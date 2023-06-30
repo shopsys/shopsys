@@ -11,7 +11,7 @@ export function useCurrentCustomerData(): CurrentCustomerType | null | undefined
     const [{ data }] = useQueryError(useCurrentCustomerUserQueryApi());
 
     return useMemo(() => {
-        if (data?.currentCustomerUser === undefined) {
+        if (!data?.currentCustomerUser) {
             return undefined;
         }
 
@@ -22,31 +22,24 @@ export function useCurrentCustomerData(): CurrentCustomerType | null | undefined
 const mapCurrentCustomerApiData = (
     apiCurrentCustomerData: CurrentCustomerUserQueryApi['currentCustomerUser'],
 ): CurrentCustomerType | null => {
-    if (apiCurrentCustomerData === null) {
+    if (!apiCurrentCustomerData) {
         return null;
     }
 
+    const isCompanyCustomer = apiCurrentCustomerData.__typename === 'CompanyCustomerUser';
+
     return {
         ...apiCurrentCustomerData,
-        companyCustomer: apiCurrentCustomerData.__typename === 'CompanyCustomerUser',
-        telephone: apiCurrentCustomerData.telephone === null ? '' : apiCurrentCustomerData.telephone,
-        companyName:
-            apiCurrentCustomerData.__typename === 'CompanyCustomerUser' && apiCurrentCustomerData.companyName !== null
-                ? apiCurrentCustomerData.companyName
-                : '',
+        companyCustomer: isCompanyCustomer,
+        telephone: apiCurrentCustomerData.telephone ? apiCurrentCustomerData.telephone : '',
+        companyName: isCompanyCustomer && apiCurrentCustomerData.companyName ? apiCurrentCustomerData.companyName : '',
         companyNumber:
-            apiCurrentCustomerData.__typename === 'CompanyCustomerUser' && apiCurrentCustomerData.companyNumber !== null
-                ? apiCurrentCustomerData.companyNumber
-                : '',
+            isCompanyCustomer && apiCurrentCustomerData.companyNumber ? apiCurrentCustomerData.companyNumber : '',
         companyTaxNumber:
-            apiCurrentCustomerData.__typename === 'CompanyCustomerUser' &&
-            apiCurrentCustomerData.companyTaxNumber !== null
-                ? apiCurrentCustomerData.companyTaxNumber
-                : '',
-        defaultDeliveryAddress:
-            apiCurrentCustomerData.defaultDeliveryAddress !== null
-                ? mapDeliveryAddress(apiCurrentCustomerData.defaultDeliveryAddress)
-                : undefined,
+            isCompanyCustomer && apiCurrentCustomerData.companyTaxNumber ? apiCurrentCustomerData.companyTaxNumber : '',
+        defaultDeliveryAddress: apiCurrentCustomerData.defaultDeliveryAddress
+            ? mapDeliveryAddress(apiCurrentCustomerData.defaultDeliveryAddress)
+            : undefined,
         deliveryAddresses: mapDeliveryAddresses(apiCurrentCustomerData.deliveryAddresses),
         passwordOld: '',
         passwordFirst: '',
