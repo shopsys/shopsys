@@ -12,4 +12,3 @@ docker image build \
     --compress \
     -f project-base/docker/php-fpm/Dockerfile \
     .
-docker image push ${DOCKER_PHP_FPM_REPOSITORY_TAG}
