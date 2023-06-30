@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DOCKER_PHP_FPM_REPOSITORY_TAG=${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
+DOCKER_PHP_FPM_REPOSITORY_TAG=$1
 
 docker image build \
     --build-arg project_root=project-base \

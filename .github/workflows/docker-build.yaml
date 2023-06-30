@@ -23,53 +23,67 @@ jobs:
         name: Build PHP-FPM and Elasticsearch images
         needs: cancel
         runs-on: ubuntu-20.04
+        permissions:
+            contents: read
+            packages: write
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v2
                 with:
                     ref: ${{ github.ref }}
-            -   name: Login to Docker Hub
-                uses: docker/login-action@v1
+            -   name: Login to GitHub Container Registry
+                uses: docker/login-action@v2
                 with:
-                    username: ${{ secrets.DOCKER_USERNAME }}
-                    password: ${{ secrets.DOCKER_PASSWORD }}
+                    registry: ghcr.io
+                    username: ${{ github.actor }}
+                    password: ${{ secrets.GITHUB_TOKEN }}
             -   name: Check if PHP-FPM image exists
                 env:
                     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
                 run: |
-                    DOCKER_PHP_FPM_IMAGE_TAG=gitlab-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_PHP_FPM_BASE_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
+                    DOCKER_PHP_FPM_REPOSITORY_TAG=${DOCKER_PHP_FPM_BASE_REPOSITORY_TAG}-${{ github.sha }}
                     echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
+                    echo "DOCKER_PHP_FPM_BASE_REPOSITORY_TAG=${DOCKER_PHP_FPM_BASE_REPOSITORY_TAG}" >> $GITHUB_ENV
+                    echo "DOCKER_PHP_FPM_REPOSITORY_TAG=${DOCKER_PHP_FPM_REPOSITORY_TAG}" >> $GITHUB_ENV
                     echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
-                    DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} > /dev/null ; echo $?`
+                    DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_BASE_REPOSITORY_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo "DOCKER_PHP_FPM_IMAGE_EXISTS=${DOCKER_PHP_FPM_IMAGE_EXISTS}" >> $GITHUB_ENV
             -   name: Build PHP-FPM image and push it to Docker Hub
                 if: env.DOCKER_PHP_FPM_IMAGE_EXISTS == 0
-                run: .github/build-php-fpm-image.sh
+                run: |
+                    .github/build-php-fpm-image.sh
+                    docker image push ${{ DOCKER_PHP_FPM_BASE_REPOSITORY_TAG }}
             -   name: Check if Elasticseach image exists
                 run: |
-                    DOCKER_ELASTICSEARCH_IMAGE_TAG=gitlab-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_TAG=${DOCKER_ELASTICSEARCH_IMAGE_TAG}" >> $GITHUB_ENV
-                    DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} > /dev/null ; echo $?`
+                    DOCKER_ELASTICSEARCH_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}
+                    echo "DOCKER_ELASTICSEARCH_REPOSITORY_TAG=${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}" >> $GITHUB_ENV
+                    DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_ENV
             -   name: Build Elasticsearch image and push it to Docker Hub
                 if: env.DOCKER_ELASTICSEARCH_IMAGE_EXISTS == 0
-                run: .github/build-elasticsearch-image.sh
+                run: |
+                    .github/build-elasticsearch-image.sh
+                    docker image push ${{ DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}
             -   name: Copy and rename docker-compose.github-actions.yml.dist to docker-compose.yml
                 run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
             -   name: Update docker-compose.yml file with right PHP-FPM image
-                run: "sed -i \"s#php-fpm-image#${{ secrets.DOCKER_USERNAME }}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}#\" ./docker-compose.yml"
+                run: "sed -i \"s#php-fpm-image#${DOCKER_PHP_FPM_REPOSITORY_TAG}#\" ./docker-compose.yml"
             -   name: Update docker-compose.yml file with right Elastichsearch image
-                run: "sed -i \"s#elasticsearch-image#${{ secrets.DOCKER_USERNAME }}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.yml"
+                run: "sed -i \"s#elasticsearch-image#${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}#\" ./docker-compose.yml"
             -   name: Create branch specific PHP-FPM image with project files
                 run: |
-                    docker run -d --name php-fpm ${{ secrets.DOCKER_USERNAME }}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
+                    docker run -d --name php-fpm ${DOCKER_PHP_FPM_BASE_REPOSITORY_TAG}
                     docker cp ./ php-fpm:/var/www/html
                     docker exec php-fpm composer install --optimize-autoloader --no-interaction
                     docker exec php-fpm php phing composer-dev dirs-create test-dirs-create assets npm build-version-generate frontend-api-enable
             -   name: Push branch specific PHP-FPM image to Docker Hub
                 run: |
-                    docker commit -m="Include Composer and NPM files" php-fpm ${{ secrets.DOCKER_USERNAME }}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}
-                    docker image push ${{ secrets.DOCKER_USERNAME }}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}
+                    docker commit -m="Include Composer and NPM files" php-fpm ${DOCKER_PHP_FPM_REPOSITORY_TAG}
+                    docker image push ${DOCKER_PHP_FPM_REPOSITORY_TAG}
             -   name: Upload docker-compose.yml to artifacts
                 uses: actions/upload-artifact@v2
                 with:
@@ -155,48 +169,37 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Check if PHP-FPM image exists
                 env:
-                    DOCKER_USERNAME: shopsysbot
+                    DOCKER_USERNAME: shopsys
                 run: |
-                    DOCKER_PHP_FPM_IMAGE_TAG=gitlab-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_PHP_FPM_BASE_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
+                    DOCKER_PHP_FPM_REPOSITORY_TAG=${DOCKER_PHP_FPM_BASE_REPOSITORY_TAG}-${{ github.sha }}
                     echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
-                    echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
-                    DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} > /dev/null ; echo $?`
+                    echo "DOCKER_PHP_FPM_BASE_REPOSITORY_TAG=${DOCKER_PHP_FPM_BASE_REPOSITORY_TAG}" >> $GITHUB_ENV
+                    echo "DOCKER_PHP_FPM_REPOSITORY_TAG=${DOCKER_PHP_FPM_REPOSITORY_TAG}" >> $GITHUB_ENV
+                    DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_BASE_REPOSITORY_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo ${DOCKER_PHP_FPM_IMAGE_EXISTS}
                     echo "DOCKER_PHP_FPM_IMAGE_EXISTS=${DOCKER_PHP_FPM_IMAGE_EXISTS}" >> $GITHUB_ENV
             -   name: Build PHP-FPM image
                 if: env.DOCKER_PHP_FPM_IMAGE_EXISTS == 0
-                run: |
-                    docker image build \
-                        --build-arg project_root=project-base \
-                        --build-arg www_data_uid=$(id -u) \
-                        --build-arg www_data_gid=$(id -g) \
-                        --tag ${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG} \
-                        --target development \
-                        --no-cache \
-                        --compress \
-                        -f project-base/docker/php-fpm/Dockerfile \
-                        .
+                run: .github/build-php-fpm-image.sh ${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}
             -   name: Check if Elasticseach image exists
                 run: |
-                    DOCKER_ELASTICSEARCH_IMAGE_TAG=gitlab-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_TAG=${DOCKER_ELASTICSEARCH_IMAGE_TAG}" >> $GITHUB_ENV
-                    DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} > /dev/null ; echo $?`
+                    DOCKER_ELASTICSEARCH_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}
+                    echo "DOCKER_ELASTICSEARCH_REPOSITORY_TAG=${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}" >> $GITHUB_ENV
+                    DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_ENV
             -   name: Build Elasticsearch image
                 if: env.DOCKER_ELASTICSEARCH_IMAGE_EXISTS == 0
-                run: |
-                    docker image build \
-                        --tag ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG} \
-                        --no-cache \
-                        --compress \
-                        -f project-base/docker/elasticsearch/Dockerfile \
-                        .
+                run: .github/build-elasticsearch-image.sh ${{ needs.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}
             -   name: Copy and rename docker-compose.github-actions.yml.dist to docker-compose.yml
                 run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
             -   name: Update docker-compose.yml file with right PHP-FPM image
-                run: "sed -i \"s#php-fpm-image#${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}#\" ./docker-compose.yml"
+                run: "sed -i \"s#php-fpm-image#${DOCKER_PHP_FPM_REPOSITORY_TAG}#\" ./docker-compose.yml"
             -   name: Update docker-compose.yml file with right Elastichsearch image
-                run: "sed -i \"s#elasticsearch-image#${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.yml"
+                run: "sed -i \"s#elasticsearch-image#${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}#\" ./docker-compose.yml"
             -   name: Build application
                 run: |
                     docker-compose pull --parallel webserver postgres redis selenium-server
