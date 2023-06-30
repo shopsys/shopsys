@@ -1,0 +1,5 @@
+query StoreDetailQuery($urlSlug: String) {
+    store(urlSlug: $urlSlug) {
+        ...StoreDetailFragment
+    }
+}

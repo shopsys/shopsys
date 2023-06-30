@@ -1,27 +1,20 @@
 import { flush } from '@sentry/nextjs';
 import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
 import { Error500Content } from 'components/Pages/ErrorPage/Error500Content';
-import { DomainConfigType, getDomainConfig } from 'helpers/domain/domain';
 import { logException } from 'helpers/errors/logException';
-import { useSetDomainConfig } from 'hooks/useDomainConfig';
+import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { NextPage } from 'next';
 import NextErrorComponent, { ErrorProps } from 'next/error';
 import { ReactElement } from 'react';
 
 type ErrorPageProps = ErrorProps & {
-    domainConfig: DomainConfigType;
     hasGetInitialPropsRun: boolean;
     err?: any;
 };
 
-const ErrorPage: NextPage<ErrorPageProps> = ({
-    hasGetInitialPropsRun,
-    err,
-    statusCode,
-    domainConfig,
-}): ReactElement => {
-    useSetDomainConfig(domainConfig);
-    if (!hasGetInitialPropsRun && err !== undefined && err !== null) {
+const ErrorPage: NextPage<ErrorPageProps> = ({ hasGetInitialPropsRun, err, statusCode }): ReactElement => {
+    if (!hasGetInitialPropsRun && err) {
         // getInitialProps is not called in case of
         // https://github.com/vercel/next.js/issues/8592. As a workaround, we pass
         // err via _app.js so it can be captured
@@ -32,13 +25,15 @@ const ErrorPage: NextPage<ErrorPageProps> = ({
     return statusCode === 404 ? <Error404Content /> : <Error500Content />;
 };
 
-ErrorPage.getInitialProps = async ({ res, err, asPath, req }) => {
-    const errorInitialProps = await NextErrorComponent.getInitialProps({ res, err } as any);
-    const domainConfig = getDomainConfig(req!.headers.host!);
-
+ErrorPage.getInitialProps = getServerSidePropsWithRedisClient((redisClient) => async (context: any) => {
+    const errorInitialProps: any = await NextErrorComponent.getInitialProps({
+        res: context.res,
+        err: context.err,
+    } as any);
+    const serverSideProps = await initServerSideProps({ context, redisClient });
     // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
     // getInitialProps has run
-    const errorPageProps = { ...errorInitialProps, hasGetInitialPropsRun: true, domainConfig };
+    const errorPageProps = { ...errorInitialProps, hasGetInitialPropsRun: true };
 
     // Running on the server, the response object (`res`) is available.
     //
@@ -53,20 +48,23 @@ ErrorPage.getInitialProps = async ({ res, err, asPath, req }) => {
     //    Boundary. Read more about what types of exceptions are caught by Error
     //    Boundaries: https://reactjs.org/docs/error-boundaries.html
 
-    if (err !== undefined && err !== null) {
-        logException(err);
+    if (context.err) {
+        logException(context.err);
     } else {
         // If this point is reached, getInitialProps was called without any
         // information about what the error might be. This is unexpected and may
         // indicate a bug introduced in Next.js, so record it in Sentry
-        logException(new Error(`_error.js getInitialProps missing data at path: ${asPath}`));
+        logException(new Error(`_error.js getInitialProps missing data at path: ${context.asPath}`));
     }
 
     // Flushing before returning is necessary if deploying to Vercel, see
     // https://vercel.com/docs/platform/limits#streaming-responses
     await flush(2000);
 
-    return errorPageProps;
-};
+    return {
+        ...errorPageProps,
+        ...('props' in serverSideProps ? serverSideProps.props : {}),
+    };
+});
 
 export default ErrorPage;

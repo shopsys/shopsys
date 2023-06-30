@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -6,7 +7,6 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { useAuth } from 'hooks/auth/useAuth';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import NextLink from 'next/link';
 
 type CustomerContentProps = {
     breadcrumbs: BreadcrumbFragmentApi[];
@@ -32,10 +32,14 @@ export const CustomerContent: FC<CustomerContentProps> = ({ breadcrumbs }) => {
             <Webline>
                 <ul className="mb-8 flex flex-col flex-wrap gap-4 md:flex-row">
                     <CustomerListItem>
-                        <NextLink href={customerOrdersUrl}>{t('My orders')}</NextLink>
+                        <ExtendedNextLink href={customerOrdersUrl} type="static">
+                            {t('My orders')}
+                        </ExtendedNextLink>
                     </CustomerListItem>
                     <CustomerListItem>
-                        <NextLink href={customerEditProfileUrl}>{t('Edit profile')}</NextLink>
+                        <ExtendedNextLink href={customerEditProfileUrl} type="static">
+                            {t('Edit profile')}
+                        </ExtendedNextLink>
                     </CustomerListItem>
                     <CustomerListItem>
                         <a onClick={logout}>{t('Logout')}</a>

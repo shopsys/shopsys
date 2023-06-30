@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { twMerge } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { twMergeCustom } from 'utils/twMerge';
 
 type NativeButtonProps = ExtractNativePropsFromDefault<
     ButtonHTMLAttributes<HTMLButtonElement>,
@@ -40,7 +40,7 @@ export const Button: FC<Props> = ({
 
     return (
         <button
-            className={twMerge(
+            className={twMergeCustom(
                 'inline-flex w-auto cursor-pointer items-center justify-center gap-2 text-center font-bold uppercase outline-none transition-all hover:no-underline',
                 size === 'small' ? 'py-1 px-4 text-sm' : 'py-3 px-8 text-base',
                 !variant && 'bg-orange text-white hover:bg-orangeDarker hover:text-white',

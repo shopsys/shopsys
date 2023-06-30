@@ -1,7 +1,7 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { twJoin } from 'tailwind-merge';
 
@@ -50,12 +50,12 @@ export const OrderAction: FC<OrderActionProps> = ({
             )}
         >
             <div className="order-2 lg:order-1" data-testid={TEST_IDENTIFIER + 'back'}>
-                <NextLink href={buttonBackLink} passHref>
+                <ExtendedNextLink href={buttonBackLink} passHref type="static">
                     <a className="font-bold uppercase text-dark no-underline">
                         <Icon iconType="icon" icon="Arrow" className="relative top-0 mr-1 rotate-90 text-greyLight" />
                         {buttonBack}
                     </a>
-                </NextLink>
+                </ExtendedNextLink>
             </div>
             <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0" data-testid={TEST_IDENTIFIER + 'next'}>
                 <Button

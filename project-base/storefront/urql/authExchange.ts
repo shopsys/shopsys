@@ -1,7 +1,7 @@
 import { DocumentNode } from 'graphql';
 import { RefreshTokensDocumentApi } from 'graphql/generated';
 import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { CombinedError, makeOperation, Operation, OperationContext, OperationResult, TypedDocumentNode } from 'urql';
 import { TokenType } from 'urql/types';
 
@@ -57,7 +57,7 @@ const doTryRefreshToken = async (
         variables?: Variables,
         context?: Partial<OperationContext>,
     ) => Promise<OperationResult<Data>>,
-    context?: GetServerSidePropsContext,
+    context?: GetServerSidePropsContext | NextPageContext,
 ): Promise<TokenType | null> => {
     try {
         const result = await mutate(RefreshTokensDocumentApi, { refreshToken });
@@ -86,7 +86,7 @@ const doTryRefreshToken = async (
  * Initial requests with refreshToken only are refreshed immediately
  * Subsequent requests are refreshed when necessary
  */
-const createGetAuth = (context?: GetServerSidePropsContext) => {
+const createGetAuth = (context?: GetServerSidePropsContext | NextPageContext) => {
     return async (params: {
         authState: TokenType | null;
         mutate: <Data = any, Variables extends Record<string, unknown> = Record<string, unknown>>(
@@ -137,7 +137,9 @@ type GetAuthExchangeOptionsReturnType = {
     }) => Promise<TokenType | null>;
 };
 
-export const getAuthExchangeOptions = (context?: GetServerSidePropsContext): GetAuthExchangeOptionsReturnType => ({
+export const getAuthExchangeOptions = (
+    context?: GetServerSidePropsContext | NextPageContext,
+): GetAuthExchangeOptionsReturnType => ({
     addAuthToOperation,
     didAuthError,
     getAuth: createGetAuth(context),

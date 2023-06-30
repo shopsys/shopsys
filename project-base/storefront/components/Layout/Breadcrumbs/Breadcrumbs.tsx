@@ -1,18 +1,20 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import NextLink from 'next/link';
 import { Fragment } from 'react';
+import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 
 type BreadcrumbsProps = {
     breadcrumb: BreadcrumbFragmentApi[];
+    type?: FriendlyPagesTypesKeys;
 };
 
 const TEST_IDENTIFIER = 'layout-breadcrumbs';
 
-export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumb }) => {
+export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumb, type }) => {
     const t = useTypedTranslationFunction();
 
     if (breadcrumb.length === 0) {
@@ -33,7 +35,11 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumb }) => {
                 <BreadcrumbsSpan>/</BreadcrumbsSpan>
                 {breadcrumb.slice(0, breadcrumb.length - 1).map((breadcrumb, index) => (
                     <Fragment key={index}>
-                        <BreadcrumbsLink href={breadcrumb.slug} dataTestId={TEST_IDENTIFIER + '-item-' + index}>
+                        <BreadcrumbsLink
+                            href={breadcrumb.slug}
+                            type={type}
+                            dataTestId={TEST_IDENTIFIER + '-item-' + index}
+                        >
                             {breadcrumb.name}
                         </BreadcrumbsLink>
                         <BreadcrumbsSpan>/</BreadcrumbsSpan>
@@ -53,13 +59,13 @@ const BreadcrumbsSpan: FC = ({ children, dataTestId }) => (
     </span>
 );
 
-const BreadcrumbsLink: FC<{ href: string }> = ({ href, children, dataTestId }) => (
-    <NextLink href={href} passHref>
+const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKeys }> = ({ href, type, children, dataTestId }) => (
+    <ExtendedNextLink href={href} passHref type={type || 'static'}>
         <a
             className="mr-3 hidden text-greyLight no-underline last-of-type:inline lg:inline lg:text-primary lg:underline"
             data-testid={dataTestId}
         >
             {children}
         </a>
-    </NextLink>
+    </ExtendedNextLink>
 );

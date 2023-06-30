@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { mediaQueries } from 'components/Theme/mediaQueries';
@@ -5,7 +6,6 @@ import { ListedBlogArticleFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
-import NextLink from 'next/link';
 import { Fragment } from 'react';
 
 type SideSliderProps = {
@@ -44,7 +44,7 @@ export const SideSlider: FC<SideSliderProps> = ({ blogSideItems }) => {
                             data-testid={TEST_IDENTIFIER + index}
                         >
                             <div className="flex w-full">
-                                <NextLink href={blogSideItem.link} passHref>
+                                <ExtendedNextLink type="blogArticle" href={blogSideItem.link} passHref>
                                     <a className="relative mb-2 flex w-full">
                                         <Image
                                             image={blogSideItemImage}
@@ -53,7 +53,7 @@ export const SideSlider: FC<SideSliderProps> = ({ blogSideItems }) => {
                                             className="max-h-32 rounded"
                                         />
                                     </a>
-                                </NextLink>
+                                </ExtendedNextLink>
                             </div>
                             <div className="flex-1">
                                 {blogSideItem.blogCategories.map((blogPreviewCategorie, index) => (
@@ -64,11 +64,11 @@ export const SideSlider: FC<SideSliderProps> = ({ blogSideItems }) => {
                                     </Fragment>
                                 ))}
 
-                                <NextLink href={blogSideItem.link} passHref>
+                                <ExtendedNextLink type="blogArticle" href={blogSideItem.link} passHref>
                                     <a className="block text-lg font-bold leading-5 text-creamWhite no-underline hover:text-creamWhite">
                                         {blogSideItem.name}
                                     </a>
-                                </NextLink>
+                                </ExtendedNextLink>
                             </div>
                         </div>
                     );

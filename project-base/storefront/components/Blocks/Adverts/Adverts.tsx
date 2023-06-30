@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -7,7 +8,6 @@ import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
-import NextLink from 'next/link';
 import { Fragment, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -74,9 +74,9 @@ export const Adverts: FC<AdvertsProps> = ({
                     return (
                         <Fragment key={index}>
                             {advert.link ? (
-                                <NextLink href={advert.link} passHref>
+                                <ExtendedNextLink href={advert.link} passHref type="static">
                                     <a target="_blank">{ImageComponent}</a>
-                                </NextLink>
+                                </ExtendedNextLink>
                             ) : (
                                 ImageComponent
                             )}

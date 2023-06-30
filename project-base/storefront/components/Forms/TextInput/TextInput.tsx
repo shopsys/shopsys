@@ -1,7 +1,7 @@
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
@@ -50,7 +50,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             isWithoutLabel={isWithoutLabel}
         >
             <input
-                className={twMerge(
+                className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
                     'peer w-full rounded-xl border-2 border-border bg-white px-3 pt-5 text-dark [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:[color:transparent] focus:outline-none disabled:pointer-events-none disabled:cursor-no-drop disabled:opacity-50',
                     '[&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner [&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner',

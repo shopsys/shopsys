@@ -1,9 +1,9 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import NextLink from 'next/link';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-submenu';
 
@@ -16,19 +16,19 @@ export const SubMenu: FC = () => {
 
     return (
         <div className="mt-5 flex flex-col" data-testid={TEST_IDENTIFIER}>
-            <NextLink href="/" passHref>
+            <ExtendedNextLink href="/" passHref type="static">
                 <SubMenuItem dataTestId={TEST_IDENTIFIER + '-0'}>{t('Customer service')}</SubMenuItem>
-            </NextLink>
-            <NextLink href={storesUrl} passHref>
+            </ExtendedNextLink>
+            <ExtendedNextLink href={storesUrl} passHref type="static">
                 <SubMenuItem dataTestId={TEST_IDENTIFIER + '-1'}>{t('Stores')}</SubMenuItem>
-            </NextLink>
+            </ExtendedNextLink>
 
             {isUserLoggedIn ? (
                 <SubMenuItem onClick={logout}>{t('Logout')}</SubMenuItem>
             ) : (
-                <NextLink href={loginUrl} passHref>
+                <ExtendedNextLink href={loginUrl} passHref type="static">
                     <SubMenuItem dataTestId={TEST_IDENTIFIER + '-2'}>{t('Sign in')}</SubMenuItem>
-                </NextLink>
+                </ExtendedNextLink>
             )}
         </div>
     );

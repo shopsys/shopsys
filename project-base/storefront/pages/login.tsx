@@ -35,7 +35,7 @@ const LoginPage: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
     const domainConfig = getDomainConfig(context.req.headers.host!);
     const ssrCache = ssrExchange({ isClient: false });
-    const client = await createClient(context, domainConfig.publicGraphqlEndpoint, ssrCache, redisClient);
+    const client = createClient(context, domainConfig.publicGraphqlEndpoint, ssrCache, redisClient);
     const serverSideProps = await initServerSideProps({ context, client, ssrCache, redisClient });
 
     const customerQueryResult = client?.readQuery<CurrentCustomerUserQueryApi>(CurrentCustomerUserQueryDocumentApi, {});

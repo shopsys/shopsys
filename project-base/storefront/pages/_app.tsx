@@ -1,5 +1,3 @@
-import '../styles/globals.css';
-import '../styles/user-text.css';
 import { GtmHeadScript } from 'components/Helpers/GtmHeadScript';
 import { LoadingHandler } from 'components/Layout/LoadingHandler';
 import { Error500ContentWithBoundary } from 'components/Pages/ErrorPage/Error500Content';
@@ -14,6 +12,11 @@ import { ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
 import { useSetDomainConfig } from 'hooks/useDomainConfig';
 import i18nConfig from 'i18n';
+import 'lightgallery/css/lg-thumbnail.css';
+import 'lightgallery/css/lightgallery.css';
+import 'react-loading-skeleton/dist/skeleton.css';
+import '../styles/globals.css';
+import '../styles/user-text.css';
 import appWithI18n from 'next-translate/appWithI18n';
 import { withUrqlClient } from 'next-urql';
 import { AppProps as NextAppProps } from 'next/app';

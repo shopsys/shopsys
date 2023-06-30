@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
@@ -8,7 +9,6 @@ import { useHandleCompare } from 'hooks/product/useHandleCompare';
 import { useHandleCompareTable } from 'hooks/product/useHandleCompareTable';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import NextLink from 'next/link';
 import { useCallback } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 
@@ -38,7 +38,7 @@ export const HeadItem: FC<ItemProps> = ({ product, productsCompareCount, listInd
                     <div className="flex h-[185px] w-full items-center justify-center pt-4 pb-3">
                         <Image image={product.image} type="list" alt={product.image?.name || product.fullName} />
                     </div>
-                    <NextLink href={product.slug} passHref>
+                    <ExtendedNextLink href={product.slug} passHref type="product">
                         <a
                             className="text-primary no-underline hover:no-underline"
                             onClick={() =>
@@ -51,7 +51,7 @@ export const HeadItem: FC<ItemProps> = ({ product, productsCompareCount, listInd
                         >
                             {product.fullName}
                         </a>
-                    </NextLink>
+                    </ExtendedNextLink>
                     <p className="mb-2 text-xs">
                         {t('Code')}: {product.catalogNumber}
                     </p>

@@ -1,8 +1,8 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useMediaMin } from 'hooks/ui/useMediaMin';
 import { usePagination } from 'hooks/ui/usePagination';
 import { useQueryParams } from 'hooks/useQueryParams';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, RefObject } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -23,7 +23,7 @@ export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }
 
     const asPathWithoutQueryParams = router.asPath.split('?')[0];
     const queryParamsWithoutPage = { ...router.query };
-    delete queryParamsWithoutPage.all;
+    delete queryParamsWithoutPage.slugType;
     delete queryParamsWithoutPage[PAGE_QUERY_PARAMETER_NAME];
 
     const onChangePage = () => {
@@ -49,7 +49,7 @@ export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }
                                 {pageNumber}
                             </PaginationButton>
                         ) : (
-                            <NextLink
+                            <ExtendedNextLink
                                 href={{
                                     pathname: asPathWithoutQueryParams,
                                     query: {
@@ -60,6 +60,7 @@ export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }
                                 passHref
                                 shallow
                                 scroll={false}
+                                type="static"
                             >
                                 <PaginationButton
                                     dataTestId={TEST_IDENTIFIER + '-' + pageNumber}
@@ -67,7 +68,7 @@ export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }
                                 >
                                     {pageNumber}
                                 </PaginationButton>
-                            </NextLink>
+                            </ExtendedNextLink>
                         )}
                     </Fragment>
                 ))}
@@ -111,9 +112,9 @@ const PaginationButton: FC<PaginationButtonProps> = ({
 
     if (href !== undefined) {
         return (
-            <NextLink href={href} passHref shallow scroll={false}>
+            <ExtendedNextLink href={href} passHref shallow scroll={false} type="static">
                 {button}
-            </NextLink>
+            </ExtendedNextLink>
         );
     }
 

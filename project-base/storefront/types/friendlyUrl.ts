@@ -20,3 +20,29 @@ export type FriendlyUrlPageType =
     | BlogCategoryDetailFragmentApi
     | BrandDetailFragmentApi
     | FlagDetailFragmentApi;
+
+export const FriendlyPagesTypes = {
+    article: 'front_article_detail',
+    blogArticle: 'front_blogarticle_detail',
+    blogCategory: 'front_blogcategory_detail',
+    brand: 'front_brand_detail',
+    category: 'front_product_list',
+    product: 'front_product_detail',
+    store: 'front_stores_detail',
+    flag: 'front_flag_detail',
+} as const;
+
+export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKeys, string> = {
+    article: '/articles/[articleSlug]',
+    blogArticle: '/blogArticles/[blogArticleSlug]',
+    blogCategory: '/blogCategories/[blogCategorySlug]',
+    brand: '/brands/[brandSlug]',
+    category: '/categories/[categorySlug]',
+    product: '/products/[productSlug]',
+    store: '/stores/[storeSlug]',
+    flag: '/flags/[flagSlug]',
+} as const;
+
+export type FriendlyPagesTypesKeys = keyof typeof FriendlyPagesTypes;
+
+export type FriendlyPageTypesValue = (typeof FriendlyPagesTypes)[FriendlyPagesTypesKeys];

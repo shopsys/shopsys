@@ -1,9 +1,9 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { CartItemFragmentApi } from 'graphql/generated';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import NextLink from 'next/link';
 import { MouseEventHandler } from 'react';
 
 type ListItemProps = {
@@ -26,11 +26,11 @@ export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantit
                 <Image image={product.image} alt={product.image?.name || product.fullName} type="thumbnail" />
             </div>
             <div className="flex flex-1 items-center justify-between">
-                <NextLink href={product.slug} passHref>
+                <ExtendedNextLink href={product.slug} passHref type="product">
                     <a className="flex-1 cursor-pointer pl-3 text-sm font-bold text-greyDark no-underline outline-none">
                         {product.fullName}
                     </a>
-                </NextLink>
+                </ExtendedNextLink>
                 <span className="pr-3 text-sm">{quantity + product.unit.name}</span>
                 <span className="w-28 break-words pr-4 text-right text-sm font-bold text-primary">
                     {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}

@@ -9,7 +9,7 @@ export const UserConsentContainer: FC = () => {
     const userConsent = usePersistStore((store) => store.userConsent);
 
     const onSetCallback = useCallback(() => {
-        if (userConsent) {
+        if (userConsent !== null) {
             setUserConsentVisibility(false);
         }
     }, [userConsent]);

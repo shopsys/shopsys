@@ -1,4 +1,3 @@
-import { CategoryDetailContentMessage } from '../CategoryDetail/CategoryDetailContentMessage';
 import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
@@ -45,19 +44,13 @@ export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ 
 
     return (
         <>
-            {flagListedProducts && flagListedProducts.length !== 0 ? (
-                <>
-                    <ProductsList
-                        gtmProductListName={GtmProductListNameType.flag_detail}
-                        fetching={fetching}
-                        products={flagListedProducts}
-                        gtmMessageOrigin={GtmMessageOriginType.other}
-                    />
-                    <Pagination totalCount={flag.products.totalCount} containerWrapRef={containerWrapRef} />
-                </>
-            ) : (
-                <CategoryDetailContentMessage />
-            )}
+            <ProductsList
+                gtmProductListName={GtmProductListNameType.flag_detail}
+                fetching={fetching}
+                products={flagListedProducts}
+                gtmMessageOrigin={GtmMessageOriginType.other}
+            />
+            <Pagination totalCount={flag.products.totalCount} containerWrapRef={containerWrapRef} />
         </>
     );
 };

@@ -1,9 +1,9 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Button } from 'components/Forms/Button/Button';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import NextLink from 'next/link';
 
 // TODO PRG
 const dummyData = {
@@ -42,11 +42,11 @@ export const FooterBoxInfo: FC = () => {
                     </a>
                     <p className="m-0 text-sm text-white">{dummyData.opening}</p>
                 </div>
-                <NextLink href={contactUrl} passHref>
+                <ExtendedNextLink href={contactUrl} type="static">
                     <Button variant="secondary" className="z-above">
                         {t('Write to us')}
                     </Button>
-                </NextLink>
+                </ExtendedNextLink>
             </div>
         </div>
     );

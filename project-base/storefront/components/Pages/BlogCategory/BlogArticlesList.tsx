@@ -1,10 +1,10 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
 import { ListedBlogArticleFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import NextLink from 'next/link';
 import { Fragment } from 'react';
 
 type BlogArticlesListProps = {
@@ -31,11 +31,11 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                             className="mb-3 w-full text-center md:mb-0 md:w-48"
                             data-testid={TEST_IDENTIFIER + blogArticleIndex + '-image'}
                         >
-                            <NextLink href={blogArticle.link} passHref>
+                            <ExtendedNextLink href={blogArticle.link} passHref type="blogArticle">
                                 <a>
                                     <Image image={blogImage} type="list" alt={blogImage?.name || blogArticle.name} />
                                 </a>
-                            </NextLink>
+                            </ExtendedNextLink>
                         </div>
                         <div className="flex w-full flex-col md:pl-10">
                             <div>
@@ -57,7 +57,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                                     </Fragment>
                                 ))}
                             </div>
-                            <NextLink href={blogArticle.link} passHref>
+                            <ExtendedNextLink href={blogArticle.link} passHref type="blogArticle">
                                 <a
                                     className="group hover:no-underline"
                                     data-testid={TEST_IDENTIFIER + blogArticleIndex + '-title'}
@@ -66,7 +66,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                                         {blogArticle.name}
                                     </Heading>
                                 </a>
-                            </NextLink>
+                            </ExtendedNextLink>
                             {blogArticle.perex !== null && (
                                 <p
                                     className="mb-3 text-base"

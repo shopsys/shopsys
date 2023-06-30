@@ -1,5 +1,5 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
-import NextLink from 'next/link';
 import { twJoin } from 'tailwind-merge';
 
 type ErrorPageProps = { isWithoutImage?: boolean };
@@ -20,7 +20,7 @@ export const ErrorPageTextHeading: FC = ({ children }) => <div className="text-2
 export const ErrorPageTextMain: FC = ({ children }) => <div className="mt-4 text-greyDark">{children}</div>;
 
 export const ErrorPageButtonLink: FC<{ href: string }> = ({ href, children }) => (
-    <NextLink href={href}>
+    <ExtendedNextLink href={href} type="static">
         <Button className="mt-5">{children}</Button>
-    </NextLink>
+    </ExtendedNextLink>
 );

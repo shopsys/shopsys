@@ -1,15 +1,15 @@
 import { ParsedUrlQuery } from 'querystring';
 
-export const getQueryWithoutAllParameter = (query: ParsedUrlQuery): ParsedUrlQuery => {
+export const getQueryWithoutSlugTypeParameter = (query: ParsedUrlQuery): ParsedUrlQuery => {
     const routerQueryWithoutAllParameter = { ...query };
-    delete routerQueryWithoutAllParameter.all;
+    delete routerQueryWithoutAllParameter.slugType;
 
     return routerQueryWithoutAllParameter;
 };
 
-export const getQueryWithoutAllParameterFromQueryString = (query: string): string => {
+export const getQueryWithoutSlugTypeParameterFromQueryString = (query: string): string => {
     const queryParams = new URLSearchParams(query);
-    queryParams.delete('all');
+    queryParams.delete('slugType');
 
     return queryParams.toString();
 };

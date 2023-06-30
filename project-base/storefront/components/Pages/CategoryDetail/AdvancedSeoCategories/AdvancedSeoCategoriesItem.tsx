@@ -1,10 +1,10 @@
-import NextLink from 'next/link';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twJoin } from 'tailwind-merge';
 
 type AdvancedSeoCategoriesItemProps = { slug: string };
 
 export const AdvancedSeoCategoriesItem: FC<AdvancedSeoCategoriesItemProps> = ({ children, slug, className }) => (
-    <NextLink href={slug} passHref>
+    <ExtendedNextLink href={`/${slug}`} passHref type="static">
         <a
             className={twJoin(
                 'flex items-center justify-center rounded-xl bg-greyVeryLight p-3 text-center text-sm text-dark no-underline',
@@ -15,5 +15,5 @@ export const AdvancedSeoCategoriesItem: FC<AdvancedSeoCategoriesItemProps> = ({ 
         >
             {children}
         </a>
-    </NextLink>
+    </ExtendedNextLink>
 );

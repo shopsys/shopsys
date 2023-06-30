@@ -2,8 +2,7 @@ import { ProductComparePopup } from './ProductComparePopup';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { useHandleCompare } from 'hooks/product/useHandleCompare';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, HTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
+import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -40,7 +39,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps & NativeProps> =
                 onClick={handleProductInComparison}
             >
                 <Icon
-                    className={twMerge('text-grey', isProductInComparison && 'text-green')}
+                    className={twMergeCustom('text-grey', isProductInComparison && 'text-green')}
                     iconType="icon"
                     icon="Compare"
                 />

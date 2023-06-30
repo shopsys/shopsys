@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { InfoBox } from './InfoBox';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
@@ -9,7 +10,6 @@ import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import Image from 'next/image';
-import NextLink from 'next/link';
 import { useCallback, useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { MapMarker } from 'types/map';
@@ -97,7 +97,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                     <div className="mb-10 lg:grid lg:grid-cols-2 lg:gap-8">
                         {mappedStores.length &&
                             mappedStores.map((store) => (
-                                <NextLink key={store.slug} href={store.slug} passHref>
+                                <ExtendedNextLink key={store.slug} href={store.slug} passHref type="store">
                                     <a className="mb-4 flex w-full items-center justify-between rounded-xl border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline lg:w-auto vl:hover:-translate-x-1 vl:hover:shadow-lg">
                                         <div className="flex flex-row items-center text-lg text-primary">
                                             <Icon
@@ -116,7 +116,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                                             />
                                         </div>
                                     </a>
-                                </NextLink>
+                                </ExtendedNextLink>
                             ))}
                     </div>
                 </>

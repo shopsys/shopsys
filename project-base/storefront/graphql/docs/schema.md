@@ -205,11 +205,6 @@ Returns list of adverts, optionally filtered by `positionName`
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">categoryUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">positionName</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -7003,15 +6998,6 @@ Represents setting of SEO
 <td>
 
 Description of the content of a web page
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>robotsTxtContent</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Robots.txt's file content
 
 </td>
 </tr>

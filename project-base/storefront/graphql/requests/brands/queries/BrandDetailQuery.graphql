@@ -1,0 +1,5 @@
+query BrandDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+    brand(urlSlug: $urlSlug) {
+        ...BrandDetailFragment
+    }
+}

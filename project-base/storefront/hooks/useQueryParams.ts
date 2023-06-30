@@ -1,5 +1,5 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { getQueryWithoutAllParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
+import { getQueryWithoutSlugTypeParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
@@ -39,7 +39,7 @@ const handleUpdateFilter = (selectedUuid: string | undefined, items: string[] | 
 
 export const useQueryParams = () => {
     const router = useRouter();
-    const query = getQueryWithoutAllParameter(router.query) as unknown as UrlQueries;
+    const query = getQueryWithoutSlugTypeParameter(router.query) as unknown as UrlQueries;
 
     const currentPage = Number(query[PAGE_QUERY_PARAMETER_NAME] || 1);
     const sort = query[SORT_QUERY_PARAMETER_NAME];
