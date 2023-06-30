@@ -2143,6 +2143,7 @@ export type QueryAccessPersonalDataArgsApi = {
 
 
 export type QueryAdvertsArgsApi = {
+  categoryUuid: Maybe<Scalars['Uuid']>;
   positionName: Maybe<Scalars['String']>;
 };
 
@@ -2528,6 +2529,8 @@ export type SeoSettingApi = {
   __typename?: 'SeoSetting';
   /** Description of the content of a web page */
   metaDescription: Scalars['String'];
+  /** Robots.txt's file content */
+  robotsTxtContent: Maybe<Scalars['String']>;
   /** Document's title that is shown in a browser's title */
   title: Scalars['String'];
   /** Complement to title */
