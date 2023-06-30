@@ -4,11 +4,13 @@ import { getFilteredQueries } from 'helpers/queryParams/queryHandlers';
 import {
     DEFAULT_SORT,
     getChangedDefaultFilters,
+    getChangedDefaultFiltersAfterAvailabilityChange,
     getChangedDefaultFiltersAfterFlagChange,
     getChangedDefaultFiltersAfterMaximumPriceChange,
     getChangedDefaultFiltersAfterMinimumPriceChange,
     getChangedDefaultFiltersAfterParameterChange,
     getChangedDefaultFiltersAfterSliderParameterChange,
+    SEO_SENSITIVE_FILTERS,
 } from 'helpers/filterOptions/seoCategories';
 import {
     FILTER_QUERY_PARAMETER_NAME,
@@ -61,7 +63,7 @@ export const useQueryParams = () => {
     const filter = filterQuery ? (JSON.parse(filterQuery) as FilterOptionsUrlQueryType) : null;
 
     const updateSort = (sorting: ProductOrderingModeEnumApi) => {
-        if (originalCategorySlug) {
+        if (SEO_SENSITIVE_FILTERS.SORT && originalCategorySlug) {
             pushQueryFilter(getChangedDefaultFilters(defaultProductFiltersMap, filter), originalCategorySlug, sorting);
 
             return;
@@ -75,6 +77,16 @@ export const useQueryParams = () => {
     };
 
     const updateFilterInStock = (value: FilterOptionsUrlQueryType['onlyInStock']) => {
+        if (SEO_SENSITIVE_FILTERS.AVAILABILITY && originalCategorySlug) {
+            pushQueryFilter(
+                getChangedDefaultFiltersAfterAvailabilityChange(defaultProductFiltersMap, filter, !!value),
+                originalCategorySlug,
+                defaultProductFiltersMap.sort,
+            );
+
+            return;
+        }
+
         pushQueryFilter({ ...filter, onlyInStock: value || undefined });
     };
 
@@ -86,7 +98,7 @@ export const useQueryParams = () => {
     };
 
     const updateFilterPriceMaximum = (newMaxPrice: FilterOptionsUrlQueryType['maximalPrice']) => {
-        if (originalCategorySlug) {
+        if (SEO_SENSITIVE_FILTERS.PRICE && originalCategorySlug) {
             pushQueryFilter(
                 getChangedDefaultFiltersAfterMaximumPriceChange(defaultProductFiltersMap, filter, newMaxPrice),
                 originalCategorySlug,
@@ -100,7 +112,7 @@ export const useQueryParams = () => {
     };
 
     const updateFilterPriceMinimum = (newMinPrice: FilterOptionsUrlQueryType['minimalPrice']) => {
-        if (originalCategorySlug) {
+        if (SEO_SENSITIVE_FILTERS.PRICE && originalCategorySlug) {
             pushQueryFilter(
                 getChangedDefaultFiltersAfterMinimumPriceChange(defaultProductFiltersMap, filter, newMinPrice),
                 originalCategorySlug,
@@ -118,7 +130,7 @@ export const useQueryParams = () => {
     };
 
     const updateFilterFlags = (selectedUuid: string) => {
-        if (originalCategorySlug) {
+        if (SEO_SENSITIVE_FILTERS.FLAGS && originalCategorySlug) {
             pushQueryFilter(
                 getChangedDefaultFiltersAfterFlagChange(defaultProductFiltersMap, filter, selectedUuid),
                 originalCategorySlug,
@@ -137,8 +149,11 @@ export const useQueryParams = () => {
         minimalValue?: number,
         maximalValue?: number,
     ) => {
-        if (originalCategorySlug) {
-            if (!paramaterOptionUuid) {
+        if (
+            (SEO_SENSITIVE_FILTERS.PARAMETERS.CHECKBOX || SEO_SENSITIVE_FILTERS.PARAMETERS.SLIDER) &&
+            originalCategorySlug
+        ) {
+            if (SEO_SENSITIVE_FILTERS.PARAMETERS.SLIDER && !paramaterOptionUuid) {
                 pushQueryFilter(
                     getChangedDefaultFiltersAfterSliderParameterChange(
                         defaultProductFiltersMap,
@@ -153,19 +168,20 @@ export const useQueryParams = () => {
 
                 return;
             }
+            if (SEO_SENSITIVE_FILTERS.PARAMETERS.CHECKBOX && paramaterOptionUuid) {
+                pushQueryFilter(
+                    getChangedDefaultFiltersAfterParameterChange(
+                        defaultProductFiltersMap,
+                        filter,
+                        parameterUuid,
+                        paramaterOptionUuid,
+                    ),
+                    originalCategorySlug,
+                    defaultProductFiltersMap.sort,
+                );
 
-            pushQueryFilter(
-                getChangedDefaultFiltersAfterParameterChange(
-                    defaultProductFiltersMap,
-                    filter,
-                    parameterUuid,
-                    paramaterOptionUuid,
-                ),
-                originalCategorySlug,
-                defaultProductFiltersMap.sort,
-            );
-
-            return;
+                return;
+            }
         }
 
         const parameters: FilterOptionsParameterUrlQueryType[] | undefined = (() => {
