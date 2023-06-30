@@ -7,8 +7,8 @@ import { getGtmCreateOrderEventFromLocalStorage } from 'helpers/gtm/helpers';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
@@ -19,7 +19,7 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
 
     const orderUuidParam = getOrderUuid(orderIdentifier);
 
-    useEffectOnce(() => {
+    useEffect(() => {
         checkPaymentStatus({ orderUuid: orderUuidParam }).then(({ data: checkPaymentStatusResultData }) => {
             const { gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart } =
                 getGtmCreateOrderEventFromLocalStorage();
@@ -37,7 +37,7 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                 onGtmPaymentFailEventHandler(gtmCreateOrderEventOrderPart.id);
             }
         });
-    });
+    }, []);
 
     return (
         <>

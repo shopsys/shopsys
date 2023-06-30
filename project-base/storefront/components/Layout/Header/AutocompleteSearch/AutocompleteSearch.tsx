@@ -8,12 +8,11 @@ import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmAutocompleteResultsViewEvent } from 'hooks/gtm/useGtmAutocompleteResultsViewEvent';
 import { useDebounce } from 'hooks/helpers/useDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
-import { ChangeEventHandler, useCallback, useRef, useState } from 'react';
+import { ChangeEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
@@ -45,7 +44,7 @@ export const AutocompleteSearch: FC = () => {
 
     useGtmAutocompleteResultsViewEvent(autocompleteSearchData, debouncedAutocompleteSearchQuery);
 
-    useEffectOnce(() => {
+    useEffect(() => {
         const onDocumentClickHandler: EventListener = (event) => {
             if (autocompleteSearchInRef.current === null || !(event.target instanceof HTMLElement)) {
                 setAutocompleteSearchFocus(false);
@@ -62,7 +61,7 @@ export const AutocompleteSearch: FC = () => {
         document.addEventListener('click', onDocumentClickHandler);
 
         return () => document.removeEventListener('click', onDocumentClickHandler);
-    });
+    }, []);
 
     useResizeWidthEffect(
         width,
