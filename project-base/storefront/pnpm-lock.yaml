@@ -113,9 +113,6 @@ dependencies:
   redis:
     specifier: 4.0.4
     version: 4.0.4
-  smoothscroll-polyfill:
-    specifier: 0.4.4
-    version: 0.4.4
   tailwind-merge:
     specifier: 1.9.1
     version: 1.9.1
@@ -193,9 +190,6 @@ devDependencies:
   '@types/react-transition-group':
     specifier: 4.4.2
     version: 4.4.2
-  '@types/smoothscroll-polyfill':
-    specifier: 0.3.1
-    version: 0.3.1
   '@types/tinycolor2':
     specifier: 1.4.3
     version: 1.4.3
@@ -3354,10 +3348,6 @@ packages:
 
   /@types/semver@7.3.13:
     resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
-    dev: true
-
-  /@types/smoothscroll-polyfill@0.3.1:
-    resolution: {integrity: sha512-+KkHw4y+EyeCtVXET7woHUhIbfWFCflc0E0mZnSV+ZdjPQeHt/9KPEuT7gSW/kFQ8O3EG30PLO++YhChDt8+Ag==}
     dev: true
 
   /@types/symlink-or-copy@1.2.0:
@@ -9197,10 +9187,6 @@ packages:
     resolution: {integrity: sha512-up04hB2hR92PgjpyU3y/eg91yIBILyjVY26NvvciY3EVVPjybkMszMpXQ9QAkcS3I5rtJBDLoTxxg+qvW8c7rw==}
     engines: {node: '>=0.10.0'}
     dev: true
-
-  /smoothscroll-polyfill@0.4.4:
-    resolution: {integrity: sha512-TK5ZA9U5RqCwMpfoMq/l1mrH0JAR7y7KRvOBx0n2869aLxch+gT9GhN3yUfjiw+d/DiF1mKo14+hd62JyMmoBg==}
-    dev: false
 
   /snake-case@2.1.0:
     resolution: {integrity: sha512-FMR5YoPFwOLuh4rRz92dywJjyKYZNLpMn1R5ujVpIYkbA9p01fq8RMg0FkO4M+Yobt4MjHeLTJVm5xFFBHSV2Q==}

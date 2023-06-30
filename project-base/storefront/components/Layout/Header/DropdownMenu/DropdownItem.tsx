@@ -7,7 +7,6 @@ import {
     NavigationSubCategoriesLinkFragmentApi,
 } from 'graphql/generated';
 import { useContext, useEffect, useState } from 'react';
-import * as smoothscroll from 'smoothscroll-polyfill';
 import { twJoin } from 'tailwind-merge';
 import { DropdownItemType } from 'types/dropdown';
 
@@ -36,10 +35,6 @@ export const DropdownItem: FC<DropdownItemProps> = ({
     const scrollToTop = () => {
         window.scroll({ top: 0, left: 0, behavior: 'smooth' });
     };
-
-    useEffect(() => {
-        smoothscroll.polyfill();
-    }, []);
 
     useEffect(() => {
         if (navigationItem !== undefined) {
