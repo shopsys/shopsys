@@ -1,7 +1,7 @@
 on:
     schedule:
         -   cron: '0 3 * * *'
-    workflow_dispatch: 
+    workflow_dispatch:
 name: Rebuild Docker images
 jobs:
     rebuild-php-fpm-images:
@@ -9,7 +9,7 @@ jobs:
         runs-on: ubuntu-20.04
         strategy:
             matrix:
-                branches: ['master', '9.1', '10.0', '11.0', '12.0']
+                branches: ['master', '11.0', '12.0', '13.0']
             fail-fast: false
         permissions:
             contents: read
@@ -36,7 +36,7 @@ jobs:
         runs-on: ubuntu-20.04
         strategy:
             matrix:
-                branches: ['master', '9.1', '10.0', '11.0', '12.0']
+                branches: ['master', '11.0', '12.0', '13.0']
             fail-fast: false
         permissions:
             contents: read
