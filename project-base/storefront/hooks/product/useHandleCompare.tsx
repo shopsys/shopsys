@@ -9,19 +9,10 @@ import {
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
-export const useHandleCompare = (
-    productUuid: string,
-): {
-    isProductInComparison: boolean;
-    handleProductInComparison: () => void;
-    handleRemoveAllFromComparison: () => void;
-    isPopupCompareOpen: boolean;
-    setIsPopupCompareOpen: Dispatch<SetStateAction<boolean>>;
-    getComparisonProducts: () => ComparedProductFragmentApi[];
-} => {
+export const useHandleCompare = (productUuid: string) => {
     const t = useTypedTranslationFunction();
     const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
     const { isUserLoggedIn } = useCurrentUserData();
@@ -36,17 +27,15 @@ export const useHandleCompare = (
         requestPolicy: 'network-only',
     });
 
-    const comparedProducts = useMemo(() => {
-        return result.data?.comparison?.products ?? [];
-    }, [result.data?.comparison?.products]);
+    const comparisonProducts: ComparedProductFragmentApi[] = result.data?.comparison?.products ?? [];
 
     useEffect(() => {
-        if (comparedProducts.find((product) => product.uuid === productUuid) !== undefined) {
+        if (comparisonProducts.find((product) => product.uuid === productUuid) !== undefined) {
             setIsProductInComparison(true);
         } else {
             setIsProductInComparison(false);
         }
-    }, [productUuid, comparedProducts]);
+    }, [productUuid]);
 
     const handleAddToComparison = async () => {
         const addProductToComparisonResult = await addProductToComparison({
@@ -117,16 +106,12 @@ export const useHandleCompare = (
         }
     };
 
-    const getComparisonProducts = (): ComparedProductFragmentApi[] => {
-        return comparedProducts;
-    };
-
     return {
         isProductInComparison,
+        comparisonProducts,
+        isPopupCompareOpen,
         handleProductInComparison,
         handleRemoveAllFromComparison,
-        isPopupCompareOpen,
         setIsPopupCompareOpen,
-        getComparisonProducts,
     };
 };

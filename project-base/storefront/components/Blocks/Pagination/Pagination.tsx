@@ -3,7 +3,7 @@ import { useMediaMin } from 'hooks/ui/useMediaMin';
 import { usePagination } from 'hooks/ui/usePagination';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
-import { Fragment, MouseEventHandler, RefObject } from 'react';
+import { Fragment, MouseEventHandler, RefObject, forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type PaginationProps = {
@@ -82,36 +82,34 @@ type PaginationButtonProps = {
     onClick?: () => void;
 };
 
-const PaginationButton: FC<PaginationButtonProps> = ({
-    children,
-    dataTestId,
-    isActive,
-    isDotButton,
-    href,
-    onClick,
-}) => {
-    const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
-        e.preventDefault();
+const PaginationButton: FC<PaginationButtonProps> = forwardRef(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ({ children, dataTestId, isActive, isDotButton, href, onClick }, _) => {
+        const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
+            e.preventDefault();
 
-        if (onClick) {
-            onClick();
-        }
-    };
+            if (onClick) {
+                onClick();
+            }
+        };
 
-    const button = (
-        <a
-            className={twJoin(
-                'flex h-11 w-11 items-center justify-center rounded border border-white bg-white font-bold no-underline hover:no-underline',
-                isActive && 'border-none bg-orange hover:cursor-default',
-                isDotButton && 'hover:cursor-default',
-            )}
-            href={href}
-            onClick={handleOnClick}
-            data-testid={dataTestId}
-        >
-            {children}
-        </a>
-    );
+        const button = (
+            <a
+                className={twJoin(
+                    'flex h-11 w-11 items-center justify-center rounded border border-white bg-white font-bold no-underline hover:no-underline',
+                    isActive && 'border-none bg-orange hover:cursor-default',
+                    isDotButton && 'hover:cursor-default',
+                )}
+                href={href}
+                onClick={handleOnClick}
+                data-testid={dataTestId}
+            >
+                {children}
+            </a>
+        );
 
-    return button;
-};
+        return button;
+    },
+);
+
+PaginationButton.displayName = 'PaginationButton';
