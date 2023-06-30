@@ -1,5 +1,6 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { getQueryWithoutSlugTypeParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
+import { getFilteredQueries } from 'helpers/queryParams/queryHandlers';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
@@ -19,7 +20,7 @@ export type UrlQueries = {
 };
 
 const handleUpdateFilter = (selectedUuid: string | undefined, items: string[] | undefined): string[] | undefined => {
-    if (selectedUuid === undefined) {
+    if (!selectedUuid) {
         return undefined;
     }
 
@@ -48,6 +49,10 @@ export const useQueryParams = () => {
 
     const updateSort = (sorting: ProductOrderingModeEnumApi | undefined) => {
         pushQuerySort(sorting);
+    };
+
+    const updatePagination = (page: number | undefined) => {
+        pushQueryPage(page);
     };
 
     const updateFilterInStock = (value: FilterOptionsUrlQueryType['onlyInStock']) => {
@@ -151,6 +156,15 @@ export const useQueryParams = () => {
         pushQueries(newQuery);
     };
 
+    const pushQueryPage = (page?: number) => {
+        const newQuery: UrlQueries = {
+            ...query,
+            [PAGE_QUERY_PARAMETER_NAME]: page !== undefined && page > 1 ? page.toString() : undefined,
+        } as const;
+
+        pushQueries(newQuery, true);
+    };
+
     const pushQueryFilter = (newFilter?: FilterQueries) => {
         const isWithFilterParams =
             !!newFilter &&
@@ -170,18 +184,14 @@ export const useQueryParams = () => {
         pushQueries(newQuery);
     };
 
-    const pushQueries = (query: UrlQueries) => {
+    const pushQueries = (queries: UrlQueries, isPush?: boolean) => {
         // remove queries which are not set or removed
-        (Object.keys(query) as Array<keyof typeof query>).forEach((key) => {
-            if (typeof query[key] === 'undefined') {
-                delete query[key];
-            }
-        });
+        const filteredQueries = getFilteredQueries(queries);
 
-        router.replace(
+        router[isPush ? 'push' : 'replace'](
             {
                 pathname: router.asPath.split('?')[0],
-                query,
+                query: filteredQueries,
             },
             undefined,
             { shallow: true },
@@ -194,6 +204,7 @@ export const useQueryParams = () => {
         filter,
         isWithFilter,
         updateSort,
+        updatePagination,
         updateFilterInStock,
         updateFilterPrices,
         updateFilterPriceMaximum,

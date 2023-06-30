@@ -75,11 +75,13 @@ const rewriteDynamicPages = (pageType: FriendlyPageTypesValue, rewriteUrl: strin
         (key) => FriendlyPagesTypes[key] === pageType,
     );
 
-    if (pageTypeKey) {
-        return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`, rewriteUrl));
-    }
+    const host = new URL(rewriteUrl).origin;
+    const newUrl = new URL(
+        pageTypeKey ? `${FriendlyPagesDestinations[pageTypeKey]}${queryParams}` : ERROR_PAGE_ROUTE,
+        host,
+    );
 
-    return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, rewriteUrl));
+    return NextResponse.rewrite(newUrl);
 };
 
 const getHostFromRequest = (request: NextRequest): string => {
