@@ -8,10 +8,10 @@ jobs:
         name: Cancel review after branch merge
         runs-on: [self-hosted, linux, review-stage]
         steps:
-            -   name: GIT checkout branch - master
+            -   name: GIT checkout branch - ${{ env.MAIN_BRANCH_NAME }}
                 uses: actions/checkout@v3
                 with:
-                    ref: 'refs/heads/master'
+                    ref: 'refs/heads/${{ env.MAIN_BRANCH_NAME }}'
                     path: cancel-review-after-branch-merge
             -   name: Extract branch name to ENV variable BRANCH_NAME
                 run: echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV

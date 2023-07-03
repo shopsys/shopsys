@@ -8,14 +8,14 @@ on:
 name: Manually cancel review
 jobs:
     cancel-review:
-        if:  ${{ inputs.branch_name }} != 'master'
+        if:  ${{ inputs.branch_name }} != ${{ env.MAIN_BRANCH_NAME }}
         name: Cancel review
         runs-on: [self-hosted, linux, review-stage]
         steps:
-            -   name: GIT checkout branch - master
+            -   name: GIT checkout branch - ${{ env.MAIN_BRANCH_NAME }}
                 uses: actions/checkout@v3
                 with:
-                    ref: 'refs/heads/master'
+                    ref: 'refs/heads/${{ env.MAIN_BRANCH_NAME }}'
                     path: manually-cancel-review
             -   name: Cancel review
                 env:

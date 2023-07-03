@@ -117,7 +117,7 @@ jobs:
     build-php-fpm-image:
         if: |
             github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' || 
-            github.event.ref == 'refs/heads/master'
+            github.ref_protected == true
         name: Build PHP-FPM image
         runs-on: ubuntu-22.04
         needs: variables
@@ -154,7 +154,7 @@ jobs:
     build-storefront-image:
         if: |
             github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' || 
-            github.event.ref == 'refs/heads/master'
+            github.ref_protected == true
         name: Build storefront image
         runs-on: ubuntu-22.04
         needs: variables
@@ -180,7 +180,7 @@ jobs:
         if: |
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
-                github.event.ref == 'refs/heads/master'
+                github.ref_protected == true
             ) && 
             needs.variables.outputs.DOCKER_STOREFRONT_CI_IMAGE_EXISTS == 0
         name: Build storefront CI image
@@ -208,7 +208,7 @@ jobs:
         if: |
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
-                github.event.ref == 'refs/heads/master'
+                github.ref_protected == true
             ) && 
             needs.variables.outputs.DOCKER_ELASTICSEARCH_IMAGE_EXISTS == 0
         name: Build Elasticsearch image
@@ -239,7 +239,7 @@ jobs:
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
-                github.event.ref == 'refs/heads/master'
+                github.ref_protected == true
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped')
         runs-on: ubuntu-22.04
@@ -263,7 +263,7 @@ jobs:
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
-                github.event.ref == 'refs/heads/master'
+                github.ref_protected == true
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-storefront-ci-image.result == 'success' || needs.build-storefront-ci-image.result == 'skipped')
@@ -314,7 +314,7 @@ jobs:
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
-                github.event.ref == 'refs/heads/master'
+                github.ref_protected == true
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
@@ -353,7 +353,7 @@ jobs:
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
-                github.event.ref == 'refs/heads/master'
+                github.ref_protected == true
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
@@ -393,7 +393,7 @@ jobs:
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
-                github.event.ref == 'refs/heads/master'
+                github.ref_protected == true
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
@@ -443,7 +443,7 @@ jobs:
     build-fork-docker-images:
         if: |
             github.event.pull_request.head.repo.full_name != 'shopsys/shopsys' && 
-            github.event.ref != 'refs/heads/master'
+            github.ref_protected != true
         name: Build application and run standards checks and tests
         runs-on: ubuntu-22.04
         needs: variables
@@ -570,7 +570,7 @@ jobs:
             always() && !failure() && !cancelled() &&
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
-                github.event.ref == 'refs/heads/master'
+                github.ref_protected == true
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
