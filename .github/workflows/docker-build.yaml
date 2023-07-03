@@ -474,7 +474,6 @@ jobs:
                 run: "sed -i \"s#storefront-image#${{ needs.variables.outputs.DOCKER_STOREFRONT_CI_REPOSITORY_TAG }}#\" ./docker-compose.yml"
             -   name: Build PHP-FPM part of application
                 run: |
-                    cat docker-compose.yml
                     docker compose pull --parallel webserver postgres redis selenium-server php-fpm elasticsearch storefront
                     docker compose up -d --force-recreate
                     docker cp ./ shopsys-framework-php-fpm:/var/www/html
