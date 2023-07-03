@@ -467,7 +467,7 @@ jobs:
             -   name: Copy and rename docker-compose.github-actions.yml.dist to docker-compose.yml
                 run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
             -   name: Update docker-compose.yml file with right PHP-FPM image
-                run: "sed -i \"s#php-fpm-image#${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}#\" ./docker-compose.yml"
+                run: "sed -i \"s#php-fpm-image#${{ needs.variables.outputs.DOCKER_PHP_FPM_BASE_REPOSITORY_TAG }}#\" ./docker-compose.yml"
             -   name: Update docker-compose.yml file with right Elasticsearch image
                 run: "sed -i \"s#elasticsearch-image#${{ needs.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}#\" ./docker-compose.yml"
             -   name: Update docker-compose.yml file with right Storefront image
