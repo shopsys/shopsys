@@ -14,6 +14,7 @@ use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Flag\Flag;
+use App\Model\Product\Parameter\ParameterFacade;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -40,6 +41,7 @@ class CategoryQuery extends BaseCategoryQuery
      * @param \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $appFriendlyUrlFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -48,6 +50,7 @@ class CategoryQuery extends BaseCategoryQuery
         private readonly ProductFilterFacade $productFilterFacade,
         private readonly AppFriendlyUrlFacade $appFriendlyUrlFacade,
         private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        private readonly ParameterFacade $parameterFacade,
     ) {
         parent::__construct($categoryFacade, $domain, $friendlyUrlFacade);
     }
@@ -182,14 +185,23 @@ class CategoryQuery extends BaseCategoryQuery
     private function isFilterSet(ResolveInfo $resolveInfo): bool
     {
         $variableValues = $resolveInfo->variableValues;
-        $onlyInStock = $variableValues['filter']['onlyInStock'] ?? false;
-        $minimalPrice = $variableValues['filter']['minimalPrice'] ?? null;
-        $maximalPrice = $variableValues['filter']['maximalPrice'] ?? null;
-        $parameters = $variableValues['filter']['parameters'] ?? [];
-        $flags = $variableValues['filter']['flags'] ?? [];
-        $brands = $variableValues['filter']['brands'] ?? [];
+        $parametersVariable = $variableValues['filter']['parameters'] ?? [];
 
-        return $onlyInStock || $minimalPrice !== null || $maximalPrice !== null || count($parameters) > 0 || count($flags) > 0 || count($brands) > 0;
+        $parameterUuids = array_map(
+            static fn (array $parameterVariable) => $parameterVariable['parameter'],
+            $parametersVariable,
+        );
+        $parameters = $this->parameterFacade->getParametersByUuids($parameterUuids);
+
+        foreach ($parameters as $parameter) {
+            if (!$parameter->isSlider()) {
+                return true;
+            }
+        }
+
+        $flags = $variableValues['filter']['flags'] ?? [];
+
+        return count($flags) > 0;
     }
 
     /**
