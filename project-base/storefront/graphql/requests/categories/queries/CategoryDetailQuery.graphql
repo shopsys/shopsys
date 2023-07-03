@@ -1,0 +1,5 @@
+query CategoryDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+    category(urlSlug: $urlSlug) {
+        ...CategoryDetailFragment
+    }
+}

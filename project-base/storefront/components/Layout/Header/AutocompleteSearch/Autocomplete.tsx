@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
@@ -13,7 +14,6 @@ import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -113,7 +113,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                     key={product.slug}
                                                     data-testid={TEST_IDENTIFIER + '-products-' + index}
                                                 >
-                                                    <NextLink href={product.slug} passHref>
+                                                    <ExtendedNextLink href={product.slug} type="product" passHref>
                                                         <a
                                                             className="flex cursor-pointer items-center text-dark no-underline outline-none lg:flex-col lg:items-start"
                                                             onClick={onProductDetailRedirectHandler(
@@ -136,7 +136,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                                 {formatPrice(product.price.priceWithVat)}
                                                             </span>
                                                         </a>
-                                                    </NextLink>
+                                                    </ExtendedNextLink>
                                                 </li>
                                             ),
                                     )}
@@ -153,7 +153,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                         (brand, index) =>
                                             index < AUTOCOMPLETE_BRAND_LIMIT && (
                                                 <li key={brand.slug} data-testid={TEST_IDENTIFIER + '-brands-' + index}>
-                                                    <NextLink href={brand.slug} passHref>
+                                                    <ExtendedNextLink href={brand.slug} type="brand" passHref>
                                                         <SearchResultLink
                                                             onClick={() =>
                                                                 onGtmAutocompleteResultClickEventHandler(
@@ -165,7 +165,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                         >
                                                             {brand.name}
                                                         </SearchResultLink>
-                                                    </NextLink>
+                                                    </ExtendedNextLink>
                                                 </li>
                                             ),
                                     )}
@@ -185,7 +185,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                     key={category.slug}
                                                     data-testid={TEST_IDENTIFIER + '-categories-' + index}
                                                 >
-                                                    <NextLink href={category.slug} passHref>
+                                                    <ExtendedNextLink href={category.slug} type="category" passHref>
                                                         <SearchResultLink
                                                             onClick={() =>
                                                                 onGtmAutocompleteResultClickEventHandler(
@@ -197,7 +197,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                         >
                                                             {category.name}
                                                         </SearchResultLink>
-                                                    </NextLink>
+                                                    </ExtendedNextLink>
                                                 </li>
                                             ),
                                     )}
@@ -217,7 +217,15 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                     key={article.slug}
                                                     data-testid={TEST_IDENTIFIER + '-articles-' + index}
                                                 >
-                                                    <NextLink href={article.slug} passHref>
+                                                    <ExtendedNextLink
+                                                        href={article.slug}
+                                                        type={
+                                                            article.__typename === 'ArticleSite'
+                                                                ? 'article'
+                                                                : 'blogArticle'
+                                                        }
+                                                        passHref
+                                                    >
                                                         <SearchResultLink
                                                             onClick={() =>
                                                                 onGtmAutocompleteResultClickEventHandler(
@@ -229,7 +237,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                         >
                                                             {article.name}
                                                         </SearchResultLink>
-                                                    </NextLink>
+                                                    </ExtendedNextLink>
                                                 </li>
                                             ),
                                     )}

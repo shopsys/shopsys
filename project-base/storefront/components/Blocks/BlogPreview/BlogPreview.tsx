@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Main } from './Main';
 import { Side } from './Side';
 import { SideSlider } from './SideSlider';
@@ -10,7 +11,6 @@ import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
-import NextLink from 'next/link';
 import { useMemo, useState } from 'react';
 
 export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
@@ -50,7 +50,7 @@ export const BlogPreview: FC = () => {
                     {t('Shopsys magazine')}
                 </h2>
                 {blogUrl !== undefined && (
-                    <NextLink href={blogUrl} passHref>
+                    <ExtendedNextLink type="blogCategory" href={blogUrl} passHref>
                         <a className="mb-2 flex items-center font-bold uppercase text-creamWhite no-underline hover:text-creamWhite hover:no-underline">
                             {t('View all')}
                             <Icon
@@ -59,7 +59,7 @@ export const BlogPreview: FC = () => {
                                 className="relative top-0 ml-2 text-xs text-creamWhite"
                             />
                         </a>
-                    </NextLink>
+                    </ExtendedNextLink>
                 )}
             </div>
 

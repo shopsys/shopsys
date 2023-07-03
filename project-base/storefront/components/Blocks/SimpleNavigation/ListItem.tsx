@@ -1,20 +1,22 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
-import NextLink from 'next/link';
+import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 import { ListedItemPropType } from 'types/simpleNavigation';
 
 type ListItemProps = {
     listedItem: ListedItemPropType;
     imageType?: string;
+    linkType: FriendlyPagesTypesKeys | 'static';
 };
 
 const TEST_IDENTIFIER = 'blocks-simplenavigation-listitem';
 
-export const ListItem: FC<ListItemProps> = ({ listedItem, imageType }) => {
+export const ListItem: FC<ListItemProps> = ({ listedItem, imageType, linkType }) => {
     const itemImage = 'images' in listedItem ? getFirstImageOrNull(listedItem.images) : null;
 
     return (
-        <NextLink href={listedItem.slug} passHref>
+        <ExtendedNextLink type={linkType} href={listedItem.slug} passHref>
             <a
                 className="flex h-full w-full cursor-pointer flex-col items-center rounded-xl bg-greyVeryLight px-2 py-4 no-underline transition hover:bg-whitesmoke hover:no-underline lg:flex-row lg:px-3 lg:py-2"
                 data-testid={TEST_IDENTIFIER}
@@ -36,6 +38,6 @@ export const ListItem: FC<ListItemProps> = ({ listedItem, imageType }) => {
                     )}
                 </div>
             </a>
-        </NextLink>
+        </ExtendedNextLink>
     );
 };

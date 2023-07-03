@@ -4,7 +4,7 @@ import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
-import React, { FC } from 'react';
+import React from 'react';
 import { GtmPageType } from 'types/gtm/enums';
 
 const ContactPage: FC<ServerSidePropsType> = () => {

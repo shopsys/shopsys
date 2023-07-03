@@ -7,14 +7,9 @@ export async function getLocalTranslates(locale, namespace) {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getFreshTranslates(locale, namespace) {
-    const ENDPOINT_URL = process.env.INTERNAL_GRAPHQL_ENDPOINT.substring(
-        0,
-        process.env.INTERNAL_GRAPHQL_ENDPOINT.indexOf('/graphql'),
-    );
-
     const [localTranslatesResponse, userTranslatesResponse] = await Promise.all([
-        fetch(`${ENDPOINT_URL}/locales/${locale}/${namespace}.json`),
-        fetch(`${ENDPOINT_URL}/content/locales/${locale}/${namespace}.json`),
+        fetch(`${process.env.INTERNAL_ENDPOINT}/locales/${locale}/${namespace}.json`),
+        fetch(`${process.env.INTERNAL_ENDPOINT}/content/locales/${locale}/${namespace}.json`),
     ]);
 
     const localTranslates = localTranslatesResponse.status === 200 ? await localTranslatesResponse.json() : {};
@@ -26,7 +21,7 @@ export async function getFreshTranslates(locale, namespace) {
 
 function fillEmptyTranslatesWithKeys(translates) {
     for (let key in translates) {
-        if (translates[key] === undefined || translates[key] === null || translates[key] === '') {
+        if (!translates[key]) {
             translates[key] = key;
         }
     }

@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ProductAction } from './ProductAction';
 import { ProductAvailableStoresCount } from './ProductAvailableStoresCount';
 import { ProductExposedStoresCount } from './ProductExposedStoresCount';
@@ -7,7 +8,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'helpers/gtm/eventHandlers';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import NextLink from 'next/link';
+
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 
 type SliderProductItemProps = {
@@ -33,7 +34,7 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({
             data-testid={TEST_IDENTIFIER + product.catalogNumber}
         >
             <div className="group relative flex h-full flex-col rounded-xl text-left hover:shadow-lg">
-                <NextLink href={product.slug} passHref>
+                <ExtendedNextLink passHref href={product.slug} type="product">
                     <a
                         className="relative flex h-full flex-col no-underline hover:no-underline"
                         onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
@@ -73,7 +74,7 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({
                             </div>
                         </div>
                     </a>
-                </NextLink>
+                </ExtendedNextLink>
                 <ProductAction
                     product={product}
                     gtmProductListName={gtmProductListName}

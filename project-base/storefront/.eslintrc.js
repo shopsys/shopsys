@@ -78,10 +78,21 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-unnecessary-condition': 'error',
         'no-restricted-imports': [
-            'error',
-            {
-                patterns: ['../.*'],
+            'error', {
+                "name": "tailwind-merge",
+                "importNames": ["twMerge"],
+                "message": "Please use twMergeCustom from utils/twMerge instead."
             },
+            {
+                "name": "react",
+                "importNames": ["FC"],
+                "message": "Please remove this import and use global FC interface"
+            },
+            {
+                "name": "next/link",
+                "message": "Please use ExtendedNextLink instead"
+            },
+
         ],
         'react-hooks/rules-of-hooks': 'error',
         'react-hooks/exhaustive-deps': 'error',

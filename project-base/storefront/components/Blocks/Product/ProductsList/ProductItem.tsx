@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ProductCompareButton } from '../ButtonsAction/ProductCompareButton';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
@@ -8,7 +9,6 @@ import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'helpers/gtm/eventHandlers';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import NextLink from 'next/link';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 
 type ProductItemProps = {
@@ -28,7 +28,7 @@ export const ProductItem: FC<ProductItemProps> = ({ product, listIndex, gtmProdu
             className="relative flex flex-col justify-between rounded-t-xl border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl vl:border-b"
             data-testid={getDataTestId(product.catalogNumber)}
         >
-            <NextLink href={product.slug} passHref>
+            <ExtendedNextLink type="product" href={product.slug} passHref>
                 <a
                     className="relative flex h-full flex-col no-underline hover:no-underline"
                     onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
@@ -62,7 +62,7 @@ export const ProductItem: FC<ProductItemProps> = ({ product, listIndex, gtmProdu
                         </div>
                     </div>
                 </a>
-            </NextLink>
+            </ExtendedNextLink>
             <ProductCompareButton
                 className="mb-2 justify-end"
                 productUuid={product.uuid}

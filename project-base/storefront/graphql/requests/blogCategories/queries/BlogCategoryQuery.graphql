@@ -1,0 +1,5 @@
+query BlogCategoryQuery($urlSlug: String) {
+    blogCategory(urlSlug: $urlSlug) {
+        ...BlogCategoryDetailFragment
+    }
+}

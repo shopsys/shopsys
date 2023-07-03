@@ -6,7 +6,6 @@ import { UserText } from 'components/Helpers/UserText/UserText';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BrandDetailFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
-import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/useRemoveSortFromUrlIfDefault';
 import { useRef } from 'react';
 
 type BrandDetailContentProps = {
@@ -17,7 +16,6 @@ const TEST_IDENTIFIER = 'pages-branddetail-';
 
 export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
-    useRemoveSortFromUrlIfDefault(brand.products.orderingMode, brand.products.defaultOrderingMode);
 
     const brandImage = getFirstImageOrNull(brand.images);
 

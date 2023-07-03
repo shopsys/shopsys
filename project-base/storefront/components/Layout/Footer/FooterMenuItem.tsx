@@ -1,6 +1,6 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleNotBlogArticleFragmentApi } from 'graphql/generated';
-import NextLink from 'next/link';
 
 type FooterMenuItemProps = {
     title: string;
@@ -20,7 +20,11 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
         <ul className="pb-5 lg:pb-0">
             {items.map((item) => (
                 <li className="mb-1 last:mb-0 lg:mb-4" key={item.uuid}>
-                    <NextLink href={item.__typename === 'ArticleSite' ? item.slug : item.url} passHref>
+                    <ExtendedNextLink
+                        href={item.__typename === 'ArticleSite' ? item.slug : item.url}
+                        type="static"
+                        passHref
+                    >
                         <a
                             className="block text-sm text-greyLight no-underline hover:text-greyLight"
                             target={item.external ? '_blank' : undefined}
@@ -28,7 +32,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
                         >
                             {item.name}
                         </a>
-                    </NextLink>
+                    </ExtendedNextLink>
                 </li>
             ))}
         </ul>

@@ -1,0 +1,15 @@
+query ProductDetailQuery($urlSlug: String) {
+    product(urlSlug: $urlSlug) {
+        ... on Product {
+            ...ProductDetailFragment
+        }
+        ... on MainVariant {
+            ...MainVariantDetailFragment
+        }
+        ... on Variant {
+            mainVariant {
+                slug
+            }
+        }
+    }
+}

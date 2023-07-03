@@ -1,7 +1,7 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import NextLink from 'next/link';
 import { twJoin } from 'tailwind-merge';
 
 type OrderStepsProps = {
@@ -73,5 +73,11 @@ const OrderStepsListItemLink: FC<OrderStepsListItemLinkProps> = ({ children, isA
         </span>
     );
 
-    return href !== undefined ? <NextLink href={href}>{Component}</NextLink> : Component;
+    return href ? (
+        <ExtendedNextLink href={href} passHref type="static">
+            {Component}
+        </ExtendedNextLink>
+    ) : (
+        Component
+    );
 };

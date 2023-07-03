@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
 import { TableGrid } from 'components/Basic/TableGrid/TableGrid';
@@ -11,7 +12,6 @@ import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import NextLink from 'next/link';
 import { useRef } from 'react';
 
 type OrdersContentProps = {
@@ -62,14 +62,15 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                                     return (
                                         <tr key={index} data-testid={TEST_IDENTIFIER + index}>
                                             <td data-testid={TEST_IDENTIFIER + 'number'}>
-                                                <NextLink
+                                                <ExtendedNextLink
                                                     href={{
                                                         pathname: customerOrderDetailUrl,
                                                         query: { orderNumber: order.number },
                                                     }}
+                                                    type="static"
                                                 >
                                                     {order.number}
-                                                </NextLink>
+                                                </ExtendedNextLink>
                                             </td>
                                             <td className="text-right" data-testid={TEST_IDENTIFIER + 'creation-date'}>
                                                 {formatDateAndTime(order.creationDate)}
@@ -94,14 +95,15 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                                                 {formatPrice(order.totalPrice.priceWithVat)}
                                             </td>
                                             <td data-testid={TEST_IDENTIFIER + 'detail-link'}>
-                                                <NextLink
+                                                <ExtendedNextLink
                                                     href={{
                                                         pathname: customerOrderDetailUrl,
                                                         query: { orderNumber: order.number },
                                                     }}
+                                                    type="static"
                                                 >
                                                     {t('Detail')}
-                                                </NextLink>
+                                                </ExtendedNextLink>
                                             </td>
                                         </tr>
                                     );

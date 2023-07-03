@@ -1,8 +1,9 @@
 import { Button } from 'components/Forms/Button/Button';
-import NextLink from 'next/link';
+
 import { AnchorHTMLAttributes } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { ExtendedNextLink } from '../ExtendedNextLink/ExtendedNextLink';
+import { twMergeCustom } from 'utils/twMerge';
 
 type NativePropsAnchor = ExtractNativePropsFromDefault<
     AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -22,7 +23,7 @@ const getDataTestId = (isExternal?: boolean, isButton?: boolean) =>
 export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel, target, className }) => {
     const content = (
         <a
-            className={twMerge(
+            className={twMergeCustom(
                 'inline-flex cursor-pointer items-center text-greyDark outline-none hover:text-primary',
                 isButton ? 'no-underline hover:no-underline' : 'underline hover:underline',
             )}
@@ -40,8 +41,8 @@ export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel,
     }
 
     return (
-        <NextLink href={href} passHref>
+        <ExtendedNextLink href={href} passHref type="static">
             {content}
-        </NextLink>
+        </ExtendedNextLink>
     );
 };

@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
@@ -15,7 +16,6 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Translate } from 'next-translate';
 import Image from 'next/image';
-import NextLink from 'next/link';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/zustand/usePersistStore';
@@ -98,16 +98,16 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                             <div className="flex items-center gap-1 whitespace-nowrap rounded-xl border-primary py-2 px-2 text-sm text-primary lg:mt-5 lg:border-2 lg:px-3 lg:py-3">
                                 <Icon iconType="icon" icon="Warning" className="hidden h-5 w-9 text-red sm:block" />
                                 <div className="hidden flex-grow lg:block">{t('Lost your password?')}</div>
-                                <NextLink href={resetPasswordUrl} passHref>
+                                <ExtendedNextLink href={resetPasswordUrl} passHref type="static">
                                     <div className="hidden cursor-pointer text-primary underline hover:no-underline lg:block">
                                         {t('Renew it')}
                                     </div>
-                                </NextLink>
-                                <NextLink href={resetPasswordUrl} passHref>
+                                </ExtendedNextLink>
+                                <ExtendedNextLink href={resetPasswordUrl} passHref type="static">
                                     <div className="block text-sm text-primary underline hover:no-underline lg:hidden">
                                         {t('Lost your password?')}
                                     </div>
-                                </NextLink>
+                                </ExtendedNextLink>
                             </div>
                         </div>
                     </Form>

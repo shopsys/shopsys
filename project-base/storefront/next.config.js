@@ -19,7 +19,7 @@ const moduleExports = nextTranslate({
         hideSourceMaps: true,
     },
     serverRuntimeConfig: {
-        internalGraphqlEndpoint: process.env.INTERNAL_GRAPHQL_ENDPOINT,
+        internalGraphqlEndpoint: `${process.env.INTERNAL_ENDPOINT}graphql/`,
     },
     publicRuntimeConfig: {
         googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
@@ -56,7 +56,7 @@ const moduleExports = nextTranslate({
                 gtmId: process.env.GTM_ID,
             },
             {
-                publicGraphqlEndpoint: process.env.INTERNAL_GRAPHQL_ENDPOINT,
+                publicGraphqlEndpoint: `${process.env.INTERNAL_ENDPOINT}graphql/`,
                 url: 'http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/',
                 defaultLocale: 'en',
                 currencyCode: 'EUR',

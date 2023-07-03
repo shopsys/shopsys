@@ -19,7 +19,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
     return (
         <div className="flex flex-col rounded-xl bg-primary p-7">
             <Heading type="h2">{t('Article categories')}</Heading>
-            {blogCategoryItems !== undefined &&
+            {!!blogCategoryItems &&
                 blogCategoryItems.map((blogCategory, index) => {
                     const isActive = activeItem === blogCategory.uuid;
 
@@ -33,7 +33,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                                 <BlogSignpostIcon isActive={isActive} />
                                 {blogCategory.name}
                             </BlogSignpostItem>
-                            {blogCategory.children !== undefined && blogCategory.children.length > 0 && (
+                            {!!blogCategory.children?.length && (
                                 <Children blogCategory={blogCategory} activeItem={activeItem} itemLevel={1} />
                             )}
                         </Fragment>

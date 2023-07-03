@@ -2,8 +2,8 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value', never>;
 
@@ -40,7 +40,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 type="search"
                 onKeyUp={enterKeyPressHandler}
                 data-testid={dataTestId}
-                className={twMerge(
+                className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
                     'peer mb-0 h-12 w-full rounded-xl border-2 border-white bg-white pr-11 pl-4 text-dark placeholder:text-grey placeholder:opacity-100 focus:outline-none [&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner [&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none [&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none',
                     className,

@@ -1,20 +1,13 @@
-/* eslint-disable no-param-reassign */
 import { logException } from '../errors/logException';
 import { createClient } from '../urql/createClient';
 import { getUnauthenticatedRedirectSSR } from './getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from './isUserLoggedInSSR';
-import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
-import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
     ArticlePlacementTypeEnumApi,
     ArticlesQueryDocumentApi,
-    BlogCategoryArticlesDocumentApi,
-    BrandProductsQueryDocumentApi,
-    CategoryProductsQueryDocumentApi,
     CurrentCustomerUserQueryDocumentApi,
-    FlagProductsQueryDocumentApi,
     NavigationQueryDocumentApi,
     NotificationBarsDocumentApi,
     ProductsByCatnumsDocumentApi,
@@ -22,20 +15,9 @@ import {
     SettingsQueryDocumentApi,
 } from 'graphql/generated';
 import { DomainConfigType, getDomainConfig } from 'helpers/domain/domain';
-import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
-import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import { getServerSideInternationalizedStaticUrl } from 'helpers/localization/getInternationalizedStaticUrls';
-import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
-import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import {
-    FILTER_QUERY_PARAMETER_NAME,
-    PAGE_QUERY_PARAMETER_NAME,
-    SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParams/queryParamNames';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
-import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { SSRData, SSRExchange } from 'next-urql';
@@ -70,9 +52,9 @@ export const initServerSideProps = async ({
         const domainConfig = getDomainConfig(context.req.headers.host!);
         const currentSsrCache = ssrCache ?? ssrExchange({ isClient: false });
         const currentClient =
-            client ?? (await createClient(context, domainConfig.publicGraphqlEndpoint, currentSsrCache, redisClient));
+            client ?? createClient(context, domainConfig.publicGraphqlEndpoint, currentSsrCache, redisClient);
 
-        if (currentClient !== null) {
+        if (currentClient) {
             prefetchedQueries.push({ query: NotificationBarsDocumentApi });
             prefetchedQueries.push({ query: NavigationQueryDocumentApi });
             prefetchedQueries.push({
@@ -93,7 +75,7 @@ export const initServerSideProps = async ({
 
             const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);
 
-            if (seoPageSlug !== null) {
+            if (seoPageSlug) {
                 prefetchedQueries.push({
                     query: SeoPageQueryDocumentApi,
                     variables: {
@@ -107,60 +89,25 @@ export const initServerSideProps = async ({
                     currentClient.query(queryObject.query, queryObject.variables).toPromise(),
                 ),
             );
-            const slugResult = resolvedQueries.find((query) => query.data?.slug?.slug !== undefined);
+
+            const slugResult = resolvedQueries.find((query) => !!query.data?.slug?.slug);
             const parsedSlug = slugResult?.data.slug.slug;
+
             const { trimmedUrlWithoutQueryParams, queryParams } = getServerSideInternationalizedStaticUrl(
                 context,
                 domainConfig.url,
             );
 
-            const entityWithProductsResult = resolvedQueries.find((query) =>
-                ['Category', 'Brand', 'Flag', 'BlogCategory'].includes(query.data?.slug?.__typename),
-            );
-
-            if (entityWithProductsResult) {
-                let document;
-
-                if (entityWithProductsResult.data.slug.__typename === 'Category') {
-                    document = CategoryProductsQueryDocumentApi;
-                } else if (entityWithProductsResult.data.slug.__typename === 'Brand') {
-                    document = BrandProductsQueryDocumentApi;
-                } else if (entityWithProductsResult.data.slug.__typename === 'Flag') {
-                    document = FlagProductsQueryDocumentApi;
-                } else if (entityWithProductsResult.data.slug.__typename === 'BlogCategory') {
-                    document = BlogCategoryArticlesDocumentApi;
-                }
-
-                const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
-                const orderingMode = getProductListSort(
-                    getStringFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
-                );
-                const filter = getFilterOptions(
-                    parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]),
-                );
-
-                if (document !== undefined) {
-                    await currentClient
-                        .query(document, {
-                            endCursor: getEndCursor(page),
-                            orderingMode,
-                            filter: mapParametersFilter(filter),
-                            uuid: entityWithProductsResult.data.slug.uuid,
-                            pageSize: DEFAULT_PAGE_SIZE,
-                        })
-                        .toPromise();
-                }
-            }
-
             const articleWithGrapesJsResult = resolvedQueries.find((query) =>
                 ['BlogArticle', 'Article'].includes(query.data?.slug?.__typename),
             );
+
             if (articleWithGrapesJsResult) {
                 const parsedCatnums = parseCatnums(articleWithGrapesJsResult.data.slug.text);
                 await currentClient.query(ProductsByCatnumsDocumentApi, { catnums: parsedCatnums }).toPromise();
             }
 
-            if (parsedSlug !== undefined && parsedSlug !== trimmedUrlWithoutQueryParams) {
+            if (parsedSlug && parsedSlug !== trimmedUrlWithoutQueryParams) {
                 return {
                     redirect: {
                         statusCode: 301,
@@ -180,7 +127,7 @@ export const initServerSideProps = async ({
                 }
             }
 
-            const isMaintenance = resolvedQueries.some((query) => query.error?.response.status === 503);
+            const isMaintenance = resolvedQueries.some((query) => query.error?.response?.status === 503);
             if (isMaintenance) {
                 // eslint-disable-next-line require-atomic-updates
                 context.res.statusCode = 503;

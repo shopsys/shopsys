@@ -1,8 +1,8 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { AvailabilityStatusEnumApi, StoreAvailabilityFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import NextLink from 'next/link';
 import { forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -43,7 +43,7 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                                     >
                                         {storeAvailability.availabilityInformation}
                                     </span>
-                                    <NextLink href={storeAvailability.store.slug} passHref>
+                                    <ExtendedNextLink href={storeAvailability.store.slug} passHref type="store">
                                         <a
                                             className="ml-auto flex items-center text-dark no-underline hover:text-dark hover:no-underline"
                                             data-testid={TEST_IDENTIFIER + index + '-detail'}
@@ -51,7 +51,7 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                                             {t('Store detail')}
                                             <Icon iconType="icon" icon="ArrowRight" />
                                         </a>
-                                    </NextLink>
+                                    </ExtendedNextLink>
                                 </li>
                             ),
                     )}

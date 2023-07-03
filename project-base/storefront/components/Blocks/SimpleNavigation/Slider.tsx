@@ -1,5 +1,6 @@
 import { ListItem } from 'components/Blocks/SimpleNavigation/ListItem';
 import { mediaQueries } from 'components/Theme/mediaQueries';
+import { getSearchResultLinkType } from 'helpers/mappers/simpleNavigation';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import { ListedItemPropType } from 'types/simpleNavigation';
@@ -36,7 +37,9 @@ export const Slider: FC<SliderProps> = ({ listedItems }) => {
                     className="keen-slider__slide mb-4 ml-0 pl-0 text-center lg:w-1/2 lg:pl-6 lg:text-left vl:w-1/3 xl:w-1/4"
                     data-testid={TEST_IDENTIFIER + key}
                 >
-                    <ListItem listedItem={listedItem}>{listedItem.name}</ListItem>
+                    <ListItem listedItem={listedItem} linkType={getSearchResultLinkType(listedItem)}>
+                        {listedItem.name}
+                    </ListItem>
                 </li>
             ))}
         </div>

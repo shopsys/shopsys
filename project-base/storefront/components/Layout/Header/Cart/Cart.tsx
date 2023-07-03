@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ListItem } from './ListItem';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
@@ -9,7 +10,6 @@ import { useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { twJoin } from 'tailwind-merge';
@@ -35,7 +35,7 @@ export const Cart: FC = () => {
                 </div>
             )}
 
-            <NextLink href={cartUrl} passHref>
+            <ExtendedNextLink href={cartUrl} passHref type="static">
                 <a
                     className={twJoin(
                         'hidden items-center rounded-xl bg-orangeLight py-4 pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
@@ -55,7 +55,7 @@ export const Cart: FC = () => {
                         })}
                     </span>
                 </a>
-            </NextLink>
+            </ExtendedNextLink>
             <div
                 className={twJoin(
                     'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded-xl lg:rounded-tr-none lg:bg-white lg:opacity-0 lg:shadow-md',
@@ -97,12 +97,12 @@ export const Cart: FC = () => {
                 )}
             </div>
             <div className="flex h-10 w-10 cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
-                <NextLink href={cartUrl} passHref>
+                <ExtendedNextLink href={cartUrl} passHref type="static">
                     <a className="relative flex h-full w-full items-center justify-center text-white no-underline transition-colors hover:text-white hover:no-underline">
                         <Icon iconType="icon" icon="Cart" className="w-5 text-white" />
                         <CartCount>{cart?.items.length ?? 0}</CartCount>
                     </a>
-                </NextLink>
+                </ExtendedNextLink>
             </div>
         </div>
     );
