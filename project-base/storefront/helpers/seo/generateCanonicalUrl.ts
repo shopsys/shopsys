@@ -1,5 +1,6 @@
 import { getQueryWithoutSlugTypeParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { INTERNAL_QUERY_PARAMETERS } from 'helpers/queryParams/queryParamNames';
 import { NextRouter } from 'next/router';
 
@@ -21,12 +22,11 @@ export const generateCanonicalUrl = (router: NextRouter, url: string): string | 
         return null;
     }
 
-    const urlWithoutTrailingSlash = url.charAt(url.length - 1) === '/' ? url.slice(0, url.length - 1) : url;
     const queryParams = new URLSearchParams(newQueryOverwrite).toString();
 
     if (queryParams.length === 0) {
-        return `${urlWithoutTrailingSlash}${getUrlWithoutGetParameters(router.asPath)}`;
+        return `${getStringWithoutTrailingSlash(url)}${getUrlWithoutGetParameters(router.asPath)}`;
     }
 
-    return `${urlWithoutTrailingSlash}${getUrlWithoutGetParameters(router.asPath)}?${queryParams}`;
+    return `${getStringWithoutTrailingSlash(url)}${getUrlWithoutGetParameters(router.asPath)}?${queryParams}`;
 };
