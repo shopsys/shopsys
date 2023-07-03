@@ -132,7 +132,7 @@ class NewProductTest extends ApplicationTestCase
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
 
-            $vatInputField->setValue($vat->getId());
+            $vatInputField->setValue((string)$vat->getId());
         }
     }
 }
