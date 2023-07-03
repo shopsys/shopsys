@@ -1,5 +1,7 @@
 #!/bin/bash
 
+MAIN_BRANCH_NAME=$1
+
 current_date=$(date +%Y-%m-%d)
 eight_days_ago=$(date -d "8 days ago" +%Y-%m-%d)
 seven_days_ago=$(date -d "7 days ago" +%Y-%m-%d)
@@ -19,7 +21,7 @@ for branch in "${branches_eight_days_ago[@]}"; do
     fi
 done
 
-filtered_branches=($(echo "${filtered_branches[@]}" | tr ' ' '\n' | grep -v "master"))
+filtered_branches=($(echo "${filtered_branches[@]}" | tr ' ' '\n' | grep -v "${MAIN_BRANCH_NAME}"))
 
 for BRANCH_NAME in "${filtered_branches[@]}"; do
     /bin/bash ./cancel-review.sh
