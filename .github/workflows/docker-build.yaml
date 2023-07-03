@@ -284,7 +284,7 @@ jobs:
             -   name: Install dev dependencies
                 run: |
                     docker compose exec --user root storefront chown -R node:node /home/node/app
-                    docker compose exec storefront pnpm install --frozen-lockfile --force --child-concurrency 2
+                    docker compose exec storefront pnpm install --frozen-lockfile --force --child-concurrency 1
             -   name: Check no NEXT_PUBLIC_ variables are used
                 run: |
                     docker compose exec --user root storefront apk add grep
