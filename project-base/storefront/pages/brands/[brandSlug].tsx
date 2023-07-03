@@ -71,7 +71,7 @@ const BrandDetailPage: NextPage = () => {
                     <Breadcrumbs key="breadcrumb" breadcrumb={brandDetailData.brand.breadcrumb} />
                 </Webline>
             )}
-            {!filter && fetching && !brandDetailData ? (
+            {!filter && fetching ? (
                 <CategoryDetailPageSkeleton />
             ) : (
                 !!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />

@@ -68,7 +68,7 @@ const FlagDetailPage: NextPage = () => {
                     <Breadcrumbs key="breadcrumb" breadcrumb={flagDetailData.flag.breadcrumb} />
                 </Webline>
             )}
-            {!filter && fetching && !flagDetailData ? (
+            {!filter && fetching ? (
                 <CategoryDetailPageSkeleton />
             ) : (
                 !!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />
