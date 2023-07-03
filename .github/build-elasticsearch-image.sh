@@ -1,6 +1,7 @@
 #!/bin/sh
 
-DOCKER_ELASTICSEARCH_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}
+DOCKER_ELASTICSEARCH_REPOSITORY_TAG=$1
+
 
 docker image build \
     --tag ${DOCKER_ELASTICSEARCH_REPOSITORY_TAG} \
@@ -8,4 +9,3 @@ docker image build \
     --compress \
     -f project-base/docker/elasticsearch/Dockerfile \
     .
-docker image push ${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}
