@@ -1,7 +1,7 @@
 FROM node:18.15.0-alpine as development
 
 RUN corepack enable
-RUN corepack prepare --activate pnpm@8.6.1
+RUN corepack prepare --activate pnpm@8.6.7
 
 ARG APP_DIR=/home/node/app
 USER node
