@@ -65,18 +65,16 @@ Function used to generate an abandoned cart URL.
 const getAbandonedCartUrl = (isUserLoggedIn: boolean, domain: DomainConfigType, cartUuid: string | null) => {
     if (isUserLoggedIn) {
         const [loginRelativeUrl, cartRelativeUrl] = getInternationalizedStaticUrls(['/login', '/cart'], domain.url);
-        const loginAbsoluteUrlWithoutLeadingSlash = loginRelativeUrl.slice(1);
 
-        return domain.url + loginAbsoluteUrlWithoutLeadingSlash + '?r=' + cartRelativeUrl;
+        return domain.url + getStringWithoutLeadingSlash(loginRelativeUrl) + '?r=' + cartRelativeUrl;
     }
 
     const [abandonedCartRelativeUrl] = getInternationalizedStaticUrls(
         [{ url: '/abandoned-cart/:cartUuid', param: cartUuid }],
         domain.url,
     );
-    const abandonedCartRelativeUrlWithoutLeadingSlash = abandonedCartRelativeUrl.slice(1);
 
-    return domain.url + abandonedCartRelativeUrlWithoutLeadingSlash;
+    return domain.url + getStringWithoutLeadingSlash(abandonedCartRelativeUrl);
 };
 ```
 

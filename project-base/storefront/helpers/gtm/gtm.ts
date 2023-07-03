@@ -40,6 +40,7 @@ import {
     GtmReviewConsentsType,
     GtmUserInfoType,
 } from 'types/gtm/objects';
+import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
     const { cart, promoCode, isFetching } = useCurrentCart();
@@ -90,18 +91,16 @@ export const getGtmMappedCart = (
 const getAbandonedCartUrl = (isUserLoggedIn: boolean, domain: DomainConfigType, cartUuid: string | null) => {
     if (isUserLoggedIn) {
         const [loginRelativeUrl, cartRelativeUrl] = getInternationalizedStaticUrls(['/login', '/cart'], domain.url);
-        const loginAbsoluteUrlWithoutLeadingSlash = loginRelativeUrl.slice(1);
 
-        return domain.url + loginAbsoluteUrlWithoutLeadingSlash + '?r=' + cartRelativeUrl;
+        return domain.url + getStringWithoutLeadingSlash(loginRelativeUrl) + '?r=' + cartRelativeUrl;
     }
 
     const [abandonedCartRelativeUrl] = getInternationalizedStaticUrls(
         [{ url: '/abandoned-cart/:cartUuid', param: cartUuid }],
         domain.url,
     );
-    const abandonedCartRelativeUrlWithoutLeadingSlash = abandonedCartRelativeUrl.slice(1);
 
-    return domain.url + abandonedCartRelativeUrlWithoutLeadingSlash;
+    return domain.url + getStringWithoutLeadingSlash(abandonedCartRelativeUrl);
 };
 
 export const getGtmPageInfoTypeForFriendlyUrl = (
