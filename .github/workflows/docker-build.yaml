@@ -284,7 +284,7 @@ jobs:
             -   name: Install dev dependencies
                 run: |
                     docker compose exec --user root storefront chown -R node:node /home/node/app
-                    docker compose exec storefront pnpm install --frozen-lockfile --force --child-concurrency 2
+                    docker compose exec storefront pnpm install --frozen-lockfile --force --child-concurrency 1
             -   name: Check no NEXT_PUBLIC_ variables are used
                 run: |
                     docker compose exec --user root storefront apk add grep
@@ -467,14 +467,13 @@ jobs:
             -   name: Copy and rename docker-compose.github-actions.yml.dist to docker-compose.yml
                 run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
             -   name: Update docker-compose.yml file with right PHP-FPM image
-                run: "sed -i \"s#php-fpm-image#${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}#\" ./docker-compose.yml"
+                run: "sed -i \"s#php-fpm-image#${{ needs.variables.outputs.DOCKER_PHP_FPM_BASE_REPOSITORY_TAG }}#\" ./docker-compose.yml"
             -   name: Update docker-compose.yml file with right Elasticsearch image
                 run: "sed -i \"s#elasticsearch-image#${{ needs.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}#\" ./docker-compose.yml"
             -   name: Update docker-compose.yml file with right Storefront image
                 run: "sed -i \"s#storefront-image#${{ needs.variables.outputs.DOCKER_STOREFRONT_CI_REPOSITORY_TAG }}#\" ./docker-compose.yml"
             -   name: Build PHP-FPM part of application
                 run: |
-                    cat docker-compose.yml
                     docker compose pull --parallel webserver postgres redis selenium-server php-fpm elasticsearch storefront
                     docker compose up -d --force-recreate
                     docker cp ./ shopsys-framework-php-fpm:/var/www/html
