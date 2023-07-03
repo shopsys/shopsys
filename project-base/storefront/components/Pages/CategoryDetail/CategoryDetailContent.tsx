@@ -15,12 +15,17 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import Skeleton from 'react-loading-skeleton';
 
 type CategoryDetailContentProps = {
     category: CategoryDetailFragmentApi;
+    showTitleAndDescriptionSkeleton: boolean;
 };
 
-export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category }) => {
+export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({
+    category,
+    showTitleAndDescriptionSkeleton,
+}) => {
     const t = useTypedTranslationFunction();
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
@@ -61,14 +66,29 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
                 <div className="flex flex-1 flex-col overflow-hidden vl:pl-12">
                     <Adverts positionName="productList" className="mb-5" />
-                    <HeadingPaginated type="h1" totalCount={category.products.totalCount}>
-                        {category.seoH1 !== null ? category.seoH1 : category.name}
-                    </HeadingPaginated>
-                    {category.description !== null &&
-                        category.description !== '' &&
-                        (query[PAGE_QUERY_PARAMETER_NAME] ?? 1) === 1 && (
-                            <div dangerouslySetInnerHTML={{ __html: category.description }} className="mb-4" />
+                    <>
+                        {showTitleAndDescriptionSkeleton ? (
+                            <div className="mb-12 flex w-full flex-col gap-4 ">
+                                <Skeleton className="h-9 w-5/6" />
+                                <Skeleton count={4} className="mb-3 h-4" />
+                            </div>
+                        ) : (
+                            <>
+                                <HeadingPaginated type="h1" totalCount={category.products.totalCount}>
+                                    {category.seoH1 !== null ? category.seoH1 : category.name}
+                                </HeadingPaginated>
+                                {category.description !== null &&
+                                    category.description !== '' &&
+                                    (query[PAGE_QUERY_PARAMETER_NAME] ?? 1) === 1 && (
+                                        <div
+                                            dangerouslySetInnerHTML={{ __html: category.description }}
+                                            className="mb-4"
+                                        />
+                                    )}
+                            </>
                         )}
+                    </>
+
                     <Adverts positionName="productListMiddle" currentCategory={category} className="mb-7" />
                     <SimpleNavigation
                         listedItems={[...category.children, ...category.linkedCategories]}

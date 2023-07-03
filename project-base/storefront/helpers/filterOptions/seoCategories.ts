@@ -195,12 +195,14 @@ export const useHandleDefaultFiltersUpdate = (
 
 export const useHandleSeoCategorySlugUpdate = (category: CategoryDetailFragmentApi | undefined | null) => {
     const setOriginalCategorySlug = useSessionStore((s) => s.setOriginalCategorySlug);
+    const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
     const { asPath } = useRouter();
     const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(asPath));
 
     useEffect(() => {
         const isCurrentAndRedirectSlugDifferent = getStringWithoutLeadingSlash(category?.slug ?? '') !== urlSlug;
         if (category?.originalCategorySlug && isCurrentAndRedirectSlugDifferent) {
+            setWasRedirectedToSeoCategory(true);
             router.replace(category.slug, undefined, { shallow: true });
         }
         setOriginalCategorySlug(category?.originalCategorySlug ?? undefined);

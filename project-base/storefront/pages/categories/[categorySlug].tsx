@@ -6,11 +6,12 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
 import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import {
-    useCategoryDetailQueryApi,
     CategoryDetailQueryApi,
     CategoryDetailQueryVariablesApi,
     CategoryDetailQueryDocumentApi,
     CategoryProductsQueryDocumentApi,
+    ProductFilterApi,
+    CategoryDetailFragmentApi,
 } from 'graphql/generated';
 import { getDomainConfig } from 'helpers/domain/domain';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
@@ -31,57 +32,61 @@ import {
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { createClient } from 'helpers/urql/createClient';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+import { handleQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { OperationResult, ssrExchange } from 'urql';
+import { useEffect, useState } from 'react';
+import { useSessionStore } from 'store/zustand/useSessionStore';
+import { OperationResult, ssrExchange, useClient } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 const CategoryDetailPage: NextPage = () => {
     const router = useRouter();
-    const slug = getUrlWithoutGetParameters(router.asPath);
     const orderingMode = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
-
+    const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
     const filter = mapParametersFilter(
         getFilterOptions(parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
     );
+    const [categoryData, fetching] = useCategoryDetailData(filter);
 
-    const [{ data: categoryData, fetching }] = useQueryError(
-        useCategoryDetailQueryApi({
-            variables: {
-                urlSlug: getSlugFromUrl(slug),
-                orderingMode,
-                filter,
-            },
-        }),
-    );
-
-    useHandleDefaultFiltersUpdate(categoryData?.category?.products);
-    useHandleSeoCategorySlugUpdate(categoryData?.category);
+    useHandleDefaultFiltersUpdate(categoryData?.products);
+    useHandleSeoCategorySlugUpdate(categoryData);
 
     const seoTitle = useSeoTitleWithPagination(
-        categoryData?.category?.products.totalCount,
-        categoryData?.category?.name,
-        categoryData?.category?.seoTitle,
+        categoryData?.products.totalCount,
+        categoryData?.name,
+        categoryData?.seoTitle,
     );
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(categoryData?.category);
+    const pageViewEvent = useGtmFriendlyPageViewEvent(categoryData);
     useGtmPageViewEvent(pageViewEvent, fetching);
 
+    const isSkeletonVisible = !filter && !originalCategorySlug && !orderingMode && fetching;
+
     return (
-        <CommonLayout title={seoTitle} description={categoryData?.category?.seoMetaDescription}>
+        <CommonLayout title={seoTitle} description={categoryData?.seoMetaDescription}>
             <Webline>
-                {!!categoryData?.category?.breadcrumb && (
+                {!!categoryData?.breadcrumb && (
                     <Webline>
-                        <Breadcrumbs type="category" key="breadcrumb" breadcrumb={categoryData.category.breadcrumb} />
+                        <Breadcrumbs type="category" key="breadcrumb" breadcrumb={categoryData.breadcrumb} />
                     </Webline>
                 )}
-                {!filter && fetching ? (
+                {isSkeletonVisible ? (
                     <CategoryDetailPageSkeleton />
                 ) : (
-                    !!categoryData?.category && <CategoryDetailContent category={categoryData.category} />
+                    !!categoryData && (
+                        <>
+                            <CategoryDetailContent
+                                showTitleAndDescriptionSkeleton={
+                                    (!!filter || !!orderingMode || !!originalCategorySlug) && fetching
+                                }
+                                category={categoryData}
+                            />
+                        </>
+                    )
                 )}
             </Webline>
         </CommonLayout>
@@ -99,11 +104,12 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
 
     if (isRedirectedFromSsr(context.req.headers)) {
         const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
+        const filter = mapParametersFilter(optionsFilter);
         const categoryDetailResponse: OperationResult<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi> =
             await client!
                 .query(CategoryDetailQueryDocumentApi, {
                     urlSlug,
-                    filter: mapParametersFilter(optionsFilter),
+                    filter,
                     orderingMode,
                 })
                 .toPromise();
@@ -112,7 +118,7 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
             .query(CategoryProductsQueryDocumentApi, {
                 endCursor: getEndCursor(page),
                 orderingMode,
-                filter: mapParametersFilter(optionsFilter),
+                filter,
                 urlSlug,
                 pageSize: DEFAULT_PAGE_SIZE,
             })
@@ -136,3 +142,37 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
 });
 
 export default CategoryDetailPage;
+
+const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | CategoryDetailFragmentApi, boolean] => {
+    const client = useClient();
+    const router = useRouter();
+    const t = useTypedTranslationFunction();
+    const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(router.asPath));
+    const orderingMode = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
+    const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
+    const [categoryDetailData, setCategoryDetailData] = useState<undefined | CategoryDetailFragmentApi>(undefined);
+    const [fetching, setFetching] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (wasRedirectedToSeoCategory) {
+            return;
+        }
+        setFetching(true);
+
+        client
+            .query<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
+                urlSlug,
+                orderingMode,
+                filter,
+            })
+            .toPromise()
+            .then((response) => {
+                handleQueryError(response.error, t);
+                setCategoryDetailData(response.data?.category ?? undefined);
+            })
+            .finally(() => setFetching(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [urlSlug, orderingMode, JSON.stringify(filter)]);
+
+    return [categoryDetailData, fetching];
+};
