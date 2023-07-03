@@ -8,6 +8,8 @@ import React from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 import { ProductItemSkeleton } from './ProductItemSkeleton';
 import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/CategoryDetailContentMessage';
+import { useComparison } from 'hooks/comparison/useComparison';
+import { ProductComparePopup } from '../ButtonsAction/ProductComparePopup';
 
 type ProductsListProps = {
     products: ListedProductFragmentApi[] | undefined;
@@ -27,6 +29,8 @@ export const ProductsList: FC<ProductsListProps> = ({
     gtmMessageOrigin = GtmMessageOriginType.other,
 }) => {
     const { currentPage } = useQueryParams();
+    const { isPopupCompareOpen, handleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
+        useComparison();
 
     if (!products?.length && !fetching) {
         return <CategoryDetailContentMessage />;
@@ -39,15 +43,18 @@ export const ProductsList: FC<ProductsListProps> = ({
         >
             {!!products?.length && !fetching ? (
                 <>
-                    {products.map((listedProductItem, index) => (
+                    {products.map((product, index) => (
                         <ProductItem
-                            key={listedProductItem.uuid}
-                            product={listedProductItem}
+                            key={product.uuid}
+                            product={product}
                             listIndex={(currentPage - 1) * DEFAULT_PAGE_SIZE + index}
                             gtmProductListName={gtmProductListName}
                             gtmMessageOrigin={gtmMessageOrigin}
+                            isProductInComparison={isProductInComparison(product.uuid)}
+                            onProductInComparisonClick={() => handleProductInComparison(product.uuid)}
                         />
                     ))}
+
                     {category && (
                         <Adverts
                             positionName="productListSecondRow"
@@ -55,6 +62,10 @@ export const ProductsList: FC<ProductsListProps> = ({
                             className="col-span-full row-start-2 mx-auto justify-center pl-2"
                             isSingle
                         />
+                    )}
+
+                    {isPopupCompareOpen && (
+                        <ProductComparePopup isVisible onCloseCallback={() => setIsPopupCompareOpen(false)} />
                     )}
                 </>
             ) : (

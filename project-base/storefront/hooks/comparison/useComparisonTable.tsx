@@ -3,7 +3,7 @@ import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useScrollTop } from 'hooks/ui/useScrollTop';
 import { useState } from 'react';
 
-export const useHandleCompareTable = (
+export const useComparisonTable = (
     productsCompareCount: number,
 ): {
     isArrowLeftActive: boolean;

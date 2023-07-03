@@ -4,10 +4,10 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BreadcrumbFragmentApi, useComparisonQueryApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmSliderProductListViewEvent } from 'hooks/gtm/productList/useGtmSliderProductListViewEvent';
+import { useComparison } from 'hooks/comparison/useComparison';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { usePersistStore } from 'store/zustand/usePersistStore';
 import { GtmProductListNameType } from 'types/gtm/enums';
 
 type ProductsComparisonProps = {
@@ -17,10 +17,8 @@ type ProductsComparisonProps = {
 export const ProductsComparison: FC<ProductsComparisonProps> = ({ breadcrumb }) => {
     const t = useTypedTranslationFunction();
 
-    const productsComparisonUuid = usePersistStore((store) => store.productsComparisonUuid);
-    const [result] = useComparisonQueryApi({ variables: { comparisonUuid: productsComparisonUuid } });
-    const comparedProducts = result.data?.comparison?.products ?? [];
-    const isLoading = result.fetching;
+    const { comparison, fetching } = useComparison();
+    const comparedProducts = comparison?.products ?? [];
 
     const content =
         comparedProducts.length > 0 ? (
@@ -35,12 +33,12 @@ export const ProductsComparison: FC<ProductsComparisonProps> = ({ breadcrumb }) 
             </div>
         );
 
-    useGtmSliderProductListViewEvent(result.data?.comparison?.products, GtmProductListNameType.product_comparison_page);
+    useGtmSliderProductListViewEvent(comparison?.products, GtmProductListNameType.product_comparison_page);
 
     return (
         <Webline>
             <Breadcrumbs breadcrumb={breadcrumb} />
-            {isLoading ? (
+            {fetching ? (
                 <div className="flex w-full justify-center py-10">
                     <Loader className="w-10" />
                 </div>

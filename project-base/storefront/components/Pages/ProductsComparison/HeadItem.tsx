@@ -5,8 +5,7 @@ import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ComparedProductFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'helpers/gtm/eventHandlers';
-import { useHandleCompare } from 'hooks/product/useHandleCompare';
-import { useHandleCompareTable } from 'hooks/product/useHandleCompareTable';
+import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCallback } from 'react';
@@ -16,13 +15,13 @@ type ItemProps = {
     product: ComparedProductFragmentApi;
     productsCompareCount: number;
     listIndex: number;
+    onProductInComparisonClick: () => void;
 };
 
-export const HeadItem: FC<ItemProps> = ({ product, productsCompareCount, listIndex }) => {
+export const HeadItem: FC<ItemProps> = ({ product, productsCompareCount, listIndex, onProductInComparisonClick }) => {
     const t = useTypedTranslationFunction();
     const { url } = useDomainConfig();
-    const { handleProductInComparison } = useHandleCompare(product.uuid);
-    const { calcMaxMarginLeft } = useHandleCompareTable(productsCompareCount);
+    const { calcMaxMarginLeft } = useComparisonTable(productsCompareCount);
 
     const onProductDetailRedirectHandler = useCallback(
         (product: ListedProductFragmentApi, listName: GtmProductListNameType, index: number) => {
@@ -68,7 +67,7 @@ export const HeadItem: FC<ItemProps> = ({ product, productsCompareCount, listInd
             <div
                 className="absolute top-1 right-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded bg-white transition-colors hover:bg-greyVeryLight"
                 onClick={() => {
-                    handleProductInComparison();
+                    onProductInComparisonClick();
                     calcMaxMarginLeft();
                 }}
             >

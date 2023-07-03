@@ -1,30 +1,24 @@
-import { ProductComparePopup } from './ProductComparePopup';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { useHandleCompare } from 'hooks/product/useHandleCompare';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { HTMLAttributes } from 'react';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'utils/twMerge';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'className'>;
-
 type ProductCompareButtonProps = {
-    productUuid: string;
     isMainVariant: boolean;
     isWithText?: boolean;
+    isProductInComparison: boolean;
+    onProductInComparisonClick: () => void;
 };
 
 const TEST_IDENTIFIER = 'compare-button';
 
-export const ProductCompareButton: FC<ProductCompareButtonProps & NativeProps> = ({
-    productUuid,
+export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     className,
     isMainVariant,
     isWithText,
+    isProductInComparison,
+    onProductInComparisonClick,
 }) => {
     const t = useTypedTranslationFunction();
-    const { isProductInComparison, handleProductInComparison, isPopupCompareOpen, setIsPopupCompareOpen } =
-        useHandleCompare(productUuid);
 
     if (isMainVariant) {
         return null;
@@ -36,7 +30,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps & NativeProps> =
                 className="flex cursor-pointer items-center"
                 data-testid={TEST_IDENTIFIER}
                 title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
-                onClick={handleProductInComparison}
+                onClick={onProductInComparisonClick}
             >
                 <Icon
                     className={twMergeCustom('text-grey', isProductInComparison && 'text-green')}
@@ -47,8 +41,6 @@ export const ProductCompareButton: FC<ProductCompareButtonProps & NativeProps> =
                     <span className="ml-1">{isProductInComparison ? t('Remove from comparison') : t('Compare')}</span>
                 )}
             </div>
-
-            <ProductComparePopup isVisible={isPopupCompareOpen} onCloseCallback={() => setIsPopupCompareOpen(false)} />
         </div>
     );
 };

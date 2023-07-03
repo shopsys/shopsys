@@ -1,5 +1,5 @@
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { useHandleCompare } from 'hooks/product/useHandleCompare';
+import { useComparison } from 'hooks/comparison/useComparison';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { MenuIconicItem, MenuIconicItemLink, MenuIconicItemIcon } from './MenuIconicElements';
@@ -12,7 +12,7 @@ export const MenuIconic: FC = () => {
     const t = useTypedTranslationFunction();
     const { url } = useDomainConfig();
     const [storesUrl, productsComparisonUrl] = getInternationalizedStaticUrls(['/stores', '/products-comparison'], url);
-    const { comparisonProducts } = useHandleCompare('');
+    const { comparison } = useComparison();
 
     return (
         <ul className="flex" data-testid={TEST_IDENTIFIER}>
@@ -36,7 +36,7 @@ export const MenuIconic: FC = () => {
                     <MenuIconicItemLink>
                         <MenuIconicItemIcon icon="Compare" />
                         {t('Comparison')}
-                        {!!comparisonProducts.length && <span>({comparisonProducts.length})</span>}
+                        {!!comparison?.products.length && <span>({comparison.products.length})</span>}
                     </MenuIconicItemLink>
                 </ExtendedNextLink>
             </MenuIconicItem>
