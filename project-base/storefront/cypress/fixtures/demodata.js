@@ -6,7 +6,7 @@ export const buttonName = {
 };
 export const categories = {
     elektro: {
-        name: 'Electronics',
+        name: 'Gadgets',
         url: '/electronics',
     },
 };
