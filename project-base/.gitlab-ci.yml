@@ -30,7 +30,7 @@ build:
     script:
         - cp -R ./docker/nginx/ ./app/docker/nginx/
         - cd ./app/
-        - docker build -f ./docker/php-fpm/Dockerfile --target production --compress -t ${TAG} .
+        - docker build -f ./docker/php-fpm/Dockerfile --target production-project --compress -t ${TAG} .
         - docker push ${TAG}
     interruptible: true
 

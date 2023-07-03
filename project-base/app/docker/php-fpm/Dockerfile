@@ -134,7 +134,10 @@ RUN composer install --optimize-autoloader --no-interaction --no-progress --no-d
 
 RUN php phing build-deploy-part-1-db-independent clean
 
-RUN chmod +x ${project_root}/deploy/deploy-project.sh && ${project_root}/deploy/deploy-project.sh merge
+
+FROM production as production-project
+
+RUN chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh merge
 
 ########################################################################################################################
 
