@@ -31,7 +31,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     parameterIndex,
 }) => {
     const t = useTypedTranslationFunction();
-    const [isGroupCollapsed, setIsGroupCollapsed] = useState(false);
+    const [isGroupCollapsed, setIsGroupCollapsed] = useState(parameter.isCollapsed);
     const {
         filter: { parameters: selectedParametersUuids },
         updateFilterParameters,
