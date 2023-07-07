@@ -187,7 +187,7 @@ class FileUpload
         $filesForUpload = $entity->getTemporaryFilesForUpload();
 
         /** @var \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload $fileForUpload */
-        foreach ($filesForUpload as $fileForUpload) {
+        foreach ($filesForUpload as $key => $fileForUpload) {
             $sourceFilepath = TransformString::removeDriveLetterFromPath(
                 $this->getTemporaryFilepath($fileForUpload->getTemporaryFilename()),
             );
@@ -209,6 +209,7 @@ class FileUpload
                 }
 
                 $this->mountManager->move('main://' . $sourceFilepath, 'main://' . $targetFilename);
+                $entity->setFileKeyAsUploaded($key);
             } catch (IOException $ex) {
                 $message = 'Failed to rename file from temporary directory to entity';
 

@@ -18,6 +18,11 @@ interface EntityFileUploadInterface
     public function setFileAsUploaded(string $key, string $originalFilename): void;
 
     /**
+     * @param string $key
+     */
+    public function setFileKeyAsUploaded(string $key): void;
+
+    /**
      * @return int
      */
     public function getId(): int;
