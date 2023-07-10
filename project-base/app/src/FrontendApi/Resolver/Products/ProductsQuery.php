@@ -8,6 +8,7 @@ use App\Component\Deprecation\DeprecatedMethodException;
 use App\FrontendApi\Component\Validation\PageSizeValidator;
 use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use App\FrontendApi\Resolver\Category\CategoryQuery;
+use App\FrontendApi\Resolver\Products\Flag\FlagQuery;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
@@ -29,6 +30,7 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery as BaseProductsQuery;
 
 /**
@@ -52,6 +54,8 @@ class ProductsQuery extends BaseProductsQuery
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\FrontendApi\Resolver\Category\CategoryQuery $categoryQuery
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
+     * @param \App\FrontendApi\Resolver\Products\Flag\FlagQuery $flagQuery
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -63,6 +67,8 @@ class ProductsQuery extends BaseProductsQuery
         private readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
         private readonly ProductRepository $productRepository,
         protected readonly CategoryQuery $categoryQuery,
+        protected readonly BrandQuery $brandQuery,
+        protected readonly FlagQuery $flagQuery,
     ) {
         parent::__construct($productFacade, $productFilterFacade, $productConnectionFactory);
     }
@@ -162,7 +168,7 @@ class ProductsQuery extends BaseProductsQuery
      * @param \GraphQL\Type\Definition\ResolveInfo $info
      * @return \App\FrontendApi\Model\Product\Connection\ProductExtendedConnection|\GraphQL\Executor\Promise\Promise
      */
-    public function productsWithCategoryQuery(Argument $argument, ResolveInfo $info)
+    public function productsWithOverlyingEntityQuery(Argument $argument, ResolveInfo $info)
     {
         PageSizeValidator::checkMaxPageSize($argument);
 
@@ -178,6 +184,24 @@ class ProductsQuery extends BaseProductsQuery
             $category = $this->categoryQuery->categoryOrSeoMixByUuidOrUrlSlugQuery($info, urlSlug: $argument['categorySlug']);
 
             return $this->productsByCategoryOrReadyCategorySeoMixQuery(
+                $argument,
+                $category,
+            );
+        }
+
+        if ($argument['brandSlug']) {
+            $category = $this->brandQuery->brandByUuidOrUrlSlugQuery(urlSlug: $argument['brandSlug']);
+
+            return $this->productsByBrandQuery(
+                $argument,
+                $category,
+            );
+        }
+
+        if ($argument['flagSlug']) {
+            $category = $this->flagQuery->flagByUuidOrUrlSlugQuery(urlSlug: $argument['flagSlug']);
+
+            return $this->productsByFlagQuery(
                 $argument,
                 $category,
             );

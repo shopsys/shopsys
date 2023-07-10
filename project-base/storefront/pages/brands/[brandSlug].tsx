@@ -34,7 +34,7 @@ import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { OperationResult, ssrExchange } from 'urql';
+import { ssrExchange } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
@@ -89,32 +89,35 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
     const ssrCache = ssrExchange({ isClient: false });
     const client = createClient(context, domainConfig.publicGraphqlEndpoint, ssrCache, redisClient);
 
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]));
-    const filter = mapParametersFilter(
-        getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME])),
-    );
-    const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
-
     if (isRedirectedFromSsr(context.req.headers)) {
-        const brandDetailResponse: OperationResult<BrandDetailQueryApi, BrandDetailQueryVariablesApi> = await client!
-            .query(BrandDetailQueryDocumentApi, {
-                urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+        const orderingMode = getProductListSort(
+            parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
+        );
+        const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
+        const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+        const filter = mapParametersFilter(
+            getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME])),
+        );
+
+        const brandDetailResponsePromise = client!
+            .query<BrandDetailQueryApi, BrandDetailQueryVariablesApi>(BrandDetailQueryDocumentApi, {
+                urlSlug,
                 orderingMode,
                 filter,
             })
             .toPromise();
 
-        if (brandDetailResponse.data?.brand?.uuid) {
-            await client!
-                .query<BrandProductsQueryApi, BrandProductsQueryVariablesApi>(BrandProductsQueryDocumentApi, {
-                    endCursor: getEndCursor(page),
-                    orderingMode,
-                    filter,
-                    uuid: brandDetailResponse.data.brand.uuid,
-                    pageSize: DEFAULT_PAGE_SIZE,
-                })
-                .toPromise();
-        }
+        const brandProductsResponsePromise = client!
+            .query<BrandProductsQueryApi, BrandProductsQueryVariablesApi>(BrandProductsQueryDocumentApi, {
+                endCursor: getEndCursor(page),
+                orderingMode,
+                filter,
+                urlSlug,
+                pageSize: DEFAULT_PAGE_SIZE,
+            })
+            .toPromise();
+
+        const [brandDetailResponse] = await Promise.all([brandDetailResponsePromise, brandProductsResponsePromise]);
 
         if ((!brandDetailResponse.data || !brandDetailResponse.data.brand) && !(context.res.statusCode === 503)) {
             return {
