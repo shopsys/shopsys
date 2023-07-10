@@ -7,6 +7,7 @@ namespace App\FrontendApi\Resolver\Products;
 use App\Component\Deprecation\DeprecatedMethodException;
 use App\FrontendApi\Component\Validation\PageSizeValidator;
 use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
+use App\FrontendApi\Resolver\Category\CategoryQuery;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
@@ -17,6 +18,7 @@ use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\ProductRepository;
 use GraphQL\Executor\Promise\Promise;
+use GraphQL\Type\Definition\ResolveInfo;
 use InvalidArgumentException;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -49,6 +51,7 @@ class ProductsQuery extends BaseProductsQuery
      * @param \App\Model\Product\Comparison\ComparisonRepository $comparisonRepository
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
      * @param \App\Model\Product\ProductRepository $productRepository
+     * @param \App\FrontendApi\Resolver\Category\CategoryQuery $categoryQuery
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -59,6 +62,7 @@ class ProductsQuery extends BaseProductsQuery
         private readonly ComparisonRepository $comparisonRepository,
         private readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
         private readonly ProductRepository $productRepository,
+        protected readonly CategoryQuery $categoryQuery,
     ) {
         parent::__construct($productFacade, $productFilterFacade, $productConnectionFactory);
     }
@@ -146,9 +150,19 @@ class ProductsQuery extends BaseProductsQuery
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      */
     public function productsQuery(Argument $argument)
+    {
+        throw new DeprecatedMethodException();
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \GraphQL\Type\Definition\ResolveInfo $info
+     * @return \App\FrontendApi\Model\Product\Connection\ProductExtendedConnection|\GraphQL\Executor\Promise\Promise
+     */
+    public function productsWithCategoryQuery(Argument $argument, ResolveInfo $info)
     {
         PageSizeValidator::checkMaxPageSize($argument);
 
@@ -159,6 +173,15 @@ class ProductsQuery extends BaseProductsQuery
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForAll(
             $argument,
         );
+
+        if ($argument['categorySlug'] !== null) {
+            $category = $this->categoryQuery->categoryOrSeoMixByUuidOrUrlSlugQuery($info, null, $argument['categorySlug']);
+
+            return $this->productsByCategoryOrReadyCategorySeoMixQuery(
+                $argument,
+                $category,
+            );
+        }
 
         return $this->productConnectionFactory->createConnectionForAll(
             function ($offset, $limit) use ($argument, $productFilterData, $search) {

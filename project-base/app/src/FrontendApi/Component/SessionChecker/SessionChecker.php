@@ -15,7 +15,7 @@ class SessionChecker
     {
         $request = $event->getRequest();
 
-        if (!$request->hasSession() || !$request->getSession()->isStarted() || !str_contains($request->getRequestUri(), 'graphql')) {
+        if (!$request->hasSession() || !$request->getSession()->isStarted() || !str_contains($request->getRequestUri(), '/graphql/')) {
             return;
         }
         $response = $event->getResponse();
