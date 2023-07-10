@@ -800,6 +800,11 @@ Returns list of ordered products that can be paginated using `first`, `last`, `b
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">categorySlug</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">filter</td>
 <td valign="top"><a href="#productfilter">ProductFilter</a></td>
 <td></td>
@@ -2578,6 +2583,11 @@ Paginated and ordered products of brand
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">categorySlug</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">filter</td>
 <td valign="top"><a href="#productfilter">ProductFilter</a></td>
 <td></td>
@@ -3183,6 +3193,11 @@ Paginated and ordered products of category
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">categorySlug</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
@@ -3832,6 +3847,11 @@ Paginated and ordered products of flag
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">categorySlug</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
@@ -10686,6 +10706,11 @@ Paginated and ordered products
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">categorySlug</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>

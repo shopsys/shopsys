@@ -1,6 +1,0 @@
-fragment ListedProductsPreviewFragment on ProductListable {
-    __typename
-    products(orderingMode: $orderingMode, filter: $filter) {
-        ...ListedProductConnectionPreviewFragment
-    }
-}
