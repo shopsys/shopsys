@@ -1,5 +1,6 @@
 fragment SimpleCategoryFragment on Category {
     __typename
+    uuid
     name
     slug
 }

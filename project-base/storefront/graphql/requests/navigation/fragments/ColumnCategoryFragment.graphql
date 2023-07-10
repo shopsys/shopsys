@@ -1,5 +1,6 @@
 fragment ColumnCategoryFragment on Category {
     __typename
+    uuid
     name
     slug
     ...CategoryImagesDefaultFragment
