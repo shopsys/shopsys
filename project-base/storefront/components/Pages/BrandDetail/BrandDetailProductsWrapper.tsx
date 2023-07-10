@@ -6,6 +6,7 @@ import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import { getMappedProducts } from 'helpers/mappers/products';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
@@ -14,6 +15,7 @@ import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
 import { RefObject } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 type BrandDetailProductsWrapperProps = {
     brand: BrandDetailFragmentApi;
@@ -24,7 +26,7 @@ export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = (
     brand,
     paginationScrollTargetRef,
 }) => {
-    const { query } = useRouter();
+    const { query, asPath } = useRouter();
     const { currentPage } = useQueryParams();
     const orderingMode = getProductListSort(parseProductListSortFromQuery(query.sort));
     const parametersFilter = getFilterOptions(parseFilterOptionsFromQuery(query.filter));
@@ -35,13 +37,13 @@ export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = (
                 endCursor: getEndCursor(currentPage),
                 filter: mapParametersFilter(parametersFilter),
                 orderingMode,
-                uuid: brand.uuid,
+                urlSlug: getSlugFromUrl(getUrlWithoutGetParameters(asPath)),
                 pageSize: DEFAULT_PAGE_SIZE,
             },
         }),
     );
 
-    const listedBrandProducts = getMappedProducts(brandProductsData?.brand?.products.edges);
+    const listedBrandProducts = getMappedProducts(brandProductsData?.products.edges);
 
     useGtmPaginatedProductListViewEvent(listedBrandProducts, GtmProductListNameType.brand_detail);
 

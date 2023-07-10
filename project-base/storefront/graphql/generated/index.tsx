@@ -409,9 +409,11 @@ export type BrandMainImageArgsApi = {
 export type BrandProductsArgsApi = {
   after: Maybe<Scalars['String']>;
   before: Maybe<Scalars['String']>;
+  brandSlug: Maybe<Scalars['String']>;
   categorySlug: Maybe<Scalars['String']>;
   filter: Maybe<ProductFilterApi>;
   first: Maybe<Scalars['Int']>;
+  flagSlug: Maybe<Scalars['String']>;
   last: Maybe<Scalars['Int']>;
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
   search: Maybe<Scalars['String']>;
@@ -601,9 +603,11 @@ export type CategoryMainImageArgsApi = {
 export type CategoryProductsArgsApi = {
   after: Maybe<Scalars['String']>;
   before: Maybe<Scalars['String']>;
+  brandSlug: Maybe<Scalars['String']>;
   categorySlug: Maybe<Scalars['String']>;
   filter: Maybe<ProductFilterApi>;
   first: Maybe<Scalars['Int']>;
+  flagSlug: Maybe<Scalars['String']>;
   last: Maybe<Scalars['Int']>;
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
   search: Maybe<Scalars['String']>;
@@ -873,9 +877,11 @@ export type FlagCategoriesArgsApi = {
 export type FlagProductsArgsApi = {
   after: Maybe<Scalars['String']>;
   before: Maybe<Scalars['String']>;
+  brandSlug: Maybe<Scalars['String']>;
   categorySlug: Maybe<Scalars['String']>;
   filter: Maybe<ProductFilterApi>;
   first: Maybe<Scalars['Int']>;
+  flagSlug: Maybe<Scalars['String']>;
   last: Maybe<Scalars['Int']>;
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
   search: Maybe<Scalars['String']>;
@@ -2004,9 +2010,11 @@ export type ProductListableApi = {
 export type ProductListableProductsArgsApi = {
   after: Maybe<Scalars['String']>;
   before: Maybe<Scalars['String']>;
+  brandSlug: Maybe<Scalars['String']>;
   categorySlug: Maybe<Scalars['String']>;
   filter: Maybe<ProductFilterApi>;
   first: Maybe<Scalars['Int']>;
+  flagSlug: Maybe<Scalars['String']>;
   last: Maybe<Scalars['Int']>;
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
   search: Maybe<Scalars['String']>;
@@ -2299,9 +2307,11 @@ export type QueryProductArgsApi = {
 export type QueryProductsArgsApi = {
   after: Maybe<Scalars['String']>;
   before: Maybe<Scalars['String']>;
+  brandSlug: Maybe<Scalars['String']>;
   categorySlug: Maybe<Scalars['String']>;
   filter: Maybe<ProductFilterApi>;
   first: Maybe<Scalars['Int']>;
+  flagSlug: Maybe<Scalars['String']>;
   last: Maybe<Scalars['Int']>;
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
   search: Maybe<Scalars['String']>;
@@ -3472,12 +3482,12 @@ export type BrandProductsQueryVariablesApi = Exact<{
   endCursor: Scalars['String'];
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
   filter: Maybe<ProductFilterApi>;
-  uuid: Maybe<Scalars['Uuid']>;
+  urlSlug: Maybe<Scalars['String']>;
   pageSize: Maybe<Scalars['Int']>;
 }>;
 
 
-export type BrandProductsQueryApi = { __typename?: 'Query', brand: Maybe<{ __typename?: 'Brand', products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: Maybe<ProductOrderingModeEnumApi>, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Maybe<Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }>>, flags: Maybe<Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }>>, parameters: Maybe<Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: Maybe<string>, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: Maybe<number>, unit: Maybe<{ __typename: 'Unit', name: string }> }>> }, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: Maybe<string>, endCursor: Maybe<string> }, edges: Maybe<Array<Maybe<{ __typename: 'ProductEdge', node: Maybe<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> }> }>>> } }> };
+export type BrandProductsQueryApi = { __typename?: 'Query', products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: Maybe<ProductOrderingModeEnumApi>, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Maybe<Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }>>, flags: Maybe<Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }>>, parameters: Maybe<Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: Maybe<string>, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: Maybe<number>, unit: Maybe<{ __typename: 'Unit', name: string }> }>> }, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: Maybe<string>, endCursor: Maybe<string> }, edges: Maybe<Array<Maybe<{ __typename: 'ProductEdge', node: Maybe<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> }> }>>> } };
 
 export type CategoryProductsQueryVariablesApi = Exact<{
   endCursor: Scalars['String'];
@@ -3501,12 +3511,12 @@ export type FlagProductsQueryVariablesApi = Exact<{
   endCursor: Scalars['String'];
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
   filter: Maybe<ProductFilterApi>;
-  uuid: Maybe<Scalars['Uuid']>;
+  urlSlug: Maybe<Scalars['String']>;
   pageSize: Maybe<Scalars['Int']>;
 }>;
 
 
-export type FlagProductsQueryApi = { __typename?: 'Query', flag: Maybe<{ __typename?: 'Flag', products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: Maybe<ProductOrderingModeEnumApi>, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Maybe<Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }>>, flags: Maybe<Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }>>, parameters: Maybe<Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: Maybe<string>, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: Maybe<number>, unit: Maybe<{ __typename: 'Unit', name: string }> }>> }, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: Maybe<string>, endCursor: Maybe<string> }, edges: Maybe<Array<Maybe<{ __typename: 'ProductEdge', node: Maybe<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> }> }>>> } }> };
+export type FlagProductsQueryApi = { __typename?: 'Query', products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: Maybe<ProductOrderingModeEnumApi>, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Maybe<Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }>>, flags: Maybe<Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }>>, parameters: Maybe<Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: Maybe<string>, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: Maybe<number>, unit: Maybe<{ __typename: 'Unit', name: string }> }>> }, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: Maybe<string>, endCursor: Maybe<string> }, edges: Maybe<Array<Maybe<{ __typename: 'ProductEdge', node: Maybe<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> }> }>>> } };
 
 export type ProductDetailQueryVariablesApi = Exact<{
   urlSlug: Maybe<Scalars['String']>;
@@ -5791,16 +5801,15 @@ export function useRemoveProductFromComparisonMutationApi() {
   return Urql.useMutation<RemoveProductFromComparisonMutationApi, RemoveProductFromComparisonMutationVariablesApi>(RemoveProductFromComparisonMutationDocumentApi);
 };
 export const BrandProductsQueryDocumentApi = gql`
-    query BrandProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $uuid: Uuid, $pageSize: Int) {
-  brand(uuid: $uuid) {
-    products(
-      after: $endCursor
-      orderingMode: $orderingMode
-      filter: $filter
-      first: $pageSize
-    ) {
-      ...ListedProductConnectionFragment
-    }
+    query BrandProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $urlSlug: String, $pageSize: Int) {
+  products(
+    brandSlug: $urlSlug
+    after: $endCursor
+    orderingMode: $orderingMode
+    filter: $filter
+    first: $pageSize
+  ) {
+    ...ListedProductConnectionFragment
   }
 }
     ${ListedProductConnectionFragmentApi}`;
@@ -5837,16 +5846,15 @@ export function useComparisonQueryApi(options: Omit<Urql.UseQueryArgs<Comparison
   return Urql.useQuery<ComparisonQueryApi>({ query: ComparisonQueryDocumentApi, ...options });
 };
 export const FlagProductsQueryDocumentApi = gql`
-    query FlagProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $uuid: Uuid, $pageSize: Int) {
-  flag(uuid: $uuid) {
-    products(
-      after: $endCursor
-      orderingMode: $orderingMode
-      filter: $filter
-      first: $pageSize
-    ) {
-      ...ListedProductConnectionFragment
-    }
+    query FlagProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $urlSlug: String, $pageSize: Int) {
+  products(
+    flagSlug: $urlSlug
+    after: $endCursor
+    orderingMode: $orderingMode
+    filter: $filter
+    first: $pageSize
+  ) {
+    ...ListedProductConnectionFragment
   }
 }
     ${ListedProductConnectionFragmentApi}`;

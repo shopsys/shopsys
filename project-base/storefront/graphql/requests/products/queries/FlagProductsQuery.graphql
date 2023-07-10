@@ -2,12 +2,10 @@ query FlagProductsQuery(
     $endCursor: String!
     $orderingMode: ProductOrderingModeEnum
     $filter: ProductFilter
-    $uuid: Uuid
+    $urlSlug: String
     $pageSize: Int
 ) {
-    flag(uuid: $uuid) {
-        products(after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize) {
-            ...ListedProductConnectionFragment
-        }
+    products(flagSlug: $urlSlug, after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize) {
+        ...ListedProductConnectionFragment
     }
 }
