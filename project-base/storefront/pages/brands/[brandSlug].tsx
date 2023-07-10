@@ -8,6 +8,9 @@ import {
     BrandDetailQueryApi,
     BrandDetailQueryDocumentApi,
     BrandDetailQueryVariablesApi,
+    BrandProductsQueryApi,
+    BrandProductsQueryDocumentApi,
+    BrandProductsQueryVariablesApi,
     useBrandDetailQueryApi,
 } from 'graphql/generated';
 import { getDomainConfig } from 'helpers/domain/domain';
@@ -35,6 +38,7 @@ import { OperationResult, ssrExchange } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 
 const BrandDetailPage: NextPage = () => {
     const router = useRouter();
@@ -100,14 +104,17 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
             })
             .toPromise();
 
-        await client!
-            .query(BrandDetailQueryDocumentApi, {
-                endCursor: getEndCursor(page),
-                orderingMode,
-                filter,
-                uuid: brandDetailResponse.data?.brand?.uuid,
-            })
-            .toPromise();
+        if (brandDetailResponse.data?.brand?.uuid) {
+            await client!
+                .query<BrandProductsQueryApi, BrandProductsQueryVariablesApi>(BrandProductsQueryDocumentApi, {
+                    endCursor: getEndCursor(page),
+                    orderingMode,
+                    filter,
+                    uuid: brandDetailResponse.data.brand.uuid,
+                    pageSize: DEFAULT_PAGE_SIZE,
+                })
+                .toPromise();
+        }
 
         if ((!brandDetailResponse.data || !brandDetailResponse.data.brand) && !(context.res.statusCode === 503)) {
             return {
