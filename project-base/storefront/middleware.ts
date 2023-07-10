@@ -15,9 +15,13 @@ const ERROR_PAGE_ROUTE = '/404';
 export const middleware: NextMiddleware = async (request) => {
     try {
         const host = getHostFromRequest(request);
+        console.log('host', host);
         const domainUrlFromStaticUrls = getDomainUrlFromStaticUrls(host);
+        console.log('domainUrlFromStaticUrls', domainUrlFromStaticUrls);
         const staticUrlsAvailableForDomain = getStaticUrlsAvailableForDomain(domainUrlFromStaticUrls);
+        console.log('staticUrlsAvailableForDomain', JSON.stringify(staticUrlsAvailableForDomain));
         const rewriteTargetUrl = getRewriteTargetPathname(request, staticUrlsAvailableForDomain);
+        console.log('rewriteTargetUrl',rewriteTargetUrl)
 
         if (rewriteTargetUrl) {
             const rewriteUrlObject = new URL(rewriteTargetUrl, request.url);
