@@ -1,0 +1,13 @@
+mirror-project-from-github:
+    stage: service
+    rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: always
+    needs: []
+    script:
+        - apk add git openssh-client
+        - eval $(ssh-agent -s)
+        - mkdir -p ~/.ssh
+        - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+        - echo "$SSHKEY_MIRROR_PROJECT_BASE" | ssh-add -
+        - sh ./gitlab/mirror-repository/mirror.sh "shopsys-project-base" "git@github.com:shopsys/project-base.git" "$MIRROR_SOURCE_BRANCH" "git@gitlab.shopsys.cz:ss6-projects/project-base.git" "$MIRROR_TARGET_BRANCH"

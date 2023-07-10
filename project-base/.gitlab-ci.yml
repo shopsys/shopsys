@@ -7,6 +7,8 @@ stages:
 
 .only-default: &only-default
     rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
         -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
         -   if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
             when: never
@@ -21,6 +23,9 @@ variables:
 
 before_script:
     - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} ${CI_REGISTRY} --password-stdin
+
+# Can be removed if mirroring is not needed
+include: gitlab/mirror-repository/gitlab-stage.yml
 
 build:
     stage: build
@@ -168,6 +173,8 @@ review:stop:
         - docker-compose down --rmi all -v --remove-orphans
         - /home/ci/clean.sh ${COMPOSE_PROJECT_NAME}
     rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
         -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
             when: manual
             allow_failure: true
@@ -228,6 +235,8 @@ service:merge_request:
     tags:
         - deploy
     rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
     script:
@@ -243,6 +252,8 @@ deploy:production:
     variables:
         KUBE_CONFIG: ${KUBE_CONFIG_PROD}
     rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
         -   if: '$CI_COMMIT_BRANCH == "master"'
@@ -262,6 +273,8 @@ deploy:devel:
     variables:
         KUBE_CONFIG: ${KUBE_CONFIG_DEVEL}
     rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
         -   if: '$CI_COMMIT_BRANCH == "devel" || $CI_COMMIT_BRANCH =~ /^devel-.*$/'
