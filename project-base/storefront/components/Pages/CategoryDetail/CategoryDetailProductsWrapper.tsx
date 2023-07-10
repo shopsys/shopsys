@@ -58,7 +58,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ categor
     );
 };
 
-const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi['category'], boolean] => {
+const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi, boolean] => {
     const client = useClient();
     const { query, asPath } = useRouter();
     const { currentPage } = useQueryParams();
@@ -71,9 +71,7 @@ const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi['categ
 
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
     const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
-    const [categoryDetailData, setCategoryDetailData] = useState<undefined | CategoryProductsQueryApi['category']>(
-        undefined,
-    );
+    const [categoryDetailData, setCategoryDetailData] = useState<undefined | CategoryProductsQueryApi>(undefined);
     const [fetching, setFetching] = useState<boolean>(false);
 
     useEffect(() => {
@@ -95,7 +93,7 @@ const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi['categ
             .toPromise()
             .then((response) => {
                 handleQueryError(response.error, t);
-                setCategoryDetailData(response.data?.category ?? undefined);
+                setCategoryDetailData(response.data ?? undefined);
             })
             .finally(() => setFetching(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
