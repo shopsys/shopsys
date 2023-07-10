@@ -41,7 +41,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSessionStore } from 'store/zustand/useSessionStore';
-import { OperationResult, ssrExchange, useClient } from 'urql';
+import { ssrExchange, useClient } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 const CategoryDetailPage: NextPage = () => {
@@ -97,16 +97,15 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
     if (isRedirectedFromSsr(context.req.headers)) {
         const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
         const filter = mapParametersFilter(optionsFilter);
-        const categoryDetailResponse: OperationResult<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi> =
-            await client!
-                .query(CategoryDetailQueryDocumentApi, {
-                    urlSlug,
-                    filter,
-                    orderingMode,
-                })
-                .toPromise();
+        const categoryDetailResponsePromise = client!
+            .query<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
+                urlSlug,
+                filter,
+                orderingMode,
+            })
+            .toPromise();
 
-        await client!
+        const categoryProductsResponsePromise = client!
             .query(CategoryProductsQueryDocumentApi, {
                 endCursor: getEndCursor(page),
                 orderingMode,
@@ -115,6 +114,11 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
                 pageSize: DEFAULT_PAGE_SIZE,
             })
             .toPromise();
+
+        const [categoryDetailResponse] = await Promise.all([
+            categoryDetailResponsePromise,
+            categoryProductsResponsePromise,
+        ]);
 
         if (!categoryDetailResponse.data?.category && !(context.res.statusCode === 503)) {
             return {

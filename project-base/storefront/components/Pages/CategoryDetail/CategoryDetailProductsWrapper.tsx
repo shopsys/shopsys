@@ -56,7 +56,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ categor
     );
 };
 
-const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi['category'], boolean] => {
+const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi, boolean] => {
     const client = useClient();
     const { asPath } = useRouter();
     const { filter, sort, currentPage } = useQueryParams();
@@ -89,7 +89,7 @@ const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi['categ
             .toPromise()
             .then((response) => {
                 handleQueryError(response.error, t);
-                setCategoryDetailData(response.data?.category ?? undefined);
+                setCategoryDetailData(response.data ?? undefined);
             })
             .finally(() => setFetching(false));
     }, [urlSlug, sort, JSON.stringify(filter), endCursor]);

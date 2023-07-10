@@ -5,9 +5,13 @@ query CategoryProductsQuery(
     $urlSlug: String
     $pageSize: Int
 ) {
-    category(urlSlug: $urlSlug) {
-        products(after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize) {
-            ...ListedProductConnectionFragment
-        }
+    products(
+        categorySlug: $urlSlug
+        after: $endCursor
+        orderingMode: $orderingMode
+        filter: $filter
+        first: $pageSize
+    ) {
+        ...ListedProductConnectionFragment
     }
 }
