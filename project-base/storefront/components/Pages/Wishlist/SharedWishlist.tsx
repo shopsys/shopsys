@@ -41,7 +41,7 @@ export const SharedWishlist: FC<SharedWishlistProps> = ({ urlQueryParamId }) => 
                 </>
             ) : (
                 <div className="my-[50px]">
-                    <Heading type="h3">{t('No shared favorites products found.')}</Heading>
+                    <Heading type="h3">{t('There are no products in the shared wishlist.')}</Heading>
                 </div>
             )}
         </Webline>

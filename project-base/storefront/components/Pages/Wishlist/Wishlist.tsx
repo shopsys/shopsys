@@ -57,7 +57,7 @@ export const Wishlist: FC = () => {
                             <TextInput
                                 id="copyUrl-input"
                                 value={buildShareUrl()}
-                                label={t('Send a link to your favourite products')}
+                                label={t('Send a link to this wishlist')}
                                 onChange={() => {
                                     return false;
                                 }}
@@ -86,7 +86,7 @@ export const Wishlist: FC = () => {
                     </div>
                 ) : (
                     <div>
-                        <strong>{t('You have no favorites products.')}</strong>
+                        <strong>{t('There are no products in the wishlist. Add some first.')}</strong>
                     </div>
                 )}
             </Webline>
