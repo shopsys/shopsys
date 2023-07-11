@@ -11,7 +11,6 @@ import { useTypedTranslationFunction } from './typescript/useTypedTranslationFun
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { usePersistStore } from 'store/zustand/usePersistStore';
-import { useQueryError } from './graphQl/useQueryError';
 
 export const useWishlist = () => {
     const t = useTypedTranslationFunction();
@@ -25,12 +24,10 @@ export const useWishlist = () => {
     const [, addProductToWishlist] = useAddProductToWishlistMutationApi();
     const [, removeProductFromWishlist] = useRemoveProductFromWishlistMutationApi();
     const [, cleanWishlist] = useCleanWishlistMutationApi();
-    const [{ data, fetching }] = useQueryError(
-        useWishlistQueryApi({
-            variables: { wishlistUuid },
-            pause: !wishlistUuid,
-        }),
-    );
+    const [{ data, fetching }] = useWishlistQueryApi({
+        variables: { wishlistUuid },
+        pause: !wishlistUuid,
+    });
 
     const handleCleanWishlist = async () => {
         const cleanWishlistResult = await cleanWishlist({ wishlistUuid });
@@ -102,11 +99,9 @@ export const useWishlist = () => {
 };
 
 export const useSharedWishlist = (catnums: string[]): { products: ListedProductFragmentApi[]; fetching: boolean } => {
-    const [{ data, fetching }] = useQueryError(
-        useSharedWishlistQueryApi({
-            variables: { catnums },
-        }),
-    );
+    const [{ data, fetching }] = useSharedWishlistQueryApi({
+        variables: { catnums },
+    });
 
     if (!data?.productsByCatnums) {
         return { products: [], fetching };

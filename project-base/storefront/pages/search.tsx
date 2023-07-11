@@ -26,7 +26,7 @@ import {
 } from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -39,16 +39,14 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const { url } = useDomainConfig();
     const { sort, filter, searchString } = useQueryParams();
 
-    const [{ data: searchData, fetching }] = useQueryError(
-        useSearchQueryApi({
-            variables: {
-                search: searchString ?? '',
-                orderingMode: sort,
-                filter: mapParametersFilter(filter),
-                pageSize: DEFAULT_PAGE_SIZE,
-            },
-        }),
-    );
+    const [{ data: searchData, fetching }] = useSearchQueryApi({
+        variables: {
+            search: searchString ?? '',
+            orderingMode: sort,
+            filter: mapParametersFilter(filter),
+            pageSize: DEFAULT_PAGE_SIZE,
+        },
+    });
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
     const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Search'), slug: searchUrl }];

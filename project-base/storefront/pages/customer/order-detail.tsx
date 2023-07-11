@@ -8,7 +8,7 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -20,9 +20,9 @@ const OrderDetailPage: FC = () => {
     const { url } = useDomainConfig();
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
     const router = useRouter();
-    const [{ data: orderData }] = useQueryError(
-        useOrderDetailQueryApi({ variables: { orderNumber: getStringFromUrlQuery(router.query.orderNumber) } }),
-    );
+    const [{ data: orderData }] = useOrderDetailQueryApi({
+        variables: { orderNumber: getStringFromUrlQuery(router.query.orderNumber) },
+    });
     const breadcrumbs: BreadcrumbFragmentApi[] = [
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
     ];

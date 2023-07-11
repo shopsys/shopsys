@@ -13,7 +13,7 @@ import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'help
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
@@ -68,12 +68,10 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
         url,
     );
 
-    const [{ data: pickupPlaceData }] = useQueryError(
-        useStoreQueryApi({
-            pause: lastOrder?.pickupPlaceIdentifier === undefined || lastOrder.pickupPlaceIdentifier === null,
-            variables: { uuid: lastOrder?.pickupPlaceIdentifier ?? null },
-        }),
-    );
+    const [{ data: pickupPlaceData }] = useStoreQueryApi({
+        pause: lastOrder?.pickupPlaceIdentifier === undefined || lastOrder.pickupPlaceIdentifier === null,
+        variables: { uuid: lastOrder?.pickupPlaceIdentifier ?? null },
+    });
 
     const transportAndPaymentValidationMessages = useMemo(() => {
         const errors: Partial<TransportAndPaymentErrorsType> = {};

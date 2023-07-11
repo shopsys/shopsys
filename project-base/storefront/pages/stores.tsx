@@ -4,14 +4,13 @@ import { BreadcrumbFragmentApi, StoresQueryDocumentApi, useStoresQueryApi } from
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { GtmPageType } from 'types/gtm/enums';
 
 const StoresPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
-    const [{ data: storesData }] = useQueryError(useStoresQueryApi());
+    const [{ data: storesData }] = useStoresQueryApi();
     const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Department stores'), slug: '' }];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.stores, breadcrumbs);

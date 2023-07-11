@@ -7,7 +7,7 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
@@ -18,8 +18,8 @@ const TEST_IDENTIFIER = 'blocks-blogpreview';
 
 export const BlogPreview: FC = () => {
     const t = useTypedTranslationFunction();
-    const [{ data: blogPreviewData }] = useQueryError(useBlogArticlesQueryApi({ variables: BLOG_PREVIEW_VARIABLES }));
-    const [{ data: blogUrlData }] = useQueryError(useBlogUrlQueryApi());
+    const [{ data: blogPreviewData }] = useBlogArticlesQueryApi({ variables: BLOG_PREVIEW_VARIABLES });
+    const [{ data: blogUrlData }] = useBlogUrlQueryApi();
     const blogUrl = blogUrlData?.blogCategories[0].link;
     const { width } = useGetWindowSize();
     const [isBlogPreviewArticlesSideSliderVisible, setBlogPreviewArticlesSideSliderVisibility] = useState(false);

@@ -17,7 +17,7 @@ import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { createClient } from 'helpers/urql/createClient';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import getT from 'next-translate/getT';
@@ -28,11 +28,9 @@ import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 const ProductDetailPage: NextPage = () => {
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
-    const [{ data: productData, fetching }] = useQueryError(
-        useProductDetailQueryApi({
-            variables: { urlSlug: getSlugFromUrl(slug) },
-        }),
-    );
+    const [{ data: productData, fetching }] = useProductDetailQueryApi({
+        variables: { urlSlug: getSlugFromUrl(slug) },
+    });
 
     const product =
         productData?.product?.__typename === 'RegularProduct' || productData?.product?.__typename === 'MainVariant'

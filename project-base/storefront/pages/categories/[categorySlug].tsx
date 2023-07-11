@@ -35,10 +35,8 @@ import {
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { createClient } from 'helpers/urql/createClient';
-import { handleQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { NextRouter, useRouter } from 'next/router';
@@ -77,11 +75,7 @@ const CategoryDetailPage: NextPage = () => {
                 {isSkeletonVisible ? (
                     <CategoryDetailPageSkeleton />
                 ) : (
-                    !!categoryData && (
-                        <>
-                            <CategoryDetailContent category={categoryData} />
-                        </>
-                    )
+                    !!categoryData && <CategoryDetailContent category={categoryData} />
                 )}
             </Webline>
         </CommonLayout>
@@ -145,7 +139,6 @@ export default CategoryDetailPage;
 const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | CategoryDetailFragmentApi, boolean] => {
     const client = useClient();
     const router = useRouter();
-    const t = useTypedTranslationFunction();
     const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(router.asPath));
     const { sort } = useQueryParams();
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
@@ -171,7 +164,6 @@ const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | Ca
             })
             .toPromise()
             .then((response) => {
-                handleQueryError(response.error, t);
                 setCategoryDetailData(response.data?.category ?? undefined);
                 handleSeoCategorySlugUpdate(
                     router,

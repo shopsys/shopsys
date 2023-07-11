@@ -2,7 +2,7 @@ import { ProductsSlider } from '../Blocks/Product/ProductsSlider';
 import { UserText } from 'components/Helpers/UserText/UserText';
 import { ListedProductFragmentApi, useProductsByCatnumsApi } from 'graphql/generated';
 import { replaceAll } from 'helpers/replaceAll';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { memo } from 'react';
 import { GtmProductListNameType } from 'types/gtm/enums';
 import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'utils/grapesJsParser';
@@ -16,7 +16,7 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text }) => {
 
     const dividedText = text.split(GJS_PRODUCTS_SEPARATOR).filter(Boolean);
 
-    const [result] = useQueryError(useProductsByCatnumsApi({ variables: { catnums: productsCatnum } }));
+    const [result] = useProductsByCatnumsApi({ variables: { catnums: productsCatnum } });
 
     const allProducts = result.data?.productsByCatnums;
 

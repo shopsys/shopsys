@@ -12,7 +12,7 @@ import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePro
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useGtmPaymentAndTransportPageViewEvent } from 'hooks/gtm/useGtmPaymentAndTransportPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -24,10 +24,11 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { isUserLoggedIn } = useCurrentUserData();
-    const [{ data: transportsData }] = useQueryError(
-        useTransportsQueryApi({ variables: { cartUuid }, requestPolicy: 'cache-and-network' }),
-    );
-    const [{ data }] = useQueryError(useLastOrderQueryApi({ requestPolicy: 'network-only', pause: !isUserLoggedIn }));
+    const [{ data: transportsData }] = useTransportsQueryApi({
+        variables: { cartUuid },
+        requestPolicy: 'cache-and-network',
+    });
+    const [{ data }] = useLastOrderQueryApi({ requestPolicy: 'network-only', pause: !isUserLoggedIn });
     const currentCart = useCurrentCart();
     const [changeTransportInCart, isTransportSelectionLoading] = useChangeTransportInCart();
     const [changePaymentInCart, isPaymentSelectionLoading] = useChangePaymentInCart();

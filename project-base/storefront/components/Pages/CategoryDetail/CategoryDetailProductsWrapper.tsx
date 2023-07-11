@@ -14,9 +14,7 @@ import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'helpers/gtm/gtm';
 import { getMappedProducts } from 'helpers/mappers/products';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { handleQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPaginatedProductListViewEvent } from 'hooks/gtm/productList/useGtmPaginatedProductListViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
 import { RefObject, useEffect, useMemo, useState } from 'react';
@@ -63,7 +61,6 @@ const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi, boole
     const client = useClient();
     const { asPath } = useRouter();
     const { filter, sort, currentPage } = useQueryParams();
-    const t = useTypedTranslationFunction();
 
     const endCursor = getEndCursor(currentPage);
     const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(asPath));
@@ -94,7 +91,6 @@ const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi, boole
             })
             .toPromise()
             .then((response) => {
-                handleQueryError(response.error, t);
                 setCategoryProductsData(response.data ?? undefined);
             })
             .finally(() => setFetching(false));

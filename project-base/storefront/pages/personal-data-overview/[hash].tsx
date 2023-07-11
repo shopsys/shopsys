@@ -5,7 +5,7 @@ import { PersonalDataDetailQueryDocumentApi, usePersonalDataDetailQueryApi } fro
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
@@ -13,7 +13,7 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
     const { query } = useRouter();
     const hash = getStringFromUrlQuery(query.hash);
 
-    const [{ data }] = useQueryError(usePersonalDataDetailQueryApi({ variables: { hash } }));
+    const [{ data }] = usePersonalDataDetailQueryApi({ variables: { hash } });
 
     if (!data) {
         return <Error404Content />;

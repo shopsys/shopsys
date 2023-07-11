@@ -16,7 +16,7 @@ import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { createClient } from 'helpers/urql/createClient';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import getT from 'next-translate/getT';
@@ -28,11 +28,9 @@ const StoreDetailPage: NextPage = () => {
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
 
-    const [{ data: storeDetailData, fetching }] = useQueryError(
-        useStoreDetailQueryApi({
-            variables: { urlSlug: getSlugFromUrl(slug) },
-        }),
-    );
+    const [{ data: storeDetailData, fetching }] = useStoreDetailQueryApi({
+        variables: { urlSlug: getSlugFromUrl(slug) },
+    });
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(storeDetailData?.store);
     useGtmPageViewEvent(pageViewEvent, fetching);

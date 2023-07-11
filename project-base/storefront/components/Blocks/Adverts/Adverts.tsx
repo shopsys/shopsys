@@ -4,7 +4,7 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { AdvertsFragmentApi, CategoryDetailFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { Fragment, useState } from 'react';
@@ -36,7 +36,7 @@ export const Adverts: FC<AdvertsProps> = ({
     className,
     isSingle,
 }) => {
-    const [{ data: advertsData }] = useQueryError(useAdvertsQueryApi());
+    const [{ data: advertsData }] = useAdvertsQueryApi();
     const [isMobile, setIsMobile] = useState(false);
     const { width } = useGetWindowSize();
 

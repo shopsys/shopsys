@@ -16,7 +16,7 @@ import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePro
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -28,12 +28,10 @@ const OrdersPage: FC = () => {
     const t = useTypedTranslationFunction();
     const { currentPage } = useQueryParams();
     const { url } = useDomainConfig();
-    const [{ data: ordersData }] = useQueryError(
-        useOrdersQueryApi({
-            variables: { after: getEndCursor(currentPage), first: DEFAULT_PAGE_SIZE },
-            requestPolicy: 'cache-and-network',
-        }),
-    );
+    const [{ data: ordersData }] = useOrdersQueryApi({
+        variables: { after: getEndCursor(currentPage), first: DEFAULT_PAGE_SIZE },
+        requestPolicy: 'cache-and-network',
+    });
     const mappedOrders = useMemo(
         () => mapConnectionEdges<ListedOrderFragmentApi>(ordersData?.orders?.edges),
         [ordersData?.orders?.edges],

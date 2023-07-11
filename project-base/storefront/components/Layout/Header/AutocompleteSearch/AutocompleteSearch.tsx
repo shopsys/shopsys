@@ -4,7 +4,7 @@ import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmAutocompleteResultsViewEvent } from 'hooks/gtm/useGtmAutocompleteResultsViewEvent';
 import { useDebounce } from 'hooks/helpers/useDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -23,17 +23,15 @@ export const AutocompleteSearch: FC = () => {
     const [autocompleteSearchQueryValue, setAutocompleteSearchQueryValue] = useState('');
     const debouncedAutocompleteSearchQuery = useDebounce(autocompleteSearchQueryValue, 200);
     const [hasAutocompleteSearchFocus, setAutocompleteSearchFocus] = useState(false);
-    const [{ data: autocompleteSearchData, fetching: areSearchResultsLoading }] = useQueryError(
-        useAutocompleteSearchQueryApi({
-            variables: {
-                search: debouncedAutocompleteSearchQuery,
-                maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
-                maxProductCount: AUTOCOMPLETE_PRODUCT_LIMIT,
-            },
-            pause: debouncedAutocompleteSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH,
-            requestPolicy: 'network-only',
-        }),
-    );
+    const [{ data: autocompleteSearchData, fetching: areSearchResultsLoading }] = useAutocompleteSearchQueryApi({
+        variables: {
+            search: debouncedAutocompleteSearchQuery,
+            maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
+            maxProductCount: AUTOCOMPLETE_PRODUCT_LIMIT,
+        },
+        pause: debouncedAutocompleteSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH,
+        requestPolicy: 'network-only',
+    });
 
     const autocompleteSearchInRef = useRef<HTMLDivElement>(null);
     const { url } = useDomainConfig();

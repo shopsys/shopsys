@@ -3,7 +3,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useNotificationBarsApi } from 'graphql/generated';
 import { useAuth } from 'hooks/auth/useAuth';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import decode from 'jwt-decode';
 import Trans from 'next-translate/Trans';
@@ -13,7 +13,7 @@ import { twJoin } from 'tailwind-merge';
 import tinycolor from 'tinycolor2';
 
 export const NotificationBars: FC = memo(function NotificationBars() {
-    const [{ data: notificationBarsData }] = useQueryError(useNotificationBarsApi());
+    const [{ data: notificationBarsData }] = useNotificationBarsApi();
     const { isUserLoggedIn, user } = useCurrentUserData();
     const [loggedAsUserEmail, setLoggedAsUserEmail] = useState<string>();
     const bars = notificationBarsData?.notificationBars;

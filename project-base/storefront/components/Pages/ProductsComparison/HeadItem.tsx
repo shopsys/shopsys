@@ -35,7 +35,11 @@ export const HeadItem: FC<ItemProps> = ({ product, productsCompareCount, listInd
             <div className="flex h-[365px] w-[182px] flex-col gap-2 sm:w-[205px]">
                 <div className="flex flex-col items-center ">
                     <div className="flex h-[185px] w-full items-center justify-center pt-4 pb-3">
-                        <Image image={product.mainImage} type="list" alt={product.mainImage?.name || product.fullName} />
+                        <Image
+                            image={product.mainImage}
+                            type="list"
+                            alt={product.mainImage?.name || product.fullName}
+                        />
                     </div>
                     <ExtendedNextLink href={product.slug} passHref type="product">
                         <a
