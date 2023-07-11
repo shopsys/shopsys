@@ -50,7 +50,8 @@ jobs:
                     DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/app/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     DOCKER_ELASTICSEARCH_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}
                     DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
-                    BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+                    BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+                    BRANCH_NAME="${BRANCH,,}"
                     BRANCH_NAME_ESCAPED="${BRANCH_NAME//./-}"
                     echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_OUTPUT
                     echo "BRANCH_NAME_ESCAPED=${BRANCH_NAME_ESCAPED}" >> $GITHUB_OUTPUT
