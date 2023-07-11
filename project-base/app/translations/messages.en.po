@@ -418,6 +418,9 @@ msgstr ""
 msgid "Datum zobrazení OD"
 msgstr ""
 
+msgid "Day"
+msgstr ""
+
 msgid "Default stock cannot be removed"
 msgstr ""
 
@@ -730,6 +733,9 @@ msgstr ""
 msgid "Free transport and payment - view"
 msgstr ""
 
+msgid "Friday"
+msgstr ""
+
 msgid "Full name"
 msgstr ""
 
@@ -982,6 +988,12 @@ msgstr ""
 msgid "Meta description"
 msgstr ""
 
+msgid "Množství zboží <strong>{{ name }}</strong> ve Vašem košíku bylo upraveno z důvodu změny dostupnosti. Prosím zkontrolujte si svojí objednávku."
+msgstr "Množstvo tovaru <strong>{{name}}</strong> vo vašom košíku bolo upravené z dôvodu zmeny dostupnosti. Prosím, skontrolujte si svoju objednávku."
+
+msgid "Monday"
+msgstr ""
+
 msgid "Move"
 msgstr ""
 
@@ -1199,6 +1211,9 @@ msgid "Open Graph description"
 msgstr ""
 
 msgid "Open Graph title"
+msgstr ""
+
+msgid "Opening hours"
 msgstr ""
 
 msgid "Operator information - full"
@@ -1663,6 +1678,9 @@ msgstr ""
 msgid "Sales overview (last 7 days)"
 msgstr ""
 
+msgid "Saturday"
+msgstr ""
+
 msgid "Save changes"
 msgstr ""
 
@@ -1834,6 +1852,9 @@ msgstr ""
 msgid "Stáhnout soubor"
 msgstr ""
 
+msgid "Sunday"
+msgstr ""
+
 msgid "TOP"
 msgstr ""
 
@@ -1885,10 +1906,19 @@ msgstr ""
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr ""
 
+msgid "Thursday"
+msgstr ""
+
 msgid "TikTok URL"
 msgstr ""
 
 msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
+msgstr ""
+
+msgid "Time from"
+msgstr ""
+
+msgid "Time to"
 msgstr ""
 
 msgid "Titulek stránky"
@@ -1946,6 +1976,12 @@ msgid "Transports and payments - full"
 msgstr ""
 
 msgid "Transports and payments - view"
+msgstr ""
+
+msgid "Try using web search"
+msgstr "Skúste použiť vyhľadávanie na webe"
+
+msgid "Tuesday"
 msgstr ""
 
 msgid "Two factor authentication code"
@@ -2141,6 +2177,9 @@ msgid "Warehouse"
 msgstr ""
 
 msgid "We have nothing to show you at this url."
+msgstr ""
+
+msgid "Wednesday"
 msgstr ""
 
 msgid "Weight (g)"

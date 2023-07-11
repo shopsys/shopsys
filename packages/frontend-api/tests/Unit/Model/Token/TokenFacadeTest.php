@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Unit\Model\Token;
 
 use DateTimeImmutable;
+use DateTimeZone;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\Encoding\JoseEncoder;
@@ -123,7 +124,8 @@ class TokenFacadeTest extends TestCase
      */
     private function createDomain(): Domain
     {
-        $domainConfig = new DomainConfig(1, 'http://webserver:8080', 'domain', 'en');
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
+        $domainConfig = new DomainConfig(1, 'http://webserver:8080', 'domain', 'en', $defaultTimeZone);
         $setting = $this->createMock(Setting::class);
 
         $domain = new Domain([$domainConfig], $setting);

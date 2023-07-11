@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Store;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use App\Model\Store\OpeningHours\OpeningHoursDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
@@ -14,11 +15,13 @@ class StoreDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
+     * @param \App\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHourDataFactory
      */
     public function __construct(
         private readonly Domain $domain,
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
         private readonly ImageUploadDataFactory $imageUploadDataFactory,
+        private readonly OpeningHoursDataFactory $openingHourDataFactory,
     ) {
     }
 
@@ -27,7 +30,10 @@ class StoreDataFactory
      */
     public function create(): StoreData
     {
-        return $this->createInstance();
+        $storeData = $this->createInstance();
+        $storeData->openingHours = $this->openingHourDataFactory->createWeek();
+
+        return $storeData;
     }
 
     /**
@@ -46,7 +52,7 @@ class StoreDataFactory
         $storeData->city = $store->getCity();
         $storeData->postcode = $store->getPostcode();
         $storeData->country = $store->getCountry();
-        $storeData->openingHours = $store->getOpeningHours();
+        $storeData->openingHours = $this->openingHourDataFactory->createWholeWeekOpeningHours($store->getOpeningHours());
         $storeData->contactInfo = $store->getContactInfo();
         $storeData->specialMessage = $store->getSpecialMessage();
         $storeData->locationLatitude = $store->getLocationLatitude();

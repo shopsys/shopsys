@@ -88,9 +88,7 @@ export const mapGtmShippingInfo = (pickupPlace: ListedStoreFragmentApi | null): 
     if (pickupPlace !== null) {
         transportDetail = `${pickupPlace.name}, ${pickupPlace.street}, ${pickupPlace.city}, ${pickupPlace.country.name}, ${pickupPlace.postcode}`;
 
-        if (pickupPlace.openingHoursHtml !== null) {
-            transportExtra.push(pickupPlace.openingHoursHtml);
-        }
+        transportExtra.push('');
     }
 
     return {
@@ -116,7 +114,7 @@ export const getGtmPickupPlaceFromStore = (
         code: store.country.code,
     },
     description: store.description ?? '',
-    openingHoursHtml: store.openingHoursHtml ?? '',
+    openingHours: store.openingHours,
     postcode: store.postcode,
     street: store.street,
 });
@@ -138,7 +136,11 @@ export const getGtmPickupPlaceFromLastOrder = (
         code: lastOrder.deliveryCountry?.code ?? '',
     },
     description: null,
-    openingHoursHtml: null,
+    openingHours: {
+        isOpen: false,
+        dayOfWeek: 0,
+        openingHoursOfDays: [],
+    },
     postcode: lastOrder.deliveryPostcode ?? '',
     street: lastOrder.deliveryStreet ?? '',
 });

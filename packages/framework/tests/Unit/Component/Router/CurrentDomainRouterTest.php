@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Router;
 
+use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -16,7 +17,8 @@ class CurrentDomainRouterTest extends TestCase
 {
     public function testDelegateRouter()
     {
-        $domainConfigs = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'en');
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
+        $domainConfigs = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'en', $defaultTimeZone);
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain([$domainConfigs], $settingMock);
         $domain->switchDomainById(Domain::FIRST_DOMAIN_ID);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Store\OpeningHours\OpeningHoursDataFactory;
 use App\Model\Store\StoreData;
 use App\Model\Store\StoreDataFactory;
 use App\Model\Store\StoreFacade;
@@ -26,7 +27,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const ATTR_CITY = 'city';
     private const ATTR_POSTCODE = 'postcode';
     private const ATTR_COUNTRY = 'country';
-    private const ATTR_OPENING_HOURS = 'openingHours';
     private const ATTR_CONTACT_INFO = 'contactInfo';
     private const ATTR_SPECIAL_MESSAGE = 'specialMessage';
     private const ATTR_LOCATION_LATITUDE = 'locationLatitude';
@@ -58,12 +58,14 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param \App\Model\Store\StoreDataFactory $storeDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
+     * @param \App\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHourDataFactory
      */
     public function __construct(
         private readonly StoreFacade $storeFacade,
         private readonly StoreDataFactory $storeDataFactory,
         private readonly Domain $domain,
         private readonly ImageUploadDataFactory $imageUploadDataFactory,
+        private readonly OpeningHoursDataFactory $openingHourDataFactory,
     ) {
     }
 
@@ -99,7 +101,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_POSTCODE => '70200',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                 self::ATTR_CONTACT_INFO => null,
-                self::ATTR_OPENING_HOURS => 'Po-Pa: 8:00-16:00',
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '49.8574975',
                 self::ATTR_LOCATION_LONGITUDE => '18.2738861',
@@ -116,7 +117,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_POSTCODE => '53002',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                 self::ATTR_CONTACT_INFO => null,
-                self::ATTR_OPENING_HOURS => 'Po-Pa: 8:00-17:00',
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '50.0346875',
                 self::ATTR_LOCATION_LONGITUDE => '15.7707169',
@@ -133,7 +133,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA),
                 self::ATTR_POSTCODE => '01007',
                 self::ATTR_CONTACT_INFO => null,
-                self::ATTR_OPENING_HOURS => 'Po-Pa: 7:00-16:00',
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '49.2030444',
                 self::ATTR_LOCATION_LONGITUDE => '18.7499042',
@@ -167,7 +166,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         $storeData->city = $demoRow[self::ATTR_CITY];
         $storeData->postcode = $demoRow[self::ATTR_POSTCODE];
         $storeData->country = $demoRow[self::ATTR_COUNTRY];
-        $storeData->openingHours = $demoRow[self::ATTR_OPENING_HOURS];
+        $storeData->openingHours = $this->createOpeningHoursData();
         $storeData->contactInfo = $demoRow[self::ATTR_CONTACT_INFO];
         $storeData->specialMessage = $demoRow[self::ATTR_SPECIAL_MESSAGE];
         $storeData->locationLatitude = $demoRow[self::ATTR_LOCATION_LATITUDE];
@@ -182,5 +181,73 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         return [
             StocksDataFixture::class,
         ];
+    }
+
+    /**
+     * @return \App\Model\Store\OpeningHours\OpeningHoursData[]
+     */
+    private function createOpeningHoursData(): array
+    {
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 1;
+        $openingHourData->firstOpeningTime = '06:00';
+        $openingHourData->firstClosingTime = '11:00';
+        $openingHourData->secondOpeningTime = '13:00';
+        $openingHourData->secondClosingTime = '18:00';
+
+        $openingHoursData[] = $openingHourData;
+
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 2;
+        $openingHourData->firstOpeningTime = '07:00';
+        $openingHourData->firstClosingTime = '11:00';
+        $openingHourData->secondOpeningTime = '13:00';
+        $openingHourData->secondClosingTime = '17:00';
+
+        $openingHoursData[] = $openingHourData;
+
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 3;
+        $openingHourData->firstOpeningTime = '08:00';
+        $openingHourData->firstClosingTime = '11:00';
+        $openingHourData->secondOpeningTime = '13:00';
+        $openingHourData->secondClosingTime = '16:00';
+
+        $openingHoursData[] = $openingHourData;
+
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 4;
+        $openingHourData->firstOpeningTime = '09:00';
+        $openingHourData->firstClosingTime = '11:00';
+        $openingHourData->secondOpeningTime = '13:00';
+        $openingHourData->secondClosingTime = '15:00';
+
+        $openingHoursData[] = $openingHourData;
+
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 5;
+        $openingHourData->firstOpeningTime = '10:00';
+        $openingHourData->firstClosingTime = '11:00';
+        $openingHourData->secondOpeningTime = '13:00';
+        $openingHourData->secondClosingTime = '14:00';
+
+        $openingHoursData[] = $openingHourData;
+
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 6;
+        $openingHourData->firstOpeningTime = '08:00';
+        $openingHourData->firstClosingTime = '11:00';
+
+        $openingHoursData[] = $openingHourData;
+
+
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 7;
+        $openingHourData->firstOpeningTime = '09:00';
+        $openingHourData->firstClosingTime = '11:00';
+
+        $openingHoursData[] = $openingHourData;
+
+        return $openingHoursData;
     }
 }

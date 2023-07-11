@@ -418,6 +418,9 @@ msgstr ""
 msgid "Datum zobrazení OD"
 msgstr ""
 
+msgid "Day"
+msgstr "Den"
+
 msgid "Default stock cannot be removed"
 msgstr "Výchozí sklad nemůže být odstraněn"
 
@@ -730,6 +733,9 @@ msgstr "Doprava a platba zdarma - vše"
 msgid "Free transport and payment - view"
 msgstr "Doprava a platba zdarma - zobrazení"
 
+msgid "Friday"
+msgstr "Pátek"
+
 msgid "Full name"
 msgstr "Celé jméno"
 
@@ -982,6 +988,9 @@ msgstr "Přehled měrných jednotek"
 msgid "Meta description"
 msgstr "Meta popis"
 
+msgid "Monday"
+msgstr "Pondělí"
+
 msgid "Move"
 msgstr ""
 
@@ -1200,6 +1209,9 @@ msgstr "Open Graph popis"
 
 msgid "Open Graph title"
 msgstr "Open Graph titulek"
+
+msgid "Opening hours"
+msgstr "Otevírací doba"
 
 msgid "Operator information - full"
 msgstr "Informace o provozovateli - vše"
@@ -1663,6 +1675,9 @@ msgstr "SEO stránky"
 msgid "Sales overview (last 7 days)"
 msgstr ""
 
+msgid "Saturday"
+msgstr "Sobota"
+
 msgid "Save changes"
 msgstr "Uložit změny"
 
@@ -1834,6 +1849,9 @@ msgstr ""
 msgid "Stáhnout soubor"
 msgstr ""
 
+msgid "Sunday"
+msgstr "Neděle"
+
 msgid "TOP"
 msgstr ""
 
@@ -1885,11 +1903,20 @@ msgstr ""
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr ""
 
+msgid "Thursday"
+msgstr "Čtvrtek"
+
 msgid "TikTok URL"
 msgstr "TikTok URL"
 
 msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
 msgstr "Formát času: \"hh:mm\", např.: \"07:45\", \"23:05\""
+
+msgid "Time from"
+msgstr "Čas od"
+
+msgid "Time to"
+msgstr "Čas do"
 
 msgid "Titulek stránky"
 msgstr ""
@@ -1947,6 +1974,12 @@ msgstr "Dopravy a platby - vše"
 
 msgid "Transports and payments - view"
 msgstr "Dopravy a platby - zobrazení"
+
+msgid "Try using web search"
+msgstr "Zkuste použít vyhledávání na webu"
+
+msgid "Tuesday"
+msgstr "Úterý"
 
 msgid "Two factor authentication code"
 msgstr ""
@@ -2142,6 +2175,9 @@ msgstr "Sklad"
 
 msgid "We have nothing to show you at this url."
 msgstr "Na téhle url adrese nemáme nic, co bychom Vám ukázali."
+
+msgid "Wednesday"
+msgstr "Středa"
 
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"

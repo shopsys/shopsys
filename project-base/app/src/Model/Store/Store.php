@@ -6,6 +6,11 @@ namespace App\Model\Store;
 
 use App\Model\Stock\Stock;
 use App\Model\Store\Exception\StoreDomainNotFoundException;
+use App\Model\Store\OpeningHours\Exception\OpeningHoursNotFoundException;
+use App\Model\Store\OpeningHours\OpeningHours;
+use App\Model\Store\OpeningHours\OpeningHoursData;
+use DateTimeImmutable;
+use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -99,10 +104,11 @@ class Store implements OrderableEntityInterface
     protected Country $country;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="text", nullable=true)
+     * @var \Doctrine\Common\Collections\Collection<int,\App\Model\Store\OpeningHours\OpeningHours>
+     * @ORM\OneToMany(targetEntity="\App\Model\Store\OpeningHours\OpeningHours", mappedBy="store", cascade={"persist", "remove"}, orphanRemoval=true, fetch="EAGER")
+     * @ORM\OrderBy({"dayOfWeek" = "ASC"})
      */
-    protected ?string $openingHours;
+    protected Collection $openingHours;
 
     /**
      * @var string|null
@@ -144,6 +150,7 @@ class Store implements OrderableEntityInterface
         $this->position = self::GEDMO_SORTABLE_LAST_POSITION;
         $this->createDomains($storeData);
         $this->uuid = $storeData->uuid ?: Uuid::uuid4()->toString();
+        $this->openingHours = new ArrayCollection();
         $this->setData($storeData);
     }
 
@@ -170,7 +177,7 @@ class Store implements OrderableEntityInterface
         $this->city = $storeData->city;
         $this->postcode = $storeData->postcode;
         $this->country = $storeData->country;
-        $this->openingHours = $storeData->openingHours;
+        $this->openingHours = $this->createOpeningHours($storeData->openingHours);
         $this->contactInfo = $storeData->contactInfo;
         $this->specialMessage = $storeData->specialMessage;
         $this->locationLatitude = $storeData->locationLatitude;
@@ -292,11 +299,67 @@ class Store implements OrderableEntityInterface
     }
 
     /**
-     * @return string|null
+     * @return \App\Model\Store\OpeningHours\OpeningHours[]
      */
-    public function getOpeningHours(): ?string
+    public function getOpeningHours(): array
     {
-        return $this->openingHours;
+        return $this->openingHours->getValues();
+    }
+
+    /**
+     * @param \DateTimeZone $dateTimeZone
+     * @return \App\Model\Store\OpeningHours\OpeningHours
+     */
+    public function getTodayOpeningHours(DateTimeZone $dateTimeZone): OpeningHours
+    {
+        $dayOfWeek = (int)(new DateTimeImmutable('now', $dateTimeZone))->format('N');
+
+        foreach ($this->openingHours as $openingHours) {
+            if ($openingHours->getDayOfWeek() === $dayOfWeek) {
+                return $openingHours;
+            }
+        }
+
+        throw new OpeningHoursNotFoundException($this->id, $dayOfWeek);
+    }
+
+    /**
+     * @param \DateTimeImmutable $date
+     * @return bool
+     */
+    public function isOpen(DateTimeImmutable $date): bool
+    {
+        $todayOpeningHours = $this->getTodayOpeningHours($date->getTimezone());
+        $firstOpeningTime = $this->getTimeWithTimeZone($todayOpeningHours->getFirstOpeningTime(), $date->getTimezone());
+        $firstClosingTime = $this->getTimeWithTimeZone($todayOpeningHours->getFirstClosingTime(), $date->getTimezone());
+        $secondOpeningTime = $this->getTimeWithTimeZone($todayOpeningHours->getSecondOpeningTime(), $date->getTimezone());
+        $secondClosingTime = $this->getTimeWithTimeZone($todayOpeningHours->getSecondClosingTime(), $date->getTimezone());
+
+        $hasFirstTimeSet = $firstOpeningTime !== null && $firstClosingTime !== null;
+        $hasSecondTimeSet = $secondOpeningTime !== null && $secondClosingTime !== null;
+
+        $isFirstTimeOpen = $hasFirstTimeSet && $date >= $firstOpeningTime && $date < $firstClosingTime;
+        $isSecondTimeOpen = $hasSecondTimeSet && $date >= $secondOpeningTime && $date < $secondClosingTime;
+
+        return $isFirstTimeOpen || $isSecondTimeOpen;
+    }
+
+    /**
+     * @param string|null $time
+     * @param \DateTimeZone $dateTimeZone
+     * @return \DateTimeImmutable|null
+     */
+    protected function getTimeWithTimeZone(?string $time, DateTimeZone $dateTimeZone): ?DateTimeImmutable
+    {
+        if ($time === null) {
+            return null;
+        }
+
+        return DateTimeImmutable::createFromFormat(
+            'H:i',
+            $time,
+            $dateTimeZone,
+        );
     }
 
     /**
@@ -374,5 +437,21 @@ class Store implements OrderableEntityInterface
     public function setDefault(): void
     {
         $this->isDefault = true;
+    }
+
+    /**
+     * @param \App\Model\Store\OpeningHours\OpeningHoursData[] $openingHours
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    protected function createOpeningHours(array $openingHours): ArrayCollection
+    {
+        $openingHours = array_map(function (OpeningHoursData $openingHourData): OpeningHours {
+            $openingHours = new OpeningHours($openingHourData);
+            $openingHours->setStore($this);
+
+            return $openingHours;
+        }, $openingHours);
+
+        return new ArrayCollection($openingHours);
     }
 }

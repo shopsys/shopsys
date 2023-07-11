@@ -55,6 +55,8 @@
     * [NavigationItemCategoriesByColumns](#navigationitemcategoriesbycolumns)
     * [NewsletterSubscriber](#newslettersubscriber)
     * [NotificationBar](#notificationbar)
+    * [OpeningHours](#openinghours)
+    * [OpeningHoursOfDay](#openinghoursofday)
     * [Order](#order)
     * [OrderConnection](#orderconnection)
     * [OrderEdge](#orderedge)
@@ -4861,6 +4863,110 @@ Message of the notification
 </tbody>
 </table>
 
+### OpeningHours
+
+Represents store opening hours
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>dayOfWeek</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Current day of the week
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isOpen</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Is store currently open?
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>openingHoursOfDays</strong></td>
+<td valign="top">[<a href="#openinghoursofday">OpeningHoursOfDay</a>!]!</td>
+<td>
+
+Opening hours for every day of the week (1 for Monday 7 for Sunday)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OpeningHoursOfDay
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>dayOfWeek</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Day of the week
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstClosingTime</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+First closing time
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstOpeningTime</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+First opening time
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>secondClosingTime</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Second closing time
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>secondOpeningTime</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Second opening time
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### Order
 
 <table>
@@ -7306,19 +7412,10 @@ Store name
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>openingHours</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td valign="top"><a href="#openinghours">OpeningHours</a>!</td>
 <td>
 
 Store opening hours
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>openingHoursHtml</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Store opening hours, newlines are rendered as HTML breakline
 
 </td>
 </tr>

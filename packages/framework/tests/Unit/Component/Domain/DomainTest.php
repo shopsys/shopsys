@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Domain;
 
+use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -20,7 +21,9 @@ class DomainTest extends TestCase
      */
     private function createDomainConfigFirst(): DomainConfig
     {
-        return new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example.com', 'cs');
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
+
+        return new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example.com', 'cs', $defaultTimeZone);
     }
 
     /**
@@ -28,7 +31,9 @@ class DomainTest extends TestCase
      */
     private function createDomainConfigSecond(): DomainConfig
     {
-        return new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.org:8080', 'example.org', 'en');
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
+
+        return new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.org:8080', 'example.org', 'en', $defaultTimeZone);
     }
 
     /**
@@ -124,10 +129,11 @@ class DomainTest extends TestCase
 
     public function testGetAllLocales(): void
     {
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
             $this->createDomainConfigFirst(),
             $this->createDomainConfigSecond(),
-            new DomainConfig(Domain::THIRD_DOMAIN_ID, 'http://example.cz:8080', 'example.cz', 'cs'),
+            new DomainConfig(Domain::THIRD_DOMAIN_ID, 'http://example.cz:8080', 'example.cz', 'cs', $defaultTimeZone),
         ];
         $settingMock = $this->createMock(Setting::class);
 

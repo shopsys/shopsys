@@ -13,6 +13,7 @@ class DomainsConfigDefinition implements ConfigurationInterface
     public const CONFIG_ID = 'id';
     public const CONFIG_NAME = 'name';
     public const CONFIG_LOCALE = 'locale';
+    public const CONFIG_TIMEZONE = 'timezone';
     public const CONFIG_STYLES_DIRECTORY = 'styles_directory';
     public const CONFIG_DESIGN_ID = 'design_id';
 
@@ -34,6 +35,7 @@ class DomainsConfigDefinition implements ConfigurationInterface
                             ->scalarNode(self::CONFIG_ID)->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode(self::CONFIG_NAME)->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode(self::CONFIG_LOCALE)->isRequired()->cannotBeEmpty()->end()
+                            ->scalarNode(self::CONFIG_TIMEZONE)->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode(self::CONFIG_STYLES_DIRECTORY)->defaultValue(
                                 DomainConfig::STYLES_DIRECTORY_DEFAULT,
                             )->end()

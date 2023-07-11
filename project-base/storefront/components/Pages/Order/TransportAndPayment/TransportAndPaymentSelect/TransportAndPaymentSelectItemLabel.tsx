@@ -2,6 +2,7 @@ import { ListedStoreFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Translate } from 'next-translate';
+import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 
 type TransportAndPaymentSelectItemLabelProps = {
     name: string;
@@ -46,13 +47,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                                 pickupPlaceDetail.city}
                         </span>
                         <span className="text-sm text-greyLight">{t('Open') + ': '}</span>
-                        {pickupPlaceDetail.openingHoursHtml !== null && (
-                            <span
-                                className="text-sm text-greyLight"
-                                dangerouslySetInnerHTML={{ __html: pickupPlaceDetail.openingHoursHtml }}
-                                data-testid={TEST_IDENTIFIER + '-openinghours'}
-                            />
-                        )}
+                        <OpeningHours openingHours={pickupPlaceDetail.openingHours} />
                     </>
                 )}
             </div>

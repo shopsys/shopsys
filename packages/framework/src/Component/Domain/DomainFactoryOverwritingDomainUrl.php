@@ -66,6 +66,7 @@ class DomainFactoryOverwritingDomainUrl
                 $this->overwriteDomainUrl,
                 $domainConfig->getName(),
                 $domainConfig->getLocale(),
+                $domainConfig->getDateTimeZone(),
                 $domainConfig->getStylesDirectory(),
             );
         }

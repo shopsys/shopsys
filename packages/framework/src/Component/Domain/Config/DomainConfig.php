@@ -4,44 +4,30 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Domain\Config;
 
+use DateTimeZone;
+
 class DomainConfig
 {
     public const STYLES_DIRECTORY_DEFAULT = 'common';
-
-    protected int $id;
-
-    protected string $url;
-
-    protected string $name;
-
-    protected string $locale;
-
-    protected string $stylesDirectory;
-
-    protected ?string $designId = null;
 
     /**
      * @param int $id
      * @param string $url
      * @param string $name
      * @param string $locale
+     * @param \DateTimeZone $dateTimeZone
      * @param string $stylesDirectory
      * @param string|null $designId
      */
     public function __construct(
-        $id,
-        $url,
-        $name,
-        $locale,
-        $stylesDirectory = self::STYLES_DIRECTORY_DEFAULT,
-        $designId = null,
+        protected int $id,
+        protected string $url,
+        protected string $name,
+        protected string $locale,
+        protected DateTimeZone $dateTimeZone,
+        protected string $stylesDirectory = self::STYLES_DIRECTORY_DEFAULT,
+        protected ?string $designId = null,
     ) {
-        $this->id = $id;
-        $this->url = $url;
-        $this->name = $name;
-        $this->locale = $locale;
-        $this->stylesDirectory = $stylesDirectory;
-        $this->designId = $designId;
     }
 
     /**
@@ -98,5 +84,13 @@ class DomainConfig
     public function isHttps()
     {
         return strpos($this->url, 'https://') === 0;
+    }
+
+    /**
+     * @return \DateTimeZone
+     */
+    public function getDateTimeZone(): DateTimeZone
+    {
+        return $this->dateTimeZone;
     }
 }

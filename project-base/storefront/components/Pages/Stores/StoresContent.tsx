@@ -66,7 +66,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                                 activeMarkerId={activeMarkerId}
                             />
                         </div>
-                        <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-b-xl border-2 border-greyLighter p-8 max-lg:border-t-0 vl:h-full vl:w-[420px] vl:border-l-0">
+                        <div className="relative flex flex-col items-center justify-center overflow-hidden border-2 border-greyLighter p-8 max-vl:border-t-0 vl:h-full vl:w-[420px] vl:border-l-0">
                             <div className="relative">
                                 <span className="absolute right-[10%] bottom-3 z-above inline-flex h-10 w-10 flex-col items-center justify-center rounded-full bg-[linear-gradient(180deg,#ffcf09,#ffb235)] text-xl font-medium text-white sm:h-14 sm:w-14 sm:text-2xl">
                                     {mappedStores.length}x
@@ -109,11 +109,6 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                                         </div>
                                         <div className="flex flex-row items-center text-lg text-primary">
                                             <ButtonBottomName isRight>{t('Store detail')}</ButtonBottomName>
-                                            <Icon
-                                                iconType="icon"
-                                                icon="Arrow"
-                                                className="ml-3 w-6 text-2xl text-primary xl:ml-5"
-                                            />
                                         </div>
                                     </a>
                                 </ExtendedNextLink>

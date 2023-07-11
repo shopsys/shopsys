@@ -10,6 +10,9 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { createMapMarker } from 'helpers/map/createMapMarker';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
+import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
+import { twJoin } from 'tailwind-merge';
 
 type StoreDetailContentProps = {
     store: StoreDetailFragmentApi;
@@ -28,8 +31,9 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
             <div className="mb-10">
                 <div className="relative lg:min-h-[350px] lg:pl-[380px] vl:min-h-[500px] vl:pl-[530px] xl:min-h-[650px] xl:pl-[720px]">
                     <Heading type="h1">{store.storeName}</Heading>
+                    <OpeningStatus isOpen={store.openingHours.isOpen} className="mb-3" />
                     <div className="md:flex md:flex-wrap">
-                        {store.description !== null && (
+                        {!!store.description && (
                             <InfoItem>
                                 <StoreHeading text={t('Store description')} />
                                 {store.description}
@@ -45,19 +49,17 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                             <br />
                             {store.country.name}
                         </InfoItem>
-                        {store.openingHours !== null && (
-                            <InfoItem>
-                                <StoreHeading text={t('Opening hours')} />
-                                <div className="max-w-[160px]">{store.openingHours}</div>
-                            </InfoItem>
-                        )}
-                        {store.contactInfo !== null && (
+                        <InfoItem className="flex-1">
+                            <StoreHeading text={t('Opening hours')} />
+                            <OpeningHours openingHours={store.openingHours} />
+                        </InfoItem>
+                        {!!store.contactInfo && (
                             <InfoItem>
                                 <StoreHeading text={t('Contact to the department store')} />
                                 {store.contactInfo}
                             </InfoItem>
                         )}
-                        {store.specialMessage !== null && (
+                        {!!store.specialMessage && (
                             <InfoItem>
                                 <StoreHeading text={t('Special announcement')} />
                                 {store.specialMessage}
@@ -82,7 +84,6 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         </div>
                         <div className="flex flex-row items-center text-lg text-primary">
                             <a className="relative flex-grow text-primary md:text-lg">{t('Customer Centre')}</a>
-                            <Icon iconType="icon" icon="Arrow" className="ml-3 w-6 text-2xl text-primary xl:ml-5" />
                         </div>
                     </a>
                 </div>
@@ -120,4 +121,6 @@ const StoreHeading: FC<{ text: string }> = ({ text }) => (
     </Heading>
 );
 
-const InfoItem: FC = ({ children }) => <div className="mb-4 odd:pr-3 even:pl-3 md:mb-6 md:w-1/2">{children}</div>;
+const InfoItem: FC = ({ children, className }) => (
+    <div className={twJoin('mb-4 odd:pr-3 even:pl-3 md:mb-6', className)}>{children}</div>
+);

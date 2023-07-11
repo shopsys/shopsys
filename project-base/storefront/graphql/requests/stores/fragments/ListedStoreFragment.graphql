@@ -4,7 +4,9 @@ fragment ListedStoreFragment on Store {
     identifier: uuid
     name
     description
-    openingHoursHtml
+    openingHours {
+        ...OpeningHoursFragment
+    }
     locationLatitude
     locationLongitude
     street

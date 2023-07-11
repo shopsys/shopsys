@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Constraints;
 
+use DateTimeZone;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
@@ -22,9 +23,10 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
      */
     protected function createValidator()
     {
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'name1', 'cs'),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'name2', 'en'),
+            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'name1', 'cs', $defaultTimeZone),
+            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'name2', 'en', $defaultTimeZone),
         ];
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain($domainConfigs, $settingMock);
