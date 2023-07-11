@@ -9,7 +9,6 @@ import {
     useIsCustomerUserRegisteredQueryApi,
     useOrderSentPageContentApi,
 } from 'graphql/generated';
-import { getDomainConfig } from 'helpers/domain/domain';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -88,15 +87,13 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient, domainConfig) => async (context) => {
     const { orderUuid, orderEmail } = context.query as OrderConfirmationQuery;
-
-    const { url } = getDomainConfig(context.req.headers.host!);
 
     if (!orderUuid || !orderEmail) {
         return {
             redirect: {
-                destination: getInternationalizedStaticUrls(['/cart'], url)[0] ?? '/',
+                destination: getInternationalizedStaticUrls(['/cart'], domainConfig.url)[0] ?? '/',
                 statusCode: 301,
             },
         };

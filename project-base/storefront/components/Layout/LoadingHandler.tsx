@@ -1,26 +1,9 @@
-import { showInfoMessage, showSuccessMessage } from 'components/Helpers/toasts';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useEffect } from 'react';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { useLoginLoader } from 'hooks/app/useLoginLoader';
+import { usePageLoader } from 'hooks/app/usePageLoader';
 
 export const LoadingHandler: FC = () => {
-    const t = useTypedTranslationFunction();
-    const loginLoading = usePersistStore((store) => store.loginLoading);
-    const updateGeneralState = usePersistStore((store) => store.updateLoginLoadingState);
-
-    useEffect(() => {
-        if (!loginLoading) {
-            return;
-        }
-
-        showSuccessMessage(t('Successfully logged in'));
-
-        if (loginLoading === 'loading-with-cart-modifications') {
-            showInfoMessage(t('Your cart has been modified. Please check the changes.'));
-        }
-
-        updateGeneralState(null);
-    }, []);
+    useLoginLoader();
+    usePageLoader();
 
     return null;
 };

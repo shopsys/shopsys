@@ -10,7 +10,7 @@ import {
     ProductDetailQueryVariablesApi,
     useProductDetailQueryApi,
 } from 'graphql/generated';
-import { getDomainConfig } from 'helpers/domain/domain';
+
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
@@ -20,6 +20,7 @@ import { createClient } from 'helpers/urql/createClient';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
+import getT from 'next-translate/getT';
 import { useRouter } from 'next/router';
 import { OperationResult, ssrExchange } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
@@ -59,10 +60,10 @@ const ProductDetailPage: NextPage = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-    const domainConfig = getDomainConfig(context.req.headers.host!);
+export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient, domainConfig) => async (context) => {
     const ssrCache = ssrExchange({ isClient: false });
-    const client = createClient(context, domainConfig.publicGraphqlEndpoint, ssrCache, redisClient);
+    const t = await getT(domainConfig.defaultLocale, 'common');
+    const client = createClient(t, ssrCache, domainConfig.publicGraphqlEndpoint, redisClient, context);
 
     if (isRedirectedFromSsr(context.req.headers)) {
         const productResponse: OperationResult<ProductDetailQueryApi, ProductDetailQueryVariablesApi> = await client!

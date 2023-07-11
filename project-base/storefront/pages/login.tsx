@@ -5,7 +5,7 @@ import {
     CurrentCustomerUserQueryApi,
     CurrentCustomerUserQueryDocumentApi,
 } from 'graphql/generated';
-import { getDomainConfig } from 'helpers/domain/domain';
+import getT from 'next-translate/getT';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -32,10 +32,10 @@ const LoginPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-    const domainConfig = getDomainConfig(context.req.headers.host!);
+export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient, domainConfig) => async (context) => {
     const ssrCache = ssrExchange({ isClient: false });
-    const client = createClient(context, domainConfig.publicGraphqlEndpoint, ssrCache, redisClient);
+    const t = await getT(domainConfig.defaultLocale, 'common');
+    const client = createClient(t, ssrCache, domainConfig.publicGraphqlEndpoint, redisClient, context);
     const serverSideProps = await initServerSideProps({ context, client, ssrCache, redisClient });
 
     const customerQueryResult = client?.readQuery<CurrentCustomerUserQueryApi>(CurrentCustomerUserQueryDocumentApi, {});

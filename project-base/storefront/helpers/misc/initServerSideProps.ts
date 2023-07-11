@@ -24,6 +24,7 @@ import { SSRData, SSRExchange } from 'next-urql';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 import { Client, ssrExchange } from 'urql';
 import { parseCatnums } from 'utils/grapesJsParser';
+import getT from 'next-translate/getT';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;
@@ -51,8 +52,9 @@ export const initServerSideProps = async ({
     try {
         const domainConfig = getDomainConfig(context.req.headers.host!);
         const currentSsrCache = ssrCache ?? ssrExchange({ isClient: false });
+        const t = await getT(domainConfig.defaultLocale, 'common');
         const currentClient =
-            client ?? createClient(context, domainConfig.publicGraphqlEndpoint, currentSsrCache, redisClient);
+            client ?? createClient(t, currentSsrCache, domainConfig.publicGraphqlEndpoint, redisClient, context);
 
         if (currentClient) {
             prefetchedQueries.push({ query: NotificationBarsDocumentApi });

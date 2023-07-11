@@ -7,9 +7,11 @@ import { SSRExchange } from 'next-urql';
 import { ClientOptions, CombinedError, errorExchange, fetchExchange } from 'urql';
 import { getAuthExchangeOptions } from 'urql/authExchange';
 import { cache } from 'urql/cacheExchange';
+import { Translate } from 'next-translate';
 
 export const getUrqlExchanges = (
     ssrExchange: SSRExchange,
+    _t?: Translate,
     context?: GetServerSidePropsContext | NextPageContext,
 ): ClientOptions['exchanges'] => [
     devtoolsExchange,
