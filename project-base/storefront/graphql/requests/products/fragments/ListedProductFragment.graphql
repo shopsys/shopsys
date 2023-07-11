@@ -10,7 +10,7 @@ fragment ListedProductFragment on Product {
     flags {
         ...SimpleFlagFragment
     }
-    image: mainImage {
+    mainImage {
         ...ImageSizesFragment
     }
     price {

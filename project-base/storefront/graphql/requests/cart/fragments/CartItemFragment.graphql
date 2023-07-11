@@ -13,7 +13,7 @@ fragment CartItemFragment on CartItem {
         flags {
             ...SimpleFlagFragment
         }
-        image: mainImage {
+        mainImage {
             ...ImageSizesFragment
         }
         stockQuantity

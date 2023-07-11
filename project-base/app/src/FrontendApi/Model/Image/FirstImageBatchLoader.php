@@ -43,8 +43,8 @@ class FirstImageBatchLoader
         $imagesIndexedByImageBatchLoadDataId = [];
 
         foreach ($imagesBatchLoadDataByEntityNameAndType as $entityName => $dataByTypes) {
-            foreach ($dataByTypes as $type => $imagesBatchLoadData) {
-                $imagesIndexedByImageBatchLoadDataId = array_merge($imagesIndexedByImageBatchLoadDataId, $this->getImagesByEntityNameAndTypeIndexedByDataId($imagesBatchLoadData, $entityName, $type));
+            foreach ($dataByTypes as $type => $imagesBatchLoadDataOfType) {
+                $imagesIndexedByImageBatchLoadDataId = array_merge($imagesIndexedByImageBatchLoadDataId, $this->getImagesByEntityNameAndTypeIndexedByDataId($imagesBatchLoadDataOfType, $entityName, $type));
             }
         }
 

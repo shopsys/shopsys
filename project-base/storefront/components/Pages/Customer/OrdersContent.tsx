@@ -8,7 +8,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi, ListedOrderFragmentApi } from 'graphql/generated';
 import { formatDateAndTime } from 'helpers/formaters/formatDate';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -56,58 +55,54 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
 
                         {orders !== undefined && orders.length !== 0 && (
                             <tbody>
-                                {orders.map((order, index) => {
-                                    const transportImage = getFirstImageOrNull(order.transport.images);
-
-                                    return (
-                                        <tr key={index} data-testid={TEST_IDENTIFIER + index}>
-                                            <td data-testid={TEST_IDENTIFIER + 'number'}>
-                                                <ExtendedNextLink
-                                                    href={{
-                                                        pathname: customerOrderDetailUrl,
-                                                        query: { orderNumber: order.number },
-                                                    }}
-                                                    type="static"
-                                                >
-                                                    {order.number}
-                                                </ExtendedNextLink>
-                                            </td>
-                                            <td className="text-right" data-testid={TEST_IDENTIFIER + 'creation-date'}>
-                                                {formatDateAndTime(order.creationDate)}
-                                            </td>
-                                            <td className="text-right" data-testid={TEST_IDENTIFIER + 'quantity'}>
-                                                {order.productItems.length}
-                                            </td>
-                                            <td data-testid={TEST_IDENTIFIER + 'transport'}>
-                                                <div className="relative top-1 mr-1 inline-flex w-10 justify-center">
-                                                    <Image
-                                                        image={transportImage}
-                                                        type="default"
-                                                        alt={transportImage?.name || order.transport.name}
-                                                        maxWidth={36}
-                                                        maxHeight={20}
-                                                    />
-                                                </div>
-                                                {order.transport.name}
-                                            </td>
-                                            <td data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment.name}</td>
-                                            <td className="text-right" data-testid={TEST_IDENTIFIER + 'total-price'}>
-                                                {formatPrice(order.totalPrice.priceWithVat)}
-                                            </td>
-                                            <td data-testid={TEST_IDENTIFIER + 'detail-link'}>
-                                                <ExtendedNextLink
-                                                    href={{
-                                                        pathname: customerOrderDetailUrl,
-                                                        query: { orderNumber: order.number },
-                                                    }}
-                                                    type="static"
-                                                >
-                                                    {t('Detail')}
-                                                </ExtendedNextLink>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
+                                {orders.map((order, index) => (
+                                    <tr key={index} data-testid={TEST_IDENTIFIER + index}>
+                                        <td data-testid={TEST_IDENTIFIER + 'number'}>
+                                            <ExtendedNextLink
+                                                href={{
+                                                    pathname: customerOrderDetailUrl,
+                                                    query: { orderNumber: order.number },
+                                                }}
+                                                type="static"
+                                            >
+                                                {order.number}
+                                            </ExtendedNextLink>
+                                        </td>
+                                        <td className="text-right" data-testid={TEST_IDENTIFIER + 'creation-date'}>
+                                            {formatDateAndTime(order.creationDate)}
+                                        </td>
+                                        <td className="text-right" data-testid={TEST_IDENTIFIER + 'quantity'}>
+                                            {order.productItems.length}
+                                        </td>
+                                        <td data-testid={TEST_IDENTIFIER + 'transport'}>
+                                            <div className="relative top-1 mr-1 inline-flex w-10 justify-center">
+                                                <Image
+                                                    image={order.transport.mainImage}
+                                                    type="default"
+                                                    alt={order.transport.mainImage?.name || order.transport.name}
+                                                    maxWidth={36}
+                                                    maxHeight={20}
+                                                />
+                                            </div>
+                                            {order.transport.name}
+                                        </td>
+                                        <td data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment.name}</td>
+                                        <td className="text-right" data-testid={TEST_IDENTIFIER + 'total-price'}>
+                                            {formatPrice(order.totalPrice.priceWithVat)}
+                                        </td>
+                                        <td data-testid={TEST_IDENTIFIER + 'detail-link'}>
+                                            <ExtendedNextLink
+                                                href={{
+                                                    pathname: customerOrderDetailUrl,
+                                                    query: { orderNumber: order.number },
+                                                }}
+                                                type="static"
+                                            >
+                                                {t('Detail')}
+                                            </ExtendedNextLink>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         )}
 

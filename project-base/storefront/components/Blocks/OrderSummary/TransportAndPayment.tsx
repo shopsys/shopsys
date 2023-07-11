@@ -6,7 +6,6 @@ import {
 } from './OrderSummaryElements';
 import { Image } from 'components/Basic/Image/Image';
 import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
-import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 
 type TransportAndPaymentProps = {
@@ -28,7 +27,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                             {transport.name}
                             <span className="ml-2 inline-block h-5 align-bottom">
                                 <Image
-                                    image={getFirstImageOrNull(transport.images)}
+                                    image={transport.mainImage}
                                     type="default"
                                     alt={transport.name}
                                     className="w-9"
@@ -45,12 +44,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                         <OrderSummaryTextAndImage dataTestId={TEST_IDENTIFIER + '-payment-name'}>
                             {payment.name}
                             <span className="ml-2 inline-block h-5 align-bottom">
-                                <Image
-                                    image={getFirstImageOrNull(payment.images)}
-                                    type="default"
-                                    alt={payment.name}
-                                    className="w-9"
-                                />
+                                <Image image={payment.mainImage} type="default" alt={payment.name} className="w-9" />
                             </span>
                         </OrderSummaryTextAndImage>
                         <OrderSummaryPrice dataTestId={TEST_IDENTIFIER + '-payment-price'}>

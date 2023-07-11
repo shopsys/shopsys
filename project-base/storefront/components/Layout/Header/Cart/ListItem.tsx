@@ -23,7 +23,7 @@ export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantit
             data-testid={TEST_IDENTIFIER}
         >
             <div className="relative w-11 items-center">
-                <Image image={product.image} alt={product.image?.name || product.fullName} type="thumbnail" />
+                <Image image={product.mainImage} alt={product.mainImage?.name || product.fullName} type="thumbnail" />
             </div>
             <div className="flex flex-1 items-center justify-between">
                 <ExtendedNextLink href={product.slug} passHref type="product">

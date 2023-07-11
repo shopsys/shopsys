@@ -9,7 +9,7 @@ fragment BrandDetailFragment on Brand {
     name
     seoH1
     description
-    images {
+    mainImage {
         ...ImageSizesFragment
     }
     products(orderingMode: $orderingMode, filter: $filter) {

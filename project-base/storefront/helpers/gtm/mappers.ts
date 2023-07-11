@@ -70,8 +70,8 @@ const mapGtmProductInterface = (productInterface: ProductInterfaceType, domainUr
 };
 
 const mapGtmProductInterfaceImageUrl = (productInterface: ProductInterfaceType): string | undefined => {
-    if ('image' in productInterface) {
-        return productInterface.image?.sizes.find((size) => size.size === 'default')?.url;
+    if ('mainImage' in productInterface) {
+        return productInterface.mainImage?.sizes.find((size) => size.size === 'default')?.url;
     }
 
     if ('images' in productInterface && Array.isArray(productInterface.images)) {

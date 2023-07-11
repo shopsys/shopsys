@@ -28,9 +28,9 @@ export const HeadSticky: FC<HeadStickyProps> = (props) => {
                     >
                         <a className="w-16" href={product.slug}>
                             <Image
-                                image={product.image}
+                                image={product.mainImage}
                                 type="listVerySmall"
-                                alt={product.image?.name || product.fullName}
+                                alt={product.mainImage?.name || product.fullName}
                             />
                         </a>
                         <div className="ml-2 flex flex-1 flex-col">
