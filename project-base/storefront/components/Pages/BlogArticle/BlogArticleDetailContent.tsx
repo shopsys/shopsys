@@ -4,7 +4,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
 import { BlogArticleDetailFragmentApi } from 'graphql/generated';
 import { formatDate } from 'helpers/formaters/formatDate';
-import { getFirstImageOrNull } from 'helpers/mappers/image';
 
 type BlogArticleDetailContentProps = {
     blogArticle: BlogArticleDetailFragmentApi;
@@ -13,16 +12,18 @@ type BlogArticleDetailContentProps = {
 const TEST_IDENTIFIER = 'pages-blogarticle-';
 
 export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ blogArticle }) => {
-    const blogImage = getFirstImageOrNull(blogArticle.images);
-
     return (
         <Webline>
             <ArticleTitle dataTestId={TEST_IDENTIFIER + 'title'}>{blogArticle.name}</ArticleTitle>
             <div className="px-5">
                 <div className="mb-12 flex w-full flex-col">
-                    {blogImage && (
+                    {blogArticle.mainImage && (
                         <div className="mb-10 flex overflow-hidden" data-testid={TEST_IDENTIFIER + 'image'}>
-                            <Image image={blogImage} type="default" alt={blogImage.name || blogArticle.name} />
+                            <Image
+                                image={blogArticle.mainImage}
+                                type="default"
+                                alt={blogArticle.mainImage.name || blogArticle.name}
+                            />
                         </div>
                     )}
                     <div

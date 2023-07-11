@@ -14,7 +14,6 @@ import {
     useGoPaySwiftsQueryApi,
 } from 'graphql/generated';
 import { logException } from 'helpers/errors/logException';
-import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
@@ -229,7 +228,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     value={transportItem.uuid}
                     checked={isActive}
                     dataTestId={TEST_IDENTIFIER + 'transport-item-input'}
-                    image={getFirstImageOrNull(transportItem.images)}
+                    image={transportItem.mainImage}
                     onChangeCallback={handleTransportChange}
                     label={
                         <TransportAndPaymentSelectItemLabel
@@ -258,7 +257,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     value={paymentItem.uuid}
                     checked={isActive}
                     dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
-                    image={getFirstImageOrNull(paymentItem.images)}
+                    image={paymentItem.mainImage}
                     onChangeCallback={handlePaymentChange}
                     label={
                         <TransportAndPaymentSelectItemLabel

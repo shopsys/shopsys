@@ -1,5 +1,5 @@
 fragment SliderItemImagesWebDefaultFragment on SliderItem {
-    webImages: images (type: "web", sizes: "default") {
+    webMainImage: mainImage (type: "web", size: "default") {
         ...ImageSizesFragment
     }
 }

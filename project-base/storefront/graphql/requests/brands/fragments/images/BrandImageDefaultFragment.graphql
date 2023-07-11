@@ -1,5 +1,5 @@
 fragment BrandImageDefaultFragment on Brand {
-    images {
+    mainImage {
         ...ImageSizesFragment
     }
 }

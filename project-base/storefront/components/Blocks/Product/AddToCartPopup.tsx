@@ -43,12 +43,12 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                 data-testid={TEST_IDENTIFIER}
             >
                 {' '}
-                {!!product.image && (
+                {!!product.mainImage && (
                     <div className="mb-4 flex w-24 items-center justify-center md:mb-0">
                         <Image
-                            image={product.image}
+                            image={product.mainImage}
                             type="thumbnailMedium"
-                            alt={product.image.name || product.fullName}
+                            alt={product.mainImage.name || product.fullName}
                         />
                     </div>
                 )}

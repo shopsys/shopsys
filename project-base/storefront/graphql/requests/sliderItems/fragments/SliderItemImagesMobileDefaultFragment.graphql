@@ -1,5 +1,5 @@
 fragment SliderItemImagesMobileDefaultFragment on SliderItem {
-    mobileImages: images (type: "mobile", sizes: "default") {
+    mobileMainImage: mainImage (type: "mobile", size: "default") {
         ...ImageSizesFragment
     }
 }

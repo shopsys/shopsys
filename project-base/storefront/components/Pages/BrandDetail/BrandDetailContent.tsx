@@ -17,15 +17,13 @@ const TEST_IDENTIFIER = 'pages-branddetail-';
 export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
-    const brandImage = getFirstImageOrNull(brand.images);
-
     return (
         <>
             <Webline>
                 <Heading type="h1">{brand.seoH1 !== null ? brand.seoH1 : brand.name}</Heading>
                 <div className="mb-5 flex w-full flex-col justify-start md:flex-row">
                     <div className="mr-5 min-w-[13.75rem] self-start" data-testid={TEST_IDENTIFIER + 'image'}>
-                        <Image image={brandImage} type="default" alt={brandImage?.name || brand.name} />
+                        <Image image={brand.mainImage} type="default" alt={brand.mainImage?.name || brand.name} />
                     </div>
                     <div
                         className="self-start  md:self-center [&>section]:text-base [&>section]:text-dark"

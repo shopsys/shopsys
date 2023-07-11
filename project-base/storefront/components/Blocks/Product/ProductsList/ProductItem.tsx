@@ -44,9 +44,9 @@ export const ProductItem: FC<ProductItemProps> = ({
                 >
                     <div className="relative flex h-[185px] w-full items-center justify-center px-3 pt-4 pb-3">
                         <Image
-                            image={product.image}
+                            image={product.mainImage}
                             type="list"
-                            alt={product.image?.name || product.fullName}
+                            alt={product.mainImage?.name || product.fullName}
                             className="max-h-full lg:hover:mix-blend-multiply"
                         />
                         <div className="absolute top-3 left-4 flex flex-col">
