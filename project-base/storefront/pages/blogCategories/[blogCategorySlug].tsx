@@ -12,7 +12,7 @@ import {
     BlogCategoryQueryVariablesApi,
     useBlogCategoryQueryApi,
 } from 'graphql/generated';
-import { getDomainConfig } from 'helpers/domain/domain';
+
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
@@ -28,6 +28,7 @@ import { OperationResult, ssrExchange } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import getT from 'next-translate/getT';
 
 const BlogCategoryPage: NextPage = () => {
     const router = useRouter();
@@ -67,10 +68,10 @@ const BlogCategoryPage: NextPage = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-    const domainConfig = getDomainConfig(context.req.headers.host!);
+export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient, domainConfig) => async (context) => {
     const ssrCache = ssrExchange({ isClient: false });
-    const client = createClient(context, domainConfig.publicGraphqlEndpoint, ssrCache, redisClient);
+    const t = await getT(domainConfig.defaultLocale, 'common');
+    const client = createClient(t, ssrCache, domainConfig.publicGraphqlEndpoint, redisClient, context);
     const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
 
     if (isRedirectedFromSsr(context.req.headers)) {

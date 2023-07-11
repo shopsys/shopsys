@@ -13,7 +13,7 @@ import {
     FlagProductsQueryVariablesApi,
     useFlagDetailQueryApi,
 } from 'graphql/generated';
-import { getDomainConfig } from 'helpers/domain/domain';
+
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
@@ -39,6 +39,7 @@ import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import getT from 'next-translate/getT';
 
 const FlagDetailPage: NextPage = () => {
     const router = useRouter();
@@ -80,10 +81,10 @@ const FlagDetailPage: NextPage = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-    const domainConfig = getDomainConfig(context.req.headers.host!);
+export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient, domainConfig) => async (context) => {
     const ssrCache = ssrExchange({ isClient: false });
-    const client = createClient(context, domainConfig.publicGraphqlEndpoint, ssrCache, redisClient);
+    const t = await getT(domainConfig.defaultLocale, 'common');
+    const client = createClient(t, ssrCache, domainConfig.publicGraphqlEndpoint, redisClient, context);
 
     if (isRedirectedFromSsr(context.req.headers)) {
         const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);

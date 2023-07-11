@@ -1,7 +1,7 @@
 import {
+    useCurrentCustomerUserQueryApi,
     CurrentCustomerUserQueryApi,
     DeliveryAddressFragmentApi,
-    useCurrentCustomerUserQueryApi,
 } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useMemo } from 'react';

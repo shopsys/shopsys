@@ -15,7 +15,7 @@ import {
     Maybe,
     ProductOrderingModeEnumApi,
 } from 'graphql/generated';
-import { getDomainConfig } from 'helpers/domain/domain';
+
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
@@ -42,6 +42,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { NextRouter, useRouter } from 'next/router';
+import getT from 'next-translate/getT';
 import { useEffect, useState } from 'react';
 import { useSessionStore } from 'store/zustand/useSessionStore';
 import { Client, ssrExchange, useClient } from 'urql';
@@ -87,10 +88,10 @@ const CategoryDetailPage: NextPage = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-    const domainConfig = getDomainConfig(context.req.headers.host!);
+export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient, domainConfig) => async (context) => {
     const ssrCache = ssrExchange({ isClient: false });
-    const client = createClient(context, domainConfig.publicGraphqlEndpoint, ssrCache, redisClient);
+    const t = await getT(domainConfig.defaultLocale, 'common');
+    const client = createClient(t, ssrCache, domainConfig.publicGraphqlEndpoint, redisClient, context);
 
     const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]));
     const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
