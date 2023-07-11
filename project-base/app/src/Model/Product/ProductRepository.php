@@ -371,19 +371,13 @@ class ProductRepository extends BaseProductRepository
     public function getProductIdsByCatnums(array $catnums): array
     {
         $result = $this->em->createQueryBuilder()
-            ->select('p.id, p.catnum')
+            ->select('p.id')
             ->from(Product::class, 'p')
             ->where('p.catnum IN (:catnums)')
             ->setParameter('catnums', $catnums)
             ->getQuery()
             ->getScalarResult();
 
-        $productIdsSortedByCatnum = array_fill_keys($catnums, null);
-
-        foreach ($result as $item) {
-            $productIdsSortedByCatnum[$item['catnum']] = $item['id'];
-        }
-
-        return array_values($productIdsSortedByCatnum);
+        return array_column($result, 'id');
     }
 }
