@@ -8,7 +8,7 @@ import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
 
 export const createClient = (
-    t: Translate,   
+    t: Translate,
     ssrExchange: SSRExchange,
     publicGraphqlEndpoint: string,
     redisClient?: RedisClientType<any & RedisModules, RedisScripts>,

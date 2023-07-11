@@ -14,7 +14,7 @@ import {
 } from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPaginatedProductListViewEvent } from 'hooks/gtm/productList/useGtmPaginatedProductListViewEvent';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
@@ -32,17 +32,15 @@ export const SearchProductsWrapper: FC<SearchProductsWrapperProps> = ({ containe
     const orderingMode = getProductListSort(parseProductListSortFromQuery(query[SORT_QUERY_PARAMETER_NAME]));
     const parametersFilter = getFilterOptions(parseFilterOptionsFromQuery(query[FILTER_QUERY_PARAMETER_NAME]));
 
-    const [{ data: searchProductsData, fetching }] = useQueryError(
-        useSearchProductsQueryApi({
-            variables: {
-                endCursor: getEndCursor(currentPage),
-                filter: mapParametersFilter(parametersFilter),
-                orderingMode,
-                search: queryString,
-                pageSize: DEFAULT_PAGE_SIZE,
-            },
-        }),
-    );
+    const [{ data: searchProductsData, fetching }] = useSearchProductsQueryApi({
+        variables: {
+            endCursor: getEndCursor(currentPage),
+            filter: mapParametersFilter(parametersFilter),
+            orderingMode,
+            search: queryString,
+            pageSize: DEFAULT_PAGE_SIZE,
+        },
+    });
 
     const searchResultProducts = getMappedProducts(searchProductsData?.products.edges);
 

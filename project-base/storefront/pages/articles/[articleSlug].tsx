@@ -17,7 +17,7 @@ import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { createClient } from 'helpers/urql/createClient';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import getT from 'next-translate/getT';
@@ -29,11 +29,9 @@ import { parseCatnums } from 'utils/grapesJsParser';
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
-    const [{ data: articleDetailData, fetching }] = useQueryError(
-        useArticleDetailQueryApi({
-            variables: { urlSlug: getSlugFromUrl(slug) },
-        }),
-    );
+    const [{ data: articleDetailData, fetching }] = useArticleDetailQueryApi({
+        variables: { urlSlug: getSlugFromUrl(slug) },
+    });
 
     const article = articleDetailData?.article?.__typename === 'ArticleSite' ? articleDetailData.article : null;
 

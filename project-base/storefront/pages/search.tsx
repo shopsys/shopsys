@@ -26,7 +26,7 @@ import {
 } from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -43,16 +43,14 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     );
     const search = getStringFromUrlQuery(router.query[SEARCH_QUERY_PARAMETER_NAME]);
 
-    const [{ data: searchData, fetching }] = useQueryError(
-        useSearchQueryApi({
-            variables: {
-                search,
-                orderingMode,
-                filter,
-                pageSize: DEFAULT_PAGE_SIZE,
-            },
-        }),
-    );
+    const [{ data: searchData, fetching }] = useSearchQueryApi({
+        variables: {
+            search,
+            orderingMode,
+            filter,
+            pageSize: DEFAULT_PAGE_SIZE,
+        },
+    });
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
     const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Search'), slug: searchUrl }];

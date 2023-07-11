@@ -5,7 +5,7 @@ import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwit
 import { useCookiesArticleUrlQueryApi } from 'graphql/generated';
 import { onGtmConsentUpdateEventHandler } from 'helpers/gtm/eventHandlers';
 import { getGtmConsentInfo } from 'helpers/gtm/gtm';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useCallback } from 'react';
@@ -21,7 +21,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = useUserConsentForm();
     const formMeta = useUserConsentFormMeta();
-    const [{ data: cookiesArticleUrlData }] = useQueryError(useCookiesArticleUrlQueryApi());
+    const [{ data: cookiesArticleUrlData }] = useCookiesArticleUrlQueryApi();
     const cookiesArticleUrl = cookiesArticleUrlData?.cookiesArticle?.slug;
     const userConsent = usePersistStore((store) => store.userConsent);
     const setUserConsent = usePersistStore((store) => store.setUserConsent);

@@ -9,7 +9,7 @@ import { getMappedProducts } from 'helpers/mappers/products';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPaginatedProductListViewEvent } from 'hooks/gtm/productList/useGtmPaginatedProductListViewEvent';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
@@ -28,17 +28,15 @@ export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = (
     const orderingMode = getProductListSort(parseProductListSortFromQuery(query.sort));
     const parametersFilter = getFilterOptions(parseFilterOptionsFromQuery(query.filter));
 
-    const [{ data: brandProductsData, fetching }] = useQueryError(
-        useBrandProductsQueryApi({
-            variables: {
-                endCursor: getEndCursor(currentPage),
-                filter: mapParametersFilter(parametersFilter),
-                orderingMode,
-                urlSlug: getSlugFromUrl(getUrlWithoutGetParameters(asPath)),
-                pageSize: DEFAULT_PAGE_SIZE,
-            },
-        }),
-    );
+    const [{ data: brandProductsData, fetching }] = useBrandProductsQueryApi({
+        variables: {
+            endCursor: getEndCursor(currentPage),
+            filter: mapParametersFilter(parametersFilter),
+            orderingMode,
+            urlSlug: getSlugFromUrl(getUrlWithoutGetParameters(asPath)),
+            pageSize: DEFAULT_PAGE_SIZE,
+        },
+    });
 
     const listedBrandProducts = getMappedProducts(brandProductsData?.products.edges);
 

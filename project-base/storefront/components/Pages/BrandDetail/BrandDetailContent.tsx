@@ -5,7 +5,6 @@ import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { UserText } from 'components/Helpers/UserText/UserText';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BrandDetailFragmentApi } from 'graphql/generated';
-import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useRef } from 'react';
 
 type BrandDetailContentProps = {

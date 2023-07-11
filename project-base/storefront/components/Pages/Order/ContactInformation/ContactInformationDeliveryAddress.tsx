@@ -11,7 +11,7 @@ import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInf
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useCountriesQueryApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCalcElementHeight } from 'hooks/ui/useCalcElementHeight';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
@@ -41,7 +41,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
     const isCustomAddressSelected = deliveryAddressUuidValue === '';
     const showAddressSelection = isUserLoggedIn && !pickupPlace && (!user || user.deliveryAddresses.length > 0);
 
-    const [{ data: countriesData }] = useQueryError(useCountriesQueryApi());
+    const [{ data: countriesData }] = useCountriesQueryApi();
     const countriesAsSelectOptions = useMemo(
         () => mapCountriesToSelectOptions(countriesData?.countries),
         [countriesData?.countries],

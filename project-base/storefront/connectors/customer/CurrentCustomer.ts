@@ -3,12 +3,12 @@ import {
     CurrentCustomerUserQueryApi,
     DeliveryAddressFragmentApi,
 } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useMemo } from 'react';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 
 export function useCurrentCustomerData(): CurrentCustomerType | null | undefined {
-    const [{ data }] = useQueryError(useCurrentCustomerUserQueryApi());
+    const [{ data }] = useCurrentCustomerUserQueryApi();
 
     return useMemo(() => {
         if (!data?.currentCustomerUser) {

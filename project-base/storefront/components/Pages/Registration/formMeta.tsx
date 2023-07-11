@@ -18,7 +18,7 @@ import {
 } from 'components/Forms/validationRules';
 import { usePrivacyPolicyArticleUrlQueryApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
@@ -114,7 +114,7 @@ export const useRegistrationFormMeta = (
 ): RegistrationFormMetaType => {
     const t = useTypedTranslationFunction();
     const isEmailValid = formProviderMethods.formState.errors.email === undefined;
-    const [{ data: privacyPolicyArticleUrlData }] = useQueryError(usePrivacyPolicyArticleUrlQueryApi());
+    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQueryApi();
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
 
     const customerFieldName = 'customer' as const;

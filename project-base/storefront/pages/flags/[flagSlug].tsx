@@ -30,7 +30,7 @@ import {
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { createClient } from 'helpers/urql/createClient';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -50,15 +50,13 @@ const FlagDetailPage: NextPage = () => {
         getFilterOptions(parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
     );
 
-    const [{ data: flagDetailData, fetching }] = useQueryError(
-        useFlagDetailQueryApi({
-            variables: {
-                urlSlug: getSlugFromUrl(slug),
-                orderingMode,
-                filter,
-            },
-        }),
-    );
+    const [{ data: flagDetailData, fetching }] = useFlagDetailQueryApi({
+        variables: {
+            urlSlug: getSlugFromUrl(slug),
+            orderingMode,
+            filter,
+        },
+    });
 
     const seoTitle = useSeoTitleWithPagination(flagDetailData?.flag?.products.totalCount, flagDetailData?.flag?.name);
 

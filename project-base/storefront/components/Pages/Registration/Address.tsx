@@ -7,7 +7,7 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useCountriesQueryApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -18,7 +18,7 @@ export const Address: FC = () => {
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const { setValue } = formProviderMethods;
     const formMeta = useRegistrationFormMeta(formProviderMethods);
-    const [{ data: countriesData }] = useQueryError(useCountriesQueryApi());
+    const [{ data: countriesData }] = useCountriesQueryApi();
     const countriesAsSelectOptions = useMemo(
         () => mapCountriesToSelectOptions(countriesData?.countries),
         [countriesData?.countries],

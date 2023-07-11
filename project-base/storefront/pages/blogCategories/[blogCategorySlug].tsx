@@ -20,7 +20,7 @@ import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { createClient } from 'helpers/urql/createClient';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -33,11 +33,9 @@ import getT from 'next-translate/getT';
 const BlogCategoryPage: NextPage = () => {
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
-    const [{ data: blogCategoryData, fetching }] = useQueryError(
-        useBlogCategoryQueryApi({
-            variables: { urlSlug: getSlugFromUrl(slug) },
-        }),
-    );
+    const [{ data: blogCategoryData, fetching }] = useBlogCategoryQueryApi({
+        variables: { urlSlug: getSlugFromUrl(slug) },
+    });
 
     const seoTitle = useSeoTitleWithPagination(
         blogCategoryData?.blogCategory?.articlesTotalCount,

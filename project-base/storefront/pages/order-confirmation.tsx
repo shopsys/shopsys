@@ -13,7 +13,7 @@ import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -41,10 +41,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: orderSentPageContentData }] = useQueryError(
-        useOrderSentPageContentApi({ variables: { orderUuid: orderUuid! } }),
-    );
-
+    const [{ data: orderSentPageContentData }] = useOrderSentPageContentApi({ variables: { orderUuid: orderUuid! } });
     const [{ data: isCustomerUserRegisteredData, fetching: isInformationAboutUserRegistrationFetching }] =
         useIsCustomerUserRegisteredQueryApi({
             variables: {

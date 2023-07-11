@@ -5,7 +5,7 @@ import { SecondaryList } from './SecondaryList';
 import { SubMenu } from './SubMenu';
 import { TertiaryList } from './TertiaryList';
 import { useNavigationQueryApi } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { twJoin } from 'tailwind-merge';
@@ -19,7 +19,7 @@ type DropdownMenuProps = {
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu';
 
 export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
-    const [{ data: navigationData }] = useQueryError(useNavigationQueryApi());
+    const [{ data: navigationData }] = useNavigationQueryApi();
     const [menuLevel, setMenuLevel] = useState<DropdownListLevels | undefined>('primary');
     const [historyOfIndexes, setHistoryOfIndexes] = useState<(number | string | undefined)[]>([]);
     const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');

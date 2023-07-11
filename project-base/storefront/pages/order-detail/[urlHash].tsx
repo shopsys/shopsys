@@ -12,7 +12,7 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -23,9 +23,9 @@ const OrderDetailByHashPage: FC = () => {
     const t = useTypedTranslationFunction();
     const { url } = useDomainConfig();
     const router = useRouter();
-    const [{ data: orderData }] = useQueryError(
-        useOrderDetailByHashQueryApi({ variables: { urlHash: getStringFromUrlQuery(router.query.urlHash) } }),
-    );
+    const [{ data: orderData }] = useOrderDetailByHashQueryApi({
+        variables: { urlHash: getStringFromUrlQuery(router.query.urlHash) },
+    });
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
     const breadcrumbs: BreadcrumbFragmentApi[] = [
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },

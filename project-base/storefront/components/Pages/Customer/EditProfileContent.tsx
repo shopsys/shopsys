@@ -21,7 +21,6 @@ import {
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
@@ -49,7 +48,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     });
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
-    const [{ data: countriesData }] = useQueryError(useCountriesQueryApi());
+    const [{ data: countriesData }] = useCountriesQueryApi();
     const countriesAsSelectOptions = useMemo(
         () => mapCountriesToSelectOptions(countriesData?.countries),
         [countriesData?.countries],
