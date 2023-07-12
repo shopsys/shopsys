@@ -188,8 +188,6 @@ export const useHandleDefaultFiltersUpdate = (
                 productsPreview?.defaultOrderingMode,
             ),
         );
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productsPreview?.productFilterOptions, productsPreview?.defaultOrderingMode]);
 };
 
