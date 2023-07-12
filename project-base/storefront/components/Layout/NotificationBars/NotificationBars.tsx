@@ -2,12 +2,12 @@ import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useNotificationBarsApi } from 'graphql/generated';
+import { getTokensFromCookies } from 'helpers/auth/tokens';
 import { useAuth } from 'hooks/auth/useAuth';
 
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import decode from 'jwt-decode';
 import Trans from 'next-translate/Trans';
-import { parseCookies } from 'nookies';
 import { memo, useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import tinycolor from 'tinycolor2';
@@ -20,10 +20,13 @@ export const NotificationBars: FC = memo(function NotificationBars() {
     const { logout } = useAuth();
 
     useEffect(() => {
-        const cookies = parseCookies(undefined, { decode }) as unknown as {
-            accessToken?: { administratorUuid: string };
-        } | null;
-        const isUserAdmin = !!cookies?.accessToken?.administratorUuid;
+        const { accessToken: encodedAccessToken } = getTokensFromCookies();
+        if (!encodedAccessToken) {
+            return;
+        }
+
+        const decodedAccessToken = decode(encodedAccessToken) as { administratorUuid?: string };
+        const isUserAdmin = !!decodedAccessToken.administratorUuid;
 
         setLoggedAsUserEmail(isUserAdmin ? user!.email : undefined);
     }, [isUserLoggedIn, user]);

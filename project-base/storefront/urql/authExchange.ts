@@ -1,9 +1,9 @@
-import { DocumentNode } from 'graphql';
+import { AuthConfig, AuthUtilities } from '@urql/exchange-auth';
 import { RefreshTokensDocumentApi } from 'graphql/generated';
 import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
-import { GetServerSidePropsContext, NextPageContext } from 'next';
-import { CombinedError, makeOperation, Operation, OperationContext, OperationResult, TypedDocumentNode } from 'urql';
-import { TokenType } from 'urql/types';
+import { GetServerSidePropsContext, NextPageContext, PreviewData } from 'next';
+import { ParsedUrlQuery } from 'querystring';
+import { CombinedError, makeOperation, Operation } from 'urql';
 
 const isRefreshTokenMutation = (operation: Operation) => {
     return (
@@ -21,23 +21,28 @@ const isRefreshTokenMutation = (operation: Operation) => {
  * Add access token to each request if authState is valid
  * Access token is not added to the RefreshTokens mutation (allows refreshing tokens with invalid access token)
  */
-const addAuthToOperation = (params: { authState: TokenType | null; operation: Operation }): Operation => {
-    if (!params.authState || isRefreshTokenMutation(params.operation)) {
-        return params.operation;
+const addAuthToOperation = (
+    operation: Operation,
+    context?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData> | NextPageContext | undefined,
+): Operation => {
+    const { accessToken } = getTokensFromCookies(context);
+
+    if (!accessToken || isRefreshTokenMutation(operation)) {
+        return operation;
     }
 
     const fetchOptions =
-        typeof params.operation.context.fetchOptions === 'function'
-            ? params.operation.context.fetchOptions()
-            : params.operation.context.fetchOptions || {};
+        typeof operation.context.fetchOptions === 'function'
+            ? operation.context.fetchOptions()
+            : operation.context.fetchOptions || {};
 
-    return makeOperation(params.operation.kind, params.operation, {
-        ...params.operation.context,
+    return makeOperation(operation.kind, operation, {
+        ...operation.context,
         fetchOptions: {
             ...fetchOptions,
             headers: {
                 ...fetchOptions.headers,
-                'X-Auth-Token': 'Bearer ' + params.authState.accessToken,
+                'X-Auth-Token': 'Bearer ' + accessToken,
             },
         },
     });
@@ -46,101 +51,50 @@ const addAuthToOperation = (params: { authState: TokenType | null; operation: Op
 /**
  * Check whether error returned from API is an authentication error
  */
-const didAuthError = (params: { error: CombinedError }): boolean => {
-    return params.error.response?.status === 401;
+const didAuthError = (error: CombinedError): boolean => {
+    return error.response?.status === 401;
 };
 
 const doTryRefreshToken = async (
     refreshToken: string,
-    mutate: <Data = any, Variables extends Record<string, unknown> = Record<string, unknown>>(
-        query: DocumentNode | TypedDocumentNode<Data, Variables> | string,
-        variables?: Variables,
-        context?: Partial<OperationContext>,
-    ) => Promise<OperationResult<Data>>,
+    mutate: AuthUtilities['mutate'],
     context?: GetServerSidePropsContext | NextPageContext,
-): Promise<TokenType | null> => {
+): Promise<void> => {
+    const { data: refreshTokenData } = await mutate(RefreshTokensDocumentApi, { refreshToken });
+
+    if (refreshTokenData?.RefreshTokens) {
+        setTokensToCookie(
+            refreshTokenData.RefreshTokens.accessToken,
+            refreshTokenData.RefreshTokens.refreshToken,
+            context,
+        );
+    }
+
+    removeTokensFromCookies(context);
+};
+
+const refreshAuth = async (
+    authUtilities: AuthUtilities,
+    context?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData> | NextPageContext | undefined,
+): Promise<void> => {
+    const { refreshToken } = getTokensFromCookies(context);
+
     try {
-        const result = await mutate(RefreshTokensDocumentApi, { refreshToken });
-
-        const { data } = result;
-
-        if (data?.RefreshTokens !== undefined) {
-            setTokensToCookie(data.RefreshTokens.accessToken, data.RefreshTokens.refreshToken, context);
-
-            return {
-                accessToken: data.RefreshTokens.accessToken,
-                refreshToken: data.RefreshTokens.refreshToken,
-            };
+        if (!refreshToken) {
+            return;
         }
+
+        await doTryRefreshToken(refreshToken, authUtilities.mutate, context);
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
     }
-
-    removeTokensFromCookies(context);
-    return null;
 };
 
-/**
- * Factory for getAuth function, so it's possible to pass context
- * Initial requests with refreshToken only are refreshed immediately
- * Subsequent requests are refreshed when necessary
- */
-const createGetAuth = (context?: GetServerSidePropsContext | NextPageContext) => {
-    return async (params: {
-        authState: TokenType | null;
-        mutate: <Data = any, Variables extends Record<string, unknown> = Record<string, unknown>>(
-            query: DocumentNode | TypedDocumentNode<Data, Variables> | string,
-            variables?: Variables,
-            context?: Partial<OperationContext>,
-        ) => Promise<OperationResult<Data>>;
-    }): Promise<TokenType | null> => {
-        const { accessToken, refreshToken } = getTokensFromCookies(context);
-
-        if (!params.authState) {
-            try {
-                if (refreshToken === undefined) {
-                    return null;
-                }
-
-                if (accessToken === undefined) {
-                    return doTryRefreshToken(refreshToken, params.mutate, context);
-                }
-
-                return { accessToken, refreshToken };
-            } catch (e) {
-                // eslint-disable-next-line no-console
-                console.error(e);
-            }
-
-            return null;
-        }
-
-        if (refreshToken !== undefined && params.authState.refreshToken !== refreshToken) {
-            return doTryRefreshToken(refreshToken, params.mutate, context);
-        }
-
-        return doTryRefreshToken(params.authState.refreshToken, params.mutate, context);
-    };
-};
-
-type GetAuthExchangeOptionsReturnType = {
-    addAuthToOperation: (params: { authState: TokenType | null; operation: Operation }) => Operation;
-    didAuthError: (params: { error: CombinedError }) => boolean;
-    getAuth: (params: {
-        authState: TokenType | null;
-        mutate: <Data = any, Variables extends Record<string, unknown> = Record<string, unknown>>(
-            query: DocumentNode | TypedDocumentNode<Data, Variables> | string,
-            variables?: Variables,
-            context?: Partial<OperationContext>,
-        ) => Promise<OperationResult<Data>>;
-    }) => Promise<TokenType | null>;
-};
-
-export const getAuthExchangeOptions = (
-    context?: GetServerSidePropsContext | NextPageContext,
-): GetAuthExchangeOptionsReturnType => ({
-    addAuthToOperation,
-    didAuthError,
-    getAuth: createGetAuth(context),
-});
+export const getAuthExchangeOptions =
+    (context?: GetServerSidePropsContext | NextPageContext) =>
+    async (authUtilities: AuthUtilities): Promise<AuthConfig> => ({
+        addAuthToOperation: (operation) => addAuthToOperation(operation, context),
+        didAuthError,
+        refreshAuth: () => refreshAuth(authUtilities, context),
+    });

@@ -1,9 +1,9 @@
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
-import { initUrqlClient, SSRExchange } from 'next-urql';
+import { initUrqlClient } from 'next-urql';
 import getConfig from 'next/config';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
-import { Client } from 'urql';
+import { Client, SSRExchange } from 'urql';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
 
