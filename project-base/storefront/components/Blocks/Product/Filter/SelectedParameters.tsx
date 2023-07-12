@@ -212,7 +212,7 @@ const SelectedParametersIcon: FC<{ onClick: () => void }> = ({ onClick, dataTest
 
 const getCheckedFlags = (
     defaultProductFiltersMap: DefaultProductFiltersMapType,
-    flagFilterOptions: ProductFilterOptionsFragmentApi['flags'] = [],
+    flagFilterOptions: ProductFilterOptionsFragmentApi['flags'],
     flagsCheckedByUser: string[] = [],
 ) => {
     const checkedFlagsSet = new Set([...flagsCheckedByUser, ...Array.from(defaultProductFiltersMap.flags)]);
