@@ -20,7 +20,7 @@
         "typecheck": "tsc --pretty --noEmit --project tsconfig.json"
     },
     "dependencies": {
-        "@floating-ui/react-dom-interactions": "0.9.1",
+        "@floating-ui/react": "^0.24.6",
         "@hookform/resolvers": "2.6.1",
         "@next/bundle-analyzer": "13.2.4",
         "@sentry/nextjs": "7.12.1",
