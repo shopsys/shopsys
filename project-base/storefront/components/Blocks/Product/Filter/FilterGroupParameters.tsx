@@ -68,28 +68,30 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
             <FilterGroupContent isOpen={!isGroupCollapsed}>
                 {isCheckboxType && (
                     <>
-                        {defaultOptions.map((parameterValue, index) => {
+                        {defaultOptions.map((parameterValueOption, index) => {
                             const isChecked = getIsSelectedParameterValue(
                                 defaultSelectedParameters,
                                 selectedParameter?.values,
                                 parameter.uuid,
-                                parameterValue.uuid,
+                                parameterValueOption.uuid,
                             );
                             const id = `parameters.${parameterIndex}.values.${index}.checked`;
 
                             return (
                                 <FilterGroupContentItem
-                                    key={parameterValue.uuid}
-                                    isDisabled={parameterValue.count === 0 && !isChecked}
+                                    key={parameterValueOption.uuid}
+                                    isDisabled={parameterValueOption.count === 0 && !isChecked}
                                     dataTestId={getDataTestId(parameterIndex) + '-' + index}
                                 >
                                     <Checkbox
                                         id={id}
                                         name={id}
-                                        label={parameterValue.text}
-                                        onChange={() => updateFilterParameters(parameter.uuid, parameterValue.uuid)}
+                                        label={parameterValueOption.text}
+                                        onChange={() =>
+                                            updateFilterParameters(parameter.uuid, parameterValueOption.uuid)
+                                        }
                                         value={isChecked}
-                                        count={parameterValue.count}
+                                        count={parameterValueOption.count}
                                     />
                                 </FilterGroupContentItem>
                             );
