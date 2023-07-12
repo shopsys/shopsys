@@ -298,7 +298,7 @@ export const useQueryParams = () => {
 
         router[isPush ? 'push' : 'replace'](
             {
-                pathname: pathnameOverride ? pathnameOverride : router.asPath.split('?')[0],
+                pathname: pathnameOverride || router.asPath.split('?')[0],
                 query: filteredQueries,
             },
             undefined,
