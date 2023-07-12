@@ -9,10 +9,7 @@ namespace ShopsysNamespace;
  */
 final class ValidClass
 {
-    /**
-     * @var \ShopsysNamespace\Type
-     */
-    private $parameterCamelCase;
+    private Type $parameterCamelCase;
 
     /**
      * @param \ShopsysNamespace\Type $parameterCamelCase
