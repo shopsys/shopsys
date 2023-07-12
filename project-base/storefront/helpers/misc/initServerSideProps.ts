@@ -20,9 +20,8 @@ import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetPara
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import loadNamespaces from 'next-translate/loadNamespaces';
-import { SSRData, SSRExchange } from 'next-urql';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
-import { Client, ssrExchange } from 'urql';
+import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
 import { parseCatnums } from 'utils/grapesJsParser';
 import getT from 'next-translate/getT';
 

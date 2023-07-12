@@ -1,10 +1,10 @@
 import { GetServerSidePropsContext, NextPageContext } from 'next';
-import { destroyCookie, parseCookies, setCookie } from 'nookies';
+import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 import { OptionalTokenType } from 'urql/types';
 
 export const removeTokensFromCookies = (context?: GetServerSidePropsContext | NextPageContext): void => {
-    destroyCookie(context, 'accessToken', { path: '/' });
-    destroyCookie(context, 'refreshToken', { path: '/' });
+    deleteCookie('accessToken', { req: context?.req, res: context?.res, path: '/' });
+    deleteCookie('refreshToken', { req: context?.req, res: context?.res, path: '/' });
 };
 
 export const setTokensToCookie = (
@@ -12,21 +12,26 @@ export const setTokensToCookie = (
     refreshToken: string,
     context?: GetServerSidePropsContext | NextPageContext,
 ): void => {
-    setCookie(context, 'accessToken', accessToken, { path: '/' });
-    setCookie(context, 'refreshToken', refreshToken, {
+    setCookie('accessToken', accessToken, { req: context?.req, res: context?.res, path: '/' });
+    setCookie('refreshToken', refreshToken, {
+        req: context?.req,
+        res: context?.res,
         maxAge: 3600 * 24 * 14,
         path: '/',
     });
 };
 
-export const hasTokenInCookie = (context?: GetServerSidePropsContext): boolean => {
-    return 'refreshToken' in parseCookies(context);
-};
-
 export const getTokensFromCookies = (context?: GetServerSidePropsContext | NextPageContext): OptionalTokenType => {
-    const cookies = parseCookies(context);
-    const accessToken = cookies.accessToken;
-    const refreshToken = cookies.refreshToken;
+    let accessToken = getCookie('accessToken', { req: context?.req, res: context?.res });
+    let refreshToken = getCookie('refreshToken', { req: context?.req, res: context?.res });
+
+    if (typeof accessToken !== 'string') {
+        accessToken = undefined;
+    }
+
+    if (typeof refreshToken !== 'string') {
+        refreshToken = undefined;
+    }
 
     return { accessToken, refreshToken };
 };

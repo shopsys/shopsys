@@ -15,10 +15,8 @@ import {
     ComparisonQueryApi,
     ComparisonQueryDocumentApi,
     ComparisonQueryVariablesApi,
-    Maybe,
     RemoveProductFromComparisonMutationVariablesApi,
     RemoveProductFromWishlistMutationVariablesApi,
-    Scalars,
     TransportsQueryApi,
     TransportsQueryDocumentApi,
     TransportsQueryVariablesApi,
@@ -26,6 +24,7 @@ import {
     WishlistQueryApi,
     WishlistQueryDocumentApi,
     WishlistQueryVariablesApi,
+    InputMaybe,
 } from 'graphql/generated';
 import schema from 'schema.graphql.json';
 
@@ -245,7 +244,7 @@ const manuallyUpdateCartFragment = (cache: Cache, newCart: CartApi | undefined) 
     }
 };
 
-const clearComparisonQueryFragment = (cache: Cache, comparisonUuid: Maybe<Scalars['Uuid']>) => {
+const clearComparisonQueryFragment = (cache: Cache, comparisonUuid: InputMaybe<string>) => {
     cache.updateQuery<ComparisonQueryApi, ComparisonQueryVariablesApi>(
         { query: ComparisonQueryDocumentApi, variables: { comparisonUuid } },
         () => {
@@ -257,7 +256,7 @@ const clearComparisonQueryFragment = (cache: Cache, comparisonUuid: Maybe<Scalar
     );
 };
 
-const clearWishlistQueryFragment = (cache: Cache, wishlistUuid: Maybe<Scalars['Uuid']>) => {
+const clearWishlistQueryFragment = (cache: Cache, wishlistUuid: InputMaybe<string>) => {
     cache.updateQuery<WishlistQueryApi, WishlistQueryVariablesApi>(
         { query: WishlistQueryDocumentApi, variables: { wishlistUuid } },
         () => {
