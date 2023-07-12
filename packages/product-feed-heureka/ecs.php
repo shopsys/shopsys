@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff;
+use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
+use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
@@ -42,6 +44,12 @@ return static function (ECSConfig $ecsConfig): void {
         ],
         ObjectIsCreatedByFactorySniff::class => [
             __DIR__ . '/tests/*',
+        ],
+        PhpdocToPropertyTypeFixer::class => [
+            __DIR__ . '/src/*',
+        ],
+        DeclareStrictTypesFixer::class => [
+            __DIR__ . '/src/*',
         ],
     ]);
 
