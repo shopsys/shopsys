@@ -3,11 +3,11 @@ name: "Checks and tests"
 jobs:
     checks-and-tests:
         name: Run checks and tests in PHP ${{ matrix.php-versions }} ${{ matrix.composer-prefered-dependencies }}
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         strategy:
             matrix:
-                php-versions: ['8.0', '8.1']
-                composer-prefered-dependencies: ['--prefer-lowest', '']
+                php-versions: ['8.1']
+                composer-preferred-dependencies: ['--prefer-lowest', '']
             fail-fast: false
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -21,7 +21,7 @@ jobs:
                     extensions: bcmath, gd, intl, pdo_pgsql, redis, pgsql, zip
                     tools: composer
             -   name: Install Composer dependencies
-                run: composer install --optimize-autoloader --no-interaction
+                run: composer update --optimize-autoloader --no-interaction ${{ matrix.composer-preferred-dependencies }}
             -   name: Run parallel-lint
                 run: php vendor/bin/parallel-lint ./src ./tests
             -   name: Run Easy Coding Standards
