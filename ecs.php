@@ -18,14 +18,12 @@ return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->skip(
         [
             PhpdocToPropertyTypeFixer::class => [
-                __DIR__ . '/packages/*',
                 __DIR__ . '/project-base/src/*',
                 __DIR__ . '/project-base/app/*',
                 __DIR__ . '/project-base/tests/App/Acceptance/*',
                 __DIR__ . '/utils/*',
             ],
             DeclareStrictTypesFixer::class => [
-                __DIR__ . '/packages/*',
                 __DIR__ . '/utils/*',
             ],
             ConstantVisibilityRequiredSniff::class => [
