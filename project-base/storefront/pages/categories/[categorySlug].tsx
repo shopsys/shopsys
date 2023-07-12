@@ -80,12 +80,7 @@ const CategoryDetailPage: NextPage = () => {
                 ) : (
                     !!categoryData && (
                         <>
-                            <CategoryDetailContent
-                                showTitleAndDescriptionSkeleton={
-                                    (!!filter || !!orderingMode || !!originalCategorySlug) && fetching
-                                }
-                                category={categoryData}
-                            />
+                            <CategoryDetailContent category={categoryData} />
                         </>
                     )
                 )}
