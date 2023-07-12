@@ -7,20 +7,15 @@ import {
     CategoryProductsQueryDocumentApi,
     CategoryProductsQueryVariablesApi,
 } from 'graphql/generated';
-import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'helpers/gtm/gtm';
 import { getMappedProducts } from 'helpers/mappers/products';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { SORT_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
-import { getProductListSort } from 'helpers/sorting/getProductListSort';
-import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { handleQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPaginatedProductListViewEvent } from 'hooks/gtm/productList/useGtmPaginatedProductListViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useQueryParams } from 'hooks/useQueryParams';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { RefObject, useEffect, useMemo, useState } from 'react';
 import { useSessionStore } from 'store/zustand/useSessionStore';
 import { GtmMessageOriginType } from 'types/gtm/enums';
@@ -60,19 +55,18 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ categor
 
 const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi, boolean] => {
     const client = useClient();
-    const { query, asPath } = useRouter();
+    const { asPath } = useRouter();
     const { currentPage } = useQueryParams();
     const t = useTypedTranslationFunction();
 
     const endCursor = getEndCursor(currentPage);
-    const filter = mapParametersFilter(getFilterOptions(parseFilterOptionsFromQuery(query.filter)));
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
+    const { filter, sort } = useQueryParams();
     const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(asPath));
 
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
     const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
-    const [categoryDetailData, setCategoryDetailData] = useState<undefined | CategoryProductsQueryApi>(undefined);
-    const [fetching, setFetching] = useState<boolean>(false);
+    const [categoryDetailData, setCategoryDetailData] = useState<CategoryProductsQueryApi>();
+    const [fetching, setFetching] = useState(false);
 
     useEffect(() => {
         if (wasRedirectedToSeoCategory) {
@@ -85,8 +79,8 @@ const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi, boole
         client
             .query<CategoryProductsQueryApi, CategoryProductsQueryVariablesApi>(CategoryProductsQueryDocumentApi, {
                 endCursor,
-                filter,
-                orderingMode,
+                filter: mapParametersFilter(filter),
+                orderingMode: sort ?? null,
                 urlSlug,
                 pageSize: DEFAULT_PAGE_SIZE,
             })
@@ -96,8 +90,7 @@ const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi, boole
                 setCategoryDetailData(response.data ?? undefined);
             })
             .finally(() => setFetching(false));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [urlSlug, orderingMode, JSON.stringify(filter)]);
+    }, [urlSlug, sort, JSON.stringify(filter)]);
 
     return [categoryDetailData, fetching];
 };
