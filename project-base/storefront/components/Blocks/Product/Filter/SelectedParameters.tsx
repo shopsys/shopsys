@@ -81,7 +81,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions 
 
                 {getSelectedParameters(defaultProductFiltersMap, parameters).map((selectedParameter) => {
                     const selectedParameterOptions = filterOptions.parameters?.find(
-                        (parameter) => parameter.uuid === selectedParameter.parameter,
+                        (parameterOption) => parameterOption.uuid === selectedParameter.parameter,
                     );
 
                     const isSliderParameter = selectedParameterOptions?.__typename === 'ParameterSliderFilterOption';
