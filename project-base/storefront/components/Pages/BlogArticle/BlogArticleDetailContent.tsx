@@ -17,7 +17,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
 
     return (
         <Webline>
-            <ArticleTitle dataTestId={TEST_IDENTIFIER + 'title'}>{blogArticle.name}</ArticleTitle>
+            <ArticleTitle dataTestId={TEST_IDENTIFIER + 'title'}>{blogArticle.seoH1 || blogArticle.name}</ArticleTitle>
             <div className="px-5">
                 <div className="mb-12 flex w-full flex-col">
                     {blogImage && (

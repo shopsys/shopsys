@@ -13,4 +13,5 @@ fragment BlogArticleDetailFragment on BlogArticle {
     publishDate
     seoTitle
     seoMetaDescription
+    seoH1
 }
