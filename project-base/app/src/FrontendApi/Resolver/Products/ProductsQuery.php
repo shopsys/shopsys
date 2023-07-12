@@ -190,20 +190,21 @@ class ProductsQuery extends BaseProductsQuery
         }
 
         if ($argument['brandSlug']) {
-            $category = $this->brandQuery->brandByUuidOrUrlSlugQuery(urlSlug: $argument['brandSlug']);
+            /** @var \App\Model\Product\Brand\Brand $brand */
+            $brand = $this->brandQuery->brandByUuidOrUrlSlugQuery(urlSlug: $argument['brandSlug']);
 
             return $this->productsByBrandQuery(
                 $argument,
-                $category,
+                $brand,
             );
         }
 
         if ($argument['flagSlug']) {
-            $category = $this->flagQuery->flagByUuidOrUrlSlugQuery(urlSlug: $argument['flagSlug']);
+            $flag = $this->flagQuery->flagByUuidOrUrlSlugQuery(urlSlug: $argument['flagSlug']);
 
             return $this->productsByFlagQuery(
                 $argument,
-                $category,
+                $flag,
             );
         }
 
