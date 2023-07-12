@@ -36,6 +36,7 @@ import { handleQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -152,7 +153,7 @@ const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | Ca
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(router.asPath));
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
+    const { sort } = useQueryParams();
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
     const [categoryDetailData, setCategoryDetailData] = useState<undefined | CategoryDetailFragmentApi>(undefined);
     const [fetching, setFetching] = useState<boolean>(false);
@@ -166,7 +167,7 @@ const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | Ca
         client
             .query<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
                 urlSlug,
-                orderingMode,
+                orderingMode: sort ?? null,
                 filter,
             })
             .toPromise()
@@ -175,8 +176,7 @@ const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | Ca
                 setCategoryDetailData(response.data?.category ?? undefined);
             })
             .finally(() => setFetching(false));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [urlSlug, orderingMode, JSON.stringify(filter)]);
+    }, [urlSlug, sort, JSON.stringify(filter)]);
 
     return [categoryDetailData, fetching];
 };
