@@ -201,11 +201,12 @@ export const useHandleSeoCategorySlugUpdate = (category: CategoryDetailFragmentA
 
     useEffect(() => {
         const isCurrentAndRedirectSlugDifferent = getStringWithoutLeadingSlash(category?.slug ?? '') !== urlSlug;
+
         if (category?.originalCategorySlug && isCurrentAndRedirectSlugDifferent) {
             setWasRedirectedToSeoCategory(true);
             router.replace(category.slug, undefined, { shallow: true });
         }
+
         setOriginalCategorySlug(category?.originalCategorySlug ?? undefined);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category?.originalCategorySlug, category?.slug]);
 };
