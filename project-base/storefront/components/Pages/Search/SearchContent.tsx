@@ -1,6 +1,5 @@
 import { ProductsSearch } from './ProductsSearch';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { Button } from 'components/Forms/Button/Button';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
@@ -16,6 +15,7 @@ import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { CategoryDetailPageSkeleton } from '../CategoryDetail/CategoryDetailPageSkeleton';
+import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 
 enum NUMBER_OF_VISIBLE_ITEMS {
     XL = 8,
@@ -37,6 +37,8 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching,
     const [areBrandsResultsVisible, setBrandsResultsVisibility] = useState(false);
     const [areCategoriesResultsVisible, setCategoriesResultsVisibility] = useState(false);
     const [numberOfVisible, setNumberOfVisible] = useState(0);
+
+    const title = useSeoTitleWithPagination(searchResults?.productsSearch.totalCount, t('Found products'));
 
     const mappedCategoriesSearchResults = useMemo(
         () => mapConnectionEdges<SimpleCategoryFragmentApi>(searchResults?.categoriesSearch.edges),
@@ -147,9 +149,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching,
                             )}
 
                             <div className="mt-6">
-                                <HeadingPaginated type="h3" totalCount={searchResults.productsSearch.totalCount}>
-                                    {t('Found products')}
-                                </HeadingPaginated>
+                                <Heading type="h3">{title}</Heading>
                                 <ProductsSearch productsSearch={searchResults.productsSearch} />
                             </div>
                         </>

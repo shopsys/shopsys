@@ -28,10 +28,10 @@ import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
-import router from 'next/router';
 import { GtmPageType } from 'types/gtm/enums';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
@@ -56,19 +56,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.search_results, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    let title = t('Search');
-    const currentPage = parsePageNumberFromQuery(router.query[PAGE_QUERY_PARAMETER_NAME]);
-    const searchedProductsTotalCount = searchData?.productsSearch.totalCount ?? 0;
-
-    if (searchedProductsTotalCount > DEFAULT_PAGE_SIZE) {
-        const additionalPaginationText =
-            ' ' +
-            t('page {{ currentPage }} from {{ totalPages }}', {
-                totalPages: Math.ceil(searchedProductsTotalCount / DEFAULT_PAGE_SIZE),
-                currentPage: currentPage,
-            });
-        title = title + additionalPaginationText;
-    }
+    const title = useSeoTitleWithPagination(searchData?.productsSearch.totalCount, t('Search'));
 
     return (
         <>
