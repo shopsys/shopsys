@@ -18,7 +18,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                 <Heading type="h1">{flag.name}</Heading>
             </Webline>
             <Webline>
-                <div ref={paginationScrollTargetRef} className="scroll-m-5">
+                <div ref={paginationScrollTargetRef} className="scroll-mt-5">
                     <SortingBar sorting={flag.products.orderingMode} totalCount={flag.products.totalCount} />
                     <FlagDetailProductsWrapper flag={flag} paginationScrollTargetRef={paginationScrollTargetRef} />
                 </div>

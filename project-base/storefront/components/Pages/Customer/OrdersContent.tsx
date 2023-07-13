@@ -37,7 +37,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                 </div>
                 <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
-            <div ref={paginationScrollTargetRef} className="scroll-m-5">
+            <div ref={paginationScrollTargetRef} className="scroll-mt-5">
                 <Webline>
                     <TableGrid>
                         {orders !== undefined && orders.length !== 0 && (

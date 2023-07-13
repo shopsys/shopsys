@@ -42,7 +42,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
         <Webline>
             {isFiltered && <MetaRobots content="noindex, follow" />}
             <div
-                className="mb-7 flex scroll-m-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap"
+                className="mb-7 flex scroll-mt-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap"
                 ref={paginationScrollTargetRef}
             >
                 <div

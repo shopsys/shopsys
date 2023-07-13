@@ -36,7 +36,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 </div>
             </Webline>
             <Webline>
-                <div ref={paginationScrollTargetRef} className="scroll-m-5">
+                <div ref={paginationScrollTargetRef} className="scroll-mt-5">
                     <SortingBar sorting={brand.products.orderingMode} totalCount={brand.products.totalCount} />
                     <BrandDetailProductsWrapper brand={brand} paginationScrollTargetRef={paginationScrollTargetRef} />
                 </div>

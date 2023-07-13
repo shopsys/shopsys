@@ -14,7 +14,7 @@ export const BlogCategoryContent: FC<BlogCategoryContentProps> = ({ blogCategory
 
     return (
         <Webline>
-            <div ref={paginationScrollTargetRef} className="scroll-m-5">
+            <div ref={paginationScrollTargetRef} className="scroll-mt-5">
                 <HeadingPaginated type="h1" totalCount={blogCategory.articlesTotalCount}>
                     {blogCategory.name}
                 </HeadingPaginated>
