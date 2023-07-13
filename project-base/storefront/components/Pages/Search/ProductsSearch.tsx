@@ -4,7 +4,7 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
-import { ListedProductConnectionPreviewFragmentApi } from 'graphql/generated';
+import { ListedProductConnectionPreviewFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -58,7 +58,7 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                 </div>
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
                 <div
-                    className="flex flex-1 scroll-m-5 flex-col overflow-hidden vl:pl-12"
+                    className="flex flex-1 scroll-mt-5 flex-col overflow-hidden scroll-smooth vl:pl-12"
                     ref={paginationScrollTargetRef}
                 >
                     <div
@@ -68,7 +68,15 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                         <Icon iconType="icon" icon="Filter" className="mr-3 w-6 font-bold text-white" />
                         {t('Filter')}
                     </div>
-                    <SortingBar sorting={productsSearch.orderingMode} totalCount={productsSearch.totalCount} />
+                    <SortingBar
+                        sorting={productsSearch.orderingMode}
+                        totalCount={productsSearch.totalCount}
+                        customSortOptions={[
+                            ProductOrderingModeEnumApi.RelevanceApi,
+                            ProductOrderingModeEnumApi.PriceAscApi,
+                            ProductOrderingModeEnumApi.PriceDescApi,
+                        ]}
+                    />
                     <SearchProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef} />
                 </div>
             </div>
