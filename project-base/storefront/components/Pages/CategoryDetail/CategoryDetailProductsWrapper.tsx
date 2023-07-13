@@ -18,10 +18,10 @@ import { GtmMessageOriginType } from 'types/gtm/enums';
 
 type CategoryDetailProps = {
     category: CategoryDetailFragmentApi;
-    containerWrapRef: RefObject<HTMLDivElement>;
+    paginationScrollTargetRef: RefObject<HTMLDivElement>;
 };
 
-export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ category, containerWrapRef }) => {
+export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ category, paginationScrollTargetRef }) => {
     const { query } = useRouter();
     const { currentPage } = useQueryParams();
     const orderingMode = getProductListSort(parseProductListSortFromQuery(query.sort));
@@ -57,7 +57,10 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ categor
                 category={category}
                 gtmMessageOrigin={GtmMessageOriginType.other}
             />
-            <Pagination containerWrapRef={containerWrapRef} totalCount={category.products.totalCount} />
+            <Pagination
+                paginationScrollTargetRef={paginationScrollTargetRef}
+                totalCount={category.products.totalCount}
+            />
         </>
     );
 };

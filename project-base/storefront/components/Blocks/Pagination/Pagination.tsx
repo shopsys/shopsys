@@ -8,14 +8,14 @@ import { twJoin } from 'tailwind-merge';
 
 type PaginationProps = {
     totalCount: number;
-    containerWrapRef: RefObject<HTMLDivElement> | null;
+    paginationScrollTargetRef: RefObject<HTMLDivElement> | null;
 };
 
 const TEST_IDENTIFIER = 'blocks-pagination';
 
 export const DEFAULT_PAGE_SIZE = 9;
 
-export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }) => {
+export const Pagination: FC<PaginationProps> = ({ totalCount, paginationScrollTargetRef }) => {
     const router = useRouter();
     const isDesktop = useMediaMin('sm');
     const { currentPage, updatePagination } = useQueryParams();
@@ -29,8 +29,8 @@ export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }
     const queryParams = getFilteredQueries(router.query);
 
     const onChangePage = (pageNumber: number) => () => {
-        if (containerWrapRef?.current) {
-            containerWrapRef.current.scrollIntoView();
+        if (paginationScrollTargetRef?.current) {
+            paginationScrollTargetRef.current.scrollIntoView();
         }
         updatePagination(pageNumber);
     };
@@ -93,7 +93,7 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
             }
         };
 
-        const button = (
+        return (
             <a
                 className={twJoin(
                     'flex h-11 w-11 items-center justify-center rounded border border-white bg-white font-bold no-underline hover:no-underline',
@@ -107,8 +107,6 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
                 {children}
             </a>
         );
-
-        return button;
     },
 );
 

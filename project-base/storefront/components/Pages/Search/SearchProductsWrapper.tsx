@@ -22,10 +22,10 @@ import { RefObject } from 'react';
 import { GtmProductListNameType } from 'types/gtm/enums';
 
 type SearchProductsWrapperProps = {
-    containerWrapperRef: RefObject<HTMLDivElement>;
+    paginationScrollTargetRef: RefObject<HTMLDivElement>;
 };
 
-export const SearchProductsWrapper: FC<SearchProductsWrapperProps> = ({ containerWrapperRef }) => {
+export const SearchProductsWrapper: FC<SearchProductsWrapperProps> = ({ paginationScrollTargetRef }) => {
     const { query } = useRouter();
     const { currentPage } = useQueryParams();
     const queryString = getStringFromUrlQuery(query[SEARCH_QUERY_PARAMETER_NAME]);
@@ -61,7 +61,7 @@ export const SearchProductsWrapper: FC<SearchProductsWrapperProps> = ({ containe
                 />
             )}
             <Pagination
-                containerWrapRef={containerWrapperRef}
+                paginationScrollTargetRef={paginationScrollTargetRef}
                 totalCount={searchProductsData?.products.totalCount ?? 0}
             />
         </>

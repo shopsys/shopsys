@@ -17,10 +17,10 @@ import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 
 type FlagDetailProductsWrapperProps = {
     flag: FlagDetailFragmentApi;
-    containerWrapRef: RefObject<HTMLDivElement>;
+    paginationScrollTargetRef: RefObject<HTMLDivElement>;
 };
 
-export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ flag, containerWrapRef }) => {
+export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ flag, paginationScrollTargetRef }) => {
     const { query } = useRouter();
     const { currentPage } = useQueryParams();
     const orderingMode = getProductListSort(parseProductListSortFromQuery(query.sort));
@@ -50,7 +50,7 @@ export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ 
                 products={flagListedProducts}
                 gtmMessageOrigin={GtmMessageOriginType.other}
             />
-            <Pagination totalCount={flag.products.totalCount} containerWrapRef={containerWrapRef} />
+            <Pagination totalCount={flag.products.totalCount} paginationScrollTargetRef={paginationScrollTargetRef} />
         </>
     );
 };

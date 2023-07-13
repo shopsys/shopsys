@@ -23,7 +23,7 @@ type CategoryDetailContentProps = {
 export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category }) => {
     const t = useTypedTranslationFunction();
     const [isPanelOpen, setIsPanelOpen] = useState(false);
-    const containerWrapRef = useRef<null | HTMLDivElement>(null);
+    const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const { query } = useRouter();
     const isFiltered = 'filter' in query;
 
@@ -41,7 +41,10 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
     return (
         <Webline>
             {isFiltered && <MetaRobots content="noindex, follow" />}
-            <div className="mb-7 flex flex-col vl:mb-10 vl:flex-row vl:flex-wrap" ref={containerWrapRef}>
+            <div
+                className="mb-7 flex scroll-m-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap"
+                ref={paginationScrollTargetRef}
+            >
                 <div
                     className={twJoin(
                         'fixed top-0 left-0 bottom-0 right-10 max-w-[400px] -translate-x-full transition max-vl:z-aboveOverlay vl:static vl:w-[304px] vl:translate-x-0 vl:transition-none',
@@ -88,7 +91,10 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                             totalCount={category.products.totalCount}
                         />
                     </div>
-                    <CategoryDetailProductsWrapper category={category} containerWrapRef={containerWrapRef} />
+                    <CategoryDetailProductsWrapper
+                        category={category}
+                        paginationScrollTargetRef={paginationScrollTargetRef}
+                    />
                 </div>
             </div>
         </Webline>
