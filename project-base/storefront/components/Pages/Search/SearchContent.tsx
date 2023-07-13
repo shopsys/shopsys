@@ -12,7 +12,6 @@ import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
-import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -34,7 +33,6 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching,
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const { width } = useGetWindowSize();
-    const { currentPage } = useQueryParams();
     const [areArticlesResultsVisible, setArticlesResultsVisibility] = useState(false);
     const [areBrandsResultsVisible, setBrandsResultsVisibility] = useState(false);
     const [areCategoriesResultsVisible, setCategoriesResultsVisibility] = useState(false);
@@ -78,7 +76,6 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching,
                 {isFetchingInitialData ? (
                     <CategoryDetailPageSkeleton />
                 ) : (
-                    currentPage === 1 &&
                     !!searchResults && (
                         <>
                             {searchResults.articlesSearch.length > 0 && (
