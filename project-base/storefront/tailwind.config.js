@@ -43,7 +43,7 @@ module.exports = {
             inStock: '#01946f',
         },
         fontFamily: {
-            default: ['DM Sans', 'Arial', 'Helvetica', 'sans-serif'],
+            default: ['var(--font-dm_sans)'],
         },
         zIndex: {
             hidden: -1000,
