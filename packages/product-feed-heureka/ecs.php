@@ -9,6 +9,7 @@ use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 /**
@@ -50,6 +51,10 @@ return static function (ECSConfig $ecsConfig): void {
         ],
         DeclareStrictTypesFixer::class => [
             __DIR__ . '/src/*',
+        ],
+        PropertyTypeHintSniff::class => [
+            __DIR__ . '/src/Model/Product/HeurekaProductDomain.php',
+            __DIR__ . '/src/Model/HeurekaCategory/HeurekaCategory.php',
         ],
     ]);
 
