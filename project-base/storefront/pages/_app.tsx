@@ -1,12 +1,7 @@
 import 'dayjs/locale/cs';
 import 'dayjs/locale/sk';
-import 'lightgallery/css/lg-thumbnail.css';
-import 'lightgallery/css/lightgallery.css';
-import 'react-loading-skeleton/dist/skeleton.css';
 import '../styles/globals.css';
 import '../styles/user-text.css';
-import 'react-toastify/dist/ReactToastify.css';
-import 'nprogress/nprogress.css';
 import { extend, locale } from 'dayjs';
 import appWithI18n from 'next-translate/appWithI18n';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';

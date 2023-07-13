@@ -14,6 +14,7 @@ import { Error500ContentWithBoundary } from '../ErrorPage/Error500Content';
 import { Error503Content } from '../ErrorPage/Error503Content';
 import { PageHeadScripts } from './PageHeadScript';
 import { CartReloader } from './CartReloader';
+import { Fonts } from './Fonts';
 
 type AppPageContentProps = {
     Component: NextComponentType<NextPageContext, any, any>;
@@ -46,6 +47,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps, 
     return (
         <>
             <PageHeadScripts baseDomain={baseDomain} />
+            <Fonts />
             <div className="absolute left-0 top-0 z-overlay h-[1px] w-[1px]" id="portal" />
             <CartReloader />
             <LoadingHandler />

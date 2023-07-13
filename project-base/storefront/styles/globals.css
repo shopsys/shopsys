@@ -1,4 +1,8 @@
-@import 'fonts.css';
+@import 'lightgallery/css/lg-thumbnail.css';
+@import 'lightgallery/css/lightgallery.css';
+@import 'react-loading-skeleton/dist/skeleton.css';
+@import 'react-toastify/dist/ReactToastify.css';
+@import 'nprogress/nprogress.css';
 
 @tailwind base;
 @tailwind components;
@@ -306,8 +310,8 @@ div.smap .cluster img {
 
 /* fix gallery video start width and hide dummy image */
 .lg-outer .lg-video-cont .lg-object.lg-video-poster {
-    @apply !w-auto
+    @apply !w-auto;
 }
 .lg-outer .lg-video-cont.lg-has-youtube .lg-dummy-img {
-    @apply !hidden
+    @apply !hidden;
 }
