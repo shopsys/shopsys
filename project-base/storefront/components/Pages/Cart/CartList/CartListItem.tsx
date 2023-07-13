@@ -48,14 +48,12 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRem
             data-testid={TEST_IDENTIFIER + itemCatnum}
         >
             <div className="mb-6 flex w-[93px] pr-4 vl:mb-0" data-testid={TEST_IDENTIFIER + 'image'}>
-                <ExtendedNextLink href={item.product.slug} passHref type="product">
-                    <a className="relative h-full w-full">
-                        <Image
-                            image={item.product.mainImage}
-                            type="thumbnailExtraSmall"
-                            alt={item.product.mainImage?.name || item.product.fullName}
-                        />
-                    </a>
+                <ExtendedNextLink href={item.product.slug} type="product" className="relative h-full w-full">
+                    <Image
+                        image={item.product.mainImage}
+                        type="thumbnailExtraSmall"
+                        alt={item.product.mainImage?.name || item.product.fullName}
+                    />
                 </ExtendedNextLink>
             </div>
             <div className="mb-5 flex w-[calc(100%-93px)] flex-col items-start pr-7 text-sm font-bold vl:mb-0 vl:flex-1 vl:flex-row vl:items-center vl:pr-4">

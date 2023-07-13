@@ -60,12 +60,12 @@ const BreadcrumbsSpan: FC = ({ children, dataTestId }) => (
 );
 
 const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKeys }> = ({ href, type, children, dataTestId }) => (
-    <ExtendedNextLink href={href} passHref type={type || 'static'}>
-        <a
-            className="mr-3 hidden text-greyLight no-underline last-of-type:inline lg:inline lg:text-primary lg:underline"
-            data-testid={dataTestId}
-        >
-            {children}
-        </a>
+    <ExtendedNextLink
+        href={href}
+        type={type || 'static'}
+        className="mr-3 hidden text-greyLight no-underline last-of-type:inline lg:inline lg:text-primary lg:underline"
+        data-testid={dataTestId}
+    >
+        <>{children}</>
     </ExtendedNextLink>
 );

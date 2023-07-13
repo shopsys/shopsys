@@ -16,26 +16,37 @@ export const SubMenu: FC = () => {
 
     return (
         <div className="mt-5 flex flex-col" data-testid={TEST_IDENTIFIER}>
-            <ExtendedNextLink href="/" passHref type="static">
-                <SubMenuItem dataTestId={TEST_IDENTIFIER + '-0'}>{t('Customer service')}</SubMenuItem>
-            </ExtendedNextLink>
-            <ExtendedNextLink href={storesUrl} passHref type="static">
-                <SubMenuItem dataTestId={TEST_IDENTIFIER + '-1'}>{t('Stores')}</SubMenuItem>
-            </ExtendedNextLink>
+            <SubMenuItem href="/" dataTestId={TEST_IDENTIFIER + '-0'}>
+                {t('Customer service')}
+            </SubMenuItem>
+            <SubMenuItem href={storesUrl} dataTestId={TEST_IDENTIFIER + '-1'}>
+                {t('Stores')}
+            </SubMenuItem>
 
             {isUserLoggedIn ? (
                 <SubMenuItem onClick={logout}>{t('Logout')}</SubMenuItem>
             ) : (
-                <ExtendedNextLink href={loginUrl} passHref type="static">
-                    <SubMenuItem dataTestId={TEST_IDENTIFIER + '-2'}>{t('Sign in')}</SubMenuItem>
-                </ExtendedNextLink>
+                <SubMenuItem href={loginUrl} dataTestId={TEST_IDENTIFIER + '-2'}>
+                    {t('Sign in')}
+                </SubMenuItem>
             )}
         </div>
     );
 };
 
-const SubMenuItem: FC<{ onClick?: () => void }> = ({ children, dataTestId, onClick }) => (
-    <a className="mb-5 px-8 text-sm text-dark no-underline" onClick={onClick} data-testid={dataTestId}>
-        {children}
-    </a>
-);
+const SubMenuItem: FC<{ onClick?: () => void; href?: string }> = ({ children, dataTestId, onClick, href }) => {
+    if (href) {
+        <ExtendedNextLink
+            href={href}
+            passHref
+            type="static"
+            className="mb-5 px-8 text-sm text-dark no-underline"
+        ></ExtendedNextLink>;
+    }
+
+    return (
+        <a className="mb-5 px-8 text-sm text-dark no-underline" onClick={onClick} data-testid={dataTestId}>
+            {children}
+        </a>
+    );
+};

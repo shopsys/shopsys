@@ -36,9 +36,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({ defaultTitle, defaultDescription }) 
 
     return (
         <Head>
-            <title>
-                {title} {titleSuffix}
-            </title>
+            <title>{`${title} ${titleSuffix}`}</title>
             {description !== null && <meta name="description" content={description} />}
             {ogTitle !== null && <meta name="og:title" content={ogTitle} />}
             {ogDescription !== null && <meta name="og:description" content={ogDescription} />}

@@ -17,30 +17,49 @@ export const MenuIconicItem: FC = ({ children, className, dataTestId }) => (
 type MenuIconicItemLinkProps = { onClick?: () => void; href?: string };
 
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, dataTestId }) => {
-    const content = (
-        <a className="block py-3 px-5 text-sm text-dark no-underline" data-testid={dataTestId} onClick={onClick}>
-            {children}
-        </a>
-    );
-
     if (href) {
         return (
-            <ExtendedNextLink href={href} passHref type="static">
-                {content}
+            <ExtendedNextLink
+                className="block py-3 px-5 text-sm text-dark no-underline"
+                data-testid={dataTestId}
+                onClick={onClick}
+                href={href}
+                type="static"
+            >
+                <>{children}</>
             </ExtendedNextLink>
         );
     }
 
-    return content;
+    return (
+        <a className="block py-3 px-5 text-sm text-dark no-underline" data-testid={dataTestId} onClick={onClick}>
+            {children}
+        </a>
+    );
 };
 
 export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, className, dataTestId, href, onClick }, _) => {
-        const Tag = href ? 'a' : 'span';
+        if (href) {
+            return (
+                <ExtendedNextLink
+                    href={href}
+                    type="static"
+                    className={twMergeCustom(
+                        'flex items-center justify-center rounded-tr-none text-sm text-white no-underline transition-colors hover:text-white hover:no-underline',
+                        className,
+                    )}
+                    onClick={onClick}
+                    data-testid={dataTestId}
+                >
+                    <>{children}</>
+                </ExtendedNextLink>
+            );
+        }
 
-        const content = (
-            <Tag
+        return (
+            <span
                 className={twMergeCustom(
                     'flex items-center justify-center rounded-tr-none text-sm text-white no-underline transition-colors hover:text-white hover:no-underline',
                     className,
@@ -49,18 +68,8 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
                 data-testid={dataTestId}
             >
                 {children}
-            </Tag>
+            </span>
         );
-
-        if (href) {
-            return (
-                <ExtendedNextLink href={href} passHref type="static">
-                    {content}
-                </ExtendedNextLink>
-            );
-        }
-
-        return content;
     },
 );
 

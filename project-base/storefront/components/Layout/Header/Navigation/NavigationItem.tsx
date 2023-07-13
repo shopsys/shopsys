@@ -15,12 +15,14 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
 
     return (
         <li className="group inline-block p-0 align-middle last:mr-0 lg:mr-6 xl:mr-12" data-testid={TEST_IDENTIFIER}>
-            <ExtendedNextLink type="category" href={props.navigationItem.link} passHref>
-                <a
-                    className={twJoin(
-                        'relative m-0 block px-2 py-4 text-sm font-bold uppercase text-white no-underline after:absolute after:bottom-0 after:left-0 after:right-0 after:hidden after:h-1 after:bg-orange after:content-[""] hover:text-orangeLight hover:no-underline hover:after:block group-hover:text-orangeLight group-hover:no-underline after:group-hover:block vl:text-base',
-                    )}
-                >
+            <ExtendedNextLink
+                type="category"
+                href={props.navigationItem.link}
+                className={twJoin(
+                    'relative m-0 block px-2 py-4 text-sm font-bold uppercase text-white no-underline after:absolute after:bottom-0 after:left-0 after:right-0 after:hidden after:h-1 after:bg-orange after:content-[""] hover:text-orangeLight hover:no-underline hover:after:block group-hover:text-orangeLight group-hover:no-underline after:group-hover:block vl:text-base',
+                )}
+            >
+                <>
                     {props.navigationItem.name}
                     {hasChildren && (
                         <Icon
@@ -29,7 +31,7 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
                             className="ml-2 text-white group-hover:rotate-180 group-hover:text-orangeLight"
                         />
                     )}
-                </a>
+                </>
             </ExtendedNextLink>
             {hasChildren && (
                 <div className="pointer-events-none absolute left-0 right-0 z-menu block bg-white py-12 px-14 opacity-0 shadow-md group-hover:pointer-events-auto group-hover:opacity-100">

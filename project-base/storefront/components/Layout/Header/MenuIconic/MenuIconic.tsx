@@ -4,7 +4,6 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { MenuIconicItem, MenuIconicItemLink, MenuIconicItemIcon } from './MenuIconicElements';
 import { MenuIconicItemLogin } from './MenuIconicItemLogin';
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 
 const TEST_IDENTIFIER = 'layout-header-menuiconic';
 
@@ -32,13 +31,11 @@ export const MenuIconic: FC = () => {
                 <MenuIconicItemLogin />
             </MenuIconicItem>
             <MenuIconicItem data-testid={TEST_IDENTIFIER + '-comparison'} className="max-vl:hidden">
-                <ExtendedNextLink href={productsComparisonUrl} passHref type="static">
-                    <MenuIconicItemLink>
-                        <MenuIconicItemIcon icon="Compare" />
-                        {t('Comparison')}
-                        {!!comparison?.products.length && <span>({comparison.products.length})</span>}
-                    </MenuIconicItemLink>
-                </ExtendedNextLink>
+                <MenuIconicItemLink href={productsComparisonUrl}>
+                    <MenuIconicItemIcon icon="Compare" />
+                    {t('Comparison')}
+                    {!!comparison?.products.length && <span>({comparison.products.length})</span>}
+                </MenuIconicItemLink>
             </MenuIconicItem>
         </ul>
     );

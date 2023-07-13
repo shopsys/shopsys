@@ -41,19 +41,19 @@ export const HeadItem: FC<ItemProps> = ({ product, productsCompareCount, listInd
                             alt={product.mainImage?.name || product.fullName}
                         />
                     </div>
-                    <ExtendedNextLink href={product.slug} passHref type="product">
-                        <a
-                            className="text-primary no-underline hover:no-underline"
-                            onClick={() =>
-                                onProductDetailRedirectHandler(
-                                    product,
-                                    GtmProductListNameType.product_comparison_page,
-                                    listIndex,
-                                )
-                            }
-                        >
-                            {product.fullName}
-                        </a>
+                    <ExtendedNextLink
+                        href={product.slug}
+                        type="product"
+                        className="text-primary no-underline hover:no-underline"
+                        onClick={() =>
+                            onProductDetailRedirectHandler(
+                                product,
+                                GtmProductListNameType.product_comparison_page,
+                                listIndex,
+                            )
+                        }
+                    >
+                        {product.fullName}
                     </ExtendedNextLink>
                     <p className="mb-2 text-xs">
                         {t('Code')}: {product.catalogNumber}
