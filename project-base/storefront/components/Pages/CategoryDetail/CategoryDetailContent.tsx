@@ -15,6 +15,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+
 type CategoryDetailContentProps = {
     category: CategoryDetailFragmentApi;
 };
