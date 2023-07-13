@@ -6,4 +6,6 @@ This guide contains instructions to upgrade from version v12.0.0 to v13.0.0-dev.
 There you can find links to upgrade notes for other versions too.
 
 - split functional and frontend-api tests into separate suites ([#2641](https://github.com/shopsys/shopsys/pull/2641))
-   - see #project-base-diff to update your project
+    - see #project-base-diff to update your project
+- use TestCurrencyProvider from the framework ([#2662](https://github.com/shopsys/shopsys/pull/2662))
+    - remove class `Tests\App\Functional\Model\Pricing\Currency\TestCurrencyProvider` and use `Tests\FrameworkBundle\Test\Provider\TestCurrencyProvider` instead

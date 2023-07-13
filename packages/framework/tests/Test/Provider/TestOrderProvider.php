@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
-use Tests\App\Functional\Model\Pricing\Currency\TestCurrencyProvider;
 
 class TestOrderProvider
 {
