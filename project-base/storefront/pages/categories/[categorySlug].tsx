@@ -46,7 +46,7 @@ import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 const CategoryDetailPage: NextPage = () => {
     const router = useRouter();
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
+    const { sort } = useQueryParams();
     const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
     const filter = mapParametersFilter(
         getFilterOptions(parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
@@ -65,7 +65,7 @@ const CategoryDetailPage: NextPage = () => {
     const pageViewEvent = useGtmFriendlyPageViewEvent(categoryData);
     useGtmPageViewEvent(pageViewEvent, fetching);
 
-    const isSkeletonVisible = !filter && !originalCategorySlug && !orderingMode && fetching;
+    const isSkeletonVisible = !filter && !originalCategorySlug && !sort && fetching;
 
     return (
         <CommonLayout title={seoTitle} description={categoryData?.seoMetaDescription}>
