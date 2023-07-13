@@ -141,6 +141,7 @@ return static function (ECSConfig $ecsConfig): void {
         PropertyTypeHintSniff::class => [
             __DIR__ . '/tests/Unit/Component/ClassExtension/Source/*/*.php',
             __DIR__ . '/tests/Unit/Component/ClassExtension/Source/*.php',
+            ...explode("\n", trim(shell_exec("grep -rl '\\* @ORM\\\\Entity' " . escapeshellarg(__DIR__ . '/src')) ?? ''))
         ],
         PhpdocToPropertyTypeFixer::class => [
             __DIR__ . '/src/*',
