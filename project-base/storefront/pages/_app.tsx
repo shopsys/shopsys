@@ -1,10 +1,10 @@
 import 'dayjs/locale/cs';
 import 'dayjs/locale/sk';
+import '../styles/globals.css';
+import '../styles/user-text.css';
 import 'lightgallery/css/lg-thumbnail.css';
 import 'lightgallery/css/lightgallery.css';
 import 'react-loading-skeleton/dist/skeleton.css';
-import '../styles/globals.css';
-import '../styles/user-text.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'nprogress/nprogress.css';
 import { extend, locale } from 'dayjs';

@@ -2,7 +2,6 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useSetDomainConfig } from 'hooks/useDomainConfig';
 import { NextComponentType, NextPageContext } from 'next';
-import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { PropsWithChildren } from 'react';
@@ -11,10 +10,12 @@ import { ToastContainer } from 'react-toastify';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { Error500ContentWithBoundary } from '../ErrorPage/Error500Content';
 import { Error503Content } from '../ErrorPage/Error503Content';
-import { PageHeadScripts } from './PageHeadScript';
+import { GtmHeadScript } from 'components/Helpers/GtmHeadScript';
+import Head from 'next/head';
 import { useLoginLoader } from 'hooks/app/useLoginLoader';
 import { usePageLoader } from 'hooks/app/usePageLoader';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
+import { Fonts } from './Fonts';
 
 type AppPageContentProps = {
     Component: NextComponentType<NextPageContext, any, any>;
@@ -26,7 +27,6 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps, 
     const router = useRouter();
     const { url } = pageProps.domainConfig;
     const userConsent = usePersistStore((store) => store.userConsent);
-    const { publicRuntimeConfig } = getConfig();
 
     useSetDomainConfig(pageProps.domainConfig);
     useLoginLoader();
@@ -45,11 +45,13 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps, 
 
     const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
     const isConsentUpdatePage = router.asPath === consentUpdatePageUrl;
-    const baseDomain = publicRuntimeConfig.cdnDomain;
 
     return (
         <>
-            <PageHeadScripts baseDomain={baseDomain} />
+            <Head>
+                <GtmHeadScript />
+            </Head>
+            <Fonts />
             <div className="absolute left-0 top-0 z-overlay h-[1px] w-[1px]" id="portal" />
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
             <ErrorBoundary FallbackComponent={Error500ContentWithBoundary}>
