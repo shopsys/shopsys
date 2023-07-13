@@ -30,25 +30,21 @@ import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useRouter } from 'next/router';
+import { useQueryParams } from 'hooks/useQueryParams';
+import router from 'next/router';
 import { GtmPageType } from 'types/gtm/enums';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
-    const router = useRouter();
     const { url } = useDomainConfig();
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
-    const filter = mapParametersFilter(
-        getFilterOptions(parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
-    );
-    const search = getStringFromUrlQuery(router.query[SEARCH_QUERY_PARAMETER_NAME]);
+    const { sort, filter, searchString } = useQueryParams();
 
     const [{ data: searchData, fetching }] = useQueryError(
         useSearchQueryApi({
             variables: {
-                search,
-                orderingMode,
-                filter,
+                search: searchString ?? '',
+                orderingMode: sort,
+                filter: mapParametersFilter(filter),
                 pageSize: DEFAULT_PAGE_SIZE,
             },
         }),

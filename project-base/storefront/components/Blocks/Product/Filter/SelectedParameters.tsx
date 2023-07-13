@@ -17,8 +17,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions 
     const formatPrice = useFormatPrice();
 
     const {
-        isWithFilter,
-        filter: { onlyInStock, minimalPrice, maximalPrice, brands, flags, parameters },
+        filter,
         updateFilterInStock,
         updateFilterPrices,
         updateFilterBrands,
@@ -26,6 +25,12 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions 
         updateFilterParameters,
         resetAllFilters,
     } = useQueryParams();
+
+    if (!filter) {
+        return null;
+    }
+
+    const { onlyInStock, minimalPrice, maximalPrice, brands, flags, parameters } = filter;
 
     const isOnlyInStock = !!onlyInStock;
 
@@ -39,10 +44,6 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions 
 
     const isWithMinimalPrice = minimalPrice !== undefined;
     const isWithMaximalPrice = maximalPrice !== undefined;
-
-    if (!isWithFilter) {
-        return null;
-    }
 
     return (
         <div className="z-aboveOverlay rounded-xl py-4 vl:z-[0]" data-testid={TEST_IDENTIFIER}>

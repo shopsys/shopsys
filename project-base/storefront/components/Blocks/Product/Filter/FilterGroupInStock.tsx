@@ -28,10 +28,10 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, inStock
                 <Checkbox
                     name="onlyInStock"
                     id="onlyInStock"
-                    onChange={() => updateFilterInStock(!filter.onlyInStock)}
+                    onChange={() => updateFilterInStock(!filter?.onlyInStock)}
                     label={t('In stock')}
                     count={inStockCount}
-                    value={!!filter.onlyInStock}
+                    value={!!filter?.onlyInStock}
                 />
             </FilterGroupContent>
         </FilterGroupWrapper>

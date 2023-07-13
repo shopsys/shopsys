@@ -32,12 +32,9 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
 }) => {
     const t = useTypedTranslationFunction();
     const [isGroupCollapsed, setIsGroupCollapsed] = useState(parameter.isCollapsed);
-    const {
-        filter: { parameters: selectedParametersUuids },
-        updateFilterParameters,
-    } = useQueryParams();
+    const { filter, updateFilterParameters } = useQueryParams();
 
-    const selectedParameter = selectedParametersUuids?.find((p) => p.parameter === parameter.uuid);
+    const selectedParameter = filter?.parameters?.find((p) => p.parameter === parameter.uuid);
 
     const isCheckboxType = parameter.__typename === 'ParameterCheckboxFilterOption';
 

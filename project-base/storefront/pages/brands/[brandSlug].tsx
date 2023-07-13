@@ -35,22 +35,20 @@ import { OperationResult, ssrExchange } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { useQueryParams } from 'hooks/useQueryParams';
 
 const BrandDetailPage: NextPage = () => {
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
 
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
-    const filter = mapParametersFilter(
-        getFilterOptions(parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
-    );
+    const { sort, filter } = useQueryParams();
 
     const [{ data: brandDetailData, fetching }] = useQueryError(
         useBrandDetailQueryApi({
             variables: {
                 urlSlug: getSlugFromUrl(slug),
-                orderingMode,
-                filter,
+                orderingMode: sort,
+                filter: mapParametersFilter(filter),
             },
         }),
     );
