@@ -622,6 +622,7 @@ jobs:
             TESTS_RESULT: ${{ needs.tests-unit-functional-smoke.result }}
             TESTS_ACCEPTANCE_RESULT: ${{ needs.tests-acceptance.result }}
             STANDARDS_STOREFRONT_RESULT: ${{ needs.standards-storefront.result }}
+            REVIEW_RESULT: ${{ needs.review.result }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v3
@@ -629,5 +630,5 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Build successful
                 run: |
-                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} > /dev/null ; echo $?`
+                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${REVIEW_RESULT} > /dev/null ; echo $?`
                     exit "${EXIT_CODE}"
