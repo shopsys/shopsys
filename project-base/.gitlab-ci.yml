@@ -150,7 +150,6 @@ review:
         - chmod +x ./gitlab/scripts/set-urls-for-review.sh && ./gitlab/scripts/set-urls-for-review.sh setDomainsToDockerCompose
         - docker-compose down --rmi all -v --remove-orphans
         - docker-compose up -d
-        - "docker-compose exec -T php-fpm sed -i \"s/database_name:.*/database_name: ${COMPOSE_PROJECT_NAME}/\" config/parameters.yaml"
         - ./gitlab/scripts/set-urls-for-review.sh setUrlsToDomainsUrls
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
         - ./gitlab/scripts/set-urls-for-review.sh printDomains
