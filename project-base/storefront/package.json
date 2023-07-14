@@ -29,7 +29,6 @@
         "@urql/exchange-graphcache": "6.1.4",
         "cookies-next": "^2.1.2",
         "crypto-js": "4.1.1",
-        "cypress": "^12.17.1",
         "dayjs": "1.11.3",
         "embla-carousel-react": "^7.1.0",
         "graphql": "16.7.1",
