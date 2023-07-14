@@ -113,7 +113,11 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
     {
         $routeNameMapping = $this->friendlyUrlRepository->getRouteNameToEntityMap();
 
-        return $routeNameMapping[$routeName] ?? throw new FriendlyUrlNotFoundException();
+        if (array_key_exists($routeName, $routeNameMapping)) {
+            return $routeNameMapping[$routeName];
+        }
+
+        throw new FriendlyUrlNotFoundException();
     }
 
     /**
