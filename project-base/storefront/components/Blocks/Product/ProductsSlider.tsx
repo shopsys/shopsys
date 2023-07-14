@@ -1,3 +1,4 @@
+import { Icon } from 'components/Basic/Icon/Icon';
 import { SliderProductItem } from './SliderProductItem';
 import { mediaQueries } from 'components/Theme/mediaQueries';
 import { ListedProductFragmentApi } from 'graphql/generated';
@@ -5,6 +6,7 @@ import { useGtmSliderProductListViewEvent } from 'hooks/gtm/productList/useGtmSl
 import { useKeenSlider } from 'keen-slider/react';
 import { useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { twMergeCustom } from 'utils/twMerge';
 
 type ProductsSliderProps = {
     products: ListedProductFragmentApi[];
@@ -34,14 +36,15 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             [mediaQueries.queryTablet]: {
                 loop: products.length > 2,
                 autoAdjustSlidesPerView: false,
-                slidesPerView: 2,
+                slidesPerView: 2.15,
                 controls: products.length > 2,
             },
             [mediaQueries.queryMobile]: {
                 loop: products.length > 1,
                 autoAdjustSlidesPerView: false,
-                slidesPerView: 1,
+                slidesPerView: 1.15,
                 controls: products.length > 1,
+                centered: true,
             },
         },
         slideChanged(slider) {
@@ -75,21 +78,23 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                 ))}
             </div>
             {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
-            {slider !== null && areControlsVisible ? (
+            {slider && areControlsVisible ? (
                 <div className="absolute -top-11 right-0 hidden items-center justify-center lg:flex ">
-                    <SliderButton onClick={onMoveToPreviousSlideHandler}>p</SliderButton>
-                    <SliderButton onClick={onMoveToNextSlideHandler}>n</SliderButton>
+                    <SliderButton type="prev" onClick={onMoveToPreviousSlideHandler} />
+                    <SliderButton type="next" onClick={onMoveToNextSlideHandler} />
                 </div>
             ) : null}
         </div>
     );
 };
 
-const SliderButton: FC<{ onClick: () => void }> = ({ children, onClick }) => (
+const SliderButton: FC<{ type?: 'prev' | 'next'; onClick: () => void }> = ({ type, onClick }) => (
     <button
-        className="ml-1 h-8 w-8 cursor-pointer rounded border-none bg-greyDark text-creamWhite outline-none transition hover:bg-greyDarker"
+        className={twMergeCustom(
+            'ml-1 h-8 w-8 cursor-pointer rounded border-none bg-greyDark pt-1 text-creamWhite outline-none transition hover:bg-greyDarker',
+        )}
         onClick={onClick}
     >
-        {children}
+        <Icon className={twMergeCustom('rotate-90', type === 'next' && '-rotate-90')} iconType="icon" icon="Arrow" />
     </button>
 );
