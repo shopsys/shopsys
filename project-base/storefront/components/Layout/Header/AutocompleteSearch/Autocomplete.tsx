@@ -15,7 +15,7 @@ import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
-import { useCallback, useMemo } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { GtmProductListNameType, GtmSectionType } from 'types/gtm/enums';
 
@@ -284,8 +284,11 @@ const SearchResultGroup: FC = ({ children, dataTestId }) => (
     </ul>
 );
 
-const SearchResultLink: FC<{ onClick: () => void }> = ({ children, onClick }) => (
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const SearchResultLink: FC<{ onClick: () => void }> = forwardRef(({ children, onClick }, _) => (
     <a className="flex w-full items-center py-3 text-sm font-bold text-dark no-underline" onClick={onClick}>
         {children}
     </a>
-);
+));
+
+SearchResultLink.displayName = 'SearchResultLink';

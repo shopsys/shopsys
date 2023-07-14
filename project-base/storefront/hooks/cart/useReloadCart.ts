@@ -17,13 +17,13 @@ export const useReloadCart = (): void => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
 
     useEffect(() => {
-        if (cartUuid !== null || isUserLoggedIn) {
+        if (cartUuid || isUserLoggedIn) {
             refetchCart();
         }
     }, [slug, refetchCart, isUserLoggedIn, cartUuid]);
 
     useEffect(() => {
-        if (modifications !== null) {
+        if (modifications) {
             handleCartModifications(modifications, t, changePaymentInCart);
         }
     }, [modifications, changePaymentInCart, t]);

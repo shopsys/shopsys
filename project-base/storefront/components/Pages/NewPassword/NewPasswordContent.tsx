@@ -13,10 +13,9 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { useAuth } from 'hooks/auth/useAuth';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import Trans from 'next-translate/Trans';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { NewPasswordFormType } from 'types/form';
@@ -83,11 +82,11 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
         ],
     );
 
-    useEffectOnce(() => {
+    useEffect(() => {
         if (hash === '' || email === '') {
             showErrorMessage(t('Error occured while loading form data'));
         }
-    });
+    }, []);
 
     if (hash === '' || email === '') {
         return (

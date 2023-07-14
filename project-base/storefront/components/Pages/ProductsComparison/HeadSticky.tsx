@@ -1,6 +1,6 @@
 import { Image } from 'components/Basic/Image/Image';
 import { ComparedProductFragmentApi } from 'graphql/generated';
-import { useHandleCompareTable } from 'hooks/product/useHandleCompareTable';
+import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import { twJoin } from 'tailwind-merge';
 
 type HeadStickyProps = {
@@ -9,7 +9,7 @@ type HeadStickyProps = {
 };
 
 export const HeadSticky: FC<HeadStickyProps> = (props) => {
-    const { tableStickyHeadActive } = useHandleCompareTable(props.productsCompare.length);
+    const { tableStickyHeadActive } = useComparisonTable(props.productsCompare.length);
 
     return (
         <div

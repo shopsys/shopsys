@@ -32,13 +32,12 @@ import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandle
 import { useGtmContactInformationPageViewEvent } from 'hooks/gtm/useGtmContactInformationPageViewEvent';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
 import { OrderConfirmationQuery } from 'pages/order-confirmation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { CustomerTypeEnum } from 'types/customer';
@@ -72,7 +71,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
 
     useHandleContactInformationNonTextChanges(formProviderMethods.control, formMeta);
 
-    useEffectOnce(() => {
+    useEffect(() => {
         if (customer === undefined) {
             if (isUserLoggedIn && user?.companyCustomer) {
                 formProviderMethods.setValue(formMeta.fields.customer.name, CustomerTypeEnum.CompanyCustomer);
@@ -80,7 +79,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                 formProviderMethods.setValue(formMeta.fields.customer.name, CustomerTypeEnum.CommonCustomer);
             }
         }
-    });
+    }, []);
 
     const onCreateOrderHandler: SubmitHandler<typeof defaultValues> = async (formValues) => {
         setOrderCreating(true);

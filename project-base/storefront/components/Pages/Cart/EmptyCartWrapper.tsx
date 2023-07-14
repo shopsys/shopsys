@@ -29,8 +29,7 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], url);
     const [initiatedLoading, setInitiatedLoading] = useState(false);
     const [isLoadingVisible, setIsLoadingVisible] = useState(true);
-    const isLoading = !currentCart.isInitiallyLoaded || currentCart.isLoading;
-    const isLoginLoading = loginLoading !== 'not-loading';
+    const isLoading = currentCart.isFetching || currentCart.isLoading;
 
     useEffect(() => {
         if (enableHandling === false) {
@@ -64,7 +63,7 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
         enableHandling,
     ]);
 
-    if (isLoadingVisible || isLoginLoading) {
+    if (isLoadingVisible || loginLoading) {
         return isCartPage ? (
             <CommonLayout title={title}>
                 <CartLoading />

@@ -9,7 +9,7 @@ export const LoadingHandler: FC = () => {
     const updateGeneralState = usePersistStore((store) => store.updateLoginLoadingState);
 
     useEffect(() => {
-        if (loginLoading === 'not-loading') {
+        if (!loginLoading) {
             return;
         }
 
@@ -19,8 +19,7 @@ export const LoadingHandler: FC = () => {
             showInfoMessage(t('Your cart has been modified. Please check the changes.'));
         }
 
-        updateGeneralState({ loginLoading: 'not-loading' });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        updateGeneralState(null);
     }, []);
 
     return null;

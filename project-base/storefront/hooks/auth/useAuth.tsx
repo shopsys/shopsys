@@ -4,7 +4,6 @@ import { removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens'
 import { canUseDom } from 'helpers/misc/canUseDom';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { OperationResult } from 'urql';
 
@@ -35,44 +34,39 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
     const [, logoutMutation] = useLogoutApi();
     const t = useTypedTranslationFunction();
     const updateUserState = usePersistStore((store) => store.updateUserState);
-    const updateGeneralState = usePersistStore((store) => store.updateLoginLoadingState);
+    const updateLoginLoadingState = usePersistStore((store) => store.updateLoginLoadingState);
 
     const router = useRouter();
 
-    const login = useCallback<LoginHandler>(
-        async (variables, rewriteUrl) => {
-            const loginResult = await loginMutation(variables);
+    const login: LoginHandler = async (variables, rewriteUrl) => {
+        const loginResult = await loginMutation(variables);
 
-            if (loginResult.data !== undefined) {
-                const accessToken = loginResult.data.Login.tokens.accessToken;
-                const refreshToken = loginResult.data.Login.tokens.refreshToken;
+        if (loginResult.data) {
+            const accessToken = loginResult.data.Login.tokens.accessToken;
+            const refreshToken = loginResult.data.Login.tokens.refreshToken;
 
-                setTokensToCookie(accessToken, refreshToken);
+            setTokensToCookie(accessToken, refreshToken);
 
-                updateUserState({
-                    cartUuid: null,
-                });
+            updateUserState({
+                cartUuid: null,
+            });
 
-                updateGeneralState({
-                    loginLoading: loginResult.data.Login.showCartMergeInfo
-                        ? 'loading-with-cart-modifications'
-                        : 'loading',
-                });
+            updateLoginLoadingState(
+                loginResult.data.Login.showCartMergeInfo ? 'loading-with-cart-modifications' : 'loading',
+            );
 
-                if (canUseDom()) {
-                    window.location.href = rewriteUrl ?? router.asPath;
-                }
+            if (canUseDom()) {
+                window.location.href = rewriteUrl ?? router.asPath;
             }
+        }
 
-            return loginResult;
-        },
-        [loginMutation, router.asPath, updateGeneralState, updateUserState],
-    );
+        return loginResult;
+    };
 
-    const logout = useCallback<LogoutHandler>(async () => {
+    const logout: LogoutHandler = async () => {
         const logoutResult = await logoutMutation({});
 
-        if (logoutResult.data?.Logout === true) {
+        if (logoutResult.data?.Logout) {
             removeTokensFromCookies();
             showSuccessMessage(t('Successfully logged out'));
 
@@ -82,7 +76,7 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
         }
 
         return logoutResult;
-    }, [logoutMutation, router, t]);
+    };
 
     return { login, logout };
 };

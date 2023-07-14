@@ -21,10 +21,9 @@ import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import getConfig from 'next/config';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
 const { publicRuntimeConfig } = getConfig();
@@ -177,9 +176,9 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         }
     }, [handlePaymentChange, handleTransportChange, lastOrderPaymentUuid, lastOrderTransportUuid, payment, transport]);
 
-    useEffectOnce(() => {
+    useEffect(() => {
         loadPresetsFromLastOrder();
-    });
+    }, []);
 
     const resetPaymentAndGoPayBankSwift = () => {
         changePaymentInCart(null, null);

@@ -68,7 +68,6 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         }, delay);
 
         return () => clearTimeout(timer);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [minValueThumb, delay]);
 
     useEffect(() => {
@@ -79,7 +78,6 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         }, delay);
 
         return () => clearTimeout(timer);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [maxValueThumb, delay]);
 
     useEffect(() => {

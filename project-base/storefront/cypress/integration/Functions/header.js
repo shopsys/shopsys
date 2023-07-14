@@ -22,9 +22,9 @@ export function typeToSearchInput(searchText) {
 }
 
 export function clickOnUserIconInHeader() {
-    cy.get('[data-testid="layout-header-menuiconic-2"] [data-testid="basic-icon-iconsvg-User"]').click();
+    cy.get('[data-testid="layout-header-menuiconic-login-link-popup"] [data-testid="basic-icon-iconsvg-User"]').click();
 }
 
 export function checkUserIsLoggedIn() {
-    cy.get('[data-testid="layout-header-menuiconic-2"]').contains(link.myAccount);
+    cy.get('[data-testid="layout-header-menuiconic-login-my-account"]').contains(link.myAccount);
 }

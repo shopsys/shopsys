@@ -2,14 +2,14 @@ import { StateCreator } from 'zustand';
 
 export type UserSlice = {
     cartUuid: string | null;
-    productsComparisonUuid: string | null;
+    comparisonUuid: string | null;
 
     updateUserState: (value: Partial<UserSlice>) => void;
 };
 
 export const createUserSlice: StateCreator<UserSlice> = (set) => ({
     cartUuid: null,
-    productsComparisonUuid: null,
+    comparisonUuid: null,
 
     updateUserState: (value) => {
         set(value);

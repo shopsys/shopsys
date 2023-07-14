@@ -11,28 +11,37 @@ import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 import { GtmProductListNameType } from 'types/gtm/enums';
+import { twMergeCustom } from 'utils/twMerge';
 
 const TEST_IDENTIFIER = 'layout-header-cart-';
 
-export const Cart: FC = () => {
+export const Cart: FC = ({ className }) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
-    const { cart, isCartEmpty, isInitiallyLoaded } = useCurrentCart();
+    const { cart, isCartEmpty, isFetching } = useCurrentCart();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const loginLoading = usePersistStore((store) => store.loginLoading);
     const [removeItemFromCart, isRemovingItem] = useRemoveFromCart(GtmProductListNameType.cart);
+    const [isLoading, setIsLoading] = useState(false);
+
+    /** We have to match server HTML and client HTML. Since we store cardUuid in browser,
+     * server doesn't know that user do have cartUuid and it won't start fetching, but browser
+     * does. For this we need both server and client start with the same values and then
+     * set it on client. */
+    useEffect(() => {
+        setIsLoading(isFetching || !!loginLoading);
+    }, [isFetching, loginLoading]);
 
     return (
-        <div className="group relative lg:flex">
-            {(!isInitiallyLoaded || loginLoading !== 'not-loading') && (
-                <div className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-xl bg-greyLighter opacity-50">
-                    <Loader className="w-8" />
-                </div>
+        <div className={twMergeCustom('group relative lg:flex', className)}>
+            {isLoading && (
+                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-xl bg-greyLighter py-2 opacity-50" />
             )}
 
             <ExtendedNextLink href={cartUrl} passHref type="static">

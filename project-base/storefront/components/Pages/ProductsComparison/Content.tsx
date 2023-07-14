@@ -6,7 +6,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { ComparedProductFragmentApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/misc/canUseDom';
-import { useHandleCompareTable } from 'hooks/product/useHandleCompareTable';
+import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -16,7 +16,7 @@ type ContentProps = {
     productsCompare: ComparedProductFragmentApi[];
 };
 
-export const Content: FC<ContentProps> = (props) => {
+export const Content: FC<ContentProps> = ({ productsCompare }) => {
     const t = useTypedTranslationFunction();
     const {
         isArrowLeftActive,
@@ -27,11 +27,11 @@ export const Content: FC<ContentProps> = (props) => {
         handleSlideRight,
         calcMaxMarginLeft,
         tableMarginLeft,
-    } = useHandleCompareTable(props.productsCompare.length);
+    } = useComparisonTable(productsCompare.length);
 
     const getParametersDataState = useMemo(() => {
         const parametersData: { name: string; values: string[] }[] = [];
-        props.productsCompare.forEach((product) => {
+        productsCompare.forEach((product) => {
             product.parameters.forEach((parameter) => {
                 const indexOfParameter = parametersData.findIndex((item) => item.name === parameter.name);
 
@@ -41,7 +41,7 @@ export const Content: FC<ContentProps> = (props) => {
             });
         });
 
-        props.productsCompare.forEach((product, productIndex) => {
+        productsCompare.forEach((product, productIndex) => {
             product.parameters.forEach((parameter) => {
                 const indexOfParameter = parametersData.findIndex((item) => item.name === parameter.name);
 
@@ -57,7 +57,7 @@ export const Content: FC<ContentProps> = (props) => {
         });
 
         return parametersData;
-    }, [props.productsCompare]);
+    }, [productsCompare]);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -71,7 +71,7 @@ export const Content: FC<ContentProps> = (props) => {
         <>
             <div className="mb-8 flex items-end">
                 <Heading type="h1" className="mb-0 w-full lg:w-auto lg:flex-1">
-                    {t('Product comparison')}&nbsp;({props.productsCompare.length})
+                    {t('Product comparison')}&nbsp;({productsCompare.length})
                 </Heading>
             </div>
             <ButtonRemoveAll displayMobile />
@@ -89,15 +89,15 @@ export const Content: FC<ContentProps> = (props) => {
                         isRight
                     />
                 </div>
-                <HeadSticky productsCompare={props.productsCompare} tableMarginLeft={tableMarginLeft} />
+                <HeadSticky productsCompare={productsCompare} tableMarginLeft={tableMarginLeft} />
                 <div>
                     <table
                         className="table-fixed border-collapse transition-all"
                         style={{ marginLeft: -tableMarginLeft }}
                         id="js-table-compare"
                     >
-                        <Head productsCompare={props.productsCompare} />
-                        <Body productsCompare={props.productsCompare} parametersDataState={getParametersDataState} />
+                        <Head productsCompare={productsCompare} />
+                        <Body productsCompare={productsCompare} parametersDataState={getParametersDataState} />
                     </table>
                 </div>
             </div>

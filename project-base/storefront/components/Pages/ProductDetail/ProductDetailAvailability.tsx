@@ -1,8 +1,7 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { AvailabilityStatusEnumApi, ProductDetailFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { RefObject, useEffect } from 'react';
-import * as smoothscroll from 'smoothscroll-polyfill';
+import { RefObject } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ProductDetailAvailabilityProps = {
@@ -20,10 +19,6 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
             scrollTarget.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     };
-
-    useEffect(() => {
-        smoothscroll.polyfill();
-    }, []);
 
     return (
         <div className="rounded-md bg-blueLight px-3 py-4" data-testid={TEST_IDENTIFIER}>

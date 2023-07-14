@@ -1,8 +1,8 @@
 import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const PaymentStatusNotifyPage: FC<ServerSidePropsType> = () => {
     const [, checkPaymentStatus] = useCheckPaymentStatusMutationApi();
@@ -22,9 +22,9 @@ const PaymentStatusNotifyPage: FC<ServerSidePropsType> = () => {
         await checkPaymentStatus({ orderUuid });
     };
 
-    useEffectOnce(() => {
+    useEffect(() => {
         checkPaymentOnApi(orderUuidParam);
-    });
+    }, []);
 
     return <></>;
 };

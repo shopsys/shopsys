@@ -17,6 +17,7 @@ import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/Pr
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ProductDetailFragmentApi } from 'graphql/generated';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import { useComparison } from 'hooks/comparison/useComparison';
 import { useGtmProductDetailViewEvent } from 'hooks/gtm/useGtmProductDetailViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
@@ -33,6 +34,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
     const t = useTypedTranslationFunction();
     const scrollTarget = useRef<HTMLUListElement>(null);
     const router = useRouter();
+    const { isProductInComparison, handleProductInComparison } = useComparison();
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
 
     return (
@@ -66,9 +68,10 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                         <ProductDetailAvailability scrollTarget={scrollTarget} product={product} />
                         <ProductCompareButton
                             className="mt-3"
-                            productUuid={product.uuid}
                             isMainVariant={product.isMainVariant}
                             isWithText
+                            isProductInComparison={isProductInComparison(product.uuid)}
+                            onProductInComparisonClick={() => handleProductInComparison(product.uuid)}
                         />
                     </ProductDetailInfo>
                 </ProductDetail>

@@ -16,11 +16,20 @@ type ProductItemProps = {
     listIndex: number;
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
+    isProductInComparison: boolean;
+    onProductInComparisonClick: () => void;
 };
 
 const getDataTestId = (catalogNumber: string) => 'blocks-product-list-listeditem-' + catalogNumber;
 
-export const ProductItem: FC<ProductItemProps> = ({ product, listIndex, gtmProductListName, gtmMessageOrigin }) => {
+export const ProductItem: FC<ProductItemProps> = ({
+    product,
+    listIndex,
+    gtmProductListName,
+    gtmMessageOrigin,
+    isProductInComparison,
+    onProductInComparisonClick,
+}) => {
     const { url } = useDomainConfig();
 
     return (
@@ -65,8 +74,9 @@ export const ProductItem: FC<ProductItemProps> = ({ product, listIndex, gtmProdu
             </ExtendedNextLink>
             <ProductCompareButton
                 className="mb-2 justify-end"
-                productUuid={product.uuid}
                 isMainVariant={product.isMainVariant}
+                isProductInComparison={isProductInComparison}
+                onProductInComparisonClick={onProductInComparisonClick}
             />
             <ProductAction
                 product={product}

@@ -1,6 +1,5 @@
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
 import {
-    ComparedProductFragmentApi,
     useAddProductToComparisonMutationApi,
     useCleanComparisonMutationApi,
     useComparisonQueryApi,
@@ -9,124 +8,106 @@ import {
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
-export const useHandleCompare = (
-    productUuid: string,
-): {
-    isProductInComparison: boolean;
-    handleProductInComparison: () => void;
-    handleRemoveAllFromComparison: () => void;
-    isPopupCompareOpen: boolean;
-    setIsPopupCompareOpen: Dispatch<SetStateAction<boolean>>;
-    getComparisonProducts: () => ComparedProductFragmentApi[];
-} => {
+export const useComparison = () => {
     const t = useTypedTranslationFunction();
-    const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
     const { isUserLoggedIn } = useCurrentUserData();
-    const [isProductInComparison, setIsProductInComparison] = useState(false);
     const [, addProductToComparison] = useAddProductToComparisonMutationApi();
     const [, removeProductFromComparison] = useRemoveProductFromComparisonMutationApi();
     const [, cleanComparison] = useCleanComparisonMutationApi();
-    const productsComparisonUuid = usePersistStore((store) => store.productsComparisonUuid);
+    const comparisonUuid = usePersistStore((store) => store.comparisonUuid);
     const updateUserState = usePersistStore((store) => store.updateUserState);
-    const [result] = useComparisonQueryApi({
-        variables: { comparisonUuid: productsComparisonUuid },
+    const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
+    const [pause, setPause] = useState(true);
+
+    const [{ data: comparisonData, fetching }] = useComparisonQueryApi({
+        variables: { comparisonUuid },
         requestPolicy: 'network-only',
+        pause,
     });
 
-    const comparedProducts = useMemo(() => {
-        return result.data?.comparison?.products ?? [];
-    }, [result.data?.comparison?.products]);
-
     useEffect(() => {
-        if (comparedProducts.find((product) => product.uuid === productUuid) !== undefined) {
-            setIsProductInComparison(true);
-        } else {
-            setIsProductInComparison(false);
-        }
-    }, [productUuid, comparedProducts]);
+        setPause(false);
+    }, []);
 
-    const handleAddToComparison = async () => {
+    const isProductInComparison = (productUuid: string) =>
+        !!comparisonData?.comparison?.products.find((product) => product.uuid === productUuid);
+
+    const handleAddToComparison = async (productUuid: string) => {
         const addProductToComparisonResult = await addProductToComparison({
             productUuid,
-            comparisonUuid: productsComparisonUuid,
+            comparisonUuid,
         });
 
-        if (addProductToComparisonResult.error !== undefined) {
+        if (addProductToComparisonResult.error) {
             const { applicationError } = getUserFriendlyErrors(addProductToComparisonResult.error, t);
-            if (applicationError?.message !== undefined) {
-                showErrorMessage(applicationError.message);
-            } else {
-                showErrorMessage(t('Unable to add product to comparison.'));
-            }
+
+            showErrorMessage(applicationError?.message ?? t('Unable to add product to comparison.'));
         } else {
             setIsPopupCompareOpen(true);
 
             updateUserState({
-                productsComparisonUuid: isUserLoggedIn
+                comparisonUuid: isUserLoggedIn
                     ? null
                     : addProductToComparisonResult.data?.addProductToComparison.uuid ?? null,
             });
         }
     };
 
-    const handleRemoveFromComparison = async () => {
+    const handleRemoveFromComparison = async (productUuid: string) => {
         const removeProductFromComparisonResult = await removeProductFromComparison({
             productUuid,
-            comparisonUuid: productsComparisonUuid,
+            comparisonUuid,
         });
 
-        if (removeProductFromComparisonResult.error !== undefined) {
+        if (removeProductFromComparisonResult.error) {
             const { applicationError } = getUserFriendlyErrors(removeProductFromComparisonResult.error, t);
-            if (applicationError?.message !== undefined) {
+            if (applicationError?.message) {
                 showErrorMessage(applicationError.message);
             } else {
                 showErrorMessage(t('Unable to remove product from comparison.'));
             }
         } else {
             if (!removeProductFromComparisonResult.data?.removeProductFromComparison) {
-                updateUserState({ productsComparisonUuid: null });
+                updateUserState({ comparisonUuid: null });
             }
             showSuccessMessage(t('Product has been removed from your comparison.'));
         }
     };
 
-    const handleProductInComparison = async () => {
-        if (isProductInComparison) {
-            handleRemoveFromComparison();
+    const handleProductInComparison = async (productUuid: string) => {
+        if (isProductInComparison(productUuid)) {
+            handleRemoveFromComparison(productUuid);
         } else {
-            handleAddToComparison();
+            handleAddToComparison(productUuid);
         }
     };
 
-    const handleRemoveAllFromComparison = async () => {
-        const cleanComparisonResult = await cleanComparison({ comparisonUuid: productsComparisonUuid });
+    const handleCleanComparison = async () => {
+        const cleanComparisonResult = await cleanComparison({ comparisonUuid });
 
-        if (cleanComparisonResult.error !== undefined) {
+        if (cleanComparisonResult.error) {
             const { applicationError } = getUserFriendlyErrors(cleanComparisonResult.error, t);
-            if (applicationError?.message !== undefined) {
+            if (applicationError?.message) {
                 showErrorMessage(applicationError.message);
             } else {
                 showErrorMessage(t('Unable to clean product comparison.'));
             }
         } else {
-            updateUserState({ productsComparisonUuid: null });
+            updateUserState({ comparisonUuid: null });
             showSuccessMessage(t('Comparison products have been cleaned.'));
         }
     };
 
-    const getComparisonProducts = (): ComparedProductFragmentApi[] => {
-        return comparedProducts;
-    };
-
     return {
+        comparison: comparisonData?.comparison,
+        fetching,
+        isPopupCompareOpen,
         isProductInComparison,
         handleProductInComparison,
-        handleRemoveAllFromComparison,
-        isPopupCompareOpen,
+        handleCleanComparison,
         setIsPopupCompareOpen,
-        getComparisonProducts,
     };
 };

@@ -75,7 +75,7 @@ const CategoryDetailPage: NextPage = () => {
                         <Breadcrumbs type="category" key="breadcrumb" breadcrumb={categoryData.category.breadcrumb} />
                     </Webline>
                 )}
-                {!filter && fetching && !categoryData ? (
+                {!filter && fetching ? (
                     <CategoryDetailPageSkeleton />
                 ) : (
                     !!categoryData?.category && <CategoryDetailContent category={categoryData.category} />

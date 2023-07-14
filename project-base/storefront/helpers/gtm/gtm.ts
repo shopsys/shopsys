@@ -42,21 +42,21 @@ import {
 } from 'types/gtm/objects';
 
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
-    const { cart, isInitiallyLoaded, promoCode } = useCurrentCart();
+    const { cart, promoCode, isFetching } = useCurrentCart();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { isUserLoggedIn } = useCurrentUserData();
     const domainConfig = useDomainConfig();
 
     return useMemo(() => {
-        if ((cartUuid === null && !isUserLoggedIn) || cart === null) {
-            return { gtmCartInfo: null, isCartLoaded: isInitiallyLoaded };
+        if ((!cartUuid && !isUserLoggedIn) || !cart) {
+            return { gtmCartInfo: null, isCartLoaded: !isFetching };
         }
 
         return {
             gtmCartInfo: getGtmMappedCart(cart, promoCode, isUserLoggedIn, domainConfig, cartUuid),
-            isCartLoaded: isInitiallyLoaded,
+            isCartLoaded: !isFetching,
         };
-    }, [cart, cartUuid, domainConfig, isInitiallyLoaded, isUserLoggedIn, promoCode]);
+    }, [cart, cartUuid, domainConfig, isFetching, isUserLoggedIn, promoCode]);
 };
 
 export const getGtmMappedCart = (
@@ -66,13 +66,9 @@ export const getGtmMappedCart = (
     domain: DomainConfigType,
     cartUuid: string | null,
 ): GtmCartInfoType => {
-    const products = (() => {
-        if (cart.items.length) {
-            return cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domain.url, index));
-        }
-
-        return undefined;
-    })();
+    const products = cart.items.length
+        ? cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domain.url, index))
+        : undefined;
 
     const abandonedCartUrl = getAbandonedCartUrl(isUserLoggedIn, domain, cartUuid);
 
@@ -84,7 +80,7 @@ export const getGtmMappedCart = (
         products,
     };
 
-    if (promoCode !== null) {
+    if (promoCode) {
         mappedCart.promoCodes = [promoCode];
     }
 
