@@ -189,7 +189,7 @@ class ProductsQuery extends BaseProductsQuery
             );
         }
 
-        if ($argument['brandSlug']) {
+        if ($argument['brandSlug'] !== null) {
             /** @var \App\Model\Product\Brand\Brand $brand */
             $brand = $this->brandQuery->brandByUuidOrUrlSlugQuery(urlSlug: $argument['brandSlug']);
 
