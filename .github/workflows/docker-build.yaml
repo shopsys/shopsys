@@ -435,8 +435,7 @@ jobs:
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d --wait
-                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate test-db-create test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
-                    docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=acc environment-change
+                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress tests
                 run: docker compose run cypress
             -   name: Upload Cypress videos to artifacts

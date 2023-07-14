@@ -54,6 +54,7 @@ services:
             - ./project-base/storefront/cypress:/app:delegated
         profiles:
             - storefront-acceptance-tests
+        network_mode: "host"
 
     php-fpm:
         build:

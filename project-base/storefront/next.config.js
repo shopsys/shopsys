@@ -10,7 +10,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 /** @type {import('next').NextConfig} */
-const moduleExports = {
+const nextConfig = {
     experimental: { scrollRestoration: true },
     reactStrictMode: true,
     swcMinify: true,
@@ -59,20 +59,6 @@ const moduleExports = {
                 },
                 gtmId: process.env.GTM_ID,
             },
-            {
-                publicGraphqlEndpoint: `${process.env.INTERNAL_ENDPOINT}graphql/`,
-                url: 'http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/',
-                defaultLocale: 'en',
-                currencyCode: 'EUR',
-                timezone: 'Europe/Prague',
-                domainId: 1,
-                mapSetting: {
-                    latitude: 49.8175,
-                    longitude: 15.473,
-                    zoom: 7,
-                },
-                gtmId: process.env.GTM_ID,
-            },
         ],
         staticRewritePaths: STATIC_REWRITE_PATHS,
     },
@@ -107,4 +93,4 @@ const SentryWebpackPluginOptions = {
     },
 };
 
-module.exports = withBundleAnalyzer(withSentryConfig(nextTranslate(moduleExports), SentryWebpackPluginOptions));
+module.exports = withBundleAnalyzer(withSentryConfig(nextTranslate(nextConfig), SentryWebpackPluginOptions));
