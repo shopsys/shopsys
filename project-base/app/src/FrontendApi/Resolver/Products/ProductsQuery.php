@@ -199,7 +199,7 @@ class ProductsQuery extends BaseProductsQuery
             );
         }
 
-        if ($argument['flagSlug']) {
+        if ($argument['flagSlug'] !== null) {
             $flag = $this->flagQuery->flagByUuidOrUrlSlugQuery(urlSlug: $argument['flagSlug']);
 
             return $this->productsByFlagQuery(
