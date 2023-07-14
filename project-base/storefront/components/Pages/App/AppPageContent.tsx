@@ -16,6 +16,16 @@ import { PageHeadScripts } from './PageHeadScript';
 import { CartReloader } from './CartReloader';
 import { Fonts } from './Fonts';
 
+const UserConsentContainer = dynamic<PropsWithChildren<Record<string, unknown>>>(
+    () =>
+        import('components/Blocks/UserConsent/UserConsentContainer').then(
+            (component) => component.UserConsentContainer,
+        ),
+    {
+        ssr: false,
+    },
+);
+
 type AppPageContentProps = {
     Component: NextComponentType<NextPageContext, any, any>;
     pageProps: ServerSidePropsType;
@@ -29,16 +39,6 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps, 
     const { publicRuntimeConfig } = getConfig();
 
     useSetDomainConfig(pageProps.domainConfig);
-
-    const UserConsentContainer = dynamic<PropsWithChildren<Record<string, unknown>>>(
-        () =>
-            import('components/Blocks/UserConsent/UserConsentContainer').then(
-                (component) => component.UserConsentContainer,
-            ),
-        {
-            ssr: false,
-        },
-    );
 
     const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
     const isConsentUpdatePage = router.asPath === consentUpdatePageUrl;
