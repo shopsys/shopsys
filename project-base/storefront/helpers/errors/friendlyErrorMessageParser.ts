@@ -34,7 +34,7 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate
 
             if ('userCode' in error.extensions) {
                 const errorExtensions = error.extensions as { userCode: ApplicationErrorsType };
-                if (ApplicationIgnoredErrors.includes(errorExtensions.userCode)) {
+                if (ApplicationIgnoredErrors.some((ignoredError) => ignoredError === errorExtensions.userCode)) {
                     continue;
                 }
 
