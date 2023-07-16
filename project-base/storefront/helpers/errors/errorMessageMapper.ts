@@ -1,8 +1,17 @@
 import { ApplicationErrors, ApplicationErrorsType } from './applicationErrors';
 import { Translate } from 'next-translate';
+import { ApplicationIgnoredErrors } from './ignoredErrors';
 
-const getErrorMessageTranslationString = (errorCode: ApplicationErrorsType, t: Translate): string | undefined => {
-    const ERROR_MESSAGES: Record<ApplicationErrorsType, string | undefined> = {
+type ApplicationErrorsWithoutIgnoredErrorsType = Exclude<
+    ApplicationErrorsType,
+    (typeof ApplicationIgnoredErrors)[number]
+>;
+
+const getErrorMessageTranslationString = (
+    errorCode: ApplicationErrorsWithoutIgnoredErrorsType,
+    t: Translate,
+): string | undefined => {
+    const ERROR_MESSAGES: Record<ApplicationErrorsWithoutIgnoredErrorsType, string | undefined> = {
         [ApplicationErrors.default]: t('Unknown error.'),
         [ApplicationErrors['cart-not-found']]: t('Cart not found.'),
         [ApplicationErrors['max-allowed-limit']]: t('Max allowed limit reached.'),
@@ -18,9 +27,7 @@ const getErrorMessageTranslationString = (errorCode: ApplicationErrorsType, t: T
         [ApplicationErrors['order-not-found']]: t('Order not found.'),
         [ApplicationErrors['personal-data-hash-invalid']]: t('Invalid hash.'),
         [ApplicationErrors['product-price-missing']]: t('Product price is missing.'),
-        [ApplicationErrors['no-result-found-for-slug']]: t('No result found for slug.'),
         [ApplicationErrors['store-not-found']]: t('Store not found.'),
-        [ApplicationErrors['invalid-token']]: t('Invalid token.'),
         [ApplicationErrors['product-not-found']]: t('Product not found.'),
         [ApplicationErrors['handling-with-logged-customer-comparison']]: t('Product not found.'),
         [ApplicationErrors['comparison-not-found']]: t('Comparison not found.'),
@@ -35,11 +42,14 @@ const getErrorMessageTranslationString = (errorCode: ApplicationErrorsType, t: T
 };
 
 export const hasErrorMessage = (errorCode: string, t: Translate): boolean => {
-    return getErrorMessageTranslationString(errorCode as ApplicationErrorsType, t) !== undefined;
+    return getErrorMessageTranslationString(errorCode as ApplicationErrorsWithoutIgnoredErrorsType, t) !== undefined;
 };
 
 export const getErrorMessage = (errorCode: string, t: Translate): string => {
-    const translationString = getErrorMessageTranslationString(errorCode as ApplicationErrorsType, t);
+    const translationString = getErrorMessageTranslationString(
+        errorCode as ApplicationErrorsWithoutIgnoredErrorsType,
+        t,
+    );
 
     return translationString !== undefined ? t(translationString) : t('Unknown error.');
 };
