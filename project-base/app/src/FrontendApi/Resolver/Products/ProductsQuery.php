@@ -181,7 +181,7 @@ class ProductsQuery extends BaseProductsQuery
         );
 
         if ($argument['categorySlug'] !== null) {
-            $category = $this->categoryQuery->categoryOrSeoMixByUuidOrUrlSlugQuery($info, urlSlug: $argument['categorySlug']);
+            $category = $this->categoryQuery->categoryOrSeoMixByUuidOrUrlSlugQuery($info, null, $argument['categorySlug']);
 
             return $this->productsByCategoryOrReadyCategorySeoMixQuery(
                 $argument,
