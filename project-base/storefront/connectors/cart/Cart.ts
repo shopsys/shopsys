@@ -1,4 +1,4 @@
-import { showErrorMessage, showInfoMessage } from 'components/Helpers/toasts';
+import { showInfoMessage } from 'components/Helpers/toasts';
 import {
     CartItemModificationsFragmentApi,
     CartModificationsFragmentApi,
@@ -10,33 +10,24 @@ import {
     TransportWithAvailablePaymentsAndStoresFragmentApi,
     useCartQueryApi,
 } from 'graphql/generated';
-import { ApplicationErrors } from 'helpers/errors/applicationErrors';
-import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
+
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { CurrentCartType } from 'types/cart';
 import { GtmMessageOriginType } from 'types/gtm/enums';
-import { CombinedError } from 'urql';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const { isUserLoggedIn } = useCurrentUserData();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const t = useTypedTranslationFunction();
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
-    const [{ data: cartData, error: cartError, stale, fetching }, refetchCart] = useCartQueryApi({
+    const [{ data: cartData, stale, fetching }, refetchCart] = useCartQueryApi({
         variables: { cartUuid },
         pause: !cartUuid && !isUserLoggedIn,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
-
-    if (cartError) {
-        // EXTEND CART ERRORS HERE
-        handleCartError(cartError, t);
-    }
 
     return {
         cart: cartData?.cart ?? null,
@@ -55,24 +46,6 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         modifications: cartData?.cart?.modifications ?? null,
         refetchCart,
     };
-};
-
-const handleCartError = (error: CombinedError, t: Translate) => {
-    const { userError, applicationError } = getUserFriendlyErrors(error, t);
-
-    switch (applicationError?.type) {
-        case ApplicationErrors['cart-not-found']:
-            break;
-        case ApplicationErrors.default:
-            showErrorMessage(applicationError.message, GtmMessageOriginType.cart);
-            break;
-    }
-
-    if (userError?.validation !== undefined) {
-        for (const invalidFieldName in userError.validation) {
-            showErrorMessage(userError.validation[invalidFieldName].message, GtmMessageOriginType.cart);
-        }
-    }
 };
 
 export const handleCartModifications = (
