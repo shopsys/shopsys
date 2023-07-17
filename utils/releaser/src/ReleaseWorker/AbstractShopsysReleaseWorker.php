@@ -39,6 +39,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         'shopsys/postgres-search-bundle',
         'shopsys/doctrine-orm',
         'shopsys/jparser',
+        'shopsys/deployment',
         'shopsys/ordered-form',
         'shopsys/changelog-linker',
         'shopsys/jsformvalidator-bundle',
