@@ -103,6 +103,7 @@ class ErrorPagesFacade
         switch ($statusCode) {
             case Response::HTTP_NOT_FOUND:
             case Response::HTTP_FORBIDDEN:
+            case Response::HTTP_METHOD_NOT_ALLOWED:
                 return static::PAGE_STATUS_CODE_404;
             case Response::HTTP_GONE:
                 return static::PAGE_STATUS_CODE_410;
