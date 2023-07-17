@@ -4,23 +4,26 @@ import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetPara
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
+import { useClient } from 'urql';
+import { CartQueryDocumentApi } from 'graphql/generated';
 
 export const useReloadCart = (): void => {
-    const { modifications, refetchCart } = useCurrentCart(false);
+    const { modifications } = useCurrentCart(false);
     const [changePaymentInCart] = useChangePaymentInCart();
     const t = useTypedTranslationFunction();
     const router = useRouter();
-    const slug = useMemo(() => getUrlWithoutGetParameters(router.asPath), [router.asPath]);
+    const slug = getUrlWithoutGetParameters(router.asPath);
     const { isUserLoggedIn } = useCurrentUserData();
     const cartUuid = usePersistStore((store) => store.cartUuid);
+    const client = useClient();
 
     useEffect(() => {
         if (cartUuid || isUserLoggedIn) {
-            refetchCart();
+            client.query(CartQueryDocumentApi, { cartUuid }, { requestPolicy: 'network-only' }).toPromise();
         }
-    }, [slug, refetchCart, isUserLoggedIn, cartUuid]);
+    }, [slug]);
 
     useEffect(() => {
         if (modifications) {
