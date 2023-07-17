@@ -216,3 +216,5 @@ There you can find links to upgrade notes for other versions too.
             ) {
         ```
     - see #project-base-diff to update your project
+- exclude 405 errors from logging ([#2666](https://github.com/shopsys/shopsys/pull/2666))
+    - see #project-base-diff to update your project
