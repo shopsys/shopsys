@@ -34,6 +34,9 @@ msgstr "Přidat další příznak"
 msgid "Add another parameter"
 msgstr "Přidat další parametr"
 
+msgid "Add another video"
+msgstr ""
+
 msgid "Add some flag"
 msgstr "Přidejte nějaký příznak"
 
@@ -2098,6 +2101,9 @@ msgstr "DPH - vše"
 msgid "Vats - view"
 msgstr "DPH - zobrazení"
 
+msgid "Videos"
+msgstr ""
+
 msgid "Viditelný na homepage"
 msgstr ""
 
@@ -2212,6 +2218,9 @@ msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
 msgid "Youtube URL"
 msgstr ""
 
+msgid "Youtube URL Id"
+msgstr ""
+
 msgid "Zadany kod neni spravny"
 msgstr ""
 
@@ -2250,6 +2259,9 @@ msgstr ""
 
 msgid "flags"
 msgstr "příznaků"
+
+msgid "form-line__item"
+msgstr ""
 
 msgid "from most expensive"
 msgstr ""

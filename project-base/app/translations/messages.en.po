@@ -34,6 +34,9 @@ msgstr ""
 msgid "Add another parameter"
 msgstr ""
 
+msgid "Add another video"
+msgstr ""
+
 msgid "Add some flag"
 msgstr ""
 
@@ -2101,6 +2104,9 @@ msgstr ""
 msgid "Vats - view"
 msgstr ""
 
+msgid "Videos"
+msgstr ""
+
 msgid "Viditelný na homepage"
 msgstr ""
 
@@ -2215,6 +2221,9 @@ msgstr ""
 msgid "Youtube URL"
 msgstr ""
 
+msgid "Youtube URL Id"
+msgstr ""
+
 msgid "Zadany kod neni spravny"
 msgstr ""
 
@@ -2252,6 +2261,9 @@ msgid "blogArticles"
 msgstr ""
 
 msgid "flags"
+msgstr ""
+
+msgid "form-line__item"
 msgstr ""
 
 msgid "from most expensive"

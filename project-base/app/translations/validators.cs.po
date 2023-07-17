@@ -211,6 +211,9 @@ msgstr "Vyplňte prosím PSČ"
 msgid "Please fill in numbers only"
 msgstr "Prosím vyplňte pouze čísla"
 
+msgid "Please enter video ID"
+msgstr ""
+
 msgid "Postcode cannot be longer than {{ limit }} characters"
 msgstr "PSČ nesmí být delší než {{ limit }} znaků"
 

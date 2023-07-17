@@ -211,6 +211,9 @@ msgstr ""
 msgid "Please fill in numbers only"
 msgstr ""
 
+msgid "Please enter video ID"
+msgstr ""
+
 msgid "Postcode cannot be longer than {{ limit }} characters"
 msgstr ""
 

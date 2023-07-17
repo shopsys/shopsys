@@ -24,7 +24,7 @@ class VideoTokenType extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank([
-                    'message' => 'Please give video id',
+                    'message' => 'Please enter video ID',
                 ]),
             ],
             'label' => false,
