@@ -372,7 +372,7 @@ class GetStoreTest extends GraphQlTestCase
                 'locationLongitude' => '18.2738861',
                 'breadcrumb' => [
                     [
-                        'name' => t('Obchodní domy'),
+                        'name' => t('Department stores'),
                         'slug' => $storesSlug,
                     ],
                     [
@@ -399,7 +399,7 @@ class GetStoreTest extends GraphQlTestCase
                 'locationLongitude' => '15.7707169',
                 'breadcrumb' => [
                     [
-                        'name' => t('Obchodní domy'),
+                        'name' => t('Department stores'),
                         'slug' => $storesSlug,
                     ],
                     [

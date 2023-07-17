@@ -13,9 +13,6 @@ msgstr ""
 msgid "Choose image"
 msgstr ""
 
-msgid "Chybný formát RGB HEX : #336699 nebo #ABC"
-msgstr ""
-
 msgid "City name cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -25,10 +22,13 @@ msgstr ""
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Entered RGB Hex is in invalid format. Valid formats are #336699 or #ABC."
+msgstr ""
+
 msgid "External ID cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Externí ID můstku nesmí být delší než {{ limit }} znaků"
+msgid "External bridge ID cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "First name cannot be longer than {{ limit }} characters"
@@ -44,9 +44,6 @@ msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Heading (H1) cannot be longer than {{ limit }} characters"
-msgstr ""
-
-msgid "Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků."
 msgstr ""
 
 msgid "Identification number cannot be longer than {{ limit }} characters"
@@ -73,7 +70,7 @@ msgstr ""
 msgid "New password must be at least {{ limit }} characters long"
 msgstr ""
 
-msgid "Název skladu nesmí být delší než {{ limit }} znaků"
+msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
 msgstr ""
 
 msgid "Password must be at least {{ limit }} characters long"
@@ -107,6 +104,18 @@ msgid "Please choose image"
 msgstr ""
 
 msgid "Please choose type of limitation"
+msgstr ""
+
+msgid "Please enter GTM ID"
+msgstr ""
+
+msgid "Please enter URL"
+msgstr ""
+
+msgid "Please enter article content"
+msgstr ""
+
+msgid "Please enter article name"
 msgstr ""
 
 msgid "Please enter at least one discount limit"
@@ -145,10 +154,19 @@ msgstr ""
 msgid "Please enter last name"
 msgstr ""
 
+msgid "Please enter limit from"
+msgstr ""
+
+msgid "Please enter link URL"
+msgstr ""
+
 msgid "Please enter name"
 msgstr ""
 
 msgid "Please enter new password"
+msgstr ""
+
+msgid "Please enter notification bar content"
 msgstr ""
 
 msgid "Please enter only numbers and the + character"
@@ -190,6 +208,12 @@ msgstr ""
 msgid "Please enter valid email"
 msgstr ""
 
+msgid "Please enter video ID"
+msgstr ""
+
+msgid "Please enter warehouse name"
+msgstr ""
+
 msgid "Please enter your city"
 msgstr ""
 
@@ -211,9 +235,6 @@ msgstr ""
 msgid "Please fill in numbers only"
 msgstr ""
 
-msgid "Please enter video ID"
-msgstr ""
-
 msgid "Postcode cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -223,7 +244,7 @@ msgstr ""
 msgid "Product suffix name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Produkt s tímto katalogovým číslem již existuje"
+msgid "Product with entered catalog number already exists"
 msgstr ""
 
 msgid "Promo code \"%invalidPromoCode%\" is not available for pricing group ID \"%pricingGroupId%\"."
@@ -256,12 +277,6 @@ msgstr ""
 msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
 msgstr ""
 
-msgid "Prosím vložte limit od"
-msgstr ""
-
-msgid "Prosím vyplňte GTM ID"
-msgstr ""
-
 msgid "Provided hash is not valid."
 msgstr ""
 
@@ -284,9 +299,6 @@ msgid "Selected transport price has changed"
 msgstr ""
 
 msgid "Selected transport weight limit has been exceeded"
-msgstr ""
-
-msgid "Sklad s tímto externím kódem již existuje"
 msgstr ""
 
 msgid "Street and house number must contain a number"
@@ -361,22 +373,10 @@ msgstr ""
 msgid "Variable {{ needle }} is required"
 msgstr ""
 
-msgid "Vyplňte prosím URL"
+msgid "Warehouse name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Vyplňte prosím URL odkazu"
-msgstr ""
-
-msgid "Vyplňte prosím název skladu"
-msgstr ""
-
-msgid "Vyplňte prosím název článku"
-msgstr ""
-
-msgid "Vyplňte prosím obsah notifikační lišty"
-msgstr ""
-
-msgid "Vyplňte prosím obsah článku"
+msgid "Warehouse with this exteral code already exists"
 msgstr ""
 
 msgid "Zip code cannot be longer than {{ limit }} characters"

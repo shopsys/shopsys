@@ -102,9 +102,13 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
 
+        $helloKittyName = t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
+            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
+            t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
+
         return [
             0 => [
-                'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => $helloKittyName,
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh),
                 'quantity' => 1,
@@ -223,10 +227,12 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
     private function getExpectedPromoCodeItemName(string $firstDomainLocale): string
     {
         return sprintf(
-            '%s %s - %s',
+            '%s %s - %s %s %s',
             t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
             $this->numberFormatterExtension->formatPercent(-10, $firstDomainLocale),
-            t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+            t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+            t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
     }
 

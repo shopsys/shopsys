@@ -136,6 +136,6 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
      */
     public function getTransferName(): string
     {
-        return t('Přenos příznaků produktů');
+        return t('Products flags transfer');
     }
 }

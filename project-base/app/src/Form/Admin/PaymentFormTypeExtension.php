@@ -69,7 +69,7 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
                 'disabled' => true,
                 'attr' => [
                     'icon' => true,
-                    'iconTitle' => t('Tento způsob platby je skrytý systémem GoPay.'),
+                    'iconTitle' => t('This payment method is hidden by GoPay.'),
                 ],
             ]);
         }

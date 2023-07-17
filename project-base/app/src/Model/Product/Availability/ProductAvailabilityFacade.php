@@ -45,7 +45,7 @@ class ProductAvailabilityFacade
         }
 
         if ($product->hasPreorder() === false) {
-            return t('Vyprodáno');
+            return t('Out of stock');
         }
 
         return $this->getDeliveryWeeksAvailabilityMessageByProductAndDomainId($product, $domainId);
@@ -101,7 +101,7 @@ class ProductAvailabilityFacade
         }
 
         if ($product->hasPreorder() === false) {
-            return t('Vyprodáno');
+            return t('Out of stock');
         }
 
         return $this->getDeliveryWeeksAvailabilityMessageByProductAndDomainId($product, $domainId);
@@ -131,7 +131,7 @@ class ProductAvailabilityFacade
         $count = $this->getAvailableStoresCount($product, $domainId);
 
         return t(
-            '{0}|{1}Můžete mít ihned na <span class="box-detail__avail__text__strong">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class="box-detail__avail__text__strong">%count%</span> prodejnách',
+            '{0}|{1}Available in <span class="box-detail__avail__text__strong">%count%</span> store|[2,Inf]Available in <span class="box-detail__avail__text__strong">%count%</span> stores',
             ['%count%' => $count],
         );
     }
@@ -166,7 +166,7 @@ class ProductAvailabilityFacade
         $count = $this->getExposedStoresCount($product, $domainId);
 
         return t(
-            '{0}|{1}Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejně|[2,Inf]Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejnách',
+            '{0}|{1}Can be viewed in <span class="box-detail__avail__text__strong">%count%</span> store|[2,Inf]Can be viewed in <span class="box-detail__avail__text__strong">%count%</span> stores',
             ['%count%' => $count],
         );
     }
@@ -273,7 +273,7 @@ class ProductAvailabilityFacade
         $productStoresAvailabilityInformationList = [];
 
         foreach ($productStores as $productStore) {
-            $availabilityInformation = t('Ihned k odběru');
+            $availabilityInformation = t('Available immediately');
             $availabilityStatus = AvailabilityStatusEnum::InStock;
 
             if ($isOutOfStock) {
@@ -312,7 +312,7 @@ class ProductAvailabilityFacade
     private function getWeeksAvailabilityMessageByWeeks(int $weeks): string
     {
         return t(
-            '{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] K dispozici za %count% týdnů',
+            '{0,1} Available in one week|[2,Inf] Available in %count% weeks',
             ['%count%' => $weeks],
         );
     }

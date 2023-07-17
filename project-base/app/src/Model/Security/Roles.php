@@ -349,8 +349,8 @@ class Roles extends BaseRoles
                 self::ROLE_CONTACT_FORM_VIEW => t('Contact form - view'),
             ],
             [
-                self::ROLE_STOCK_FULL => t('Stocks - full'),
-                self::ROLE_STOCK_VIEW => t('Stocks - view'),
+                self::ROLE_STOCK_FULL => t('Warehouses - full'),
+                self::ROLE_STOCK_VIEW => t('Warehouses - view'),
             ],
             [
                 self::ROLE_HEUREKA_FULL => t('Heureka setting - full'),

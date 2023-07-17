@@ -181,7 +181,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                 'parameters' => [
                     [
                         'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'unit' => [
                             'name' => t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
@@ -193,7 +193,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                     ],
                     [
                         'name' => t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'unit' => null,
                         'values' => [
                             [
@@ -203,7 +203,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                     ],
                     [
                         'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'unit' => null,
                         'values' => [
                             [
@@ -213,7 +213,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                     ],
                     [
                         'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'group' => t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'unit' => null,
                         'values' => [
                             [
@@ -223,7 +223,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                     ],
                     [
                         'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'group' => t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'unit' => null,
                         'values' => [
                             [

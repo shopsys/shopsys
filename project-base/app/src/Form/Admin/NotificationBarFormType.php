@@ -54,11 +54,11 @@ class NotificationBarFormType extends AbstractType
                 'required' => false,
                 'label' => t('Content'),
                 'constraints' => [
-                    new NotBlank(['message' => 'Vyplňte prosím obsah notifikační lišty']),
+                    new NotBlank(['message' => 'Please enter notification bar content']),
                 ],
             ])
             ->add('rgbColor', ColorPickerType::class, [
-                'label' => t('Barva pozadí'),
+                'label' => t('Background color'),
                 'constraints' => [
                     new NotBlank(['message' => 'Please enter flag color']),
                     new Length([
@@ -70,7 +70,7 @@ class NotificationBarFormType extends AbstractType
             ->add('validityFrom', DatePickerType::class, [
                 'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
                 'required' => false,
-                'label' => t('Platnost od'),
+                'label' => t('Valid from'),
                 'attr' => [
                     'autocomplete' => 'off',
                 ],
@@ -78,7 +78,7 @@ class NotificationBarFormType extends AbstractType
             ->add('validityTo', DatePickerType::class, [
                 'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
                 'required' => false,
-                'label' => t('Platnost do'),
+                'label' => t('Valid to'),
                 'attr' => [
                     'autocomplete' => 'off',
                 ],
@@ -140,7 +140,7 @@ class NotificationBarFormType extends AbstractType
             && $notificationBarData->validityTo !== null
             && $notificationBarData->validityTo <= $notificationBarData->validityFrom
         ) {
-            $context->buildViolation('"Platnost do" musí být větší než "Platnost od"')
+            $context->buildViolation(t('"Valid to" must be greater than "Valid from"'))
                 ->atPath('validityTo')
                 ->addViolation();
         }

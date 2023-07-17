@@ -1051,6 +1051,9 @@ msgstr ""
 msgid "Exclude from sale"
 msgstr ""
 
+msgid "Exclude from sale on whole eshop"
+msgstr ""
+
 msgid "Excluded from sale"
 msgstr ""
 
@@ -2119,9 +2122,6 @@ msgstr ""
 msgid "Sending emails off, no email will be sent from the app."
 msgstr ""
 
-msgid "Seo"
-msgstr ""
-
 msgid "Set"
 msgstr ""
 
@@ -2210,9 +2210,6 @@ msgid "Status of orders <strong>{{ name }}</strong> reserved and can't be delete
 msgstr ""
 
 msgid "Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
-msgstr ""
-
-msgid "Stocks"
 msgstr ""
 
 msgid "Street"
@@ -2461,6 +2458,9 @@ msgstr ""
 msgid "Visibility for unlogged customers"
 msgstr ""
 
+msgid "Warehouses"
+msgstr ""
+
 msgid "When changing the default currency there is no recalculation of prices"
 msgstr ""
 
@@ -2527,6 +2527,9 @@ msgstr ""
 msgid "above footer"
 msgstr ""
 
+msgid "above order summary in cart"
+msgstr ""
+
 msgid "administrators"
 msgstr ""
 
@@ -2581,6 +2584,12 @@ msgstr ""
 msgid "in category (above the category name)"
 msgstr ""
 
+msgid "in category (above the product list)"
+msgstr ""
+
+msgid "in category (between first and second row of products)"
+msgstr ""
+
 msgid "in footer"
 msgstr ""
 
@@ -2597,9 +2606,6 @@ msgid "lower or equal"
 msgstr ""
 
 msgid "lower than"
-msgstr ""
-
-msgid "nad souhrnem objednávky v košíku"
 msgstr ""
 
 msgid "never"
@@ -2654,12 +2660,6 @@ msgid "unregistered customer"
 msgstr ""
 
 msgid "uses"
-msgstr ""
-
-msgid "v kategorii (mezi prvním a druhým řádkem produktů)"
-msgstr ""
-
-msgid "v kategorii (nad výpisem produktů)"
 msgstr ""
 
 msgid "without positioning"

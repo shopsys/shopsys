@@ -1,8 +1,8 @@
 {% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 {% import _self as self %}
 
-{% block title %}- {{ 'Rozšířené SEO kategorie - volba kategorie'|trans }}{% endblock %}
-{% block h1 %}{{ 'Rozšířené SEO kategorie - volba kategorie'|trans }}{% endblock %}
+{% block title %}- {{ 'Extended SEO category - category selection'|trans }}{% endblock %}
+{% block h1 %}{{ 'Extended SEO category - category selection'|trans }}{% endblock %}
 
 {% block main_content %}
 
@@ -16,7 +16,7 @@
                         <span class="js-category-tree-item-line  js-category-tree-item-handle form-tree__item__name">{{ categoryWithPreloadedChildren.category.name(locale) }}</span>
                         <span class="js-category-tree-item-icons form-tree__item__controls form-tree__item__controls--indented">
                             <a href="{{ url('admin_categoryseo_newfilters', { categoryId: categoryWithPreloadedChildren.category.id }) }}">
-                                {{ 'Zvolit tuto kategorii a pokračovat' }}
+                                {{ 'Choose this category and continue'|trans }}
                             </a>
                         </span>
                     </div>
@@ -36,7 +36,7 @@
 
     {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
         {% block fixed_bar_content %}
-            <a href="{{ url('admin_categoryseo_list') }}" class="btn-link-style">{{ 'Zpět výpis'|trans }}</a>
+            <a href="{{ url('admin_categoryseo_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
         {% endblock %}
     {% endembed %}
 

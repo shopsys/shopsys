@@ -22,19 +22,19 @@ class GetSliderItemsTest extends GraphQlTestCase
             [
                 'name' => t('Shopsys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'link' => 'https://www.shopsys.cz',
-                'extendedText' => t('Pravidla akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'extendedText' => t('Terms of promotion', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'extendedTextLink' => 'https://www.shopsys.cz',
             ],
             [
                 'name' => t('Documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'link' => 'https://docs.shopsys.com',
-                'extendedText' => t('Pravidla akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'extendedText' => t('Terms of promotion', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'extendedTextLink' => 'https://www.shopsys.cz',
             ],
             [
                 'name' => t('Become one of us', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'link' => 'https://jobs.shopsys.cz',
-                'extendedText' => t('Pravidla akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'extendedText' => t('Terms of promotion', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'extendedTextLink' => 'https://www.shopsys.cz',
             ],
         ];

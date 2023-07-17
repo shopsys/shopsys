@@ -1,6 +1,6 @@
 {% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
-{% set title = 'Rozšířené SEO kategorie %categoryName% - kombinace'|trans({'%categoryName%': category.name(locale)}) %}
+{% set title = 'Extended SEO category %categoryName% - combinations'|trans({'%categoryName%': category.name(locale)}) %}
 
 {% block title %}- {{ title }}{% endblock %}
 {% block h1 %}{{ title }}{% endblock %}
@@ -15,14 +15,14 @@
             {% endfor %}
 
             {% if categorySeoFiltersData.useFlags %}
-                <th>{{ 'Příznak'|trans }}</th>
+                <th>{{ 'Flag'|trans }}</th>
             {% endif %}
 
             {% if categorySeoFiltersData.useOrdering %}
-                <th>{{ 'Řazení'|trans }}</th>
+                <th>{{ 'Ordering'|trans }}</th>
             {% endif %}
 
-            <th>{{ 'Akce'|trans }}</th>
+            <th>{{ 'Action'|trans }}</th>
         </tr>
 
     {% for categorySeoMix in categorySeoMixes %}
@@ -53,7 +53,7 @@
 
     {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
         {% block fixed_bar_content %}
-            <a href="{{ backLink }}" class="btn-link-style">{{ 'Zpět na volbu parametrů'|trans }}</a>
+            <a href="{{ backLink }}" class="btn-link-style">{{ 'Back to parameter selection'|trans }}</a>
         {% endblock %}
     {% endembed %}
 

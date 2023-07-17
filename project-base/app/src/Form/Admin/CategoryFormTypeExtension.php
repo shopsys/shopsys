@@ -55,14 +55,14 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         $settingsBuilder = $builder->get('settings');
         $settingsBuilder
             ->add('svgIcon', ChoiceType::class, [
-                'label' => t('Nastavení SVG ikony'),
+                'label' => t('SVG icon settings'),
                 'required' => false,
                 'choices' => $this->svgProvider->getAllSvgIconsNames(),
             ]);
 
         /** @var \Ivory\OrderedForm\Builder\OrderedFormBuilder $builderShortDescriptionGroup */
         $builderShortDescriptionGroup = $builder->create('shortDescriptionGroup', GroupType::class, [
-            'label' => t('Krátký popis'),
+            'label' => t('Short description'),
         ]);
 
         $builderShortDescriptionGroup->add('shortDescription', MultidomainType::class, [
@@ -87,7 +87,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
                     ->create('linkedCategories', SortableValuesType::class, [
                         'labels_by_value' => $categoryPaths,
                         'required' => false,
-                        'label' => t('Propojené kategorie'),
+                        'label' => t('Linked categories'),
                     ])
                     ->addViewTransformer($this->removeDuplicatesFromArrayTransformer)
                     ->addModelTransformer($this->categoriesIdsToCategoriesTransformer),
@@ -104,7 +104,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         if ($category === null) {
             return;
         }
-        $parametersFilterBuilder = $builder->add('parametersGroup', GroupType::class, ['label' => t('Parametry filtru')]);
+        $parametersFilterBuilder = $builder->add('parametersGroup', GroupType::class, ['label' => t('Filter parameters')]);
 
         $parameterNamesById = [];
 
@@ -114,13 +114,13 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
 
         $parametersFilterBuilder->add('parametersPosition', SortableValuesType::class, [
             'labels_by_value' => $parameterNamesById,
-            'label' => t('Parametry a pořadí v kategorii'),
+            'label' => t('Parameters order in category'),
             'required' => false,
         ]);
 
         $parametersFilterBuilder->add('parametersCollapsed', ChoiceType::class, [
             'required' => false,
-            'label' => t('Defaultně zavřené parametry ve filtru'),
+            'label' => t('Filter parameters closed by default'),
             'choices' => $this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID),
             'expanded' => true,
             'choice_label' => 'name',

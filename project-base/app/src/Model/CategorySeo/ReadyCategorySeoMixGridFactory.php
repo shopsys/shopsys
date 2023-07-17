@@ -40,11 +40,11 @@ class ReadyCategorySeoMixGridFactory
 
         $grid = $this->gridFactory->create('ready_category_seo_mix', $dataSource);
 
-        $grid->addColumn('categoryName', 'categoryName', t('Název kategorie'));
-        $grid->addColumn('friendlyUrlSlug', 'fuSlug', t('Hlavní URL'));
-        $grid->addColumn('parameters', 'rcsm.choseCategorySeoMixCombinationJson', t('Kombinace parametrů a jejich hodnot parametrů'));
-        $grid->addColumn('flagName', 'flagName', t('Příznak'));
-        $grid->addColumn('ordering', 'rcsm.ordering', t('Řazení'));
+        $grid->addColumn('categoryName', 'categoryName', t('Category name'));
+        $grid->addColumn('friendlyUrlSlug', 'fuSlug', t('Main URL'));
+        $grid->addColumn('parameters', 'rcsm.choseCategorySeoMixCombinationJson', t('Combination of parameters and their values'));
+        $grid->addColumn('flagName', 'flagName', t('Flag'));
+        $grid->addColumn('ordering', 'rcsm.ordering', t('Ordering'));
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_categoryseo_readycombination', [

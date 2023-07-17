@@ -90,7 +90,7 @@ class AdvertFormTypeExtension extends AbstractTypeExtension
                     ]),
                 ],
                 'constraints' => ($options['mobile_image_exists'] ? [] : $imageConstraints),
-                'label' => t('Nahrát nový obrázek pro mobilní zařízení'),
+                'label' => t('Upload image for mobile devices'),
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]);
@@ -125,11 +125,11 @@ class AdvertFormTypeExtension extends AbstractTypeExtension
         $builder->add('datetimeVisibleFrom', DatePickerType::class, [
             'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             'required' => false,
-            'label' => t('Datum zobrazení OD'),
+            'label' => t('Display date FROM'),
         ])->add('datetimeVisibleTo', DatePickerType::class, [
             'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             'required' => false,
-            'label' => t('Datum zobrazení DO'),
+            'label' => t('Display date TO'),
         ]);
     }
 

@@ -38,7 +38,7 @@ class StockFormType extends AbstractType
         $this->stock = $options['stock'];
 
         $stockDataBuilder = $builder->create('stockData', GroupType::class, [
-            'label' => t('Stock'),
+            'label' => t('Warehouse'),
         ]);
 
         if ($this->stock !== null) {
@@ -50,7 +50,7 @@ class StockFormType extends AbstractType
                 ->add('isDefault', DisplayOnlyType::class, [
                     'required' => false,
                     'data' => $this->stock->isDefault() ? t('Yes') : t('No'),
-                    'label' => t('Výchozí sklad'),
+                    'label' => t('Default warehouse'),
                 ]);
         }
 
@@ -58,8 +58,8 @@ class StockFormType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Vyplňte prosím název skladu']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Název skladu nesmí být delší než {{ limit }} znaků']),
+                    new Constraints\NotBlank(['message' => 'Please enter warehouse name']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Warehouse name cannot be longer than {{ limit }} characters']),
                 ],
                 'label' => t('Name'),
             ])
@@ -69,15 +69,15 @@ class StockFormType extends AbstractType
             ])
             ->add('externalId', TextType::class, [
                 'required' => false,
-                'label' => t('Externí ID můstku'),
+                'label' => t('External bridge ID'),
                 'constraints' => [
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Externí ID můstku nesmí být delší než {{ limit }} znaků']),
+                    new Constraints\Length(['max' => 255, 'maxMessage' => 'External bridge ID cannot be longer than {{ limit }} characters']),
                     new Constraints\Callback([$this, 'sameStockExternalIdValidation']),
                 ],
             ])
             ->add('note', TextType::class, [
                 'required' => false,
-                'label' => t('Interní poznámka'),
+                'label' => t('Internal note'),
             ]);
 
         $builder->add($stockDataBuilder);
@@ -114,7 +114,7 @@ class StockFormType extends AbstractType
         $stock = $this->stockFacade->findStockByExternalId($externalId);
 
         if ($stock !== null) {
-            $context->addViolation('Sklad s tímto externím kódem již existuje');
+            $context->addViolation('Warehouse with this exteral code already exists');
         }
     }
 }

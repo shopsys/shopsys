@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\ArticleDataFixture;
 use App\Model\Article\Article;
 use App\Model\Article\ArticleFacade;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -142,8 +143,8 @@ class GetArticleTest extends GraphQlTestCase
             [
                 'termsAndConditionsArticle',
                 [
-                    'name' => t('Obchodní podmínky OD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'slug' => '/obchodni-podminky-od',
+                    'name' => t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'slug' => '/' . TransformString::stringToFriendlyUrlSlug(t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
                     'placement' => Article::PLACEMENT_FOOTER_4,
                     'text' => t(
                         '<div class="gjs-text-ckeditor">Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</div>',
@@ -156,7 +157,7 @@ class GetArticleTest extends GraphQlTestCase
                     'seoMetaDescription' => null,
                     'breadcrumb' => [
                         [
-                            'name' => t('Obchodní podmínky OD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'name' => t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'slug' => $this->urlGenerator->generate('front_article_detail', ['id' => $termsAndConditionsArticle->getId()]),
                         ],
                     ],
@@ -166,7 +167,7 @@ class GetArticleTest extends GraphQlTestCase
                 'privacyPolicyArticle',
                 [
                     'name' => t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'slug' => '/privacy-policy',
+                    'slug' => '/' . TransformString::stringToFriendlyUrlSlug(t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
                     'placement' => Article::PLACEMENT_NONE,
                     'text' => t(
                         '<div class="gjs-text-ckeditor">Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</div>',
@@ -189,7 +190,7 @@ class GetArticleTest extends GraphQlTestCase
                 'cookiesArticle',
                 [
                     'name' => t('Information about cookies', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'slug' => '/information-about-cookies',
+                    'slug' => '/' . TransformString::stringToFriendlyUrlSlug(t('Information about cookies', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
                     'placement' => Article::PLACEMENT_NONE,
                     'text' => t(
                         '<div class="gjs-text-ckeditor">Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.</div>',

@@ -66,11 +66,11 @@ class TransferController extends AdminBaseController
         $grid->enablePaging();
         $grid->setDefaultOrder('createdAt DESC, id');
 
-        $grid->addColumn('transfer', 't.name', t('Přenos'));
-        $grid->addColumn('message', 'ti.message', t('Text zprávy'));
-        $grid->addColumn('createdAt', 'ti.createdAt', t('Datum a čas'));
+        $grid->addColumn('transfer', 't.name', t('Transfer'));
+        $grid->addColumn('message', 'ti.message', t('Message text'));
+        $grid->addColumn('createdAt', 'ti.createdAt', t('Date and time'));
         $grid->addDeleteActionColumn('admin_transfer_delete', ['id' => 'ti.id'])
-            ->setConfirmMessage(t('Opravdu chcete tento problém označit jako vyřešený?'));
+            ->setConfirmMessage(t('Do you really want to mark this issue as resolved?'));
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 
@@ -92,10 +92,10 @@ class TransferController extends AdminBaseController
             $this->transferIssueFacade->deleteById((int)$id);
 
             $this->addSuccessFlashTwig(
-                t('Problém v přenosu byl označen jako vyřešený'),
+                t('Transfer problem has been marked as resolved'),
             );
         } catch (NotFoundHttpException $ex) {
-            $this->addErrorFlash(t('Vybraný problém v přenosu nebyl nalezen'));
+            $this->addErrorFlash(t('Selected transfer issue was not found'));
         }
 
         return $this->redirectToRoute('admin_transfer_list');

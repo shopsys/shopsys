@@ -84,6 +84,6 @@ class AkeneoImportProductGroupParameterFacade extends AbstractAkeneoImportTransf
      */
     public function getTransferIdentifier(): string
     {
-        return t('Přenos skupin parametrů produkt');
+        return t('Products parameters groups transfer');
     }
 }

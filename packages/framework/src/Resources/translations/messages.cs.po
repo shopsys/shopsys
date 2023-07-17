@@ -1051,6 +1051,9 @@ msgstr "Bez DPH"
 msgid "Exclude from sale"
 msgstr "Vyřadit z prodeje"
 
+msgid "Exclude from sale on whole eshop"
+msgstr "Vyřadit z prodeje na celém e-shopu"
+
 msgid "Excluded from sale"
 msgstr "Vyřazeno z prodeje"
 
@@ -1184,7 +1187,7 @@ msgid "HTML code"
 msgstr "HTML kód"
 
 msgid "Heading (H1)"
-msgstr "Nadpis H1"
+msgstr "Nadpis (H1)"
 
 msgid "Headline"
 msgstr "Titulek"
@@ -1781,7 +1784,7 @@ msgid "Please check following information:"
 msgstr "Prosím překontrolujte následující informace:"
 
 msgid "Please check the correctness of all data filled."
-msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů"
+msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů."
 
 msgid "Please check the entered values.<br>"
 msgstr "Překontrolujte prosím zadané hodnoty.<br>"
@@ -2119,9 +2122,6 @@ msgstr "Zasílat e-mail o změně na tento stav"
 msgid "Sending emails off, no email will be sent from the app."
 msgstr "Odesílání e-mailů je vypnuto, z aplikace nebude odeslán žádný e-mail."
 
-msgid "Seo"
-msgstr "Seo"
-
 msgid "Set"
 msgstr "Nastavit"
 
@@ -2211,9 +2211,6 @@ msgstr "Stav objednávek <strong>{{ name }}</strong> je rezervovaný a nelze jej
 
 msgid "Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
 msgstr "Stav objednávek <strong>{{ oldName }}</strong> byl nahrazen stavem <strong>{{ newName }}</strong> a byl smazán."
-
-msgid "Stocks"
-msgstr "Skladové zásoby"
 
 msgid "Street"
 msgstr "Ulice"
@@ -2461,6 +2458,9 @@ msgstr "Viditelnost"
 msgid "Visibility for unlogged customers"
 msgstr "Viditelnost pro neregistrované zákazníky"
 
+msgid "Warehouses"
+msgstr ""
+
 msgid "When changing the default currency there is no recalculation of prices"
 msgstr "Při změně výchozí měny nedochází k žádnému přepočtu cen"
 
@@ -2527,6 +2527,9 @@ msgstr "Máte neuložené změny!"
 msgid "above footer"
 msgstr "nad patičkou"
 
+msgid "above order summary in cart"
+msgstr "nad souhrnem objednávky v košíku"
+
 msgid "administrators"
 msgstr "administrátorů"
 
@@ -2581,6 +2584,12 @@ msgstr "větší než"
 msgid "in category (above the category name)"
 msgstr "v kategorii (nad názvem kategorie)"
 
+msgid "in category (above the product list)"
+msgstr "v kategorii (nad výpisem produktů)"
+
+msgid "in category (between first and second row of products)"
+msgstr "v kategorii (mezi prvním a druhým řádkem produktů)"
+
 msgid "in footer"
 msgstr "v patičce"
 
@@ -2598,9 +2607,6 @@ msgstr "menší nebo rovno"
 
 msgid "lower than"
 msgstr "menší než"
-
-msgid "nad souhrnem objednávky v košíku"
-msgstr ""
 
 msgid "never"
 msgstr "nikdy"
@@ -2655,12 +2661,6 @@ msgstr "neregistrovaný zákazník"
 
 msgid "uses"
 msgstr "používá"
-
-msgid "v kategorii (mezi prvním a druhým řádkem produktů)"
-msgstr ""
-
-msgid "v kategorii (nad výpisem produktů)"
-msgstr ""
 
 msgid "without positioning"
 msgstr "bez umístění"

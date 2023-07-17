@@ -1,11 +1,11 @@
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
-{% block title %}- {{ 'Přehled problémů v přenosech'|trans }}{% endblock %}
-{% block h1 %}{{ 'Přehled problémů v přenosech'|trans }}{% endblock %}
+{% block title %}- {{ 'Transfer issues overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Transfer issues overview'|trans }}{% endblock %}
 
 {% block btn %}
     <a href="{{ url('admin_default_dashboard') }}" class="btn wrap-bar__btn">
-        {{ 'Zpět na nástěnku'|trans }}
+        {{ 'Back to dashboard'|trans }}
     </a>
 {% endblock %}
 
@@ -16,12 +16,12 @@
 
     <div class="form-group wrap-border">
         <div class="form-group__title">
-            {{ 'Hledání v přenosech'|trans }}
+            {{ 'Search in transfers'|trans }}
         </div>
 
-        {{ form_row(form.transfer, { label: 'Typ přenosu'|trans }) }}
+        {{ form_row(form.transfer, { label: 'Transfer type'|trans }) }}
         <div class="text-right margin-top-10">
-            {{ form_widget(form.submit, { label: 'Vyhledat'|trans }) }}
+            {{ form_widget(form.submit, { label: 'Search [verb]'|trans }) }}
         </div>
     </div>
 

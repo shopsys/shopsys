@@ -24,9 +24,9 @@ class AdvertPositionRegistry
             self::POSITION_HEADER => t('under heading'),
             self::POSITION_FOOTER => t('above footer'),
             self::POSITION_PRODUCT_LIST => t('in category (above the category name)'),
-            self::POSITION_CATEGORIES_ABOVE_PRODUCT_LIST => t('v kategorii (nad výpisem produktů)'),
-            self::POSITION_CATEGORIES_SECOND_ROW_PRODUCT_LIST => t('v kategorii (mezi prvním a druhým řádkem produktů)'),
-            self::POSITION_CART_PREVIEW => t('nad souhrnem objednávky v košíku'),
+            self::POSITION_CATEGORIES_ABOVE_PRODUCT_LIST => t('in category (above the product list)'),
+            self::POSITION_CATEGORIES_SECOND_ROW_PRODUCT_LIST => t('in category (between first and second row of products)'),
+            self::POSITION_CART_PREVIEW => t('above order summary in cart'),
         ];
     }
 

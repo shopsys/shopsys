@@ -3,10 +3,10 @@
         <td >
             {%  if escape %}
                 {{ form_errors(formData, { errors_attr: { class: 'table-form__cell__error'}})|escape }}
-                {{ form_widget(formData, { attr: { class: 'form-line__item'|trans} })|escape }}
+                {{ form_widget(formData, { attr: { class: 'form-line__item' } })|escape }}
             {% else %}
                 {{ form_errors(formData, { errors_attr: { class: 'table-form__cell__error' }})}}
-                {{ form_widget(formData, { attr: { class: 'form-line__item'|trans} })}}
+                {{ form_widget(formData, { attr: { class: 'form-line__item' } })}}
             {% endif %}
         </td>
         <td>
@@ -21,7 +21,7 @@
         <table class="table-form">
             <thead>
             <tr class="table-form__row">
-                <th class="table-form__cell table-form__cell--label">{{ 'Youtube URL Id'|trans }}</th>
+                <th class="table-form__cell table-form__cell--label">{{ 'Youtube URL ID'|trans }}</th>
                 <th class="table-form__cell"></th>
             </tr>
             </thead>

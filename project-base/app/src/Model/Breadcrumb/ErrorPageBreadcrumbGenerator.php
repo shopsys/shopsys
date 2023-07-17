@@ -21,6 +21,6 @@ class ErrorPageBreadcrumbGenerator extends BaseErrorPageBreadcrumbGenerator
      */
     protected function getTranslatedBreadcrumbForErrorPage(): string
     {
-        return t('Oops! Error occurred');
+        return t('Oops! Error occurred.');
     }
 }

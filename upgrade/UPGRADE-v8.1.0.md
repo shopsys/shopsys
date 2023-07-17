@@ -429,7 +429,7 @@ There you can find links to upgrade notes for other versions too.
         +    {
         +        $me->wantTo('display 500 error and check error ID uniqueness');
         +        $me->amOnPage('/test/error-handler/exception');
-        +        $me->see('Oops! Error occurred');
+        +        $me->see('Oops! Error occurred.');
         +        $cssIdentifier = ['css' => '#js-error-id'];
         +        $errorIdFirstAccess = $me->grabTextFrom($cssIdentifier);
         +        $me->amOnPage('/test/error-handler/exception');

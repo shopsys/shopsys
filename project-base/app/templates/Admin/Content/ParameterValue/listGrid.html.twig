@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block grid_no_data %}
-    {{ 'Žádná hodnota parameteru typu barva není vytvořena.'|trans }}
+    {{ 'There are no parameter values of type color yet.'|trans }}
 {% endblock %}
 
 {% block grid_pager_totalcount %}
-    {% set entityName = 'parameterValue'|trans %}
+    {% set entityName = 'parameter values'|trans %}
     {{ parent() }}
 {% endblock %}

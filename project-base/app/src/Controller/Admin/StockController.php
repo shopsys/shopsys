@@ -106,7 +106,7 @@ class StockController extends AdminBaseController
             $this
                 ->addSuccessFlashTwig(
                     t(
-                        'Nastavení %domainName% skladů uloženo.',
+                        'Warehouse setting %domainName% saved.',
                         [
                             '%domainName%' => $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName(),
                         ],
@@ -115,7 +115,7 @@ class StockController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->redirectToRoute('admin_stock_list');
@@ -142,7 +142,7 @@ class StockController extends AdminBaseController
 
             $this
                 ->addSuccessFlashTwig(
-                    t('Stock <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
+                    t('Warehouse <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
                     [
                         'name' => $stock->getName(),
                         'url' => $this->generateUrl('admin_stock_edit', ['id' => $stock->getId()]),
@@ -153,7 +153,7 @@ class StockController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('Admin/Content/Stock/new.html.twig', [
@@ -182,7 +182,7 @@ class StockController extends AdminBaseController
 
             $this
                 ->addSuccessFlashTwig(
-                    t('Stock <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
+                    t('Warehouse <strong><a href="{{ url }}">{{ name }}</a></strong> modified'),
                     [
                         'name' => $stock->getName(),
                         'url' => $this->generateUrl('admin_stock_edit', ['id' => $stock->getId()]),
@@ -193,10 +193,10 @@ class StockController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editace skladu - %name%', ['%name%' => $stock->getName()]));
+        $this->breadcrumbOverrider->overrideLastItem(t('Editing warehouse - %name%', ['%name%' => $stock->getName()]));
 
         return $this->render('Admin/Content/Stock/edit.html.twig', [
             'form' => $form->createView(),
@@ -218,13 +218,13 @@ class StockController extends AdminBaseController
             $this->stockFacade->changeDefaultStock($stock);
 
             $this->addSuccessFlashTwig(
-                t('Stock <strong>{{ name }}</strong> was set as default.'),
+                t('Warehouse <strong>{{ name }}</strong> was set as default.'),
                 [
                     'name' => $stock->getName(),
                 ],
             );
         } catch (StockNotFoundException $ex) {
-            $this->addErrorFlash(t('Vybraný sklad neexistuje.'));
+            $this->addErrorFlash(t('Selected warehouse does not exist.'));
         }
 
         return $this->redirectToRoute('admin_stock_list');
@@ -250,13 +250,13 @@ class StockController extends AdminBaseController
             $this->stockFacade->delete($id);
 
             $this->addSuccessFlashTwig(
-                t('Stock <strong>{{ name }}</strong> deleted'),
+                t('Warehouse <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $stock->getName(),
                 ],
             );
         } catch (StockNotFoundException $ex) {
-            $this->addErrorFlash(t('Vybraný sklad neexistuje.'));
+            $this->addErrorFlash(t('Selected warehouse does not exist.'));
         }
 
         return $this->redirectToRoute('admin_stock_list');
@@ -279,7 +279,7 @@ class StockController extends AdminBaseController
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_stock_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_stock_delete', ['id' => 's.id'])
-            ->setConfirmMessage(t('Do you really want to remove this stock? By deleting this stock you will '
+            ->setConfirmMessage(t('Do you really want to remove this warehouse? By deleting this warehouse you will '
                 . 'remove all stock quantities from products and association to stores. This step is irreversible!'));
         $grid->enableDragAndDrop(Stock::class);
 

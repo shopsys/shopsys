@@ -404,7 +404,7 @@ class ProductFormType extends AbstractType
             ])
             ->add('sellingDenied', YesNoType::class, [
                 'required' => false,
-                'label' => t('Exclude from sale'),
+                'label' => t('Exclude from sale on whole eshop'),
                 'attr' => [
                     'icon' => true,
                     'iconTitle' => t(
@@ -678,7 +678,7 @@ class ProductFormType extends AbstractType
             $seoH1OptionsByDomainId[$domainId] = $seoTitlesOptionsByDomainId[$domainId];
         }
         $builderSeoGroup = $builder->create('seoGroup', GroupType::class, [
-            'label' => t('Seo'),
+            'label' => t('SEO'),
         ]);
 
         $builderSeoGroup

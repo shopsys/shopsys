@@ -50,7 +50,7 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
                 'constraints' => $this->getFirstPasswordConstraints($options['scenario']),
                 'attr' => [
                     'icon' => true,
-                    'iconTitle' => t('Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků.'),
+                    'iconTitle' => t('Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters.'),
                 ],
             ],
             'second_options' => [
@@ -78,7 +78,7 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
             $builderSettingsGroup->add('roles', ChoiceType::class, [
                 'required' => false,
                 'choices' => Roles::getAvailableAdministratorRolesChoices(),
-                'placeholder' => t('-- Vyber roli --'),
+                'placeholder' => t('-- Select a role --'),
                 'multiple' => true,
                 'label' => t('Role'),
                 'attr' => [
@@ -115,7 +115,7 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
     private function getFirstPasswordConstraints($scenario)
     {
         $constraints = [
-            new Constraints\Regex(['pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{10,}$/', 'message' => 'Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků.']),
+            new Constraints\Regex(['pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{10,}$/', 'message' => 'Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters.']),
         ];
 
         if ($scenario === AdministratorFormType::SCENARIO_CREATE) {

@@ -49,7 +49,7 @@ class TransportFormTypeExtension extends AbstractTypeExtension
             ])
             ->add('personalPickup', YesNoType::class, [
                 'required' => false,
-                'label' => t('Osobní odběr Commerce Cloud'),
+                'label' => t('Personal pickup'),
             ])
             ->add('daysUntilDelivery', TextType::class, [
                 'required' => true,
@@ -62,7 +62,7 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                         'pattern' => '/^\d+$/',
                     ]),
                 ],
-                'label' => t('Dnů do doručení'),
+                'label' => t('Days until delivery'),
             ])
             ->add('maxWeight', IntegerType::class, [
                 'label' => t('Maximum weight (g)'),

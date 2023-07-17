@@ -51,7 +51,7 @@ class ParameterValueController extends AdminBaseController
 
         $grid = $this->gridFactory->create('parameterValues', $dataSource);
 
-        $grid->addColumn('text', 'pv.text', t('Hodnota parameteru'));
+        $grid->addColumn('text', 'pv.text', t('Parameter value'));
         $grid->addColumn('rgbHex', 'pv.rgbHex', t('RGB Hex'));
         $grid->addEditActionColumn('admin_parametervalue_edit', ['id' => 'pv.id']);
         $grid->setTheme('Admin/Content/ParameterValue/listGrid.html.twig');
@@ -81,7 +81,7 @@ class ParameterValueController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $parameterValue = $this->parameterFacade->editParameterValue($id, $form->getData());
             $this->addSuccessFlashTwig(
-                t('Hodnota parametru <strong><a href="{{ url }}">{{ parameterValue.text }}</a></strong> je úspěšně upravena.'),
+                t('Parameter value <strong><a href="{{ url }}">{{ parameterValue.text }}</a></strong> modified.'),
                 [
                     'parameterValue' => $parameterValue,
                     'url' => $this->generateUrl('admin_parametervalue_edit', ['id' => $parameterValue->getId()]),
@@ -95,7 +95,7 @@ class ParameterValueController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Úprava hodnoty parametru typu barva - %name%', ['%name%' => $parameterValue->getText()]));
+        $this->breadcrumbOverrider->overrideLastItem(t('Editing pararameter value of type color - %name%', ['%name%' => $parameterValue->getText()]));
 
         return $this->render(
             'Admin/Content/ParameterValue/edit.html.twig',

@@ -80,7 +80,7 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
-                'label' => t('Nahrát obrázek pro mobilní zařízení'),
+                'label' => t('Upload image for mobile devices'),
                 'entity' => $options['slider_item'],
                 'info_text' => t('You can upload following formats: PNG, JPG'),
                 'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
@@ -94,11 +94,11 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
     {
         $builder->add('sliderExtendedText', TextType::class, [
             'required' => false,
-            'label' => t('Text zobrazený pod bannerem'),
+            'label' => t('Text displayed under banner'),
         ])
         ->add('sliderExtendedTextLink', UrlType::class, [
             'required' => false,
-            'label' => t('Odkaz textu pod bannerem'),
+            'label' => t('Link of text under banner'),
         ]);
     }
 
@@ -110,11 +110,11 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
         $builder->add('datetimeVisibleFrom', DatePickerType::class, [
             'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             'required' => false,
-            'label' => t('Datum zobrazení OD'),
+            'label' => t('Display date FROM'),
         ])->add('datetimeVisibleTo', DatePickerType::class, [
             'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             'required' => false,
-            'label' => t('Datum zobrazení DO'),
+            'label' => t('Display date TO'),
         ]);
     }
 
@@ -127,13 +127,13 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
             'required' => true,
             'label' => t('GTM ID'),
             'constraints' => [
-                new Constraints\NotBlank(['message' => 'Prosím vyplňte GTM ID']),
+                new Constraints\NotBlank(['message' => 'Please enter GTM ID']),
             ],
-            'attr' => ['placeholder' => t('např. Akce-zidle-20-2020-04')],
+            'attr' => ['placeholder' => t('e.g. Sale-04-20-2020')],
         ])->add('gtmCreative', TextType::class, [
             'required' => false,
             'label' => t('GTM creative'),
-            'attr' => ['placeholder' => t('např. cervena-1035x340-jpg-carousel')],
+            'attr' => ['placeholder' => t('e.g. red-1035x340-jpg-carousel')],
         ]);
     }
 

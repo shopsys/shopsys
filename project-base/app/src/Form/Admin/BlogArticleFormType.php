@@ -199,14 +199,14 @@ class BlogArticleFormType extends AbstractType
             ])
             ->add('visibleOnHomepage', YesNoType::class, [
                 'required' => true,
-                'label' => t('Viditelný na homepage'),
+                'label' => t('Visible on homepage'),
             ])
             ->add('publishDate', DatePickerType::class, [
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter date of creation']),
                 ],
-                'label' => t('Datum publikace'),
+                'label' => t('Date of publication'),
                 'data' => $blogArticle === null ? new DateTime() : $blogArticle->getPublishDate(),
             ]);
 

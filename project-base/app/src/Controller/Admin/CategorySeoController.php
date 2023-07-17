@@ -236,15 +236,15 @@ class CategorySeoController extends AdminBaseController
                 );
 
                 $this->addSuccessFlashTwig(
-                    t('<strong><a href="{{ url }}">SEO kombinace kategorie</a></strong> byla uložena'),
+                    t('<strong><a href="{{ url }}">SEO category</a></strong> has been saved'),
                     ['url' => $selfUrl],
                 );
 
                 return $this->redirect($newCombinationsUrl);
             } catch (ReadyCategorySeoMixUrlsContainBadDomainUrlException $exception) {
-                $this->addErrorFlash(t('Vyplňte pouze URL pro zvolenou doménu'));
+                $this->addErrorFlash(t('Fill URL only for selected domain'));
             } catch (ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException $exception) {
-                $this->addErrorFlash(t('Vyplňte také URL pro zvolenou doménu'));
+                $this->addErrorFlash(t('Fill URL also for selected domain'));
             }
         }
 
@@ -293,13 +293,13 @@ class CategorySeoController extends AdminBaseController
             $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($id);
             $this->readyCategorySeoMixFacade->delete($readyCategorySeoMix);
             $this->addSuccessFlashTwig(
-                t('SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána', [
+                t('SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed', [
                     '{{ ReadyCategorySeoMixId }}' => $id,
                 ]),
             );
         } catch (ReadyCategorySeoMixNotFoundException $readyCategorySeoMixNotFoundException) {
             $this->addSuccessFlashTwig(
-                t('SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} nebyla smazána, protože nebyla nalezena', [
+                t('SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found', [
                     '{{ ReadyCategorySeoMixId }}' => $id,
                 ]),
             );

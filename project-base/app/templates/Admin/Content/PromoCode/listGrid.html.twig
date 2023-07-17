@@ -2,7 +2,7 @@
 
 {% block grid_value_cell_id_percent %}
     {% if value|length > 1 %}
-        {{ 'Škálovaný slevový kupón'|trans }}
+        {{ 'Scaled promo code'|trans }}
     {% else %}
         {% if row['pc']['discountType'] == constant('\\App\\Model\\Order\\PromoCode\\PromoCode::DISCOUNT_TYPE_PERCENT') %}
             {{ value[0]|formatPercent }}

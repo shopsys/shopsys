@@ -61,6 +61,6 @@ class ProductExtension extends BaseProductExtension
             ->getProductListOrderingConfig()
             ->getSupportedOrderingModesNamesIndexedById();
 
-        return $supportedOrderingModesNamesIndexedById[$orderingId] ?? t('Neplatné řazení') . ' ' . $orderingId;
+        return $supportedOrderingModesNamesIndexedById[$orderingId] ?? t('Unsupported order') . ' ' . $orderingId;
     }
 }

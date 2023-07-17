@@ -289,9 +289,9 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->em->refresh($product);
 
         $expected = match ($expectedWeekCount) {
-            -1 => t('Vyprodáno', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            -1 => t('Out of stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             0 => t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            default => t('{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] K dispozici za %count% týdnů', ['%count%' => $expectedWeekCount], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            default => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => $expectedWeekCount], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
         };
 
         $this->assertSame($expected, $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, self::FIRST_DOMAIN_ID));

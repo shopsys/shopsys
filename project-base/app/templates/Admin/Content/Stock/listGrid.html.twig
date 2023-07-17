@@ -5,17 +5,17 @@
 {% endblock %}
 
 {% block grid_pager_totalcount %}
-    {% set entityName = 'Sklad'|trans %}
+    {% set entityName = 'Warehouse'|trans %}
     {{ parent() }}
 {% endblock %}
 
 {% block grid_no_data %}
-    {{ 'Žádný sklad na této doméně není vytvořen. Nejprve musíte nějaký vytvořit.'|trans }}
+    {{ 'There is no warehouse on this domain yet.'|trans }}
 {% endblock %}
 
 {% block grid_action_cell_type_delete %}
     {% if row.s.isDefault %}
-        <span title="{{ 'Default stock cannot be removed'|trans }}"
+        <span title="{{ 'Default warehouse cannot be removed'|trans }}"
             class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="left">
             {{ icon('info') }}
         </span>
