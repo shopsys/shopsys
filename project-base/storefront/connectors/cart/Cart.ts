@@ -44,7 +44,6 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         isLoading: stale,
         isFetching: fetching,
         modifications: cartData?.cart?.modifications ?? null,
-        refetchCart,
     };
 };
 
