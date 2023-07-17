@@ -174,7 +174,7 @@
         "squizlabs/php_codesniffer": "^3.6.2",
         "sspooky13/yaml-standards": "^7.0.1",
         "symfony/var-dumper": "^5.4",
-        "symplify/easy-coding-standard": "^10.2.2",
+        "symplify/easy-coding-standard": "^10.3.3",
         "symplify/monorepo-builder": "^8.3.48",
         "zalas/phpunit-injector": "^2.0"
     },
