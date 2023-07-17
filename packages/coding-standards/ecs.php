@@ -60,6 +60,7 @@ use PhpCsFixer\Fixer\ControlStructure\NoTrailingCommaInListCallFixer;
 use PhpCsFixer\Fixer\ControlStructure\NoUnneededControlParenthesesFixer;
 use PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer;
 use PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer;
+use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
 use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
 use PhpCsFixer\Fixer\LanguageConstruct\CombineConsecutiveUnsetsFixer;
@@ -402,6 +403,12 @@ return static function (ECSConfig $ecsConfig): void {
         ListSyntaxFixer::class => null,
         PropertyTypeHintSniff::class => [
             '**Data.php',
+        ],
+        PhpdocToPropertyTypeFixer::class => [
+            __DIR__ . '/src/*',
+        ],
+        DeclareStrictTypesFixer::class => [
+            __DIR__ . '/src/*',
         ],
     ]);
 };

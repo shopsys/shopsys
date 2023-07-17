@@ -6,6 +6,8 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\MethodDeclarationSniff;
+use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
+use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
@@ -139,6 +141,14 @@ return static function (ECSConfig $ecsConfig): void {
         PropertyTypeHintSniff::class => [
             __DIR__ . '/tests/Unit/Component/ClassExtension/Source/*/*.php',
             __DIR__ . '/tests/Unit/Component/ClassExtension/Source/*.php',
+            ...explode("\n", trim(shell_exec("grep -rl '\\* @ORM\\\\Entity' " . escapeshellarg(__DIR__ . '/src')) ?? ''))
+        ],
+        PhpdocToPropertyTypeFixer::class => [
+            __DIR__ . '/src/*',
+            __DIR__ . '/tests/*',
+        ],
+        DeclareStrictTypesFixer::class => [
+            __DIR__ . '/src/*',
         ],
     ]);
 

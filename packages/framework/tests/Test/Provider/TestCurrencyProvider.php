@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\Model\Pricing\Currency;
+namespace Tests\FrameworkBundle\Test\Provider;
 
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
