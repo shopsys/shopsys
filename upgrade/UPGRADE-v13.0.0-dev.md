@@ -9,3 +9,6 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - use TestCurrencyProvider from the framework ([#2662](https://github.com/shopsys/shopsys/pull/2662))
     - remove class `Tests\App\Functional\Model\Pricing\Currency\TestCurrencyProvider` and use `Tests\FrameworkBundle\Test\Provider\TestCurrencyProvider` instead
+    - see #project-base-diff to update your project
+- fix S3Bridge bundle name ([#2648](https://github.com/shopsys/shopsys/pull/2648))
+    - see #project-base-diff to update your project

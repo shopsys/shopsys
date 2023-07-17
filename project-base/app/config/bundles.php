@@ -34,7 +34,7 @@ return [
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
-    Shopsys\S3Bridge\S3BridgeBundle::class => ['all' => true],
+    Shopsys\S3Bridge\ShopsysS3BridgeBundle::class => ['all' => true],
     Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
     Overblog\DataLoaderBundle\OverblogDataLoaderBundle::class => ['all' => true],

@@ -13,7 +13,6 @@
 /project-base/app/package-lock.json
 /project-base/app/migrations-lock.yml
 /project-base/app/.phpunit.result.cache
-/project-base/app/config/packages/frontend_api.yaml
 /.env.local
 /.env.local.php
 /.env.*.local

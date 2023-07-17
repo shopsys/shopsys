@@ -14,22 +14,11 @@ Frontend API package is installed by default in `shopsys/project-base`.
 In case you want to add the package into an already existing project, you should follow [upgrade instructions](https://github.com/shopsys/shopsys/blob/master/upgrade/UPGRADE-v9.0.0.md)
 
 ## Configuration
-Frontend API is disabled by default and you need to enable it for each domain for which you want to use it.
-You can enable the frontend API for all domains using the phing command `./phing frontend-api-enable`. 
-This command create new configuration file `config/packages/frontend_api.yaml` with this content:
-
-```yaml
-parmeters:
-    shopsys.frontend_api.domains:
-        - 1
-        - 2
-```
-
+Frontend API is enabled by default for all domains.  
 If you want to disable the frontend api for a special domain, delete its id from the `shopsys.frontend_api.domains` array.
 
-The command `./phing frontend-api-enable` creates pair of private and public keys for signing access tokens.
-If these keys are lost, you can regenerate them with the command `./phing frontend-api-generate-new-keys`.
-Note that when you regenerate the keys, you invalidate all issued access and refresh tokens.
+You have to create a pair of private and public keys for signing access tokens with the command `./phing frontend-api-generate-new-keys`.
+Note that when you regenerate the keys in the future, you invalidate all issued access and refresh tokens.
 You can read more about tokens in part [authentication](./authentication.md).
 
 You can also configure the place from which are the data for products taken from by choosing implementation of `ProductOnCurrentDomainFacadeInterface`.  

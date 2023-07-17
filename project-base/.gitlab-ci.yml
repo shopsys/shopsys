@@ -7,6 +7,8 @@ stages:
 
 .only-default: &only-default
     rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
         -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
         -   if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
             when: never
@@ -22,6 +24,9 @@ variables:
 before_script:
     - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} ${CI_REGISTRY} --password-stdin
 
+# Can be removed if mirroring is not needed
+include: gitlab/mirror-repository/gitlab-stage.yml
+
 build:
     stage: build
     <<: *only-default
@@ -30,7 +35,7 @@ build:
     script:
         - cp -R ./docker/nginx/ ./app/docker/nginx/
         - cd ./app/
-        - docker build -f ./docker/php-fpm/Dockerfile --target production --compress -t ${TAG} .
+        - docker build -f ./docker/php-fpm/Dockerfile --target production-project --compress -t ${TAG} .
         - docker push ${TAG}
     interruptible: true
 
@@ -67,13 +72,16 @@ test:storefront-standards-with-codegen:
     needs:
         - build-storefront
     before_script:
+        - corepack enable
+        - corepack prepare --activate pnpm@8.6.0
+        - pnpm config set store-dir .pnpm-store
         - cp ./app/schema.graphql ./storefront/schema.graphql
         - cd ./storefront
-        - npm ci
     script:
+        - pnpm install --frozen-lockfile
         - ./check-next-public-variable.sh
         - ./check-code-gen.sh
-        - npm run check
+        - pnpm run check
     interruptible: true
 
 tests:functional-and-acceptance:
@@ -142,7 +150,6 @@ review:
         - chmod +x ./gitlab/scripts/set-urls-for-review.sh && ./gitlab/scripts/set-urls-for-review.sh setDomainsToDockerCompose
         - docker-compose down --rmi all -v --remove-orphans
         - docker-compose up -d
-        - "docker-compose exec -T php-fpm sed -i \"s/database_name:.*/database_name: ${COMPOSE_PROJECT_NAME}/\" config/parameters.yaml"
         - ./gitlab/scripts/set-urls-for-review.sh setUrlsToDomainsUrls
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
         - ./gitlab/scripts/set-urls-for-review.sh printDomains
@@ -165,6 +172,8 @@ review:stop:
         - docker-compose down --rmi all -v --remove-orphans
         - /home/ci/clean.sh ${COMPOSE_PROJECT_NAME}
     rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
         -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
             when: manual
             allow_failure: true
@@ -217,7 +226,7 @@ service:merge_request:
 
 .deploy: &deploy
     image:
-        name: registry.shopsys.cz/devops/kubernetes-buildpack:1.1
+        name: shopsys/kubernetes-buildpack:0.9
     stage: deploy
     needs:
         - build
@@ -225,6 +234,8 @@ service:merge_request:
     tags:
         - deploy
     rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
     script:
@@ -240,6 +251,8 @@ deploy:production:
     variables:
         KUBE_CONFIG: ${KUBE_CONFIG_PROD}
     rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
         -   if: '$CI_COMMIT_BRANCH == "master"'
@@ -259,6 +272,8 @@ deploy:devel:
     variables:
         KUBE_CONFIG: ${KUBE_CONFIG_DEVEL}
     rules:
+        -   if: '$MIRROR_ONLY == "true"'
+            when: never
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
         -   if: '$CI_COMMIT_BRANCH == "devel" || $CI_COMMIT_BRANCH =~ /^devel-.*$/'
@@ -271,7 +286,7 @@ deploy:devel:
 test:gatling:
     stage: test
     image:
-        name: registry.shopsys.cz/devops/kubernetes-buildpack:1.1
+        name: shopsys/kubernetes-buildpack:0.9
     tags:
         - tests
     variables:
