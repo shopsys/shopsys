@@ -16,7 +16,7 @@ jobs:
             -   name: Ensure Symfony 4 version
                 run: docker-compose exec -T php-fpm composer update
             -   name: Build application
-                run: docker-compose exec -T php-fpm php phing db-create test-db-create build-demo-dev-quick error-pages-generate
+                run: docker-compose exec -T php-fpm php phing db-create test-db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate
             -   name: Check standards
                 run: docker-compose exec -T php-fpm php phing standards
             -   name: Run tests
