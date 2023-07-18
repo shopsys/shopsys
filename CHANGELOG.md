@@ -26,6 +26,57 @@ Packages are formatted by release version. You can see all the changes done to p
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) as explained in the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/).
 
+## [v11.1.0](https://github.com/shopsys/shopsys/compare/v11.0.0...v11.1.0) (2023-07-18)
+
+### :sparkles: Enhancements and features
+* [shopsys] added detailed cron run information for administrators by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2581
+* [shopsys] adverts on product list can now be set only for range of categories by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2583
+* [shopsys] added ability to change periodicity and length of cron runs by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2584
+* [framework] columns in grid can now be reordered by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2564
+* [shopsys] added ability to change content of robots.txt file through administration by @radek-bruha in https://github.com/shopsys/shopsys/pull/2591
+* [shopsys] users and admins now have only five tries to log in one minute by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2599
+* [framework] cron overview is now available for admin in the default state by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2600
+* [shopsys] added ability to change email whitelist through administration by @radek-bruha in https://github.com/shopsys/shopsys/pull/2592
+* [shopsys] don't show 500 error page when you have 405 http code by @sspooky13 in https://github.com/shopsys/shopsys/pull/2666
+
+### :bug: Bug Fixes
+* [framework] AdministrationFacade: support requests without _route parameter by @mposchl in https://github.com/shopsys/shopsys/pull/2373
+* [shopsys] updated acceptance tests because they were no longer working locally by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2610
+* [shopsys] too many attempts js error is now translated on frontend by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2613
+* [framework] removed class duplication in expanded choice by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2614
+
+### :hammer: Developer experience and refactoring
+* [framework] added missing getters to UploadedFile by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2582
+* [framework] bin/console base phing targets are now more verbose by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/2507
+* [framework] Transport::getPrice() - fix error message by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/2506
+* [framework] added commonly used methods to Price class by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2589
+* [framework] build-demo-dev-quick phing target now correctly recreates elasticsearch structure by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2590
+* [framework] removed DRY violation in AggregationResultToProductFilterCountDtaTransformer and fixed property name by @sspooky13 in https://github.com/shopsys/shopsys/pull/2501
+* [shopsys] checking if order status update email should be sent is done directly in OrderMailFacade instead in multiple places by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2588
+* [shopsys] updated installation docs for macOS using Mutagen by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2593
+* [shopsys] added BlankLineBeforeStatementFixer for ensuring empty line before statements by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2128
+* [framework] RegisterProjectFrameworkClassExtensionCompilerPass now ensures that both class and interface alias are registered in Symfony services by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2605
+* [project-base] config folder is now less confusing by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2607
+
+### :link: Frontend API
+* [shopsys] authentication failure now return errors as array by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2387
+* [frontend-api] empty strings are now considered nulls in frontend API by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2601
+
+### :book: Documentation
+* [docs] changed bc promise link to supported version by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2606
+
+### :art: Design & appearance
+* [framework] improved elasticsearch debug panel readability in Symfony Profiler by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2509
+* [framework] Do not show loader element in load order preview by @sspooky13 in https://github.com/shopsys/shopsys/pull/2425
+* [framework] admin: order items table sizes are now fixed by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2597
+
+### :cloud: Infrastructure
+* added review stage by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2619
+* fixed review canceling jobs by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2626
+* fix canceling review after branch merge by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2627
+* fixed actions for rebuilding images and building  by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2628
+* rebuild-docker-images.yaml now use personal token to push images by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2630
+
 ## [v11.0.0](https://github.com/shopsys/shopsys/compare/v10.0.5...v11.0.0) (2023-03-02)
 
 ### :construction: Changes that require additional implementation if you are using Frontend API
