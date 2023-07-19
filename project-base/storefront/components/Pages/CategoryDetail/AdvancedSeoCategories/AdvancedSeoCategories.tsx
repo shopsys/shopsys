@@ -1,14 +1,8 @@
-import { AdvancedSeoCategoriesItem } from './AdvancedSeoCategoriesItem';
-import { AdvancedSeoCategoriesSlider } from './AdvancedSeoCategoriesSlider';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { isElementVisible } from 'components/Helpers/isElementVisible';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { CategoryDetailFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
-import 'keen-slider/keen-slider.min.css';
-import { useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 
 type AdvancedSeoCategoriesProps = {
     readyCategorySeoMixLinks: CategoryDetailFragmentApi['readyCategorySeoMixLinks'];
@@ -16,15 +10,6 @@ type AdvancedSeoCategoriesProps = {
 
 export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCategorySeoMixLinks }) => {
     const t = useTypedTranslationFunction();
-    const { width } = useGetWindowSize();
-    const [isAdvancedSeoCategoriesSliderVisible, setAdvancedSeoCategoriesSliderVisibility] = useState(true);
-    useResizeWidthEffect(
-        width,
-        desktopFirstSizes.tablet,
-        () => setAdvancedSeoCategoriesSliderVisibility(false),
-        () => setAdvancedSeoCategoriesSliderVisibility(true),
-        () => setAdvancedSeoCategoriesSliderVisibility(isElementVisible([{ min: 0, max: 768 }], width)),
-    );
 
     if (readyCategorySeoMixLinks.length === 0) {
         return null;
@@ -33,17 +18,23 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCat
     return (
         <>
             <Heading type="h3">{t('Favorite categories')}</Heading>
-            {isAdvancedSeoCategoriesSliderVisible ? (
-                <AdvancedSeoCategoriesSlider readyCategorySeoMixLinks={readyCategorySeoMixLinks} />
-            ) : (
-                <div className="mb-5 flex flex-row flex-wrap gap-3">
-                    {readyCategorySeoMixLinks.map((seoMixLink, index) => (
-                        <AdvancedSeoCategoriesItem key={index} slug={seoMixLink.slug}>
+            <ul className="mb-5 grid snap-x snap-mandatory auto-cols-[40%] gap-3 overflow-x-auto overscroll-x-contain max-lg:grid-flow-col lg:grid-cols-[repeat(auto-fill,minmax(210px,1fr))]">
+                {readyCategorySeoMixLinks.map((seoMixLink, index) => (
+                    <li key={index} className="snap-start">
+                        <ExtendedNextLink
+                            href={`/${seoMixLink.slug}`}
+                            type="static"
+                            className={twJoin(
+                                'flex h-full items-center justify-center rounded-xl bg-greyVeryLight p-3 text-center text-sm text-dark no-underline',
+                                'hover:bg-whitesmoke hover:text-dark hover:no-underline',
+                                'active:bg-whitesmoke active:text-dark active:no-underline',
+                            )}
+                        >
                             {seoMixLink.name}
-                        </AdvancedSeoCategoriesItem>
-                    ))}
-                </div>
-            )}
+                        </ExtendedNextLink>
+                    </li>
+                ))}
+            </ul>
         </>
     );
 };

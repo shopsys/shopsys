@@ -2,7 +2,7 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
 import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ProductDetailGallerySliderProps = {
@@ -11,14 +11,14 @@ type ProductDetailGallerySliderProps = {
     videoIds?: VideoTokenFragmentApi[];
 };
 
-const sliderSettings = (): EmblaOptionsType => {
-    return {
-        dragFree: false,
-        loop: false,
-        startIndex: 0,
-        containScroll: 'trimSnaps',
-        slidesToScroll: 1,
-    };
+const sliderSettings: EmblaOptionsType = {
+    dragFree: false,
+    loop: false,
+    speed: 20,
+    startIndex: 0,
+    containScroll: 'trimSnaps',
+    draggable: true,
+    slidesToScroll: 1,
 };
 
 export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = ({ galleryItems, flags, videoIds }) => {
@@ -26,20 +26,21 @@ export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = (
     const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-    const [emblaRef, emblaApi] = useEmblaCarousel(sliderSettings());
+    const [emblaRef, emblaApi] = useEmblaCarousel(sliderSettings);
 
-    const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-    const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-    const scrollTo = useCallback((index: number) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
+    const scrollPrev = () => emblaApi?.scrollPrev();
+    const scrollNext = () => emblaApi?.scrollNext();
+    const scrollTo = (index: number) => emblaApi && emblaApi.scrollTo(index);
 
-    const onSelect = useCallback(() => {
+    const onSelect = () => {
         if (!emblaApi) {
             return;
         }
+
         setSelectedIndex(emblaApi.selectedScrollSnap());
         setPrevBtnEnabled(emblaApi.canScrollPrev());
         setNextBtnEnabled(emblaApi.canScrollNext());
-    }, [emblaApi, setSelectedIndex]);
+    };
 
     useEffect(() => {
         if (!emblaApi) {
@@ -49,7 +50,7 @@ export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = (
         setScrollSnaps(emblaApi.scrollSnapList());
         emblaApi.on('select', onSelect);
         emblaApi.on('reInit', onSelect);
-    }, [emblaApi, setScrollSnaps, onSelect, videoIds]);
+    }, [emblaApi, videoIds]);
 
     return (
         <div className="p-2 lg:hidden">
@@ -69,22 +70,20 @@ export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = (
                         </div>
                     ))}
                     {videoIds !== undefined &&
-                        videoIds.map((videoId, index) => {
-                            return (
-                                <div
-                                    key={'video-' + index}
-                                    className="relative flex w-full min-w-0 flex-shrink-0 items-center justify-center pb-[56.25%] sm:max-h-[300px] sm:min-h-[300px] md:max-h-[330px] md:min-h-[330px]"
-                                    data-src=""
-                                >
-                                    <iframe
-                                        className="absolute top-0 left-0 h-full w-full border-none"
-                                        src={'https://www.youtube.com/embed/' + videoId.token}
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        allowFullScreen
-                                    />
-                                </div>
-                            );
-                        })}
+                        videoIds.map((videoId, index) => (
+                            <div
+                                key={'video-' + index}
+                                className="relative flex w-full min-w-0 flex-shrink-0 items-center justify-center pb-[56.25%] sm:max-h-[300px] sm:min-h-[300px] md:max-h-[330px] md:min-h-[330px]"
+                                data-src=""
+                            >
+                                <iframe
+                                    className="absolute top-0 left-0 h-full w-full border-none"
+                                    src={'https://www.youtube.com/embed/' + videoId.token}
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowFullScreen
+                                />
+                            </div>
+                        ))}
                 </div>
                 <div className="flex items-center justify-center pt-6 pr-4 pb-2">
                     {scrollSnaps.map((_, index) => (
