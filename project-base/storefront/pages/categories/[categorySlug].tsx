@@ -12,6 +12,8 @@ import {
     CategoryProductsQueryDocumentApi,
     ProductFilterApi,
     CategoryDetailFragmentApi,
+    Maybe,
+    ProductOrderingModeEnumApi,
 } from 'graphql/generated';
 import { getDomainConfig } from 'helpers/domain/domain';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
@@ -41,7 +43,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSessionStore } from 'store/zustand/useSessionStore';
-import { ssrExchange, useClient } from 'urql';
+import { Client, ssrExchange, useClient } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 const CategoryDetailPage: NextPage = () => {
@@ -146,7 +148,10 @@ const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | Ca
     const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(router.asPath));
     const { sort } = useQueryParams();
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
-    const [categoryDetailData, setCategoryDetailData] = useState<undefined | CategoryDetailFragmentApi>(undefined);
+    const [categoryDetailData, setCategoryDetailData] = useState<undefined | CategoryDetailFragmentApi>(
+        readCategoryDetailFromCache(client, urlSlug, sort, filter),
+    );
+
     const [fetching, setFetching] = useState<boolean>(false);
 
     useEffect(() => {
@@ -170,4 +175,19 @@ const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | Ca
     }, [urlSlug, sort, JSON.stringify(filter)]);
 
     return [categoryDetailData, fetching];
+};
+
+const readCategoryDetailFromCache = (
+    client: Client,
+    urlSlug: string,
+    sort: ProductOrderingModeEnumApi | null,
+    filter: Maybe<ProductFilterApi>,
+) => {
+    return (
+        client.readQuery<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
+            urlSlug,
+            orderingMode: sort,
+            filter,
+        })?.data?.category ?? undefined
+    );
 };

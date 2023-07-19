@@ -6,6 +6,9 @@ import {
     CategoryProductsQueryApi,
     CategoryProductsQueryDocumentApi,
     CategoryProductsQueryVariablesApi,
+    Maybe,
+    ProductFilterApi,
+    ProductOrderingModeEnumApi,
 } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'helpers/gtm/gtm';
@@ -19,7 +22,7 @@ import { useRouter } from 'next/router';
 import { RefObject, useEffect, useMemo, useState } from 'react';
 import { useSessionStore } from 'store/zustand/useSessionStore';
 import { GtmMessageOriginType } from 'types/gtm/enums';
-import { useClient } from 'urql';
+import { Client, useClient } from 'urql';
 import { getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 type CategoryDetailProps = {
@@ -64,10 +67,13 @@ const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi, boole
 
     const endCursor = getEndCursor(currentPage);
     const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(asPath));
+    const mappedFilter = mapParametersFilter(filter);
 
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
     const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
-    const [categoryDetailData, setCategoryDetailData] = useState<CategoryProductsQueryApi>();
+    const [categoryProductsData, setCategoryProductsData] = useState<undefined | CategoryProductsQueryApi>(
+        readCategoryProductsFromCache(client, urlSlug, sort, mappedFilter, endCursor),
+    );
     const [fetching, setFetching] = useState(false);
 
     useEffect(() => {
@@ -81,7 +87,7 @@ const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi, boole
         client
             .query<CategoryProductsQueryApi, CategoryProductsQueryVariablesApi>(CategoryProductsQueryDocumentApi, {
                 endCursor,
-                filter: mapParametersFilter(filter),
+                filter: mappedFilter,
                 orderingMode: sort ?? null,
                 urlSlug,
                 pageSize: DEFAULT_PAGE_SIZE,
@@ -89,10 +95,31 @@ const useCategoryProductsData = (): [undefined | CategoryProductsQueryApi, boole
             .toPromise()
             .then((response) => {
                 handleQueryError(response.error, t);
-                setCategoryDetailData(response.data ?? undefined);
+                setCategoryProductsData(response.data ?? undefined);
             })
             .finally(() => setFetching(false));
     }, [urlSlug, sort, JSON.stringify(filter), endCursor]);
 
-    return [categoryDetailData, fetching];
+    return [categoryProductsData, fetching];
+};
+
+const readCategoryProductsFromCache = (
+    client: Client,
+    urlSlug: string,
+    sort: ProductOrderingModeEnumApi | null,
+    filter: Maybe<ProductFilterApi>,
+    endCursor: string,
+) => {
+    return (
+        client.readQuery<CategoryProductsQueryApi, CategoryProductsQueryVariablesApi>(
+            CategoryProductsQueryDocumentApi,
+            {
+                endCursor,
+                filter,
+                orderingMode: sort,
+                urlSlug,
+                pageSize: DEFAULT_PAGE_SIZE,
+            },
+        )?.data ?? undefined
+    );
 };

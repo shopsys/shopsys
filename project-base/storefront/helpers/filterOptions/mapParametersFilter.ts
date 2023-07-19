@@ -2,7 +2,7 @@ import { ProductFilterApi } from 'graphql/generated';
 import { FilterOptionsUrlQueryType } from 'types/productFilter';
 
 export const mapParametersFilter = (parametersFilter: FilterOptionsUrlQueryType | null): ProductFilterApi | null => {
-    if (parametersFilter === null) {
+    if (!parametersFilter || Object.keys(parametersFilter).length === 0) {
         return null;
     }
 
