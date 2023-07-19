@@ -37,7 +37,6 @@ services:
             target: development
             args:
                 node_uid: 1000
-                node_gid: 1000
         container_name: shopsys-framework-storefront
         command: # Optional
             - dev # change to `- build` if you want to test application build

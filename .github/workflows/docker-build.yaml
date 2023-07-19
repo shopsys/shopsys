@@ -284,7 +284,6 @@ jobs:
                 run: docker compose cp ./project-base/app/schema.graphql storefront:/home/node/app/schema.graphql
             -   name: Install dev dependencies
                 run: |
-                    docker compose exec --user root storefront chown -R node:node /home/node/app
                     docker compose exec storefront pnpm install --dev --frozen-lockfile
             -   name: Check no NEXT_PUBLIC_ variables are used
                 run: |
@@ -295,7 +294,6 @@ jobs:
                     docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
                     docker compose cp php-fpm:/var/www/html/project-base/app/schema.graphql /tmp/schema.graphql
                     docker compose cp /tmp/schema.graphql storefront:/home/node/app/schema.graphql
-                    docker compose exec -u root storefront chown -R node:node /home/node/app
                     docker compose exec storefront sh check-code-gen.sh
             -   name: Check standards
                 run: docker compose exec storefront pnpm run check
@@ -334,7 +332,6 @@ jobs:
                 run: |
                     docker compose pull --parallel postgres webserver elasticsearch redis php-fpm storefront
                     docker compose up -d postgres webserver elasticsearch redis php-fpm storefront
-                    docker compose exec -T --user root storefront chown -R node:node /home/node/app
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate
             -   name: Run tests
                 run: docker compose exec -T php-fpm php phing -D production.confirm.action=y tests
@@ -516,7 +513,6 @@ jobs:
                     docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
                     docker compose cp php-fpm:/var/www/html/project-base/app/schema.graphql /tmp/schema.graphql
                     docker compose cp /tmp/schema.graphql storefront:/home/node/app/schema.graphql
-                    docker compose exec -u root storefront chown -R node:node /home/node/app
                     docker compose exec storefront sh check-code-gen.sh
             -   name: Check Storefront standards
                 run: docker compose exec storefront pnpm run check
