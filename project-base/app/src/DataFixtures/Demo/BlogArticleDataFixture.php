@@ -279,33 +279,41 @@ EOT));
         foreach ($this->domain->getAllLocales() as $locale) {
             $blogArticleData->names[$locale] = t('GrapesJS page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $blogArticleData->descriptions[$locale] = str_replace(['    ', PHP_EOL], '', trim(<<<EOT
-<style>#i3wiwe{padding-top:15px;padding-bottom:15px;}#i47xqe{color:black;}#ijhc4t{color:black;width:533px;height:324px;}#ie4jei{color:black;width:1157px;}</style><div class="gjs-text-ckeditor"><p>Ať už vyb&iacute;r&aacute;te pracovn&iacute; židli pro sebe nebo pro sv&eacute; zaměstnance, při v&yacute;běru kancel&aacute;řsk&eacute; židle berte v &uacute;vahu n&aacute;sleduj&iacute;c&iacute; faktory:</p>
+<style>#i3wiwe{padding-top:15px;padding-bottom:15px;}#i47xqe{color:black;}#ijhc4t{color:black;width:533px;height:324px;}#ie4jei{color:black;width:1157px;}</style>
+<div class="gjs-text-ckeditor"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque arcu. Fusce tellu:</p>
 
 <ul>
-	<li>Kolik hodin denně budete na židli sedět</li>
-	<li>Existuj&iacute;c&iacute; zdravotn&iacute; omezen&iacute; a hmotnost sed&iacute;c&iacute;ho</li>
-	<li>Prostor nutn&yacute; pro pohyb na židli</li>
-	<li>Možnosti nastaven&iacute; a v&yacute;bava kancel&aacute;řsk&eacute; židle</li>
+	<li>Praesent dapibus</li>
+	<li>Donec vitae arcu</li>
+	<li>Morbi scelerisque luctus velit</li>
+	<li>Nam libero tempore, cum soluta nobis est eligendi</li>
 </ul>
 
-<h2>Kolik hodin denně budete na židli sedět</h2>
-Pokud budete židli využ&iacute;vat pouze kr&aacute;tkodobě, pak si vystač&iacute;te se z&aacute;kladn&iacute;m modelem židle s permanentn&iacute;m mechanismem a nastaviteln&yacute;m sklonem opěradla. Pokud ale na židli budete sedět vět&scaron;inu pracovn&iacute; doby, vyplat&iacute; se do židle opravdu investovat. Spr&aacute;vn&aacute; pracovn&iacute; židle mus&iacute; umožňovat individu&aacute;ln&iacute; nastaven&iacute;, dle v&yacute;&scaron;ky, hmotnosti, tvaru těla a potřeby uživatele. Doporučujeme proto zvolit <strong>synchronn&iacute;</strong>, <strong>asynchronn&iacute;</strong> nebo <strong>houpac&iacute; mechaniku</strong>, kter&eacute; automaticky přizpůsobuj&iacute; z&aacute;dov&eacute; a sedac&iacute; opěry židle pohybům trupu, přičemž zaji&scaron;ťuj&iacute; permanentn&iacute; oporu v z&aacute;dov&eacute; oblasti.<br />
+<h2>Praesent dapibus</h2>
+Aliquam ante. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Ut enim ad minim veniam, <strong>quis nostrud exercitation</strong> ullamco laboris nisi ut aliquip ex ea commodo consequat. In enim a arcu imperdiet malesuada. Fusce nibh. Integer lacinia. Fusce <strong>aliquam vestibulum</strong> ipsum. Fusce consectetuer risus a nunc. Donec iaculis gravida nulla. Phasellus enim erat, vestibulum vel, aliquam a, <strong>posuere eu</strong>, velit. Morbi imperdiet, mauris ac auctor dictum, nisl ligula egestas nulla, et sollicitudin sem purus in lacus.<br />
 <br />
-<strong>TIP:</strong><a href="{$firstDomainUrl}" id="ieevs4">Přečtěte si v&iacute;ce informac&iacute; o mechanik&aacute;ch kancel&aacute;řsk&yacute;ch židl&iacute;</a>
+<strong>TIP:</strong><a href="{$firstDomainUrl}" id="ieevs4">Mauris suscipit, ligula sit amet pharetra semper</a>
 
-<h2>Existuj&iacute;c&iacute; zdravotn&iacute; omezen&iacute; a hmotnost sed&iacute;c&iacute;ho</h2>
-Komfortn&iacute; a zdrav&eacute; sezen&iacute; zajist&iacute; tak&eacute; anatomicky tvarovan&yacute; sed&aacute;k se zaoblen&yacute;m okrajem, kter&yacute; umožňuje pohodln&eacute; sezen&iacute; bez tlaku na spodn&iacute; č&aacute;st stehen, dostatečně velk&yacute; opěr&aacute;k podp&iacute;raj&iacute;c&iacute; z&aacute;da po cel&eacute; jejich d&eacute;lce a po celou dobu sezen&iacute; a <strong>bedern&iacute; opěrka</strong>. Aby v&aacute;m židle dlouhodobě sloužila, věnujte pozornost tak&eacute; maxim&aacute;ln&iacute; <strong>nosnosti židl&iacute;</strong>.<br />
+<h2>Donec vitae arcu</h2>
+Aenean fermentum risus id tortor. Vivamus ac leo pretium faucibus. Duis risus. Mauris elementum <strong>mauris vitae</strong> tortor. Nulla quis diam. In rutrum. In enim a arcu imperdiet malesuada. Fusce wisi. Integer imperdiet lectus quis justo. Pellentesque ipsum. Aliquam erat volutpat. Etiam <strong>dictum tincidunt</strong> diam.<br />
 <br />
-<strong>TIP:</strong><a href="{$firstDomainUrl}" id="iauj76">U každ&eacute; kancel&aacute;řsk&eacute; židle uv&aacute;d&iacute;me jej&iacute; nosnost</a>
+<strong>TIP:</strong><a href="{$firstDomainUrl}" id="iauj76">Mauris tincidunt sem sed arcu</a>
 
-<h2>Prostor nutn&yacute; pro pohyb na židli</h2>
-Při v&yacute;běru židle mějte na paměti i celkov&yacute; pracovn&iacute; prostor. Čast&yacute;m omezen&iacute;m je např. v&yacute;&scaron;ka stolu, kdy područky se nevejdou pod stůl (lze vyře&scaron;it např. v&yacute;&scaron;kově staviteln&yacute;mi područkami), kolečka mohou nar&aacute;žet do skř&iacute;n&iacute; nebo kontejnerů, prostor za z&aacute;dy sed&iacute;c&iacute;ho neumožňuje zhoupnut&iacute;, apod.<br />
+<h2>Morbi scelerisque luctus velit</h2>
+Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus faucibus molestie nisl. Nullam faucibus mi quis velit. Integer imperdiet lectus quis justo. Nulla accumsan, elit sit amet varius semper, nulla mauris mollis quam, tempor suscipit diam nulla vel leo.<br />
 <br />
-<strong>TIP:</strong> U každ&eacute; kancel&aacute;řsk&eacute; židle uv&aacute;d&iacute;me rozměry: celkov&aacute; v&yacute;&scaron;ka, v&yacute;&scaron;ka sed&aacute;ku, hloubka sed&aacute;ku, &scaron;&iacute;řka &scaron;ed&aacute;ku, v&yacute;&scaron;ka opěr&aacute;ku, v&yacute;&scaron;ka područky nad sed&aacute;kem, ...<br />
+<strong>TIP:</strong>Mauris vehicula lacinia, quis nostrud exercitation ullamco laboris ...<br />
 <br />
-&nbsp;</div><div class="gjs-text-ckeditor"><h2>Možnosti nastaven&iacute; kancel&aacute;řsk&eacute; židle</h2>
-Hlavn&iacute;mi parametry pro v&yacute;běr kancel&aacute;řsk&eacute; židle je typ mechaniky židle, možnosti nastaven&iacute; v&yacute;&scaron;ky, hloubky sed&aacute;ku, a dal&scaron;&iacute; v&yacute;bava jako bedern&iacute; opěrka, nastaviteln&eacute; područky (opěrky rukou).<br />
-&nbsp;</div><div class="gjs-products" data-products="9177759,9176508,5965879P,5960453"><div data-product="9177759" data-product-name="22&quot; Sencor SLE 22F46DM4 HELLO KITTY" class="gjs-product"></div><div data-product="9176508" data-product-name="32&quot; Philips 32PFL4308" class="gjs-product"></div><div data-product="5965879P" data-product-name="47&quot; LG 47LA790V (FHD)" class="gjs-product"></div><div data-product="5960453" data-product-name="A4tech myš X-710BK, OSCAR Game, 2000DPI, černá" class="gjs-product"></div></div>
+
+<h2>Nam libero tempore, cum soluta nobis est eligendi</h2>
+Proin in tellus sit amet nibh dignissim sagittis. Integer in sapien. Curabitur sagittis hendrerit ante. Praesent in mauris eu tortor porttitor accumsan. Aliquam in lorem sit amet leo accumsan lacinia. Nullam rhoncus aliquam metus. Mauris dolor felis, sagittis at, luctus sed, aliquam non, tellus. Aliquam erat volutpat. Duis ante orci, molestie vitae vehicula venenatis, tincidunt ac pede. Duis condimentum augue id magna semper rutrum. Etiam bibendum elit eget erat.<br />
+</div>
+
+<div class="gjs-products" data-products="9177759,9176508,5965879P">
+<div data-product="9177759" data-product-name="22&quot; Sencor SLE 22F46DM4 HELLO KITTY" class="gjs-product"></div>
+<div data-product="9176508" data-product-name="32&quot; Philips 32PFL4308" class="gjs-product"></div>
+<div data-product="5965879P" data-product-name="47&quot; LG 47LA790V (FHD)" class="gjs-product"></div>
+</div>
 EOT));
         }
 
