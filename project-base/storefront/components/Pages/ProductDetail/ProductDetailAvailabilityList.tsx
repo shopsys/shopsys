@@ -43,14 +43,16 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                                     >
                                         {storeAvailability.availabilityInformation}
                                     </span>
-                                    <ExtendedNextLink href={storeAvailability.store.slug} passHref type="store">
-                                        <a
-                                            className="ml-auto flex items-center text-dark no-underline hover:text-dark hover:no-underline"
-                                            data-testid={TEST_IDENTIFIER + index + '-detail'}
-                                        >
+                                    <ExtendedNextLink
+                                        href={storeAvailability.store.slug}
+                                        type="store"
+                                        className="ml-auto flex items-center text-dark no-underline hover:text-dark hover:no-underline"
+                                        data-testid={TEST_IDENTIFIER + index + '-detail'}
+                                    >
+                                        <>
                                             {t('Store detail')}
                                             <Icon iconType="icon" icon="ArrowRight" />
-                                        </a>
+                                        </>
                                     </ExtendedNextLink>
                                 </li>
                             ),

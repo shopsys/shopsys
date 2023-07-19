@@ -12,15 +12,15 @@ type FlagProps = NativeProps & {
 const getDataTestId = (dataTestId?: string) => dataTestId ?? 'basic-flag';
 
 export const Flag: FC<FlagProps> = ({ children, dataTestId, href, classNames }) => (
-    <ExtendedNextLink type="blogCategory" href={href} passHref>
-        <a
-            className={twMergeCustom(
-                'mb-2 mr-3 inline-flex rounded-sm bg-primaryLight py-1 px-2 text-xs uppercase text-dark no-underline hover:text-dark hover:no-underline',
-                classNames,
-            )}
-            data-testid={getDataTestId(dataTestId)}
-        >
-            {children}
-        </a>
+    <ExtendedNextLink
+        type="blogCategory"
+        href={href}
+        className={twMergeCustom(
+            'mb-2 mr-3 inline-flex rounded-sm bg-primaryLight py-1 px-2 text-xs uppercase text-dark no-underline hover:text-dark hover:no-underline',
+            classNames,
+        )}
+        data-testid={getDataTestId(dataTestId)}
+    >
+        <>{children}</>
     </ExtendedNextLink>
 );

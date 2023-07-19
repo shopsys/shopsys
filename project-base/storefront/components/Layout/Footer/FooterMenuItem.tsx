@@ -23,15 +23,11 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
                     <ExtendedNextLink
                         href={item.__typename === 'ArticleSite' ? item.slug : item.url}
                         type="static"
-                        passHref
+                        className="block text-sm text-greyLight no-underline hover:text-greyLight"
+                        target={item.external ? '_blank' : undefined}
+                        rel={item.external ? 'nofollow noreferrer noopener' : undefined}
                     >
-                        <a
-                            className="block text-sm text-greyLight no-underline hover:text-greyLight"
-                            target={item.external ? '_blank' : undefined}
-                            rel={item.external ? 'nofollow noreferrer noopener' : undefined}
-                        >
-                            {item.name}
-                        </a>
+                        {item.name}
                     </ExtendedNextLink>
                 </li>
             ))}

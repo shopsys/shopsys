@@ -50,15 +50,19 @@ export const BlogPreview: FC = () => {
                     {t('Shopsys magazine')}
                 </h2>
                 {blogUrl !== undefined && (
-                    <ExtendedNextLink type="blogCategory" href={blogUrl} passHref>
-                        <a className="mb-2 flex items-center font-bold uppercase text-creamWhite no-underline hover:text-creamWhite hover:no-underline">
+                    <ExtendedNextLink
+                        type="blogCategory"
+                        href={blogUrl}
+                        className="mb-2 flex items-center font-bold uppercase text-creamWhite no-underline hover:text-creamWhite hover:no-underline"
+                    >
+                        <>
                             {t('View all')}
                             <Icon
                                 iconType="icon"
                                 icon="ArrowRight"
                                 className="relative top-0 ml-2 text-xs text-creamWhite"
                             />
-                        </a>
+                        </>
                     </ExtendedNextLink>
                 )}
             </div>

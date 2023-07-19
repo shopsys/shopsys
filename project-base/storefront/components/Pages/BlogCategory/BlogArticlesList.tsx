@@ -27,14 +27,12 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                         className="mb-3 w-full text-center md:mb-0 md:w-48"
                         data-testid={TEST_IDENTIFIER + blogArticleIndex + '-image'}
                     >
-                        <ExtendedNextLink href={blogArticle.link} passHref type="blogArticle">
-                            <a>
-                                <Image
-                                    image={blogArticle.mainImage}
-                                    type="list"
-                                    alt={blogArticle.mainImage?.name || blogArticle.name}
-                                />
-                            </a>
+                        <ExtendedNextLink href={blogArticle.link} type="blogArticle">
+                            <Image
+                                image={blogArticle.mainImage}
+                                type="list"
+                                alt={blogArticle.mainImage?.name || blogArticle.name}
+                            />
                         </ExtendedNextLink>
                     </div>
                     <div className="flex w-full flex-col md:pl-10">
@@ -57,15 +55,15 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                                 </Fragment>
                             ))}
                         </div>
-                        <ExtendedNextLink href={blogArticle.link} passHref type="blogArticle">
-                            <a
-                                className="group hover:no-underline"
-                                data-testid={TEST_IDENTIFIER + blogArticleIndex + '-title'}
-                            >
-                                <Heading type="h2" className="group-hover:text-primary">
-                                    {blogArticle.name}
-                                </Heading>
-                            </a>
+                        <ExtendedNextLink
+                            href={blogArticle.link}
+                            type="blogArticle"
+                            className="group hover:no-underline"
+                            data-testid={TEST_IDENTIFIER + blogArticleIndex + '-title'}
+                        >
+                            <Heading type="h2" className="group-hover:text-primary">
+                                {blogArticle.name}
+                            </Heading>
                         </ExtendedNextLink>
                         {blogArticle.perex !== null && (
                             <p className="mb-3 text-base" data-testid={TEST_IDENTIFIER + blogArticleIndex + '-perex'}>
