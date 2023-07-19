@@ -11,7 +11,7 @@ export const createClient = (
     t: Translate,
     ssrExchange: SSRExchange,
     publicGraphqlEndpoint: string,
-    redisClient?: RedisClientType<any & RedisModules, RedisScripts>,
+    redisClient?: RedisClientType<RedisModules, RedisScripts>,
     context?: GetServerSidePropsContext | NextPageContext,
 ): Client | null => {
     const { serverRuntimeConfig } = getConfig();
