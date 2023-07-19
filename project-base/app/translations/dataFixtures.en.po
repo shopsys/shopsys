@@ -1444,6 +1444,9 @@ msgstr ""
 msgid "Red and green paper glasses for watching"
 msgstr ""
 
+msgid "Reduced rate"
+msgstr ""
+
 msgid "Reducing the diameter of 35 mm to 32 mm"
 msgstr ""
 
@@ -1514,6 +1517,9 @@ msgid "Samsung UE75HU7500 (UHD)"
 msgstr ""
 
 msgid "Screen size"
+msgstr ""
+
+msgid "Second reduced rate"
 msgstr ""
 
 msgid "Second subsection %locale%"
@@ -1601,6 +1607,9 @@ msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency rang
 msgstr ""
 
 msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB, 4Ohm impedance, power supply via USB, 3.5 mm audio jack, dimensions 85x85x107mm, weight 550 g"
+msgstr ""
+
+msgid "Standard rate"
 msgstr ""
 
 msgid "Store in Ostrava Přívoz"
@@ -1907,6 +1916,9 @@ msgid "You will be welcomed by friendly staff!"
 msgstr ""
 
 msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
+msgstr ""
+
+msgid "Zero rate"
 msgstr ""
 
 msgid "battery"

@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface;
@@ -50,26 +51,26 @@ class VatDataFixture extends AbstractReferenceFixture
 
         $vatData = $this->vatDataFactory->create();
 
-        foreach ($this->domain->getAllIds() as $domainId) {
-            if ($domainId !== Domain::FIRST_DOMAIN_ID) {
-                $vatData->name = 'Zero rate';
+        foreach ($this->domain->getAll() as $domainConfig) {
+            if ($domainConfig->getId() !== Domain::FIRST_DOMAIN_ID) {
+                $vatData->name = t('Zero rate', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
                 $vatData->percent = '0';
-                $this->createVat($vatData, $domainId, self::VAT_ZERO);
+                $this->createVat($vatData, $domainConfig->getId(), self::VAT_ZERO);
             }
 
-            $vatData->name = 'Second reduced rate';
+            $vatData->name = t('Second reduced rate', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
             $vatData->percent = '10';
-            $this->createVat($vatData, $domainId, self::VAT_SECOND_LOW);
+            $this->createVat($vatData, $domainConfig->getId(), self::VAT_SECOND_LOW);
 
-            $vatData->name = 'Reduced rate';
+            $vatData->name = t('Reduced rate', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
             $vatData->percent = '15';
-            $this->createVat($vatData, $domainId, self::VAT_LOW);
+            $this->createVat($vatData, $domainConfig->getId(), self::VAT_LOW);
 
-            $vatData->name = 'Standard rate';
+            $vatData->name = t('Standard rate', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
             $vatData->percent = '21';
-            $this->createVat($vatData, $domainId, self::VAT_HIGH);
+            $this->createVat($vatData, $domainConfig->getId(), self::VAT_HIGH);
 
-            $this->setHighVatAsDefault($domainId);
+            $this->setHighVatAsDefault($domainConfig->getId());
         }
     }
 

@@ -1444,6 +1444,9 @@ msgstr "Záznam na"
 msgid "Red and green paper glasses for watching"
 msgstr "papírové brýle růžovo-zelené pro prohlížení 3D obrázků nebo sledování 3D filmů"
 
+msgid "Reduced rate"
+msgstr "První snížená sazba"
+
 msgid "Reducing the diameter of 35 mm to 32 mm"
 msgstr "Redukce průměru z 35 mm na 32 mm"
 
@@ -1515,6 +1518,9 @@ msgstr "Samsung UE75HU7500 (UHD)"
 
 msgid "Screen size"
 msgstr "Úhlopříčka"
+
+msgid "Second reduced rate"
+msgstr "Druhá snížená sazba"
 
 msgid "Second subsection %locale%"
 msgstr "Druhá podsekce %locale%"
@@ -1602,6 +1608,9 @@ msgstr "Kapesní reproduktor pro MP3 přehrávače, mobilní telefony, počíta�
 
 msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB, 4Ohm impedance, power supply via USB, 3.5 mm audio jack, dimensions 85x85x107mm, weight 550 g"
 msgstr "Kapesní reproduktor pro MP3 přehrávače, mobilní telefony, počítače, notebooky, tablety atd. Stačí vybalit, zapojit a spustit přehrávání. S tímto reproduktorem získáte 360° zvukový zážitek na cestách."
+
+msgid "Standard rate"
+msgstr "Standardní sazba"
 
 msgid "Store in Ostrava Přívoz"
 msgstr "Prodejna v Ostravě Přívoze"
@@ -1908,6 +1917,9 @@ msgstr "Uvítá Vás milý personál!"
 
 msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
 msgstr "ZN-8009 napařovací žehlička Ferratte nerez 2200 W modrá"
+
+msgid "Zero rate"
+msgstr "Nulová sazba"
 
 msgid "battery"
 msgstr "akumulátor"
