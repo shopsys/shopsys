@@ -63,8 +63,11 @@ dependencies:
     specifier: 13.2.0
     version: 13.2.0(@babel/core@7.13.10)(react-dom@18.2.0)(react@18.2.0)(sass@1.58.3)
   next-translate:
-    specifier: 1.5.0
-    version: 1.5.0(next@13.2.0)(react@18.2.0)
+    specifier: 2.0.0
+    version: 2.0.0(next@13.2.0)(react@18.2.0)
+  next-translate-plugin:
+    specifier: 2.0.0
+    version: 2.0.0(next-translate@2.0.0)
   next-urql:
     specifier: 5.0.2
     version: 5.0.2(react@18.2.0)(urql@4.0.4)
@@ -5244,8 +5247,19 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /next-translate@1.5.0(next@13.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-6amnuJWw22XbaM2DVhsYaOXelFLjTbMqTgqvB+h9VfE/H2aQ/edfT06ONQLQbsVV/I7Hn+93LTaV1/qOo6Kf9A==}
+  /next-translate-plugin@2.0.0(next-translate@2.0.0):
+    resolution: {integrity: sha512-lwpUihudN0cYXLa62pCVo3OW/pY2RUUdcHjs5nEf7e3T8fvCbNTzmSJ/4aKqSfXHjbmd66F4rpTpPnfKmiR0gw==}
+    engines: {node: '>=14.15.0'}
+    peerDependencies:
+      next-translate: '>= 2.0.0-canary.1'
+    dependencies:
+      next-translate: 2.0.0(next@13.2.0)(react@18.2.0)
+      typescript: 4.5.2
+    dev: false
+
+  /next-translate@2.0.0(next@13.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-6+FMHuCwFbDngx1ArOP+/L4pzdehyJXIXT+Iw3hNjnipJYUHiGYz0ojMhRpv/Qj9R9yV2AOK4iIIiYREFwB6PQ==}
+    engines: {node: '>=14.15.0'}
     peerDependencies:
       next: '>= 10.0.0'
       react: '>= 16.8.0'
@@ -6768,6 +6782,12 @@ packages:
   /typedarray@0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
     dev: true
+
+  /typescript@4.5.2:
+    resolution: {integrity: sha512-5BlMof9H1yGt0P8/WF+wPNw6GfctgGjXp5hkblpyT+8rkASSmkUKMXrxR0Xg8ThVCi/JnHQiKXeBaEwCeQwMFw==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: false
 
   /typescript@4.9.5:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
