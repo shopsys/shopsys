@@ -12,6 +12,7 @@ export const Logo: FC = () => (
                 src="/images/logo.svg"
                 width={163}
                 height={38}
+                alt="Shopsys logo"
                 data-testid={TEST_IDENTIFIER}
                 className="flex w-32 max-w-full lg:w-40"
                 alt="logo"
