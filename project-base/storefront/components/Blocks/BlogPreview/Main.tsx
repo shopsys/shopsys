@@ -36,15 +36,17 @@ export const Main: FC<MainProps> = ({ blogMainItems }) => {
                     data-testid={TEST_IDENTIFIER + index}
                 >
                     <div className="flex w-full max-w-xs">
-                        <ExtendedNextLink type="blogArticle" href={blogMainItem.link} passHref>
-                            <a className="relative mb-3 flex w-full">
-                                <Image
-                                    image={blogMainItem.mainImage}
-                                    type="list"
-                                    alt={blogMainItem.mainImage?.name || blogMainItem.name}
-                                    className="max-h-44 rounded"
-                                />
-                            </a>
+                        <ExtendedNextLink
+                            type="blogArticle"
+                            href={blogMainItem.link}
+                            className="relative mb-3 flex w-full"
+                        >
+                            <Image
+                                image={blogMainItem.mainImage}
+                                type="list"
+                                alt={blogMainItem.mainImage?.name || blogMainItem.name}
+                                className="max-h-44 rounded"
+                            />
                         </ExtendedNextLink>
                     </div>
                     <div className="flex-1">
@@ -55,10 +57,12 @@ export const Main: FC<MainProps> = ({ blogMainItems }) => {
                                 )}
                             </Fragment>
                         ))}
-                        <ExtendedNextLink type="blogArticle" href={blogMainItem.link} passHref>
-                            <a className="mb-2 block text-lg font-bold leading-5 text-white no-underline hover:text-white hover:no-underline">
-                                {blogMainItem.name}
-                            </a>
+                        <ExtendedNextLink
+                            type="blogArticle"
+                            href={blogMainItem.link}
+                            className="mb-2 block text-lg font-bold leading-5 text-white no-underline hover:text-white hover:no-underline"
+                        >
+                            {blogMainItem.name}
                         </ExtendedNextLink>
                         <div className="leading-5 text-white">{blogMainItem.perex}</div>
                     </div>

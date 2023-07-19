@@ -16,15 +16,13 @@ export const Side: FC<SideProps> = ({ blogSideItems }) => {
             {blogSideItems.map((blogSideItem, index) => (
                 <div className="mb-3 flex w-full flex-row" key={index} data-testid={TEST_IDENTIFIER + index}>
                     <div className="flex w-36">
-                        <ExtendedNextLink type="blogArticle" href={blogSideItem.link} passHref>
-                            <a className="relative flex w-full">
-                                <Image
-                                    image={blogSideItem.mainImage}
-                                    type="listAside"
-                                    alt={blogSideItem.mainImage?.name || blogSideItem.name}
-                                    className="max-h-20 rounded"
-                                />
-                            </a>
+                        <ExtendedNextLink type="blogArticle" href={blogSideItem.link} className="relative flex w-full">
+                            <Image
+                                image={blogSideItem.mainImage}
+                                type="listAside"
+                                alt={blogSideItem.mainImage?.name || blogSideItem.name}
+                                className="max-h-20 rounded"
+                            />
                         </ExtendedNextLink>
                     </div>
                     <div className="ml-5 flex-1">
@@ -35,10 +33,12 @@ export const Side: FC<SideProps> = ({ blogSideItems }) => {
                                 )}
                             </Fragment>
                         ))}
-                        <ExtendedNextLink type="blogArticle" href={blogSideItem.link} passHref>
-                            <a className="mb-2 block font-bold leading-5 text-creamWhite no-underline hover:text-creamWhite">
-                                {blogSideItem.name}
-                            </a>
+                        <ExtendedNextLink
+                            type="blogArticle"
+                            href={blogSideItem.link}
+                            className="mb-2 block font-bold leading-5 text-creamWhite no-underline hover:text-creamWhite"
+                        >
+                            {blogSideItem.name}
                         </ExtendedNextLink>
                     </div>
                 </div>

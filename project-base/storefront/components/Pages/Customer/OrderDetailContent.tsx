@@ -53,8 +53,8 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                                     <td>{t('Package number')}:</td>
                                     <td className="text-right" data-testid={TEST_IDENTIFIER + 'trackingUrl'}>
                                         {order.trackingUrl && (
-                                            <ExtendedNextLink href={order.trackingUrl} passHref type="static">
-                                                <a target="_blank">{order.trackingNumber}</a>
+                                            <ExtendedNextLink href={order.trackingUrl} type="static" target="_blank">
+                                                {order.trackingNumber}
                                             </ExtendedNextLink>
                                         )}
                                         {order.trackingUrl === null && order.trackingNumber}

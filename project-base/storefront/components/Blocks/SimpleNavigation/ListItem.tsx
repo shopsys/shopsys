@@ -15,11 +15,13 @@ export const ListItem: FC<ListItemProps> = ({ listedItem, imageType, linkType })
     const itemImage = 'mainImage' in listedItem ? listedItem.mainImage : null;
 
     return (
-        <ExtendedNextLink type={linkType} href={listedItem.slug} passHref>
-            <a
-                className="flex h-full w-full cursor-pointer flex-col items-center rounded-xl bg-greyVeryLight px-2 py-4 no-underline transition hover:bg-whitesmoke hover:no-underline lg:flex-row lg:px-3 lg:py-2"
-                data-testid={TEST_IDENTIFIER}
-            >
+        <ExtendedNextLink
+            type={linkType}
+            href={listedItem.slug}
+            className="flex h-full w-full cursor-pointer flex-col items-center rounded-xl bg-greyVeryLight px-2 py-4 no-underline transition hover:bg-whitesmoke hover:no-underline lg:flex-row lg:px-3 lg:py-2"
+            data-testid={TEST_IDENTIFIER}
+        >
+            <>
                 {itemImage && (
                     <div className="relative mb-1 h-12 w-16 flex-shrink-0 flex-grow-0 basis-auto lg:mb-0">
                         <Image
@@ -36,7 +38,7 @@ export const ListItem: FC<ListItemProps> = ({ listedItem, imageType, linkType })
                         <span className="ml-2 whitespace-nowrap text-sm text-greyLight">({listedItem.totalCount})</span>
                     )}
                 </div>
-            </a>
+            </>
         </ExtendedNextLink>
     );
 };

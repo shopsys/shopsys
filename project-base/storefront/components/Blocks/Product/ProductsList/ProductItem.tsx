@@ -55,12 +55,13 @@ export const ProductItem: FC<ProductItemProps> = ({
                     <Icon iconType="icon" icon="RemoveBold" className="mx-auto w-2 basis-2" />
                 </button>
             )}
-
-            <ExtendedNextLink type="product" href={product.slug} passHref>
-                <a
-                    className="relative flex h-full flex-col no-underline hover:no-underline"
-                    onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
-                >
+            <ExtendedNextLink
+                type="product"
+                href={product.slug}
+                className="relative flex h-full flex-col no-underline hover:no-underline"
+                onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
+            >
+                <>
                     <div className="relative flex h-[185px] w-full items-center justify-center px-3 pt-4 pb-3">
                         <Image
                             image={product.mainImage}
@@ -92,7 +93,7 @@ export const ProductItem: FC<ProductItemProps> = ({
                             />
                         </div>
                     </div>
-                </a>
+                </>
             </ExtendedNextLink>
             <div className="mb-2 flex justify-end gap-2">
                 <ProductCompareButton

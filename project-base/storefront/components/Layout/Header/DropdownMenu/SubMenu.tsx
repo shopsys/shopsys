@@ -23,37 +23,41 @@ export const SubMenu: FC = () => {
 
     return (
         <div className="mt-5 flex flex-col" data-testid={TEST_IDENTIFIER}>
-            <ExtendedNextLink href={storesUrl} passHref type="static">
-                <SubMenuItem dataTestId={TEST_IDENTIFIER + '-1'}>{t('Stores')}</SubMenuItem>
-            </ExtendedNextLink>
-
-            <ExtendedNextLink href={productsComparisonUrl} passHref type="static">
-                <SubMenuItem dataTestId={TEST_IDENTIFIER + '-3'}>
-                    {t('Comparison')}
-                    {!!comparison?.products.length && <span>&nbsp;({comparison.products.length})</span>}
-                </SubMenuItem>
-            </ExtendedNextLink>
-
-            <ExtendedNextLink href={wishlistUrl} passHref type="static">
-                <SubMenuItem dataTestId={TEST_IDENTIFIER + '-4'}>
-                    {t('Wishlist')}
-                    {!!wishlist?.products.length && <span>&nbsp;({wishlist.products.length})</span>}
-                </SubMenuItem>
-            </ExtendedNextLink>
+            <SubMenuItem href={storesUrl} dataTestId={TEST_IDENTIFIER + '-1'}>
+                {t('Stores')}
+            </SubMenuItem>
+            <SubMenuItem href={productsComparisonUrl} dataTestId={TEST_IDENTIFIER + '-3'}>
+                {t('Comparison')}
+                {!!comparison?.products.length && <span>&nbsp;({comparison.products.length})</span>}
+            </SubMenuItem>
+            <SubMenuItem href={wishlistUrl} dataTestId={TEST_IDENTIFIER + '-4'}>
+                {t('Wishlist')}
+                {!!wishlist?.products.length && <span>&nbsp;({wishlist.products.length})</span>}
+            </SubMenuItem>
 
             {isUserLoggedIn ? (
                 <SubMenuItem onClick={logout}>{t('Logout')}</SubMenuItem>
             ) : (
-                <ExtendedNextLink href={loginUrl} passHref type="static">
-                    <SubMenuItem dataTestId={TEST_IDENTIFIER + '-2'}>{t('Sign in')}</SubMenuItem>
-                </ExtendedNextLink>
+                <SubMenuItem href={loginUrl} dataTestId={TEST_IDENTIFIER + '-2'}>
+                    {t('Sign in')}
+                </SubMenuItem>
             )}
         </div>
     );
 };
 
-const SubMenuItem: FC<{ onClick?: () => void }> = ({ children, dataTestId, onClick }) => (
-    <a className="mb-5 px-8 text-sm text-dark no-underline" onClick={onClick} data-testid={dataTestId}>
-        {children}
-    </a>
-);
+const SubMenuItem: FC<{ onClick?: () => void; href?: string }> = ({ children, dataTestId, onClick, href }) => {
+    if (href) {
+        return (
+            <ExtendedNextLink href={href} passHref type="static" className="mb-5 px-8 text-sm text-dark no-underline">
+                <>{children}</>
+            </ExtendedNextLink>
+        );
+    }
+
+    return (
+        <a className="mb-5 px-8 text-sm text-dark no-underline" onClick={onClick} data-testid={dataTestId}>
+            {children}
+        </a>
+    );
+};

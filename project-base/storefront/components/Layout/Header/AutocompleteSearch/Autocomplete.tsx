@@ -17,6 +17,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { forwardRef, useCallback, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 import { GtmProductListNameType, GtmSectionType } from 'types/gtm/enums';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
@@ -113,15 +114,17 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                     key={product.slug}
                                                     data-testid={TEST_IDENTIFIER + '-products-' + index}
                                                 >
-                                                    <ExtendedNextLink href={product.slug} type="product" passHref>
-                                                        <a
-                                                            className="flex cursor-pointer items-center text-dark no-underline outline-none lg:flex-col lg:items-start"
-                                                            onClick={onProductDetailRedirectHandler(
-                                                                product,
-                                                                GtmProductListNameType.autocomplete_search_results,
-                                                                index,
-                                                            )}
-                                                        >
+                                                    <ExtendedNextLink
+                                                        href={product.slug}
+                                                        type="product"
+                                                        className="flex cursor-pointer items-center text-dark no-underline outline-none lg:flex-col lg:items-start"
+                                                        onClick={onProductDetailRedirectHandler(
+                                                            product,
+                                                            GtmProductListNameType.autocomplete_search_results,
+                                                            index,
+                                                        )}
+                                                    >
+                                                        <>
                                                             <div className="relative mr-2 h-16 w-20">
                                                                 <Image
                                                                     className="w-full"
@@ -135,7 +138,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                             <span className="font-bold text-primary">
                                                                 {formatPrice(product.price.priceWithVat)}
                                                             </span>
-                                                        </a>
+                                                        </>
                                                     </ExtendedNextLink>
                                                 </li>
                                             ),
@@ -153,19 +156,19 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                         (brand, index) =>
                                             index < AUTOCOMPLETE_BRAND_LIMIT && (
                                                 <li key={brand.slug} data-testid={TEST_IDENTIFIER + '-brands-' + index}>
-                                                    <ExtendedNextLink href={brand.slug} type="brand" passHref>
-                                                        <SearchResultLink
-                                                            onClick={() =>
-                                                                onGtmAutocompleteResultClickEventHandler(
-                                                                    autocompleteSearchQueryValue,
-                                                                    GtmSectionType.brand,
-                                                                    brand.name,
-                                                                )
-                                                            }
-                                                        >
-                                                            {brand.name}
-                                                        </SearchResultLink>
-                                                    </ExtendedNextLink>
+                                                    <SearchResultLink
+                                                        href={brand.slug}
+                                                        type="brand"
+                                                        onClick={() =>
+                                                            onGtmAutocompleteResultClickEventHandler(
+                                                                autocompleteSearchQueryValue,
+                                                                GtmSectionType.brand,
+                                                                brand.name,
+                                                            )
+                                                        }
+                                                    >
+                                                        {brand.name}
+                                                    </SearchResultLink>
                                                 </li>
                                             ),
                                     )}
@@ -185,19 +188,19 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                     key={category.slug}
                                                     data-testid={TEST_IDENTIFIER + '-categories-' + index}
                                                 >
-                                                    <ExtendedNextLink href={category.slug} type="category" passHref>
-                                                        <SearchResultLink
-                                                            onClick={() =>
-                                                                onGtmAutocompleteResultClickEventHandler(
-                                                                    autocompleteSearchQueryValue,
-                                                                    GtmSectionType.category,
-                                                                    category.name,
-                                                                )
-                                                            }
-                                                        >
-                                                            {category.name}
-                                                        </SearchResultLink>
-                                                    </ExtendedNextLink>
+                                                    <SearchResultLink
+                                                        href={category.slug}
+                                                        type="category"
+                                                        onClick={() =>
+                                                            onGtmAutocompleteResultClickEventHandler(
+                                                                autocompleteSearchQueryValue,
+                                                                GtmSectionType.category,
+                                                                category.name,
+                                                            )
+                                                        }
+                                                    >
+                                                        {category.name}
+                                                    </SearchResultLink>
                                                 </li>
                                             ),
                                     )}
@@ -217,27 +220,23 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                     key={article.slug}
                                                     data-testid={TEST_IDENTIFIER + '-articles-' + index}
                                                 >
-                                                    <ExtendedNextLink
+                                                    <SearchResultLink
                                                         href={article.slug}
                                                         type={
                                                             article.__typename === 'ArticleSite'
                                                                 ? 'article'
                                                                 : 'blogArticle'
                                                         }
-                                                        passHref
+                                                        onClick={() =>
+                                                            onGtmAutocompleteResultClickEventHandler(
+                                                                autocompleteSearchQueryValue,
+                                                                GtmSectionType.article,
+                                                                article.name,
+                                                            )
+                                                        }
                                                     >
-                                                        <SearchResultLink
-                                                            onClick={() =>
-                                                                onGtmAutocompleteResultClickEventHandler(
-                                                                    autocompleteSearchQueryValue,
-                                                                    GtmSectionType.article,
-                                                                    article.name,
-                                                                )
-                                                            }
-                                                        >
-                                                            {article.name}
-                                                        </SearchResultLink>
-                                                    </ExtendedNextLink>
+                                                        {article.name}
+                                                    </SearchResultLink>
                                                 </li>
                                             ),
                                     )}
@@ -284,11 +283,18 @@ const SearchResultGroup: FC = ({ children, dataTestId }) => (
     </ul>
 );
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const SearchResultLink: FC<{ onClick: () => void }> = forwardRef(({ children, onClick }, _) => (
-    <a className="flex w-full items-center py-3 text-sm font-bold text-dark no-underline" onClick={onClick}>
-        {children}
-    </a>
-));
+const SearchResultLink: FC<{ onClick: () => void; href: string; type: FriendlyPagesTypesKeys }> = forwardRef(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ({ children, onClick, href, type }, _) => (
+        <ExtendedNextLink
+            className="flex w-full items-center py-3 text-sm font-bold text-dark no-underline"
+            onClick={onClick}
+            href={href}
+            type={type}
+        >
+            <>{children}</>
+        </ExtendedNextLink>
+    ),
+);
 
 SearchResultLink.displayName = 'SearchResultLink';

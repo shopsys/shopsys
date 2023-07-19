@@ -23,8 +23,10 @@ export const ProductComparePopup: FC<ProductComparePopupProps> = ({ isVisible, o
             <div className="flex flex-col">
                 <p className="text-bigger font-semiBold mt-[15px] mb-5">{t('Product added to comparison.')}</p>
                 <Link isButton href={productsComparisonUrl}>
-                    <span>{t('Show products comparison')}</span>
-                    <Icon className="rotate-90" iconType="icon" icon="ArrowSecondary" />
+                    <>
+                        <span>{t('Show products comparison')}</span>
+                        <Icon className="rotate-90" iconType="icon" icon="ArrowSecondary" />
+                    </>
                 </Link>
             </div>
         </Popup>
