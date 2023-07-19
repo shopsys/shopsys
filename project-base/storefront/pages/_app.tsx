@@ -13,6 +13,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { createClient } from 'helpers/urql/createClient';
 import { Provider, ssrExchange } from 'urql';
 import { initDayjsLocale } from 'helpers/formaters/formatDate';
+import { logException } from 'helpers/errors/logException';
 
 type ErrorProps = {
     err?: any;
@@ -22,6 +23,9 @@ type AppProps = {
     pageProps: ServerSidePropsType;
 } & Omit<NextAppProps<ErrorProps>, 'pageProps'> &
     ErrorProps;
+
+process.on('unhandledRejection', logException);
+process.on('uncaughtException', logException);
 
 function MyApp({ Component, pageProps, err }: AppProps): ReactElement | null {
     const { defaultLocale, publicGraphqlEndpoint } = pageProps.domainConfig;

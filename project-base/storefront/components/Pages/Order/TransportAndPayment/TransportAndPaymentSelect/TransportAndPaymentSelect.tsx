@@ -55,7 +55,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState<ListedStoreFragmentApi | null>(
         lastOrderPickupPlace,
     );
-    const { transport, pickupPlace: selectedPickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
+    const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
     const [getGoPaySwiftsResult] = useGoPaySwiftsQueryApi({ variables: { currencyCode } });
     const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
     const clearPacketeryPickupPoint = usePersistStore((store) => store.clearPacketeryPickupPoint);
@@ -64,7 +64,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         packeteryPoint: PacketeryExtendedPoint | null,
         packeteryTransport: TransportWithAvailablePaymentsAndStoresFragmentApi,
     ) => {
-        if (packeteryPoint) {
+        if (packeteryPoint !== null) {
             const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
             setPacketeryPickupPoint(mappedPacketeryPoint);
             changeTransportInCart(packeteryTransport.uuid, mappedPacketeryPoint);
@@ -72,7 +72,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     };
 
     const openPacketeryPopup = (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
-        if (!selectedPickupPlace) {
+        if (!pickupPlace) {
             const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
 
             if (!packeteryApiKey?.length) {
@@ -136,8 +136,9 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         }
     };
 
-    const handleGoPaySwiftChange = async (newGoPaySwiftValue: string | null) =>
+    const handleGoPaySwiftChange = async (newGoPaySwiftValue: string | null) => {
         await changePaymentInCart(payment?.uuid ?? null, newGoPaySwiftValue);
+    };
 
     const loadPresetsFromLastOrder = async () => {
         if (!transport) {
@@ -178,10 +179,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
     const getPickupPlaceDetail = (transportItem: TransportWithAvailablePaymentsAndStoresFragmentApi) =>
         transport?.uuid === transportItem.uuid &&
-        transportItem.stores?.edges?.some(
-            (storeEdge) => storeEdge?.node?.identifier === selectedPickupPlace?.identifier,
-        )
-            ? selectedPickupPlace
+        transportItem.stores?.edges?.some((storeEdge) => storeEdge?.node?.identifier === pickupPlace?.identifier)
+            ? pickupPlace
             : null;
 
     const renderTransportListItem = (
@@ -266,8 +265,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         />
                     )}
                 </div>
-
-                {!!transport && !preSelectedTransport && (
+                {transport !== null && preSelectedTransport === null && (
                     <div className="relative mt-12" data-testid={TEST_IDENTIFIER + 'payment'}>
                         {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" />}
 
@@ -295,8 +293,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 ))}
                             </>
                         )}
-
-                        {!!payment && (
+                        {payment !== null && (
                             <ResetButton
                                 onClick={resetPaymentAndGoPayBankSwift}
                                 dataTestId={TEST_IDENTIFIER + 'reset-payment'}
