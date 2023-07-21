@@ -5771,6 +5771,15 @@ Indicator whether the parameter should be collapsed based on the current categor
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isSelectable</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Can be used in filter
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>maximalValue</strong></td>
 <td valign="top"><a href="#float">Float</a>!</td>
 <td>

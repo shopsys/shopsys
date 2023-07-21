@@ -13,3 +13,6 @@ ParameterSliderFilterOption:
             selectedValue:
                 type: "Float"
                 description: "The pre-selected value (used for \"ready category seo mixes\")"
+            isSelectable:
+                type: "Boolean!"
+                description: "Can be used in filter"

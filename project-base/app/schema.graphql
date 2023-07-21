@@ -1298,6 +1298,8 @@ interface ParameterFilterOptionInterface {
 type ParameterSliderFilterOption implements ParameterFilterOptionInterface {
   """Indicator whether the parameter should be collapsed based on the current category setting"""
   isCollapsed: Boolean!
+  """Can be used in filter"""
+  isSelectable: Boolean!
   """The parameter maximal value"""
   maximalValue: Float!
   """The parameter minimal value"""

@@ -1645,6 +1645,8 @@ export type ParameterSliderFilterOptionApi = ParameterFilterOptionInterfaceApi &
   __typename?: 'ParameterSliderFilterOption';
   /** Indicator whether the parameter should be collapsed based on the current category setting */
   isCollapsed: Scalars['Boolean'];
+  /** Can be used in filter */
+  isSelectable: Scalars['Boolean'];
   /** The parameter maximal value */
   maximalValue: Scalars['Float'];
   /** The parameter minimal value */

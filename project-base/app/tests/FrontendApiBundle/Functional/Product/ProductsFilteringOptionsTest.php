@@ -942,24 +942,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
         $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
 
-        $query = 'query {
-          category(urlSlug: "/personal-computers-accessories") {
-            products {
-              productFilterOptions {
-                parameters {
-                  uuid
-                  ... on ParameterSliderFilterOption {
-                      minimalValue
-                      maximalValue
-                  }
-                }
-              }
-            }
-          }
-        }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderFilterInCategory.graphql', [
+            'urlSlug' => 'personal-computers-accessories',
+        ]);
 
-        $result = $this->getResponseDataForGraphQlType($this->getResponseContentForQuery($query), 'category');
+        $result = $this->getResponseDataForGraphQlType($response, 'category');
         $parameters = $result['products']['productFilterOptions']['parameters'];
 
         foreach ($parameters as $parameterArray) {
@@ -968,5 +955,42 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 $this->assertSame(5, $parameterArray['maximalValue']);
             }
         }
+    }
+
+    /**
+     * @dataProvider isSliderSelectable
+     * @param bool $isSliderSelectable
+     * @param array $filter
+     */
+    public function testIsSliderSelectable(bool $isSliderSelectable, array $filter): void
+    {
+        /** @var \App\Model\Product\Parameter\Parameter $parameterSliderWarranty */
+        $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
+        $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderFilterInCategory.graphql', [
+            'urlSlug' => 'personal-computers-accessories',
+            'filter' => $filter,
+        ]);
+
+        $result = $this->getResponseDataForGraphQlType($response, 'category');
+        $parameters = $result['products']['productFilterOptions']['parameters'];
+
+        foreach ($parameters as $parameterArray) {
+            if ($parameterArray['uuid'] === $parameterSliderWarrantyUuid) {
+                $this->assertSame(1, $parameterArray['minimalValue']);
+                $this->assertSame(5, $parameterArray['maximalValue']);
+            }
+        }
+    }
+
+    /**
+     * @return iterable
+     */
+    public function isSliderSelectable(): iterable
+    {
+        yield [true, 'filter' => []];
+
+        yield [false, 'filter' => ['brands' => ['738ead90-3108-433d-ad6e-1ea23f68a13d']]];
     }
 }

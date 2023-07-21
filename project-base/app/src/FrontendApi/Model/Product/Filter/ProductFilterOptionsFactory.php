@@ -72,6 +72,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $parameterValueFilterOptions
      * @param bool $collapsed
      * @param float|null $selectedValue
+     * @param bool|null $isSliderAllowed
      * @return \App\FrontendApi\Model\Product\Filter\ParameterFilterOption
      */
     protected function createParameterFilterOption(
@@ -79,8 +80,9 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         array $parameterValueFilterOptions,
         bool $collapsed = false,
         ?float $selectedValue = null,
+        ?bool $isSliderAllowed = null,
     ): ParameterFilterOption {
-        return new ParameterFilterOption($parameter, $parameterValueFilterOptions, $collapsed, $selectedValue);
+        return new ParameterFilterOption($parameter, $parameterValueFilterOptions, $collapsed, $selectedValue, $isSliderAllowed);
     }
 
     /**
@@ -266,6 +268,8 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
 
             $parameterValueFilterOptions = [];
 
+            $isSliderSelectable = false;
+
             foreach ($parameterFilterChoice->getValues() as $parameterValue) {
                 /** @var \App\Model\Product\Parameter\ParameterValue $parameterValue */
                 $parameterValueCount = $this->getParameterValueCount(
@@ -274,6 +278,11 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
                     $productFilterData,
                     $productFilterCountData,
                 );
+
+                if ($parameterValueCount > 0 && $parameter->isSlider()) {
+                    $isSliderSelectable = true;
+                }
+
                 $parameterValueFilterOptions[] = $this->createParameterValueFilterOption(
                     $parameterValue,
                     $parameterValueCount,
@@ -287,6 +296,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
                 $parameterValueFilterOptions,
                 in_array($parameter, $collapsedParameters, true),
                 $this->getParameterSelectedValue($readyCategorySeoMix, $parameterFilterChoice),
+                $isSliderSelectable,
             );
         }
     }
