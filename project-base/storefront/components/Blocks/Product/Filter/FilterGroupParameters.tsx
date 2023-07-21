@@ -150,6 +150,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 parameter.maximalValue === value ? undefined : value,
                             )
                         }
+                        isDisabled={!parameter.isSelectable}
                     />
                 )}
             </FilterGroupContent>

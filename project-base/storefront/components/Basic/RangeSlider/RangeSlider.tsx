@@ -26,6 +26,7 @@ type RangeSliderProps = {
     maxValue: number;
     setMinValueCallback: (value: number) => void;
     setMaxValueCallback: (value: number) => void;
+    isDisabled?: boolean;
 };
 
 const DELIMITER_REGEXP = /[,.]/;
@@ -48,6 +49,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     maxValue,
     setMinValueCallback,
     setMaxValueCallback,
+    isDisabled,
 }) => {
     const t = useTypedTranslationFunction();
     const step = getStep(min, max);
@@ -184,6 +186,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 value={minValueThumb}
                 onChange={onChangeMinHandler}
                 data-testid={TEST_IDENTIFIER + '-left-thumb'}
+                disabled={isDisabled}
             />
             <RangeSliderThumb
                 isActive={maxValueThumb !== max}
@@ -194,10 +197,14 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 value={maxValueThumb}
                 onChange={onChangeMaxHandler}
                 data-testid={TEST_IDENTIFIER + '-right-thumb'}
+                disabled={isDisabled}
             />
             <div className="relative w-full">
                 <div className="absolute z-above h-1 w-full rounded bg-greyLighter" />
-                <div className="absolute z-[2] h-1 rounded bg-primary" ref={range} />
+                <div
+                    className={twJoin('absolute z-[2] h-1 rounded', isDisabled ? 'bg-greyLight' : 'bg-primary')}
+                    ref={range}
+                />
                 <div
                     className="absolute -left-2 mt-5 w-20 text-xs text-black"
                     data-testid={TEST_IDENTIFIER + '-left-value'}
@@ -211,6 +218,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                         onChange={onChangeMinInputHandler}
                         onBlur={onBlurMinHandler}
                         onKeyPress={onKeyPressHandler}
+                        disabled={isDisabled}
                     />
                 </div>
                 <div
@@ -226,6 +234,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                         onChange={onChangeMaxInputHandler}
                         onBlur={onBlurMaxHandler}
                         onKeyPress={onKeyPressHandler}
+                        disabled={isDisabled}
                     />
                 </div>
             </div>
@@ -237,7 +246,7 @@ type RangeSliderThumbProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
     isActive: boolean;
 };
 
-const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ dataTestId, isActive, ...props }) => {
+const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ dataTestId, isActive, disabled, ...props }) => {
     const webkitTwClass =
         '[&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-[3] [&::-webkit-slider-thumb]:-my-2 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:[-webkit-tap-highlight-color:transparent] [&::-webkit-slider-runnable-track]:pointer-events-none';
     const mozTwClass =
@@ -255,7 +264,10 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ dataTestId, isActive, ...
                 isActive
                     ? '[&::-webkit-slider-thumb]:bg-orange [&::-moz-range-thumb]:bg-orange [&::-ms-thumb]:bg-orange'
                     : '[&::-webkit-slider-thumb]:bg-greyLight [&::-moz-range-thumb]:bg-greyLight [&::-ms-thumb]:bg-greyLight',
+                disabled &&
+                    '[&::-webkit-slider-thumb]:cursor-not-allowed [&::-moz-range-thumb]:cursor-not-allowed [&::-ms-thumb]:cursor-not-allowed',
             )}
+            disabled={disabled}
             type="range"
             data-testid={dataTestId}
             {...props}
