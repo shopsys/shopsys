@@ -8,7 +8,7 @@ import {
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
 export const useComparison = () => {
@@ -20,17 +20,11 @@ export const useComparison = () => {
     const comparisonUuid = usePersistStore((store) => store.comparisonUuid);
     const updateUserState = usePersistStore((store) => store.updateUserState);
     const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
-    const [pause, setPause] = useState(true);
 
     const [{ data: comparisonData, fetching }] = useComparisonQueryApi({
         variables: { comparisonUuid },
-        requestPolicy: 'network-only',
-        pause,
+        pause: !comparisonUuid,
     });
-
-    useEffect(() => {
-        setPause(false);
-    }, []);
 
     const isProductInComparison = (productUuid: string) =>
         !!comparisonData?.comparison?.products.find((product) => product.uuid === productUuid);

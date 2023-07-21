@@ -28,6 +28,7 @@ export const useWishlist = () => {
     const [{ data, fetching }] = useQueryError(
         useWishlistQueryApi({
             variables: { wishlistUuid },
+            pause: !wishlistUuid,
         }),
     );
 
