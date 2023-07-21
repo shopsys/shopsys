@@ -68,9 +68,10 @@ export const ProductsList: FC<ProductsListProps> = ({
                         />
                     )}
 
-                    {isPopupCompareOpen && (
-                        <ProductComparePopup isVisible onCloseCallback={() => setIsPopupCompareOpen(false)} />
-                    )}
+                    <ProductComparePopup
+                        isVisible={isPopupCompareOpen}
+                        onCloseCallback={() => setIsPopupCompareOpen(false)}
+                    />
                 </>
             ) : (
                 createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => <ProductItemSkeleton key={index} />)

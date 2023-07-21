@@ -7,6 +7,9 @@ import { useKeenSlider } from 'keen-slider/react';
 import { useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 import { twMergeCustom } from 'utils/twMerge';
+import { ProductComparePopup } from 'components/Blocks/Product/ButtonsAction/ProductComparePopup';
+import { useComparison } from 'hooks/comparison/useComparison';
+import { useWishlist } from 'hooks/useWishlist';
 
 type ProductsSliderProps = {
     products: ListedProductFragmentApi[];
@@ -56,6 +59,10 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     });
     useGtmSliderProductListViewEvent(products, gtmProductListName);
 
+    const { isPopupCompareOpen, handleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
+        useComparison();
+    const { handleProductInWishlist, isProductInWishlist } = useWishlist();
+
     const onMoveToNextSlideHandler = () => {
         slider.moveToSlide(currentSlide + 1);
     };
@@ -74,6 +81,10 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                         gtmProductListName={gtmProductListName}
                         gtmMessageOrigin={gtmMessageOrigin}
                         listIndex={index}
+                        isProductInComparison={isProductInComparison(productItemData.uuid)}
+                        onProductInComparisonClick={() => handleProductInComparison(productItemData.uuid)}
+                        handleProductInWishlist={() => handleProductInWishlist(productItemData.uuid)}
+                        isInWishlist={isProductInWishlist(productItemData.uuid)}
                     />
                 ))}
             </div>
@@ -84,6 +95,8 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     <SliderButton type="next" onClick={onMoveToNextSlideHandler} />
                 </div>
             ) : null}
+
+            <ProductComparePopup isVisible={isPopupCompareOpen} onCloseCallback={() => setIsPopupCompareOpen(false)} />
         </div>
     );
 };
