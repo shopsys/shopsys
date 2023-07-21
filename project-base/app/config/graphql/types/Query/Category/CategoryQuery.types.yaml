@@ -23,4 +23,8 @@ CategoryQuery:
                         type: "Uuid"
                     urlSlug:
                         type: "String"
+                    orderingMode:
+                        type: "ProductOrderingModeEnum"
+                    filter:
+                        type: "ProductFilter"
                 description: "Returns category filtered using UUID or URL slug"

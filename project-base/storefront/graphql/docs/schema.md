@@ -488,6 +488,16 @@ Returns category filtered using UUID or URL slug
 </td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#productfilter">ProductFilter</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderingMode</td>
+<td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">urlSlug</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>

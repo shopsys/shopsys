@@ -2254,6 +2254,8 @@ export type QueryCategoriesSearchArgsApi = {
 
 
 export type QueryCategoryArgsApi = {
+  filter: Maybe<ProductFilterApi>;
+  orderingMode: Maybe<ProductOrderingModeEnumApi>;
   urlSlug: Maybe<Scalars['String']>;
   uuid: Maybe<Scalars['Uuid']>;
 };
@@ -5389,7 +5391,7 @@ export function useMinimalCartQueryApi(options: Omit<Urql.UseQueryArgs<MinimalCa
 };
 export const CategoryDetailQueryDocumentApi = gql`
     query CategoryDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
-  category(urlSlug: $urlSlug) {
+  category(urlSlug: $urlSlug, orderingMode: $orderingMode, filter: $filter) {
     ...CategoryDetailFragment
   }
 }

@@ -1694,7 +1694,7 @@ type Query {
   """Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"""
   categoriesSearch(after: String, before: String, first: Int, last: Int, search: String!): CategoryConnection!
   """Returns category filtered using UUID or URL slug"""
-  category(urlSlug: String, uuid: Uuid): Category
+  category(filter: ProductFilter, orderingMode: ProductOrderingModeEnum, urlSlug: String, uuid: Uuid): Category
   CompanyCustomerUser: CompanyCustomerUser
   """Get comparison by UUID or comparison of logged customer user."""
   comparison(uuid: Uuid): Comparison
