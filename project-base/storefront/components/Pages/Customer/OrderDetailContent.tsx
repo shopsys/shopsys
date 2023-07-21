@@ -1,13 +1,13 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { TableGrid, TableGridColumn } from 'components/Basic/TableGrid/TableGrid';
-import { TableGridColumns } from 'components/Basic/TableGrid/TableGridElements';
+import { Row, Cell, CellHead, Table, CellMinor } from 'components/Basic/Table/Table';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi, OrderDetailFragmentApi } from 'graphql/generated';
 import { formatDateAndTime } from 'helpers/formaters/formatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { twMergeCustom } from 'utils/twMerge';
 
 type OrderDetailContentProps = {
     order: OrderDetailFragmentApi;
@@ -23,202 +23,264 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
     return (
         <>
             <Webline>
+                <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
+
                 <div className="text-center">
                     <Heading type="h1">
                         {t('Order number')} {order.number}
                     </Heading>
                 </div>
-                <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
-            <Webline>
-                <TableGrid>
-                    <TableGridColumns>
-                        <TableGridColumn>
-                            <tr>
-                                <th colSpan={2}>{t('Basic information')}</th>
-                            </tr>
-                            <tr>
-                                <td>{t('Creation date')}:</td>
-                                <td className="text-right" data-testid={TEST_IDENTIFIER + 'creationDate'}>
-                                    {formatDateAndTime(order.creationDate)}
-                                </td>
-                            </tr>
-                        </TableGridColumn>
-                        {order.trackingNumber && (
-                            <TableGridColumn>
-                                <tr>
-                                    <th colSpan={2}>{t('Tracking package')}</th>
-                                </tr>
-                                <tr>
-                                    <td>{t('Package number')}:</td>
-                                    <td className="text-right" data-testid={TEST_IDENTIFIER + 'trackingUrl'}>
-                                        {order.trackingUrl && (
-                                            <ExtendedNextLink href={order.trackingUrl} type="static" target="_blank">
-                                                {order.trackingNumber}
-                                            </ExtendedNextLink>
-                                        )}
-                                        {order.trackingUrl === null && order.trackingNumber}
-                                    </td>
-                                </tr>
-                            </TableGridColumn>
-                        )}
-                        {order.note && (
-                            <TableGridColumn>
-                                <tr>
-                                    <th colSpan={2}>{t('Your note')}</th>
-                                </tr>
-                                <tr>
-                                    <td data-testid={TEST_IDENTIFIER + 'note'}>{order.note}</td>
-                                </tr>
-                            </TableGridColumn>
-                        )}
-                    </TableGridColumns>
-                </TableGrid>
-                <TableGrid>
-                    <TableGridColumns>
-                        <TableGridColumn>
-                            <tr>
-                                <th colSpan={2}>{t('Billing address')}</th>
-                            </tr>
-                            {!!order.companyName && (
-                                <>
-                                    <tr>
-                                        <td>{t('Company name')}:</td>
-                                        <td data-testid={TEST_IDENTIFIER + 'companyName'}>{order.companyName}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{t('Company number')}:</td>
-                                        <td data-testid={TEST_IDENTIFIER + 'companyNumber'}>{order.companyNumber}</td>
-                                    </tr>
-                                    {!!order.companyTaxNumber && (
-                                        <tr>
-                                            <td>{t('Tax number')}:</td>
-                                            <td data-testid={TEST_IDENTIFIER + 'companyTaxNumber'}>
-                                                {order.companyTaxNumber}
-                                            </td>
-                                        </tr>
-                                    )}
-                                </>
-                            )}
-                            {!!order.firstName && (
-                                <>
-                                    <tr>
-                                        <td>{t('First name')}:</td>
-                                        <td data-testid={TEST_IDENTIFIER + 'firstName'}>{order.firstName}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{t('Last name')}:</td>
-                                        <td data-testid={TEST_IDENTIFIER + 'lastName'}>{order.lastName}</td>
-                                    </tr>
-                                </>
-                            )}
-                            <tr>
-                                <td>{t('Email')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'email'}>{order.email}</td>
-                            </tr>
-                            <tr>
-                                <td>{t('Phone')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'telephone'}>{order.telephone}</td>
-                            </tr>
-                            <tr>
-                                <td>{t('Street and house no.')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'street'}>{order.street}</td>
-                            </tr>
-                            <tr>
-                                <td>{t('City')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'city'}>{order.city}</td>
-                            </tr>
-                            <tr>
-                                <td>{t('Postcode')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'postcode'}>{order.postcode}</td>
-                            </tr>
-                            <tr>
-                                <td>{t('Country')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'country'}>{order.country.name}</td>
-                            </tr>
-                        </TableGridColumn>
-                        <TableGridColumn>
-                            <tr>
-                                <th colSpan={2}>{t('Delivery address')}</th>
-                            </tr>
-                            <tr>
-                                <td>{t('First name')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'deliveryFirstName'}>{order.deliveryFirstName}</td>
-                            </tr>
-                            <tr>
-                                <td>{t('Last name')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'deliveryLastName'}>{order.deliveryLastName}</td>
-                            </tr>
-                            {!!order.deliveryCompanyName && (
-                                <tr>
-                                    <td>{t('Company name')}:</td>
-                                    <td data-testid={TEST_IDENTIFIER + 'deliveryCompanyName'}>
-                                        {order.deliveryCompanyName}
-                                    </td>
-                                </tr>
-                            )}
-                            <tr>
-                                <td>{t('Phone')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'deliveryTelephone'}>{order.deliveryTelephone}</td>
-                            </tr>
-                            <tr>
-                                <td>{t('Street and house no.')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'deliveryStreet'}>{order.deliveryStreet}</td>
-                            </tr>
-                            <tr>
-                                <td>{t('City')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'deliveryCity'}>{order.deliveryCity}</td>
-                            </tr>
-                            <tr>
-                                <td>{t('Postcode')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'deliveryPostcode'}>{order.deliveryPostcode}</td>
-                            </tr>
-                            <tr>
-                                <td>{t('Country')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'deliveryCountry'}>{order.deliveryCountry?.name}</td>
-                            </tr>
-                        </TableGridColumn>
-                    </TableGridColumns>
-                </TableGrid>
-                {order.items.length > 0 && (
-                    <>
-                        <div className="text-center">
-                            <Heading type="h2">{t('Your purchase')}</Heading>
-                        </div>
-                        <TableGrid>
-                            <tr>
-                                <th>{t('Product name')}</th>
-                                <th className="text-right">{t('Price per piece incl. VAT')}</th>
-                                <th className="text-right">{t('Amount')}</th>
-                                <th className="text-right">{t('VAT')}</th>
-                                <th className="text-right">{t('Total price excl. VAT')}</th>
-                                <th className="text-right">{t('Total price incl. VAT')}</th>
-                            </tr>
 
+            <Webline>
+                <Table>
+                    <Row className="flex flex-col md:flex-row">
+                        <Cell className="flex-1">
+                            <ColumnHeader>{t('Basic information')}</ColumnHeader>
+                            <Table className="border-0 p-0">
+                                <Row>
+                                    <CellMinor>{t('Creation date')}</CellMinor>
+                                    <Cell align="right" dataTestId={TEST_IDENTIFIER + 'creationDate'}>
+                                        {formatDateAndTime(order.creationDate)}
+                                    </Cell>
+                                </Row>
+                            </Table>
+                        </Cell>
+
+                        {!!order.trackingNumber && (
+                            <Cell className="flex-1">
+                                <ColumnHeader>{t('Tracking package')}</ColumnHeader>
+                                <Table className="border-0 p-0">
+                                    <Row>
+                                        <CellMinor>{t('Package number')}</CellMinor>
+                                        <Cell align="right" dataTestId={TEST_IDENTIFIER + 'trackingUrl'}>
+                                            {order.trackingUrl ? (
+                                                <ExtendedNextLink
+                                                    href={order.trackingUrl}
+                                                    type="static"
+                                                    target="_blank"
+                                                >
+                                                    {order.trackingNumber}
+                                                </ExtendedNextLink>
+                                            ) : (
+                                                order.trackingNumber
+                                            )}
+                                        </Cell>
+                                    </Row>
+                                </Table>
+                            </Cell>
+                        )}
+
+                        {!!order.note && (
+                            <Cell className="flex-1">
+                                <ColumnHeader>{t('Your note')}</ColumnHeader>
+                                <Table>
+                                    <Row>
+                                        <Cell dataTestId={TEST_IDENTIFIER + 'note'}>{order.note}</Cell>
+                                    </Row>
+                                </Table>
+                            </Cell>
+                        )}
+                    </Row>
+                </Table>
+
+                <Table className="mt-10">
+                    <Row className="flex flex-col md:flex-row">
+                        <Cell className="flex-1">
+                            <ColumnHeader>{t('Billing address')}</ColumnHeader>
+
+                            <Table className="border-0 p-0">
+                                {!!order.companyName && (
+                                    <>
+                                        <Row>
+                                            <CellMinor>{t('Company name')}</CellMinor>
+                                            <Cell dataTestId={TEST_IDENTIFIER + 'companyName'}>
+                                                {order.companyName}
+                                            </Cell>
+                                        </Row>
+
+                                        <Row>
+                                            <CellMinor>{t('Company number')}</CellMinor>
+                                            <Cell dataTestId={TEST_IDENTIFIER + 'companyNumber'}>
+                                                {order.companyNumber}
+                                            </Cell>
+                                        </Row>
+
+                                        {!!order.companyTaxNumber && (
+                                            <Row>
+                                                <CellMinor>{t('Tax number')}</CellMinor>
+                                                <Cell dataTestId={TEST_IDENTIFIER + 'companyTaxNumber'}>
+                                                    {order.companyTaxNumber}
+                                                </Cell>
+                                            </Row>
+                                        )}
+                                    </>
+                                )}
+
+                                {!!order.firstName && (
+                                    <>
+                                        <Row>
+                                            <CellMinor>{t('First name')}</CellMinor>
+                                            <Cell dataTestId={TEST_IDENTIFIER + 'firstName'}>{order.firstName}</Cell>
+                                        </Row>
+
+                                        <Row>
+                                            <CellMinor>{t('Last name')}</CellMinor>
+                                            <Cell dataTestId={TEST_IDENTIFIER + 'lastName'}>{order.lastName}</Cell>
+                                        </Row>
+                                    </>
+                                )}
+
+                                <Row>
+                                    <CellMinor>{t('Email')}</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'email'}>{order.email}</Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('Phone')}</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'telephone'}>{order.telephone}</Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('Street and house no.')}</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'street'}>{order.street}</Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('City')}</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'city'}>{order.city}</Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('Postcode')}</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'postcode'}>{order.postcode}</Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('Country')}</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'country'}>{order.country.name}</Cell>
+                                </Row>
+                            </Table>
+                        </Cell>
+
+                        <Cell className="flex-1">
+                            <ColumnHeader>{t('Delivery address')}</ColumnHeader>
+
+                            <Table className="border-0 p-0">
+                                <Row>
+                                    <CellMinor>{t('First name')}</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryFirstName'}>
+                                        {order.deliveryFirstName}
+                                    </Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('First name')}</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryFirstName'}>
+                                        {order.deliveryFirstName}
+                                    </Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('Last name')}</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryLastName'}>
+                                        {order.deliveryLastName}
+                                    </Cell>
+                                </Row>
+
+                                {!!order.deliveryCompanyName && (
+                                    <Row>
+                                        <CellMinor>{t('Company name')}</CellMinor>
+                                        <Cell dataTestId={TEST_IDENTIFIER + 'deliveryCompanyName'}>
+                                            {order.deliveryCompanyName}
+                                        </Cell>
+                                    </Row>
+                                )}
+
+                                <Row>
+                                    <CellMinor>{t('Phone')}:</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryTelephone'}>
+                                        {order.deliveryTelephone}
+                                    </Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('Street and house no.')}:</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryStreet'}>{order.deliveryStreet}</Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('City')}:</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryCity'}>{order.deliveryCity}</Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('Postcode')}:</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryPostcode'}>
+                                        {order.deliveryPostcode}
+                                    </Cell>
+                                </Row>
+
+                                <Row>
+                                    <CellMinor>{t('Country')}:</CellMinor>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryCountry'}>
+                                        {order.deliveryCountry?.name}
+                                    </Cell>
+                                </Row>
+                            </Table>
+                        </Cell>
+                    </Row>
+                </Table>
+
+                {!!order.items.length && (
+                    <div className="mt-10">
+                        <Heading type="h2" className="text-center">
+                            {t('Your purchase')}
+                        </Heading>
+
+                        <Table
+                            className="overflow-x-auto"
+                            head={
+                                <Row>
+                                    <CellHead isWithoutWrap>{t('Product name')}</CellHead>
+                                    <CellHead className="text-right">{t('Price per piece incl. VAT')}</CellHead>
+                                    <CellHead className="text-right">{t('Amount')}</CellHead>
+                                    <CellHead className="text-right">{t('VAT')}</CellHead>
+                                    <CellHead className="text-right">{t('Total price excl. VAT')}</CellHead>
+                                    <CellHead className="text-right">{t('Total price incl. VAT')}</CellHead>
+                                </Row>
+                            }
+                        >
                             {order.items.map((item, index) => (
-                                <tr key={index} data-testid={TEST_IDENTIFIER + 'item-' + index}>
-                                    <td data-testid={TEST_IDENTIFIER + 'item-name'}>{item.name}</td>
-                                    <td className="text-right" data-testid={TEST_IDENTIFIER + 'item-unitprice'}>
+                                <Row key={index} dataTestId={TEST_IDENTIFIER + 'item-' + index}>
+                                    <Cell dataTestId={TEST_IDENTIFIER + 'item-name'}>{item.name}</Cell>
+                                    <Cell className="text-right" dataTestId={TEST_IDENTIFIER + 'item-unitprice'}>
                                         {formatPrice(item.unitPrice.priceWithVat)}
-                                    </td>
-                                    <td className="text-right" data-testid={TEST_IDENTIFIER + 'item-quantity'}>
+                                    </Cell>
+                                    <Cell className="text-right" dataTestId={TEST_IDENTIFIER + 'item-quantity'}>
                                         {item.quantity} {item.unit}
-                                    </td>
-                                    <td className="nowrap text-right" data-testid={TEST_IDENTIFIER + 'item-vat'}>
+                                    </Cell>
+                                    <Cell className="nowrap text-right" dataTestId={TEST_IDENTIFIER + 'item-vat'}>
                                         {parseFloat(item.vatRate)} %
-                                    </td>
-                                    <td className="text-right" data-testid={TEST_IDENTIFIER + 'item-price'}>
+                                    </Cell>
+                                    <Cell className="text-right" dataTestId={TEST_IDENTIFIER + 'item-price'}>
                                         {formatPrice(item.totalPrice.priceWithoutVat)}
-                                    </td>
-                                    <td className="text-right" data-testid={TEST_IDENTIFIER + 'item-pricevat'}>
+                                    </Cell>
+                                    <Cell className="text-right" dataTestId={TEST_IDENTIFIER + 'item-pricevat'}>
                                         {formatPrice(item.totalPrice.priceWithVat)}
-                                    </td>
-                                </tr>
+                                    </Cell>
+                                </Row>
                             ))}
-                        </TableGrid>
-                    </>
+                        </Table>
+                    </div>
                 )}
             </Webline>
         </>
     );
 };
+
+const ColumnHeader: FC = ({ children, className }) => (
+    <div className={twMergeCustom('border-b-2 border-greyLighter p-4 pl-0 text-lg text-dark', className)}>
+        {children}
+    </div>
+);

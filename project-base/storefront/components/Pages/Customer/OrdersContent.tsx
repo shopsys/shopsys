@@ -1,7 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
-import { TableGrid } from 'components/Basic/TableGrid/TableGrid';
+import { Loader } from 'components/Basic/Loader/Loader';
+import { Cell, CellHead, Row, Table } from 'components/Basic/Table/Table';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -14,6 +15,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRef } from 'react';
 
 type OrdersContentProps = {
+    isLoading: boolean;
     orders: ListedOrderFragmentApi[] | undefined;
     totalCount: number | undefined;
     breadcrumbs: BreadcrumbFragmentApi[];
@@ -21,7 +23,7 @@ type OrdersContentProps = {
 
 const TEST_IDENTIFIER = 'pages-customer-orders-';
 
-export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, totalCount }) => {
+export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, breadcrumbs, orders, totalCount }) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const { url } = useDomainConfig();
@@ -31,33 +33,49 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
     return (
         <>
             <Webline>
+                <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
                 <div className="text-center">
                     <Heading type="h1">{t('My orders')}</Heading>
                 </div>
-                <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
             <div ref={paginationScrollTargetRef} className="scroll-mt-5">
                 <Webline>
-                    <TableGrid>
-                        {orders !== undefined && orders.length !== 0 && (
-                            <thead>
-                                <tr>
-                                    <th>{t('Order number')}</th>
-                                    <th className="text-right">{t('Creation date')}</th>
-                                    <th className="text-right">{t('Number of items')}</th>
-                                    <th>{t('Shipping')}</th>
-                                    <th>{t('Payment')}</th>
-                                    <th className="text-right">{t('Total price including VAT')}</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                        )}
+                    {(() => {
+                        if (isLoading) {
+                            return (
+                                <div className="flex justify-center">
+                                    <Loader className="w-10" />
+                                </div>
+                            );
+                        }
 
-                        {orders !== undefined && orders.length !== 0 && (
-                            <tbody>
+                        if (!orders?.length) {
+                            return <div>{t('You have no orders')}</div>;
+                        }
+
+                        return (
+                            <Table
+                                head={
+                                    <Row>
+                                        <CellHead isWithoutWrap>{t('Order number')}</CellHead>
+                                        <CellHead isWithoutWrap align="right">
+                                            {t('Creation date')}
+                                        </CellHead>
+                                        <CellHead isWithoutWrap align="right">
+                                            {t('Number of items')}
+                                        </CellHead>
+                                        <CellHead isWithoutWrap>{t('Shipping')}</CellHead>
+                                        <CellHead isWithoutWrap>{t('Payment')}</CellHead>
+                                        <CellHead isWithoutWrap align="right">
+                                            {t('Total price including VAT')}
+                                        </CellHead>
+                                        <CellHead isWithoutWrap>&nbsp;</CellHead>
+                                    </Row>
+                                }
+                            >
                                 {orders.map((order, index) => (
-                                    <tr key={index} data-testid={TEST_IDENTIFIER + index}>
-                                        <td data-testid={TEST_IDENTIFIER + 'number'}>
+                                    <Row key={order.uuid} data-testid={TEST_IDENTIFIER + index}>
+                                        <Cell data-testid={TEST_IDENTIFIER + 'number'}>
                                             <ExtendedNextLink
                                                 href={{
                                                     pathname: customerOrderDetailUrl,
@@ -67,14 +85,14 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                                             >
                                                 {order.number}
                                             </ExtendedNextLink>
-                                        </td>
-                                        <td className="text-right" data-testid={TEST_IDENTIFIER + 'creation-date'}>
+                                        </Cell>
+                                        <Cell align="right" data-testid={TEST_IDENTIFIER + 'creation-date'}>
                                             {formatDateAndTime(order.creationDate)}
-                                        </td>
-                                        <td className="text-right" data-testid={TEST_IDENTIFIER + 'quantity'}>
+                                        </Cell>
+                                        <Cell align="right" data-testid={TEST_IDENTIFIER + 'quantity'}>
                                             {order.productItems.length}
-                                        </td>
-                                        <td data-testid={TEST_IDENTIFIER + 'transport'}>
+                                        </Cell>
+                                        <Cell data-testid={TEST_IDENTIFIER + 'transport'}>
                                             <div className="relative top-1 mr-1 inline-flex w-10 justify-center">
                                                 <Image
                                                     image={order.transport.mainImage}
@@ -85,12 +103,12 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                                                 />
                                             </div>
                                             {order.transport.name}
-                                        </td>
-                                        <td data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment.name}</td>
-                                        <td className="text-right" data-testid={TEST_IDENTIFIER + 'total-price'}>
+                                        </Cell>
+                                        <Cell data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment.name}</Cell>
+                                        <Cell isWithoutWrap align="right" data-testid={TEST_IDENTIFIER + 'total-price'}>
                                             {formatPrice(order.totalPrice.priceWithVat)}
-                                        </td>
-                                        <td data-testid={TEST_IDENTIFIER + 'detail-link'}>
+                                        </Cell>
+                                        <Cell data-testid={TEST_IDENTIFIER + 'detail-link'}>
                                             <ExtendedNextLink
                                                 href={{
                                                     pathname: customerOrderDetailUrl,
@@ -100,26 +118,16 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                                             >
                                                 {t('Detail')}
                                             </ExtendedNextLink>
-                                        </td>
-                                    </tr>
+                                        </Cell>
+                                    </Row>
                                 ))}
-                            </tbody>
-                        )}
-
-                        {orders?.length === 0 && (
-                            <tbody>
-                                <tr>
-                                    <th>{t('You have no orders')}</th>
-                                </tr>
-                            </tbody>
-                        )}
-                    </TableGrid>
+                            </Table>
+                        );
+                    })()}
                 </Webline>
+
                 <Webline>
-                    <Pagination
-                        totalCount={totalCount !== undefined ? totalCount : 0}
-                        paginationScrollTargetRef={paginationScrollTargetRef}
-                    />
+                    <Pagination totalCount={totalCount || 0} paginationScrollTargetRef={paginationScrollTargetRef} />
                 </Webline>
             </div>
         </>
