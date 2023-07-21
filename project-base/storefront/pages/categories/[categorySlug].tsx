@@ -19,13 +19,14 @@ import { getDomainConfig } from 'helpers/domain/domain';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
-import { useHandleDefaultFiltersUpdate, useHandleSeoCategorySlugUpdate } from 'helpers/filterOptions/seoCategories';
+import { useHandleDefaultFiltersUpdate } from 'helpers/filterOptions/seoCategories';
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
@@ -40,7 +41,7 @@ import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSessionStore } from 'store/zustand/useSessionStore';
 import { Client, ssrExchange, useClient } from 'urql';
@@ -52,7 +53,6 @@ const CategoryDetailPage: NextPage = () => {
     const [categoryData, fetching] = useCategoryDetailData(mapParametersFilter(filter));
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
-    useHandleSeoCategorySlugUpdate(categoryData);
 
     const seoTitle = useSeoTitleWithPagination(
         categoryData?.products.totalCount,
@@ -151,6 +151,8 @@ const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | Ca
     const [categoryDetailData, setCategoryDetailData] = useState<undefined | CategoryDetailFragmentApi>(
         readCategoryDetailFromCache(client, urlSlug, sort, filter),
     );
+    const setOriginalCategorySlug = useSessionStore((s) => s.setOriginalCategorySlug);
+    const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
 
     const [fetching, setFetching] = useState<boolean>(false);
 
@@ -170,11 +172,37 @@ const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | Ca
             .then((response) => {
                 handleQueryError(response.error, t);
                 setCategoryDetailData(response.data?.category ?? undefined);
+                handleSeoCategorySlugUpdate(
+                    router,
+                    urlSlug,
+                    response.data?.category?.originalCategorySlug,
+                    response.data?.category?.slug,
+                    setWasRedirectedToSeoCategory,
+                    setOriginalCategorySlug,
+                );
             })
             .finally(() => setFetching(false));
     }, [urlSlug, sort, JSON.stringify(filter)]);
 
     return [categoryDetailData, fetching];
+};
+
+export const handleSeoCategorySlugUpdate = (
+    router: NextRouter,
+    urlSlug: string,
+    originalCategorySlug: string | undefined | null,
+    categorySlug: string | undefined,
+    setWasRedirectedToSeoCategory: (value: boolean) => void,
+    setOriginalCategorySlug: (value: string | undefined) => void,
+) => {
+    const isCurrentAndRedirectSlugDifferent = getStringWithoutLeadingSlash(categorySlug ?? '') !== urlSlug;
+
+    if (originalCategorySlug && isCurrentAndRedirectSlugDifferent && categorySlug) {
+        setWasRedirectedToSeoCategory(true);
+        router.replace(categorySlug, undefined, { shallow: true });
+    }
+
+    setOriginalCategorySlug(originalCategorySlug ?? undefined);
 };
 
 const readCategoryDetailFromCache = (
