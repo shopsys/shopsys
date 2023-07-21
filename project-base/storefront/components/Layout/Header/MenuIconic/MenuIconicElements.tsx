@@ -8,8 +8,12 @@ export const MenuIconicItemIcon: FC<{ icon: IconName }> = ({ icon, className }) 
     <Icon iconType="icon" icon={icon} className={twMergeCustom('mr-2 w-4 text-white', className)} />
 );
 
-export const MenuIconicItem: FC = ({ children, className, dataTestId }) => (
-    <li className={twMergeCustom('relative mr-5 flex last:mr-0 xl:mr-8', className)} data-testid={dataTestId}>
+export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, dataTestId, title }) => (
+    <li
+        className={twMergeCustom('relative mr-5 flex last:mr-0 xl:mr-8', className)}
+        data-testid={dataTestId}
+        title={title}
+    >
         {children}
     </li>
 );

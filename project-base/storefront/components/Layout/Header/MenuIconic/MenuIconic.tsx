@@ -30,7 +30,11 @@ export const MenuIconic: FC = () => {
             <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-login'} className="max-vl:mr-0">
                 <MenuIconicItemLogin />
             </MenuIconicItem>
-            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-comparison'} className="max-vl:hidden">
+            <MenuIconicItem
+                dataTestId={TEST_IDENTIFIER + '-comparison'}
+                className="max-vl:hidden"
+                title={t('Comparison')}
+            >
                 <ExtendedNextLink href={productsComparisonUrl} passHref type="static">
                     <MenuIconicItemLink>
                         <MenuIconicItemIcon icon="Compare" />
@@ -38,7 +42,7 @@ export const MenuIconic: FC = () => {
                     </MenuIconicItemLink>
                 </ExtendedNextLink>
             </MenuIconicItem>
-            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-wishlist'} className="max-vl:hidden">
+            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-wishlist'} className="max-vl:hidden" title={t('Wishlist')}>
                 <ExtendedNextLink href={wishlistUrl} passHref type="static">
                     <MenuIconicItemLink>
                         <MenuIconicItemIcon icon={wishlist?.products.length ? 'HeartFull' : 'Heart'} />
