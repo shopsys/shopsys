@@ -1,7 +1,7 @@
 import { showErrorMessage } from 'components/Helpers/toasts';
 import { CartQueryDocumentApi } from 'graphql/generated';
 import { removeTokensFromCookies } from 'helpers/auth/tokens';
-import { ApplicationErrors } from 'helpers/errors/applicationErrors';
+import { isFlashMessageError, isNoLogError } from 'helpers/errors/applicationErrors';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { logException } from 'helpers/errors/logException';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
@@ -26,13 +26,17 @@ export const getErrorExchange =
                     const isAuthError = error.response?.status === 401;
                     if (isAuthError) {
                         removeTokensFromCookies(context);
+
+                        return;
                     }
 
                     const parsedErrors = t ? getUserFriendlyErrors(error, t) : undefined;
-                    logException(error);
-
                     if (!parsedErrors) {
                         return;
+                    }
+
+                    if (parsedErrors.userError) {
+                        logException(parsedErrors.userError);
                     }
 
                     const isCartError = operation.query === CartQueryDocumentApi;
@@ -42,7 +46,15 @@ export const getErrorExchange =
                         return;
                     }
 
-                    if (parsedErrors.applicationError) {
+                    if (!parsedErrors.applicationError) {
+                        return;
+                    }
+
+                    if (!isNoLogError(parsedErrors.applicationError.type)) {
+                        logException(parsedErrors.applicationError);
+                    }
+
+                    if (isFlashMessageError(parsedErrors.applicationError.type)) {
                         showErrorMessage(parsedErrors.applicationError.message);
                     }
                 }),
@@ -52,9 +64,9 @@ export const getErrorExchange =
 
 const handleCartError = ({ userError, applicationError }: ParsedErrors) => {
     switch (applicationError?.type) {
-        case ApplicationErrors['cart-not-found']:
+        case 'cart-not-found':
             break;
-        case ApplicationErrors.default:
+        case 'default':
             showErrorMessage(applicationError.message, GtmMessageOriginType.cart);
             break;
     }
