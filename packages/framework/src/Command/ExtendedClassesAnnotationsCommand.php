@@ -176,6 +176,10 @@ class ExtendedClassesAnnotationsCommand extends Command
             $frameworkClassBetterReflection = ReflectionObject::createFromName($frameworkClass);
             $projectClassBetterReflection = ReflectionObject::createFromName($projectClass);
 
+            if (str_starts_with($projectClass, 'App') === false) {
+                continue;
+            }
+
             $projectClassNecessaryPropertyAnnotationsLines = $this->propertyAnnotationsFactory->getProjectClassNecessaryPropertyAnnotationsLines(
                 $frameworkClassBetterReflection,
                 $projectClassBetterReflection,
