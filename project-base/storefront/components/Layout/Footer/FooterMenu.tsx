@@ -47,7 +47,7 @@ export const FooterMenu: FC = () => {
     );
 
     return (
-        <div className="-mr-5 mb-7 lg:mb-10 lg:-ml-5 lg:flex vl:mb-0 vl:flex-1" data-testid={TEST_IDENTIFIER}>
+        <div className="mb-7 lg:mb-10 lg:-ml-5 lg:flex vl:-mr-5 vl:mb-0 vl:flex-1" data-testid={TEST_IDENTIFIER}>
             {items.map((item) => (
                 <FooterMenuItem key={item.key} title={item.title} items={item.items} />
             ))}

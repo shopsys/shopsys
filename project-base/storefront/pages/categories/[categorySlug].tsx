@@ -65,18 +65,16 @@ const CategoryDetailPage: NextPage = () => {
 
     return (
         <CommonLayout title={seoTitle} description={categoryData?.seoMetaDescription}>
-            <Webline>
-                {!!categoryData?.breadcrumb && (
-                    <Webline>
-                        <Breadcrumbs type="category" key="breadcrumb" breadcrumb={categoryData.breadcrumb} />
-                    </Webline>
-                )}
-                {isSkeletonVisible ? (
-                    <CategoryDetailPageSkeleton />
-                ) : (
-                    !!categoryData && <CategoryDetailContent category={categoryData} />
-                )}
-            </Webline>
+            {!!categoryData?.breadcrumb && (
+                <Webline>
+                    <Breadcrumbs type="category" key="breadcrumb" breadcrumb={categoryData.breadcrumb} />
+                </Webline>
+            )}
+            {isSkeletonVisible ? (
+                <CategoryDetailPageSkeleton />
+            ) : (
+                !!categoryData && <CategoryDetailContent category={categoryData} />
+            )}
         </CommonLayout>
     );
 };

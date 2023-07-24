@@ -25,6 +25,6 @@ export const Webline: FC<WeblineProps> = ({ children, style, dataTestId, type, c
         style={style}
         data-testid={getDataTestId(dataTestId, type)}
     >
-        <div className="px-5 xl:mx-auto xl:w-full xl:max-w-7xl">{children}</div>
+        <div className="px-4 xl:mx-auto xl:w-full xl:max-w-7xl">{children}</div>
     </div>
 );
