@@ -76,7 +76,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
     };
 
     return (
-        <div className="flex flex-col vl:flex-row" ref={sliderBoxRef} data-testid={dataTestId}>
+        <div className="flex flex-col gap-6 vl:flex-row" ref={sliderBoxRef} data-testid={dataTestId}>
             <div
                 ref={sliderRef}
                 className="keen-slider h-[200px] w-full cursor-pointer rounded-xl lg:h-[250px] vl:h-[290px] vl:w-[calc(100%-307px)]"
@@ -85,7 +85,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
                     <BannersSliderItem key={index} item={sliderItem} />
                 ))}
             </div>
-            <div className="hidden max-h-[307px] max-w-xs pl-6 vl:block">
+            <div className="hidden vl:flex vl:flex-1 vl:flex-col">
                 {sliderItems.map((sliderItem, index) => (
                     <button
                         className="group relative mb-4 block !w-full cursor-pointer rounded-xl border-2 border-blueLight bg-blueLight py-4 px-8 text-left font-bold transition hover:border-blue hover:bg-blue disabled:border-primary disabled:bg-creamWhite"
