@@ -40,7 +40,7 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({
 
     return (
         <div
-            className="keen-slider__slide p-2 text-dark hover:text-primary"
+            className="keen-slider__slide pr-2 text-dark hover:text-primary"
             data-testid={TEST_IDENTIFIER + product.catalogNumber}
         >
             <div className="group relative flex h-full flex-col rounded-xl text-left hover:shadow-lg">

@@ -15,7 +15,6 @@ export const Logo: FC = () => (
                 alt="Shopsys logo"
                 data-testid={TEST_IDENTIFIER}
                 className="flex w-32 max-w-full lg:w-40"
-                alt="logo"
             />
         </Link>
     </>

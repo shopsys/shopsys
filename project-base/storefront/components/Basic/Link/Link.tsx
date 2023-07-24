@@ -1,6 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 
-import { AnchorHTMLAttributes, ReactElement } from 'react';
+import { AnchorHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { ExtendedNextLink } from '../ExtendedNextLink/ExtendedNextLink';
 import { twMergeCustom } from 'utils/twMerge';
@@ -15,7 +15,6 @@ type LinkProps = NativePropsAnchor & {
     isExternal?: boolean;
     isButton?: boolean;
     size?: 'small';
-    children?: ReactElement | string | number;
 };
 
 const getDataTestId = (isExternal?: boolean, isButton?: boolean) =>
@@ -26,6 +25,7 @@ export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel,
         'inline-flex cursor-pointer items-center text-greyDark outline-none hover:text-primary',
         isButton ? 'no-underline hover:no-underline' : 'underline hover:underline',
     );
+
     const props = {
         className: classNameTwClass,
         href: isExternal ? href : undefined,
@@ -33,6 +33,7 @@ export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel,
         target,
         'data-testid': getDataTestId(isExternal, isButton),
     };
+
     const content = isButton ? <Button className={className}>{children}</Button> : children;
 
     if (isExternal) {

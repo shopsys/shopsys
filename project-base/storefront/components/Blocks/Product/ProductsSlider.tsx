@@ -73,7 +73,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
     return (
         <div className="relative">
-            <div ref={sliderRef} className="keen-slider relative -mx-2 flex overflow-hidden">
+            <div ref={sliderRef} className="keen-slider">
                 {products.map((productItemData, index) => (
                     <SliderProductItem
                         key={productItemData.uuid}

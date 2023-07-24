@@ -1,17 +1,12 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Main } from './Main';
-import { Side } from './Side';
-import { SideSlider } from './SideSlider';
+import { BlogPreviewMain } from './BlogPreviewMain';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { isElementVisible } from 'components/Helpers/isElementVisible';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import { BlogPreviewSide } from './BlogPreviewSide';
 
 export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
 const TEST_IDENTIFIER = 'blocks-blogpreview';
@@ -21,8 +16,7 @@ export const BlogPreview: FC = () => {
     const [{ data: blogPreviewData }] = useBlogArticlesQueryApi({ variables: BLOG_PREVIEW_VARIABLES });
     const [{ data: blogUrlData }] = useBlogUrlQueryApi();
     const blogUrl = blogUrlData?.blogCategories[0].link;
-    const { width } = useGetWindowSize();
-    const [isBlogPreviewArticlesSideSliderVisible, setBlogPreviewArticlesSideSliderVisibility] = useState(false);
+
     const blogMainItems = useMemo(
         () => mapConnectionEdges<ListedBlogArticleFragmentApi>(blogPreviewData?.blogArticles.edges?.slice(0, 2)),
         [blogPreviewData?.blogArticles.edges],
@@ -32,24 +26,13 @@ export const BlogPreview: FC = () => {
         [blogPreviewData?.blogArticles.edges],
     );
 
-    useResizeWidthEffect(
-        width,
-        desktopFirstSizes.notLargeDesktop,
-        () => setBlogPreviewArticlesSideSliderVisibility(false),
-        () => setBlogPreviewArticlesSideSliderVisibility(true),
-        () =>
-            setBlogPreviewArticlesSideSliderVisibility(
-                isElementVisible([{ min: 0, max: desktopFirstSizes.notLargeDesktop }], width),
-            ),
-    );
-
     return (
-        <div className="pt-12 pb-10 vl:pb-16" data-testid={TEST_IDENTIFIER}>
+        <div className="py-10 vl:py-16 vl:pb-20" data-testid={TEST_IDENTIFIER}>
             <div className="mb-5 flex flex-wrap items-baseline">
                 <h2 className="mr-8 mb-2 transform-none text-3xl font-bold leading-9 text-creamWhite">
                     {t('Shopsys magazine')}
                 </h2>
-                {blogUrl !== undefined && (
+                {!!blogUrl && (
                     <ExtendedNextLink
                         type="blogCategory"
                         href={blogUrl}
@@ -67,17 +50,16 @@ export const BlogPreview: FC = () => {
                 )}
             </div>
 
-            <div className="flex flex-wrap">
-                <div className="mb-8 flex flex-col lg:-ml-11 lg:flex-row vl:mb-0 vl:flex-1 xl:-ml-20">
-                    {!!blogMainItems && <Main blogMainItems={blogMainItems} />}
-                </div>
+            <div className="flex flex-col gap-16 vl:flex-row  vl:justify-between">
+                {!!blogMainItems && (
+                    <div className="flex flex-1 gap-6 vl:gap-16">
+                        <BlogPreviewMain articles={blogMainItems} />
+                    </div>
+                )}
+
                 {!!blogSideItems && (
-                    <div className="flex-col overflow-hidden vl:ml-12 vl:flex xl:ml-24">
-                        {isBlogPreviewArticlesSideSliderVisible ? (
-                            <SideSlider blogSideItems={blogSideItems} />
-                        ) : (
-                            <Side blogSideItems={blogSideItems} />
-                        )}
+                    <div className="grid snap-x snap-mandatory auto-cols-[80%] gap-4 overscroll-x-contain max-vl:grid-flow-col max-vl:overflow-x-auto md:auto-cols-[40%] lg:gap-6 vl:flex vl:basis-1/3 vl:flex-col vl:gap-3">
+                        <BlogPreviewSide articles={blogSideItems} />
                     </div>
                 )}
             </div>
