@@ -1,18 +1,19 @@
 on:
     schedule:
         -   cron: '0 2 * * *'
+    workflow_dispatch:
 name: Cancel reviews older than seven days
 jobs:
     cancel-old-reviews:
         name: Cancel reviews older than seven days
         runs-on: [ self-hosted, linux, review-stage ]
         steps:
-            -   name: GIT checkout branch - master
+            -   name: GIT checkout branch - ${{ vars.MAIN_BRANCH_NAME }}
                 uses: actions/checkout@v3
                 with:
-                    ref: 'refs/heads/master'
+                    ref: 'refs/heads/${{ vars.MAIN_BRANCH_NAME }}'
                     path: cancel-old-reviews
             -   name: Cancel reviews older than seven days
                 working-directory: cancel-old-reviews
                 run: |
-                    ./.github/cancel-old-reviews.sh
+                    /bin/bash ./.github/cancel-old-reviews.sh ${{ vars.MAIN_BRANCH_NAME }} ${{ secrets.ACTIONS_TOKEN }}
