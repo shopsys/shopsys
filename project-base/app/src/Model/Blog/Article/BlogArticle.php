@@ -277,9 +277,6 @@ class BlogArticle extends AbstractTranslatableEntity
         return $this->getDomain($domainId)->getSeoH1();
     }
 
-    /**;
-     */
-
     /**
      * @param int $domainId
      * @return bool

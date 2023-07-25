@@ -12,7 +12,7 @@ type GalleryProps = {
 
 export const Gallery: FC<GalleryProps> = ({ selector, children }) => {
     const {
-        publicRuntimeConfig: { lightgalleryLicenceKey },
+        publicRuntimeConfig: { lightgalleryLicenseKey },
     } = getConfig();
 
     return (
@@ -21,7 +21,7 @@ export const Gallery: FC<GalleryProps> = ({ selector, children }) => {
             thumbnail
             plugins={[lgThumbnail, lgVideo]}
             selector={selector}
-            licenseKey={lightgalleryLicenceKey}
+            licenseKey={lightgalleryLicenseKey}
         >
             {children}
         </LightGallery>
