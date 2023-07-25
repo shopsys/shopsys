@@ -18,4 +18,4 @@ jobs:
             -   name: Cancel review
                 working-directory: cancel-review-after-branch-merge
                 run: |
-                    ./.github/cancel-review.sh
+                    /bin/bash ./.github/cancel-review.sh ${{ env.BRANCH_NAME }}

@@ -18,8 +18,6 @@ jobs:
                     ref: 'refs/heads/${{ vars.MAIN_BRANCH_NAME }}'
                     path: manually-cancel-review
             -   name: Cancel review
-                env:
-                    BRANCH_NAME: ${{ inputs.branch_name }}
                 working-directory: manually-cancel-review
                 run: |
-                    ./.github/cancel-review.sh
+                    /bin/bash ./.github/cancel-review.sh "${{ inputs.branch_name }}"
