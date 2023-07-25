@@ -23,18 +23,21 @@ class ParameterFilterOption extends BaseParameterFilterOption
      * @param \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $values
      * @param bool $isCollapsed
      * @param float|null $selectedValue
+     * @param bool|null $isSelectable
      */
     public function __construct(
         BaseParameter $parameter,
         array $values,
         public bool $isCollapsed,
         public ?float $selectedValue = null,
+        public ?bool $isSelectable = null,
     ) {
         parent::__construct($parameter, $values);
 
         if (!$parameter->isSlider()) {
             return;
         }
+
         $floatValues = $this->getFloatValuesFromParameterValueFilterOptions($values);
         $this->minimalValue = min($floatValues);
         $this->maximalValue = max($floatValues);

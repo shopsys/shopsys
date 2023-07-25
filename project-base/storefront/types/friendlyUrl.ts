@@ -30,6 +30,7 @@ export const FriendlyPagesTypes = {
     product: 'front_product_detail',
     store: 'front_stores_detail',
     flag: 'front_flag_detail',
+    seo_category: 'front_category_seo',
 } as const;
 
 export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKeys, string> = {
@@ -41,6 +42,7 @@ export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKeys, string> =
     product: '/products/[productSlug]',
     store: '/stores/[storeSlug]',
     flag: '/flags/[flagSlug]',
+    seo_category: '/categories/[categorySlug]',
 } as const;
 
 export type FriendlyPagesTypesKeys = keyof typeof FriendlyPagesTypes;

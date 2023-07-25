@@ -2,12 +2,16 @@ query CategoryProductsQuery(
     $endCursor: String!
     $orderingMode: ProductOrderingModeEnum
     $filter: ProductFilter
-    $uuid: Uuid
+    $urlSlug: String
     $pageSize: Int
 ) {
-    category(uuid: $uuid) {
-        products(after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize) {
-            ...ListedProductConnectionFragment
-        }
+    products(
+        categorySlug: $urlSlug
+        after: $endCursor
+        orderingMode: $orderingMode
+        filter: $filter
+        first: $pageSize
+    ) {
+        ...ListedProductConnectionFragment
     }
 }

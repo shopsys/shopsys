@@ -7,7 +7,7 @@ ParameterFilter:
             -   App\FrontendApi\Model\Component\Constraints\ParameterFilter: ~
         fields:
             values:
-                type: "[Uuid!]"
+                type: "[Uuid!]!"
                 description: "Array of uuids representing parameter values to be filtered by"
                 defaultValue: []
                 validation:

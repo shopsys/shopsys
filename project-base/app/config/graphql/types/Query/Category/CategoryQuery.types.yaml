@@ -15,3 +15,16 @@ CategoryQuery:
                     search:
                         type: "String!"
                 description: "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"
+            category:
+                type: 'Category'
+                resolve: "@=query('categoryOrSeoMixByUuidOrUrlSlugQuery', info, args['uuid'], args['urlSlug'])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                    orderingMode:
+                        type: "ProductOrderingModeEnum"
+                    filter:
+                        type: "ProductFilter"
+                description: "Returns category filtered using UUID or URL slug"

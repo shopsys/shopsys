@@ -302,7 +302,7 @@ type Brand implements Breadcrumb & Slug & ProductListable {
   """Brand name"""
   name: String!
   """Paginated and ordered products of brand"""
-  products(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
   """Brand SEO H1"""
   seoH1: String
   """Brand SEO meta description"""
@@ -455,7 +455,7 @@ type Category implements Breadcrumb & Slug & ProductListable {
   """Ancestor category"""
   parent: Category
   """Paginated and ordered products of category"""
-  products(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
   """An array of links of prepared category SEO mixes of a given category"""
   readyCategorySeoMixLinks: [Link!]!
   """Seo first level heading of category"""
@@ -707,7 +707,7 @@ type Flag implements Breadcrumb & Slug & ProductListable {
   """Localized flag name (domain dependent)"""
   name: String!
   """Paginated and ordered products of flag"""
-  products(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
   """Flag color in rgb format"""
   rgbColor: String!
   """URL slug of flag"""
@@ -1279,7 +1279,7 @@ input ParameterFilter {
   """Uuid of filtered parameter"""
   parameter: Uuid!
   """Array of uuids representing parameter values to be filtered by"""
-  values: [Uuid!] = []
+  values: [Uuid!]! = []
 }
 
 """Represents parameter filter option"""
@@ -1298,6 +1298,8 @@ interface ParameterFilterOptionInterface {
 type ParameterSliderFilterOption implements ParameterFilterOptionInterface {
   """Indicator whether the parameter should be collapsed based on the current category setting"""
   isCollapsed: Boolean!
+  """Can be used in filter"""
+  isSelectable: Boolean!
   """The parameter maximal value"""
   maximalValue: Float!
   """The parameter minimal value"""
@@ -1610,7 +1612,7 @@ type ProductFilterOptions {
 """Paginated and ordered products"""
 interface ProductListable {
   """Paginated and ordered products"""
-  products(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
 }
 
 """One of possible ordering modes for product"""
@@ -1692,7 +1694,7 @@ type Query {
   """Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"""
   categoriesSearch(after: String, before: String, first: Int, last: Int, search: String!): CategoryConnection!
   """Returns category filtered using UUID or URL slug"""
-  category(urlSlug: String, uuid: Uuid): Category
+  category(filter: ProductFilter, orderingMode: ProductOrderingModeEnum, urlSlug: String, uuid: Uuid): Category
   CompanyCustomerUser: CompanyCustomerUser
   """Get comparison by UUID or comparison of logged customer user."""
   comparison(uuid: Uuid): Comparison
@@ -1739,7 +1741,7 @@ type Query {
   """Returns product filtered using UUID or URL slug"""
   product(urlSlug: String, uuid: Uuid): Product
   """Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"""
-  products(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
   """Returns list of products by catalog numbers"""
   productsByCatnums(
     """Array of product catalog numbers"""

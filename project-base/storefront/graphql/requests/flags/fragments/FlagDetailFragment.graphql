@@ -6,5 +6,7 @@ fragment FlagDetailFragment on Flag {
         ...BreadcrumbFragment
     }
     name
-    ...ListedProductsPreviewFragment
+    products(orderingMode: $orderingMode, filter: $filter) {
+        ...ListedProductConnectionPreviewFragment
+    }
 }

@@ -1,4 +1,5 @@
 import { BreadcrumbFragmentApi } from 'graphql/generated';
+import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import Head from 'next/head';
 
@@ -19,9 +20,7 @@ export const BreadcrumbsMetadata: FC<BreadcrumbsMetadataProps> = ({ breadcrumbs 
                         '@context': 'https://schema.org',
                         '@type': 'BreadcrumbList',
                         itemListElement: breadcrumbs.map((breadcrumb, index) => {
-                            const breadcrumbSlugWithoutLeadingSlash =
-                                breadcrumb.slug.charAt(0) === '/' ? breadcrumb.slug.slice(1) : breadcrumb.slug;
-                            const breadcrumbAbsoluteUrl = url + breadcrumbSlugWithoutLeadingSlash;
+                            const breadcrumbAbsoluteUrl = url + getStringWithoutLeadingSlash(breadcrumb.slug);
 
                             return {
                                 '@type': 'ListItem',

@@ -1,0 +1,16 @@
+query category($urlSlug: String!, $filter: ProductFilter) {
+    category(urlSlug: $urlSlug) {
+        products(filter: $filter) {
+            productFilterOptions {
+                parameters {
+                    uuid
+                    ... on ParameterSliderFilterOption {
+                        minimalValue
+                        maximalValue
+                        isSelectable
+                    }
+                }
+            }
+        }
+    }
+}

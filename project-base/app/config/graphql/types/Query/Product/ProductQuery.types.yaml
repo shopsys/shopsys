@@ -8,7 +8,7 @@ ProductQuery:
                     builder: "PaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: "@=query('productsQuery', args)"
+                resolve: "@=query('productsWithOverlyingEntityQuery', args, info)"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
             productsByCatnums:

@@ -2,12 +2,24 @@ import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { getQueryWithoutSlugTypeParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
 import { getFilteredQueries } from 'helpers/queryParams/queryHandlers';
 import {
+    DEFAULT_SORT,
+    getChangedDefaultFilters,
+    getChangedDefaultFiltersAfterAvailabilityChange,
+    getChangedDefaultFiltersAfterFlagChange,
+    getChangedDefaultFiltersAfterMaximumPriceChange,
+    getChangedDefaultFiltersAfterMinimumPriceChange,
+    getChangedDefaultFiltersAfterParameterChange,
+    getChangedDefaultFiltersAfterSliderParameterChange,
+    SEO_SENSITIVE_FILTERS,
+} from 'helpers/filterOptions/seoCategories';
+import {
     FILTER_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParams/queryParamNames';
 import { useRouter } from 'next/router';
+import { useSessionStore } from 'store/zustand/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
 
 export type FilterQueries = FilterOptionsUrlQueryType | undefined;
@@ -41,6 +53,8 @@ const handleUpdateFilter = (selectedUuid: string | undefined, items: string[] | 
 export const useQueryParams = () => {
     const router = useRouter();
     const query = getQueryWithoutSlugTypeParameter(router.query) as unknown as UrlQueries;
+    const defaultProductFiltersMap = useSessionStore((s) => s.defaultProductFiltersMap);
+    const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
 
     const currentPage = Number(query[PAGE_QUERY_PARAMETER_NAME] || 1);
     const searchString = query[SEARCH_QUERY_PARAMETER_NAME];
@@ -48,15 +62,31 @@ export const useQueryParams = () => {
     const filterQuery = query[FILTER_QUERY_PARAMETER_NAME];
     const filter = filterQuery ? (JSON.parse(filterQuery) as FilterOptionsUrlQueryType) : null;
 
-    const updateSort = (sorting: ProductOrderingModeEnumApi | undefined) => {
+    const updateSort = (sorting: ProductOrderingModeEnumApi) => {
+        if (SEO_SENSITIVE_FILTERS.SORT && originalCategorySlug) {
+            pushQueryFilter(getChangedDefaultFilters(defaultProductFiltersMap, filter), originalCategorySlug, sorting);
+
+            return;
+        }
+
         pushQuerySort(sorting);
     };
 
-    const updatePagination = (page: number | undefined) => {
+    const updatePagination = (page: number) => {
         pushQueryPage(page);
     };
 
     const updateFilterInStock = (value: FilterOptionsUrlQueryType['onlyInStock']) => {
+        if (SEO_SENSITIVE_FILTERS.AVAILABILITY && originalCategorySlug) {
+            pushQueryFilter(
+                getChangedDefaultFiltersAfterAvailabilityChange(defaultProductFiltersMap, filter, !!value),
+                originalCategorySlug,
+                defaultProductFiltersMap.sort,
+            );
+
+            return;
+        }
+
         pushQueryFilter({ ...filter, onlyInStock: value || undefined });
     };
 
@@ -67,33 +97,94 @@ export const useQueryParams = () => {
         pushQueryFilter({ ...filter, ...values });
     };
 
-    const updateFilterPriceMaximum = (value: FilterOptionsUrlQueryType['maximalPrice']) => {
-        pushQueryFilter({ ...filter, maximalPrice: value });
+    const updateFilterPriceMaximum = (newMaxPrice: FilterOptionsUrlQueryType['maximalPrice']) => {
+        if (SEO_SENSITIVE_FILTERS.PRICE && originalCategorySlug) {
+            pushQueryFilter(
+                getChangedDefaultFiltersAfterMaximumPriceChange(defaultProductFiltersMap, filter, newMaxPrice),
+                originalCategorySlug,
+                defaultProductFiltersMap.sort,
+            );
+
+            return;
+        }
+
+        pushQueryFilter({ ...filter, maximalPrice: newMaxPrice });
     };
 
-    const updateFilterPriceMinimum = (value: FilterOptionsUrlQueryType['minimalPrice']) => {
-        pushQueryFilter({ ...filter, minimalPrice: value });
+    const updateFilterPriceMinimum = (newMinPrice: FilterOptionsUrlQueryType['minimalPrice']) => {
+        if (SEO_SENSITIVE_FILTERS.PRICE && originalCategorySlug) {
+            pushQueryFilter(
+                getChangedDefaultFiltersAfterMinimumPriceChange(defaultProductFiltersMap, filter, newMinPrice),
+                originalCategorySlug,
+                defaultProductFiltersMap.sort,
+            );
+
+            return;
+        }
+
+        pushQueryFilter({ ...filter, minimalPrice: newMinPrice });
     };
 
-    const updateFilterBrands = (selectedUuid: string | undefined) => {
+    const updateFilterBrands = (selectedUuid: string) => {
         pushQueryFilter({ ...filter, brands: handleUpdateFilter(selectedUuid, filter?.brands) });
     };
 
-    const updateFilterFlags = (selectedUuid: string | undefined) => {
+    const updateFilterFlags = (selectedUuid: string) => {
+        if (SEO_SENSITIVE_FILTERS.FLAGS && originalCategorySlug) {
+            pushQueryFilter(
+                getChangedDefaultFiltersAfterFlagChange(defaultProductFiltersMap, filter, selectedUuid),
+                originalCategorySlug,
+                defaultProductFiltersMap.sort,
+            );
+
+            return;
+        }
+
         pushQueryFilter({ ...filter, flags: handleUpdateFilter(selectedUuid, filter?.flags) });
     };
 
     const updateFilterParameters = (
-        parameterUuid: string | undefined,
+        parameterUuid: string,
         paramaterOptionUuid: string | undefined,
         minimalValue?: number,
         maximalValue?: number,
     ) => {
-        const parameters: FilterOptionsParameterUrlQueryType[] | undefined = (() => {
-            if (!parameterUuid) {
-                return undefined;
-            }
+        if (
+            (SEO_SENSITIVE_FILTERS.PARAMETERS.CHECKBOX || SEO_SENSITIVE_FILTERS.PARAMETERS.SLIDER) &&
+            originalCategorySlug
+        ) {
+            if (SEO_SENSITIVE_FILTERS.PARAMETERS.SLIDER && !paramaterOptionUuid) {
+                pushQueryFilter(
+                    getChangedDefaultFiltersAfterSliderParameterChange(
+                        defaultProductFiltersMap,
+                        filter,
+                        parameterUuid,
+                        minimalValue,
+                        maximalValue,
+                    ),
+                    originalCategorySlug,
+                    defaultProductFiltersMap.sort,
+                );
 
+                return;
+            }
+            if (SEO_SENSITIVE_FILTERS.PARAMETERS.CHECKBOX && paramaterOptionUuid) {
+                pushQueryFilter(
+                    getChangedDefaultFiltersAfterParameterChange(
+                        defaultProductFiltersMap,
+                        filter,
+                        parameterUuid,
+                        paramaterOptionUuid,
+                    ),
+                    originalCategorySlug,
+                    defaultProductFiltersMap.sort,
+                );
+
+                return;
+            }
+        }
+
+        const parameters: FilterOptionsParameterUrlQueryType[] | undefined = (() => {
             // deep clone parameters
             const newParameters: FilterOptionsParameterUrlQueryType[] = JSON.parse(
                 JSON.stringify(filter?.parameters || []),
@@ -144,7 +235,7 @@ export const useQueryParams = () => {
     };
 
     const resetAllFilters = () => {
-        pushQueryFilter(undefined);
+        pushQueryFilter(undefined, originalCategorySlug);
     };
 
     const pushQuerySort = (sorting?: ProductOrderingModeEnumApi) => {
@@ -154,7 +245,7 @@ export const useQueryParams = () => {
             [SORT_QUERY_PARAMETER_NAME]: sorting,
         } as const;
 
-        pushQueries(newQuery);
+        pushQueries(newQuery, true);
     };
 
     const pushQueryPage = (page?: number) => {
@@ -166,7 +257,11 @@ export const useQueryParams = () => {
         pushQueries(newQuery, true);
     };
 
-    const pushQueryFilter = (newFilter?: FilterQueries) => {
+    const pushQueryFilter = (
+        newFilter?: FilterQueries,
+        pathnameOverride?: string,
+        sortOverride?: ProductOrderingModeEnumApi,
+    ) => {
         const isWithFilterParams =
             !!newFilter &&
             (!!newFilter.onlyInStock ||
@@ -176,22 +271,35 @@ export const useQueryParams = () => {
                 !!newFilter.flags?.length ||
                 !!newFilter.parameters?.length);
 
+        if (newFilter) {
+            (Object.keys(newFilter) as Array<keyof typeof newFilter>).forEach((key) => {
+                const newFilterValue = newFilter[key];
+                if (Array.isArray(newFilterValue) && newFilterValue.length === 0) {
+                    delete newFilter[key];
+                }
+            });
+        }
+
         const newQuery: UrlQueries = {
             ...query,
             page: undefined,
             [FILTER_QUERY_PARAMETER_NAME]: isWithFilterParams ? JSON.stringify(newFilter) : undefined,
         } as const;
 
-        pushQueries(newQuery);
+        if (sortOverride && sortOverride !== DEFAULT_SORT) {
+            newQuery[SORT_QUERY_PARAMETER_NAME] = sortOverride;
+        }
+
+        pushQueries(newQuery, true, pathnameOverride);
     };
 
-    const pushQueries = (queries: UrlQueries, isPush?: boolean) => {
+    const pushQueries = (queries: UrlQueries, isPush?: boolean, pathnameOverride?: string) => {
         // remove queries which are not set or removed
         const filteredQueries = getFilteredQueries(queries);
 
         router[isPush ? 'push' : 'replace'](
             {
-                pathname: router.asPath.split('?')[0],
+                pathname: pathnameOverride || router.asPath.split('?')[0],
                 query: filteredQueries,
             },
             undefined,

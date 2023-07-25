@@ -2,12 +2,10 @@ query BrandProductsQuery(
     $endCursor: String!
     $orderingMode: ProductOrderingModeEnum
     $filter: ProductFilter
-    $uuid: Uuid
+    $urlSlug: String
     $pageSize: Int
 ) {
-    brand(uuid: $uuid) {
-        products(after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize) {
-            ...ListedProductConnectionFragment
-        }
+    products(brandSlug: $urlSlug, after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize) {
+        ...ListedProductConnectionFragment
     }
 }

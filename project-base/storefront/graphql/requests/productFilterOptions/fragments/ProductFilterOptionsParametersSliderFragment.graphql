@@ -10,4 +10,5 @@ fragment ProductFilterOptionsParametersSliderFragment on ParameterSliderFilterOp
     }
     isCollapsed
     selectedValue
+    isSelectable
 }

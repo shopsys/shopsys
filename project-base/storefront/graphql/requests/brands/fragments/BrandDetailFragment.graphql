@@ -12,7 +12,9 @@ fragment BrandDetailFragment on Brand {
     images {
         ...ImageSizesFragment
     }
-    ...ListedProductsPreviewFragment
+    products(orderingMode: $orderingMode, filter: $filter) {
+        ...ListedProductConnectionPreviewFragment
+    }
     seoTitle
     seoMetaDescription
 }

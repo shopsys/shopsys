@@ -8,6 +8,7 @@ import {
     SimpleProductFragmentApi,
 } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
+import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'types/gtm/objects';
 import { ProductInterfaceType } from 'types/product';
 
@@ -47,8 +48,7 @@ const mapGtmProductInterface = (productInterface: ProductInterfaceType, domainUr
     let productUrl;
 
     if (domainUrl.endsWith('/')) {
-        const domainUrlWithoutTrailingSlash = domainUrl.slice(0, domainUrl.length - 1);
-        productUrl = domainUrlWithoutTrailingSlash + productInterface.slug;
+        productUrl = getStringWithoutTrailingSlash(domainUrl) + productInterface.slug;
     } else {
         productUrl = domainUrl + productInterface.slug;
     }
