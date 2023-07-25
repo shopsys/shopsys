@@ -59,9 +59,9 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     });
     useGtmSliderProductListViewEvent(products, gtmProductListName);
 
-    const { isPopupCompareOpen, handleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
+    const { isPopupCompareOpen, toggleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
         useComparison();
-    const { handleProductInWishlist, isProductInWishlist } = useWishlist();
+    const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
 
     const onMoveToNextSlideHandler = () => {
         slider.moveToSlide(currentSlide + 1);
@@ -82,9 +82,9 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                         gtmMessageOrigin={gtmMessageOrigin}
                         listIndex={index}
                         isProductInComparison={isProductInComparison(productItemData.uuid)}
-                        onProductInComparisonClick={() => handleProductInComparison(productItemData.uuid)}
-                        handleProductInWishlist={() => handleProductInWishlist(productItemData.uuid)}
-                        isInWishlist={isProductInWishlist(productItemData.uuid)}
+                        toggleProductInComparison={() => toggleProductInComparison(productItemData.uuid)}
+                        isProductInWishlist={isProductInWishlist(productItemData.uuid)}
+                        toggleProductInWishlist={() => toggleProductInWishlist(productItemData.uuid)}
                     />
                 ))}
             </div>

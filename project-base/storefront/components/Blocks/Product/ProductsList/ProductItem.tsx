@@ -20,9 +20,9 @@ type ProductItemProps = {
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
     isProductInComparison: boolean;
-    onProductInComparisonClick: () => void;
-    isInWishlist: boolean;
-    handleProductInWishlist: () => void;
+    toggleProductInComparison: () => void;
+    isProductInWishlist: boolean;
+    toggleProductInWishlist: () => void;
 };
 
 const getDataTestId = (catalogNumber: string) => 'blocks-product-list-listeditem-' + catalogNumber;
@@ -33,9 +33,9 @@ export const ProductItem: FC<ProductItemProps> = ({
     gtmProductListName,
     gtmMessageOrigin,
     isProductInComparison,
-    onProductInComparisonClick,
-    isInWishlist,
-    handleProductInWishlist,
+    toggleProductInComparison,
+    isProductInWishlist,
+    toggleProductInWishlist,
 }) => {
     const { url } = useDomainConfig();
     const t = useTypedTranslationFunction();
@@ -48,7 +48,7 @@ export const ProductItem: FC<ProductItemProps> = ({
             {gtmProductListName === GtmProductListNameType.wishlist && (
                 <button
                     className="absolute right-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-none bg-whitesmoke p-0 outline-none transition hover:bg-blueLight"
-                    onClick={handleProductInWishlist}
+                    onClick={toggleProductInWishlist}
                     data-testid={getDataTestId(product.catalogNumber) + '-wishlist-remove'}
                     title={t('Remove from wishlist')}
                 >
@@ -98,12 +98,12 @@ export const ProductItem: FC<ProductItemProps> = ({
                 <ProductCompareButton
                     isMainVariant={product.isMainVariant}
                     isProductInComparison={isProductInComparison}
-                    onProductInComparisonClick={onProductInComparisonClick}
+                    toggleProductInComparison={toggleProductInComparison}
                 />
                 <ProductWishlistButton
                     isMainVariant={product.isMainVariant}
-                    handleProductInWishlist={handleProductInWishlist}
-                    isInWishlist={isInWishlist}
+                    toggleProductInWishlist={toggleProductInWishlist}
+                    isProductInWishlist={isProductInWishlist}
                 />
             </div>
             <ProductAction

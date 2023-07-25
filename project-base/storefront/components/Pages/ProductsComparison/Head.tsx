@@ -8,7 +8,7 @@ type HeadProps = {
 };
 
 export const Head: FC<HeadProps> = ({ productsCompare }) => {
-    const { handleProductInComparison } = useComparison();
+    const { toggleProductInComparison } = useComparison();
 
     return (
         <thead>
@@ -22,7 +22,7 @@ export const Head: FC<HeadProps> = ({ productsCompare }) => {
                         key={`head-${product.uuid}`}
                         productsCompareCount={productsCompare!.length}
                         listIndex={index}
-                        onProductInComparisonClick={() => handleProductInComparison(product.uuid)}
+                        toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
                     />
                 ))}
             </tr>

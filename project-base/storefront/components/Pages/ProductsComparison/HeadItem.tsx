@@ -15,10 +15,10 @@ type ItemProps = {
     product: ComparedProductFragmentApi;
     productsCompareCount: number;
     listIndex: number;
-    onProductInComparisonClick: () => void;
+    toggleProductInComparison: () => void;
 };
 
-export const HeadItem: FC<ItemProps> = ({ product, productsCompareCount, listIndex, onProductInComparisonClick }) => {
+export const HeadItem: FC<ItemProps> = ({ product, productsCompareCount, listIndex, toggleProductInComparison }) => {
     const t = useTypedTranslationFunction();
     const { url } = useDomainConfig();
     const { calcMaxMarginLeft } = useComparisonTable(productsCompareCount);
@@ -67,7 +67,7 @@ export const HeadItem: FC<ItemProps> = ({ product, productsCompareCount, listInd
             <div
                 className="absolute top-1 right-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded bg-white transition-colors hover:bg-greyVeryLight"
                 onClick={() => {
-                    onProductInComparisonClick();
+                    toggleProductInComparison();
                     calcMaxMarginLeft();
                 }}
             >

@@ -36,8 +36,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
     const t = useTypedTranslationFunction();
     const scrollTarget = useRef<HTMLUListElement>(null);
     const router = useRouter();
-    const { isProductInComparison, handleProductInComparison } = useComparison();
-    const { handleProductInWishlist, isProductInWishlist } = useWishlist();
+    const { isProductInComparison, toggleProductInComparison } = useComparison();
+    const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
 
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
 
@@ -75,13 +75,13 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                                 isMainVariant={product.isMainVariant}
                                 isWithText
                                 isProductInComparison={isProductInComparison(product.uuid)}
-                                onProductInComparisonClick={() => handleProductInComparison(product.uuid)}
+                                toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
                             />
                             <ProductWishlistButton
                                 isMainVariant={product.isMainVariant}
                                 isWithText
-                                isInWishlist={isProductInWishlist(product.uuid)}
-                                handleProductInWishlist={() => handleProductInWishlist(product.uuid)}
+                                isProductInWishlist={isProductInWishlist(product.uuid)}
+                                toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
                             />
                         </div>
                     </ProductDetailInfo>

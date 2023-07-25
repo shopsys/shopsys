@@ -71,7 +71,7 @@ export const useComparison = () => {
         }
     };
 
-    const handleProductInComparison = async (productUuid: string) => {
+    const toggleProductInComparison = async (productUuid: string) => {
         if (isProductInComparison(productUuid)) {
             handleRemoveFromComparison(productUuid);
         } else {
@@ -100,7 +100,7 @@ export const useComparison = () => {
         fetching,
         isPopupCompareOpen,
         isProductInComparison,
-        handleProductInComparison,
+        toggleProductInComparison,
         handleCleanComparison,
         setIsPopupCompareOpen,
     };

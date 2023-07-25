@@ -77,7 +77,7 @@ export const useWishlist = () => {
     const isProductInWishlist = (productUuid: string) =>
         !!data?.wishlist?.products.find((product) => product.uuid === productUuid);
 
-    const handleProductInWishlist = (productUuid: string) => {
+    const toggleProductInWishlist = (productUuid: string) => {
         if (isProductInWishlist(productUuid)) {
             handleRemoveFromWishlist(productUuid);
         } else {
@@ -97,7 +97,7 @@ export const useWishlist = () => {
         fetching,
         isProductInWishlist,
         handleCleanWishlist,
-        handleProductInWishlist,
+        toggleProductInWishlist,
     };
 };
 

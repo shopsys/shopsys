@@ -9,8 +9,8 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 type ProductCompareButtonProps = {
     isMainVariant: boolean;
     isWithText?: boolean;
-    isInWishlist: boolean;
-    handleProductInWishlist: () => void;
+    isProductInWishlist: boolean;
+    toggleProductInWishlist: () => void;
 };
 
 const TEST_IDENTIFIER = 'wishlist-button';
@@ -19,8 +19,8 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
     className,
     isMainVariant,
     isWithText,
-    isInWishlist,
-    handleProductInWishlist,
+    isProductInWishlist,
+    toggleProductInWishlist,
 }) => {
     const t = useTypedTranslationFunction();
 
@@ -33,16 +33,18 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
             <div
                 className="flex cursor-pointer items-center"
                 data-testid={TEST_IDENTIFIER}
-                title={isInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
-                onClick={handleProductInWishlist}
+                title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
+                onClick={toggleProductInWishlist}
             >
                 <Icon
-                    className={twMergeCustom('m-2', 'text-grey', isInWishlist && 'text-green')}
+                    className={twMergeCustom('m-2', 'text-grey', isProductInWishlist && 'text-green')}
                     iconType="icon"
-                    icon={isInWishlist ? 'HeartFull' : 'Heart'}
+                    icon={isProductInWishlist ? 'HeartFull' : 'Heart'}
                 />
                 {isWithText && (
-                    <span className="ml-1">{isInWishlist ? t('Remove from wishlist') : t('Add to wishlist')}</span>
+                    <span className="ml-1">
+                        {isProductInWishlist ? t('Remove from wishlist') : t('Add to wishlist')}
+                    </span>
                 )}
             </div>
         </div>

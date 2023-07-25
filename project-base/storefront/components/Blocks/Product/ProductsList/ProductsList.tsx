@@ -30,9 +30,9 @@ export const ProductsList: FC<ProductsListProps> = ({
     gtmMessageOrigin = GtmMessageOriginType.other,
 }) => {
     const { currentPage } = useQueryParams();
-    const { isPopupCompareOpen, handleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
+    const { isPopupCompareOpen, toggleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
         useComparison();
-    const { handleProductInWishlist, isProductInWishlist } = useWishlist();
+    const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
 
     if (!products?.length && !fetching) {
         return <CategoryDetailContentMessage />;
@@ -53,9 +53,9 @@ export const ProductsList: FC<ProductsListProps> = ({
                             gtmProductListName={gtmProductListName}
                             gtmMessageOrigin={gtmMessageOrigin}
                             isProductInComparison={isProductInComparison(product.uuid)}
-                            onProductInComparisonClick={() => handleProductInComparison(product.uuid)}
-                            handleProductInWishlist={() => handleProductInWishlist(product.uuid)}
-                            isInWishlist={isProductInWishlist(product.uuid)}
+                            toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
+                            isProductInWishlist={isProductInWishlist(product.uuid)}
+                            toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
                         />
                     ))}
 

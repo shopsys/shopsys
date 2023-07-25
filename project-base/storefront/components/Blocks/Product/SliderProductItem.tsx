@@ -19,9 +19,9 @@ type SliderProductItemProps = {
     gtmMessageOrigin: GtmMessageOriginType;
     listIndex: number;
     isProductInComparison: boolean;
-    onProductInComparisonClick: () => void;
-    isInWishlist: boolean;
-    handleProductInWishlist: () => void;
+    toggleProductInComparison: () => void;
+    isProductInWishlist: boolean;
+    toggleProductInWishlist: () => void;
 };
 
 const TEST_IDENTIFIER = 'blocks-product-sliderproductitem-';
@@ -32,9 +32,9 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({
     listIndex,
     gtmMessageOrigin,
     isProductInComparison,
-    onProductInComparisonClick,
-    isInWishlist,
-    handleProductInWishlist,
+    toggleProductInComparison,
+    isProductInWishlist,
+    toggleProductInWishlist,
 }) => {
     const { url } = useDomainConfig();
 
@@ -89,12 +89,12 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({
                     <ProductCompareButton
                         isMainVariant={product.isMainVariant}
                         isProductInComparison={isProductInComparison}
-                        onProductInComparisonClick={onProductInComparisonClick}
+                        toggleProductInComparison={toggleProductInComparison}
                     />
                     <ProductWishlistButton
                         isMainVariant={product.isMainVariant}
-                        handleProductInWishlist={handleProductInWishlist}
-                        isInWishlist={isInWishlist}
+                        isProductInWishlist={isProductInWishlist}
+                        toggleProductInWishlist={toggleProductInWishlist}
                     />
                 </div>
                 <ProductAction
