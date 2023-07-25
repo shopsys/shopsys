@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Order;
 
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -133,7 +134,8 @@ class OrderFacadeHeurekaTest extends TestCase
      */
     private function createDomain(): Domain
     {
-        $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs');
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
+        $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs', $defaultTimeZone);
 
         return new Domain([$domainConfig], $this->createMock(Setting::class));
     }

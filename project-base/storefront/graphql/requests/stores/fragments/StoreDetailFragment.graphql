@@ -10,7 +10,9 @@ fragment StoreDetailFragment on Store {
     country {
         ...CountryFragment
     }
-    openingHours
+    openingHours {
+        ...OpeningHoursFragment
+    }
     contactInfo
     specialMessage
     locationLatitude

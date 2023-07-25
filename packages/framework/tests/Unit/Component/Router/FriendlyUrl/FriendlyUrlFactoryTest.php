@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Router\FriendlyUrl;
 
+use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -15,9 +16,10 @@ class FriendlyUrlFactoryTest extends TestCase
 {
     public function testCreateForAllDomains()
     {
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'example.cz', 'cs'),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'example.com', 'en'),
+            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'example.cz', 'cs', $defaultTimeZone),
+            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'example.com', 'en', $defaultTimeZone),
         ];
         $settingMock = $this->createMock(Setting::class);
         $domain = new Domain($domainConfigs, $settingMock);

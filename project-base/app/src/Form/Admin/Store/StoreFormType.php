@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Store;
 
+use App\Form\Admin\Store\OpeningHours\OpeningHoursFormType;
 use App\Model\Stock\StockFacade;
 use App\Model\Store\Store;
 use App\Model\Store\StoreData;
@@ -18,6 +19,7 @@ use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -155,7 +157,9 @@ class StoreFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please choose country']),
                 ],
             ])
-            ->add('openingHours', TextareaType::class, [
+            ->add('openingHours', CollectionType::class, [
+                'label' => t('Opening hours'),
+                'entry_type' => OpeningHoursFormType::class,
                 'required' => false,
             ])
             ->add('contactInfo', TextareaType::class, [

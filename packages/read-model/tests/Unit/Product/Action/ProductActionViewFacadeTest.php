@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ReadModelBundle\Unit\Product\Action;
 
+use DateTimeZone;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -69,7 +70,8 @@ class ProductActionViewFacadeTest extends TestCase
      */
     protected function createDomainMock(): Domain
     {
-        $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://webserver:8080/', 'shopsys', 'en');
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
+        $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://webserver:8080/', 'shopsys', 'en', $defaultTimeZone);
 
         $domain = $this->createMock(Domain::class);
         $domain->method('getCurrentDomainConfig')->willReturn($domainConfig);

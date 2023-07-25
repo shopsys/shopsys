@@ -23,7 +23,7 @@ import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import getConfig from 'next/config';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
 const { publicRuntimeConfig } = getConfig();
@@ -56,133 +56,104 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState<ListedStoreFragmentApi | null>(
         lastOrderPickupPlace,
     );
-    const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
+    const { transport, pickupPlace: selectedPickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
     const [getGoPaySwiftsResult] = useQueryError(useGoPaySwiftsQueryApi({ variables: { currencyCode } }));
     const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
     const clearPacketeryPickupPoint = usePersistStore((store) => store.clearPacketeryPickupPoint);
 
-    const isPickupPlaceSelected = pickupPlace !== null;
+    const onSelectPacketeryPickupPlaceCallback = (
+        packeteryPoint: PacketeryExtendedPoint | null,
+        packeteryTransport: TransportWithAvailablePaymentsAndStoresFragmentApi,
+    ) => {
+        if (packeteryPoint) {
+            const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
+            setPacketeryPickupPoint(mappedPacketeryPoint);
+            changeTransportInCart(packeteryTransport.uuid, mappedPacketeryPoint);
+        }
+    };
 
-    const onSelectPacketeryPickupPlaceCallback = useCallback(
-        (
-            packeteryPoint: PacketeryExtendedPoint | null,
-            packeteryTransport: TransportWithAvailablePaymentsAndStoresFragmentApi,
-        ) => {
-            if (packeteryPoint !== null) {
-                const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
-                setPacketeryPickupPoint(mappedPacketeryPoint);
-                changeTransportInCart(packeteryTransport.uuid, mappedPacketeryPoint);
+    const openPacketeryPopup = (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
+        if (!selectedPickupPlace) {
+            const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
+
+            if (!packeteryApiKey?.length) {
+                logException(new Error(`Packeta API key was not set`));
+                return;
             }
-        },
-        [changeTransportInCart, setPacketeryPickupPoint],
-    );
 
-    const openPacketeryPopup = useCallback(
-        (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
-            if (!isPickupPlaceSelected) {
-                const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
-                if (packeteryApiKey === undefined || packeteryApiKey.length === 0) {
-                    logException(new Error(`Packeta API key was not set`));
-                    return;
-                }
+            packeteryPick(
+                packeteryApiKey,
+                (point) => {
+                    onSelectPacketeryPickupPlaceCallback(point, newTransport);
+                },
+                { language: defaultLocale },
+            );
+        }
+    };
 
-                packeteryPick(
-                    packeteryApiKey,
-                    (point) => {
-                        onSelectPacketeryPickupPlaceCallback(point, newTransport);
-                    },
-                    { language: defaultLocale },
-                );
-            }
-        },
-        [defaultLocale, isPickupPlaceSelected, onSelectPacketeryPickupPlaceCallback],
-    );
+    const openPersonalPickupPopup = (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
+        if (newTransport.transportType.code === 'packetery') {
+            openPacketeryPopup(newTransport);
 
-    const openPersonalPickupPopup = useCallback(
-        (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
-            if (newTransport.transportType.code === 'packetery') {
-                openPacketeryPopup(newTransport);
+            return;
+        }
+
+        clearPacketeryPickupPoint();
+        setPreselectedTransport(newTransport);
+    };
+
+    const handlePaymentChange = async (newPaymentUuid: string | null) =>
+        await changePaymentInCart(newPaymentUuid, paymentGoPayBankSwift);
+
+    const handleTransportChange = async (newTransportUuid: string | null) => {
+        const potentialNewTransport = transports.find((transport) => transport.uuid === newTransportUuid);
+
+        if (potentialNewTransport?.uuid === transport?.uuid) {
+            return;
+        }
+
+        if (!potentialNewTransport) {
+            await changeTransportInCart(null, null);
+            await handlePaymentChange(null);
+
+            return;
+        }
+
+        if (potentialNewTransport.isPersonalPickup || potentialNewTransport.transportType.code === 'packetery') {
+            if (!preSelectedPickupPlace) {
+                openPersonalPickupPopup(potentialNewTransport);
 
                 return;
             }
 
-            clearPacketeryPickupPoint();
-            setPreselectedTransport(newTransport);
-        },
-        [clearPacketeryPickupPoint, openPacketeryPopup],
-    );
+            await changeTransportInCart(newTransportUuid, preSelectedPickupPlace);
+            setPreSelectedPickupPlace(null);
 
-    const handlePaymentChange = useCallback(
-        async (newPaymentUuid: string | null) => {
-            await changePaymentInCart(newPaymentUuid, paymentGoPayBankSwift);
-        },
-        [paymentGoPayBankSwift, changePaymentInCart],
-    );
+            return;
+        }
 
-    const handleTransportChange = useCallback(
-        async (newTransportUuid: string | null) => {
-            const potentialNewTransport = transports.find((transport) => transport.uuid === newTransportUuid);
-            if (potentialNewTransport?.uuid === transport?.uuid) {
-                return;
-            }
+        if (newTransportUuid !== transport?.uuid) {
+            await changeTransportInCart(newTransportUuid, null);
+        }
+    };
 
-            if (potentialNewTransport === undefined) {
-                await changeTransportInCart(null, null);
-                await handlePaymentChange(null);
+    const handleGoPaySwiftChange = async (newGoPaySwiftValue: string | null) =>
+        await changePaymentInCart(payment?.uuid ?? null, newGoPaySwiftValue);
 
-                return;
-            }
-
-            if (potentialNewTransport.isPersonalPickup || potentialNewTransport.transportType.code === 'packetery') {
-                if (preSelectedPickupPlace === null) {
-                    openPersonalPickupPopup(potentialNewTransport);
-
-                    return;
-                }
-
-                await changeTransportInCart(newTransportUuid, preSelectedPickupPlace);
-                setPreSelectedPickupPlace(null);
-
-                return;
-            }
-
-            if (newTransportUuid !== transport?.uuid) {
-                await changeTransportInCart(newTransportUuid, null);
-            }
-        },
-        [
-            changeTransportInCart,
-            transports,
-            openPersonalPickupPopup,
-            transport?.uuid,
-            preSelectedPickupPlace,
-            handlePaymentChange,
-        ],
-    );
-
-    const handleGoPaySwiftChange = useCallback(
-        async (newGoPaySwiftValue: string | null) => {
-            await changePaymentInCart(payment?.uuid ?? null, newGoPaySwiftValue);
-        },
-        [changePaymentInCart, payment],
-    );
-
-    const loadPresetsFromLastOrder = useCallback(async () => {
-        if (transport === null) {
+    const loadPresetsFromLastOrder = async () => {
+        if (!transport) {
             await handleTransportChange(lastOrderTransportUuid);
         }
-        if (payment === null) {
+        if (!payment) {
             await handlePaymentChange(lastOrderPaymentUuid);
         }
-    }, [handlePaymentChange, handleTransportChange, lastOrderPaymentUuid, lastOrderTransportUuid, payment, transport]);
+    };
 
     useEffect(() => {
         loadPresetsFromLastOrder();
     }, []);
 
-    const resetPaymentAndGoPayBankSwift = () => {
-        changePaymentInCart(null, null);
-    };
+    const resetPaymentAndGoPayBankSwift = () => changePaymentInCart(null, null);
 
     const resetAll = async () => {
         await handleTransportChange(null);
@@ -191,7 +162,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     };
 
     const onChangePickupPlaceHandler = (selectedPickupPlace: ListedStoreFragmentApi | null) => {
-        if (selectedPickupPlace !== null && preSelectedTransport !== null) {
+        if (selectedPickupPlace && preSelectedTransport) {
             changeTransportInCart(preSelectedTransport.uuid, selectedPickupPlace);
         } else {
             handleTransportChange(null);
@@ -206,71 +177,68 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         setPreselectedTransport(null);
     };
 
-    const getPickupPlaceDetail = (transportItem: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
-        return transport?.uuid === transportItem.uuid &&
-            transportItem.stores?.edges?.some((storeEdge) => storeEdge?.node?.identifier === pickupPlace?.identifier)
-            ? pickupPlace
+    const getPickupPlaceDetail = (transportItem: TransportWithAvailablePaymentsAndStoresFragmentApi) =>
+        transport?.uuid === transportItem.uuid &&
+        transportItem.stores?.edges?.some(
+            (storeEdge) => storeEdge?.node?.identifier === selectedPickupPlace?.identifier,
+        )
+            ? selectedPickupPlace
             : null;
-    };
 
     const renderTransportListItem = (
         transportItem: TransportWithAvailablePaymentsAndStoresFragmentApi,
         isActive: boolean,
-    ) => {
-        return (
-            <TransportAndPaymentListItem
-                key={transportItem.uuid}
-                isActive={isActive}
-                dataTestId={TEST_IDENTIFIER + 'transport-item' + (isActive ? '-active' : '')}
-            >
-                <Radiobutton
-                    name="transport"
-                    id={transportItem.uuid}
-                    value={transportItem.uuid}
-                    checked={isActive}
-                    dataTestId={TEST_IDENTIFIER + 'transport-item-input'}
-                    image={getFirstImageOrNull(transportItem.images)}
-                    onChangeCallback={handleTransportChange}
-                    label={
-                        <TransportAndPaymentSelectItemLabel
-                            name={transportItem.name}
-                            daysUntilDelivery={transportItem.daysUntilDelivery}
-                            price={transportItem.price}
-                            description={transportItem.description}
-                            pickupPlaceDetail={getPickupPlaceDetail(transportItem)}
-                        />
-                    }
-                />
-            </TransportAndPaymentListItem>
-        );
-    };
+    ) => (
+        <TransportAndPaymentListItem
+            key={transportItem.uuid}
+            isActive={isActive}
+            dataTestId={TEST_IDENTIFIER + 'transport-item' + (isActive ? '-active' : '')}
+        >
+            <Radiobutton
+                name="transport"
+                id={transportItem.uuid}
+                value={transportItem.uuid}
+                checked={isActive}
+                dataTestId={TEST_IDENTIFIER + 'transport-item-input'}
+                image={getFirstImageOrNull(transportItem.images)}
+                onChangeCallback={handleTransportChange}
+                label={
+                    <TransportAndPaymentSelectItemLabel
+                        name={transportItem.name}
+                        daysUntilDelivery={transportItem.daysUntilDelivery}
+                        price={transportItem.price}
+                        description={transportItem.description}
+                        pickupPlaceDetail={getPickupPlaceDetail(transportItem)}
+                    />
+                }
+            />
+        </TransportAndPaymentListItem>
+    );
 
-    const renderPaymentListItem = (paymentItem: SimplePaymentFragmentApi, isActive: boolean) => {
-        return (
-            <TransportAndPaymentListItem
-                key={paymentItem.uuid}
-                isActive={isActive}
-                dataTestId={TEST_IDENTIFIER + 'payment-item' + (isActive ? '-active' : '')}
-            >
-                <Radiobutton
-                    name="payment"
-                    id={paymentItem.uuid}
-                    value={paymentItem.uuid}
-                    checked={isActive}
-                    dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
-                    image={getFirstImageOrNull(paymentItem.images)}
-                    onChangeCallback={handlePaymentChange}
-                    label={
-                        <TransportAndPaymentSelectItemLabel
-                            name={paymentItem.name}
-                            price={paymentItem.price}
-                            description={paymentItem.description}
-                        />
-                    }
-                />
-            </TransportAndPaymentListItem>
-        );
-    };
+    const renderPaymentListItem = (paymentItem: SimplePaymentFragmentApi, isActive: boolean) => (
+        <TransportAndPaymentListItem
+            key={paymentItem.uuid}
+            isActive={isActive}
+            dataTestId={TEST_IDENTIFIER + 'payment-item' + (isActive ? '-active' : '')}
+        >
+            <Radiobutton
+                name="payment"
+                id={paymentItem.uuid}
+                value={paymentItem.uuid}
+                checked={isActive}
+                dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
+                image={getFirstImageOrNull(paymentItem.images)}
+                onChangeCallback={handlePaymentChange}
+                label={
+                    <TransportAndPaymentSelectItemLabel
+                        name={paymentItem.name}
+                        price={paymentItem.price}
+                        description={paymentItem.description}
+                    />
+                }
+            />
+        </TransportAndPaymentListItem>
+    );
 
     return (
         <>
@@ -279,18 +247,18 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 <div data-testid={TEST_IDENTIFIER + 'transport'}>
                     <Heading type="h3">{t('Choose transport')}</Heading>
                     <ul>
-                        {transport !== null
+                        {transport
                             ? renderTransportListItem(transport, true)
                             : transports.map((transportItem) => renderTransportListItem(transportItem, false))}
                     </ul>
-                    {transport !== null && (
+                    {!!transport && (
                         <ResetButton
                             onClick={resetAll}
                             dataTestId={TEST_IDENTIFIER + 'reset-transport'}
                             text={t('Change transport type')}
                         />
                     )}
-                    {preSelectedTransport !== null && (
+                    {!!preSelectedTransport && (
                         <PickupPlacePopup
                             isVisible
                             transport={preSelectedTransport}
@@ -299,15 +267,19 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         />
                     )}
                 </div>
-                {transport !== null && preSelectedTransport === null && (
+
+                {!!transport && !preSelectedTransport && (
                     <div className="relative mt-12" data-testid={TEST_IDENTIFIER + 'payment'}>
                         {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" />}
+
                         <Heading type="h3">{t('Choose payment')}</Heading>
+
                         <ul>
-                            {payment !== null
+                            {payment
                                 ? renderPaymentListItem(payment, true)
                                 : transport.payments.map((paymentItem) => renderPaymentListItem(paymentItem, false))}
                         </ul>
+
                         {payment?.type === 'goPay' && payment.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT' && (
                             <>
                                 <Heading type="h3">{t('Choose your bank')}</Heading>
@@ -324,7 +296,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 ))}
                             </>
                         )}
-                        {payment !== null && (
+
+                        {!!payment && (
                             <ResetButton
                                 onClick={resetPaymentAndGoPayBankSwift}
                                 dataTestId={TEST_IDENTIFIER + 'reset-payment'}

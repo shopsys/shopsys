@@ -31,7 +31,10 @@ class StoreData
 
     public ?Country $country = null;
 
-    public ?string $openingHours = null;
+    /**
+     * @var \App\Model\Store\OpeningHours\OpeningHoursData[]
+     */
+    public array $openingHours = [];
 
     public ?string $contactInfo = null;
 

@@ -12,3 +12,20 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - fix S3Bridge bundle name ([#2648](https://github.com/shopsys/shopsys/pull/2648))
     - see #project-base-diff to update your project
+- add opening hours to stores ([#2660](https://github.com/shopsys/shopsys/pull/2660))
+    - `Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig`
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    $id,
+                    $url,
+                    $name,
+                    $locale,
+            +       DateTimeZone $dateTimeZone,
+                    $stylesDirectory = self::STYLES_DIRECTORY_DEFAULT,
+                    $stylesDirectory = self::STYLES_DIRECTORY_DEFAULT,
+                    $designId = null,
+                ) {
+            ```
+    - to start using opening hours of stores set store opening hours in administration or create specialized migrations for it
+        - after update add this to your migration: `$this->sql('ALTER TABLE stores DROP COLUMN opening_hours');`

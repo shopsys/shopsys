@@ -3,8 +3,10 @@ domains:
         name: shopsys
         locale: en
         styles_directory: common
+        timezone: Europe/Prague
 
     -   id: 2
         name: 2.shopsys
         locale: cs
         styles_directory: domain2
+        timezone: Europe/Bratislava

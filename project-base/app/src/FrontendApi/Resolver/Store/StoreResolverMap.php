@@ -4,34 +4,31 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Store;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Store\Store;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class StoreResolverMap extends ResolverMap
 {
     /**
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
-    public function __construct(private FriendlyUrlFacade $friendlyUrlFacade, private Domain $domain)
-    {
+    public function __construct(
+        private readonly Domain $domain,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+    ) {
     }
 
     /**
      * @return array
      */
-    protected function map()
+    protected function map(): array
     {
         return [
             'Store' => [
-                'slug' => function (Store $store) {
-                    return $this->getSlug($store);
-                },
-                'openingHoursHtml' => function (Store $store) {
-                    return $store->getOpeningHours() !== null ? nl2br($store->getOpeningHours()) : null;
-                },
+                'slug' => fn (Store $store): string => $this->getSlug($store),
             ],
         ];
     }

@@ -1,0 +1,11 @@
+fragment OpeningHoursFragment on OpeningHours {
+    isOpen
+    dayOfWeek
+    openingHoursOfDays {
+        dayOfWeek
+        firstOpeningTime
+        firstClosingTime
+        secondOpeningTime
+        secondClosingTime
+    }
+}

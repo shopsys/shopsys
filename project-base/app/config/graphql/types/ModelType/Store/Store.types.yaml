@@ -33,11 +33,8 @@ Store:
                 type: "Country!"
                 description: "Store address country"
             openingHours:
-                type: "String"
+                type: "OpeningHours!"
                 description: "Store opening hours"
-            openingHoursHtml:
-                type: "String"
-                description: "Store opening hours, newlines are rendered as HTML breakline"
             contactInfo:
                 type: "String"
                 description: ""

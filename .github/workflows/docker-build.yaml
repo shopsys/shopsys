@@ -147,7 +147,8 @@ jobs:
                     docker cp ./ php-fpm:/var/www/html
                     docker exec --user root php-fpm chown -R www-data:www-data /var/www/html
                     docker exec php-fpm rm -rf /var/www/html/composer.lock /var/www/html/project-base/package-lock.json /var/www/html/project-base/migrations-lock.yml
-                    docker exec php-fpm php phing -D production.confirm.action=y build-version-generate
+                    docker exec php-fpm composer install
+                    docker exec php-fpm php phing -D production.confirm.action=y build-version-generate npm
             -   name: Push branch specific PHP-FPM image to GitHub Container Registry
                 run: |
                     docker commit -m="Include Composer and NPM files" php-fpm ${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}

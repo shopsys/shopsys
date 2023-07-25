@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Domain\Config;
 
+use DateTimeZone;
 use Shopsys\FrameworkBundle\Component\Domain\Config\Exception\DomainConfigsDoNotMatchException;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Processor;
@@ -91,6 +92,7 @@ class DomainsConfigLoader
             $domainConfig[DomainsUrlsConfigDefinition::CONFIG_URL],
             $domainConfig[DomainsConfigDefinition::CONFIG_NAME],
             $domainConfig[DomainsConfigDefinition::CONFIG_LOCALE],
+            new DateTimeZone($domainConfig[DomainsConfigDefinition::CONFIG_TIMEZONE]),
             $domainConfig[DomainsConfigDefinition::CONFIG_STYLES_DIRECTORY],
             $domainConfig[DomainsConfigDefinition::CONFIG_DESIGN_ID],
         );

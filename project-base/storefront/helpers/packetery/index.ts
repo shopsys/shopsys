@@ -46,13 +46,9 @@ export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExten
         name: packeteryExtendedPoint.country.toUpperCase(),
     },
     postcode: packeteryExtendedPoint.zip.replaceAll(' ', ''),
-    openingHoursHtml: parsePacketeryOpeningHours(packeteryExtendedPoint.openingHours.compactShort),
+    openingHours: {
+        isOpen: false,
+        dayOfWeek: 0,
+        openingHoursOfDays: [],
+    },
 });
-
-/**
- * only specific HTML tags are filtered
- * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html#:~:text=PointHours
- */
-const parsePacketeryOpeningHours = (openingHours: string) => {
-    return openingHours.replaceAll(/<(\/?strong\s?(style='color: red;')?)>/g, '');
-};

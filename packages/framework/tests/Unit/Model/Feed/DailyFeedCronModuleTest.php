@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Feed;
 
+use DateTimeZone;
 use Monolog\Handler\NullHandler;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -25,7 +26,8 @@ class DailyFeedCronModuleTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en');
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
+        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $defaultTimeZone);
         $domain = new Domain([$domainConfig], $settingMock);
 
         $feedExportMock = $this->getMockBuilder(FeedExport::class)

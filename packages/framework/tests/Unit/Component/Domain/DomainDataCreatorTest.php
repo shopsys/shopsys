@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Domain;
 
+use DateTimeZone;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator;
@@ -24,8 +25,9 @@ class DomainDataCreatorTest extends TestCase
 {
     public function testCreateNewDomainsDataNoNewDomain()
     {
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs'),
+            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone),
         ];
 
         $settingMock = $this->createMock(Setting::class);
@@ -63,9 +65,10 @@ class DomainDataCreatorTest extends TestCase
 
     public function testCreateNewDomainsDataOneNewDomain()
     {
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
-            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs'),
-            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs'),
+            new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone),
+            new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone),
         ];
 
         $settingMock = $this->createMock(Setting::class);
@@ -135,17 +138,20 @@ class DomainDataCreatorTest extends TestCase
 
     public function testCreateNewDomainsDataNewLocale()
     {
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigWithDataCreated = new DomainConfig(
             Domain::FIRST_DOMAIN_ID,
             'http://example.com:8080',
             'example',
             'cs',
+            $defaultTimeZone,
         );
         $domainConfigWithNewLocale = new DomainConfig(
             Domain::SECOND_DOMAIN_ID,
             'http://example.com:8080',
             'example',
             'en',
+            $defaultTimeZone,
         );
         $domainConfigs = [
             $domainConfigWithDataCreated,

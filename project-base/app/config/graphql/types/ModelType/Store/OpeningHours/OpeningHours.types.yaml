@@ -1,0 +1,14 @@
+OpeningHours:
+    type: object
+    config:
+        description: "Represents store opening hours"
+        fields:
+            isOpen:
+                type: "Boolean!"
+                description: "Is store currently open?"
+            dayOfWeek:
+                type: "Int!"
+                description: "Current day of the week"
+            openingHoursOfDays:
+                type: "[OpeningHoursOfDay!]!"
+                description: "Opening hours for every day of the week (1 for Monday 7 for Sunday)"

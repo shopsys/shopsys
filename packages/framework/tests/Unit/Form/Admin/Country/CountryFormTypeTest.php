@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Form\Admin\Country;
 
+use DateTimeZone;
 use ReflectionClass;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -122,10 +123,13 @@ class CountryFormTypeTest extends TypeTestCase
         $this->localization->method('getAdminLocale')->willReturn('en');
 
         $this->domain = $this->createMock(Domain::class);
+
+        $defaultTimeZone = new DateTimeZone('Europe/Prague');
+
         $this->domain->method('getAll')
             ->willReturn([
-                new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs'),
-                new DomainConfig(Domain::SECOND_DOMAIN_ID, '', '', 'en'),
+                new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs', $defaultTimeZone),
+                new DomainConfig(Domain::SECOND_DOMAIN_ID, '', '', 'en', $defaultTimeZone),
             ]);
         $this->domain->method('getAllIds')->willReturn([1, 2]);
 
