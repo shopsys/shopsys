@@ -28,27 +28,23 @@ import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useRouter } from 'next/router';
+import { useQueryParams } from 'hooks/useQueryParams';
 import { GtmPageType } from 'types/gtm/enums';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
-    const router = useRouter();
     const { url } = useDomainConfig();
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
-    const filter = mapParametersFilter(
-        getFilterOptions(parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
-    );
-    const search = getStringFromUrlQuery(router.query[SEARCH_QUERY_PARAMETER_NAME]);
+    const { sort, filter, searchString } = useQueryParams();
 
     const [{ data: searchData, fetching }] = useQueryError(
         useSearchQueryApi({
             variables: {
-                search,
-                orderingMode,
-                filter,
+                search: searchString ?? '',
+                orderingMode: sort,
+                filter: mapParametersFilter(filter),
                 pageSize: DEFAULT_PAGE_SIZE,
             },
         }),
@@ -60,19 +56,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.search_results, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    let title = t('Search');
-    const currentPage = parsePageNumberFromQuery(router.query[PAGE_QUERY_PARAMETER_NAME]);
-    const searchedProductsTotalCount = searchData?.productsSearch.totalCount ?? 0;
-
-    if (searchedProductsTotalCount > DEFAULT_PAGE_SIZE) {
-        const additionalPaginationText =
-            ' ' +
-            t('page {{ currentPage }} from {{ totalPages }}', {
-                totalPages: Math.ceil(searchedProductsTotalCount / DEFAULT_PAGE_SIZE),
-                currentPage: currentPage,
-            });
-        title = title + additionalPaginationText;
-    }
+    const title = useSeoTitleWithPagination(searchData?.productsSearch.totalCount, t('Search'));
 
     return (
         <>

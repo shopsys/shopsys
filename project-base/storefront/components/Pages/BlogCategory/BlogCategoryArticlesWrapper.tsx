@@ -5,15 +5,18 @@ import { ListedBlogArticleFragmentApi, useBlogCategoryArticlesApi } from 'graphq
 import { createEmptyArray } from 'helpers/arrayUtils';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { useMemo, useRef } from 'react';
+import { RefObject, useMemo } from 'react';
 import { BlogArticleSkeleton } from '../BlogArticle/BlogArticleSkeleton';
 
 type BlogCategoryArticlesWrapperProps = {
     uuid: string;
+    paginationScrollTargetRef: RefObject<HTMLDivElement>;
 };
 
-export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> = ({ uuid }) => {
-    const containerWrapRef = useRef<null | HTMLDivElement>(null);
+export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> = ({
+    uuid,
+    paginationScrollTargetRef,
+}) => {
     const { currentPage } = useQueryParams();
 
     const [{ data, fetching }] = useBlogCategoryArticlesApi({
@@ -35,13 +38,13 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
                 <BlogArticlesList blogArticles={mappedArticles} />
             ) : (
                 <div className="flex flex-col gap-10">
-                    {createEmptyArray(4).map((_, index) => (
+                    {createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
                         <BlogArticleSkeleton key={index} />
                     ))}
                 </div>
             )}
             <Pagination
-                containerWrapRef={containerWrapRef}
+                paginationScrollTargetRef={paginationScrollTargetRef}
                 totalCount={data?.blogCategory?.blogArticles.totalCount ?? 0}
             />
         </>

@@ -26,7 +26,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const { url } = useDomainConfig();
-    const containerWrapRef = useRef<null | HTMLDivElement>(null);
+    const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
 
     return (
@@ -37,7 +37,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                 </div>
                 <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
-            <div ref={containerWrapRef}>
+            <div ref={paginationScrollTargetRef} className="scroll-mt-5">
                 <Webline>
                     <TableGrid>
                         {orders !== undefined && orders.length !== 0 && (
@@ -123,7 +123,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                 <Webline>
                     <Pagination
                         totalCount={totalCount !== undefined ? totalCount : 0}
-                        containerWrapRef={containerWrapRef}
+                        paginationScrollTargetRef={paginationScrollTargetRef}
                     />
                 </Webline>
             </div>

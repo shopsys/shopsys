@@ -69,7 +69,7 @@ export const ProductsList: FC<ProductsListProps> = ({
                     )}
                 </>
             ) : (
-                createEmptyArray(10).map((_, index) => <ProductItemSkeleton key={index} />)
+                createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => <ProductItemSkeleton key={index} />)
             )}
         </div>
     );

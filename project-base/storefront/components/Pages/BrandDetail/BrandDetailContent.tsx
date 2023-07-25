@@ -15,7 +15,7 @@ type BrandDetailContentProps = {
 const TEST_IDENTIFIER = 'pages-branddetail-';
 
 export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
-    const containerWrapRef = useRef<null | HTMLDivElement>(null);
+    const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
 
     const brandImage = getFirstImageOrNull(brand.images);
 
@@ -36,9 +36,9 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 </div>
             </Webline>
             <Webline>
-                <div ref={containerWrapRef}>
+                <div ref={paginationScrollTargetRef} className="scroll-mt-5">
                     <SortingBar sorting={brand.products.orderingMode} totalCount={brand.products.totalCount} />
-                    <BrandDetailProductsWrapper brand={brand} containerWrapRef={containerWrapRef} />
+                    <BrandDetailProductsWrapper brand={brand} paginationScrollTargetRef={paginationScrollTargetRef} />
                 </div>
             </Webline>
         </>

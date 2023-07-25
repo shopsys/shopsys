@@ -15,11 +15,9 @@ const TEST_IDENTIFIER = 'blocks-product-filter-filtergroup-price';
 
 export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinPrice, initialMaxPrice }) => {
     const [isGroupOpen, setIsGroupOpen] = useState(true);
-    const {
-        filter: { minimalPrice, maximalPrice },
-        updateFilterPriceMinimum,
-        updateFilterPriceMaximum,
-    } = useQueryParams();
+    const { filter, updateFilterPriceMinimum, updateFilterPriceMaximum } = useQueryParams();
+
+    const { minimalPrice, maximalPrice } = filter || {};
 
     const minPriceOption = getPriceRounded(initialMinPrice);
     const maxPriceOption = getPriceRounded(initialMaxPrice);

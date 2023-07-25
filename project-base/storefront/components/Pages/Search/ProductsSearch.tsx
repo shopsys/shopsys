@@ -4,12 +4,12 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
-import { ListedProductConnectionPreviewFragmentApi } from 'graphql/generated';
+import { ListedProductConnectionPreviewFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ProductsSearchProps = {
@@ -19,13 +19,13 @@ type ProductsSearchProps = {
 export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
     const t = useTypedTranslationFunction();
     const router = useRouter();
-    const containerWrapRef = useRef<HTMLDivElement>(null);
+    const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const { url } = useDomainConfig();
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const isFiltered = 'filter' in router.query;
 
-    const handlePanelOpenerClick = useCallback(() => {
+    const handlePanelOpenerClick = () => {
         const body = document.getElementsByTagName('body')[0];
 
         setIsPanelOpen((prev) => {
@@ -34,7 +34,7 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
 
             return newValue;
         });
-    }, []);
+    };
 
     return (
         <>
@@ -57,7 +57,10 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                     />
                 </div>
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
-                <div className="flex flex-1 flex-col overflow-hidden vl:pl-12">
+                <div
+                    className="flex flex-1 scroll-mt-5 flex-col overflow-hidden scroll-smooth vl:pl-12"
+                    ref={paginationScrollTargetRef}
+                >
                     <div
                         className="relative mb-3 flex h-12 w-full cursor-pointer flex-row justify-center rounded-xl bg-primary py-3 px-8 font-bold uppercase leading-7 text-white vl:hidden"
                         onClick={handlePanelOpenerClick}
@@ -65,8 +68,16 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                         <Icon iconType="icon" icon="Filter" className="mr-3 w-6 font-bold text-white" />
                         {t('Filter')}
                     </div>
-                    <SortingBar sorting={productsSearch.orderingMode} totalCount={productsSearch.totalCount} />
-                    <SearchProductsWrapper containerWrapperRef={containerWrapRef} />
+                    <SortingBar
+                        sorting={productsSearch.orderingMode}
+                        totalCount={productsSearch.totalCount}
+                        customSortOptions={[
+                            ProductOrderingModeEnumApi.RelevanceApi,
+                            ProductOrderingModeEnumApi.PriceAscApi,
+                            ProductOrderingModeEnumApi.PriceDescApi,
+                        ]}
+                    />
+                    <SearchProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef} />
                 </div>
             </div>
         </>

@@ -33,6 +33,7 @@ import { createClient } from 'helpers/urql/createClient';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult, ssrExchange } from 'urql';
@@ -41,19 +42,14 @@ import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 const CategoryDetailPage: NextPage = () => {
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
-
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
-
-    const filter = mapParametersFilter(
-        getFilterOptions(parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
-    );
+    const { sort, filter } = useQueryParams();
 
     const [{ data: categoryData, fetching }] = useQueryError(
         useCategoryDetailQueryApi({
             variables: {
                 urlSlug: getSlugFromUrl(slug),
-                orderingMode,
-                filter,
+                orderingMode: sort,
+                filter: mapParametersFilter(filter),
             },
         }),
     );

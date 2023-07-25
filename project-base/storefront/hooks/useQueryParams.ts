@@ -43,9 +43,10 @@ export const useQueryParams = () => {
     const query = getQueryWithoutSlugTypeParameter(router.query) as unknown as UrlQueries;
 
     const currentPage = Number(query[PAGE_QUERY_PARAMETER_NAME] || 1);
-    const sort = query[SORT_QUERY_PARAMETER_NAME];
-    const filter = JSON.parse(query[FILTER_QUERY_PARAMETER_NAME] || '{}') as FilterOptionsUrlQueryType;
-    const isWithFilter = !!Object.keys(filter).length;
+    const searchString = query[SEARCH_QUERY_PARAMETER_NAME];
+    const sort = query[SORT_QUERY_PARAMETER_NAME] ?? null;
+    const filterQuery = query[FILTER_QUERY_PARAMETER_NAME];
+    const filter = filterQuery ? (JSON.parse(filterQuery) as FilterOptionsUrlQueryType) : null;
 
     const updateSort = (sorting: ProductOrderingModeEnumApi | undefined) => {
         pushQuerySort(sorting);
@@ -75,11 +76,11 @@ export const useQueryParams = () => {
     };
 
     const updateFilterBrands = (selectedUuid: string | undefined) => {
-        pushQueryFilter({ ...filter, brands: handleUpdateFilter(selectedUuid, filter.brands) });
+        pushQueryFilter({ ...filter, brands: handleUpdateFilter(selectedUuid, filter?.brands) });
     };
 
     const updateFilterFlags = (selectedUuid: string | undefined) => {
-        pushQueryFilter({ ...filter, flags: handleUpdateFilter(selectedUuid, filter.flags) });
+        pushQueryFilter({ ...filter, flags: handleUpdateFilter(selectedUuid, filter?.flags) });
     };
 
     const updateFilterParameters = (
@@ -95,7 +96,7 @@ export const useQueryParams = () => {
 
             // deep clone parameters
             const newParameters: FilterOptionsParameterUrlQueryType[] = JSON.parse(
-                JSON.stringify(filter.parameters || []),
+                JSON.stringify(filter?.parameters || []),
             );
 
             const updatedParamaterIndex = newParameters.findIndex(
@@ -112,7 +113,7 @@ export const useQueryParams = () => {
             if (updatedParamaterIndex !== -1) {
                 const newValues = handleUpdateFilter(
                     paramaterOptionUuid,
-                    filter.parameters![updatedParamaterIndex].values,
+                    filter?.parameters![updatedParamaterIndex].values,
                 );
 
                 newParameters[updatedParamaterIndex] = {
@@ -200,9 +201,9 @@ export const useQueryParams = () => {
 
     return {
         currentPage,
+        searchString,
         sort,
         filter,
-        isWithFilter,
         updateSort,
         updatePagination,
         updateFilterInStock,

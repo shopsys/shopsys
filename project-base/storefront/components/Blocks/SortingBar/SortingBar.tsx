@@ -12,26 +12,36 @@ import { twJoin } from 'tailwind-merge';
 type SortingBarProps = {
     totalCount: number;
     sorting: ProductOrderingModeEnumApi | null;
+    customSortOptions?: ProductOrderingModeEnumApi[];
 };
 
 const TEST_IDENTIFIER = 'blocks-sortingbar';
 
-export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
+const DEFAULT_SORT_OPTIONS = [
+    ProductOrderingModeEnumApi.PriorityApi,
+    ProductOrderingModeEnumApi.PriceAscApi,
+    ProductOrderingModeEnumApi.PriceDescApi,
+];
+
+export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSortOptions }) => {
     const t = useTypedTranslationFunction();
     const { sort: sortSelected, updateSort } = useQueryParams();
     const { width } = useGetWindowSize();
     const [isMobileSortBarVisible, setMobileSortBarVisible] = useState(true);
     const [toggleSortMenu, setToggleSortMenu] = useState(false);
 
-    const sortValues = [
-        { stateValue: ProductOrderingModeEnumApi.PriorityApi, displayValue: t('priority') },
-        { stateValue: ProductOrderingModeEnumApi.PriceAscApi, displayValue: t('price ascending') },
-        { stateValue: ProductOrderingModeEnumApi.PriceDescApi, displayValue: t('price descending') },
-    ];
+    const sortOptionsLabels = {
+        [ProductOrderingModeEnumApi.PriorityApi]: t('priority'),
+        [ProductOrderingModeEnumApi.PriceAscApi]: t('price ascending'),
+        [ProductOrderingModeEnumApi.PriceDescApi]: t('price descending'),
+        [ProductOrderingModeEnumApi.RelevanceApi]: t('relevance'),
+        [ProductOrderingModeEnumApi.NameAscApi]: t('name ascending'),
+        [ProductOrderingModeEnumApi.NameDescApi]: t('name descending'),
+    };
 
-    const selectedSortOption = sortValues.find(
-        (v) => v.stateValue === (sortSelected || sorting || ProductOrderingModeEnumApi.PriorityApi),
-    );
+    const sortOptions = customSortOptions || DEFAULT_SORT_OPTIONS;
+
+    const selectedSortOption = sortSelected || sorting || ProductOrderingModeEnumApi.PriorityApi;
 
     useResizeWidthEffect(
         width,
@@ -40,9 +50,6 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
         () => setMobileSortBarVisible(true),
         () => setMobileSortBarVisible(isElementVisible([{ min: 0, max: 1024 }], width)),
     );
-
-    const handleSort = (newSort: ProductOrderingModeEnumApi) =>
-        updateSort(newSort === sortValues[0].stateValue ? undefined : newSort);
 
     return (
         <div
@@ -57,40 +64,38 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
             >
                 {isMobileSortBarVisible ? (
                     <>
-                        {selectedSortOption && (
-                            <div
-                                className="flex items-center justify-center py-2"
-                                onClick={() => setToggleSortMenu((prev) => !prev)}
-                                data-testid={TEST_IDENTIFIER + '-selected'}
-                            >
-                                <Icon iconType="icon" icon="Sort" className="w-5 align-middle" />
-                                <div className="pl-2 text-justify font-bold text-dark">
-                                    <div className="uppercase leading-5">{t('Sort')}</div>
-                                    <div
-                                        className="text-sm leading-3 text-primary"
-                                        data-testid={TEST_IDENTIFIER + '-selected-value'}
-                                    >
-                                        {selectedSortOption.displayValue}
-                                    </div>
+                        <div
+                            className="flex items-center justify-center py-2"
+                            onClick={() => setToggleSortMenu((prev) => !prev)}
+                            data-testid={TEST_IDENTIFIER + '-selected'}
+                        >
+                            <Icon iconType="icon" icon="Sort" className="w-5 align-middle" />
+                            <div className="pl-2 text-justify font-bold text-dark">
+                                <div className="uppercase leading-5">{t('Sort')}</div>
+                                <div
+                                    className="text-sm leading-3 text-primary"
+                                    data-testid={TEST_IDENTIFIER + '-selected-value'}
+                                >
+                                    {selectedSortOption}
                                 </div>
                             </div>
-                        )}
+                        </div>
 
                         {toggleSortMenu && (
                             <div className="absolute top-full z-[1] w-full rounded-b-xl bg-border">
-                                {sortValues
-                                    .filter((value) => value.stateValue !== selectedSortOption?.stateValue)
-                                    .map((value, index) => (
-                                        <SortingBarItem key={value.stateValue}>
+                                {sortOptions
+                                    .filter((sortOption) => sortOption !== selectedSortOption)
+                                    .map((sortOption, index) => (
+                                        <SortingBarItem key={sortOption}>
                                             <SortingBarItemLink
-                                                isActive={value.stateValue === selectedSortOption?.stateValue}
+                                                isActive={sortOption === selectedSortOption}
                                                 onClick={() => {
                                                     setToggleSortMenu((prev) => !prev);
-                                                    handleSort(value.stateValue);
+                                                    updateSort(sortOption);
                                                 }}
                                                 dataTestId={TEST_IDENTIFIER + '-' + index}
                                             >
-                                                {value.displayValue}
+                                                {sortOptionsLabels[sortOption]}
                                             </SortingBarItemLink>
                                         </SortingBarItem>
                                     ))}
@@ -100,16 +105,14 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
                 ) : (
                     <>
                         <div className="flex vl:gap-3">
-                            {sortValues.map((sortOption, index) => (
+                            {sortOptions.map((sortOption, index) => (
                                 <SortingBarItem
-                                    key={sortOption.stateValue}
-                                    onClick={() => handleSort(sortOption.stateValue)}
+                                    key={sortOption}
+                                    onClick={() => updateSort(sortOption)}
                                     dataTestId={TEST_IDENTIFIER + '-' + index}
                                 >
-                                    <SortingBarItemLink
-                                        isActive={sortOption.stateValue === selectedSortOption?.stateValue}
-                                    >
-                                        <span>{sortOption.displayValue}</span>
+                                    <SortingBarItemLink isActive={sortOption === selectedSortOption}>
+                                        <span>{sortOptionsLabels[sortOption]}</span>
                                     </SortingBarItemLink>
                                 </SortingBarItem>
                             ))}

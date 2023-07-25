@@ -1,7 +1,7 @@
+import { Heading } from 'components/Basic/Heading/Heading';
 import { AdvancedSeoCategories } from './AdvancedSeoCategories/AdvancedSeoCategories';
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
@@ -15,6 +15,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 
 type CategoryDetailContentProps = {
     category: CategoryDetailFragmentApi;
@@ -23,9 +24,11 @@ type CategoryDetailContentProps = {
 export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category }) => {
     const t = useTypedTranslationFunction();
     const [isPanelOpen, setIsPanelOpen] = useState(false);
-    const containerWrapRef = useRef<null | HTMLDivElement>(null);
+    const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const { query } = useRouter();
     const isFiltered = 'filter' in query;
+
+    const title = useSeoTitleWithPagination(category.products.totalCount, category.name, category.seoH1);
 
     const handlePanelOpenerClick = useCallback(() => {
         const body = document.getElementsByTagName('body')[0];
@@ -41,7 +44,10 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
     return (
         <Webline>
             {isFiltered && <MetaRobots content="noindex, follow" />}
-            <div className="mb-7 flex flex-col vl:mb-10 vl:flex-row vl:flex-wrap" ref={containerWrapRef}>
+            <div
+                className="mb-7 flex scroll-mt-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap"
+                ref={paginationScrollTargetRef}
+            >
                 <div
                     className={twJoin(
                         'fixed top-0 left-0 bottom-0 right-10 max-w-[400px] -translate-x-full transition max-vl:z-aboveOverlay vl:static vl:w-[304px] vl:translate-x-0 vl:transition-none',
@@ -61,9 +67,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
                 <div className="flex flex-1 flex-col overflow-hidden vl:pl-12">
                     <Adverts positionName="productList" className="mb-5" />
-                    <HeadingPaginated type="h1" totalCount={category.products.totalCount}>
-                        {category.seoH1 !== null ? category.seoH1 : category.name}
-                    </HeadingPaginated>
+                    <Heading type="h1">{title}</Heading>
                     {category.description !== null &&
                         category.description !== '' &&
                         (query[PAGE_QUERY_PARAMETER_NAME] ?? 1) === 1 && (
@@ -88,7 +92,10 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                             totalCount={category.products.totalCount}
                         />
                     </div>
-                    <CategoryDetailProductsWrapper category={category} containerWrapRef={containerWrapRef} />
+                    <CategoryDetailProductsWrapper
+                        category={category}
+                        paginationScrollTargetRef={paginationScrollTargetRef}
+                    />
                 </div>
             </div>
         </Webline>

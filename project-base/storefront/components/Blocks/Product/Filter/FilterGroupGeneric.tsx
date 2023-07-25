@@ -35,7 +35,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     const [isGroupOpen, setIsGroupOpen] = useState(true);
     const { filter, updateFilterFlags, updateFilterBrands } = useQueryParams();
 
-    const selectedItems = filter[filterField];
+    const selectedItems = filter && filter[filterField];
 
     const { defaultOptions, isShowLessMoreShown, isWithAllItemsShown, setAreAllItemsShown } = useFilterShowLess(
         options,
