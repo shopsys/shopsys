@@ -280,12 +280,9 @@ jobs:
                 with:
                     name: docker-compose
             -   name: Build application
-                run: docker compose up -d storefront php-fpm
+                run: docker compose up -d --wait storefront php-fpm
             -   name: Move schema.graphql to Storefront container
                 run: docker compose cp ./project-base/app/schema.graphql storefront:/home/node/app/schema.graphql
-            -   name: Install dev dependencies
-                run: |
-                    docker compose exec storefront pnpm install --dev --frozen-lockfile
             -   name: Check no NEXT_PUBLIC_ variables are used
                 run: |
                     docker compose exec --user root storefront apk add grep
@@ -410,7 +407,7 @@ jobs:
             -   name: Build application
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
-                    docker compose up -d
+                    docker compose up -d --wait
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate test-db-create test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
                     docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=acc environment-change
             -   name: Run Cypress tests
@@ -532,7 +529,7 @@ jobs:
             -   name: Build application
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
-                    docker compose up -d
+                    docker compose up -d --wait
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate test-db-create test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
                     docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=acc environment-change
             -   name: Run Cypress tests
