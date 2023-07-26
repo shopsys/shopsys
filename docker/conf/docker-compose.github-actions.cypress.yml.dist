@@ -15,6 +15,12 @@ services:
             - postgres
             - -c
             - config_file=/var/lib/postgresql/data/postgresql.conf
+        healthcheck:
+            test: ["CMD", "pg_isready"]
+            start_period: 10s
+            interval: 10s
+            timeout: 10s
+            retries: 15
 
     webserver:
         image: nginx:1.13-alpine
