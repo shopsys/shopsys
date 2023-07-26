@@ -36,6 +36,12 @@ services:
             - dev
         ports:
             - "3000:3000"
+        healthcheck:
+            test: wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1
+            start_period: 30s
+            interval: 30s
+            timeout: 10s
+            retries: 5
         volumes:
             - ./project-base/storefront:/home/node/app
 

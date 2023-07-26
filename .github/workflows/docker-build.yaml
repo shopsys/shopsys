@@ -280,12 +280,9 @@ jobs:
                 with:
                     name: docker-compose
             -   name: Build application
-                run: docker compose up -d storefront php-fpm
+                run: docker compose up -d --wait storefront php-fpm
             -   name: Move schema.graphql to Storefront container
                 run: docker compose cp ./project-base/app/schema.graphql storefront:/home/node/app/schema.graphql
-            -   name: Install dev dependencies
-                run: |
-                    docker compose exec storefront pnpm install --dev --frozen-lockfile
             -   name: Check no NEXT_PUBLIC_ variables are used
                 run: |
                     docker compose exec --user root storefront apk add grep
