@@ -6,7 +6,7 @@ type ProductCompareButtonProps = {
     isMainVariant: boolean;
     isWithText?: boolean;
     isProductInComparison: boolean;
-    onProductInComparisonClick: () => void;
+    toggleProductInComparison: () => void;
 };
 
 const TEST_IDENTIFIER = 'compare-button';
@@ -16,7 +16,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     isMainVariant,
     isWithText,
     isProductInComparison,
-    onProductInComparisonClick,
+    toggleProductInComparison,
 }) => {
     const t = useTypedTranslationFunction();
 
@@ -30,10 +30,10 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
                 className="flex cursor-pointer items-center"
                 data-testid={TEST_IDENTIFIER}
                 title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
-                onClick={onProductInComparisonClick}
+                onClick={toggleProductInComparison}
             >
                 <Icon
-                    className={twMergeCustom('text-grey', isProductInComparison && 'text-green')}
+                    className={twMergeCustom('m-2 text-grey', isProductInComparison && 'text-green')}
                     iconType="icon"
                     icon="Compare"
                 />

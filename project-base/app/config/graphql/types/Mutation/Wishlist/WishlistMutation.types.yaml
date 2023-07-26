@@ -1,0 +1,29 @@
+WishlistMutation:
+    type: object
+    config:
+        fields:
+            addProductToWishlist:
+                type: 'Wishlist!'
+                description: "Add product to wishlist and create if not exists."
+                args:
+                    productUuid:
+                        type: "Uuid!"
+                    wishlistUuid:
+                        type: "Uuid"
+                resolve: "@=mutation('addProductToWishlistMutation', args)"
+            removeProductFromWishlist:
+                type: 'Wishlist'
+                description: "Remove product from wishlist and if is wishlist empty remove it."
+                args:
+                    productUuid:
+                        type: "Uuid!"
+                    wishlistUuid:
+                        type: "Uuid"
+                resolve: "@=mutation('removeProductFromWishlistMutation', args)"
+            cleanWishlist:
+                type: 'Wishlist'
+                description: "Remove all products from wishlist and remove it."
+                resolve: "@=mutation('cleanWishlistMutation', args)"
+                args:
+                    wishlistUuid:
+                        type: "Uuid"

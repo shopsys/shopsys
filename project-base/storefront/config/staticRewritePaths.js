@@ -26,6 +26,7 @@ const STATIC_REWRITE_PATHS = {
         '/abandoned-cart/:cartUuid': '/abandoned-cart/:cartUuid',
         '/grapesjs-template': '/grapesjs-template',
         '/products-comparison': '/products-comparison',
+        '/wishlist': '/wishlist',
     },
     [process.env.DOMAIN_HOSTNAME_2]: {
         '/search': '/hledani',
@@ -54,6 +55,7 @@ const STATIC_REWRITE_PATHS = {
         '/abandoned-cart/:cartUuid': '/opusteny-kosik/:cartUuid',
         '/grapesjs-template': '/grapesjs-template',
         '/products-comparison': '/porovnani-produktu',
+        '/wishlist': '/oblibene-produkty',
     },
 };
 

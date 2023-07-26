@@ -1,0 +1,5 @@
+mutation AddProductToWishlistMutation($productUuid: Uuid!, $wishlistUuid: Uuid){
+    addProductToWishlist(productUuid:$productUuid, wishlistUuid: $wishlistUuid){
+        ...WishlistFragment
+    }
+}

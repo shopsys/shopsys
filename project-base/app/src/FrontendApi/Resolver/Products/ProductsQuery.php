@@ -18,6 +18,8 @@ use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\ProductRepository;
+use App\Model\Wishlist\Wishlist;
+use App\Model\Wishlist\WishlistRepository;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Type\Definition\ResolveInfo;
 use InvalidArgumentException;
@@ -56,6 +58,8 @@ class ProductsQuery extends BaseProductsQuery
      * @param \App\FrontendApi\Resolver\Category\CategoryQuery $categoryQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
      * @param \App\FrontendApi\Resolver\Products\Flag\FlagQuery $flagQuery
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader
+     * @param \App\Model\Wishlist\WishlistRepository $wishlistRepository
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -66,9 +70,11 @@ class ProductsQuery extends BaseProductsQuery
         private readonly ComparisonRepository $comparisonRepository,
         private readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
         private readonly ProductRepository $productRepository,
-        protected readonly CategoryQuery $categoryQuery,
-        protected readonly BrandQuery $brandQuery,
-        protected readonly FlagQuery $flagQuery,
+        private readonly CategoryQuery $categoryQuery,
+        private readonly BrandQuery $brandQuery,
+        private readonly FlagQuery $flagQuery,
+        private readonly DataLoaderInterface $productsVisibleByIdsBatchLoader,
+        private readonly WishlistRepository $wishlistRepository,
     ) {
         parent::__construct($productFacade, $productFilterFacade, $productConnectionFactory);
     }
@@ -297,6 +303,17 @@ class ProductsQuery extends BaseProductsQuery
         $productIds = $this->comparisonRepository->getProductIdsByComparison($comparison);
 
         return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
+    }
+
+    /**
+     * @param \App\Model\Wishlist\Wishlist $wishlist
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function productsByWishlistQuery(Wishlist $wishlist): Promise
+    {
+        $productIds = $this->wishlistRepository->getProductIdsByWishlist($wishlist);
+
+        return $this->productsVisibleByIdsBatchLoader->load($productIds);
     }
 
     /**

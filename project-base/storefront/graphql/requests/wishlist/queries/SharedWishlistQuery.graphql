@@ -1,0 +1,5 @@
+query SharedWishlistQuery($catnums: [String!]!) {
+    productsByCatnums(catnums: $catnums) {
+        ...ListedProductFragment
+    }
+}

@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ProductCompareButton } from '../ButtonsAction/ProductCompareButton';
+import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
@@ -10,6 +10,9 @@ import { ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'helpers/gtm/eventHandlers';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 
 type ProductItemProps = {
     product: ListedProductFragmentApi;
@@ -17,7 +20,9 @@ type ProductItemProps = {
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
     isProductInComparison: boolean;
-    onProductInComparisonClick: () => void;
+    toggleProductInComparison: () => void;
+    isProductInWishlist: boolean;
+    toggleProductInWishlist: () => void;
 };
 
 const getDataTestId = (catalogNumber: string) => 'blocks-product-list-listeditem-' + catalogNumber;
@@ -28,15 +33,29 @@ export const ProductItem: FC<ProductItemProps> = ({
     gtmProductListName,
     gtmMessageOrigin,
     isProductInComparison,
-    onProductInComparisonClick,
+    toggleProductInComparison,
+    isProductInWishlist,
+    toggleProductInWishlist,
 }) => {
     const { url } = useDomainConfig();
+    const t = useTypedTranslationFunction();
 
     return (
         <div
             className="relative flex flex-col justify-between rounded-t-xl border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl vl:border-b"
             data-testid={getDataTestId(product.catalogNumber)}
         >
+            {gtmProductListName === GtmProductListNameType.wishlist && (
+                <button
+                    className="absolute right-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-none bg-whitesmoke p-0 outline-none transition hover:bg-blueLight"
+                    onClick={toggleProductInWishlist}
+                    data-testid={getDataTestId(product.catalogNumber) + '-wishlist-remove'}
+                    title={t('Remove from wishlist')}
+                >
+                    <Icon iconType="icon" icon="RemoveBold" className="mx-auto w-2 basis-2" />
+                </button>
+            )}
+
             <ExtendedNextLink type="product" href={product.slug} passHref>
                 <a
                     className="relative flex h-full flex-col no-underline hover:no-underline"
@@ -53,12 +72,15 @@ export const ProductItem: FC<ProductItemProps> = ({
                             <ProductFlags flags={product.flags} />
                         </div>
                     </div>
+
                     <div className="mt-auto flex-1 px-3 pb-5">
                         <h3 className="mb-1 block h-10 overflow-hidden break-words text-lg font-bold leading-5 text-black">
                             {product.fullName}
                         </h3>
+
                         <ProductPrice productPrice={product.price} />
-                        <div className="mb-3 text-sm text-black">
+
+                        <div className="text-sm text-black">
                             {product.availability.name}
                             <ProductAvailableStoresCount
                                 isMainVariant={product.isMainVariant}
@@ -72,12 +94,18 @@ export const ProductItem: FC<ProductItemProps> = ({
                     </div>
                 </a>
             </ExtendedNextLink>
-            <ProductCompareButton
-                className="mb-2 justify-end"
-                isMainVariant={product.isMainVariant}
-                isProductInComparison={isProductInComparison}
-                onProductInComparisonClick={onProductInComparisonClick}
-            />
+            <div className="mb-2 flex justify-end gap-2">
+                <ProductCompareButton
+                    isMainVariant={product.isMainVariant}
+                    isProductInComparison={isProductInComparison}
+                    toggleProductInComparison={toggleProductInComparison}
+                />
+                <ProductWishlistButton
+                    isMainVariant={product.isMainVariant}
+                    toggleProductInWishlist={toggleProductInWishlist}
+                    isProductInWishlist={isProductInWishlist}
+                />
+            </div>
             <ProductAction
                 product={product}
                 gtmProductListName={gtmProductListName}

@@ -26,6 +26,9 @@ const getErrorMessageTranslationString = (errorCode: ApplicationErrorsType, t: T
         [ApplicationErrors['comparison-not-found']]: t('Comparison not found.'),
         [ApplicationErrors['compared-item-not-found']]: t('Compared product not found.'),
         [ApplicationErrors['compared-item-already-exists']]: t('Compared product is already compared.'),
+        [ApplicationErrors['wishlist-not-found']]: t('Wishlist not found.'),
+        [ApplicationErrors['wishlist-item-already-exists']]: t('Product in wishlist already exists.'),
+        [ApplicationErrors['wishlist-item-not-found']]: t('Product in wishlist not found.'),
     };
 
     return ERROR_MESSAGES[errorCode];

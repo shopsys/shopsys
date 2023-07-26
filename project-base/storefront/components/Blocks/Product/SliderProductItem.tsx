@@ -10,12 +10,18 @@ import { onGtmProductClickEventHandler } from 'helpers/gtm/eventHandlers';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
+import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 
 type SliderProductItemProps = {
     product: ListedProductFragmentApi;
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
     listIndex: number;
+    isProductInComparison: boolean;
+    toggleProductInComparison: () => void;
+    isProductInWishlist: boolean;
+    toggleProductInWishlist: () => void;
 };
 
 const TEST_IDENTIFIER = 'blocks-product-sliderproductitem-';
@@ -25,6 +31,10 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({
     gtmProductListName,
     listIndex,
     gtmMessageOrigin,
+    isProductInComparison,
+    toggleProductInComparison,
+    isProductInWishlist,
+    toggleProductInWishlist,
 }) => {
     const { url } = useDomainConfig();
 
@@ -75,6 +85,18 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({
                         </div>
                     </a>
                 </ExtendedNextLink>
+                <div className="mb-2 flex justify-end gap-2">
+                    <ProductCompareButton
+                        isMainVariant={product.isMainVariant}
+                        isProductInComparison={isProductInComparison}
+                        toggleProductInComparison={toggleProductInComparison}
+                    />
+                    <ProductWishlistButton
+                        isMainVariant={product.isMainVariant}
+                        isProductInWishlist={isProductInWishlist}
+                        toggleProductInWishlist={toggleProductInWishlist}
+                    />
+                </div>
                 <ProductAction
                     product={product}
                     gtmProductListName={gtmProductListName}

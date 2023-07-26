@@ -4,6 +4,7 @@ import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { CategoryDetailFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import { useQueryParams } from 'hooks/useQueryParams';
+import { useWishlist } from 'hooks/useWishlist';
 import React from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 import { ProductItemSkeleton } from './ProductItemSkeleton';
@@ -29,8 +30,9 @@ export const ProductsList: FC<ProductsListProps> = ({
     gtmMessageOrigin = GtmMessageOriginType.other,
 }) => {
     const { currentPage } = useQueryParams();
-    const { isPopupCompareOpen, handleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
+    const { isPopupCompareOpen, toggleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
         useComparison();
+    const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
 
     if (!products?.length && !fetching) {
         return <CategoryDetailContentMessage />;
@@ -51,7 +53,9 @@ export const ProductsList: FC<ProductsListProps> = ({
                             gtmProductListName={gtmProductListName}
                             gtmMessageOrigin={gtmMessageOrigin}
                             isProductInComparison={isProductInComparison(product.uuid)}
-                            onProductInComparisonClick={() => handleProductInComparison(product.uuid)}
+                            toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
+                            isProductInWishlist={isProductInWishlist(product.uuid)}
+                            toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
                         />
                     ))}
 
@@ -64,9 +68,10 @@ export const ProductsList: FC<ProductsListProps> = ({
                         />
                     )}
 
-                    {isPopupCompareOpen && (
-                        <ProductComparePopup isVisible onCloseCallback={() => setIsPopupCompareOpen(false)} />
-                    )}
+                    <ProductComparePopup
+                        isVisible={isPopupCompareOpen}
+                        onCloseCallback={() => setIsPopupCompareOpen(false)}
+                    />
                 </>
             ) : (
                 createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => <ProductItemSkeleton key={index} />)

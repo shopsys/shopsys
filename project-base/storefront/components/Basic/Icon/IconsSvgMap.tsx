@@ -30,6 +30,8 @@ export const IconsSvgMap = {
     Compare: <Icons.Compare />,
     ArrowSecondary: <Icons.ArrowSecondary />,
     Play: <Icons.Play />,
+    Heart: <Icons.Heart />,
+    HeartFull: <Icons.HeartFull />,
 };
 
 export type IconName = keyof typeof IconsSvgMap;

@@ -10,14 +10,27 @@ import {
     ChangePaymentInCartMutationApi,
     ChangeTransportInCartInputApi,
     ChangeTransportInCartMutationApi,
+    CleanComparisonMutationVariablesApi,
+    CleanWishlistMutationVariablesApi,
+    ComparisonQueryApi,
+    ComparisonQueryDocumentApi,
+    ComparisonQueryVariablesApi,
+    Maybe,
+    RemoveProductFromComparisonMutationVariablesApi,
+    RemoveProductFromWishlistMutationVariablesApi,
+    Scalars,
     TransportsQueryApi,
     TransportsQueryDocumentApi,
     TransportsQueryVariablesApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
+    WishlistQueryApi,
+    WishlistQueryDocumentApi,
+    WishlistQueryVariablesApi,
 } from 'graphql/generated';
 import schema from 'schema.graphql.json';
 
 const keyNull = () => null;
+const keyWishlist = () => 'wishlist';
 const keyUuid = (data: Data) => data.uuid as string | null;
 const keyName = (data: Data) => data.name as string | null;
 const keyCode = (data: Data) => data.code as string | null;
@@ -91,14 +104,15 @@ export const cache = cacheExchange({
         TransportType: keyCode,
         Unit: keyName,
         Variant: keyUuid,
+        Wishlist: keyWishlist,
     },
     updates: {
         Mutation: {
             Login(_result, _args, cache) {
-                invalidateFields(cache, ['cart']);
+                invalidateFields(cache, ['cart', 'wishlist']);
             },
             Logout(_result, _args, cache) {
-                invalidateFields(cache, ['cart']);
+                invalidateFields(cache, ['cart', 'wishlist']);
             },
             DeleteDeliveryAddress(_result, _args, cache) {
                 invalidateFields(cache, ['currentCustomerUser']);
@@ -144,14 +158,21 @@ export const cache = cacheExchange({
                         : undefined;
                 manuallyUpdateCartFragment(cache, newCart);
             },
-            addProductToComparison(result, _args, cache) {
-                invalidateFields(cache, ['comparison']);
+            removeProductFromComparison(result, args: RemoveProductFromComparisonMutationVariablesApi, cache) {
+                if (result.removeProductFromComparison === null) {
+                    clearComparisonQueryFragment(cache, args.comparisonUuid);
+                }
             },
-            removeProductFromComparison(result, _args, cache) {
-                invalidateFields(cache, ['comparison']);
+            cleanComparison(result, args: CleanComparisonMutationVariablesApi, cache) {
+                clearComparisonQueryFragment(cache, args.comparisonUuid);
             },
-            cleanComparison(result, _args, cache) {
-                invalidateFields(cache, ['comparison']);
+            removeProductFromWishlist(result, args: RemoveProductFromWishlistMutationVariablesApi, cache) {
+                if (result.removeProductFromWishlist === null) {
+                    clearWishlistQueryFragment(cache, args.wishlistUuid);
+                }
+            },
+            cleanWishlist(result, args: CleanWishlistMutationVariablesApi, cache) {
+                clearWishlistQueryFragment(cache, args.wishlistUuid);
             },
         },
     },
@@ -222,6 +243,30 @@ const manuallyUpdateCartFragment = (cache: Cache, newCart: CartApi | undefined) 
             },
         );
     }
+};
+
+const clearComparisonQueryFragment = (cache: Cache, comparisonUuid: Maybe<Scalars['Uuid']>) => {
+    cache.updateQuery<ComparisonQueryApi, ComparisonQueryVariablesApi>(
+        { query: ComparisonQueryDocumentApi, variables: { comparisonUuid } },
+        () => {
+            return {
+                __typename: 'Query',
+                comparison: null,
+            };
+        },
+    );
+};
+
+const clearWishlistQueryFragment = (cache: Cache, wishlistUuid: Maybe<Scalars['Uuid']>) => {
+    cache.updateQuery<WishlistQueryApi, WishlistQueryVariablesApi>(
+        { query: WishlistQueryDocumentApi, variables: { wishlistUuid } },
+        () => {
+            return {
+                __typename: 'Query',
+                wishlist: null,
+            };
+        },
+    );
 };
 
 const getOptimisticChangeTransportInCartResult = (
