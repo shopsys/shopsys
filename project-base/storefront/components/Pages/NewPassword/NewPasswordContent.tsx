@@ -2,7 +2,6 @@ import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './formMeta
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
@@ -15,11 +14,14 @@ import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import Trans from 'next-translate/Trans';
+import dynamic from 'next/dynamic';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { NewPasswordFormType } from 'types/form';
 import { GtmMessageOriginType } from 'types/gtm/enums';
+
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 type NewPasswordContentProps = {
     hash: string;

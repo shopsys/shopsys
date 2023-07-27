@@ -3,7 +3,6 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
@@ -11,9 +10,12 @@ import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
 import { useRemovePromoCodeFromCart } from 'hooks/cart/useRemovePromoCodeFromCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCalcElementHeight } from 'hooks/ui/useCalcElementHeight';
+import dynamic from 'next/dynamic';
 import { ChangeEventHandler, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import { GtmMessageOriginType } from 'types/gtm/enums';
+
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 type TransportAndPaymentErrorsType = {
     promoCode: {

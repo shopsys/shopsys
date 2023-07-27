@@ -1,6 +1,5 @@
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import {
     LastOrderFragmentApi,
@@ -16,10 +15,13 @@ import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { GtmMessageOriginType } from 'types/gtm/enums';
+
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 type TransportAndPaymentContentProps = {
     transports: TransportWithAvailablePaymentsAndStoresFragmentApi[] | undefined;

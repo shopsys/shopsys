@@ -4,7 +4,6 @@ import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
@@ -17,9 +16,12 @@ import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import Trans from 'next-translate/Trans';
+import dynamic from 'next/dynamic';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
 import { GtmFormType, GtmMessageOriginType } from 'types/gtm/enums';
+
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 const TEST_IDENTIFIER = 'pages-orderconfirmation-registration-create-account';
 

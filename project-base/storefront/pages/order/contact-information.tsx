@@ -1,7 +1,6 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { Form } from 'components/Forms/Form/Form';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { Footer } from 'components/Layout/Footer/Footer';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -35,6 +34,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { OrderConfirmationQuery } from 'pages/order-confirmation';
 import React, { useEffect, useState } from 'react';
@@ -42,6 +42,8 @@ import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { CustomerTypeEnum } from 'types/customer';
 import { GtmMessageOriginType, GtmPageType } from 'types/gtm/enums';
+
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
