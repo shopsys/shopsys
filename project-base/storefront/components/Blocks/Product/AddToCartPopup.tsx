@@ -12,7 +12,7 @@ import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 
-type AddToCartPopupProps = {
+export type AddToCartPopupProps = {
     isVisible: boolean;
     onCloseCallback: () => void;
     addedCartItem: CartItemFragmentApi;
