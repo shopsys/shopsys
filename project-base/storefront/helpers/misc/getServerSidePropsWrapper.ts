@@ -8,7 +8,7 @@ import { SSRExchange, ssrExchange } from 'urql';
 export const getServerSidePropsWrapper =
     (
         callback: (props: {
-            redisClient: RedisClientType<any & RedisModules, RedisScripts>;
+            redisClient: RedisClientType<RedisModules, RedisScripts>;
             domainConfig: DomainConfigType;
             ssrExchange: SSRExchange;
             t: Translate;

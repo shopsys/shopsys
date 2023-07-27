@@ -15,7 +15,7 @@ const createInit = (init?: RequestInit | undefined) => ({
 });
 
 export const fetcher =
-    (redisClient: RedisClientType<any & RedisModules, RedisScripts>) =>
+    (redisClient: RedisClientType<RedisModules, RedisScripts>) =>
     async (input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response> => {
         if (!isServer() || !init || process.env.GRAPHQL_REDIS_CACHE !== '1') {
             return fetch(input, createInit(init));

@@ -45,7 +45,7 @@ type InitServerSidePropsParameters = {
       }
     | {
           client?: never;
-          redisClient: RedisClientType<any & RedisModules, RedisScripts>;
+          redisClient: RedisClientType<RedisModules, RedisScripts>;
           ssrExchange?: SSRExchange;
           t: Translate;
       }
