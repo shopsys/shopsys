@@ -18,7 +18,7 @@ import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
@@ -34,12 +34,10 @@ import { createClient } from 'helpers/urql/createClient';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { ssrExchange } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
-import getT from 'next-translate/getT';
 
 const FlagDetailPage: NextPage = () => {
     const router = useRouter();
@@ -79,56 +77,66 @@ const FlagDetailPage: NextPage = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient, domainConfig) => async (context) => {
-    const ssrCache = ssrExchange({ isClient: false });
-    const t = await getT(domainConfig.defaultLocale, 'common');
-    const client = createClient(t, ssrCache, domainConfig.publicGraphqlEndpoint, redisClient, context);
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, ssrExchange, t }) =>
+        async (context) => {
+            const client = createClient({
+                t,
+                ssrExchange,
+                publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+                redisClient,
+                context,
+            });
 
-    if (isRedirectedFromSsr(context.req.headers)) {
-        const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
-        const orderingMode = getProductListSort(
-            parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
-        );
-        const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
-        const filter = mapParametersFilter(
-            getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME])),
-        );
+            if (isRedirectedFromSsr(context.req.headers)) {
+                const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+                const orderingMode = getProductListSort(
+                    parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
+                );
+                const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
+                const filter = mapParametersFilter(
+                    getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME])),
+                );
 
-        const flagDetailResponsePromise = client!
-            .query<FlagDetailQueryApi, FlagDetailQueryVariablesApi>(FlagDetailQueryDocumentApi, {
-                urlSlug,
-                filter,
-                orderingMode,
-            })
-            .toPromise();
+                const flagDetailResponsePromise = client!
+                    .query<FlagDetailQueryApi, FlagDetailQueryVariablesApi>(FlagDetailQueryDocumentApi, {
+                        urlSlug,
+                        filter,
+                        orderingMode,
+                    })
+                    .toPromise();
 
-        const flagProductsResponsePromise = client!
-            .query<FlagProductsQueryApi, FlagProductsQueryVariablesApi>(FlagProductsQueryDocumentApi, {
-                endCursor: getEndCursor(page),
-                orderingMode,
-                filter,
-                urlSlug,
-                pageSize: DEFAULT_PAGE_SIZE,
-            })
-            .toPromise();
+                const flagProductsResponsePromise = client!
+                    .query<FlagProductsQueryApi, FlagProductsQueryVariablesApi>(FlagProductsQueryDocumentApi, {
+                        endCursor: getEndCursor(page),
+                        orderingMode,
+                        filter,
+                        urlSlug,
+                        pageSize: DEFAULT_PAGE_SIZE,
+                    })
+                    .toPromise();
 
-        const [flagDetailResponse] = await Promise.all([flagDetailResponsePromise, flagProductsResponsePromise]);
+                const [flagDetailResponse] = await Promise.all([
+                    flagDetailResponsePromise,
+                    flagProductsResponsePromise,
+                ]);
 
-        if ((!flagDetailResponse.data || !flagDetailResponse.data.flag) && !(context.res.statusCode === 503)) {
-            return {
-                notFound: true,
-            };
-        }
-    }
+                if ((!flagDetailResponse.data || !flagDetailResponse.data.flag) && !(context.res.statusCode === 503)) {
+                    return {
+                        notFound: true,
+                    };
+                }
+            }
 
-    const initServerSideData = await initServerSideProps({
-        context,
-        client,
-        ssrCache,
-        redisClient,
-    });
+            const initServerSideData = await initServerSideProps({
+                context,
+                client,
+                ssrExchange,
+                domainConfig,
+            });
 
-    return initServerSideData;
-});
+            return initServerSideData;
+        },
+);
 
 export default FlagDetailPage;

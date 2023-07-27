@@ -36,13 +36,10 @@ function MyApp({ Component, pageProps, err }: AppProps): ReactElement | null {
     const t = useTypedTranslationFunction();
 
     const urqlClient = useMemo(
-        () => createClient(t, ssrExchange({ initialState: pageProps.urqlState }), publicGraphqlEndpoint),
+        () =>
+            createClient({ t, ssrExchange: ssrExchange({ initialState: pageProps.urqlState }), publicGraphqlEndpoint }),
         [publicGraphqlEndpoint, pageProps.urqlState, t],
     );
-
-    if (urqlClient === null) {
-        return null;
-    }
 
     return (
         <Provider value={urqlClient}>

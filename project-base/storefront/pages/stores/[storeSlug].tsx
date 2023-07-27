@@ -11,7 +11,7 @@ import {
 } from 'graphql/generated';
 
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
@@ -19,9 +19,8 @@ import { createClient } from 'helpers/urql/createClient';
 
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
-import getT from 'next-translate/getT';
 import { useRouter } from 'next/router';
-import { OperationResult, ssrExchange } from 'urql';
+import { OperationResult } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 const StoreDetailPage: NextPage = () => {
@@ -51,33 +50,40 @@ const StoreDetailPage: NextPage = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient, domainConfig) => async (context) => {
-    const ssrCache = ssrExchange({ isClient: false });
-    const t = await getT(domainConfig.defaultLocale, 'common');
-    const client = createClient(t, ssrCache, domainConfig.publicGraphqlEndpoint, redisClient, context);
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, ssrExchange, t }) =>
+        async (context) => {
+            const client = createClient({
+                t,
+                ssrExchange,
+                publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+                redisClient,
+                context,
+            });
 
-    if (isRedirectedFromSsr(context.req.headers)) {
-        const storeResponse: OperationResult<StoreDetailQueryApi, StoreDetailQueryVariablesApi> = await client!
-            .query(StoreDetailQueryDocumentApi, {
-                urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-            })
-            .toPromise();
+            if (isRedirectedFromSsr(context.req.headers)) {
+                const storeResponse: OperationResult<StoreDetailQueryApi, StoreDetailQueryVariablesApi> = await client!
+                    .query(StoreDetailQueryDocumentApi, {
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                    })
+                    .toPromise();
 
-        if ((!storeResponse.data || !storeResponse.data.store) && !(context.res.statusCode === 503)) {
-            return {
-                notFound: true,
-            };
-        }
-    }
+                if ((!storeResponse.data || !storeResponse.data.store) && !(context.res.statusCode === 503)) {
+                    return {
+                        notFound: true,
+                    };
+                }
+            }
 
-    const initServerSideData = await initServerSideProps({
-        context,
-        client,
-        ssrCache,
-        redisClient,
-    });
+            const initServerSideData = await initServerSideProps({
+                context,
+                client,
+                ssrExchange,
+                domainConfig,
+            });
 
-    return initServerSideData;
-});
+            return initServerSideData;
+        },
+);
 
 export default StoreDetailPage;

@@ -24,7 +24,7 @@ import { getGtmReviewConsents } from 'helpers/gtm/gtm';
 import { saveGtmCreateOrderEventInLocalStorage } from 'helpers/gtm/helpers';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getIsPaymentWithPaymentGate } from 'helpers/mappers/payment';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
@@ -243,8 +243,10 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient(
-    (redisClient) => async (context) => initServerSideProps({ context, redisClient }),
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, t }) =>
+        async (context) =>
+            initServerSideProps({ context, redisClient, domainConfig, t }),
 );
 
 export default ContactInformationPage;

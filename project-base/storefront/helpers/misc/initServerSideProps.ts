@@ -14,7 +14,7 @@ import {
     SeoPageQueryDocumentApi,
     SettingsQueryDocumentApi,
 } from 'graphql/generated';
-import { DomainConfigType, getDomainConfig } from 'helpers/domain/domain';
+import { DomainConfigType } from 'helpers/domain/domain';
 import { getServerSideInternationalizedStaticUrl } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
@@ -23,7 +23,7 @@ import loadNamespaces from 'next-translate/loadNamespaces';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
 import { parseCatnums } from 'utils/grapesJsParser';
-import getT from 'next-translate/getT';
+import { Translate } from 'next-translate';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;
@@ -32,122 +32,134 @@ export type ServerSidePropsType = {
 };
 
 type InitServerSidePropsParameters = {
+    domainConfig: DomainConfigType;
     context: GetServerSidePropsContext;
     authenticationRequired?: boolean;
     prefetchedQueries?: { query: string | DocumentNode; variables?: { [key: string]: unknown } }[];
-    redisClient: RedisClientType<any & RedisModules, RedisScripts>;
-    client?: Client | null;
-    ssrCache?: SSRExchange;
-};
+} & (
+    | {
+          client: Client;
+          redisClient?: never;
+          ssrExchange: SSRExchange;
+          t?: never;
+      }
+    | {
+          client?: never;
+          redisClient: RedisClientType<any & RedisModules, RedisScripts>;
+          ssrExchange?: SSRExchange;
+          t: Translate;
+      }
+);
 
 export const initServerSideProps = async ({
+    domainConfig,
     context,
+    redisClient,
+    t,
     authenticationRequired = false,
     prefetchedQueries = [],
-    redisClient,
     client,
-    ssrCache,
+    ssrExchange: ssrExchangeOverride,
 }: InitServerSidePropsParameters): Promise<GetServerSidePropsResult<ServerSidePropsType>> => {
     try {
-        const domainConfig = getDomainConfig(context.req.headers.host!);
-        const currentSsrCache = ssrCache ?? ssrExchange({ isClient: false });
-        const t = await getT(domainConfig.defaultLocale, 'common');
+        const currentSsrCache = ssrExchangeOverride ?? ssrExchange({ isClient: false });
         const currentClient =
-            client ?? createClient(t, currentSsrCache, domainConfig.publicGraphqlEndpoint, redisClient, context);
+            client ??
+            (await createClient({
+                ssrExchange: currentSsrCache,
+                redisClient,
+                context,
+                t,
+                publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+            }));
 
-        if (currentClient) {
-            prefetchedQueries.push({ query: NotificationBarsDocumentApi });
-            prefetchedQueries.push({ query: NavigationQueryDocumentApi });
+        prefetchedQueries.push({ query: NotificationBarsDocumentApi });
+        prefetchedQueries.push({ query: NavigationQueryDocumentApi });
+        prefetchedQueries.push({
+            query: ArticlesQueryDocumentApi,
+            variables: {
+                placement: [
+                    ArticlePlacementTypeEnumApi.Footer1Api,
+                    ArticlePlacementTypeEnumApi.Footer2Api,
+                    ArticlePlacementTypeEnumApi.Footer3Api,
+                    ArticlePlacementTypeEnumApi.Footer4Api,
+                ],
+                first: 100,
+            },
+        });
+        prefetchedQueries.push({ query: AdvertsQueryDocumentApi });
+        prefetchedQueries.push({ query: CurrentCustomerUserQueryDocumentApi });
+        prefetchedQueries.push({ query: SettingsQueryDocumentApi });
+
+        const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);
+
+        if (seoPageSlug) {
             prefetchedQueries.push({
-                query: ArticlesQueryDocumentApi,
+                query: SeoPageQueryDocumentApi,
                 variables: {
-                    placement: [
-                        ArticlePlacementTypeEnumApi.Footer1Api,
-                        ArticlePlacementTypeEnumApi.Footer2Api,
-                        ArticlePlacementTypeEnumApi.Footer3Api,
-                        ArticlePlacementTypeEnumApi.Footer4Api,
-                    ],
-                    first: 100,
+                    pageSlug: seoPageSlug,
                 },
             });
-            prefetchedQueries.push({ query: AdvertsQueryDocumentApi });
-            prefetchedQueries.push({ query: CurrentCustomerUserQueryDocumentApi });
-            prefetchedQueries.push({ query: SettingsQueryDocumentApi });
+        }
 
-            const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);
+        const resolvedQueries = await Promise.all(
+            prefetchedQueries.map((queryObject) =>
+                currentClient.query(queryObject.query, queryObject.variables).toPromise(),
+            ),
+        );
 
-            if (seoPageSlug) {
-                prefetchedQueries.push({
-                    query: SeoPageQueryDocumentApi,
-                    variables: {
-                        pageSlug: seoPageSlug,
-                    },
-                });
-            }
+        const slugResult = resolvedQueries.find((query) => !!query.data?.slug?.slug);
+        const parsedSlug = slugResult?.data.slug.slug;
 
-            const resolvedQueries = await Promise.all(
-                prefetchedQueries.map((queryObject) =>
-                    currentClient.query(queryObject.query, queryObject.variables).toPromise(),
-                ),
-            );
+        const { trimmedUrlWithoutQueryParams, queryParams } = getServerSideInternationalizedStaticUrl(
+            context,
+            domainConfig.url,
+        );
 
-            const slugResult = resolvedQueries.find((query) => !!query.data?.slug?.slug);
-            const parsedSlug = slugResult?.data.slug.slug;
+        const articleWithGrapesJsResult = resolvedQueries.find((query) =>
+            ['BlogArticle', 'Article'].includes(query.data?.slug?.__typename),
+        );
 
-            const { trimmedUrlWithoutQueryParams, queryParams } = getServerSideInternationalizedStaticUrl(
-                context,
-                domainConfig.url,
-            );
+        if (articleWithGrapesJsResult) {
+            const parsedCatnums = parseCatnums(articleWithGrapesJsResult.data.slug.text);
+            await currentClient.query(ProductsByCatnumsDocumentApi, { catnums: parsedCatnums }).toPromise();
+        }
 
-            const articleWithGrapesJsResult = resolvedQueries.find((query) =>
-                ['BlogArticle', 'Article'].includes(query.data?.slug?.__typename),
-            );
-
-            if (articleWithGrapesJsResult) {
-                const parsedCatnums = parseCatnums(articleWithGrapesJsResult.data.slug.text);
-                await currentClient.query(ProductsByCatnumsDocumentApi, { catnums: parsedCatnums }).toPromise();
-            }
-
-            if (parsedSlug && parsedSlug !== trimmedUrlWithoutQueryParams) {
-                return {
-                    redirect: {
-                        statusCode: 301,
-                        destination: `${parsedSlug}${queryParams ?? ''}`,
-                    },
-                };
-            }
-
-            if (authenticationRequired) {
-                const isUserLoggedIn = isUserLoggedInSSR(currentClient);
-
-                if (!isUserLoggedIn) {
-                    return getUnauthenticatedRedirectSSR(
-                        getUrlWithoutGetParameters(context.resolvedUrl),
-                        domainConfig.url,
-                    );
-                }
-            }
-
-            const isMaintenance = resolvedQueries.some((query) => query.error?.response?.status === 503);
-            if (isMaintenance) {
-                // eslint-disable-next-line require-atomic-updates
-                context.res.statusCode = 503;
-            }
-
+        if (parsedSlug && parsedSlug !== trimmedUrlWithoutQueryParams) {
             return {
-                props: {
-                    ...(await loadNamespaces({
-                        locale: domainConfig.defaultLocale,
-                        pathname: trimmedUrlWithoutQueryParams,
-                    })),
-                    domainConfig,
-                    // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993
-                    urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
-                    isMaintenance,
+                redirect: {
+                    statusCode: 301,
+                    destination: `${parsedSlug}${queryParams ?? ''}`,
                 },
             };
         }
-        return { props: {} as ServerSidePropsType };
+
+        if (authenticationRequired) {
+            const isUserLoggedIn = isUserLoggedInSSR(currentClient);
+
+            if (!isUserLoggedIn) {
+                return getUnauthenticatedRedirectSSR(getUrlWithoutGetParameters(context.resolvedUrl), domainConfig.url);
+            }
+        }
+
+        const isMaintenance = resolvedQueries.some((query) => query.error?.response?.status === 503);
+        if (isMaintenance) {
+            // eslint-disable-next-line require-atomic-updates
+            context.res.statusCode = 503;
+        }
+
+        return {
+            props: {
+                ...(await loadNamespaces({
+                    locale: domainConfig.defaultLocale,
+                    pathname: trimmedUrlWithoutQueryParams,
+                })),
+                domainConfig,
+                // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993
+                urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
+                isMaintenance,
+            },
+        };
     } catch (e) {
         logException(e);
         throw e;

@@ -8,7 +8,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { GtmPageType } from 'types/gtm/enums';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useRouter } from 'next/router';
 import SharedWishlist from 'components/Pages/Wishlist/SharedWishlist';
@@ -34,8 +34,10 @@ const WishlistPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient(
-    (redisClient) => async (context) => initServerSideProps({ context, redisClient }),
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, t }) =>
+        async (context) =>
+            initServerSideProps({ context, redisClient, domainConfig, t }),
 );
 
 export default WishlistPage;

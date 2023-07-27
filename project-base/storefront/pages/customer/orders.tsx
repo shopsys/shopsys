@@ -12,7 +12,7 @@ import {
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
@@ -58,7 +58,7 @@ const OrdersPage: FC = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
 
     return initServerSideProps({
@@ -74,6 +74,8 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
             },
         ],
         redisClient,
+        domainConfig,
+        t,
     });
 });
 

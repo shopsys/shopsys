@@ -7,13 +7,19 @@ import { Client, SSRExchange } from 'urql';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
 
-export const createClient = (
-    t: Translate,
-    ssrExchange: SSRExchange,
-    publicGraphqlEndpoint: string,
-    redisClient?: RedisClientType<RedisModules, RedisScripts>,
-    context?: GetServerSidePropsContext | NextPageContext,
-): Client | null => {
+export const createClient = ({
+    t,
+    ssrExchange,
+    publicGraphqlEndpoint,
+    redisClient,
+    context,
+}: {
+    t: Translate;
+    ssrExchange: SSRExchange;
+    publicGraphqlEndpoint: string;
+    redisClient?: RedisClientType<RedisModules, RedisScripts>;
+    context?: GetServerSidePropsContext | NextPageContext;
+}): Client => {
     const { serverRuntimeConfig } = getConfig();
     const internalGraphqlEndpoint = serverRuntimeConfig?.internalGraphqlEndpoint ?? undefined;
     const publicGraphqlEndpointObject = new URL(publicGraphqlEndpoint);

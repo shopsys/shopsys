@@ -1,13 +1,18 @@
 import { DomainConfigType, getDomainConfig } from 'helpers/domain/domain';
 import { GetServerSideProps } from 'next';
+import { Translate } from 'next-translate';
+import getT from 'next-translate/getT';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
+import { SSRExchange, ssrExchange } from 'urql';
 
-export const getServerSidePropsWithRedisClient =
+export const getServerSidePropsWrapper =
     (
-        callback: (
-            redisClient: RedisClientType<any & RedisModules, RedisScripts>,
-            domainConfig: DomainConfigType,
-        ) => GetServerSideProps,
+        callback: (props: {
+            redisClient: RedisClientType<any & RedisModules, RedisScripts>;
+            domainConfig: DomainConfigType;
+            ssrExchange: SSRExchange;
+            t: Translate;
+        }) => GetServerSideProps,
     ): any =>
     async (context: any) => {
         const domainConfig = getDomainConfig(context.req.headers.host!);
@@ -20,7 +25,8 @@ export const getServerSidePropsWithRedisClient =
         });
         await redisClient.connect();
 
-        const nextCallback = callback(redisClient, domainConfig);
+        const t = await getT(domainConfig.defaultLocale, 'common');
+        const nextCallback = callback({ redisClient, domainConfig, ssrExchange: ssrExchange({ isClient: false }), t });
         const initialProps = await nextCallback(context);
 
         redisClient.disconnect();

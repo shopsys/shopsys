@@ -14,7 +14,7 @@ import {
 } from 'graphql/generated';
 
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
@@ -24,11 +24,10 @@ import { createClient } from 'helpers/urql/createClient';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { OperationResult, ssrExchange } from 'urql';
+import { OperationResult } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import getT from 'next-translate/getT';
 
 const BlogCategoryPage: NextPage = () => {
     const router = useRouter();
@@ -66,45 +65,53 @@ const BlogCategoryPage: NextPage = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient, domainConfig) => async (context) => {
-    const ssrCache = ssrExchange({ isClient: false });
-    const t = await getT(domainConfig.defaultLocale, 'common');
-    const client = createClient(t, ssrCache, domainConfig.publicGraphqlEndpoint, redisClient, context);
-    const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, ssrExchange, t }) =>
+        async (context) => {
+            const client = createClient({
+                t,
+                ssrExchange,
+                publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+                redisClient,
+                context,
+            });
+            const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
 
-    if (isRedirectedFromSsr(context.req.headers)) {
-        const blogCategoryResponse: OperationResult<BlogCategoryQueryApi, BlogCategoryQueryVariablesApi> = await client!
-            .query(BlogCategoryQueryDocumentApi, {
-                urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-            })
-            .toPromise();
+            if (isRedirectedFromSsr(context.req.headers)) {
+                const blogCategoryResponse: OperationResult<BlogCategoryQueryApi, BlogCategoryQueryVariablesApi> =
+                    await client!
+                        .query(BlogCategoryQueryDocumentApi, {
+                            urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                        })
+                        .toPromise();
 
-        await client!
-            .query(BlogCategoryArticlesDocumentApi, {
-                uuid: blogCategoryResponse.data?.blogCategory?.uuid,
-                endCursor: getEndCursor(page),
-                pageSize: DEFAULT_PAGE_SIZE,
-            })
-            .toPromise();
+                await client!
+                    .query(BlogCategoryArticlesDocumentApi, {
+                        uuid: blogCategoryResponse.data?.blogCategory?.uuid,
+                        endCursor: getEndCursor(page),
+                        pageSize: DEFAULT_PAGE_SIZE,
+                    })
+                    .toPromise();
 
-        if (
-            (!blogCategoryResponse.data || !blogCategoryResponse.data.blogCategory) &&
-            !(context.res.statusCode === 503)
-        ) {
-            return {
-                notFound: true,
-            };
-        }
-    }
+                if (
+                    (!blogCategoryResponse.data || !blogCategoryResponse.data.blogCategory) &&
+                    !(context.res.statusCode === 503)
+                ) {
+                    return {
+                        notFound: true,
+                    };
+                }
+            }
 
-    const initServerSideData = await initServerSideProps({
-        context,
-        client,
-        ssrCache,
-        redisClient,
-    });
+            const initServerSideData = await initServerSideProps({
+                context,
+                client,
+                domainConfig,
+                ssrExchange,
+            });
 
-    return initServerSideData;
-});
+            return initServerSideData;
+        },
+);
 
 export default BlogCategoryPage;

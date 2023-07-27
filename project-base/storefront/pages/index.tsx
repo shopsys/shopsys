@@ -13,7 +13,7 @@ import {
     SliderItemsQueryDocumentApi,
 } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -48,18 +48,21 @@ const HomePage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient(
-    (redisClient) => async (context) =>
-        initServerSideProps({
-            context,
-            redisClient,
-            prefetchedQueries: [
-                { query: PromotedCategoriesQueryDocumentApi },
-                { query: SliderItemsQueryDocumentApi },
-                { query: PromotedProductsQueryDocumentApi },
-                { query: BlogArticlesQueryDocumentApi, variables: BLOG_PREVIEW_VARIABLES },
-            ],
-        }),
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, t }) =>
+        async (context) =>
+            initServerSideProps({
+                context,
+                redisClient,
+                domainConfig,
+                prefetchedQueries: [
+                    { query: PromotedCategoriesQueryDocumentApi },
+                    { query: SliderItemsQueryDocumentApi },
+                    { query: PromotedProductsQueryDocumentApi },
+                    { query: BlogArticlesQueryDocumentApi, variables: BLOG_PREVIEW_VARIABLES },
+                ],
+                t,
+            }),
 );
 
 export default HomePage;

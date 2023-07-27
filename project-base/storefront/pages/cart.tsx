@@ -9,7 +9,7 @@ import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmCartViewEvent } from 'hooks/gtm/useGtmCartViewEvent';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
@@ -52,8 +52,10 @@ const CartPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient(
-    (redisClient) => async (context) => initServerSideProps({ context, redisClient }),
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, t }) =>
+        async (context) =>
+            initServerSideProps({ context, redisClient, domainConfig, t }),
 );
 
 export default CartPage;

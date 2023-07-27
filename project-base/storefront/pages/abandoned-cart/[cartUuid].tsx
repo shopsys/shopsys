@@ -1,5 +1,5 @@
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -22,7 +22,7 @@ const AbandonedCartPage: FC<AbandonedCartPageProps> = ({ cartUuid }) => {
     return null;
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient(() => async (context) => ({
+export const getServerSideProps = getServerSidePropsWrapper(() => async (context) => ({
     props: { cartUuid: context.params?.cartUuid },
 }));
 

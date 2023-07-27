@@ -9,7 +9,7 @@ import {
 } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 
@@ -51,7 +51,7 @@ const OrderDetailByHashPage: FC = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     if (typeof context.params?.urlHash !== 'string') {
         return {
             redirect: {
@@ -67,6 +67,8 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
             { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },
         ],
         redisClient,
+        domainConfig,
+        t,
     });
 });
 

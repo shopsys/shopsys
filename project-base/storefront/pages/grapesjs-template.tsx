@@ -2,7 +2,7 @@ import { CommonLayout } from '../components/Layout/CommonLayout';
 import { GrapesJs } from 'components/Helpers/UserText/GrapesJs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 
 const Index: FC = () => (
@@ -21,8 +21,10 @@ const Index: FC = () => (
     </CommonLayout>
 );
 
-export const getServerSideProps = getServerSidePropsWithRedisClient(
-    (redisClient) => async (context) => initServerSideProps({ context, redisClient }),
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, t }) =>
+        async (context) =>
+            initServerSideProps({ context, redisClient, domainConfig, t }),
 );
 
 export default Index;

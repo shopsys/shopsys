@@ -5,17 +5,15 @@ import {
     CurrentCustomerUserQueryApi,
     CurrentCustomerUserQueryDocumentApi,
 } from 'graphql/generated';
-import getT from 'next-translate/getT';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { createClient } from 'helpers/urql/createClient';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { GtmPageType } from 'types/gtm/enums';
-import { ssrExchange } from 'urql';
 
 const LoginPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
@@ -32,33 +30,48 @@ const LoginPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient, domainConfig) => async (context) => {
-    const ssrCache = ssrExchange({ isClient: false });
-    const t = await getT(domainConfig.defaultLocale, 'common');
-    const client = createClient(t, ssrCache, domainConfig.publicGraphqlEndpoint, redisClient, context);
-    const serverSideProps = await initServerSideProps({ context, client, ssrCache, redisClient });
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, ssrExchange, t }) =>
+        async (context) => {
+            const client = createClient({
+                t,
+                ssrExchange,
+                publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+                redisClient,
+                context,
+            });
+            const serverSideProps = await initServerSideProps({
+                context,
+                client,
+                domainConfig,
+                ssrExchange,
+            });
 
-    const customerQueryResult = client?.readQuery<CurrentCustomerUserQueryApi>(CurrentCustomerUserQueryDocumentApi, {});
-    const isLogged =
-        customerQueryResult?.data?.currentCustomerUser !== undefined &&
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        customerQueryResult?.data?.currentCustomerUser !== null;
+            const customerQueryResult = client.readQuery<CurrentCustomerUserQueryApi>(
+                CurrentCustomerUserQueryDocumentApi,
+                {},
+            );
+            const isLogged =
+                customerQueryResult?.data?.currentCustomerUser !== undefined &&
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                customerQueryResult?.data?.currentCustomerUser !== null;
 
-    if (isLogged) {
-        let redirectUrl = '/';
-        if (typeof context.query.r === 'string') {
-            redirectUrl = context.query.r;
-        }
+            if (isLogged) {
+                let redirectUrl = '/';
+                if (typeof context.query.r === 'string') {
+                    redirectUrl = context.query.r;
+                }
 
-        return {
-            redirect: {
-                statusCode: 302,
-                destination: redirectUrl,
-            },
-        };
-    }
+                return {
+                    redirect: {
+                        statusCode: 302,
+                        destination: redirectUrl,
+                    },
+                };
+            }
 
-    return serverSideProps;
-});
+            return serverSideProps;
+        },
+);
 
 export default LoginPage;
