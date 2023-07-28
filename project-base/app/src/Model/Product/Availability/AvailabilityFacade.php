@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade as Bas
 /**
  * @property \App\Model\Product\Availability\AvailabilityRepository $availabilityRepository
  * @property \App\Component\Setting\Setting $setting
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\Availability\AvailabilityRepository $availabilityRepository, \App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler, \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactory $availabilityFactory, \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\Availability\AvailabilityRepository $availabilityRepository, \App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler, \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactoryInterface $availabilityFactory, \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher)
  */
 class AvailabilityFacade extends BaseAvailabilityFacade
 {

@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFac
 
 /**
  * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
- * @method __construct(\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactory $customerUserRefreshTokenChainDataFactory, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactory $customerUserRefreshTokenChainFactory, \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory, \App\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory, \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory, \App\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
  * @method removeAllCustomerUserRefreshTokenChains(\App\Model\Customer\User\CustomerUser $customerUser)
  */
 class CustomerUserRefreshTokenChainFacade extends BaseCustomerUserRefreshTokenChainFacade
