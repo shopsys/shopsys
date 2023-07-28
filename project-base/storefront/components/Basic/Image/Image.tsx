@@ -19,7 +19,7 @@ export const Image: FC<ImageProps> = ({ image, alt, type, loading, dataTestId, m
     if (img === null) {
         return (
             <img
-                src="/images/optimized-noimage.png"
+                src="/images/optimized-noimage.webp"
                 alt={alt || ''}
                 data-testid={getDataTestId(dataTestId) + '-empty'}
                 className={className}

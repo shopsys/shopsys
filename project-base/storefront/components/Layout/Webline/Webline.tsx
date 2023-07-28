@@ -19,7 +19,7 @@ export const Webline: FC<WeblineProps> = ({ children, style, dataTestId, type, c
             type === 'colored' && 'bg-primary',
             type === 'dark' && 'bg-greyDark',
             type === 'light' && 'bg-orangeLight',
-            type === 'blog' && 'bg-[url("/images/blog-background.png")] bg-cover bg-center bg-no-repeat',
+            type === 'blog' && 'bg-[url("/images/blog-background.webp")] bg-cover bg-center bg-no-repeat',
             className,
         )}
         style={style}
