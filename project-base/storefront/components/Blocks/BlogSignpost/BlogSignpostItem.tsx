@@ -21,6 +21,6 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({ children, href, is
         style={itemLevel !== undefined ? { marginLeft: `calc(6px*${itemLevel})` } : {}}
         data-testid={dataTestId}
     >
-        <>{children}</>
+        {children}
     </ExtendedNextLink>
 );

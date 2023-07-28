@@ -50,7 +50,7 @@ const SubMenuItem: FC<{ onClick?: () => void; href?: string }> = ({ children, da
     if (href) {
         return (
             <ExtendedNextLink href={href} passHref type="static" className="mb-5 px-8 text-sm text-dark no-underline">
-                <>{children}</>
+                {children}
             </ExtendedNextLink>
         );
     }

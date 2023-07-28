@@ -1,6 +1,7 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'utils/twMerge';
@@ -24,6 +25,8 @@ export const SearchInput: FC<SearchInputProps> = ({
     isLoading,
     className,
 }) => {
+    const t = useTypedTranslationFunction();
+
     const enterKeyPressHandler: KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.key === 'Enter' && onEnterPressCallback !== undefined) {
             onEnterPressCallback();
@@ -50,6 +53,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 className="absolute right-4 top-3 cursor-pointer border-none"
                 type="submit"
                 disabled={isSearchButtonDisabled}
+                title={t('Search')}
             >
                 <Icon iconType="icon" icon="Search" className="w-5" />
             </button>
