@@ -17,26 +17,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AdminBaseController
 {
     /**
-     * @Route("/dashboard/ssfw-twitter/")
+     * @Route("/dashboard/twitter/")
      */
-    public function ssfwTwitterAction()
+    public function twitterAction()
     {
-        return $this->render('Admin/Content/Dashboard/ssfw_twitter.html.twig');
+        return $this->render('Admin/Content/Dashboard/twitter.html.twig');
     }
 }
 ```
 
 The `Admin` directory is already configured to use [routing by annotations](https://symfony.com/doc/3.4/routing.html), as it is the easiest to use.
-By adding the `@Route("/dashboard/ssfw-twitter/")` annotation, you are creating a route named `admin_dashboard_ssfwtwitter` (`admin_` + lowercase controller name + `_` + lowercase action name).
+By adding the `@Route("/dashboard/twitter/")` annotation, you are creating a route named `admin_dashboard_twitter` (`admin_` + lowercase controller name + `_` + lowercase action name).
 
-This newly added route should be available under the URL [http://127.0.0.1:8000/admin/**dashboard/ssfw-twitter/**](http://127.0.0.1:8000/admin/dashboard/ssfw-twitter/) by default.
+This newly added route should be available under the URL [http://127.0.0.1:8000/admin/**dashboard/twitter/**](http://127.0.0.1:8000/admin/dashboard/twitter/) by default.
 If you try to access the page, it will fail on loading non-existing template, which we will fix in the next step.
 
 If you'd like to create something more complicated, you can require other services in the controller's constructor, which will be autowired.
 
 ## Twig template
 
-Create a new Twig template named `ssfw_twitter.html.twig` in `templates/Admin/Content` (you'll have to create the directory).
+Create a new Twig template named `twitter.html.twig` in `templates/Admin/Content` (you'll have to create the directory).
 
 The template should extend `@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig` and extend its blocks `title`, `h1` and `block main_content`:
 
@@ -97,7 +97,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $dashboardMenu = $event->getMenu();
 
         $dashboardMenu->addChild('default', ['route' => 'admin_default_dashboard', 'label' => t('Default dashboard')]);
-        $dashboardMenu->addChild('ssfw_twitter', ['route' => 'admin_dashboard_ssfwtwitter', 'label' => t('Tweets by @ShopsysFW')]);
+        $dashboardMenu->addChild('twitter', ['route' => 'admin_dashboard_twitter', 'label' => t('Tweets by @ShopsysFW')]);
 
         $this->removeLink($dashboardMenu);
     }

@@ -28,7 +28,7 @@ Graphic radiobuttons
 ```
 
 ## Background image template
-We prepared PSD file for create custom background image. You can download it (./frontend/custom_checkbox_ssfw.psd). For editing all colors, borders and radiuses you can upload it to (https://www.photopea.com/).
+We prepared PSD file for create custom background image. You can [download it](./custom_checkbox.psd). For editing all colors, borders and radiuses you can upload it to [Photopea](https://www.photopea.com/).
 
 As you can see at layer structure, there are radiobuttons and checkboxes separately. Just make visible part that you want, make your changes and export as png file and save as original file:
 
