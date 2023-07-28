@@ -11,7 +11,7 @@ scheb_two_factor:
         template: 'Admin/Content/Login/LoginFormTwoFA.html.twig'
     google:
         enabled: true
-        server_name: SSFWCC
+        server_name: Shopsys Platform
         issuer: Shopsys
         digits: 6
         window: 1
