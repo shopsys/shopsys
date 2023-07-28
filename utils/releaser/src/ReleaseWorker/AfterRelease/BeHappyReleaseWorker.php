@@ -19,7 +19,7 @@ final class BeHappyReleaseWorker extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return '[Manually] Be happy - the new version of Shopsys Framework is released!';
+        return '[Manually] Be happy - the new version of Shopsys Platform is released!';
     }
 
     /**

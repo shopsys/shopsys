@@ -1,7 +1,7 @@
 # FAQ and Common Issues
 
 This section provides only the basic answers to some of the most frequently asked questions.
-For more detailed information about the Shopsys Framework, please see [Shopsys Framework Knowledge Base](../index.md).
+For more detailed information about the Shopsys Platform, please see [Shopsys Platform Knowledge Base](../index.md).
 
 ### Index
 - [What are the phing targets?](#what-are-the-phing-targets)
@@ -16,7 +16,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [What are the differences between "listable", "sellable", "offered" and "visible" products?](#what-are-the-differences-between-listable-sellable-offered-and-visible-products)
 - [How calculated attributes work?](#how-calculated-attributes-work)
 - [How do I change the environment (PRODUCTION/DEVELOPMENT/TEST)?](#how-do-i-change-the-environment-productiondevelopmenttest)
-- [Are some periodic tasks part of the Shopsys Framework (cron)?](#are-some-periodic-tasks-part-of-the-shopsys-framework-cron)
+- [Are some periodic tasks part of the Shopsys Platform (cron)?](#are-some-periodic-tasks-part-of-the-shopsys-framework-cron)
 - [Why are you using entity data instead of entities for Symfony forms?](#why-are-you-using-entity-data-instead-of-entities-for-symfony-forms)
 - [What is the configuration file `services_test.yaml` good for?](#what-is-the-configuration-file-services_testyaml-good-for)
 - [How to change the behavior of the product search on the front-end?](#how-to-change-the-behavior-of-the-product-search-on-the-front-end)
@@ -47,7 +47,7 @@ This scenario is described in more detail in the tutorial [How to Set Up Domains
 
 ## How to use database migrations and why the developers should use shopsys:migrations:generate instead of the default Doctrine one?
 Migrations (also known as database migrations) are used to unify the database schema with ORM.
-On Shopsys Framework, you can use the phing target `db-migrations-generate` for migrations generation.
+On Shopsys Platform, you can use the phing target `db-migrations-generate` for migrations generation.
 Compared to the standard migrations generation process from Doctrine, this phing target does not generate "irreversible" migrations, such as migrations with the operations `DROP` and `DELETE`.
 Migrations are described more in detail in the docs [Database Migrations](./database-migrations.md)
 
@@ -60,7 +60,7 @@ For example, the phing target `standards` starts checking of all files in the ap
 Modifications are detected via git by comparison against the origin/master version.
 
 ## Is the application https ready or does it need some extra setting?
-Shopsys Framework is fully prepared for HTTPS.
+Shopsys Platform is fully prepared for HTTPS.
 You can just use `https://<your-domain>` in your `config/domains_urls.yaml` configuration file.
 Of course, an SSL certificate must be installed on your server.
 
@@ -72,7 +72,7 @@ For more information about translations, see [the separate article](./translatio
 
 ## How to set up deployment and production server?
 We recommend installation using the Docker for production.
-See how to install Shopsys Framework in production and how to proceed when deploying in the tutorial [Installation Using Docker on Production Server](../installation/installation-using-docker-on-production-server.md).
+See how to install Shopsys Platform in production and how to proceed when deploying in the tutorial [Installation Using Docker on Production Server](../installation/installation-using-docker-on-production-server.md).
 
 ## How to set up the administration with a different locale/language (e.g. Czech)?
 The administration uses `en` locale by default.
@@ -85,7 +85,7 @@ Products can be grouped into several groups according to their current status or
 These groups are described in more detail in the article [How to Work with Products](../model/how-to-work-with-products.md).
 
 ## How calculated attributes work?
-Some attributes that are used on the Shopsys Framework are not set directly, but their value is automatically calculated based on other attributes.
+Some attributes that are used on the Shopsys Platform are not set directly, but their value is automatically calculated based on other attributes.
 For example, if a category of products does not have a name for a locale of the specific domain, this category will be automatically set as not visible on this domain.
 See more about calculated attributes in the article [How to Work with Products](../model/how-to-work-with-products.md).
 
@@ -97,8 +97,8 @@ If the command `composer install --no-dev` is executed, the file `PRODUCTION` is
 
 You can change the environment manually by using the command `php bin/console shopsys:environment:change`.
 
-## Are some periodic tasks part of the Shopsys Framework (cron)?
-Yes, there is some prepared configuration for Shopsys Framework cron commands in a file `src/Resources/config/services/cron.yaml` in `FrameworkBundle`.
+## Are some periodic tasks part of the Shopsys Platform (cron)?
+Yes, there is some prepared configuration for Shopsys Platform cron commands in a file `src/Resources/config/services/cron.yaml` in `FrameworkBundle`.
 Do not forget to set up a cron on your server to execute [`php phing cron`](./console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
 
 ## Why are you using entity data instead of entities for Symfony forms?
@@ -157,7 +157,7 @@ Yes, you can! Check [the quick guide](../automated-testing/running-acceptance-te
 As a general rule, packages and libraries that depend on PHP 8.1 will work as expected even on any higher 8.x version, but not vice versa.
 Maintainers of PHP are focusing on backward-compatibility (even if there were [some incompatible changes](https://www.php.net/manual/en/migration81.incompatible.php) introduced in PHP 8.1, in practice it doesn't cause issues).
 
-Using [the `config.platform.php` option](https://getcomposer.org/doc/06-config.md#platform) in `composer.json` allows us to force Composer to install such dependencies, that work for all supported versions of PHP by Shopsys Framework.
+Using [the `config.platform.php` option](https://getcomposer.org/doc/06-config.md#platform) in `composer.json` allows us to force Composer to install such dependencies, that work for all supported versions of PHP by Shopsys Platform.
 These dependencies are locked during each release of SSFW so users that install it can download exact versions of all libraries and tools that were tested and proved working.
 This helps to eliminate unforeseen issues during installation.
 See [Composer docs](https://getcomposer.org/doc/01-basic-usage.md#installing-with-composer-lock) for more details on version locking.

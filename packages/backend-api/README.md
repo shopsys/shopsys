@@ -1,12 +1,12 @@
 # Shopsys Backend API
 
-*Backend API package is currently reviewed and is not compatible with upcoming Shopsys Framework release*
+*Backend API package is currently reviewed and is not compatible with upcoming Shopsys Platform release*
 
 [![Build Status](https://travis-ci.org/shopsys/backend-api.svg?branch=master)](https://travis-ci.org/shopsys/backend-api)
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/backend-api.svg)](https://packagist.org/packages/shopsys/backend-api)
 
-This bundle for [Shopsys Framework](https://www.shopsys.com) adds backend API using [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle), [oauth2-bundle](https://github.com/trikoder/oauth2-bundle) and [JMSSerializerBundle](https://github.com/schmittjoh/JMSSerializerBundle).
-The bundle is dedicated for projects based on Shopsys Framework (i.e. created from [`shopsys/project-base`](https://github.com/shopsys/project-base)) exclusively.
+This bundle for [Shopsys Platform](https://www.shopsys.com) adds backend API using [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle), [oauth2-bundle](https://github.com/trikoder/oauth2-bundle) and [JMSSerializerBundle](https://github.com/schmittjoh/JMSSerializerBundle).
+The bundle is dedicated for projects based on Shopsys Platform (i.e. created from [`shopsys/project-base`](https://github.com/shopsys/project-base)) exclusively.
 This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
 ## Installation
@@ -17,7 +17,7 @@ This repository is maintained by [shopsys/shopsys] monorepo, information about c
 
 ## Contributing
 Thank you for your contributions to Shopsys Backend API package.
-Together we are making Shopsys Framework better.
+Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),

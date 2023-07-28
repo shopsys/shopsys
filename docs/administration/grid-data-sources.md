@@ -2,7 +2,7 @@
 
 As a data source, the [Grid Component](./grid.md) requires an implementation of [`DataSourceInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/DataSourceInterface.php).
 
-You can find 4 implementations of the interface in Shopsys Framework.
+You can find 4 implementations of the interface in Shopsys Platform.
 
 ## [`QueryBuilderDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/QueryBuilderDataSource.php)
 Most commonly used data source that is created from Doctrine Query Builder.

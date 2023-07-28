@@ -1,31 +1,31 @@
 # Shopsys Project-base
 
-This repository is part of Shopsys Framework - a **scalable ecommerce framework** for fast-growing ecommerce sites created and maintained by in-house developers or outsourcing agencies.
+This repository is part of Shopsys Platform - a **scalable ecommerce framework** for fast-growing ecommerce sites created and maintained by in-house developers or outsourcing agencies.
 
-Shopsys/project-base repository contains the fully ready base for building your Shopsys Framework projects. This repository is READ-ONLY and it is maintained by monorepo [shopsys/shopsys](https://github.com/shopsys/shopsys).
+Shopsys/project-base repository contains the fully ready base for building your Shopsys Platform projects. This repository is READ-ONLY and it is maintained by monorepo [shopsys/shopsys](https://github.com/shopsys/shopsys).
 
 For more information about project, please see [shopsys/shopsys](https://github.com/shopsys/shopsys) readme.
 
 This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
 ## Installation
-We recommend to choose **installation via Docker** because it is the easiest and fastest way to start using Shopsys Framework.
+We recommend to choose **installation via Docker** because it is the easiest and fastest way to start using Shopsys Platform.
 Docker contains complete development environment necessary for running your application.
-In the future we want to add new technologies to Shopsys Framework (e.g. ElasticSearch).
+In the future we want to add new technologies to Shopsys Platform (e.g. ElasticSearch).
 **Updating your development environment to use these technologies will be very easy with Docker**
 because such an update will be done just by running `docker-compose build`.
 And that is all!
 
-Create new project on Shopsys Framework easily from this package following the [Installation Guide](https://docs.shopsys.com/en/latest/installation/installation-guide/).
+Create new project on Shopsys Platform easily from this package following the [Installation Guide](https://docs.shopsys.com/en/latest/installation/installation-guide/).
 
 ## Documentation
-For documentation of Shopsys Framework itself see [Shopsys Framework Knowledge Base](https://docs.shopsys.com/en/latest/).
+For documentation of Shopsys Platform itself see [Shopsys Platform Knowledge Base](https://docs.shopsys.com/en/latest/).
 
-Documentation of the specific project built on Shopsys Framework should be in [Project Documentation](https://github.com/shopsys/project-base/blob/master/docs/index.md).
+Documentation of the specific project built on Shopsys Platform should be in [Project Documentation](https://github.com/shopsys/project-base/blob/master/docs/index.md).
 
 ## Contributing
 Thank you for your contributions to Shopsys Project-base.
-Together we are making Shopsys Framework better.
+Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),

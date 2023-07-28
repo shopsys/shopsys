@@ -3,7 +3,7 @@
 ## What should be covered in project documentation
 In order to write a good documentation you should think about what information will other developers need to know to further develop and maintain the project.  
 
-Shopsys Framework has it's own documentation so the project documentation should focus on what is not standard and cannot be found in the [Shopsys Framework Knowledge Base](../index.md).
+Shopsys Platform has its own documentation so the project documentation should focus on what is not standard and cannot be found in the [Shopsys Platform Knowledge Base](../index.md).
 
 ### Examples of topics
 * Changes in the architecture

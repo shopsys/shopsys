@@ -2,27 +2,27 @@
 
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/framework.svg)](https://packagist.org/packages/shopsys/framework)
 
-This repository is part of Shopsys Framework - a **scalable ecommerce framework** for fast-growing ecommerce sites created and maintained by in-house developers or outsourcing agencies.
+This repository is part of Shopsys Platform - a **scalable ecommerce framework** for fast-growing ecommerce sites created and maintained by in-house developers or outsourcing agencies.
 
-Shopsys/framework package is part of Shopsys Framework environment and it stands out as a core of Shopsys Framework projects. This repository is READ-ONLY and it is maintained by monorepo [shopsys/shopsys](https://github.com/shopsys/shopsys).
+Shopsys/framework package is part of Shopsys Platform environment and it stands out as a core of Shopsys Platform projects. This repository is READ-ONLY and it is maintained by monorepo [shopsys/shopsys](https://github.com/shopsys/shopsys).
 
 For more information about project, please see [shopsys/shopsys] readme.
 
 This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
 ## How to Start New Project
-For the purposes of building the new project use our [shopsys/project-base](https://github.com/shopsys/project-base), which is fully ready as the base for building your Shopsys Framework based project.
+For the purposes of building the new project use our [shopsys/project-base](https://github.com/shopsys/project-base), which is fully ready as the base for building your Shopsys Platform based project.
 
 For more detailed instructions, follow the [Installation Guide](https://docs.shopsys.com/en/latest/installation/installation-guide/).
 
 ## Documentation
-For documentation of Shopsys Framework itself see [Shopsys Framework Knowledge Base](https://docs.shopsys.com/en/latest/).
+For documentation of Shopsys Platform itself see [Shopsys Platform Knowledge Base](https://docs.shopsys.com/en/latest/).
 
-Documentation of the specific project built on Shopsys Framework should be in [Project Documentation](https://github.com/shopsys/project-base/blob/master/docs/index.md).
+Documentation of the specific project built on Shopsys Platform should be in [Project Documentation](https://github.com/shopsys/project-base/blob/master/docs/index.md).
 
 ## Contributing
-Thank you for your contributions to Shopsys Framework Package.
-Together we are making Shopsys Framework better.
+Thank you for your contributions to Shopsys Platform Package.
+Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),

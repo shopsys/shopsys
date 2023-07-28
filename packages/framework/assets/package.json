@@ -1,7 +1,7 @@
 {
   "name": "@shopsys/framework",
   "version": "11.0.0",
-  "description": "Shopsys framework assets files",
+  "description": "Shopsys Platform assets files",
   "repository": "https://github.com/shopsys/shopsys",
   "author": "Shopsys",
   "license": "proprietary",

@@ -1,8 +1,8 @@
-# Development Workflow of Project on Shopsys Framework
+# Development Workflow of Project on Shopsys Platform
 
 ## Requirements
-* Shopsys Framework [installed](../installation/installation-guide.md)
-* [GIT repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository) created from Shopsys Framework [project-base](https://github.com/shopsys/project-base/)
+* Shopsys Platform [installed](../installation/installation-guide.md)
+* [GIT repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository) created from Shopsys Platform [project-base](https://github.com/shopsys/project-base/)
 
 ## How to develop a new feature
 1. Create a new branch from `master` branch e.g. `my-new-feature`
@@ -25,7 +25,7 @@
 1. [Create commit](https://git-scm.com/docs/git-commit) with descriptive commit message about changes you have made.
 
     !!! tip
-        We have [Guidelines for Creating Commits](../contributing/guidelines-for-creating-commits.md) for contributors to Shopsys Framework.
+        We have [Guidelines for Creating Commits](../contributing/guidelines-for-creating-commits.md) for contributors to Shopsys Platform.
         These guidelines suggest some best practices for creating commits that you could adopt on your project.
 
 1. [Push changes](https://git-scm.com/docs/git-push) to your remote GIT repository

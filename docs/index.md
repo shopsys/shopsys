@@ -1,8 +1,8 @@
-# Shopsys Framework Knowledge Base
-Welcome to Shopsys Framework Knowledge Base!
+# Shopsys Platform Knowledge Base
+Welcome to Shopsys Platform Knowledge Base!
 On these pages, you can find everything you need to know when you want to build your own ecommerce site based on the framework.
 
-If you want to know more about what Shopsys Framework is, you can take a look at our [README.md](https://github.com/shopsys/shopsys/blob/master/README.md).
+If you want to know more about what Shopsys Platform is, you can take a look at our [README.md](https://github.com/shopsys/shopsys/blob/master/README.md).
 
 ## Need help?
 If you are not able to find the desired information here, you can always ask us directly on our [public slack](https://join.slack.com/t/shopsysframework/shared_invite/zt-11wx9au4g-e5pXei73UJydHRQ7nVApAQ) or [report an issue](https://github.com/shopsys/shopsys/issues/new) on Github.
@@ -17,13 +17,13 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
 * [Installation](./installation/index.md)
     * Application configuration, requirements, installation guides for various platforms including Docker.
 * [Introduction](./introduction/index.md)
-    * Information about basic concepts and terms in Shopsys Framework.
+    * Information about basic concepts and terms in Shopsys Platform.
 * [Model](./model/index.md)
     * Basics about model architecture, entities, ...
 * [Cookbook](./cookbook/index.md)
     * Step by step how-to guides.
 * [Functional](./functional/index.md)
-    * How Shopsys Framework works from a user point of view.
+    * How Shopsys Platform works from a user point of view.
 * [Frontend](./frontend/index.md)
     * Design implementation and customization, LESS, ...
 * [Administration](./administration/index.md)
@@ -31,11 +31,11 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
 * [Frontend API](./frontend-api)
     * Information about the frontend GraphQL API dedicated for connecting external storefront or mobile app.
 * [Extensibility](./extensibility/index.md)
-    * How to customize the behavior of Shopsys Framework to suit your needs.
+    * How to customize the behavior of Shopsys Platform to suit your needs.
 * [Automated Testing](./automated-testing/index.md)
     * Information about available types of tests and how to run them.
 * [Contributing](./contributing/index.md)
-    * Guidelines and handy information for Shopsys Framework contributors.
+    * Guidelines and handy information for Shopsys Platform contributors.
 
 ## Frontend
 * [Design implementation and Customization](./frontend/design-implementation-and-customization.md)
@@ -49,4 +49,4 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
 For the frequently asked questions, see [FAQ and Common Issues](./introduction/faq-and-common-issues.md).
 
 ## Documenting your own project
-We strongly believe that not only the framework itself needs documentation, but also your project deserves it's own docs. The tips for writing project documentation are written down in [Guidelines for Project Documentation](./project/guidelines-for-project-documentation.md).
+We strongly believe that not only the Shopsys Platform itself needs documentation, but also your project deserves it's own docs. The tips for writing project documentation are written down in [Guidelines for Project Documentation](./project/guidelines-for-project-documentation.md).

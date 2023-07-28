@@ -1,5 +1,5 @@
 # Frontend Troubleshooting
-This document servers for most common bugs found during developing at Shopsys Framework.
+This document servers for most common bugs found during developing at Shopsys Platform.
 
 ## Icons from SVG generated document are not visible in Mozilla browsers properly
 In case you access SVG icons placed in directory `project-base/docs/generated` with browsers from Mozilla you will not be able to see SVG icons properly.

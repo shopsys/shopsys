@@ -1,6 +1,6 @@
 # How to write an upgradable application
 
-This article describes a list of useful tips on how to write your application to make the upgrade to the new version of the Shopsys Framework as smooth as possible.
+This article describes a list of useful tips on how to write your application to make the upgrade to the new version of the Shopsys Platform as smooth as possible.
 
 [TOC]
 
@@ -53,7 +53,7 @@ Also, you may be sure this is intentional, and not a bug.
 
 ## Reported bug
 
-Sometimes you may find a bug or request a feature in Shopsys Framework, 
+Sometimes you may find a bug or request a feature in Shopsys Platform, 
 but until the reported (thanks for that!) issue/request is processed, and a new version is released you need to fix it in your code.
 
 Then it's really useful to make a notice in your code, so you can quickly decide in the future whether some parts of your code can be safely deleted as the original issue is already resolved.

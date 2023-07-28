@@ -1,6 +1,6 @@
 # Entity Extension
 
-This article describes a quick way to extend your entity and the internals of entity extension system implemented in Shopsys Framework.
+This article describes a quick way to extend your entity and the internals of entity extension system implemented in Shopsys Platform.
 
 ## How can I extend an entity?
 

@@ -1,8 +1,8 @@
 # Configuring Image Sizes for Individual Devices Width
-In Shopsys Framework you can configure image sizes for individual devices width. This is allowed by HTML element [Picture element (see more in Mozilla official documentation)](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture).
+In Shopsys Platform you can configure image sizes for individual devices width. This is allowed by HTML element [Picture element (see more in Mozilla official documentation)](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture).
 
 ## Introduction
-This document serves for introducing you with the process of managing images on Shopsys Framework.
+This document serves for introducing you with the process of managing images on Shopsys Platform.
 
 !!! tip
     In order to get correct image sizes of additional images then your original image must be larger than highest size in additional image size.

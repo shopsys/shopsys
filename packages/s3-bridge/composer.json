@@ -1,8 +1,8 @@
 {
     "name": "shopsys/s3-bridge",
     "type": "library",
-    "description": "Integration of AWS S3 into Shopsys Framework",
-    "keywords": ["S3", "AWS", "Shopsys Framework", "SSFW"],
+    "description": "Integration of AWS S3 into Shopsys Platform",
+    "keywords": ["S3", "AWS", "Shopsys Platform", "SSFW"],
     "license": "proprietary",
     "authors": [
         {

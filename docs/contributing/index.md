@@ -10,4 +10,4 @@
 * [Guidelines for Writing Documentation](./guidelines-for-writing-documentation.md)
 * [Guidelines for writing UPGRADE.md](./guidelines-for-writing-upgrade.md)
 * [Merging to Master on Github](./merging-on-github.md)
-* [Releasing a new version of Shopsys Framework](./releasing-a-new-version-of-shopsys-framework.md)
+* [Releasing a new version of Shopsys Platform](./releasing-a-new-version-of-shopsys-framework.md)

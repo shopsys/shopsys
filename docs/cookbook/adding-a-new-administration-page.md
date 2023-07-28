@@ -44,7 +44,7 @@ The template should extend `@ShopsysFramework/Admin/Layout/layoutWithPanel.html.
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
 {% block title %}- {{ 'Tweets by @ShopsysFW'|trans }}{% endblock %}
-{% block h1 %}{{ 'Updates from the Shopsys Framework'|trans }}{% endblock %}
+{% block h1 %}{{ 'Updates from the Shopsys Platform'|trans }}{% endblock %}
 
 {% block main_content %}
     <a class="twitter-timeline" data-lang="{{ app.request.locale }}" data-theme="light" href="https://twitter.com/ShopsysFW"></a>

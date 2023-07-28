@@ -41,7 +41,7 @@ git rebase origin/master
 * Now just wait for review of your change.
 
 ### Note about targeting pull requests
-As we [support multiple versions](./backward-compatibility-promise.md#current-release-plan) of Shopsys Framework while keeping [Backward Compatibility Promise](./backward-compatibility-promise.md), it is important to think about proper targeting of your pull request.
+As we [support multiple versions](./backward-compatibility-promise.md#current-release-plan) of Shopsys Platform while keeping [Backward Compatibility Promise](./backward-compatibility-promise.md), it is important to think about proper targeting of your pull request.
 
 If your pull request:
 
@@ -91,4 +91,4 @@ After squash you just need to correct commit messages (if needed) and push it:
 git push --force
 ```
 
-##### Wait for the merge from SSFW developers and look forward for better Shopsys Framework.
+##### Wait for the merge from Shopsys developers and look forward for better Shopsys Platform.

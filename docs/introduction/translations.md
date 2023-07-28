@@ -7,7 +7,7 @@ In this article, we describe tools and recommendations for translations.
 
 ## Usage
 
-1. Use a translator for your [translatable texts](#translatable-texts). Shopsys Framework implementation of a translator is [`Shopsys\FrameworkBundle\Component\Translation\Translator`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Translation/Translator.php) class.
+1. Use a translator for your [translatable texts](#translatable-texts). Shopsys Platform implementation of a translator is [`Shopsys\FrameworkBundle\Component\Translation\Translator`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Translation/Translator.php) class.
    You can find more in [Symfony translation documentation](https://symfony.com/doc/current/components/translation/usage.html).
 
 1. Once you have translations in your code, you have to extract them by running `php phing translations-dump`.
@@ -142,6 +142,6 @@ JavaScript translations are extracted and translated during compilation of JavaS
     * just change the translations in `*.po` file(s) for English and all the other languages
 
 ## Localized routes
-On Shopsys Framework, you can translate URLs of your routes.
+On Shopsys Platform, you can translate URLs of your routes.
 See ["Frontend routes" section in "How to Set Up Domains and Locales" article](./how-to-set-up-domains-and-locales.md#32-frontend-routes) for more information.
 You can see the list of all translated URLs in administration page `admin/superadmin/urls/` (you must be logged in as a superadmin).

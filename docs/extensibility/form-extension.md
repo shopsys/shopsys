@@ -30,7 +30,7 @@ Many of our forms have their own theme which describe on how to render form row.
 Copy theme of form type you want to change into your project namespace and replace file you want to
 change with your own file in `twig/form_themes` in `config/packages/twig.yaml` file. Now you can change whatever you want.
 
-Remember that files that you copy into your project cannot be automatically upgraded with newer versions of Shopsys Framework.
+Remember that files that you copy into your project cannot be automatically upgraded with newer versions of Shopsys Platform.
 
 If you want to change the whole style of rendering forms in administration you need to copy whole [`theme.html.twig`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) which defines the style of
 rendering default symfony rows.

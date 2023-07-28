@@ -1,8 +1,8 @@
 {
     "name": "shopsys/read-model",
     "type": "library",
-    "description": "[experimental] Read model layer for Shopsys Framework",
-    "keywords": ["Read Model", "Shopsys Framework", "SSFW"],
+    "description": "[experimental] Read model layer for Shopsys Platform",
+    "keywords": ["Read Model", "Shopsys Platform", "SSFW"],
     "license": "proprietary",
     "authors": [
         {

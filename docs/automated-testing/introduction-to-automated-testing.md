@@ -1,7 +1,7 @@
 # Introduction to Automated Testing
 
 Testing is a crucial part of development and maintenance of reliable software.  
-For this reason Shopsys Framework comes with 5 types of automated tests:
+For this reason Shopsys Platform comes with 5 types of automated tests:
 
 * [Unit tests](#unit-tests)
 * [Functional tests](#functional-tests)
@@ -57,12 +57,12 @@ When your application depends on some specific feature in a 3rd party system tha
 
 The fact that the feature is not documented may indicate that the authors did not consider the behavior a real feature and may change in future versions. If it does you will be notified by your tests.
 
-## Types of automated tests available in Shopsys Framework
+## Types of automated tests available in Shopsys Platform
 
 ### Unit tests
 Used to test the smallest possible amount of code (the "unit", i.e. class/method). To isolate tested unit it is useful to mock other objects - create a dummy object mimicking the real implementation of collaborating classes.
 
-Unit tests in Shopsys Framework are built on [PHPUnit testing framework](https://phpunit.de/).
+Unit tests in Shopsys Platform are built on [PHPUnit testing framework](https://phpunit.de/).
 
 #### Advantages:
 * execution is really fast

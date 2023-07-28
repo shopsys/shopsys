@@ -1,6 +1,6 @@
 # How to Work with Products
 
-In the context of the products, there are several concepts on the Shopsys Framework that can not be understood at first sight.
+In the context of the products, there are several concepts on the Shopsys Platform that can not be understood at first sight.
 The article describes this concepts more in detail.
 
 ## Groups of products - "listable", "sellable", "offered", "visible"
@@ -29,7 +29,7 @@ Sellable products are products that can actually be purchased.
 Only the standard products or the specific variants can actually be purchased.
 
 ## How calculated attributes work?
-Some attributes that are used on the Shopsys Framework are not set directly, but their value is automatically calculated based on other attributes.
+Some attributes that are used on the Shopsys Platform are not set directly, but their value is automatically calculated based on other attributes.
 For example, if a category of products does not have a name for a locale of the specific domain, this category will be automatically set as not visible on this domain.
 The recalculations of these special attributes can be initialized as `immediate` or `scheduled`:
 

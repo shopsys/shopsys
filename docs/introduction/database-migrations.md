@@ -1,6 +1,6 @@
 # Database Migrations
 
-In Shopsys Framework we use [Doctrine migrations bundle](https://symfony.com/doc/master/bundles/DoctrineMigrationsBundle/index.html) with a few modifications.
+In Shopsys Platform we use [Doctrine migrations bundle](https://symfony.com/doc/master/bundles/DoctrineMigrationsBundle/index.html) with a few modifications.
 Our [MigrationsBundle](https://github.com/shopsys/migrations) supports the installation of database migrations from all registered bundles and also enables controlling their order or even skipping some.
 
 ## Where to store migrations
@@ -31,9 +31,9 @@ If the migrations fail by either triggering an error or by not passing a schema 
 
 ## Locking the order of migrations
 
-Shopsys Framework enables installation of migrations from multiple sources like your project, the framework itself, and other installed bundles.
+Shopsys Platform enables installation of migrations from multiple sources like your project, the framework itself, and other installed bundles.
 Usually, the migrations are executed in the same order as they were generated (the class names of migrations contain the time of their creation).
-This wouldn't work as well in Shopsys Framework, because you can install a module with migrations created in the past, leading to an inconsistent order of execution:
+This wouldn't work as well in Shopsys Platform, because you can install a module with migrations created in the past, leading to an inconsistent order of execution:
 
 > Imagine there is an application with two installed migrations: `Version20180101115739` and `Version20180619154622`.
 > Then a module with a migration `Version20180228141735` is installed.

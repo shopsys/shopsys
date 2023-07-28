@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Shopsys Framework" default="list">
+<project name="Shopsys Platform" default="list">
 
     <property name="check-and-fix-annotations" value="true"/>
     <property name="npm.framework" value="@shopsys/framework"/>

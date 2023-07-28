@@ -2,7 +2,7 @@
 Sometimes you may need to dump (i.e. export) and import the application database.
 The typical use case is creating and restoring a database backup or transferring database from one machine to another.
 
-In Shopsys Framework, database dumps consist of `public` schema only.
+In Shopsys Platform, database dumps consist of `public` schema only.
 This schema contains all the application data.
 There are other database objects inside `pg_catalog` schema (like collations or extensions) but those are not considered part of the application database and therefore are not included in database dumps.  
 

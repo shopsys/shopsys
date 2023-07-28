@@ -20,7 +20,7 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return '[Manually] Install Shopsys Framework (project-base) using installation guides on all supported operating systems. You need to wait with the installation until the monorepo is split.';
+        return '[Manually] Install Shopsys Platform (project-base) using installation guides on all supported operating systems. You need to wait with the installation until the monorepo is split.';
     }
 
     /**

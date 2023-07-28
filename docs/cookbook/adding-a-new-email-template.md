@@ -258,7 +258,7 @@ You will receive email notification about the changed password for the account.
 One of the requirements was to be able to edit the template in administration.
 Let's make it possible.
 
-Shopsys Framework made this task really easy.  
+Shopsys Platform made this task really easy.  
 You just need to define variables, their labels for the form, allowed usage, and whether they are required or not.
 
 This configuration is made in PHP to ease translating values.
@@ -332,4 +332,3 @@ Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration:
 
 Now in your database is a new email template and email from this template is sent to the user whenever he resets his password.
 This template can be easily changed from the administration
-

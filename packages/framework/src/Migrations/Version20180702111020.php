@@ -148,7 +148,7 @@ class Version20180702111020 extends AbstractMigration
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoMetaDescriptionMainPage\', 1, :text, \'string\')',
                 [
-                    'text' => 'Shopsys Framework - the best solution for your eshop.',
+                    'text' => 'Shopsys Platform - the best solution for your eshop.',
                 ],
             );
         }
@@ -164,7 +164,7 @@ class Version20180702111020 extends AbstractMigration
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoTitleMainPage\', 1, :text, \'string\')',
                 [
-                    'text' => 'Shopsys Framework - Title page',
+                    'text' => 'Shopsys Platform - Title page',
                 ],
             );
         }

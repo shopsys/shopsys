@@ -1,5 +1,5 @@
 # Application Requirements
-To be able to install, develop and run Shopsys Framework, the system should have preinstalled some tools and services.
+To be able to install, develop and run Shopsys Platform, the system should have preinstalled some tools and services.
 
 ## Linux / macOS / WSL
 * [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)

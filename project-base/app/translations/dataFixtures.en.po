@@ -1558,10 +1558,10 @@ msgstr ""
 msgid "Shopping guide to improve your shopping experience"
 msgstr ""
 
-msgid "Shopsys Framework - Title page"
+msgid "Shopsys Platform - Title page"
 msgstr ""
 
-msgid "Shopsys Framework - the best solution for your eshop."
+msgid "Shopsys Platform - the best solution for your eshop."
 msgstr ""
 
 msgid "Side mount plates - few ETV-2860"
@@ -2169,4 +2169,3 @@ msgstr ""
 
 msgid "| Demo eshop"
 msgstr ""
-

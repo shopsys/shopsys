@@ -3,7 +3,7 @@ In this article you will learn about model rules, what is and what is not model,
 
 ## Hierarchy nesting
 All classes related to the model are nested in the `Model` namespace inside the bundle namespace.
-In your ecommerce project based on Shopsys Framework, you should put your classes inside `App\Model\<MODEL>` (this namespace will be used below).
+In your ecommerce project based on Shopsys Platform, you should put your classes inside `App\Model\<MODEL>` (this namespace will be used below).
 Core model classes of SSFW can be found in `Shopsys\FrameworkBundle\Model\<MODEL>`.
 
 They can also be nested into deeper directory such as `App\Model\Product\Search` if it encapsulate group of classes representing some specific functionality, for example search functionality for a `Product` entity.

@@ -1,5 +1,5 @@
 # Pagination
-Shopsys Framework Frontend API uses pagination inspired by [Relay cursor connection](https://facebook.github.io/relay/graphql/connections.htm)
+Shopsys Platform Frontend API uses pagination inspired by [Relay cursor connection](https://facebook.github.io/relay/graphql/connections.htm)
 
 Every paginated entity uses connection with information about current page and paginated entities.
 For more information please see [the specification](https://facebook.github.io/relay/graphql/connections.htm)

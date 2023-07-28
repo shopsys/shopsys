@@ -24,7 +24,7 @@ php phing tests-acceptance
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 ### How to watch what is going on in the selenium browser
-Shopsys Framework uses `seleniarm/standalone-firefox` image for `selenium-server` service which provides two ways of watching acceptance tests progress:
+Shopsys Platform uses `seleniarm/standalone-firefox` image for `selenium-server` service which provides two ways of watching acceptance tests progress:
 
 #### VNC
 From your local machine, connect to the remote desktop on `vnc://127.0.0.1:5900`
@@ -47,7 +47,7 @@ For running acceptance tests you need to install [Google Chrome browser](https:/
 You must choose compatible versions of Google Chrome and ChromeDriver.
 As Chrome browser has auto-update enabled by default this may require you to update ChromeDriver from time to time.
 
-When installing Shopsys Framework natively, it is important to update parameters in `.env.acc.local`:
+When installing Shopsys Platform natively, it is important to update parameters in `.env.acc.local`:
 
 * `OVERWRITE_DOMAIN_URL=` (disables domain URL overwriting in `ACCEPTANCE` environment)
 * `SELENIUM_SERVER_HOST=127.0.0.1`

@@ -1,6 +1,6 @@
 # Domain, Multidomain, Multilanguage
 
-During the development with the Shopsys Framework, it is possible to meet concepts - domain, multidomain, multilanguage.
+During the development with the Shopsys Platform, it is possible to meet concepts - domain, multidomain, multilanguage.
 This document explains what these terms mean.
 
 How to work with them during the development of your project is described in the [How to set up domains and locales article](how-to-set-up-domains-and-locales.md).

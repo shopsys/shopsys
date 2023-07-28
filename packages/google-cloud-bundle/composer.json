@@ -1,8 +1,8 @@
 {
     "name": "shopsys/google-cloud-bundle",
     "type": "library",
-    "description": "Shopsys Framework Google Cloud Bundle",
-    "keywords": ["google cloud", "Shopsys Framework", "SSFW"],
+    "description": "Shopsys Platform Google Cloud Bundle",
+    "keywords": ["google cloud", "Shopsys Platform", "SSFW"],
     "license": "MIT",
     "authors": [
         {

@@ -1,1 +1,1 @@
-# Shopsys Framework Backend
+# Shopsys Platform Backend

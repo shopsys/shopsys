@@ -1,6 +1,6 @@
 # Start Building Your Application
 
-Installation of the Shopsys Framework is complete and now you can start building your application.
+Installation of the Shopsys Platform is complete and now you can start building your application.
 Here are first steps you should start with.
 
 !!! note

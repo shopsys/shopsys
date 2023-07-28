@@ -31,7 +31,7 @@ DETAIL:  The operating system could not find any locale data for the locale name
 
 Some features like sorting products by name in the products catalog require your database to contain specific collations in order to be able to sort by locale-specific rules.
 Unfortunately, in PostgreSQL locales are operating system dependent, which means that they can be different on each system.
-Shopsys Framework normalizes the names of locales present in different systems by creating new collations in the database.
+Shopsys Platform normalizes the names of locales present in different systems by creating new collations in the database.
 
 However, if your operating system does not provide the required locales you can try:
 

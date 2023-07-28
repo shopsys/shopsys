@@ -2,7 +2,7 @@
 This document describes the behavior of CSS pre-processor [LESS](http://lesscss.org/).
 
 ## Files import
-In Shopsys Framework we implement `Less` by dividing styles into many `Less components`.
+In Shopsys Platform we implement `Less` by dividing styles into many `Less components`.
 Each component has its own file. Filename and component name are the same.
 We use `@import` command for joining all components contents into one compiled `CSS` file.
 

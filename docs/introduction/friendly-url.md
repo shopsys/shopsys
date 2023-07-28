@@ -1,6 +1,6 @@
 # Friendly URL
 
-Shopsys Framework comes with the implementation to support custom URLs for entities or other use you might need.
+Shopsys Platform comes with the implementation to support custom URLs for entities or other use you might need.
 By default, there are custom URLs implemented for product detail, product list, article detail and brand detail pages.
 Thanks to this functionality you can set your own URL or set of URLs to these entities.
 This functionality is provided by `FriendlyUrlDataProviderInterface` implementations, e.g. `ProductDetailFriendlyUrlDataProvider`.

@@ -3,7 +3,7 @@ numberRegex="^[0-9]+([.][0-9]+)?$"
 operatingSystem=""
 allowedValues=(1 2)
 projectPathPrefix="app/"
-echo This is installation script that will install demo Shopsys Framework application on docker with all required containers and with demo database created.
+echo This is installation script that will install demo Shopsys Platform application on docker with all required containers and with demo database created.
 
 docker ps -q &> /dev/null
 if [[ "$?" != 0 ]]; then

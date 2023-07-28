@@ -2,12 +2,12 @@
 
 In a modern web application (or native mobile application), it’s likely that you’ll need to make parts of your app private so they are not accessible by anybody.
 If you want some users to be able to access those restricted parts, you need to implement some sort of user authentication in your app, so that users can create an account, and later log into that account, to access protected content.
-User authentication in Shopsys Framework Frontend API uses access tokens.
+User authentication in Shopsys Platform Frontend API uses access tokens.
 
 Access Tokens are used in token-based authentication to allow an application to access an API. For example, a customer orders API methods can read orders for only one (authorized) customer.
 Once an application has received an Access Token, it will include that token as a credential during API requests. To do so, it should transmit the Access Token to the API as a Bearer credential in an HTTP Authorization header.
 
-[JWT](https://jwt.io/introduction/) tokens are used as access tokens in Shopsys Framework.
+[JWT](https://jwt.io/introduction/) tokens are used as access tokens in Shopsys Platform.
 
 You can read more about access tokens in [this article](https://auth0.com/docs/tokens/concepts/access-tokens).
 
@@ -15,7 +15,7 @@ The access token has a short lifetime (15 minutes by default).
 In order to not force users to log in every 15 minutes, we have implemented refresh tokens that have a longer lifetime (14 days in the base).
 You can read more about refresh tokens [here](https://auth0.com/docs/tokens/concepts/refresh-tokens).
 
-Tokens are signed with a private key and verified with its public key in Shopsys Framework.
+Tokens are signed with a private key and verified with its public key in Shopsys Platform.
 You can generate them using the command `./phing frontend-api-generate-new-keys`.
 If these keys leak, you can generate a new key pair with the same command.
 Note that when you regenerate the keys, you invalidate all issued access and refresh tokens.

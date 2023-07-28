@@ -3,13 +3,13 @@
 Read model is an extra layer that separates templates and [the application model](./introduction-to-model-architecture.md).
 The read model is taken from [CQRS pattern](https://martinfowler.com/bliki/CQRS.html) where the main idea is usage of different objects for reading and writing data.
 
-![model architecture schema](./img/read-model-architecture.png 'Read model in Shopsys Framework architecture')
+![model architecture schema](./img/read-model-architecture.png 'Read model in Shopsys Platform architecture')
 
 The read model stands next to the standard domain model, and it is completely independent of it. When using [entities](./entities.md) from the standard domain model, you might get a lot of data that you do not need for your particular use case.
 This is not effective and often has a negative impact on the application performance.
 Also, entities have a lot of responsibilities that are useless (or even harmful) during reading scenarios.
 
-The main goal of the read model in Shopsys Framework is a clear separation of the model and view layer, and performance gain for the end user.
+The main goal of the read model in Shopsys Platform is a clear separation of the model and view layer, and performance gain for the end user.
 This is achieved by avoiding the usage of Doctrine entities (and hence calls to SQL Database) in particular frontend templates.
 
 Each object in the read model has its specific purpose (e.g. there is [`ListedProductView`](https://github.com/shopsys/shopsys/blob/master/packages/read-model/src/Product/Listed/ListedProductView.php) object that is used on product lists only).

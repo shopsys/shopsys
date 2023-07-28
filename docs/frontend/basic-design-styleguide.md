@@ -1,11 +1,11 @@
 # Basic Design Styleguide
 
 ## Documentation
-Styleguide - tool to make creating and maintaining styleguides easy for Shopsys Framework designs.
+Styleguide - tool to make creating and maintaining styleguides easy for Shopsys Platform designs.
 Contains all html elements necessary to create new design.
 
-## Installation for already running project based on Shopsys Framework
-You need to have Shopsys Framework installed in developer mode according to our [Installation Guide](../installation/installation-guide.md)
+## Installation for already running project based on Shopsys Platform
+You need to have Shopsys Platform installed in developer mode according to our [Installation Guide](../installation/installation-guide.md)
 
 1) run `npm run dev` so you have all your styles compiled
 2) open http://127.0.0.1:8000/_styleguide file in browser to see your styleguide
