@@ -1,4 +1,4 @@
-import { ProductsSlider } from '../Blocks/Product/ProductsSlider';
+import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { UserText } from 'components/Helpers/UserText/UserText';
 import { ListedProductFragmentApi, useProductsByCatnumsApi } from 'graphql/generated';
 import { replaceAll } from 'helpers/replaceAll';

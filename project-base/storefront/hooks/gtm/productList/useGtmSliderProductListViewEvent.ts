@@ -13,7 +13,7 @@ export const useGtmSliderProductListViewEvent = (
     const { url } = useDomainConfig();
 
     useEffect(() => {
-        if (products !== undefined && products.length !== 0 && !wasViewedRef.current) {
+        if (products?.length && !wasViewedRef.current) {
             wasViewedRef.current = true;
             gtmSafePushEvent(getGtmProductListViewEvent(products, gtmProuctListName, 1, 0, url));
         }

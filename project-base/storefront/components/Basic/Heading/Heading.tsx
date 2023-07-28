@@ -7,14 +7,11 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLHeadingEleme
 type HeadingType = 'h1' | 'h2' | 'h3' | 'h4';
 
 export type HeadingProps = NativeProps & {
-    //  A enumerator-like list of all available typeHeadings of the custom Heading element
     type: HeadingType;
-    'data-testid'?: string;
 };
 
 const getDataTestId = (type: HeadingType) => 'basic-heading-' + type;
 
-// A global heading element, which takes a "type" prop, and based on that displays a heading of type h1 - h4
 export const Heading: FC<HeadingProps> = ({ type, type: HeadingTag, className, ...props }) => (
     <HeadingTag
         className={twMergeCustom(

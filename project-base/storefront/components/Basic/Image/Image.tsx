@@ -16,7 +16,7 @@ const getDataTestId = (dataTestId?: string) => dataTestId ?? 'basic-image';
 export const Image: FC<ImageProps> = ({ image, alt, type, loading, dataTestId, maxWidth, maxHeight, className }) => {
     const img: ImageSizeFragmentApi | null = image?.sizes.find((i) => i.size === type) ?? null;
 
-    if (img === null) {
+    if (!img) {
         return (
             <img
                 src="/images/optimized-noimage.webp"
