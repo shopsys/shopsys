@@ -49,9 +49,13 @@ class RegisterProjectFrameworkClassExtensionsCompilerPass implements CompilerPas
                 continue;
             }
 
-            $classExtensionRegistryDefinition->addMethodCall('addExtendedService', [$serviceId, $aliasId]);
             $frameworkClassBetterReflection = ReflectionObject::createFromName($serviceId);
 
+            if ($frameworkClassBetterReflection->isInterface() && !$this->isProjectClass($aliasId)) {
+                continue;
+            }
+
+            $classExtensionRegistryDefinition->addMethodCall('addExtendedService', [$serviceId, $aliasId]);
             $this->addAllVariantsOfServiceToClassExtension($frameworkClassBetterReflection, $classExtensionRegistryDefinition, $aliasId);
         }
     }
