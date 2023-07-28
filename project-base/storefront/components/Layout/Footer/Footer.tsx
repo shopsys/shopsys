@@ -1,6 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { FooterBoxInfo } from './FooterBoxInfo';
-import { FooterContact } from './FooterContact';
 import { FooterCopyright } from './FooterCopyright';
 import { FooterMenu } from './FooterMenu';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
@@ -26,7 +25,6 @@ export const Footer: FC<FooterProps> = ({ simpleFooter }) => {
                         <FooterBoxInfo />
                         <div className="mb-12 vl:mb-24 vl:flex">
                             <FooterMenu />
-                            <FooterContact />
                         </div>
                     </>
                 )}

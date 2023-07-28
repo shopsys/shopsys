@@ -3,6 +3,7 @@ import { ArticlePlacementTypeEnumApi, SimpleNotBlogArticleFragmentApi, useArticl
 
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
+import { FooterContact } from './FooterContact';
 
 const TEST_IDENTIFIER = 'layout-footer-footermenu';
 
@@ -43,14 +44,23 @@ export const FooterMenu: FC = () => {
                 items: filterArticlesByPlacement(data?.articles.edges, ArticlePlacementTypeEnumApi.Footer4Api),
             },
         ],
-        [data?.articles.edges, t],
+        [data?.articles.edges],
     );
 
     return (
-        <div className="mb-7 lg:mb-10 lg:-ml-5 lg:flex vl:-mr-5 vl:mb-0 vl:flex-1" data-testid={TEST_IDENTIFIER}>
+        <div
+            className="flex w-full flex-col flex-wrap gap-6 text-center lg:flex-row lg:justify-center lg:text-left vl:flex-nowrap vl:justify-between"
+            data-testid={TEST_IDENTIFIER}
+        >
             {items.map((item) => (
-                <FooterMenuItem key={item.key} title={item.title} items={item.items} />
+                <div className="flex-1" key={item.key}>
+                    <FooterMenuItem title={item.title} items={item.items} />
+                </div>
             ))}
+
+            <div className="flex basis-full flex-col items-center vl:flex-1" data-testid={TEST_IDENTIFIER}>
+                <FooterContact />
+            </div>
         </div>
     );
 };

@@ -7,17 +7,13 @@ type FooterMenuItemProps = {
     items: SimpleNotBlogArticleFragmentApi[];
 };
 
-const TEST_IDENTIFIER = 'layout-footer-footermenuitem';
-
 export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
-    <div className="px-5 lg:w-1/4 lg:pl-5" data-testid={TEST_IDENTIFIER}>
-        <Heading
-            type="h4"
-            className="mb-0 flex items-center justify-between py-5 font-bold uppercase text-white lg:pointer-events-none lg:mb-6 lg:p-0"
-        >
+    <>
+        <Heading type="h4" className="text-center font-bold uppercase text-white lg:text-left">
             {title}
         </Heading>
-        <ul className="pb-5 lg:pb-0">
+
+        <ul className="">
             {items.map((item) => (
                 <li className="mb-1 last:mb-0 lg:mb-4" key={item.uuid}>
                     <ExtendedNextLink
@@ -32,5 +28,5 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
                 </li>
             ))}
         </ul>
-    </div>
+    </>
 );
