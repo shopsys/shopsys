@@ -64,7 +64,7 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/tests/App/Functional/Model/Cart/CartMigrationFacadeTest.php',
             __DIR__ . '/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoValidator.php',
             __DIR__ . '/src/Component/Akeneo/Transfer/AbstractAkeneoImportTransfer.php',
-            __DIR__ . '/src/Component/SsfwccBridge/Transfer/AbstractBridgeImportTransfer.php',
+            __DIR__ . '/src/Component/DataBridge/Transfer/AbstractBridgeImportTransfer.php',
             __DIR__ . '/src/Migrations/Version20200319113341.php',
             __DIR__ . '/src/Migrations/Version20200831091231.php',
             __DIR__ . '/src/Controller/Admin/CategorySeoController.php',

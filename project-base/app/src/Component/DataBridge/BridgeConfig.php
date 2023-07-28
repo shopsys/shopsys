@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\SsfwccBridge;
+namespace App\Component\DataBridge;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

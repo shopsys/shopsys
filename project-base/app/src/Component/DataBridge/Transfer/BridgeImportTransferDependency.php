@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Component\SsfwccBridge\Transfer;
+namespace App\Component\DataBridge\Transfer;
 
-use App\Component\SsfwccBridge\BridgeConfig;
+use App\Component\DataBridge\BridgeConfig;
 use App\Model\Transfer\TransferLoggerFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
@@ -17,7 +17,7 @@ class BridgeImportTransferDependency
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Transfer\TransferLoggerFactory $transferLoggerFactory
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
-     * @param \App\Component\SsfwccBridge\BridgeConfig $bridgeConfig
+     * @param \App\Component\DataBridge\BridgeConfig $bridgeConfig
      */
     public function __construct(
         protected SqlLoggerFacade $sqlLoggerFacade,
@@ -53,7 +53,7 @@ class BridgeImportTransferDependency
     }
 
     /**
-     * @return \App\Component\SsfwccBridge\BridgeConfig
+     * @return \App\Component\DataBridge\BridgeConfig
      */
     public function getBridgeConfig(): BridgeConfig
     {

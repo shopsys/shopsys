@@ -143,11 +143,11 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '15', instanceName: gopay, readableName: 'Import order payment status from GoPay' }
 
-    # SSFWCC bridge import
+    # Data bridge import
 
-    App\Component\SsfwccBridge\DummyCronModule:
+    App\Component\DataBridge\DummyCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: ssfwccBridgeImport, readableName: 'Dummy SSFWCC bridge import' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: dataBridgeImport, readableName: 'Dummy data bridge import' }
 
     # Packetery
 

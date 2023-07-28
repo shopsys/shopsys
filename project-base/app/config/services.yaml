@@ -630,11 +630,11 @@ services:
         arguments:
             - '@monolog.logger.cron'
 
-    App\Component\SsfwccBridge\BridgeConfig:
+    App\Component\DataBridge\BridgeConfig:
         arguments:
-            $bridgeConfig: "%ssfwcc_bridge_config%"
+            $bridgeConfig: "%data_bridge_config%"
 
-    App\Component\SsfwccBridge\Transfer\BridgeImportTransferDependency: ~
+    App\Component\DataBridge\Transfer\BridgeImportTransferDependency: ~
 
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository:
         alias: App\Model\Product\Parameter\ParameterRepository

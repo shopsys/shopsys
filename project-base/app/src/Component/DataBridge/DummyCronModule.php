@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Component\SsfwccBridge;
+namespace App\Component\DataBridge;
 
-use App\Component\SsfwccBridge\Transfer\DummyImportTransferFacade;
+use App\Component\DataBridge\Transfer\DummyImportTransferFacade;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 use Symfony\Bridge\Monolog\Logger;
 
 class DummyCronModule implements SimpleCronModuleInterface
 {
     /**
-     * @param \App\Component\SsfwccBridge\Transfer\DummyImportTransferFacade $dummyImportTransfer
+     * @param \App\Component\DataBridge\Transfer\DummyImportTransferFacade $dummyImportTransfer
      */
     public function __construct(private DummyImportTransferFacade $dummyImportTransfer)
     {

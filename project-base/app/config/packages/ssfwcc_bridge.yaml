@@ -1,6 +1,0 @@
-parameters:
-    ssfwcc_bridge_config:
-        enabled: '%env(bool:SSFWCC_BRIDGE_ENABLED)%'
-        base_uri: '%env(SSFWCC_BRIDGE_BASE_URI)%'
-        user: '%env(SSFWCC_BRIDGE_USER)%'
-        password: '%env(SSFWCC_BRIDGE_PASSWORD)%'

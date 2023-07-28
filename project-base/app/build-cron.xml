@@ -49,11 +49,11 @@
         </exec>
     </target>
 
-    <target name="cron-ssfwcc-bridge-import" description="Runs SSFWCC bridge import background jobs. Should be executed periodically by system Cron every 5 minutes.">
+    <target name="cron-data-bridge-import" description="Runs import background jobs to synchronize data from another system. Should be executed periodically by system Cron every 5 minutes.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />
             <arg value="shopsys:cron" />
-            <arg value="--instance-name=ssfwccBridgeImport" />
+            <arg value="--instance-name=dataBridgeImport" />
         </exec>
     </target>
 
