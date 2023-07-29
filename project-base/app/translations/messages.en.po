@@ -457,6 +457,9 @@ msgstr ""
 msgid "Create new blog category"
 msgstr ""
 
+msgid "Create new holiday or internal day"
+msgstr ""
+
 msgid "Create new item"
 msgstr ""
 
@@ -491,6 +494,9 @@ msgid "Customers - view"
 msgstr ""
 
 msgid "Customers overview"
+msgstr ""
+
+msgid "Date"
 msgstr ""
 
 msgid "Date and time"
@@ -592,6 +598,9 @@ msgstr ""
 msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
 msgstr ""
 
+msgid "Do you really want to remove this holiday / internal day?"
+msgstr ""
+
 msgid "Do you really want to remove this language constant translation?"
 msgstr ""
 
@@ -691,6 +700,9 @@ msgstr ""
 msgid "Editing flag - {{ name }}"
 msgstr ""
 
+msgid "Editing holiday / internal day - {{ name }}"
+msgstr ""
+
 msgid "Editing item"
 msgstr ""
 
@@ -776,6 +788,9 @@ msgid "Exclude from sale on domains"
 msgstr ""
 
 msgid "Exclude from sale on whole eshop"
+msgstr ""
+
+msgid "Excluded stores"
 msgstr ""
 
 msgid "Expand"
@@ -944,6 +959,27 @@ msgid "Hide"
 msgstr ""
 
 msgid "Hide on domain"
+msgstr ""
+
+msgid "Holiday / internal day"
+msgstr ""
+
+msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Holiday / internal day <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Holiday / internal day detail"
+msgstr ""
+
+msgid "Holidays and internal days"
+msgstr ""
+
+msgid "Holidays and internal days overview"
 msgstr ""
 
 msgid "Home page"
@@ -1175,6 +1211,9 @@ msgid "New blog article"
 msgstr ""
 
 msgid "New blog category"
+msgstr ""
+
+msgid "New closed day"
 msgstr ""
 
 msgid "New flag"
@@ -1745,6 +1784,9 @@ msgid "Selected blog category does not exist."
 msgstr ""
 
 msgid "Selected flag doesn't exist."
+msgstr ""
+
+msgid "Selected holiday / internal day doesn't exist."
 msgstr ""
 
 msgid "Selected navigation item does not exist."

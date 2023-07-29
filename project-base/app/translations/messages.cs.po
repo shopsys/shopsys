@@ -457,6 +457,9 @@ msgstr "Vytvořit nový článek blogu"
 msgid "Create new blog category"
 msgstr "Vytvořit novou rubriku blogu"
 
+msgid "Create new holiday or internal day"
+msgstr "Vytvořit nový svátek nebo interní den"
+
 msgid "Create new item"
 msgstr "Vytvořit novou položku"
 
@@ -492,6 +495,9 @@ msgstr "Zákazníci - zobrazení"
 
 msgid "Customers overview"
 msgstr "Přehled zákazníků"
+
+msgid "Date"
+msgstr "Datum"
 
 msgid "Date and time"
 msgstr "Datum a čas"
@@ -592,6 +598,9 @@ msgstr "Opravdu chcete odstranit tento příznak?"
 msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
 msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL může mít špatný vliv na SEO."
 
+msgid "Do you really want to remove this holiday / internal day?"
+msgstr "Opravdu si přejete odstranit tento svátek / interní den?"
+
 msgid "Do you really want to remove this language constant translation?"
 msgstr "Opravdu chcete odstranit tento překlad jazykové konstanty?"
 
@@ -691,6 +700,9 @@ msgstr "Editace příznaku"
 msgid "Editing flag - {{ name }}"
 msgstr "Editace příznaku - {{ name }}"
 
+msgid "Editing holiday / internal day - {{ name }}"
+msgstr "Editace svátku / interního dne - {{ name }}"
+
 msgid "Editing item"
 msgstr "Editace položky"
 
@@ -777,6 +789,9 @@ msgstr "Vyřazení z prodeje dle domén"
 
 msgid "Exclude from sale on whole eshop"
 msgstr "Vyřadit z prodeje na celém eshopu"
+
+msgid "Excluded stores"
+msgstr "Vyjmuté prodejny"
 
 msgid "Expand"
 msgstr "Rozbalit"
@@ -945,6 +960,27 @@ msgstr "Skrýt"
 
 msgid "Hide on domain"
 msgstr "Skrýt na doméně"
+
+msgid "Holiday / internal day"
+msgstr "Svátek / interní den"
+
+msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Svátek / interní den <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
+
+msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Svátek / interní den <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
+
+msgid "Holiday / internal day <strong>{{ name }}</strong> deleted"
+msgstr "Svátek / interní <strong>{{ name }}</strong> byl smazán"
+
+msgid "Holiday / internal day detail"
+msgstr "Detail svátku / interního dne"
+
+msgid "Holidays and internal days"
+msgstr "Svátky a interní dny"
+
+msgid "Holidays and internal days overview"
+msgstr "Přehled svátků a interních dní"
 
 msgid "Home page"
 msgstr "Domovská stránka"
@@ -1176,6 +1212,9 @@ msgstr "Nový článek blogu"
 
 msgid "New blog category"
 msgstr "Nová rubrika blogu"
+
+msgid "New closed day"
+msgstr "Nový svátek / interní den"
 
 msgid "New flag"
 msgstr "Nový příznak"
@@ -1747,6 +1786,9 @@ msgstr "Vybíraná rubrika blogu neexistuje."
 msgid "Selected flag doesn't exist."
 msgstr "Vybraný příznak neexistuje."
 
+msgid "Selected holiday / internal day doesn't exist."
+msgstr "Vybraný svátek / interní den neexistuje."
+
 msgid "Selected navigation item does not exist."
 msgstr "Zvolená položka navigace neexistuje."
 
@@ -2274,3 +2316,4 @@ msgstr "{0}|{1}Můžete si prohlédnout na <span class=\"box-detail__avail__text
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
 msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vytvořeny <strong>%count%</strong> slevové kupóny|[5,Inf] Bylo vytvořeno <strong>%count%</strong> slevových kupónů"
+

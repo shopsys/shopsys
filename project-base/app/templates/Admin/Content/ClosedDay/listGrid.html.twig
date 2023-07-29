@@ -1,0 +1,12 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_excludedStores %}
+    {% for item in value %}
+        <a href="{{ url('admin_store_edit', { id: item.id }) }}">{{ item.name }}</a>
+        {% if not loop.last %}<br/>{% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block grid_value_cell_id_date %}
+    {{ value|formatDate }}
+{% endblock %}

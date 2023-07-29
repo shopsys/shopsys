@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
+use DateTimeZone;
 use Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
@@ -197,5 +198,13 @@ class Domain implements DomainIdsProviderInterface
     public function isMultidomain()
     {
         return count($this->getAll()) > 1;
+    }
+
+    /**
+     * @return \DateTimeZone
+     */
+    public function getDateTimeZone(): DateTimeZone
+    {
+        return $this->getCurrentDomainConfig()->getDateTimeZone();
     }
 }

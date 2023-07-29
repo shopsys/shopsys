@@ -1,0 +1,18 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Holidays and internal days overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Holidays and internal days overview'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ gridView.render() }}
+{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar">
+        <a href="{{ url('admin_closedday_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create new holiday or internal day'|trans }}
+        </a>
+    </div>
+{% endblock %}

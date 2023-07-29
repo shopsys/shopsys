@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Component\DateTimeHelper\DateTimeHelper;
 use App\Form\BlogCategoriesType;
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleData;
@@ -208,6 +209,7 @@ class BlogArticleFormType extends AbstractType
                 ],
                 'label' => t('Date of publication'),
                 'data' => $blogArticle === null ? new DateTime() : $blogArticle->getPublishDate(),
+                'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             ]);
 
         return $builderSettingsGroup;
