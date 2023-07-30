@@ -18,6 +18,10 @@ import { AppPageContent } from 'components/Pages/App/AppPageContent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { createClient } from 'helpers/urql/createClient';
 import { Provider, ssrExchange } from 'urql';
+import utc from 'dayjs/plugin/utc';
+import dayjs from 'dayjs';
+
+dayjs.extend(utc);
 
 extend(LocalizedFormat);
 
