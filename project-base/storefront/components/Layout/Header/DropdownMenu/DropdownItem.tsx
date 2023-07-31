@@ -29,8 +29,8 @@ export const DropdownItem: FC<DropdownItemProps> = ({
 }) => {
     const context = useContext(DropdownMenuContext);
     const [hasChildren, setHasChildren] = useState(false);
-    const [itemLink, setItemLink] = useState('');
-    const [itemName, setItemName] = useState('');
+    const [itemLink, setItemLink] = useState(navigationItem?.link || columnCategory?.slug || '');
+    const [itemName, setItemName] = useState(navigationItem?.name || columnCategory?.name || '');
 
     const scrollToTop = () => {
         window.scroll({ top: 0, left: 0, behavior: 'smooth' });
