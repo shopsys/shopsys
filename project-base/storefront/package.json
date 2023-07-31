@@ -18,7 +18,8 @@
         "start": "next start",
         "translate": "i18next --config config/i18next-parser.config.js",
         "typecheck": "tsc --pretty --noEmit --project tsconfig.json",
-        "test": "vitest"
+        "test": "vitest",
+        "test--no-watch": "vitest run"
     },
     "dependencies": {
         "@floating-ui/react": "0.24.6",
