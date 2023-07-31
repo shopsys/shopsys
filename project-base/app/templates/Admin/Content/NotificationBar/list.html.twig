@@ -4,9 +4,11 @@
 {% block h1 %}{{ 'Notification bar'|trans }}{% endblock %}
 
 {% block btn %}
-    <a href="{{ url('admin_notificationbar_new') }}" class="btn btn--plus wrap-bar__btn">
-        <i class="btn__icon">+</i>{{ 'Create notification bar'|trans }}
-    </a>
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_notificationbar_new') }}" class="btn btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create notification bar'|trans }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block main_content %}
