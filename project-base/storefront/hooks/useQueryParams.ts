@@ -9,6 +9,7 @@ import {
     getChangedDefaultFiltersAfterMaximumPriceChange,
     getChangedDefaultFiltersAfterMinimumPriceChange,
     getChangedDefaultFiltersAfterParameterChange,
+    getChangedDefaultFiltersAfterPriceChange,
     getChangedDefaultFiltersAfterSliderParameterChange,
     SEO_SENSITIVE_FILTERS,
 } from 'helpers/filterOptions/seoCategories';
@@ -91,9 +92,24 @@ export const useQueryParams = () => {
     };
 
     const updateFilterPrices = (values: {
-        maximalPrice: FilterOptionsUrlQueryType['maximalPrice'];
         minimalPrice: FilterOptionsUrlQueryType['minimalPrice'];
+        maximalPrice: FilterOptionsUrlQueryType['maximalPrice'];
     }) => {
+        if (SEO_SENSITIVE_FILTERS.PRICE && originalCategorySlug) {
+            pushQueryFilter(
+                getChangedDefaultFiltersAfterPriceChange(
+                    defaultProductFiltersMap,
+                    filter,
+                    values.minimalPrice,
+                    values.maximalPrice,
+                ),
+                originalCategorySlug,
+                defaultProductFiltersMap.sort,
+            );
+
+            return;
+        }
+
         pushQueryFilter({ ...filter, ...values });
     };
 
@@ -214,7 +230,7 @@ export const useQueryParams = () => {
             } else {
                 newParameters.push({
                     ...updatedParameterSharedProps,
-                    values: paramaterOptionUuid ? [paramaterOptionUuid] : [],
+                    values: paramaterOptionUuid ? [paramaterOptionUuid] : undefined,
                 });
             }
 
@@ -235,23 +251,29 @@ export const useQueryParams = () => {
     };
 
     const resetAllFilters = () => {
+        if (originalCategorySlug) {
+            pushQueryFilter(undefined, originalCategorySlug, defaultProductFiltersMap.sort);
+
+            return;
+        }
+
         pushQueryFilter(undefined, originalCategorySlug);
     };
 
-    const pushQuerySort = (sorting?: ProductOrderingModeEnumApi) => {
+    const pushQuerySort = (sorting: ProductOrderingModeEnumApi) => {
         const newQuery: UrlQueries = {
             ...query,
             page: undefined,
-            [SORT_QUERY_PARAMETER_NAME]: sorting,
+            [SORT_QUERY_PARAMETER_NAME]: sorting !== DEFAULT_SORT ? sorting : undefined,
         } as const;
 
         pushQueries(newQuery, true);
     };
 
-    const pushQueryPage = (page?: number) => {
+    const pushQueryPage = (page: number) => {
         const newQuery: UrlQueries = {
             ...query,
-            [PAGE_QUERY_PARAMETER_NAME]: page !== undefined && page > 1 ? page.toString() : undefined,
+            [PAGE_QUERY_PARAMETER_NAME]: page > 1 ? page.toString() : undefined,
         } as const;
 
         pushQueries(newQuery, true);
