@@ -23,7 +23,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles }) => (
                         image={article.mainImage}
                         type="list"
                         alt={article.mainImage?.name || article.name}
-                        className="max-h-44 rounded"
+                        className="rounded"
                     />
                 </ArticleLink>
 
@@ -40,6 +40,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles }) => (
                     >
                         {article.name}
                     </ArticleLink>
+
                     <div className="leading-5">{article.perex}</div>
                 </div>
             </div>

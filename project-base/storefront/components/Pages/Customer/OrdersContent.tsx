@@ -99,8 +99,8 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, breadcrumbs, 
                                                     image={order.transport.mainImage}
                                                     type="default"
                                                     alt={order.transport.mainImage?.name || order.transport.name}
-                                                    maxWidth={36}
-                                                    maxHeight={20}
+                                                    width={36}
+                                                    height={20}
                                                 />
                                             </div>
                                             {order.transport.name}

@@ -67,7 +67,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             )}
 
             <div
-                className="mb-5 grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col gap-4 overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[calc(25%-1rem)] [&::-webkit-scrollbar]:hidden"
+                className="grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] [&::-webkit-scrollbar]:hidden"
                 ref={sliderRef}
             >
                 <ProductsListContent
@@ -75,7 +75,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     products={products}
                     gtmProductListName={gtmProductListName}
                     gtmMessageOrigin={gtmMessageOrigin}
-                    className="snap-center md:snap-start"
+                    className="snap-center border-b-0 md:snap-start"
                 />
             </div>
         </div>

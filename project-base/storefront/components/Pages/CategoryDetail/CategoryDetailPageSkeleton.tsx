@@ -1,4 +1,4 @@
-import { ProductItemSkeleton } from 'components/Blocks/Product/ProductsList/ProductItemSkeleton';
+import { ProductListItemSkeleton } from 'components/Blocks/Product/ProductsList/ProductListItemSkeleton';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import Skeleton from 'react-loading-skeleton';
@@ -39,7 +39,7 @@ export const CategoryDetailPageSkeleton: FC = () => (
                         </div>
                         <div className="mb-7 grid w-full grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-y-4 xl:grid-cols-4">
                             {createEmptyArray(9).map((_, index) => (
-                                <ProductItemSkeleton key={index} />
+                                <ProductListItemSkeleton key={index} />
                             ))}
                         </div>
                     </div>

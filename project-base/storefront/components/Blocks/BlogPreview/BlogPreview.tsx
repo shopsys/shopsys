@@ -32,6 +32,7 @@ export const BlogPreview: FC = () => {
                 <h2 className="mr-8 mb-2 transform-none text-3xl font-bold leading-9 text-creamWhite">
                     {t('Shopsys magazine')}
                 </h2>
+
                 {!!blogUrl && (
                     <ExtendedNextLink
                         type="blogCategory"

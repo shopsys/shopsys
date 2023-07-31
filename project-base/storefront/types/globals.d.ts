@@ -1,13 +1,13 @@
 import { FunctionComponent, ReactNode } from 'react';
 
+export type FunctionComponentProps = {
+    className?: string;
+    dataTestId?: string;
+    children?: ReactNode;
+};
+
 declare global {
-    type FC<P = object> = FunctionComponent<
-        P & {
-            className?: string;
-            dataTestId?: string;
-            children?: ReactNode;
-        }
-    >;
+    type FC<P = object> = FunctionComponent<P & FunctionComponentProps>;
 
     interface Window {
         Packeta: {

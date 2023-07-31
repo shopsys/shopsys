@@ -37,11 +37,6 @@ textarea {
     @apply font-default leading-default text-dark;
 }
 
-img:not(.icon):not(.responsive-image) {
-    @apply max-w-full;
-    image-rendering: -webkit-optimize-contrast;
-}
-
 td,
 th {
     @apply text-left;
