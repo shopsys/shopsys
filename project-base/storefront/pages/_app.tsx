@@ -1,13 +1,9 @@
-import 'dayjs/locale/cs';
-import 'dayjs/locale/sk';
 import '../styles/globals.css';
 import '../styles/user-text.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'nprogress/nprogress.css';
-import { extend, locale } from 'dayjs';
 import appWithI18n from 'next-translate/appWithI18n';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import { ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import i18nConfig from 'i18n';
 import { AppProps as NextAppProps } from 'next/app';
@@ -16,12 +12,7 @@ import { AppPageContent } from 'components/Pages/App/AppPageContent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { createClient } from 'helpers/urql/createClient';
 import { Provider, ssrExchange } from 'urql';
-import utc from 'dayjs/plugin/utc';
-import dayjs from 'dayjs';
-
-dayjs.extend(utc);
-
-extend(LocalizedFormat);
+import { initDayjsLocale } from 'helpers/formaters/formatDate';
 
 type ErrorProps = {
     err?: any;
@@ -34,7 +25,7 @@ type AppProps = {
 
 function MyApp({ Component, pageProps, err }: AppProps): ReactElement | null {
     const { defaultLocale, publicGraphqlEndpoint } = pageProps.domainConfig;
-    locale(defaultLocale);
+    initDayjsLocale(defaultLocale);
     const t = useTypedTranslationFunction();
 
     const urqlClient = useMemo(
