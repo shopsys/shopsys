@@ -78,12 +78,13 @@ export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumb
                     </Form>
                 </FormProvider>
             </SimpleLayout>
-            <ErrorPopup
-                isVisible={isErrorPopupVisible}
-                onCloseCallback={() => setErrorPopupVisibility(false)}
-                fields={formMeta.fields}
-                gtmMessageOrigin={GtmMessageOriginType.other}
-            />
+            {isErrorPopupVisible && (
+                <ErrorPopup
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
+                    fields={formMeta.fields}
+                    gtmMessageOrigin={GtmMessageOriginType.other}
+                />
+            )}
         </>
     );
 };

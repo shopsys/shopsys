@@ -166,12 +166,13 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
                 buttonBackLink={cartUrl}
                 nextStepClickHandler={onSelectTransportAndPaymentHandler}
             />
-            <ErrorPopup
-                isVisible={isErrorPopupVisible}
-                onCloseCallback={() => setErrorPopupVisibility(false)}
-                fields={transportAndPaymentValidationMessages}
-                gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
-            />
+            {isErrorPopupVisible && (
+                <ErrorPopup
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
+                    fields={transportAndPaymentValidationMessages}
+                    gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
+                />
+            )}
         </>
     );
 };

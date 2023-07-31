@@ -99,11 +99,9 @@ export const NewsletterForm: FC = () => {
                     </FormProvider>
                 </div>
             </div>
-            <ErrorPopup
-                isVisible={isErrorPopupVisible}
-                onCloseCallback={() => setErrorPopupVisibility(false)}
-                fields={formMeta.fields}
-            />
+            {isErrorPopupVisible && (
+                <ErrorPopup onCloseCallback={() => setErrorPopupVisibility(false)} fields={formMeta.fields} />
+            )}
         </>
     );
 };

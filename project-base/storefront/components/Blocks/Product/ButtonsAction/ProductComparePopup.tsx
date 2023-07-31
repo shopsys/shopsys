@@ -7,17 +7,16 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 
 type ProductComparePopupProps = {
-    isVisible: boolean;
     onCloseCallback: () => void;
 };
 
-export const ProductComparePopup: FC<ProductComparePopupProps> = ({ isVisible, onCloseCallback }) => {
+export const ProductComparePopup: FC<ProductComparePopupProps> = ({ onCloseCallback }) => {
     const t = useTypedTranslationFunction();
     const { url } = useDomainConfig();
     const [productsComparisonUrl] = getInternationalizedStaticUrls(['/products-comparison'], url);
 
     return (
-        <Popup isVisible={isVisible} onCloseCallback={onCloseCallback}>
+        <Popup onCloseCallback={onCloseCallback}>
             <Heading type="h3">{t('Comparison')}</Heading>
 
             <div className="flex flex-col">

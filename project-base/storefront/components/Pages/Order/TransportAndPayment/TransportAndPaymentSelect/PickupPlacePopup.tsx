@@ -7,7 +7,6 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useState } from 'react';
 
 type PickupPlacePopupProps = {
-    isVisible: boolean;
     transport: TransportWithAvailablePaymentsAndStoresFragmentApi;
     onChangePickupPlaceCallback: (selectedPickupPlace: ListedStoreFragmentApi | null) => void;
     onClosePickupPlacePopupCallback: () => void;
@@ -15,20 +14,24 @@ type PickupPlacePopupProps = {
 
 const TEST_IDENTIFIER = 'pages-order-pickupplace-popup-';
 
-export const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
+export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
+    transport,
+    onChangePickupPlaceCallback,
+    onClosePickupPlacePopupCallback,
+}) => {
     const t = useTypedTranslationFunction();
     const [selectedStoreUuid, setSelectedStoreUuid] = useState('');
 
     const onConfirmPickupPlaceHandler = () => {
-        const selectedPickupPlace = props.transport.stores?.edges?.find(
+        const selectedPickupPlace = transport.stores?.edges?.find(
             (storeEdge) => storeEdge?.node?.identifier === selectedStoreUuid,
         )?.node;
 
-        props.onChangePickupPlaceCallback(selectedPickupPlace === undefined ? null : selectedPickupPlace);
+        onChangePickupPlaceCallback(selectedPickupPlace === undefined ? null : selectedPickupPlace);
     };
 
     const onClosePickupPlacePopupHandler = () => {
-        props.onClosePickupPlacePopupCallback();
+        onClosePickupPlacePopupCallback();
     };
 
     const onSelectStoreHandler = (newStoreUuid: string | null) => {
@@ -36,14 +39,10 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
     };
 
     return (
-        <Popup
-            isVisible={props.isVisible}
-            onCloseCallback={onClosePickupPlacePopupHandler}
-            className="w-11/12 max-w-4xl"
-        >
+        <Popup onCloseCallback={onClosePickupPlacePopupHandler} className="w-11/12 max-w-4xl">
             <Heading type="h2">{t('Choose the store where you are going to pick up your order')}</Heading>
             <StoreSelect
-                transport={props.transport}
+                transport={transport}
                 selectedStoreUuid={selectedStoreUuid}
                 onSelectStoreCallback={onSelectStoreHandler}
             />

@@ -1,4 +1,4 @@
-import { Autocomplete, AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './Autocomplete';
+import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './Autocomplete';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
@@ -11,9 +11,12 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { ChangeEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+
+const Autocomplete = dynamic(() => import('./Autocomplete').then((component) => component.Autocomplete));
 
 export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
 const TEST_IDENTIFIER = 'layout-header-search-autocomplete-input';

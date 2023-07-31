@@ -4,11 +4,13 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useAuth } from 'hooks/auth/useAuth';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Popup } from 'components/Layout/Popup/Popup';
 import { Login } from 'components/Blocks/Popup/Login/Login';
 import { useState } from 'react';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import dynamic from 'next/dynamic';
+
+const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
 const TEST_IDENTIFIER = 'layout-header-menuiconic-login';
 
@@ -83,8 +85,8 @@ export const MenuIconicItemLogin: FC = () => {
                     </div>
                 )}
             </div>
-            {!isUserLoggedIn && (
-                <Popup isVisible={isLoginPopupOpened} onCloseCallback={() => setIsLoginPopupOpened(false)}>
+            {!isUserLoggedIn && isLoginPopupOpened && (
+                <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
                     <Heading type="h2">{t('Login')}</Heading>
                     <Login />
                 </Popup>

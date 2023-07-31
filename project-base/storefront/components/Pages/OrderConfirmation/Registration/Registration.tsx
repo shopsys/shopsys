@@ -137,12 +137,13 @@ export const Registration: FC<RegistrationProps> = ({ lastOrderUuid }) => {
                     </div>
                 </div>
             </Webline>
-            <ErrorPopup
-                isVisible={isErrorPopupVisible}
-                onCloseCallback={() => setErrorPopupVisibility(false)}
-                fields={formMeta.fields}
-                gtmMessageOrigin={GtmMessageOriginType.order_confirmation_page}
-            />
+            {isErrorPopupVisible && (
+                <ErrorPopup
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
+                    fields={formMeta.fields}
+                    gtmMessageOrigin={GtmMessageOriginType.order_confirmation_page}
+                />
+            )}
         </>
     );
 };

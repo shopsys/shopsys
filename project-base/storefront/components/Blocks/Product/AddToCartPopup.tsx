@@ -4,45 +4,42 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
-import { Popup } from 'components/Layout/Popup/Popup';
 import { CartItemFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import dynamic from 'next/dynamic';
 
-export type AddToCartPopupProps = {
-    isVisible: boolean;
+const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
+
+type AddToCartPopupProps = {
     onCloseCallback: () => void;
     addedCartItem: CartItemFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'blocks-product-addtocartpopup-product';
 
-export const AddToCartPopup: FC<AddToCartPopupProps> = ({
-    isVisible,
-    onCloseCallback,
-    addedCartItem: { product, quantity },
-}) => {
+export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, addedCartItem: { product, quantity } }) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
 
     return (
-        <Popup isVisible={isVisible} onCloseCallback={onCloseCallback} className="w-11/12 max-w-2xl" hideCloseButton>
+        <Popup onCloseCallback={onCloseCallback} className="w-11/12 max-w-2xl" hideCloseButton>
             <div className="mb-4 flex w-full items-center md:mb-6">
                 <Icon iconType="icon" icon="Checkmark" className="mr-4 w-7" />
                 <Heading type="h2" className="mb-0 text-xl normal-case text-primary">
                     {t('Great choice! We have added your item to the cart')}
                 </Heading>
             </div>
+
             <div
                 className="mb-4 flex flex-col items-center rounded border border-greyLighter p-3 md:flex-row md:p-4"
                 data-testid={TEST_IDENTIFIER}
             >
-                {' '}
                 {!!product.mainImage && (
                     <div className="mb-4 flex w-24 items-center justify-center md:mb-0">
                         <Image
@@ -58,6 +55,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                             {product.fullName}
                         </ExtendedNextLink>
                     </div>
+
                     <div className="mt-2 lg:mt-0 lg:w-5/12 lg:pl-4 lg:text-right">
                         <div className="block text-primary" data-testid={TEST_IDENTIFIER + '-price'}>
                             {`${quantity} ${product.unit.name}, ${formatPrice(
@@ -76,6 +74,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                 >
                     {t('Back to shop')}
                 </Button>
+
                 <Link className="mt-2 w-full lg:w-auto lg:justify-start" href={cartUrl} isButton>
                     {t('To cart')}
                 </Link>

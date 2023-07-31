@@ -151,12 +151,13 @@ export const PromoCode: FC = () => {
                     </>
                 )}
             </div>
-            <ErrorPopup
-                isVisible={isErrorPopupVisible}
-                onCloseCallback={() => setErrorPopupVisibility(false)}
-                fields={promoCodeValidationMessages}
-                gtmMessageOrigin={GtmMessageOriginType.cart}
-            />
+            {isErrorPopupVisible && (
+                <ErrorPopup
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
+                    fields={promoCodeValidationMessages}
+                    gtmMessageOrigin={GtmMessageOriginType.cart}
+                />
+            )}
         </>
     );
 };

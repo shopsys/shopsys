@@ -234,12 +234,13 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                 <Webline type="dark">
                     <Footer simpleFooter />
                 </Webline>
-                <ErrorPopup
-                    isVisible={isErrorPopupVisible}
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
-                    fields={formMeta.fields}
-                    gtmMessageOrigin={GtmMessageOriginType.contact_information_page}
-                />
+                {isErrorPopupVisible && (
+                    <ErrorPopup
+                        onCloseCallback={() => setErrorPopupVisibility(false)}
+                        fields={formMeta.fields}
+                        gtmMessageOrigin={GtmMessageOriginType.contact_information_page}
+                    />
+                )}
             </EmptyCartWrapper>
         </>
     );
