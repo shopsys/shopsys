@@ -4,8 +4,8 @@ import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { describe, expect, test } from 'vitest';
 
 describe('ExtendedNextLink snapshot tests', () => {
-    const component = test('render ExtendedNextLink with static type', () => {
-        render(
+    test('render ExtendedNextLink with static type', () => {
+        const component = render(
             <ExtendedNextLink type="static" href="/test-href">
                 <div>
                     <span>link text</span>
@@ -13,7 +13,7 @@ describe('ExtendedNextLink snapshot tests', () => {
             </ExtendedNextLink>,
         );
 
-        expect(component).toMatchFileSnapshot('snap-1.json');
+        expect(component).toMatchFileSnapshot('snap-1.test.tsx.snap');
     });
 
     test('render ExtendedNextLink with static type and `as` prop', () => {
@@ -25,7 +25,7 @@ describe('ExtendedNextLink snapshot tests', () => {
             </ExtendedNextLink>,
         );
 
-        expect(component).toMatchFileSnapshot('snap-2.json');
+        expect(component).toMatchFileSnapshot('snap-2.test.tsx.snap');
     });
 
     test('render ExtendedNextLink with a friendly page type', () => {
@@ -37,7 +37,7 @@ describe('ExtendedNextLink snapshot tests', () => {
             </ExtendedNextLink>,
         );
 
-        expect(component).toMatchFileSnapshot('snap-3.json');
+        expect(component).toMatchFileSnapshot('snap-3.test.tsx.snap');
     });
 
     test('render ExtendedNextLink with a friendly page type and URL query', () => {
@@ -53,6 +53,6 @@ describe('ExtendedNextLink snapshot tests', () => {
             </ExtendedNextLink>,
         );
 
-        expect(component).toMatchFileSnapshot('snap-4.json');
+        expect(component).toMatchFileSnapshot('snap-4.test.tsx.snap');
     });
 });
