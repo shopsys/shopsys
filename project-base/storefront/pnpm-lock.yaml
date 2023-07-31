@@ -54,8 +54,8 @@ dependencies:
     specifier: 5.5.1
     version: 5.5.1
   lightgallery:
-    specifier: 2.5.0
-    version: 2.5.0
+    specifier: 2.7.1
+    version: 2.7.1
   lz-string:
     specifier: 1.5.0
     version: 1.5.0
@@ -5001,8 +5001,8 @@ packages:
       immediate: 3.0.6
     dev: false
 
-  /lightgallery@2.5.0:
-    resolution: {integrity: sha512-pzg5gwflLGlKaK1VqDKpb7yqQ/WSV/TxFaHRR7ld7G5iOI9gkJZ2qKKo2lyqvTvu8yAqNYXoU0w9O/Dll6POkw==}
+  /lightgallery@2.7.1:
+    resolution: {integrity: sha512-NbXOzD2APY1OhOOn464jDsBZBaCRahUoLvBxhDFxvwJeC8hCkCIPYSjGgGTYINxVK09DKMsNDJzRr1ngH5nDdg==}
     engines: {node: '>=6.0.0'}
     dev: false
 
