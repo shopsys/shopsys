@@ -4,9 +4,11 @@
 {% block h1 %}{{ 'Transfer issues overview'|trans }}{% endblock %}
 
 {% block btn %}
-    <a href="{{ url('admin_default_dashboard') }}" class="btn wrap-bar__btn">
-        {{ 'Back to dashboard'|trans }}
-    </a>
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_default_dashboard') }}" class="btn wrap-bar__btn">
+            {{ 'Back to dashboard'|trans }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block main_content %}
