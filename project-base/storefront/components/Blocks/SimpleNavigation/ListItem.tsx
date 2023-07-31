@@ -21,14 +21,12 @@ export const ListItem: FC<ListItemProps> = ({ listedItem, imageType, linkType, d
             >
                 <>
                     {itemImage && (
-                        <div className="relative mb-1 h-12 w-16 flex-shrink-0 flex-grow-0 basis-auto lg:mb-0">
-                            <Image
-                                className="!max-h-full mix-blend-multiply"
-                                image={itemImage}
-                                type={imageType ?? 'default'}
-                                alt={itemImage.name || listedItem.name}
-                            />
-                        </div>
+                        <Image
+                            className="h-12 w-16 mix-blend-multiply"
+                            image={itemImage}
+                            type={imageType ?? 'default'}
+                            alt={itemImage.name || listedItem.name}
+                        />
                     )}
 
                     <div className="max-w-full">
