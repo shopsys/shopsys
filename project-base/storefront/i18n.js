@@ -7,7 +7,7 @@ const REDIS_UPDATE_JOB_TIMEOUT = 5; // seconds (default: 30)
 const REDIS_IS_CACHED_TIMEOUT = 86400; // all day long (cache is invalidated on translation change on backend)
 
 const logException = (e) => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.APP_ENV === 'development') {
         // eslint-disable-next-line no-console
         console.error(e);
     }
@@ -25,7 +25,7 @@ module.exports = {
     serializeConfig: false,
     defaultNS: 'common',
     keySeparator: false,
-    logBuild: process.env.NODE_ENV !== 'production',
+    logBuild: process.env.APP_ENV !== 'production',
     nsSeparator: false,
     loader: false,
     skipInitialProps: true,

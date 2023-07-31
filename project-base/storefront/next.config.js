@@ -14,8 +14,8 @@ const moduleExports = nextTranslate({
     swcMinify: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
     sentry: {
-        disableServerWebpackPlugin: process.env.NODE_ENV === 'development',
-        disableClientWebpackPlugin: process.env.NODE_ENV === 'development',
+        disableServerWebpackPlugin: process.env.APP_ENV === 'development',
+        disableClientWebpackPlugin: process.env.APP_ENV === 'development',
         hideSourceMaps: true,
     },
     serverRuntimeConfig: {
