@@ -4,7 +4,6 @@ import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCur
 import { useSearchProductsQueryApi } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { getMappedProducts } from 'helpers/mappers/products';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPaginatedProductListViewEvent } from 'hooks/gtm/productList/useGtmPaginatedProductListViewEvent';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { RefObject } from 'react';
@@ -17,17 +16,15 @@ type SearchProductsWrapperProps = {
 export const SearchProductsWrapper: FC<SearchProductsWrapperProps> = ({ paginationScrollTargetRef }) => {
     const { currentPage, sort, filter, searchString } = useQueryParams();
 
-    const [{ data: searchProductsData, fetching }] = useQueryError(
-        useSearchProductsQueryApi({
-            variables: {
-                endCursor: getEndCursor(currentPage),
-                filter: mapParametersFilter(filter),
-                orderingMode: sort,
-                search: searchString ?? '',
-                pageSize: DEFAULT_PAGE_SIZE,
-            },
-        }),
-    );
+    const [{ data: searchProductsData, fetching }] = useSearchProductsQueryApi({
+        variables: {
+            endCursor: getEndCursor(currentPage),
+            filter: mapParametersFilter(filter),
+            orderingMode: sort,
+            search: searchString ?? '',
+            pageSize: DEFAULT_PAGE_SIZE,
+        },
+    });
 
     const searchResultProducts = getMappedProducts(searchProductsData?.products.edges);
 

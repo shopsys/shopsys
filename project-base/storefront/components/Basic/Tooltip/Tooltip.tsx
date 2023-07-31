@@ -10,7 +10,7 @@ import {
     useHover,
     useInteractions,
     useRole,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
 import { cloneElement, useMemo, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
@@ -21,12 +21,12 @@ type TooltipProps = {
 };
 
 export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top' }) => {
-    const [open, setOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
-    const { x, y, reference, floating, strategy, context } = useFloating({
+    const { x, y, refs, context, strategy } = useFloating({
         placement,
-        open,
-        onOpenChange: setOpen,
+        open: isOpen,
+        onOpenChange: setIsOpen,
         middleware: [offset(5), flip(), shift({ padding: 8 })],
         whileElementsMounted: autoUpdate,
     });
@@ -37,27 +37,24 @@ export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top' }
         useRole(context, { role: 'tooltip' }),
         useDismiss(context),
     ]);
-
-    const ref = useMemo(() => mergeRefs([reference, (children as any).ref]), [reference, children]);
+    const ref = useMemo(() => mergeRefs([refs.setReference, (children as any).ref]), [refs.setReference, children]);
 
     return (
         <>
             {cloneElement(children, getReferenceProps({ ref, ...children.props }))}
-            {open && label !== undefined && (
-                <div className="relative">
-                    <div
-                        {...getFloatingProps({
-                            ref: floating,
-                            className: 'tooltip block rounded-md bg-black bg-opacity-75 p-2 text-white',
-                            style: {
-                                position: strategy,
-                                top: y ?? 0,
-                                left: x ?? 0,
-                            },
-                        })}
-                    >
-                        {label}
-                    </div>
+            {isOpen && label && (
+                <div
+                    ref={refs.setFloating}
+                    {...getFloatingProps({
+                        className: 'tooltip block rounded-md bg-black bg-opacity-75 p-2 text-white',
+                        style: {
+                            position: strategy,
+                            top: y,
+                            left: x,
+                        },
+                    })}
+                >
+                    {label}
                 </div>
             )}
         </>

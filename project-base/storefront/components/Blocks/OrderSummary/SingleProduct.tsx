@@ -16,9 +16,9 @@ export const SingleProduct: FC<SingleProductProps> = ({ item }) => {
         <li className="flex items-center border-b border-creamWhite py-3">
             <div className="mr-4 w-14" data-testid={TEST_IDENTIFIER + 'image'}>
                 <Image
-                    image={item.product.image}
+                    image={item.product.mainImage}
                     type="thumbnailExtraSmall"
-                    alt={item.product.image?.name || item.product.fullName}
+                    alt={item.product.mainImage?.name || item.product.fullName}
                 />
             </div>
             <div className="flex flex-1 items-center">

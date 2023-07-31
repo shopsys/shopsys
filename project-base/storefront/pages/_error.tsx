@@ -2,7 +2,7 @@ import { flush } from '@sentry/nextjs';
 import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
 import { Error500Content } from 'components/Pages/ErrorPage/Error500Content';
 import { logException } from 'helpers/errors/logException';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { NextPage } from 'next';
 import NextErrorComponent, { ErrorProps } from 'next/error';
@@ -25,12 +25,12 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ hasGetInitialPropsRun, err, statu
     return statusCode === 404 ? <Error404Content /> : <Error500Content />;
 };
 
-ErrorPage.getInitialProps = getServerSidePropsWithRedisClient((redisClient) => async (context: any) => {
+ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context: any) => {
     const errorInitialProps: any = await NextErrorComponent.getInitialProps({
         res: context.res,
         err: context.err,
     } as any);
-    const serverSideProps = await initServerSideProps({ context, redisClient });
+    const serverSideProps = await initServerSideProps({ context, redisClient, domainConfig, t });
     // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
     // getInitialProps has run
     const errorPageProps = { ...errorInitialProps, hasGetInitialPropsRun: true };

@@ -25,6 +25,7 @@ export const ApplicationErrors = {
     'wishlist-not-found': 'wishlist-not-found',
     'wishlist-item-already-exists': 'wishlist-item-already-exists',
     'wishlist-item-not-found': 'wishlist-item-not-found',
+    'seo-page-not-found': 'seo-page-not-found',
 } as const;
 
 export type ApplicationErrorsType = keyof typeof ApplicationErrors;

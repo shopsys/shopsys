@@ -9,29 +9,27 @@ import {
     StoreDetailQueryVariablesApi,
     useStoreDetailQueryApi,
 } from 'graphql/generated';
-import { getDomainConfig } from 'helpers/domain/domain';
+
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { createClient } from 'helpers/urql/createClient';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { OperationResult, ssrExchange } from 'urql';
+import { OperationResult } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 const StoreDetailPage: NextPage = () => {
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
 
-    const [{ data: storeDetailData, fetching }] = useQueryError(
-        useStoreDetailQueryApi({
-            variables: { urlSlug: getSlugFromUrl(slug) },
-        }),
-    );
+    const [{ data: storeDetailData, fetching }] = useStoreDetailQueryApi({
+        variables: { urlSlug: getSlugFromUrl(slug) },
+    });
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(storeDetailData?.store);
     useGtmPageViewEvent(pageViewEvent, fetching);
@@ -52,33 +50,40 @@ const StoreDetailPage: NextPage = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-    const domainConfig = getDomainConfig(context.req.headers.host!);
-    const ssrCache = ssrExchange({ isClient: false });
-    const client = createClient(context, domainConfig.publicGraphqlEndpoint, ssrCache, redisClient);
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, ssrExchange, t }) =>
+        async (context) => {
+            const client = createClient({
+                t,
+                ssrExchange,
+                publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+                redisClient,
+                context,
+            });
 
-    if (isRedirectedFromSsr(context.req.headers)) {
-        const storeResponse: OperationResult<StoreDetailQueryApi, StoreDetailQueryVariablesApi> = await client!
-            .query(StoreDetailQueryDocumentApi, {
-                urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
-            })
-            .toPromise();
+            if (isRedirectedFromSsr(context.req.headers)) {
+                const storeResponse: OperationResult<StoreDetailQueryApi, StoreDetailQueryVariablesApi> = await client!
+                    .query(StoreDetailQueryDocumentApi, {
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                    })
+                    .toPromise();
 
-        if ((!storeResponse.data || !storeResponse.data.store) && !(context.res.statusCode === 503)) {
-            return {
-                notFound: true,
-            };
-        }
-    }
+                if ((!storeResponse.data || !storeResponse.data.store) && !(context.res.statusCode === 503)) {
+                    return {
+                        notFound: true,
+                    };
+                }
+            }
 
-    const initServerSideData = await initServerSideProps({
-        context,
-        client,
-        ssrCache,
-        redisClient,
-    });
+            const initServerSideData = await initServerSideProps({
+                context,
+                client,
+                ssrExchange,
+                domainConfig,
+            });
 
-    return initServerSideData;
-});
+            return initServerSideData;
+        },
+);
 
 export default StoreDetailPage;

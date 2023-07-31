@@ -14,7 +14,7 @@ import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
@@ -26,7 +26,7 @@ import {
 } from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -39,16 +39,14 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const { url } = useDomainConfig();
     const { sort, filter, searchString } = useQueryParams();
 
-    const [{ data: searchData, fetching }] = useQueryError(
-        useSearchQueryApi({
-            variables: {
-                search: searchString ?? '',
-                orderingMode: sort,
-                filter: mapParametersFilter(filter),
-                pageSize: DEFAULT_PAGE_SIZE,
-            },
-        }),
-    );
+    const [{ data: searchData, fetching }] = useSearchQueryApi({
+        variables: {
+            search: searchString ?? '',
+            orderingMode: sort,
+            filter: mapParametersFilter(filter),
+            pageSize: DEFAULT_PAGE_SIZE,
+        },
+    });
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
     const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Search'), slug: searchUrl }];
@@ -68,7 +66,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]));
     const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
     const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
@@ -99,6 +97,8 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
             },
         ],
         redisClient,
+        domainConfig,
+        t,
     });
 });
 

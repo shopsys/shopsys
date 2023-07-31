@@ -14,12 +14,11 @@ import {
     useGoPaySwiftsQueryApi,
 } from 'graphql/generated';
 import { logException } from 'helpers/errors/logException';
-import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import getConfig from 'next/config';
@@ -57,7 +56,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         lastOrderPickupPlace,
     );
     const { transport, pickupPlace: selectedPickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
-    const [getGoPaySwiftsResult] = useQueryError(useGoPaySwiftsQueryApi({ variables: { currencyCode } }));
+    const [getGoPaySwiftsResult] = useGoPaySwiftsQueryApi({ variables: { currencyCode } });
     const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
     const clearPacketeryPickupPoint = usePersistStore((store) => store.clearPacketeryPickupPoint);
 
@@ -200,7 +199,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 value={transportItem.uuid}
                 checked={isActive}
                 dataTestId={TEST_IDENTIFIER + 'transport-item-input'}
-                image={getFirstImageOrNull(transportItem.images)}
+                image={transportItem.mainImage}
                 onChangeCallback={handleTransportChange}
                 label={
                     <TransportAndPaymentSelectItemLabel
@@ -227,7 +226,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 value={paymentItem.uuid}
                 checked={isActive}
                 dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
-                image={getFirstImageOrNull(paymentItem.images)}
+                image={paymentItem.mainImage}
                 onChangeCallback={handlePaymentChange}
                 label={
                     <TransportAndPaymentSelectItemLabel

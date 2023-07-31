@@ -54,9 +54,9 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({
                             data-testid={TEST_IDENTIFIER + 'image'}
                         >
                             <Image
-                                image={product.image}
+                                image={product.mainImage}
                                 type="list"
-                                alt={product.image?.name || product.fullName}
+                                alt={product.mainImage?.name || product.fullName}
                                 className="group-hover:mix-blend-multiply"
                             />
                             <div className="absolute top-2 left-3 flex flex-col">

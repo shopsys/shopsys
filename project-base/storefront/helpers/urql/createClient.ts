@@ -1,29 +1,38 @@
 import { GetServerSidePropsContext, NextPageContext } from 'next';
-import { initUrqlClient, SSRExchange } from 'next-urql';
+import { Translate } from 'next-translate';
+import { initUrqlClient } from 'next-urql';
 import getConfig from 'next/config';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
-import { Client } from 'urql';
+import { Client, SSRExchange } from 'urql';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
 
-export const createClient = (
-    context: GetServerSidePropsContext | NextPageContext,
-    publicGraphqlEndpoint: string,
-    ssrCache: SSRExchange,
-    redisClient: RedisClientType<any & RedisModules, RedisScripts>,
-): Client | null => {
+export const createClient = ({
+    t,
+    ssrExchange,
+    publicGraphqlEndpoint,
+    redisClient,
+    context,
+}: {
+    t: Translate;
+    ssrExchange: SSRExchange;
+    publicGraphqlEndpoint: string;
+    redisClient?: RedisClientType<RedisModules, RedisScripts>;
+    context?: GetServerSidePropsContext | NextPageContext;
+}): Client => {
     const { serverRuntimeConfig } = getConfig();
-    const graphqlEndpoint = new URL(publicGraphqlEndpoint);
-    const fetch = fetcher(redisClient);
+    const internalGraphqlEndpoint = serverRuntimeConfig?.internalGraphqlEndpoint ?? undefined;
+    const publicGraphqlEndpointObject = new URL(publicGraphqlEndpoint);
+    const fetch = redisClient ? fetcher(redisClient) : undefined;
 
     return initUrqlClient(
         {
-            url: serverRuntimeConfig.internalGraphqlEndpoint,
-            exchanges: getUrqlExchanges(ssrCache, context),
+            url: internalGraphqlEndpoint ?? publicGraphqlEndpoint,
+            exchanges: getUrqlExchanges(ssrExchange, t, context),
             fetchOptions: {
                 headers: {
-                    OriginalHost: graphqlEndpoint.host,
-                    'X-Forwarded-Proto': graphqlEndpoint.protocol === 'https:' ? 'on' : 'off',
+                    OriginalHost: publicGraphqlEndpointObject.host,
+                    'X-Forwarded-Proto': publicGraphqlEndpointObject.protocol === 'https:' ? 'on' : 'off',
                 },
             },
             fetch,

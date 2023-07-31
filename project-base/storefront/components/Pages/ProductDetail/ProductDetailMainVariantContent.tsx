@@ -31,8 +31,8 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
     const t = useTypedTranslationFunction();
     const mainVariantImagesWithVariantImages = useMemo(() => {
         const variantImages = product.variants.reduce((mappedVariantImages, variant) => {
-            if (variant.image) {
-                mappedVariantImages.push(variant.image);
+            if (variant.mainImage) {
+                mappedVariantImages.push(variant.mainImage);
             }
 
             return mappedVariantImages;

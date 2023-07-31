@@ -1,6 +1,6 @@
 import { useSettingsQueryApi } from 'graphql/generated';
 import { formatPrice } from 'helpers/formaters/formatPrice';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 
@@ -8,7 +8,7 @@ type FormatPriceFunctionType = (price: string | number, options?: { explicitZero
 
 export const useFormatPrice = (): FormatPriceFunctionType => {
     const t = useTypedTranslationFunction();
-    const [{ data }] = useQueryError(useSettingsQueryApi({ requestPolicy: 'cache-first' }));
+    const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-first' });
     const { defaultLocale = 'en' } = useDomainConfig();
 
     const { minimumFractionDigits = 0, defaultCurrencyCode = 'CZK' } = data?.settings?.pricing ?? {};

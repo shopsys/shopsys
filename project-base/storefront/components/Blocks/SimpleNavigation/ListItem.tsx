@@ -1,6 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 import { ListedItemPropType } from 'types/simpleNavigation';
 
@@ -13,7 +12,7 @@ type ListItemProps = {
 const TEST_IDENTIFIER = 'blocks-simplenavigation-listitem';
 
 export const ListItem: FC<ListItemProps> = ({ listedItem, imageType, linkType }) => {
-    const itemImage = 'images' in listedItem ? getFirstImageOrNull(listedItem.images) : null;
+    const itemImage = 'mainImage' in listedItem ? listedItem.mainImage : null;
 
     return (
         <ExtendedNextLink type={linkType} href={listedItem.slug} passHref>

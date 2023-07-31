@@ -2,7 +2,7 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BrandsContent } from 'components/Pages/Brands/BrandsContent';
 import { BrandsQueryDocumentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -21,11 +21,13 @@ const BrandsOverviewPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     return initServerSideProps({
         context,
         prefetchedQueries: [{ query: BrandsQueryDocumentApi }],
         redisClient,
+        domainConfig,
+        t,
     });
 });
 

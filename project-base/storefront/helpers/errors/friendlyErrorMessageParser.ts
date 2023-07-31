@@ -1,4 +1,4 @@
-import { ApplicationErrors } from 'helpers/errors/applicationErrors';
+import { ApplicationErrors, ApplicationErrorsType } from 'helpers/errors/applicationErrors';
 import { getErrorMessage, hasErrorMessage } from 'helpers/errors/errorMessageMapper';
 import { ApplicationIgnoredErrors } from 'helpers/errors/ignoredErrors';
 import { Translate } from 'next-translate';
@@ -12,30 +12,36 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate
         errors.networkError = t('Could not connect to server. Check your network.') as string;
     } else if (originalError.graphQLErrors.length > 0) {
         for (const error of originalError.graphQLErrors) {
-            if (
-                error.extensions !== undefined &&
-                Object.prototype.hasOwnProperty.call(error.extensions, 'validation')
-            ) {
+            if ('validation' in error.extensions) {
+                const errorExtensions = error.extensions as {
+                    validation: {
+                        [fieldName: string]: {
+                            message: string;
+                            code: string;
+                        }[];
+                    };
+                };
                 const mappedValidationErrors: ValidationErrors = {};
 
-                for (const errorName in error.extensions.validation) {
+                for (const errorName in errorExtensions.validation) {
                     const newErrorName = errorName.replace('input.', '');
-                    mappedValidationErrors[newErrorName] = error.extensions.validation[errorName][0];
+                    mappedValidationErrors[newErrorName] = errorExtensions.validation[errorName][0];
                 }
 
                 errors.userError = { validation: mappedValidationErrors };
                 continue;
             }
 
-            if (error.extensions !== undefined) {
-                if (ApplicationIgnoredErrors.includes(error.extensions.userCode)) {
+            if ('userCode' in error.extensions) {
+                const errorExtensions = error.extensions as { userCode: ApplicationErrorsType };
+                if (ApplicationIgnoredErrors.some((ignoredError) => ignoredError === errorExtensions.userCode)) {
                     continue;
                 }
 
-                if (hasErrorMessage(error.extensions.userCode, t)) {
+                if (hasErrorMessage(errorExtensions.userCode, t)) {
                     errors.applicationError = {
-                        type: error.extensions.userCode,
-                        message: getErrorMessage(error.extensions.userCode, t),
+                        type: errorExtensions.userCode,
+                        message: getErrorMessage(errorExtensions.userCode, t),
                     };
                     continue;
                 }

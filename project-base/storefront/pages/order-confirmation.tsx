@@ -9,12 +9,11 @@ import {
     useIsCustomerUserRegisteredQueryApi,
     useOrderSentPageContentApi,
 } from 'graphql/generated';
-import { getDomainConfig } from 'helpers/domain/domain';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -42,10 +41,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: orderSentPageContentData }] = useQueryError(
-        useOrderSentPageContentApi({ variables: { orderUuid: orderUuid! } }),
-    );
-
+    const [{ data: orderSentPageContentData }] = useOrderSentPageContentApi({ variables: { orderUuid: orderUuid! } });
     const [{ data: isCustomerUserRegisteredData, fetching: isInformationAboutUserRegistrationFetching }] =
         useIsCustomerUserRegisteredQueryApi({
             variables: {
@@ -88,15 +84,13 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     const { orderUuid, orderEmail } = context.query as OrderConfirmationQuery;
-
-    const { url } = getDomainConfig(context.req.headers.host!);
 
     if (!orderUuid || !orderEmail) {
         return {
             redirect: {
-                destination: getInternationalizedStaticUrls(['/cart'], url)[0] ?? '/',
+                destination: getInternationalizedStaticUrls(['/cart'], domainConfig.url)[0] ?? '/',
                 statusCode: 301,
             },
         };
@@ -111,6 +105,8 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
             },
         ],
         redisClient,
+        domainConfig,
+        t,
     });
 });
 

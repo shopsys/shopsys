@@ -51,9 +51,9 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRem
                 <ExtendedNextLink href={item.product.slug} passHref type="product">
                     <a className="relative h-full w-full">
                         <Image
-                            image={item.product.image}
+                            image={item.product.mainImage}
                             type="thumbnailExtraSmall"
-                            alt={item.product.image?.name || item.product.fullName}
+                            alt={item.product.mainImage?.name || item.product.fullName}
                         />
                     </a>
                 </ExtendedNextLink>

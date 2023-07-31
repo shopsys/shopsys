@@ -10,7 +10,7 @@ fragment ListedOrderFragment on Order {
     transport {
         __typename
         name
-        images {
+        mainImage {
             ...ImageSizesFragment
         }
     }

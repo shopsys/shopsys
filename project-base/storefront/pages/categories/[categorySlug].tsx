@@ -15,13 +15,13 @@ import {
     Maybe,
     ProductOrderingModeEnumApi,
 } from 'graphql/generated';
-import { getDomainConfig } from 'helpers/domain/domain';
+
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import { useHandleDefaultFiltersUpdate } from 'helpers/filterOptions/seoCategories';
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
@@ -35,16 +35,14 @@ import {
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { createClient } from 'helpers/urql/createClient';
-import { handleQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { NextRouter, useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSessionStore } from 'store/zustand/useSessionStore';
-import { Client, ssrExchange, useClient } from 'urql';
+import { Client, useClient } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 const CategoryDetailPage: NextPage = () => {
@@ -76,75 +74,81 @@ const CategoryDetailPage: NextPage = () => {
                 {isSkeletonVisible ? (
                     <CategoryDetailPageSkeleton />
                 ) : (
-                    !!categoryData && (
-                        <>
-                            <CategoryDetailContent category={categoryData} />
-                        </>
-                    )
+                    !!categoryData && <CategoryDetailContent category={categoryData} />
                 )}
             </Webline>
         </CommonLayout>
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-    const domainConfig = getDomainConfig(context.req.headers.host!);
-    const ssrCache = ssrExchange({ isClient: false });
-    const client = createClient(context, domainConfig.publicGraphqlEndpoint, ssrCache, redisClient);
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, ssrExchange, t }) =>
+        async (context) => {
+            const client = await createClient({
+                publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
+                ssrExchange,
+                redisClient,
+                context,
+                t,
+            });
 
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]));
-    const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
-    const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+            const orderingMode = getProductListSort(
+                parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
+            );
+            const optionsFilter = getFilterOptions(
+                parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]),
+            );
+            const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
 
-    if (isRedirectedFromSsr(context.req.headers)) {
-        const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
-        const filter = mapParametersFilter(optionsFilter);
-        const categoryDetailResponsePromise = client!
-            .query<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
-                urlSlug,
-                filter,
-                orderingMode,
-            })
-            .toPromise();
+            if (isRedirectedFromSsr(context.req.headers)) {
+                const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
+                const filter = mapParametersFilter(optionsFilter);
+                const categoryDetailResponsePromise = client!
+                    .query<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
+                        urlSlug,
+                        filter,
+                        orderingMode,
+                    })
+                    .toPromise();
 
-        const categoryProductsResponsePromise = client!
-            .query(CategoryProductsQueryDocumentApi, {
-                endCursor: getEndCursor(page),
-                orderingMode,
-                filter,
-                urlSlug,
-                pageSize: DEFAULT_PAGE_SIZE,
-            })
-            .toPromise();
+                const categoryProductsResponsePromise = client!
+                    .query(CategoryProductsQueryDocumentApi, {
+                        endCursor: getEndCursor(page),
+                        orderingMode,
+                        filter,
+                        urlSlug,
+                        pageSize: DEFAULT_PAGE_SIZE,
+                    })
+                    .toPromise();
 
-        const [categoryDetailResponse] = await Promise.all([
-            categoryDetailResponsePromise,
-            categoryProductsResponsePromise,
-        ]);
+                const [categoryDetailResponse] = await Promise.all([
+                    categoryDetailResponsePromise,
+                    categoryProductsResponsePromise,
+                ]);
 
-        if (!categoryDetailResponse.data?.category && !(context.res.statusCode === 503)) {
-            return {
-                notFound: true,
-            };
-        }
-    }
+                if (!categoryDetailResponse.data?.category && !(context.res.statusCode === 503)) {
+                    return {
+                        notFound: true,
+                    };
+                }
+            }
 
-    const initServerSideData = await initServerSideProps({
-        context,
-        client,
-        ssrCache,
-        redisClient,
-    });
+            const initServerSideData = await initServerSideProps({
+                domainConfig,
+                context,
+                client,
+                ssrExchange,
+            });
 
-    return initServerSideData;
-});
+            return initServerSideData;
+        },
+);
 
 export default CategoryDetailPage;
 
 const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | CategoryDetailFragmentApi, boolean] => {
     const client = useClient();
     const router = useRouter();
-    const t = useTypedTranslationFunction();
     const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(router.asPath));
     const { sort } = useQueryParams();
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
@@ -170,7 +174,6 @@ const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | Ca
             })
             .toPromise()
             .then((response) => {
-                handleQueryError(response.error, t);
                 setCategoryDetailData(response.data?.category ?? undefined);
                 handleSeoCategorySlugUpdate(
                     router,

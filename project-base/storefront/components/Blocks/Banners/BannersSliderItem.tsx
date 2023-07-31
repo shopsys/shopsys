@@ -1,6 +1,5 @@
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { ImageSizeFragmentApi, SliderItemFragmentApi } from 'graphql/generated';
-import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import 'keen-slider/keen-slider.min.css';
 
@@ -8,9 +7,11 @@ type BannersSliderItemProps = {
     item: SliderItemFragmentApi;
 };
 
-export const BannersSliderItem: FC<BannersSliderItemProps> = ({ item: { webImages, mobileImages, link, name } }) => {
+export const BannersSliderItem: FC<BannersSliderItemProps> = ({
+    item: { webMainImage, mobileMainImage, link, name },
+}) => {
     const { width } = useGetWindowSize();
-    const image = getFirstImageOrNull(width > desktopFirstSizes.tablet ? webImages : mobileImages);
+    const image = width > desktopFirstSizes.tablet ? webMainImage : mobileMainImage;
 
     const imageSize: ImageSizeFragmentApi | null = image?.sizes.find((i) => i.size === 'default') ?? null;
 

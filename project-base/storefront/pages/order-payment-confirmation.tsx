@@ -4,7 +4,7 @@ import { PaymentConfirmationContent } from 'components/Pages/Order/PaymentConfir
 import { OrderSentPageContentDocumentApi, useCheckPaymentStatusMutationApi } from 'graphql/generated';
 import { onGtmCreateOrderEventHandler, onGtmPaymentFailEventHandler } from 'helpers/gtm/eventHandlers';
 import { getGtmCreateOrderEventFromLocalStorage } from 'helpers/gtm/helpers';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
@@ -65,7 +65,7 @@ const getOrderUuid = (orderIdentifier: string[] | string | undefined) => {
     return orderUuidParam;
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     const orderUuid = getOrderUuid(context.query.orderIdentifier);
 
     if (orderUuid === '') {
@@ -81,6 +81,8 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
         context,
         prefetchedQueries: [{ query: OrderSentPageContentDocumentApi, variables: { orderUuid } }],
         redisClient,
+        domainConfig,
+        t,
     });
 });
 

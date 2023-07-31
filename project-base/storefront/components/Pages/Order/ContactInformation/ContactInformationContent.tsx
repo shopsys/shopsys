@@ -14,7 +14,7 @@ import {
     usePrivacyPolicyArticleUrlQueryApi,
     useTermsAndConditionsArticleUrlQueryApi,
 } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import Trans from 'next-translate/Trans';
@@ -35,9 +35,9 @@ export const ContactInformationContent: FC = () => {
     const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
     const [isEmailAlreadyRegistered, setIsEmailAlreadyRegistered] = useState(false);
     const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
-    const [{ data: termsAndConditionsArticleUrlData }] = useQueryError(useTermsAndConditionsArticleUrlQueryApi());
+    const [{ data: termsAndConditionsArticleUrlData }] = useTermsAndConditionsArticleUrlQueryApi();
     const termsAndConditionsArticleUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
-    const [{ data: privacyPolicyArticleUrlData }] = useQueryError(usePrivacyPolicyArticleUrlQueryApi());
+    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQueryApi();
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
     const [{ data: isCustomerUserRegisteredData }] = useIsCustomerUserRegisteredQueryApi({
         variables: {

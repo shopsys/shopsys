@@ -12,11 +12,11 @@ fragment AdvertsFragment on Advert {
     }
     ... on AdvertImage {
         link
-        images(type: "web") {
+        mainImage(type: "web") {
             position
             ...ImageSizesFragment
         }
-        imageMobile: images(type: "mobile") {
+        mainImageMobile: mainImage(type: "mobile") {
             position
             ...ImageSizesFragment
         }

@@ -125,9 +125,9 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                             <div className="relative mr-2 h-16 w-20">
                                                                 <Image
                                                                     className="w-full"
-                                                                    image={product.image}
+                                                                    image={product.mainImage}
                                                                     type="thumbnailMedium"
-                                                                    alt={product.image?.name || product.fullName}
+                                                                    alt={product.mainImage?.name || product.fullName}
                                                                 />
                                                             </div>
                                                             <span className="mb-1 flex-1">{product.fullName}</span>

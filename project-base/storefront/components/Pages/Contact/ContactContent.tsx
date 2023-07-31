@@ -14,7 +14,7 @@ import { useContactMutationApi, usePrivacyPolicyArticleUrlQueryApi, useSettingsQ
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import React, { useCallback } from 'react';
@@ -26,8 +26,8 @@ export const ContactContent: FC = () => {
     const t = useTypedTranslationFunction();
     const [formProviderMethods, defaultValues] = useContactForm();
     const formMeta = useContactFormMeta(formProviderMethods);
-    const [{ data }] = useQueryError(useSettingsQueryApi({ requestPolicy: 'cache-only' }));
-    const [{ data: privacyPolicyArticleUrlData }] = useQueryError(usePrivacyPolicyArticleUrlQueryApi());
+    const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-only' });
+    const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQueryApi();
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const [, contact] = useContactMutationApi();

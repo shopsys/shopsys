@@ -3,7 +3,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
-export const LoadingHandler: FC = () => {
+export const useLoginLoader = () => {
     const t = useTypedTranslationFunction();
     const loginLoading = usePersistStore((store) => store.loginLoading);
     const updateGeneralState = usePersistStore((store) => store.updateLoginLoadingState);

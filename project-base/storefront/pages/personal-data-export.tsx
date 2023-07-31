@@ -8,9 +8,9 @@ import {
 } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
+import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
+
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -23,7 +23,7 @@ const PersonalDataExportPage: FC = () => {
     const breadcrumbs: BreadcrumbFragmentApi[] = [
         { __typename: 'Link', name: t('Personal Data Export'), slug: personalDataExportUrl },
     ];
-    const [personalDataPageTextResult] = useQueryError(usePersonalDataPageTextQueryApi());
+    const [personalDataPageTextResult] = usePersonalDataPageTextQueryApi();
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -41,13 +41,16 @@ const PersonalDataExportPage: FC = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWithRedisClient(
-    (redisClient) => async (context) =>
-        initServerSideProps({
-            context,
-            prefetchedQueries: [{ query: PersonalDataPageTextQueryDocumentApi }],
-            redisClient,
-        }),
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, t }) =>
+        async (context) =>
+            initServerSideProps({
+                context,
+                prefetchedQueries: [{ query: PersonalDataPageTextQueryDocumentApi }],
+                redisClient,
+                domainConfig,
+                t,
+            }),
 );
 
 export default PersonalDataExportPage;

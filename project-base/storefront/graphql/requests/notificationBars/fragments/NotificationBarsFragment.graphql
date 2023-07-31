@@ -2,7 +2,7 @@ fragment NotificationBarsFragment on NotificationBar {
     __typename
     text
     rgbColor
-    images {
+    mainImage {
         ...ImageSizesFragment
     }
 }
