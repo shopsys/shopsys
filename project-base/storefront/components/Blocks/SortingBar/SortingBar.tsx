@@ -3,11 +3,13 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { DEFAULT_SORT } from 'helpers/filterOptions/seoCategories';
+import { getFilteredQueries } from 'helpers/queryParams/queryHandlers';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { MouseEventHandler, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type SortingBarProps = {
@@ -51,6 +53,9 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
         () => setMobileSortBarVisible(isElementVisible([{ min: 0, max: 1024 }], width)),
     );
 
+    const router = useRouter();
+    const asPathWithoutQueryParams = router.asPath.split('?')[0];
+
     return (
         <div
             className="relative w-full border-greyLighter vl:static vl:inline-block vl:border-b"
@@ -86,17 +91,16 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                                 {sortOptions
                                     .filter((sortOption) => sortOption !== selectedSortOption)
                                     .map((sortOption, index) => (
-                                        <SortingBarItem key={sortOption}>
-                                            <SortingBarItemLink
-                                                isActive={sortOption === selectedSortOption}
-                                                onClick={() => {
-                                                    setToggleSortMenu((prev) => !prev);
-                                                    updateSort(sortOption);
-                                                }}
-                                                dataTestId={TEST_IDENTIFIER + '-' + index}
-                                            >
-                                                {sortOptionsLabels[sortOption]}
-                                            </SortingBarItemLink>
+                                        <SortingBarItem
+                                            key={sortOption}
+                                            isActive={sortOption === selectedSortOption}
+                                            onClick={() => {
+                                                setToggleSortMenu((prev) => !prev);
+                                                updateSort(sortOption);
+                                            }}
+                                            dataTestId={TEST_IDENTIFIER + '-' + index}
+                                        >
+                                            {sortOptionsLabels[sortOption]}
                                         </SortingBarItem>
                                     ))}
                             </div>
@@ -105,22 +109,32 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                 ) : (
                     <>
                         <div className="flex vl:gap-3">
-                            {sortOptions.map((sortOption, index) => (
-                                <SortingBarItem
-                                    key={sortOption}
-                                    onClick={() => updateSort(sortOption)}
-                                    dataTestId={TEST_IDENTIFIER + '-' + index}
-                                >
-                                    <SortingBarItemLink isActive={sortOption === selectedSortOption}>
-                                        <span>{sortOptionsLabels[sortOption]}</span>
-                                    </SortingBarItemLink>
-                                </SortingBarItem>
-                            ))}
+                            {sortOptions.map((sortOption, index) => {
+                                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                                const { page, ...queriesWithoutPage } = getFilteredQueries(router.query);
+                                const sortParams = new URLSearchParams({
+                                    ...queriesWithoutPage,
+                                    sort: sortOption,
+                                }).toString();
+                                const sortHref = `${asPathWithoutQueryParams}?${sortParams}`;
+
+                                return (
+                                    <SortingBarItem
+                                        key={sortOption}
+                                        isActive={sortOption === selectedSortOption}
+                                        onClick={() => updateSort(sortOption)}
+                                        dataTestId={TEST_IDENTIFIER + '-' + index}
+                                        href={sortHref}
+                                    >
+                                        {sortOptionsLabels[sortOption]}
+                                    </SortingBarItem>
+                                );
+                            })}
                         </div>
-                        <SortingBarItem>
+                        <div>
                             <strong>{totalCount} </strong>
                             {t('Products count', { count: totalCount })}
-                        </SortingBarItem>
+                        </div>
                     </>
                 )}
             </div>
@@ -128,26 +142,32 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     );
 };
 
-const SortingBarItem: FC<{ onClick?: () => void }> = ({ dataTestId, children, onClick }) => (
-    <div data-testid={dataTestId} onClick={onClick}>
-        {children}
-    </div>
-);
-
-const SortingBarItemLink: FC<{ isActive: boolean; onClick?: () => void }> = ({
-    isActive,
-    children,
+const SortingBarItem: FC<{ isActive: boolean; href?: string; onClick?: () => void }> = ({
     dataTestId,
+    children,
+    isActive,
+    href,
     onClick,
-}) => (
-    <a
-        className={twJoin(
-            'block border-b-2 py-4 px-2 text-center text-xs uppercase text-dark no-underline transition hover:text-dark hover:no-underline vl:py-2',
-            isActive ? 'hover:text-dark vl:border-primary' : 'border-none',
-        )}
-        data-testid={dataTestId}
-        onClick={onClick}
-    >
-        {children}
-    </a>
-);
+}) => {
+    const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
+        e.preventDefault();
+
+        if (onClick) {
+            onClick();
+        }
+    };
+
+    return (
+        <a
+            className={twJoin(
+                'block border-b-2 py-4 px-2 text-center text-xs uppercase text-dark no-underline transition hover:text-dark hover:no-underline vl:py-2',
+                isActive ? 'cursor-default hover:text-dark vl:border-primary' : 'border-none',
+            )}
+            data-testid={dataTestId}
+            href={href}
+            onClick={handleOnClick}
+        >
+            {children}
+        </a>
+    );
+};
