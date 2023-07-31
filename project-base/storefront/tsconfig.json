@@ -17,6 +17,6 @@
         "typeRoots": ["./node_modules/@types", "./theme"],
         "incremental": true
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "*.js"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "*.js", "*.test.tsx"],
     "exclude": ["node_modules", "tsconfig.json", "graphql", ".pnpm-store", ".next"]
 }
