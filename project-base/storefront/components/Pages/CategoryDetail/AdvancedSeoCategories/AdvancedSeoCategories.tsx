@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { CategoryDetailFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twJoin } from 'tailwind-merge';
@@ -17,7 +16,8 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCat
 
     return (
         <>
-            <Heading type="h3">{t('Favorite categories')}</Heading>
+            <div className="mb-3 break-words font-bold text-dark lg:text-lg">{t('Favorite categories')}</div>
+
             <ul className="mb-5 grid snap-x snap-mandatory auto-cols-[40%] gap-3 overflow-x-auto overscroll-x-contain max-lg:grid-flow-col lg:grid-cols-[repeat(auto-fill,minmax(210px,1fr))]">
                 {readyCategorySeoMixLinks.map((seoMixLink, index) => (
                     <li key={index} className="snap-start">

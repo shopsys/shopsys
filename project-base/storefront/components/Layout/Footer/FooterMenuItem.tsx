@@ -9,7 +9,7 @@ type FooterMenuItemProps = {
 
 export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
     <>
-        <Heading type="h4" className="text-center font-bold uppercase text-white lg:text-left">
+        <Heading type="h3" className="text-center font-bold uppercase text-white lg:text-left">
             {title}
         </Heading>
 
