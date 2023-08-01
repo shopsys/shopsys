@@ -1,6 +1,10 @@
-import { ApplicationErrors, ApplicationErrorsType } from 'helpers/errors/applicationErrors';
-import { getErrorMessage, hasErrorMessage } from 'helpers/errors/errorMessageMapper';
-import { ApplicationIgnoredErrors } from 'helpers/errors/ignoredErrors';
+import {
+    ApplicationErrorsType,
+    isFlashMessageError,
+    isNoFlashMessageError,
+    isNoLogError,
+} from 'helpers/errors/applicationErrors';
+import { getErrorMessage } from 'helpers/errors/errorMessageMapper';
 import { Translate } from 'next-translate';
 import { ParsedErrors, ValidationErrors } from 'types/error';
 import { CombinedError } from 'urql';
@@ -34,11 +38,15 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate
 
             if ('userCode' in error.extensions) {
                 const errorExtensions = error.extensions as { userCode: ApplicationErrorsType };
-                if (ApplicationIgnoredErrors.some((ignoredError) => ignoredError === errorExtensions.userCode)) {
+                if (isNoLogError(errorExtensions.userCode) || isNoFlashMessageError(errorExtensions.userCode)) {
+                    errors.applicationError = {
+                        type: errorExtensions.userCode,
+                        message: error.message,
+                    };
                     continue;
                 }
 
-                if (hasErrorMessage(errorExtensions.userCode, t)) {
+                if (isFlashMessageError(errorExtensions.userCode)) {
                     errors.applicationError = {
                         type: errorExtensions.userCode,
                         message: getErrorMessage(errorExtensions.userCode, t),
@@ -47,10 +55,10 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate
                 }
             }
 
-            errors.applicationError = { type: ApplicationErrors.default, message: t('Unknown error.') };
+            errors.applicationError = { type: 'default', message: t('Unknown error.') };
         }
     } else {
-        errors.applicationError = { type: ApplicationErrors.default, message: t('Unknown error.') };
+        errors.applicationError = { type: 'default', message: t('Unknown error.') };
     }
 
     return errors;

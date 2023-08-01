@@ -1,31 +1,55 @@
-export const ApplicationErrors = {
-    default: 'default',
-    'cart-not-found': 'cart-not-found',
-    'max-allowed-limit': 'max-allowed-limit',
-    'packetery-address-id-invalid': 'packetery-address-id-invalid',
-    'invalid-credentials': 'invalid-credentials',
-    'invalid-refresh-token': 'invalid-refresh-token',
-    'order-emails-not-sent': 'order-emails-not-sent',
-    'order-empty-cart': 'order-empty-cart',
-    'personal-data-request-type-invalid': 'personal-data-request-type-invalid',
-    'blog-category-not-found': 'blog-category-not-found',
-    'image-type-invalid': 'image-type-invalid',
-    'image-size-invalid': 'image-size-invalid',
-    'order-not-found': 'order-not-found',
-    'personal-data-hash-invalid': 'personal-data-hash-invalid',
-    'product-price-missing': 'product-price-missing',
-    'no-result-found-for-slug': 'no-result-found-for-slug',
-    'store-not-found': 'store-not-found',
-    'invalid-token': 'invalid-token',
-    'product-not-found': 'product-not-found',
-    'handling-with-logged-customer-comparison': 'handling-with-logged-customer-comparison',
-    'comparison-not-found': 'comparison-not-found',
-    'compared-item-not-found': 'compared-item-not-found',
-    'compared-item-already-exists': 'compared-item-already-exists',
-    'wishlist-not-found': 'wishlist-not-found',
-    'wishlist-item-already-exists': 'wishlist-item-already-exists',
-    'wishlist-item-not-found': 'wishlist-item-not-found',
-    'seo-page-not-found': 'seo-page-not-found',
+export type ApplicationErrorVerbosityLevel = 'flash-message' | 'no-flash-message' | 'no-log';
+
+const ApplicationErrors = {
+    default: 'flash-message',
+    'cart-not-found': 'flash-message',
+    'max-allowed-limit': 'flash-message',
+    'packetery-address-id-invalid': 'flash-message',
+    'invalid-credentials': 'flash-message',
+    'invalid-refresh-token': 'flash-message',
+    'order-emails-not-sent': 'flash-message',
+    'order-empty-cart': 'flash-message',
+    'personal-data-request-type-invalid': 'flash-message',
+    'blog-category-not-found': 'flash-message',
+    'image-type-invalid': 'flash-message',
+    'image-size-invalid': 'flash-message',
+    'order-not-found': 'flash-message',
+    'personal-data-hash-invalid': 'flash-message',
+    'product-price-missing': 'flash-message',
+    'no-result-found-for-slug': 'no-flash-message',
+    'store-not-found': 'flash-message',
+    'invalid-token': 'no-flash-message',
+    'product-not-found': 'flash-message',
+    'handling-with-logged-customer-comparison': 'flash-message',
+    'comparison-not-found': 'flash-message',
+    'compared-item-not-found': 'flash-message',
+    'compared-item-already-exists': 'flash-message',
+    'seo-page-not-found': 'no-log',
+    'wishlist-not-found': 'flash-message',
+    'wishlist-item-already-exists': 'flash-message',
+    'wishlist-item-not-found': 'flash-message',
 } as const;
 
+type KeysMatching<T, V extends ApplicationErrorVerbosityLevel> = {
+    [K in keyof T]: T[K] extends V ? K : never;
+}[keyof T];
+
+export type FlashMessageKeys = KeysMatching<typeof ApplicationErrors, 'flash-message'>;
+
+export type NoFlashMessageKeys = KeysMatching<typeof ApplicationErrors, 'no-flash-message'>;
+
+export type NoLogKeys = KeysMatching<typeof ApplicationErrors, 'no-log'>;
+
 export type ApplicationErrorsType = keyof typeof ApplicationErrors;
+
+export const isFlashMessageError = (errorCode: string): errorCode is FlashMessageKeys =>
+    Object.keys(ApplicationErrors).includes(errorCode) &&
+    ApplicationErrors[errorCode as keyof typeof ApplicationErrors] === 'flash-message';
+
+export const isNoFlashMessageError = (errorCode: string): errorCode is NoFlashMessageKeys =>
+    Object.keys(ApplicationErrors).includes(errorCode) &&
+    ApplicationErrors[errorCode as keyof typeof ApplicationErrors] === 'no-flash-message';
+
+export const isNoLogError = (errorCode: string): errorCode is NoLogKeys =>
+    Object.keys(ApplicationErrors).includes(errorCode) &&
+    ApplicationErrors[errorCode as keyof typeof ApplicationErrors] === 'no-log';
