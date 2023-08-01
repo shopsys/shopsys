@@ -5,13 +5,13 @@
 
 ### How does it work
 
-- the cache is set via the graphql directive `@redisCache` which accepts TTL in seconds
+- the cache is set via the graphql directive `@_redisCache` which accepts TTL in seconds
 - the custom URQl fetcher tries to read the data from the cache, if it does not find it, it calls the API
 - the cache can be deactivated (e.g. for development purposes) by setting `GRAPHQL_REDIS_CACHE=0` in your `.env.local` file
 
 ### How to use it
 
-- to apply cache to some query, simply set the `@redisCache` directive on the query
+- to apply cache to some query, simply set the `@_redisCache` directive on the query
 
 #### Example
 
@@ -28,7 +28,7 @@ query NavigationQuery {
 
 query is cached for 1 hour
 ```graphql
-query NavigationQuery @redisCache(ttl: 3600) {
+query NavigationQuery @_redisCache(ttl: 3600) {
     navigation {
         name
         link
