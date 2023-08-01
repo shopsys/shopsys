@@ -7,7 +7,7 @@ type ProductFlagsProps = { flags: SimpleFlagFragmentApi[] };
 const TEST_IDENTIFIER = 'blocks-product-flags-';
 
 export const ProductFlags: FC<ProductFlagsProps> = ({ flags }) => {
-    if (flags.length === 0) {
+    if (!flags.length) {
         return null;
     }
 

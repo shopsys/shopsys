@@ -97,9 +97,11 @@ export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = (
                         />
                     ))}
                 </div>
-                <div className="absolute top-3 left-4 flex flex-col">
-                    <ProductFlags flags={flags} />
-                </div>
+                {!!flags.length && (
+                    <div className="absolute top-3 left-4 flex flex-col">
+                        <ProductFlags flags={flags} />
+                    </div>
+                )}
             </div>
             <ImageSliderControl onClick={scrollPrev} enabled={prevBtnEnabled} />
             <ImageSliderControl onClick={scrollNext} isNext enabled={nextBtnEnabled} />

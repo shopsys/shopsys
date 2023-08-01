@@ -82,9 +82,11 @@ export const ProductListItem = forwardRef<HTMLDivElement, ProductItemProps>(
                             alt={product.mainImage?.name || product.fullName}
                             className="h-40 lg:hover:mix-blend-multiply"
                         />
-                        <div className="absolute top-3 left-4 flex flex-col">
-                            <ProductFlags flags={product.flags} />
-                        </div>
+                        {!!product.flags.length && (
+                            <div className="absolute top-3 left-4 flex flex-col">
+                                <ProductFlags flags={product.flags} />
+                            </div>
+                        )}
                     </div>
 
                     <div className="mt-auto flex-1 px-3 pb-5">
