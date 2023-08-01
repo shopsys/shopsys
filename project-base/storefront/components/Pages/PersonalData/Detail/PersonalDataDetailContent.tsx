@@ -3,7 +3,7 @@ import { Link } from 'components/Basic/Link/Link';
 import { Cell, CellHead, CellMinor, Row, Table } from 'components/Basic/Table/Table';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PersonalDataDetailQueryApi } from 'graphql/generated';
-import { formatDate } from 'helpers/formaters/formatDate';
+import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 
@@ -16,6 +16,7 @@ const TEST_IDENTIFIER = 'pages-personal-data-detail-';
 export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ data }) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
+    const { formatDate } = useFormatDate();
 
     const userData = data.accessPersonalData.customerUser;
     const orders = data.accessPersonalData.orders;

@@ -7,8 +7,8 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi, ListedOrderFragmentApi } from 'graphql/generated';
-import { formatDateAndTime } from 'helpers/formaters/formatDate';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -26,6 +26,7 @@ const TEST_IDENTIFIER = 'pages-customer-orders-';
 export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, breadcrumbs, orders, totalCount }) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
+    const { formatDateAndTime } = useFormatDate();
     const { url } = useDomainConfig();
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);

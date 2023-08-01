@@ -4,7 +4,7 @@ import { Row, Cell, CellHead, Table, CellMinor } from 'components/Basic/Table/Ta
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi, OrderDetailFragmentApi } from 'graphql/generated';
-import { formatDateAndTime } from 'helpers/formaters/formatDate';
+import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twMergeCustom } from 'utils/twMerge';
@@ -19,6 +19,7 @@ const TEST_IDENTIFIER = 'pages-customer-orderdetail-';
 export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
+    const { formatDateAndTime } = useFormatDate();
 
     return (
         <>
