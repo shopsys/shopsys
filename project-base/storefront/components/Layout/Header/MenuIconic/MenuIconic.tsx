@@ -4,7 +4,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useWishlist } from 'hooks/useWishlist';
 import { MenuIconicItem, MenuIconicItemLink, MenuIconicItemIcon } from './MenuIconicElements';
-import { MenuIconicItemLogin } from './MenuIconicItemLogin';
+import { MenuIconicItemUser } from './MenuIconicItemUser';
 
 const TEST_IDENTIFIER = 'layout-header-menuiconic';
 
@@ -20,22 +20,25 @@ export const MenuIconic: FC = () => {
 
     return (
         <ul className="flex" data-testid={TEST_IDENTIFIER}>
-            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-stores'} className="max-vl:hidden">
+            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-stores'} className="max-lg:hidden">
                 <MenuIconicItemLink href={storesUrl}>
                     <MenuIconicItemIcon icon="Marker" />
                     {t('Stores')}
                 </MenuIconicItemLink>
             </MenuIconicItem>
-            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-login'} className="max-vl:mr-0">
-                <MenuIconicItemLogin />
+
+            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-login'} className="max-lg:mr-0">
+                <MenuIconicItemUser />
             </MenuIconicItem>
-            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-comparison'} className="max-vl:hidden">
+
+            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-comparison'} className="max-lg:hidden">
                 <MenuIconicItemLink href={productsComparisonUrl} title={t('Comparison')}>
                     <MenuIconicItemIcon icon="Compare" />
                     {!!comparison?.products.length && <span>{comparison.products.length}</span>}
                 </MenuIconicItemLink>
             </MenuIconicItem>
-            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-wishlist'} className="max-vl:hidden">
+
+            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-wishlist'} className="max-lg:hidden">
                 <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')}>
                     <MenuIconicItemIcon icon={wishlist?.products.length ? 'HeartFull' : 'Heart'} />
                     {!!wishlist?.products.length && <span>{wishlist.products.length}</span>}
