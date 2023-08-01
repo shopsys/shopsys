@@ -1,5 +1,4 @@
 import { ProductDetailGallerySlider } from './ProductDetailGallerySlider';
-import { Gallery } from 'components/Basic/Gallery/Gallery';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
@@ -9,8 +8,11 @@ import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } f
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+
+const Gallery = dynamic(() => import('components/Basic/Gallery/Gallery').then((component) => component.Gallery));
 
 type ProductDetailGalleryProps = {
     images: ImageSizesFragmentApi[];
