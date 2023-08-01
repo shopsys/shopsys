@@ -6,7 +6,6 @@ import {
     SimplePaymentFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
-import { OperationContext } from 'urql';
 
 export type CurrentCartType = {
     cart: Maybe<CartFragmentApi>;
@@ -19,5 +18,4 @@ export type CurrentCartType = {
     isLoading: boolean;
     isFetching: boolean;
     modifications: Maybe<CartModificationsFragmentApi>;
-    refetchCart: (opts?: Partial<OperationContext>) => void;
 };

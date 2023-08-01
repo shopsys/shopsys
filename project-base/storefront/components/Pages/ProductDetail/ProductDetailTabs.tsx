@@ -1,4 +1,4 @@
-import { Table } from 'components/Basic/Table/Table';
+import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Helpers/UserText/UserText';
 import { ParameterFragmentApi } from 'graphql/generated';
@@ -31,21 +31,17 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
             </TabsContent>
             {parameters.length > 0 && (
                 <TabsContent headingTextMobile={t('Parameters')} dataTestId={TEST_IDENTIFIER + 'parameters-content'}>
-                    <Table>
-                        <tbody>
-                            {parameters.map((parameter) => (
-                                <tr key={parameter.uuid} className="border-t border-greyLighter first:border-t-0">
-                                    <th className="py-2 text-left text-sm font-bold uppercase leading-5">
-                                        {parameter.name}
-                                    </th>
-                                    <td className="py-2 text-right text-sm leading-5">
-                                        {parameter.values.map((value, index) =>
-                                            formatParameterValue(value.text, index),
-                                        )}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
+                    <Table className="border-0 p-0">
+                        {parameters.map((parameter) => (
+                            <Row key={parameter.uuid} className="border-t border-greyLighter first:border-t-0">
+                                <Cell className="py-2 text-left text-sm font-bold uppercase leading-5">
+                                    {parameter.name}
+                                </Cell>
+                                <Cell className="py-2 text-right text-sm leading-5">
+                                    {parameter.values.map((value, index) => formatParameterValue(value.text, index))}
+                                </Cell>
+                            </Row>
+                        ))}
                     </Table>
                 </TabsContent>
             )}

@@ -14,6 +14,7 @@ export const Logo: FC = () => (
                 height={38}
                 data-testid={TEST_IDENTIFIER}
                 className="flex w-32 max-w-full lg:w-40"
+                alt="logo"
             />
         </Link>
     </>

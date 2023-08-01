@@ -3,7 +3,7 @@ import { GrapesJsParser } from 'components/Helpers/GrapeJsParser';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
 import { BlogArticleDetailFragmentApi } from 'graphql/generated';
-import { formatDate } from 'helpers/formaters/formatDate';
+import { useFormatDate } from 'hooks/formatting/useFormatDate';
 
 type BlogArticleDetailContentProps = {
     blogArticle: BlogArticleDetailFragmentApi;
@@ -12,6 +12,8 @@ type BlogArticleDetailContentProps = {
 const TEST_IDENTIFIER = 'pages-blogarticle-';
 
 export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ blogArticle }) => {
+    const { formatDate } = useFormatDate();
+
     return (
         <Webline>
             <ArticleTitle dataTestId={TEST_IDENTIFIER + 'title'}>{blogArticle.seoH1 || blogArticle.name}</ArticleTitle>

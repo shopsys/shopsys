@@ -69,7 +69,7 @@ export const MenuIconicItemLogin: FC = () => {
             {/* MOBILE MENU */}
             <div className="order-2 ml-1 flex h-9 w-9 cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
                 {isUserLoggedIn ? (
-                    <ExtendedNextLink href={customerUrl} passHref type="static">
+                    <ExtendedNextLink href={customerUrl} type="static">
                         <div className="relative flex h-full w-full items-center justify-center text-white transition-colors">
                             <MenuIconicItemIcon icon="User" className="mr-0" />
                         </div>

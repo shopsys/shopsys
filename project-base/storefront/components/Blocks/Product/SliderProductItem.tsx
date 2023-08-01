@@ -44,11 +44,13 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({
             data-testid={TEST_IDENTIFIER + product.catalogNumber}
         >
             <div className="group relative flex h-full flex-col rounded-xl text-left hover:shadow-lg">
-                <ExtendedNextLink passHref href={product.slug} type="product">
-                    <a
-                        className="relative flex h-full flex-col no-underline hover:no-underline"
-                        onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
-                    >
+                <ExtendedNextLink
+                    href={product.slug}
+                    type="product"
+                    className="relative flex h-full flex-col no-underline hover:no-underline"
+                    onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
+                >
+                    <>
                         <div
                             className="relative flex h-48 w-full items-center justify-center px-2 pt-4 pb-2"
                             data-testid={TEST_IDENTIFIER + 'image'}
@@ -83,7 +85,7 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({
                                 />
                             </div>
                         </div>
-                    </a>
+                    </>
                 </ExtendedNextLink>
                 <div className="mb-2 flex justify-end gap-2">
                     <ProductCompareButton

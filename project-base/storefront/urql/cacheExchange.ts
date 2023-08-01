@@ -1,13 +1,16 @@
 import { Cache, cacheExchange, Data } from '@urql/exchange-graphcache';
 import { IntrospectionQuery } from 'graphql';
 import {
+    AddToCartMutationVariablesApi,
     AddToCartResultApi,
+    ApplyPromoCodeToCartMutationVariablesApi,
     CartApi,
     CartQueryApi,
     CartQueryDocumentApi,
     CartQueryVariablesApi,
     ChangePaymentInCartInputApi,
     ChangePaymentInCartMutationApi,
+    ChangePaymentInCartMutationVariablesApi,
     ChangeTransportInCartInputApi,
     ChangeTransportInCartMutationApi,
     CleanComparisonMutationVariablesApi,
@@ -17,6 +20,9 @@ import {
     ComparisonQueryVariablesApi,
     RemoveProductFromComparisonMutationVariablesApi,
     RemoveProductFromWishlistMutationVariablesApi,
+    ChangeTransportInCartMutationVariablesApi,
+    RemoveFromCartMutationVariablesApi,
+    RemovePromoCodeFromCartMutationVariablesApi,
     TransportsQueryApi,
     TransportsQueryDocumentApi,
     TransportsQueryVariablesApi,
@@ -119,43 +125,43 @@ export const cache = cacheExchange({
             CreateOrder(_result, _args, cache) {
                 invalidateFields(cache, ['currentCustomerUser']);
             },
-            AddToCart(result, _args, cache) {
+            AddToCart(result, args: AddToCartMutationVariablesApi, cache) {
                 const newCart =
                     typeof result.AddToCart !== 'undefined' ? (result.AddToCart as AddToCartResultApi) : undefined;
-                manuallyUpdateCartFragment(cache, newCart?.cart);
+                manuallyUpdateCartFragment(cache, newCart?.cart, args.input.cartUuid);
             },
-            ChangeTransportInCart(result, _args, cache) {
+            ChangeTransportInCart(result, args: ChangeTransportInCartMutationVariablesApi, cache) {
                 const newCart =
                     typeof result.ChangeTransportInCart !== 'undefined'
                         ? (result.ChangeTransportInCart as CartApi)
                         : undefined;
-                manuallyUpdateCartFragment(cache, newCart);
+                manuallyUpdateCartFragment(cache, newCart, args.input.cartUuid);
             },
-            ChangePaymentInCart(result, _args, cache) {
+            ChangePaymentInCart(result, args: ChangePaymentInCartMutationVariablesApi, cache) {
                 const newCart =
                     typeof result.ChangePaymentInCart !== 'undefined'
                         ? (result.ChangePaymentInCart as CartApi)
                         : undefined;
-                manuallyUpdateCartFragment(cache, newCart);
+                manuallyUpdateCartFragment(cache, newCart, args.input.cartUuid);
             },
-            RemoveFromCart(result, _args, cache) {
+            RemoveFromCart(result, args: RemoveFromCartMutationVariablesApi, cache) {
                 const newCart =
                     typeof result.RemoveFromCart !== 'undefined' ? (result.RemoveFromCart as CartApi) : undefined;
-                manuallyUpdateCartFragment(cache, newCart);
+                manuallyUpdateCartFragment(cache, newCart, args.input.cartUuid);
             },
-            ApplyPromoCodeToCart(result, _args, cache) {
+            ApplyPromoCodeToCart(result, args: ApplyPromoCodeToCartMutationVariablesApi, cache) {
                 const newCart =
                     typeof result.ApplyPromoCodeToCart !== 'undefined'
                         ? (result.ApplyPromoCodeToCart as CartApi)
                         : undefined;
-                manuallyUpdateCartFragment(cache, newCart);
+                manuallyUpdateCartFragment(cache, newCart, args.input.cartUuid);
             },
-            RemovePromoCodeFromCart(result, _args, cache) {
+            RemovePromoCodeFromCart(result, args: RemovePromoCodeFromCartMutationVariablesApi, cache) {
                 const newCart =
                     typeof result.RemovePromoCodeFromCart !== 'undefined'
                         ? (result.RemovePromoCodeFromCart as CartApi)
                         : undefined;
-                manuallyUpdateCartFragment(cache, newCart);
+                manuallyUpdateCartFragment(cache, newCart, args.input.cartUuid);
             },
             removeProductFromComparison(result, args: RemoveProductFromComparisonMutationVariablesApi, cache) {
                 if (result.removeProductFromComparison === null) {
@@ -223,24 +229,14 @@ const invalidateFields = (cache: Cache, fields: string[]): void => {
     }
 };
 
-const manuallyUpdateCartFragment = (cache: Cache, newCart: CartApi | undefined) => {
-    if (newCart !== undefined) {
-        cache.updateQuery<CartQueryApi, CartQueryVariablesApi>(
-            { query: CartQueryDocumentApi, variables: { cartUuid: newCart.uuid } },
-            (data) => {
-                if (typeof newCart !== 'undefined') {
-                    // eslint-disable-next-line no-param-reassign
-                    data = {
-                        __typename: 'Query',
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
-                        cart: newCart,
-                    };
-                }
-
-                return data;
-            },
-        );
+const manuallyUpdateCartFragment = (cache: Cache, newCart: CartApi | undefined, cartUuid: string | null) => {
+    if (newCart) {
+        cache.updateQuery({ query: CartQueryDocumentApi, variables: { cartUuid } }, (data) => {
+            if (data) {
+                data.cart = newCart;
+            }
+            return data;
+        });
     }
 };
 

@@ -26,10 +26,12 @@ export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantit
                 <Image image={product.mainImage} alt={product.mainImage?.name || product.fullName} type="thumbnail" />
             </div>
             <div className="flex flex-1 items-center justify-between">
-                <ExtendedNextLink href={product.slug} passHref type="product">
-                    <a className="flex-1 cursor-pointer pl-3 text-sm font-bold text-greyDark no-underline outline-none">
-                        {product.fullName}
-                    </a>
+                <ExtendedNextLink
+                    href={product.slug}
+                    type="product"
+                    className="flex-1 cursor-pointer pl-3 text-sm font-bold text-greyDark no-underline outline-none"
+                >
+                    {product.fullName}
                 </ExtendedNextLink>
                 <span className="pr-3 text-sm">{quantity + product.unit.name}</span>
                 <span className="w-28 break-words pr-4 text-right text-sm font-bold text-primary">

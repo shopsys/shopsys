@@ -36,15 +36,17 @@ export const SideSlider: FC<SideSliderProps> = ({ blogSideItems }) => {
                 {blogSideItems.map((blogSideItem, index) => (
                     <div key={index} className="keen-slider__slide flex flex-col" data-testid={TEST_IDENTIFIER + index}>
                         <div className="flex w-full">
-                            <ExtendedNextLink type="blogArticle" href={blogSideItem.link} passHref>
-                                <a className="relative mb-2 flex w-full">
-                                    <Image
-                                        image={blogSideItem.mainImage}
-                                        type="list"
-                                        alt={blogSideItem.mainImage?.name || blogSideItem.name}
-                                        className="max-h-32 rounded"
-                                    />
-                                </a>
+                            <ExtendedNextLink
+                                type="blogArticle"
+                                href={blogSideItem.link}
+                                className="relative mb-2 flex w-full"
+                            >
+                                <Image
+                                    image={blogSideItem.mainImage}
+                                    type="list"
+                                    alt={blogSideItem.mainImage?.name || blogSideItem.name}
+                                    className="max-h-32 rounded"
+                                />
                             </ExtendedNextLink>
                         </div>
                         <div className="flex-1">
@@ -56,10 +58,12 @@ export const SideSlider: FC<SideSliderProps> = ({ blogSideItems }) => {
                                 </Fragment>
                             ))}
 
-                            <ExtendedNextLink type="blogArticle" href={blogSideItem.link} passHref>
-                                <a className="block text-lg font-bold leading-5 text-creamWhite no-underline hover:text-creamWhite">
-                                    {blogSideItem.name}
-                                </a>
+                            <ExtendedNextLink
+                                type="blogArticle"
+                                href={blogSideItem.link}
+                                className="block text-lg font-bold leading-5 text-creamWhite no-underline hover:text-creamWhite"
+                            >
+                                {blogSideItem.name}
                             </ExtendedNextLink>
                         </div>
                     </div>

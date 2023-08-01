@@ -44,13 +44,15 @@ export const Cart: FC = ({ className }) => {
                 <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-xl bg-greyLighter py-2 opacity-50" />
             )}
 
-            <ExtendedNextLink href={cartUrl} passHref type="static">
-                <a
-                    className={twJoin(
-                        'hidden items-center rounded-xl bg-orangeLight py-4 pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
-                    )}
-                    data-testid={TEST_IDENTIFIER + 'block'}
-                >
+            <ExtendedNextLink
+                href={cartUrl}
+                type="static"
+                className={twJoin(
+                    'hidden items-center rounded-xl bg-orangeLight py-4 pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
+                )}
+                data-testid={TEST_IDENTIFIER + 'block'}
+            >
+                <>
                     <span className="relative flex text-lg">
                         <Icon iconType="icon" icon="Cart" className="w-5" />
                         <CartCount dataTestId={TEST_IDENTIFIER + 'itemcount'}>{cart?.items.length ?? 0}</CartCount>
@@ -63,7 +65,7 @@ export const Cart: FC = ({ className }) => {
                             explicitZero: true,
                         })}
                     </span>
-                </a>
+                </>
             </ExtendedNextLink>
             <div
                 className={twJoin(
@@ -106,11 +108,15 @@ export const Cart: FC = ({ className }) => {
                 )}
             </div>
             <div className="flex h-10 w-10 cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
-                <ExtendedNextLink href={cartUrl} passHref type="static">
-                    <a className="relative flex h-full w-full items-center justify-center text-white no-underline transition-colors hover:text-white hover:no-underline">
+                <ExtendedNextLink
+                    href={cartUrl}
+                    type="static"
+                    className="relative flex h-full w-full items-center justify-center text-white no-underline transition-colors hover:text-white hover:no-underline"
+                >
+                    <>
                         <Icon iconType="icon" icon="Cart" className="w-5 text-white" />
                         <CartCount>{cart?.items.length ?? 0}</CartCount>
-                    </a>
+                    </>
                 </ExtendedNextLink>
             </div>
         </div>

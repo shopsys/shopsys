@@ -5,6 +5,7 @@ import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/
 
 it('Homepage promoted products - Adding product to cart from promoted products on homepage and check product in cart', () => {
     cy.visit('/');
+    cy.wait(2000);
     addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
     checkProductAndGoToCartFromCartPopupWindow(products.helloKitty.namePrefixSuffix);
     checkProductInCart(products.helloKitty.catnum, products.helloKitty.namePrefixSuffix);

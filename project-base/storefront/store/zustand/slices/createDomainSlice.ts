@@ -10,6 +10,7 @@ export const createDomainSlice: StateCreator<DomainSlice> = (set) => ({
     domainConfig: {
         url: process.env.DOMAIN_HOSTNAME_1!,
         publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1!,
+        timezone: 'Europe/Prague',
         defaultLocale: 'cs',
         currencyCode: 'CZK',
         domainId: 1,

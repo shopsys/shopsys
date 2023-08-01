@@ -29,8 +29,8 @@ export const DropdownItem: FC<DropdownItemProps> = ({
 }) => {
     const context = useContext(DropdownMenuContext);
     const [hasChildren, setHasChildren] = useState(false);
-    const [itemLink, setItemLink] = useState('');
-    const [itemName, setItemName] = useState('');
+    const [itemLink, setItemLink] = useState(navigationItem?.link || columnCategory?.slug || '');
+    const [itemName, setItemName] = useState(navigationItem?.name || columnCategory?.name || '');
 
     const scrollToTop = () => {
         window.scroll({ top: 0, left: 0, behavior: 'smooth' });
@@ -57,16 +57,16 @@ export const DropdownItem: FC<DropdownItemProps> = ({
             onClick={scrollToTop}
             data-testid={TEST_IDENTIFIER}
         >
-            <ExtendedNextLink type="category" href={itemLink} passHref>
-                <a
-                    className={twJoin(
-                        'flex-1 font-bold text-dark no-underline',
-                        variant === 'small' ? 'py-4 text-sm' : 'py-5 pr-11 pl-8 text-base uppercase',
-                    )}
-                    onClick={context.onMenuToggleHandler}
-                >
-                    {itemName}
-                </a>
+            <ExtendedNextLink
+                type="category"
+                href={itemLink}
+                className={twJoin(
+                    'flex-1 font-bold text-dark no-underline',
+                    variant === 'small' ? 'py-4 text-sm' : 'py-5 pr-11 pl-8 text-base uppercase',
+                )}
+                onClick={context.onMenuToggleHandler}
+            >
+                {itemName}
             </ExtendedNextLink>
             {hasChildren && <DropdownSlideRight goToMenu={goToMenu} index={index} />}
         </div>

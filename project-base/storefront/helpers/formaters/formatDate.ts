@@ -1,5 +1,19 @@
-import dayjs, { Dayjs } from 'dayjs';
+import 'dayjs/locale/cs';
+import 'dayjs/locale/sk';
+import { Dayjs, extend, locale } from 'dayjs';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import utcPlugin from 'dayjs/plugin/utc';
+import timezonePlugin from 'dayjs/plugin/timezone';
+import dayjs from 'dayjs';
 
-export const formatDate = (date?: Dayjs | string, format?: string): string => dayjs(date).format(format);
+dayjs.extend(utcPlugin);
+dayjs.extend(timezonePlugin);
+extend(LocalizedFormat);
 
-export const formatDateAndTime = (date?: Dayjs | string): string => dayjs(date).format('l LT');
+export const initDayjsLocale = (defaultLocale: string) => locale(defaultLocale);
+
+export const formatDate = (date?: Dayjs | string, timezone?: string, format?: string): string =>
+    dayjs(date).tz(timezone).format(format);
+
+export const formatDateAndTime = (date?: Dayjs | string, timezone?: string): string =>
+    dayjs(date).tz(timezone).format('l LT');

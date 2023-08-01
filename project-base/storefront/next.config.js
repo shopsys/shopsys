@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { withSentryConfig } = require('@sentry/nextjs');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const nextTranslate = require('next-translate');
+const nextTranslate = require('next-translate-plugin');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const STATIC_REWRITE_PATHS = require('./config/staticRewritePaths');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -34,6 +34,7 @@ const moduleExports = nextTranslate({
                 url: process.env.DOMAIN_HOSTNAME_1,
                 defaultLocale: 'en',
                 currencyCode: 'EUR',
+                timezone: 'Europe/Prague',
                 domainId: 1,
                 mapSetting: {
                     latitude: 49.8175,
@@ -47,6 +48,7 @@ const moduleExports = nextTranslate({
                 url: process.env.DOMAIN_HOSTNAME_2,
                 defaultLocale: 'cs',
                 currencyCode: 'CZK',
+                timezone: 'Europe/Prague',
                 domainId: 2,
                 mapSetting: {
                     latitude: 48.669,
@@ -60,6 +62,7 @@ const moduleExports = nextTranslate({
                 url: 'http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/',
                 defaultLocale: 'en',
                 currencyCode: 'EUR',
+                timezone: 'Europe/Prague',
                 domainId: 1,
                 mapSetting: {
                     latitude: 49.8175,

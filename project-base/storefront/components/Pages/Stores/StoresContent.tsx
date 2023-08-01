@@ -97,8 +97,13 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                     <div className="mb-10 lg:grid lg:grid-cols-2 lg:gap-8">
                         {mappedStores.length &&
                             mappedStores.map((store) => (
-                                <ExtendedNextLink key={store.slug} href={store.slug} passHref type="store">
-                                    <a className="mb-4 flex w-full items-center justify-between rounded-xl border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline lg:w-auto vl:hover:-translate-x-1 vl:hover:shadow-lg">
+                                <ExtendedNextLink
+                                    key={store.slug}
+                                    href={store.slug}
+                                    type="store"
+                                    className="mb-4 flex w-full items-center justify-between rounded-xl border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline lg:w-auto vl:hover:-translate-x-1 vl:hover:shadow-lg"
+                                >
+                                    <>
                                         <div className="flex flex-row items-center text-lg text-primary">
                                             <Icon
                                                 iconType="icon"
@@ -110,7 +115,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                                         <div className="flex flex-row items-center text-lg text-primary">
                                             <ButtonBottomName isRight>{t('Store detail')}</ButtonBottomName>
                                         </div>
-                                    </a>
+                                    </>
                                 </ExtendedNextLink>
                             ))}
                     </div>

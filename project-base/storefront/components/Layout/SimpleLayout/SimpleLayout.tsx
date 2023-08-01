@@ -20,7 +20,7 @@ export const SimpleLayout: FC<SimpleLayoutProps> = ({ breadcrumb, heading, child
         <Webline>
             {standardWidth !== true && (
                 <div className="mr-24 flex w-full justify-center">
-                    <div className="mt-7 w-full rounded-2xl border-2 border-greyLighter px-2 pt-5 pb-4 lg:w-[690px] lg:px-14 lg:pt-10 lg:pb-8">
+                    <div className="my-7 w-full rounded-2xl border-2 border-greyLighter px-2 pt-5 pb-4 lg:w-[690px] lg:px-14 lg:pt-10 lg:pb-8">
                         {children}
                     </div>
                 </div>

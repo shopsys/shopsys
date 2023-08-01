@@ -15,10 +15,8 @@ const sliderSettings = (): EmblaOptionsType => {
     return {
         dragFree: false,
         loop: false,
-        speed: 20,
         startIndex: 0,
         containScroll: 'trimSnaps',
-        draggable: true,
         slidesToScroll: 1,
     };
 };

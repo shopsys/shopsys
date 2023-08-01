@@ -31,10 +31,12 @@ export const Footer: FC<FooterProps> = ({ simpleFooter }) => {
                     </>
                 )}
                 <FooterCopyright />
-                <ExtendedNextLink href={cookieConsentUrl} type="static">
-                    <a className="self-center text-greyLight no-underline transition hover:text-whitesmoke hover:no-underline">
-                        {t('Cookie consent update')}
-                    </a>
+                <ExtendedNextLink
+                    href={cookieConsentUrl}
+                    type="static"
+                    className="self-center text-greyLight no-underline transition hover:text-whitesmoke hover:no-underline"
+                >
+                    {t('Cookie consent update')}
                 </ExtendedNextLink>
             </div>
         </div>

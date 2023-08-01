@@ -1,12 +1,15 @@
 import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 // eslint-disable-next-line no-restricted-imports
 import NextLink, { LinkProps } from 'next/link';
+import { ComponentPropsWithoutRef, ReactElement } from 'react';
 import { FriendlyPagesDestinations, FriendlyPagesTypes, FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 
 type ExtendedNextLinkProps = {
     type: FriendlyPagesTypesKeys | 'static';
     queryParams?: Record<string, string>;
-} & Omit<LinkProps, 'prefetch'>;
+    children?: ReactElement | string | number;
+} & Omit<ComponentPropsWithoutRef<'a'>, keyof LinkProps> &
+    Omit<LinkProps, 'prefetch'>;
 
 export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({ children, href, type, queryParams, as, ...props }) => {
     const isStatic = type === 'static';
