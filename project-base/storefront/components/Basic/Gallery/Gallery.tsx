@@ -22,6 +22,7 @@ export const Gallery: FC<GalleryProps> = ({ selector, children }) => {
             plugins={[lgThumbnail, lgVideo]}
             selector={selector}
             licenseKey={lightgalleryLicenseKey}
+            download={false}
         >
             {children}
         </LightGallery>
