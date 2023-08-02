@@ -27,38 +27,48 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 
     return (
-        <Webline dataTestId={TEST_IDENTIFIER}>
-            <div className="mb-10">
-                <div className="relative lg:min-h-[350px] lg:pl-[380px] vl:min-h-[500px] vl:pl-[530px] xl:min-h-[650px] xl:pl-[720px]">
+        <Webline dataTestId={TEST_IDENTIFIER} className="mb-10">
+            <div className="flex flex-col vl:flex-row vl:gap-5">
+                <div className="text-center vl:order-2 vl:flex-1">
                     <Heading type="h1">{store.storeName}</Heading>
-                    <OpeningStatus isOpen={store.openingHours.isOpen} className="mb-3" />
-                    <div className="md:flex md:flex-wrap">
-                        {!!store.description && (
+
+                    <OpeningStatus isOpen={store.openingHours.isOpen} />
+
+                    <div className="mt-6 flex flex-col gap-4 md:flex-row">
+                        <div className="flex-1">
+                            {!!store.description && (
+                                <InfoItem>
+                                    <StoreHeading text={t('Store description')} />
+                                    {store.description}
+                                </InfoItem>
+                            )}
+
                             <InfoItem>
-                                <StoreHeading text={t('Store description')} />
-                                {store.description}
+                                <StoreHeading text={t('Store address')} />
+                                {store.city}
+                                <br />
+                                {store.street}
+                                <br />
+                                {store.postcode}
+                                <br />
+                                {store.country.name}
                             </InfoItem>
-                        )}
-                        <InfoItem>
-                            <StoreHeading text={t('Store address')} />
-                            {store.city}
-                            <br />
-                            {store.street}
-                            <br />
-                            {store.postcode}
-                            <br />
-                            {store.country.name}
-                        </InfoItem>
+                        </div>
+
                         <InfoItem className="flex-1">
                             <StoreHeading text={t('Opening hours')} />
                             <OpeningHours openingHours={store.openingHours} />
                         </InfoItem>
+                    </div>
+
+                    <div>
                         {!!store.contactInfo && (
                             <InfoItem>
                                 <StoreHeading text={t('Contact to the department store')} />
                                 {store.contactInfo}
                             </InfoItem>
                         )}
+
                         {!!store.specialMessage && (
                             <InfoItem>
                                 <StoreHeading text={t('Special announcement')} />
@@ -66,53 +76,58 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                             </InfoItem>
                         )}
                     </div>
-                    <div className="mb-4 h-60 w-full lg:absolute lg:left-0 lg:top-0 lg:mb-0 lg:h-[350px] lg:w-[350px] vl:h-[500px] vl:w-[500px] xl:h-[650px] xl:w-[650px] ">
-                        <SeznamMap
-                            center={storeCoordinates}
-                            zoom={15}
-                            markers={storeCoordinates ? [storeCoordinates] : []}
-                        />
-                    </div>
-                    <a className="flex items-center justify-between rounded-xl border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline vl:hover:-translate-x-1 vl:hover:shadow-lg">
+
+                    <div className="mt-6 flex items-center justify-between rounded-xl border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline vl:hover:-translate-x-1 vl:hover:shadow-lg">
                         <div className="flex flex-row items-center text-lg text-primary">
                             <Icon iconType="icon" icon="Chat" className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
                             <ExtendedNextLink
                                 href={contactUrl}
+                                passHref
                                 type="static"
                                 className="relative flex-grow text-primary md:text-lg"
                             >
                                 {t('Do you have any questions?')}
                             </ExtendedNextLink>
                         </div>
+
                         <div className="flex flex-row items-center text-lg text-primary">
                             <a className="relative flex-grow text-primary md:text-lg">{t('Customer Centre')}</a>
                         </div>
-                    </a>
-                </div>
-                {store.storeImages.length > 0 && (
-                    <div className="mt-10 bg-greyVeryLight p-3">
-                        <Gallery selector=".lightboxItem">
-                            <div className="flex flex-wrap justify-center lg:justify-start">
-                                {store.storeImages.map((image, index) => (
-                                    <div
-                                        key={index}
-                                        title={store.storeName}
-                                        className="lightboxItem basis-[304px]  p-3"
-                                        data-src={image.sizes.find((size) => size.size === 'default')?.url}
-                                    >
-                                        <Image
-                                            image={image}
-                                            alt={image.name || `${store.storeName}-${index}`}
-                                            type="thumbnail"
-                                            className="cursor-pointer"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </Gallery>
                     </div>
-                )}
+                </div>
+
+                <div className="mt-6 w-full basis-96 vl:mt-0 vl:basis-1/2">
+                    <SeznamMap
+                        center={storeCoordinates}
+                        zoom={15}
+                        markers={storeCoordinates ? [storeCoordinates] : []}
+                    />
+                </div>
             </div>
+
+            {store.storeImages.length > 0 && (
+                <div className="mt-6 bg-greyVeryLight p-3">
+                    <Gallery selector=".lightboxItem">
+                        <div className="flex flex-wrap justify-center lg:justify-start">
+                            {store.storeImages.map((image, index) => (
+                                <div
+                                    key={index}
+                                    title={store.storeName}
+                                    className="lightboxItem basis-[304px] p-3"
+                                    data-src={image.sizes.find((size) => size.size === 'default')?.url}
+                                >
+                                    <Image
+                                        image={image}
+                                        alt={image.name || `${store.storeName}-${index}`}
+                                        type="thumbnail"
+                                        className="cursor-pointer"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </Gallery>
+                </div>
+            )}
         </Webline>
     );
 };
@@ -123,6 +138,4 @@ const StoreHeading: FC<{ text: string }> = ({ text }) => (
     </Heading>
 );
 
-const InfoItem: FC = ({ children, className }) => (
-    <div className={twJoin('mb-4 odd:pr-3 even:pl-3 md:mb-6', className)}>{children}</div>
-);
+const InfoItem: FC = ({ children, className }) => <div className={twJoin('mb-4 md:mb-6', className)}>{children}</div>;

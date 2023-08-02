@@ -1,8 +1,9 @@
 import { OpeningHoursApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twJoin } from 'tailwind-merge';
+import { twMergeCustom } from 'utils/twMerge';
 
-export const OpeningHours: FC<{ openingHours: OpeningHoursApi }> = ({ openingHours }) => {
+export const OpeningHours: FC<{ openingHours: OpeningHoursApi }> = ({ openingHours, className }) => {
     const t = useTypedTranslationFunction();
 
     const dayNames = [
@@ -16,7 +17,7 @@ export const OpeningHours: FC<{ openingHours: OpeningHoursApi }> = ({ openingHou
     ];
 
     return (
-        <div className="flex w-full max-w-sm flex-col justify-start text-left">
+        <div className={twMergeCustom('flex w-full flex-col items-center text-left', className)}>
             {openingHours.openingHoursOfDays.map(
                 ({ firstOpeningTime, firstClosingTime, secondOpeningTime, secondClosingTime, dayOfWeek }) => {
                     const isToday = openingHours.dayOfWeek === dayOfWeek;
@@ -29,11 +30,11 @@ export const OpeningHours: FC<{ openingHours: OpeningHoursApi }> = ({ openingHou
                         <div
                             key={dayOfWeek}
                             className={twJoin(
-                                'flex flex-col flex-wrap items-center py-1 md:flex-row',
+                                'flex flex-col items-center py-1 md:flex-row',
                                 isToday ? 'font-bold' : 'font-normal',
                             )}
                         >
-                            <span className="mr-1 md:basis-28">{dayNames[dayOfWeek]}:</span>
+                            <span className="mr-1 md:basis-28">{dayNames[dayOfWeek - 1]}:</span>
                             <span className="flex-1">
                                 {isFirstTime && (
                                     <>

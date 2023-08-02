@@ -22,20 +22,25 @@ export const InfoBox: FC<InfoBoxProps> = ({ store, closeInfoBoxCallback }) => {
                 icon="Remove"
                 className="absolute top-4 right-4 w-5 cursor-pointer text-primary transition-colors hover:text-orangeDarker "
             />
+
             <Heading type="h2" className="">
                 {store.name}
             </Heading>
+
             <OpeningStatus isOpen={store.openingHours.isOpen} className="mb-3" />
+
             <div>
                 {store.street}
                 <br />
                 {store.postcode} {store.city}
             </div>
+
             <Heading type="h3" className="m-0 mt-3">
                 {t('Opening hours')}
             </Heading>
+
             <OpeningHours openingHours={store.openingHours} />
-            <br />
+
             <Link href={store.slug} isButton className="mt-5">
                 {t('Store detail')}
             </Link>
