@@ -96,16 +96,16 @@ export const getChangedDefaultFiltersAfterFlagChange = (
 export const getChangedDefaultFiltersAfterParameterChange = (
     defaultProductFiltersMap: DefaultProductFiltersMapType,
     filter: FilterOptionsUrlQueryType | null,
-    changedaParameterUuid: string,
-    changedaParameterValueUuid: string,
+    changedParameterUuid: string,
+    changedParameterValueUuid: string,
 ): FilterOptionsUrlQueryType => {
-    const matchingDefaultParameter = defaultProductFiltersMap.parameters.get(changedaParameterUuid);
+    const matchingDefaultParameter = defaultProductFiltersMap.parameters.get(changedParameterUuid);
     if (matchingDefaultParameter) {
-        if (!matchingDefaultParameter.delete(changedaParameterValueUuid)) {
-            matchingDefaultParameter.add(changedaParameterValueUuid);
+        if (!matchingDefaultParameter.delete(changedParameterValueUuid)) {
+            matchingDefaultParameter.add(changedParameterValueUuid);
         }
     } else {
-        defaultProductFiltersMap.parameters.set(changedaParameterUuid, new Set([changedaParameterValueUuid]));
+        defaultProductFiltersMap.parameters.set(changedParameterUuid, new Set([changedParameterValueUuid]));
     }
 
     return getChangedDefaultFilters(defaultProductFiltersMap, filter);
@@ -136,6 +136,19 @@ export const getChangedDefaultFiltersAfterSliderParameterChange = (
         flags: Array.from(defaultProductFiltersMap.flags),
         parameters: selectedParameters,
     };
+};
+
+export const getChangedDefaultFiltersAfterPriceChange = (
+    defaultProductFiltersMap: DefaultProductFiltersMapType,
+    filter: FilterOptionsUrlQueryType | null,
+    newMinPrice: number | undefined,
+    newMaxPrice: number | undefined,
+): FilterOptionsUrlQueryType => {
+    return getChangedDefaultFilters(defaultProductFiltersMap, {
+        ...filter,
+        minimalPrice: newMinPrice,
+        maximalPrice: newMaxPrice,
+    });
 };
 
 export const getChangedDefaultFiltersAfterMinimumPriceChange = (

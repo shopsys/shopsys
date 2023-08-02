@@ -304,6 +304,33 @@ jobs:
             -   name: Nginx container logs
                 if: ${{ failure() }}
                 run: docker compose logs webserver
+    unit-test-storefront:
+        name: Run unit tests of Storefront
+        needs: [build-storefront-ci-image]
+        if: |
+            always() && !failure() && !cancelled() &&
+            (
+                github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
+                github.ref_protected == true
+            ) &&
+            (needs.build-storefront-ci-image.result == 'success' || needs.build-storefront-ci-image.result == 'skipped')
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v3
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Download docker-compose.yml from artifacts
+                uses: actions/download-artifact@v3
+                with:
+                    name: docker-compose
+            -   name: Build application
+                run: docker compose up -d --wait storefront
+            -   name: Run unit tests
+                run: docker compose exec storefront pnpm test--no-watch
+            -   name: Storefront container logs
+                if: ${{ failure() }}
+                run: docker compose logs storefront
     tests-unit-functional-smoke:
         name: Run unit, functional and smoke tests
         needs: [build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
@@ -514,6 +541,8 @@ jobs:
                     docker compose exec storefront sh check-code-gen.sh
             -   name: Check Storefront standards
                 run: docker compose exec storefront pnpm run check
+            -   name: Run storefront unit tests
+                run: docker compose exec storefront pnpm test--no-watch
             -   name: Storefront container logs
                 if: ${{ failure() }}
                 run: docker compose logs storefront
