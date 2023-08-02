@@ -47,7 +47,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                                 pickupPlaceDetail.city}
                         </span>
                         <span className="text-sm text-greyLight">{t('Open') + ': '}</span>
-                        <OpeningHours openingHours={pickupPlaceDetail.openingHours} />
+                        <OpeningHours openingHours={pickupPlaceDetail.openingHours} className="items-start" />
                     </>
                 )}
             </div>
