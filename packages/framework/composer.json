@@ -120,7 +120,7 @@
         }
     },
     "conflict": {
-        "doctrine/orm": "2.12.0"
+        "doctrine/orm": "2.12.0 || >=2.16.0"
     },
     "suggest": {
         "ext-pgsql": "Required for dumping the Postgres database in shopsys:database:dump command"
