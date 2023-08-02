@@ -9,7 +9,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 });
 
-const moduleExports = nextTranslate({
+/** @type {import('next').NextConfig} */
+const moduleExports = {
     reactStrictMode: true,
     swcMinify: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
@@ -97,7 +98,7 @@ const moduleExports = nextTranslate({
 
         return config;
     },
-});
+};
 
 const SentryWebpackPluginOptions = {
     errorHandler: (err, invokeErr, compilation) => {
@@ -105,4 +106,4 @@ const SentryWebpackPluginOptions = {
     },
 };
 
-module.exports = withBundleAnalyzer(withSentryConfig(moduleExports, SentryWebpackPluginOptions));
+module.exports = withBundleAnalyzer(withSentryConfig(nextTranslate(moduleExports), SentryWebpackPluginOptions));
