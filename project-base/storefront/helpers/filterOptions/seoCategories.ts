@@ -1,17 +1,12 @@
 import {
     ListedProductConnectionPreviewFragmentApi,
-    CategoryDetailFragmentApi,
     ProductFilterOptionsFragmentApi,
     ProductOrderingModeEnumApi,
 } from 'graphql/generated';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
-import router, { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { DefaultProductFiltersMapType } from 'store/zustand/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/zustand/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
-import { getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 export const DEFAULT_SORT = ProductOrderingModeEnumApi.PriorityApi as const;
 
@@ -202,22 +197,4 @@ export const useHandleDefaultFiltersUpdate = (
             ),
         );
     }, [productsPreview?.productFilterOptions, productsPreview?.defaultOrderingMode]);
-};
-
-export const useHandleSeoCategorySlugUpdate = (category: CategoryDetailFragmentApi | undefined | null) => {
-    const setOriginalCategorySlug = useSessionStore((s) => s.setOriginalCategorySlug);
-    const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
-    const { asPath } = useRouter();
-    const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(asPath));
-
-    useEffect(() => {
-        const isCurrentAndRedirectSlugDifferent = getStringWithoutLeadingSlash(category?.slug ?? '') !== urlSlug;
-
-        if (category?.originalCategorySlug && isCurrentAndRedirectSlugDifferent) {
-            setWasRedirectedToSeoCategory(true);
-            router.replace(category.slug, undefined, { shallow: true });
-        }
-
-        setOriginalCategorySlug(category?.originalCategorySlug ?? undefined);
-    }, [category?.originalCategorySlug, category?.slug]);
 };

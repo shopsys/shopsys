@@ -17,6 +17,7 @@ const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
 }));
 
 const CATEGORY_URL = '/category-url';
+const CATEGORY_PATHNAME = '/categories/[categorySlug]';
 const ORIGINAL_CATEGORY_URL = '/original-category-slug';
 const DEFAULT_SEO_CATEGORY_PARAMETERS = new Map([
     ['default-parameter-1', new Set(['default-parameter-value-1', 'default-parameter-value-2'])],
@@ -38,6 +39,7 @@ vi.mock('helpers/filterOptions/seoCategories', async (importOriginal) => {
 const mockPush = vi.fn();
 vi.mock('next/router', () => ({
     useRouter: vi.fn(() => ({
+        pathname: CATEGORY_PATHNAME,
         asPath: CATEGORY_URL,
         push: mockPush,
         query: {},
@@ -60,6 +62,7 @@ vi.mock('store/zustand/useSessionStore', () => ({
 describe('useQueryParams().updateFilterParameters tests', () => {
     test('checkbox parameter value should be added to query if parameter is already present but value is not', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: {
@@ -82,6 +85,24 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-1',
+                                values: ['default-parameter-value-1', 'default-parameter-value-2'],
+                            },
+                            {
+                                parameter: 'default-parameter-2',
+                                values: ['default-parameter-value-3', 'default-parameter-value-4'],
+                            },
+                        ],
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -98,7 +119,6 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -107,6 +127,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
     test('checkbox parameter should be added to query if not present', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: {
@@ -125,6 +146,24 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-1',
+                                values: ['default-parameter-value-1', 'default-parameter-value-2'],
+                            },
+                            {
+                                parameter: 'default-parameter-2',
+                                values: ['default-parameter-value-3'],
+                            },
+                        ],
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -141,7 +180,6 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -150,6 +188,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
     test('checkbox parameter value should be removed from query if parameter and value are both present', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: {
@@ -172,6 +211,24 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-1',
+                                values: ['default-parameter-value-1', 'default-parameter-value-2'],
+                            },
+                            {
+                                parameter: 'default-parameter-2',
+                                values: ['default-parameter-value-3'],
+                            },
+                        ],
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -188,7 +245,6 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -197,6 +253,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
     test('checkbox parameter should be removed from query if parameter and value are both present and removed value is the only one', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: {
@@ -219,6 +276,20 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-1',
+                                values: ['default-parameter-value-1', 'default-parameter-value-2'],
+                            },
+                        ],
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -231,7 +302,6 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -240,6 +310,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
     test('slider parameter should be added to query if not present', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: {
@@ -259,6 +330,26 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-1',
+                                minimalValue: 100,
+                                maximalValue: 1000,
+                            },
+                            {
+                                parameter: 'default-parameter-2',
+                                minimalValue: 200,
+                                maximalValue: 2000,
+                            },
+                        ],
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -277,7 +368,6 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -286,6 +376,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
     test('slider parameter should be updated if its values change', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: {
@@ -310,6 +401,26 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-1',
+                                minimalValue: 100,
+                                maximalValue: 1000,
+                            },
+                            {
+                                parameter: 'default-parameter-2',
+                                minimalValue: 300,
+                                maximalValue: 3000,
+                            },
+                        ],
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -328,7 +439,6 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -337,6 +447,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
     test('slider parameter should be removed from query if already present and values are set to undefined', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: {
@@ -361,6 +472,21 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-1',
+                                minimalValue: 100,
+                                maximalValue: 1000,
+                            },
+                        ],
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -374,7 +500,6 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -397,6 +522,26 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: ORIGINAL_CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        flags: ['default-flag-1', 'default-flag-2'],
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-1',
+                                values: ['default-parameter-value-1', 'default-parameter-value-2'],
+                            },
+                            {
+                                parameter: 'default-parameter-2',
+                                values: ['default-parameter-value-3'],
+                            },
+                        ],
+                    }),
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                },
+            },
+            {
                 pathname: ORIGINAL_CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -415,7 +560,6 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                     [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -441,6 +585,20 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-2',
+                                values: ['default-parameter-value-5'],
+                            },
+                        ],
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -453,7 +611,6 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -479,6 +636,31 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: ORIGINAL_CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        flags: ['default-flag-1', 'default-flag-2'],
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-1',
+                                values: ['default-parameter-value-1', 'default-parameter-value-2'],
+                            },
+                            {
+                                parameter: 'default-parameter-2',
+                                values: ['default-parameter-value-3'],
+                            },
+                            {
+                                parameter: 'default-parameter-3',
+                                minimalValue: 100,
+                                maximalValue: 1000,
+                            },
+                        ],
+                    }),
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                },
+            },
+            {
                 pathname: ORIGINAL_CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -502,7 +684,6 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                     [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -525,6 +706,21 @@ describe('useQueryParams().updateFilterParameters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-3',
+                                minimalValue: 100,
+                                maximalValue: 1000,
+                            },
+                        ],
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -538,7 +734,6 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },

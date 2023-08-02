@@ -21,6 +21,7 @@ const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
 }));
 
 const CATEGORY_URL = '/category-url';
+const CATEGORY_PATHNAME = '/categories/[categorySlug]';
 const ORIGINAL_CATEGORY_URL = '/original-category-slug';
 const DEFAULT_SEO_CATEGORY_PARAMETERS = new Map([
     ['default-parameter-1', new Set(['default-parameter-value-1', 'default-parameter-value-2'])],
@@ -46,6 +47,7 @@ vi.mock('helpers/filterOptions/seoCategories', async (importOriginal) => {
 const mockPush = vi.fn();
 vi.mock('next/router', () => ({
     useRouter: vi.fn(() => ({
+        pathname: CATEGORY_PATHNAME,
         asPath: CATEGORY_URL,
         push: mockPush,
         query: {},
@@ -68,6 +70,7 @@ vi.mock('store/zustand/useSessionStore', () => ({
 describe('useQueryParams().resetAllFilters tests', () => {
     test('resetting all filters should clear filter and page from query', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: {
@@ -97,12 +100,18 @@ describe('useQueryParams().resetAllFilters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceDescApi,
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceDescApi,
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -122,6 +131,7 @@ describe('useQueryParams().resetAllFilters tests', () => {
         });
 
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: {
@@ -139,12 +149,18 @@ describe('useQueryParams().resetAllFilters tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: ORIGINAL_CATEGORY_URL,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                },
+            },
+            {
                 pathname: ORIGINAL_CATEGORY_URL,
                 query: {
                     [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
