@@ -180,7 +180,7 @@
     },
     "conflict": {
         "symfony/symfony": "*",
-        "doctrine/orm": "2.12.0"
+        "doctrine/orm": "2.12.0 || >=2.16.0"
     },
     "scripts": {
         "post-install-cmd": [
