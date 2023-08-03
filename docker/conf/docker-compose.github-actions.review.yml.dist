@@ -18,6 +18,12 @@ services:
             - default
         labels:
             - traefik.enable=false
+        healthcheck:
+            test: ["CMD", "pg_isready"]
+            start_period: 10s
+            interval: 10s
+            timeout: 10s
+            retries: 15
 
     webserver:
         restart: always
