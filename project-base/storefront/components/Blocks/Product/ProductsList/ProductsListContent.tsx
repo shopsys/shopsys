@@ -6,7 +6,7 @@ import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 import { useComparison } from 'hooks/comparison/useComparison';
 import dynamic from 'next/dynamic';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 
 const ProductComparePopup = dynamic(() =>
     import('../ButtonsAction/ProductComparePopup').then((component) => component.ProductComparePopup),

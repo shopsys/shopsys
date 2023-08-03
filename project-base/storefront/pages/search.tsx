@@ -1,5 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
@@ -16,10 +16,12 @@ import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
+import { parseLoadMoreFromQuery } from 'helpers/pagination/parseLoadMoreFromQuery';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import {
     FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
@@ -33,18 +35,20 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { GtmPageType } from 'types/gtm/enums';
+import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
+import { getSlugFromServerSideUrl } from 'utils/getSlugFromUrl';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const { url } = useDomainConfig();
-    const { sort, filter, searchString } = useQueryParams();
+    const { sort, filter, searchString, currentLoadMore } = useQueryParams();
 
     const [{ data: searchData, fetching }] = useSearchQueryApi({
         variables: {
             search: searchString ?? '',
             orderingMode: sort,
             filter: mapParametersFilter(filter),
-            pageSize: DEFAULT_PAGE_SIZE,
+            pageSize: DEFAULT_PAGE_SIZE * (currentLoadMore + 1),
         },
     });
 
@@ -67,9 +71,17 @@ const SearchPage: FC<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
+    const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+    const loadMore = parseLoadMoreFromQuery(context.query[LOAD_MORE_QUERY_PARAMETER_NAME]);
+    const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
+    const redirect = getRedirectWithOffsetPage(page, loadMore, urlSlug, context.query);
+
+    if (redirect) {
+        return redirect;
+    }
+
     const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]));
     const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
-    const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
     const filter = mapParametersFilter(optionsFilter);
     const search = getStringFromUrlQuery(context.query[SEARCH_QUERY_PARAMETER_NAME]);
 
@@ -82,7 +94,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
                     search,
                     orderingMode,
                     filter,
-                    pageSize: DEFAULT_PAGE_SIZE,
+                    pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
                 },
             },
             {
@@ -92,7 +104,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
                     orderingMode,
                     filter,
                     endCursor: getEndCursor(page),
-                    pageSize: DEFAULT_PAGE_SIZE,
+                    pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
                 },
             },
         ],

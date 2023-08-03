@@ -382,7 +382,7 @@ export const getGtmTransportChangeEvent = (
 export const getGtmProductListViewEvent = (
     products: ListedProductFragmentApi[],
     gtmProductListName: GtmProductListNameType,
-    currentPage: number,
+    currentPageWithLoadMore: number,
     pageSize: number,
     domainUrl: string,
 ): GtmProductListViewEventType => ({
@@ -390,7 +390,7 @@ export const getGtmProductListViewEvent = (
     ecommerce: {
         listName: gtmProductListName,
         products: products.map((product, index) => {
-            const listedProductIndex = (currentPage - 1) * pageSize + index;
+            const listedProductIndex = (currentPageWithLoadMore - 1) * pageSize + index;
 
             return mapGtmListedProductType(product, listedProductIndex, domainUrl);
         }),

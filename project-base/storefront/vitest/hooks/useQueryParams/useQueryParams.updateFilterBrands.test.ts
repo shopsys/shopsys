@@ -1,5 +1,9 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { FILTER_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+} from 'helpers/queryParams/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
 import { describe, expect, Mock, test, vi } from 'vitest';
@@ -32,13 +36,6 @@ vi.mock('store/zustand/useSessionStore', () => ({
 
 describe('useQueryParams().updateFilterBrands tests', () => {
     test('brand should be added to query if not present', () => {
-        (useRouter as Mock).mockImplementation(() => ({
-            pathname: CATEGORY_PATHNAME,
-            asPath: CATEGORY_URL,
-            push: mockPush,
-            query: {},
-        }));
-
         useQueryParams().updateFilterBrands('test-brand');
 
         expect(mockPush).toBeCalledWith(
@@ -83,6 +80,43 @@ describe('useQueryParams().updateFilterBrands tests', () => {
             {
                 pathname: CATEGORY_URL,
                 query: {},
+            },
+            {
+                shallow: true,
+            },
+        );
+    });
+
+    test('changing brands resets page and load more', () => {
+        (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
+            asPath: CATEGORY_URL,
+            push: mockPush,
+            query: {
+                [PAGE_QUERY_PARAMETER_NAME]: '2',
+                [LOAD_MORE_QUERY_PARAMETER_NAME]: '2',
+            },
+        }));
+
+        useQueryParams().updateFilterBrands('test-brand');
+
+        expect(mockPush).toBeCalledWith(
+            {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        brands: ['test-brand'],
+                    }),
+                },
+            },
+            {
+                pathname: CATEGORY_URL,
+                query: {
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        brands: ['test-brand'],
+                    }),
+                },
             },
             {
                 shallow: true,

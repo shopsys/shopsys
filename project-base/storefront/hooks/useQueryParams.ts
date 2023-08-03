@@ -15,6 +15,7 @@ import {
 } from 'helpers/filterOptions/seoCategories';
 import {
     FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
@@ -22,6 +23,7 @@ import {
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/zustand/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
+import { getDynamicPageQueryKey } from 'helpers/parsing/getDynamicPageQueryKey';
 
 export type FilterQueries = FilterOptionsUrlQueryType | undefined;
 
@@ -30,6 +32,7 @@ export type UrlQueries = {
     [SEARCH_QUERY_PARAMETER_NAME]?: string;
     [SORT_QUERY_PARAMETER_NAME]?: ProductOrderingModeEnumApi;
     [PAGE_QUERY_PARAMETER_NAME]?: string;
+    [LOAD_MORE_QUERY_PARAMETER_NAME]?: string;
 };
 
 const handleUpdateFilter = (selectedUuid: string | undefined, items: string[] | undefined): string[] | undefined => {
@@ -58,6 +61,7 @@ export const useQueryParams = () => {
     const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
 
     const currentPage = Number(query[PAGE_QUERY_PARAMETER_NAME] || 1);
+    const currentLoadMore = Number(query[LOAD_MORE_QUERY_PARAMETER_NAME] || 0);
     const searchString = query[SEARCH_QUERY_PARAMETER_NAME];
     const sort = query[SORT_QUERY_PARAMETER_NAME] ?? null;
     const filterQuery = query[FILTER_QUERY_PARAMETER_NAME];
@@ -75,6 +79,16 @@ export const useQueryParams = () => {
 
     const updatePagination = (page: number) => {
         pushQueryPage(page);
+    };
+
+    const loadMore = () => {
+        const updatedLoadMore = currentLoadMore + 1;
+        const newQuery: UrlQueries = {
+            ...query,
+            [LOAD_MORE_QUERY_PARAMETER_NAME]: updatedLoadMore > 0 ? updatedLoadMore.toString() : undefined,
+        } as const;
+
+        pushQueries(newQuery, true);
     };
 
     const updateFilterInStock = (value: FilterOptionsUrlQueryType['onlyInStock']) => {
@@ -263,7 +277,8 @@ export const useQueryParams = () => {
     const pushQuerySort = (sorting: ProductOrderingModeEnumApi) => {
         const newQuery: UrlQueries = {
             ...query,
-            page: undefined,
+            [LOAD_MORE_QUERY_PARAMETER_NAME]: undefined,
+            [PAGE_QUERY_PARAMETER_NAME]: undefined,
             [SORT_QUERY_PARAMETER_NAME]: sorting !== DEFAULT_SORT ? sorting : undefined,
         } as const;
 
@@ -273,6 +288,7 @@ export const useQueryParams = () => {
     const pushQueryPage = (page: number) => {
         const newQuery: UrlQueries = {
             ...query,
+            [LOAD_MORE_QUERY_PARAMETER_NAME]: undefined,
             [PAGE_QUERY_PARAMETER_NAME]: page > 1 ? page.toString() : undefined,
         } as const;
 
@@ -304,7 +320,8 @@ export const useQueryParams = () => {
 
         const newQuery: UrlQueries = {
             ...query,
-            page: undefined,
+            [PAGE_QUERY_PARAMETER_NAME]: undefined,
+            [LOAD_MORE_QUERY_PARAMETER_NAME]: undefined,
             [FILTER_QUERY_PARAMETER_NAME]: isWithFilterParams ? JSON.stringify(newFilter) : undefined,
         } as const;
 
@@ -345,11 +362,13 @@ export const useQueryParams = () => {
 
     return {
         currentPage,
+        currentLoadMore,
         searchString,
         sort,
         filter,
         updateSort,
         updatePagination,
+        loadMore,
         updateFilterInStock,
         updateFilterPrices,
         updateFilterPriceMaximum,
@@ -359,15 +378,4 @@ export const useQueryParams = () => {
         updateFilterParameters,
         resetAllFilters,
     };
-};
-
-const getDynamicPageQueryKey = (pathname: string) => {
-    const start = pathname.indexOf('[');
-    const end = pathname.indexOf(']');
-
-    if (start !== -1 && end !== -1) {
-        return pathname.substring(start + 1, end);
-    }
-
-    return undefined;
 };

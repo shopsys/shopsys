@@ -1,4 +1,4 @@
-import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { getGtmProductListViewEvent } from 'helpers/gtm/eventFactories';
 import { gtmSafePushEvent } from 'helpers/gtm/gtm';
@@ -11,17 +11,31 @@ export const useGtmPaginatedProductListViewEvent = (
     paginatedProducts: ListedProductFragmentApi[] | undefined,
     gtmProductListName: GtmProductListNameType,
 ): void => {
-    const lastViewedProducts = useRef<ListedProductFragmentApi[]>();
-    const { currentPage } = useQueryParams();
+    const lastViewedStringifiedProducts = useRef<string>();
+    const { currentPage, currentLoadMore } = useQueryParams();
+    const previousLoadMoreRef = useRef(currentLoadMore);
     const { url } = useDomainConfig();
+    const stringifiedProducts = JSON.stringify(paginatedProducts);
 
     useEffect(() => {
-        if (paginatedProducts !== undefined && lastViewedProducts.current !== paginatedProducts) {
-            lastViewedProducts.current = paginatedProducts;
+        if (paginatedProducts && lastViewedStringifiedProducts.current !== stringifiedProducts) {
+            lastViewedStringifiedProducts.current = stringifiedProducts;
+
+            let paginatedProductsSlice = paginatedProducts;
+            if (previousLoadMoreRef.current !== currentLoadMore) {
+                paginatedProductsSlice = paginatedProductsSlice.slice(currentLoadMore * DEFAULT_PAGE_SIZE);
+                previousLoadMoreRef.current = currentLoadMore;
+            }
 
             gtmSafePushEvent(
-                getGtmProductListViewEvent(paginatedProducts, gtmProductListName, currentPage, DEFAULT_PAGE_SIZE, url),
+                getGtmProductListViewEvent(
+                    paginatedProductsSlice,
+                    gtmProductListName,
+                    currentPage + currentLoadMore,
+                    DEFAULT_PAGE_SIZE,
+                    url,
+                ),
             );
         }
-    }, [gtmProductListName, currentPage, paginatedProducts, url]);
+    }, [gtmProductListName, currentPage, url, currentLoadMore, stringifiedProducts]);
 };

@@ -1,6 +1,12 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { FILTER_QUERY_PARAMETER_NAME, SORT_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+} from 'helpers/queryParams/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
+import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/zustand/useSessionStore';
 import { describe, expect, Mock, test, vi } from 'vitest';
 
@@ -191,6 +197,37 @@ describe('useQueryParams().updateSort tests', () => {
             {
                 shallow: true,
             },
+        );
+    });
+
+    test('changing sort resets page and load more', () => {
+        (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
+            asPath: CATEGORY_URL,
+            push: mockPush,
+            query: {
+                [PAGE_QUERY_PARAMETER_NAME]: '2',
+                [LOAD_MORE_QUERY_PARAMETER_NAME]: '2',
+            },
+        }));
+
+        useQueryParams().updateSort(ProductOrderingModeEnumApi.PriceAscApi);
+
+        expect(mockPush).toBeCalledWith(
+            {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                },
+            },
+            {
+                pathname: CATEGORY_URL,
+                query: {
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                },
+            },
+            { shallow: true },
         );
     });
 });

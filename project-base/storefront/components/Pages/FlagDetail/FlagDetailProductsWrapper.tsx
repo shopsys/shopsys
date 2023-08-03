@@ -1,21 +1,12 @@
-import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
-import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { FlagDetailFragmentApi, useFlagProductsQueryApi } from 'graphql/generated';
-import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
-import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
+import { FlagDetailFragmentApi, FlagProductsQueryDocumentApi } from 'graphql/generated';
 import { getMappedProducts } from 'helpers/mappers/products';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { getProductListSort } from 'helpers/sorting/getProductListSort';
-import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
+import { useProductsData } from 'helpers/pagination/loadMore';
 
 import { useGtmPaginatedProductListViewEvent } from 'hooks/gtm/productList/useGtmPaginatedProductListViewEvent';
-import { useQueryParams } from 'hooks/useQueryParams';
-import { useRouter } from 'next/router';
 import { RefObject } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
-import { getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 type FlagDetailProductsWrapperProps = {
     flag: FlagDetailFragmentApi;
@@ -23,22 +14,11 @@ type FlagDetailProductsWrapperProps = {
 };
 
 export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ flag, paginationScrollTargetRef }) => {
-    const { query, asPath } = useRouter();
-    const { currentPage } = useQueryParams();
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(query.sort));
-    const parametersFilter = getFilterOptions(parseFilterOptionsFromQuery(query.filter));
-
-    const [{ data: flagProductsData, fetching }] = useFlagProductsQueryApi({
-        variables: {
-            endCursor: getEndCursor(currentPage),
-            filter: mapParametersFilter(parametersFilter),
-            orderingMode,
-            urlSlug: getSlugFromUrl(getUrlWithoutGetParameters(asPath)),
-            pageSize: DEFAULT_PAGE_SIZE,
-        },
-    });
-
-    const flagListedProducts = getMappedProducts(flagProductsData?.products.edges);
+    const [flagProductsData, hasNextPage, fetching, loadMoreFetching] = useProductsData(
+        FlagProductsQueryDocumentApi,
+        flag.products.totalCount,
+    );
+    const flagListedProducts = getMappedProducts(flagProductsData);
 
     useGtmPaginatedProductListViewEvent(flagListedProducts, GtmProductListNameType.flag_detail);
 
@@ -47,10 +27,16 @@ export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ 
             <ProductsList
                 gtmProductListName={GtmProductListNameType.flag_detail}
                 fetching={fetching}
+                loadMoreFetching={loadMoreFetching}
                 products={flagListedProducts}
                 gtmMessageOrigin={GtmMessageOriginType.other}
             />
-            <Pagination totalCount={flag.products.totalCount} paginationScrollTargetRef={paginationScrollTargetRef} />
+            <Pagination
+                totalCount={flag.products.totalCount}
+                paginationScrollTargetRef={paginationScrollTargetRef}
+                isWithLoadMore
+                hasNextPage={hasNextPage}
+            />
         </>
     );
 };

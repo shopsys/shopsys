@@ -1,6 +1,7 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import {
     FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParams/queryParamNames';
@@ -68,7 +69,7 @@ vi.mock('store/zustand/useSessionStore', () => ({
 }));
 
 describe('useQueryParams().resetAllFilters tests', () => {
-    test('resetting all filters should clear filter and page from query', () => {
+    test('resetting all filters should clear filter, load more, and page from query', () => {
         (useRouter as Mock).mockImplementation(() => ({
             pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
@@ -93,6 +94,7 @@ describe('useQueryParams().resetAllFilters tests', () => {
                 }),
                 [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceDescApi,
                 [PAGE_QUERY_PARAMETER_NAME]: '2',
+                [LOAD_MORE_QUERY_PARAMETER_NAME]: '2',
             },
         }));
 

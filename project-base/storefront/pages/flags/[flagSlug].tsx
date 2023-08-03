@@ -24,6 +24,7 @@ import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import {
     FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParams/queryParamNames';
@@ -37,7 +38,9 @@ import { useRouter } from 'next/router';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { parseLoadMoreFromQuery } from 'helpers/pagination/parseLoadMoreFromQuery';
+import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
 
 const FlagDetailPage: NextPage = () => {
     const router = useRouter();
@@ -80,6 +83,15 @@ const FlagDetailPage: NextPage = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, ssrExchange, t }) =>
         async (context) => {
+            const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+            const loadMore = parseLoadMoreFromQuery(context.query[LOAD_MORE_QUERY_PARAMETER_NAME]);
+            const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
+            const redirect = getRedirectWithOffsetPage(page, loadMore, urlSlug, context.query);
+
+            if (redirect) {
+                return redirect;
+            }
+
             const client = createClient({
                 t,
                 ssrExchange,
@@ -89,11 +101,9 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
                 const orderingMode = getProductListSort(
                     parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
                 );
-                const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
                 const filter = mapParametersFilter(
                     getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME])),
                 );
@@ -112,7 +122,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                         orderingMode,
                         filter,
                         urlSlug,
-                        pageSize: DEFAULT_PAGE_SIZE,
+                        pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
                     })
                     .toPromise();
 

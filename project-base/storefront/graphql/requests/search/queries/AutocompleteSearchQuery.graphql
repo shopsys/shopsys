@@ -9,6 +9,12 @@ query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCateg
         ...SimpleCategoryConnectionFragment
     }
     productsSearch: products(search: $search, first: $maxProductCount) {
+        orderingMode
+        defaultOrderingMode
+        totalCount
+        productFilterOptions {
+            ...ProductFilterOptionsFragment
+        }
         ...ListedProductConnectionFragment
     }
 }

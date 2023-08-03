@@ -6,6 +6,12 @@ query SearchProductsQuery(
     $pageSize: Int
 ) {
     products(after: $endCursor, orderingMode: $orderingMode, filter: $filter, search: $search, first: $pageSize) {
+        orderingMode
+        defaultOrderingMode
+        totalCount
+        productFilterOptions {
+            ...ProductFilterOptionsFragment
+        }
         ...ListedProductConnectionFragment
     }
 }

@@ -1,4 +1,4 @@
-import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout } from 'components/Layout/CommonLayout';

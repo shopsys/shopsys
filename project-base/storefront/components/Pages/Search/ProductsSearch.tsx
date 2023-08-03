@@ -74,7 +74,10 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                             ProductOrderingModeEnumApi.PriceDescApi,
                         ]}
                     />
-                    <SearchProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef} />
+                    <SearchProductsWrapper
+                        paginationScrollTargetRef={paginationScrollTargetRef}
+                        productsSearch={productsSearch}
+                    />
                 </div>
             </div>
         </>

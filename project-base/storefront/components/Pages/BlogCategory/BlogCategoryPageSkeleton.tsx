@@ -2,7 +2,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import Skeleton from 'react-loading-skeleton';
 import { BlogArticleSkeleton } from '../BlogArticle/BlogArticleSkeleton';
-import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 
 export const BlogCategoryPageSkeleton: FC = () => (
     <Webline>

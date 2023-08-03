@@ -1,5 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrdersContent } from 'components/Pages/Customer/OrdersContent';
