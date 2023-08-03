@@ -22,7 +22,7 @@ type StoresContentProps = {
 export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const { defaultLocale } = useDomainConfig();
-    const [activeInfoBox, setActiveInfoBox] = useState(-1);
+    const [activeStoreIndex, setActiveStoreIndex] = useState<number>();
     const mappedStores = useMemo(() => mapConnectionEdges<ListedStoreFragmentApi>(stores.edges), [stores.edges]);
 
     const markers = useMemo(() => {
@@ -37,33 +37,24 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
         return validMarkers;
     }, [mappedStores]);
 
-    const [activeMarkerId, setActiveMarkerId] = useState<string>();
+    const activeMarkerHandler = useCallback((markerId: string) => {
+        const newStoreIndex = mappedStores?.findIndex((store) => store.slug === markerId);
 
-    const activeMarkerHandler = useCallback(
-        (markerId: string) => {
-            const index = mappedStores!.findIndex((store) => store.slug === markerId);
+        setActiveStoreIndex(activeStoreIndex !== newStoreIndex ? newStoreIndex : undefined);
+    }, []);
 
-            setActiveInfoBox((prev) => (prev !== index ? index : -1));
-            setActiveMarkerId((prev) => (prev !== markerId ? markerId : undefined));
-        },
-        [mappedStores],
-    );
-
-    const closeInfoBoxHandler = () => {
-        setActiveInfoBox(-1);
-        setActiveMarkerId(undefined);
-    };
+    const selectedStore = activeStoreIndex !== undefined ? mappedStores?.[activeStoreIndex] : undefined;
 
     return (
         <SimpleLayout standardWidth heading={t('Stores')} breadcrumb={breadcrumbs}>
-            {mappedStores !== undefined && (
+            {mappedStores && (
                 <>
                     <div className="mb-8 flex w-full flex-col vl:h-[500px] vl:flex-row">
                         <div className="h-[250px] w-full md:h-[350px] vl:h-auto vl:w-[calc(100%-420px)]">
                             <SeznamMap
                                 markers={markers}
                                 activeMarkerHandler={activeMarkerHandler}
-                                activeMarkerId={activeMarkerId}
+                                activeMarkerId={selectedStore?.slug}
                             />
                         </div>
                         <div className="relative flex flex-col items-center justify-center overflow-hidden border-2 border-greyLighter p-8 max-vl:border-t-0 vl:h-full vl:w-[420px] vl:border-l-0">
@@ -71,29 +62,28 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                                 <span className="absolute right-[10%] bottom-3 z-above inline-flex h-10 w-10 flex-col items-center justify-center rounded-full bg-[linear-gradient(180deg,#ffcf09,#ffb235)] text-xl font-medium text-white sm:h-14 sm:w-14 sm:text-2xl">
                                     {mappedStores.length}x
                                 </span>
-                                <picture>
-                                    <source
-                                        srcSet={`/images/stores_${defaultLocale}2x.png 2x, /images/stores_${defaultLocale}.png 1x`}
-                                    />
-                                    <Image
-                                        src={`/images/stores_${defaultLocale}.png`}
-                                        alt={t('Stores')}
-                                        width={210}
-                                        height={160}
-                                    />
-                                </picture>
+
+                                <Image
+                                    src={`/images/stores_${defaultLocale}.png`}
+                                    alt={t('Stores')}
+                                    width={210}
+                                    height={160}
+                                />
                             </div>
+
                             <Heading type="h3" className="m-0 lg:mt-6">
                                 {t('Stores')}
                             </Heading>
-                            {activeInfoBox !== -1 && (
+
+                            {selectedStore && (
                                 <InfoBox
-                                    closeInfoBoxCallback={closeInfoBoxHandler}
-                                    store={mappedStores[activeInfoBox]}
+                                    closeInfoBoxCallback={() => setActiveStoreIndex(undefined)}
+                                    store={selectedStore}
                                 />
                             )}
                         </div>
                     </div>
+
                     <div className="mb-10 lg:grid lg:grid-cols-2 lg:gap-8">
                         {mappedStores.length &&
                             mappedStores.map((store) => (
@@ -110,10 +100,11 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                                                 icon="Marker"
                                                 className="mr-3 w-6 text-2xl text-orange xl:mr-5"
                                             />
-                                            <ButtonBottomName>{store.name}</ButtonBottomName>
+                                            <StoreButton>{store.name}</StoreButton>
                                         </div>
+
                                         <div className="flex flex-row items-center text-lg text-primary">
-                                            <ButtonBottomName isRight>{t('Store detail')}</ButtonBottomName>
+                                            <StoreButton isRight>{t('Store detail')}</StoreButton>
                                         </div>
                                     </>
                                 </ExtendedNextLink>
@@ -125,11 +116,9 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
     );
 };
 
-type ButtonBottomNameProps = {
+const StoreButton: FC<{
     isRight?: boolean;
-};
-
-const ButtonBottomName: FC<ButtonBottomNameProps> = ({ children, isRight }) => (
+}> = ({ children, isRight }) => (
     <div className={twJoin('relative flex-grow text-primary md:text-lg', isRight && 'ml-5 hidden vl:block')}>
         {children}
     </div>

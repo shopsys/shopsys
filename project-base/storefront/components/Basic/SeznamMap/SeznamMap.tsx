@@ -61,7 +61,7 @@ export const SeznamMap: FC<SeznamMapProps> = ({ markers, center, zoom, activeMar
                         <SeznamMapMarkerLayer
                             map={map}
                             markers={markers}
-                            isMarkersClickable={activeMarkerHandler !== undefined}
+                            isMarkersClickable={!!activeMarkerHandler}
                             activeMarkerId={activeMarkerId}
                         />
                     </SeznamMapLayer>
