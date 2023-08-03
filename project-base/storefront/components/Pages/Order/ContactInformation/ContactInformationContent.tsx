@@ -15,7 +15,7 @@ import {
 } from 'graphql/generated';
 
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import Trans from 'next-translate/Trans';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
@@ -32,7 +32,7 @@ export const ContactInformationContent: FC = () => {
     const formProviderMethods = useFormContext<ContactInformation>();
     const { trigger, formState } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
-    const { isUserLoggedIn } = useCurrentUserData();
+    const isUserLoggedIn = !!useCurrentCustomerData();
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
     const [isEmailAlreadyRegistered, setIsEmailAlreadyRegistered] = useState(false);
@@ -98,12 +98,15 @@ export const ContactInformationContent: FC = () => {
                     onBlur: () => updateContactInformation({ email: emailValue }),
                 }}
             />
+
             {isEmailAlreadyRegistered && !isUserLoggedIn && (
                 <Button size="small" type="button" onClick={loginHandler} className="mb-5">
                     {t('User with this email is already registered. Do you want to sign in')}
                 </Button>
             )}
+
             {isEmailFilledCorrectly && <ContactInformationFormWrapper />}
+
             <div className={twJoin(!isEmailFilledCorrectly && 'pointer-events-none opacity-50')}>
                 <p className="mb-4">
                     <Trans
@@ -125,6 +128,7 @@ export const ContactInformationContent: FC = () => {
                         }}
                     />
                 </p>
+
                 <CheckboxControlled
                     name={formMeta.fields.newsletterSubscription.name}
                     control={formProviderMethods.control}

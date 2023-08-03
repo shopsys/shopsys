@@ -1,4 +1,4 @@
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import dynamic from 'next/dynamic';
 
 const TEST_IDENTIFIER = 'layout-header-menuiconic-login';
@@ -16,7 +16,7 @@ const MenuIconicItemUserUnauthenticated = dynamic(() =>
 );
 
 export const MenuIconicItemUser: FC = () => {
-    const { isUserLoggedIn } = useCurrentUserData();
+    const isUserLoggedIn = !!useCurrentCustomerData();
 
     return isUserLoggedIn ? (
         <MenuIconicItemUserAuthenticated dataTestId={TEST_IDENTIFIER} />

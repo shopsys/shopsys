@@ -17,7 +17,7 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServe
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useRouter } from 'next/router';
 import { GtmPageType } from 'types/gtm/enums';
 import { PaymentTypeEnum } from 'types/payment';
@@ -36,7 +36,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { orderUuid, orderEmail, orderPaymentType } = query as OrderConfirmationQuery;
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
-    const { isUserLoggedIn } = useCurrentUserData();
+    const isUserLoggedIn = !!useCurrentCustomerData();
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);

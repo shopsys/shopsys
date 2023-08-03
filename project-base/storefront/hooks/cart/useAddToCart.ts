@@ -6,7 +6,7 @@ import { getGtmMappedCart } from 'helpers/gtm/gtm';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 
@@ -23,7 +23,7 @@ export const useAddToCart = (
 ): [AddToCartAction, boolean] => {
     const [{ fetching }, addToCart] = useAddToCartMutationApi();
     const t = useTypedTranslationFunction();
-    const { isUserLoggedIn } = useCurrentUserData();
+    const isUserLoggedIn = !!useCurrentCustomerData();
     const { cart } = useCurrentCart();
     const domainConfig = useDomainConfig();
     const cartUuid = usePersistStore((store) => store.cartUuid);

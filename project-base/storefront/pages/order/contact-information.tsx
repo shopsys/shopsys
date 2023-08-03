@@ -33,8 +33,7 @@ import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import dynamic from 'next/dynamic';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useRouter } from 'next/router';
 import { OrderConfirmationQuery } from 'pages/order-confirmation';
 import React, { useEffect, useState } from 'react';
@@ -64,7 +63,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const [formProviderMethods, defaultValues] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
-    const { user, isUserLoggedIn } = useCurrentUserData();
+    const user = useCurrentCustomerData();
     const userContactInformation = useCurrentUserContactInformation();
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.contact_information);
@@ -75,7 +74,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
 
     useEffect(() => {
         if (customer === undefined) {
-            if (isUserLoggedIn && user?.companyCustomer) {
+            if (user?.companyCustomer) {
                 formProviderMethods.setValue(formMeta.fields.customer.name, CustomerTypeEnum.CompanyCustomer);
             } else {
                 formProviderMethods.setValue(formMeta.fields.customer.name, CustomerTypeEnum.CommonCustomer);

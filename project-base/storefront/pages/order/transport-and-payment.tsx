@@ -16,15 +16,15 @@ import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useGtmPaymentAndTransportPageViewEvent } from 'hooks/gtm/useGtmPaymentAndTransportPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import Head from 'next/head';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { GtmPageType } from 'types/gtm/enums';
+import Head from 'next/head';
 
 const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const { isUserLoggedIn } = useCurrentUserData();
+    const isUserLoggedIn = !!useCurrentCustomerData();
     const [{ data: transportsData }] = useTransportsQueryApi({
         variables: { cartUuid },
         requestPolicy: 'cache-and-network',

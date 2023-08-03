@@ -9,12 +9,11 @@ import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCountriesQueryApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
-
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCalcElementHeight } from 'hooks/ui/useCalcElementHeight';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useEffect, useMemo, useRef } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { Transition } from 'react-transition-group';
@@ -29,7 +28,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [elementHeight, calcHeight] = useCalcElementHeight(contentElement);
     const { pickupPlace } = useCurrentCart();
-    const { isUserLoggedIn, user } = useCurrentUserData();
+    const user = useCurrentCustomerData();
     const formProviderMethods = useFormContext<ContactInformation>();
     const { setValue, getValues } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
@@ -39,7 +38,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
     });
 
     const isCustomAddressSelected = deliveryAddressUuidValue === '';
-    const showAddressSelection = isUserLoggedIn && !pickupPlace && (!user || user.deliveryAddresses.length > 0);
+    const showAddressSelection = user?.deliveryAddresses.length && !pickupPlace;
 
     const [{ data: countriesData }] = useCountriesQueryApi();
     const countriesAsSelectOptions = useMemo(
@@ -91,13 +90,11 @@ export const ContactInformationDeliveryAddress: FC = () => {
     ]);
 
     useEffect(() => {
-        if (isUserLoggedIn) {
-            const deliveryAddress = user?.deliveryAddresses.find(
-                (address) => address.uuid === deliveryAddressUuidValue,
-            );
+        if (user) {
+            const deliveryAddress = user.deliveryAddresses.find((address) => address.uuid === deliveryAddressUuidValue);
             const selectedCountryOption =
                 countriesAsSelectOptions.find((option) => option.value === deliveryAddress?.country) ??
-                countriesAsSelectOptions.find((option) => option.value === user?.country.code);
+                countriesAsSelectOptions.find((option) => option.value === user.country.code);
 
             if (selectedCountryOption !== undefined || countriesAsSelectOptions.length > 0) {
                 setValue(formMeta.fields.deliveryFirstName.name, deliveryAddress?.firstName ?? '');
@@ -126,7 +123,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
         formMeta.fields.deliveryPostcode.name,
         formMeta.fields.deliveryStreet.name,
         formMeta.fields.deliveryTelephone.name,
-        isUserLoggedIn,
+        user,
         pickupPlace,
         setValue,
         user?.country.code,
@@ -179,7 +176,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 control={formProviderMethods.control}
                                                 formName={formMeta.formName}
                                                 radiobuttons={[
-                                                    ...(user?.deliveryAddresses.map((deliveryAddress) => ({
+                                                    ...user.deliveryAddresses.map((deliveryAddress) => ({
                                                         label: (
                                                             <p>
                                                                 <strong className="mr-1">
@@ -193,7 +190,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             </p>
                                                         ),
                                                         value: deliveryAddress.uuid,
-                                                    })) ?? []),
+                                                    })),
                                                     {
                                                         label: (
                                                             <p>
