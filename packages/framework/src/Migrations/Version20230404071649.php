@@ -24,7 +24,7 @@ class Version20230404071649 extends AbstractMigration
 
             if ($seoRobotsTxtContentSettingCount <= 0) {
                 $this->sql(
-                    'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoRobotsTxtContent\', :domainId, NULL, \'string\')',
+                    'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoRobotsTxtContent\', :domainId, \'\', \'string\')',
                     ['domainId' => $domainId],
                 );
             }
