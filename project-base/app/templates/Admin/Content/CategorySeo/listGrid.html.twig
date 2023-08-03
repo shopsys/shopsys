@@ -1,11 +1,11 @@
 {% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
 
 {% block grid_no_data %}
-    {{ 'Nebyly nalezeny žádné kombinace pro SEO kategorií.'|trans }}
+    {{ 'No combinations of SEO categories found.'|trans }}
 {% endblock %}
 
 {% block grid_pager_totalcount %}
-    {% set entityName = 'readyCategorySeoMixs'|trans %}
+    {% set entityName = 'ready category seo mixes'|trans %}
     {{ parent() }}
 {% endblock %}
 

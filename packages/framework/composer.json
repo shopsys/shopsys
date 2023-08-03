@@ -101,6 +101,7 @@
         "webmozart/assert": "^1.4"
     },
     "require-dev": {
+        "php-mock/php-mock-phpunit": "^2.7",
         "phpstan/phpstan": "^1.6.8",
         "phpstan/phpstan-doctrine": "^1.3.4",
         "phpstan/phpstan-phpunit": "^1.1.1",

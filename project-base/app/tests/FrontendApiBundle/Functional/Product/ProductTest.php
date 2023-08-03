@@ -159,9 +159,9 @@ class ProductTest extends GraphQlTestCase
 
         $fullName = sprintf(
             '%s %s %s',
-            t('Televize', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+            t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            t('plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+            t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
         /** @var \App\Model\Category\Category $mainCategory */
@@ -175,7 +175,7 @@ class ProductTest extends GraphQlTestCase
                 'product' => [
                     'id' => 1,
                     'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'slug' => '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova',
+                    'slug' => '/' . $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 1], UrlGeneratorInterface::RELATIVE_PATH),
                     'shortDescription' => $shortDescription,
                     'seoH1' => t(
                         'Hello Kitty Television',
@@ -279,7 +279,7 @@ class ProductTest extends GraphQlTestCase
                     'parameters' => [
                         [
                             'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'unit' => [
                                 'name' => t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             ],
@@ -291,7 +291,7 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'unit' => null,
                             'values' => [
                                 [
@@ -301,7 +301,7 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'unit' => null,
                             'values' => [
                                 [
@@ -311,7 +311,7 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'group' => t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'unit' => null,
                             'values' => [
                                 [
@@ -321,7 +321,7 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'group' => t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'unit' => null,
                             'values' => [
                                 [
@@ -351,8 +351,8 @@ class ProductTest extends GraphQlTestCase
                         ],
                     ],
                     'isUsingStock' => true,
-                    'namePrefix' => t('Televize', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'nameSuffix' => t('plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'namePrefix' => t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'nameSuffix' => t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'fullName' => $fullName,
                     'catalogNumber' => '9177759',
                     'partNumber' => 'SLE 22F46DM4',
@@ -397,14 +397,14 @@ class ProductTest extends GraphQlTestCase
                                 'name' => 'Ostrava',
                             ],
                             'exposed' => true,
-                            'availabilityInformation' => 'Ihned k odběru',
+                            'availabilityInformation' => 'Available immediately',
                             'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
                         ], [
                             'store' => [
                                 'name' => 'Pardubice',
                             ],
                             'exposed' => false,
-                            'availabilityInformation' => 'K dispozici za týden',
+                            'availabilityInformation' => 'Available in one week',
                             'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
                         ],
                     ],

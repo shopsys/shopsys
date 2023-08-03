@@ -45,13 +45,13 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
 
         if ($value instanceof File === false) {
             $this->context
-                ->buildViolation(t('Nepodporovaný datový typ pro validaci souboru. Kontaktujte, prosím, správce obchodu.'))
+                ->buildViolation(t('Unsupported file type'))
                 ->addViolation();
         }
 
         if ($this->filesystem->has($value->getPathname()) === false) {
             $this->context
-                ->buildViolation(t('Soubor se nepodařilo nalézt na hlavním uložišti. Zkuste to, prosím, znovu nebo kontaktujte správce obchodu.'))
+                ->buildViolation(t('File not found in main filesystem. Please try again later.'))
                 ->addViolation();
         }
 

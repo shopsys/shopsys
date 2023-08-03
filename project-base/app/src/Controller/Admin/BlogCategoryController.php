@@ -61,7 +61,7 @@ class BlogCategoryController extends AdminBaseController
             $this->blogCategoryFacade->edit($id, $blogCategoryData);
 
             $this->addSuccessFlashTwig(
-                t('Rubrika blogu <strong><a href="{{ url }}">{{ name }}</a></strong> byla upravena'),
+                t('Blog category <strong><a href="{{ url }}">{{ name }}</a></strong> has been updated'),
                 [
                     'name' => $blogCategory->getName(),
                     'url' => $this->generateUrl('admin_blogcategory_edit', ['id' => $blogCategory->getId()]),
@@ -72,10 +72,10 @@ class BlogCategoryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editace rubriky blogu - %name%', ['%name%' => $blogCategory->getName()]));
+        $this->breadcrumbOverrider->overrideLastItem(t('Editing blog category - %name%', ['%name%' => $blogCategory->getName()]));
 
         return $this->render('Admin/Content/Blog/Category/edit.html.twig', [
             'form' => $form->createView(),
@@ -102,7 +102,7 @@ class BlogCategoryController extends AdminBaseController
             $blogCategory = $this->blogCategoryFacade->create($blogCategoryData);
 
             $this->addSuccessFlashTwig(
-                t('Rubrika blogu <strong><a href="{{ url }}">{{ name }}</a></strong> byla vytvořena'),
+                t('Blog category <strong><a href="{{ url }}">{{ name }}</a></strong> has been created'),
                 [
                     'name' => $blogCategory->getName(),
                     'url' => $this->generateUrl('admin_blogcategory_edit', ['id' => $blogCategory->getId()]),
@@ -113,7 +113,7 @@ class BlogCategoryController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('Admin/Content/Blog/Category/new.html.twig', [
@@ -190,13 +190,13 @@ class BlogCategoryController extends AdminBaseController
             $this->blogCategoryFacade->deleteById($id);
 
             $this->addSuccessFlashTwig(
-                t('Rubrika blogu <strong>{{ name }}</strong> byla smazána'),
+                t('Blog category <strong>{{ name }}</strong> has been removed'),
                 [
                     'name' => $fullName,
                 ],
             );
         } catch (BlogCategoryNotFoundException $ex) {
-            $this->addErrorFlash(t('Vybraná rubrika blogu neexistuje.'));
+            $this->addErrorFlash(t('Selected blog category does not exist.'));
         }
 
         return $this->redirectToRoute('admin_blogcategory_list');

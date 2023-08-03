@@ -1,10 +1,10 @@
 {% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
 
 {% block grid_no_data %}
-    {{ 'Nebyly nalezeny žádné články blogu.'|trans }}
+    {{ 'No blog articles found.'|trans }}
 {% endblock %}
 
 {% block grid_pager_totalcount %}
-    {% set entityName = 'blogArticles'|trans %}
+    {% set entityName = 'blog articles'|trans %}
     {{ parent() }}
 {% endblock %}

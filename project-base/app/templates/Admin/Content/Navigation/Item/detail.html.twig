@@ -6,7 +6,7 @@
 
 		{% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
 			{% block fixed_bar_content %}
-				<a href="{{ url('admin_navigation_list') }}" class="btn-link-style">{{ 'Zpět na přehled'|trans }}</a>
+				<a href="{{ url('admin_navigation_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
 				{{ form_save(item|default(null), form) }}
 			{% endblock %}
 		{% endembed %}

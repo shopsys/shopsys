@@ -33,31 +33,31 @@ class ReadyCategorySeoCombinationFormType extends AbstractType
                 'required' => true,
                 'route_name' => 'front_category_seo',
                 'entity_id' => $readyCategorySeoMix !== null ? $readyCategorySeoMix->getId() : null,
-                'label' => t('Nastavení URL'),
+                'label' => t('URL Settings'),
                 'constraints' => [
                     new NotBlank(),
                 ],
             ])
             ->add('h1', TextType::class, [
-                'label' => t('Nadpis H1'),
+                'label' => t('Heading (H1)'),
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
                 ],
             ])
             ->add('showInCategory', YesNoType::class, [
-                'label' => t('Zobrazit v rozcestníku'),
+                'label' => t('Show in the category'),
             ])
             ->add('shortDescription', TextareaType::class, [
-                'label' => t('Krátký popis kategorie'),
+                'label' => t('Short description of category'),
                 'required' => false,
             ])
             ->add('description', CKEditorType::class, [
-                'label' => t('Popis kategorie'),
+                'label' => t('Category description'),
                 'required' => false,
             ])
             ->add('title', TextType::class, [
-                'label' => t('Titulek stránky'),
+                'label' => t('Page title'),
                 'required' => false,
                 'macro' => [
                     'name' => 'seoFormRowMacros',
@@ -75,7 +75,7 @@ class ReadyCategorySeoCombinationFormType extends AbstractType
             ->add('categorySeoFilterFormTypeAllQueriesJson', HiddenType::class)
             ->add('choseCategorySeoMixCombinationJson', HiddenType::class)
             ->add('save', SubmitType::class, [
-                'label' => t('Uložit'),
+                'label' => t('Save'),
                 'attr' => [
                     'class' => 'margin-top-20',
                 ],

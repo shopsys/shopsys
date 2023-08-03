@@ -23,9 +23,9 @@
         <table class="table-form" id="promo_code_limits">
             <thead>
             <tr class="table-form__row">
-                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Od'|trans }}</th>
+                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'From'|trans }}</th>
                 <th class="table-form__cell table-form__cell--del"></th>
-                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Sleva'|trans }}</th>
+                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Discount'|trans }}</th>
                 <th class="table-form__cell table-form__cell--del-after"></th>
             </tr>
             </thead>
@@ -38,7 +38,7 @@
             {% endfor %}
 
             <tr class="js-limits-empty-item table-form__row">
-                <td class="table-form__cell" colspan="4">{{ 'Přidejte limit'|trans }}</td>
+                <td class="table-form__cell" colspan="4">{{ 'Add limit'|trans }}</td>
             </tr>
             </tbody>
         </table>
@@ -47,7 +47,7 @@
             <div class="form-line__line form-line__line--no-space">
                 <a href="#" class="js-limits-item-add btn btn--plus">
                     <i class="btn__icon">+</i>
-                    {{ 'Přidat další limit'|trans }}
+                    {{ 'Add another limit'|trans }}
                 </a>
             </div>
         </div>

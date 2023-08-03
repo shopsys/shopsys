@@ -31,7 +31,7 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
 
         $builderArticleDataGroup->add('external', YesNoType::class, [
             'required' => true,
-            'label' => t('Otevírat v novém okně'),
+            'label' => t('Open in new window'),
             'position' => [
                 'after' => 'hidden',
             ],
@@ -40,12 +40,12 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
         $builderArticleDataGroup->add('type', ChoiceType::class, [
             'required' => true,
             'choices' => [
-                t('Stránka') => Article::TYPE_SITE,
-                t('Odkaz') => Article::TYPE_LINK,
+                t('Site') => Article::TYPE_SITE,
+                t('Link') => Article::TYPE_LINK,
             ],
             'expanded' => true,
             'multiple' => false,
-            'label' => t('Typ'),
+            'label' => t('Type'),
             'position' => [
                 'after' => 'external',
             ],
@@ -55,7 +55,7 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
             'required' => true,
             'constraints' => [
                 new Constraints\NotBlank([
-                    'message' => 'Vyplňte prosím URL',
+                    'message' => 'Please enter URL',
                     'groups' => [static::VALIDATION_GROUP_TYPE_LINK],
                 ]),
             ],
@@ -69,7 +69,7 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
             'allow_products' => true,
             'constraints' => [
                 new Constraints\NotBlank([
-                    'message' => 'Vyplňte prosím obsah článku',
+                    'message' => 'Please enter article content',
                     'groups' => [static::VALIDATION_GROUP_TYPE_SITE],
                 ]),
             ],

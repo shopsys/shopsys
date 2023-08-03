@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundExce
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository;
 use Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -121,8 +122,9 @@ class DomainDataCreator
      */
     protected function createDefaultPricingGroupForNewDomain(int $domainId)
     {
+        $domain = $this->domain->getDomainConfigById($domainId);
         $pricingGroupData = $this->pricingGroupDataFactory->create();
-        $pricingGroupData->name = 'Default';
+        $pricingGroupData->name = t('Default pricing group', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domain->getLocale());
 
         return $this->pricingGroupFacade->create($pricingGroupData, $domainId);
     }
@@ -142,8 +144,9 @@ class DomainDataCreator
      */
     protected function createDefaultVatForNewDomain(int $domainId): Vat
     {
+        $domain = $this->domain->getDomainConfigById($domainId);
         $vatData = $this->vatDataFactory->create();
-        $vatData->name = 'Default';
+        $vatData->name = t('Default VAT rate', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domain->getLocale());
         $vatData->percent = '0';
 
         return $this->vatFacade->create($vatData, $domainId);

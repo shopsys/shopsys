@@ -28,7 +28,7 @@ front_customer_activation:
     path: /registration-confirmation
 
 front_brand_list:
-    path: /brand-overview
+    path: /brands-overview
 
 front_personal_data:
     path: /personal-data-overview

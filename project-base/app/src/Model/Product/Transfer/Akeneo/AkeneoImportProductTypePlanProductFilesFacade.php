@@ -147,6 +147,6 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
      */
     public function getTransferName(): string
     {
-        return t('přenos souborů "Typový plán"');
+        return t('files transfer "Type plan"');
     }
 }

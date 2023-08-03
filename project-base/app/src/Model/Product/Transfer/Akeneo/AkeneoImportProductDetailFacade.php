@@ -75,7 +75,7 @@ class AkeneoImportProductDetailFacade extends AbstractAkeneoImportTransfer
      */
     public function getTransferName(): string
     {
-        return t('Přenos příslušenství produktu');
+        return t('Products accessories transfer');
     }
 
     /**

@@ -27,7 +27,7 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
 
     private function registerExtendedOrderStatusMailTemplates(): void
     {
-        $mailTemplate = new MailTemplateVariables(t('Změna stavu objednávky'));
+        $mailTemplate = new MailTemplateVariables(t('Order status changed'));
         $mailTemplate
             ->addVariable(OrderMail::VARIABLE_NUMBER, t('Order number'))
             ->addVariable(OrderMail::VARIABLE_DATE, t('Date and time of order creation'))
@@ -48,10 +48,10 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
 
     private function registerCustomerActivationMailTemplate(): void
     {
-        $mailTemplate = new MailTemplateVariables(t('Dokončení registrace'));
+        $mailTemplate = new MailTemplateVariables(t('Registration completion'));
         $mailTemplate
             ->addVariable(CustomerActivationMail::VARIABLE_EMAIL, t('Email'))
-            ->addVariable(CustomerActivationMail::VARIABLE_ACTIVATION_URL, t('Odkaz na dokončení registrace'), MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BODY);
+            ->addVariable(CustomerActivationMail::VARIABLE_ACTIVATION_URL, t('Link to complete the registration'), MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BODY);
         $this->addMailTemplateVariables(CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplate);
     }
 

@@ -188,7 +188,7 @@ class AdministratorController extends BaseAdministratorController
         $administrator = $this->getUser();
 
         if ($code !== $administrator->getEmailAuthCode()) {
-            $context->addViolation(t('Zadany kod neni spravny'));
+            $context->addViolation(t('Entered code is not valid'));
         }
     }
 
@@ -202,7 +202,7 @@ class AdministratorController extends BaseAdministratorController
         $administrator = $this->getUser();
 
         if (!$this->administratorTwoFactorFacade->isGoogleAuthenticatorCodeValid($administrator, $code)) {
-            $context->addViolation(t('Zadany kod neni spravny'));
+            $context->addViolation(t('Entered code is not valid'));
         }
     }
 

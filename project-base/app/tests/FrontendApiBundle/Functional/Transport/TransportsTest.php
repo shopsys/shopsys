@@ -193,7 +193,7 @@ class TransportsTest extends GraphQlTestCase
                     [
                         'name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                         'description' => t(
-                            'Vhodné pro všechny druhy zboží',
+                            'Suitable for all kinds of goods',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                             $this->getLocaleForFirstDomain(),

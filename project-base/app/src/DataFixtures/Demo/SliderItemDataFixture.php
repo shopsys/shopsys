@@ -57,7 +57,7 @@ class SliderItemDataFixture extends AbstractReferenceFixture
             $sliderItemData->domainId = $domainId;
             $sliderItemData->hidden = false;
             $sliderItemData->gtmId = 'sliderItemTest';
-            $sliderItemData->sliderExtendedText = t('Pravidla akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $sliderItemData->sliderExtendedText = t('Terms of promotion', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $sliderItemData->sliderExtendedTextLink = 'https://www.shopsys.cz';
 
             $sliderItemData->name = 'Shopsys';

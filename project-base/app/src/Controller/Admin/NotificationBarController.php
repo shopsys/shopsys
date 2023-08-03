@@ -47,11 +47,11 @@ class NotificationBarController extends AdminBaseController
 
         $grid->addColumn('visible', 'visibility', t('Visibility'), true)->setClassAttribute('table-col table-col-10');
         $grid->addColumn('text', 'nb.text', t('Text'));
-        $grid->addColumn('validityFrom', 'nb.validityFrom', t('Platnost od'), true);
-        $grid->addColumn('validityTo', 'nb.validityTo', t('Platnost do'), true);
+        $grid->addColumn('validityFrom', 'nb.validityFrom', t('Valid from'), true);
+        $grid->addColumn('validityTo', 'nb.validityTo', t('Valid to'), true);
         $grid->addEditActionColumn('admin_notificationbar_edit', ['id' => 'nb.id']);
         $grid->addDeleteActionColumn('admin_notificationbar_delete', ['id' => 'nb.id'])
-            ->setConfirmMessage(t('Opravdu chcete odstranit tuto notifikační lištu?'));
+            ->setConfirmMessage(t('Do you really want to remove this notification bar?'));
 
         $grid->setTheme('Admin/Content/NotificationBar/listGrid.html.twig');
 
@@ -79,7 +79,7 @@ class NotificationBarController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->notificationBarFacade->create($notificationBarData);
 
-            $this->addSuccessFlash(t('Notifikační lišta byla úspešne vytvořená'));
+            $this->addSuccessFlash(t('Notification bar has been successfuly created'));
 
             return $this->redirectToRoute('admin_notificationbar_list');
         }
@@ -114,7 +114,7 @@ class NotificationBarController extends AdminBaseController
             $notificationBar = $this->notificationBarFacade->edit($notificationBar, $notificationBarData);
 
             $this->addSuccessFlashTwig(
-                t('<strong><a href="{{ url }}">Notifikační lišta</a></strong> byla úspešne upravená'),
+                t('<strong><a href="{{ url }}">Notification bar</a></strong> has been successfuly updated'),
                 [
                     'url' => $this->generateUrl('admin_notificationbar_edit', ['id' => $notificationBar->getId()]),
                 ],
@@ -144,9 +144,9 @@ class NotificationBarController extends AdminBaseController
         try {
             $this->notificationBarFacade->delete($id);
 
-            $this->addSuccessFlash(t('Notifikační lišta byla úspešne smazaná'));
+            $this->addSuccessFlash(t('Notification bar has been successfuly deleted'));
         } catch (NotificationBarNotFoundException $exception) {
-            $this->addErrorFlash(t('Vybraná notifikační lišta neexistuje'));
+            $this->addErrorFlash(t('Selected notification bar does not exist'));
         }
 
         return $this->redirectToRoute('admin_notificationbar_list');

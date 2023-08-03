@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
 
 class UniqueProductCatnum extends Constraint
 {
-    public string $message = 'Produkt s tímto katalogovým číslem již existuje';
+    public string $message = 'Product with entered catalog number already exists';
 
     public ?Product $product = null;
 }

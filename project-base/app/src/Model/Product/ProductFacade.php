@@ -316,7 +316,7 @@ class ProductFacade extends BaseProductFacade
                 $product->getAssemblyInstructionCode($domainConfig->getId()),
             );
             $downloadFileUrls[] = [
-                'anchor_text' => t('Instalační manuál'),
+                'anchor_text' => t('Installation manual'),
                 'url' => $url,
             ];
         }
@@ -331,7 +331,7 @@ class ProductFacade extends BaseProductFacade
                 $product->getProductTypePlanCode($domainConfig->getId()),
             );
             $downloadFileUrls[] = [
-                'anchor_text' => t('Typový plán'),
+                'anchor_text' => t('Type plan'),
                 'url' => $url,
             ];
         }

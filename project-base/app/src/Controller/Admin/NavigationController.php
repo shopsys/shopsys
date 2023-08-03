@@ -71,7 +71,7 @@ class NavigationController extends AdminBaseController
 
             $this
                 ->addSuccessFlashTwig(
-                    t('Byla vytvořena položka navigace <strong><a href="{{ url }}">{{ name }}</a></strong>'),
+                    t('Navigation item <strong><a href="{{ url }}">{{ name }}</a></strong> has been created'),
                     [
                         'name' => $navigationItem->getName(),
                         'url' => $this->generateUrl('admin_navigation_edit', ['id' => $navigationItem->getId()]),
@@ -82,7 +82,7 @@ class NavigationController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorFlashTwig(t('Prosím zkontrolujte si správnost vyplnění všech údajů'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('Admin/Content/Navigation/Item/new.html.twig', [
@@ -113,7 +113,7 @@ class NavigationController extends AdminBaseController
 
             $this
                 ->addSuccessFlashTwig(
-                    t('Byla upravena položka navigace <strong><a href="{{ url }}">{{ name }}</a></strong>'),
+                    t('Navigation item <strong><a href="{{ url }}">{{ name }}</a></strong> has been modified'),
                     [
                         'name' => $navigationItem->getName(),
                         'url' => $this->generateUrl('admin_navigation_edit', ['id' => $navigationItem->getId()]),
@@ -124,7 +124,7 @@ class NavigationController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorFlashTwig(t('Prosím zkontrolujte si správnost vyplnění všech údajů'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('Admin/Content/Navigation/Item/edit.html.twig', [
@@ -148,13 +148,13 @@ class NavigationController extends AdminBaseController
             $this->navigationItemFacade->delete($navigationItem);
 
             $this->addSuccessFlashTwig(
-                t('Položka navigace <strong>{{ name }}</strong> byla smazána'),
+                t('Navigation item <strong>{{ name }}</strong> has been removed'),
                 [
                     'name' => $fullName,
                 ],
             );
         } catch (NavigationItemNotFoundException $ex) {
-            $this->addErrorFlash(t('Zvolená položka navigace neexistuje.'));
+            $this->addErrorFlash(t('Selected navigation item does not exist.'));
         }
 
         return $this->redirectToRoute('admin_navigation_list');
@@ -172,11 +172,11 @@ class NavigationController extends AdminBaseController
 
         $grid = $this->gridFactory->create('navigationItemsList', $dataSource);
 
-        $grid->addColumn('name', 'ni.name', t('Název'));
+        $grid->addColumn('name', 'ni.name', t('Name'));
 
         $grid->addEditActionColumn('admin_navigation_edit', ['id' => 'ni.id']);
         $grid->addDeleteActionColumn('admin_navigation_delete', ['id' => 'ni.id'])
-            ->setConfirmMessage('Opravdu si přejete položku navigace smazat?');
+            ->setConfirmMessage(t('Do you really want to remove this navigation item?'));
 
         $grid->enableDragAndDrop(NavigationItem::class);
 

@@ -14,9 +14,9 @@ import Translator from 'bazinga-translator';
         this.init = function () {
             $rows.addClass('display-none');
 
-            var unpackButtonHtml = '<span class="btn js-promo-code-group-unpack width-80 text-center" data-promo-code-prefix="' + prefix + '">' + Translator.trans('Rozbalit') + '</span>';
+            var unpackButtonHtml = '<span class="btn js-promo-code-group-unpack width-80 text-center" data-promo-code-prefix="' + prefix + '">' + Translator.trans('Expand') + '</span>';
             var $parentRow = $('<tr class="table-grid__row js-grid-row background-color-ddd">'
-                + '<td colspan="2" class="table-grid__cell">' + Translator.trans('Hromadné kupony s prefixem') + ' <b>' + prefix + '</b></td>'
+                + '<td colspan="2" class="table-grid__cell">' + Translator.trans('Bulk coupons with prefix') + ' <b>' + prefix + '</b></td>'
                 + '<td></td>'
                 + '<td class="table-grid__cell">' + unpackButtonHtml + '</td>'
                 + '</tr>'
@@ -33,8 +33,8 @@ import Translator from 'bazinga-translator';
 
             $('.js-promo-code-group-unpack[data-promo-code-prefix="' + prefix + '"]').click(function () {
                 $(this).text(function (i, text) {
-                    var pack = Translator.trans('Sbalit');
-                    var unpack = Translator.trans('Rozbalit');
+                    var pack = Translator.trans('Collapse');
+                    var unpack = Translator.trans('Expand');
                     return text === unpack ? pack : unpack;
                 });
                 $rows.toggleClass('display-none');

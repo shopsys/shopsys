@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\ImageSitemap;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFacade;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Tests\App\Test\ApplicationTestCase;
@@ -48,8 +50,10 @@ class ImageSitemapTest extends ApplicationTestCase
     private function getExpectedXmlRegex(DomainConfig $domainConfig): string
     {
         $urlPattern = preg_quote($domainConfig->getUrl(), '~');
+        $television = TransformString::stringToFriendlyUrlSlug(t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()));
+        $plasma = TransformString::stringToFriendlyUrlSlug(t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()));
 
-        return '~<url><loc>' . $urlPattern . '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova</loc><image\:image><image\:loc>' . $urlPattern . '/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_1\.jpg</image\:loc><image\:title><!\[CDATA\[22" Sencor SLE 22F46DM4 HELLO KITTY\]\]></image\:title></image\:image></url>~';
+        return '~<url><loc>' . $urlPattern . '/' . $television . '-22-sencor-sle-22f46dm4-hello-kitty-' . $plasma . '</loc><image\:image><image\:loc>' . $urlPattern . '/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_1\.jpg</image\:loc><image\:title><!\[CDATA\[22" Sencor SLE 22F46DM4 HELLO KITTY\]\]></image\:title></image\:image></url>~';
     }
 
     /**

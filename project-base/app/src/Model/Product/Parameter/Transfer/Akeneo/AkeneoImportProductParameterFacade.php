@@ -110,7 +110,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
      */
     public function getTransferIdentifier(): string
     {
-        return t('Přenos parametrů produkt');
+        return t('Products parameters transfer');
     }
 
     /**

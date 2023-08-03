@@ -19,7 +19,7 @@ class StoreProductFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('productExposed', YesNoType::class, [
-            'label' => t('Je vystaven'),
+            'label' => t('Is exhibited'),
         ]);
     }
 

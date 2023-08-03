@@ -24,7 +24,7 @@ class AdvancedSearchProductFilterTranslation extends AdvancedSearchFilterTransla
         $this->addFilterTranslation(ProductFlagFilter::NAME, t('Flag'));
         $this->addFilterTranslation(ProductNameFilter::NAME, t('Product name'));
         $this->addFilterTranslation(ProductPartnoFilter::NAME, t('PartNo (serial number)'));
-        $this->addFilterTranslation(ProductStockFilter::NAME, t('Stocks'));
+        $this->addFilterTranslation(ProductStockFilter::NAME, t('Warehouses'));
         $this->addFilterTranslation(ProductCalculatedSellingDeniedFilter::NAME, t('Excluded from sale'));
         $this->addFilterTranslation(ProductAvailabilityFilter::NAME, t('Availability'));
         $this->addFilterTranslation(ProductBrandFilter::NAME, t('Brand'));

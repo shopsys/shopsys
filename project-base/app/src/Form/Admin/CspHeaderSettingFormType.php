@@ -22,7 +22,7 @@ class CspHeaderSettingFormType extends AbstractType
             'label' => t('Content-Security-Policy header'),
         ]);
         $builder->add('save', SubmitType::class, [
-            'label' => t('Uložit'),
+            'label' => t('Save'),
         ]);
     }
 }

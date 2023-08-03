@@ -28,13 +28,13 @@ class ScriptDataFixture extends AbstractReferenceFixture
     public function load(ObjectManager $manager)
     {
         $scriptData = $this->scriptDataFactory->create();
-        $scriptData->name = 'Demo skript 1';
+        $scriptData->name = 'Demo script 1';
         $scriptData->code = '<!-- demo script -->';
         $scriptData->placement = Script::PLACEMENT_ALL_PAGES;
 
         $this->scriptFacade->create($scriptData);
 
-        $scriptData->name = 'Demo skript 2';
+        $scriptData->name = 'Demo script 2';
         $scriptData->code = '<!-- script to display on order sent page -->';
         $scriptData->placement = Script::PLACEMENT_ORDER_SENT_PAGE;
 

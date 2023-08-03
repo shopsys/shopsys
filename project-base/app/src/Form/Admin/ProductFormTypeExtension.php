@@ -56,7 +56,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                     new Constraints\Length(['max' => 255, 'maxMessage' => 'Product prefix name cannot be longer than {{ limit }} characters']),
                 ],
             ],
-            'label' => t('Název prefix'),
+            'label' => t('Name prefix'),
             'render_form_row' => false,
             'position' => ['before' => 'name'],
         ]);
@@ -68,7 +68,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                     new Constraints\Length(['max' => 255, 'maxMessage' => 'Product suffix name cannot be longer than {{ limit }} characters']),
                 ],
             ],
-            'label' => t('Název suffix'),
+            'label' => t('Name suffix'),
             'render_form_row' => false,
             'position' => ['after' => 'name'],
         ]);
@@ -157,25 +157,25 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             ->add('preorder', YesNoType::class, [
                 'required' => false,
                 'disabled' => $this->isProductMainVariant($product),
-                'label' => 'Povolit nákup do mínusu',
+                'label' => t('Allow overselling'),
             ])
             ->add('sellingDenied', YesNoType::class, [
                 'required' => false,
-                'label' => t('Vyřadit z prodeje v celém eshopu'),
+                'label' => t('Exclude from sale on whole eshop'),
                 'attr' => [
                     'icon' => true,
                     'iconTitle' => t('Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.'),
                 ],
             ])
             ->add('saleExclusion', MultidomainType::class, [
-                'label' => t('Vyřazení z prodeje dle domén'),
+                'label' => t('Exclude from sale on domains'),
                 'required' => false,
                 'entry_type' => YesNoType::class,
                 'position' => ['after' => 'sellingDenied'],
             ])
             ->add('vendorDeliveryDate', TextType::class, [
                 'required' => false,
-                'label' => 'Dodací lhůta dodavatele',
+                'label' => t('Supplier\'s delivery time'),
             ])
             ->add('usingStock', YesNoType::class, [
                 'data' => true,
@@ -184,7 +184,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'label' => t('Use stocks'),
             ])
             ->add('domainHidden', MultidomainType::class, [
-                'label' => t('Skrýt na doméně'),
+                'label' => t('Hide on domain'),
                 'required' => false,
                 'entry_type' => YesNoType::class,
                 'position' => ['after' => 'hidden'],
@@ -209,17 +209,17 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         }
 
         $groupBuilder = $builder->create('transferredFilesGroup', GroupType::class, [
-            'label' => t('Přenesené soubory'),
+            'label' => t('Transferred files'),
         ]);
 
         $groupBuilder->add('assemblyInstructionFileUrl', MultidomainType::class, [
-            'label' => t('Instalační manuál'),
+            'label' => t('Installation manual'),
             'required' => false,
             'entry_type' => UrlType::class,
         ]);
 
         $groupBuilder->add('productTypePlanFileUrl', MultidomainType::class, [
-            'label' => t('Typový plán'),
+            'label' => t('Type plan'),
             'required' => false,
             'entry_type' => UrlType::class,
         ]);
@@ -246,40 +246,40 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private function setShortDescriptionsUspGroup(FormBuilderInterface $builder): void
     {
         $builderShortDescriptionsUspGroup = $builder->create('shortDescriptionsUspGroups', GroupType::class, [
-            'label' => t('Krátký popis USP'),
+            'label' => t('Short description USP'),
         ]);
 
         $builderShortDescriptionsUspGroup
             ->add('shortDescriptionUsp1', MultidomainType::class, [
-                'label' => t('Krátký popis 1'),
+                'label' => t('Short description 1'),
                 'entry_type' => TextType::class,
                 'required' => false,
             ]);
 
         $builderShortDescriptionsUspGroup
             ->add('shortDescriptionUsp2', MultidomainType::class, [
-                'label' => t('Krátký popis 2'),
+                'label' => t('Short description 2'),
                 'entry_type' => TextType::class,
                 'required' => false,
             ]);
 
         $builderShortDescriptionsUspGroup
             ->add('shortDescriptionUsp3', MultidomainType::class, [
-                'label' => t('Krátký popis 3'),
+                'label' => t('Short description 3'),
                 'entry_type' => TextType::class,
                 'required' => false,
             ]);
 
         $builderShortDescriptionsUspGroup
             ->add('shortDescriptionUsp4', MultidomainType::class, [
-                'label' => t('Krátký popis 4'),
+                'label' => t('Short description 4'),
                 'entry_type' => TextType::class,
                 'required' => false,
             ]);
 
         $builderShortDescriptionsUspGroup
             ->add('shortDescriptionUsp5', MultidomainType::class, [
-                'label' => t('Krátký popis 5'),
+                'label' => t('Short description 5'),
                 'entry_type' => TextType::class,
                 'required' => false,
             ]);
@@ -307,7 +307,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private function setStocksGroup(FormBuilderInterface $builder): void
     {
         $stockGroupBuilder = $builder->create('stocksGroup', GroupType::class, [
-            'label' => t('Stocks'),
+            'label' => t('Warehouses'),
         ]);
 
         $stockGroupBuilder->add('stockProductData', CollectionType::class, [

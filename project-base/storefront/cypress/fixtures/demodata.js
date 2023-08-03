@@ -55,15 +55,14 @@ export const placeholder = {
 export const products = {
     helloKitty: {
         name: '22" Sencor SLE 22F46DM4 HELLO KITTY',
-        namePrefixSuffix: 'Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová',
+        namePrefixSuffix: 'Television 22" Sencor SLE 22F46DM4 HELLO KITTY plasma',
         catnum: '9177759',
-        urlPrefixSuffix: '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova',
+        urlPrefixSuffix: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
         priceWithVat: priceWithVatHelloKitty,
         priceWithoutVat: '€115.67',
     },
     philips32PFL4308: {
         name: 'Philips 32PFL4308',
-        namePrefixSuffix: 'Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová',
         catnum: '9176544M',
         url: '/philips-32pfl4308',
     },

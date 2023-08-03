@@ -49,7 +49,7 @@ class ParameterGridFactory extends BaseParameterGridFactory
         $grid->addColumn(
             'parameterType',
             'p.parameterType',
-            t('Typ'),
+            t('Type'),
         );
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
@@ -62,9 +62,9 @@ class ParameterGridFactory extends BaseParameterGridFactory
         foreach ($grid->getActionColumns() as $actionColumn) {
             if ($actionColumn->getType() === ActionColumn::TYPE_DELETE) {
                 $actionColumn->setConfirmMessage(t(
-                    'Opravdu chcete odstranit tento parametr?'
-                    . ' Smazáním parametru dojde k odstranění tohoto parametru u zboží a případné landing stránky'
-                    . ' rozšířeného SEO kategorií, kde je parametr přiřazen. Tento krok je nevratný!',
+                    'Do you really want to remove this parameter?'
+                    . ' Deleting the parameter will remove this parameter from the products and the possible landing page'
+                    . ' of the extended SEO category where the parameter is assigned. This step is irreversible!',
                 ));
             }
         }

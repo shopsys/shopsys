@@ -1,7 +1,7 @@
 {% extends '@!ShopsysFramework/Admin/Form/productParameterValue.html.twig' %}
 
 {% macro parameterRow(parameter, index) %}
-    {% set parameterGroupName = parameter.vars.data.parameter.group.name|default('Nezařazeno') %}
+    {% set parameterGroupName = parameter.vars.data.parameter.group.name|default('No group'|trans) %}
     {% set parameterGroupAkeneoCode = parameter.vars.data.parameter.group.akeneoCode|default(null) %}
     {% set parameterUnit = parameter.parameter.vars.data.unit ?? null %}
     <tr class="js-parameters-item js-form-group table-form__row" data-index="{{ index }}">
@@ -38,7 +38,7 @@
         <table class="table-form" id="product_form_parameters">
             <thead>
             <tr class="table-form__row">
-                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Skupiny'|trans }}</th>
+                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Groups'|trans }}</th>
                 <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Parameter'|trans }}</th>
                 <th class="table-form__cell table-form__cell--del"></th>
                 <th class="table-form__cell table-form__cell--del-after">{{ 'Value'|trans }}</th>

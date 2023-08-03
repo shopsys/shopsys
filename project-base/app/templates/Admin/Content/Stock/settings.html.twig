@@ -1,7 +1,7 @@
 {% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
-{% block title %}- {{ 'Nastavení skladů'|trans }}{% endblock %}
-{% block h1 %}{{ 'Nastavení skladů'|trans }}{% endblock %}
+{% block title %}- {{ 'Warehouse settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'Warehouse settings'|trans }}{% endblock %}
 
 {% block main_content %}
 
@@ -11,7 +11,7 @@
     <div class="wrap-divider">
         <div class="form-group">
             <div class="form-group__title">
-                {{ 'Nastavení skladů'|trans }}
+                {{ 'Warehouse settings'|trans }}
             </div>
             <div>
                 {{ form_row(form.delivery) }}
@@ -21,7 +21,7 @@
     </div>
     {% embed '@!ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
         {% block fixed_bar_content %}
-            {{ form_widget(form.save, { label: 'Uložit nastavení skladu'|trans}) }}
+            {{ form_widget(form.save, { label: 'Save warehouse settings'|trans}) }}
         {% endblock %}
     {% endembed %}
     {{ form_end(form) }}

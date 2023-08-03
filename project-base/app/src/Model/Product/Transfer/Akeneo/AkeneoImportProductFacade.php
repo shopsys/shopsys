@@ -142,6 +142,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      */
     public function getTransferName(): string
     {
-        return t('Přenos produktů');
+        return t('Products transfer');
     }
 }

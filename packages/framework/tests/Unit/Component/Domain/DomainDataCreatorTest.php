@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Domain;
 
 use DateTimeZone;
+use phpmock\MockBuilder;
+use phpmock\phpunit\PHPMock;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator;
@@ -23,6 +25,8 @@ use Tests\FrameworkBundle\Unit\TestCase;
 
 class DomainDataCreatorTest extends TestCase
 {
+    use PHPMock;
+
     public function testCreateNewDomainsDataNoNewDomain()
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
@@ -66,6 +70,15 @@ class DomainDataCreatorTest extends TestCase
     public function testCreateNewDomainsDataOneNewDomain()
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
+
+        $builder = new MockBuilder();
+        $builder->setNamespace('\\Shopsys\\FrameworkBundle\\Component\\Domain')->setName('t')->setFunction(
+            function () {
+                return 'Default VAT group';
+            },
+        );
+        $tFunctionMock = $builder->build();
+
         $domainConfigs = [
             new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone),
             new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone),
@@ -131,7 +144,10 @@ class DomainDataCreatorTest extends TestCase
             $vatDataFactoryMock,
             $vatFacadeMock,
         );
+
+        $tFunctionMock->enable();
         $newDomainsDataCreated = $domainDataCreator->createNewDomainsData();
+        $tFunctionMock->disable();
 
         $this->assertEquals(1, $newDomainsDataCreated);
     }

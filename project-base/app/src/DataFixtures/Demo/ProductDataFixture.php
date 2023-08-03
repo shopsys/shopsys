@@ -157,9 +157,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
-            $productData->namePrefix[$locale] = t('Televize', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->namePrefix[$locale] = t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->name[$locale] = t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $productData->nameSufix[$locale] = t('plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->nameSufix[$locale] = t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -168,11 +168,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->seoMetaDescriptions[$domain->getId()] = t('Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
             $i = 0;
-            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), UnitDataFixture::UNIT_INCH);
-            $this->addParameterTranslations($parameterTranslations, t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
-            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
-            $this->addParameterTranslations($parameterTranslations, t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
-            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), UnitDataFixture::UNIT_INCH);
+            $this->addParameterTranslations($parameterTranslations, t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
+            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
+            $this->addParameterTranslations($parameterTranslations, t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
+            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
         }
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
@@ -307,7 +307,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $i = 0;
-            $this->addParameterTranslations($parameterTranslations, t('Gaming mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Hlavní údaje myš', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
+            $this->addParameterTranslations($parameterTranslations, t('Gaming mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Main information mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
             $this->addParameterTranslations($parameterTranslations, t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
@@ -2300,8 +2300,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('36" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $productData->namePrefix[$locale] = t('Defaultní varianta - prefix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $productData->nameSufix[$locale] = t('Defaultní varianta - suffix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->namePrefix[$locale] = t('Default variant - prefix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->nameSufix[$locale] = t('Default variant - suffix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 

@@ -38,11 +38,11 @@ class CategorySeoFilterFormType extends AbstractType
         $builder
             ->add('useFlags', YesNoType::class, [
                 'required' => false,
-                'label' => t('Dle příznaků'),
+                'label' => t('By flag'),
                 'data' => false,
             ])
             ->add('parameters', ChoiceType::class, [
-                'label' => t('Parametry produktů vybrané kategorie'),
+                'label' => t('Products parameters of selected category'),
                 'choices' => $this->categorySeoFacade->getParametersUsedByProductsInCategoryWithoutSlider($category, $domainId),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
@@ -51,7 +51,7 @@ class CategorySeoFilterFormType extends AbstractType
                 'required' => false,
             ])
             ->add('save', SubmitType::class, [
-                'label' => t('Zobrazit kombinace'),
+                'label' => t('Show combinations'),
                 'attr' => [
                     'class' => 'margin-top-20',
                 ],

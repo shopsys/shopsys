@@ -74,7 +74,7 @@
         <td>
             {% if paymentTransaction.refundable %}
                 {{ form_widget(paymentTransactionForm.executeRefund, {attr: { class: 'js-execute-refund-' ~ paymentTransaction.id }}) }}
-                {{ form_widget(paymentTransactionForm.sendRefund, {label: "Odeslat refund a uložit celou změny objednávky"|trans,attr: { 'data-execute-class': 'js-execute-refund-' ~ paymentTransaction.id, class: 'js-send-refund' }}) }}
+                {{ form_widget(paymentTransactionForm.sendRefund, {label: "Send refund and save order"|trans,attr: { 'data-execute-class': 'js-execute-refund-' ~ paymentTransaction.id, class: 'js-send-refund' }}) }}
             {% else %}
                 {% do paymentTransactionForm.executeRefund.setRendered %}
                 {% do paymentTransactionForm.sendRefund.setRendered %}

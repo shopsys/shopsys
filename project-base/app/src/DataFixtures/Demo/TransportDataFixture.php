@@ -107,8 +107,8 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->description[$locale] = t('Vhodné pro všechny druhy zboží', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $transportData->instructions[$locale] = t('Očekávejte dodávku koncem příštího měsíce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->description[$locale] = t('Suitable for all kinds of goods', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->instructions[$locale] = t('Expect delivery by the end of next month', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $transportData->personalPickup = false;

@@ -39,7 +39,7 @@ class PromoCodeLimitType extends AbstractType
         $builder->add('fromPriceWithVat', IntegerType::class, [
             'constraints' => [
                 new Constraints\NotBlank([
-                    'message' => 'Prosím vložte limit od',
+                    'message' => 'Please enter limit from',
                 ]),
             ],
         ]);

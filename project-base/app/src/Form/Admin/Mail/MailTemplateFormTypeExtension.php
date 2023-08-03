@@ -66,7 +66,7 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
             $builder
                 ->add('orderStatus', ChoiceType::class, [
                     'required' => true,
-                    'label' => t('Stav objednávky'),
+                    'label' => t('Order status'),
                     'multiple' => false,
                     'expanded' => false,
                     'choices' => $this->orderStatusFacade->getAll(),

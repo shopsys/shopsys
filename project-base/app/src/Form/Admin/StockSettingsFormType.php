@@ -22,7 +22,7 @@ class StockSettingsFormType extends AbstractType
     {
         $builder
             ->add('delivery', TextType::class, [
-                'label' => t('Dní do naskladnění'),
+                'label' => t('Days until stocking'),
                 'constraints' => [
                     new Constraints\NotBlank(),
                     new Constraints\Regex(['pattern' => '/^\d+$/']),
@@ -30,7 +30,7 @@ class StockSettingsFormType extends AbstractType
                 ],
             ])
             ->add('transfer', TextType::class, [
-                'label' => t('Dny pro přesun mezi sklady'),
+                'label' => t('Days for transfer between warehouses'),
                 'constraints' => [
                     new Constraints\NotBlank(),
                     new Constraints\Regex(['pattern' => '/^\d+$/']),

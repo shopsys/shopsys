@@ -38,11 +38,11 @@ class PromoCodeMassGeneratedBatchGridFactory
 
         $grid = $this->gridFactory->create('promoCodeList', $dataSource);
         $grid->setDefaultOrder('batchId');
-        $grid->addColumn('code', 'batchId', t('Dávka ID'), true);
-        $grid->addColumn('prefix', 'pc.prefix', t('Prefix kuponu'), true);
+        $grid->addColumn('code', 'batchId', t('Batch ID'), true);
+        $grid->addColumn('prefix', 'pc.prefix', t('Promo code prefix'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
 
-        $grid->addActionColumn('download', t('Stáhnout soubor'), 'admin_promocode_downloadmassgeneratebatch', ['batchId' => 'batchId']);
+        $grid->addActionColumn('download', t('Download file'), 'admin_promocode_downloadmassgeneratebatch', ['batchId' => 'batchId']);
 
         return $grid;
     }

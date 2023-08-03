@@ -1,13 +1,13 @@
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 {% import _self as self %}
 
-{% block title %}- {{ 'Rubriky blogu'|trans }}{% endblock %}
-{% block h1 %}{{ 'Rubriky blogu'|trans }}{% endblock %}
+{% block title %}- {{ 'Blog categories'|trans }}{% endblock %}
+{% block h1 %}{{ 'Blog categories'|trans }}{% endblock %}
 {% block btn %}
     <div class="wrap-bar">
         <a href="{{ url('admin_blogcategory_new') }}" class="btn btn--plus wrap-bar__btn">
             <i class="btn__icon">+</i>
-            {{ 'Vytvořit novou rubriku blogu'|trans }}
+            {{ 'Create new blog category'|trans }}
         </a>
     </div>
 {% endblock %}
@@ -37,7 +37,7 @@
                                     href="{{ blogCategoryDeleteUrl }}"
                                     onclick="
                                             Shopsys.window({
-                                            content: '{{ 'Opravdu chcete smazat tuto rubriku blogu?'|trans|e('js') }}',
+                                            content: '{{ 'Do you really want to remove this blog category?'|trans|e('js') }}',
                                             buttonCancel: true,
                                             buttonContinue: true,
                                             textContinue: '{{ 'Yes'|trans|e('js') }}',
@@ -83,7 +83,7 @@
             </div>
         </div>
         <div>
-            {{ 'Na konkrétní záložce domény není možné upravovat pořadí a zanoření rubrik blogu. Prosím přejděte na detail kategorie nebo na přehled kategorií na všech doménách'|trans }}
+            {{ 'It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains'|trans }}
         </div>
     {% endif %}
 {% endblock %}

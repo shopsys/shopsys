@@ -34,11 +34,11 @@ services:
 
     App\Model\Transfer\Issue\TransferIssueLogCleanerCronModule:
         tags:
-            - { name: shopsys.cron, hours: '23', minutes: '10', instanceName: service, readableName: 'Mazání starých problémů v přenosech' }
+            - { name: shopsys.cron, hours: '23', minutes: '10', instanceName: service, readableName: 'Delete old transfer issues' }
 
     App\Component\FileUpload\DeleteOldUploadedFilesCronModule:
         tags:
-            - { name: shopsys.cron, hours: '2', minutes: '50', instanceName: service, readableName: 'Promazání pozůstalých uploadovaných souborů' }
+            - { name: shopsys.cron, hours: '2', minutes: '50', instanceName: service, readableName: 'Delete old temporary uploaded files' }
 
     Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
         tags:
@@ -46,11 +46,11 @@ services:
 
     App\Model\Product\Comparison\RemoveOldComparisonsCronModule:
         tags:
-            - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Delete old comparisons.' }
+            - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Delete old comparisons' }
 
     App\Model\Wishlist\RemoveOldWishlistsCronModule:
         tags:
-            - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Delete old wishlists.' }
+            - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Delete old wishlists' }
 
     # This module should run as last because it creates multiple kernels and fake requests.
     Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule:
@@ -111,25 +111,25 @@ services:
     Shopsys\FrameworkBundle\Model\Feed\HourlyFeedCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '10', instanceName: default, readableName: 'Generate hourly feeds' }
-    # Akeneno import products
+    # Akeneo import products
 
     App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '15', instanceName: importAkeneoProduct, readableName: 'Import stromu kategorií z Akeneo' }
+            - { name: shopsys.cron, hours: '*', minutes: '15', instanceName: importAkeneoProduct, readableName: 'Import category tree from Akeneo' }
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportProductCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importAkeneoProduct, readableName: 'Import produktů z Akeneo' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importAkeneoProduct, readableName: 'Import products from Akeneo' }
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportFlagCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '20', instanceName: importAkeneoProduct, readableName: 'Import číselníku příznaků z Akeneo' }
+            - { name: shopsys.cron, hours: '*', minutes: '20', instanceName: importAkeneoProduct, readableName: 'Import flags from Akeneo' }
 
-    # Akeneno import files
+    # Akeneo import files
 
     App\Model\Product\Transfer\Akeneo\AkeneoImportProductFilesCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importAkeneoFiles, readableName: 'Import souborů k produktům z Akeneo' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importAkeneoFiles, readableName: 'Import product files from Akeneo' }
 
     # GoPay
 
@@ -137,11 +137,11 @@ services:
         arguments:
             - '%gopay_config%'
         tags:
-            - { name: shopsys.cron, hours: '3', minutes: '50', instanceName: gopay, readableName: 'Import dostupných platebních metod z GoPay', readableFrequency: '1x za den' }
+            - { name: shopsys.cron, hours: '3', minutes: '50', instanceName: gopay, readableName: 'Import available payment methods from GoPay' }
 
     App\Model\GoPay\OrderGoPayStatusUpdateCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '15', instanceName: gopay, readableName: 'Import stavu plateb objednávek z GoPay', readableFrequency: '1x za hodinu' }
+            - { name: shopsys.cron, hours: '*', minutes: '15', instanceName: gopay, readableName: 'Import order payment status from GoPay' }
 
     # SSFWCC bridge import
 
@@ -153,4 +153,4 @@ services:
 
     App\Component\Packetery\PacketeryCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: packetery, readableName: 'Odeslání balíků do zásilkovny' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: packetery, readableName: 'Sending parcels to the packetery' }

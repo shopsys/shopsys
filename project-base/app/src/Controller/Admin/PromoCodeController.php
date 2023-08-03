@@ -82,10 +82,10 @@ class PromoCodeController extends BasePromoCodeController
             $this->promoCodeFacade->massCreate($promoCodeData);
 
             $this->addSuccessFlashTwig(
-                t('Bylo vytvořeno <strong>{{ quantity }}</strong> slevových kupónů'),
-                [
-                    'quantity' => $promoCodeData->quantity,
-                ],
+                t(
+                    '{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created',
+                    ['%count%' => $promoCodeData->quantity],
+                ),
             );
 
             /** @var \Symfony\Component\Form\SubmitButton $saveButton */

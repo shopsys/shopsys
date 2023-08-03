@@ -138,7 +138,7 @@ class CategoryFormType extends AbstractType
             ]);
 
         $builderSeoGroup = $builder->create('seo', GroupType::class, [
-            'label' => t('Seo'),
+            'label' => t('SEO'),
         ]);
 
         $builderSeoGroup

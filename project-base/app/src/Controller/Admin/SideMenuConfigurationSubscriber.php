@@ -54,7 +54,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $dashboardMenu->addChild('transferList', [
             'route' => 'admin_transfer_list',
             'display' => false,
-            'label' => t('Přehled problémů v přenosech'),
+            'label' => t('Transfer issues overview'),
         ]);
     }
 
@@ -80,26 +80,26 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 
         $promoCodeMenu = $customersMenu->addChild('promo_codes', [
             'route' => 'admin_promocode_list',
-            'label' => t('Slevové kupóny'),
+            'label' => t('Promo codes'),
         ]);
         $promoCodeMenu->addChild('admin_promocode_listmassgeneratebatch', [
             'route' => 'admin_promocode_listmassgeneratebatch',
             'display' => true,
-            'label' => t('Vygenerované dávky'),
+            'label' => t('Generated batches'),
         ]);
         $promoCodeMenu->addChild('promo_codes_new', [
             'route' => 'admin_promocode_new',
             'display' => false,
-            'label' => t('Nový slevový kupóny'),
+            'label' => t('New promo code'),
         ]);
         $promoCodeMenu->addChild('promo_codes_edit', [
             'route' => 'admin_promocode_edit',
             'display' => false,
-            'label' => t('Editace slevového kupónu'),
+            'label' => t('Editing promo code'),
         ]);
         $promoCodeMenu->addChild('promo_codes_newmassgenerate', [
             'route' => 'admin_promocode_newmassgenerate',
-            'label' => t('Hromadné vytvoření slevových kupónů'),
+            'label' => t('Bulk creation of promo codes'),
             'display' => false,
         ]);
     }
@@ -136,22 +136,22 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $homepageMenu->addChild('promoted_categories', ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
 
         $navigationMenu = $marketingMenu->addChild('navigation', ['route' => 'admin_navigation_list', 'label' => t('Navigation')]);
-        $navigationMenu->addChild('navigation_edit', ['route' => 'admin_navigation_edit', 'display' => false, 'label' => t('Editace položky')]);
-        $navigationMenu->addChild('navigation_new', ['route' => 'admin_navigation_new', 'display' => false, 'label' => t('Nová položka')]);
+        $navigationMenu->addChild('navigation_edit', ['route' => 'admin_navigation_edit', 'display' => false, 'label' => t('Editing item')]);
+        $navigationMenu->addChild('navigation_new', ['route' => 'admin_navigation_new', 'display' => false, 'label' => t('New item')]);
 
         $blogMenu = $marketingMenu->addChild('blog', ['label' => t('Blog')]);
 
-        $blogCategories = $blogMenu->addChild('blogCategories', ['route' => 'admin_blogcategory_list', 'label' => t('Rubriky blogu')]);
-        $blogCategories->addChild('newBlogCategories', ['route' => 'admin_blogcategory_new', 'display' => false, 'label' => t('Nová rubrika blogu')]);
+        $blogCategories = $blogMenu->addChild('blogCategories', ['route' => 'admin_blogcategory_list', 'label' => t('Blog categories')]);
+        $blogCategories->addChild('newBlogCategories', ['route' => 'admin_blogcategory_new', 'display' => false, 'label' => t('New blog category')]);
         $blogCategories->addChild('editBlogCategories', ['route' => 'admin_blogcategory_edit', 'display' => false]);
 
-        $blogArticles = $blogMenu->addChild('blogArticles', ['route' => 'admin_blogarticle_list', 'label' => t('Články blogu')]);
-        $blogArticles->addChild('newBlogArticles', ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('Nový článek blogu')]);
+        $blogArticles = $blogMenu->addChild('blogArticles', ['route' => 'admin_blogarticle_list', 'label' => t('Blog articles')]);
+        $blogArticles->addChild('newBlogArticles', ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('New blog article')]);
         $blogArticles->addChild('editBlogArticles', ['route' => 'admin_blogarticle_edit', 'display' => false]);
 
-        $notificationBar = $marketingMenu->addChild('notification_bar', ['route' => 'admin_notificationbar_list', 'label' => t('Notifikační lišta')]);
-        $notificationBar->addChild('notification_bar_new', ['route' => 'admin_notificationbar_new', 'label' => t('Nová notifikační lišta'), 'display' => false]);
-        $notificationBar->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editace notifikační lišty'), 'display' => false]);
+        $notificationBar = $marketingMenu->addChild('notification_bar', ['route' => 'admin_notificationbar_list', 'label' => t('Notification bar')]);
+        $notificationBar->addChild('notification_bar_new', ['route' => 'admin_notificationbar_new', 'label' => t('New notification bar'), 'display' => false]);
+        $notificationBar->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editing notification bar'), 'display' => false]);
 
         $marketingMenu->addChild('order_confirmation', ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
 
@@ -174,11 +174,11 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $settingsMenu->getChild('communication')->removeChild('order_confirmation');
 
         $seoMenu = $settingsMenu->getChild('seo');
-        $categorySeoMenu = $seoMenu->addChild('categorySeo', ['route' => 'admin_categoryseo_list', 'label' => t('Rozšířené SEO kategorií')]);
-        $categorySeoMenu->addChild('new_category', ['route' => 'admin_categoryseo_newcategory', 'label' => t('Rozšířené SEO kategorií - volba kategorie'), 'display' => false]);
-        $categorySeoMenu->addChild('new_filters', ['route' => 'admin_categoryseo_newfilters', 'label' => t('Rozšířené SEO kategorie - filtry'), 'display' => false]);
-        $categorySeoMenu->addChild('new_combinations', ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Rozšířené SEO kategorie - kombinace'), 'display' => false]);
-        $categorySeoMenu->addChild('new_combination', ['route' => 'admin_categoryseo_readycombination', 'label' => t('Rozšířené SEO kategorie - nastavení kombinace se SEO hodnotami'), 'display' => false]);
+        $categorySeoMenu = $seoMenu->addChild('categorySeo', ['route' => 'admin_categoryseo_list', 'label' => t('Extended SEO categories')]);
+        $categorySeoMenu->addChild('new_category', ['route' => 'admin_categoryseo_newcategory', 'label' => t('Extended SEO category - category selection'), 'display' => false]);
+        $categorySeoMenu->addChild('new_filters', ['route' => 'admin_categoryseo_newfilters', 'label' => t('Extended SEO category - filters'), 'display' => false]);
+        $categorySeoMenu->addChild('new_combinations', ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Extended SEO category - combinations'), 'display' => false]);
+        $categorySeoMenu->addChild('new_combination', ['route' => 'admin_categoryseo_readycombination', 'label' => t('Extended SEO category - set combinations with SEO values'), 'display' => false]);
         $seoMenu->addChild('unusedFriendlyUrlList', ['route' => 'admin_unused_friendly_url_list', 'label' => t('Unused friendly URL list')]);
 
         $seoPageMenu = $seoMenu->addChild('seoPageList', ['route' => 'admin_seopage_list', 'label' => t('SEO pages')]);
@@ -197,17 +197,17 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $storeMenu->addChild('new_store', ['route' => 'admin_store_new', 'display' => false, 'label' => t('New store')]);
         $storeMenu->addChild('edit_store', ['route' => 'admin_store_edit', 'display' => false, 'label' => t('Edit store')]);
 
-        $parameterValueMenu = $listMenu->addChild('parameter_values', ['route' => 'admin_parametervalue_list', 'label' => t('Hodnota parametru typu barva')]);
-        $parameterValueMenu->addChild('parameter_values_edit', ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editace hodnoty parametru typu barva')]);
+        $parameterValueMenu = $listMenu->addChild('parameter_values', ['route' => 'admin_parametervalue_list', 'label' => t('Pararameter value of type color')]);
+        $parameterValueMenu->addChild('parameter_values_edit', ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editing parameter value of type color')]);
 
         $transportTypeMenu = $listMenu->addChild('transport_type', ['route' => 'admin_transporttype_list', 'label' => t('Transport types')]);
         $transportTypeMenu->addChild('transport_type_edit', ['route' => 'admin_transporttype_edit', 'display' => false, 'label' => t('Edit transport type')]);
 
-        $stockMenu = $settingsMenu->addChild('stocks', ['label' => t('Skladovost')]);
-        $stockMenu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Sklady')]);
-        $stockMenu->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
-        $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
-        $stockMenu->addChild('stock_settings', ['route' => 'admin_stock_settings', 'label' => t('Nastavení skladů')]);
+        $stockMenu = $settingsMenu->addChild('stocks', ['label' => t('Stocking')]);
+        $stockMenu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Warehouses')]);
+        $stockMenu->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('New warehouse')]);
+        $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Warehouse detail')]);
+        $stockMenu->addChild('stock_settings', ['route' => 'admin_stock_settings', 'label' => t('Warehouse settings')]);
 
         $superadminSettingMenu = $settingsMenu->getChild('superadmin');
 

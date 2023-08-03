@@ -105,7 +105,7 @@ class BlogArticleController extends AdminBaseController
 
             $this
                 ->addSuccessFlashTwig(
-                    t('Článek blogu <strong><a href="{{ url }}">{{ name }}</a></strong> byl změněn'),
+                    t('Blog article <strong><a href="{{ url }}">{{ name }}</a></strong> has been updated'),
                     [
                         'name' => $blogArticle->getName(),
                         'url' => $this->generateUrl('admin_blogarticle_edit', ['id' => $blogArticle->getId()]),
@@ -116,10 +116,10 @@ class BlogArticleController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editace článku blogu - %name%', ['%name%' => $blogArticle->getName()]));
+        $this->breadcrumbOverrider->overrideLastItem(t('Editing blog article - %name%', ['%name%' => $blogArticle->getName()]));
 
         return $this->render('Admin/Content/Blog/Article/edit.html.twig', [
             'form' => $form->createView(),
@@ -146,7 +146,7 @@ class BlogArticleController extends AdminBaseController
 
             $this
                 ->addSuccessFlashTwig(
-                    t('Článek blogu <strong><a href="{{ url }}">{{ name }}</a></strong> byl vytvořen'),
+                    t('Blog article <strong><a href="{{ url }}">{{ name }}</a></strong> has been created'),
                     [
                         'name' => $blogArticle->getName(),
                         'url' => $this->generateUrl('admin_blogarticle_edit', ['id' => $blogArticle->getId()]),
@@ -157,7 +157,7 @@ class BlogArticleController extends AdminBaseController
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorFlashTwig(t('Prosím zkontrolujte si, zda jsou všechna data správně vyplněna.'));
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('Admin/Content/Blog/Article/new.html.twig', [
@@ -179,13 +179,13 @@ class BlogArticleController extends AdminBaseController
             $this->blogArticleFacade->delete($id);
 
             $this->addSuccessFlashTwig(
-                t('Článek blogu <strong>{{ name }}</strong> byl smazán'),
+                t('Blog article <strong>{{ name }}</strong> has been removed'),
                 [
                     'name' => $fullName,
                 ],
             );
         } catch (ArticleNotFoundException $ex) {
-            $this->addErrorFlash(t('Vybraný článek blogu neexistuje.'));
+            $this->addErrorFlash(t('Selected blog article does not exist.'));
         }
 
         return $this->redirectToRoute('admin_blogarticle_list');
@@ -198,7 +198,7 @@ class BlogArticleController extends AdminBaseController
      */
     public function deleteConfirmAction(int $id): Response
     {
-        $message = t('Opravdu chcete smazat tento článek blogu?');
+        $message = t('Do you really want to remove this blog article?');
 
         return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_blogarticle_delete', $id);
     }

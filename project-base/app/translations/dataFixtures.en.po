@@ -445,6 +445,9 @@ msgstr ""
 msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
 msgstr ""
 
+msgid "About us"
+msgstr ""
+
 msgid "Action"
 msgstr ""
 
@@ -634,10 +637,22 @@ msgstr ""
 msgid "Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers."
 msgstr ""
 
+msgid "Complaint"
+msgstr ""
+
+msgid "Connection method"
+msgstr ""
+
 msgid "Connectors"
 msgstr ""
 
 msgid "Construction"
+msgstr ""
+
+msgid "Contacts"
+msgstr ""
+
+msgid "Cooperation"
 msgstr ""
 
 msgid "Coupon valued to 100 Czech crowns."
@@ -706,16 +721,19 @@ msgstr ""
 msgid "Dear customer,<br /><br />Your order has been placed successfully.<br /><br />You will be contacted when the order state changes.<br />Order number: {number} <br />Date and time of creation: {date} <br />E-shop link: {url} <br />Order detail link: {order_detail_url} <br />Shipping: {transport} <br />Payment: {payment} <br />Total price including VAT: {total_price} <br />Billing address:<br /> {billing_address} <br />Delivery address: {delivery_address} <br />Note: {note} <br />Products: {products} <br />{transport_instructions} <br />{payment_instructions}"
 msgstr ""
 
+msgid "Dear customer,<br /><br />you can finish registration and set new password via this link: <a href=\"{activation_url}\">{activation_url}</a>"
+msgstr ""
+
 msgid "Dear customer.<br /><br />You can set a new password following this link: <a href=\"{new_password_url}\">{new_password_url}</a>"
 msgstr ""
 
 msgid "Deep baking sheet ETV-2560/2860/2960 / 3160bc"
 msgstr ""
 
-msgid "Defaultní varianta - prefix"
+msgid "Default variant - prefix"
 msgstr ""
 
-msgid "Defaultní varianta - suffix"
+msgid "Default variant - suffix"
 msgstr ""
 
 msgid "Defender 2.0 SPK-480"
@@ -728,6 +746,9 @@ msgid "Demo advert"
 msgstr ""
 
 msgid "Demo category advert"
+msgstr ""
+
+msgid "Department stores services"
 msgstr ""
 
 msgid "Determination"
@@ -787,9 +808,6 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-msgid "Doprava a platba"
-msgstr ""
-
 msgid "Drone delivery"
 msgstr ""
 
@@ -844,6 +862,9 @@ msgstr ""
 msgid "Ergonomics"
 msgstr ""
 
+msgid "Expect delivery by the end of next month"
+msgstr ""
+
 msgid "Extension rod plastic TM-4610"
 msgstr ""
 
@@ -881,6 +902,12 @@ msgid "Food"
 msgstr ""
 
 msgid "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth."
+msgstr ""
+
+msgid "For press"
+msgstr ""
+
+msgid "Frequently Asked Questions FAQ"
 msgstr ""
 
 msgid "Full HD Electronics with LED technology and USB"
@@ -923,6 +950,9 @@ msgid "GoPay - Payment By Card"
 msgstr ""
 
 msgid "GoPay - Quick Bank Account Transfer"
+msgstr ""
+
+msgid "Goods care"
 msgstr ""
 
 msgid "GrapesJS page"
@@ -985,12 +1015,6 @@ msgstr ""
 msgid "High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."
 msgstr ""
 
-msgid "Hlavní údaje"
-msgstr ""
-
-msgid "Hlavní údaje myš"
-msgstr ""
-
 msgid "Home Listening"
 msgstr ""
 
@@ -1012,6 +1036,9 @@ msgstr ""
 msgid "Information about cookies"
 msgstr ""
 
+msgid "Installment plan"
+msgstr ""
+
 msgid "Interface"
 msgstr ""
 
@@ -1021,16 +1048,13 @@ msgstr ""
 msgid "JURA Impressa J9 TFT Carbon"
 msgstr ""
 
+msgid "Job at Shopsys"
+msgstr ""
+
 msgid "Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD"
 msgstr ""
 
-msgid "Kde nás najdete"
-msgstr ""
-
 msgid "Knife potato RM-3240/3250"
-msgstr ""
-
-msgid "Kontakty"
 msgstr ""
 
 msgid "LCD"
@@ -1088,6 +1112,12 @@ msgid "Main blog page - %locale% - Title"
 msgstr ""
 
 msgid "Main blog page - %locale% - meta description"
+msgstr ""
+
+msgid "Main information"
+msgstr ""
+
+msgid "Main information mouse"
 msgstr ""
 
 msgid "Material"
@@ -1177,9 +1207,6 @@ msgstr ""
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
 msgstr ""
 
-msgid "Nejčastější dotazy FAQ"
-msgstr ""
-
 msgid "New [adjective]"
 msgstr "New"
 
@@ -1228,12 +1255,6 @@ msgstr ""
 msgid "Number of processor cores"
 msgstr ""
 
-msgid "Nákup na splátky"
-msgstr ""
-
-msgid "O nás"
-msgstr ""
-
 msgid "OKI MC861cdxm"
 msgstr ""
 
@@ -1262,15 +1283,6 @@ msgid "OPP-2060 Hood sub-mounting 60 cm"
 msgstr ""
 
 msgid "OPV-3260 Built-in retractable hood is 60 cm"
-msgstr ""
-
-msgid "Obchodní podmínky OD"
-msgstr ""
-
-msgid "Obchodní podmínky e-shopu"
-msgstr ""
-
-msgid "Odstoupení od smlouvy"
 msgstr ""
 
 msgid "On request"
@@ -1307,9 +1319,6 @@ msgid "Out of stock"
 msgstr ""
 
 msgid "Overall performance"
-msgstr ""
-
-msgid "Očekávejte dodávku koncem příštího měsíce"
 msgstr ""
 
 msgid "PANASONIC DMC FT5EP"
@@ -1381,9 +1390,6 @@ msgstr ""
 msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers.Using an optical sensor with high sensitivity is move the cursor on the screen fast and smooth.Benefits are also programmable buttons to help with easy access to the programs and documents you use most often.The computer mouse simply connect using a cable with a USB connector and the support Plug and Play, no need to install drivers and you can immediately get to work."
 msgstr ""
 
-msgid "Pravidla akce"
-msgstr ""
-
 msgid "PremiumCord micro USB, A-B, 1m"
 msgstr ""
 
@@ -1411,16 +1417,7 @@ msgstr ""
 msgid "Privacy policy"
 msgstr ""
 
-msgid "Pro média"
-msgstr ""
-
 msgid "Processor frequency (GHz)"
-msgstr ""
-
-msgid "Práce v Shopsys"
-msgstr ""
-
-msgid "Péče o nábytek"
 msgstr ""
 
 msgid "Quality digital camera with CMOS sensor with a resolution of 18 megapixels"
@@ -1447,6 +1444,9 @@ msgstr ""
 msgid "Red and green paper glasses for watching"
 msgstr ""
 
+msgid "Reduced rate"
+msgstr ""
+
 msgid "Reducing the diameter of 35 mm to 32 mm"
 msgstr ""
 
@@ -1459,7 +1459,7 @@ msgstr ""
 msgid "Registration completed"
 msgstr ""
 
-msgid "Reklamace"
+msgid "Registration completion"
 msgstr ""
 
 msgid "Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc"
@@ -1519,6 +1519,9 @@ msgstr ""
 msgid "Screen size"
 msgstr ""
 
+msgid "Second reduced rate"
+msgstr ""
+
 msgid "Second subsection %locale%"
 msgstr ""
 
@@ -1570,9 +1573,6 @@ msgstr ""
 msgid "Slovakia"
 msgstr ""
 
-msgid "Služby obchodních domů"
-msgstr ""
-
 msgid "Snack"
 msgstr ""
 
@@ -1609,7 +1609,7 @@ msgstr ""
 msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB, 4Ohm impedance, power supply via USB, 3.5 mm audio jack, dimensions 85x85x107mm, weight 550 g"
 msgstr ""
 
-msgid "Spolupráce"
+msgid "Standard rate"
 msgstr ""
 
 msgid "Store in Ostrava Přívoz"
@@ -1619,6 +1619,9 @@ msgid "Store in Žilina"
 msgstr ""
 
 msgid "Store v Pardubice"
+msgstr ""
+
+msgid "Suitable for all kinds of goods"
 msgstr ""
 
 msgid "Super LCD"
@@ -1687,6 +1690,9 @@ msgstr ""
 msgid "Telescopic pipe VP918x VP802x"
 msgstr ""
 
+msgid "Television"
+msgstr ""
+
 msgid "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback"
 msgstr ""
 
@@ -1726,7 +1732,13 @@ msgstr ""
 msgid "Television or TV is a telecommunication medium used for transmitting sound with moving images in monochrome (black-and-white), or in color, and in two or three dimensions"
 msgstr ""
 
-msgid "Televize"
+msgid "Terms and conditions of department stores"
+msgstr ""
+
+msgid "Terms and conditions of eshop"
+msgstr ""
+
+msgid "Terms of promotion"
 msgstr ""
 
 msgid "Thank you for your order no. {number} placed at {date}"
@@ -1798,6 +1810,9 @@ msgstr ""
 msgid "Toys"
 msgstr ""
 
+msgid "Transport and payment"
+msgstr ""
+
 msgid "Tube type: Universal. Diameter: 32mm."
 msgstr ""
 
@@ -1820,9 +1835,6 @@ msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
 msgstr ""
 
 msgid "VIP"
-msgstr ""
-
-msgid "Vhodné pro všechny druhy zboží"
 msgstr ""
 
 msgid "Video"
@@ -1858,6 +1870,9 @@ msgstr ""
 msgid "Well known USB cable with A and micro B connectors."
 msgstr ""
 
+msgid "Where to find us"
+msgstr ""
+
 msgid "WiFi"
 msgstr ""
 
@@ -1868,6 +1883,9 @@ msgid "Windows 2000/XP/Vista/7"
 msgstr ""
 
 msgid "Wired"
+msgstr ""
+
+msgid "Withdrawal from contract"
 msgstr ""
 
 msgid "Xtreamer SW4"
@@ -1900,7 +1918,7 @@ msgstr ""
 msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
 msgstr ""
 
-msgid "Způsob připojení"
+msgid "Zero rate"
 msgstr ""
 
 msgid "battery"
@@ -2044,10 +2062,10 @@ msgstr ""
 msgid "perex"
 msgstr ""
 
-msgid "plastic"
+msgid "plasma"
 msgstr ""
 
-msgid "plazmová"
+msgid "plastic"
 msgstr ""
 
 msgid "red"

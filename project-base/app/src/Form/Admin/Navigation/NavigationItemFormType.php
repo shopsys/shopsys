@@ -61,17 +61,17 @@ class NavigationItemFormType extends AbstractType
                 'label' => t('Domain'),
             ])
             ->add('name', TextType::class, [
-                'label' => t('Název'),
+                'label' => t('Name'),
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Vyplňte prosím název článku']),
+                    new Constraints\NotBlank(['message' => 'Please enter article name']),
                 ],
             ])
             ->add('url', TextType::class, [
-                'label' => t('URL odkazu'),
+                'label' => t('Link URL'),
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Vyplňte prosím URL odkazu']),
+                    new Constraints\NotBlank(['message' => 'Please enter link URL']),
                 ],
             ]);
         $this->addColumnFields($builder);

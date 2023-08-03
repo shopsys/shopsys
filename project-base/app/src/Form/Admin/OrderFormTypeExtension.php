@@ -34,7 +34,7 @@ class OrderFormTypeExtension extends AbstractTypeExtension
 
         $builderBasicInformationGroup
             ->add('payment', DisplayOnlyType::class, [
-                'label' => t('Typ platby'),
+                'label' => t('Payment type'),
                 'data' => $order->getPayment()->getName(),
             ]);
 
@@ -49,14 +49,14 @@ class OrderFormTypeExtension extends AbstractTypeExtension
 
             $builderBasicInformationGroup
                 ->add('gopayStatus', DisplayOnlyType::class, [
-                    'label' => t('Stav platby GoPay'),
+                    'label' => t('GoPay payment status'),
                     'data' => $translatedGoPayStatus,
                 ]);
         }
 
         $builderBasicInformationGroup
             ->add('transport', DisplayOnlyType::class, [
-                'label' => t('Typ dopravy'),
+                'label' => t('Transport type'),
                 'data' => $order->getTransport()->getName(),
             ])
             ->add('trackingNumber', TextType::class, [
