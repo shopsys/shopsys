@@ -18,7 +18,6 @@ export const useWishlist = () => {
     const { isUserLoggedIn } = useCurrentUserData();
 
     const updateWishlistUuid = usePersistStore((s) => s.updateWishlistUuid);
-    const clearWishlistUuid = usePersistStore((s) => s.clearWishlistUuid);
     const wishlistUuid = usePersistStore((s) => s.wishlistUuid);
 
     const [, addProductToWishlist] = useAddProductToWishlistMutationApi();
@@ -26,8 +25,12 @@ export const useWishlist = () => {
     const [, cleanWishlist] = useCleanWishlistMutationApi();
     const [{ data, fetching }] = useWishlistQueryApi({
         variables: { wishlistUuid },
-        pause: !wishlistUuid,
+        pause: !wishlistUuid && !isUserLoggedIn,
     });
+
+    useEffect(() => {
+        updateWishlistUuid(data?.wishlist?.uuid ?? null);
+    }, [data?.wishlist?.uuid]);
 
     const handleCleanWishlist = async () => {
         const cleanWishlistResult = await cleanWishlist({ wishlistUuid });
@@ -36,25 +39,21 @@ export const useWishlist = () => {
             showErrorMessage(t('Unable to clean wishlist.'));
         } else {
             showSuccessMessage(t('Wishlist was cleaned.'));
-            clearWishlistUuid();
+            updateWishlistUuid(null);
         }
     };
 
     const handleAddToWishlist = async (productUuid: string) => {
         const addProductToWishlistResult = await addProductToWishlist({
             productUuid,
-            wishlistUuid,
+            wishlistUuid: isUserLoggedIn ? null : wishlistUuid,
         });
 
         if (addProductToWishlistResult.error) {
             showErrorMessage(t('Unable to add product to wishlist.'));
         } else {
             showSuccessMessage(t('The item has been added to your wishlist.'));
-            if (isUserLoggedIn) {
-                clearWishlistUuid();
-            } else {
-                updateWishlistUuid(addProductToWishlistResult.data?.addProductToWishlist.uuid ?? '');
-            }
+            updateWishlistUuid(addProductToWishlistResult.data?.addProductToWishlist.uuid ?? null);
         }
     };
 
@@ -65,7 +64,7 @@ export const useWishlist = () => {
             showErrorMessage(t('Unable to remove product from wishlist.'));
         } else {
             if (!removeProductFromWishlistResult.data?.removeProductFromWishlist) {
-                clearWishlistUuid();
+                updateWishlistUuid(null);
             }
             showSuccessMessage(t('The item has been removed from your wishlist.'));
         }
@@ -86,7 +85,6 @@ export const useWishlist = () => {
         if (!isUserLoggedIn && data?.wishlist && wishlistUuid !== data.wishlist.uuid) {
             updateWishlistUuid(data.wishlist.uuid);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data?.wishlist?.uuid]);
 
     return {

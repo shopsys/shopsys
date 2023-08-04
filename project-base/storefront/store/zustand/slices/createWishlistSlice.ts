@@ -3,8 +3,7 @@ import { StateCreator } from 'zustand';
 export type WishlistSlice = {
     wishlistUuid: string | null;
 
-    updateWishlistUuid: (value: string) => void;
-    clearWishlistUuid: () => void;
+    updateWishlistUuid: (value: string | null) => void;
 };
 
 export const createWishlistSlice: StateCreator<WishlistSlice> = (set) => ({
@@ -12,8 +11,5 @@ export const createWishlistSlice: StateCreator<WishlistSlice> = (set) => ({
 
     updateWishlistUuid: (wishlistUuid) => {
         set({ wishlistUuid });
-    },
-    clearWishlistUuid: () => {
-        set({ wishlistUuid: null });
     },
 });
