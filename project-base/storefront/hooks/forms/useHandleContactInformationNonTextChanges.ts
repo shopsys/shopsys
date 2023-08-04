@@ -28,21 +28,21 @@ export const useHandleContactInformationNonTextChanges = (
 
     useEffect(() => {
         updateContactInformation({ customer: customerValue });
-    }, [customerValue, updateContactInformation]);
+    }, [customerValue]);
 
     useEffect(() => {
         updateContactInformation({ country: countryValue });
-    }, [countryValue, updateContactInformation]);
+    }, [countryValue]);
 
     useEffect(() => {
         updateContactInformation({ differentDeliveryAddress: differentDeliveryAddressValue });
-    }, [differentDeliveryAddressValue, updateContactInformation]);
+    }, [differentDeliveryAddressValue]);
 
     useEffect(() => {
         updateContactInformation({ deliveryCountry: deliveryCountryValue });
-    }, [deliveryCountryValue, updateContactInformation]);
+    }, [deliveryCountryValue]);
 
     useEffect(() => {
         updateContactInformation({ newsletterSubscription: newsletterSubscriptionValue });
-    }, [updateContactInformation, newsletterSubscriptionValue]);
+    }, [newsletterSubscriptionValue]);
 };
