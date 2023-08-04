@@ -3,7 +3,6 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductCompareButtonProps = {
-    isMainVariant: boolean;
     isWithText?: boolean;
     isProductInComparison: boolean;
     toggleProductInComparison: () => void;
@@ -13,16 +12,11 @@ const TEST_IDENTIFIER = 'compare-button';
 
 export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     className,
-    isMainVariant,
     isWithText,
     isProductInComparison,
     toggleProductInComparison,
 }) => {
     const t = useTypedTranslationFunction();
-
-    if (isMainVariant) {
-        return null;
-    }
 
     return (
         <div className={twMergeCustom('flex items-center', className)}>
