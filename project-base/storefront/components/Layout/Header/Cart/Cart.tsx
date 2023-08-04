@@ -99,11 +99,7 @@ export const Cart: FC = ({ className }) => {
                 ) : (
                     <div className="relative flex h-20 items-center justify-between px-5">
                         <span className="text-dark">{t('Your cart is currently empty.')}</span>
-                        <img
-                            className="h-20 overflow-hidden"
-                            src="/images/empty-cart-small.png"
-                            alt="empty cart icon"
-                        />
+                        <Icon iconType="icon" icon="EmptyCart" className={twJoin('w-20 rotate-6 text-orange')} />
                     </div>
                 )}
             </div>

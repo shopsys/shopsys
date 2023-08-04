@@ -18,7 +18,6 @@ import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { onGtmSendFormEventHandler } from 'helpers/gtm/eventHandlers';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import Image from 'next/image';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { usePersistStore } from 'store/zustand/usePersistStore';
@@ -78,21 +77,12 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}>
                         <div className="mb-10">
-                            <div className="relative my-6 -mr-4 w-full rounded-xl bg-blueLight p-4 lg:m-0">
+                            <div className="mb-6 -mr-4 flex w-full items-center justify-between rounded-l-xl bg-blueLight p-4">
                                 <div className="block text-lg text-primary md:pr-32 lg:text-xl">
                                     <div className="block text-xl font-semibold">
                                         {t("Don't have an account yet? Register.")}
                                     </div>
                                     {t('You will shop with us as')}:
-                                </div>
-                                <div className="absolute right-5 bottom-0 hidden h-28 overflow-hidden md:right-10 md:block">
-                                    <Image
-                                        src="/images/qmark.png"
-                                        height={120}
-                                        width={75}
-                                        alt={t("Don't have an account yet? Register.")}
-                                        className="max-w-none"
-                                    />
                                 </div>
                             </div>
                         </div>
