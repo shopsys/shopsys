@@ -23,7 +23,7 @@ export const SeznamMapLayer: FC<SeznamMapLayerProps> = ({ children, map, activeM
         return () => {
             map.removeLayer(layer);
         };
-    }, [activeMarkerHandler, map]);
+    }, [map]);
 
     return <>{children}</>;
 };
