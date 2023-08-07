@@ -97,12 +97,10 @@ export const ProductItem: FC<ProductItemProps> = ({
             </ExtendedNextLink>
             <div className="mb-2 flex justify-end gap-2">
                 <ProductCompareButton
-                    isMainVariant={product.isMainVariant}
                     isProductInComparison={isProductInComparison}
                     toggleProductInComparison={toggleProductInComparison}
                 />
                 <ProductWishlistButton
-                    isMainVariant={product.isMainVariant}
                     toggleProductInWishlist={toggleProductInWishlist}
                     isProductInWishlist={isProductInWishlist}
                 />

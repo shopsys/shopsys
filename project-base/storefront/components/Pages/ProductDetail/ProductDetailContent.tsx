@@ -72,13 +72,11 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                         <ProductDetailAvailability scrollTarget={scrollTarget} product={product} />
                         <div className="mt-3 flex flex-col gap-4 vl:flex-row">
                             <ProductCompareButton
-                                isMainVariant={product.isMainVariant}
                                 isWithText
                                 isProductInComparison={isProductInComparison(product.uuid)}
                                 toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
                             />
                             <ProductWishlistButton
-                                isMainVariant={product.isMainVariant}
                                 isWithText
                                 isProductInWishlist={isProductInWishlist(product.uuid)}
                                 toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}

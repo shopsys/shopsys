@@ -7,7 +7,6 @@ import { twMergeCustom } from 'utils/twMerge';
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'className'>;
 
 type ProductCompareButtonProps = {
-    isMainVariant: boolean;
     isWithText?: boolean;
     isProductInWishlist: boolean;
     toggleProductInWishlist: () => void;
@@ -17,16 +16,11 @@ const TEST_IDENTIFIER = 'wishlist-button';
 
 export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> = ({
     className,
-    isMainVariant,
     isWithText,
     isProductInWishlist,
     toggleProductInWishlist,
 }) => {
     const t = useTypedTranslationFunction();
-
-    if (isMainVariant) {
-        return null;
-    }
 
     return (
         <div className={twMergeCustom('flex items-center', className)}>
