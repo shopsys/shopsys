@@ -15,7 +15,6 @@ import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Translate } from 'next-translate';
-import Image from 'next/image';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/zustand/usePersistStore';
@@ -62,7 +61,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
 
     return (
         <div
-            className="flex w-full max-w-xs flex-col items-center sm:max-w-md md:max-w-2xl lg:max-w-3xl lg:flex-row"
+            className="flex w-full max-w-xs flex-col sm:max-w-md md:max-w-2xl lg:max-w-3xl lg:flex-row"
             data-testid={TEST_IDENTIFIER}
         >
             <div className="w-full border-b border-primary lg:w-1/2 lg:border-b-0 lg:border-r lg:pr-5">
@@ -96,15 +95,9 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                                 </Button>
                             </div>
                             <div className="flex items-center gap-1 whitespace-nowrap rounded-xl border-primary py-2 px-2 text-sm text-primary lg:mt-5 lg:border-2 lg:px-3 lg:py-3">
-                                <Icon iconType="icon" icon="Warning" className="hidden h-5 w-9 text-red sm:block" />
-                                <div className="hidden flex-grow lg:block">{t('Lost your password?')}</div>
+                                <Icon iconType="icon" icon="Warning" className=" h-5 w-9 text-red" />
                                 <ExtendedNextLink href={resetPasswordUrl} type="static">
-                                    <div className="hidden cursor-pointer text-primary underline hover:no-underline lg:block">
-                                        {t('Renew it')}
-                                    </div>
-                                </ExtendedNextLink>
-                                <ExtendedNextLink href={resetPasswordUrl} type="static">
-                                    <div className="block text-sm text-primary underline hover:no-underline lg:hidden">
+                                    <div className="block text-sm text-primary underline hover:no-underline">
                                         {t('Lost your password?')}
                                     </div>
                                 </ExtendedNextLink>
@@ -114,19 +107,8 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                 </FormProvider>
             </div>
             <div className="mt-7 w-full lg:mt-0 lg:w-1/2 lg:pl-5">
-                <div className="relative mb-6 -mr-4 w-full rounded-l-xl bg-blueLight p-4">
-                    <div className="block w-44 text-lg text-primary lg:w-72 lg:pr-24 lg:text-xl">
-                        {t("Don't have an account yet? Register.")}
-                    </div>
-                    <div className="absolute right-0 bottom-0 h-24 overflow-hidden md:right-3 lg:h-28">
-                        <Image
-                            src="/images/qmark.png"
-                            height={120}
-                            width={75}
-                            alt={t("Don't have an account yet? Register.")}
-                            className="!max-w-none"
-                        />
-                    </div>
+                <div className="mb-6 -mr-4 flex w-full justify-between rounded-l-xl bg-blueLight p-4">
+                    <p className="text-lg text-primary lg:text-xl">{t("Don't have an account yet? Register.")}</p>
                 </div>
                 <p className="mb-8 hidden lg:block">
                     {t('Your addresses prefilled and you can check your order history.')}

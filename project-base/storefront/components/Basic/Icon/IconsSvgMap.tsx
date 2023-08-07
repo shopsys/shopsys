@@ -32,6 +32,7 @@ export const IconsSvgMap = {
     Play: <Icons.Play />,
     Heart: <Icons.Heart />,
     HeartFull: <Icons.HeartFull />,
+    EmptyCart: <Icons.EmptyCart />,
 };
 
 export type IconName = keyof typeof IconsSvgMap;
