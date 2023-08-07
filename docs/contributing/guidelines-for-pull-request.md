@@ -35,7 +35,7 @@ git rebase origin/master
     In this step you were using multiple Phing targets.  
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
-* Please make sure you sign form to agree with the [license agreement](https://www.shopsys-framework.com/license-agreement).
+* Please make sure you sign form to agree with the [license agreement](https://www.shopsys.com/license-agreement/).
 * [Create a PR](https://github.com/shopsys/shopsys/compare?expand=1) with essential information to make our code review easier.
     * you do not have to update `CHANGELOG.md` at all as it is generated automatically using [github-changelog-generator/github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator) during our release process.
 * Now just wait for review of your change.
