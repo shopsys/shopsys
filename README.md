@@ -11,7 +11,7 @@ Deployment and scaling of our system are comfortable thanks to the use of the co
 The platform is based on one of the best PHP frameworks on the market - **Symfony**.
 
 ## Shopsys Platform Infrastructure
-![Shopsys Platform Infrastructure](./docs/img/shopsys-framework-infrastructure.png 'Shopsys Platform Infrastructure')
+![Shopsys Platform Infrastructure](./docs/img/shopsys-platform-infrastructure.png 'Shopsys Platform Infrastructure')
 
 ## Current State and Roadmap
 
