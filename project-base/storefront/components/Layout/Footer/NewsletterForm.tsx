@@ -74,7 +74,7 @@ export const NewsletterForm: FC = () => {
                                 />
                                 <div className="flex flex-col">
                                     <Button
-                                        className="mt-3 lg:ml-3"
+                                        className="max-lg:mt-3 lg:ml-3"
                                         type="submit"
                                         isRounder
                                         isWithDisabledLook={!formProviderMethods.formState.isValid}
