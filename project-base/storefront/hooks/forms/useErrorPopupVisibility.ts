@@ -9,12 +9,12 @@ export const useErrorPopupVisibility = <T extends FieldValues>(
 
     useEffect(() => {
         if (
-            formProviderMethods.formState.isSubmitting &&
+            formProviderMethods.formState.isSubmitted &&
             (Object.keys(formProviderMethods.formState.errors).length > 0 || overrideVisibility)
         ) {
             setErrorPopupVisibility(true);
         }
-    }, [formProviderMethods.formState.isSubmitting, formProviderMethods.formState.errors, overrideVisibility]);
+    }, [formProviderMethods.formState.isSubmitted, formProviderMethods.formState.errors, overrideVisibility]);
 
     return [isErrorPopupVisible, setErrorPopupVisibility];
 };
