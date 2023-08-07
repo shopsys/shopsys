@@ -108,7 +108,7 @@ class CategoryRepository extends BaseCategoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[][]
      */
-    public function getCategoriesByIds(array $categoriesIds, DomainConfig $domainConfig): array
+    public function getVisibleCategoriesByIds(array $categoriesIds, DomainConfig $domainConfig): array
     {
         $queryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId())
             ->addSelect('cd')
