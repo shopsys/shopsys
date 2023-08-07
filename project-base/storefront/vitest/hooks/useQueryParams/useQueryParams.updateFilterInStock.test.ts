@@ -17,6 +17,7 @@ const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
 }));
 
 const CATEGORY_URL = '/category-url';
+const CATEGORY_PATHNAME = '/categories/[categorySlug]';
 const ORIGINAL_CATEGORY_URL = '/original-category-slug';
 const DEFAULT_SEO_CATEGORY_PARAMETERS = new Map([
     ['default-parameter-1', new Set(['default-parameter-value-1', 'default-parameter-value-2'])],
@@ -38,6 +39,7 @@ vi.mock('helpers/filterOptions/seoCategories', async (importOriginal) => {
 const mockPush = vi.fn();
 vi.mock('next/router', () => ({
     useRouter: vi.fn(() => ({
+        pathname: CATEGORY_PATHNAME,
         asPath: CATEGORY_URL,
         push: mockPush,
         query: {},
@@ -63,10 +65,18 @@ describe('useQueryParams().updateFilterInStock tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
-                pathname: CATEGORY_URL,
-                query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ onlyInStock: true }) },
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ onlyInStock: true }),
+                },
             },
-            undefined,
+            {
+                pathname: CATEGORY_URL,
+                query: {
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ onlyInStock: true }),
+                },
+            },
             {
                 shallow: true,
             },
@@ -75,6 +85,7 @@ describe('useQueryParams().updateFilterInStock tests', () => {
 
     test('onlyInStock should be set to false if updating with `false`', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ onlyInStock: true }) },
@@ -84,10 +95,13 @@ describe('useQueryParams().updateFilterInStock tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: { categorySlug: CATEGORY_URL },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {},
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -113,6 +127,27 @@ describe('useQueryParams().updateFilterInStock tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: ORIGINAL_CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        onlyInStock: true,
+                        flags: ['default-flag-1', 'default-flag-2'],
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-1',
+                                values: ['default-parameter-value-1', 'default-parameter-value-2'],
+                            },
+                            {
+                                parameter: 'default-parameter-2',
+                                values: ['default-parameter-value-3', 'default-parameter-value-4'],
+                            },
+                        ],
+                    }),
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                },
+            },
+            {
                 pathname: ORIGINAL_CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -132,7 +167,6 @@ describe('useQueryParams().updateFilterInStock tests', () => {
                     [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -144,6 +178,15 @@ describe('useQueryParams().updateFilterInStock tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        onlyInStock: true,
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -151,7 +194,6 @@ describe('useQueryParams().updateFilterInStock tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },

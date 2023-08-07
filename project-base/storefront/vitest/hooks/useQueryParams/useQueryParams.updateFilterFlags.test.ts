@@ -5,10 +5,12 @@ import { useRouter } from 'next/router';
 import { describe, expect, Mock, test, vi } from 'vitest';
 
 const CATEGORY_URL = '/category-url';
+const CATEGORY_PATHNAME = '/categories/[categorySlug]';
 
 const mockPush = vi.fn();
 vi.mock('next/router', () => ({
     useRouter: vi.fn(() => ({
+        pathname: CATEGORY_PATHNAME,
         asPath: CATEGORY_URL,
         push: mockPush,
         query: {},
@@ -31,6 +33,7 @@ vi.mock('store/zustand/useSessionStore', () => ({
 describe('useQueryParams().updateFilterFlags tests', () => {
     test('flag should be added to query if not present', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: {},
@@ -40,6 +43,15 @@ describe('useQueryParams().updateFilterFlags tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        flags: ['test-flag'],
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -47,7 +59,6 @@ describe('useQueryParams().updateFilterFlags tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -56,6 +67,7 @@ describe('useQueryParams().updateFilterFlags tests', () => {
 
     test('flag should be removed from query if already present', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ flags: ['test-flag'] }) },
@@ -65,10 +77,13 @@ describe('useQueryParams().updateFilterFlags tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: { categorySlug: CATEGORY_URL },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {},
             },
-            undefined,
             {
                 shallow: true,
             },

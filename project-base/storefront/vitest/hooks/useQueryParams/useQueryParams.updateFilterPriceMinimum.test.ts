@@ -17,6 +17,7 @@ const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
 }));
 
 const CATEGORY_URL = '/category-url';
+const CATEGORY_PATHNAME = '/categories/[categorySlug]';
 const ORIGINAL_CATEGORY_URL = '/original-category-slug';
 const DEFAULT_SEO_CATEGORY_PARAMETERS = new Map([
     ['default-parameter-1', new Set(['default-parameter-value-1', 'default-parameter-value-2'])],
@@ -38,6 +39,7 @@ vi.mock('helpers/filterOptions/seoCategories', async (importOriginal) => {
 const mockPush = vi.fn();
 vi.mock('next/router', () => ({
     useRouter: vi.fn(() => ({
+        pathname: CATEGORY_PATHNAME,
         asPath: CATEGORY_URL,
         push: mockPush,
         query: {},
@@ -60,6 +62,7 @@ vi.mock('store/zustand/useSessionStore', () => ({
 describe('useQueryParams().updateFilterPriceMinimum tests', () => {
     test('minimalPrice should not be updated if it is the same as current minimal price', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1000 }) },
@@ -69,10 +72,18 @@ describe('useQueryParams().updateFilterPriceMinimum tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
-                pathname: CATEGORY_URL,
-                query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1000 }) },
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1000 }),
+                },
             },
-            undefined,
+            {
+                pathname: CATEGORY_URL,
+                query: {
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1000 }),
+                },
+            },
             {
                 shallow: true,
             },
@@ -81,6 +92,7 @@ describe('useQueryParams().updateFilterPriceMinimum tests', () => {
 
     test('minimalPrice should be updated if it differs from the current minimal price', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1000 }) },
@@ -90,10 +102,18 @@ describe('useQueryParams().updateFilterPriceMinimum tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
-                pathname: CATEGORY_URL,
-                query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1100 }) },
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1100 }),
+                },
             },
-            undefined,
+            {
+                pathname: CATEGORY_URL,
+                query: {
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1100 }),
+                },
+            },
             {
                 shallow: true,
             },
@@ -102,6 +122,7 @@ describe('useQueryParams().updateFilterPriceMinimum tests', () => {
 
     test('minimalPrice should be reset if it is set to undefined', () => {
         (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
             asPath: CATEGORY_URL,
             push: mockPush,
             query: { [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({ minimalPrice: 1000 }) },
@@ -111,10 +132,13 @@ describe('useQueryParams().updateFilterPriceMinimum tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: { categorySlug: CATEGORY_URL },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {},
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -137,6 +161,15 @@ describe('useQueryParams().updateFilterPriceMinimum tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        minimalPrice: 100,
+                    }),
+                },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -144,7 +177,6 @@ describe('useQueryParams().updateFilterPriceMinimum tests', () => {
                     }),
                 },
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -170,6 +202,27 @@ describe('useQueryParams().updateFilterPriceMinimum tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: ORIGINAL_CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        minimalPrice: 100,
+                        flags: ['default-flag-1', 'default-flag-2'],
+                        parameters: [
+                            {
+                                parameter: 'default-parameter-1',
+                                values: ['default-parameter-value-1', 'default-parameter-value-2'],
+                            },
+                            {
+                                parameter: 'default-parameter-2',
+                                values: ['default-parameter-value-3', 'default-parameter-value-4'],
+                            },
+                        ],
+                    }),
+                    [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                },
+            },
+            {
                 pathname: ORIGINAL_CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
@@ -189,7 +242,6 @@ describe('useQueryParams().updateFilterPriceMinimum tests', () => {
                     [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
                 },
             },
-            undefined,
             {
                 shallow: true,
             },

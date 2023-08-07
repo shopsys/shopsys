@@ -4,10 +4,12 @@ import { useQueryParams } from 'hooks/useQueryParams';
 import { describe, expect, test, vi } from 'vitest';
 
 const CATEGORY_URL = '/category-url';
+const CATEGORY_PATHNAME = '/categories/[categorySlug]';
 
 const mockPush = vi.fn();
 vi.mock('next/router', () => ({
     useRouter: vi.fn(() => ({
+        pathname: CATEGORY_PATHNAME,
         asPath: CATEGORY_URL,
         push: mockPush,
         query: {},
@@ -33,10 +35,13 @@ describe('useQueryParams().updatePagination tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: { categorySlug: CATEGORY_URL },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {},
             },
-            undefined,
             {
                 shallow: true,
             },
@@ -48,12 +53,15 @@ describe('useQueryParams().updatePagination tests', () => {
 
         expect(mockPush).toBeCalledWith(
             {
+                pathname: CATEGORY_PATHNAME,
+                query: { categorySlug: CATEGORY_URL, [PAGE_QUERY_PARAMETER_NAME]: '2' },
+            },
+            {
                 pathname: CATEGORY_URL,
                 query: {
                     [PAGE_QUERY_PARAMETER_NAME]: '2',
                 },
             },
-            undefined,
             {
                 shallow: true,
             },

@@ -319,12 +319,26 @@ export const useQueryParams = () => {
         // remove queries which are not set or removed
         const filteredQueries = getFilteredQueries(queries);
 
+        const asPathname = router.asPath.split('?')[0];
+        const dynamicPageQueryKey = getDynamicPageQueryKey(router.pathname);
+
+        let filteredQueriesWithDynamicParam = filteredQueries;
+        if (dynamicPageQueryKey) {
+            filteredQueriesWithDynamicParam = {
+                [dynamicPageQueryKey]: pathnameOverride || asPathname,
+                ...filteredQueries,
+            };
+        }
+
         router[isPush ? 'push' : 'replace'](
             {
-                pathname: pathnameOverride || router.asPath.split('?')[0],
+                pathname: router.pathname,
+                query: filteredQueriesWithDynamicParam,
+            },
+            {
+                pathname: pathnameOverride || asPathname,
                 query: filteredQueries,
             },
-            undefined,
             { shallow: true },
         );
     };
@@ -345,4 +359,15 @@ export const useQueryParams = () => {
         updateFilterParameters,
         resetAllFilters,
     };
+};
+
+const getDynamicPageQueryKey = (pathname: string) => {
+    const start = pathname.indexOf('[');
+    const end = pathname.indexOf(']');
+
+    if (start !== -1 && end !== -1) {
+        return pathname.substring(start + 1, end);
+    }
+
+    return undefined;
 };
