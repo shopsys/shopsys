@@ -14,7 +14,12 @@ export const Table: FC<TableProps> = ({ head, children, className }) => (
     </div>
 );
 
-type CellProps = { align?: 'center' | 'right'; isWithoutWrap?: boolean; isHead?: boolean };
+type CellProps = {
+    align?: 'center' | 'right';
+    isWithoutWrap?: boolean;
+    isHead?: boolean;
+    colSpan?: number;
+};
 
 export const Row: FC = ({ children, className, dataTestId }) => (
     <tr
@@ -25,11 +30,12 @@ export const Row: FC = ({ children, className, dataTestId }) => (
     </tr>
 );
 
-export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, className, dataTestId }) => {
+export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, className, dataTestId, colSpan }) => {
     const Tag = isHead ? 'th' : 'td';
 
     return (
         <Tag
+            colSpan={colSpan}
             className={twMergeCustom(
                 'px-2 py-4 text-sm text-dark ',
 
