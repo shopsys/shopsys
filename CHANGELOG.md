@@ -26,7 +26,7 @@ Packages are formatted by release version. You can see all the changes done to p
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) as explained in the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/).
 
-## [v11.1.0](https://github.com/shopsys/shopsys/compare/v11.0.0...v11.1.0) (2023-07-18)
+## [v11.1.0](https://github.com/shopsys/shopsys/compare/v11.0.0...v11.1.0) (2023-08-08)
 
 ### :sparkles: Enhancements and features
 * [shopsys] added detailed cron run information for administrators by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2581
