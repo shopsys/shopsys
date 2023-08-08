@@ -19,10 +19,10 @@
         "php": "^8.1",
         "google/cloud-storage": "^1.10",
         "league/flysystem-google-cloud-storage": "^3.0",
-        "shopsys/form-types-bundle": "11.0.x-dev",
-        "shopsys/framework": "11.0.x-dev",
-        "shopsys/migrations": "11.0.x-dev",
-        "shopsys/plugin-interface": "11.0.x-dev",
+        "shopsys/form-types-bundle": "11.1.0",
+        "shopsys/framework": "11.1.0",
+        "shopsys/migrations": "11.1.0",
+        "shopsys/plugin-interface": "11.1.0",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4",
         "symfony/framework-bundle": "^5.4",
@@ -30,7 +30,7 @@
         "symfony/options-resolver": "^5.4"
     },
     "require-dev": {
-        "shopsys/coding-standards": "11.0.x-dev"
+        "shopsys/coding-standards": "11.1.0"
     },
     "extra": {
         "branch-alias": {
