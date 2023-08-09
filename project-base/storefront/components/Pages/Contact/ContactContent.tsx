@@ -1,4 +1,4 @@
-import { useContactForm, useContactFormMeta } from './formMeta';
+import { useContactForm, useContactFormMeta } from './contactFormMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';

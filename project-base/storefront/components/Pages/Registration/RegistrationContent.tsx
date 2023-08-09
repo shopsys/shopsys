@@ -2,7 +2,7 @@ import { Address } from './Address';
 import { Company } from './Company';
 import { Password } from './Password';
 import { User } from './User';
-import { useRegistrationForm, useRegistrationFormMeta } from './formMeta';
+import { useRegistrationForm, useRegistrationFormMeta } from './registrationFormMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';

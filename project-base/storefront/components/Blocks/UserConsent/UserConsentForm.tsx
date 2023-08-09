@@ -1,4 +1,4 @@
-import { useUserConsentForm, useUserConsentFormMeta } from './formMeta';
+import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';

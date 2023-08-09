@@ -2,7 +2,7 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
+import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';

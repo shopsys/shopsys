@@ -1,4 +1,4 @@
-import { usePersonalDataOverviewForm, usePersonalDataOverviewFormMeta } from './formMeta';
+import { usePersonalDataOverviewForm, usePersonalDataOverviewFormMeta } from './personalDataOverviewFormMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';

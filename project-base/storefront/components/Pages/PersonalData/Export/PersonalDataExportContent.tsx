@@ -1,4 +1,4 @@
-import { usePersonalDataExportForm, usePersonalDataExportFormMeta } from './formMeta';
+import { usePersonalDataExportForm, usePersonalDataExportFormMeta } from './personalDataExportFormMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';

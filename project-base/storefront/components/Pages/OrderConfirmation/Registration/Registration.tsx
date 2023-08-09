@@ -1,4 +1,4 @@
-import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './formMeta';
+import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './registrationAfterOrderFormMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';

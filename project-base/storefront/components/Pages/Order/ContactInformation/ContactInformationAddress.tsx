@@ -4,7 +4,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
+import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useCountriesQueryApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 

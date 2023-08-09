@@ -11,7 +11,10 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
 import { AddressList } from 'components/Pages/Customer/AddressList';
-import { useCustomerChangeProfileForm, useCustomerChangeProfileFormMeta } from 'components/Pages/Customer/formMeta';
+import {
+    useCustomerChangeProfileForm,
+    useCustomerChangeProfileFormMeta,
+} from 'components/Pages/Customer/customerChangeProfileFormMeta';
 import {
     useChangePasswordMutationApi,
     useChangePersonalDataMutationApi,

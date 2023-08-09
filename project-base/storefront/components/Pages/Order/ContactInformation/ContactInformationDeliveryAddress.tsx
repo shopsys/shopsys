@@ -7,7 +7,7 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
+import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCountriesQueryApi } from 'graphql/generated';

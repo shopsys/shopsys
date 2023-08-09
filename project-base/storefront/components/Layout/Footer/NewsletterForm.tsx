@@ -1,4 +1,4 @@
-import { useNewsletterForm, useNewsletterFormMeta } from './formMeta';
+import { useNewsletterForm, useNewsletterFormMeta } from './newsletterFormMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';

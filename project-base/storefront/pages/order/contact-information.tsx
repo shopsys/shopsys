@@ -9,7 +9,7 @@ import { ContactInformationContent } from 'components/Pages/Order/ContactInforma
 import {
     useContactInformationForm,
     useContactInformationFormMeta,
-} from 'components/Pages/Order/ContactInformation/formMeta';
+} from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { handleCartModifications, useCurrentCart } from 'connectors/cart/Cart';
 import { useCreateOrderMutationApi } from 'graphql/generated';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';

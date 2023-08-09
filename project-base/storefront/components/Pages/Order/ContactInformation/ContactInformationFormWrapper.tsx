@@ -6,7 +6,7 @@ import { ContactInformationCompany } from 'components/Pages/Order/ContactInforma
 import { ContactInformationCustomer } from 'components/Pages/Order/ContactInformation/ContactInformationCustomer';
 import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/ContactInformationDeliveryAddress';
 import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/ContactInformationUser';
-import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
+import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';

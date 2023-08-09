@@ -1,5 +1,5 @@
 import { ContactInformationFormWrapper } from './ContactInformationFormWrapper';
-import { useContactInformationFormMeta } from './formMeta';
+import { useContactInformationFormMeta } from './contactInformationFormMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
 import { Login } from 'components/Blocks/Popup/Login/Login';

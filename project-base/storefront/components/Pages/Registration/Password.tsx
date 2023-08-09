@@ -2,7 +2,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
-import { useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
+import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';

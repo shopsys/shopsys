@@ -1,4 +1,4 @@
-import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
+import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useEffect } from 'react';
 import { Control, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';

@@ -1,4 +1,4 @@
-import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './formMeta';
+import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './recoveryPasswordFormMeta';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
