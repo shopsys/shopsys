@@ -1,5 +1,5 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { ProductsComparison } from 'components/Pages/ProductsComparison/ProductsComparison';
+import { ProductComparison } from 'components/Pages/ProductComparison/ProductComparison';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
@@ -10,10 +10,10 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { GtmPageType } from 'types/gtm/enums';
 
-const ProductsComparisonPage: FC<ServerSidePropsType> = () => {
+const ProductComparisonPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const { url } = useDomainConfig();
-    const [productComparisonUrl] = getInternationalizedStaticUrls(['/products-comparison'], url);
+    const [productComparisonUrl] = getInternationalizedStaticUrls(['/product-comparison'], url);
     const breadcrumb: BreadcrumbFragmentApi[] = [
         { __typename: 'Link', name: t('Product comparison'), slug: productComparisonUrl },
     ];
@@ -22,7 +22,7 @@ const ProductsComparisonPage: FC<ServerSidePropsType> = () => {
 
     return (
         <CommonLayout title={t('Product comparison')}>
-            <ProductsComparison breadcrumb={breadcrumb} />
+            <ProductComparison breadcrumb={breadcrumb} />
         </CommonLayout>
     );
 };
@@ -33,4 +33,4 @@ export const getServerSideProps = getServerSidePropsWrapper(
             initServerSideProps({ context, redisClient, domainConfig, t }),
 );
 
-export default ProductsComparisonPage;
+export default ProductComparisonPage;

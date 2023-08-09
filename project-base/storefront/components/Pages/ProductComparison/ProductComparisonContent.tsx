@@ -1,7 +1,7 @@
-import { Body } from './Body';
-import { ButtonRemoveAll } from './ButtonRemoveAll';
-import { Head } from './Head';
-import { HeadSticky } from './HeadSticky';
+import { ProductComparisonBody } from './ProductComparisonBody';
+import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
+import { ProductComparisonHead } from './ProductComparisonHead';
+import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { ComparedProductFragmentApi } from 'graphql/generated';
@@ -12,11 +12,11 @@ import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'helpers/twMerge';
 
-type ContentProps = {
+type ProductComparisonContentProps = {
     productsCompare: ComparedProductFragmentApi[];
 };
 
-export const Content: FC<ContentProps> = ({ productsCompare }) => {
+export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ productsCompare }) => {
     const t = useTypedTranslationFunction();
     const {
         isArrowLeftActive,
@@ -74,7 +74,7 @@ export const Content: FC<ContentProps> = ({ productsCompare }) => {
                     {t('Product comparison')}&nbsp;({productsCompare.length})
                 </Heading>
             </div>
-            <ButtonRemoveAll displayMobile />
+            <ProductComparisonButtonRemoveAll displayMobile />
             <div className="relative mb-24 overflow-hidden" id="js-table-compare-wrap">
                 <div className="mb-1 flex justify-end gap-3">
                     <ContentArrow
@@ -89,15 +89,18 @@ export const Content: FC<ContentProps> = ({ productsCompare }) => {
                         isRight
                     />
                 </div>
-                <HeadSticky productsCompare={productsCompare} tableMarginLeft={tableMarginLeft} />
+                <ProductComparisonHeadSticky productsCompare={productsCompare} tableMarginLeft={tableMarginLeft} />
                 <div>
                     <table
                         className="table-fixed border-collapse transition-all"
                         style={{ marginLeft: -tableMarginLeft }}
                         id="js-table-compare"
                     >
-                        <Head productsCompare={productsCompare} />
-                        <Body productsCompare={productsCompare} parametersDataState={getParametersDataState} />
+                        <ProductComparisonHead productsCompare={productsCompare} />
+                        <ProductComparisonBody
+                            productsCompare={productsCompare}
+                            parametersDataState={getParametersDataState}
+                        />
                     </table>
                 </div>
             </div>

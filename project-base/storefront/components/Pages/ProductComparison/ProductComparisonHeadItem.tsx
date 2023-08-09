@@ -11,14 +11,19 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCallback } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 
-type ItemProps = {
+type ProductComparisonItemProps = {
     product: ComparedProductFragmentApi;
     productsCompareCount: number;
     listIndex: number;
     toggleProductInComparison: () => void;
 };
 
-export const HeadItem: FC<ItemProps> = ({ product, productsCompareCount, listIndex, toggleProductInComparison }) => {
+export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
+    product,
+    productsCompareCount,
+    listIndex,
+    toggleProductInComparison,
+}) => {
     const t = useTypedTranslationFunction();
     const { url } = useDomainConfig();
     const { calcMaxMarginLeft } = useComparisonTable(productsCompareCount);

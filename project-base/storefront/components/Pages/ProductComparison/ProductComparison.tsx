@@ -1,4 +1,4 @@
-import { Content } from './Content';
+import { ProductComparisonContent } from './ProductComparisonContent';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
@@ -10,11 +10,11 @@ import { useComparison } from 'hooks/comparison/useComparison';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { GtmProductListNameType } from 'types/gtm/enums';
 
-type ProductsComparisonProps = {
+type ProductComparisonProps = {
     breadcrumb: BreadcrumbFragmentApi[];
 };
 
-export const ProductsComparison: FC<ProductsComparisonProps> = ({ breadcrumb }) => {
+export const ProductComparison: FC<ProductComparisonProps> = ({ breadcrumb }) => {
     const t = useTypedTranslationFunction();
 
     const { comparison, fetching } = useComparison();
@@ -22,7 +22,7 @@ export const ProductsComparison: FC<ProductsComparisonProps> = ({ breadcrumb }) 
 
     const content =
         comparedProducts.length > 0 ? (
-            <Content productsCompare={comparedProducts} />
+            <ProductComparisonContent productsCompare={comparedProducts} />
         ) : (
             <div className="my-[75px] flex items-center">
                 <Icon iconType="icon" icon="Info" className="mr-4 w-8" />

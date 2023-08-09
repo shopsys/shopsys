@@ -13,7 +13,7 @@ type ProductComparePopupProps = {
 export const ProductComparePopup: FC<ProductComparePopupProps> = ({ onCloseCallback }) => {
     const t = useTypedTranslationFunction();
     const { url } = useDomainConfig();
-    const [productsComparisonUrl] = getInternationalizedStaticUrls(['/products-comparison'], url);
+    const [productComparisonUrl] = getInternationalizedStaticUrls(['/product-comparison'], url);
 
     return (
         <Popup onCloseCallback={onCloseCallback}>
@@ -21,7 +21,7 @@ export const ProductComparePopup: FC<ProductComparePopupProps> = ({ onCloseCallb
 
             <div className="flex flex-col">
                 <p className="text-bigger font-semiBold mt-[15px] mb-5">{t('Product added to comparison.')}</p>
-                <Link isButton href={productsComparisonUrl}>
+                <Link isButton href={productComparisonUrl}>
                     <>
                         <span>{t('Show products comparison')}</span>
                         <Icon className="rotate-90" iconType="icon" icon="ArrowSecondary" />

@@ -13,8 +13,8 @@ export const SubMenu: FC = () => {
     const t = useTypedTranslationFunction();
     const { url } = useDomainConfig();
     const isUserLoggedIn = !!useCurrentCustomerData();
-    const [storesUrl, loginUrl, productsComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls(
-        ['/stores', '/login', '/products-comparison', '/wishlist'],
+    const [storesUrl, loginUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls(
+        ['/stores', '/login', '/product-comparison', '/wishlist'],
         url,
     );
     const { logout } = useAuth();
@@ -26,7 +26,7 @@ export const SubMenu: FC = () => {
             <SubMenuItem href={storesUrl} dataTestId={TEST_IDENTIFIER + '-1'}>
                 {t('Stores')}
             </SubMenuItem>
-            <SubMenuItem href={productsComparisonUrl} dataTestId={TEST_IDENTIFIER + '-3'}>
+            <SubMenuItem href={productComparisonUrl} dataTestId={TEST_IDENTIFIER + '-3'}>
                 {t('Comparison')}
                 {!!comparison?.products.length && <span>&nbsp;({comparison.products.length})</span>}
             </SubMenuItem>

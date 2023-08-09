@@ -3,12 +3,12 @@ import { ComparedProductFragmentApi } from 'graphql/generated';
 import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import { twJoin } from 'tailwind-merge';
 
-type HeadStickyProps = {
+type ProductComparisonHeadStickyProps = {
     productsCompare: ComparedProductFragmentApi[];
     tableMarginLeft: number;
 };
 
-export const HeadSticky: FC<HeadStickyProps> = (props) => {
+export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> = (props) => {
     const { tableStickyHeadActive } = useComparisonTable(props.productsCompare.length);
 
     return (

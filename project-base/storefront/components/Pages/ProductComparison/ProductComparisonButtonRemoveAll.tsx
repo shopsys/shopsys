@@ -3,11 +3,11 @@ import { useComparison } from 'hooks/comparison/useComparison';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twJoin } from 'tailwind-merge';
 
-type ButtonRemoveAllProps = {
+type ProductComparisonButtonRemoveAllProps = {
     displayMobile?: boolean;
 };
 
-export const ButtonRemoveAll: FC<ButtonRemoveAllProps> = ({ displayMobile }) => {
+export const ProductComparisonButtonRemoveAll: FC<ProductComparisonButtonRemoveAllProps> = ({ displayMobile }) => {
     const t = useTypedTranslationFunction();
     const { handleCleanComparison } = useComparison();
 

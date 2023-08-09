@@ -3,12 +3,12 @@ import { ComparedProductFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twJoin } from 'tailwind-merge';
 
-type BodyProps = {
+type ProductComparisonBodyProps = {
     productsCompare: ComparedProductFragmentApi[];
     parametersDataState: { name: string; values: string[] }[];
 };
 
-export const Body: FC<BodyProps> = (props) => {
+export const ProductComparisonBody: FC<ProductComparisonBodyProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     return (
