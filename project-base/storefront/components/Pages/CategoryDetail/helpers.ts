@@ -14,7 +14,7 @@ import { NextRouter, useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useSessionStore } from 'store/zustand/useSessionStore';
 import { useClient, Client } from 'urql';
-import { getSlugFromUrl } from 'utils/getSlugFromUrl';
+import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 
 export const useCategoryDetailData = (
     filter: ProductFilterApi | null,

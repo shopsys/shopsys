@@ -22,8 +22,8 @@ import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
-import { parseCatnums } from 'utils/grapesJsParser';
+import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
+import { parseCatnums } from 'helpers/parsing/grapesJsParser';
 
 const BlogArticleDetailPage: NextPage = () => {
     const router = useRouter();

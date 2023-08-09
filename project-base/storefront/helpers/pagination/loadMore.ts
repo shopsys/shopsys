@@ -13,7 +13,7 @@ import {
     ProductOrderingModeEnumApi,
 } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 import { getFilteredQueries } from 'helpers/queryParams/queryHandlers';
 import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
@@ -22,7 +22,6 @@ import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import { useRef, useState, useEffect } from 'react';
 import { Client, useClient } from 'urql';
-import { getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 const PRODUCT_LIST_LIMIT = 100;
 
@@ -207,7 +206,7 @@ export const useProductsData = (
     const client = useClient();
     const { asPath } = useRouter();
     const { filter, sort, currentPage, currentLoadMore } = useQueryParams();
-    const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(asPath));
+    const urlSlug = getSlugFromUrl(asPath);
     const mappedFilter = mapParametersFilter(filter);
 
     const previousLoadMoreRef = useRef(currentLoadMore);

@@ -25,7 +25,7 @@ import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
+import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 

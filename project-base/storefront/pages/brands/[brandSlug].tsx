@@ -35,7 +35,7 @@ import { createClient } from 'helpers/urql/createClient';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
+import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useQueryParams } from 'hooks/useQueryParams';

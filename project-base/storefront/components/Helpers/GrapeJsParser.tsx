@@ -5,7 +5,7 @@ import { replaceAll } from 'helpers/replaceAll';
 
 import { memo } from 'react';
 import { GtmProductListNameType } from 'types/gtm/enums';
-import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'utils/grapesJsParser';
+import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'helpers/parsing/grapesJsParser';
 
 type GrapesJsParserProps = {
     text: string;

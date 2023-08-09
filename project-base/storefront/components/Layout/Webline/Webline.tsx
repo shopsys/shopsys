@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { twMergeCustom } from 'utils/twMerge';
+import { twMergeCustom } from 'helpers/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'style'>;
 

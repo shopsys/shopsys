@@ -10,7 +10,7 @@ import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { twMergeCustom } from 'utils/twMerge';
+import { twMergeCustom } from 'helpers/twMerge';
 
 type ContentProps = {
     productsCompare: ComparedProductFragmentApi[];

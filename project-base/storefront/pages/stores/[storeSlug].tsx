@@ -21,7 +21,7 @@ import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
+import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 
 const StoreDetailPage: NextPage = () => {
     const router = useRouter();

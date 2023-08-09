@@ -36,7 +36,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { GtmPageType } from 'types/gtm/enums';
 import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
-import { getSlugFromServerSideUrl } from 'utils/getSlugFromUrl';
+import { getSlugFromServerSideUrl } from 'helpers/parsing/getSlugFromUrl';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

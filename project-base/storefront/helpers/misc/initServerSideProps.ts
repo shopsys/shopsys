@@ -22,7 +22,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
-import { parseCatnums } from 'utils/grapesJsParser';
+import { parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { Translate } from 'next-translate';
 
 export type ServerSidePropsType = {

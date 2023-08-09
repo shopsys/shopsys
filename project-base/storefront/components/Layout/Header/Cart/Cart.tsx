@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 import { GtmProductListNameType } from 'types/gtm/enums';
-import { twMergeCustom } from 'utils/twMerge';
+import { twMergeCustom } from 'helpers/twMerge';
 
 const TEST_IDENTIFIER = 'layout-header-cart-';
 
