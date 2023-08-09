@@ -1,7 +1,7 @@
-import { Address } from './Address';
-import { Company } from './Company';
-import { Password } from './Password';
-import { User } from './User';
+import { RegistrationAddress } from './RegistrationAddress';
+import { RegistrationCompany } from './RegistrationCompany';
+import { RegistrationPassword } from './RegistrationPassword';
+import { RegistrationUser } from './RegistrationUser';
 import { useRegistrationForm, useRegistrationFormMeta } from './registrationFormMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
@@ -90,21 +90,21 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                         </div>
 
                         <div className="mb-10">
-                            <User />
+                            <RegistrationUser />
                         </div>
 
                         {customerValue === 'companyCustomer' && (
                             <div className="mb-10">
-                                <Company />
+                                <RegistrationCompany />
                             </div>
                         )}
 
                         <div className="mb-10">
-                            <Password />
+                            <RegistrationPassword />
                         </div>
 
                         <div className="mb-10">
-                            <Address />
+                            <RegistrationAddress />
                         </div>
 
                         <CheckboxControlled

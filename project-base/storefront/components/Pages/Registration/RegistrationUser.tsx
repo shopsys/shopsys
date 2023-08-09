@@ -8,7 +8,7 @@ import { useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 import { RegistrationFormType } from 'types/form';
 
-export const User: FC = () => {
+export const RegistrationUser: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const formMeta = useRegistrationFormMeta(formProviderMethods);

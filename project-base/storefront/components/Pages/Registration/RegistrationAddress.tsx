@@ -13,7 +13,7 @@ import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 
-export const Address: FC = () => {
+export const RegistrationAddress: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const { setValue } = formProviderMethods;

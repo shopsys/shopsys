@@ -6,7 +6,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 
-export const Company: FC = () => {
+export const RegistrationCompany: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
