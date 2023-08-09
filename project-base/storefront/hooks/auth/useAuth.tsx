@@ -1,4 +1,4 @@
-import { showSuccessMessage } from 'components/Helpers/toasts';
+import { showSuccessMessage } from 'helpers/toasts';
 import { Exact, LoginApi, LoginVariablesApi, LogoutApi, Maybe, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
 import { canUseDom } from 'helpers/misc/canUseDom';

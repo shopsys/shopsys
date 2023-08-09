@@ -6,7 +6,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { showSuccessMessage } from 'components/Helpers/toasts';
+import { showSuccessMessage } from 'helpers/toasts';
 import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';

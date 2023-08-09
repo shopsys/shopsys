@@ -1,4 +1,4 @@
-import { showErrorMessage } from 'components/Helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts';
 import { CartFragmentApi, ListedStoreFragmentApi, useChangeTransportInCartMutationApi } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { onGtmTransportChangeEventHandler } from 'helpers/gtm/eventHandlers';

@@ -1,6 +1,6 @@
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
-import { UserText } from 'components/Helpers/UserText/UserText';
+import { UserText } from 'components/Basic/UserText/UserText';
 import { ParameterFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 

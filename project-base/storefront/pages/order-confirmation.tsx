@@ -1,5 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { PageGuard } from 'components/Helpers/PageGuard';
+import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';

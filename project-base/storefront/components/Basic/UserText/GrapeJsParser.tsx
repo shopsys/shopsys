@@ -1,5 +1,5 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
-import { UserText } from 'components/Helpers/UserText/UserText';
+import { UserText } from 'components/Basic/UserText/UserText';
 import { ListedProductFragmentApi, useProductsByCatnumsApi } from 'graphql/generated';
 import { replaceAll } from 'helpers/replaceAll';
 

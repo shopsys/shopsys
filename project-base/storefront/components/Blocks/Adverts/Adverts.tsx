@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { isElementVisible } from 'components/Helpers/isElementVisible';
+import { isElementVisible } from 'helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { AdvertsFragmentApi, CategoryDetailFragmentApi, useAdvertsQueryApi } from 'graphql/generated';

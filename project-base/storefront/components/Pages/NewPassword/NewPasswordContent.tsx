@@ -4,7 +4,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi, useRecoverPasswordMutationApi } from 'graphql/generated';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';

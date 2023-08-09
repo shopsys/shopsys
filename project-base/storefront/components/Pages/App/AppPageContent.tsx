@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { Error500ContentWithBoundary } from '../ErrorPage/Error500Content';
 import { Error503Content } from '../ErrorPage/Error503Content';
-import { GtmHeadScript } from 'components/Helpers/GtmHeadScript';
+import { GtmHeadScript } from 'components/Pages/App/GtmHeadScript';
 import Head from 'next/head';
 import { useLoginLoader } from 'hooks/app/useLoginLoader';
 import { usePageLoader } from 'hooks/app/usePageLoader';

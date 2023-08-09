@@ -1,6 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Button } from 'components/Forms/Button/Button';
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import dynamic from 'next/dynamic';

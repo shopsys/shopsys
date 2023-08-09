@@ -1,4 +1,4 @@
-import { showErrorMessage } from 'components/Helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { Translate } from 'next-translate';
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form';

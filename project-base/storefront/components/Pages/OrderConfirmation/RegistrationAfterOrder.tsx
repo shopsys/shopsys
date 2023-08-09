@@ -6,7 +6,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useRegistrationMutationApi } from 'graphql/generated';
 import { setTokensToCookie } from 'helpers/auth/tokens';

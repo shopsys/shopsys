@@ -1,5 +1,5 @@
 import { CommonLayout } from '../components/Layout/CommonLayout';
-import { GrapesJs } from 'components/Helpers/UserText/GrapesJs';
+import { GrapesJs } from 'components/Basic/UserText/GrapesJs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
 import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';

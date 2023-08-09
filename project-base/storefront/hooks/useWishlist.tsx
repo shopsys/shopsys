@@ -8,9 +8,9 @@ import {
     useWishlistQueryApi,
 } from 'graphql/generated';
 import { useTypedTranslationFunction } from './typescript/useTypedTranslationFunction';
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/zustand/usePersistStore';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 
 export const useWishlist = () => {
     const t = useTypedTranslationFunction();
