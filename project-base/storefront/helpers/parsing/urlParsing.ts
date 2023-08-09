@@ -16,14 +16,6 @@ export const getStringFromUrlQuery = (urlQuery: string | string[] | undefined): 
     return urlQuery;
 };
 
-export const getOptionalStringFromUrlQuery = (urlQuery: string | string[] | undefined): string | undefined => {
-    if (Array.isArray(urlQuery)) {
-        return undefined;
-    }
-
-    return urlQuery;
-};
-
 export const getNumberFromUrlQuery = (query: string | string[] | undefined, defaultNumber: number): number => {
     const parsedNumber = Number(query);
     return isNaN(parsedNumber) ? defaultNumber : parsedNumber;
@@ -82,8 +74,12 @@ export const getUrlQueriesWithoutDynamicPageQueries = (queries: UrlQueries) => {
     return filteredQueries;
 };
 
-export const getProductListSortFromUrlQuery = (sortQuery: string | undefined): ProductOrderingModeEnumApi | null => {
-    return Object.values(ProductOrderingModeEnumApi).some((sort) => sort === sortQuery)
-        ? (sortQuery as ProductOrderingModeEnumApi)
+export const getProductListSortFromUrlQuery = (
+    sortQuery: string | string[] | undefined,
+): ProductOrderingModeEnumApi | null => {
+    const sortQueryAsString = getStringFromUrlQuery(sortQuery);
+
+    return Object.values(ProductOrderingModeEnumApi).some((sort) => sort === sortQueryAsString)
+        ? (sortQueryAsString as ProductOrderingModeEnumApi)
         : null;
 };

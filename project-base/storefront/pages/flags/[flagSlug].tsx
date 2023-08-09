@@ -13,8 +13,7 @@ import {
     FlagProductsQueryVariablesApi,
     useFlagDetailQueryApi,
 } from 'graphql/generated';
-import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
-import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
+import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
@@ -31,12 +30,9 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import {
     getNumberFromUrlQuery,
-    getOptionalStringFromUrlQuery,
     getProductListSortFromUrlQuery,
     getSlugFromServerSideUrl,
     getSlugFromUrl,
-    getStringFromUrlQuery,
-    getUrlWithoutGetParameters,
 } from 'helpers/parsing/urlParsing';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -44,16 +40,12 @@ import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
 
 const FlagDetailPage: NextPage = () => {
     const router = useRouter();
-    const slug = getUrlWithoutGetParameters(router.asPath);
-
-    const orderingMode = getProductListSortFromUrlQuery(getStringFromUrlQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
-    const filter = mapParametersFilter(
-        getFilterOptions(getOptionalStringFromUrlQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
-    );
+    const orderingMode = getProductListSortFromUrlQuery(router.query[SORT_QUERY_PARAMETER_NAME]);
+    const filter = getMappedProductFilter(router.query[FILTER_QUERY_PARAMETER_NAME]);
 
     const [{ data: flagDetailData, fetching }] = useFlagDetailQueryApi({
         variables: {
-            urlSlug: getSlugFromUrl(slug),
+            urlSlug: getSlugFromUrl(router.asPath),
             orderingMode,
             filter,
         },
@@ -101,12 +93,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const orderingMode = getProductListSortFromUrlQuery(
-                    getStringFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
-                );
-                const filter = mapParametersFilter(
-                    getFilterOptions(getOptionalStringFromUrlQuery(context.query[FILTER_QUERY_PARAMETER_NAME])),
-                );
+                const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
+                const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
 
                 const flagDetailResponsePromise = client!
                     .query<FlagDetailQueryApi, FlagDetailQueryVariablesApi>(FlagDetailQueryDocumentApi, {

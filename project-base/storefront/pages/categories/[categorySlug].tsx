@@ -12,7 +12,7 @@ import {
     CategoryDetailQueryDocumentApi,
     CategoryProductsQueryDocumentApi,
 } from 'graphql/generated';
-import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
+import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { useHandleDefaultFiltersUpdate } from 'helpers/filterOptions/seoCategories';
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
@@ -34,10 +34,8 @@ import { useSessionStore } from 'store/useSessionStore';
 import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
 import {
     getNumberFromUrlQuery,
-    getOptionalStringFromUrlQuery,
     getProductListSortFromUrlQuery,
     getSlugFromServerSideUrl,
-    getStringFromUrlQuery,
 } from 'helpers/parsing/urlParsing';
 
 const CategoryDetailPage: NextPage = () => {
@@ -94,15 +92,9 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 t,
             });
 
-            const orderingMode = getProductListSortFromUrlQuery(
-                getStringFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
-            );
-            const optionsFilter = getFilterOptions(
-                getOptionalStringFromUrlQuery(context.query[FILTER_QUERY_PARAMETER_NAME]),
-            );
-
             if (isRedirectedFromSsr(context.req.headers)) {
-                const filter = mapParametersFilter(optionsFilter);
+                const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
+                const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
                 const categoryDetailResponsePromise = client!
                     .query<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
                         urlSlug,

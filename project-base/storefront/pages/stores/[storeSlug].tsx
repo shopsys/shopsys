@@ -13,7 +13,7 @@ import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/DOM/isServer';
-import { getSlugFromServerSideUrl, getSlugFromUrl, getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
+import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { createClient } from 'urql/createClient';
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
@@ -22,10 +22,8 @@ import { OperationResult } from 'urql';
 
 const StoreDetailPage: NextPage = () => {
     const router = useRouter();
-    const slug = getUrlWithoutGetParameters(router.asPath);
-
     const [{ data: storeDetailData, fetching }] = useStoreDetailQueryApi({
-        variables: { urlSlug: getSlugFromUrl(slug) },
+        variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(storeDetailData?.store);

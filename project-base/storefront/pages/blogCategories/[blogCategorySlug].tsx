@@ -22,19 +22,13 @@ import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
-import {
-    getNumberFromUrlQuery,
-    getSlugFromServerSideUrl,
-    getSlugFromUrl,
-    getUrlWithoutGetParameters,
-} from 'helpers/parsing/urlParsing';
+import { getNumberFromUrlQuery, getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 
 const BlogCategoryPage: NextPage = () => {
     const router = useRouter();
-    const slug = getUrlWithoutGetParameters(router.asPath);
     const [{ data: blogCategoryData, fetching }] = useBlogCategoryQueryApi({
-        variables: { urlSlug: getSlugFromUrl(slug) },
+        variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
     const seoTitle = useSeoTitleWithPagination(

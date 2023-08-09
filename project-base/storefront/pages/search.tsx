@@ -9,7 +9,7 @@ import {
     SearchQueryDocumentApi,
     useSearchQueryApi,
 } from 'graphql/generated';
-import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
+import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
@@ -30,7 +30,6 @@ import { useQueryParams } from 'hooks/useQueryParams';
 import { GtmPageType } from 'types/gtm/enums';
 import {
     getNumberFromUrlQuery,
-    getOptionalStringFromUrlQuery,
     getProductListSortFromUrlQuery,
     getSlugFromServerSideUrl,
     getStringFromUrlQuery,
@@ -79,11 +78,8 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         return redirect;
     }
 
-    const orderingMode = getProductListSortFromUrlQuery(
-        getStringFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
-    );
-    const optionsFilter = getFilterOptions(getOptionalStringFromUrlQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
-    const filter = mapParametersFilter(optionsFilter);
+    const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
+    const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
     const search = getStringFromUrlQuery(context.query[SEARCH_QUERY_PARAMETER_NAME]);
 
     return initServerSideProps({

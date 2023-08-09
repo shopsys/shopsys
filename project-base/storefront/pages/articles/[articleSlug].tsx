@@ -20,13 +20,12 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { parseCatnums } from 'helpers/parsing/grapesJsParser';
-import { getSlugFromServerSideUrl, getSlugFromUrl, getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
+import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();
-    const slug = getUrlWithoutGetParameters(router.asPath);
     const [{ data: articleDetailData, fetching }] = useArticleDetailQueryApi({
-        variables: { urlSlug: getSlugFromUrl(slug) },
+        variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
     const article = articleDetailData?.article?.__typename === 'ArticleSite' ? articleDetailData.article : null;

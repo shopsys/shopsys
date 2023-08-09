@@ -7,7 +7,7 @@ import {
     CategoryDetailQueryDocumentApi,
     CategoryDetailQueryVariablesApi,
 } from 'graphql/generated';
-import { getUrlWithoutGetParameters, getSlugFromUrl } from 'helpers/parsing/urlParsing';
+import { getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextRouter, useRouter } from 'next/router';
@@ -20,7 +20,7 @@ export const useCategoryDetailData = (
 ): [undefined | CategoryDetailFragmentApi, boolean] => {
     const client = useClient();
     const router = useRouter();
-    const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(router.asPath));
+    const urlSlug = getSlugFromUrl(router.asPath);
     const { sort } = useQueryParams();
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
     const [categoryDetailData, setCategoryDetailData] = useState<undefined | CategoryDetailFragmentApi>(
