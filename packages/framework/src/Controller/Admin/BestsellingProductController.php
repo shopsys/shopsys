@@ -55,11 +55,13 @@ class BestsellingProductController extends AdminBaseController
     /**
      * @Route("/product/bestselling-product/detail/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function detailAction(Request $request)
     {
-        $category = $this->categoryFacade->getById($request->get('categoryId'));
-        $domainId = $request->get('domainId');
+        $categoryId = (int)$request->query->get('categoryId');
+        $category = $this->categoryFacade->getById($categoryId);
+        $domainId = (int)$request->get('domainId');
 
         $products = $this->manualBestsellingProductFacade->getProductsIndexedByPosition(
             $category,
