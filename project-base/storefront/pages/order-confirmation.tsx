@@ -3,7 +3,7 @@ import { PageGuard } from 'components/Helpers/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
-import { Registration } from 'components/Pages/OrderConfirmation/Registration/Registration';
+import { Registration } from 'components/Pages/OrderConfirmation/Registration';
 import {
     OrderSentPageContentDocumentApi,
     useIsCustomerUserRegisteredQueryApi,
