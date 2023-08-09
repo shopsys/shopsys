@@ -6,12 +6,12 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 
-type InfoBoxProps = {
+type StoreInfoBoxProps = {
     store: ListedStoreFragmentApi;
     closeInfoBoxCallback: () => void;
 };
 
-export const InfoBox: FC<InfoBoxProps> = ({ store, closeInfoBoxCallback }) => {
+export const StoreInfoBox: FC<StoreInfoBoxProps> = ({ store, closeInfoBoxCallback }) => {
     const t = useTypedTranslationFunction();
 
     return (

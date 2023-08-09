@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { InfoBox } from './InfoBox';
+import { StoreInfoBox } from './StoreInfoBox';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
@@ -76,7 +76,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                             </Heading>
 
                             {selectedStore && (
-                                <InfoBox
+                                <StoreInfoBox
                                     closeInfoBoxCallback={() => setActiveStoreIndex(undefined)}
                                     store={selectedStore}
                                 />
