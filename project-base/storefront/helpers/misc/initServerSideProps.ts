@@ -1,5 +1,5 @@
 import { logException } from '../errors/logException';
-import { createClient } from '../urql/createClient';
+import { createClient } from 'urql/createClient';
 import { getUnauthenticatedRedirectSSR } from './getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from './isUserLoggedInSSR';
 import { DocumentNode } from 'graphql';

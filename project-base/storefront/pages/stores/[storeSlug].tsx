@@ -15,7 +15,7 @@ import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrappe
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/misc/isServer';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { createClient } from 'helpers/urql/createClient';
+import { createClient } from 'urql/createClient';
 
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';

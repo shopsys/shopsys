@@ -10,7 +10,7 @@ import { AppProps as NextAppProps } from 'next/app';
 import { ReactElement, useMemo } from 'react';
 import { AppPageContent } from 'components/Pages/App/AppPageContent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { createClient } from 'helpers/urql/createClient';
+import { createClient } from 'urql/createClient';
 import { Provider, ssrExchange } from 'urql';
 import { initDayjsLocale } from 'helpers/formaters/formatDate';
 import { logException } from 'helpers/errors/logException';
