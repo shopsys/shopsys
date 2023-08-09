@@ -25,11 +25,11 @@ const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then(
 
 const TEST_IDENTIFIER = 'pages-orderconfirmation-registration-create-account';
 
-type RegistrationProps = {
+type RegistrationAfterOrderProps = {
     lastOrderUuid: string;
 };
 
-export const Registration: FC<RegistrationProps> = ({ lastOrderUuid }) => {
+export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOrderUuid }) => {
     const contactInformation = useCurrentUserContactInformation();
     const [, register] = useRegistrationMutationApi();
     const t = useTypedTranslationFunction();

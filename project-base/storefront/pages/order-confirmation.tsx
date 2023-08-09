@@ -3,7 +3,7 @@ import { PageGuard } from 'components/Helpers/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
-import { Registration } from 'components/Pages/OrderConfirmation/Registration';
+import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
 import {
     OrderSentPageContentDocumentApi,
     useIsCustomerUserRegisteredQueryApi,
@@ -77,7 +77,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                     orderUuid &&
                     !isInformationAboutUserRegistrationFetching &&
                     isCustomerUserRegisteredData?.isCustomerUserRegistered === false && (
-                        <Registration lastOrderUuid={orderUuid} />
+                        <RegistrationAfterOrder lastOrderUuid={orderUuid} />
                     )}
             </CommonLayout>
         </PageGuard>
