@@ -7,7 +7,7 @@ docker image build \
     --build-arg www_data_uid=$(id -u) \
     --build-arg www_data_gid=$(id -g) \
     --tag ${DOCKER_PHP_FPM_REPOSITORY_TAG} \
-    --target production \
+    --target base \
     --no-cache \
     --compress \
     -f project-base/app/docker/php-fpm/Dockerfile \
