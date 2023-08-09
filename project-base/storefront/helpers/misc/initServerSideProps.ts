@@ -14,7 +14,7 @@ import {
     SeoPageQueryDocumentApi,
     SettingsQueryDocumentApi,
 } from 'graphql/generated';
-import { DomainConfigType } from 'helpers/domain/domain';
+import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { getServerSideInternationalizedStaticUrl } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';

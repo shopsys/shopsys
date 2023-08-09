@@ -1,4 +1,4 @@
-import { DomainConfigType } from 'helpers/domain/domain';
+import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 

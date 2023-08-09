@@ -9,7 +9,7 @@ import {
     CartFragmentApi,
     CategoryDetailFragmentApi,
 } from 'graphql/generated';
-import { DomainConfigType } from 'helpers/domain/domain';
+import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { canUseDom } from 'helpers/misc/canUseDom';
 import { useDomainConfig } from 'hooks/useDomainConfig';

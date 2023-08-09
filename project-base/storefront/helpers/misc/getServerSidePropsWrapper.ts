@@ -1,4 +1,4 @@
-import { DomainConfigType, getDomainConfig } from 'helpers/domain/domain';
+import { DomainConfigType, getDomainConfig } from 'helpers/domain/domainConfig';
 import { GetServerSideProps } from 'next';
 import { Translate } from 'next-translate';
 import getT from 'next-translate/getT';

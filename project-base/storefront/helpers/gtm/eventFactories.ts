@@ -20,7 +20,7 @@ import {
     SimpleProductFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
-import { DomainConfigType } from 'helpers/domain/domain';
+import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';

@@ -1,4 +1,4 @@
-import { getDomainConfig } from 'helpers/domain/domain';
+import { getDomainConfig } from 'helpers/domain/domainConfig';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { GetServerSidePropsContext } from 'next';
 
