@@ -1,0 +1,30 @@
+on:
+    pull_request:
+        branches:
+            - '**'
+name: Add Review URL to Pull request description
+jobs:
+    add-review-url-to-pull-request-description:
+        name: Add Review URL to Pull request description
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: Extract variables to output
+                id: variables
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                run: |
+                    BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+                    BRANCH_NAME="${BRANCH,,}"
+                    BRANCH_NAME_ESCAPED="${BRANCH_NAME//./-}"
+                    echo "BRANCH_NAME_ESCAPED=${BRANCH_NAME_ESCAPED}" >> $GITHUB_OUTPUT
+            -   name: Add Review URL to Pull request description
+                uses: Jerome1337/comment-pull-request@v1.0.4
+                env:
+                    GITHUB_TOKEN: ${{ github.token }}
+                with:
+                    description-message: |
+                        ----
+                        :globe_with_meridians: Live Preview:
+                          - https://${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
+                          - https://cz.${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
+                    delete-previous-comment: false
