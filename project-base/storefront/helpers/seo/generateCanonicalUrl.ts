@@ -1,12 +1,14 @@
-import { getQueryWithoutSlugTypeParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import {
+    getQueryWithoutSlugTypeParameterFromParsedUrlQuery,
+    getUrlWithoutGetParameters,
+} from 'helpers/parsing/urlParsing';
 import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { INTERNAL_QUERY_PARAMETERS } from 'helpers/queryParams/queryParamNames';
 import { NextRouter } from 'next/router';
 
 export const generateCanonicalUrl = (router: NextRouter, url: string): string | null => {
     const newQueryOverwrite: Record<string, string> = {};
-    const queryWithoutAllParameter = getQueryWithoutSlugTypeParameter(router.query);
+    const queryWithoutAllParameter = getQueryWithoutSlugTypeParameterFromParsedUrlQuery(router.query);
 
     for (const queryParam in queryWithoutAllParameter) {
         if ((INTERNAL_QUERY_PARAMETERS as string[]).includes(queryParam)) {

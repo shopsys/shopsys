@@ -7,7 +7,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
+import { showInfoMessage, showSuccessMessage } from 'helpers/visual/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi, useRegistrationMutationApi } from 'graphql/generated';
 import { setTokensToCookies } from 'helpers/auth/tokens';

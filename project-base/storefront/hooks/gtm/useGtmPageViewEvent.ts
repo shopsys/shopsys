@@ -1,5 +1,5 @@
 import { gtmSafePushEvent } from 'helpers/gtm/gtm';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { GtmPageViewEventType } from 'types/gtm/events';

@@ -1,4 +1,4 @@
-import { showInfoMessage } from 'helpers/toasts';
+import { showInfoMessage } from 'helpers/visual/toasts';
 import {
     CartItemModificationsFragmentApi,
     CartModificationsFragmentApi,
@@ -10,7 +10,6 @@ import {
     TransportWithAvailablePaymentsAndStoresFragmentApi,
     useCartQueryApi,
 } from 'graphql/generated';
-
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { Translate } from 'next-translate';

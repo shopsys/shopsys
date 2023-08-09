@@ -10,7 +10,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
-import { twMergeCustom } from 'helpers/twMerge';
+import { twMergeCustom } from 'helpers/visual/twMerge';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 

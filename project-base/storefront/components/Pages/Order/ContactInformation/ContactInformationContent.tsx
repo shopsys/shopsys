@@ -13,7 +13,6 @@ import {
     usePrivacyPolicyArticleUrlQueryApi,
     useTermsAndConditionsArticleUrlQueryApi,
 } from 'graphql/generated';
-
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import Trans from 'next-translate/Trans';

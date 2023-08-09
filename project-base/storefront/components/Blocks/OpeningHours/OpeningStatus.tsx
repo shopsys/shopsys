@@ -1,5 +1,5 @@
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { twMergeCustom } from 'helpers/twMerge';
+import { twMergeCustom } from 'helpers/visual/twMerge';
 
 export const OpeningStatus: FC<{ isOpen: boolean }> = ({ isOpen, className }) => {
     const t = useTypedTranslationFunction();

@@ -1,5 +1,5 @@
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { ServerSidePropsType } from 'helpers/misc/initServerSideProps';
+import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useSetDomainConfig } from 'hooks/useDomainConfig';
 import { NextComponentType, NextPageContext } from 'next';
 import dynamic from 'next/dynamic';

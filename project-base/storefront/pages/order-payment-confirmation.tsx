@@ -4,8 +4,8 @@ import { PaymentConfirmationContent } from 'components/Pages/Order/PaymentConfir
 import { OrderSentPageContentDocumentApi, useCheckPaymentStatusMutationApi } from 'graphql/generated';
 import { onGtmCreateOrderEventHandler, onGtmPaymentFailEventHandler } from 'helpers/gtm/eventHandlers';
 import { getGtmCreateOrderEventFromLocalStorage } from 'helpers/gtm/helpers';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';

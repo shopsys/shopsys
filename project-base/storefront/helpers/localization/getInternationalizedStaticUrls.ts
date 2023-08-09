@@ -1,5 +1,7 @@
-import { getQueryWithoutSlugTypeParameterFromQueryString } from 'helpers/filterOptions/getQueryWithoutAllParameter';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import {
+    getQueryWithoutSlugTypeParameterFromQueryString,
+    getUrlWithoutGetParameters,
+} from 'helpers/parsing/urlParsing';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import getConfig from 'next/config';
 

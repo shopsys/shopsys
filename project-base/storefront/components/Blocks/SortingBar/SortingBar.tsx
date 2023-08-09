@@ -1,9 +1,9 @@
 import { Icon } from 'components/Basic/Icon/Icon';
-import { isElementVisible } from 'helpers/isElementVisible';
+import { isElementVisible } from 'helpers/visual/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { DEFAULT_SORT } from 'helpers/filterOptions/seoCategories';
-import { getFilteredQueries } from 'helpers/queryParams/queryHandlers';
+import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
@@ -111,7 +111,9 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                         <div className="flex vl:gap-3">
                             {sortOptions.map((sortOption, index) => {
                                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                                const { page, ...queriesWithoutPage } = getFilteredQueries(router.query);
+                                const { page, ...queriesWithoutPage } = getUrlQueriesWithoutDynamicPageQueries(
+                                    router.query,
+                                );
                                 const sortParams = new URLSearchParams({
                                     ...queriesWithoutPage,
                                     sort: sortOption,

@@ -5,7 +5,6 @@ import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwit
 import { useCookiesArticleUrlQueryApi } from 'graphql/generated';
 import { onGtmConsentUpdateEventHandler } from 'helpers/gtm/eventHandlers';
 import { getGtmConsentInfo } from 'helpers/gtm/gtm';
-
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useCallback } from 'react';

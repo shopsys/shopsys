@@ -1,6 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { twMergeCustom } from 'helpers/twMerge';
+import { twMergeCustom } from 'helpers/visual/twMerge';
 
 type ProductCompareButtonProps = {
     isWithText?: boolean;

@@ -3,7 +3,7 @@ import { SeznamMapLayer } from './SeznamMapLayer';
 import { SeznamMapMarkerLayer } from './SeznamMapMarkerLayer';
 import { SeznamMapMounter } from './SeznamMapMounter';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
-import { showErrorMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/visual/toasts';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useState } from 'react';

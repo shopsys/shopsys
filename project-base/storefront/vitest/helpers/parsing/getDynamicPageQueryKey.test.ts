@@ -1,4 +1,4 @@
-import { getDynamicPageQueryKey } from 'helpers/parsing/getDynamicPageQueryKey';
+import { getDynamicPageQueryKey } from 'helpers/parsing/urlParsing';
 import { describe, expect, test } from 'vitest';
 
 describe('getDynamicPageQueryKey test', () => {

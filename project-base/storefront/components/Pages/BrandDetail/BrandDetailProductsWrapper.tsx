@@ -3,7 +3,6 @@ import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsLis
 import { BrandDetailFragmentApi, BrandProductsQueryDocumentApi } from 'graphql/generated';
 import { getMappedProducts } from 'helpers/mappers/products';
 import { useProductsData } from 'helpers/pagination/loadMore';
-
 import { useGtmPaginatedProductListViewEvent } from 'hooks/gtm/productList/useGtmPaginatedProductListViewEvent';
 import { RefObject } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';

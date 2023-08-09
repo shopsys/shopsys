@@ -7,14 +7,13 @@ import {
     CategoryDetailQueryDocumentApi,
     CategoryDetailQueryVariablesApi,
 } from 'graphql/generated';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import { getUrlWithoutGetParameters, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextRouter, useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useClient, Client } from 'urql';
-import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 
 export const useCategoryDetailData = (
     filter: ProductFilterApi | null,

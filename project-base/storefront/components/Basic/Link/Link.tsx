@@ -1,9 +1,8 @@
 import { Button } from 'components/Forms/Button/Button';
-
 import { AnchorHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { ExtendedNextLink } from '../ExtendedNextLink/ExtendedNextLink';
-import { twMergeCustom } from 'helpers/twMerge';
+import { twMergeCustom } from 'helpers/visual/twMerge';
 
 type NativePropsAnchor = ExtractNativePropsFromDefault<
     AnchorHTMLAttributes<HTMLAnchorElement>,

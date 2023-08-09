@@ -1,6 +1,5 @@
 import { FooterMenuItem } from 'components/Layout/Footer/FooterMenuItem';
 import { ArticlePlacementTypeEnumApi, SimpleNotBlogArticleFragmentApi, useArticlesQueryApi } from 'graphql/generated';
-
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
 import { FooterContact } from './FooterContact';

@@ -12,21 +12,22 @@ import {
     BlogCategoryQueryVariablesApi,
     useBlogCategoryQueryApi,
 } from 'graphql/generated';
-
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/misc/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/misc/isServer';
-import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { isRedirectedFromSsr } from 'helpers/DOM/isServer';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { createClient } from 'urql/createClient';
-
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import {
+    getNumberFromUrlQuery,
+    getSlugFromServerSideUrl,
+    getSlugFromUrl,
+    getUrlWithoutGetParameters,
+} from 'helpers/parsing/urlParsing';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 
 const BlogCategoryPage: NextPage = () => {
@@ -75,7 +76,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 redisClient,
                 context,
             });
-            const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+            const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
 
             if (isRedirectedFromSsr(context.req.headers)) {
                 const blogCategoryResponse: OperationResult<BlogCategoryQueryApi, BlogCategoryQueryVariablesApi> =

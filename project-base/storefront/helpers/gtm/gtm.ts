@@ -11,7 +11,7 @@ import {
 } from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { canUseDom } from 'helpers/misc/canUseDom';
+import { canUseDom } from 'helpers/DOM/canUseDom';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useMemo } from 'react';

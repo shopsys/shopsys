@@ -7,7 +7,6 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
 import { useCountriesQueryApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
-
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';

@@ -1,7 +1,7 @@
 import { ListItem } from './ListItem';
 import { getSearchResultLinkType } from 'helpers/mappers/simpleNavigation';
 import { ListedItemPropType } from 'types/simpleNavigation';
-import { twMergeCustom } from 'helpers/twMerge';
+import { twMergeCustom } from 'helpers/visual/twMerge';
 
 type SimpleNavigationProps = {
     listedItems: ListedItemPropType[];

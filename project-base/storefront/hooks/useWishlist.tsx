@@ -10,7 +10,7 @@ import {
 import { useTypedTranslationFunction } from './typescript/useTypedTranslationFunction';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import { showErrorMessage, showSuccessMessage } from 'helpers/visual/toasts';
 
 export const useWishlist = () => {
     const t = useTypedTranslationFunction();

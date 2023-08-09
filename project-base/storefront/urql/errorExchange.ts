@@ -1,4 +1,4 @@
-import { showErrorMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/visual/toasts';
 import { CartQueryDocumentApi } from 'graphql/generated';
 import { removeTokensFromCookies } from 'helpers/auth/tokens';
 import { isFlashMessageError, isNoLogError } from 'helpers/errors/applicationErrors';

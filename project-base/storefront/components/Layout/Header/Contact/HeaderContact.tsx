@@ -1,5 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
-import { isElementVisible } from 'helpers/isElementVisible';
+import { isElementVisible } from 'helpers/visual/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';

@@ -1,5 +1,5 @@
 import { UserConsentForm } from 'components/Blocks/UserConsent/UserConsentForm';
-import { showSuccessMessage } from 'helpers/toasts';
+import { showSuccessMessage } from 'helpers/visual/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';

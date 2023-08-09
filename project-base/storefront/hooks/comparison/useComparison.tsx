@@ -1,4 +1,4 @@
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import { showErrorMessage, showSuccessMessage } from 'helpers/visual/toasts';
 import {
     useAddProductToComparisonMutationApi,
     useCleanComparisonMutationApi,

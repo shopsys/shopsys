@@ -1,4 +1,4 @@
-import { twMergeCustom } from 'helpers/twMerge';
+import { twMergeCustom } from 'helpers/visual/twMerge';
 
 type FormColumnProps = {
     width?: string;

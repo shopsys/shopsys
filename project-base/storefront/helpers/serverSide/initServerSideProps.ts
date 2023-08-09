@@ -1,7 +1,5 @@
 import { logException } from '../errors/logException';
 import { createClient } from 'urql/createClient';
-import { getUnauthenticatedRedirectSSR } from './getUnauthenticatedRedirectSSR';
-import { isUserLoggedInSSR } from './isUserLoggedInSSR';
 import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
@@ -16,7 +14,7 @@ import {
 } from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { getServerSideInternationalizedStaticUrl } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import loadNamespaces from 'next-translate/loadNamespaces';
@@ -24,6 +22,8 @@ import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
 import { parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { Translate } from 'next-translate';
+import { isUserLoggedInSSR } from 'helpers/auth/isUserLoggedInSSR';
+import { getUnauthenticatedRedirectSSR } from 'helpers/auth/getUnauthenticatedRedirectSSR';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;

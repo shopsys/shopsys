@@ -1,6 +1,6 @@
 import { useChangePaymentInCart } from './useChangePaymentInCart';
 import { handleCartModifications, useCurrentCart } from 'connectors/cart/Cart';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useRouter } from 'next/router';

@@ -1,4 +1,4 @@
-import { twMergeCustom } from 'helpers/twMerge';
+import { twMergeCustom } from 'helpers/visual/twMerge';
 import { ExtendedNextLink } from '../ExtendedNextLink/ExtendedNextLink';
 
 const getDataTestId = (dataTestId?: string) => dataTestId ?? 'basic-flag';

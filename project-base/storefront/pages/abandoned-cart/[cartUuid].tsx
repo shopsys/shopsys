@@ -1,5 +1,5 @@
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';

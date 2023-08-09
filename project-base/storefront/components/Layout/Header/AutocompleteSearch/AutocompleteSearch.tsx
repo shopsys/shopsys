@@ -4,7 +4,6 @@ import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-
 import { useGtmAutocompleteResultsViewEvent } from 'hooks/gtm/useGtmAutocompleteResultsViewEvent';
 import { useDebounce } from 'hooks/helpers/useDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';

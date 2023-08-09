@@ -1,6 +1,8 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { getQueryWithoutSlugTypeParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
-import { getFilteredQueries } from 'helpers/queryParams/queryHandlers';
+import {
+    getQueryWithoutSlugTypeParameterFromParsedUrlQuery,
+    getUrlQueriesWithoutDynamicPageQueries,
+} from 'helpers/parsing/urlParsing';
 import {
     DEFAULT_SORT,
     getChangedDefaultFilters,
@@ -23,7 +25,7 @@ import {
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
-import { getDynamicPageQueryKey } from 'helpers/parsing/getDynamicPageQueryKey';
+import { getDynamicPageQueryKey } from 'helpers/parsing/urlParsing';
 
 export type FilterQueries = FilterOptionsUrlQueryType | undefined;
 
@@ -56,7 +58,7 @@ const handleUpdateFilter = (selectedUuid: string | undefined, items: string[] | 
 
 export const useQueryParams = () => {
     const router = useRouter();
-    const query = getQueryWithoutSlugTypeParameter(router.query) as unknown as UrlQueries;
+    const query = getQueryWithoutSlugTypeParameterFromParsedUrlQuery(router.query) as UrlQueries;
     const defaultProductFiltersMap = useSessionStore((s) => s.defaultProductFiltersMap);
     const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
 
@@ -334,7 +336,7 @@ export const useQueryParams = () => {
 
     const pushQueries = (queries: UrlQueries, isPush?: boolean, pathnameOverride?: string) => {
         // remove queries which are not set or removed
-        const filteredQueries = getFilteredQueries(queries);
+        const filteredQueries = getUrlQueriesWithoutDynamicPageQueries(queries);
 
         const asPathname = router.asPath.split('?')[0];
         const dynamicPageQueryKey = getDynamicPageQueryKey(router.pathname);

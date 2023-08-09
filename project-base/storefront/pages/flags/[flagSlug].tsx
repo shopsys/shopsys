@@ -13,42 +13,42 @@ import {
     FlagProductsQueryVariablesApi,
     useFlagDetailQueryApi,
 } from 'graphql/generated';
-
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/misc/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/misc/isServer';
-import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { isRedirectedFromSsr } from 'helpers/DOM/isServer';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParams/queryParamNames';
-import { getProductListSort } from 'helpers/sorting/getProductListSort';
-import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { createClient } from 'urql/createClient';
-
 import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import {
+    getNumberFromUrlQuery,
+    getOptionalStringFromUrlQuery,
+    getProductListSortFromUrlQuery,
+    getSlugFromServerSideUrl,
+    getSlugFromUrl,
+    getStringFromUrlQuery,
+    getUrlWithoutGetParameters,
+} from 'helpers/parsing/urlParsing';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { parseLoadMoreFromQuery } from 'helpers/pagination/parseLoadMoreFromQuery';
 import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
 
 const FlagDetailPage: NextPage = () => {
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
 
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
+    const orderingMode = getProductListSortFromUrlQuery(getStringFromUrlQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
     const filter = mapParametersFilter(
-        getFilterOptions(parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
+        getFilterOptions(getOptionalStringFromUrlQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
     );
 
     const [{ data: flagDetailData, fetching }] = useFlagDetailQueryApi({
@@ -83,8 +83,8 @@ const FlagDetailPage: NextPage = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, ssrExchange, t }) =>
         async (context) => {
-            const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
-            const loadMore = parseLoadMoreFromQuery(context.query[LOAD_MORE_QUERY_PARAMETER_NAME]);
+            const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
+            const loadMore = getNumberFromUrlQuery(context.query[LOAD_MORE_QUERY_PARAMETER_NAME], 0);
             const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
             const redirect = getRedirectWithOffsetPage(page, loadMore, urlSlug, context.query);
 
@@ -101,11 +101,11 @@ export const getServerSideProps = getServerSidePropsWrapper(
             });
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const orderingMode = getProductListSort(
-                    parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
+                const orderingMode = getProductListSortFromUrlQuery(
+                    getStringFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
                 );
                 const filter = mapParametersFilter(
-                    getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME])),
+                    getFilterOptions(getOptionalStringFromUrlQuery(context.query[FILTER_QUERY_PARAMETER_NAME])),
                 );
 
                 const flagDetailResponsePromise = client!

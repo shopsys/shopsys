@@ -1,6 +1,6 @@
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
-import { canUseDom } from 'helpers/misc/canUseDom';
-import { isServer } from 'helpers/misc/isServer';
+import { canUseDom } from 'helpers/DOM/canUseDom';
+import { isServer } from 'helpers/DOM/isServer';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import { GtmDeviceTypes } from 'types/gtm/enums';
 import { GtmCreateOrderEventOrderPartType } from 'types/gtm/events';

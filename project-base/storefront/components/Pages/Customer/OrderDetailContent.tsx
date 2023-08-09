@@ -7,7 +7,7 @@ import { BreadcrumbFragmentApi, OrderDetailFragmentApi } from 'graphql/generated
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { twMergeCustom } from 'helpers/twMerge';
+import { twMergeCustom } from 'helpers/visual/twMerge';
 
 type OrderDetailContentProps = {
     order: OrderDetailFragmentApi;

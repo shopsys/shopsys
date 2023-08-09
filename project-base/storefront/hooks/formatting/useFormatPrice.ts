@@ -1,6 +1,5 @@
 import { useSettingsQueryApi } from 'graphql/generated';
 import { formatPrice } from 'helpers/formaters/formatPrice';
-
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 

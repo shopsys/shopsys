@@ -13,8 +13,6 @@ import {
     ProductOrderingModeEnumApi,
 } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
-import { getFilteredQueries } from 'helpers/queryParams/queryHandlers';
 import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { Redirect } from 'next';
@@ -22,6 +20,7 @@ import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import { useRef, useState, useEffect } from 'react';
 import { Client, useClient } from 'urql';
+import { getSlugFromUrl, getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
 
 const PRODUCT_LIST_LIMIT = 100;
 
@@ -128,7 +127,7 @@ export const getRedirectWithOffsetPage = (
         return undefined;
     }
 
-    const updatedQuery: ParsedUrlQuery = getFilteredQueries(currentQuery);
+    const updatedQuery: ParsedUrlQuery = getUrlQueriesWithoutDynamicPageQueries(currentQuery);
     const searchParams = new URLSearchParams();
 
     for (const [key, value] of Object.entries(updatedQuery)) {

@@ -67,7 +67,11 @@ const doTryRefreshToken = async (
         return;
     }
 
-    setTokensToCookies(refreshTokenData.RefreshTokens.accessToken, refreshTokenData.RefreshTokens.refreshToken, context);
+    setTokensToCookies(
+        refreshTokenData.RefreshTokens.accessToken,
+        refreshTokenData.RefreshTokens.refreshToken,
+        context,
+    );
 };
 
 const refreshAuth = async (
