@@ -7,9 +7,9 @@ import { ProductExposedStoresCount } from 'components/Blocks/Product/ProductExpo
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { ListedProductFragmentApi } from 'graphql/generated';
-import { onGtmProductClickEventHandler } from 'helpers/gtm/eventHandlers';
+import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';

@@ -1,13 +1,13 @@
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
-import { GtmPageType } from 'types/gtm/enums';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useRouter } from 'next/router';

@@ -2,7 +2,7 @@ import { ProductListItem } from './ProductListItem';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { useWishlist } from 'hooks/useWishlist';
 import React, { RefObject } from 'react';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { useComparison } from 'hooks/comparison/useComparison';
 import dynamic from 'next/dynamic';
 import { useQueryParams } from 'hooks/useQueryParams';

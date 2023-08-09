@@ -2,9 +2,9 @@ import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueri
 import { canUseDom } from 'helpers/DOM/canUseDom';
 import { isServer } from 'helpers/DOM/isServer';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
-import { GtmDeviceTypes } from 'types/gtm/enums';
-import { GtmCreateOrderEventOrderPartType } from 'types/gtm/events';
-import { GtmUserInfoType } from 'types/gtm/objects';
+import { GtmDeviceTypes } from 'gtm/types/enums';
+import { GtmCreateOrderEventOrderPartType } from 'gtm/types/events';
+import { GtmUserInfoType } from 'gtm/types/objects';
 import { v4 as uuidV4 } from 'uuid';
 
 const GTM_CREATE_ORDER_OBJECT_LOCAL_STORAGE_KEY = 'gtmCreateOrderEvent' as const;

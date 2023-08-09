@@ -14,7 +14,7 @@ import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ImageSizesFragmentApi, MainVariantDetailFragmentApi } from 'graphql/generated';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
-import { useGtmProductDetailViewEvent } from 'hooks/gtm/useGtmProductDetailViewEvent';
+import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';

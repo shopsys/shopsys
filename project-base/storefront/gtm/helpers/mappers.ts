@@ -9,7 +9,7 @@ import {
 } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
-import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'types/gtm/objects';
+import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'gtm/types/objects';
 import { ProductInterfaceType } from 'types/product';
 
 export const mapGtmCartItemType = (

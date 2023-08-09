@@ -20,7 +20,7 @@ import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PersonalDataOverviewFormType } from 'types/form';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

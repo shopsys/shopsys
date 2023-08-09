@@ -11,7 +11,7 @@ import {
 } from 'graphql/generated';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
@@ -22,12 +22,12 @@ import {
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParams/queryParamNames';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { GtmPageType } from 'types/gtm/enums';
+import { GtmPageType } from 'gtm/types/enums';
 import {
     getNumberFromUrlQuery,
     getProductListSortFromUrlQuery,

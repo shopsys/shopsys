@@ -29,7 +29,7 @@ import { useMemo } from 'react';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { CombinedError } from 'urql';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));

@@ -9,18 +9,18 @@ import {
     OrdersQueryDocumentApi,
     useOrdersQueryApi,
 } from 'graphql/generated';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useMemo } from 'react';
-import { GtmPageType } from 'types/gtm/enums';
+import { GtmPageType } from 'gtm/types/enums';
 import { getNumberFromUrlQuery } from 'helpers/parsing/urlParsing';
 
 const OrdersPage: FC = () => {

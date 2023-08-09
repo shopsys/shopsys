@@ -2,7 +2,7 @@ import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsLis
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 
 type ResultProductsProps = {
     products: ListedProductFragmentApi[];

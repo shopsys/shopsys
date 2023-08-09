@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { DeliveryAddressType } from 'types/customer';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 

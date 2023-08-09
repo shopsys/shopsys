@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
-import { GtmProductListNameType } from 'types/gtm/enums';
+import { GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/visual/twMerge';
 
 const TEST_IDENTIFIER = 'layout-header-cart-';

@@ -7,17 +7,17 @@ import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
 import { TransportAndPaymentContent } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentContent';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useLastOrderQueryApi, useTransportsQueryApi } from 'graphql/generated';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
-import { useGtmPaymentAndTransportPageViewEvent } from 'hooks/gtm/useGtmPaymentAndTransportPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { useGtmPaymentAndTransportPageViewEvent } from 'gtm/hooks/useGtmPaymentAndTransportPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
-import { GtmPageType } from 'types/gtm/enums';
+import { GtmPageType } from 'gtm/types/enums';
 import Head from 'next/head';
 
 const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {

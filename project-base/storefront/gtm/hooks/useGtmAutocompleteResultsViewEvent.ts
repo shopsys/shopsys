@@ -1,6 +1,6 @@
 import { AutocompleteSearchQueryApi } from 'graphql/generated';
-import { getGtmAutocompleteResultsViewEvent } from 'helpers/gtm/eventFactories';
-import { gtmSafePushEvent } from 'helpers/gtm/gtm';
+import { getGtmAutocompleteResultsViewEvent } from 'gtm/helpers/eventFactories';
+import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { useEffect, useRef } from 'react';
 
 export const useGtmAutocompleteResultsViewEvent = (

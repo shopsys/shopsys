@@ -1,6 +1,6 @@
 import { MainVariantDetailFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
-import { getGtmProductDetailViewEvent } from 'helpers/gtm/eventFactories';
-import { gtmSafePushEvent } from 'helpers/gtm/gtm';
+import { getGtmProductDetailViewEvent } from 'gtm/helpers/eventFactories';
+import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useEffect, useRef } from 'react';
 

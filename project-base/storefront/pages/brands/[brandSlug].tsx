@@ -15,7 +15,7 @@ import {
 } from 'graphql/generated';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
+import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/DOM/isServer';
@@ -32,7 +32,7 @@ import {
     getSlugFromUrl,
 } from 'helpers/parsing/urlParsing';
 import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';

@@ -17,18 +17,18 @@ import {
     getGtmCreateOrderEventOrderPart,
     getGtmCreateOrderEventUserPart,
     useGtmStaticPageViewEvent,
-} from 'helpers/gtm/eventFactories';
-import { onGtmCreateOrderEventHandler } from 'helpers/gtm/eventHandlers';
-import { getGtmReviewConsents } from 'helpers/gtm/gtm';
-import { saveGtmCreateOrderEventInLocalStorage } from 'helpers/gtm/helpers';
+} from 'gtm/helpers/eventFactories';
+import { onGtmCreateOrderEventHandler } from 'gtm/helpers/eventHandlers';
+import { getGtmReviewConsents } from 'gtm/helpers/gtm';
+import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/helpers/helpers';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getIsPaymentWithPaymentGate } from 'helpers/mappers/payment';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useGtmContactInformationPageViewEvent } from 'hooks/gtm/useGtmContactInformationPageViewEvent';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmContactInformationPageViewEvent } from 'gtm/hooks/useGtmContactInformationPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
@@ -39,7 +39,7 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { CustomerTypeEnum } from 'types/customer';
-import { GtmMessageOriginType, GtmPageType } from 'types/gtm/enums';
+import { GtmMessageOriginType, GtmPageType } from 'gtm/types/enums';
 import dynamic from 'next/dynamic';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));

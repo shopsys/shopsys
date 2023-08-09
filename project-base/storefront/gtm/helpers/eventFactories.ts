@@ -40,7 +40,7 @@ import {
     GtmPageType,
     GtmProductListNameType,
     GtmSectionType,
-} from 'types/gtm/enums';
+} from 'gtm/types/enums';
 import {
     GtmAutocompleteResultClickEventType,
     GtmAutocompleteResultsViewEventType,
@@ -60,7 +60,7 @@ import {
     GtmSendFormEventType,
     GtmShowMessageEventType,
     GtmTransportChangeEventType,
-} from 'types/gtm/events';
+} from 'gtm/types/events';
 import {
     GtmCartInfoType,
     GtmCartItemType,
@@ -68,7 +68,7 @@ import {
     GtmPageInfoType,
     GtmReviewConsentsType,
     GtmUserInfoType,
-} from 'types/gtm/objects';
+} from 'gtm/types/objects';
 
 export const getGtmCartViewEvent = (
     currencyCode: string,

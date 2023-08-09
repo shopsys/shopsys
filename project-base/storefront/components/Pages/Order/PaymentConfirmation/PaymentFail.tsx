@@ -1,10 +1,10 @@
 import { ImageWrapper, Message, MessageWrapper, PaymentWrapper } from './PaymentConfirmationElements';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { GtmPageType } from 'types/gtm/enums';
+import { GtmPageType } from 'gtm/types/enums';
 
 export const PaymentFail: FC = () => {
     const t = useTypedTranslationFunction();

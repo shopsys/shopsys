@@ -1,7 +1,7 @@
-import { getGtmCartViewEvent } from 'helpers/gtm/eventFactories';
-import { gtmSafePushEvent } from 'helpers/gtm/gtm';
+import { getGtmCartViewEvent } from 'gtm/helpers/eventFactories';
+import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { useEffect, useRef } from 'react';
-import { GtmPageViewEventType } from 'types/gtm/events';
+import { GtmPageViewEventType } from 'gtm/types/events';
 
 export const useGtmCartViewEvent = (gtmPageViewEvent: GtmPageViewEventType): void => {
     const wasViewedRef = useRef(false);

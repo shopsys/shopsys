@@ -1,9 +1,9 @@
 import { ResultProducts } from './ResultProducts';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { getMappedProducts } from 'helpers/mappers/products';
-import { useGtmPaginatedProductListViewEvent } from 'hooks/gtm/productList/useGtmPaginatedProductListViewEvent';
+import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
 import { RefObject } from 'react';
-import { GtmProductListNameType } from 'types/gtm/enums';
+import { GtmProductListNameType } from 'gtm/types/enums';
 import { useSearchProductsData } from './helpers';
 import { ListedProductConnectionPreviewFragmentApi } from 'graphql/generated';
 

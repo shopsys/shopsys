@@ -1,11 +1,11 @@
 import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageElements';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import React from 'react';
-import { GtmPageType } from 'types/gtm/enums';
+import { GtmPageType } from 'gtm/types/enums';
 
 export const Error404Content: FC = () => {
     const t = useTypedTranslationFunction();

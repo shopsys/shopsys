@@ -19,7 +19,7 @@ import { useCallback, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { NewPasswordFormType } from 'types/form';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

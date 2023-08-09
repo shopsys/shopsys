@@ -1,9 +1,9 @@
 import { CartFragmentApi, CartItemFragmentApi, useRemoveFromCartMutationApi } from 'graphql/generated';
-import { onGtmRemoveFromCartEventHandler } from 'helpers/gtm/eventHandlers';
+import { onGtmRemoveFromCartEventHandler } from 'gtm/helpers/eventHandlers';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { usePersistStore } from 'store/usePersistStore';
-import { GtmProductListNameType } from 'types/gtm/enums';
+import { GtmProductListNameType } from 'gtm/types/enums';
 
 export type RemoveFromCartHandler = (
     cartItem: CartItemFragmentApi,

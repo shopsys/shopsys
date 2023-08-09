@@ -27,8 +27,8 @@ import {
     GtmProductListNameType,
     GtmUserStatus,
     GtmUserType,
-} from 'types/gtm/enums';
-import { GtmEventInterface } from 'types/gtm/events';
+} from 'gtm/types/enums';
+import { GtmEventInterface } from 'gtm/types/events';
 import {
     GtmBlogArticleDetailPageInfoType,
     GtmBrandDetailPageInfoType,
@@ -39,7 +39,7 @@ import {
     GtmPageInfoType,
     GtmReviewConsentsType,
     GtmUserInfoType,
-} from 'types/gtm/objects';
+} from 'gtm/types/objects';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {

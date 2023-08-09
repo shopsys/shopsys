@@ -27,9 +27,9 @@ import {
     GtmMessageType,
     GtmProductListNameType,
     GtmSectionType,
-} from 'types/gtm/enums';
-import { GtmCreateOrderEventOrderPartType } from 'types/gtm/events';
-import { GtmCartInfoType, GtmConsentInfoType, GtmUserInfoType } from 'types/gtm/objects';
+} from 'gtm/types/enums';
+import { GtmCreateOrderEventOrderPartType } from 'gtm/types/events';
+import { GtmCartInfoType, GtmConsentInfoType, GtmUserInfoType } from 'gtm/types/objects';
 
 export const onGtmCreateOrderEventHandler = (
     gtmCreateOrderEventOrderPart: GtmCreateOrderEventOrderPartType | undefined,

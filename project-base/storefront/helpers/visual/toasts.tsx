@@ -1,6 +1,6 @@
-import { onGtmShowMessageEventHandler } from 'helpers/gtm/eventHandlers';
+import { onGtmShowMessageEventHandler } from 'gtm/helpers/eventHandlers';
 import { toast } from 'react-toastify';
-import { GtmMessageDetailType, GtmMessageOriginType, GtmMessageType } from 'types/gtm/enums';
+import { GtmMessageDetailType, GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
 
 const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
     if (type === 'error') {

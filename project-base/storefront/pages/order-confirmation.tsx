@@ -9,16 +9,16 @@ import {
     useIsCustomerUserRegisteredQueryApi,
     useOrderSentPageContentApi,
 } from 'graphql/generated';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useRouter } from 'next/router';
-import { GtmPageType } from 'types/gtm/enums';
+import { GtmPageType } from 'gtm/types/enums';
 import { PaymentTypeEnum } from 'types/payment';
 
 export type OrderConfirmationQuery = {

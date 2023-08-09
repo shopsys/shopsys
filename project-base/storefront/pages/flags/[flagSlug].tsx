@@ -14,7 +14,7 @@ import {
     useFlagDetailQueryApi,
 } from 'graphql/generated';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
-import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
+import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/DOM/isServer';
@@ -25,7 +25,7 @@ import {
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParams/queryParamNames';
 import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import {

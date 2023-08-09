@@ -11,7 +11,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useRegistrationMutationApi } from 'graphql/generated';
 import { setTokensToCookies } from 'helpers/auth/tokens';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { onGtmSendFormEventHandler } from 'helpers/gtm/eventHandlers';
+import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
@@ -19,7 +19,7 @@ import Trans from 'next-translate/Trans';
 import dynamic from 'next/dynamic';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
-import { GtmFormType, GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

@@ -8,7 +8,7 @@ import {
     useStoreQueryApi,
 } from 'graphql/generated';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
-import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'helpers/gtm/mappers';
+import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'gtm/helpers/mappers';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
@@ -18,7 +18,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

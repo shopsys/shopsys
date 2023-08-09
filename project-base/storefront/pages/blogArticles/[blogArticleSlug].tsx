@@ -10,13 +10,13 @@ import {
     ProductsByCatnumsDocumentApi,
     useBlogArticleDetailQueryApi,
 } from 'graphql/generated';
-import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
+import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/DOM/isServer';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';

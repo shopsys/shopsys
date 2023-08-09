@@ -18,7 +18,7 @@ import { Translate } from 'next-translate';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import * as Yup from 'yup';
 
 type LoginProps = {

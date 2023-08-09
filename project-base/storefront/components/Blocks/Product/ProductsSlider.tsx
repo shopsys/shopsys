@@ -1,7 +1,7 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { RefObject, createRef, useEffect, useRef, useState } from 'react';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/visual/twMerge';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { ProductsListContent } from './ProductsList/ProductsListContent';

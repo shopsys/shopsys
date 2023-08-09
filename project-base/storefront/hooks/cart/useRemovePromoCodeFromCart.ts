@@ -4,7 +4,7 @@ import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 
 type RemovePromoCodeHandler = (
     promoCodeToBeRemoved: string,

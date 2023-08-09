@@ -15,7 +15,7 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { Translate } from 'next-translate';
 import { usePersistStore } from 'store/usePersistStore';
 import { CurrentCartType } from 'types/cart';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const isUserLoggedIn = !!useCurrentCustomerData();

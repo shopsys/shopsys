@@ -1,10 +1,10 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Popup } from 'components/Layout/Popup/Popup';
-import { getGtmShowMessageEvent } from 'helpers/gtm/eventFactories';
-import { gtmSafePushEvent } from 'helpers/gtm/gtm';
+import { getGtmShowMessageEvent } from 'gtm/helpers/eventFactories';
+import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { ReactElement, useEffect, useMemo } from 'react';
-import { GtmMessageOriginType, GtmMessageType } from 'types/gtm/enums';
+import { GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
 
 type ErrorPopupProps = {
     onCloseCallback: () => void;

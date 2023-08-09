@@ -5,10 +5,10 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
-import { useGtmSliderProductListViewEvent } from 'hooks/gtm/productList/useGtmSliderProductListViewEvent';
+import { useGtmSliderProductListViewEvent } from 'gtm/hooks/productList/useGtmSliderProductListViewEvent';
 import { useComparison } from 'hooks/comparison/useComparison';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { GtmProductListNameType } from 'types/gtm/enums';
+import { GtmProductListNameType } from 'gtm/types/enums';
 
 type ProductComparisonProps = {
     breadcrumb: BreadcrumbFragmentApi[];

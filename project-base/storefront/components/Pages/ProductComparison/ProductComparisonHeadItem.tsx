@@ -4,12 +4,12 @@ import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ComparedProductFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
-import { onGtmProductClickEventHandler } from 'helpers/gtm/eventHandlers';
+import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCallback } from 'react';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 
 type ProductComparisonItemProps = {
     product: ComparedProductFragmentApi;

@@ -15,7 +15,7 @@ import {
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { useHandleDefaultFiltersUpdate } from 'helpers/filterOptions/seoCategories';
-import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
+import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/DOM/isServer';
@@ -26,7 +26,7 @@ import {
     LOAD_MORE_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParams/queryParamNames';
 import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';

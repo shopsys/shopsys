@@ -2,7 +2,7 @@ import { showErrorMessage } from 'helpers/visual/toasts';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { Translate } from 'next-translate';
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { CombinedError } from 'urql';
 
 export const handleFormErrors = <T extends FieldValues>(
