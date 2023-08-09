@@ -644,8 +644,8 @@ jobs:
                     description-message: |
                         ----
                         :globe_with_meridians: Live Preview:
-                          - https://${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
-                          - https://cz.${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
+                          - https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
+                          - https://cz.${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                     delete-previous-comment: false
     build-successful:
         if: ${{ always() }}
