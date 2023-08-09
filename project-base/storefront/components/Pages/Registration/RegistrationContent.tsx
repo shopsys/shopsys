@@ -10,7 +10,7 @@ import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi, useRegistrationMutationApi } from 'graphql/generated';
-import { setTokensToCookie } from 'helpers/auth/tokens';
+import { setTokensToCookies } from 'helpers/auth/tokens';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
@@ -54,7 +54,7 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                 const accessToken = registerResult.data.Register.tokens.accessToken;
                 const refreshToken = registerResult.data.Register.tokens.refreshToken;
 
-                setTokensToCookie(accessToken, refreshToken);
+                setTokensToCookies(accessToken, refreshToken);
                 showSuccessMessage(formMeta.messages.successAndLogged);
 
                 if (registerResult.data.Register.showCartMergeInfo === true) {

@@ -7,7 +7,7 @@ export const removeTokensFromCookies = (context?: GetServerSidePropsContext | Ne
     deleteCookie('refreshToken', { req: context?.req, res: context?.res, path: '/' });
 };
 
-export const setTokensToCookie = (
+export const setTokensToCookies = (
     accessToken: string,
     refreshToken: string,
     context?: GetServerSidePropsContext | NextPageContext,

@@ -1,6 +1,6 @@
 import { AuthConfig, AuthUtilities } from '@urql/exchange-auth';
 import { RefreshTokensDocumentApi } from 'graphql/generated';
-import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
+import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
 import { GetServerSidePropsContext, NextPageContext, PreviewData } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { CombinedError, makeOperation, Operation } from 'urql';
@@ -67,7 +67,7 @@ const doTryRefreshToken = async (
         return;
     }
 
-    setTokensToCookie(refreshTokenData.RefreshTokens.accessToken, refreshTokenData.RefreshTokens.refreshToken, context);
+    setTokensToCookies(refreshTokenData.RefreshTokens.accessToken, refreshTokenData.RefreshTokens.refreshToken, context);
 };
 
 const refreshAuth = async (

@@ -9,7 +9,7 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useRegistrationMutationApi } from 'graphql/generated';
-import { setTokensToCookie } from 'helpers/auth/tokens';
+import { setTokensToCookies } from 'helpers/auth/tokens';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { onGtmSendFormEventHandler } from 'helpers/gtm/eventHandlers';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
@@ -51,7 +51,7 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
             const accessToken = registerResult.data.Register.tokens.accessToken;
             const refreshToken = registerResult.data.Register.tokens.refreshToken;
 
-            setTokensToCookie(accessToken, refreshToken);
+            setTokensToCookies(accessToken, refreshToken);
             showSuccessMessage(t('Your account has been created and you are logged in now'));
             onGtmSendFormEventHandler(GtmFormType.registration);
 
