@@ -6,7 +6,7 @@ import { getMappedProducts } from 'helpers/mappers/products';
 import { useProductsData } from 'helpers/pagination/loadMore';
 import { useGtmPaginatedProductListViewEvent } from 'hooks/gtm/productList/useGtmPaginatedProductListViewEvent';
 import { RefObject, useMemo } from 'react';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { GtmMessageOriginType } from 'types/gtm/enums';
 
 type CategoryDetailProps = {

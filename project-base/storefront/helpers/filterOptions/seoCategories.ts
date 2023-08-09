@@ -4,8 +4,8 @@ import {
     ProductOrderingModeEnumApi,
 } from 'graphql/generated';
 import { useEffect } from 'react';
-import { DefaultProductFiltersMapType } from 'store/zustand/slices/createSeoCategorySlice';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
+import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
 
 export const DEFAULT_SORT = ProductOrderingModeEnumApi.PriorityApi as const;

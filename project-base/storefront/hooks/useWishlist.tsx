@@ -9,7 +9,7 @@ import {
 } from 'graphql/generated';
 import { useTypedTranslationFunction } from './typescript/useTypedTranslationFunction';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 
 export const useWishlist = () => {

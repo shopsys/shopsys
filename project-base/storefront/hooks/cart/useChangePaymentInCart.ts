@@ -6,7 +6,7 @@ import { useGtmCartInfo } from 'helpers/gtm/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useLatest } from 'hooks/ui/useLatest';
 import { useCallback } from 'react';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType } from 'types/gtm/enums';
 
 export type ChangePaymentHandler = (

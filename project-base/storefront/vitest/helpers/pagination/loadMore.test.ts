@@ -13,7 +13,7 @@ import {
 import { stringify } from 'querystring';
 import { describe, expect, test, vi } from 'vitest';
 
-vi.mock('store/zustand/useSessionStore', () => ({}));
+vi.mock('store/useSessionStore', () => ({}));
 
 describe('getPreviouslyQueriedProductsFromCache tests', () => {
     const SLUG = '/url-slug';

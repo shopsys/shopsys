@@ -12,7 +12,7 @@ import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextRouter, useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { useClient, Client } from 'urql';
 import { getSlugFromUrl } from 'helpers/parsing/getSlugFromUrl';
 

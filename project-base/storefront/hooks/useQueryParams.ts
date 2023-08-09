@@ -21,7 +21,7 @@ import {
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParams/queryParamNames';
 import { useRouter } from 'next/router';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
 import { getDynamicPageQueryKey } from 'helpers/parsing/getDynamicPageQueryKey';
 

@@ -10,7 +10,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import Trans from 'next-translate/Trans';
 import { useCallback } from 'react';
 import { FormProvider } from 'react-hook-form';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';
 
 type UserConsentFormProps = {

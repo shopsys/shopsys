@@ -23,7 +23,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import getConfig from 'next/config';
 import { useEffect, useState } from 'react';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 
 const { publicRuntimeConfig } = getConfig();
 

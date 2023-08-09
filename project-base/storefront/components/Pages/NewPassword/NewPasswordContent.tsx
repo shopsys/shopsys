@@ -17,7 +17,7 @@ import Trans from 'next-translate/Trans';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { NewPasswordFormType } from 'types/form';
 import { GtmMessageOriginType } from 'types/gtm/enums';
 

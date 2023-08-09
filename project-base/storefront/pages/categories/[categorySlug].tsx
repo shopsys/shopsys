@@ -36,7 +36,7 @@ import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { getSlugFromServerSideUrl } from 'helpers/parsing/getSlugFromUrl';
 import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
 

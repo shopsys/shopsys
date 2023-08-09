@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { Error500ContentWithBoundary } from '../ErrorPage/Error500Content';
 import { Error503Content } from '../ErrorPage/Error503Content';
 import { GtmHeadScript } from 'components/Pages/App/GtmHeadScript';

@@ -7,7 +7,7 @@ import {
 } from 'helpers/queryParams/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { describe, expect, Mock, test, vi } from 'vitest';
 
 const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
@@ -55,7 +55,7 @@ vi.mock('next/router', () => ({
     })),
 }));
 
-vi.mock('store/zustand/useSessionStore', () => ({
+vi.mock('store/useSessionStore', () => ({
     useSessionStore: vi.fn((selector) => {
         return selector({
             defaultProductFiltersMap: {

@@ -2,7 +2,7 @@ import { CartFragmentApi, CartItemFragmentApi, useRemoveFromCartMutationApi } fr
 import { onGtmRemoveFromCartEventHandler } from 'helpers/gtm/eventHandlers';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { GtmProductListNameType } from 'types/gtm/enums';
 
 export type RemoveFromCartHandler = (

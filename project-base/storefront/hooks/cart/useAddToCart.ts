@@ -7,7 +7,7 @@ import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 
 export type AddToCartAction = (

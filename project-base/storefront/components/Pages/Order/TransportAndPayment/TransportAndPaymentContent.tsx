@@ -18,7 +18,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType } from 'types/gtm/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));

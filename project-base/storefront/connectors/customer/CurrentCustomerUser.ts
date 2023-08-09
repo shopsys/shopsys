@@ -1,6 +1,6 @@
 import { CurrentCustomerUserQueryApi, useCurrentCustomerUserQueryApi } from 'graphql/generated';
 
-import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CustomerTypeEnum } from 'types/customer';
 
 export function useCurrentCustomerContactInformationQuery(): ContactInformation | null | undefined {

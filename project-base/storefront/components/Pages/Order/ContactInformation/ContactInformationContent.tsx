@@ -20,8 +20,8 @@ import Trans from 'next-translate/Trans';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));

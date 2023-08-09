@@ -15,8 +15,8 @@ import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
 import { SelectOptionType } from 'types/selectOptions';
 
 export const ContactInformationDeliveryAddress: FC = () => {

@@ -20,7 +20,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
-import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CustomerTypeEnum } from 'types/customer';
 import * as Yup from 'yup';
 

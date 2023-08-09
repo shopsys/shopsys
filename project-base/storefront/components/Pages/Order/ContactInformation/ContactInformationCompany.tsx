@@ -4,8 +4,8 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
 
 export const ContactInformationCompany: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);

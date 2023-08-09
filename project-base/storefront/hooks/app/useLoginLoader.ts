@@ -1,7 +1,7 @@
 import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect } from 'react';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 
 export const useLoginLoader = () => {
     const t = useTypedTranslationFunction();

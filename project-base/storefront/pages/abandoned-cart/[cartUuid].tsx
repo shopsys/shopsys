@@ -3,7 +3,7 @@ import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrappe
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 
 type AbandonedCartPageProps = { cartUuid?: string };
 

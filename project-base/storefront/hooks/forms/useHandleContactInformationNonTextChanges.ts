@@ -1,8 +1,8 @@
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useEffect } from 'react';
 import { Control, useWatch } from 'react-hook-form';
-import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
 
 export const useHandleContactInformationNonTextChanges = (
     control: Control<ContactInformation>,

@@ -6,7 +6,7 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { CurrentCartType } from 'types/cart';
 
 type EmptyCartWrapperProps = {

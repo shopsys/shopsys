@@ -20,7 +20,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
 import { GtmFormType, GtmMessageOriginType } from 'types/gtm/enums';
 

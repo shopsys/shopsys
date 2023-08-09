@@ -14,7 +14,7 @@ import {
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { Translate } from 'next-translate';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { CurrentCartType } from 'types/cart';
 import { GtmMessageOriginType } from 'types/gtm/enums';
 

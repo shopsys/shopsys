@@ -4,7 +4,7 @@ import { removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens'
 import { canUseDom } from 'helpers/misc/canUseDom';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { OperationResult } from 'urql';
 
 export type LoginHandler = (

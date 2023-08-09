@@ -37,7 +37,7 @@ import { useRouter } from 'next/router';
 import { OrderConfirmationQuery } from 'pages/order-confirmation';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { CustomerTypeEnum } from 'types/customer';
 import { GtmMessageOriginType, GtmPageType } from 'types/gtm/enums';
 import dynamic from 'next/dynamic';

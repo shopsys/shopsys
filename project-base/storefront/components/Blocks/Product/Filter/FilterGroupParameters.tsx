@@ -13,8 +13,8 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useState } from 'react';
 import { ParametersType } from 'types/productFilter';
-import { useSessionStore } from 'store/zustand/useSessionStore';
-import { DefaultProductFiltersMapType } from 'store/zustand/slices/createSeoCategorySlice';
+import { useSessionStore } from 'store/useSessionStore';
+import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 
 type FilterGroupParametersProps = {
     title: string;

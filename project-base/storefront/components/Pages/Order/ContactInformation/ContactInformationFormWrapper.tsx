@@ -10,7 +10,7 @@ import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInf
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 
 export const ContactInformationFormWrapper: FC = () => {
