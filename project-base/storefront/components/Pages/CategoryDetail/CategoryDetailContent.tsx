@@ -1,5 +1,5 @@
 import { Heading } from 'components/Basic/Heading/Heading';
-import { AdvancedSeoCategories } from './AdvancedSeoCategories/AdvancedSeoCategories';
+import { AdvancedSeoCategories } from './AdvancedSeoCategories';
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { Icon } from 'components/Basic/Icon/Icon';
