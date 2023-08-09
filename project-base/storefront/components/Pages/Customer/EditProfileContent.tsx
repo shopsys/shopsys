@@ -3,7 +3,6 @@ import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -22,12 +21,15 @@ import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { GtmMessageOriginType } from 'types/gtm/enums';
 import { CombinedError } from 'urql';
+
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 type EditProfileContentProps = {
     currentCustomerUser: CurrentCustomerType;
@@ -415,12 +417,13 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                     <Button type="submit">{t('Save profile')}</Button>
                 </Form>
             </FormProvider>
-            <ErrorPopup
-                isVisible={isErrorPopupVisible}
-                onCloseCallback={() => setErrorPopupVisibility(false)}
-                fields={formMeta.fields}
-                gtmMessageOrigin={GtmMessageOriginType.other}
-            />
+            {isErrorPopupVisible && (
+                <ErrorPopup
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
+                    fields={formMeta.fields}
+                    gtmMessageOrigin={GtmMessageOriginType.other}
+                />
+            )}
         </>
     );
 };

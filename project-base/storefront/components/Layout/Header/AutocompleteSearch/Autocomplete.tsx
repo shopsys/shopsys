@@ -292,7 +292,7 @@ const SearchResultLink: FC<{ onClick: () => void; href: string; type: FriendlyPa
             href={href}
             type={type}
         >
-            <>{children}</>
+            {children}
         </ExtendedNextLink>
     ),
 );

@@ -1,7 +1,6 @@
 import { usePersonalDataExportForm, usePersonalDataExportFormMeta } from './formMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { UserText } from 'components/Helpers/UserText/UserText';
@@ -17,10 +16,13 @@ import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PersonalDataExportFormType } from 'types/form';
 import { GtmMessageOriginType } from 'types/gtm/enums';
+
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 type PersonalDataExportContentProps = {
     breadcrumbs: BreadcrumbFragmentApi[];
@@ -80,12 +82,13 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                     </Form>
                 </FormProvider>
             </SimpleLayout>
-            <ErrorPopup
-                isVisible={isErrorPopupVisible}
-                onCloseCallback={() => setErrorPopupVisibility(false)}
-                fields={formMeta.fields}
-                gtmMessageOrigin={GtmMessageOriginType.other}
-            />
+            {isErrorPopupVisible && (
+                <ErrorPopup
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
+                    fields={formMeta.fields}
+                    gtmMessageOrigin={GtmMessageOriginType.other}
+                />
+            )}
         </>
     );
 };

@@ -7,22 +7,29 @@ type ImageProps = {
     alt: string | null | undefined;
     type: string;
     loading?: ImgHTMLAttributes<HTMLImageElement>['loading'];
-    maxWidth?: string | number;
-    maxHeight?: string | number;
+    width?: string | number;
+    height?: string | number;
 };
 
 const getDataTestId = (dataTestId?: string) => dataTestId ?? 'basic-image';
 
-export const Image: FC<ImageProps> = ({ image, alt, type, loading, dataTestId, maxWidth, maxHeight, className }) => {
+export const Image: FC<ImageProps> = ({ image, alt, type, loading, dataTestId, width, height, className }) => {
     const img: ImageSizeFragmentApi | null = image?.sizes.find((i) => i.size === type) ?? null;
 
-    if (img === null) {
+    const classNameTwClass = twMergeCustom(
+        'block object-contain [image-rendering:-webkit-optimize-contrast] max-w-full max-h-full',
+        className,
+    );
+
+    if (!img) {
         return (
             <img
-                src="/images/optimized-noimage.png"
+                src="/images/optimized-noimage.webp"
                 alt={alt || ''}
                 data-testid={getDataTestId(dataTestId) + '-empty'}
-                className={className}
+                height={height || 160}
+                width={width || 160}
+                className={twMergeCustom(classNameTwClass, 'h-auto w-full')}
             />
         );
     }
@@ -33,11 +40,9 @@ export const Image: FC<ImageProps> = ({ image, alt, type, loading, dataTestId, m
                 <source key={size.url} srcSet={size.url} media={size.media} />
             ))}
             <img
-                className={twMergeCustom('responsive-image block w-full object-contain', className)}
-                style={{
-                    maxWidth: maxWidth ?? (img.width !== null ? `${img.width}px` : undefined),
-                    maxHeight: maxHeight ?? (img.height !== null ? `${img.height}px` : undefined),
-                }}
+                className={classNameTwClass}
+                width={width ?? (img.width !== null ? `${img.width}px` : undefined)}
+                height={height ?? (img.height !== null ? `${img.height}px` : undefined)}
                 src={img.url}
                 alt={alt || ''}
                 loading={loading}

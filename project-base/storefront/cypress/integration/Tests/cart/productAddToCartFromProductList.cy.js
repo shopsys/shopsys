@@ -8,6 +8,7 @@ it('Product list - Adding product to cart from product list and check product in
     cy.visit('/');
     clickOnCategoryFromMenu(categories.elektro.name);
     cy.url().should('contain', categories.elektro.url);
+    cy.wait(6000);
     addProductToCartFromProductList(products.helloKitty.catnum);
     checkProductAndGoToCartFromCartPopupWindow(products.helloKitty.namePrefixSuffix);
     checkProductInCart(products.helloKitty.catnum, products.helloKitty.namePrefixSuffix);

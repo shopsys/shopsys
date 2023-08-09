@@ -40,7 +40,7 @@ const ProductDetailPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout title={product?.seoTitle} description={product?.seoMetaDescription}>
+        <CommonLayout title={product?.seoTitle || product?.name} description={product?.seoMetaDescription}>
             {!!product?.breadcrumb && (
                 <Webline>
                     <Breadcrumbs type="category" key="breadcrumb" breadcrumb={product.breadcrumb} />

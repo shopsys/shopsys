@@ -7,7 +7,6 @@ import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { showInfoMessage, showSuccessMessage } from 'components/Helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi, useRegistrationMutationApi } from 'graphql/generated';
@@ -18,11 +17,14 @@ import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { onGtmSendFormEventHandler } from 'helpers/gtm/eventHandlers';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { RegistrationFormType } from 'types/form';
 import { GtmFormType, GtmMessageOriginType } from 'types/gtm/enums';
+
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 type RegistrationContentProps = {
     breadcrumbs: BreadcrumbFragmentApi[];
@@ -130,12 +132,13 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                 </FormProvider>
             </SimpleLayout>
 
-            <ErrorPopup
-                isVisible={isErrorPopupVisible}
-                onCloseCallback={() => setErrorPopupVisibility(false)}
-                fields={formMeta.fields}
-                gtmMessageOrigin={GtmMessageOriginType.other}
-            />
+            {isErrorPopupVisible && (
+                <ErrorPopup
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
+                    fields={formMeta.fields}
+                    gtmMessageOrigin={GtmMessageOriginType.other}
+                />
+            )}
         </>
     );
 };

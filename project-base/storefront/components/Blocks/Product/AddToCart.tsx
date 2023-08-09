@@ -1,14 +1,18 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
-import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { CartItemFragmentApi } from 'graphql/generated';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 import { twMergeCustom } from 'utils/twMerge';
+
+const AddToCartPopup = dynamic(() =>
+    import('components/Blocks/Product/AddToCartPopup').then((component) => component.AddToCartPopup),
+);
 
 type AddToCartProps = {
     productUuid: string;
@@ -47,7 +51,15 @@ export const AddToCart: FC<AddToCartProps> = ({
 
     return (
         <div className={twMergeCustom('flex items-stretch justify-between gap-2', className)}>
-            <Spinbox size="small" step={1} min={minQuantity} max={maxQuantity} defaultValue={1} ref={spinboxRef} />
+            <Spinbox
+                size="small"
+                step={1}
+                min={minQuantity}
+                max={maxQuantity}
+                defaultValue={1}
+                ref={spinboxRef}
+                id={productUuid}
+            />
             <Button
                 isDisabled={fetching}
                 className="py-2"
@@ -63,8 +75,9 @@ export const AddToCart: FC<AddToCartProps> = ({
                 )}
                 <span>{t('Add to cart')}</span>
             </Button>
-            {popupData !== undefined && (
-                <AddToCartPopup isVisible onCloseCallback={() => setPopupData(undefined)} addedCartItem={popupData} />
+
+            {!!popupData && (
+                <AddToCartPopup onCloseCallback={() => setPopupData(undefined)} addedCartItem={popupData} />
             )}
         </div>
     );

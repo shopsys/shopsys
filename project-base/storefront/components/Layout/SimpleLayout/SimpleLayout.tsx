@@ -18,14 +18,15 @@ export const SimpleLayout: FC<SimpleLayoutProps> = ({ breadcrumb, heading, child
             <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumb} />
         </Webline>
         <Webline>
-            {standardWidth !== true && (
+            {standardWidth ? (
+                children
+            ) : (
                 <div className="mr-24 flex w-full justify-center">
                     <div className="my-7 w-full rounded-2xl border-2 border-greyLighter px-2 pt-5 pb-4 lg:w-[690px] lg:px-14 lg:pt-10 lg:pb-8">
                         {children}
                     </div>
                 </div>
             )}
-            {standardWidth === true && <>{children}</>}
         </Webline>
     </>
 );

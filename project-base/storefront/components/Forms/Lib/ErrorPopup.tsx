@@ -7,7 +7,6 @@ import { ReactElement, useEffect, useMemo } from 'react';
 import { GtmMessageOriginType, GtmMessageType } from 'types/gtm/enums';
 
 type ErrorPopupProps = {
-    isVisible: boolean;
     onCloseCallback: () => void;
     fields: {
         [fieldName: string]: {
@@ -20,7 +19,6 @@ type ErrorPopupProps = {
 };
 
 export const ErrorPopup: FC<ErrorPopupProps> = ({
-    isVisible,
     onCloseCallback,
     fields,
     gtmMessageOrigin = GtmMessageOriginType.other,
@@ -28,21 +26,14 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({
     const t = useTypedTranslationFunction();
 
     useEffect(() => {
-        if (isVisible) {
-            for (const fieldName in fields) {
-                const errorMessage = fields[fieldName].errorMessage;
-                if (errorMessage !== undefined) {
-                    const event = getGtmShowMessageEvent(
-                        GtmMessageType.error,
-                        errorMessage,
-                        fieldName,
-                        gtmMessageOrigin,
-                    );
-                    gtmSafePushEvent(event);
-                }
+        for (const fieldName in fields) {
+            const errorMessage = fields[fieldName].errorMessage;
+            if (errorMessage !== undefined) {
+                const event = getGtmShowMessageEvent(GtmMessageType.error, errorMessage, fieldName, gtmMessageOrigin);
+                gtmSafePushEvent(event);
             }
         }
-    }, [isVisible, fields, gtmMessageOrigin]);
+    }, [fields, gtmMessageOrigin]);
 
     const mappedErrors = useMemo(() => {
         const newMappedErrors = [];
@@ -64,7 +55,7 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({
     }, [fields]);
 
     return (
-        <Popup isVisible={isVisible} onCloseCallback={onCloseCallback} className="w-11/12 max-w-lg">
+        <Popup onCloseCallback={onCloseCallback} className="w-11/12 max-w-lg">
             <Heading type="h2">{t('Please check inserted details')}</Heading>
             <ul className="max-h-[50vh] overflow-y-auto">{mappedErrors}</ul>
         </Popup>

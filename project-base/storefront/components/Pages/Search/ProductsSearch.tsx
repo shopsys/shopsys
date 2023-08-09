@@ -57,10 +57,7 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                     />
                 </div>
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
-                <div
-                    className="flex flex-1 scroll-mt-5 flex-col overflow-hidden scroll-smooth vl:pl-12"
-                    ref={paginationScrollTargetRef}
-                >
+                <div className="flex flex-1 flex-col vl:pl-12" ref={paginationScrollTargetRef}>
                     <div
                         className="relative mb-3 flex h-12 w-full cursor-pointer flex-row justify-center rounded-xl bg-primary py-3 px-8 font-bold uppercase leading-7 text-white vl:hidden"
                         onClick={handlePanelOpenerClick}

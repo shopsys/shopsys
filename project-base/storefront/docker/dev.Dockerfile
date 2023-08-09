@@ -15,7 +15,7 @@ RUN if [[ -n "$node_uid" && "$node_uid" -ne 1000 ]]; then usermod -u $node_uid n
 USER node
 WORKDIR $APP_DIR
 
-ENV NODE_ENV development
+ENV APP_ENV development
 ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY docker/entrypoint.sh /

@@ -1,7 +1,6 @@
 import { usePasswordResetForm, usePasswordResetFormMeta } from './formMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'components/Helpers/toasts';
@@ -14,10 +13,13 @@ import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { onGtmSendFormEventHandler } from 'helpers/gtm/eventHandlers';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
 import { GtmFormType, GtmMessageOriginType } from 'types/gtm/enums';
+
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 type ResetPasswordContentProps = {
     breadcrumbs: BreadcrumbFragmentApi[];
@@ -76,12 +78,13 @@ export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumb
                     </Form>
                 </FormProvider>
             </SimpleLayout>
-            <ErrorPopup
-                isVisible={isErrorPopupVisible}
-                onCloseCallback={() => setErrorPopupVisibility(false)}
-                fields={formMeta.fields}
-                gtmMessageOrigin={GtmMessageOriginType.other}
-            />
+            {isErrorPopupVisible && (
+                <ErrorPopup
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
+                    fields={formMeta.fields}
+                    gtmMessageOrigin={GtmMessageOriginType.other}
+                />
+            )}
         </>
     );
 };

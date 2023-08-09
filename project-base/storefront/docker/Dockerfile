@@ -15,7 +15,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 ARG SENTRY_RELEASE
-ENV NODE_ENV production
+ENV APP_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV SENTRY_RELEASE $SENTRY_RELEASE
 
@@ -31,7 +31,7 @@ USER node
 ARG APP_DIR=/home/node/app
 WORKDIR $APP_DIR
 
-ENV NODE_ENV production
+ENV APP_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=dependencies --chown=node:node /tmp/build $APP_DIR

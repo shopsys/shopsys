@@ -18,7 +18,7 @@ export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, da
     </li>
 );
 
-type MenuIconicItemLinkProps = { onClick?: () => void; href?: string };
+type MenuIconicItemLinkProps = { onClick?: () => void; href?: string; title?: string };
 
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, dataTestId }) => {
     if (href) {
@@ -30,7 +30,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, h
                 href={href}
                 type="static"
             >
-                <>{children}</>
+                {children}
             </ExtendedNextLink>
         );
     }
@@ -44,7 +44,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, h
 
 export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({ children, className, dataTestId, href, onClick }, _) => {
+    ({ children, className, dataTestId, href, title, onClick }, _) => {
         if (href) {
             return (
                 <ExtendedNextLink
@@ -56,8 +56,9 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
                     )}
                     onClick={onClick}
                     data-testid={dataTestId}
+                    title={title}
                 >
-                    <>{children}</>
+                    {children}
                 </ExtendedNextLink>
             );
         }
@@ -68,6 +69,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
                     'flex items-center justify-center rounded-tr-none text-sm text-white no-underline transition-colors hover:text-white hover:no-underline',
                     className,
                 )}
+                title={title}
                 onClick={onClick}
                 data-testid={dataTestId}
             >

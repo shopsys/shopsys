@@ -1,7 +1,6 @@
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { ImageSizeFragmentApi, SliderItemFragmentApi } from 'graphql/generated';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
-import 'keen-slider/keen-slider.min.css';
 
 type BannersSliderItemProps = {
     item: SliderItemFragmentApi;
@@ -18,7 +17,7 @@ export const BannersSliderItem: FC<BannersSliderItemProps> = ({
     return (
         <a href={link} className="keen-slider__slide">
             {!imageSize ? (
-                <BannerImage src="images/optimized-noimage.png" alt="no image" />
+                <BannerImage src="images/optimized-noimage.webp" alt="no image" />
             ) : (
                 <picture>
                     {imageSize.additionalSizes.map((additionalSize) => (

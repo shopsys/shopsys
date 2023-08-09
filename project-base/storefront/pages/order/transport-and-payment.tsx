@@ -17,6 +17,7 @@ import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useGtmPaymentAndTransportPageViewEvent } from 'hooks/gtm/useGtmPaymentAndTransportPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import Head from 'next/head';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { GtmPageType } from 'types/gtm/enums';
 
@@ -39,6 +40,9 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
 
     return (
         <>
+            <Head>
+                <script src="https://widget.packeta.com/v6/www/js/library.js" async />
+            </Head>
             <MetaRobots content="noindex" />
             <EmptyCartWrapper currentCart={currentCart} title={t('Order')}>
                 <OrderLayout

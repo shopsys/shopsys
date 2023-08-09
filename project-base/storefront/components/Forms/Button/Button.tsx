@@ -1,22 +1,18 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'utils/twMerge';
 
-type NativeButtonProps = ExtractNativePropsFromDefault<
-    ButtonHTMLAttributes<HTMLButtonElement>,
-    never,
-    'type' | 'onClick' | 'style' | 'name'
->;
+type NativeButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'disabled'>;
 
-type Props = Omit<NativeButtonProps, 'type'> & {
-    type?: 'button' | 'submit' | 'reset';
-    isDisabled?: boolean;
-    isWithDisabledLook?: boolean;
-    size?: 'small';
-    variant?: 'primary' | 'secondary';
-    isRounder?: boolean;
-};
+type Props = NativeButtonProps &
+    Omit<NativeButtonProps, 'type' | 'disabled'> & {
+        type?: 'button' | 'submit' | 'reset';
+        isDisabled?: boolean;
+        isWithDisabledLook?: boolean;
+        size?: 'small';
+        variant?: 'primary' | 'secondary';
+        isRounder?: boolean;
+    };
 
 export const Button: FC<Props> = forwardRef(
     (
@@ -24,15 +20,13 @@ export const Button: FC<Props> = forwardRef(
             children,
             type = 'button',
             dataTestId,
-            onClick,
-            name,
             className,
             isDisabled: isDisabledDefault,
             isWithDisabledLook,
             isRounder,
-            style,
             size,
             variant,
+            ...props
         },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _,
@@ -56,11 +50,9 @@ export const Button: FC<Props> = forwardRef(
                     isRounder ? 'rounded-xl' : 'rounded',
                     className,
                 )}
-                style={style}
                 type={type}
                 data-testid={dataTestId}
-                onClick={onClick}
-                name={name}
+                {...props}
             >
                 {children}
             </button>

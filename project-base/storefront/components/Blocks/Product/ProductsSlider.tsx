@@ -1,15 +1,10 @@
 import { Icon } from 'components/Basic/Icon/Icon';
-import { SliderProductItem } from './SliderProductItem';
-import { mediaQueries } from 'components/Theme/mediaQueries';
 import { ListedProductFragmentApi } from 'graphql/generated';
-import { useGtmSliderProductListViewEvent } from 'hooks/gtm/productList/useGtmSliderProductListViewEvent';
-import { useKeenSlider } from 'keen-slider/react';
-import { useState } from 'react';
+import { RefObject, createRef, useEffect, useRef, useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 import { twMergeCustom } from 'utils/twMerge';
-import { ProductComparePopup } from 'components/Blocks/Product/ButtonsAction/ProductComparePopup';
-import { useComparison } from 'hooks/comparison/useComparison';
-import { useWishlist } from 'hooks/useWishlist';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { ProductsListContent } from './ProductsList/ProductsListContent';
 
 type ProductsSliderProps = {
     products: ListedProductFragmentApi[];
@@ -21,92 +16,82 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     products,
     gtmProductListName,
     gtmMessageOrigin = GtmMessageOriginType.other,
+    dataTestId,
 }) => {
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [areControlsVisible, setAreControlsVisible] = useState<boolean | undefined>(false);
-    const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
-        loop: products.length > 4,
-        autoAdjustSlidesPerView: false,
-        slidesPerView: 4,
-        controls: products.length > 4,
-        breakpoints: {
-            [mediaQueries.queryNotLargeDesktop]: {
-                loop: products.length > 3,
-                autoAdjustSlidesPerView: false,
-                slidesPerView: 3,
-                controls: products.length > 3,
-            },
-            [mediaQueries.queryTablet]: {
-                loop: products.length > 2,
-                autoAdjustSlidesPerView: false,
-                slidesPerView: 2.15,
-                controls: products.length > 2,
-            },
-            [mediaQueries.queryMobile]: {
-                loop: products.length > 1,
-                autoAdjustSlidesPerView: false,
-                slidesPerView: 1.15,
-                controls: products.length > 1,
-                centered: true,
-            },
-        },
-        slideChanged(slider) {
-            setCurrentSlide(slider.details().relativeSlide);
-        },
-        move(slider) {
-            setAreControlsVisible(slider.options().controls);
-        },
-    });
-    useGtmSliderProductListViewEvent(products, gtmProductListName);
+    const t = useTypedTranslationFunction();
+    const sliderRef = useRef<HTMLDivElement>(null);
+    const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLDivElement>>>([]);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const isWithControls = products.length > 4;
 
-    const { isPopupCompareOpen, toggleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
-        useComparison();
-    const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
+    useEffect(() => {
+        setProductElementRefs((elRefs) =>
+            Array(products.length)
+                .fill(null)
+                .map((_, i) => elRefs[i] || createRef()),
+        );
+    }, []);
 
-    const onMoveToNextSlideHandler = () => {
-        slider.moveToSlide(currentSlide + 1);
+    const handleScroll = (productIndex: number) => {
+        productElementRefs[productIndex].current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'start',
+        });
+
+        setActiveIndex(productIndex);
     };
 
-    const onMoveToPreviousSlideHandler = () => {
-        slider.moveToSlide(currentSlide - 1);
+    const handlePreviousClick = () => {
+        const prevIndex = activeIndex - 1;
+        const newActiveIndex = prevIndex >= 0 ? prevIndex : productElementRefs.length - 4;
+
+        handleScroll(newActiveIndex);
+    };
+
+    const handleNextClick = () => {
+        const nextIndex = activeIndex + 1;
+        const isEndSlide = nextIndex + 4 > productElementRefs.length;
+        const newActiveIndex = isEndSlide ? 0 : nextIndex;
+
+        handleScroll(newActiveIndex);
     };
 
     return (
-        <div className="relative">
-            <div ref={sliderRef} className="keen-slider relative -mx-2 flex overflow-hidden">
-                {products.map((productItemData, index) => (
-                    <SliderProductItem
-                        key={productItemData.uuid}
-                        product={productItemData}
-                        gtmProductListName={gtmProductListName}
-                        gtmMessageOrigin={gtmMessageOrigin}
-                        listIndex={index}
-                        isProductInComparison={isProductInComparison(productItemData.uuid)}
-                        toggleProductInComparison={() => toggleProductInComparison(productItemData.uuid)}
-                        isProductInWishlist={isProductInWishlist(productItemData.uuid)}
-                        toggleProductInWishlist={() => toggleProductInWishlist(productItemData.uuid)}
-                    />
-                ))}
-            </div>
-            {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
-            {slider && areControlsVisible ? (
-                <div className="absolute -top-11 right-0 hidden items-center justify-center lg:flex ">
-                    <SliderButton type="prev" onClick={onMoveToPreviousSlideHandler} />
-                    <SliderButton type="next" onClick={onMoveToNextSlideHandler} />
+        <div className="relative" data-testid={dataTestId}>
+            {isWithControls && (
+                <div className="absolute -top-11 right-0 hidden items-center justify-center vl:flex ">
+                    <SliderButton type="prev" onClick={handlePreviousClick} title={t('Previous products')} />
+                    <SliderButton type="next" onClick={handleNextClick} title={t('Next products')} />
                 </div>
-            ) : null}
+            )}
 
-            <ProductComparePopup isVisible={isPopupCompareOpen} onCloseCallback={() => setIsPopupCompareOpen(false)} />
+            <div
+                className="grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] [&::-webkit-scrollbar]:hidden"
+                ref={sliderRef}
+            >
+                <ProductsListContent
+                    productRefs={productElementRefs}
+                    products={products}
+                    gtmProductListName={gtmProductListName}
+                    gtmMessageOrigin={gtmMessageOrigin}
+                    className="snap-center border-b-0 md:snap-start"
+                />
+            </div>
         </div>
     );
 };
 
-const SliderButton: FC<{ type?: 'prev' | 'next'; onClick: () => void }> = ({ type, onClick }) => (
+type SliderButtonProps = { type?: 'prev' | 'next'; onClick: () => void; isDisabled?: boolean; title: string };
+
+const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title }) => (
     <button
         className={twMergeCustom(
-            'ml-1 h-8 w-8 cursor-pointer rounded border-none bg-greyDark pt-1 text-creamWhite outline-none transition hover:bg-greyDarker',
+            'ml-1 h-8 w-8 cursor-pointer rounded border-none bg-greyDark pt-1 text-creamWhite outline-none transition hover:bg-greyDarker disabled:bg-greyLighter',
         )}
+        title={title}
         onClick={onClick}
+        disabled={isDisabled}
     >
         <Icon className={twMergeCustom('rotate-90', type === 'next' && '-rotate-90')} iconType="icon" icon="Arrow" />
     </button>

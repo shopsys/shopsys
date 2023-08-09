@@ -3,8 +3,8 @@ import 'lightgallery/css/lg-thumbnail.css';
 import 'lightgallery/css/lg-video.css';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import lgVideo from 'lightgallery/plugins/video';
-import LightGallery from 'lightgallery/react';
 import getConfig from 'next/config';
+import LightGallery from 'lightgallery/react';
 
 type GalleryProps = {
     selector: string;

@@ -61,6 +61,7 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRem
             </div>
             <div className="flex w-28 items-center vl:w-36 vl:pr-4 " data-testid={TEST_IDENTIFIER + 'spinbox'}>
                 <Spinbox
+                    id={item.uuid}
                     min={1}
                     max={item.product.stockQuantity}
                     step={1}

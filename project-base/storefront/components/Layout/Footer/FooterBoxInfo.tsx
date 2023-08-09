@@ -21,10 +21,10 @@ export const FooterBoxInfo: FC = () => {
     return (
         <div className="relative mb-11 flex items-center lg:mb-24" data-testid={TEST_IDENTIFIER}>
             <picture>
-                <source srcSet="/images/need_advice2x.png 2x, /images/need_advice2x.png 1x" />
+                <source srcSet="/images/need_advice2x.webp 2x, /images/need_advice2x.webp 1x" />
                 <img
                     className="absolute left-0 bottom-0 block h-12 w-12 translate-y-1/2 lg:h-16 lg:w-16"
-                    src="/images/need_advice.png"
+                    src="/images/need_advice.webp"
                     alt={t('Need advice?')}
                 />
             </picture>

@@ -1,12 +1,12 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
-import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { CartItemFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 
@@ -15,6 +15,10 @@ type ProductDetailAddToCartProps = {
 };
 
 const TEST_IDENTIFIER = 'pages-productdetail-addtocart';
+
+const AddToCartPopup = dynamic(() =>
+    import('components/Blocks/Product/AddToCartPopup').then((component) => component.AddToCartPopup),
+);
 
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
@@ -27,7 +31,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     const [popupData, setPopupData] = useState<CartItemFragmentApi | undefined>();
 
     const onAddToCartHandler = async () => {
-        if (spinboxRef.current === null) {
+        if (!spinboxRef.current) {
             return;
         }
 
@@ -47,7 +51,14 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                 ) : (
                     <div className="text-sm vl:text-base">
                         <div className="flex items-center justify-between">
-                            <Spinbox min={1} step={1} defaultValue={1} max={product.stockQuantity} ref={spinboxRef} />
+                            <Spinbox
+                                id={product.uuid}
+                                min={1}
+                                step={1}
+                                defaultValue={1}
+                                max={product.stockQuantity}
+                                ref={spinboxRef}
+                            />
                             <div className="ml-2 flex-1">
                                 <Button
                                     isDisabled={fetching}
@@ -65,8 +76,8 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                     </div>
                 )}
             </div>
-            {popupData !== undefined && (
-                <AddToCartPopup isVisible onCloseCallback={() => setPopupData(undefined)} addedCartItem={popupData} />
+            {!!popupData && (
+                <AddToCartPopup onCloseCallback={() => setPopupData(undefined)} addedCartItem={popupData} />
             )}
         </>
     );

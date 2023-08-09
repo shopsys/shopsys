@@ -3,14 +3,16 @@ import { Image } from 'components/Basic/Image/Image';
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { ProductExposedStoresCount } from 'components/Blocks/Product/ProductExposedStoresCount';
-import { Popup } from 'components/Layout/Popup/Popup';
 import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailAvailabilityList';
 import { MainVariantDetailFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 import { twMergeCustom } from 'utils/twMerge';
+
+const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
 type VariantProps = {
     variant: MainVariantDetailFragmentApi['variants'][number];
@@ -77,11 +79,7 @@ export const Variant: FC<VariantProps> = ({
                 </Cell>
             </ProductVariantsTableRow>
             {isAvailabilityPopupVisible && (
-                <Popup
-                    isVisible={isAvailabilityPopupVisible}
-                    onCloseCallback={() => setAvailabilityPopupVisibility(false)}
-                    className="w-11/12 max-w-2xl"
-                >
+                <Popup onCloseCallback={() => setAvailabilityPopupVisibility(false)} className="w-11/12 max-w-2xl">
                     <ProductDetailAvailabilityList storeAvailabilities={variant.storeAvailabilities} />
                 </Popup>
             )}

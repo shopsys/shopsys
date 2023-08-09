@@ -1,12 +1,7 @@
 import { ListItem } from './ListItem';
-import { Slider } from './Slider';
-import { isElementVisible } from 'components/Helpers/isElementVisible';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { getSearchResultLinkType } from 'helpers/mappers/simpleNavigation';
-import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
-import { useState } from 'react';
 import { ListedItemPropType } from 'types/simpleNavigation';
+import { twMergeCustom } from 'utils/twMerge';
 
 type SimpleNavigationProps = {
     listedItems: ListedItemPropType[];
@@ -16,38 +11,25 @@ type SimpleNavigationProps = {
 const TEST_IDENTIFIER = 'blocks-simplenavigation';
 
 export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, imageType, className }) => {
-    const { width } = useGetWindowSize();
-    const [isSliderVisible, setSliderVisible] = useState(true);
-    useResizeWidthEffect(
-        width,
-        desktopFirstSizes.tablet,
-        () => setSliderVisible(false),
-        () => setSliderVisible(true),
-        () => setSliderVisible(isElementVisible([{ min: 0, max: 768 }], width)),
-    );
-
     return (
-        <ul className={className}>
-            {isSliderVisible ? (
-                <Slider listedItems={listedItems} />
-            ) : (
-                <ul
-                    className="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-3"
-                    data-testid={TEST_IDENTIFIER}
-                >
-                    {listedItems.map((listedItem, key) => (
-                        <li className="text-center lg:text-left" key={key} data-testid={TEST_IDENTIFIER + '-' + key}>
-                            <ListItem
-                                linkType={getSearchResultLinkType(listedItem)}
-                                listedItem={listedItem}
-                                imageType={imageType}
-                            >
-                                {listedItem.name}
-                            </ListItem>
-                        </li>
-                    ))}
-                </ul>
+        <ul
+            className={twMergeCustom(
+                'grid snap-x snap-mandatory auto-cols-[40%] gap-3 overflow-x-auto overscroll-x-contain max-lg:grid-flow-col lg:grid-cols-[repeat(auto-fill,minmax(210px,1fr))]',
+                className,
             )}
+            data-testid={TEST_IDENTIFIER}
+        >
+            {listedItems.map((listedItem, index) => (
+                <ListItem
+                    key={index}
+                    linkType={getSearchResultLinkType(listedItem)}
+                    listedItem={listedItem}
+                    imageType={imageType}
+                    dataTestId={TEST_IDENTIFIER + '-' + index}
+                >
+                    {listedItem.name}
+                </ListItem>
+            ))}
         </ul>
     );
 };

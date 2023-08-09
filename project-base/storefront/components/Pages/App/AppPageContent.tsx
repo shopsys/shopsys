@@ -4,7 +4,6 @@ import { useSetDomainConfig } from 'hooks/useDomainConfig';
 import { NextComponentType, NextPageContext } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { PropsWithChildren } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
 import { usePersistStore } from 'store/zustand/usePersistStore';
@@ -17,7 +16,7 @@ import { usePageLoader } from 'hooks/app/usePageLoader';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
 import { Fonts } from './Fonts';
 
-const UserConsentContainer = dynamic<PropsWithChildren<Record<string, unknown>>>(
+const UserConsentContainer = dynamic(
     () =>
         import('components/Blocks/UserConsent/UserConsentContainer').then(
             (component) => component.UserConsentContainer,

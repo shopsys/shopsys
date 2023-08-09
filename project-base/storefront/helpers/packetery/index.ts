@@ -6,12 +6,6 @@ import { canUseDom } from 'helpers/misc/canUseDom';
  * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html
  */
 
-export const packeteryClose = (): void => {
-    if (canUseDom()) {
-        window.Packeta.Widget.close();
-    }
-};
-
 export const packeteryPick: PacketeryPickFunction = (apiKey, callback, opts, inElement) => {
     if (!canUseDom()) {
         return;

@@ -8,7 +8,6 @@ import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { Popup } from 'components/Layout/Popup/Popup';
 import {
     useIsCustomerUserRegisteredQueryApi,
     usePrivacyPolicyArticleUrlQueryApi,
@@ -18,11 +17,14 @@ import {
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import Trans from 'next-translate/Trans';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { twJoin } from 'tailwind-merge';
+
+const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
 export const ContactInformationContent: FC = () => {
     const t = useTypedTranslationFunction();
@@ -133,10 +135,12 @@ export const ContactInformationContent: FC = () => {
                     }}
                 />
             </div>
-            <Popup isVisible={isLoginPopupOpened} onCloseCallback={onCloseLoginPopupHandler}>
-                <Heading type="h2">{t('Login')}</Heading>
-                <Login defaultEmail={emailValue} />
-            </Popup>
+            {isLoginPopupOpened && (
+                <Popup onCloseCallback={onCloseLoginPopupHandler}>
+                    <Heading type="h2">{t('Login')}</Heading>
+                    <Login defaultEmail={emailValue} />
+                </Popup>
+            )}
         </>
     );
 };

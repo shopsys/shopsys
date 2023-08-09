@@ -29,18 +29,14 @@ export const MenuIconic: FC = () => {
             <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-login'} className="max-vl:mr-0">
                 <MenuIconicItemLogin />
             </MenuIconicItem>
-            <MenuIconicItem
-                dataTestId={TEST_IDENTIFIER + '-comparison'}
-                className="max-vl:hidden"
-                title={t('Comparison')}
-            >
-                <MenuIconicItemLink href={productsComparisonUrl}>
+            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-comparison'} className="max-vl:hidden">
+                <MenuIconicItemLink href={productsComparisonUrl} title={t('Comparison')}>
                     <MenuIconicItemIcon icon="Compare" />
                     {!!comparison?.products.length && <span>{comparison.products.length}</span>}
                 </MenuIconicItemLink>
             </MenuIconicItem>
-            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-wishlist'} className="max-vl:hidden" title={t('Wishlist')}>
-                <MenuIconicItemLink href={wishlistUrl}>
+            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-wishlist'} className="max-vl:hidden">
+                <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')}>
                     <MenuIconicItemIcon icon={wishlist?.products.length ? 'HeartFull' : 'Heart'} />
                     {!!wishlist?.products.length && <span>{wishlist.products.length}</span>}
                 </MenuIconicItemLink>

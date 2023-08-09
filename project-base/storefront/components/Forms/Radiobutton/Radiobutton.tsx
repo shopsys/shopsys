@@ -26,7 +26,7 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
     ) => {
         const onClickHandler: MouseEventHandler<HTMLInputElement> = useCallback(
             (event) => {
-                if (onChangeCallback === undefined) {
+                if (!onChangeCallback) {
                     return;
                 }
 
@@ -45,9 +45,7 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
                 label={
                     <div>
                         {!!image && (
-                            <div className="mr-3 flex h-6 w-11 items-center justify-center">
-                                <Image alt={image.name} type="default" image={image} />
-                            </div>
+                            <Image alt={image.name} type="default" image={image} className="mr-3 h-6 max-h-full w-11" />
                         )}
                         {label}
                     </div>
@@ -66,7 +64,7 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
                     onBlur={onBlur}
                     onChange={onChange}
                     ref={radiobuttonForwardedRef}
-                    readOnly={onChange === undefined}
+                    readOnly={!onChange}
                     data-testid={dataTestId}
                 />
             </LabelWrapper>

@@ -93,8 +93,10 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
             }
         };
 
+        const Tag = isActive ? 'span' : 'a';
+
         return (
-            <a
+            <Tag
                 className={twJoin(
                     'flex h-11 w-11 items-center justify-center rounded border border-white bg-white font-bold no-underline hover:no-underline',
                     isActive && 'border-none bg-orange hover:cursor-default',
@@ -105,7 +107,7 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
                 data-testid={dataTestId}
             >
                 {children}
-            </a>
+            </Tag>
         );
     },
 );

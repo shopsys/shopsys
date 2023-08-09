@@ -66,6 +66,6 @@ const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKeys }> = ({ 
         className="mr-3 hidden text-greyLight no-underline last-of-type:inline lg:inline lg:text-primary lg:underline"
         data-testid={dataTestId}
     >
-        <>{children}</>
+        {children}
     </ExtendedNextLink>
 );

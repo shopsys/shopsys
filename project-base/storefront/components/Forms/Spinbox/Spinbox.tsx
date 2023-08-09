@@ -1,4 +1,5 @@
 import { useForwardedRef } from 'hooks/typescript/useForwardedRef';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 type SpinboxProps = {
@@ -6,6 +7,7 @@ type SpinboxProps = {
     max: number;
     step: number;
     defaultValue: number;
+    id: string;
     onChangeValueCallback?: (currentValue: number) => void;
     size?: 'default' | 'small';
 };
@@ -13,7 +15,8 @@ type SpinboxProps = {
 const TEST_IDENTIFIER = 'forms-spinbox-';
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
-    ({ min, max, onChangeValueCallback, step, defaultValue, size }, spinboxForwardedRef) => {
+    ({ min, max, onChangeValueCallback, step, defaultValue, size, id }, spinboxForwardedRef) => {
+        const t = useTypedTranslationFunction();
         const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
         const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
         const intervalRef = useRef<NodeJS.Timer | null>(null);
@@ -91,10 +94,13 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     onMouseUp={() => setIsHoldingDecrease(false)}
                     onMouseLeave={() => setIsHoldingDecrease(false)}
                     dataTestId={TEST_IDENTIFIER + 'decrease'}
+                    title={t('Decrease')}
                 >
                     -
                 </SpinboxButton>
+
                 <input
+                    aria-label={`${t('Quantity')} ${id}`}
                     className="h-full min-w-0 flex-1 border-0 p-0 text-center text-lg font-bold text-dark outline-none"
                     ref={spinboxRef}
                     defaultValue={defaultValue}
@@ -104,12 +110,14 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     max={max}
                     data-testid={TEST_IDENTIFIER + 'input'}
                 />
+
                 <SpinboxButton
                     onClick={() => onChangeValueHandler(step)}
                     onMouseDown={() => setIsHoldingIncrease(true)}
                     onMouseUp={() => setIsHoldingIncrease(false)}
                     onMouseLeave={() => setIsHoldingIncrease(false)}
                     dataTestId={TEST_IDENTIFIER + 'increase'}
+                    title={t('Increase')}
                 >
                     +
                 </SpinboxButton>
@@ -139,6 +147,7 @@ type SpinboxButtonProps = {
     onMouseDown: () => void;
     onMouseUp: () => void;
     onMouseLeave: () => void;
+    title: string;
 };
 
 const SpinboxButton: FC<SpinboxButtonProps> = ({ children, dataTestId, ...props }) => (

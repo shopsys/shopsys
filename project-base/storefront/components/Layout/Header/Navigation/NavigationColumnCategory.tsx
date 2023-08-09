@@ -15,13 +15,13 @@ export const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = ({ co
             <ExtendedNextLink
                 href={columnCategory.slug}
                 type="static"
-                className="mb-4 flex h-16 justify-center rounded-xl bg-dark bg-opacity-5 p-2"
+                className="mb-4 flex justify-center rounded-xl bg-dark bg-opacity-5 p-2"
             >
                 <Image
                     image={columnCategory.mainImage}
                     type="default"
                     alt={columnCategory.mainImage?.name || columnCategory.name}
-                    className="mix-blend-multiply"
+                    className="h-16 mix-blend-multiply"
                 />
             </ExtendedNextLink>
             <ExtendedNextLink

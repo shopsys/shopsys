@@ -6,14 +6,13 @@ import { MouseEventHandler, useEffect, useRef } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 
 type PopupProps = {
-    isVisible: boolean;
     onCloseCallback: () => void;
     hideCloseButton?: boolean;
 };
 
 const TEST_IDENTIFIER = 'layout-popup';
 
-export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hideCloseButton, className }) => {
+export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButton, className }) => {
     const onEscapeButtonPressHandler = useRef((event: KeyboardEvent): void => {
         if (event.key === 'Escape') {
             onCloseCallback();
@@ -25,26 +24,18 @@ export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hi
             return undefined;
         }
 
-        if (isVisible) {
-            document.addEventListener('keydown', onEscapeButtonPressHandler);
-        } else {
-            document.removeEventListener('keydown', onEscapeButtonPressHandler);
-        }
+        document.addEventListener('keydown', onEscapeButtonPressHandler);
 
         return () => document.removeEventListener('keydown', onEscapeButtonPressHandler);
-    }, [onEscapeButtonPressHandler, isVisible]);
+    }, []);
 
     const onClickCloseActionHandler: MouseEventHandler<HTMLElement> = () => {
         onCloseCallback();
     };
 
-    if (!isVisible) {
-        return null;
-    }
-
     return (
         <Portal>
-            <Overlay isActive={isVisible} onClick={onClickCloseActionHandler} />
+            <Overlay isActive onClick={onClickCloseActionHandler} />
             <div
                 role="dialog"
                 aria-modal
@@ -54,7 +45,7 @@ export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hi
                     className,
                 )}
             >
-                {hideCloseButton !== true && (
+                {!hideCloseButton && (
                     <div className="flex h-9 items-center justify-end ">
                         <button
                             className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-0 bg-creamWhite text-xs text-grey no-underline outline-none"

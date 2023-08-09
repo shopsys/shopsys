@@ -1,4 +1,3 @@
-import { Gallery } from 'components/Basic/Gallery/Gallery';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
@@ -13,6 +12,9 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { twJoin } from 'tailwind-merge';
+import dynamic from 'next/dynamic';
+
+const Gallery = dynamic(() => import('components/Basic/Gallery/Gallery').then((component) => component.Gallery));
 
 type StoreDetailContentProps = {
     store: StoreDetailFragmentApi;

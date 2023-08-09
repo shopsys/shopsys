@@ -4,7 +4,6 @@ import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'components/Helpers/toasts';
@@ -14,9 +13,12 @@ import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
+
+const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 const TEST_IDENTIFIER = 'layout-footer-newsletterform';
 
@@ -46,7 +48,7 @@ export const NewsletterForm: FC = () => {
     return (
         <>
             <div
-                className="relative flex flex-col pb-7 pt-8 before:absolute before:bottom-0 before:-left-5 before:h-32 before:w-28 before:-translate-x-full before:bg-[url('/images/lines.png')] before:content-[''] lg:flex-row lg:items-center"
+                className="relative flex flex-col pb-7 pt-8 before:absolute before:bottom-0 before:-left-5 before:h-32 before:w-28 before:-translate-x-full before:bg-[url('/images/lines.webp')] before:content-[''] lg:flex-row lg:items-center"
                 data-testid={TEST_IDENTIFIER}
             >
                 <Heading type="h2" className="flex-1 lg:pr-5">
@@ -97,11 +99,9 @@ export const NewsletterForm: FC = () => {
                     </FormProvider>
                 </div>
             </div>
-            <ErrorPopup
-                isVisible={isErrorPopupVisible}
-                onCloseCallback={() => setErrorPopupVisibility(false)}
-                fields={formMeta.fields}
-            />
+            {isErrorPopupVisible && (
+                <ErrorPopup onCloseCallback={() => setErrorPopupVisibility(false)} fields={formMeta.fields} />
+            )}
         </>
     );
 };
