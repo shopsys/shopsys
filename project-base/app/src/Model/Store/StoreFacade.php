@@ -22,13 +22,13 @@ class StoreFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
-        private StoreRepository $storeRepository,
-        private StoreFactory $storeFactory,
-        private FriendlyUrlFacade $friendlyUrlFacade,
-        private ImageFacade $imageFacade,
-        private EntityManagerInterface $em,
-        private ProductStoreFacade $productStoreFacade,
-        private ProductRepository $productRepository,
+        private readonly StoreRepository $storeRepository,
+        private readonly StoreFactory $storeFactory,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+        private readonly ImageFacade $imageFacade,
+        private readonly EntityManagerInterface $em,
+        private readonly ProductStoreFacade $productStoreFacade,
+        private readonly ProductRepository $productRepository,
     ) {
     }
 

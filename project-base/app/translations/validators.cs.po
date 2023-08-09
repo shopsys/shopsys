@@ -130,6 +130,9 @@ msgstr "Vyplňte prosím kód"
 msgid "Please enter company name"
 msgstr "Vyplňte prosím název společnosti"
 
+msgid "Please enter date"
+msgstr "Vyplňte prosím datum"
+
 msgid "Please enter date of creation"
 msgstr "Vyplňte prosím datum vytvoření"
 

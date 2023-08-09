@@ -209,6 +209,10 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Warehouse detail')]);
         $stockMenu->addChild('stock_settings', ['route' => 'admin_stock_settings', 'label' => t('Warehouse settings')]);
 
+        $closedDayMenu = $listMenu->addChild('closed_day', ['route' => 'admin_closedday_list', 'label' => t('Holidays and internal days')]);
+        $closedDayMenu->addChild('closed_day_new', ['route' => 'admin_closedday_new', 'label' => t('New closed day'), 'display' => false]);
+        $closedDayMenu->addChild('closed_day_edit', ['route' => 'admin_closedday_edit', 'label' => t('Holiday / internal day detail'), 'display' => false]);
+
         $superadminSettingMenu = $settingsMenu->getChild('superadmin');
 
         if ($superadminSettingMenu !== null) {

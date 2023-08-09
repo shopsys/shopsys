@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Store;
 
 use App\DataFixtures\Demo\StoreDataFixture;
+use App\Model\Store\ClosedDay\ClosedDay;
+use App\Model\Store\ClosedDay\ClosedDayDataFactory;
+use App\Model\Store\ClosedDay\ClosedDayFacade;
 use App\Model\Store\OpeningHours\OpeningHoursDataFactory;
 use App\Model\Store\Store;
 use App\Model\Store\StoreDataFactory;
@@ -45,6 +48,16 @@ class GetStoreTest extends GraphQlTestCase
      * @inject
      */
     private OpeningHoursDataFactory $openingHourDataFactory;
+
+    /**
+     * @inject
+     */
+    private ClosedDayDataFactory $closedDayDataFactory;
+
+    /**
+     * @inject
+     */
+    private ClosedDayFacade $closedDayFacade;
 
     public function testGetStoreByUuid(): void
     {
@@ -137,28 +150,54 @@ class GetStoreTest extends GraphQlTestCase
 
     /**
      * @dataProvider openingHoursDataProvider
-     * @param string|null $openingOne
-     * @param string|null $closingOne
-     * @param string|null $openingTwo
-     * @param string|null $closingTwo
-     * @param bool $isOpen
+     * @param string|null $firstOpeningTime
+     * @param string|null $firstClosingTime
+     * @param string|null $secondOpeningTime
+     * @param string|null $secondClosingTime
+     * @param \DateTime|null $publicHolidayDate
+     * @param array $publicHolidayExcludedStoresIds
+     * @param bool $expectedIsOpen
+     * @param string|null $expectedDaysFirstOpeningTime
+     * @param string|null $expectedDaysFirstClosingTime
+     * @param string|null $expectedDaysSecondOpeningTime
+     * @param string|null $expectedDaysSecondClosingTime
      */
     public function testGetStoreOpeningHours(
-        ?string $openingOne,
-        ?string $closingOne,
-        ?string $openingTwo,
-        ?string $closingTwo,
-        bool $isOpen,
+        ?string $firstOpeningTime,
+        ?string $firstClosingTime,
+        ?string $secondOpeningTime,
+        ?string $secondClosingTime,
+        ?DateTime $publicHolidayDate,
+        array $publicHolidayExcludedStoresIds,
+        bool $expectedIsOpen,
+        ?string $expectedDaysFirstOpeningTime,
+        ?string $expectedDaysFirstClosingTime,
+        ?string $expectedDaysSecondOpeningTime,
+        ?string $expectedDaysSecondClosingTime,
     ): void {
-        $store = $this->updateStoreOpeningHours($openingOne, $closingOne, $openingTwo, $closingTwo);
-        $query = sprintf('{ store(uuid: "%s") { openingHours { isOpen } } }', $store->getUuid());
-        $response = $this->getResponseContentForQuery($query);
+        $store = $this->updateStoreOpeningHours($firstOpeningTime, $firstClosingTime, $secondOpeningTime, $secondClosingTime);
+        $dayOfWeek = $this->getCurrentDayOfWeek();
+
+        if ($publicHolidayDate !== null) {
+            $this->createClosedDay($publicHolidayDate, $publicHolidayExcludedStoresIds);
+        }
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+            'uuid' => $store->getUuid(),
+        ]);
+
+        $expectedDays = $this->createExpectedOpeningDays($expectedDaysFirstOpeningTime, $expectedDaysFirstClosingTime, $expectedDaysSecondOpeningTime, $expectedDaysSecondClosingTime);
 
         self::assertArrayHasKey('data', $response);
         self::assertArrayHasKey('store', $response['data']);
         self::assertArrayHasKey('openingHours', $response['data']['store']);
+        self::assertArrayHasKey('openingHoursOfDays', $response['data']['store']['openingHours']);
         self::assertArrayHasKey('isOpen', $response['data']['store']['openingHours']);
-        self::assertEquals($isOpen, $response['data']['store']['openingHours']['isOpen']);
+        self::assertEquals($expectedIsOpen, $response['data']['store']['openingHours']['isOpen']);
+        self::assertEquals(
+            array_merge($expectedDays, ['dayOfWeek' => $dayOfWeek]),
+            $response['data']['store']['openingHours']['openingHoursOfDays'][$dayOfWeek - 1],
+        );
     }
 
     /**
@@ -167,17 +206,19 @@ class GetStoreTest extends GraphQlTestCase
     protected function openingHoursDataProvider(): array
     {
         return [
-            ['-1 hour', '+1 hour', null, null, true],
-            [null, null, '-1 hour', '+1 hour', true],
-            [null, null, null, null, false],
-            ['+1 hour', '+2 hour', null, null, false],
-            [null, null, '+1 hour', '+2 hour', false],
-            ['-2 hour', '-1 hour', null, null, false],
-            [null, null, '-2 hour', '-1 hour', false],
-            ['-1 hour', null, null, '+1 hour', false],
-            [null, '+1 hour', '-1 hour', null, false],
-            ['+1 hour', '-1 hour', null, null, false],
-            [null, null, '+1 hour', '-1 hour', false],
+            ['-1 hour', '+1 hour', null, null, null, [], true, '-1 hour', '+1 hour', null, null],
+            [null, null, '-1 hour', '+1 hour', null, [], true, null, null, '-1 hour', '+1 hour'],
+            ['-1 hour', '+1 hour', null, null, new DateTime('now', new DateTimeZone('Europe/Prague')), [1], true, '-1 hour', '+1 hour', null, null],
+            [null, null, '-1 hour', '+1 hour', new DateTime('now', new DateTimeZone('Europe/Prague')), [], false, null, null, null, null],
+            [null, null, null, null, null, [], false, null, null, null, null],
+            ['+1 hour', '+2 hour', null, null, null, [], false, '+1 hour', '+2 hour', null, null],
+            [null, null, '+1 hour', '+2 hour', null, [], false, null, null, '+1 hour', '+2 hour'],
+            ['-2 hour', '-1 hour', null, null, null, [], false, '-2 hour', '-1 hour', null, null],
+            [null, null, '-2 hour', '-1 hour', null, [], false, null, null, '-2 hour', '-1 hour'],
+            ['-1 hour', null, null, '+1 hour', null, [], false, '-1 hour', null, null, '+1 hour'],
+            [null, '+1 hour', '-1 hour', null, null, [], false, null, '+1 hour', '-1 hour', null],
+            ['+1 hour', '-1 hour', null, null, null, [], false, '+1 hour', '-1 hour', null, null],
+            [null, null, '+1 hour', '-1 hour', null, [], false, null, null, '+1 hour', '-1 hour'],
         ];
     }
 
@@ -436,17 +477,17 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @param string|null $openingOne
-     * @param string|null $closingOne
-     * @param string|null $openingTwo
-     * @param string|null $closingTwo
+     * @param string|null $firstOpeningTime
+     * @param string|null $firstClosingTime
+     * @param string|null $secondOpeningTime
+     * @param string|null $secondClosingTime
      * @return \App\Model\Store\Store
      */
     private function updateStoreOpeningHours(
-        ?string $openingOne,
-        ?string $closingOne,
-        ?string $openingTwo,
-        ?string $closingTwo,
+        ?string $firstOpeningTime,
+        ?string $firstClosingTime,
+        ?string $secondOpeningTime,
+        ?string $secondClosingTime,
     ): Store {
         $store = $this->storeFacade->getAllStores()[0];
         $dayOfWeek = $this->getCurrentDayOfWeek();
@@ -454,10 +495,10 @@ class GetStoreTest extends GraphQlTestCase
         $storeData = $this->storeDataFactory->createFromStore($store);
         $storeData->openingHours = $this->openingHourDataFactory->createWeek();
 
-        $openingOneDateTime = $openingOne ? $this->createOpeningOrClosingHour($openingOne) : null;
-        $closingOneDateTime = $closingOne ? $this->createOpeningOrClosingHour($closingOne) : null;
-        $openingTwoDateTime = $openingTwo ? $this->createOpeningOrClosingHour($openingTwo) : null;
-        $closingTwoDateTime = $closingTwo ? $this->createOpeningOrClosingHour($closingTwo) : null;
+        $openingOneDateTime = $firstOpeningTime ? $this->createOpeningOrClosingHour($firstOpeningTime) : null;
+        $closingOneDateTime = $firstClosingTime ? $this->createOpeningOrClosingHour($firstClosingTime) : null;
+        $openingTwoDateTime = $secondOpeningTime ? $this->createOpeningOrClosingHour($secondOpeningTime) : null;
+        $closingTwoDateTime = $secondClosingTime ? $this->createOpeningOrClosingHour($secondClosingTime) : null;
 
         $openingHour = $storeData->openingHours[$dayOfWeek - 1];
         $openingHour->dayOfWeek = $dayOfWeek;
@@ -482,5 +523,48 @@ class GetStoreTest extends GraphQlTestCase
             $hour->setDate(1970, 1, 1);
             $hour->setTime(23, 59, 59);
         }
+    }
+
+    /**
+     * @param string|null $firstOpeningTimeModifier
+     * @param string|null $firstClosingTimeModifier
+     * @param string|null $secondOpeningTimeModifier
+     * @param string|null $secondClosingTimeModifier
+     * @return array
+     */
+    private function createExpectedOpeningDays(
+        ?string $firstOpeningTimeModifier,
+        ?string $firstClosingTimeModifier,
+        ?string $secondOpeningTimeModifier,
+        ?string $secondClosingTimeModifier,
+    ): array {
+        return [
+            'firstOpeningTime' => $firstOpeningTimeModifier ? $this->createOpeningOrClosingHour($firstOpeningTimeModifier)->format('H:i') : null,
+            'firstClosingTime' => $firstClosingTimeModifier ? $this->createOpeningOrClosingHour($firstClosingTimeModifier)->format('H:i') : null,
+            'secondOpeningTime' => $secondOpeningTimeModifier ? $this->createOpeningOrClosingHour($secondOpeningTimeModifier)->format('H:i') : null,
+            'secondClosingTime' => $secondClosingTimeModifier ? $this->createOpeningOrClosingHour($secondClosingTimeModifier)->format('H:i') : null,
+        ];
+    }
+
+    /**
+     * @param \DateTime $date
+     * @param string[] $storesIds
+     * @return \App\Model\Store\ClosedDay\ClosedDay
+     */
+    private function createClosedDay(DateTime $date, array $storesIds = []): ClosedDay
+    {
+        $closedDayData = $this->closedDayDataFactory->create();
+
+        $closedDayData->domainId = $this->domain->getId();
+        $closedDayData->name = '';
+        $closedDayData->date = $date->setTime(0, 0);
+        $closedDayData->excludedStores = array_map(function (string $storeId): Store {
+            /** @var \App\Model\Store\Store $store */
+            $store = $this->getReference(sprintf('%s%s', StoreDataFixture::STORE_PREFIX, $storeId));
+
+            return $store;
+        }, $storesIds);
+
+        return $this->closedDayFacade->create($closedDayData);
     }
 }

@@ -610,6 +610,12 @@ msgstr ""
 msgid "Catalog"
 msgstr ""
 
+msgid "Christmas Day"
+msgstr ""
+
+msgid "Christmas Eve"
+msgstr ""
+
 msgid "Circumaural"
 msgstr ""
 
@@ -1517,6 +1523,9 @@ msgid "Samsung UE75HU7500 (UHD)"
 msgstr ""
 
 msgid "Screen size"
+msgstr ""
+
+msgid "Second Christmas Day"
 msgstr ""
 
 msgid "Second reduced rate"

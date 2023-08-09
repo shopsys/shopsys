@@ -130,6 +130,9 @@ msgstr ""
 msgid "Please enter company name"
 msgstr ""
 
+msgid "Please enter date"
+msgstr ""
+
 msgid "Please enter date of creation"
 msgstr ""
 

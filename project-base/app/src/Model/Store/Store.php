@@ -325,11 +325,17 @@ class Store implements OrderableEntityInterface
 
     /**
      * @param \DateTimeImmutable $date
+     * @param \App\Model\Store\ClosedDay\ClosedDay[] $closedDays
      * @return bool
      */
-    public function isOpen(DateTimeImmutable $date): bool
+    public function isOpen(DateTimeImmutable $date, array $closedDays): bool
     {
         $todayOpeningHours = $this->getTodayOpeningHours($date->getTimezone());
+
+        if (array_key_exists($date->format('N'), $closedDays)) {
+            return false;
+        }
+
         $firstOpeningTime = $this->getTimeWithTimeZone($todayOpeningHours->getFirstOpeningTime(), $date->getTimezone());
         $firstClosingTime = $this->getTimeWithTimeZone($todayOpeningHours->getFirstClosingTime(), $date->getTimezone());
         $secondOpeningTime = $this->getTimeWithTimeZone($todayOpeningHours->getSecondOpeningTime(), $date->getTimezone());

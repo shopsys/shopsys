@@ -610,6 +610,12 @@ msgstr "Dobírka"
 msgid "Catalog"
 msgstr "Katalog"
 
+msgid "Christmas Day"
+msgstr "První svátek Vánoční"
+
+msgid "Christmas Eve"
+msgstr "Štědrý den"
+
 msgid "Circumaural"
 msgstr "Okolo uší - Circumaurální"
 
@@ -1518,6 +1524,9 @@ msgstr "Samsung UE75HU7500 (UHD)"
 
 msgid "Screen size"
 msgstr "Úhlopříčka"
+
+msgid "Second Christmas Day"
+msgstr "Druhý svátek Vánoční"
 
 msgid "Second reduced rate"
 msgstr "Druhá snížená sazba"
