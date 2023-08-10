@@ -108,7 +108,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
                         onClick={() => onMoveToSlideHandler(index)}
                         disabled={index === currentSlide % sliderItems.length}
                         key={sliderItem.uuid}
-                        className="mx-1 h-2 w-3 cursor-pointer rounded-sm border-none bg-greyLight outline-none disabled:bg-primary"
+                        className="mx-1 h-2 w-3 cursor-pointer rounded border-none bg-greyLight outline-none disabled:bg-primary"
                     />
                 ))}
             </div>

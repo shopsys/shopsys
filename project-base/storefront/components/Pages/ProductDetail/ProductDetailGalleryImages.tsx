@@ -50,7 +50,7 @@ export const ProductDetailGalleryImages: FC<ProductDetailGalleryImagesProps> = (
                             <div
                                 key={index}
                                 className={twJoin(
-                                    'lightboxItem relative block w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded-md lg:bg-greyVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter',
+                                    'lightboxItem relative block w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded lg:bg-greyVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter',
                                     index > 6 && 'hidden',
                                 )}
                                 data-src={image.sizes.find((size) => size.size === 'default')?.url}
@@ -108,7 +108,7 @@ export const ProductDetailGalleryImages: FC<ProductDetailGalleryImagesProps> = (
                         return (
                             <div
                                 key={videoId.token}
-                                className="lightboxItem relative block max-h-56 w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded-md lg:bg-greyVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter"
+                                className="lightboxItem relative block max-h-56 w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded lg:bg-greyVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter"
                                 data-poster={`https://img.youtube.com/vi/${videoId.token}/0.jpg`}
                                 data-src={`https://www.youtube.com/embed/${videoId.token}`}
                             >
