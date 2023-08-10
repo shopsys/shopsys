@@ -15,6 +15,8 @@ export const Gallery: FC<GalleryProps> = ({ selector, children }) => {
         publicRuntimeConfig: { lightgalleryLicenseKey },
     } = getConfig();
 
+    const TwClass = 'relative mb-5 flex flex-row items-start justify-start overflow-hidden lg:rounded basis-3/5';
+
     return (
         <LightGallery
             mode="lg-fade"
@@ -23,6 +25,7 @@ export const Gallery: FC<GalleryProps> = ({ selector, children }) => {
             selector={selector}
             licenseKey={lightgalleryLicenseKey}
             download={false}
+            elementClassNames={TwClass}
         >
             {children}
         </LightGallery>

@@ -2,12 +2,10 @@ import {
     ProductDetail,
     ProductDetailCode,
     ProductDetailHeading,
-    ProductDetailImage,
     ProductDetailInfo,
     ProductDetailPrefix,
 } from './ProductDetaiElements';
 import { ProductDetailAccessories } from './ProductDetailAccessories';
-import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductVariantsTable } from './ProductVariantsTable/ProductVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
@@ -18,6 +16,7 @@ import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewE
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
+import { ProductDetailGallery } from './ProductDetailGallery';
 
 type ProductDetailMainVariantContentProps = {
     product: MainVariantDetailFragmentApi;
@@ -48,13 +47,12 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             <ProductMetadata product={product} />
             <Webline>
                 <ProductDetail>
-                    <ProductDetailImage dataTestId={TEST_IDENTIFIER + 'gallery'}>
-                        <ProductDetailGallery
-                            images={mainVariantImagesWithVariantImages}
-                            productName={product.name}
-                            flags={product.flags}
-                        />
-                    </ProductDetailImage>
+                    <ProductDetailGallery
+                        dataTestId={TEST_IDENTIFIER + 'gallery'}
+                        images={mainVariantImagesWithVariantImages}
+                        productName={product.name}
+                        flags={product.flags}
+                    />
                     <ProductDetailInfo>
                         <ProductDetailPrefix dataTestId={TEST_IDENTIFIER + 'prefix'}>
                             {product.namePrefix}
@@ -74,7 +72,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             <Webline dataTestId={TEST_IDENTIFIER + 'description'}>
                 <ProductDetailTabs description={product.description} parameters={product.parameters} />
             </Webline>
-            <Webline dataTestId={TEST_IDENTIFIER + 'accessories'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'accessories'} className="mt-5">
                 <ProductDetailAccessories accessories={product.accessories} />
             </Webline>
         </>

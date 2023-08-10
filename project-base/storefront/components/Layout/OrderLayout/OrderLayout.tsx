@@ -21,7 +21,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ activeStep, isTransportOrPay
         <>
             <SeoMeta defaultTitle={t('Order')} />
             <NotificationBars />
-            <Webline type="colored" style={{ marginBottom: '32px', position: 'relative' }}>
+            <Webline type="colored" className="relative mb-8">
                 <Header simpleHeader />
             </Webline>
             <Adverts positionName="header" withGapBottom withWebline />

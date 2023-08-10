@@ -27,7 +27,7 @@ type TabFC<T = unknown> = FC<T> & { tabsRole: string };
 type PropsWithRef<T> = T & { ref: any };
 
 export const Tabs: TabFC<Partial<TabsProps>> = ({ children, className, ...props }) => (
-    <TabsReact className={twJoin('mb-5 p-0 vl:py-0 vl:px-5 xl:my-auto xl:mb-5 xl:max-w-7xl', className)} {...props}>
+    <TabsReact className={twJoin('mb-5 xl:my-auto xl:mb-5 xl:max-w-7xl', className)} {...props}>
         {children}
     </TabsReact>
 );
