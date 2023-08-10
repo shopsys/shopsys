@@ -1,0 +1,14 @@
+{
+    "name": "shopsys/license-acknowledgements-generator",
+    "type": "project",
+    "require": {
+        "maddhatter/markdown-table": "^1.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shopsys",
+            "homepage": "https://www.shopsys.com/"
+        }
+    ]
+}
