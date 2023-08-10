@@ -31,7 +31,7 @@ class MergadoFeedItem implements FeedItemInterface
      * @param array $shortDescriptionUsp
      * @param int $deliveryDays
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $price
-     * @param array $galleryImageUrls
+     * @param string[] $galleryImageUrls
      * @param array $parameters
      * @param string $currencyCode
      * @param string|null $description
@@ -161,7 +161,7 @@ class MergadoFeedItem implements FeedItemInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getGalleryImageUrls(): array
     {

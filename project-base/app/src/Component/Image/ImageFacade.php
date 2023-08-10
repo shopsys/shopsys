@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Image as BaseImage;
@@ -38,6 +37,8 @@ use Symfony\Contracts\Cache\CacheInterface;
  * @method \App\Component\Image\Image getById(int $imageId)
  * @method \App\Component\Image\Image[] getImagesByEntitiesIndexedByEntityId(int[] $entityIds, string $entityClass)
  * @method \App\Component\Image\Image[] getImagesByEntityId(int $id, string $entityClass)
+ * @method \App\Component\Image\Image getImageByEntity(object $entity, string|null $type)
+ * @method \App\Component\Image\Image[] getImagesByEntityIndexedById(object $entity, string|null $type)
  */
 class ImageFacade extends BaseImageFacade
 {
@@ -321,8 +322,6 @@ class ImageFacade extends BaseImageFacade
                 $this->em->remove($oldImage);
             }
 
-            $this->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
-
             /** @var \App\Component\Image\Image|null $newImage */
             $newImage = $this->imageFactory->create(
                 $imageEntityConfig->getEntityName(),
@@ -355,76 +354,12 @@ class ImageFacade extends BaseImageFacade
 
         foreach ($images as $image) {
             $imageToRemove = $this->imageRepository->findById($image->getId());
-            $this->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $image->getType());
 
             if ($imageToRemove !== null) {
                 $this->em->remove($imageToRemove);
             }
         }
         $this->em->flush();
-    }
-
-    /**
-     * @param $entity
-     * @param $type
-     * @throws \Psr\Cache\InvalidArgumentException
-     * @return \App\Component\Image\Image
-     */
-    public function getImageByEntity($entity, $type): BaseImage
-    {
-        $entityName = $this->imageConfig->getEntityName($entity);
-        $entityId = $this->getEntityId($entity);
-        $cacheId = $this->getCacheIdForSingleEntity($entityName, $entityId, $type);
-
-        return $this->cache->get(
-            $cacheId,
-            function () use ($entityName, $entityId, $type) {
-                return $this->imageRepository->getImageByEntity(
-                    $entityName,
-                    $entityId,
-                    $type,
-                );
-            },
-        );
-    }
-
-    /**
-     * @param object $entity
-     * @param string|null $type
-     * @return \App\Component\Image\Image[]
-     */
-    public function getImagesByEntityIndexedById(object $entity, ?string $type): array
-    {
-        $entityName = $this->imageConfig->getEntityName($entity);
-        $entityId = $this->getEntityId($entity);
-
-        $cacheId = $this->getCacheIdForMultipleEntities($entityName, $entityId, $type);
-
-        return $this->cache->get(
-            $cacheId,
-            function () use ($entityName, $entityId, $type) {
-                return $this->imageRepository->getImagesByEntityIndexedById(
-                    $entityName,
-                    $entityId,
-                    $type,
-                );
-            },
-        );
-    }
-
-    /**
-     * @param object $entity
-     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData $imageUploadData
-     * @param string|null $type
-     */
-    public function manageImages(object $entity, ImageUploadData $imageUploadData, ?string $type = null): void
-    {
-        $entityName = $this->imageConfig->getEntityName($entity);
-        $entityId = $this->getEntityId($entity);
-
-        $this->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
-
-        parent::manageImages($entity, $imageUploadData, $type);
     }
 
     /**
@@ -507,52 +442,5 @@ class ImageFacade extends BaseImageFacade
             $sizeName,
             $additionalIndex,
         );
-    }
-
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string|null $type
-     * @return string
-     */
-    private function getCacheIdForSingleEntity(string $entityName, int $entityId, ?string $type): string
-    {
-        if ($type === null) {
-            return sprintf('cache_image_entity_%s_%d', $entityName, $entityId);
-        }
-
-        return sprintf('cache_image_entity_%s_%d_%s', $entityName, $entityId, $type);
-    }
-
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string|null $type
-     * @return string
-     */
-    private function getCacheIdForMultipleEntities(string $entityName, int $entityId, ?string $type): string
-    {
-        if ($type === null) {
-            return sprintf('cache_images_entities_%s_%d', $entityName, $entityId);
-        }
-
-        return sprintf('cache_images_entities_%s_%d_%s', $entityName, $entityId, $type);
-    }
-
-    /**
-     * @param string $entityName
-     * @param int $entityId
-     * @param string|null $type
-     */
-    public function invalidateCacheByEntityNameAndEntityIdAndType(
-        string $entityName,
-        int $entityId,
-        ?string $type,
-    ): void {
-        $cacheIdForSingleEntity = $this->getCacheIdForSingleEntity($entityName, $entityId, $type);
-        $cacheIdForMultipleEntities = $this->getCacheIdForMultipleEntities($entityName, $entityId, $type);
-
-        $this->cache->delete($cacheIdForSingleEntity);
-        $this->cache->delete($cacheIdForMultipleEntities);
     }
 }
