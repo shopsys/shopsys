@@ -8,7 +8,7 @@ import {
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
 export const useComparison = () => {
@@ -20,11 +20,27 @@ export const useComparison = () => {
     const comparisonUuid = usePersistStore((store) => store.comparisonUuid);
     const updateUserState = usePersistStore((store) => store.updateUserState);
     const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
+    const initialLoadRef = useRef(false);
+    const [isLoadingVisible, setIsLoadingVisible] = useState(true);
 
     const [{ data: comparisonData, fetching }] = useComparisonQueryApi({
         variables: { comparisonUuid },
-        pause: !comparisonUuid,
+        pause: !comparisonUuid && !isUserLoggedIn,
     });
+
+    useEffect(() => {
+        if (initialLoadRef.current) {
+            initialLoadRef.current = true;
+        } else {
+            setIsLoadingVisible(fetching);
+        }
+    }, [fetching]);
+
+    useEffect(() => {
+        updateUserState({
+            comparisonUuid: comparisonData?.comparison?.uuid ?? null,
+        });
+    }, [comparisonData?.comparison?.uuid]);
 
     const isProductInComparison = (productUuid: string) =>
         !!comparisonData?.comparison?.products.find((product) => product.uuid === productUuid);
@@ -43,9 +59,7 @@ export const useComparison = () => {
             setIsPopupCompareOpen(true);
 
             updateUserState({
-                comparisonUuid: isUserLoggedIn
-                    ? null
-                    : addProductToComparisonResult.data?.addProductToComparison.uuid ?? null,
+                comparisonUuid: addProductToComparisonResult.data?.addProductToComparison.uuid ?? null,
             });
         }
     };
@@ -97,7 +111,7 @@ export const useComparison = () => {
 
     return {
         comparison: comparisonData?.comparison,
-        fetching,
+        fetching: isLoadingVisible,
         isPopupCompareOpen,
         isProductInComparison,
         toggleProductInComparison,

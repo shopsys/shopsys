@@ -114,10 +114,10 @@ export const cache = cacheExchange({
     updates: {
         Mutation: {
             Login(_result, _args, cache) {
-                invalidateFields(cache, ['cart', 'wishlist']);
+                invalidateFields(cache, ['cart']);
             },
             Logout(_result, _args, cache) {
-                invalidateFields(cache, ['cart', 'wishlist']);
+                invalidateFields(cache, ['cart']);
             },
             DeleteDeliveryAddress(_result, _args, cache) {
                 invalidateFields(cache, ['currentCustomerUser']);
