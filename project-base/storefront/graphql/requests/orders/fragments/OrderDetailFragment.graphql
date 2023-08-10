@@ -46,4 +46,7 @@ fragment OrderDetailFragment on Order {
     promoCode
     trackingNumber
     trackingUrl
+    totalPrice {
+        ...PriceFragment
+    }
 }

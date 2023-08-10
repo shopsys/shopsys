@@ -272,6 +272,17 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                                     </Cell>
                                 </Row>
                             ))}
+                            <Row>
+                                <Cell
+                                    colSpan={6}
+                                    className="w-full text-right"
+                                    dataTestId={TEST_IDENTIFIER + 'ordet-total-pricevat'}
+                                >
+                                    <b>
+                                        {t('Total price including VAT')}: {formatPrice(order.totalPrice.priceWithVat)}
+                                    </b>
+                                </Cell>
+                            </Row>
                         </Table>
                     </div>
                 )}
