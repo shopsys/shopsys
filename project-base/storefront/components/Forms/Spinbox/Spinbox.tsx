@@ -133,7 +133,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         }
 
         return (
-            <div className="inline-flex h-12 w-32 overflow-hidden rounded-xl border-2 border-border bg-white">
+            <div className="inline-flex h-12 w-32 overflow-hidden rounded border-2 border-border bg-white">
                 {content}
             </div>
         );

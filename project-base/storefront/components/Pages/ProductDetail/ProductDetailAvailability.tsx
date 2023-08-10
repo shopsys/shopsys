@@ -21,7 +21,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
     };
 
     return (
-        <div className="rounded-md bg-blueLight px-3 py-4" data-testid={TEST_IDENTIFIER}>
+        <div className="rounded bg-blueLight px-3 py-4" data-testid={TEST_IDENTIFIER}>
             <a
                 className={twJoin(
                     'flex items-center font-bold no-underline hover:no-underline',

@@ -53,7 +53,7 @@ export const ProductListItem = forwardRef<HTMLDivElement, ProductItemProps>(
             <div
                 ref={ref}
                 className={twMergeCustom(
-                    'relative flex flex-col justify-between rounded-t-xl border-b border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
+                    'relative flex flex-col justify-between rounded-t border-b border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
                     className,
                 )}
                 data-testid={getDataTestId(product.catalogNumber)}

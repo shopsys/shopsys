@@ -48,7 +48,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
             <div
                 data-src={mainImageUrl}
                 className={twJoin(
-                    'hidden lg:relative lg:order-1 lg:block lg:overflow-hidden lg:rounded-xl lg:p-4',
+                    'hidden lg:relative lg:order-1 lg:block lg:overflow-hidden lg:rounded lg:p-4',
                     mainImage && 'lightboxItem',
                 )}
             >

@@ -81,7 +81,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                     <AdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
                     <div className="flex flex-col gap-3 sm:flex-row">
                         <div
-                            className="relative flex w-full cursor-pointer flex-row items-center justify-center rounded-xl bg-primary py-3 px-8 font-bold uppercase text-white vl:mb-3 vl:hidden"
+                            className="relative flex w-full cursor-pointer flex-row items-center justify-center rounded bg-primary py-3 px-8 font-bold uppercase text-white vl:mb-3 vl:hidden"
                             onClick={handlePanelOpenerClick}
                         >
                             <Icon iconType="icon" icon="Filter" className="mr-3 w-6 font-bold text-white" />

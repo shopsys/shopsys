@@ -94,7 +94,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                                     {t('Log-in')}
                                 </Button>
                             </div>
-                            <div className="flex items-center gap-1 whitespace-nowrap rounded-xl border-primary py-2 px-2 text-sm text-primary lg:mt-5 lg:border-2 lg:px-3 lg:py-3">
+                            <div className="flex items-center gap-1 whitespace-nowrap rounded border-primary py-2 px-2 text-sm text-primary lg:mt-5 lg:border-2 lg:px-3 lg:py-3">
                                 <Icon iconType="icon" icon="Warning" className=" h-5 w-9 text-red" />
                                 <ExtendedNextLink href={resetPasswordUrl} type="static">
                                     <div className="block text-sm text-primary underline hover:no-underline">
@@ -107,7 +107,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                 </FormProvider>
             </div>
             <div className="mt-7 w-full lg:mt-0 lg:w-1/2 lg:pl-5">
-                <div className="mb-6 -mr-4 flex w-full justify-between rounded-l-xl bg-blueLight p-4">
+                <div className="mb-6 -mr-4 flex w-full justify-between rounded-l bg-blueLight p-4">
                     <p className="text-lg text-primary lg:text-xl">{t("Don't have an account yet? Register.")}</p>
                 </div>
                 <p className="mb-8 hidden lg:block">

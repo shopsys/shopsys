@@ -24,7 +24,7 @@ export const ProductDetailPageSkeleton: FC = () => (
                         <Skeleton className="h-7 w-5/6" />
                         <Skeleton className="h-4 w-2/6" />
                     </div>
-                    <Skeleton className="h-8 w-20 rounded-2xl" />
+                    <Skeleton className="h-8 w-20 rounded" />
                     <Skeleton className="h-10 w-2/4" />
                     <div className="flex flex-col gap-1">
                         <Skeleton className="h-10 w-20" />
@@ -47,7 +47,7 @@ export const ProductDetailPageSkeleton: FC = () => (
         </Webline>
         <div className="border-grayLight mb-6 w-full border-t vl:border-0">
             <Webline>
-                <Skeleton className="hidden vl:block vl:h-8 vl:w-40 vl:rounded-2xl " />
+                <Skeleton className="hidden vl:block vl:h-8 vl:w-40 vl:rounded" />
                 <div className="flex w-full flex-col vl:flex-row">
                     <div className="w-full">
                         <Skeleton className="mb-8 mt-3 h-4 w-16" />

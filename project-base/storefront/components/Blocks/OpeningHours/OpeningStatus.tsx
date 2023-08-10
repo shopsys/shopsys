@@ -7,7 +7,7 @@ export const OpeningStatus: FC<{ isOpen: boolean }> = ({ isOpen, className }) =>
     return (
         <div
             className={twMergeCustom(
-                'inline-block rounded-xl py-1 px-3 font-medium uppercase leading-normal text-white',
+                'inline-block rounded py-1 px-3 font-medium uppercase leading-normal text-white',
                 isOpen ? 'bg-greenDark' : 'bg-red',
                 className,
             )}

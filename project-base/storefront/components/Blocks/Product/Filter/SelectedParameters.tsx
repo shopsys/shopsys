@@ -41,7 +41,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions 
     const checkedFlags = getCheckedFlags(defaultProductFiltersMap, filterOptions.flags, filter?.flags);
 
     return (
-        <div className="z-aboveOverlay rounded-xl py-4 vl:z-[0]" data-testid={TEST_IDENTIFIER}>
+        <div className="z-aboveOverlay rounded py-4 vl:z-[0]" data-testid={TEST_IDENTIFIER}>
             <Heading type="h4" className="uppercase">
                 {t('Selected filters')}
             </Heading>

@@ -11,7 +11,7 @@ export const FooterContact: FC = () => {
                 {t('Follow Us')}
             </Heading>
 
-            <div className="flex h-24 w-full max-w-xs overflow-hidden rounded-xl border-2 border-greyLight">
+            <div className="flex h-24 w-full max-w-xs overflow-hidden rounded border-2 border-greyLight">
                 <FooterContactSocialsItem href="#" title="Instagram">
                     <Icon iconType="icon" icon="Instagram" className="w-8 text-white" />
                 </FooterContactSocialsItem>

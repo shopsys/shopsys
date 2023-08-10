@@ -26,7 +26,7 @@ export const MenuIconicItemUserAuthenticated: FC = ({ dataTestId }) => {
                     {t('My account')}
                 </MenuIconicItemLink>
 
-                <ul className="pointer-events-none absolute top-full right-0 z-cart block min-w-[150px] origin-top-right scale-50 rounded-xl rounded-tr-none bg-white opacity-0 shadow-lg transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100">
+                <ul className="pointer-events-none absolute top-full right-0 z-cart block min-w-[150px] origin-top-right scale-50 rounded rounded-tr-none bg-white opacity-0 shadow-lg transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100">
                     <li className="block" data-testid={dataTestId + '-sub-0'}>
                         <MenuIconicSubItemLink href={customerOrdersUrl}>{t('My orders')}</MenuIconicSubItemLink>
                     </li>

@@ -11,7 +11,6 @@ type Props = NativeButtonProps &
         isWithDisabledLook?: boolean;
         size?: 'small';
         variant?: 'primary' | 'secondary';
-        isRounder?: boolean;
     };
 
 export const Button: FC<Props> = forwardRef(
@@ -23,7 +22,6 @@ export const Button: FC<Props> = forwardRef(
             className,
             isDisabled: isDisabledDefault,
             isWithDisabledLook,
-            isRounder,
             size,
             variant,
             ...props
@@ -40,14 +38,13 @@ export const Button: FC<Props> = forwardRef(
         return (
             <button
                 className={twMergeCustom(
-                    'inline-flex w-auto cursor-pointer items-center justify-center gap-2 text-center font-bold uppercase outline-none transition-all hover:no-underline',
-                    size === 'small' ? 'py-1 px-4 text-sm' : 'py-3 px-8 text-base',
+                    'inline-flex w-auto cursor-pointer items-center justify-center gap-2 rounded text-center font-bold uppercase outline-none transition-all hover:no-underline',
+                    size === 'small' ? 'py-1 px-4 text-sm' : 'py-3 px-4 text-base vl:px-8',
                     !variant && 'bg-orange text-white hover:bg-orangeDarker hover:text-white',
                     variant === 'primary' && 'bg-primary text-white hover:bg-primaryDarker hover:text-white',
                     variant === 'secondary' && 'bg-orangeLight text-black hover:bg-white hover:text-black',
                     (isDisabled || isWithDisabledLook) && 'cursor-no-drop opacity-50',
                     isDisabled && 'pointer-events-none',
-                    isRounder ? 'rounded-xl' : 'rounded',
                     className,
                 )}
                 type={type}

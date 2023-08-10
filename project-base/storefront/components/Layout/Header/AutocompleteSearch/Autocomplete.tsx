@@ -72,7 +72,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
     return (
         <div
             className={twJoin(
-                'absolute top-0 left-0 z-aboveMenu w-full bg-creamWhite px-7 pb-6 shadow-md max-vl:origin-top max-vl:scale-y-90 max-vl:opacity-0 max-vl:transition lg:relative lg:left-0 lg:right-auto lg:w-full lg:origin-top lg:scale-y-90 lg:rounded-xl lg:p-8 lg:transition-all vl:w-[576px]',
+                'absolute top-0 left-0 z-aboveMenu w-full bg-creamWhite px-7 pb-6 shadow-md max-vl:origin-top max-vl:scale-y-90 max-vl:opacity-0 max-vl:transition lg:relative lg:left-0 lg:right-auto lg:w-full lg:origin-top lg:scale-y-90 lg:rounded lg:p-8 lg:transition-all vl:w-[576px]',
                 isAutocompleteActive
                     ? 'pointer-events-auto pt-32 opacity-100 max-vl:scale-y-100 max-vl:opacity-100 vl:top-3'
                     : 'pointer-events-none lg:opacity-0',

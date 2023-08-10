@@ -4,7 +4,7 @@ export const ProductDetail: FC = ({ children }) => (
 
 export const ProductDetailImage: FC = ({ children, dataTestId }) => (
     <div
-        className="lg:w-[calc(100%-346px)] vl:w-[calc(100%-512px)] [&>div]:relative [&>div]:mb-5 [&>div]:flex [&>div]:w-full [&>div]:flex-row [&>div]:items-start [&>div]:justify-start [&>div]:overflow-hidden lg:[&>div]:rounded-xl"
+        className="lg:w-[calc(100%-346px)] vl:w-[calc(100%-512px)] [&>div]:relative [&>div]:mb-5 [&>div]:flex [&>div]:w-full [&>div]:flex-row [&>div]:items-start [&>div]:justify-start [&>div]:overflow-hidden lg:[&>div]:rounded"
         data-testid={dataTestId}
     >
         {children}

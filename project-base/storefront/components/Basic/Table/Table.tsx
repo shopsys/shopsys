@@ -6,7 +6,7 @@ type TableProps = {
 };
 
 export const Table: FC<TableProps> = ({ head, children, className }) => (
-    <div className={twMergeCustom('overflow-x-auto rounded-xl border-2 border-border p-6', className)}>
+    <div className={twMergeCustom('overflow-x-auto rounded border-2 border-border p-6', className)}>
         <table className="w-full">
             {!!head && <thead className="border-b border-border">{head}</thead>}
             <tbody>{children}</tbody>

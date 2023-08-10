@@ -67,7 +67,7 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
     return (
         <>
             <Webline>
-                <div className="relative mb-20 flex flex-col rounded-xl border-2 border-primary before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-1 before:-translate-x-1/2 before:bg-primary before:content-none lg:flex-row before:lg:block">
+                <div className="relative mb-20 flex flex-col rounded border-2 border-primary before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-1 before:-translate-x-1/2 before:bg-primary before:content-none lg:flex-row before:lg:block">
                     <div className="w-full p-5 lg:w-1/2 lg:py-8 lg:px-10">
                         <Heading type="h2" className="mb-5 text-4xl leading-10 [&>strong]:text-primary">
                             <Trans
@@ -125,7 +125,6 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
                                         dataTestId={TEST_IDENTIFIER}
                                         type="submit"
                                         variant="primary"
-                                        isRounder
                                         style={{ width: '100%' }}
                                         isWithDisabledLook={!formProviderMethods.formState.isValid}
                                     >

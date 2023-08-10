@@ -91,7 +91,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                                     key={store.slug}
                                     href={store.slug}
                                     type="store"
-                                    className="mb-4 flex w-full items-center justify-between rounded-xl border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline lg:w-auto vl:hover:-translate-x-1 vl:hover:shadow-lg"
+                                    className="mb-4 flex w-full items-center justify-between rounded border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline lg:w-auto vl:hover:-translate-x-1 vl:hover:shadow-lg"
                                 >
                                     <>
                                         <div className="flex flex-row items-center text-lg text-primary">
