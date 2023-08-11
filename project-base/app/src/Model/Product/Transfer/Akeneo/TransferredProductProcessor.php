@@ -15,7 +15,6 @@ use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Generator;
 use League\Flysystem\FilesystemOperator;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class TransferredProductProcessor
 {
@@ -43,7 +42,6 @@ class TransferredProductProcessor
      * @param \App\Model\Product\Transfer\Akeneo\AssetTransferAkeneoFacade $assetTransferAkeneoFacade
      * @param \App\Component\FileUpload\FileUpload $fileUpload
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
@@ -56,7 +54,6 @@ class TransferredProductProcessor
         private readonly AssetTransferAkeneoFacade $assetTransferAkeneoFacade,
         private readonly FileUpload $fileUpload,
         private readonly ParameterFacade $parameterFacade,
-        private readonly ImageConfig $imageConfig,
         private readonly FilesystemOperator $filesystem,
     ) {
     }
@@ -72,11 +69,6 @@ class TransferredProductProcessor
 
         $product = $this->findProductByIdentifier((string)$akeneoProductData['identifier']);
 
-        if ($product !== null) {
-            $entityName = $this->imageConfig->getEntityName($product);
-            $entityId = $product->getId();
-            $this->imageFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, null);
-        }
         $productData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductData($akeneoProductData, $product, $logger);
 
         if ($product === null) {
