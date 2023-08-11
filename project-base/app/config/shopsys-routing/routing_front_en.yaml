@@ -37,7 +37,7 @@ front_personal_data_access:
     path: /personal-data-access/{hash}
 
 front_personal_data_export:
-    path: /export-personal-data
+    path: /personal-data-export
 
 front_stores:
     path: /stores
