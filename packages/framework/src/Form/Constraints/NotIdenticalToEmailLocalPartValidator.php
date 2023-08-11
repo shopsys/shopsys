@@ -25,12 +25,14 @@ class NotIdenticalToEmailLocalPartValidator extends ConstraintValidator
         $password = $propertyAccessor->getValue($values, $constraint->password);
         $email = $propertyAccessor->getValue($values, $constraint->email);
 
-        if (strpos($email, $password . '@') === 0) {
+        if ($password === null || $email === null) {
+            return;
+        }
+
+        if (str_starts_with($email, $password . '@')) {
             $this->context->buildViolation($constraint->message)
                 ->atPath($constraint->errorPath)
                 ->addViolation();
-
-            return;
         }
     }
 }
