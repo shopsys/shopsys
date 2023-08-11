@@ -1,8 +1,8 @@
-import '../styles/globals.css';
 import '../styles/user-text.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'nprogress/nprogress.css';
+import '../styles/globals.css';
 import appWithI18n from 'next-translate/appWithI18n';
 import i18nConfig from 'i18n';
 import { AppProps as NextAppProps } from 'next/app';

@@ -1,21 +1,19 @@
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { ImageSizeFragmentApi, SliderItemFragmentApi } from 'graphql/generated';
-import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { SliderItemFragmentApi } from 'graphql/generated';
 
 type BannersSliderItemProps = {
     item: SliderItemFragmentApi;
+    isDesktop: boolean;
 };
 
 export const BannersSliderItem: FC<BannersSliderItemProps> = ({
     item: { webMainImage, mobileMainImage, link, name },
+    isDesktop,
 }) => {
-    const { width } = useGetWindowSize();
-    const image = width > desktopFirstSizes.tablet ? webMainImage : mobileMainImage;
-
-    const imageSize: ImageSizeFragmentApi | null = image?.sizes.find((i) => i.size === 'default') ?? null;
+    const image = isDesktop ? webMainImage : mobileMainImage;
+    const imageSize = image?.sizes.find((i) => i.size === 'default');
 
     return (
-        <a href={link} className="keen-slider__slide">
+        <a href={link} className="keen-slider__slide w-full">
             {!imageSize ? (
                 <BannerImage src="images/optimized-noimage.webp" alt="no image" />
             ) : (

@@ -20,38 +20,38 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 }) => {
     const t = useTypedTranslationFunction();
     const sliderRef = useRef<HTMLDivElement>(null);
-    const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLDivElement>>>([]);
+    const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLDivElement>>>();
     const [activeIndex, setActiveIndex] = useState(0);
     const isWithControls = products.length > 4;
 
     useEffect(() => {
-        setProductElementRefs((elRefs) =>
+        setProductElementRefs(
             Array(products.length)
                 .fill(null)
-                .map((_, i) => elRefs[i] || createRef()),
+                .map(() => createRef()),
         );
     }, []);
 
-    const handleScroll = (productIndex: number) => {
-        productElementRefs[productIndex].current?.scrollIntoView({
+    useEffect(() => {
+        productElementRefs?.[activeIndex].current?.scrollIntoView({
             behavior: 'smooth',
             block: 'nearest',
             inline: 'start',
         });
+    }, [activeIndex]);
 
-        setActiveIndex(productIndex);
-    };
+    const handleScroll = (productIndex: number) => setActiveIndex(productIndex);
 
     const handlePreviousClick = () => {
         const prevIndex = activeIndex - 1;
-        const newActiveIndex = prevIndex >= 0 ? prevIndex : productElementRefs.length - 4;
+        const newActiveIndex = prevIndex >= 0 ? prevIndex : productElementRefs!.length - 4;
 
         handleScroll(newActiveIndex);
     };
 
     const handleNextClick = () => {
         const nextIndex = activeIndex + 1;
-        const isEndSlide = nextIndex + 4 > productElementRefs.length;
+        const isEndSlide = nextIndex + 4 > productElementRefs!.length;
         const newActiveIndex = isEndSlide ? 0 : nextIndex;
 
         handleScroll(newActiveIndex);
