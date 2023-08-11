@@ -636,6 +636,17 @@ jobs:
                     docker compose exec -T php-fpm php phing -D change.environment=prod environment-change
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys demo-data error-pages-generate warmup
                     ./set-urls-for-review.sh printDomains
+            -   name: Add Review URL to Pull request description
+                uses: Jerome1337/comment-pull-request@v1.0.4
+                env:
+                    GITHUB_TOKEN: ${{ github.token }}
+                with:
+                    description-message: |
+                        ----
+                        :globe_with_meridians: Live Preview:
+                          - https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
+                          - https://cz.${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
+                    delete-previous-comment: false
     build-successful:
         if: ${{ always() }}
         name: Build successful
