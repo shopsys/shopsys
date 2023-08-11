@@ -26,129 +26,176 @@ You can check all the dependencies using the instructions from the section Libra
 These images and packages are configured in `docker-compose.yml` and in `Dockerfile`. We do not redistribute these packages, we are only referencing them to download, user agrees to download these images by pulling and building images done by `docker-compose up` or `docker build`.
 
 ### Postgres
-Image: `Postgres:12.1-alpine`  
+Image: `postgres:12.1-alpine`  
 License: PostgreSQL License  
 https://www.postgresql.org/about/licence/
 
 ### Nginx
-Image: `Nginx:1.13-alpine`  
+Image: `nginx:1.13-alpine`  
 License: BSD-2-Clause  
 http://nginx.org/LICENSE
 
 ### Redis
-Image: `Redis:7.0-alpine`  
+Image: `redis:7.0-alpine`  
 License: BSD-3-Clause  
 https://redis.io/topics/license
 
-### phpRedisAdmin
-Image: `Erikdubbelboer/phpredisadmin:v1.10.2`  
-License: Creative Commons Attribution 3.0 BY  
-https://github.com/erikdubbelboer/phpRedisAdmin/blob/master/README.markdown
+### Redis Commander
+Image: `ghcr.io/joeferner/redis-commander:latest`  
+License: MIT  
+https://github.com/joeferner/redis-commander/blob/master/LICENSE
 
 ### Selenium Docker
 Image: `seleniarm/standalone-firefox:4.9.0`  
 License: Apache License 2.0  
-https://github.com/seleniumhq-community/docker-seleniarm/blob/trunk/LICENSE.md  
-Copyright 2018 Software Freedom Conservancy (SFC)
+https://github.com/seleniumhq-community/docker-seleniarm/blob/trunk/LICENSE.md
 
 ### Adminer
-Image: `Adminer:4.7`  
+Image: `adminer:4.7`  
 License: Apache License 2.0 or GPL 2  
 https://github.com/vrana/adminer/blob/master/readme.txt
 
 ### Elasticsearch
-Image: `Docker.elastic.co/elasticsearch/elasticsearch-oss`  
+Image: `docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2`  
 License: Apache License 2.0  
-https://github.com/elastic/elasticsearch/blob/v6.3.2/LICENSE.txt  
-Copyright 2009-2018 Elasticsearch
+https://github.com/elastic/elasticsearch/blob/v7.10.2/LICENSE.txt
+
+### Elasticsearch ICU Analysis plugin
+License: Apache License 2.0  
+https://github.com/elastic/elasticsearch/blob/master/LICENSE.txt
+
+### Kibana  
+Image: `docker.elastic.co/kibana/kibana-oss:7.6.0`  
+License: Apache License 2.0  
+https://github.com/elastic/kibana/blob/v7.6.0/LICENSE.txt
+
+### Node
+Image: `node:18.15.0-alpine`  
+License: MIT  
+https://github.com/nodejs/docker-node/blob/main/LICENSE
 
 ### Php
 Image: `php:8.1-fpm-bullseye`  
 License: The PHP License  
-http://php.net/license/  
-Copyright (c) 1999 - 2018 The PHP Group. All rights reserved.
+http://php.net/license/
+
+### Python
+Image: `python:3.7.4-slim-buster`  
+License: Python Software Foundation License  
+https://docs.python.org/3/license.html
 
 ### Composer - Dependency Management for PHP
 License: MIT  
-https://github.com/composer/composer/blob/master/LICENSE  
-Copyright (c) Nils Adermann, Jordi Boggiano
+https://github.com/composer/composer/blob/master/LICENSE
 
 ### wget
-License: GPL  
-https://metadata.ftp-master.debian.org/changelogs/main/w/wget/wget_1.18-5+deb9u2_copyright  
-Copyright: (C) 2007 Free Software Foundation, Inc.
+License: GPL-3  
+https://metadata.ftp-master.debian.org/changelogs/main/w/wget/stable_copyright
 
 ### gnupg
 License: GPL-3+  
-https://metadata.ftp-master.debian.org/changelogs/main/g/gnupg2/gnupg2_2.1.18-8~deb9u3_copyright  
-Copyright: 1992, 1995-2016, Free Software Foundation, Inc
+https://metadata.ftp-master.debian.org/changelogs/main/g/gnupg2/stable_copyright
 
 ### g++
-License: GPL  
-https://metadata.ftp-master.debian.org/changelogs/main/g/gcc-defaults/gcc-defaults_1.168_copyright  
-Copyright (c) 1999 The NetBSD Foundation, Inc.
+License: GPL-2  
+https://metadata.ftp-master.debian.org/changelogs/main/g/gcc-defaults/stable_copyright
 
 ### locales
 License: LGPL-2.1  
-https://metadata.ftp-master.debian.org/changelogs//main/g/glibc/glibc_2.24-11+deb9u3_copyright  
-Copyright (C) 1991-2015 Free Software Foundation, Inc.
+https://metadata.ftp-master.debian.org/changelogs//main/g/glibc/stable_copyright
 
 ### unzip
 License: Info-ZIP  
-https://metadata.ftp-master.debian.org/changelogs/main/u/unzip/unzip_6.0-21_copyright  
-Copyright (c) 1990-2009 Info-ZIP.  All rights reserved.
+https://metadata.ftp-master.debian.org/changelogs/main/u/unzip/stable_copyright
 
 ### dialog
 License: LGPL-2.1  
-https://metadata.ftp-master.debian.org/changelogs/main/d/dialog/dialog_1.3-20160828-2_copyright  
-Copyright 1999-2016 Thomas E. Dickey  
+https://metadata.ftp-master.debian.org/changelogs/main/d/dialog/stable_copyright
 
 ### apt-utils
-Licens: GPLv2+  
-https://metadata.ftp-master.debian.org/changelogs/main/a/apt/apt_1.4.8_copyright  
-Apt is copyright 1997, 1998, 1999 Jason Gunthorpe and others.
+Licens: GPL-2+  
+https://metadata.ftp-master.debian.org/changelogs/main/a/apt/stable_copyright
 
 ### nodejs-npm
 License: Artistic License 2.0  
-https://www.npmjs.com/policies/npm-license  
-Copyright (c) 2000-2006, The Perl Foundation
+https://docs.npmjs.com/policies/npm-license
+
+### bash-completion
+License: GPL-2+  
+https://metadata.ftp-master.debian.org/changelogs/main/b/bash-completion/stable_copyright
 
 ### libicu-dev
 License: ICU License  
-https://metadata.ftp-master.debian.org/changelogs/main/i/icu/icu_57.1-6+deb9u2_copyright  
-Copyright (c) 1995-2013 International Business Machines Corporation and others
+https://metadata.ftp-master.debian.org/changelogs/main/i/icu/stable_copyright
 
 ### libpng-dev
 License: libpng  
-https://metadata.ftp-master.debian.org/changelogs/main/libp/libpng1.6/libpng1.6_1.6.28-1_copyright  
-Copyright: Copyright (c) 1998-2016 Glenn Randers-Pehrson
+https://metadata.ftp-master.debian.org/changelogs/main/libp/libpng1.6/stable_copyright
 
 ### libpq-dev
-Licens: PostgreSQL  
-https://metadata.ftp-master.debian.org/changelogs/main/p/postgresql-9.6/postgresql-9.6_9.6.10-0+deb9u1_copyright  
-Copyright:
-Portions Copyright (c) 1996-2016, PostgreSQL Global Development Group,
-Portions Copyright (c) 1994, The Regents of the University of California
+License: PostgreSQL  
+https://metadata.ftp-master.debian.org/changelogs/main/p/postgresql-11/stable_copyright
 
 ### libzip-dev
 License: GPL  
-https://metadata.ftp-master.debian.org/changelogs/main/libz/libzip/libzip_1.1.2-1.1_copyright  
-Copyright (C) 2007-2010 Fathi Boudra <fabo@debian.org>
+https://metadata.ftp-master.debian.org/changelogs/main/libz/libzip/stable_copyright
 
 ### autoconf
 License: GPL-3+  
-https://metadata.ftp-master.debian.org/changelogs/main/a/autoconf/autoconf_2.69-10_copyright  
-Copyright: 1992-1996, 1999-2001, 2003, 2005-2012 Free Software Foundation, Inc.
+https://metadata.ftp-master.debian.org/changelogs/main/a/autoconf/stable_copyright
+
+### libjpeg-dev
+License: GPL-3  
+https://metadata.ftp-master.debian.org/changelogs/main/libj/libjpeg/stable_copyright
+
+### libfreetype6-dev
+License: FTL  
+https://metadata.ftp-master.debian.org/changelogs/main/f/freetype/stable_copyright
+
+### vim
+License: Vim  
+https://metadata.ftp-master.debian.org/changelogs/main/v/vim/stable_copyright
+
+### nano
+License: GPL-3+  
+https://metadata.ftp-master.debian.org/changelogs/main/n/nano/stable_copyright
+
+### mc
+License: GPL-3+  
+https://metadata.ftp-master.debian.org/changelogs/main/m/mc/stable_copyright
+
+### htop
+License: GPL-2+  
+https://metadata.ftp-master.debian.org/changelogs/main/h/htop/stable_copyright
 
 ### pecl
 License: The PHP License  
-https://pecl.php.net/copyright.php  
-Copyright © 2001-2018 The PHP Group. All rights reserved.
+https://pecl.php.net/copyright.php
 
-### postgresql-10 and postgresql-client-10
+### postgresql-12 and postgresql-client-12
 License: PostgreSQL  
-https://www.postgresql.org/about/licence/  
-Portions Copyright © 1996-2019, The PostgreSQL Global Development Group
+https://www.postgresql.org/about/licence/
+
+### mkdocs
+License: BSD-2-Clause  
+https://github.com/mkdocs/mkdocs/blob/master/LICENSE
+
+### jinja2
+License: BSD-3-Clause  
+https://github.com/pallets/jinja/blob/main/LICENSE.rst
+
+### mkdocs-awesome-pages-plugin
+License: MIT  
+https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin/blob/master/LICENSE.md
+
+### markdown
+License: BSD License  
+https://github.com/Python-Markdown/markdown/blob/master/LICENSE.md
+
+### readthedocs-version-warning-mkdocs-plugin
+License: MIT  
+https://github.com/shopsys/readthedocs-version-warning-mkdocs-plugin/blob/master/LICENSE
+
 
 ## Libraries dynamically referenced via Composer
 Run `composer license` in your `shopsys-framework-php-fpm` container of your project to get the latest licensing info about all dependencies.
