@@ -155,6 +155,10 @@
     </div>
 {% endblock checkbox_row %}
 
+{% block integer_row -%}
+    {{- block('text_row') -}}
+{% endblock integer_row %}
+
 {% block text_row -%}
     {% if localized is defined %}
         <div class="form-line__side form-line__side--multilanguage">
