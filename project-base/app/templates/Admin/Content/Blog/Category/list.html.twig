@@ -34,17 +34,8 @@
                             }) %}
                             {% if blogCategoryWithPreloadedChildren.blogCategory.level is not same as(1) %}
                                 <a
-                                    href="{{ blogCategoryDeleteUrl }}"
-                                    onclick="
-                                            Shopsys.window({
-                                            content: '{{ 'Do you really want to remove this blog category?'|trans|e('js') }}',
-                                            buttonCancel: true,
-                                            buttonContinue: true,
-                                            textContinue: '{{ 'Yes'|trans|e('js') }}',
-                                            urlContinue: '{{ blogCategoryDeleteUrl|e('js') }}'
-                                            });
-                                            return false;"
-                                    class="form-tree__item__control"
+                                    data-delete-url="{{ blogCategoryDeleteUrl }}"
+                                    class="form-tree__item__control js-category-delete-confirm"
                                 >
                                     {{ icon('trash') }}
                                 </a>
