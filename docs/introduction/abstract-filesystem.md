@@ -1,5 +1,5 @@
 # Abstract Filesystem
-One of the goals of the Shopsys Framework is to give you tools to make your ecommerce platform scalable.
+One of the goals of the Shopsys Platform is to give you tools to make your ecommerce platform scalable.
 One of the requirements for scalable application is separated file storage that is accessible from all application instances.
 
 We use abstract filesystem - [Flysystem](https://github.com/thephpleague/flysystem).
@@ -8,7 +8,7 @@ We use abstract filesystem - [Flysystem](https://github.com/thephpleague/flysyst
 [Flysystem](https://github.com/thephpleague/flysystem) allows you to easily swap out a local filesystem for a remote one like Redis, Amazon S3, Dropbox etc.
 
 ### What is Flysystem used for
-In Shopsys Framework we currently use [Flysystem](https://github.com/thephpleague/flysystem) to store:
+In Shopsys Platform we currently use [Flysystem](https://github.com/thephpleague/flysystem) to store:
 
 - uploaded files and images
 - uploaded files and images via WYSIWYG

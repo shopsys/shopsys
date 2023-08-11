@@ -1,7 +1,7 @@
 # Backward Compatibility Promise
 
 Smooth and safe upgrades of your own ecommerce project are very important to us.
-In the same time, we need to be able to improve Shopsys Framework for you by adding functionality, enhancing or simplifying current functions and fixing bugs.
+In the same time, we need to be able to improve Shopsys Platform for you by adding functionality, enhancing or simplifying current functions and fixing bugs.
 After reading this promise you'll understand backward compatibility, what changes you can expect and how we plan to make changes in the future.
 
 ## Releases and Versioning
@@ -23,18 +23,18 @@ Once created, a git tag marking a release will never be removed or edited.
     Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc><n>`, eg. `7.0.0-beta5`.
 
 ## The BC Promise in Detail
-Shopsys Framework is built on the shoulders of giants so we've based our BC promise on the [**Symfony Backward Compatibility Promise**](https://symfony.com/doc/5.4/contributing/code/bc.html).
+Shopsys Platform is built on the shoulders of giants so we've based our BC promise on the [**Symfony Backward Compatibility Promise**](https://symfony.com/doc/5.4/contributing/code/bc.html).
 Exceptions from adhering to Symfony's promise and clarifications for non-PHP source codes can be found below.
 
 ### Project-base Repository
 The [project-base repository](https://github.com/shopsys/project-base) is not meant to be extended or depended upon.
 For this reason, the changes in it are not subject to the rules of this BC promise.
-It should be viewed as a template for your own ecommerce projects built on top of Shopsys Framework.
+It should be viewed as a template for your own ecommerce projects built on top of Shopsys Platform.
 
-This means that the `project-base` should run with any higher minor version of Shopsys Framework, up to the next `MAJOR` version.
+This means that the `project-base` should run with any higher minor version of Shopsys Platform, up to the next `MAJOR` version.
 
 Changes to the `project-base` may contain new features for front-end or examples of newly implemented features and configuration option.
-You can follow the changes in the repository to see how working with Shopsys Framework changes between the versions and to keep in touch with best practices and recommendations.
+You can follow the changes in the repository to see how working with Shopsys Platform changes between the versions and to keep in touch with best practices and recommendations.
 
 During an upgrade to the next major version, you have to make the changes yourself according to the advice in [UPGRADE.md](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md).
 
@@ -138,7 +138,7 @@ The behavior of elements with classes prefixed with `.js-` should be changed onl
 
 ## Summary
 
-### If You Are a User of Shopsys Framework...
+### If You Are a User of Shopsys Platform...
 - we use [Semantic Versioning](http://semver.org/spec/v2.0.0.html) (`MAJOR.MINOR.PATCH`)
 - all higher `MINOR` and `PATCH` releases should be compatible with your project
 - use [caret version ranges](https://getcomposer.org/doc/articles/versions.md#caret-version-range-) in your `composer.json` (eg. `^7.0.0`)
@@ -149,7 +149,7 @@ The behavior of elements with classes prefixed with `.js-` should be changed onl
 - read the [section Using Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#using-symfony-code) in their BC Promise for a nice clarification about BC in PHP
 - upgrade often, it will be easier
 
-### If You Are a Contributor to Shopsys Framework...
+### If You Are a Contributor to Shopsys Platform...
 - read about [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
 - when making a change, always think about backward compatibility
 - [add a deprecation](https://symfony.com/doc/3.4/contributing/code/conventions.html#deprecations) instead of removing code

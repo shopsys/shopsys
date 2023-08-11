@@ -10,7 +10,7 @@ arrange:
     - logging.md
     - domain-multidomain-multilanguage.md
     - how-to-set-up-domains-and-locales.md
-    - development-workflow-of-project-on-shopsys-framework.md
+    - development-workflow-of-project-on-shopsys-platform.md
     - translations.md
     - working-with-date-time-values.md
     - directories.md

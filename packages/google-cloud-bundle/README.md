@@ -2,7 +2,7 @@
 
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/google-cloud-bundle.svg)](https://packagist.org/packages/shopsys/google-cloud-bundle)
 
-This bundle is used to allow [Shopsys Framework](https://www.shopsys-framework.com) integration with Google Cloud.
+This bundle is used to allow [Shopsys Platform](https://www.shopsys-framework.com) integration with Google Cloud.
 
 This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
@@ -43,7 +43,7 @@ class AppKernel extends Kernel
 
 ## Contributing
 Thank you for your contributions to Shopsys Google Cloud Bundle package.
-Together we are making Shopsys Framework better.
+Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),

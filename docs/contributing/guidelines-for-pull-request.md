@@ -35,13 +35,13 @@ git rebase origin/master
     In this step you were using multiple Phing targets.  
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
-* Please make sure you sign form to agree with the [license agreement](https://www.shopsys-framework.com/license-agreement).
+* Please make sure you sign form to agree with the [license agreement](https://www.shopsys.com/license-agreement/).
 * [Create a PR](https://github.com/shopsys/shopsys/compare?expand=1) with essential information to make our code review easier.
     * you do not have to update `CHANGELOG.md` at all as it is generated automatically using [github-changelog-generator/github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator) during our release process.
 * Now just wait for review of your change.
 
 ### Note about targeting pull requests
-As we [support multiple versions](./backward-compatibility-promise.md#current-release-plan) of Shopsys Framework while keeping [Backward Compatibility Promise](./backward-compatibility-promise.md), it is important to think about proper targeting of your pull request.
+As we [support multiple versions](./backward-compatibility-promise.md#current-release-plan) of Shopsys Platform while keeping [Backward Compatibility Promise](./backward-compatibility-promise.md), it is important to think about proper targeting of your pull request.
 
 If your pull request:
 
@@ -91,4 +91,4 @@ After squash you just need to correct commit messages (if needed) and push it:
 git push --force
 ```
 
-##### Wait for the merge from SSFW developers and look forward for better Shopsys Framework.
+##### Wait for the merge from Shopsys developers and look forward for better Shopsys Platform.

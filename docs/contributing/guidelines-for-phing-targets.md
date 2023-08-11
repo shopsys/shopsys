@@ -1,6 +1,6 @@
 # Guidelines for Phing Targets
 
-There are a few rules to help us maintain [Phing targets](../introduction/console-commands-for-application-management-phing-targets.md) in Shopsys Framework.
+There are a few rules to help us maintain [Phing targets](../introduction/console-commands-for-application-management-phing-targets.md) in Shopsys Platform.
 
 ## Naming conventions
 
@@ -84,7 +84,7 @@ When renaming, call the new target via `<phingcall target="..."/>`.
 ```xml
 <target name="old-target" hidden="true">
     <phingcall target="new-target"/>
-    <echo level="warning" message="This phing target is deprecated since Shopsys Framework X.Y.Z, use 'new-target' instead."/>
+    <echo level="warning" message="This phing target is deprecated since Shopsys Platform X.Y.Z, use 'new-target' instead."/>
 </target>
 ```
 

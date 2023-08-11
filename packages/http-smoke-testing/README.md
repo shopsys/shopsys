@@ -172,7 +172,7 @@ PHPUnit by default does not fail on warnings. Setting `failOnWarning="true"` in 
 
 ## Contributing
 Thank you for your contributions to Shopsys HTTP Smoke Testing package.
-Together we are making Shopsys Framework better.
+Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),

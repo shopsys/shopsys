@@ -181,7 +181,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         $suggestedDevelopmentVersion = $this->suggestDevelopmentVersion($version, $suggestWithVprefix);
 
         $question = new Question(
-            'Enter next development version of Shopsys Framework',
+            'Enter next development version of Shopsys Platform',
             $suggestedDevelopmentVersion->getOriginalString(),
         );
         $question->setValidator(static function ($answer) {

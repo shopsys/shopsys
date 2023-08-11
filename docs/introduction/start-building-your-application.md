@@ -1,6 +1,6 @@
 # Start Building Your Application
 
-Installation of the Shopsys Framework is complete and now you can start building your application.
+Installation of the Shopsys Platform is complete and now you can start building your application.
 Here are first steps you should start with.
 
 !!! note
@@ -118,7 +118,7 @@ switch ($domainId) {
 ```
 
 ## Fine-tune your configuration
-If all developers working on your project use the same version of PHP (e.g. because all use SSFW via Docker), you can use higher versions of the libraries and tools installed via Composer.
+If all developers working on your project use the same version of PHP (e.g. because all use Shopsys Platform via Docker), you can use higher versions of the libraries and tools installed via Composer.
 To do so, remove the `config.platform.php` option from your `composer.json`:
 ```diff
      "config": {
@@ -130,7 +130,7 @@ To do so, remove the `config.platform.php` option from your `composer.json`:
 +        "component-dir": "project-base/web/components"
      },
 ```
-Run `composer update` to install updated versions of your dependencies (versions that don't support the lowest PHP version supported by SSFW).
+Run `composer update` to install updated versions of your dependencies (versions that don't support the lowest PHP version supported by Shopsys Platform).
 Then commit the changed `composer.json` and `composer.lock` so all the devs can share the same configuration.
 
 If you're interested in why we use the forced PHP version in the first place, read [our FAQ](../introduction/faq-and-common-issues.md#why-is-there-a-faked-php-72-platform-in-the-composer-config).

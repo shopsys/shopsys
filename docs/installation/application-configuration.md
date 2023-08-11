@@ -4,7 +4,7 @@ The application is configurable by [Symfony configuration files](https://symfony
 
 ## Configuration parameters
 
-For operating Shopsys Framework it is needed to have correctly set connections to external services via ENV variables.
+For operating Shopsys Platform it is needed to have correctly set connections to external services via ENV variables.
 
 !!! note
     All default values use default ports for all external services like PostgreSQL database, elasticsearch, redis, ...

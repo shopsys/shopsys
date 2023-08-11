@@ -17,4 +17,4 @@
 * [Create Advanced Grid](./create-advanced-grid.md)
 * [Extending Product List](./extending-product-list.md)
 * [Adding a New Email Template](./adding-a-new-email-template.md)
-* [Dump variables in framework](./dump-variables.md)
+* [Dump variables](./dump-variables.md)

@@ -8,7 +8,7 @@ These days, developers use machines with different
 settings and configurations to work with. Modern
 platforms and frameworks have in most cases
 different software requirements, so their installation may take
-up to several hours. Our goal is to facilitate the installation of Shopsys framework,
+up to several hours. Our goal is to facilitate the installation of Shopsys Platform,
 ideally, if the developer does not need to significantly customize
 the configuration of his machine but instead of that, he has the possibility
 to install the platform immediately even with all dependencies - such
@@ -25,7 +25,7 @@ always run the same, regardless of the environment.
 
 #### 3.1 docker-compose.yml
 [Docker-compose.yml](/project-base/docker/conf/docker-compose.yml.dist) file contains the definitions of containers that will be created for the installation
-of the Shopsys framework platform. Containers can communicate with each other. Data need to be saved
+of the Shopsys Platform. Containers can communicate with each other. Data need to be saved
 into volumes, otherwise, these data will be lost after the container is closed.
 
 ##### Containers
@@ -80,7 +80,7 @@ The official list of Dockerfile commands can be found on [Dockerfile reference](
 [Nginx.conf](/project-base/docker/nginx/nginx.conf) file contains Nginx configuration for new webserver container.
 
 #### 3.6 Images Distribution
-While running Shopsys Framework on docker we needed to decide which distribution will be our images running on. We use 2 types of distributions for our images.
+While running Shopsys Platform on docker we needed to decide which distribution will be our images running on. We use 2 types of distributions for our images.
 
 * Debian
 * Alpine Linux
@@ -110,4 +110,4 @@ We divide images used by us into 3 types.
 Those images are only used as it is, we are not extending them and we are only using them as they are. In this case we choose Alpine Distribution thanks to its size.
 
 ##### Application PHP-FPM
-In this case, we use Debian mainly because we suppose users to modify these images often(adding php-extensions, implementing connections to Databases). As Debian is much more easier to modify, we decided that it will be best for new users to start on Debian, and if they care about size, they can always rewrite their Dockerfiles to be use alpine image if needed. Also many of clients using Shopsys Framework often connects to MSSQL databases and we want to make it easy for them.
+In this case, we use Debian mainly because we suppose users to modify these images often(adding php-extensions, implementing connections to Databases). As Debian is much more easier to modify, we decided that it will be best for new users to start on Debian, and if they care about size, they can always rewrite their Dockerfiles to be use alpine image if needed. Also many of clients using Shopsys Platform often connects to MSSQL databases and we want to make it easy for them.

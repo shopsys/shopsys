@@ -1,5 +1,5 @@
 # Dump variables
-Shopsys Framework uses Symfony with its VarDumper. 
+Shopsys Platform uses Symfony with its VarDumper. 
 In addition to the standard function `dump()`, we implement the function `d()`, which you can pass any number of attributes where each one is dumped.
 
 Dumped variables are primarily available in the profiler. 

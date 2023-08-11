@@ -1,7 +1,7 @@
 # Contributing
 
-Thank you for your contributions to Shopsys Framework Package.
-Together we are making Shopsys Framework better.
+Thank you for your contributions to Shopsys Platform Package.
+Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),

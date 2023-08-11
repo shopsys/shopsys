@@ -2,12 +2,12 @@
 
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/frontend-api.svg)](https://packagist.org/packages/shopsys/frontend-api)
 
-This bundle for [Shopsys Framework](https://www.shopsys.com) adds frontend API using [overblog/GraphQLBundle](https://github.com/overblog/GraphQLBundle).
-The bundle is dedicated for projects based on Shopsys Framework (i.e. created from [`shopsys/project-base`](https://github.com/shopsys/project-base)) exclusively.
+This bundle for [Shopsys Platform](https://www.shopsys.com) adds frontend API using [overblog/GraphQLBundle](https://github.com/overblog/GraphQLBundle).
+The bundle is dedicated for projects based on Shopsys Platform (i.e. created from [`shopsys/project-base`](https://github.com/shopsys/project-base)) exclusively.
 This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
 ## Documentation
-[Documentation](https://docs.shopsys.com/en/latest/frontend-api/introduction-to-frontend-api/) can be found in Shopsys Framework Knowledge Base.
+[Documentation](https://docs.shopsys.com/en/latest/frontend-api/introduction-to-frontend-api/) can be found in Shopsys Platform Knowledge Base.
 
 ## Installation
 The plugin is a Symfony bundle and is installed in the same way:
@@ -34,11 +34,11 @@ and for easier development register GraphiQLBundle for development environment
 ```
 
 ## Configuration
-Detailed information about [configuring the package](https://docs.shopsys.com/en/latest/frontend-api/) can be found in Shopsys Framework Knowledge Base.
+Detailed information about [configuring the package](https://docs.shopsys.com/en/latest/frontend-api/) can be found in Shopsys Platform Knowledge Base.
 
 ## Contributing
 Thank you for your contributions to Shopsys Frontend API package.
-Together we are making Shopsys Framework better.
+Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),

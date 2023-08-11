@@ -2,10 +2,10 @@
 
 This document provides basic information about development in monorepo to make the work with packages and project-base repository as easy as possible.
 
-If you want to contribute to Shopsys Framework or to any of its packages,
+If you want to contribute to Shopsys Platform or to any of its packages,
 clone this monorepo [shopsys/shopsys](https://github.com/shopsys/shopsys).
 
-If you want to build your project on Shopsys Framework,
+If you want to build your project on Shopsys Platform,
 use composer to create project from [shopsys/project-base](https://github.com/shopsys/project-base).
 
 ## Problem
@@ -14,7 +14,7 @@ into more than one package. It meant, that the developer had to implement this i
 This approach was inefficient and repeated process always brought increased errors rate.
 
 ## Solution
-Monorepo approach provides a single development environment for management of all parts of Shopsys Framework.
+Monorepo approach provides a single development environment for management of all parts of Shopsys Platform.
 We use [Monorepo tool](https://github.com/shopsys/monorepo-tools) that splits code in appropriate repositories
 after some changes are made in monorepo. This splitting is initiated automatically once a day.
 
@@ -55,16 +55,16 @@ Monorepo can be installed and used as standard application. This requires some a
 * **build.xml** - definitions of targets for use in the monorepo, some already defined targets
 have modified behavior in such a way that their actions are launched over all monorepo packages
 
-* **composer.json** - contains the dependencies required by individual packages and by Shopsys Framework.
+* **composer.json** - contains the dependencies required by individual packages and by Shopsys Platform.
 It is not generated automatically, so each change made in the `composer.json` of the specific package must be reflected
 also in `composer.json` in the root of monorepo. In monorepo, Shopsys packages are used directly from the directory
 `packages/`, so there are no requirements of those packages in `composer.json`.
 
-* **parameters_monorepo.yaml** - overriding of global variables of Shopsys Framework, which makes it possible to run
-Shopsys Framework in monorepo
+* **parameters_monorepo.yaml** - overriding of global variables of Shopsys Platform, which makes it possible to run
+Shopsys Platform in monorepo
 
 ## Installation of monorepo
-Installation of Shopsys Framework is almost the same as is described in [Installation Using Docker](../installation/installation-guide.md#installation-using-docker),
+Installation of Shopsys Platform is almost the same as is described in [Installation Using Docker](../installation/installation-guide.md#installation-using-docker),
 but instead of creating a new project based on `project-base` repository, you have to clone [`shopsys/shopsys`](https://github.com/shopsys/shopsys).
 
 Please keep in mind that all commands have to be executed from the monorepo root directory.
@@ -74,7 +74,7 @@ Also, templates of a configuration files should be copied from `docker/` folder 
 During the development in monorepo, it is necessary to ensure that the changes made in specific package
 preserve the functionality of the package even outside the monorepo.
 
-Keep in mind that the file structure of project based on Shopsys Framework (standardly located in the root of the project) is in monorepo
+Keep in mind that the file structure of project based on Shopsys Platform (standardly located in the root of the project) is in monorepo
 located in the directory `project-base/`.
 
 ## Troubleshooting

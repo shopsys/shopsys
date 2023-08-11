@@ -2,8 +2,8 @@
 
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/read-model.svg)](https://packagist.org/packages/shopsys/read-model)
 
-This bundle for [Shopsys Framework](https://www.shopsys.com) provides integration for S3 storage.
-The bundle is dedicated for projects based on Shopsys Framework (i.e. created from [`shopsys/project-base`](https://github.com/shopsys/project-base)) exclusively.
+This bundle for [Shopsys Platform](https://www.shopsys.com) provides integration for S3 storage.
+The bundle is dedicated for projects based on Shopsys Platform (i.e. created from [`shopsys/project-base`](https://github.com/shopsys/project-base)) exclusively.
 
 This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
@@ -18,7 +18,7 @@ Registration of the bundle is automatic thanks to [Symfony Flex](https://flex.sy
 
 ## Contributing
 Thank you for your contributions to Shopsys S3 Bridge package.
-Together we are making Shopsys Framework better.
+Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),

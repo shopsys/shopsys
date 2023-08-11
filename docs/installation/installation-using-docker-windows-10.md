@@ -1,8 +1,8 @@
 # Installation Using Docker on Windows 10
 **Expected installation time:** less than 1 hour.
 
-This guide covers building new projects based on Shopsys Framework.
-In case you want to contribute to the framework itself, you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
+This guide covers building new projects based on Shopsys Platform.
+In case you want to contribute to the Shopsys Platform itself, you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
 Take a look at the article about [Monorepo](../introduction/monorepo.md) for more information.
 
 ## Supported systems
@@ -50,9 +50,9 @@ In `Debian` application run these commands:
 !!! note
     If you prefer to know more about what is happening during installation, open [install-docker-wsl-debian.sh](https://github.com/shopsys/shopsys/master/project-base/scripts/install-docker-wsl-debian.sh) script and run all commands manually.
 
-## Installation of Shopsys Framework
+## Installation of Shopsys Platform
 
-### 1. Create new project from Shopsys Framework sources
+### 1. Create new project from Shopsys Platform sources
 Open `Debian` application.
 
 Change your current directory to your home directory (`/home/<your-linux-user-name>/`)
@@ -113,7 +113,7 @@ docker-compose up -d
 ```
 
 !!! note
-    During installation there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During installation there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### 2.3 Setup the application
 [Application setup guide](installation-using-docker-application-setup.md)

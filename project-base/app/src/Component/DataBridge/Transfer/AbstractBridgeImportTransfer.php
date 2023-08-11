@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Component\SsfwccBridge\Transfer;
+namespace App\Component\DataBridge\Transfer;
 
-use App\Component\SsfwccBridge\BridgeConfig;
-use App\Component\SsfwccBridge\Transfer\Exception\TransferException;
-use App\Component\SsfwccBridge\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
-use App\Component\SsfwccBridge\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
+use App\Component\DataBridge\BridgeConfig;
+use App\Component\DataBridge\Transfer\Exception\TransferException;
+use App\Component\DataBridge\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
+use App\Component\DataBridge\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
 use App\Model\Transfer\TransferIdentificationInterface;
 use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,7 +32,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
     public ?int $cronBatchSize = null;
 
     /**
-     * @param \App\Component\SsfwccBridge\Transfer\BridgeImportTransferDependency $bridgeImportTransferDependency
+     * @param \App\Component\DataBridge\Transfer\BridgeImportTransferDependency $bridgeImportTransferDependency
      */
     public function __construct(BridgeImportTransferDependency $bridgeImportTransferDependency)
     {
@@ -49,7 +49,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
     public function runTransfer(): bool
     {
         if (!$this->bridgeConfig->isEnabled()) {
-            $this->logger->warning('Skipping transfer, SSFWCC bridge is disabled from parameters.yml');
+            $this->logger->warning('Skipping transfer, data bridge is disabled from parameters.yml');
 
             return false;
         }
@@ -168,6 +168,6 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
      */
     public function getServiceIdentifier(): string
     {
-        return 'SsfwccBridge';
+        return 'DataBridge';
     }
 }

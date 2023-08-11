@@ -1,12 +1,12 @@
 # Open Source License Acknowledgements and Third-Party Copyrights
 
-Shopsys Framework is licensed under the terms of the [Shopsys Community License](./LICENSE).
+Shopsys Platform is licensed under the terms of the [Shopsys Community License](./LICENSE).
 
-Shopsys Framework utilizes third party software from various sources. Portions of this software are copyrighted by their respective owners as indicated in the copyright notices below.
+Shopsys Platform utilizes third party software from various sources. Portions of this software are copyrighted by their respective owners as indicated in the copyright notices below.
 
 The following acknowledgements pertain to this software license.
 
-## Main components used by Shopsys Framework
+## Main components used by Shopsys Platform
 These components are installed via `composer` or via `npm`.
 You can check all the dependencies using the instructions from the section Libraries dynamically referenced via Composer and Libraries dynamically referenced via npm.
 
@@ -68,7 +68,7 @@ License: GPL-2 or LGPL-2.1 or MPL-1.1
 https://github.com/ckeditor/ckeditor-releases/blob/basic/stable/LICENSE.md  
 Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
 
-## Images and libraries installed for a full run of Shopsys Framework on Docker
+## Images and libraries installed for a full run of Shopsys Platform on Docker
 These images and packages are configured in `docker-compose.yml` and in `Dockerfile`. We do not redistribute these packages, we are only referencing them to download, user agrees to download these images by pulling and building images done by `docker-compose up` or `docker build`.
 
 ### Postgres

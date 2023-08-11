@@ -1,5 +1,5 @@
 # Logging
-Shopsys Framework is a Symfony based application that uses [Monolog](https://github.com/Seldaek/monolog) with [symfony/monolog-bundle](https://github.com/symfony/monolog-bundle) as a logging tool.
+Shopsys Platform is a Symfony based application that uses [Monolog](https://github.com/Seldaek/monolog) with [symfony/monolog-bundle](https://github.com/symfony/monolog-bundle) as a logging tool.
 Currently, this tool is used to manage the log of cron processes, slow responses, unexpected exceptions and application errors.
 
 ## Logging Using Streams

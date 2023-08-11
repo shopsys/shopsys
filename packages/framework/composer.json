@@ -1,7 +1,7 @@
 {
     "name": "shopsys/framework",
     "type": "library",
-    "description": "Core of Shopsys Framework - open source framework for building large, scalable, fast-growing e-commerce projects based on Symfony",
+    "description": "Core of Shopsys Platform - open source framework for building large, scalable, fast-growing e-commerce projects based on Symfony",
     "license": "proprietary",
     "autoload": {
         "psr-4": {

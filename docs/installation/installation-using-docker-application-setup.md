@@ -3,7 +3,7 @@
 This guide expects that you have already set up your Docker environment.
 If you have not already done that check the [Installation using Docker](./installation-guide.md#installation-using-docker).
 
-## 1. Set up the Shopsys Framework application
+## 1. Set up the Shopsys Platform application
 Now that the Docker environment is prepared we can setup the application itself.
 
 ### 1.1. Connect into terminal of the Docker container
@@ -17,7 +17,7 @@ composer install
 ```
 
 !!! note
-    During composer installation there will be installed 3-rd party software as dependencies of Shopsys Framework with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During composer installation there will be installed 3-rd party software as dependencies of Shopsys Platform with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ### 1.3. Create databases
 ```sh
@@ -34,7 +34,7 @@ php phing build-demo-dev-quick error-pages-generate
 ```
 
 !!! note
-    During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ## 2. See it in your browser!
 

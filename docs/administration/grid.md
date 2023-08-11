@@ -17,7 +17,7 @@ It helps to present data to the user, can paginate the results, allows ordering 
 
 ## Philosophy
 Each grid should be created with its own factory in which a whole grid is configured.
-This factory can use `GridFactory` class from Shopsys Framework to create a basic grid object, which will be adjusted.
+This factory can use `GridFactory` class from `shopsys/framework` package to create a basic grid object, which will be adjusted.
 
 Grid uses object implementing `DataSourceInterface` to obtain data to be rendered.
 Read more about various data sources in the [Grid data sources](../administration/grid-data-sources.md) article.

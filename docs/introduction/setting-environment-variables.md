@@ -4,7 +4,7 @@ This article describes how to set configure environment variables in different e
 
 ## Global configuration of environment variables
 
-Shopsys Framework as Symfony based application is using the same environment configuration as Symfony.
+Shopsys Platform as Symfony based application is using the same environment configuration as Symfony.
 
 We recommend using [`.env` files](https://symfony.com/doc/4.4/configuration.html#configuring-environment-variables-in-env-files) for configuring environment variables as it can be easily maintained. There is also advantage of different configuration through different application environments (such as dev, test and prod).
 

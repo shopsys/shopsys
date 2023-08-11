@@ -5,7 +5,7 @@ In the end, we will be able to even sort our grid by column, paginate large resu
 
 ## Prerequisites
 * As we are going to list the salesmen, you need to create the Salesman entity and add some entries to the database table following [the cookbook](./adding-a-new-entity.md), first.
-* You should know how to work with controllers, its actions and be familiar with concepts of administration pages in Shopsys Framework.
+* You should know how to work with controllers, its actions and be familiar with concepts of administration pages in Shopsys Platform.
     * We recommend you to read [Adding a New Administration Page](./adding-a-new-administration-page.md) cookbook.
 
 ## 1. Define the grid
@@ -285,7 +285,7 @@ Grid eases the task with already implemented action column.
 
 ### 6.1 Implement the deletion logic
 First, we need to get the salesman entity by its id and then remove it from persistence using Doctrine entity manager.
-We will follow the basic concepts of Shopsys Framework (see ["Basics about model architecture"](../model/introduction-to-model-architecture.md) article) and create new classes - `SalesmanFacade` and `SalesmanRepository`.
+We will follow the basic concepts of Shopsys Platform (see ["Basics about model architecture"](../model/introduction-to-model-architecture.md) article) and create new classes - `SalesmanFacade` and `SalesmanRepository`.
 
 #### 6.1.1 Create `SalesmanRepository` and implement `getById` method
 ```php

@@ -11,13 +11,13 @@
 1. [Composer dependencies installation fails on memory limit](#composer-dependencies-installation-fails-on-memory-limit)
 1. [Starting up the Docker containers fails due to invalid reference format](#starting-up-the-docker-containers-fails-due-to-invalid-reference-format)
 
-If you are developing on Shopsys Framework using docker, you might run into some problems during the process.
+If you are developing on Shopsys Platform using docker, you might run into some problems during the process.
 
 Most of the time you might think that a problem is in docker, but the truth is that you are probably using it wrong. This document
-provides advices that will help you develop Shopsys Framework on docker without problems.
+provides advices that will help you develop Shopsys Platform on docker without problems.
 
 ## How to Run Multiple Projects by Docker
-If you are using docker for more than one Shopsys Framework project, you might run into a problem with container names and their ports.
+If you are using docker for more than one Shopsys Platform project, you might run into a problem with container names and their ports.
 Docker requires to have unique container name and port for each container and since our `docker-compose` is not dynamically initialized,
 it contains hard coded container names and ports and that makes running more projects in docker on same machine impossible without
 modifying your configuration.

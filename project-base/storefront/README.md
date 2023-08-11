@@ -1,4 +1,4 @@
-This is documentation for Shopsys Framework StoreFront. Let's start with first two steps.
+This is documentation for Shopsys Platform StoreFront. Let's start with first two steps.
 
 ## Install
 

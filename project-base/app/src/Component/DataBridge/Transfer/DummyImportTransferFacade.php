@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\SsfwccBridge\Transfer;
+namespace App\Component\DataBridge\Transfer;
 
 use Generator;
 

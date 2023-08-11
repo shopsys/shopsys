@@ -1,6 +1,6 @@
 # Basic and Demo Data During Application Installation
 
-All basic data that are vital for Shopsys Framework (e.g. administrator, vat, database functions and triggers, etc.) are created in [database migrations](./database-migrations.md).
+All basic data that are vital for Shopsys Platform (e.g. administrator, vat, database functions and triggers, etc.) are created in [database migrations](./database-migrations.md).
 
 As the migrations create data for the first domain only,
 after all migrations are executed, necessary data must be created for all the other domains

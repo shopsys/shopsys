@@ -1,10 +1,10 @@
 # Basics About Package Architecture
 
 ## Introduction
-This article describes the architecture of Shopsys Framework from the viewpoint of packages
+This article describes the architecture of Shopsys Platform from the viewpoint of packages
 (in a contrast to application layers, about which you can read in the [separate article](../model/introduction-to-model-architecture.md)).
 After you finish reading the article, you will know
-how to start an implementation, how to perform upgrades of your own project based on Shopsys Framework
+how to start an implementation, how to perform upgrades of your own project based on Shopsys Platform
 and you will understand what modules are.
 
 ## Basic terms
@@ -25,12 +25,12 @@ a clear separation between your code and the code maintained by somebody else (C
 
 The [`shopsys/framework`](https://github.com/shopsys/framework)
 contains business logic of a basic online store, including web admin, and is designed as a glass-box.
-Shopsys Framework modules are glass-box too and are described below.
+Shopsys Platform modules are glass-box too and are described below.
 
 ### Modules
 In every project, there is a lot of code dedicated to features which are not related to the core of your business,
 but you still need it there. And although these features are necessary, it can be a long wearisome job building them from the ground up.
-That is why Shopsys Framework provides a module system that satisfies the need for an installable functionality.
+That is why Shopsys Platform provides a module system that satisfies the need for an installable functionality.
 Modules are developed in separate packages with [semantic versioning](http://semver.org/).
 You can install a module just by requiring its package via Composer and registering it in your application.
 
@@ -38,12 +38,12 @@ So far, we created packages for [HTTP Smoke testing](https://github.com/shopsys/
 and extracted product XML feeds (eg. [Google Shopping product feed](https://github.com/shopsys/product-feed-google)).
 Other candidates for extraction into modules are for example payment methods gateways, package shipping integrations or analytic service integrations.
 
-![Shopsys Framework package architecture schema](../img/package-architecture.png 'Shopsys Framework Package Architecture')
+![Shopsys Platform package architecture schema](../img/package-architecture.png 'Shopsys Platform Package Architecture')
 
 *Note: The specific modules in this diagram are just examples.*
 
-## How to develop your project on Shopsys Framework
-### Create new project from Shopsys Framework sources
+## How to develop your project on Shopsys Platform
+### Create new project from Shopsys Platform sources
 Install [`shopsys/project-base`](https://github.com/shopsys/project-base) using composer to get your own private copy.
 ```sh
 composer create-project shopsys/project-base --no-install --keep-vcs --ignore-platform-reqs
@@ -57,7 +57,7 @@ Forking also copies the `shopsys/project-base` under your Github account and the
 
 ### Upgrading
 We know that upgrading should be as easy as possible, ideally without requiring any modification of your code.
-This goal is very hard to achieve while both providing unlimited customizability and innovating the framework itself,
+This goal is very hard to achieve while both providing unlimited customizability and innovating the Shopsys Platform itself,
 as the project’s every customization has to work well with every new release.
 
 #### Framework and modules
@@ -65,7 +65,7 @@ The framework and modules provide glass-box extensibility,
 ie. you can upgrade them independently via `composer update`.
 
 !!! note
-    During composer update there will be installed or updated 3-rd party software as dependencies of Shopsys Framework with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During composer update there will be installed or updated 3-rd party software as dependencies of Shopsys Platform with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### Project base
 There is no automated way of upgrading the project base.

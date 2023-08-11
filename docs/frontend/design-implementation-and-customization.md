@@ -1,5 +1,5 @@
 # Design Implementation and Customization
-Here are the basic technologies we use in Shopsys Framework for design implementation:
+Here are the basic technologies we use in Shopsys Platform for design implementation:
 
 - [LESS pre-processor](http://lesscss.org/) for definition of cascading style sheets (i.e. [CSS](https://www.w3.org/Style/CSS/Overview.en.html))
     - the LESS files are located in `assets/styles/frontend`
@@ -11,7 +11,7 @@ Here are the basic technologies we use in Shopsys Framework for design implement
 When you want to customize the styles or templates, you can modify any of the files directly, as all of them are located in your project.
 
 ## Multidomain design customization
-Shopsys Framework provides an ability of running multiple domains as a single application,
+Shopsys Platform provides an ability of running multiple domains as a single application,
 if you want to know more about this concept, you can read [the separate article](../introduction/domain-multidomain-multilanguage.md).
 In order to change your multidomain appearance, you can set two parameters [`domains.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml) configuration file:
 

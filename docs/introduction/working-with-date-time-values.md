@@ -1,6 +1,6 @@
 # Working with date-time values
 
-Shopsys Framework internally works with dates in UTC timezone.
+Shopsys Platform internally works with dates in UTC timezone.
 That is for better portability and integration with other systems.
 Also, it allows you to work with time values more freely.
 It's easy to implement show dates that suites your needs, for example, each user has its own timezone.
@@ -28,7 +28,7 @@ All filters are aware of `DisplayTimeZoneProvider` and internally convert the va
 
 When user enters any date-time value, it should be in a currently used display timezone.
 
-Shopsys Framework comes with two FormTypes ready to handle dates properly – [`DatePickerType`](./using-form-types.md#datepickertype) and [`DateTimeType`](./using-form-types.md#datetimetype).
+Shopsys Platform comes with two FormTypes ready to handle dates properly – [`DatePickerType`](./using-form-types.md#datepickertype) and [`DateTimeType`](./using-form-types.md#datetimetype).
 Both of them are aware of `DisplayTimeZoneProvider` and convert the values to the desired display timezone when user input is submitted.
 
 **Even when you need to store only the date, it should be persisted as a `DateTime` in the database.**

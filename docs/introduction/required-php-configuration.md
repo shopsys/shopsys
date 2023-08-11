@@ -1,5 +1,5 @@
 # Required PHP Configuration
-This is a recommended configuration of PHP for project development using Shopsys Framework.
+This is a recommended configuration of PHP for project development using Shopsys Platform.
 
 ## Recommended `php.ini` settings
 ```

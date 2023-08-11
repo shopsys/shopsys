@@ -1,7 +1,7 @@
 # How to Work with Money
 
 Money is a very important concept for every ecommerce project.
-In Shopsys Framework, all monetary values (*prices, account balances, discount amounts, price limits etc.*) are represented by an instance of [the `Money` class](#money-class).
+In Shopsys Platform, all monetary values (*prices, account balances, discount amounts, price limits etc.*) are represented by an instance of [the `Money` class](#money-class).
 
 This approach has several advantages:
 
@@ -15,7 +15,7 @@ This approach has several advantages:
 [TOC]
 
 ## General Concept
-The money concept in Shopsys Framework represents and encapsulates monetary values with a decimal part, like `100`, `0.50`, `10.99`, `0.0005`, ...  
+The money concept in Shopsys Platform represents and encapsulates monetary values with a decimal part, like `100`, `0.50`, `10.99`, `0.0005`, ...  
 Money is represented without currency.
 
 ### Scale
@@ -122,7 +122,7 @@ $orderItemFormBuilder->add('priceWithVat', MoneyType::class, [
 The form type is configured with a model data transformer that converts the value into a `Money` object automatically ([`NumericToMoneyTransformer`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/Transformers/NumericToMoneyTransformer.php)).
 Thanks to this approach you can use `Money` in your [data objects](./entities.md#entity-data) directly.
 
-In Shopsys Framework, the default value of the `currency` option is `false` instead of `EUR`, hiding the currency symbol by default.
+In Shopsys Platform, the default value of the `currency` option is `false` instead of `EUR`, hiding the currency symbol by default.
 
 !!! tip
     For non-monetary numeric values use `NumberType` (see [Symfony docs](https://symfony.com/doc/3.4/reference/forms/types/number.html) for details).
@@ -306,7 +306,7 @@ See the native Javascript method [`.toFixed()`](https://www.w3schools.com/jsref/
 
 ## Money in Doctrine
 
-In Shopsys Framework, there is a custom Doctrine type `money` which can be used in similar fashion as `decimal` type.
+In Shopsys Platform, there is a custom Doctrine type `money` which can be used in similar fashion as `decimal` type.
 The entity property value will be automatically hydrated to an instance of `Money` if it's configured to use the type:
 
 ```php
@@ -424,7 +424,7 @@ class MyTest extends FunctionalTestCase
 
 [`Price`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Pricing/Price.php) is also an immutable [value object](https://codete.com/blog/value-objects/) used in pricing.
 
-It represents a price with and without VAT and is used in many parts of Shopsys Framework.
+It represents a price with and without VAT and is used in many parts of Shopsys Platform.
 Price calculation classes usually output instances of `Price`.
 
 It can be constructed by calling `new Price(Money $priceWithoutVat, Money $priceWithVat)`.

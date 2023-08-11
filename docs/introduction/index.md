@@ -10,7 +10,7 @@
 * [Logging](./logging.md)
 * [Domain, Multidomain, Multilanguage](./domain-multidomain-multilanguage.md)
 * [How to Set Up Domains and Locales (Languages)](./how-to-set-up-domains-and-locales.md)
-* [Development Workflow of Project on Shopsys Framework](./development-workflow-of-project-on-shopsys-framework.md)
+* [Development Workflow of Project on Shopsys Platform](./development-workflow-of-project-on-shopsys-platform.md)
 * [Translations](./translations.md)
 * [Directories](./directories.md)
 * [Cron](./cron.md)

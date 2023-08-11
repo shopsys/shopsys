@@ -112,12 +112,12 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
 
             $this->setting->setForDomain(
                 SeoSettingFacade::SEO_META_DESCRIPTION_MAIN_PAGE,
-                t('Shopsys Framework - the best solution for your eshop.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                t('Shopsys Platform - the best solution for your eshop.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 $domainId,
             );
             $this->setting->setForDomain(
                 SeoSettingFacade::SEO_TITLE_MAIN_PAGE,
-                t('Shopsys Framework - Title page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                t('Shopsys Platform - Title page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 $domainId,
             );
             $this->setting->setForDomain(

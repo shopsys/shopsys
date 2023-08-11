@@ -5,7 +5,7 @@ For each domain exists the same folder structure consists of some folders and fi
 This document is about describing the meaning of these files and folders.
 
 ## Terms definition
-We are using a few terms for our coding standards in Shopsys Framework.
+We are using a few terms for our coding standards in Shopsys Platform.
 In order to understand our folder hierarchy is good to know their meaning.
 
 ### Helper
@@ -20,7 +20,7 @@ Let's show you some code of helper class. You can see there is a definition of t
 ```
 
 ### Component
-In Shopsys Framework we use few types of components - `box`, `form`, `in`, `list`, `table`, `window`, `wrap`.
+In Shopsys Platform we use few types of components - `box`, `form`, `in`, `list`, `table`, `window`, `wrap`.
 
 All components are placed in the folder `components`. Each component type has own folder.
 There exists a rule that component folder name match with the component type name.
@@ -79,7 +79,7 @@ It is best practice not to hide element through styles but to place this class t
 In order to style the product list, you will have to find an appropriate `LESS component`.
 In our case it would be placed in `assets/styles/frontend/common/print/components/list/products.less`.
 It is also recommended to respect the way of writing a class name and its definition.
-We use BEM methodology in Shopsys Framework (for more information please visit [Introduction to BEM](http://getbem.com/introduction/)).
+We use BEM methodology in Shopsys Platform (for more information please visit [Introduction to BEM](http://getbem.com/introduction/)).
 
 Let's assume we need to set a green color for product title in the product list.
 

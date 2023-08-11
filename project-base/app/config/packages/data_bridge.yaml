@@ -1,0 +1,6 @@
+parameters:
+    data_bridge_config:
+        enabled: '%env(bool:DATA_BRIDGE_ENABLED)%'
+        base_uri: '%env(DATA_BRIDGE_BASE_URI)%'
+        user: '%env(DATA_BRIDGE_USER)%'
+        password: '%env(DATA_BRIDGE_PASSWORD)%'

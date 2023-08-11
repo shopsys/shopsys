@@ -1,8 +1,8 @@
 {
     "name": "shopsys/backend-api",
     "type": "library",
-    "description": "Shopsys Framework API support",
-    "keywords": ["api", "Shopsys Framework", "SSFW"],
+    "description": "Shopsys Platform API support",
+    "keywords": ["api", "Shopsys Platform", "SSFW"],
     "license": "proprietary",
     "authors": [
         {

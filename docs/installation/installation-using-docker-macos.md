@@ -1,7 +1,7 @@
 # Installation Using Docker Desktop on macOS
 
-This guide covers building new projects based on Shopsys Framework.
-If you want to contribute to the framework itself,
+This guide covers building new projects based on Shopsys Platform.
+If you want to contribute to the Shopsys Platform itself,
 you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
 Take a look at the article about [Monorepo](../introduction/monorepo.md) for more information.
 
@@ -19,7 +19,7 @@ This solution uses [*Mutagen*](https://mutagen.io) (for relatively fast two-way 
 * [Mutagen Compose](https://mutagen.io/documentation/orchestration/compose/) (install using [Mutagen Compose installation guide](https://github.com/mutagen-io/mutagen-compose#installation))
 
 ## Steps
-### 1. Create new project from Shopsys Framework sources
+### 1. Create new project from Shopsys Platform sources
 ```sh
 composer create-project shopsys/project-base --no-install --keep-vcs --ignore-platform-reqs
 cd project-base
@@ -78,7 +78,7 @@ mutagen-compose up -d --build
     `mutagen-compose` is a wrapper around `docker-compose` that adds Mutagen synchronization to the `docker-compose up` command.
 
 !!! note
-    During the build of the Docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the build of the Docker containers there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### 2.5 Set up the application
 [Application setup guide](installation-using-docker-application-setup.md)

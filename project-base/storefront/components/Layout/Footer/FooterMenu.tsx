@@ -25,7 +25,7 @@ export const FooterMenu: FC = () => {
         () => [
             {
                 key: 'about-cc',
-                title: t('About Commerce Cloud'),
+                title: t('About Shopsys'),
                 items: filterArticlesByPlacement(data?.articles.edges, ArticlePlacementTypeEnumApi.Footer1Api),
             },
             {

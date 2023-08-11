@@ -1558,11 +1558,11 @@ msgstr "Nákupní rádce pro rychlý nákup"
 msgid "Shopping guide to improve your shopping experience"
 msgstr "Zlepšení zážitku z nakupovaní"
 
-msgid "Shopsys Framework - Title page"
-msgstr "Shopsys Framework - Titulní strana"
+msgid "Shopsys Platform - Title page"
+msgstr "Shopsys Platform - Titulní strana"
 
-msgid "Shopsys Framework - the best solution for your eshop."
-msgstr "Shopsys Framework - nejlepší řešení pro váš internetový obchod."
+msgid "Shopsys Platform - the best solution for your eshop."
+msgstr "Shopsys Platform - nejlepší řešení pro váš internetový obchod."
 
 msgid "Side mount plates - few ETV-2860"
 msgstr "Boční držák plechů - pár ETV-2860"

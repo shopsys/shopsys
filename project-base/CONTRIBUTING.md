@@ -1,6 +1,6 @@
 # Contributing
 
-You can take part in making Shopsys Framework better.
+You can take part in making Shopsys Platform better.
 
 Report [issues](https://github.com/shopsys/shopsys/issues/new) and send [pull requests](https://github.com/shopsys/shopsys/compare) in the main [Shopsys repository](https://github.com/shopsys/shopsys).
 

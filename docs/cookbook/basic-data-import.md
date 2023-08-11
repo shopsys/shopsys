@@ -241,7 +241,7 @@ Shopsys\FrameworkBundle\Model\Product\ProductFacade: '@App\Model\Product\Product
 
 #### 3.4 - Implement `ImportProductsCronModule::createProduct()` and `ImportProductsCronModule::updateProduct()`
 
-As an entry-point for data processing in Shopsys Framework, we use facades.
+As an entry-point for data processing in Shopsys Platform, we use facades.
 In this case, our new `ProductFacade`
 and its inherited methods `create()` and `edit()`.
 Those methods expect [`ProductData`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductData.php)
@@ -522,8 +522,7 @@ On the other hand, you have to handle all related logic manually then.
 
 Now you know how to implement simple data transfer to your e-shop from an external source.
 You know why you should persist external ID and how to decide whether create new entities or update existing ones.
-You learned about Shopsys Framework cron modules, how to create and run them. You also know how to get desired objects based on external data
+You learned about Shopsys Platform cron modules, how to create and run them. You also know how to get desired objects based on external data
 (e.g. [`Vat`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Pricing/Vat/Vat.php) object based on vat percent).
 You are familiar with best practices for implementing data transfers,
 what pitfalls you can encounter with and what are the ways of dealing with them.
-

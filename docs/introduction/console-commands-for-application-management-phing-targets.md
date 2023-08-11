@@ -41,7 +41,7 @@ Let us take look at the first one, that is located in the same file:
 Target `build-deploy-part-1-db-independent` also executes subset of Phing targets (`clean`,`composer-prod`,`npm`,`dirs-create`,`domains-urls-check`,`assets`).
 
 !!! note
-    During the execution of `composer-prod`, `composer-dev` and `npm` targets, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the execution of `composer-prod`, `composer-dev` and `npm` targets, there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 Let us move a little deeper and take a look at the first one, `clean`:
 ```xml
@@ -326,4 +326,4 @@ Since the `build/build.local.properties` file is not versioned, the changes will
 ---
 
 !!! tip
-    If you want to add new Phing targets into Shopsys Framework or modify existing ones, please read [our guidelines](../contributing/guidelines-for-phing-targets.md) before contributing.
+    If you want to add new Phing targets into Shopsys Platform or modify existing ones, please read [our guidelines](../contributing/guidelines-for-phing-targets.md) before contributing.

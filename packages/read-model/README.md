@@ -2,8 +2,8 @@
 
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/read-model.svg)](https://packagist.org/packages/shopsys/read-model)
 
-This bundle for [Shopsys Framework](https://www.shopsys.com) separates templates from model using [read model concept](https://docs.shopsys.com/en/latest/model/introduction-to-read-model/).
-The bundle is dedicated for projects based on Shopsys Framework (i.e. created from [`shopsys/project-base`](https://github.com/shopsys/project-base)) exclusively.
+This bundle for [Shopsys Platform](https://www.shopsys.com) separates templates from model using [read model concept](https://docs.shopsys.com/en/latest/model/introduction-to-read-model/).
+The bundle is dedicated for projects based on Shopsys Platform (i.e. created from [`shopsys/project-base`](https://github.com/shopsys/project-base)) exclusively.
 
 This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
@@ -36,7 +36,7 @@ The facade provides you the view objects for product lists that can be then used
 
 ## Contributing
 Thank you for your contributions to Shopsys Read Model package.
-Together we are making Shopsys Framework better.
+Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),

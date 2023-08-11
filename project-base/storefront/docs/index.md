@@ -1,4 +1,4 @@
-This is documentation for Shopsys Framework Storefront.
+This is documentation for Shopsys Platform Storefront.
 
 ## Ways to use Shopsys Storefront
 

@@ -2,7 +2,7 @@
 
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/form-types-bundle.svg)](https://packagist.org/packages/shopsys/form-types-bundle)
 
-Symfony bundle adding form types for usage in [Shopsys Framework](https://www.shopsys-framework.com), its components and plugins.
+Symfony bundle adding form types for usage in [Shopsys Platform](https://www.shopsys-framework.com), its components and plugins.
 
 This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
@@ -72,7 +72,7 @@ A null value can be accepted/returned when no radio button is checked.
 
 ## Contributing
 Thank you for your contributions to Shopsys Form Types Bundle package.
-Together we are making Shopsys Framework better.
+Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),

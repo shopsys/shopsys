@@ -2,7 +2,7 @@
 
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/plugin-interface.svg)](https://packagist.org/packages/shopsys/plugin-interface)
 
-Package of interfaces providing compatibility between [Shopsys Framework](https://www.shopsys-framework.com) and plugins.
+Package of interfaces providing compatibility between [Shopsys Platform](https://www.shopsys-framework.com) and plugins.
 
 This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
@@ -210,7 +210,7 @@ For tips on how to write a new bundle see [Best Practices for Reusable Bundles](
 
 ## Contributing
 Thank you for your contributions to Shopsys Plugin Interface package.
-Together we are making Shopsys Framework better.
+Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new) and/or send [pull requests](https://github.com/shopsys/shopsys/compare),

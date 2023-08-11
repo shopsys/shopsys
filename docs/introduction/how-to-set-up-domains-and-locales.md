@@ -4,7 +4,7 @@ This article describes how to work with domains and languages during the develop
 For an explanation of the basic terms, please read [domain, multidomain and multilanguage](domain-multidomain-multilanguage.md) article first.
 
 !!! note
-    Demo data on the Shopsys Framework are only translated to `en` and `cs` locales.
+    Demo data on the Shopsys Platform are only translated to `en` and `cs` locales.
     If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory and you can translate your demo data in `dataFixtures.xx.po` file.
 
 ## Settings and working with domains
@@ -31,7 +31,7 @@ php phing build-demo-dev
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](./console-commands-for-application-management-phing-targets.md)
 
 !!! note
-    During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 After the build is completed, a singledomain application is created.
 
@@ -84,7 +84,7 @@ This command performs multiple actions:
     3. Recalculate product prices and visibilities
 
 #### 2.5 Multilang attributes
-Demo data of Shopsys Framework are translated only for `en` and `cs` locales.
+Demo data of Shopsys Platform are translated only for `en` and `cs` locales.
 If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory  and you can translate your demo data in `dataFixtures.xx.po` file.
 
 #### 2.6 Generate assets for the new domain
@@ -139,7 +139,7 @@ php phing domains-db-functions-create
 ```
 
 #### 3.5 Multilang attributes
-Demo data of Shopsys Framework are prepared only for `en` and `cs` locales.
+Demo data of Shopsys Platform are prepared only for `en` and `cs` locales.
 If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory and you can translate your demo data in `dataFixtures.xx.po` file.
 
 #### 3.6 Locale in administration

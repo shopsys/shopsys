@@ -1,6 +1,6 @@
 # Contributing
 
-You can take part in making Shopsys Framework better.
+You can take part in making Shopsys Platform better.
 
 * [Create a pull request](https://github.com/shopsys/shopsys/compare)
 * [Report an issue](https://github.com/shopsys/shopsys/issues/new)
@@ -12,7 +12,7 @@ You can take part in making Shopsys Framework better.
 * [Guidelines for Dependencies](https://docs.shopsys.com/en/latest/contributing/guidelines-for-dependencies/)
 * [Guidelines for writing UPGRADE.md](https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-upgrade/)
 * [Merging on Github](https://docs.shopsys.com/en/latest/contributing/merging-on-github/)
-* [Releasing a new version of Shopsys Framework monorepo](https://docs.shopsys.com/en/latest/contributing/releasing-a-new-version-of-shopsys-framework/)
+* [Releasing a new version of Shopsys Platform monorepo](https://docs.shopsys.com/en/latest/contributing/releasing-a-new-version-of-shopsys-framework/)
 * [Code Quality Principles](https://docs.shopsys.com/en/latest/contributing/code-quality-principles/)
 
 For your code to be accepted, you should follow our guidelines mentioned above,

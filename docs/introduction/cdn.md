@@ -5,9 +5,9 @@
 CDN (Content Delivery Network) is a system of distributed servers that are used to deliver web content to end-users based on their geographic location.
 The main purpose of using a CDN is to improve website performance by reducing latency and improving website load times.
 
-## How to configure CDN in Shopsys Framework
+## How to configure CDN in Shopsys Platform
 
-Shopsys Framework supports CDN by simply configuring the environment variable `CDN_DOMAIN`.
+Shopsys Platform supports CDN by simply configuring the environment variable `CDN_DOMAIN`.
 The value of this variable is used as a prefix for all static assets such as images, CSS, and JavaScript files.
 
 The variable can be configured in the `.env` file or better in the webserver settings.
