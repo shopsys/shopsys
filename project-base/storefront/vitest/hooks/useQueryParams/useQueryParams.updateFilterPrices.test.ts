@@ -1,5 +1,10 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { FILTER_QUERY_PARAMETER_NAME, SORT_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+} from 'helpers/queryParams/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/zustand/useSessionStore';
@@ -279,6 +284,45 @@ describe('useQueryParams().updateFilterPrices tests', () => {
                         ],
                     }),
                     [SORT_QUERY_PARAMETER_NAME]: ProductOrderingModeEnumApi.PriceAscApi,
+                },
+            },
+            {
+                shallow: true,
+            },
+        );
+    });
+
+    test('changing prices resets page and load more', () => {
+        (useRouter as Mock).mockImplementation(() => ({
+            pathname: CATEGORY_PATHNAME,
+            asPath: CATEGORY_URL,
+            push: mockPush,
+            query: {
+                [PAGE_QUERY_PARAMETER_NAME]: '2',
+                [LOAD_MORE_QUERY_PARAMETER_NAME]: '2',
+            },
+        }));
+
+        useQueryParams().updateFilterPrices({ minimalPrice: 100, maximalPrice: 1000 });
+
+        expect(mockPush).toBeCalledWith(
+            {
+                pathname: CATEGORY_PATHNAME,
+                query: {
+                    categorySlug: CATEGORY_URL,
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        minimalPrice: 100,
+                        maximalPrice: 1000,
+                    }),
+                },
+            },
+            {
+                pathname: CATEGORY_URL,
+                query: {
+                    [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
+                        minimalPrice: 100,
+                        maximalPrice: 1000,
+                    }),
                 },
             },
             {

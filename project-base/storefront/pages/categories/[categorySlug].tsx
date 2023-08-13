@@ -1,19 +1,16 @@
-import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
 import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
+import { useCategoryDetailData } from 'components/Pages/CategoryDetail/helpers';
 import {
     CategoryDetailQueryApi,
     CategoryDetailQueryVariablesApi,
     CategoryDetailQueryDocumentApi,
     CategoryProductsQueryDocumentApi,
-    ProductFilterApi,
-    CategoryDetailFragmentApi,
-    Maybe,
-    ProductOrderingModeEnumApi,
 } from 'graphql/generated';
 
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
@@ -24,13 +21,13 @@ import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/misc/isServer';
+import { parseLoadMoreFromQuery } from 'helpers/pagination/parseLoadMoreFromQuery';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
     FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
@@ -39,11 +36,9 @@ import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
-import { NextRouter, useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { useSessionStore } from 'store/zustand/useSessionStore';
-import { Client, useClient } from 'urql';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
+import { getSlugFromServerSideUrl } from 'utils/getSlugFromUrl';
+import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
 
 const CategoryDetailPage: NextPage = () => {
     const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
@@ -82,6 +77,15 @@ const CategoryDetailPage: NextPage = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, ssrExchange, t }) =>
         async (context) => {
+            const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+            const loadMore = parseLoadMoreFromQuery(context.query[LOAD_MORE_QUERY_PARAMETER_NAME]);
+            const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
+            const redirect = getRedirectWithOffsetPage(page, loadMore, urlSlug, context.query);
+
+            if (redirect) {
+                return redirect;
+            }
+
             const client = await createClient({
                 publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
                 ssrExchange,
@@ -96,10 +100,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const optionsFilter = getFilterOptions(
                 parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]),
             );
-            const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
 
             if (isRedirectedFromSsr(context.req.headers)) {
-                const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
                 const filter = mapParametersFilter(optionsFilter);
                 const categoryDetailResponsePromise = client!
                     .query<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
@@ -115,7 +117,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                         orderingMode,
                         filter,
                         urlSlug,
-                        pageSize: DEFAULT_PAGE_SIZE,
+                        pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
                     })
                     .toPromise();
 
@@ -143,86 +145,3 @@ export const getServerSideProps = getServerSidePropsWrapper(
 );
 
 export default CategoryDetailPage;
-
-const useCategoryDetailData = (filter: ProductFilterApi | null): [undefined | CategoryDetailFragmentApi, boolean] => {
-    const client = useClient();
-    const router = useRouter();
-    const urlSlug = getSlugFromUrl(getUrlWithoutGetParameters(router.asPath));
-    const { sort } = useQueryParams();
-    const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
-    const [categoryDetailData, setCategoryDetailData] = useState<undefined | CategoryDetailFragmentApi>(
-        readCategoryDetailFromCache(client, urlSlug, sort, filter),
-    );
-    const setOriginalCategorySlug = useSessionStore((s) => s.setOriginalCategorySlug);
-    const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
-
-    const [fetching, setFetching] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (wasRedirectedToSeoCategory) {
-            return;
-        }
-        setFetching(true);
-
-        client
-            .query<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
-                urlSlug,
-                orderingMode: sort ?? null,
-                filter,
-            })
-            .toPromise()
-            .then((response) => {
-                setCategoryDetailData(response.data?.category ?? undefined);
-                handleSeoCategorySlugUpdate(
-                    router,
-                    urlSlug,
-                    response.data?.category?.originalCategorySlug,
-                    response.data?.category?.slug,
-                    setWasRedirectedToSeoCategory,
-                    setOriginalCategorySlug,
-                );
-            })
-            .finally(() => setFetching(false));
-    }, [urlSlug, sort, JSON.stringify(filter)]);
-
-    return [categoryDetailData, fetching];
-};
-
-export const handleSeoCategorySlugUpdate = (
-    router: NextRouter,
-    urlSlug: string,
-    originalCategorySlug: string | undefined | null,
-    categorySlug: string | undefined,
-    setWasRedirectedToSeoCategory: (value: boolean) => void,
-    setOriginalCategorySlug: (value: string | undefined) => void,
-) => {
-    const isCurrentAndRedirectSlugDifferent = getStringWithoutLeadingSlash(categorySlug ?? '') !== urlSlug;
-
-    if (originalCategorySlug && isCurrentAndRedirectSlugDifferent && categorySlug) {
-        setWasRedirectedToSeoCategory(true);
-        router.replace(
-            { pathname: '/categories/[categorySlug]', query: { categorySlug: '/televize-audio-nejlevnejsi' } },
-            { pathname: categorySlug },
-            {
-                shallow: true,
-            },
-        );
-    }
-
-    setOriginalCategorySlug(originalCategorySlug ?? undefined);
-};
-
-const readCategoryDetailFromCache = (
-    client: Client,
-    urlSlug: string,
-    sort: ProductOrderingModeEnumApi | null,
-    filter: Maybe<ProductFilterApi>,
-) => {
-    return (
-        client.readQuery<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
-            urlSlug,
-            orderingMode: sort,
-            filter,
-        })?.data?.category ?? undefined
-    );
-};

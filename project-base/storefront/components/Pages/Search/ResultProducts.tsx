@@ -9,9 +9,16 @@ type ResultProductsProps = {
     areProductsShowed: boolean;
     noProductsFound: boolean;
     fetching: boolean;
+    loadMoreFetching: boolean;
 };
 
-export const ResultProducts: FC<ResultProductsProps> = ({ areProductsShowed, noProductsFound, products, fetching }) => {
+export const ResultProducts: FC<ResultProductsProps> = ({
+    areProductsShowed,
+    noProductsFound,
+    products,
+    fetching,
+    loadMoreFetching,
+}) => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -21,6 +28,7 @@ export const ResultProducts: FC<ResultProductsProps> = ({ areProductsShowed, noP
                     products={products}
                     gtmProductListName={GtmProductListNameType.search_results}
                     fetching={fetching}
+                    loadMoreFetching={loadMoreFetching}
                     gtmMessageOrigin={GtmMessageOriginType.other}
                 />
             )}

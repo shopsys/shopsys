@@ -12,10 +12,7 @@ It is triggered every time page (and therefore products) change.
 ```typescript
 export const useGtmPaginatedProductListViewEvent = (
     paginatedProducts: ListedProductFragmentApi[] | undefined, // array of displayed products, if loaded and available
-    startCursor: string | null | undefined, // start cursor used for pagination, if available
     gtmProductListName: GtmProductListNameType, // name of the viewed paginated list
-    key: string, // key used to avoid double dispatch of the event, usually URL of the page without GET parameters
-    fetching: boolean, // boolean pointer saying if the products are still loading
 ): void => {
     // function body not included in this code block
 };

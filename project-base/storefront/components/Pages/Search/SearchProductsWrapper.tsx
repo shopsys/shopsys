@@ -1,32 +1,26 @@
 import { ResultProducts } from './ResultProducts';
-import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
-import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
-import { useSearchProductsQueryApi } from 'graphql/generated';
-import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
+import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { getMappedProducts } from 'helpers/mappers/products';
 import { useGtmPaginatedProductListViewEvent } from 'hooks/gtm/productList/useGtmPaginatedProductListViewEvent';
-import { useQueryParams } from 'hooks/useQueryParams';
 import { RefObject } from 'react';
 import { GtmProductListNameType } from 'types/gtm/enums';
+import { useSearchProductsData } from './helpers';
+import { ListedProductConnectionPreviewFragmentApi } from 'graphql/generated';
 
 type SearchProductsWrapperProps = {
     paginationScrollTargetRef: RefObject<HTMLDivElement>;
+    productsSearch: ListedProductConnectionPreviewFragmentApi;
 };
 
-export const SearchProductsWrapper: FC<SearchProductsWrapperProps> = ({ paginationScrollTargetRef }) => {
-    const { currentPage, sort, filter, searchString } = useQueryParams();
+export const SearchProductsWrapper: FC<SearchProductsWrapperProps> = ({
+    paginationScrollTargetRef,
+    productsSearch,
+}) => {
+    const [searchProductsData, hasNextPage, fetching, loadMoreFetching] = useSearchProductsData(
+        productsSearch.totalCount,
+    );
 
-    const [{ data: searchProductsData, fetching }] = useSearchProductsQueryApi({
-        variables: {
-            endCursor: getEndCursor(currentPage),
-            filter: mapParametersFilter(filter),
-            orderingMode: sort,
-            search: searchString ?? '',
-            pageSize: DEFAULT_PAGE_SIZE,
-        },
-    });
-
-    const searchResultProducts = getMappedProducts(searchProductsData?.products.edges);
+    const searchResultProducts = getMappedProducts(searchProductsData);
 
     useGtmPaginatedProductListViewEvent(searchResultProducts, GtmProductListNameType.search_results);
 
@@ -34,17 +28,18 @@ export const SearchProductsWrapper: FC<SearchProductsWrapperProps> = ({ paginati
         <>
             {searchResultProducts && (
                 <ResultProducts
-                    areProductsShowed={(searchProductsData?.products.totalCount ?? 0) > 0}
+                    areProductsShowed={productsSearch.totalCount > 0}
                     fetching={fetching}
-                    noProductsFound={
-                        parseInt(searchProductsData?.products.productFilterOptions.maximalPrice ?? '') === 0
-                    }
+                    loadMoreFetching={loadMoreFetching}
+                    noProductsFound={parseInt(productsSearch.productFilterOptions.maximalPrice) === 0}
                     products={searchResultProducts}
                 />
             )}
             <Pagination
                 paginationScrollTargetRef={paginationScrollTargetRef}
-                totalCount={searchProductsData?.products.totalCount ?? 0}
+                totalCount={productsSearch.totalCount}
+                isWithLoadMore
+                hasNextPage={hasNextPage}
             />
         </>
     );

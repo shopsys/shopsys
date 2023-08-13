@@ -1,13 +1,7 @@
 fragment ListedProductConnectionFragment on ProductConnection {
     __typename
-    orderingMode
-    defaultOrderingMode
-    totalCount
-    productFilterOptions {
-        ...ProductFilterOptionsFragment
-    }
     pageInfo {
-        ...PageInfoFragment
+        hasNextPage
     }
     edges {
         __typename
