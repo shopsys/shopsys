@@ -9,13 +9,13 @@ import {
 } from 'graphql/generated';
 import { useTypedTranslationFunction } from './typescript/useTypedTranslationFunction';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
 export const useWishlist = () => {
     const t = useTypedTranslationFunction();
 
-    const { isUserLoggedIn } = useCurrentUserData();
+    const isUserLoggedIn = !!useCurrentCustomerData();
 
     const updateWishlistUuid = usePersistStore((s) => s.updateWishlistUuid);
     const wishlistUuid = usePersistStore((s) => s.wishlistUuid);

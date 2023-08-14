@@ -1,48 +1,33 @@
 import { useCurrentCustomerContactInformationQuery } from 'connectors/customer/CurrentCustomerUser';
-import { useMemo } from 'react';
 import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
 export const useCurrentUserContactInformation = (): ContactInformation => {
-    const currentUserContactInformationApiData = useCurrentCustomerContactInformationQuery();
-    const currentUserContactInformationFromStore = usePersistStore((store) => store.contactInformation);
+    const contactInformationApiData = useCurrentCustomerContactInformationQuery();
+    const contactInformationFromStore = usePersistStore((store) => store.contactInformation);
 
-    const currentUserContactInformationFromApi = useMemo<Partial<ContactInformation>>(
-        () => ({
-            ...(currentUserContactInformationApiData ? currentUserContactInformationApiData : {}),
-        }),
-        [currentUserContactInformationApiData],
-    );
-
-    return useMemo(
-        () =>
-            mergeCurrentUserContactInformationFromApiAndStore(
-                currentUserContactInformationFromApi,
-                currentUserContactInformationFromStore,
-            ),
-        [currentUserContactInformationFromApi, currentUserContactInformationFromStore],
-    );
+    return mergeContactInformation(contactInformationApiData || {}, contactInformationFromStore);
 };
 
-const mergeCurrentUserContactInformationFromApiAndStore = (
-    currentUserContactInformationFromApi: Partial<ContactInformation>,
-    currentUserContactInformationFromStore: ContactInformation,
+const mergeContactInformation = (
+    contactInformationFromApi: Partial<ContactInformation>,
+    contactInformationFromStore: ContactInformation,
 ): ContactInformation => {
-    const filteredCurrentUserContactInformationFromStore: ContactInformation = {
-        ...currentUserContactInformationFromStore,
+    const filteredContactInformationFromStore: ContactInformation = {
+        ...contactInformationFromStore,
     };
 
-    for (const key in filteredCurrentUserContactInformationFromStore) {
-        const filteredProperty = filteredCurrentUserContactInformationFromStore[key as keyof ContactInformation];
+    for (const key in filteredContactInformationFromStore) {
+        const filteredProperty = filteredContactInformationFromStore[key as keyof ContactInformation];
 
         const isEmptyString = typeof filteredProperty === 'string' && filteredProperty.length === 0;
-        if (isEmptyString && key in currentUserContactInformationFromApi) {
-            delete filteredCurrentUserContactInformationFromStore[key as keyof ContactInformation];
+        if (isEmptyString && key in contactInformationFromApi) {
+            delete filteredContactInformationFromStore[key as keyof ContactInformation];
         }
     }
 
     return {
-        ...currentUserContactInformationFromApi,
-        ...filteredCurrentUserContactInformationFromStore,
+        ...contactInformationFromApi,
+        ...filteredContactInformationFromStore,
     } as ContactInformation;
 };

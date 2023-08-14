@@ -13,7 +13,7 @@ import { DomainConfigType } from 'helpers/domain/domain';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { canUseDom } from 'helpers/misc/canUseDom';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useMemo } from 'react';
 import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/zustand/usePersistStore';
@@ -45,7 +45,7 @@ import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
     const { cart, promoCode, isFetching } = useCurrentCart();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const { isUserLoggedIn } = useCurrentUserData();
+    const isUserLoggedIn = !!useCurrentCustomerData();
     const domainConfig = useDomainConfig();
 
     return useMemo(() => {

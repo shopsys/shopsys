@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 
 export const useContactForm = (): [UseFormReturn<ContactFormType>, ContactFormType] => {
     const t = useTypedTranslationFunction();
-    const userData = useCurrentUserData();
+    const user = useCurrentCustomerData();
 
     const resolver = yupResolver(
         Yup.object().shape({
@@ -18,14 +18,11 @@ export const useContactForm = (): [UseFormReturn<ContactFormType>, ContactFormTy
             message: Yup.string().required(t('Please enter a message')),
         }),
     );
-    const defaultValues = useMemo(
-        () => ({
-            email: userData.user?.email ?? '',
-            name: userData.user?.firstName ?? '',
-            message: '',
-        }),
-        [userData],
-    );
+    const defaultValues = {
+        email: user?.email ?? '',
+        name: user?.firstName ?? '',
+        message: '',
+    };
 
     return [useShopsysForm(resolver, defaultValues), defaultValues];
 };

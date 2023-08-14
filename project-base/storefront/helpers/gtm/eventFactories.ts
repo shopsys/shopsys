@@ -24,7 +24,7 @@ import { DomainConfigType } from 'helpers/domain/domain';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useMemo } from 'react';
 import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/zustand/usePersistStore';
@@ -247,7 +247,7 @@ export const useGtmStaticPageViewEvent = (
     const { gtmCartInfo, isCartLoaded } = useGtmCartInfo();
     const domainConfig = useDomainConfig();
     const userContactInformation = useCurrentUserContactInformation();
-    const { user } = useCurrentUserData();
+    const user = useCurrentCustomerData();
     const userConsent = usePersistStore((store) => store.userConsent);
 
     return useMemo(
@@ -271,7 +271,7 @@ export const useGtmFriendlyPageViewEvent = (
     const { gtmCartInfo, isCartLoaded } = useGtmCartInfo();
     const domainConfig = useDomainConfig();
     const userContactInformation = useCurrentUserContactInformation();
-    const { user } = useCurrentUserData();
+    const user = useCurrentCustomerData();
     const userConsent = usePersistStore((store) => store.userConsent);
 
     return useMemo(

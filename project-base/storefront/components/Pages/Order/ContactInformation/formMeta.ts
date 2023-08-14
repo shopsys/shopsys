@@ -65,11 +65,7 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                 then: validateLastName(t),
                 otherwise: Yup.string(),
             }),
-            deliveryCompanyName: Yup.string().when('differentDeliveryAddress', {
-                is: true,
-                then: validateCompanyNameRequired(t),
-                otherwise: Yup.string(),
-            }),
+            deliveryCompanyName: Yup.string(),
             deliveryTelephone: Yup.string().when('differentDeliveryAddress', {
                 is: true,
                 then: validateTelephone(t),

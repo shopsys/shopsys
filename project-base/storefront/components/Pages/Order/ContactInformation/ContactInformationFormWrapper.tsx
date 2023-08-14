@@ -11,6 +11,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
+import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 
 export const ContactInformationFormWrapper: FC = () => {
     const t = useTypedTranslationFunction();
@@ -19,6 +20,8 @@ export const ContactInformationFormWrapper: FC = () => {
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
+
+    useHandleContactInformationNonTextChanges(formProviderMethods.control, formMeta);
 
     return (
         <div className="overflow-hidden transition-all" ref={cssTransitionRef}>
