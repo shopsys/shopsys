@@ -4,7 +4,7 @@ import { FlagDetailFragmentApi, FlagProductsQueryDocumentApi } from 'graphql/gen
 import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { getMappedProducts } from 'helpers/mappers/products';
-import { useProductsData } from 'helpers/pagination/loadMore';
+import { useProductsData } from 'helpers/loadMore';
 import { RefObject } from 'react';
 
 type FlagDetailProductsWrapperProps = {

@@ -1,6 +1,6 @@
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { MenuIconicItemLink, MenuIconicItemIcon, MenuIconicSubItemLink } from './MenuIconicElements';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useAuth } from 'hooks/auth/useAuth';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';

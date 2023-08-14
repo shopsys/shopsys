@@ -10,12 +10,7 @@ import {
     ListedProductConnectionFragmentApi,
 } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import {
-    calculatePageSize,
-    getPageSizeInfo,
-    hasReadAllProductsFromCache,
-    mergeProductEdges,
-} from 'helpers/pagination/loadMore';
+import { calculatePageSize, getPageSizeInfo, hasReadAllProductsFromCache, mergeProductEdges } from 'helpers/loadMore';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRef, useState, useEffect } from 'react';
 import { useClient, Client } from 'urql';

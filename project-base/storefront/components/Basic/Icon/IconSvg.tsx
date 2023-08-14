@@ -1,6 +1,6 @@
 import { IconName, IconsSvgMap } from './IconsSvgMap';
 import { HTMLAttributes } from 'react';
-import { twMergeCustom } from 'helpers/visual/twMerge';
+import { twMergeCustom } from 'helpers/twMerge';
 
 type IconSvgProps = HTMLAttributes<HTMLElement> & {
     icon: IconName;

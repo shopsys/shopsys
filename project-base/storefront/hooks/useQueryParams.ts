@@ -21,7 +21,7 @@ import {
     PAGE_QUERY_PARAMETER_NAME,
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParams/queryParamNames';
+} from 'helpers/queryParamNames';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';

@@ -1,4 +1,4 @@
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 
 export const getLoginUrlWithRedirect = (redirectTargetUrl: string, domainUrl: string): string => {

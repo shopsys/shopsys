@@ -7,7 +7,7 @@ import { ProductListItemSkeleton } from './ProductListItemSkeleton';
 import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/CategoryDetailContentMessage';
 import { ProductsListContent } from './ProductsListContent';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { calculatePageSize } from 'helpers/pagination/loadMore';
+import { calculatePageSize } from 'helpers/loadMore';
 
 type ProductsListProps = {
     products: ListedProductFragmentApi[] | undefined;

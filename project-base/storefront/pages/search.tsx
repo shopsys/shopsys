@@ -12,7 +12,7 @@ import {
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import {
@@ -21,7 +21,7 @@ import {
     PAGE_QUERY_PARAMETER_NAME,
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParams/queryParamNames';
+} from 'helpers/queryParamNames';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -34,7 +34,7 @@ import {
     getSlugFromServerSideUrl,
     getStringFromUrlQuery,
 } from 'helpers/parsing/urlParsing';
-import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

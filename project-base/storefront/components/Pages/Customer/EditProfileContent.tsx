@@ -9,7 +9,7 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { showErrorMessage, showSuccessMessage } from 'helpers/visual/toasts';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { AddressList } from 'components/Pages/Customer/AddressList';
 import {
     useCustomerChangeProfileForm,

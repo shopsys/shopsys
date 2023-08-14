@@ -1,4 +1,4 @@
-import { showInfoMessage, showSuccessMessage } from 'helpers/visual/toasts';
+import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';

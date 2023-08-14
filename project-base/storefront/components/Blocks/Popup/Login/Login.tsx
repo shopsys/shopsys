@@ -9,7 +9,7 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { blurInput } from 'helpers/forms/blurInput';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';

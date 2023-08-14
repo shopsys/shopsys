@@ -1,4 +1,4 @@
-import { showInfoMessage } from 'helpers/visual/toasts';
+import { showInfoMessage } from 'helpers/toasts';
 import {
     CartItemModificationsFragmentApi,
     CartModificationsFragmentApi,

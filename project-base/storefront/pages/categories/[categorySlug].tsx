@@ -18,20 +18,20 @@ import { useHandleDefaultFiltersUpdate } from 'helpers/filterOptions/seoCategori
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/DOM/isServer';
+import { isRedirectedFromSsr } from 'helpers/isServer';
 import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParams/queryParamNames';
+} from 'helpers/queryParamNames';
 import { createClient } from 'urql/createClient';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { useSessionStore } from 'store/useSessionStore';
-import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore';
 import {
     getNumberFromUrlQuery,
     getProductListSortFromUrlQuery,

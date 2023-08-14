@@ -7,7 +7,7 @@ import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGt
 import { RefObject, useMemo } from 'react';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { useSessionStore } from 'store/useSessionStore';
-import { useProductsData } from 'helpers/pagination/loadMore';
+import { useProductsData } from 'helpers/loadMore';
 
 type CategoryDetailProps = {
     category: CategoryDetailFragmentApi;

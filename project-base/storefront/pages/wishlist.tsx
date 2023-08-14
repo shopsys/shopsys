@@ -2,7 +2,7 @@ import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';

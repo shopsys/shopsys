@@ -8,7 +8,7 @@ import { CartSummary } from 'components/Pages/Cart/CartSummary';
 import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useGtmCartViewEvent } from 'gtm/hooks/useGtmCartViewEvent';

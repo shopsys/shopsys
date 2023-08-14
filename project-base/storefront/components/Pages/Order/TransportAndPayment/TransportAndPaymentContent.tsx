@@ -9,7 +9,7 @@ import {
 } from 'graphql/generated';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'gtm/helpers/mappers';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';

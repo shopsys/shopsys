@@ -1,15 +1,11 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { CategoryProductsQueryDocumentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
-import {
-    getOffsetPageAndLoadMore,
-    getPreviousProductsFromCache,
-    getRedirectWithOffsetPage,
-} from 'helpers/pagination/loadMore';
+import { getOffsetPageAndLoadMore, getPreviousProductsFromCache, getRedirectWithOffsetPage } from 'helpers/loadMore';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParams/queryParamNames';
+} from 'helpers/queryParamNames';
 import { stringify } from 'querystring';
 import { describe, expect, test, vi } from 'vitest';
 

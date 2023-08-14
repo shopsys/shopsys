@@ -1,5 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
-import { isElementVisible } from 'helpers/visual/isElementVisible';
+import { isElementVisible } from 'helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { DEFAULT_SORT } from 'helpers/filterOptions/seoCategories';

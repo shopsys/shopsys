@@ -5,12 +5,12 @@ import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { ComparedProductFragmentApi } from 'graphql/generated';
-import { canUseDom } from 'helpers/DOM/canUseDom';
+import { canUseDom } from 'helpers/canUseDom';
 import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { twMergeCustom } from 'helpers/visual/twMerge';
+import { twMergeCustom } from 'helpers/twMerge';
 
 type ProductComparisonContentProps = {
     productsCompare: ComparedProductFragmentApi[];

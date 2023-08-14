@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { twMergeCustom } from 'helpers/visual/twMerge';
+import { twMergeCustom } from 'helpers/twMerge';
 
 type TableProps = {
     head?: ReactNode;

@@ -18,13 +18,13 @@ import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/DOM/isServer';
+import { isRedirectedFromSsr } from 'helpers/isServer';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParams/queryParamNames';
+} from 'helpers/queryParamNames';
 import {
     getNumberFromUrlQuery,
     getProductListSortFromUrlQuery,
@@ -38,7 +38,7 @@ import { useRouter } from 'next/router';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore';
 
 const BrandDetailPage: NextPage = () => {
     const router = useRouter();

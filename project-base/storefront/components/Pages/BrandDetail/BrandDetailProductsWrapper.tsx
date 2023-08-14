@@ -2,7 +2,7 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { BrandDetailFragmentApi, BrandProductsQueryDocumentApi } from 'graphql/generated';
 import { getMappedProducts } from 'helpers/mappers/products';
-import { useProductsData } from 'helpers/pagination/loadMore';
+import { useProductsData } from 'helpers/loadMore';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
 import { RefObject } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';

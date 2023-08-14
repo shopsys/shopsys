@@ -4,7 +4,7 @@ import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { twMergeCustom } from 'helpers/visual/twMerge';
+import { twMergeCustom } from 'helpers/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value', never>;
 

@@ -4,7 +4,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { UserText } from 'components/Basic/UserText/UserText';
-import { showSuccessMessage } from 'helpers/visual/toasts';
+import { showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import {
     BreadcrumbFragmentApi,

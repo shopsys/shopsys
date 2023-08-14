@@ -1,7 +1,7 @@
-import { showSuccessMessage } from 'helpers/visual/toasts';
+import { showSuccessMessage } from 'helpers/toasts';
 import { Exact, LoginApi, LoginVariablesApi, LogoutApi, Maybe, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
-import { canUseDom } from 'helpers/DOM/canUseDom';
+import { canUseDom } from 'helpers/canUseDom';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';

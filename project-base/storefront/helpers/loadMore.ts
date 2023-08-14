@@ -13,7 +13,7 @@ import {
     ProductOrderingModeEnumApi,
 } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
+import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { Redirect } from 'next';
 import { useRouter } from 'next/router';

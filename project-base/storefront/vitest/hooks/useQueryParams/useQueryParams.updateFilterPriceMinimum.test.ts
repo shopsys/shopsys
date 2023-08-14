@@ -4,7 +4,7 @@ import {
     LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParams/queryParamNames';
+} from 'helpers/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';

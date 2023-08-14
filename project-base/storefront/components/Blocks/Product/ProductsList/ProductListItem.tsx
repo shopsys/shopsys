@@ -13,7 +13,7 @@ import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { twMergeCustom } from 'helpers/visual/twMerge';
+import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
 import { FunctionComponentProps } from 'types/globals';
 import { Heading } from 'components/Basic/Heading/Heading';

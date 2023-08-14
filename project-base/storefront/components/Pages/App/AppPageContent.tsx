@@ -1,4 +1,4 @@
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useSetDomainConfig } from 'hooks/useDomainConfig';
 import { NextComponentType, NextPageContext } from 'next';

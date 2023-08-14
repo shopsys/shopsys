@@ -1,5 +1,5 @@
 import { getLoginUrlWithRedirect } from './getLoginUrlWithRedirect';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { Redirect } from 'next';
 
 export const getUnauthenticatedRedirectSSR = (resolvedUrl: string, domainUrl: string): { redirect: Redirect } => {

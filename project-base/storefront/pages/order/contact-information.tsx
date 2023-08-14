@@ -21,7 +21,7 @@ import {
 import { onGtmCreateOrderEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmReviewConsents } from 'gtm/helpers/gtm';
 import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/helpers/helpers';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getIsPaymentWithPaymentGate } from 'helpers/mappers/payment';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';

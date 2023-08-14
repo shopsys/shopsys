@@ -1,4 +1,4 @@
-import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
+import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 // eslint-disable-next-line no-restricted-imports
 import NextLink, { LinkProps } from 'next/link';
 import { ComponentPropsWithoutRef } from 'react';

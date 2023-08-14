@@ -3,7 +3,7 @@ import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParams/queryParamNames';
+} from 'helpers/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { describe, expect, Mock, test, vi } from 'vitest';
 

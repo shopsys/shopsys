@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/nextjs';
 import md5 from 'crypto-js/md5';
-import { isServer } from 'helpers/DOM/isServer';
+import { isServer } from 'helpers/isServer';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 
 const CACHE_REGEXP = `@_redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)`;

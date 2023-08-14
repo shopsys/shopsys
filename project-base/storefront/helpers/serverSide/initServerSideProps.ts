@@ -13,7 +13,7 @@ import {
     SettingsQueryDocumentApi,
 } from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
-import { getServerSideInternationalizedStaticUrl } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getServerSideInternationalizedStaticUrl } from 'helpers/getInternationalizedStaticUrls';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';

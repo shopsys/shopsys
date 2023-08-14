@@ -3,7 +3,7 @@ import {
     getUrlWithoutGetParameters,
 } from 'helpers/parsing/urlParsing';
 import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
-import { INTERNAL_QUERY_PARAMETERS } from 'helpers/queryParams/queryParamNames';
+import { INTERNAL_QUERY_PARAMETERS } from 'helpers/queryParamNames';
 import { NextRouter } from 'next/router';
 
 export const generateCanonicalUrl = (router: NextRouter, url: string): string | null => {
