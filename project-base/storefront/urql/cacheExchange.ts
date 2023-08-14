@@ -31,6 +31,7 @@ import {
     WishlistQueryDocumentApi,
     WishlistQueryVariablesApi,
     InputMaybe,
+    AddOrderItemsToCartMutationVariablesApi,
 } from 'graphql/generated';
 import schema from 'schema.graphql.json';
 
@@ -132,6 +133,13 @@ export const cache = cacheExchange({
                 const newCart =
                     typeof result.AddToCart !== 'undefined' ? (result.AddToCart as AddToCartResultApi) : undefined;
                 manuallyUpdateCartFragment(cache, newCart?.cart, args.input.cartUuid);
+            },
+            AddOrderItemsToCart(result, args: AddOrderItemsToCartMutationVariablesApi, cache) {
+                const newCart =
+                    typeof result.AddOrderItemsToCart !== 'undefined'
+                        ? (result.AddOrderItemsToCart as CartApi)
+                        : undefined;
+                manuallyUpdateCartFragment(cache, newCart, args.input.cartUuid);
             },
             ChangeTransportInCart(result, args: ChangeTransportInCartMutationVariablesApi, cache) {
                 const newCart =

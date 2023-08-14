@@ -7,9 +7,12 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\FrontendApi\Model\Component\Constraints\ProductInOrder;
 use App\Model\Product\ProductFacade;
+use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class ProductInOrderValidationTest extends AbstractOrderTestCase
+class ProductInOrderValidationTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     /**
      * @inject
      */

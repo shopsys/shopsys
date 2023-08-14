@@ -83,7 +83,11 @@ class CartFacade
     public function getCartCreateIfNotExists(?CustomerUser $customerUser, ?string $cartUuid): Cart
     {
         if ($customerUser === null && $cartUuid !== null) {
-            return $this->getCartByUuid($cartUuid);
+            $cart = $this->getCartByUuid($cartUuid);
+
+            if ($cart->getCustomerUser() === null) {
+                return $cart;
+            }
         }
 
         if ($customerUser !== null) {

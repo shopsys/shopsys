@@ -8,6 +8,8 @@ use App\FrontendApi\Model\Cart\AddToCartResult;
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Cart\CartWithModificationsResult;
+use App\FrontendApi\Model\Cart\Exception\InvalidCartItemUserError;
+use App\FrontendApi\Model\Order\OrderFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -19,11 +21,13 @@ class CartMutation extends AbstractMutation
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
+     * @param \App\FrontendApi\Model\Order\OrderFacade $orderFacade
      */
     public function __construct(
-        private CartFacade $cartFacade,
-        private CurrentCustomerUser $currentCustomerUser,
-        protected CartWatcherFacade $cartWatcherFacade,
+        private readonly CartFacade $cartFacade,
+        private readonly CurrentCustomerUser $currentCustomerUser,
+        private readonly CartWatcherFacade $cartWatcherFacade,
+        private readonly OrderFacade $orderFacade,
     ) {
     }
 
@@ -85,5 +89,56 @@ class CartMutation extends AbstractMutation
         );
 
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
+     * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
+     */
+    public function addOrderItemsToCartMutation(
+        Argument $argument,
+        InputValidator $validator,
+    ): CartWithModificationsResult {
+        $validator->validate();
+
+        $input = $argument['input'];
+        $orderUuid = $input['orderUuid'];
+        $cartUuid = $input['cartUuid'];
+        $shouldMerge = $input['shouldMerge'];
+
+        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+        $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
+
+        $order = $this->orderFacade->getByUuid($orderUuid);
+
+        if (!$shouldMerge) {
+            $this->cartFacade->deleteCart($cart);
+            $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
+        }
+
+        $notAddedProducts = [];
+        $addProductResults = [];
+
+        foreach ($order->getProductItems() as $orderItem) {
+            try {
+                $addProductResults[] = $this->cartFacade->addProductByUuidToCart($orderItem->getProduct()->getUuid(), $orderItem->getQuantity(), false, $cart);
+            } catch (InvalidCartItemUserError) {
+                $notAddedProducts[] = $orderItem->getProduct();
+            }
+        }
+
+        $cartWithModificationsResult = $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
+        $cartWithModificationsResult->addProductsNotAddedByMultipleAddition($notAddedProducts);
+
+        foreach ($addProductResults as $addProductResult) {
+            if ($addProductResult->getNotOnStockQuantity() > 0) {
+                $cartWithModificationsResult->addCartItemWithChangedQuantity($addProductResult->getCartItem());
+            }
+        }
+
+        return $cartWithModificationsResult;
     }
 }

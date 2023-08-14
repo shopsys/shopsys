@@ -10,6 +10,15 @@ type AdditionalSize {
   width: Int
 }
 
+input AddOrderItemsToCartInput {
+  """Cart identifier or null if customer is logged in"""
+  cartUuid: Uuid = null
+  """UUID of the order based on which the cart should be prefilled"""
+  orderUuid: Uuid!
+  """Information if the prefilled cart should be merged with the current cart"""
+  shouldMerge: Boolean = false
+}
+
 type AddProductResult {
   addedQuantity: Int!
   cartItem: CartItem!
@@ -403,10 +412,15 @@ type CartItemModificationsResult {
 
 type CartModificationsResult {
   itemModifications: CartItemModificationsResult!
+  multipleAddedProductModifications: CartMultipleAddedProductModificationsResult!
   paymentModifications: CartPaymentModificationsResult!
   promoCodeModifications: CartPromoCodeModificationsResult!
   someProductWasRemovedFromEshop: Boolean!
   transportModifications: CartTransportModificationsResult!
+}
+
+type CartMultipleAddedProductModificationsResult {
+  notAddedProducts: [Product!]!
 }
 
 type CartPaymentModificationsResult {
@@ -900,6 +914,8 @@ type MainVariant implements Product & Breadcrumb & Slug {
 scalar Money
 
 type Mutation {
+  """Fills cart based on a given order, possibly merging it with the current cart"""
+  AddOrderItemsToCart(input: AddOrderItemsToCartInput!): Cart!
   """Add product to Comparison and create if not exists."""
   addProductToComparison(comparisonUuid: Uuid, productUuid: Uuid!): Comparison!
   """Add product to wishlist and create if not exists."""

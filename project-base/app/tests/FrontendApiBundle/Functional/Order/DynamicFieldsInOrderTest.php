@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class DynamicFieldsInOrderTest extends AbstractOrderTestCase
+class DynamicFieldsInOrderTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     public function testHasDynamicFields(): void
     {
         $graphQlType = 'CreateOrder';

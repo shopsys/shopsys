@@ -6,9 +6,12 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class MinimalOrderTest extends AbstractOrderTestCase
+class MinimalOrderTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     public function testCreateMinimalOrderMutation(): void
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -24,7 +27,7 @@ class MinimalOrderTest extends AbstractOrderTestCase
                             'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
                         'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'totalPrice' => AbstractOrderTestCase::getSerializedOrderTotalPriceByExpectedOrderItems(
+                        'totalPrice' => self::getSerializedOrderTotalPriceByExpectedOrderItems(
                             $expectedOrderItems,
                         ),
                         'items' => $expectedOrderItems,

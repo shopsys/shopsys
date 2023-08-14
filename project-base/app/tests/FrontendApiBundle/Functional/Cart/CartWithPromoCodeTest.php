@@ -8,11 +8,13 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Tests\FrontendApiBundle\Functional\Order\AbstractOrderTestCase;
+use Tests\FrontendApiBundle\Functional\Order\OrderTestTrait;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CartWithPromoCodeTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     public function testCartManipulationWithPromoCode(): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
@@ -79,7 +81,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
             'quantity' => 1,
         ]);
 
-        $totalPrice = AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems([
+        $totalPrice = self::getOrderTotalPriceByExpectedOrderItems([
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2602.48', $vatHigh)],
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('90', $vatHigh)],
         ]);
@@ -90,7 +92,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
             'vatAmount' => $totalPrice->getVatAmount()->getAmount(),
         ];
 
-        $totalDiscountPrice = AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems([
+        $totalDiscountPrice = self::getOrderTotalPriceByExpectedOrderItems([
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('289.26', $vatHigh)],
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('9.92', $vatHigh)],
         ]);

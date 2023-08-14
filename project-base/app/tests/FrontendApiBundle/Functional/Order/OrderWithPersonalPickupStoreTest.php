@@ -7,9 +7,12 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
+use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class OrderWithPersonalPickupStoreTest extends AbstractOrderTestCase
+class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     public function testCreateOrderWithPersonalPickupStore()
     {
         /** @var \App\Model\Store\Store $store */

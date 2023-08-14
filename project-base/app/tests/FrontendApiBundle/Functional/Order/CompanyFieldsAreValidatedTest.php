@@ -7,9 +7,12 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class CompanyFieldsAreValidatedTest extends AbstractOrderTestCase
+class CompanyFieldsAreValidatedTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     public function testValidationErrorWhenCompanyBehalfIsTrueAndFieldsAreMissing(): void
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -28,7 +31,7 @@ class CompanyFieldsAreValidatedTest extends AbstractOrderTestCase
             ],
         ];
 
-        $this->addPplTransportToDemoCart();
+        $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->addCardPaymentToDemoCart();
         $response = $this->getResponseContentForQuery($this->getMutation());
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);

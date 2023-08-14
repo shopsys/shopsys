@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
-class RequiredFieldsTest extends AbstractOrderTestCase
+use Tests\FrontendApiBundle\Test\GraphQlTestCase;
+
+class RequiredFieldsTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     public function testCreateMinimalOrderMutation(): void
     {
         $expectedViolationMessages = [

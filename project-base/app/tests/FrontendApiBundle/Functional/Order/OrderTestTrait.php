@@ -14,9 +14,8 @@ use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class AbstractOrderTestCase extends GraphQlTestCase
+trait OrderTestTrait
 {
     /**
      * @return array
@@ -102,6 +101,35 @@ class AbstractOrderTestCase extends GraphQlTestCase
     }
 
     /**
+     * @param string|null $cartUuid
+     * @param \App\Model\Transport\Transport $transport
+     * @param string|null $pickupPlaceIdentifier
+     */
+    protected function addTransportToCart(
+        ?string $cartUuid,
+        Transport $transport,
+        ?string $pickupPlaceIdentifier = null,
+    ): void {
+        $pickupPlaceIdentifierLine = '';
+
+        if ($pickupPlaceIdentifier !== null) {
+            $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
+        }
+        $changeTransportInCartMutation = '
+            mutation {
+                ChangeTransportInCart(input:{
+                    ' . ($cartUuid !== null ? 'cartUuid: "' . $cartUuid . '"' : '') . '
+                    transportUuid: "' . $transport->getUuid() . '"
+                    ' . $pickupPlaceIdentifierLine . '
+                }) {
+                    uuid
+                }
+            }
+        ';
+        $this->getResponseContentForQuery($changeTransportInCartMutation);
+    }
+
+    /**
      * @param array $expectedOrderItems
      * @return array
      */
@@ -117,55 +145,29 @@ class AbstractOrderTestCase extends GraphQlTestCase
     }
 
     /**
-     * @param string $cartUuid
+     * @param string|null $cartUuid
      */
-    protected function addCzechPostTransportToCart(string $cartUuid): void
+    protected function addCzechPostTransportToCart(?string $cartUuid): void
     {
         /** @var \App\Model\Transport\Transport $transportCzechPost */
         $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
         $this->addTransportToCart($cartUuid, $transportCzechPost);
     }
 
-    protected function addPplTransportToDemoCart(): void
+    /**
+     * @param string|null $cartUuid
+     */
+    protected function addPplTransportToCart(?string $cartUuid): void
     {
         /** @var \App\Model\Transport\Transport $transportPpl */
         $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
-        $this->addTransportToCart(CartDataFixture::CART_UUID, $transportPpl);
+        $this->addTransportToCart($cartUuid, $transportPpl);
     }
 
     /**
-     * @param string $cartUuid
-     * @param \App\Model\Transport\Transport $transport
-     * @param string|null $pickupPlaceIdentifier
+     * @param string|null $cartUuid
      */
-    protected function addTransportToCart(
-        string $cartUuid,
-        Transport $transport,
-        ?string $pickupPlaceIdentifier = null,
-    ): void {
-        $pickupPlaceIdentifierLine = '';
-
-        if ($pickupPlaceIdentifier !== null) {
-            $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
-        }
-        $changeTransportInCartMutation = '
-            mutation {
-                ChangeTransportInCart(input:{
-                    cartUuid: "' . $cartUuid . '"
-                    transportUuid: "' . $transport->getUuid() . '"
-                    ' . $pickupPlaceIdentifierLine . '
-                }) {
-                    uuid
-                }
-            }
-        ';
-        $this->getResponseContentForQuery($changeTransportInCartMutation);
-    }
-
-    /**
-     * @param string $cartUuid
-     */
-    protected function addCashOnDeliveryPaymentToCart(string $cartUuid): void
+    protected function addCashOnDeliveryPaymentToCart(?string $cartUuid): void
     {
         /** @var \App\Model\Payment\Payment $paymentCashOnDelivery */
         $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
@@ -173,9 +175,9 @@ class AbstractOrderTestCase extends GraphQlTestCase
     }
 
     /**
-     * @param string $cartUuid
+     * @param string|null $cartUuid
      */
-    protected function addCardPaymentToCart(string $cartUuid): void
+    protected function addCardPaymentToCart(?string $cartUuid): void
     {
         /** @var \App\Model\Payment\Payment $paymentCard */
         $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
@@ -183,15 +185,15 @@ class AbstractOrderTestCase extends GraphQlTestCase
     }
 
     /**
-     * @param string $cartUuid
+     * @param string|null $cartUuid
      * @param \App\Model\Payment\Payment $payment
      */
-    protected function addPaymentToCart(string $cartUuid, Payment $payment): void
+    protected function addPaymentToCart(?string $cartUuid, Payment $payment): void
     {
         $changePaymentInCartMutation = '
             mutation {
                 ChangePaymentInCart(input:{
-                    cartUuid: "' . $cartUuid . '"
+                    ' . ($cartUuid !== null ? 'cartUuid: "' . $cartUuid . '"' : '') . '
                     paymentUuid: "' . $payment->getUuid() . '"
                 }) {
                     uuid

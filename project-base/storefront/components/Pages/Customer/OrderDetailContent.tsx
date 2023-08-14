@@ -1,13 +1,21 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Row, Cell, CellHead, Table, CellMinor } from 'components/Basic/Table/Table';
+import { Button } from 'components/Forms/Button/Button';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi, OrderDetailFragmentApi } from 'graphql/generated';
+import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'helpers/twMerge';
+import dynamic from 'next/dynamic';
+
+const NotAddedProductsPopup = dynamic(() =>
+    import('./NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),
+);
+const MergeCartsPopup = dynamic(() => import('./MergeCartsPopup').then((component) => component.MergeCartsPopup));
 
 type OrderDetailContentProps = {
     order: OrderDetailFragmentApi;
@@ -20,16 +28,30 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { formatDateAndTime } = useFormatDate();
+    const {
+        orderForPrefillingUuid,
+        setOrderForPrefillingUuid,
+        addOrderItemsToEmptyCart,
+        mergeOrderItemsWithCurrentCart,
+        notAddedProductNames,
+        setNotAddedProductNames,
+    } = useAddOrderItemsToCart();
 
     return (
         <>
-            <Webline>
+            <Webline className="mb-2">
                 <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
 
-                <div className="text-center">
-                    <Heading type="h1">
+                <div className="flex flex-col items-center justify-between lg:mb-4 lg:flex-row">
+                    <div className="w-1/5" />
+                    <Heading type="h1" className="lg:mb-0">
                         {t('Order number')} {order.number}
                     </Heading>
+                    <div className="flex items-center justify-end lg:w-1/5">
+                        <Button onClick={() => addOrderItemsToEmptyCart(order.uuid)} className="lg:px-2 lg:py-1">
+                            {t('Repeat order')}
+                        </Button>
+                    </div>
                 </div>
             </Webline>
 
@@ -287,6 +309,21 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                     </div>
                 )}
             </Webline>
+
+            {!!orderForPrefillingUuid && (
+                <MergeCartsPopup
+                    mergeOrderItemsWithCurrentCart={mergeOrderItemsWithCurrentCart}
+                    orderForPrefillingUuid={orderForPrefillingUuid}
+                    onCloseCallback={() => setOrderForPrefillingUuid(undefined)}
+                />
+            )}
+
+            {!!notAddedProductNames?.length && (
+                <NotAddedProductsPopup
+                    notAddedProductNames={notAddedProductNames}
+                    onCloseCallback={() => setNotAddedProductNames(undefined)}
+                />
+            )}
         </>
     );
 };

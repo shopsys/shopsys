@@ -27,6 +27,7 @@
     * [CartItem](#cartitem)
     * [CartItemModificationsResult](#cartitemmodificationsresult)
     * [CartModificationsResult](#cartmodificationsresult)
+    * [CartMultipleAddedProductModificationsResult](#cartmultipleaddedproductmodificationsresult)
     * [CartPaymentModificationsResult](#cartpaymentmodificationsresult)
     * [CartPromoCodeModificationsResult](#cartpromocodemodificationsresult)
     * [CartTransportModificationsResult](#carttransportmodificationsresult)
@@ -97,6 +98,7 @@
     * [VideoToken](#videotoken)
     * [Wishlist](#wishlist)
   * [Inputs](#inputs)
+    * [AddOrderItemsToCartInput](#addorderitemstocartinput)
     * [AddToCartInput](#addtocartinput)
     * [ApplyPromoCodeToCartInput](#applypromocodetocartinput)
     * [CartInput](#cartinput)
@@ -1062,6 +1064,20 @@ Get wishlist by uuid or if customer is logged, try find for logged customer.
 </tr>
 </thead>
 <tbody>
+<tr>
+<td colspan="2" valign="top"><strong>AddOrderItemsToCart</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
+<td>
+
+Fills cart based on a given order, possibly merging it with the current cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#addorderitemstocartinput">AddOrderItemsToCartInput</a>!</td>
+<td></td>
+</tr>
 <tr>
 <td colspan="2" valign="top"><strong>addProductToComparison</strong></td>
 <td valign="top"><a href="#comparison">Comparison</a>!</td>
@@ -3026,6 +3042,11 @@ Cart item UUID
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>multipleAddedProductModifications</strong></td>
+<td valign="top"><a href="#cartmultipleaddedproductmodificationsresult">CartMultipleAddedProductModificationsResult</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>paymentModifications</strong></td>
 <td valign="top"><a href="#cartpaymentmodificationsresult">CartPaymentModificationsResult</a>!</td>
 <td></td>
@@ -3043,6 +3064,26 @@ Cart item UUID
 <tr>
 <td colspan="2" valign="top"><strong>transportModifications</strong></td>
 <td valign="top"><a href="#carttransportmodificationsresult">CartTransportModificationsResult</a>!</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### CartMultipleAddedProductModificationsResult
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>notAddedProducts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 </tbody>
@@ -8417,6 +8458,47 @@ Wishlist identifier
 </table>
 
 ## Inputs
+
+### AddOrderItemsToCartInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Cart identifier or null if customer is logged in
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the order based on which the cart should be prefilled
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>shouldMerge</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
+<td>
+
+Information if the prefilled cart should be merged with the current cart
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ### AddToCartInput
 

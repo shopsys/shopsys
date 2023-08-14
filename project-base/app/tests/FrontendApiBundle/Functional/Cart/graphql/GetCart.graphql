@@ -1,0 +1,16 @@
+query GetCart(
+    $cartUuid: Uuid,
+) {
+    cart(
+        cartInput: {
+            cartUuid: $cartUuid
+        }) {
+        uuid
+        items {
+            quantity
+            product {
+                name
+            }
+        }
+    }
+}

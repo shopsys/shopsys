@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\FrontendApi\Model\Component\Constraints\PaymentInOrder;
 use App\Model\Payment\PaymentDataFactory;
 use App\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class PaymentInOrderValidationTest extends AbstractOrderTestCase
+class PaymentInOrderValidationTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     /**
      * @inject
      */
@@ -24,7 +28,7 @@ class PaymentInOrderValidationTest extends AbstractOrderTestCase
 
     public function testPaymentNotSet(): void
     {
-        $this->addPplTransportToDemoCart();
+        $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
 
@@ -36,7 +40,7 @@ class PaymentInOrderValidationTest extends AbstractOrderTestCase
     public function testHiddenPaymentUnavailable(): void
     {
         $this->addCardPaymentToDemoCart();
-        $this->addPplTransportToDemoCart();
+        $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->hideCardPayment();
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
@@ -49,7 +53,7 @@ class PaymentInOrderValidationTest extends AbstractOrderTestCase
     public function testDisabledPaymentUnavailable(): void
     {
         $this->addCardPaymentToDemoCart();
-        $this->addPplTransportToDemoCart();
+        $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->disableCardPaymentOnFirstDomain();
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
@@ -62,7 +66,7 @@ class PaymentInOrderValidationTest extends AbstractOrderTestCase
     public function testPaymentPriceChanged(): void
     {
         $this->addCardPaymentToDemoCart();
-        $this->addPplTransportToDemoCart();
+        $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->changeCardPaymentPriceOnFirstDomain();
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
