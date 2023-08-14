@@ -9,6 +9,8 @@ use App\Model\Product\Product;
 use App\Model\Stock\ProductStock;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Store\ProductStoreFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 
 class ProductAvailabilityFacade
@@ -24,11 +26,13 @@ class ProductAvailabilityFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly Setting $setting,
         private readonly ProductStockFacade $productStockFacade,
         private readonly ProductStoreFacade $productStoreFacade,
+        private readonly Domain $domain,
     ) {
         $this->productAvailabilityDomainCache = [];
     }
@@ -40,12 +44,14 @@ class ProductAvailabilityFacade
      */
     public function getProductAvailabilityInformationByDomainId(Product $product, int $domainId): string
     {
+        $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
+
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
-            return t('In stock');
+            return t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
         }
 
         if ($product->hasPreorder() === false) {
-            return t('Out of stock');
+            return t('Out of stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
         }
 
         return $this->getDeliveryWeeksAvailabilityMessageByProductAndDomainId($product, $domainId);
