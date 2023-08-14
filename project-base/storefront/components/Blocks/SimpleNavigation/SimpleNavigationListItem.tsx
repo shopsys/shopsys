@@ -3,13 +3,18 @@ import { Image } from 'components/Basic/Image/Image';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 import { ListedItemPropType } from 'types/simpleNavigation';
 
-type ListItemProps = {
+type SimpleNavigationListItemProps = {
     listedItem: ListedItemPropType;
     imageType?: string;
     linkType: FriendlyPagesTypesKeys | 'static';
 };
 
-export const ListItem: FC<ListItemProps> = ({ listedItem, imageType, linkType, dataTestId }) => {
+export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
+    listedItem,
+    imageType,
+    linkType,
+    dataTestId,
+}) => {
     const itemImage = 'mainImage' in listedItem ? listedItem.mainImage : null;
 
     return (

@@ -1,4 +1,4 @@
-import { ListItem } from './ListItem';
+import { SimpleNavigationListItem } from './SimpleNavigationListItem';
 import { getSearchResultLinkType } from 'helpers/mappers/simpleNavigation';
 import { ListedItemPropType } from 'types/simpleNavigation';
 import { twMergeCustom } from 'helpers/twMerge';
@@ -6,21 +6,24 @@ import { twMergeCustom } from 'helpers/twMerge';
 type SimpleNavigationProps = {
     listedItems: ListedItemPropType[];
     imageType?: string;
+    isWithoutSlider?: true;
 };
 
 const TEST_IDENTIFIER = 'blocks-simplenavigation';
 
-export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, imageType, className }) => {
+export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, imageType, isWithoutSlider, className }) => {
     return (
         <ul
             className={twMergeCustom(
-                'grid snap-x snap-mandatory auto-cols-[40%] gap-3 overflow-x-auto overscroll-x-contain max-lg:grid-flow-col lg:grid-cols-[repeat(auto-fill,minmax(210px,1fr))]',
+                !isWithoutSlider &&
+                    'snap-x snap-mandatory auto-cols-[40%] grid-flow-col overflow-x-auto overscroll-x-contain lg:grid-flow-row',
+                'grid gap-3 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(210px,1fr))]',
                 className,
             )}
             data-testid={TEST_IDENTIFIER}
         >
             {listedItems.map((listedItem, index) => (
-                <ListItem
+                <SimpleNavigationListItem
                     key={index}
                     linkType={getSearchResultLinkType(listedItem)}
                     listedItem={listedItem}
@@ -28,7 +31,7 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, image
                     dataTestId={TEST_IDENTIFIER + '-' + index}
                 >
                     {listedItem.name}
-                </ListItem>
+                </SimpleNavigationListItem>
             ))}
         </ul>
     );

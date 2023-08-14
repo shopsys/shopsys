@@ -11,7 +11,7 @@ export const BrandsContent: FC = () => {
 
     return (
         <Webline>
-            <SimpleNavigation listedItems={brandsData.brands} />
+            <SimpleNavigation listedItems={brandsData.brands} isWithoutSlider />
         </Webline>
     );
 };
