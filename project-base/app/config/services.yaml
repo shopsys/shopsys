@@ -736,6 +736,9 @@ services:
     Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory:
         alias: App\ProductFeed\Heureka\Model\FeedItem\HeurekaFeedItemFactory
 
+    Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataRepository:
+        alias: App\ProductFeed\HeurekaDelivery\Model\FeedItem\HeurekaDeliveryDataRepository
+
     Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory:
         alias: App\ProductFeed\Google\Model\FeedItem\GoogleFeedItemFactory
 
