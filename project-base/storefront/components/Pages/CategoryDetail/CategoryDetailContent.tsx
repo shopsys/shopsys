@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { Filter } from 'components/Basic/Icon/IconsSvg';
 
 type CategoryDetailContentProps = {
     category: CategoryDetailFragmentApi;
@@ -84,7 +85,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                             className="relative flex w-full cursor-pointer flex-row items-center justify-center rounded bg-primary py-3 px-8 font-bold uppercase text-white vl:mb-3 vl:hidden"
                             onClick={handlePanelOpenerClick}
                         >
-                            <Icon iconType="icon" icon="Filter" className="mr-3 w-6 font-bold text-white" />
+                            <Icon icon={<Filter />} className="mr-3 w-6 font-bold text-white" />
                             {t('Filter')}
                         </div>
                         <SortingBar

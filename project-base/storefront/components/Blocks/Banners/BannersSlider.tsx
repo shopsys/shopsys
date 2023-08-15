@@ -1,4 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Triangle } from 'components/Basic/Icon/IconsSvg';
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem';
 import { SliderItemFragmentApi } from 'graphql/generated';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
@@ -98,8 +99,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
                         key={sliderItem.uuid}
                     >
                         <Icon
-                            iconType="icon"
-                            icon="Triangle"
+                            icon={<Triangle />}
                             className="absolute top-1/2 left-3 hidden w-2 -translate-y-1/2 text-primary vl:group-disabled:block"
                         />
                         <span className="hidden vl:inline-block">{sliderItem.name}</span>

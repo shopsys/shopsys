@@ -1,4 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Cross } from 'components/Basic/Icon/IconsSvg';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 
 type PromoCodeInfoProps = {
@@ -23,8 +24,7 @@ export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallbac
             <div className="flex items-center font-bold" data-testid={TEST_IDENTIFIER + '-code'}>
                 {promoCode}
                 <Icon
-                    iconType="icon"
-                    icon="Cross"
+                    icon={<Cross />}
                     onClick={onRemovePromoCodeHandler}
                     className="mr-1 w-4 cursor-pointer text-greyDark hover:text-primary"
                 />

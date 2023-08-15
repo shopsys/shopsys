@@ -1,4 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Compare } from 'components/Basic/Icon/IconsSvg';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twMergeCustom } from 'helpers/twMerge';
 
@@ -28,8 +29,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
             >
                 <Icon
                     className={twMergeCustom('m-2 text-grey', isProductInComparison && 'text-green')}
-                    iconType="icon"
-                    icon="Compare"
+                    icon={<Compare />}
                 />
                 {isWithText && (
                     <span className="ml-1">{isProductInComparison ? t('Remove from comparison') : t('Compare')}</span>

@@ -1,4 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Arrow, Phone, Remove } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
@@ -81,15 +82,14 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                             <br />
                             {address.telephone && (
                                 <>
-                                    <Icon iconType="icon" icon="Phone" className="relative top-[2px] mr-1" />
+                                    <Icon icon={<Phone />} className="relative top-[2px] mr-1" />
                                     {address.telephone}
                                 </>
                             )}
                         </div>
 
                         <Icon
-                            icon="Remove"
-                            iconType="icon"
+                            icon={<Remove />}
                             onClick={() => setAddressToBeDeleted(address.uuid)}
                             className="absolute right-5 top-5 w-3 cursor-pointer text-greyLight hover:text-red"
                         />
@@ -102,12 +102,12 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                         {t('Do you really want to delete this delivery address?')}
                         <div className="mt-4 flex flex-row flex-nowrap justify-between">
                             <Button onClick={() => setAddressToBeDeleted(undefined)}>
-                                <Icon iconType="icon" icon="Arrow" className="relative mr-4 rotate-90 text-white" />
+                                <Icon icon={<Arrow />} className="relative mr-4 rotate-90 text-white" />
                                 {t('No')}
                             </Button>
                             <Button onClick={() => deleteItemHandler(addressToBeDeleted)}>
                                 {t('Yes')}
-                                <Icon iconType="icon" icon="Arrow" className="relative ml-4 -rotate-90" />
+                                <Icon icon={<Arrow />} className="relative ml-4 -rotate-90" />
                             </Button>
                         </div>
                     </div>

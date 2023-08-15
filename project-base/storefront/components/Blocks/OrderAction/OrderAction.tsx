@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Arrow } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { useRouter } from 'next/router';
@@ -56,7 +57,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                     className="font-bold uppercase text-dark no-underline"
                 >
                     <>
-                        <Icon iconType="icon" icon="Arrow" className="relative top-0 mr-1 rotate-90 text-greyLight" />
+                        <Icon icon={<Arrow />} className="relative top-0 mr-1 rotate-90 text-greyLight" />
                         {buttonBack}
                     </>
                 </ExtendedNextLink>
@@ -70,7 +71,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                 >
                     {isLoading && <Loader className="w-5" />}
                     <span>{buttonNext}</span>
-                    <Icon iconType="icon" icon="Arrow" className="relative top-0 ml-1 -rotate-90 text-white" />
+                    <Icon icon={<Arrow />} className="relative top-0 ml-1 -rotate-90 text-white" />
                 </Button>
             </div>
         </div>

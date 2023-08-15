@@ -1,4 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Arrow } from 'components/Basic/Icon/IconsSvg';
 import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenuContext';
 import { useContext } from 'react';
 import { DropdownItemType } from 'types/dropdown';
@@ -14,7 +15,7 @@ export const DropdownSlideRight: FC<DropdownItemType> = (dropdownItemProps) => {
             onClick={() => context.slideRight(dropdownItemProps)}
             data-testid={TEST_IDENTIFIER}
         >
-            <Icon iconType="icon" icon="Arrow" className="w-4 -rotate-90" />
+            <Icon icon={<Arrow />} className="w-4 -rotate-90" />
         </span>
     );
 };

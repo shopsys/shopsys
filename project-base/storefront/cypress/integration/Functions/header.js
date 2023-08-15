@@ -22,7 +22,7 @@ export function typeToSearchInput(searchText) {
 }
 
 export function clickOnUserIconInHeader() {
-    cy.get('[data-testid="layout-header-menuiconic-login-link-popup"] [data-testid="basic-icon-iconsvg-User"]').click();
+    cy.get('[data-testid="layout-header-menuiconic-login-link-popup"]').click();
 }
 
 export function checkUserIsLoggedIn() {

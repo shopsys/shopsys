@@ -4,6 +4,7 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useAuth } from 'hooks/auth/useAuth';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { User } from 'components/Basic/Icon/IconsSvg';
 
 export const MenuIconicItemUserAuthenticated: FC = ({ dataTestId }) => {
     const t = useTypedTranslationFunction();
@@ -22,7 +23,7 @@ export const MenuIconicItemUserAuthenticated: FC = ({ dataTestId }) => {
                     className="rounded-t p-3 group-hover:bg-white group-hover:text-dark max-lg:hidden"
                     dataTestId={dataTestId + '-my-account'}
                 >
-                    <MenuIconicItemIcon icon="User" className="group-hover:text-dark" />
+                    <MenuIconicItemIcon icon={<User />} className="group-hover:text-dark" />
                     {t('My account')}
                 </MenuIconicItemLink>
 
@@ -46,7 +47,7 @@ export const MenuIconicItemUserAuthenticated: FC = ({ dataTestId }) => {
             <div className="order-2 ml-1 flex h-9 w-9 cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
                 <ExtendedNextLink href={customerUrl} type="static">
                     <div className="relative flex h-full w-full items-center justify-center text-white transition-colors">
-                        <MenuIconicItemIcon icon="User" className="mr-0" />
+                        <MenuIconicItemIcon icon={<User />} className="mr-0" />
                     </div>
                 </ExtendedNextLink>
             </div>

@@ -4,6 +4,7 @@ import { FilterGroupParameters } from './FilterGroupParameters';
 import { FilterGroupPrice } from './FilterGroupPrice';
 import { SelectedParameters } from './SelectedParameters';
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Remove } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
 import { ProductFilterOptionsFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -41,7 +42,7 @@ export const FilterPanel = memo<FilterPanelProps>(
                             className="relative inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-primary"
                             onClick={panelCloseHandler}
                         >
-                            <Icon iconType="icon" icon="Remove" className="w-6 text-primary" />
+                            <Icon icon={<Remove />} className="w-6 text-primary" />
                         </span>
                     </div>
 

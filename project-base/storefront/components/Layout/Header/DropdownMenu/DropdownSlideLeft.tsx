@@ -1,4 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Arrow } from 'components/Basic/Icon/IconsSvg';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { DropdownListLevels } from 'types/dropdown';
 
@@ -18,7 +19,7 @@ export const DropdownSlideLeft: FC<DropdownSlideLeftProps> = ({ goToMenu, onClic
             onClick={() => onClickEvent({ goToMenu })}
             data-testid={TEST_IDENTIFIER}
         >
-            <Icon iconType="icon" icon="Arrow" className="mr-2 rotate-90" />
+            <Icon icon={<Arrow />} className="mr-2 rotate-90" />
             {t('Back')}
         </span>
     );

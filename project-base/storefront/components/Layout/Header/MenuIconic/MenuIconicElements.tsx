@@ -1,11 +1,10 @@
 import { Icon } from 'components/Basic/Icon/Icon';
-import { IconName } from 'components/Basic/Icon/IconsSvgMap';
 import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 
-export const MenuIconicItemIcon: FC<{ icon: IconName }> = ({ icon, className }) => (
-    <Icon iconType="icon" icon={icon} className={twMergeCustom('mr-2 w-4 text-white', className)} />
+export const MenuIconicItemIcon: FC<{ icon: JSX.Element }> = ({ icon, className }) => (
+    <Icon icon={icon} className={twMergeCustom('mr-2 w-4 text-white', className)} />
 );
 
 export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, dataTestId, title }) => (
