@@ -775,3 +775,57 @@ There you can find links to upgrade notes for other versions too.
             +       protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
                 )
             ```
+    - ENV variable `MAILER_DELIVERY_WHITELIST` was removed
+    - ENV variable `MAILER_MASTER_EMAIL_ADDRESS` was removed
+    - `Shopsys\FrameworkBundle\Controller\Admin\SuperadminController`
+        - method `__construct`  changed its interface:
+            ```diff
+                public function __construct(
+                    protected readonly ModuleList $moduleList,
+                    protected readonly ModuleFacade $moduleFacade,
+                    protected readonly PricingSetting $pricingSetting,
+                    protected readonly DelayedPricingSetting $delayedPricingSetting,
+                    protected readonly GridFactory $gridFactory,
+                    protected readonly Localization $localization,
+                    protected readonly LocalizedRouterFactory $localizedRouterFactory,
+            -       protected ?MailSettingFacade $mailSettingFacade = null,
+            -       protected ?MailerSettingProvider $mailerSettingProvider = null,
+            -       protected ?AdminDomainTabsFacade $adminDomainTabsFacade = null,
+            +       protected readonly MailSettingFacade $mailSettingFacade,
+            +       protected readonly MailerSettingProvider $mailerSettingProvider,
+            +       protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+                )
+            ```
+        - variable `isOverridden` is no longer passed to `@ShopsysFramework/Admin/Content/Superadmin/mailWhitelist.html.twig` template while rendering `mailWhitelistAction`
+    - `Shopsys\FrameworkBundle\Model\Mail\EventListener\EnvelopeListener`
+        - method `getAllowedRecipients` was removed
+    - class `Shopsys\FrameworkBundle\Model\Mail\Exception\MasterMailNotSetException` was removed
+    - `Shopsys\FrameworkBundle\Model\Mail\Mailer`
+        - method `send` was removed, use `sendForDomain` instead
+        - method `getMessageWithReplacedVariables` changed its interface
+            ```diff
+                protected function getMessageWithReplacedVariables(
+                    MessageData $messageData,
+            +       int $domainId,
+            -   ): Symfony\Component\Mime\Email {
+            +   ): Shopsys\FrameworkBundle\Model\Mail\Email
+            ```
+    - `Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider`
+        - property `$mailerWhitelistExpressions` was removed
+        - property `$mailerMasterEmailAddress` was removed
+        - method `getMailerWhitelistExpressions` was removed
+        - method `isMailerWhitelistExpressionsSet` was removed
+        - method `getMailerMasterEmailAddress` was removed
+        - method `isMailerMasterEmailSet` was removed
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+            -       string $mailerWhitelist,
+            -       string $mailerMasterEmailAddress,
+                    string $mailerDsn,
+            -       protected readonly ?bool $whitelistForced = null,
+            -       protected ?MailSettingFacade $mailSettingFacade = null,
+            +       protected readonly bool $whitelistForced,
+            +       protected readonly MailSettingFacade $mailSettingFacade,
+                )
+            ```

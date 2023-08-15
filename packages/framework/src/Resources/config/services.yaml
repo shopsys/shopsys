@@ -994,8 +994,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider:
         arguments:
-            - '%env(MAILER_DELIVERY_WHITELIST)%'
-            - '%env(MAILER_MASTER_EMAIL_ADDRESS)%'
             - '%env(MAILER_DSN)%'
             - '%env(bool:MAILER_FORCE_WHITELIST)%'
 

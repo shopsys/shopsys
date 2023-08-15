@@ -6,11 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use League\Flysystem\FilesystemOperationFailed;
 use Psr\Log\LoggerInterface;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email as BaseEmail;
 
 class Mailer
 {
@@ -26,25 +24,6 @@ class Mailer
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly LoggerInterface $logger,
     ) {
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
-     * @deprecated This method will be replaced by sendForDomain() in next major version
-     */
-    public function send(MessageData $messageData): void
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'sendForDomain');
-
-        $message = $this->getMessageWithReplacedVariables($messageData);
-
-        try {
-            $this->symfonyMailer->send($message);
-        } catch (TransportExceptionInterface $exception) {
-            $this->logger->error('There was a failure while sending emails', [
-                'exception' => $exception,
-            ]);
-        }
     }
 
     /**
@@ -66,14 +45,13 @@ class Mailer
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
-     * @phpstan-ignore-next-line
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\Email
      */
     protected function getMessageWithReplacedVariables(
         MessageData $messageData,
-        /* int $domainId */
-    ): BaseEmail {
+        int $domainId,
+    ): Email {
         $body = $this->replaceVariables(
             $messageData->body,
             $messageData->variablesReplacementsForBody,
@@ -81,16 +59,6 @@ class Mailer
         $subject = $this->replaceVariables(
             $messageData->subject,
             $messageData->variablesReplacementsForSubject,
-        );
-
-        $domainId = DeprecationHelper::triggerNewArgumentInMethod(
-            __METHOD__,
-            '$domainId',
-            'int',
-            func_get_args(),
-            1,
-            0,
-            true,
         );
 
         $email = new Email($domainId);

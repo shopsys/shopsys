@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail\EventListener;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Mail\Email;
 use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -18,8 +18,9 @@ class EnvelopeListener implements EventSubscriberInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
      */
-    public function __construct(protected readonly MailerSettingProvider $mailerSettingProvider)
-    {
+    public function __construct(
+        protected readonly MailerSettingProvider $mailerSettingProvider,
+    ) {
     }
 
     /**
@@ -29,8 +30,8 @@ class EnvelopeListener implements EventSubscriberInterface
     {
         $message = $event->getMessage();
 
-        if (!($message instanceof Message)) {
-            return;
+        if (!($message instanceof Email)) {
+            throw new InvalidArgumentException(sprintf('Message must be instance of %s.', Email::class));
         }
 
         $originalRecipients = [
@@ -39,17 +40,10 @@ class EnvelopeListener implements EventSubscriberInterface
             ...$this->getAddressesFromMessageHeader($message, 'Bcc'),
         ];
 
-        if ($message instanceof Email && $message->getDomainId() !== 0) {
-            $allowedRecipients = $this->getAllowedRecipientsOnDomain($originalRecipients, $message->getDomainId());
-            $isWhitelistEnabled = $this->mailerSettingProvider->isWhitelistEnabled($message->getDomainId());
-        } else {
-            DeprecationHelper::trigger('Email is not instance of ' . Email::class . ' this will throw exception in next major version.');
+        $allowedRecipients = $this->getAllowedRecipientsOnDomain($originalRecipients, $message->getDomainId());
+        $isWhitelistEnabled = $this->mailerSettingProvider->isWhitelistEnabled($message->getDomainId());
 
-            $allowedRecipients = $this->getAllowedRecipients($originalRecipients);
-            $isWhitelistEnabled = false;
-        }
-
-        if (!$isWhitelistEnabled && !$this->mailerSettingProvider->isMailerMasterEmailSet()) {
+        if (!$isWhitelistEnabled) {
             return;
         }
 
@@ -75,32 +69,6 @@ class EnvelopeListener implements EventSubscriberInterface
         }
 
         return [];
-    }
-
-    /**
-     * @param \Symfony\Component\Mime\Address[] $originalRecipients
-     * @return \Symfony\Component\Mime\Address[]
-     * @deprecated use getAllowedRecipientsOnDomain() instead
-     */
-    protected function getAllowedRecipients(array $originalRecipients): array
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getAllowedRecipientsOnDomain()');
-
-        $allowedRecipients = [];
-
-        if ($this->mailerSettingProvider->isMailerMasterEmailSet()) {
-            $allowedRecipients = [new Address($this->mailerSettingProvider->getMailerMasterEmailAddress())];
-        }
-
-        foreach ($originalRecipients as $originalRecipient) {
-            foreach ($this->mailerSettingProvider->getMailerWhitelistExpressions() as $whitelistedPattern) {
-                if (preg_match($whitelistedPattern, $originalRecipient->getAddress())) {
-                    $allowedRecipients[] = $originalRecipient;
-                }
-            }
-        }
-
-        return $allowedRecipients;
     }
 
     /**
