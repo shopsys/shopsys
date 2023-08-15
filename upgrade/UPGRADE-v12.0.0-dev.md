@@ -848,3 +848,16 @@ There you can find links to upgrade notes for other versions too.
         - method `getBrandCount` is now public
     - `Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository`
         - second parameter in `calculateBrandsPlusNumbers` changed its name from `plusFlagsQuery` to `plusBrandsQuery`
+    - `Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation`
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    protected readonly FrontendCustomerUserProvider $frontendCustomerUserProvider,
+                    protected readonly UserPasswordHasherInterface $userPasswordHasher,
+                    protected readonly TokenFacade $tokenFacade,
+            -       protected ?DefaultLoginRateLimiter $loginRateLimiter = null,
+            -       protected ?RequestStack $requestStack = null,
+            +       protected readonly DefaultLoginRateLimiter $loginRateLimiter,
+            +       protected readonly RequestStack $requestStack,
+                )
+            ```
