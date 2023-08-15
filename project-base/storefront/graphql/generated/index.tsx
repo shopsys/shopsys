@@ -3615,6 +3615,11 @@ export type RegistrationMutationVariablesApi = Exact<{
 
 export type RegistrationMutationApi = { __typename?: 'Mutation', Register: { __typename?: 'LoginResult', showCartMergeInfo: boolean, tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
+export type RobotsTxtQueryVariablesApi = Exact<{ [key: string]: never; }>;
+
+
+export type RobotsTxtQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', seo: { __typename?: 'SeoSetting', robotsTxtContent: string | null } } | null };
+
 export type AutocompleteSearchQueryVariablesApi = Exact<{
   search: Scalars['String']['input'];
   maxProductCount: InputMaybe<Scalars['Int']['input']>;
@@ -6034,6 +6039,19 @@ export const RegistrationMutationDocumentApi = gql`
 
 export function useRegistrationMutationApi() {
   return Urql.useMutation<RegistrationMutationApi, RegistrationMutationVariablesApi>(RegistrationMutationDocumentApi);
+};
+export const RobotsTxtQueryDocumentApi = gql`
+    query RobotsTxtQuery {
+  settings {
+    seo {
+      robotsTxtContent
+    }
+  }
+}
+    `;
+
+export function useRobotsTxtQueryApi(options?: Omit<Urql.UseQueryArgs<RobotsTxtQueryVariablesApi>, 'query'>) {
+  return Urql.useQuery<RobotsTxtQueryApi, RobotsTxtQueryVariablesApi>({ query: RobotsTxtQueryDocumentApi, ...options });
 };
 export const AutocompleteSearchQueryDocumentApi = gql`
     query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int) {
