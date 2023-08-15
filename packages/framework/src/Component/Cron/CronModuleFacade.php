@@ -8,34 +8,21 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 
 class CronModuleFacade
 {
-    use SetterInjectionTrait;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRepository $cronModuleRepository
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFilter $cronFilter
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRunFactory|null $cronModuleRunFactory
+     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRunFactory $cronModuleRunFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CronModuleRepository $cronModuleRepository,
         protected readonly CronFilter $cronFilter,
-        protected ?CronModuleRunFactory $cronModuleRunFactory = null,
+        protected readonly CronModuleRunFactory $cronModuleRunFactory,
     ) {
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRunFactory $cronModuleRunFactory
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setCronModuleRunFactory(CronModuleRunFactory $cronModuleRunFactory): void
-    {
-        $this->setDependency($cronModuleRunFactory, 'cronModuleRunFactory');
     }
 
     /**

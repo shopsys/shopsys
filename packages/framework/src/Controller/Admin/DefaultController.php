@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -28,13 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AdminBaseController
 {
-    use SetterInjectionTrait;
-
     protected const PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR = 7;
-    /**
-     * @deprecated This will be removed in next major
-     */
-    protected const HOUR_IN_SECONDS = 60 * 60;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade $statisticsFacade
@@ -47,8 +40,8 @@ class DefaultController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider|null $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension|null $dateTimeFormatterExtension
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      */
     public function __construct(
         protected readonly StatisticsFacade $statisticsFacade,
@@ -61,29 +54,9 @@ class DefaultController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly CronConfig $cronConfig,
         protected readonly CronFacade $cronFacade,
-        protected ?BreadcrumbOverrider $breadcrumbOverrider = null,
-        protected ?DateTimeFormatterExtension $dateTimeFormatterExtension = null,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
     ) {
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setBreadcrumbOverrider(BreadcrumbOverrider $breadcrumbOverrider): void
-    {
-        $this->setDependency($breadcrumbOverrider, 'breadcrumbOverrider');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setDateTimeFormatterExtension(DateTimeFormatterExtension $dateTimeFormatterExtension): void
-    {
-        $this->setDependency($dateTimeFormatterExtension, 'dateTimeFormatterExtension');
     }
 
     /**
@@ -365,16 +338,6 @@ class DefaultController extends AdminBaseController
         );
 
         return $this->redirectToRoute('admin_default_dashboard');
-    }
-
-    /**
-     * @deprecated This method will be removed in the next major release. Use DateTimeFormatterExtension::formatDurationInSeconds() instead.
-     * @param int|null $durationInSeconds
-     * @return string
-     */
-    protected function getFormattedDuration(?int $durationInSeconds): string
-    {
-        return $this->dateTimeFormatterExtension->formatDurationInSeconds($durationInSeconds);
     }
 
     /**

@@ -709,3 +709,69 @@ There you can find links to upgrade notes for other versions too.
            ```
    - first unused parameter `$message` from `Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsException` exception constructor has been removed, update you code appropriately
    - see #project-base-diff to add required configurations to your project and check suggested changes to your project
+
+## Removed deprecations
+
+- check that your code don't use any removed code ([#2719](https://github.com/shopsys/shopsys/pull/2719))
+    - `Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade`
+        - method `__construct`  changed its interface:
+            ```diff
+                public function __construct(
+                    protected readonly EntityManagerInterface $em,
+                    protected readonly CronModuleRepository $cronModuleRepository,
+                    protected readonly CronFilter $cronFilter,
+            -       protected ?CronModuleRunFactory $cronModuleRunFactory = null,
+            +       protected readonly CronModuleRunFactory $cronModuleRunFactory,
+                )
+            ```
+    - `Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor`
+        - property `$canRunTo` was removed
+        - method `__construct`  changed its interface:
+            ```diff
+                public function __construct(
+            -       int $secondsTimeout,
+            -       protected ?CronConfig $cronConfig = null,
+            +       protected readonly CronConfig $cronConfig,
+                )
+            ```
+        - method `canRun` changed its interface
+            ```
+            -   public function canRun(): bool
+            +   public function canRun(CronModuleInterface $cronModule): bool
+            ```
+    - `Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig`
+        - method `registerCronModuleInstance` changed its interface
+            ```diff
+                public function registerCronModuleInstance(
+                    $service,
+                    string $serviceId,
+                    string $timeHours,
+                    string $timeMinutes,
+                    string $instanceName,
+                    ?string $readableName = null,
+            +       int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
+            +       int $timeoutIteratedCronSec = CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
+                ): void
+            ```
+    - `Shopsys\FrameworkBundle\Controller\Admin\DefaultController`
+        - constant `HOUR_IN_SECONDS` was removed
+        - method `getFormattedDuration()` was removed
+        - method `__construct`  changed its interface:
+            ```diff
+                public function __construct(
+                    protected readonly StatisticsFacade $statisticsFacade,
+                    protected readonly StatisticsProcessingFacade $statisticsProcessingFacade,
+                    protected readonly MailTemplateFacade $mailTemplateFacade,
+                    protected readonly UnitFacade $unitFacade,
+                    protected readonly Setting $setting,
+                    protected readonly AvailabilityFacade $availabilityFacade,
+                    protected readonly CronModuleFacade $cronModuleFacade,
+                    protected readonly GridFactory $gridFactory,
+                    protected readonly CronConfig $cronConfig,
+                    protected readonly CronFacade $cronFacade,
+            -       protected ?BreadcrumbOverrider $breadcrumbOverrider = null,
+            -       protected ?DateTimeFormatterExtension $dateTimeFormatterExtension = null,
+            +       protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+            +       protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
+                )
+            ```
