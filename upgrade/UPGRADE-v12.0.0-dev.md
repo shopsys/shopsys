@@ -829,3 +829,15 @@ There you can find links to upgrade notes for other versions too.
             +       protected readonly MailSettingFacade $mailSettingFacade,
                 )
             ```
+    - method `Shopsys\FrameworkBundle\Model\Advert\AdvertRepository::getAdvertByPositionQueryBuilder()` now throws exception when `POSITION_PRODUCT_LIST` is requested without category
+    - `Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertsQuery`
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    protected readonly AdvertFacade $advertFacade,
+                    protected readonly Domain $domain,
+            -       protected ?CategoryFacade $categoryFacade = null,
+            +       protected readonly CategoryFacade $categoryFacade,
+                )
+            ```
+        - method `advertsQuery` now throws exception when `POSITION_PRODUCT_LIST` is requested without category
