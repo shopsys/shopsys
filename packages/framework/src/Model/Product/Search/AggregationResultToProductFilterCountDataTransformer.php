@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 
 class AggregationResultToProductFilterCountDataTransformer
@@ -24,11 +23,10 @@ class AggregationResultToProductFilterCountDataTransformer
     }
 
     /**
-     * @deprecated This method visibility will be changed to public in next major version
      * @param array $aggregationResult
      * @return int[]
      */
-    protected function getFlagCount(array $aggregationResult): array
+    public function getFlagCount(array $aggregationResult): array
     {
         $result = [];
 
@@ -44,11 +42,10 @@ class AggregationResultToProductFilterCountDataTransformer
     }
 
     /**
-     * @deprecated This method visibility will be changed to public in next major version
      * @param array $aggregationResult
      * @return int[]
      */
-    protected function getBrandCount(array $aggregationResult): array
+    public function getBrandCount(array $aggregationResult): array
     {
         $result = [];
 
@@ -61,28 +58,6 @@ class AggregationResultToProductFilterCountDataTransformer
         }
 
         return $result;
-    }
-
-    /**
-     * @deprecated This method will be replaced by getFlagCount() in next major version
-     * @param array $aggregationResult
-     * @return int[]
-     */
-    public function translateFlagsPlusNumbers(array $aggregationResult): array
-    {
-        return $this->getFlagCount($aggregationResult);
-    }
-
-    /**
-     * @deprecated This method will be replaced by getBrandCount() in next major version
-     * @param array $aggregationResult
-     * @return int[]
-     */
-    public function translateBrandsPlusNumbers(array $aggregationResult): array
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getBrandCount');
-
-        return $this->getBrandCount($aggregationResult);
     }
 
     /**

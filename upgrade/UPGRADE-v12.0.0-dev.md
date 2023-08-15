@@ -841,3 +841,10 @@ There you can find links to upgrade notes for other versions too.
                 )
             ```
         - method `advertsQuery` now throws exception when `POSITION_PRODUCT_LIST` is requested without category
+    - `Shopsys\FrameworkBundle\Model\Product\Search\AggregationResultToProductFilterCountDataTransformer`
+        - method `translateFlagsPlusNumbers` was removed, use `getFlagCount` instead
+        - method `translateBrandsPlusNumbers` was removed, use `getBrandCount` instead
+        - method `getFlagCount` is now public
+        - method `getBrandCount` is now public
+    - `Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository`
+        - second parameter in `calculateBrandsPlusNumbers` changed its name from `plusFlagsQuery` to `plusBrandsQuery`
