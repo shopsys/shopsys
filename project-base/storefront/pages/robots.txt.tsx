@@ -1,5 +1,5 @@
-import { getDomainConfig } from 'helpers/domain/domain';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getDomainConfig } from 'helpers/domain/domainConfig';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { GetServerSidePropsContext } from 'next';
 
 // mandatory for Next although it's not used

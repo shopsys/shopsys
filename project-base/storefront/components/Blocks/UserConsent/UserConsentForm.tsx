@@ -1,16 +1,15 @@
-import { useUserConsentForm, useUserConsentFormMeta } from './formMeta';
+import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
 import { useCookiesArticleUrlQueryApi } from 'graphql/generated';
-import { onGtmConsentUpdateEventHandler } from 'helpers/gtm/eventHandlers';
-import { getGtmConsentInfo } from 'helpers/gtm/gtm';
-
+import { onGtmConsentUpdateEventHandler } from 'gtm/helpers/eventHandlers';
+import { getGtmConsentInfo } from 'gtm/helpers/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useCallback } from 'react';
 import { FormProvider } from 'react-hook-form';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { UserConsentFormType } from 'types/form';
 
 type UserConsentFormProps = {

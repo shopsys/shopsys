@@ -1,10 +1,10 @@
-import { usePersonalDataExportForm, usePersonalDataExportFormMeta } from './formMeta';
+import { usePersonalDataExportForm, usePersonalDataExportFormMeta } from './personalDataExportFormMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { UserText } from 'components/Helpers/UserText/UserText';
-import { showSuccessMessage } from 'components/Helpers/toasts';
+import { UserText } from 'components/Basic/UserText/UserText';
+import { showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import {
     BreadcrumbFragmentApi,
@@ -20,7 +20,7 @@ import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PersonalDataExportFormType } from 'types/form';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

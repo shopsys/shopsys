@@ -1,4 +1,4 @@
-import { canUseDom } from 'helpers/misc/canUseDom';
+import { canUseDom } from 'helpers/canUseDom';
 
 export const blurInput = (): void => {
     if (canUseDom() && document.activeElement instanceof HTMLElement) {

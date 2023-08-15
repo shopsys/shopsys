@@ -7,15 +7,15 @@ import { CartList } from 'components/Pages/Cart/CartList/CartList';
 import { CartSummary } from 'components/Pages/Cart/CartSummary';
 import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-import { useGtmCartViewEvent } from 'hooks/gtm/useGtmCartViewEvent';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { useGtmCartViewEvent } from 'gtm/hooks/useGtmCartViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { GtmPageType } from 'types/gtm/enums';
+import { GtmPageType } from 'gtm/types/enums';
 
 const CartPage: FC<ServerSidePropsType> = () => {
     const { url } = useDomainConfig();

@@ -1,6 +1,6 @@
 import { useCurrentCustomerContactInformationQuery } from 'connectors/customer/CurrentCustomerUser';
-import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
 
 export const useCurrentUserContactInformation = (): ContactInformation => {
     const contactInformationApiData = useCurrentCustomerContactInformationQuery();

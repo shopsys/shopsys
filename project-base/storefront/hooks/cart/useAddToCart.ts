@@ -1,14 +1,14 @@
-import { showErrorMessage } from 'components/Helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { AddToCartMutationApi, useAddToCartMutationApi } from 'graphql/generated';
-import { onGtmChangeCartItemEventHandler } from 'helpers/gtm/eventHandlers';
-import { getGtmMappedCart } from 'helpers/gtm/gtm';
+import { onGtmChangeCartItemEventHandler } from 'gtm/helpers/eventHandlers';
+import { getGtmMappedCart } from 'gtm/helpers/gtm';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { usePersistStore } from 'store/zustand/usePersistStore';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { usePersistStore } from 'store/usePersistStore';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 
 export type AddToCartAction = (
     productUuid: string,

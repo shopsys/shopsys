@@ -1,12 +1,12 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoresContent } from 'components/Pages/Stores/StoresContent';
 import { BreadcrumbFragmentApi, StoresQueryDocumentApi, useStoresQueryApi } from 'graphql/generated';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { GtmPageType } from 'types/gtm/enums';
+import { GtmPageType } from 'gtm/types/enums';
 
 const StoresPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

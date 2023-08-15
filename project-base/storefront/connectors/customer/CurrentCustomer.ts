@@ -3,7 +3,6 @@ import {
     CurrentCustomerUserQueryApi,
     DeliveryAddressFragmentApi,
 } from 'graphql/generated';
-
 import { useMemo } from 'react';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 

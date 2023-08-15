@@ -2,12 +2,12 @@ import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { CategoryDetailFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
 import { createEmptyArray } from 'helpers/arrayUtils';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { ProductListItemSkeleton } from './ProductListItemSkeleton';
 import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/CategoryDetailContentMessage';
 import { ProductsListContent } from './ProductsListContent';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { calculatePageSize } from 'helpers/pagination/loadMore';
+import { calculatePageSize } from 'helpers/loadMore';
 
 type ProductsListProps = {
     products: ListedProductFragmentApi[] | undefined;

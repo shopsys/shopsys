@@ -18,12 +18,11 @@ import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
-
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import getConfig from 'next/config';
 import { useEffect, useState } from 'react';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 
 const { publicRuntimeConfig } = getConfig();
 

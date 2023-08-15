@@ -3,7 +3,6 @@ import { BlogPreviewMain } from './BlogPreviewMain';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
 import { BlogPreviewSide } from './BlogPreviewSide';

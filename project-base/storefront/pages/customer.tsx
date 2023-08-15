@@ -2,14 +2,14 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CustomerContent } from 'components/Pages/Customer/CustomerContent';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/misc/initServerSideProps';
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { GtmPageType } from 'types/gtm/enums';
+import { GtmPageType } from 'gtm/types/enums';
 
 const CustomerPage: FC = () => {
     const t = useTypedTranslationFunction();

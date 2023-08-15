@@ -8,8 +8,8 @@ import {
     SimpleCategoryFragmentApi,
     SimpleProductFragmentApi,
 } from 'graphql/generated';
-import { onGtmAutocompleteResultClickEventHandler, onGtmProductClickEventHandler } from 'helpers/gtm/eventHandlers';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { onGtmAutocompleteResultClickEventHandler, onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -18,7 +18,7 @@ import { useRouter } from 'next/router';
 import { forwardRef, useCallback, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
-import { GtmProductListNameType, GtmSectionType } from 'types/gtm/enums';
+import { GtmProductListNameType, GtmSectionType } from 'gtm/types/enums';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
 export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;

@@ -9,34 +9,32 @@ import {
     SearchQueryDocumentApi,
     useSearchQueryApi,
 } from 'graphql/generated';
-import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
+import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-import { parseLoadMoreFromQuery } from 'helpers/pagination/parseLoadMoreFromQuery';
-import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
-import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParams/queryParamNames';
-import { getProductListSort } from 'helpers/sorting/getProductListSort';
-import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
-
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+} from 'helpers/queryParamNames';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { GtmPageType } from 'types/gtm/enums';
-import { getRedirectWithOffsetPage } from 'helpers/pagination/loadMore';
-import { getSlugFromServerSideUrl } from 'utils/getSlugFromUrl';
+import { GtmPageType } from 'gtm/types/enums';
+import {
+    getNumberFromUrlQuery,
+    getProductListSortFromUrlQuery,
+    getSlugFromServerSideUrl,
+    getStringFromUrlQuery,
+} from 'helpers/parsing/urlParsing';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
@@ -71,8 +69,8 @@ const SearchPage: FC<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
-    const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
-    const loadMore = parseLoadMoreFromQuery(context.query[LOAD_MORE_QUERY_PARAMETER_NAME]);
+    const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
+    const loadMore = getNumberFromUrlQuery(context.query[LOAD_MORE_QUERY_PARAMETER_NAME], 0);
     const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
     const redirect = getRedirectWithOffsetPage(page, loadMore, urlSlug, context.query);
 
@@ -80,9 +78,8 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         return redirect;
     }
 
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]));
-    const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
-    const filter = mapParametersFilter(optionsFilter);
+    const orderingMode = getProductListSortFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]);
+    const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
     const search = getStringFromUrlQuery(context.query[SEARCH_QUERY_PARAMETER_NAME]);
 
     return initServerSideProps({

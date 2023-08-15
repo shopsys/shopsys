@@ -9,8 +9,8 @@ import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
-import { twMergeCustom } from 'utils/twMerge';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { twMergeCustom } from 'helpers/twMerge';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 

@@ -11,7 +11,7 @@ import { useFilterShowLess } from 'hooks/filter/useFilterShowLess';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useState } from 'react';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { useSessionStore } from 'store/useSessionStore';
 
 type FilterFieldType = 'flags' | 'brands';
 

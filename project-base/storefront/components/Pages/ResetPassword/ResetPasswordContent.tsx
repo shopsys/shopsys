@@ -1,23 +1,23 @@
-import { usePasswordResetForm, usePasswordResetFormMeta } from './formMeta';
+import { usePasswordResetForm, usePasswordResetFormMeta } from './passwordResetFormMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { showSuccessMessage } from 'components/Helpers/toasts';
+import { showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi, usePasswordRecoveryMutationApi } from 'graphql/generated';
-import 'helpers//localization/getInternationalizedStaticUrls';
+import 'helpers/getInternationalizedStaticUrls';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { onGtmSendFormEventHandler } from 'helpers/gtm/eventHandlers';
+import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
-import { GtmFormType, GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

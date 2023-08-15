@@ -9,9 +9,12 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { AddressList } from 'components/Pages/Customer/AddressList';
-import { useCustomerChangeProfileForm, useCustomerChangeProfileFormMeta } from 'components/Pages/Customer/formMeta';
+import {
+    useCustomerChangeProfileForm,
+    useCustomerChangeProfileFormMeta,
+} from 'components/Pages/Customer/customerChangeProfileFormMeta';
 import {
     useChangePasswordMutationApi,
     useChangePersonalDataMutationApi,
@@ -26,7 +29,7 @@ import { useMemo } from 'react';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { CombinedError } from 'urql';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));

@@ -10,26 +10,22 @@ import {
     ProductsByCatnumsDocumentApi,
     useArticleDetailQueryApi,
 } from 'graphql/generated';
-
-import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/misc/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/misc/isServer';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { createClient } from 'helpers/urql/createClient';
-
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { isRedirectedFromSsr } from 'helpers/isServer';
+import { createClient } from 'urql/createClient';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
-import { parseCatnums } from 'utils/grapesJsParser';
+import { parseCatnums } from 'helpers/parsing/grapesJsParser';
+import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();
-    const slug = getUrlWithoutGetParameters(router.asPath);
     const [{ data: articleDetailData, fetching }] = useArticleDetailQueryApi({
-        variables: { urlSlug: getSlugFromUrl(slug) },
+        variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
     const article = articleDetailData?.article?.__typename === 'ArticleSite' ? articleDetailData.article : null;

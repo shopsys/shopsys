@@ -9,26 +9,21 @@ import {
     StoreDetailQueryVariablesApi,
     useStoreDetailQueryApi,
 } from 'graphql/generated';
-
-import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/misc/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/misc/isServer';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { createClient } from 'helpers/urql/createClient';
-
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { isRedirectedFromSsr } from 'helpers/isServer';
+import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
+import { createClient } from 'urql/createClient';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 
 const StoreDetailPage: NextPage = () => {
     const router = useRouter();
-    const slug = getUrlWithoutGetParameters(router.asPath);
-
     const [{ data: storeDetailData, fetching }] = useStoreDetailQueryApi({
-        variables: { urlSlug: getSlugFromUrl(slug) },
+        variables: { urlSlug: getSlugFromUrl(router.asPath) },
     });
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(storeDetailData?.store);

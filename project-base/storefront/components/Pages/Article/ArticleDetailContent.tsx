@@ -1,5 +1,5 @@
 import { ArticleTitle } from './ArticleTitle';
-import { GrapesJsParser } from 'components/Helpers/GrapeJsParser';
+import { GrapesJsParser } from 'components/Basic/UserText/GrapeJsParser';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleDetailFragmentApi } from 'graphql/generated';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';

@@ -1,5 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { PageGuard } from 'components/Helpers/PageGuard';
+import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent';
 import {
@@ -7,17 +7,16 @@ import {
     OrderDetailByHashQueryDocumentApi,
     useOrderDetailByHashQueryApi,
 } from 'graphql/generated';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/misc/initServerSideProps';
-import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
-
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
-import { GtmPageType } from 'types/gtm/enums';
+import { GtmPageType } from 'gtm/types/enums';
 
 const OrderDetailByHashPage: FC = () => {
     const t = useTypedTranslationFunction();

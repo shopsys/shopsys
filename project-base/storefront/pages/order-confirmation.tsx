@@ -1,25 +1,24 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { PageGuard } from 'components/Helpers/PageGuard';
+import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
-import { Registration } from 'components/Pages/OrderConfirmation/Registration/Registration';
+import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
 import {
     OrderSentPageContentDocumentApi,
     useIsCustomerUserRegisteredQueryApi,
     useOrderSentPageContentApi,
 } from 'graphql/generated';
-import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-
-import { useGtmPageViewEvent } from 'hooks/gtm/useGtmPageViewEvent';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useRouter } from 'next/router';
-import { GtmPageType } from 'types/gtm/enums';
+import { GtmPageType } from 'gtm/types/enums';
 import { PaymentTypeEnum } from 'types/payment';
 
 export type OrderConfirmationQuery = {
@@ -77,7 +76,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                     orderUuid &&
                     !isInformationAboutUserRegistrationFetching &&
                     isCustomerUserRegisteredData?.isCustomerUserRegistered === false && (
-                        <Registration lastOrderUuid={orderUuid} />
+                        <RegistrationAfterOrder lastOrderUuid={orderUuid} />
                     )}
             </CommonLayout>
         </PageGuard>

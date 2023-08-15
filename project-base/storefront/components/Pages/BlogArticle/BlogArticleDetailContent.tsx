@@ -1,5 +1,5 @@
 import { Image } from 'components/Basic/Image/Image';
-import { GrapesJsParser } from 'components/Helpers/GrapeJsParser';
+import { GrapesJsParser } from 'components/Basic/UserText/GrapeJsParser';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
 import { BlogArticleDetailFragmentApi } from 'graphql/generated';
