@@ -74,7 +74,7 @@ const handleSeoCategorySlugUpdate = (
     if (originalCategorySlug && isCurrentAndRedirectSlugDifferent && categorySlug) {
         setWasRedirectedToSeoCategory(true);
         router.replace(
-            { pathname: '/categories/[categorySlug]', query: { categorySlug: '/televize-audio-nejlevnejsi' } },
+            { pathname: '/categories/[categorySlug]', query: { categorySlug } },
             { pathname: categorySlug },
             {
                 shallow: true,
