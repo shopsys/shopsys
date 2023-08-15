@@ -861,3 +861,5 @@ There you can find links to upgrade notes for other versions too.
             +       protected readonly RequestStack $requestStack,
                 )
             ```
+    - remove setter injection in `App\Controller\Front\RobotsController`
+        - see #project-base-diff for more details
