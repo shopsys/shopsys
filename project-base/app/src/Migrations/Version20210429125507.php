@@ -7,8 +7,10 @@ namespace App\Migrations;
 use App\Model\Transport\Type\TransportTypeEnum;
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class Version20210429125507 extends AbstractMigration
+class Version20210429125507 extends AbstractMigration implements ContainerAwareInterface
 {
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema

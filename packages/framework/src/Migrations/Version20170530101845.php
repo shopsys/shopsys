@@ -6,8 +6,9 @@ namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20170530101845 extends AbstractMigration
+class Version20170530101845 extends AbstractMigration implements ContainerAwareInterface
 {
     use MultidomainMigrationTrait;
 

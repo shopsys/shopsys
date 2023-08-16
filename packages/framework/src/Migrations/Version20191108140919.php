@@ -6,8 +6,9 @@ namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20191108140919 extends AbstractMigration
+class Version20191108140919 extends AbstractMigration implements ContainerAwareInterface
 {
     use MultidomainMigrationTrait;
 
@@ -27,13 +28,6 @@ class Version20191108140919 extends AbstractMigration
 
         $this->migrateCurrentData();
         $this->sql('ALTER TABLE products DROP vat_id');
-    }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema): void
-    {
     }
 
     private function migrateCurrentData(): void
@@ -66,5 +60,12 @@ class Version20191108140919 extends AbstractMigration
                 );
             }
         }
+    }
+
+    /**
+     * @param \Doctrine\DBAL\Schema\Schema $schema
+     */
+    public function down(Schema $schema): void
+    {
     }
 }

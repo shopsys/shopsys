@@ -6,8 +6,9 @@ namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20191112122617 extends AbstractMigration
+class Version20191112122617 extends AbstractMigration implements ContainerAwareInterface
 {
     use MultidomainMigrationTrait;
 
@@ -54,13 +55,6 @@ class Version20191112122617 extends AbstractMigration
         $this->sql('ALTER TABLE vats DROP tmp_original_id;');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema): void
-    {
-    }
-
     private function migratePaymentsDomains(): void
     {
         $payments = $this->sql('SELECT id, vat_id FROM payments')->fetchAllAssociative();
@@ -103,6 +97,10 @@ class Version20191112122617 extends AbstractMigration
                 'SELECT value from setting_values where name = \'defaultDomainCurrencyId\' AND domain_id = :domainId',
                 ['domainId' => $domainId],
             )->fetchOne();
+
+            if ($defaultCurrencyForDomain === false) {
+                continue;
+            }
 
             $paymentPricesByCurrency = $this->sql(
                 'SELECT payment_id, price, domain_id FROM payment_prices WHERE currency_id = :currencyId',
@@ -184,6 +182,10 @@ class Version20191112122617 extends AbstractMigration
                 ['domainId' => $domainId],
             )->fetchOne();
 
+            if ($defaultCurrencyForDomain === false) {
+                continue;
+            }
+
             $transportPricesByCurrency = $this->sql(
                 'SELECT transport_id, price, domain_id FROM transport_prices WHERE currency_id = :currencyId',
                 [
@@ -220,5 +222,12 @@ class Version20191112122617 extends AbstractMigration
                 }
             }
         }
+    }
+
+    /**
+     * @param \Doctrine\DBAL\Schema\Schema $schema
+     */
+    public function down(Schema $schema): void
+    {
     }
 }

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20191107162719 extends AbstractMigration
+class Version20191107162719 extends AbstractMigration implements ContainerAwareInterface
 {
     use MultidomainMigrationTrait;
 
@@ -25,13 +27,6 @@ class Version20191107162719 extends AbstractMigration
         $this->migrateCurrentVats();
         $this->migrateReplaceWithColumnData();
         $this->migrateCurrentVatSetting();
-    }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema): void
-    {
     }
 
     private function migrateCurrentVats(): void
@@ -110,5 +105,12 @@ class Version20191107162719 extends AbstractMigration
                 ],
             );
         }
+    }
+
+    /**
+     * @param \Doctrine\DBAL\Schema\Schema $schema
+     */
+    public function down(Schema $schema): void
+    {
     }
 }

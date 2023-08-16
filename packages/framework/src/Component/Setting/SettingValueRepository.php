@@ -42,13 +42,18 @@ class SettingValueRepository
         $this->em->getConnection()->executeStatement(
             'INSERT INTO setting_values (name, value, type, domain_id)
             SELECT name, value, type, :toDomainId
-            FROM setting_values
+            FROM setting_values AS st
             WHERE domain_id = :fromDomainId
                 AND EXISTS (
                     SELECT 1
                     FROM setting_values
                     WHERE domain_id IS NOT NULL
                         AND domain_id != :commonDomainId
+                )
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM setting_values
+                    WHERE domain_id = :toDomainId AND name = st.name
                 )',
             [
                 'toDomainId' => $toDomainId,
