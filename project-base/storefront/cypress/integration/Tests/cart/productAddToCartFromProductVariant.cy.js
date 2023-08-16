@@ -5,8 +5,7 @@ import { productClickFromPromotedProductsOnHomepage } from '../../Functions/home
 import { addProductVariantToCartFromProductDetail } from '../../Functions/productDetail';
 
 it('Product variant - Adding variant product to cart from product detail and check product in cart', () => {
-    cy.visit('/');
-    productClickFromPromotedProductsOnHomepage(products.philips32PFL4308.catnum, products.philips32PFL4308.name);
+    cy.visit(products.philips32PFL4308.url);
     cy.url().should('contain', products.philips32PFL4308.url);
     addProductVariantToCartFromProductDetail(products.philips54CRT.catnum);
     checkProductAndGoToCartFromCartPopupWindow(products.philips54CRT.name);

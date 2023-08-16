@@ -50,13 +50,14 @@ services:
 
     cypress:
         build:
-            context: ./storefront
-            dockerfile: ./cypress/docker/Dockerfile
+            context: ./storefront/cypress
+            dockerfile: ./docker/Dockerfile
         container_name: shopsys-framework-cypress
         volumes:
             - ./storefront/cypress:/app:delegated
         profiles:
             - storefront-acceptance-tests
+        network_mode: "host"
 
     php-fpm:
         build:

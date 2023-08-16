@@ -59,10 +59,6 @@ const STATIC_REWRITE_PATHS = {
     },
 };
 
-// copy first domain as new third domain for acceptance (cypress) tests
-STATIC_REWRITE_PATHS['http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/'] =
-    STATIC_REWRITE_PATHS[process.env.DOMAIN_HOSTNAME_1];
-
 module.exports = {
     ...STATIC_REWRITE_PATHS,
 };

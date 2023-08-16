@@ -69,9 +69,12 @@ services:
             context: ./project-base/storefront/cypress
             dockerfile: ./docker/Dockerfile
         container_name: shopsys-framework-cypress
+        profiles:
+            - storefront-acceptance-tests
         volumes:
             - ./videos:/app/videos
             - ./screenshots:/app/screenshots
+        network_mode: "host"
 
 volumes:
     web-volume:
