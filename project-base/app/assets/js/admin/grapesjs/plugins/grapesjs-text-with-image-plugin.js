@@ -24,21 +24,28 @@ export default grapesjs.plugins.add('text-with-image', editor => {
                     <div class="gjs-text-with-image-inner inner left">
                         <img class="image">
                         <div class="gjs-text-ckeditor text">Insert your text here</div>
+                        <div class="clear" />    
                     </div>
                 `
             }
         }
     });
 
+    const imagePositionDataAttribute = 'data-image-position';
+    const imageTypeDataAttribute = 'data-image-type';
+
     editor.DomComponents.addType('text-with-image-inner', {
         isComponent: element => element.classList && element.classList.contains('gjs-text-with-image-inner'),
         model: {
             init () {
-                this.on('change:attributes:imagePosition', this.handleTypeChange);
+                this.on(`change:attributes:${imagePositionDataAttribute}`, this.handleTypeChange);
+                this.on(`change:attributes:${imageTypeDataAttribute}`, this.handleTypeChange);
             },
 
             handleTypeChange (element) {
-                element.setClass(['gjs-text-with-image-inner', 'inner', this.getAttributes().imagePosition]);
+                element.setClass(['gjs-text-with-image-inner', 'inner', `text-with-image-float-${this.getAttributes()[imagePositionDataAttribute]}`,
+                    `text-with-image-type-${this.getAttributes()[imageTypeDataAttribute]}`
+                ]);
             },
             defaults: {
                 removable: false,
@@ -47,13 +54,14 @@ export default grapesjs.plugins.add('text-with-image', editor => {
                 droppable: false,
                 propagate: ['removable', 'draggable', 'copyable', 'droppable'],
                 attributes: {
-                    imagePosition: 'left',
+                    [imagePositionDataAttribute]: 'left',
+                    [imageTypeDataAttribute]: 'outside-layout',
                     class: ['gjs-text-with-image-inner', 'inner', 'left']
                 },
                 traits: [
                     {
                         type: 'select',
-                        name: 'imagePosition',
+                        name: imagePositionDataAttribute,
                         label: Translator.trans('Position of image'),
                         options: [
                             {
@@ -65,6 +73,26 @@ export default grapesjs.plugins.add('text-with-image', editor => {
                                 label: 'Right'
                             }
                         ]
+                    },
+                    {
+                        type: 'select',
+                        name: imageTypeDataAttribute,
+                        label: Translator.trans('Type of image'),
+                        options: [
+                            {
+                                id: 'outside-layout',
+                                label: Translator.trans('Outside layout')
+                            },
+                            {
+                                id: 'inside-layout',
+                                label: Translator.trans('Inside layout')
+                            }
+                        ]
+                    },
+                    {
+                        type: 'input',
+                        name: 'alt',
+                        label: 'Alt'
                     }
                 ]
             }

@@ -40,6 +40,7 @@ export enum GtmProductListNameType {
     autocomplete_search_results = 'autocomplete_search_results',
     wishlist = 'wishlist',
     sharedWishlist = 'sharedWishlist',
+    other = 'other',
 }
 
 export enum GtmEventType {

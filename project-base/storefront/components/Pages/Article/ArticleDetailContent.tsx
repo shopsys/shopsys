@@ -1,8 +1,8 @@
 import { ArticleTitle } from './ArticleTitle';
-import { GrapesJsParser } from 'components/Basic/UserText/GrapeJsParser';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleDetailFragmentApi } from 'graphql/generated';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
+import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 
 type ArticleDetailContentProps = {
     article: ArticleDetailFragmentApi;
@@ -20,7 +20,7 @@ export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article })
             <div className="px-5 lg:flex" data-testid={TEST_IDENTIFIER + 'content'}>
                 {article.text !== null && (
                     <div className="order-2 mb-16 flex w-full flex-col">
-                        <GrapesJsParser text={article.text} />
+                        <GrapesJsParser text={article.text} uuid={article.uuid} />
                     </div>
                 )}
             </div>

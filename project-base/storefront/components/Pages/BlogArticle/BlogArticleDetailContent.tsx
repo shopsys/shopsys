@@ -1,5 +1,5 @@
 import { Image } from 'components/Basic/Image/Image';
-import { GrapesJsParser } from 'components/Basic/UserText/GrapeJsParser';
+import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
 import { BlogArticleDetailFragmentApi } from 'graphql/generated';
@@ -34,7 +34,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                     >
                         {formatDate(blogArticle.publishDate, 'l')}
                     </div>
-                    {blogArticle.text !== null && <GrapesJsParser text={blogArticle.text} />}
+                    {blogArticle.text !== null && <GrapesJsParser text={blogArticle.text} uuid={blogArticle.uuid} />}
                 </div>
             </div>
         </Webline>

@@ -10,6 +10,10 @@ import './plugins/grapesjs-products-plugin';
 import './plugins/grapesjs-text-with-image-plugin';
 import './plugins/grapesjs-custom-blocks-plugin';
 import './plugins/grapesjs-mail-template-plugin';
+import './plugins/grapesjs-custom-image-plugin';
+import './plugins/grapesjs-custom-link-plugin';
+import './plugins/grapesjs-custom-image-file-plugin';
+import './plugins/grapesjs-custom-iframe-plugin';
 import 'magnific-popup';
 import { Buffer } from 'buffer';
 global.Buffer = Buffer;
@@ -63,7 +67,11 @@ export default class InitGrapesJs {
             'nonEditablePage',
             'customButtons',
             'text-with-image',
-            'custom-blocks'
+            'custom-blocks',
+            'custom-image',
+            'custom-link',
+            'custom-image-file',
+            'custom-iframe'
         ];
         if (allowProducts) {
             plugins.push('products');
@@ -101,14 +109,7 @@ export default class InitGrapesJs {
                     }
                 },
                 [webPagePlugin]: {
-                    blocks: [],
-                    block: () => {
-                        return {
-                            label: 'Link Block',
-                            category: 'Basic',
-                            attributes: { class: 'fa fa-link' }
-                        };
-                    },
+                    blocks: [''],
                     useCustomTheme: false
                 },
                 [countDownPlugin]: {
@@ -126,6 +127,11 @@ export default class InitGrapesJs {
                 clearProperties: true,
                 appendTo: document.createElement('div'), // disable rendering a styleManager
                 sectors: []
+            },
+            selectorManager: {
+                componentFirst: true,
+                // eslint-disable-next-line no-useless-escape
+                escapeName: name => name.trim().replace(/([^a-z0-9\w\#\!\:\[\]&-]+)/gi, '-')
             },
             assetManager: {
                 custom: {
