@@ -98,7 +98,7 @@ class TransportsTest extends GraphQlTestCase
                         'position' => 0,
                         'daysUntilDelivery' => 5,
                         'transportType' => [
-                            'name' => t('Standard', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                            'name' => t('Standard', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'code' => 'common',
                         ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
@@ -124,7 +124,7 @@ class TransportsTest extends GraphQlTestCase
                         'position' => 1,
                         'daysUntilDelivery' => 4,
                         'transportType' => [
-                            'name' => t('Standard', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                            'name' => t('Standard', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'code' => 'common',
                         ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh),
@@ -156,7 +156,7 @@ class TransportsTest extends GraphQlTestCase
                         'position' => 2,
                         'daysUntilDelivery' => 0,
                         'transportType' => [
-                            'name' => t('Standard', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                            'name' => t('Standard', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'code' => 'common',
                         ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
@@ -202,7 +202,7 @@ class TransportsTest extends GraphQlTestCase
                         'position' => 3,
                         'daysUntilDelivery' => 0,
                         'transportType' => [
-                            'name' => t('Standard', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                            'name' => t('Standard', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'code' => 'common',
                         ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),

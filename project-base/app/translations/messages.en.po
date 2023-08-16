@@ -1861,6 +1861,9 @@ msgstr ""
 msgid "Sorting priority"
 msgstr ""
 
+msgid "Standard"
+msgstr ""
+
 msgid "Stocking"
 msgstr ""
 

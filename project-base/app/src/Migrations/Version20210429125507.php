@@ -6,12 +6,16 @@ namespace App\Migrations;
 
 use App\Model\Transport\Type\TransportTypeEnum;
 use Doctrine\DBAL\Schema\Schema;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Version20210429125507 extends AbstractMigration implements ContainerAwareInterface
 {
+    use MultidomainMigrationTrait;
+
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -43,8 +47,10 @@ class Version20210429125507 extends AbstractMigration implements ContainerAwareI
         $this->sql('CREATE UNIQUE INDEX UNIQ_C43F2EC877153098 ON transport_types (code)');
 
         $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportTypeEnum::TYPE_COMMON . '\')');
-        $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (1, \'Standardní\', \'cs\')');
-        $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (1, \'Standard\', \'en\')');
+
+        foreach ($this->getAllLocales() as $locale) {
+            $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (1, \'' . t('Standard', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) . '\', \'' . $locale . '\')');
+        }
 
         $this->sql('ALTER TABLE transports ADD transport_type_id INT NOT NULL DEFAULT 1');
         $this->sql('

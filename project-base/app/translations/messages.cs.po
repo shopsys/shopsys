@@ -1861,6 +1861,9 @@ msgstr "Slug"
 msgid "Sorting priority"
 msgstr "Priorita řazení"
 
+msgid "Standard"
+msgstr "Standardní"
+
 msgid "Stocking"
 msgstr "Skladovost"
 
