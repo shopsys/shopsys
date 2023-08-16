@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20200714071640 extends AbstractMigration
+class Version20200714071640 extends AbstractMigration implements ContainerAwareInterface
 {
+    use MultidomainMigrationTrait;
+
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -23,8 +28,9 @@ class Version20200714071640 extends AbstractMigration
         $this->sql('INSERT INTO flags (rgb_color, visible, akeneo_code) VALUES (\'#ffffff\', true, \'flag__product_hit\')');
         $lastFlagsId = $this->connection->lastInsertId('flags_id_seq');
 
-        $this->sql(sprintf('INSERT INTO flag_translations (translatable_id, name, locale) VALUES (%d, \'Cenový hit\', \'cs\')', $lastFlagsId));
-        $this->sql(sprintf('INSERT INTO flag_translations (translatable_id, name, locale) VALUES (%d, \'Price hit\', \'en\')', $lastFlagsId));
+        foreach ($this->getAllLocales() as $locale) {
+            $this->sql(sprintf('INSERT INTO flag_translations (translatable_id, name, locale) VALUES (%d, \'' . t('Price hit', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) . '\', \'' . $locale . '\')', $lastFlagsId));
+        }
     }
 
     /**
