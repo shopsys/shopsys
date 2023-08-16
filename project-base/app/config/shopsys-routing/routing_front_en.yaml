@@ -34,7 +34,7 @@ front_personal_data:
     path: /personal-data-overview
 
 front_personal_data_access:
-    path: /personal-data-access/{hash}
+    path: /personal-data-overview/{hash}
 
 front_personal_data_export:
     path: /personal-data-export
