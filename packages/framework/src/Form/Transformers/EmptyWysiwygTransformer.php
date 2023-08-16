@@ -23,6 +23,10 @@ class EmptyWysiwygTransformer implements DataTransformerInterface
      */
     public function transform($value): mixed
     {
+        if ($value === null) {
+            return null;
+        }
+
         $trimmedValue = strip_tags(preg_replace('/\s|\&nbsp\;/', '', $value));
 
         if ($trimmedValue === '') {
