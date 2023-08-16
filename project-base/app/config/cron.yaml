@@ -63,6 +63,10 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*/6', minutes: '0', instanceName: export, readableName: 'Generate daily feeds' }
 
+    Shopsys\FrameworkBundle\Model\Feed\HourlyFeedCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '10', instanceName: export, readableName: 'Generate hourly feeds' }
+
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapCronModule:
         tags:
             - { name: shopsys.cron, hours: '4', minutes: '0', instanceName: export, readableName: 'Generate Sitemap' }
@@ -107,10 +111,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: products, readableName: "Export changed products to Elasticsearch" }
 
-    # @todo mg remove?
-    Shopsys\FrameworkBundle\Model\Feed\HourlyFeedCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '10', instanceName: default, readableName: 'Generate hourly feeds' }
     # Akeneo import products
 
     App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryCronModule:
