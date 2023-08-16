@@ -1,12 +1,11 @@
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { FlagDetailFragmentApi, FlagProductsQueryDocumentApi } from 'graphql/generated';
+import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { getMappedProducts } from 'helpers/mappers/products';
-import { useProductsData } from 'helpers/pagination/loadMore';
-
-import { useGtmPaginatedProductListViewEvent } from 'hooks/gtm/productList/useGtmPaginatedProductListViewEvent';
+import { useProductsData } from 'helpers/loadMore';
 import { RefObject } from 'react';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 
 type FlagDetailProductsWrapperProps = {
     flag: FlagDetailFragmentApi;

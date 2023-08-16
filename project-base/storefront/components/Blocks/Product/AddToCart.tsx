@@ -7,8 +7,8 @@ import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
-import { twMergeCustom } from 'utils/twMerge';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { twMergeCustom } from 'helpers/twMerge';
 
 const AddToCartPopup = dynamic(() =>
     import('components/Blocks/Product/AddToCartPopup').then((component) => component.AddToCartPopup),

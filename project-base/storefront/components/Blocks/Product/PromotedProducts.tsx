@@ -1,6 +1,6 @@
 import { usePromotedProductsQueryApi } from 'graphql/generated';
 import { ProductsSlider } from './ProductsSlider';
-import { GtmProductListNameType } from 'types/gtm/enums';
+import { GtmProductListNameType } from 'gtm/types/enums';
 
 const TEST_IDENTIFIER = 'blocks-product-slider-promoted-products';
 

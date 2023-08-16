@@ -1,9 +1,9 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Portal } from 'components/Basic/Portal/Portal';
-import { canUseDom } from 'helpers/misc/canUseDom';
+import { canUseDom } from 'helpers/canUseDom';
 import { MouseEventHandler, useEffect, useRef } from 'react';
-import { twMergeCustom } from 'utils/twMerge';
+import { twMergeCustom } from 'helpers/twMerge';
 
 type PopupProps = {
     onCloseCallback: () => void;

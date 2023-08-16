@@ -133,7 +133,7 @@ export const getExportedVariable = () => EXPORTED_CONSTANT.FOO;
  * any exported function which needs an anonymous function
  * (a selector) to work properly.
  */
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { useSessionStore } from 'store/useSessionStore';
 
 export const useModuleValue = () => {
     const domainConfig = useSessionStore((s) => s.domainConfig);
@@ -250,7 +250,7 @@ These functions cannot be mocked as straightforwardly as the functions in the ex
 ```tsx
 import { vi } from 'vitest';
 
-vi.mock('store/zustand/useSessionStore', () => ({
+vi.mock('store/useSessionStore', () => ({
     // selector is used when the mocked function accepts an anonymous function which then returns data
     useSessionStore: vi.fn((selector) => {
         return selector({
@@ -268,9 +268,9 @@ As in all of the examples above, you can also override a mock of a function whic
 
 ```tsx
 import { expect, Mock, test, vi } from 'vitest';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { useSessionStore } from 'store/useSessionStore';
 
-vi.mock('store/zustand/useSessionStore', () => ({
+vi.mock('store/useSessionStore', () => ({
     useSessionStore: vi.fn((selector) => {
         return selector({
             domainConfig: {

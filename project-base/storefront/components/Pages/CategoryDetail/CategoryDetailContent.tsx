@@ -1,5 +1,5 @@
 import { Heading } from 'components/Basic/Heading/Heading';
-import { AdvancedSeoCategories } from './AdvancedSeoCategories/AdvancedSeoCategories';
+import { AdvancedSeoCategories } from './AdvancedSeoCategories';
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { Icon } from 'components/Basic/Icon/Icon';
@@ -10,7 +10,7 @@ import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavig
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CategoryDetailFragmentApi } from 'graphql/generated';
-import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
+import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';

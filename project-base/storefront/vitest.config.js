@@ -25,7 +25,6 @@ export default defineConfig({
             'typeHelpers',
             'types',
             'urql',
-            'utils',
         ],
     },
 });

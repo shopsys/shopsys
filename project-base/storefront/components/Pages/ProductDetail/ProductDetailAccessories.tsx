@@ -2,7 +2,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 
 type ProductDetailAccessoriesProps = {
     accessories: ListedProductFragmentApi[];

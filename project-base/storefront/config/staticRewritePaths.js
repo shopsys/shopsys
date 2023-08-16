@@ -25,7 +25,7 @@ const STATIC_REWRITE_PATHS = {
         '/cookie-consent': '/cookie-consent',
         '/abandoned-cart/:cartUuid': '/abandoned-cart/:cartUuid',
         '/grapesjs-template': '/grapesjs-template',
-        '/products-comparison': '/products-comparison',
+        '/product-comparison': '/product-comparison',
         '/wishlist': '/wishlist',
     },
     [process.env.DOMAIN_HOSTNAME_2]: {
@@ -54,7 +54,7 @@ const STATIC_REWRITE_PATHS = {
         '/cookie-consent': '/souhlas-se-soubory-cookies',
         '/abandoned-cart/:cartUuid': '/opusteny-kosik/:cartUuid',
         '/grapesjs-template': '/grapesjs-template',
-        '/products-comparison': '/porovnani-produktu',
+        '/product-comparison': '/porovnani-produktu',
         '/wishlist': '/oblibene-produkty',
     },
 };

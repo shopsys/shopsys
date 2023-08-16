@@ -1,5 +1,5 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
+import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { describe, expect, test, vi } from 'vitest';
 
@@ -16,7 +16,7 @@ vi.mock('next/router', () => ({
     })),
 }));
 
-vi.mock('store/zustand/useSessionStore', () => ({
+vi.mock('store/useSessionStore', () => ({
     useSessionStore: vi.fn((selector) => {
         return selector({
             defaultProductFiltersMap: {

@@ -736,11 +736,17 @@ services:
     Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory:
         alias: App\ProductFeed\Heureka\Model\FeedItem\HeurekaFeedItemFactory
 
+    Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataRepository:
+        alias: App\ProductFeed\HeurekaDelivery\Model\FeedItem\HeurekaDeliveryDataRepository
+
     Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory:
         alias: App\ProductFeed\Google\Model\FeedItem\GoogleFeedItemFactory
 
     Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository:
         alias: App\ProductFeed\Google\Model\Product\GoogleProductRepository
+
+    Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory:
+        alias: App\ProductFeed\Zbozi\Model\FeedItem\ZboziFeedItemFactory
 
     Shopsys\FrameworkBundle\Model\Transport\TransportFacade:
         alias: App\Model\Transport\TransportFacade

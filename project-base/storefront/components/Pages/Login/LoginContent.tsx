@@ -15,7 +15,7 @@ import { Translate } from 'next-translate';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import * as Yup from 'yup';
 
 type LoginContentProps = {

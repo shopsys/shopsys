@@ -1,28 +1,28 @@
-import { Address } from './Address';
-import { Company } from './Company';
-import { Password } from './Password';
-import { User } from './User';
-import { useRegistrationForm, useRegistrationFormMeta } from './formMeta';
+import { RegistrationAddress } from './RegistrationAddress';
+import { RegistrationCompany } from './RegistrationCompany';
+import { RegistrationPassword } from './RegistrationPassword';
+import { RegistrationUser } from './RegistrationUser';
+import { useRegistrationForm, useRegistrationFormMeta } from './registrationFormMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { showInfoMessage, showSuccessMessage } from 'components/Helpers/toasts';
+import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi, useRegistrationMutationApi } from 'graphql/generated';
-import { setTokensToCookie } from 'helpers/auth/tokens';
+import { setTokensToCookies } from 'helpers/auth/tokens';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { onGtmSendFormEventHandler } from 'helpers/gtm/eventHandlers';
+import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
-import { GtmFormType, GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
@@ -54,7 +54,7 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                 const accessToken = registerResult.data.Register.tokens.accessToken;
                 const refreshToken = registerResult.data.Register.tokens.refreshToken;
 
-                setTokensToCookie(accessToken, refreshToken);
+                setTokensToCookies(accessToken, refreshToken);
                 showSuccessMessage(formMeta.messages.successAndLogged);
 
                 if (registerResult.data.Register.showCartMergeInfo === true) {
@@ -90,21 +90,21 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                         </div>
 
                         <div className="mb-10">
-                            <User />
+                            <RegistrationUser />
                         </div>
 
                         {customerValue === 'companyCustomer' && (
                             <div className="mb-10">
-                                <Company />
+                                <RegistrationCompany />
                             </div>
                         )}
 
                         <div className="mb-10">
-                            <Password />
+                            <RegistrationPassword />
                         </div>
 
                         <div className="mb-10">
-                            <Address />
+                            <RegistrationAddress />
                         </div>
 
                         <CheckboxControlled

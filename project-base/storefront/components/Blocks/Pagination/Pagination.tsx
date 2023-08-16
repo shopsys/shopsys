@@ -1,6 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { getFilteredQueries } from 'helpers/queryParams/queryHandlers';
+import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMediaMin } from 'hooks/ui/useMediaMin';
 import { usePagination } from 'hooks/ui/usePagination';
@@ -36,7 +36,7 @@ export const Pagination: FC<PaginationProps> = ({
     }
 
     const asPathWithoutQueryParams = router.asPath.split('?')[0];
-    const queryParams = getFilteredQueries(router.query);
+    const queryParams = getUrlQueriesWithoutDynamicPageQueries(router.query);
 
     const onChangePage = (pageNumber: number) => () => {
         if (paginationScrollTargetRef?.current) {

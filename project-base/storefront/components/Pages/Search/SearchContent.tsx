@@ -7,7 +7,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { BreadcrumbFragmentApi, SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
@@ -16,6 +15,7 @@ import { useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { CategoryDetailPageSkeleton } from '../CategoryDetail/CategoryDetailPageSkeleton';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
 
 enum NUMBER_OF_VISIBLE_ITEMS {
     XL = 8,

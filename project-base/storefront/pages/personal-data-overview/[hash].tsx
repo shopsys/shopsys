@@ -2,10 +2,9 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
 import { PersonalDataDetailContent } from 'components/Pages/PersonalData/Detail/PersonalDataDetailContent';
 import { PersonalDataDetailQueryDocumentApi, usePersonalDataDetailQueryApi } from 'graphql/generated';
-import { getServerSidePropsWrapper } from 'helpers/misc/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/misc/initServerSideProps';
-import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
-
+import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 

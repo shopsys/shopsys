@@ -9,7 +9,7 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { blurInput } from 'helpers/forms/blurInput';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -17,8 +17,8 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Translate } from 'next-translate';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { usePersistStore } from 'store/zustand/usePersistStore';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { usePersistStore } from 'store/usePersistStore';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import * as Yup from 'yup';
 
 type LoginProps = {

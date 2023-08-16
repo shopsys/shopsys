@@ -4,7 +4,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { CartItemFragmentApi } from 'graphql/generated';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 
 type CartListProps = {
     items?: CartItemFragmentApi[];

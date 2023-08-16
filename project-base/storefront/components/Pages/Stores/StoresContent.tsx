@@ -1,11 +1,11 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { InfoBox } from './InfoBox';
+import { StoreInfoBox } from './StoreInfoBox';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi, ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
-import { createMapMarker } from 'helpers/map/createMapMarker';
+import { createMapMarker } from 'helpers/createMapMarker';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -76,7 +76,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                             </Heading>
 
                             {selectedStore && (
-                                <InfoBox
+                                <StoreInfoBox
                                     closeInfoBoxCallback={() => setActiveStoreIndex(undefined)}
                                     store={selectedStore}
                                 />

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -82,7 +83,7 @@ class CountryFormType extends AbstractType
                 'label' => t('Display on'),
             ])
             ->add('priority', MultidomainType::class, [
-                'entry_type' => TextType::class,
+                'entry_type' => IntegerType::class,
                 'entry_options' => [
                     'attr' => [
                         'icon' => true,

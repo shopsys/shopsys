@@ -2,7 +2,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { Webline } from 'components/Layout/Webline/Webline';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { useSharedWishlist } from 'hooks/useWishlist';
 

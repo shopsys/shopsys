@@ -1,4 +1,4 @@
-import { showErrorMessage } from 'components/Helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts';
 import { CartQueryDocumentApi } from 'graphql/generated';
 import { removeTokensFromCookies } from 'helpers/auth/tokens';
 import { isFlashMessageError, isNoLogError } from 'helpers/errors/applicationErrors';
@@ -7,7 +7,7 @@ import { logException } from 'helpers/errors/logException';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
 import { ParsedErrors } from 'types/error';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { Exchange } from 'urql';
 import { pipe, tap } from 'wonka';
 

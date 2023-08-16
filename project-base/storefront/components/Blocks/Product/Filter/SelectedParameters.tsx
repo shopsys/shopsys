@@ -5,9 +5,9 @@ import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { useSessionStore } from 'store/useSessionStore';
 import { getHasDefaultFilters } from 'helpers/filterOptions/seoCategories';
-import { DefaultProductFiltersMapType } from 'store/zustand/slices/createSeoCategorySlice';
+import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';

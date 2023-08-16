@@ -1,13 +1,13 @@
-import { showErrorMessage } from 'components/Helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts';
 import { CartFragmentApi, useChangePaymentInCartMutationApi } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { onGtmPaymentChangeEventHandler } from 'helpers/gtm/eventHandlers';
-import { useGtmCartInfo } from 'helpers/gtm/gtm';
+import { onGtmPaymentChangeEventHandler } from 'gtm/helpers/eventHandlers';
+import { useGtmCartInfo } from 'gtm/helpers/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useLatest } from 'hooks/ui/useLatest';
 import { useCallback } from 'react';
-import { usePersistStore } from 'store/zustand/usePersistStore';
-import { GtmMessageOriginType } from 'types/gtm/enums';
+import { usePersistStore } from 'store/usePersistStore';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 
 export type ChangePaymentHandler = (
     newPaymentUuid: string | null,

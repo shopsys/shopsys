@@ -1,4 +1,4 @@
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import {
     useAddProductToComparisonMutationApi,
     useCleanComparisonMutationApi,
@@ -9,7 +9,7 @@ import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect, useRef, useState } from 'react';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 
 export const useComparison = () => {
     const t = useTypedTranslationFunction();

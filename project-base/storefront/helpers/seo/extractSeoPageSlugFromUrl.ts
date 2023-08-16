@@ -1,4 +1,4 @@
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import getConfig from 'next/config';
 import { StaticRewriteDomainPathsType } from 'types/staticPaths';
 

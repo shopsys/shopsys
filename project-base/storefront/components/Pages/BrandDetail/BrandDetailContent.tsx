@@ -2,7 +2,7 @@ import { BrandDetailProductsWrapper } from './BrandDetailProductsWrapper';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
-import { UserText } from 'components/Helpers/UserText/UserText';
+import { UserText } from 'components/Basic/UserText/UserText';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BrandDetailFragmentApi } from 'graphql/generated';
 import { useRef } from 'react';

@@ -3,9 +3,8 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAutocompleteSearchQueryApi } from 'graphql/generated';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-
-import { useGtmAutocompleteResultsViewEvent } from 'hooks/gtm/useGtmAutocompleteResultsViewEvent';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { useGtmAutocompleteResultsViewEvent } from 'gtm/hooks/useGtmAutocompleteResultsViewEvent';
 import { useDebounce } from 'hooks/helpers/useDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';

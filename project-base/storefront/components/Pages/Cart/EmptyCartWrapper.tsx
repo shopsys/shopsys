@@ -2,11 +2,11 @@ import { CartLoading } from './CartLoading';
 import { EmptyCart } from './EmptyCart';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { CurrentCartType } from 'types/cart';
 
 type EmptyCartWrapperProps = {

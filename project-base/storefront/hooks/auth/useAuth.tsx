@@ -1,10 +1,10 @@
-import { showSuccessMessage } from 'components/Helpers/toasts';
+import { showSuccessMessage } from 'helpers/toasts';
 import { Exact, LoginApi, LoginVariablesApi, LogoutApi, Maybe, useLoginApi, useLogoutApi } from 'graphql/generated';
-import { removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
-import { canUseDom } from 'helpers/misc/canUseDom';
+import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
+import { canUseDom } from 'helpers/canUseDom';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 import { OperationResult } from 'urql';
 
 export type LoginHandler = (
@@ -45,7 +45,7 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
             const accessToken = loginResult.data.Login.tokens.accessToken;
             const refreshToken = loginResult.data.Login.tokens.refreshToken;
 
-            setTokensToCookie(accessToken, refreshToken);
+            setTokensToCookies(accessToken, refreshToken);
 
             updateUserState({
                 cartUuid: null,

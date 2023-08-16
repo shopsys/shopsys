@@ -1,6 +1,6 @@
 import { UserConsentForm } from './UserConsentForm';
 import { useCallback, useState } from 'react';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { usePersistStore } from 'store/usePersistStore';
 
 const TEST_IDENTIFIER = 'blocks-userconsent';
 

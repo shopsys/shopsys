@@ -1,5 +1,5 @@
 import { ContactInformationFormWrapper } from './ContactInformationFormWrapper';
-import { useContactInformationFormMeta } from './formMeta';
+import { useContactInformationFormMeta } from './contactInformationFormMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
 import { Login } from 'components/Blocks/Popup/Login/Login';
@@ -13,15 +13,14 @@ import {
     usePrivacyPolicyArticleUrlQueryApi,
     useTermsAndConditionsArticleUrlQueryApi,
 } from 'graphql/generated';
-
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import Trans from 'next-translate/Trans';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
-import { usePersistStore } from 'store/zustand/usePersistStore';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
