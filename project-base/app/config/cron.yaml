@@ -81,10 +81,9 @@ services:
 
     # Products
 
-    # @todo mg remove?
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: default, readableName: 'Recalculate product prices' }
+            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: products, readableName: 'Recalculate product prices' }
 
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityImmediateCronModule:
         tags:
