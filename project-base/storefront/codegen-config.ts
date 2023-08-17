@@ -3,15 +3,34 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 const config: CodegenConfig = {
     overwrite: true,
     schema: 'schema.graphql',
+    // generates: {
+    //     'schema.graphql.json': {
+    //         plugins: ['introspection'],
+    //         config: {
+    //             minify: true,
+    //         },
+    //     },
     documents: './graphql/requests/**/*.graphql',
     generates: {
-        'schema.graphql.json': {
-            plugins: ['introspection'],
+        './graphql/requests/types.ts': {
+            plugins: ['typescript', 'fragment-matcher'],
             config: {
-                minify: true,
+                typesSuffix: 'Api',
+                // withHooks: true,
+                // withHOC: false,
+                // withComponent: false,
+                // scalars: {
+                //     Money: 'string',
+                //     Uuid: 'string',
+                // },
+                avoidOptionals: true,
+                // omitOperationSuffix: true,
             },
         },
-        './graphql/generated/index.tsx': {
+        './graphql/requests/': {
+            preset: 'near-operation-file',
+            presetConfig: { extension: '.generated.tsx', baseTypesPath: 'types.ts' },
+            plugins: ['typescript-operations', 'typescript-urql', 'fragment-matcher'],
             config: {
                 typesSuffix: 'Api',
                 withHooks: true,
@@ -24,7 +43,6 @@ const config: CodegenConfig = {
                 avoidOptionals: true,
                 omitOperationSuffix: true,
             },
-            plugins: ['typescript', 'typescript-operations', 'fragment-matcher', 'typescript-urql'],
         },
     },
 };

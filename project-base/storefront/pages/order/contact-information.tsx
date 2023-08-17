@@ -11,7 +11,6 @@ import {
     useContactInformationFormMeta,
 } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { handleCartModifications, useCurrentCart } from 'connectors/cart/Cart';
-import { useCreateOrderMutationApi } from 'graphql/generated';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import {
     getGtmCreateOrderEventOrderPart,
@@ -41,6 +40,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { CustomerTypeEnum } from 'types/customer';
 import { GtmMessageOriginType, GtmPageType } from 'gtm/types/enums';
 import dynamic from 'next/dynamic';
+import { useCreateOrderMutationApi } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

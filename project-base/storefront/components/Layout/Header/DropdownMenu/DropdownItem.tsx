@@ -1,11 +1,9 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenuContext';
 import { DropdownSlideRight } from 'components/Layout/Header/DropdownMenu/DropdownSlideRight';
-import {
-    CategoriesByColumnFragmentApi,
-    ColumnCategoryFragmentApi,
-    NavigationSubCategoriesLinkFragmentApi,
-} from 'graphql/generated';
+import { NavigationSubCategoriesLinkFragmentApi } from 'graphql/requests/categories/fragments/NavigationSubCategoriesLinkFragment.generated';
+import { CategoriesByColumnFragmentApi } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
+import { ColumnCategoryFragmentApi } from 'graphql/requests/navigation/fragments/ColumnCategoryFragment.generated';
 import { useContext, useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { DropdownItemType } from 'types/dropdown';

@@ -4,15 +4,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
-import {
-    FlagDetailQueryApi,
-    FlagDetailQueryDocumentApi,
-    FlagDetailQueryVariablesApi,
-    FlagProductsQueryApi,
-    FlagProductsQueryDocumentApi,
-    FlagProductsQueryVariablesApi,
-    useFlagDetailQueryApi,
-} from 'graphql/generated';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
@@ -37,6 +28,17 @@ import {
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore';
+import {
+    useFlagDetailQueryApi,
+    FlagDetailQueryApi,
+    FlagDetailQueryVariablesApi,
+    FlagDetailQueryDocumentApi,
+} from 'graphql/requests/flags/queries/FlagDetailQuery.generated';
+import {
+    FlagProductsQueryApi,
+    FlagProductsQueryVariablesApi,
+    FlagProductsQueryDocumentApi,
+} from 'graphql/requests/products/queries/FlagProductsQuery.generated';
 
 const FlagDetailPage: NextPage = () => {
     const router = useRouter();

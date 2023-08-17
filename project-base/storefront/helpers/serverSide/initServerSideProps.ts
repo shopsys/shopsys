@@ -1,17 +1,6 @@
 import { logException } from '../errors/logException';
 import { createClient } from 'urql/createClient';
 import { DocumentNode } from 'graphql';
-import {
-    AdvertsQueryDocumentApi,
-    ArticlePlacementTypeEnumApi,
-    ArticlesQueryDocumentApi,
-    CurrentCustomerUserQueryDocumentApi,
-    NavigationQueryDocumentApi,
-    NotificationBarsDocumentApi,
-    ProductsByCatnumsDocumentApi,
-    SeoPageQueryDocumentApi,
-    SettingsQueryDocumentApi,
-} from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { getServerSideInternationalizedStaticUrl } from 'helpers/getInternationalizedStaticUrls';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
@@ -24,6 +13,15 @@ import { parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { Translate } from 'next-translate';
 import { isUserLoggedInSSR } from 'helpers/auth/isUserLoggedInSSR';
 import { getUnauthenticatedRedirectSSR } from 'helpers/auth/getUnauthenticatedRedirectSSR';
+import { AdvertsQueryDocumentApi } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
+import { ArticlesQueryDocumentApi } from 'graphql/requests/articlesInterface/articles/queries/ArticlesQuery.generated';
+import { CurrentCustomerUserQueryDocumentApi } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
+import { NavigationQueryDocumentApi } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
+import { NotificationBarsDocumentApi } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
+import { ProductsByCatnumsDocumentApi } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
+import { SeoPageQueryDocumentApi } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
+import { SettingsQueryDocumentApi } from 'graphql/requests/settings/queries/SettingsQuery.generated';
+import { ArticlePlacementTypeEnumApi } from 'graphql/requests/types';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;

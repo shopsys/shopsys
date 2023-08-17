@@ -7,12 +7,6 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import {
-    ListedStoreFragmentApi,
-    SimplePaymentFragmentApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-    useGoPaySwiftsQueryApi,
-} from 'graphql/generated';
 import { logException } from 'helpers/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
@@ -23,6 +17,10 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import getConfig from 'next/config';
 import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { SimplePaymentFragmentApi } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { useGoPaySwiftsQueryApi } from 'graphql/requests/payments/queries/GoPaySwiftsQuery.generated';
+import { ListedStoreFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 
 const { publicRuntimeConfig } = getConfig();
 

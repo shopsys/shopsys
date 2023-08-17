@@ -9,7 +9,6 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { BreadcrumbFragmentApi, useRegistrationMutationApi } from 'graphql/generated';
 import { setTokensToCookies } from 'helpers/auth/tokens';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
@@ -23,6 +22,8 @@ import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
 import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { useRegistrationMutationApi } from 'graphql/requests/registration/mutations/RegistrationMutation.generated';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

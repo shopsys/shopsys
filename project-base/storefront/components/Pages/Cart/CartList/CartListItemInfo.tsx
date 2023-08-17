@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { CartItemFragmentApi } from 'graphql/generated';
+import { CartItemFragmentApi } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 
 type CartListItemInfoProps = {

@@ -1,6 +1,5 @@
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { GtmConsent, GtmPageType, GtmUserStatus, GtmUserType } from './enums';
-import { BreadcrumbFragmentApi } from 'graphql/generated';
-
 export type GtmReviewConsentsType = {
     seznam: boolean;
     google: boolean;

@@ -1,9 +1,9 @@
 import { ProductVariantsTableRow } from './ProductVariantsTableRow';
 import { Variant } from './Variant';
-import { MainVariantDetailFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
+import { MainVariantDetailFragmentApi } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 
 type ProductVariantsTableProps = {
     variants: MainVariantDetailFragmentApi['variants'];

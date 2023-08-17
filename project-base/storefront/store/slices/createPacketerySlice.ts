@@ -1,4 +1,4 @@
-import { ListedStoreFragmentApi } from 'graphql/generated';
+import { ListedStoreFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 import { StateCreator } from 'zustand';
 
 export type PacketerySlice = {

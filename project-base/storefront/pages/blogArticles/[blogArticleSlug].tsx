@@ -3,13 +3,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
 import { BlogArticlePageSkeleton } from 'components/Pages/BlogArticle/BlogArticlePageSkeleton';
-import {
-    BlogArticleDetailQueryApi,
-    BlogArticleDetailQueryDocumentApi,
-    BlogArticleDetailQueryVariablesApi,
-    ProductsByCatnumsDocumentApi,
-    useBlogArticleDetailQueryApi,
-} from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
@@ -21,6 +14,13 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { parseCatnums } from 'helpers/parsing/grapesJsParser';
+import {
+    useBlogArticleDetailQueryApi,
+    BlogArticleDetailQueryApi,
+    BlogArticleDetailQueryVariablesApi,
+    BlogArticleDetailQueryDocumentApi,
+} from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticleDetailQuery.generated';
+import { ProductsByCatnumsDocumentApi } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 
 const BlogArticleDetailPage: NextPage = () => {
     const router = useRouter();

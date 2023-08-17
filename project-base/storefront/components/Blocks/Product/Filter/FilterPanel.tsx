@@ -5,10 +5,11 @@ import { FilterGroupPrice } from './FilterGroupPrice';
 import { SelectedParameters } from './SelectedParameters';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Button } from 'components/Forms/Button/Button';
-import { ProductFilterOptionsFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { memo } from 'react';
 import { ParametersType } from 'types/productFilter';
+import { ProductFilterOptionsFragmentApi } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
+import { ProductOrderingModeEnumApi } from 'graphql/requests/types';
 
 type FilterPanelProps = {
     productFilterOptions: ProductFilterOptionsFragmentApi;

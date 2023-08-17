@@ -1,4 +1,4 @@
-import { ImageSizesFragmentApi } from 'graphql/generated';
+import { ImageSizesFragmentApi } from 'graphql/requests/images/fragments/ImageSizesFragment.generated';
 
 export type ListedItemPropType = (
     | {

@@ -4,13 +4,14 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
-import { ListedProductConnectionPreviewFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { ListedProductConnectionPreviewFragmentApi } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
+import { ProductOrderingModeEnumApi } from 'graphql/requests/types';
 
 type ProductsSearchProps = {
     productsSearch: ListedProductConnectionPreviewFragmentApi;

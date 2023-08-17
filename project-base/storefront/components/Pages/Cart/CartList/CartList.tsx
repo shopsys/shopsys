@@ -1,10 +1,10 @@
 import { CartListItem } from './CartListItem';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { CartItemFragmentApi } from 'graphql/generated';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { CartItemFragmentApi } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 
 type CartListProps = {
     items?: CartItemFragmentApi[];

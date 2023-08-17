@@ -1,4 +1,3 @@
-import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -13,6 +12,7 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/ini
 import { useRouter } from 'next/router';
 import SharedWishlist from 'components/Pages/Wishlist/SharedWishlist';
 import { Wishlist } from 'components/Pages/Wishlist/Wishlist';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 
 const WishlistPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

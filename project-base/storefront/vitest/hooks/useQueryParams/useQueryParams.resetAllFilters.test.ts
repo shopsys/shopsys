@@ -1,4 +1,4 @@
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnumApi } from 'graphql/requests/types';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,

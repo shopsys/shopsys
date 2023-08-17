@@ -1,7 +1,8 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PaymentConfirmationContent } from 'components/Pages/Order/PaymentConfirmation/PaymentConfirmationContent';
-import { OrderSentPageContentDocumentApi, useCheckPaymentStatusMutationApi } from 'graphql/generated';
+import { useCheckPaymentStatusMutationApi } from 'graphql/requests/orders/mutations/CheckPaymentStatusMutation.generated';
+import { OrderSentPageContentDocumentApi } from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
 import { onGtmCreateOrderEventHandler, onGtmPaymentFailEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmCreateOrderEventFromLocalStorage } from 'gtm/helpers/helpers';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';

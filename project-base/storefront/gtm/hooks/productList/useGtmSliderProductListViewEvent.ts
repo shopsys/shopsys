@@ -1,9 +1,9 @@
-import { ListedProductFragmentApi } from 'graphql/generated';
 import { getGtmProductListViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useEffect, useRef } from 'react';
 import { GtmProductListNameType } from 'gtm/types/enums';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 
 export const useGtmSliderProductListViewEvent = (
     products: ListedProductFragmentApi[] | undefined,

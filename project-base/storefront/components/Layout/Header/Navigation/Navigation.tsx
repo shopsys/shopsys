@@ -1,6 +1,5 @@
+import { useNavigationQueryApi } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { NavigationItem } from './NavigationItem';
-import { useNavigationQueryApi } from 'graphql/generated';
-
 const TEST_IDENTIFIER = 'layout-header-navigation';
 
 export const Navigation: FC = () => {

@@ -1,4 +1,4 @@
-import { NavigationQueryApi } from 'graphql/generated';
+import { NavigationQueryApi } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 
 export type DropdownListLevels = 'primary' | 'secondary' | 'tertiary';
 

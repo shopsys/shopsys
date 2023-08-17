@@ -6,7 +6,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
 import { TransportAndPaymentContent } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentContent';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useLastOrderQueryApi, useTransportsQueryApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
@@ -19,6 +18,8 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmPageType } from 'gtm/types/enums';
 import Head from 'next/head';
+import { useLastOrderQueryApi } from 'graphql/requests/orders/queries/LastOrderQuery.generated';
+import { useTransportsQueryApi } from 'graphql/requests/transports/queries/TransportsQuery.generated';
 
 const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

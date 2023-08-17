@@ -1,4 +1,4 @@
-import { ProductFilterApi } from 'graphql/generated';
+import { ProductFilterApi } from 'graphql/requests/types';
 import { mapParametersFilter } from './mapParametersFilter';
 
 export const getMappedProductFilter = (filterUrlQuery: string | string[] | undefined): ProductFilterApi | null => {

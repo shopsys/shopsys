@@ -1,6 +1,5 @@
+import { CartItemFragmentApi } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { SingleProduct } from './SingleProduct';
-import { CartItemFragmentApi } from 'graphql/generated';
-
 type ProductsPreviewProps = {
     cartItems: CartItemFragmentApi[];
 };

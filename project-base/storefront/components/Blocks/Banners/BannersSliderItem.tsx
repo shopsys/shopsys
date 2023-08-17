@@ -1,5 +1,6 @@
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { ImageSizeFragmentApi, SliderItemFragmentApi } from 'graphql/generated';
+import { ImageSizeFragmentApi } from 'graphql/requests/images/fragments/ImageSizeFragment.generated';
+import { SliderItemFragmentApi } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 
 type BannersSliderItemProps = {

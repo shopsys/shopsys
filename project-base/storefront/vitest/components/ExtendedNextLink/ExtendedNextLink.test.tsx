@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnumApi } from 'graphql/requests/types';
 import { describe, expect, test } from 'vitest';
 
 describe('ExtendedNextLink snapshot tests', () => {

@@ -3,12 +3,6 @@ import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrdersContent } from 'components/Pages/Customer/OrdersContent';
-import {
-    BreadcrumbFragmentApi,
-    ListedOrderFragmentApi,
-    OrdersQueryDocumentApi,
-    useOrdersQueryApi,
-} from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
@@ -22,6 +16,9 @@ import { useQueryParams } from 'hooks/useQueryParams';
 import { useMemo } from 'react';
 import { GtmPageType } from 'gtm/types/enums';
 import { getNumberFromUrlQuery } from 'helpers/parsing/urlParsing';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { ListedOrderFragmentApi } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
+import { useOrdersQueryApi, OrdersQueryDocumentApi } from 'graphql/requests/orders/queries/OrdersQuery.generated';
 
 const OrdersPage: FC = () => {
     const t = useTypedTranslationFunction();

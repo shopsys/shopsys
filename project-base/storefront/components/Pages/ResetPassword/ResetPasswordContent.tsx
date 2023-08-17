@@ -5,7 +5,6 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { BreadcrumbFragmentApi, usePasswordRecoveryMutationApi } from 'graphql/generated';
 import 'helpers/getInternationalizedStaticUrls';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
@@ -18,6 +17,8 @@ import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
 import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { usePasswordRecoveryMutationApi } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.generated';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

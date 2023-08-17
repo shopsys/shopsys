@@ -1,7 +1,7 @@
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Basic/UserText/UserText';
-import { ParameterFragmentApi } from 'graphql/generated';
+import { ParameterFragmentApi } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 
 type ProductDetailTabsProps = {

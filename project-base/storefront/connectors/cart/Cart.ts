@@ -1,21 +1,19 @@
 import { showInfoMessage } from 'helpers/toasts';
-import {
-    CartItemModificationsFragmentApi,
-    CartModificationsFragmentApi,
-    CartPaymentModificationsFragmentApi,
-    CartPromoCodeModificationsFragmentApi,
-    CartTransportModificationsFragmentApi,
-    ListedStoreFragmentApi,
-    Maybe,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-    useCartQueryApi,
-} from 'graphql/generated';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { Translate } from 'next-translate';
 import { usePersistStore } from 'store/usePersistStore';
 import { CurrentCartType } from 'types/cart';
 import { GtmMessageOriginType } from 'gtm/types/enums';
+import { CartItemModificationsFragmentApi } from 'graphql/requests/cart/fragments/CartItemModificationsFragment.generated';
+import { CartModificationsFragmentApi } from 'graphql/requests/cart/fragments/CartModificationsFragment.generated';
+import { CartPaymentModificationsFragmentApi } from 'graphql/requests/cart/fragments/CartPaymentModificationsFragment.generated';
+import { CartPromoCodeModificationsFragmentApi } from 'graphql/requests/cart/fragments/CartPromoCodeModificationsFragment.generated';
+import { CartTransportModificationsFragmentApi } from 'graphql/requests/cart/fragments/CartTransportModificationsFragment.generated';
+import { useCartQueryApi } from 'graphql/requests/cart/queries/CartQuery.generated';
+import { ListedStoreFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import { Maybe } from 'graphql/requests/types';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const isUserLoggedIn = !!useCurrentCustomerData();

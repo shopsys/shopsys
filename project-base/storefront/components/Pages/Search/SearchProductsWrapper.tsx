@@ -5,8 +5,7 @@ import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGt
 import { RefObject } from 'react';
 import { GtmProductListNameType } from 'gtm/types/enums';
 import { useSearchProductsData } from './helpers';
-import { ListedProductConnectionPreviewFragmentApi } from 'graphql/generated';
-
+import { ListedProductConnectionPreviewFragmentApi } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
 type SearchProductsWrapperProps = {
     paginationScrollTargetRef: RefObject<HTMLDivElement>;
     productsSearch: ListedProductConnectionPreviewFragmentApi;

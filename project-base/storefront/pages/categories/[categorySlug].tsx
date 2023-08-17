@@ -6,12 +6,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
 import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { useCategoryDetailData } from 'components/Pages/CategoryDetail/helpers';
-import {
-    CategoryDetailQueryApi,
-    CategoryDetailQueryVariablesApi,
-    CategoryDetailQueryDocumentApi,
-    CategoryProductsQueryDocumentApi,
-} from 'graphql/generated';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { useHandleDefaultFiltersUpdate } from 'helpers/filterOptions/seoCategories';
@@ -37,6 +31,12 @@ import {
     getProductListSortFromUrlQuery,
     getSlugFromServerSideUrl,
 } from 'helpers/parsing/urlParsing';
+import {
+    CategoryDetailQueryApi,
+    CategoryDetailQueryVariablesApi,
+    CategoryDetailQueryDocumentApi,
+} from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
+import { CategoryProductsQueryDocumentApi } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 
 const CategoryDetailPage: NextPage = () => {
     const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);

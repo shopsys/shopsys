@@ -9,7 +9,6 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { showSuccessMessage } from 'helpers/toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useContactMutationApi, usePrivacyPolicyArticleUrlQueryApi, useSettingsQueryApi } from 'graphql/generated';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
@@ -20,6 +19,9 @@ import React, { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
 import { GtmMessageOriginType } from 'gtm/types/enums';
+import { usePrivacyPolicyArticleUrlQueryApi } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
+import { useContactMutationApi } from 'graphql/requests/contact/mutations/ContactMutation.generated';
+import { useSettingsQueryApi } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

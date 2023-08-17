@@ -1,5 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
-import { AvailabilityStatusEnumApi, ProductDetailFragmentApi } from 'graphql/generated';
+import { ProductDetailFragmentApi } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { AvailabilityStatusEnumApi } from 'graphql/requests/types';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { RefObject } from 'react';
 import { twJoin } from 'tailwind-merge';

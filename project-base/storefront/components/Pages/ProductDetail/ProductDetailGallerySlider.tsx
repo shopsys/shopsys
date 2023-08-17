@@ -1,7 +1,9 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
-import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
+import { SimpleFlagFragmentApi } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
+import { ImageSizesFragmentApi } from 'graphql/requests/images/fragments/ImageSizesFragment.generated';
+import { VideoTokenFragmentApi } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 

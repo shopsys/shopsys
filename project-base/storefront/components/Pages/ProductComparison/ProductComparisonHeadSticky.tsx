@@ -1,5 +1,5 @@
 import { Image } from 'components/Basic/Image/Image';
-import { ComparedProductFragmentApi } from 'graphql/generated';
+import { ComparedProductFragmentApi } from 'graphql/requests/products/fragments/ComparedProductFragment.generated';
 import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import { twJoin } from 'tailwind-merge';
 

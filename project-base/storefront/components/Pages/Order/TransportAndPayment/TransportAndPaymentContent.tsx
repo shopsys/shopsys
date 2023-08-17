@@ -1,12 +1,6 @@
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import {
-    LastOrderFragmentApi,
-    ListedStoreFragmentApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-    useStoreQueryApi,
-} from 'graphql/generated';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'gtm/helpers/mappers';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
@@ -19,6 +13,10 @@ import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType } from 'gtm/types/enums';
+import { LastOrderFragmentApi } from 'graphql/requests/orders/fragments/LastOrderFragment.generated';
+import { ListedStoreFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { useStoreQueryApi } from 'graphql/requests/stores/queries/StoreQuery.generated';
+import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

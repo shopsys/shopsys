@@ -4,8 +4,8 @@ import { Image } from 'components/Basic/Image/Image';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { UserText } from 'components/Basic/UserText/UserText';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BrandDetailFragmentApi } from 'graphql/generated';
 import { useRef } from 'react';
+import { BrandDetailFragmentApi } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
 
 type BrandDetailContentProps = {
     brand: BrandDetailFragmentApi;

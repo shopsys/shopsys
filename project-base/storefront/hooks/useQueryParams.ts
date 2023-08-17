@@ -1,4 +1,3 @@
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import {
     getQueryWithoutSlugTypeParameterFromParsedUrlQuery,
     getUrlQueriesWithoutDynamicPageQueries,
@@ -26,6 +25,7 @@ import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
 import { getDynamicPageQueryKey } from 'helpers/parsing/urlParsing';
+import { ProductOrderingModeEnumApi } from 'graphql/requests/types';
 
 export type FilterQueries = FilterOptionsUrlQueryType | undefined;
 

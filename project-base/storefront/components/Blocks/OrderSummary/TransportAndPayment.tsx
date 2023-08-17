@@ -5,8 +5,9 @@ import {
     OrderSummaryTextAndImage,
 } from './OrderSummaryElements';
 import { Image } from 'components/Basic/Image/Image';
-import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
+import { SimplePaymentFragmentApi } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 
 type TransportAndPaymentProps = {
     transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null;

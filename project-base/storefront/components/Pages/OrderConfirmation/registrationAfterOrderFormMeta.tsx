@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'components/Basic/Link/Link';
-import { useTermsAndConditionsArticleUrlQueryApi } from 'graphql/generated';
+import { useTermsAndConditionsArticleUrlQueryApi } from 'graphql/requests/articles/queries/TermsAndConditionsArticleUrlQuery.generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';

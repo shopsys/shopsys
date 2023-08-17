@@ -5,9 +5,9 @@ import {
     OrderSummaryRowWrapper,
     OrderSummaryTextAndImage,
 } from './OrderSummaryElements';
-import { PriceFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { PriceFragmentApi } from 'graphql/requests/prices/fragments/PriceFragment.generated';
 
 type PromoCodeProps = {
     promoCode: string;

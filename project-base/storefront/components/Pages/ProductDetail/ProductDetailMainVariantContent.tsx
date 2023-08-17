@@ -10,13 +10,14 @@ import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductVariantsTable } from './ProductVariantsTable/ProductVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { ImageSizesFragmentApi, MainVariantDetailFragmentApi } from 'graphql/generated';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { ProductDetailGallery } from './ProductDetailGallery';
+import { MainVariantDetailFragmentApi } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { ImageSizesFragmentApi } from 'graphql/requests/images/fragments/ImageSizesFragment.generated';
 
 type ProductDetailMainVariantContentProps = {
     product: MainVariantDetailFragmentApi;

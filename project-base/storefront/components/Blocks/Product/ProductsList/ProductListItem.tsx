@@ -6,7 +6,6 @@ import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAv
 import { ProductExposedStoresCount } from 'components/Blocks/Product/ProductExposedStoresCount';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
-import { ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
@@ -17,6 +16,7 @@ import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
 import { FunctionComponentProps } from 'types/globals';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 
 type ProductItemProps = {
     product: ListedProductFragmentApi;

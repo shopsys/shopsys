@@ -1,4 +1,7 @@
-import { CurrentCustomerUserQueryApi, CurrentCustomerUserQueryDocumentApi } from 'graphql/generated';
+import {
+    CurrentCustomerUserQueryApi,
+    CurrentCustomerUserQueryDocumentApi,
+} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { Client } from 'urql';
 
 export const isUserLoggedInSSR = (currentClient: Client): boolean => {

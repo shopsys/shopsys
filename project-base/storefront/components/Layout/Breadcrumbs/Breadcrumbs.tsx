@@ -2,7 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BreadcrumbFragmentApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Fragment } from 'react';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';

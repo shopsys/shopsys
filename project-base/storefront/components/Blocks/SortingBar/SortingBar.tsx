@@ -1,7 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { DEFAULT_SORT } from 'helpers/filterOptions/seoCategories';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -11,6 +10,7 @@ import { useQueryParams } from 'hooks/useQueryParams';
 import { useRouter } from 'next/router';
 import { MouseEventHandler, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { ProductOrderingModeEnumApi } from 'graphql/requests/types';
 
 type SortingBarProps = {
     totalCount: number;

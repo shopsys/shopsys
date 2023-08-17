@@ -1,4 +1,4 @@
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnumApi } from 'graphql/requests/types';
 import { getEmptyDefaultProductFiltersMap } from 'helpers/filterOptions/seoCategories';
 import { StateCreator } from 'zustand';
 

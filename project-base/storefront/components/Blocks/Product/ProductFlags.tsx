@@ -1,4 +1,4 @@
-import { SimpleFlagFragmentApi } from 'graphql/generated';
+import { SimpleFlagFragmentApi } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import tinycolor from 'tinycolor2';
 

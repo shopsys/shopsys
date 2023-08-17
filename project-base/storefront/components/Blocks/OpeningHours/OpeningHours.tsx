@@ -1,7 +1,7 @@
-import { OpeningHoursApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'helpers/twMerge';
+import { OpeningHoursApi } from 'graphql/requests/types';
 
 export const OpeningHours: FC<{ openingHours: OpeningHoursApi }> = ({ openingHours, className }) => {
     const t = useTypedTranslationFunction();

@@ -13,7 +13,6 @@ import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { ProductDetailFragmentApi } from 'graphql/generated';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useComparison } from 'hooks/comparison/useComparison';
 import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
@@ -23,6 +22,7 @@ import { Fragment, useRef } from 'react';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { useWishlist } from 'hooks/useWishlist';
 import { ProductDetailGallery } from './ProductDetailGallery';
+import { ProductDetailFragmentApi } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 
 type ProductDetailContentProps = {
     product: ProductDetailFragmentApi;

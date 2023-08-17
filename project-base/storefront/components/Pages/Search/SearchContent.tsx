@@ -5,7 +5,6 @@ import { Button } from 'components/Forms/Button/Button';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
-import { BreadcrumbFragmentApi, SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
@@ -16,6 +15,9 @@ import { twJoin } from 'tailwind-merge';
 import { CategoryDetailPageSkeleton } from '../CategoryDetail/CategoryDetailPageSkeleton';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { SimpleCategoryFragmentApi } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
+import { SearchQueryApi } from 'graphql/requests/search/queries/SearchQuery.generated';
 
 enum NUMBER_OF_VISIBLE_ITEMS {
     XL = 8,

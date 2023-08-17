@@ -2,9 +2,9 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { BlogCategoryArticlesWrapper } from './BlogCategoryArticlesWrapper';
 import { BlogSignpost } from 'components/Blocks/BlogSignpost/BlogSignpost';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BlogCategoryDetailFragmentApi } from 'graphql/generated';
 import { useRef } from 'react';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { BlogCategoryDetailFragmentApi } from 'graphql/requests/blogCategories/fragments/BlogCategoryDetailFragment.generated';
 
 type BlogCategoryContentProps = {
     blogCategory: BlogCategoryDetailFragmentApi;

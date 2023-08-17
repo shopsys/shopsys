@@ -1,8 +1,8 @@
+import { DeliveryAddressFragmentApi } from 'graphql/requests/customer/fragments/DeliveryAddressFragment.generated';
 import {
     useCurrentCustomerUserQueryApi,
     CurrentCustomerUserQueryApi,
-    DeliveryAddressFragmentApi,
-} from 'graphql/generated';
+} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { useMemo } from 'react';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 

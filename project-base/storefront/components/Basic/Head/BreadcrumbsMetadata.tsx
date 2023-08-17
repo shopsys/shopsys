@@ -1,4 +1,4 @@
-import { BreadcrumbFragmentApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import Head from 'next/head';

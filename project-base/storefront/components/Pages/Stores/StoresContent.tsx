@@ -4,7 +4,6 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { BreadcrumbFragmentApi, ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { createMapMarker } from 'helpers/createMapMarker';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -13,6 +12,9 @@ import Image from 'next/image';
 import { useCallback, useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { MapMarker } from 'types/map';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { ListedStoreConnectionFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreConnectionFragment.generated';
+import { ListedStoreFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 
 type StoresContentProps = {
     stores: ListedStoreConnectionFragmentApi;

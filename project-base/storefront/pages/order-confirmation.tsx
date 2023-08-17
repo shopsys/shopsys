@@ -4,11 +4,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
-import {
-    OrderSentPageContentDocumentApi,
-    useIsCustomerUserRegisteredQueryApi,
-    useOrderSentPageContentApi,
-} from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
@@ -20,6 +15,11 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useRouter } from 'next/router';
 import { GtmPageType } from 'gtm/types/enums';
 import { PaymentTypeEnum } from 'types/payment';
+import { useIsCustomerUserRegisteredQueryApi } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
+import {
+    useOrderSentPageContentApi,
+    OrderSentPageContentDocumentApi,
+} from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
 
 export type OrderConfirmationQuery = {
     orderUuid: string | undefined;

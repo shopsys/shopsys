@@ -1,17 +1,5 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import {
-    BrandProductsQueryDocumentApi,
-    BrandProductsQueryVariablesApi,
-    CategoryProductsQueryDocumentApi,
-    CategoryProductsQueryVariablesApi,
-    FlagProductsQueryDocumentApi,
-    FlagProductsQueryVariablesApi,
-    ListedProductConnectionFragmentApi,
-    Maybe,
-    ProductFilterApi,
-    ProductOrderingModeEnumApi,
-} from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
@@ -21,6 +9,20 @@ import { ParsedUrlQuery } from 'querystring';
 import { useRef, useState, useEffect } from 'react';
 import { Client, useClient } from 'urql';
 import { getSlugFromUrl, getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
+import { ListedProductConnectionFragmentApi } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
+import {
+    BrandProductsQueryDocumentApi,
+    BrandProductsQueryVariablesApi,
+} from 'graphql/requests/products/queries/BrandProductsQuery.generated';
+import {
+    CategoryProductsQueryDocumentApi,
+    CategoryProductsQueryVariablesApi,
+} from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
+import {
+    FlagProductsQueryDocumentApi,
+    FlagProductsQueryVariablesApi,
+} from 'graphql/requests/products/queries/FlagProductsQuery.generated';
+import { ProductOrderingModeEnumApi, ProductFilterApi, Maybe } from 'graphql/requests/types';
 
 const PRODUCT_LIST_LIMIT = 100;
 

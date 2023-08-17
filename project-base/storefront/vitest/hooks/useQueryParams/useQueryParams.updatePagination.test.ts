@@ -1,4 +1,4 @@
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { ProductOrderingModeEnumApi } from 'graphql/requests/types';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { describe, expect, test, vi } from 'vitest';

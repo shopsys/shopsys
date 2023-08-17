@@ -1,6 +1,5 @@
 import { showErrorMessage } from 'helpers/toasts';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { AddToCartMutationApi, useAddToCartMutationApi } from 'graphql/generated';
 import { onGtmChangeCartItemEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmMappedCart } from 'gtm/helpers/gtm';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
@@ -9,6 +8,10 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import {
+    AddToCartMutationApi,
+    useAddToCartMutationApi,
+} from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
 
 export type AddToCartAction = (
     productUuid: string,

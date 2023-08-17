@@ -4,13 +4,13 @@ import { ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { ComparedProductFragmentApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/canUseDom';
 import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'helpers/twMerge';
+import { ComparedProductFragmentApi } from 'graphql/requests/products/fragments/ComparedProductFragment.generated';
 
 type ProductComparisonContentProps = {
     productsCompare: ComparedProductFragmentApi[];

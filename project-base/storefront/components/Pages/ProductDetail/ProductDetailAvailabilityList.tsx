@@ -1,7 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { AvailabilityStatusEnumApi, StoreAvailabilityFragmentApi } from 'graphql/generated';
+import { StoreAvailabilityFragmentApi } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
+import { AvailabilityStatusEnumApi } from 'graphql/requests/types';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';

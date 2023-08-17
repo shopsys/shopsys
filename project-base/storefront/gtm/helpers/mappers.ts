@@ -1,16 +1,14 @@
-import {
-    CartItemFragmentApi,
-    LastOrderFragmentApi,
-    ListedProductFragmentApi,
-    ListedStoreFragmentApi,
-    MainVariantDetailFragmentApi,
-    ProductDetailFragmentApi,
-    SimpleProductFragmentApi,
-} from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'gtm/types/objects';
 import { ProductInterfaceType } from 'types/product';
+import { CartItemFragmentApi } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { LastOrderFragmentApi } from 'graphql/requests/orders/fragments/LastOrderFragment.generated';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { MainVariantDetailFragmentApi } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { ProductDetailFragmentApi } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { SimpleProductFragmentApi } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
+import { ListedStoreFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 
 export const mapGtmCartItemType = (
     cartItem: CartItemFragmentApi,

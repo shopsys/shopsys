@@ -1,4 +1,5 @@
-import { useSeoPageQueryApi, useSettingsQueryApi } from 'graphql/generated';
+import { useSeoPageQueryApi } from 'graphql/requests/seoPage/queries/SeoPageQuery.generated';
+import { useSettingsQueryApi } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
 import { generateCanonicalUrl } from 'helpers/seo/generateCanonicalUrl';
 import { useDomainConfig } from 'hooks/useDomainConfig';

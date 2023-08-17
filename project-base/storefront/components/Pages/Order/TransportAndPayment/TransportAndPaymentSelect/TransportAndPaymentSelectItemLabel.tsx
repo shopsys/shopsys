@@ -1,8 +1,8 @@
-import { ListedStoreFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Translate } from 'next-translate';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
+import { ListedStoreFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 
 type TransportAndPaymentSelectItemLabelProps = {
     name: string;

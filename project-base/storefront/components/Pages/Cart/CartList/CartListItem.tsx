@@ -3,12 +3,12 @@ import { CartListItemInfo } from './CartListItemInfo';
 import { Image } from 'components/Basic/Image/Image';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
-import { CartItemFragmentApi } from 'graphql/generated';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { AddToCartAction } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { MouseEventHandler, useRef } from 'react';
+import { CartItemFragmentApi } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 
 type CartListItemProps = {
     item: CartItemFragmentApi;

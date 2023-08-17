@@ -2,13 +2,13 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
-import { CartItemFragmentApi } from 'graphql/generated';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
+import { CartItemFragmentApi } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 
 const AddToCartPopup = dynamic(() =>
     import('components/Blocks/Product/AddToCartPopup').then((component) => component.AddToCartPopup),

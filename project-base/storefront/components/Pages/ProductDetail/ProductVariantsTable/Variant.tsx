@@ -4,13 +4,13 @@ import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { ProductExposedStoresCount } from 'components/Blocks/Product/ProductExposedStoresCount';
 import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailAvailabilityList';
-import { MainVariantDetailFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
+import { MainVariantDetailFragmentApi } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 

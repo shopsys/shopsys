@@ -1,4 +1,3 @@
-import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useRouter } from 'next/router';
@@ -36,3 +35,6 @@ export const getServerSideProps = getServerSidePropsWrapper(
 );
 
 export default PaymentStatusNotifyPage;
+function useCheckPaymentStatusMutationApi(): [any, any] {
+    throw new Error('Function not implemented.');
+}

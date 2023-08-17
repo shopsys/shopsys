@@ -1,19 +1,17 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
-import {
-    ProductOrderingModeEnumApi,
-    Maybe,
-    ProductFilterApi,
-    SearchProductsQueryApi,
-    SearchProductsQueryVariablesApi,
-    SearchProductsQueryDocumentApi,
-    ListedProductConnectionFragmentApi,
-} from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { calculatePageSize, getPageSizeInfo, hasReadAllProductsFromCache, mergeProductEdges } from 'helpers/loadMore';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useRef, useState, useEffect } from 'react';
 import { useClient, Client } from 'urql';
+import { ListedProductConnectionFragmentApi } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
+import {
+    SearchProductsQueryVariablesApi,
+    SearchProductsQueryApi,
+    SearchProductsQueryDocumentApi,
+} from 'graphql/requests/products/queries/SearchProductsQuery.generated';
+import { Maybe, ProductFilterApi, ProductOrderingModeEnumApi } from 'graphql/requests/types';
 
 export const useSearchProductsData = (
     totalProductCount: number,

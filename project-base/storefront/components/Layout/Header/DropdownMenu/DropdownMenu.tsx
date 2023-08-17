@@ -4,11 +4,11 @@ import { PrimaryList } from './PrimaryList';
 import { SecondaryList } from './SecondaryList';
 import { SubMenu } from './SubMenu';
 import { TertiaryList } from './TertiaryList';
-import { useNavigationQueryApi } from 'graphql/generated';
 import { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { twJoin } from 'tailwind-merge';
 import { DropdownItemType, DropdownListLevels } from 'types/dropdown';
+import { useNavigationQueryApi } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 
 type DropdownMenuProps = {
     isMenuOpened: boolean;

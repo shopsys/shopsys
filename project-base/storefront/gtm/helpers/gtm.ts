@@ -2,13 +2,6 @@ import { getRandomPageId } from './helpers';
 import { mapGtmCartItemType } from './mappers';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { SHA256 } from 'crypto-js';
-import {
-    BlogArticleDetailFragmentApi,
-    BrandDetailFragmentApi,
-    BreadcrumbFragmentApi,
-    CartFragmentApi,
-    CategoryDetailFragmentApi,
-} from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { canUseDom } from 'helpers/canUseDom';
@@ -41,6 +34,11 @@ import {
     GtmUserInfoType,
 } from 'gtm/types/objects';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
+import { BlogArticleDetailFragmentApi } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
+import { BrandDetailFragmentApi } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { CartFragmentApi } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { CategoryDetailFragmentApi } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
     const { cart, promoCode, isFetching } = useCurrentCart();

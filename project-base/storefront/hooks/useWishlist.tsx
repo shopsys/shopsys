@@ -1,16 +1,14 @@
 import { useEffect } from 'react';
-import {
-    ListedProductFragmentApi,
-    useAddProductToWishlistMutationApi,
-    useCleanWishlistMutationApi,
-    useRemoveProductFromWishlistMutationApi,
-    useSharedWishlistQueryApi,
-    useWishlistQueryApi,
-} from 'graphql/generated';
 import { useTypedTranslationFunction } from './typescript/useTypedTranslationFunction';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { useAddProductToWishlistMutationApi } from 'graphql/requests/wishlist/mutations/AddProductToWishlistMutation.generated';
+import { useCleanWishlistMutationApi } from 'graphql/requests/wishlist/mutations/CleanWishlistMutation.generated';
+import { useRemoveProductFromWishlistMutationApi } from 'graphql/requests/wishlist/mutations/RemoveProductFromWishlistMutation.generated';
+import { useSharedWishlistQueryApi } from 'graphql/requests/wishlist/queries/SharedWishlistQuery.generated';
+import { useWishlistQueryApi } from 'graphql/requests/wishlist/queries/WishlistQuery.generated';
 
 export const useWishlist = () => {
     const t = useTypedTranslationFunction();

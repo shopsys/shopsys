@@ -1,5 +1,4 @@
 import { showErrorMessage } from 'helpers/toasts';
-import { CartQueryDocumentApi } from 'graphql/generated';
 import { removeTokensFromCookies } from 'helpers/auth/tokens';
 import { isFlashMessageError, isNoLogError } from 'helpers/errors/applicationErrors';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
@@ -10,6 +9,7 @@ import { ParsedErrors } from 'types/error';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { Exchange } from 'urql';
 import { pipe, tap } from 'wonka';
+import { CartQueryDocumentApi } from 'graphql/requests/cart/queries/CartQuery.generated';
 
 export const getErrorExchange =
     (t?: Translate, context?: GetServerSidePropsContext | NextPageContext): Exchange =>

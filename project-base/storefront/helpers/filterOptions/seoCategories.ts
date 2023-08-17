@@ -1,8 +1,6 @@
-import {
-    ListedProductConnectionPreviewFragmentApi,
-    ProductFilterOptionsFragmentApi,
-    ProductOrderingModeEnumApi,
-} from 'graphql/generated';
+import { ProductFilterOptionsFragmentApi } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
+import { ListedProductConnectionPreviewFragmentApi } from 'graphql/requests/products/fragments/ListedProductConnectionPreviewFragment.generated';
+import { ProductOrderingModeEnumApi } from 'graphql/requests/types';
 import { useEffect } from 'react';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/useSessionStore';

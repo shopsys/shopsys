@@ -1,5 +1,7 @@
 import { FooterMenuItem } from 'components/Layout/Footer/FooterMenuItem';
-import { ArticlePlacementTypeEnumApi, SimpleNotBlogArticleFragmentApi, useArticlesQueryApi } from 'graphql/generated';
+import { SimpleNotBlogArticleFragmentApi } from 'graphql/requests/articlesInterface/articles/fragments/SimpleNotBlogArticleFragment.generated';
+import { useArticlesQueryApi } from 'graphql/requests/articlesInterface/articles/queries/ArticlesQuery.generated';
+import { ArticlePlacementTypeEnumApi } from 'graphql/requests/types';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
 import { FooterContact } from './FooterContact';

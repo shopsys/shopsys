@@ -1,5 +1,4 @@
 import { showErrorMessage } from 'helpers/toasts';
-import { CartFragmentApi, useChangePaymentInCartMutationApi } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { onGtmPaymentChangeEventHandler } from 'gtm/helpers/eventHandlers';
 import { useGtmCartInfo } from 'gtm/helpers/gtm';
@@ -8,6 +7,8 @@ import { useLatest } from 'hooks/ui/useLatest';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType } from 'gtm/types/enums';
+import { CartFragmentApi } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { useChangePaymentInCartMutationApi } from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.generated';
 
 export type ChangePaymentHandler = (
     newPaymentUuid: string | null,

@@ -1,5 +1,4 @@
 import { ProductListItem } from './ProductListItem';
-import { ListedProductFragmentApi } from 'graphql/generated';
 import { useWishlist } from 'hooks/useWishlist';
 import React, { RefObject } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
@@ -7,6 +6,7 @@ import { useComparison } from 'hooks/comparison/useComparison';
 import dynamic from 'next/dynamic';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 
 const ProductComparePopup = dynamic(() =>
     import('../ButtonsAction/ProductComparePopup').then((component) => component.ProductComparePopup),

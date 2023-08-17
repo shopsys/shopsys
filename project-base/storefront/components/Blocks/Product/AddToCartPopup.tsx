@@ -4,7 +4,7 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
-import { CartItemFragmentApi } from 'graphql/generated';
+import { CartItemFragmentApi } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';

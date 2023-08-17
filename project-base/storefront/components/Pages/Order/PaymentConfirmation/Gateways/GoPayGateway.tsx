@@ -1,6 +1,7 @@
 import { Link } from 'components/Basic/Link/Link';
+import { usePayOrderMutationApi } from 'graphql/requests/orders/mutations/PayOrderMutation.generated';
+import { GoPayCreatePaymentSetupApi } from 'graphql/requests/types';
 import { showErrorMessage } from 'helpers/toasts';
-import { GoPayCreatePaymentSetupApi, usePayOrderMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';

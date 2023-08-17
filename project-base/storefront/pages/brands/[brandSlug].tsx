@@ -4,15 +4,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailContent';
 import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
-import {
-    BrandDetailQueryApi,
-    BrandDetailQueryDocumentApi,
-    BrandDetailQueryVariablesApi,
-    BrandProductsQueryApi,
-    BrandProductsQueryDocumentApi,
-    BrandProductsQueryVariablesApi,
-    useBrandDetailQueryApi,
-} from 'graphql/generated';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
@@ -39,6 +30,17 @@ import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore';
+import {
+    useBrandDetailQueryApi,
+    BrandDetailQueryApi,
+    BrandDetailQueryVariablesApi,
+    BrandDetailQueryDocumentApi,
+} from 'graphql/requests/brands/queries/BrandDetailQuery.generated';
+import {
+    BrandProductsQueryApi,
+    BrandProductsQueryVariablesApi,
+    BrandProductsQueryDocumentApi,
+} from 'graphql/requests/products/queries/BrandProductsQuery.generated';
 
 const BrandDetailPage: NextPage = () => {
     const router = useRouter();

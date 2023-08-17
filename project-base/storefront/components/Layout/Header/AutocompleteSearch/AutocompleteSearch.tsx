@@ -2,7 +2,6 @@ import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './Autoc
 import { Icon } from 'components/Basic/Icon/Icon';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/hooks/useGtmAutocompleteResultsViewEvent';
 import { useDebounce } from 'hooks/helpers/useDebounce';
@@ -14,6 +13,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { ChangeEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { useAutocompleteSearchQueryApi } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 
 const Autocomplete = dynamic(() => import('./Autocomplete').then((component) => component.Autocomplete));
 

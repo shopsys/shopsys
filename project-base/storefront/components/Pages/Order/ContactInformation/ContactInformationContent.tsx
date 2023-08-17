@@ -8,11 +8,6 @@ import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import {
-    useIsCustomerUserRegisteredQueryApi,
-    usePrivacyPolicyArticleUrlQueryApi,
-    useTermsAndConditionsArticleUrlQueryApi,
-} from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import Trans from 'next-translate/Trans';
@@ -22,6 +17,9 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
+import { usePrivacyPolicyArticleUrlQueryApi } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
+import { useTermsAndConditionsArticleUrlQueryApi } from 'graphql/requests/articles/queries/TermsAndConditionsArticleUrlQuery.generated';
+import { useIsCustomerUserRegisteredQueryApi } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 

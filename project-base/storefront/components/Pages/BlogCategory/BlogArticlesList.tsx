@@ -2,7 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
-import { ListedBlogArticleFragmentApi } from 'graphql/generated';
+import { ListedBlogArticleFragmentApi } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Fragment } from 'react';
 

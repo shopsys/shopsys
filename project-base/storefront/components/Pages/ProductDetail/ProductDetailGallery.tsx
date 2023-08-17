@@ -1,11 +1,13 @@
 import { ProductDetailGallerySlider } from './ProductDetailGallerySlider';
 import { isElementVisible } from 'helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import { SimpleFlagFragmentApi } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
+import { ImageSizesFragmentApi } from 'graphql/requests/images/fragments/ImageSizesFragment.generated';
+import { VideoTokenFragmentApi } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 
 const ProductDetailGalleryImages = dynamic(() =>
     import('./ProductDetailGalleryImages').then((component) => component.ProductDetailGalleryImages),

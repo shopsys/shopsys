@@ -1,7 +1,6 @@
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useQueryParams } from 'hooks/useQueryParams';
@@ -9,6 +8,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { getHasDefaultFilters } from 'helpers/filterOptions/seoCategories';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
+import { ProductFilterOptionsFragmentApi } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
 

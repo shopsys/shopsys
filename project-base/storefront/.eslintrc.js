@@ -17,6 +17,7 @@ module.exports = {
         'package.json',
         'tsconfig.json',
         '.pnpm-store/*',
+        'graphql',
     ],
     extends: [
         'eslint:recommended',
@@ -78,21 +79,21 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-unnecessary-condition': 'error',
         'no-restricted-imports': [
-            'error', {
-                "name": "tailwind-merge",
-                "importNames": ["twMerge"],
-                "message": "Please use twMergeCustom from utils/twMerge instead."
+            'error',
+            {
+                name: 'tailwind-merge',
+                importNames: ['twMerge'],
+                message: 'Please use twMergeCustom from utils/twMerge instead.',
             },
             {
-                "name": "react",
-                "importNames": ["FC"],
-                "message": "Please remove this import and use global FC interface"
+                name: 'react',
+                importNames: ['FC'],
+                message: 'Please remove this import and use global FC interface',
             },
             {
-                "name": "next/link",
-                "message": "Please use ExtendedNextLink instead"
+                name: 'next/link',
+                message: 'Please use ExtendedNextLink instead',
             },
-
         ],
         'react-hooks/rules-of-hooks': 'error',
         'react/no-unknown-property': [

@@ -3,12 +3,6 @@ import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
-import {
-    BreadcrumbFragmentApi,
-    SearchProductsQueryDocumentApi,
-    SearchQueryDocumentApi,
-    useSearchQueryApi,
-} from 'graphql/generated';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
@@ -35,6 +29,9 @@ import {
     getStringFromUrlQuery,
 } from 'helpers/parsing/urlParsing';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { SearchProductsQueryDocumentApi } from 'graphql/requests/products/queries/SearchProductsQuery.generated';
+import { useSearchQueryApi, SearchQueryDocumentApi } from 'graphql/requests/search/queries/SearchQuery.generated';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

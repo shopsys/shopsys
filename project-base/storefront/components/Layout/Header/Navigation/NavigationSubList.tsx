@@ -1,6 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { NavigationSubCategoriesLinkFragmentApi } from 'graphql/generated';
-
+import { NavigationSubCategoriesLinkFragmentApi } from 'graphql/requests/categories/fragments/NavigationSubCategoriesLinkFragment.generated';
 type NavigationSubListProps = {
     columnCategoryChildren: NavigationSubCategoriesLinkFragmentApi['children'];
 };

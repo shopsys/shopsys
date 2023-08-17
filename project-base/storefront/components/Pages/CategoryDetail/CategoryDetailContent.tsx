@@ -9,13 +9,13 @@ import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { CategoryDetailFragmentApi } from 'graphql/generated';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { CategoryDetailFragmentApi } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 
 type CategoryDetailContentProps = {
     category: CategoryDetailFragmentApi;

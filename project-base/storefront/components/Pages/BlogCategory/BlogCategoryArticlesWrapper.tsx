@@ -1,13 +1,14 @@
 import { BlogArticlesList } from './BlogArticlesList';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
-import { ListedBlogArticleFragmentApi, useBlogCategoryArticlesApi } from 'graphql/generated';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { RefObject, useMemo } from 'react';
 import { BlogArticleSkeleton } from '../BlogArticle/BlogArticleSkeleton';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { useBlogCategoryArticlesApi } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
+import { ListedBlogArticleFragmentApi } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 
 type BlogCategoryArticlesWrapperProps = {
     uuid: string;

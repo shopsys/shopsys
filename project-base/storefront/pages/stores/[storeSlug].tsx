@@ -3,12 +3,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
 import { StorePageSkeleton } from 'components/Pages/StoreDetail/StorePageSkeleton';
-import {
-    StoreDetailQueryApi,
-    StoreDetailQueryDocumentApi,
-    StoreDetailQueryVariablesApi,
-    useStoreDetailQueryApi,
-} from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
@@ -19,6 +13,12 @@ import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
+import {
+    useStoreDetailQueryApi,
+    StoreDetailQueryApi,
+    StoreDetailQueryVariablesApi,
+    StoreDetailQueryDocumentApi,
+} from 'graphql/requests/stores/queries/StoreDetailQuery.generated';
 
 const StoreDetailPage: NextPage = () => {
     const router = useRouter();

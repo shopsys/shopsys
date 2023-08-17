@@ -1,8 +1,8 @@
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { ListedProductFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 
 type ResultProductsProps = {
     products: ListedProductFragmentApi[];

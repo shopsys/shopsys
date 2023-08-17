@@ -8,7 +8,6 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useRegistrationMutationApi } from 'graphql/generated';
 import { setTokensToCookies } from 'helpers/auth/tokens';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
@@ -20,6 +19,7 @@ import dynamic from 'next/dynamic';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
 import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
+import { useRegistrationMutationApi } from 'graphql/requests/registration/mutations/RegistrationMutation.generated';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

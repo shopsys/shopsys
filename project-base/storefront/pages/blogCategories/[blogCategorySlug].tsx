@@ -5,13 +5,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
 import { BlogCategoryPageSkeleton } from 'components/Pages/BlogCategory/BlogCategoryPageSkeleton';
-import {
-    BlogCategoryArticlesDocumentApi,
-    BlogCategoryQueryApi,
-    BlogCategoryQueryDocumentApi,
-    BlogCategoryQueryVariablesApi,
-    useBlogCategoryQueryApi,
-} from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
@@ -24,6 +17,13 @@ import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { getNumberFromUrlQuery, getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { BlogCategoryArticlesDocumentApi } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
+import {
+    useBlogCategoryQueryApi,
+    BlogCategoryQueryApi,
+    BlogCategoryQueryVariablesApi,
+    BlogCategoryQueryDocumentApi,
+} from 'graphql/requests/blogCategories/queries/BlogCategoryQuery.generated';
 
 const BlogCategoryPage: NextPage = () => {
     const router = useRouter();

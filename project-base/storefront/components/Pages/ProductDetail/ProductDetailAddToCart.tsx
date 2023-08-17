@@ -2,13 +2,14 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
-import { CartItemFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { CartItemFragmentApi } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { ProductDetailFragmentApi } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 
 type ProductDetailAddToCartProps = {
     product: ProductDetailFragmentApi;

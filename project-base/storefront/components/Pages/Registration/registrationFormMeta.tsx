@@ -16,7 +16,7 @@ import {
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
-import { usePrivacyPolicyArticleUrlQueryApi } from 'graphql/generated';
+import { usePrivacyPolicyArticleUrlQueryApi } from 'graphql/requests/articles/queries/PrivacyPolicyArticleUrlQuery.generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';

@@ -2,7 +2,7 @@ import {
     ParameterCheckboxFilterOptionApi,
     ParameterColorFilterOptionApi,
     ParameterSliderFilterOptionApi,
-} from 'graphql/generated';
+} from 'graphql/requests/types';
 
 export type ParametersType =
     | ParameterCheckboxFilterOptionApi

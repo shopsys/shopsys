@@ -1,6 +1,5 @@
+import { CategoriesByColumnFragmentApi } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { DropdownItem } from './DropdownItem';
-import { CategoriesByColumnFragmentApi } from 'graphql/generated';
-
 type PrimaryListProps = {
     navigationItems: CategoriesByColumnFragmentApi[];
 };

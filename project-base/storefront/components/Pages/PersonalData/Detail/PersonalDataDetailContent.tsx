@@ -2,7 +2,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
 import { Cell, CellHead, CellMinor, Row, Table } from 'components/Basic/Table/Table';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { PersonalDataDetailQueryApi } from 'graphql/generated';
+import { PersonalDataDetailQueryApi } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';

@@ -1,6 +1,5 @@
+import { useSliderItemsQueryApi } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.generated';
 import { BannersSlider } from './BannersSlider';
-import { useSliderItemsQueryApi } from 'graphql/generated';
-
 const TEST_IDENTIFIER = 'blocks-banners';
 
 export const Banners: FC = () => {

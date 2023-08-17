@@ -1,0 +1,169 @@
+import * as Types from '../../types';
+
+import gql from 'graphql-tag';
+import { CountryFragmentApi } from '../../countries/fragments/CountryFragment.generated';
+import { DeliveryAddressFragmentApi } from './DeliveryAddressFragment.generated';
+export type CustomerUserFragment_CompanyCustomerUser_Api = {
+    __typename: 'CompanyCustomerUser';
+    companyName: string | null;
+    companyNumber: string | null;
+    companyTaxNumber: string | null;
+    uuid: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    telephone: string | null;
+    street: string;
+    city: string;
+    postcode: string;
+    newsletterSubscription: boolean;
+    pricingGroup: string;
+    country: { __typename: 'Country'; name: string; code: string };
+    defaultDeliveryAddress: {
+        __typename: 'DeliveryAddress';
+        uuid: string;
+        companyName: string | null;
+        street: string | null;
+        city: string | null;
+        postcode: string | null;
+        telephone: string | null;
+        firstName: string | null;
+        lastName: string | null;
+        country: { __typename: 'Country'; name: string; code: string } | null;
+    } | null;
+    deliveryAddresses: Array<{
+        __typename: 'DeliveryAddress';
+        uuid: string;
+        companyName: string | null;
+        street: string | null;
+        city: string | null;
+        postcode: string | null;
+        telephone: string | null;
+        firstName: string | null;
+        lastName: string | null;
+        country: { __typename: 'Country'; name: string; code: string } | null;
+    }>;
+};
+
+export type CustomerUserFragment_RegularCustomerUser_Api = {
+    __typename: 'RegularCustomerUser';
+    uuid: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    telephone: string | null;
+    street: string;
+    city: string;
+    postcode: string;
+    newsletterSubscription: boolean;
+    pricingGroup: string;
+    country: { __typename: 'Country'; name: string; code: string };
+    defaultDeliveryAddress: {
+        __typename: 'DeliveryAddress';
+        uuid: string;
+        companyName: string | null;
+        street: string | null;
+        city: string | null;
+        postcode: string | null;
+        telephone: string | null;
+        firstName: string | null;
+        lastName: string | null;
+        country: { __typename: 'Country'; name: string; code: string } | null;
+    } | null;
+    deliveryAddresses: Array<{
+        __typename: 'DeliveryAddress';
+        uuid: string;
+        companyName: string | null;
+        street: string | null;
+        city: string | null;
+        postcode: string | null;
+        telephone: string | null;
+        firstName: string | null;
+        lastName: string | null;
+        country: { __typename: 'Country'; name: string; code: string } | null;
+    }>;
+};
+
+export type CustomerUserFragmentApi =
+    | CustomerUserFragment_CompanyCustomerUser_Api
+    | CustomerUserFragment_RegularCustomerUser_Api;
+
+export const CustomerUserFragmentApi = gql`
+    fragment CustomerUserFragment on CustomerUser {
+        __typename
+        uuid
+        firstName
+        lastName
+        email
+        telephone
+        street
+        city
+        postcode
+        country {
+            ...CountryFragment
+        }
+        newsletterSubscription
+        defaultDeliveryAddress {
+            ...DeliveryAddressFragment
+        }
+        deliveryAddresses {
+            ...DeliveryAddressFragment
+        }
+        ... on CompanyCustomerUser {
+            companyName
+            companyNumber
+            companyTaxNumber
+        }
+        pricingGroup
+    }
+    ${CountryFragmentApi}
+    ${DeliveryAddressFragmentApi}
+`;
+
+export interface PossibleTypesResultData {
+    possibleTypes: {
+        [key: string]: string[];
+    };
+}
+const result: PossibleTypesResultData = {
+    possibleTypes: {
+        Advert: ['AdvertCode', 'AdvertImage'],
+        ArticleInterface: ['ArticleSite', 'BlogArticle'],
+        Breadcrumb: [
+            'ArticleSite',
+            'BlogArticle',
+            'BlogCategory',
+            'Brand',
+            'Category',
+            'Flag',
+            'MainVariant',
+            'RegularProduct',
+            'Store',
+            'Variant',
+        ],
+        CartInterface: ['Cart'],
+        CustomerUser: ['CompanyCustomerUser', 'RegularCustomerUser'],
+        NotBlogArticleInterface: ['ArticleLink', 'ArticleSite'],
+        ParameterFilterOptionInterface: [
+            'ParameterCheckboxFilterOption',
+            'ParameterColorFilterOption',
+            'ParameterSliderFilterOption',
+        ],
+        PriceInterface: ['Price', 'ProductPrice'],
+        Product: ['MainVariant', 'RegularProduct', 'Variant'],
+        ProductListable: ['Brand', 'Category', 'Flag'],
+        Slug: [
+            'ArticleSite',
+            'BlogArticle',
+            'BlogCategory',
+            'Brand',
+            'Category',
+            'Flag',
+            'MainVariant',
+            'RegularProduct',
+            'Store',
+            'Variant',
+        ],
+    },
+};
+export default result;

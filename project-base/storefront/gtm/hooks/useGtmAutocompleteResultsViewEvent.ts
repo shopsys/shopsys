@@ -1,4 +1,4 @@
-import { AutocompleteSearchQueryApi } from 'graphql/generated';
+import { AutocompleteSearchQueryApi } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 import { getGtmAutocompleteResultsViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { useEffect, useRef } from 'react';

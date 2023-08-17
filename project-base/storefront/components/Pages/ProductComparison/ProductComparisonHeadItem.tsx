@@ -3,13 +3,14 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
-import { ComparedProductFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCallback } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { ComparedProductFragmentApi } from 'graphql/requests/products/fragments/ComparedProductFragment.generated';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 
 type ProductComparisonItemProps = {
     product: ComparedProductFragmentApi;

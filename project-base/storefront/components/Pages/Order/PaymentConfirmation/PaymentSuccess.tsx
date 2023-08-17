@@ -1,10 +1,10 @@
 import { ImageWrapper, Message, MessageWrapper, PaymentWrapper } from './PaymentConfirmationElements';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useOrderSentPageContentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { GtmPageType } from 'gtm/types/enums';
+import { useOrderSentPageContentApi } from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
 
 type PaymentSuccessProps = {
     orderUuid: string;

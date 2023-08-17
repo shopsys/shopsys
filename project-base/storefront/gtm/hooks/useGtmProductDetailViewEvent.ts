@@ -1,4 +1,5 @@
-import { MainVariantDetailFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
+import { MainVariantDetailFragmentApi } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { ProductDetailFragmentApi } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { getGtmProductDetailViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { useDomainConfig } from 'hooks/useDomainConfig';

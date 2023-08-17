@@ -2,11 +2,6 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent';
-import {
-    BreadcrumbFragmentApi,
-    OrderDetailByHashQueryDocumentApi,
-    useOrderDetailByHashQueryApi,
-} from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
@@ -17,6 +12,11 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { GtmPageType } from 'gtm/types/enums';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import {
+    useOrderDetailByHashQueryApi,
+    OrderDetailByHashQueryDocumentApi,
+} from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
 
 const OrderDetailByHashPage: FC = () => {
     const t = useTypedTranslationFunction();

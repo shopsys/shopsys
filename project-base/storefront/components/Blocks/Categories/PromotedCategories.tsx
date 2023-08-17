@@ -1,6 +1,5 @@
+import { usePromotedCategoriesQueryApi } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
 import { SimpleNavigation } from '../SimpleNavigation/SimpleNavigation';
-import { usePromotedCategoriesQueryApi } from 'graphql/generated';
-
 export const PromotedCategories: FC = () => {
     const [{ data: promotedCategoriesData }] = usePromotedCategoriesQueryApi();
 

@@ -1,10 +1,11 @@
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
-import { CartFragmentApi, useRemovePromoCodeFromCartMutationApi } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType } from 'gtm/types/enums';
+import { CartFragmentApi } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { useRemovePromoCodeFromCartMutationApi } from 'graphql/requests/cart/mutations/RemovePromoCodeFromCartMutation.generated';
 
 type RemovePromoCodeHandler = (
     promoCodeToBeRemoved: string,

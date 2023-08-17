@@ -3,11 +3,12 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Row, Cell, CellHead, Table, CellMinor } from 'components/Basic/Table/Table';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BreadcrumbFragmentApi, OrderDetailFragmentApi } from 'graphql/generated';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twMergeCustom } from 'helpers/twMerge';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { OrderDetailFragmentApi } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 
 type OrderDetailContentProps = {
     order: OrderDetailFragmentApi;

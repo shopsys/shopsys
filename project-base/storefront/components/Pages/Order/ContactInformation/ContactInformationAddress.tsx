@@ -5,7 +5,7 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
-import { useCountriesQueryApi } from 'graphql/generated';
+import { useCountriesQueryApi } from 'graphql/requests/countries/queries/CountriesQuery.generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect, useMemo } from 'react';

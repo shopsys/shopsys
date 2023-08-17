@@ -7,8 +7,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useClient } from 'urql';
-import { CartQueryDocumentApi } from 'graphql/generated';
-
+import { CartQueryDocumentApi } from 'graphql/requests/cart/queries/CartQuery.generated';
 export const useReloadCart = (): void => {
     const { modifications } = useCurrentCart(false);
     const [changePaymentInCart] = useChangePaymentInCart();

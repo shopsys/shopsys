@@ -1,12 +1,3 @@
-import {
-    ProductOrderingModeEnumApi,
-    Maybe,
-    ProductFilterApi,
-    CategoryDetailFragmentApi,
-    CategoryDetailQueryApi,
-    CategoryDetailQueryDocumentApi,
-    CategoryDetailQueryVariablesApi,
-} from 'graphql/generated';
 import { getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { useQueryParams } from 'hooks/useQueryParams';
@@ -14,6 +5,13 @@ import { NextRouter, useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useClient, Client } from 'urql';
+import { CategoryDetailFragmentApi } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import {
+    CategoryDetailQueryApi,
+    CategoryDetailQueryVariablesApi,
+    CategoryDetailQueryDocumentApi,
+} from 'graphql/requests/categories/queries/CategoryDetailQuery.generated';
+import { Maybe, ProductFilterApi, ProductOrderingModeEnumApi } from 'graphql/requests/types';
 
 export const useCategoryDetailData = (
     filter: ProductFilterApi | null,

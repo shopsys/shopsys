@@ -1,7 +1,6 @@
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useNotificationBarsApi } from 'graphql/generated';
 import { getTokensFromCookies } from 'helpers/auth/tokens';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
@@ -10,6 +9,7 @@ import Trans from 'next-translate/Trans';
 import { memo, useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import tinycolor from 'tinycolor2';
+import { useNotificationBarsApi } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
 
 export const NotificationBars: FC = memo(function NotificationBars() {
     const [{ data: notificationBarsData }] = useNotificationBarsApi();

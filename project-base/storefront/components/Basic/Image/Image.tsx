@@ -1,6 +1,7 @@
-import { ImageSizeFragmentApi, ImageSizesFragmentApi } from 'graphql/generated';
 import { ImgHTMLAttributes } from 'react';
 import { twMergeCustom } from 'helpers/twMerge';
+import { ImageSizeFragmentApi } from 'graphql/requests/images/fragments/ImageSizeFragment.generated';
+import { ImageSizesFragmentApi } from 'graphql/requests/images/fragments/ImageSizesFragment.generated';
 
 type ImageProps = {
     image: ImageSizesFragmentApi | null;

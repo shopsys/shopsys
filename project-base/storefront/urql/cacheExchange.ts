@@ -1,37 +1,50 @@
 import { Cache, cacheExchange, Data } from '@urql/exchange-graphcache';
 import { IntrospectionQuery } from 'graphql';
+import { AddToCartMutationVariablesApi } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
+import { ApplyPromoCodeToCartMutationVariablesApi } from 'graphql/requests/cart/mutations/ApplyPromoCodeToCartMutation.generated';
 import {
-    AddToCartMutationVariablesApi,
-    AddToCartResultApi,
-    ApplyPromoCodeToCartMutationVariablesApi,
-    CartApi,
+    ChangePaymentInCartMutationVariablesApi,
+    ChangePaymentInCartMutationApi,
+} from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.generated';
+import {
+    ChangeTransportInCartMutationVariablesApi,
+    ChangeTransportInCartMutationApi,
+} from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
+import { RemoveFromCartMutationVariablesApi } from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
+import { RemovePromoCodeFromCartMutationVariablesApi } from 'graphql/requests/cart/mutations/RemovePromoCodeFromCartMutation.generated';
+import {
     CartQueryApi,
     CartQueryDocumentApi,
     CartQueryVariablesApi,
-    ChangePaymentInCartInputApi,
-    ChangePaymentInCartMutationApi,
-    ChangePaymentInCartMutationVariablesApi,
-    ChangeTransportInCartInputApi,
-    ChangeTransportInCartMutationApi,
-    CleanComparisonMutationVariablesApi,
-    CleanWishlistMutationVariablesApi,
+} from 'graphql/requests/cart/queries/CartQuery.generated';
+import { CleanComparisonMutationVariablesApi } from 'graphql/requests/products/mutations/CleanComparisonMutation.generated';
+import { RemoveProductFromComparisonMutationVariablesApi } from 'graphql/requests/products/mutations/RemoveProductFromComparisonMutation.generated';
+import {
     ComparisonQueryApi,
-    ComparisonQueryDocumentApi,
     ComparisonQueryVariablesApi,
-    RemoveProductFromComparisonMutationVariablesApi,
-    RemoveProductFromWishlistMutationVariablesApi,
-    ChangeTransportInCartMutationVariablesApi,
-    RemoveFromCartMutationVariablesApi,
-    RemovePromoCodeFromCartMutationVariablesApi,
+    ComparisonQueryDocumentApi,
+} from 'graphql/requests/products/queries/ComparisonQuery.generated';
+import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+import {
     TransportsQueryApi,
     TransportsQueryDocumentApi,
     TransportsQueryVariablesApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-    WishlistQueryApi,
-    WishlistQueryDocumentApi,
-    WishlistQueryVariablesApi,
+} from 'graphql/requests/transports/queries/TransportsQuery.generated';
+import {
+    AddToCartResultApi,
+    CartApi,
+    ChangePaymentInCartInputApi,
+    ChangeTransportInCartInputApi,
     InputMaybe,
-} from 'graphql/generated';
+} from 'graphql/requests/types';
+import { CleanWishlistMutationVariablesApi } from 'graphql/requests/wishlist/mutations/CleanWishlistMutation.generated';
+import { RemoveProductFromWishlistMutationVariablesApi } from 'graphql/requests/wishlist/mutations/RemoveProductFromWishlistMutation.generated';
+import {
+    WishlistQueryApi,
+    WishlistQueryVariablesApi,
+    WishlistQueryDocumentApi,
+} from 'graphql/requests/wishlist/queries/WishlistQuery.generated';
+
 import schema from 'schema.graphql.json';
 
 const keyNull = () => null;

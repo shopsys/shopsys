@@ -1,11 +1,13 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { BlogPreviewMain } from './BlogPreviewMain';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
 import { BlogPreviewSide } from './BlogPreviewSide';
+import { ListedBlogArticleFragmentApi } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
+import { useBlogArticlesQueryApi } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
+import { useBlogUrlQueryApi } from 'graphql/requests/blogCategories/queries/BlogUrlQuery.generated';
 
 export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
 const TEST_IDENTIFIER = 'blocks-blogpreview';

@@ -1,7 +1,6 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { NewPasswordContent } from 'components/Pages/NewPassword/NewPasswordContent';
-import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
@@ -11,6 +10,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { GtmPageType } from 'gtm/types/enums';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 
 const NewPasswordPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

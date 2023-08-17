@@ -1,15 +1,13 @@
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
-import {
-    useAddProductToComparisonMutationApi,
-    useCleanComparisonMutationApi,
-    useComparisonQueryApi,
-    useRemoveProductFromComparisonMutationApi,
-} from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect, useRef, useState } from 'react';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
+import { useAddProductToComparisonMutationApi } from 'graphql/requests/products/mutations/AddProductToComparisonMutation.generated';
+import { useCleanComparisonMutationApi } from 'graphql/requests/products/mutations/CleanComparisonMutation.generated';
+import { useRemoveProductFromComparisonMutationApi } from 'graphql/requests/products/mutations/RemoveProductFromComparisonMutation.generated';
+import { useComparisonQueryApi } from 'graphql/requests/products/queries/ComparisonQuery.generated';
 
 export const useComparison = () => {
     const t = useTypedTranslationFunction();

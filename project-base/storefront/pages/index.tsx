@@ -6,18 +6,16 @@ import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategor
 import { PromotedProducts } from 'components/Blocks/Product/PromotedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
-import {
-    BlogArticlesQueryDocumentApi,
-    PromotedCategoriesQueryDocumentApi,
-    PromotedProductsQueryDocumentApi,
-    SliderItemsQueryDocumentApi,
-} from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { GtmPageType } from 'gtm/types/enums';
+import { BlogArticlesQueryDocumentApi } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
+import { PromotedCategoriesQueryDocumentApi } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
+import { PromotedProductsQueryDocumentApi } from 'graphql/requests/products/queries/PromotedProductsQuery.generated';
+import { SliderItemsQueryDocumentApi } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.generated';
 
 const HomePage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

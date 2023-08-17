@@ -1,11 +1,14 @@
 import { showSuccessMessage } from 'helpers/toasts';
-import { Exact, LoginApi, LoginVariablesApi, LogoutApi, Maybe, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
 import { canUseDom } from 'helpers/canUseDom';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { OperationResult } from 'urql';
+import { Maybe } from 'graphql/jsutils/Maybe';
+import { LoginVariablesApi, LoginApi, useLoginApi } from 'graphql/requests/auth/mutations/LoginMutation.generated';
+import { LogoutApi, useLogoutApi } from 'graphql/requests/auth/mutations/LogoutMutation.generated';
+import { Exact } from 'graphql/requests/types';
 
 export type LoginHandler = (
     variables: LoginVariablesApi,

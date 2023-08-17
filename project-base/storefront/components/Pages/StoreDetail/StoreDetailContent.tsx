@@ -4,7 +4,6 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { StoreDetailFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { createMapMarker } from 'helpers/createMapMarker';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -13,6 +12,7 @@ import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { twJoin } from 'tailwind-merge';
 import dynamic from 'next/dynamic';
+import { StoreDetailFragmentApi } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
 
 const Gallery = dynamic(() => import('components/Basic/Gallery/Gallery').then((component) => component.Gallery));
 

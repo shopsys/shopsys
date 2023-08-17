@@ -6,11 +6,6 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { UserText } from 'components/Basic/UserText/UserText';
 import { showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import {
-    BreadcrumbFragmentApi,
-    PersonalDataAccessRequestTypeEnumApi,
-    usePersonalDataRequestMutationApi,
-} from 'graphql/generated';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
@@ -21,6 +16,9 @@ import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { PersonalDataOverviewFormType } from 'types/form';
 import { GtmMessageOriginType } from 'gtm/types/enums';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { usePersonalDataRequestMutationApi } from 'graphql/requests/personalData/mutations/PersonalDataRequestMutation.generated';
+import { PersonalDataAccessRequestTypeEnumApi } from 'graphql/requests/types';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

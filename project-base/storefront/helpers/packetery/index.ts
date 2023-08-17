@@ -1,6 +1,6 @@
 import { PacketeryExtendedPoint, PacketeryPickFunction } from './types';
-import { ListedStoreFragmentApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/canUseDom';
+import { ListedStoreFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 
 /**
  * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html

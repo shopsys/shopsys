@@ -2,7 +2,9 @@ import { Gallery } from 'components/Basic/Gallery/Gallery';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
-import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
+import { SimpleFlagFragmentApi } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
+import { ImageSizesFragmentApi } from 'graphql/requests/images/fragments/ImageSizesFragment.generated';
+import { VideoTokenFragmentApi } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { twJoin } from 'tailwind-merge';
 

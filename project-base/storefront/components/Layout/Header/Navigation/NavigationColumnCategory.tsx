@@ -1,8 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { NavigationSubList } from 'components/Layout/Header/Navigation/NavigationSubList';
-import { ColumnCategoryFragmentApi } from 'graphql/generated';
-
+import { ColumnCategoryFragmentApi } from 'graphql/requests/navigation/fragments/ColumnCategoryFragment.generated';
 type NavigationColumnCategoryProps = {
     columnCategory: ColumnCategoryFragmentApi;
 };

@@ -1,9 +1,9 @@
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { Button } from 'components/Forms/Button/Button';
-import { ListedProductFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/dist/client/router';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 
 type ProductActionProps = {
     product: ListedProductFragmentApi;

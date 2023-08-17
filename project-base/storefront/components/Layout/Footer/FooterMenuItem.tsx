@@ -1,7 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { SimpleNotBlogArticleFragmentApi } from 'graphql/generated';
-
+import { SimpleNotBlogArticleFragmentApi } from 'graphql/requests/articlesInterface/articles/fragments/SimpleNotBlogArticleFragment.generated';
 type FooterMenuItemProps = {
     title: string;
     items: SimpleNotBlogArticleFragmentApi[];

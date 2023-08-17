@@ -3,13 +3,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
 import { ArticlePageSkeleton } from 'components/Pages/Article/ArticlePageSkeleton';
-import {
-    ArticleDetailQueryApi,
-    ArticleDetailQueryDocumentApi,
-    ArticleDetailQueryVariablesApi,
-    ProductsByCatnumsDocumentApi,
-    useArticleDetailQueryApi,
-} from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
@@ -21,6 +14,13 @@ import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
+import {
+    useArticleDetailQueryApi,
+    ArticleDetailQueryApi,
+    ArticleDetailQueryVariablesApi,
+    ArticleDetailQueryDocumentApi,
+} from 'graphql/requests/articles/queries/ArticleDetailQuery.generated';
+import { ProductsByCatnumsDocumentApi } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();

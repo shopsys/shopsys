@@ -5,7 +5,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { BreadcrumbFragmentApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';

@@ -1,14 +1,12 @@
-import {
-    ArticleDetailFragmentApi,
-    BlogArticleDetailFragmentApi,
-    BlogCategoryDetailFragmentApi,
-    BrandDetailFragmentApi,
-    CategoryDetailFragmentApi,
-    FlagDetailFragmentApi,
-    MainVariantDetailFragmentApi,
-    ProductDetailFragmentApi,
-    StoreDetailFragmentApi,
-} from 'graphql/generated';
+import { ArticleDetailFragmentApi } from 'graphql/requests/articlesInterface/articles/fragments/ArticleDetailFragment.generated';
+import { BlogArticleDetailFragmentApi } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleDetailFragment.generated';
+import { BlogCategoryDetailFragmentApi } from 'graphql/requests/blogCategories/fragments/BlogCategoryDetailFragment.generated';
+import { BrandDetailFragmentApi } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
+import { CategoryDetailFragmentApi } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { FlagDetailFragmentApi } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
+import { MainVariantDetailFragmentApi } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { ProductDetailFragmentApi } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { StoreDetailFragmentApi } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
 
 export type FriendlyUrlPageType =
     | ProductDetailFragmentApi

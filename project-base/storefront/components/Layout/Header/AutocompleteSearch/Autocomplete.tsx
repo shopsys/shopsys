@@ -2,12 +2,6 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
-import {
-    AutocompleteSearchQueryApi,
-    ListedProductFragmentApi,
-    SimpleCategoryFragmentApi,
-    SimpleProductFragmentApi,
-} from 'graphql/generated';
 import { onGtmAutocompleteResultClickEventHandler, onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
@@ -19,6 +13,10 @@ import { forwardRef, useCallback, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 import { GtmProductListNameType, GtmSectionType } from 'gtm/types/enums';
+import { SimpleCategoryFragmentApi } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { SimpleProductFragmentApi } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
+import { AutocompleteSearchQueryApi } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
 export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;

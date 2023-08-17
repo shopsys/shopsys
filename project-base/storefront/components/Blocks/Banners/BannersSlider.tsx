@@ -1,7 +1,7 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem';
 import { mediaQueries } from 'components/Theme/mediaQueries';
-import { SliderItemFragmentApi } from 'graphql/generated';
+import { SliderItemFragmentApi } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import { useEffect, useRef, useState } from 'react';

@@ -1,5 +1,5 @@
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
-import { ComparedProductFragmentApi } from 'graphql/generated';
+import { ComparedProductFragmentApi } from 'graphql/requests/products/fragments/ComparedProductFragment.generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twJoin } from 'tailwind-merge';
 

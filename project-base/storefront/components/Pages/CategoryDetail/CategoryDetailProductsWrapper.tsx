@@ -1,6 +1,5 @@
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { CategoryDetailFragmentApi, CategoryProductsQueryDocumentApi } from 'graphql/generated';
 import { getCategoryOrSeoCategoryGtmProductListName } from 'gtm/helpers/gtm';
 import { getMappedProducts } from 'helpers/mappers/products';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
@@ -8,6 +7,8 @@ import { RefObject, useMemo } from 'react';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { useSessionStore } from 'store/useSessionStore';
 import { useProductsData } from 'helpers/loadMore';
+import { CategoryDetailFragmentApi } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
+import { CategoryProductsQueryDocumentApi } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';
 
 type CategoryDetailProps = {
     category: CategoryDetailFragmentApi;

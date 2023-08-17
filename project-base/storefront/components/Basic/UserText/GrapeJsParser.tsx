@@ -1,10 +1,11 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { UserText } from 'components/Basic/UserText/UserText';
-import { ListedProductFragmentApi, useProductsByCatnumsApi } from 'graphql/generated';
 import { replaceAll } from 'helpers/replaceAll';
 import { memo } from 'react';
 import { GtmProductListNameType } from 'gtm/types/enums';
 import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'helpers/parsing/grapesJsParser';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { useProductsByCatnumsApi } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 
 type GrapesJsParserProps = {
     text: string;

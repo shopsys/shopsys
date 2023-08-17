@@ -1,4 +1,4 @@
-import { ListedProductFragmentApi } from 'graphql/generated';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 
 export const getMappedProducts = (
     unmappedEdges: ({ node: ListedProductFragmentApi | null } | null)[] | null | undefined,

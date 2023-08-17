@@ -12,14 +12,6 @@ import {
 } from './eventFactories';
 import { gtmSafePushEvent } from './gtm';
 import {
-    CartItemFragmentApi,
-    ListedProductFragmentApi,
-    ListedStoreFragmentApi,
-    SimplePaymentFragmentApi,
-    SimpleProductFragmentApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-} from 'graphql/generated';
-import {
     GtmEventType,
     GtmFormType,
     GtmMessageDetailType,
@@ -30,6 +22,12 @@ import {
 } from 'gtm/types/enums';
 import { GtmCreateOrderEventOrderPartType } from 'gtm/types/events';
 import { GtmCartInfoType, GtmConsentInfoType, GtmUserInfoType } from 'gtm/types/objects';
+import { CartItemFragmentApi } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { SimplePaymentFragmentApi } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { SimpleProductFragmentApi } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
+import { ListedStoreFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 
 export const onGtmCreateOrderEventHandler = (
     gtmCreateOrderEventOrderPart: GtmCreateOrderEventOrderPartType | undefined,

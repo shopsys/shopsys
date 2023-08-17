@@ -1,5 +1,4 @@
 import { showErrorMessage } from 'helpers/toasts';
-import { CartFragmentApi, ListedStoreFragmentApi, useChangeTransportInCartMutationApi } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { onGtmTransportChangeEventHandler } from 'gtm/helpers/eventHandlers';
 import { useGtmCartInfo } from 'gtm/helpers/gtm';
@@ -8,6 +7,9 @@ import { useLatest } from 'hooks/ui/useLatest';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType } from 'gtm/types/enums';
+import { CartFragmentApi } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { useChangeTransportInCartMutationApi } from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
+import { ListedStoreFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
 
 export type ChangeTransportHandler = (
     newTransportUuid: string | null,

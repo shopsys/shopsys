@@ -1,6 +1,5 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ResetPasswordContent } from 'components/Pages/ResetPassword/ResetPasswordContent';
-import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
@@ -9,6 +8,7 @@ import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { GtmPageType } from 'gtm/types/enums';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 
 const ResetPasswordPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

@@ -2,8 +2,8 @@ import { FlagDetailProductsWrapper } from './FlagDetailProductsWrapper';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { FlagDetailFragmentApi } from 'graphql/generated';
 import { useRef } from 'react';
+import { FlagDetailFragmentApi } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
 
 type FlagDetailContentProps = {
     flag: FlagDetailFragmentApi;

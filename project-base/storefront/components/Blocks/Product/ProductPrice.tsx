@@ -1,4 +1,4 @@
-import { ProductPriceFragmentApi } from 'graphql/generated';
+import { ProductPriceFragmentApi } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 

@@ -7,7 +7,6 @@ import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'helpers/toasts';
-import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
@@ -17,6 +16,7 @@ import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
+import { useNewsletterSubscribeMutationApi } from 'graphql/requests/newsletterSubscription/mutations/NewsletterSubscribeMutation.generated';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

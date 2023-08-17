@@ -15,11 +15,6 @@ import {
     useCustomerChangeProfileForm,
     useCustomerChangeProfileFormMeta,
 } from 'components/Pages/Customer/customerChangeProfileFormMeta';
-import {
-    useChangePasswordMutationApi,
-    useChangePersonalDataMutationApi,
-    useCountriesQueryApi,
-} from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
@@ -31,6 +26,9 @@ import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { CombinedError } from 'urql';
+import { useCountriesQueryApi } from 'graphql/requests/countries/queries/CountriesQuery.generated';
+import { useChangePasswordMutationApi } from 'graphql/requests/customer/mutations/ChangePasswordMutation.generated';
+import { useChangePersonalDataMutationApi } from 'graphql/requests/customer/mutations/ChangePersonalDataMutation.generated';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 

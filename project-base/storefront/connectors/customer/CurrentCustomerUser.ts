@@ -1,4 +1,7 @@
-import { CurrentCustomerUserQueryApi, useCurrentCustomerUserQueryApi } from 'graphql/generated';
+import {
+    useCurrentCustomerUserQueryApi,
+    CurrentCustomerUserQueryApi,
+} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CustomerTypeEnum } from 'types/customer';
 

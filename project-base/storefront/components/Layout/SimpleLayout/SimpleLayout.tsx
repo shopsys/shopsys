@@ -1,8 +1,7 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BreadcrumbFragmentApi } from 'graphql/generated';
-
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 type SimpleLayoutProps = {
     heading: string;
     breadcrumb: BreadcrumbFragmentApi[];

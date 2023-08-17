@@ -4,12 +4,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
 import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
 import { ProductDetailPageSkeleton } from 'components/Pages/ProductDetail/ProductDetailPageSkeleton';
-import {
-    ProductDetailQueryApi,
-    ProductDetailQueryDocumentApi,
-    ProductDetailQueryVariablesApi,
-    useProductDetailQueryApi,
-} from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
@@ -20,6 +14,12 @@ import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
+import {
+    useProductDetailQueryApi,
+    ProductDetailQueryApi,
+    ProductDetailQueryVariablesApi,
+    ProductDetailQueryDocumentApi,
+} from 'graphql/requests/products/queries/ProductDetailQuery.generated';
 
 const ProductDetailPage: NextPage = () => {
     const router = useRouter();

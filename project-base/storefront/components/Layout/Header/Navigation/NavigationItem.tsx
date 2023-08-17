@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { NavigationLeaf } from 'components/Layout/Header/Navigation/NavigationLeaf';
-import { CategoriesByColumnFragmentApi } from 'graphql/generated';
+import { CategoriesByColumnFragmentApi } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { twJoin } from 'tailwind-merge';
 
 type NavigationItemProps = {

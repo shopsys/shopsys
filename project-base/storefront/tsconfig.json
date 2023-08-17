@@ -18,5 +18,5 @@
         "incremental": true
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "*.js", "*.test.tsx"],
-    "exclude": ["node_modules", "tsconfig.json", "graphql", ".pnpm-store", ".next"]
+    "exclude": ["node_modules", "tsconfig.json", ".pnpm-store", ".next"]
 }

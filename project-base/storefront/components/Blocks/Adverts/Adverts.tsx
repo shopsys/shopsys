@@ -3,11 +3,13 @@ import { Image } from 'components/Basic/Image/Image';
 import { isElementVisible } from 'helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { AdvertsFragmentApi, CategoryDetailFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { Fragment, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { AdvertsFragmentApi } from 'graphql/requests/adverts/fragments/AdvertsFragment.generated';
+import { useAdvertsQueryApi } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
+import { CategoryDetailFragmentApi } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 
 type PositionNameType =
     | 'productList'

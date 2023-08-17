@@ -1,4 +1,4 @@
-import { CountryFragmentApi } from 'graphql/generated';
+import { CountryFragmentApi } from 'graphql/requests/countries/fragments/CountryFragment.generated';
 
 export enum CustomerTypeEnum {
     CommonCustomer = 'commonCustomer',

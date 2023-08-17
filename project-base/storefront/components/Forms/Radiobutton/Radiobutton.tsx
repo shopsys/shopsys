@@ -1,8 +1,8 @@
 import { LabelWrapper } from '../Lib/LabelWrapper';
 import { Image } from 'components/Basic/Image/Image';
-import { ImageSizesFragmentApi } from 'graphql/generated';
 import { forwardRef, InputHTMLAttributes, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { ImageSizesFragmentApi } from 'graphql/requests/images/fragments/ImageSizesFragment.generated';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,

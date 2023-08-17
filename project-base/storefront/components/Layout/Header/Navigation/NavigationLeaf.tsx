@@ -1,6 +1,5 @@
 import { NavigationColumnCategory } from 'components/Layout/Header/Navigation/NavigationColumnCategory';
-import { ColumnCategoriesFragmentApi } from 'graphql/generated';
-
+import { ColumnCategoriesFragmentApi } from 'graphql/requests/navigation/fragments/ColumnCategoriesFragment.generated';
 type NavigationLeafProps = {
     columnCategories: ColumnCategoriesFragmentApi[];
 };

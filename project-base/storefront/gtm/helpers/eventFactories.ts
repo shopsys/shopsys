@@ -7,19 +7,6 @@ import {
 } from './gtm';
 import { getGtmDeviceType } from './helpers';
 import { mapGtmCartItemType, mapGtmListedProductType, mapGtmProductDetailType, mapGtmShippingInfo } from './mappers';
-import {
-    AutocompleteSearchQueryApi,
-    BreadcrumbFragmentApi,
-    CartFragmentApi,
-    CartItemFragmentApi,
-    ListedProductFragmentApi,
-    ListedStoreFragmentApi,
-    MainVariantDetailFragmentApi,
-    ProductDetailFragmentApi,
-    SimplePaymentFragmentApi,
-    SimpleProductFragmentApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-} from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -69,6 +56,17 @@ import {
     GtmReviewConsentsType,
     GtmUserInfoType,
 } from 'gtm/types/objects';
+import { BreadcrumbFragmentApi } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { CartFragmentApi } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { CartItemFragmentApi } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
+import { SimplePaymentFragmentApi } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { ListedProductFragmentApi } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { MainVariantDetailFragmentApi } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { ProductDetailFragmentApi } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { SimpleProductFragmentApi } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
+import { AutocompleteSearchQueryApi } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
+import { ListedStoreFragmentApi } from 'graphql/requests/stores/fragments/ListedStoreFragment.generated';
+import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 
 export const getGtmCartViewEvent = (
     currencyCode: string,
