@@ -16,7 +16,7 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ isMenuOpened, onMenuTogg
     return (
         <div
             className={twJoin(
-                'flex h-10 w-full cursor-pointer items-center rounded-xl bg-orangeLight p-3',
+                'flex h-10 w-full cursor-pointer items-center rounded bg-orangeLight p-3',
                 isMenuOpened && 'z-aboveMobileMenu',
             )}
             onClick={onMenuToggleHandler}

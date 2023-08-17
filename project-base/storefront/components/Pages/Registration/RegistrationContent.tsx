@@ -79,7 +79,7 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}>
                         <div className="mb-10">
-                            <div className="mb-6 -mr-4 flex w-full items-center justify-between rounded-l-xl bg-blueLight p-4">
+                            <div className="mb-6 -mr-4 flex w-full items-center justify-between rounded-l bg-blueLight p-4">
                                 <div className="block text-lg text-primary md:pr-32 lg:text-xl">
                                     <div className="block text-xl font-semibold">
                                         {t("Don't have an account yet? Register.")}

@@ -79,7 +79,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
         <div className="flex flex-col gap-6 vl:flex-row" ref={sliderBoxRef} data-testid={dataTestId}>
             <div
                 ref={sliderRef}
-                className="keen-slider h-[200px] w-full cursor-pointer rounded-xl lg:h-[250px] vl:h-[290px] vl:w-[calc(100%-307px)]"
+                className="keen-slider h-[200px] w-full cursor-pointer rounded lg:h-[250px] vl:h-[290px] vl:w-[calc(100%-307px)]"
             >
                 {sliderItems.map((sliderItem, index) => (
                     <BannersSliderItem key={index} item={sliderItem} />
@@ -88,7 +88,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
             <div className="hidden vl:flex vl:flex-1 vl:flex-col">
                 {sliderItems.map((sliderItem, index) => (
                     <button
-                        className="group relative mb-4 block !w-full cursor-pointer rounded-xl border-2 border-blueLight bg-blueLight py-4 px-8 text-left font-bold transition hover:border-blue hover:bg-blue disabled:border-primary disabled:bg-creamWhite"
+                        className="group relative mb-4 block !w-full cursor-pointer rounded border-2 border-blueLight bg-blueLight py-4 px-8 text-left font-bold transition hover:border-blue hover:bg-blue disabled:border-primary disabled:bg-creamWhite"
                         onClick={() => onMoveToSlideHandler(index)}
                         disabled={index === currentSlide % sliderItems.length}
                         key={sliderItem.uuid}

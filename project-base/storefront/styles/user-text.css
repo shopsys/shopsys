@@ -44,7 +44,7 @@
         }
 
         img {
-            @apply block h-auto rounded-xl;
+            @apply block h-auto rounded;
         }
 
         iframe {

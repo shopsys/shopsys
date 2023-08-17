@@ -39,7 +39,7 @@ export const Variant: FC<VariantProps> = ({
         <>
             <ProductVariantsTableRow key={variant.uuid} dataTestId={TEST_IDENTIFIER + variant.catalogNumber}>
                 <Cell className="max-lg:float-left max-lg:w-10 max-lg:pl-0 lg:w-24">
-                    <div className="h-16 w-16">
+                    <div className="w-16">
                         <Image
                             image={variant.mainImage}
                             alt={variant.mainImage?.name || variant.fullName}

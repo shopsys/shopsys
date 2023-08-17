@@ -135,7 +135,7 @@ export const PromoCode: FC = () => {
                                             onChange={onChangePromoCodeValueHandler}
                                         />
                                         <Button
-                                            className="!rounded-r-xl !rounded-l-none !px-3"
+                                            className="!rounded-r !rounded-l-none !px-3"
                                             type="submit"
                                             isWithDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
                                             dataTestId={TEST_IDENTIFIER + '-apply-button'}

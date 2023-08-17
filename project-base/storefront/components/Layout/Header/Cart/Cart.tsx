@@ -41,14 +41,14 @@ export const Cart: FC = ({ className }) => {
     return (
         <div className={twMergeCustom('group relative lg:flex', className)}>
             {isLoading && (
-                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-xl bg-greyLighter py-2 opacity-50" />
+                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-greyLighter py-2 opacity-50" />
             )}
 
             <ExtendedNextLink
                 href={cartUrl}
                 type="static"
                 className={twJoin(
-                    'hidden items-center rounded-xl bg-orangeLight py-4 pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
+                    'hidden items-center rounded bg-orangeLight py-4 pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
                 )}
                 data-testid={TEST_IDENTIFIER + 'block'}
             >
@@ -69,7 +69,7 @@ export const Cart: FC = ({ className }) => {
             </ExtendedNextLink>
             <div
                 className={twJoin(
-                    'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded-xl lg:rounded-tr-none lg:bg-white lg:opacity-0 lg:shadow-md',
+                    'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded lg:rounded-tr-none lg:bg-white lg:opacity-0 lg:shadow-md',
                     !isCartEmpty ? 'lg:w-[510px] lg:px-5 lg:pt-1 lg:pb-6' : 'lg:w-[400px] lg:py-4',
                 )}
                 data-testid={TEST_IDENTIFIER + 'detail'}

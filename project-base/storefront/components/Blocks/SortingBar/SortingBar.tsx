@@ -63,7 +63,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
         >
             <div
                 className={twJoin(
-                    'flex w-full flex-col rounded-xl bg-border vl:static vl:top-1 vl:flex-row vl:items-center vl:justify-between vl:rounded-none vl:bg-opacity-0',
+                    'flex w-full flex-col rounded bg-border vl:static vl:top-1 vl:flex-row vl:items-center vl:justify-between vl:rounded-none vl:bg-opacity-0',
                     toggleSortMenu && 'rounded-b-none',
                 )}
             >
@@ -87,7 +87,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                         </div>
 
                         {toggleSortMenu && (
-                            <div className="absolute top-full z-[1] w-full rounded-b-xl bg-border">
+                            <div className="absolute top-full z-[1] w-full rounded-b bg-border">
                                 {sortOptions
                                     .filter((sortOption) => sortOption !== selectedSortOption)
                                     .map((sortOption, index) => (

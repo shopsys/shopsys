@@ -17,7 +17,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
     const t = useTypedTranslationFunction();
 
     return (
-        <div className="flex flex-col rounded-xl bg-primary p-7">
+        <div className="flex flex-col rounded bg-primary p-7">
             <Heading type="h2">{t('Article categories')}</Heading>
             {!!blogCategoryItems &&
                 blogCategoryItems.map((blogCategory, index) => {

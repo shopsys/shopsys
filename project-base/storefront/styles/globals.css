@@ -84,7 +84,7 @@ input[type='number'] {
 }
 
 .select__control {
-    @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded-xl !border-2 !border-border !shadow-none hover:!border-2 hover:!border-border;
+    @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded !border-2 !border-border !shadow-none hover:!border-2 hover:!border-border;
 }
 
 .select__indicator {
@@ -92,7 +92,7 @@ input[type='number'] {
 }
 
 .select__menu {
-    @apply !m-0 !overflow-hidden !rounded-b-xl !border-2 !border-t-0 !border-border !shadow-none;
+    @apply !m-0 !overflow-hidden !rounded-b !border-2 !border-t-0 !border-border !shadow-none;
 }
 
 .select__menu-list {
@@ -122,7 +122,7 @@ input[type='number'] {
 }
 
 .Toastify__toast {
-    @apply !rounded-xl;
+    @apply !rounded;
 }
 
 .Toastify__toast-body {

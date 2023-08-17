@@ -17,7 +17,7 @@ export const ListItem: FC<ListItemProps> = ({ listedItem, imageType, linkType, d
             <ExtendedNextLink
                 type={linkType}
                 href={listedItem.slug}
-                className="flex h-full w-full cursor-pointer flex-col items-center rounded-xl bg-greyVeryLight px-2 py-4 no-underline transition hover:bg-whitesmoke hover:no-underline lg:flex-row lg:px-3 lg:py-2"
+                className="flex h-full w-full cursor-pointer flex-col items-center rounded bg-greyVeryLight px-2 py-4 no-underline transition hover:bg-whitesmoke hover:no-underline lg:flex-row lg:px-3 lg:py-2"
             >
                 <>
                     {itemImage && (

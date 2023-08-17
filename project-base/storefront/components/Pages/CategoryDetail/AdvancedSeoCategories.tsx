@@ -25,7 +25,7 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCat
                             href={`/${seoMixLink.slug}`}
                             type="static"
                             className={twJoin(
-                                'flex h-full items-center justify-center rounded-xl bg-greyVeryLight p-3 text-center text-sm text-dark no-underline',
+                                'flex h-full items-center justify-center rounded bg-greyVeryLight p-3 text-center text-sm text-dark no-underline',
                                 'hover:bg-whitesmoke hover:text-dark hover:no-underline',
                                 'active:bg-whitesmoke active:text-dark active:no-underline',
                             )}

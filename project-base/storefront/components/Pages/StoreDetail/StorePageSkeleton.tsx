@@ -16,7 +16,7 @@ export const StorePageSkeleton: FC = () => (
                     <div className="flex w-full flex-col">
                         <div className="mb-7">
                             <Skeleton className="mb-4 h-6 w-40" />
-                            <Skeleton count={5} className="mb-2 h-6 w-40 rounded-lg" />
+                            <Skeleton count={5} className="mb-2 h-6 w-40 rounded" />
                         </div>
                         <Skeleton className="h-12 w-full" />
                     </div>

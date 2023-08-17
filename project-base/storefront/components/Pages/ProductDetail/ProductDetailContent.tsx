@@ -2,7 +2,6 @@ import {
     ProductDetail,
     ProductDetailCode,
     ProductDetailHeading,
-    ProductDetailImage,
     ProductDetailInfo,
     ProductDetailPrefix,
 } from './ProductDetaiElements';
@@ -10,7 +9,6 @@ import { ProductDetailAccessories } from './ProductDetailAccessories';
 import { ProductDetailAddToCart } from './ProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
-import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
@@ -24,6 +22,7 @@ import { useRouter } from 'next/router';
 import { Fragment, useRef } from 'react';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { useWishlist } from 'hooks/useWishlist';
+import { ProductDetailGallery } from './ProductDetailGallery';
 
 type ProductDetailContentProps = {
     product: ProductDetailFragmentApi;
@@ -47,14 +46,12 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
             <ProductMetadata product={product} />
             <Webline>
                 <ProductDetail>
-                    <ProductDetailImage>
-                        <ProductDetailGallery
-                            flags={product.flags}
-                            images={product.images}
-                            productName={product.name}
-                            videoIds={product.productVideos}
-                        />
-                    </ProductDetailImage>
+                    <ProductDetailGallery
+                        flags={product.flags}
+                        images={product.images}
+                        productName={product.name}
+                        videoIds={product.productVideos}
+                    />
                     <ProductDetailInfo>
                         <ProductDetailPrefix dataTestId={TEST_IDENTIFIER + 'prefix'}>
                             {product.namePrefix}
@@ -91,7 +88,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
             <Webline dataTestId={TEST_IDENTIFIER + 'availability'}>
                 <ProductDetailAvailabilityList ref={scrollTarget} storeAvailabilities={product.storeAvailabilities} />
             </Webline>
-            <Webline dataTestId={TEST_IDENTIFIER + 'accessories'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'accessories'} className="mt-5">
                 <ProductDetailAccessories accessories={product.accessories} />
             </Webline>
         </Fragment>

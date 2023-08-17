@@ -110,7 +110,7 @@ export const AutocompleteSearch: FC = () => {
                         />
                         {hasAutocompleteSearchFocus && autocompleteSearchQueryValue.length > 0 && (
                             <div
-                                className="absolute -top-8 right-0 flex h-10 w-16 min-w-[72px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-xl bg-orangeLight px-2 transition lg:right-11 lg:top-1/2 lg:h-5 lg:w-5 lg:min-w-fit lg:rounded-full lg:bg-greyLighter lg:px-0"
+                                className="absolute -top-8 right-0 flex h-10 w-16 min-w-[72px] -translate-y-1/2 cursor-pointer items-center justify-center rounded bg-orangeLight px-2 transition lg:right-11 lg:top-1/2 lg:h-5 lg:w-5 lg:min-w-fit lg:rounded-full lg:bg-greyLighter lg:px-0"
                                 onClick={() => setAutocompleteSearchQueryValue('')}
                             >
                                 {isDesktop ? (

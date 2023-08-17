@@ -52,7 +52,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             <input
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer w-full rounded-xl border-2 border-border bg-white px-3 pt-5 text-dark [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:[color:transparent] focus:outline-none disabled:pointer-events-none disabled:cursor-no-drop disabled:opacity-50',
+                    'peer w-full rounded border-2 border-border bg-white px-3 pt-5 text-dark [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:[color:transparent] focus:outline-none disabled:pointer-events-none disabled:cursor-no-drop disabled:opacity-50',
                     '[&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner [&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner',
                     inputSize === 'small' ? 'text-small h-12' : 'text-body h-14',
                     hasError && 'border-red bg-white shadow-none',

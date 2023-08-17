@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ProductDetailGallerySliderProps = {
-    galleryItems: ImageSizesFragmentApi[];
+    images: ImageSizesFragmentApi[];
     flags: SimpleFlagFragmentApi[];
     videoIds?: VideoTokenFragmentApi[];
 };
@@ -21,7 +21,7 @@ const sliderSettings: EmblaOptionsType = {
     slidesToScroll: 1,
 };
 
-export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = ({ galleryItems, flags, videoIds }) => {
+export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = ({ images, flags, videoIds }) => {
     const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
     const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -53,13 +53,13 @@ export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = (
     }, [emblaApi, videoIds]);
 
     return (
-        <div className="p-2 lg:hidden">
+        <div className="relative p-2 lg:hidden">
             <div ref={emblaRef} className="w-full overflow-hidden">
-                <div className="relative flex h-auto flex-row">
-                    {galleryItems.map((galleryItem, index) => (
+                <div className="flex h-auto flex-row">
+                    {images.map((galleryItem, index) => (
                         <div
                             key={index}
-                            className="relative flex max-h-[250px] min-h-[250px] w-full min-w-0 flex-shrink-0 items-center justify-center sm:max-h-[300px] sm:min-h-[300px] md:max-h-[330px] md:min-h-[330px]"
+                            className="flex max-h-[250px] min-h-[250px] w-full min-w-0 flex-shrink-0 items-center justify-center sm:max-h-[300px] sm:min-h-[300px] md:max-h-[330px] md:min-h-[330px]"
                             data-src={galleryItem.sizes.find((size) => size.size === 'default')?.url}
                         >
                             <img
@@ -69,7 +69,8 @@ export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = (
                             />
                         </div>
                     ))}
-                    {videoIds !== undefined &&
+
+                    {videoIds &&
                         videoIds.map((videoId, index) => (
                             <div
                                 key={'video-' + index}
@@ -85,6 +86,7 @@ export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = (
                             </div>
                         ))}
                 </div>
+
                 <div className="flex items-center justify-center pt-6 pr-4 pb-2">
                     {scrollSnaps.map((_, index) => (
                         <button
@@ -97,12 +99,14 @@ export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = (
                         />
                     ))}
                 </div>
+
                 {!!flags.length && (
                     <div className="absolute top-3 left-4 flex flex-col">
                         <ProductFlags flags={flags} />
                     </div>
                 )}
             </div>
+
             <ImageSliderControl onClick={scrollPrev} enabled={prevBtnEnabled} />
             <ImageSliderControl onClick={scrollNext} isNext enabled={nextBtnEnabled} />
         </div>

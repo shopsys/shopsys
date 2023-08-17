@@ -29,7 +29,7 @@ export const Image: FC<ImageProps> = ({ image, alt, type, loading, dataTestId, w
                 data-testid={getDataTestId(dataTestId) + '-empty'}
                 height={height || 160}
                 width={width || 160}
-                className={twMergeCustom(classNameTwClass, 'h-auto w-full')}
+                className={twMergeCustom('h-auto w-full', classNameTwClass)}
             />
         );
     }

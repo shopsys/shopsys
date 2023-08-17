@@ -153,7 +153,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                         ]}
                                         render={(radiobutton, key) => (
                                             <div
-                                                className="relative mt-4 flex w-full flex-wrap rounded-xl border-2 border-border p-5"
+                                                className="relative mt-4 flex w-full flex-wrap rounded border-2 border-border p-5"
                                                 key={key}
                                             >
                                                 {radiobutton}

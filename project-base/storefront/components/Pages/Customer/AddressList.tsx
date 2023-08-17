@@ -61,7 +61,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                     <div
                         key={address.uuid}
                         className={twJoin(
-                            'relative mb-5 flex w-full flex-row flex-wrap rounded-xl border border-grey p-5',
+                            'relative mb-5 flex w-full flex-row flex-wrap rounded border border-grey p-5',
                             defaultDeliveryAddress?.uuid === address.uuid
                                 ? 'border-primary bg-greyVeryLight'
                                 : 'cursor-pointer',

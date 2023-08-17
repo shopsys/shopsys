@@ -27,7 +27,7 @@ export const CategoryDetailPageSkeleton: FC = () => (
                     <div className="flex w-full flex-col">
                         <div className="mb-7">
                             <Skeleton className="mb-2 h-6 w-40" />
-                            <Skeleton className="h-10 rounded-lg lg:w-20 " />
+                            <Skeleton className="h-10 rounded lg:w-20 " />
                         </div>
                         <div className="mt-10 mb-8 flex flex-wrap justify-between gap-2 vl:hidden">
                             <Skeleton className="h-12 w-40" />
