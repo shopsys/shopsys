@@ -36,10 +36,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '23', minutes: '10', instanceName: service, readableName: 'Delete old transfer issues' }
 
-    App\Component\FileUpload\DeleteOldUploadedFilesCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '2', minutes: '50', instanceName: service, readableName: 'Delete old temporary uploaded files' }
-
     Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
         tags:
             - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Download Heureka categories' }
