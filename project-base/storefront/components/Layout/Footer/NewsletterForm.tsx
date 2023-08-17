@@ -1,5 +1,4 @@
 import { useNewsletterForm, useNewsletterFormMeta } from './newsletterFormMeta';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
@@ -51,10 +50,11 @@ export const NewsletterForm: FC = () => {
                 className="relative flex flex-col pb-7 pt-8 before:absolute before:bottom-0 before:-left-5 before:h-32 before:w-28 before:-translate-x-full before:bg-[url('/images/lines.webp')] before:content-[''] lg:flex-row lg:items-center"
                 data-testid={TEST_IDENTIFIER}
             >
-                <Heading type="h2" className="flex-1 lg:pr-5">
+                <div className="mb-3 break-words text-lg font-bold text-dark lg:mb-0 lg:pr-5 lg:text-2xl">
                     {t('Sign up for our newsletter and get 35% discount on running apparel')}
-                </Heading>
-                <div className="w-full lg:max-w-md vl:max-w-lg ">
+                </div>
+
+                <div className="lg:basis-5/12">
                     <FormProvider {...formProviderMethods}>
                         <Form
                             className="mt-15 sm:mt-0"
@@ -74,6 +74,7 @@ export const NewsletterForm: FC = () => {
                                         autoComplete: 'email',
                                     }}
                                 />
+
                                 <div className="flex flex-col">
                                     <SubmitButton
                                         className="max-lg:mt-3 lg:ml-3"
@@ -83,11 +84,12 @@ export const NewsletterForm: FC = () => {
                                     </SubmitButton>
                                 </div>
                             </div>
+
                             <CheckboxControlled
                                 name={formMeta.fields.privacyPolicy.name}
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
-                                render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                                render={(checkbox) => <ChoiceFormLine className="mb-0">{checkbox}</ChoiceFormLine>}
                                 checkboxProps={{
                                     label: formMeta.fields.privacyPolicy.label,
                                     required: true,
@@ -97,6 +99,7 @@ export const NewsletterForm: FC = () => {
                     </FormProvider>
                 </div>
             </div>
+
             {isErrorPopupVisible && (
                 <ErrorPopup onCloseCallback={() => setErrorPopupVisibility(false)} fields={formMeta.fields} />
             )}

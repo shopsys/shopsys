@@ -1,3 +1,4 @@
+import { twMergeCustom } from 'helpers/twMerge';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
@@ -5,8 +6,8 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 
 type ChoiceFormLineProps = NativeProps;
 
-export const ChoiceFormLine: FC<ChoiceFormLineProps> = ({ children, style }) => (
-    <div className="mb-4 w-fit" style={style}>
+export const ChoiceFormLine: FC<ChoiceFormLineProps> = ({ children, style, className }) => (
+    <div className={twMergeCustom('mb-4 w-fit', className)} style={style}>
         {children}
     </div>
 );
