@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception;
 
 use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class UploadedFileTypeConfigNotFoundException extends Exception implements UploadedFileConfigException
+class UploadedFileTypeConfigNotFoundException extends NotFoundHttpException implements UploadedFileConfigException
 {
     /**
      * @param string $typeName
@@ -16,6 +17,6 @@ class UploadedFileTypeConfigNotFoundException extends Exception implements Uploa
     {
         $message = sprintf('Uploaded file type config name "%s" not found.', $typeName);
 
-        parent::__construct($message, 0, $previous);
+        parent::__construct($message, $previous);
     }
 }

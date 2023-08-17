@@ -3,8 +3,9 @@
 namespace Shopsys\FrameworkBundle\Component\Image\Exception;
 
 use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ImageNotFoundException extends Exception implements ImageException
+class ImageNotFoundException extends NotFoundHttpException implements ImageException
 {
     /**
      * @param string $message
@@ -12,6 +13,6 @@ class ImageNotFoundException extends Exception implements ImageException
      */
     public function __construct($message = '', ?Exception $previous = null)
     {
-        parent::__construct($message, 0, $previous);
+        parent::__construct($message, $previous);
     }
 }

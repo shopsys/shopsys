@@ -3,8 +3,9 @@
 namespace Shopsys\FrameworkBundle\Component\Image\Config\Exception;
 
 use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ImageEntityConfigNotFoundException extends Exception implements ImageConfigException
+class ImageEntityConfigNotFoundException extends NotFoundHttpException implements ImageConfigException
 {
     /**
      * @var string
@@ -19,7 +20,7 @@ class ImageEntityConfigNotFoundException extends Exception implements ImageConfi
     {
         $this->entityClassOrName = $entityClassOrName;
 
-        parent::__construct('Not found image config for entity "' . $entityClassOrName . '".', 0, $previous);
+        parent::__construct('Not found image config for entity "' . $entityClassOrName . '".', $previous);
     }
 
     /**

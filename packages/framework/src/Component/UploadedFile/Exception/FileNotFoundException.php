@@ -3,8 +3,9 @@
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Exception;
 
 use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class FileNotFoundException extends Exception implements FileException
+class FileNotFoundException extends NotFoundHttpException implements FileException
 {
     /**
      * @param string $message
@@ -12,6 +13,6 @@ class FileNotFoundException extends Exception implements FileException
      */
     public function __construct($message = '', ?Exception $previous = null)
     {
-        parent::__construct($message, 0, $previous);
+        parent::__construct($message, $previous);
     }
 }
