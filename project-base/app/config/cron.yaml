@@ -93,11 +93,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: products, readableName: 'Recalculate midnight product visibilities' }
 
-    # @todo mg remove?
-    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: default, readableName: 'Recalculate product availabilities' }
-
     App\Model\Product\Elasticsearch\ProductExportCronModule:
         tags:
             - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: products, readableName: "Export products to Elasticsearch" }
