@@ -187,6 +187,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 onChange={onChangeMinHandler}
                 data-testid={TEST_IDENTIFIER + '-left-thumb'}
                 disabled={isDisabled}
+                aria-label={t('from')}
             />
             <RangeSliderThumb
                 isActive={maxValueThumb !== max}
@@ -198,6 +199,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 onChange={onChangeMaxHandler}
                 data-testid={TEST_IDENTIFIER + '-right-thumb'}
                 disabled={isDisabled}
+                aria-label={t('to')}
             />
             <div className="relative w-full">
                 <div className="absolute z-above h-1 w-full rounded bg-greyLighter" />
