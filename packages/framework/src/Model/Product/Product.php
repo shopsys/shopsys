@@ -40,6 +40,11 @@ class Product extends AbstractTranslatableEntity
     public const VARIANT_TYPE_VARIANT = 'variant';
 
     /**
+     * @var int[]
+     */
+    protected array $unsetVariantIds = [];
+
+    /**
      * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -1071,6 +1076,7 @@ class Product extends AbstractTranslatableEntity
         foreach ($this->getVariants() as $originalVariant) {
             if (!in_array($originalVariant, $currentVariants, true)) {
                 $originalVariant->unsetMainVariant();
+                $this->unsetVariantIds[] = $originalVariant->getId();
             }
         }
     }
@@ -1081,5 +1087,13 @@ class Product extends AbstractTranslatableEntity
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getUnsetVariantIds(): array
+    {
+        return $this->unsetVariantIds;
     }
 }

@@ -29,6 +29,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
@@ -227,15 +228,7 @@ class ProductFacade extends BaseProductFacade
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
-        $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getId());
-
-        if ($product->isMainVariant()) {
-            foreach ($product->getVariants() as $variant) {
-                $this->productExportScheduler->scheduleRowIdForImmediateExport($variant->getId());
-            }
-        } elseif ($product->isVariant()) {
-            $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getMainVariant()->getId());
-        }
+        $this->scheduleProductForExport($product);
 
         $this->editProductStockAndStoreRelation($productData, $product);
 
@@ -464,5 +457,25 @@ class ProductFacade extends BaseProductFacade
             $storesIndexedById,
             $productData->productStoreData,
         );
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     */
+    protected function scheduleProductForExport(Product $product): void
+    {
+        $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getId());
+
+        if ($product->isMainVariant()) {
+            foreach ($product->getVariants() as $variant) {
+                $this->productExportScheduler->scheduleRowIdForImmediateExport($variant->getId());
+            }
+        } elseif ($product->isVariant()) {
+            $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getMainVariant()->getId());
+        }
+
+        foreach ($product->getUnsetVariantIds() as $unsetVariantId) {
+            $this->productExportScheduler->scheduleRowIdForImmediateExport($unsetVariantId);
+        }
     }
 }

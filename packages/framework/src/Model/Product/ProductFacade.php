@@ -187,8 +187,7 @@ class ProductFacade
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
-        $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
-        $this->productExportScheduler->scheduleRowIdForImmediateExport($productToExport->getId());
+        $this->scheduleProductForExport($product);
 
         return $product;
     }
@@ -473,5 +472,18 @@ class ProductFacade
         }
 
         return $changedProductNames;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     */
+    protected function scheduleProductForExport(Product $product): void
+    {
+        $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
+        $this->productExportScheduler->scheduleRowIdForImmediateExport($productToExport->getId());
+
+        foreach ($product->getUnsetVariantIds() as $unsetVariantId) {
+            $this->productExportScheduler->scheduleRowIdForImmediateExport($unsetVariantId);
+        }
     }
 }
