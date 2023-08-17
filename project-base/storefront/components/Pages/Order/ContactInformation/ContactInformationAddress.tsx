@@ -31,9 +31,9 @@ export const ContactInformationAddress: FC = () => {
 
     useEffect(() => {
         if (countriesAsSelectOptions.length > 0 && countryValue.value === '') {
-            setValue(formMeta.fields.country.name, countriesAsSelectOptions[0]);
+            setValue(formMeta.fields.country.name, countriesAsSelectOptions[0], { shouldValidate: true });
         }
-    }, [countriesAsSelectOptions, countryValue, formMeta.fields.country.name, setValue]);
+    }, [countriesAsSelectOptions, countryValue, formMeta.fields.country.name]);
 
     if (countriesAsSelectOptions.length === 0) {
         return null;

@@ -128,9 +128,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
         if (isResultOk) {
             if (messages.success !== undefined) {
                 showSuccessMessage(messages.success);
-                formProviderMethods.setValue('passwordOld', '');
-                formProviderMethods.setValue('passwordFirst', '');
-                formProviderMethods.setValue('passwordSecond', '');
+                formProviderMethods.setValue('passwordOld', '', { shouldValidate: true });
+                formProviderMethods.setValue('passwordFirst', '', { shouldValidate: true });
+                formProviderMethods.setValue('passwordSecond', '', { shouldValidate: true });
             }
             if (callbacks?.success !== undefined) {
                 callbacks.success();

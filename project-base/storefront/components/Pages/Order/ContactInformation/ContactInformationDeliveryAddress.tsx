@@ -49,14 +49,14 @@ export const ContactInformationDeliveryAddress: FC = () => {
             if (selectedCountryOption) {
                 const formValues = getValues();
 
-                setValue(formMeta.fields.deliveryFirstName.name, formValues.firstName);
-                setValue(formMeta.fields.deliveryLastName.name, formValues.lastName);
-                setValue(formMeta.fields.deliveryCompanyName.name, formValues.companyName);
-                setValue(formMeta.fields.deliveryTelephone.name, formValues.telephone);
-                setValue(formMeta.fields.deliveryStreet.name, pickupPlace.street);
-                setValue(formMeta.fields.deliveryCity.name, pickupPlace.city);
-                setValue(formMeta.fields.deliveryPostcode.name, pickupPlace.postcode);
-                setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption);
+                setValue(formMeta.fields.deliveryFirstName.name, formValues.firstName, { shouldValidate: true });
+                setValue(formMeta.fields.deliveryLastName.name, formValues.lastName, { shouldValidate: true });
+                setValue(formMeta.fields.deliveryCompanyName.name, formValues.companyName, { shouldValidate: true });
+                setValue(formMeta.fields.deliveryTelephone.name, formValues.telephone, { shouldValidate: true });
+                setValue(formMeta.fields.deliveryStreet.name, pickupPlace.street, { shouldValidate: true });
+                setValue(formMeta.fields.deliveryCity.name, pickupPlace.city, { shouldValidate: true });
+                setValue(formMeta.fields.deliveryPostcode.name, pickupPlace.postcode, { shouldValidate: true });
+                setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption, { shouldValidate: true });
 
                 updateContactInformation({ ...pickupPlace, country: selectedCountryOption });
             }
@@ -71,27 +71,29 @@ export const ContactInformationDeliveryAddress: FC = () => {
             )!;
 
             if (countriesAsSelectOptions.length) {
-                setValue(formMeta.fields.deliveryFirstName.name, deliveryAddress.firstName);
-                setValue(formMeta.fields.deliveryLastName.name, deliveryAddress.lastName);
-                setValue(formMeta.fields.deliveryCompanyName.name, deliveryAddress.companyName);
-                setValue(formMeta.fields.deliveryTelephone.name, deliveryAddress.telephone);
-                setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption);
+                setValue(formMeta.fields.deliveryFirstName.name, deliveryAddress.firstName, { shouldValidate: true });
+                setValue(formMeta.fields.deliveryLastName.name, deliveryAddress.lastName, { shouldValidate: true });
+                setValue(formMeta.fields.deliveryCompanyName.name, deliveryAddress.companyName, {
+                    shouldValidate: true,
+                });
+                setValue(formMeta.fields.deliveryTelephone.name, deliveryAddress.telephone, { shouldValidate: true });
+                setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption, { shouldValidate: true });
 
                 if (!pickupPlace) {
-                    setValue(formMeta.fields.deliveryStreet.name, deliveryAddress.street);
-                    setValue(formMeta.fields.deliveryCity.name, deliveryAddress.city);
-                    setValue(formMeta.fields.deliveryPostcode.name, deliveryAddress.postcode);
+                    setValue(formMeta.fields.deliveryStreet.name, deliveryAddress.street, { shouldValidate: true });
+                    setValue(formMeta.fields.deliveryCity.name, deliveryAddress.city, { shouldValidate: true });
+                    setValue(formMeta.fields.deliveryPostcode.name, deliveryAddress.postcode, { shouldValidate: true });
                 }
             }
         } else if (deliveryAddressUuid === '') {
-            setValue(formMeta.fields.deliveryFirstName.name, '');
-            setValue(formMeta.fields.deliveryLastName.name, '');
-            setValue(formMeta.fields.deliveryCompanyName.name, '');
-            setValue(formMeta.fields.deliveryTelephone.name, '');
-            setValue(formMeta.fields.deliveryStreet.name, '');
-            setValue(formMeta.fields.deliveryCity.name, '');
-            setValue(formMeta.fields.deliveryPostcode.name, '');
-            setValue(formMeta.fields.deliveryCountry.name, countriesAsSelectOptions[0]);
+            setValue(formMeta.fields.deliveryFirstName.name, '', { shouldValidate: true });
+            setValue(formMeta.fields.deliveryLastName.name, '', { shouldValidate: true });
+            setValue(formMeta.fields.deliveryCompanyName.name, '', { shouldValidate: true });
+            setValue(formMeta.fields.deliveryTelephone.name, '', { shouldValidate: true });
+            setValue(formMeta.fields.deliveryStreet.name, '', { shouldValidate: true });
+            setValue(formMeta.fields.deliveryCity.name, '', { shouldValidate: true });
+            setValue(formMeta.fields.deliveryPostcode.name, '', { shouldValidate: true });
+            setValue(formMeta.fields.deliveryCountry.name, countriesAsSelectOptions[0], { shouldValidate: true });
         }
     }, [deliveryAddressUuid, countriesAsSelectOptions]);
 
