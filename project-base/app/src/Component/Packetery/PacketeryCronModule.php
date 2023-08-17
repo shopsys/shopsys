@@ -18,9 +18,9 @@ class PacketeryCronModule implements SimpleCronModuleInterface
      * @param \App\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
     public function __construct(
-        private PacketeryClient $packeteryClient,
-        private OrderFacade $orderFacade,
-        private TransportTypeFacade $transportTypeFacade,
+        private readonly PacketeryClient $packeteryClient,
+        private readonly OrderFacade $orderFacade,
+        private readonly TransportTypeFacade $transportTypeFacade,
     ) {
     }
 

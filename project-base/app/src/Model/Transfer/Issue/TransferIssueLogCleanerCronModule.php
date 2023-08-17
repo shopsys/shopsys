@@ -14,8 +14,9 @@ class TransferIssueLogCleanerCronModule implements SimpleCronModuleInterface
     /**
      * @param \App\Model\Transfer\Issue\TransferIssueRepository $transferIssueRepository
      */
-    public function __construct(private TransferIssueRepository $transferIssueRepository)
-    {
+    public function __construct(
+        private readonly TransferIssueRepository $transferIssueRepository,
+    ) {
     }
 
     /**

@@ -13,8 +13,9 @@ class DummyCronModule implements SimpleCronModuleInterface
     /**
      * @param \App\Component\DataBridge\Transfer\DummyImportTransferFacade $dummyImportTransfer
      */
-    public function __construct(private DummyImportTransferFacade $dummyImportTransfer)
-    {
+    public function __construct(
+        private readonly DummyImportTransferFacade $dummyImportTransfer,
+    ) {
     }
 
     /**

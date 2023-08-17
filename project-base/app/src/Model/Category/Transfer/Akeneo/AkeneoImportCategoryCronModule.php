@@ -12,8 +12,9 @@ class AkeneoImportCategoryCronModule implements SimpleCronModuleInterface
     /**
      * @param \App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryFacade $akeneoImportCategoryFacade
      */
-    public function __construct(private AkeneoImportCategoryFacade $akeneoImportCategoryFacade)
-    {
+    public function __construct(
+        private readonly AkeneoImportCategoryFacade $akeneoImportCategoryFacade,
+    ) {
     }
 
     /**

@@ -29,9 +29,9 @@ class GoPayFacade implements PaymentServiceInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private GoPayClientFactory $goPayClientFactory,
-        private GoPayOrderMapper $goPayOrderMapper,
-        private Domain $domain,
+        private readonly GoPayClientFactory $goPayClientFactory,
+        private readonly GoPayOrderMapper $goPayOrderMapper,
+        private readonly Domain $domain,
     ) {
         $this->goPayClients = [];
     }
