@@ -41,6 +41,7 @@ export enum GtmProductListNameType {
     wishlist = 'wishlist',
     sharedWishlist = 'sharedWishlist',
     other = 'other',
+    bestsellers = 'bestsellers',
 }
 
 export enum GtmEventType {

@@ -17,6 +17,7 @@ import { useCallback, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { Filter } from 'components/Basic/Icon/IconsSvg';
+import { CategoryBestsellers } from './CategoryBestsellers/CategoryBestsellers';
 
 type CategoryDetailContentProps = {
     category: CategoryDetailFragmentApi;
@@ -80,6 +81,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                         className="mb-6"
                     />
                     <AdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
+                    {category.bestsellers.length > 0 && <CategoryBestsellers products={category.bestsellers} />}
                     <div className="flex flex-col gap-3 sm:flex-row">
                         <div
                             className="relative flex w-full cursor-pointer flex-row items-center justify-center rounded bg-primary py-3 px-8 font-bold uppercase text-white vl:mb-3 vl:hidden"

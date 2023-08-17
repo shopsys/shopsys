@@ -1,3 +1,4 @@
+import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 
 type ProductAvailableStoresCountProps = {
@@ -10,6 +11,7 @@ const TEST_IDENTIFIER = 'blocks-product-availability';
 export const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> = ({
     availableStoresCount,
     isMainVariant,
+    className,
 }) => {
     const { t } = useTranslation();
 
@@ -18,7 +20,7 @@ export const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> =
     }
 
     return (
-        <div className="mb-3 text-sm text-inStock" data-testid={TEST_IDENTIFIER}>
+        <div className={twMergeCustom('text-sm  text-inStock', className)} data-testid={TEST_IDENTIFIER}>
             {t('This item is available immediately in {{ count }} stores', { count: availableStoresCount })}
         </div>
     );
