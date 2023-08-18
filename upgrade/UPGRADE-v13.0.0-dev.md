@@ -29,3 +29,5 @@ There you can find links to upgrade notes for other versions too.
             ```
     - to start using opening hours of stores set store opening hours in administration or create specialized migrations for it
         - after update add this to your migration: `$this->sql('ALTER TABLE stores DROP COLUMN opening_hours');`
+- change url for listing personal detail from email ([#2725](https://github.com/shopsys/shopsys/pull/2725))
+    - see #project-base-diff to update your project
