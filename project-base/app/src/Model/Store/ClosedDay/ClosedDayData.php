@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Store\ClosedDay;
 
-use DateTime;
+use DateTimeImmutable;
 
 class ClosedDayData
 {
@@ -15,7 +15,7 @@ class ClosedDayData
 
     public int $domainId;
 
-    public DateTime $date;
+    public DateTimeImmutable $date;
 
     public string $name;
 }

@@ -35,8 +35,8 @@ class ClosedDay
     private $domainId;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="date")
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="date_immutable")
      */
     private $date;
 
@@ -79,7 +79,7 @@ class ClosedDay
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
     public function getDate()
     {

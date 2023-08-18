@@ -13,7 +13,7 @@ use App\Model\Store\Store;
 use App\Model\Store\StoreDataFactory;
 use App\Model\Store\StoreFacade;
 use App\Model\Store\StoreFriendlyUrlProvider;
-use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -58,6 +58,8 @@ class GetStoreTest extends GraphQlTestCase
      * @inject
      */
     private ClosedDayFacade $closedDayFacade;
+
+    private DateTimeImmutable $now;
 
     public function testGetStoreByUuid(): void
     {
@@ -154,7 +156,7 @@ class GetStoreTest extends GraphQlTestCase
      * @param string|null $firstClosingTime
      * @param string|null $secondOpeningTime
      * @param string|null $secondClosingTime
-     * @param \DateTime|null $publicHolidayDate
+     * @param \DateTimeImmutable|null $publicHolidayDate
      * @param array $publicHolidayExcludedStoresIds
      * @param bool $expectedIsOpen
      * @param string|null $expectedDaysFirstOpeningTime
@@ -167,7 +169,7 @@ class GetStoreTest extends GraphQlTestCase
         ?string $firstClosingTime,
         ?string $secondOpeningTime,
         ?string $secondClosingTime,
-        ?DateTime $publicHolidayDate,
+        ?DateTimeImmutable $publicHolidayDate,
         array $publicHolidayExcludedStoresIds,
         bool $expectedIsOpen,
         ?string $expectedDaysFirstOpeningTime,
@@ -208,8 +210,8 @@ class GetStoreTest extends GraphQlTestCase
         return [
             ['-1 hour', '+1 hour', null, null, null, [], true, '-1 hour', '+1 hour', null, null],
             [null, null, '-1 hour', '+1 hour', null, [], true, null, null, '-1 hour', '+1 hour'],
-            ['-1 hour', '+1 hour', null, null, new DateTime('now', new DateTimeZone('Europe/Prague')), [1], true, '-1 hour', '+1 hour', null, null],
-            [null, null, '-1 hour', '+1 hour', new DateTime('now', new DateTimeZone('Europe/Prague')), [], false, null, null, null, null],
+            ['-1 hour', '+1 hour', null, null, $this->getNow(), [1], true, '-1 hour', '+1 hour', null, null],
+            [null, null, '-1 hour', '+1 hour', $this->getNow(), [], false, null, null, null, null],
             [null, null, null, null, null, [], false, null, null, null, null],
             ['+1 hour', '+2 hour', null, null, null, [], false, '+1 hour', '+2 hour', null, null],
             [null, null, '+1 hour', '+2 hour', null, [], false, null, null, '+1 hour', '+2 hour'],
@@ -459,21 +461,19 @@ class GetStoreTest extends GraphQlTestCase
      */
     private function getCurrentDayOfWeek(): int
     {
-        return (int)(new DateTime('now', new DateTimeZone('Europe/Prague')))->format('N');
+        return (int)$this->getNow()->format('N');
     }
 
     /**
      * @param string $modifier
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
-    private function createOpeningOrClosingHour(string $modifier): DateTime
+    private function createOpeningOrClosingHour(string $modifier): DateTimeImmutable
     {
-        $now = (new DateTime('now', new DateTimeZone('Europe/Prague')))->setDate(1970, 1, 2);
-        $hour = (clone $now)->modify($modifier);
+        $now = $this->getNow()->setDate(1970, 1, 2);
+        $hour = $now->modify($modifier);
 
-        $this->restrictDateTimeToCurrentDay($hour, $now);
-
-        return $hour;
+        return $this->restrictDateTimeToCurrentDay($hour, $now);
     }
 
     /**
@@ -511,18 +511,23 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @param \DateTime|bool $hour
-     * @param \DateTime $now
+     * @param \DateTimeImmutable $hour
+     * @param \DateTimeImmutable $now
+     * @return \DateTimeImmutable
      */
-    private function restrictDateTimeToCurrentDay(DateTime|bool $hour, DateTime $now): void
+    private function restrictDateTimeToCurrentDay(DateTimeImmutable $hour, DateTimeImmutable $now): DateTimeImmutable
     {
+        $result = $hour;
+
         if ($hour->format('j') < $now->format('j')) {
-            $hour->setDate(1970, 1, 1);
-            $hour->setTime(0, 0, 0);
+            $result = $result->setDate(1970, 1, 1);
+            $result = $result->setTime(0, 0, 0);
         } elseif ($hour->format('j') > $now->format('j')) {
-            $hour->setDate(1970, 1, 1);
-            $hour->setTime(23, 59, 59);
+            $result = $result->setDate(1970, 1, 1);
+            $result = $result->setTime(23, 59, 59);
         }
+
+        return $result;
     }
 
     /**
@@ -547,11 +552,11 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @param \DateTime $date
+     * @param \DateTimeImmutable $date
      * @param string[] $storesIds
      * @return \App\Model\Store\ClosedDay\ClosedDay
      */
-    private function createClosedDay(DateTime $date, array $storesIds = []): ClosedDay
+    private function createClosedDay(DateTimeImmutable $date, array $storesIds = []): ClosedDay
     {
         $closedDayData = $this->closedDayDataFactory->create();
 
@@ -566,5 +571,17 @@ class GetStoreTest extends GraphQlTestCase
         }, $storesIds);
 
         return $this->closedDayFacade->create($closedDayData);
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    private function getNow(): DateTimeImmutable
+    {
+        if (!isset($this->now)) {
+            $this->now = new DateTimeImmutable('now', new DateTimeZone('Europe/Prague'));
+        }
+
+        return $this->now;
     }
 }

@@ -7,7 +7,7 @@ namespace App\DataFixtures\Demo;
 use App\Model\Store\ClosedDay\ClosedDayDataFactory;
 use App\Model\Store\ClosedDay\ClosedDayFacade;
 use App\Model\Store\StoreFacade;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -53,22 +53,22 @@ class ClosedDayDataFixture extends AbstractReferenceFixture implements Dependent
 
     /**
      * @param string $locale
-     * @return iterable<array{\DateTime, string}>
+     * @return iterable<array{\DateTimeImmutable, string}>
      */
     private function getClosedDays(string $locale): iterable
     {
         yield [
-            new DateTime('24.12.' . date('Y')),
+            new DateTimeImmutable('24.12.' . date('Y')),
             t('Christmas Eve', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
         ];
 
         yield [
-            new DateTime('25.12.' . date('Y')),
+            new DateTimeImmutable('25.12.' . date('Y')),
             t('Christmas Day', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
         ];
 
         yield [
-            new DateTime('26.12.' . date('Y')),
+            new DateTimeImmutable('26.12.' . date('Y')),
             t(' Second Christmas Day', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
         ];
     }
