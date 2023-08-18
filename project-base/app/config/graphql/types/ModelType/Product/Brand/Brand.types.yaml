@@ -25,7 +25,7 @@ Brand:
             mainImage:
                 type: "Image"
                 description: "Brand image by params"
-                resolve: '@=query("mainImageByEntityIdPromiseQuery", value, args["type"], args["size"])'
+                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"
