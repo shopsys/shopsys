@@ -37,12 +37,14 @@ export const ProductDetailGalleryImages: FC<ProductDetailGalleryImagesProps> = (
                 )}
             >
                 <Image image={mainImage} alt={mainImage?.name || productName} type="default" height="400px" />
+
                 {!!flags.length && (
                     <div className="absolute top-3 left-4 flex flex-col">
                         <ProductFlags flags={flags} />
                     </div>
                 )}
             </div>
+
             <div className="hidden lg:relative lg:order-none lg:mb-5 lg:flex lg:w-24 lg:flex-col lg:pr-6">
                 {images.map(
                     (image, index) =>
@@ -50,7 +52,7 @@ export const ProductDetailGalleryImages: FC<ProductDetailGalleryImagesProps> = (
                             <div
                                 key={index}
                                 className={twJoin(
-                                    'lightboxItem relative block w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded-md lg:bg-greyVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter',
+                                    'lightboxItem relative block w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded lg:bg-greyVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter',
                                     index > 6 && 'hidden',
                                 )}
                                 data-src={image.sizes.find((size) => size.size === 'default')?.url}
@@ -64,61 +66,62 @@ export const ProductDetailGalleryImages: FC<ProductDetailGalleryImagesProps> = (
                             </div>
                         ),
                 )}
-                {!!videoIds &&
-                    videoIds.map((videoId) => {
-                        const videoImage: ImageSizesFragmentApi = {
-                            __typename: 'Image',
-                            sizes: [
-                                {
-                                    __typename: 'ImageSize',
-                                    size: 'default',
-                                    url: `https://img.youtube.com/vi/${videoId.token}/0.jpg`,
-                                    width: 480,
-                                    height: 360,
-                                    additionalSizes: [
-                                        {
-                                            __typename: 'AdditionalSize',
-                                            width: 480,
-                                            height: 360,
-                                            media: 'only screen and (-webkit-min-device-pixel-ratio: 1.5)',
-                                            url: `https://img.youtube.com/vi/${videoId.token}/0.jpg`,
-                                        },
-                                    ],
-                                },
-                                {
-                                    __typename: 'ImageSize',
-                                    size: 'thumbnailSmall',
-                                    url: `https://img.youtube.com/vi/${videoId.token}/1.jpg`,
-                                    width: 120,
-                                    height: 90,
-                                    additionalSizes: [
-                                        {
-                                            __typename: 'AdditionalSize',
-                                            width: 120,
-                                            height: 90,
-                                            media: 'only screen and (-webkit-min-device-pixel-ratio: 1.5)',
-                                            url: `https://img.youtube.com/vi/${videoId.token}/1.jpg`,
-                                        },
-                                    ],
-                                },
-                            ],
-                            name: null,
-                        };
 
-                        return (
-                            <div
-                                key={videoId.token}
-                                className="lightboxItem relative block max-h-56 w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded-md lg:bg-greyVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter"
-                                data-poster={`https://img.youtube.com/vi/${videoId.token}/0.jpg`}
-                                data-src={`https://www.youtube.com/embed/${videoId.token}`}
-                            >
-                                <Image image={videoImage} type="thumbnailSmall" alt={videoId.description} />
-                                <div className="absolute top-4 left-6 flex h-8 w-8 items-center justify-center rounded-full bg-dark bg-opacity-50 text-white">
-                                    <Icon iconType="icon" icon="Play" className="ml-1" />
-                                </div>
+                {videoIds?.map((videoId) => {
+                    const videoImage: ImageSizesFragmentApi = {
+                        __typename: 'Image',
+                        sizes: [
+                            {
+                                __typename: 'ImageSize',
+                                size: 'default',
+                                url: `https://img.youtube.com/vi/${videoId.token}/0.jpg`,
+                                width: 480,
+                                height: 360,
+                                additionalSizes: [
+                                    {
+                                        __typename: 'AdditionalSize',
+                                        width: 480,
+                                        height: 360,
+                                        media: 'only screen and (-webkit-min-device-pixel-ratio: 1.5)',
+                                        url: `https://img.youtube.com/vi/${videoId.token}/0.jpg`,
+                                    },
+                                ],
+                            },
+                            {
+                                __typename: 'ImageSize',
+                                size: 'thumbnailSmall',
+                                url: `https://img.youtube.com/vi/${videoId.token}/1.jpg`,
+                                width: 120,
+                                height: 90,
+                                additionalSizes: [
+                                    {
+                                        __typename: 'AdditionalSize',
+                                        width: 120,
+                                        height: 90,
+                                        media: 'only screen and (-webkit-min-device-pixel-ratio: 1.5)',
+                                        url: `https://img.youtube.com/vi/${videoId.token}/1.jpg`,
+                                    },
+                                ],
+                            },
+                        ],
+                        name: null,
+                    };
+
+                    return (
+                        <div
+                            key={videoId.token}
+                            className="lightboxItem relative block max-h-56 w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded lg:bg-greyVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter"
+                            data-poster={`https://img.youtube.com/vi/${videoId.token}/0.jpg`}
+                            data-src={`https://www.youtube.com/embed/${videoId.token}`}
+                        >
+                            <Image image={videoImage} type="thumbnailSmall" alt={videoId.description} />
+
+                            <div className="absolute top-4 left-6 flex h-8 w-8 items-center justify-center rounded-full bg-dark bg-opacity-50 text-white">
+                                <Icon iconType="icon" icon="Play" className="ml-1" />
                             </div>
-                        );
-                    })}
+                        </div>
+                    );
+                })}
             </div>
         </Gallery>
     );

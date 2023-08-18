@@ -1,10 +1,12 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem';
-import { mediaQueries } from 'components/Theme/mediaQueries';
 import { SliderItemFragmentApi } from 'graphql/generated';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import { useEffect, useRef, useState } from 'react';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import Skeleton from 'react-loading-skeleton';
 
 type BannersSliderProps = {
     sliderItems: SliderItemFragmentApi[];
@@ -15,16 +17,16 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
     const [pause, setPause] = useState(false);
     const timer = useRef<NodeJS.Timer | null>(null);
     const sliderBoxRef = useRef<HTMLDivElement>(null);
+
+    const { width: windowWidth } = useGetWindowSize();
+    const isDesktop = windowWidth > desktopFirstSizes.tablet;
+    const isRecognizingWindowWidth = windowWidth < 0;
+
     const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
         loop: true,
         duration: 1000,
-        breakpoints: {
-            [mediaQueries.queryTablet]: {
-                slidesPerView: 2,
-                spacing: 15,
-                centered: true,
-            },
-        },
+        slidesPerView: 1,
+        autoAdjustSlidesPerView: isRecognizingWindowWidth,
         slideChanged: (slider) => {
             setCurrentSlide(slider.details().relativeSlide);
         },
@@ -46,7 +48,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
 
         const sliderBox = sliderBoxRef.current;
 
-        if (sliderBox !== null) {
+        if (sliderBox) {
             sliderBox.addEventListener('mouseover', setPauseTrue);
             sliderBox.addEventListener('mouseout', setPauseFalse);
         }
@@ -59,13 +61,12 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
 
     useEffect(() => {
         timer.current = setInterval(() => {
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            if (!pause && slider !== null) {
+            if (!pause) {
                 slider.next();
             }
         }, 5000);
         return () => {
-            if (timer.current !== null) {
+            if (timer.current) {
                 clearInterval(timer.current);
             }
         };
@@ -77,18 +78,21 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
 
     return (
         <div className="flex flex-col gap-6 vl:flex-row" ref={sliderBoxRef} data-testid={dataTestId}>
-            <div
-                ref={sliderRef}
-                className="keen-slider h-[200px] w-full cursor-pointer rounded lg:h-[250px] vl:h-[290px] vl:w-[calc(100%-307px)]"
-            >
-                {sliderItems.map((sliderItem, index) => (
-                    <BannersSliderItem key={index} item={sliderItem} />
-                ))}
+            <div ref={sliderRef} className="keen-slider h-[250px] rounded vl:basis-4/5">
+                {isRecognizingWindowWidth ? (
+                    <div className="flex h-full w-full items-center justify-center">
+                        <Skeleton className="h-full" containerClassName="h-full w-full" />
+                    </div>
+                ) : (
+                    sliderItems.map((sliderItem, index) => (
+                        <BannersSliderItem key={index} item={sliderItem} isDesktop={isDesktop} />
+                    ))
+                )}
             </div>
-            <div className="hidden vl:flex vl:flex-1 vl:flex-col">
+            <div className="flex flex-1 justify-center gap-1 vl:flex-col vl:justify-start vl:gap-4">
                 {sliderItems.map((sliderItem, index) => (
                     <button
-                        className="group relative mb-4 block !w-full cursor-pointer rounded border-2 border-blueLight bg-blueLight py-4 px-8 text-left font-bold transition hover:border-blue hover:bg-blue disabled:border-primary disabled:bg-creamWhite"
+                        className="group relative block h-2 w-3 cursor-pointer rounded border-none border-blueLight bg-greyLight font-bold outline-none transition active:bg-none disabled:bg-primary vl:mx-0 vl:h-auto vl:w-full vl:border-2 vl:border-solid vl:bg-blueLight vl:py-4 vl:px-8 vl:text-left vl:hover:border-blue vl:hover:bg-blue vl:disabled:border-primary vl:disabled:bg-creamWhite"
                         onClick={() => onMoveToSlideHandler(index)}
                         disabled={index === currentSlide % sliderItems.length}
                         key={sliderItem.uuid}
@@ -96,20 +100,10 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
                         <Icon
                             iconType="icon"
                             icon="Triangle"
-                            className="absolute left-3 top-1/2 hidden w-2 -translate-y-1/2 text-primary group-disabled:block"
+                            className="absolute top-1/2 left-3 hidden w-2 -translate-y-1/2 text-primary vl:group-disabled:block"
                         />
-                        {sliderItem.name}
+                        <span className="hidden vl:inline-block">{sliderItem.name}</span>
                     </button>
-                ))}
-            </div>
-            <div className="mt-4 flex justify-center vl:hidden">
-                {sliderItems.map((sliderItem, index) => (
-                    <button
-                        onClick={() => onMoveToSlideHandler(index)}
-                        disabled={index === currentSlide % sliderItems.length}
-                        key={sliderItem.uuid}
-                        className="mx-1 h-2 w-3 cursor-pointer rounded-sm border-none bg-greyLight outline-none disabled:bg-primary"
-                    />
                 ))}
             </div>
         </div>

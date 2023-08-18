@@ -1,4 +1,3 @@
-import { ProductDetailGallerySlider } from './ProductDetailGallerySlider';
 import { isElementVisible } from 'helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
@@ -9,6 +8,10 @@ import { useState } from 'react';
 
 const ProductDetailGalleryImages = dynamic(() =>
     import('./ProductDetailGalleryImages').then((component) => component.ProductDetailGalleryImages),
+);
+
+const ProductDetailGallerySlider = dynamic(() =>
+    import('./ProductDetailGallerySlider').then((component) => component.ProductDetailGallerySlider),
 );
 
 type ProductDetailGalleryProps = {
