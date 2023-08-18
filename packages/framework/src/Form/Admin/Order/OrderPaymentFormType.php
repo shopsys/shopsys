@@ -41,6 +41,7 @@ class OrderPaymentFormType extends AbstractType
                 'error_bubbling' => true,
             ])
             ->add('vatPercent', NumberType::class, [
+                'input' => 'string',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter unit price without VAT']),
                 ],
