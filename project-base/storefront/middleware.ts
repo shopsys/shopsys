@@ -66,7 +66,7 @@ export const middleware: NextMiddleware = async (request) => {
 
 export const config = {
     matcher: [
-        '/((?!api|_next|favicon.ico|fonts|svg|images|locales|icons|grapesjs-template|grapesjs-homepage-article-template|grapesjs-article-template).*)',
+        '/((?!api|_next|favicon.ico|fonts|svg|images|locales|icons|grapesjs-template|grapesjs-homepage-article-template|grapesjs-article-template|robots).*)',
     ],
 };
 
