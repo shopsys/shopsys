@@ -1,7 +1,7 @@
 import { OrderSummaryContent } from './OrderSummaryElements';
 import { PriceFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 
 type TotalPriceProps = {
     totalPrice: PriceFragmentApi;
@@ -10,7 +10,7 @@ type TotalPriceProps = {
 const TEST_IDENTIFIER = 'blocks-ordersummary-totalprice';
 
 export const TotalPrice: FC<TotalPriceProps> = ({ totalPrice }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     return (

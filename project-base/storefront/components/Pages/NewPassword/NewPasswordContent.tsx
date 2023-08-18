@@ -11,7 +11,7 @@ import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import Trans from 'next-translate/Trans';
 import dynamic from 'next/dynamic';
@@ -30,7 +30,7 @@ type NewPasswordContentProps = {
 };
 
 export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, email, hash }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [, newPassword] = useRecoverPasswordMutationApi();
     const { url } = useDomainConfig();
     const [newPasswordUrl, resetPasswordUrl] = getInternationalizedStaticUrls(

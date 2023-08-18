@@ -24,7 +24,7 @@ import {
 } from 'helpers/queryParamNames';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { GtmPageType } from 'gtm/types/enums';
@@ -37,7 +37,7 @@ import {
 import { getRedirectWithOffsetPage } from 'helpers/loadMore';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const { sort, filter, searchString, currentLoadMore } = useQueryParams();
 

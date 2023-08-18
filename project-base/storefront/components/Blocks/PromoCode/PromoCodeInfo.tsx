@@ -1,6 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Cross } from 'components/Basic/Icon/IconsSvg';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 
 type PromoCodeInfoProps = {
     promoCode: string;
@@ -10,7 +10,7 @@ type PromoCodeInfoProps = {
 const TEST_IDENTIFIER = 'blocks-promocode-promocodeinfo';
 
 export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallback, promoCode }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const onRemovePromoCodeHandler = () => {
         onRemovePromoCodeCallback(promoCode);

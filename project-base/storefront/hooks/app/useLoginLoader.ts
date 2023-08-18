@@ -1,10 +1,10 @@
 import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 
 export const useLoginLoader = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const loginLoading = usePersistStore((store) => store.loginLoading);
     const updateGeneralState = usePersistStore((store) => store.updateLoginLoadingState);
 

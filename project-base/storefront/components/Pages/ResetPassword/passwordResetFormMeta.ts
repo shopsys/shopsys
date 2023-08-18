@@ -1,13 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
 import * as Yup from 'yup';
 
 export const usePasswordResetForm = (): [UseFormReturn<PasswordResetFormType>, PasswordResetFormType] => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const resolver = yupResolver(
         Yup.object().shape({
             email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
@@ -36,7 +36,7 @@ type PasswordResetFormMetaType = {
 export const usePasswordResetFormMeta = (
     formProviderMethods: UseFormReturn<PasswordResetFormType>,
 ): PasswordResetFormMetaType => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const formMeta = useMemo(
         () => ({

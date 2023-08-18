@@ -3,7 +3,7 @@ import { BlogPreviewMain } from './BlogPreviewMain';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { BlogPreviewSide } from './BlogPreviewSide';
 import { ArrowRight } from 'components/Basic/Icon/IconsSvg';
@@ -12,7 +12,7 @@ export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
 const TEST_IDENTIFIER = 'blocks-blogpreview';
 
 export const BlogPreview: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [{ data: blogPreviewData }] = useBlogArticlesQueryApi({ variables: BLOG_PREVIEW_VARIABLES });
     const [{ data: blogUrlData }] = useBlogUrlQueryApi();
     const blogUrl = blogUrlData?.blogCategories[0].link;

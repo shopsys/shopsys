@@ -12,7 +12,7 @@ import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
@@ -23,7 +23,7 @@ const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then(
 const TEST_IDENTIFIER = 'layout-footer-newsletterform';
 
 export const NewsletterForm: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
     const [formProviderMethods, defaultValues] = useNewsletterForm();
     const formMeta = useNewsletterFormMeta(formProviderMethods);

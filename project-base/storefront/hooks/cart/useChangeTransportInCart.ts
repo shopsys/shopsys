@@ -3,7 +3,7 @@ import { CartFragmentApi, ListedStoreFragmentApi, useChangeTransportInCartMutati
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { onGtmTransportChangeEventHandler } from 'gtm/helpers/eventHandlers';
 import { useGtmCartInfo } from 'gtm/helpers/gtm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useLatest } from 'hooks/ui/useLatest';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
@@ -17,7 +17,7 @@ export type ChangeTransportHandler = (
 export const useChangeTransportInCart = (): [ChangeTransportHandler, boolean] => {
     const [{ fetching }, changeTransportInCart] = useChangeTransportInCartMutationApi();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { gtmCartInfo } = useGtmCartInfo();
 
     const gtmCart = useLatest(gtmCartInfo);

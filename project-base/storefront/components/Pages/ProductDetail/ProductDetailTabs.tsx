@@ -2,7 +2,7 @@ import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Basic/UserText/UserText';
 import { ParameterFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 
 type ProductDetailTabsProps = {
     description: string | null;
@@ -12,7 +12,7 @@ type ProductDetailTabsProps = {
 const TEST_IDENTIFIER = 'pages-productdetail-';
 
 export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, parameters }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const formatParameterValue = (valueText: string, index: number) => {
         return index > 0 ? ' | ' + valueText : valueText;

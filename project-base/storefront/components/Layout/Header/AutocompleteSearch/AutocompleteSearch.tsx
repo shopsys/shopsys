@@ -7,7 +7,7 @@ import { useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/hooks/useGtmAutocompleteResultsViewEvent';
 import { useDebounce } from 'hooks/helpers/useDebounce';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -39,7 +39,7 @@ export const AutocompleteSearch: FC = () => {
     const autocompleteSearchInRef = useRef<HTMLDivElement>(null);
     const { url } = useDomainConfig();
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [isDesktop, setIsDesktop] = useState(false);
     const { width } = useGetWindowSize();
 

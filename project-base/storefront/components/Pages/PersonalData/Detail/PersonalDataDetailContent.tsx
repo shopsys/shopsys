@@ -5,7 +5,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { PersonalDataDetailQueryApi } from 'graphql/generated';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 
 type PersonalDataDetailContentProps = {
     data: PersonalDataDetailQueryApi;
@@ -14,7 +14,7 @@ type PersonalDataDetailContentProps = {
 const TEST_IDENTIFIER = 'pages-personal-data-detail-';
 
 export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ data }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { formatDate } = useFormatDate();
 

@@ -1,4 +1,4 @@
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 
 type ProductAvailableStoresCountProps = {
     isMainVariant: boolean;
@@ -11,7 +11,7 @@ export const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> =
     availableStoresCount,
     isMainVariant,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     if (isMainVariant || availableStoresCount === 0) {
         return null;

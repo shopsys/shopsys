@@ -11,12 +11,12 @@ import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSideProps
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { createClient } from 'urql/createClient';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { GtmPageType } from 'gtm/types/enums';
 
 const LoginPage: FC<ServerSidePropsType> = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [loginUrl] = getInternationalizedStaticUrls(['/login'], url);
     const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Login'), slug: loginUrl }];

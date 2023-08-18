@@ -1,10 +1,10 @@
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import Image from 'next/image';
 
 const TEST_IDENTIFIER = 'layout-footer-footercopyright';
 
 export const FooterCopyright: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <div className="flex flex-col items-center text-center" data-testid={TEST_IDENTIFIER}>

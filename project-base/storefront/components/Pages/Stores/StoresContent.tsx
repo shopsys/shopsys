@@ -7,7 +7,7 @@ import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi, ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { createMapMarker } from 'helpers/createMapMarker';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import Image from 'next/image';
 import { useCallback, useMemo, useState } from 'react';
@@ -21,7 +21,7 @@ type StoresContentProps = {
 };
 
 export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { defaultLocale } = useDomainConfig();
     const [activeStoreIndex, setActiveStoreIndex] = useState<number>();
     const mappedStores = useMemo(() => mapConnectionEdges<ListedStoreFragmentApi>(stores.edges), [stores.edges]);

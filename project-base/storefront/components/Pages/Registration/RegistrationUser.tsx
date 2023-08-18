@@ -3,13 +3,13 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 import { RegistrationFormType } from 'types/form';
 
 export const RegistrationUser: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
 

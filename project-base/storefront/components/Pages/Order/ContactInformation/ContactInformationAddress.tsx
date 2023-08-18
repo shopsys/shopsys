@@ -7,7 +7,7 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { useCountriesQueryApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
@@ -15,7 +15,7 @@ import { usePersistStore } from 'store/usePersistStore';
 
 export const ContactInformationAddress: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
     const { setValue } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);

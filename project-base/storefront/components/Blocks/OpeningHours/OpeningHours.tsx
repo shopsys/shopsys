@@ -1,10 +1,10 @@
 import { OpeningHoursApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'helpers/twMerge';
 
 export const OpeningHours: FC<{ openingHours: OpeningHoursApi }> = ({ openingHours, className }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const dayNames = [
         t('Monday'),

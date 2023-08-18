@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CartItemFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 
 type CartListItemInfoProps = {
     item: CartItemFragmentApi;
@@ -9,7 +9,7 @@ type CartListItemInfoProps = {
 const TEST_IDENTIFIER = 'pages-cart-list-item-iteminfo-';
 
 export const CartListItemInfo: FC<CartListItemInfoProps> = ({ item }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <>

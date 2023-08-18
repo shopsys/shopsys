@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'components/Basic/Link/Link';
 import { useTermsAndConditionsArticleUrlQueryApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -13,7 +13,7 @@ export const useRegistrationAfterOrderForm = (): [
     UseFormReturn<RegistrationAfterOrderFormType>,
     RegistrationAfterOrderFormType,
 ] => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const resolver = yupResolver(
         Yup.object().shape({
             password: Yup.string()
@@ -51,7 +51,7 @@ type RegistrationAfterOrderFormMetaType = {
 export const useRegistrationAfterOrderFormMeta = (
     formProviderMethods: UseFormReturn<RegistrationAfterOrderFormType>,
 ): RegistrationAfterOrderFormMetaType => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [{ data: termsAndConditionsArticleUrlData }] = useTermsAndConditionsArticleUrlQueryApi();
     const termsAndConditionUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
 

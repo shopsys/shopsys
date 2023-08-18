@@ -5,7 +5,7 @@ import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { DEFAULT_SORT } from 'helpers/filterOptions/seoCategories';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useQueryParams } from 'hooks/useQueryParams';
@@ -28,7 +28,7 @@ const DEFAULT_SORT_OPTIONS = [
 ];
 
 export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSortOptions }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { sort: sortSelected, updateSort } = useQueryParams();
     const { width } = useGetWindowSize();
     const [isMobileSortBarVisible, setMobileSortBarVisible] = useState(true);

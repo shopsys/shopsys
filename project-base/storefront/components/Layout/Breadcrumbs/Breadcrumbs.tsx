@@ -4,7 +4,7 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Arrow } from 'components/Basic/Icon/IconsSvg';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 
@@ -16,7 +16,7 @@ type BreadcrumbsProps = {
 const TEST_IDENTIFIER = 'layout-breadcrumbs';
 
 export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumb, type }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     if (breadcrumb.length === 0) {
         return null;

@@ -12,7 +12,7 @@ import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'gtm/
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -59,7 +59,7 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
 }) => {
     const router = useRouter();
     const { url } = useDomainConfig();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
     const [isErrorPopupVisible, setErrorPopupVisibility] = useState(false);
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);

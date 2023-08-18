@@ -2,14 +2,14 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 
 export const ContactInformationCompany: FC = () => {
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [companyNameValue, companyNumberValue, companyTaxNumberValue] = useWatch({

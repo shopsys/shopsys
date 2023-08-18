@@ -6,7 +6,7 @@ import { ProductExposedStoresCount } from 'components/Blocks/Product/ProductExpo
 import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailAvailabilityList';
 import { MainVariantDetailFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
@@ -33,7 +33,7 @@ export const Variant: FC<VariantProps> = ({
 }) => {
     const formatPrice = useFormatPrice();
     const [isAvailabilityPopupVisible, setAvailabilityPopupVisibility] = useState(false);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <>

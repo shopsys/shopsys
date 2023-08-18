@@ -7,7 +7,7 @@ import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ComparedProductFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCallback } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
@@ -25,7 +25,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
     listIndex,
     toggleProductInComparison,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const { calcMaxMarginLeft } = useComparisonTable(productsCompareCount);
 

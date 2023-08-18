@@ -1,7 +1,7 @@
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { CartFragmentApi, useApplyPromoCodeToCartMutationApi } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType } from 'gtm/types/enums';
@@ -14,7 +14,7 @@ type ApplyPromoCodeHandler = (
 export const useApplyPromoCodeToCart = (): [ApplyPromoCodeHandler, boolean] => {
     const [{ fetching }, applyPromoCodeToCart] = useApplyPromoCodeToCartMutationApi();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const applyPromoCodeHandler = useCallback<ApplyPromoCodeHandler>(
         async (newPromoCode, messages) => {

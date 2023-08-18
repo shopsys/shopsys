@@ -14,7 +14,7 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useRouter } from 'next/router';
@@ -30,7 +30,7 @@ export type OrderConfirmationQuery = {
 const TEST_IDENTIFIER = 'pages-orderconfirmation';
 
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { query } = useRouter();
     const { orderUuid, orderEmail, orderPaymentType } = query as OrderConfirmationQuery;
     const { url } = useDomainConfig();

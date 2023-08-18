@@ -9,13 +9,13 @@ import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { GtmPageType } from 'gtm/types/enums';
 
 const OrderDetailPage: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
     const router = useRouter();

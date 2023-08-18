@@ -1,4 +1,4 @@
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { MenuIconicItemLink, MenuIconicItemIcon } from './MenuIconicElements';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Login } from 'components/Blocks/Popup/Login/Login';
@@ -9,7 +9,7 @@ import { User } from 'components/Basic/Icon/IconsSvg';
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
 export const MenuIconicItemUserUnauthenticated: FC = ({ dataTestId }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
     const handleLogin = () => setIsLoginPopupOpened(true);
 

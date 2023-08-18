@@ -16,7 +16,7 @@ import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
@@ -31,7 +31,7 @@ type RegistrationContentProps = {
 };
 
 export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [, register] = useRegistrationMutationApi();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const [formProviderMethods, defaultValues] = useRegistrationForm();

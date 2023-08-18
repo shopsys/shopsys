@@ -1,7 +1,7 @@
 import { useChangePaymentInCart } from './useChangePaymentInCart';
 import { handleCartModifications, useCurrentCart } from 'connectors/cart/Cart';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -12,7 +12,7 @@ import { CartQueryDocumentApi } from 'graphql/generated';
 export const useReloadCart = (): void => {
     const { modifications } = useCurrentCart(false);
     const [changePaymentInCart] = useChangePaymentInCart();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
     const isUserLoggedIn = !!useCurrentCustomerData();

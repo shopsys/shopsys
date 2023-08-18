@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'components/Basic/Link/Link';
 import { usePrivacyPolicyArticleUrlQueryApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -10,7 +10,7 @@ import { NewsletterFormType } from 'types/form';
 import * as Yup from 'yup';
 
 export const useNewsletterForm = (): [UseFormReturn<NewsletterFormType>, NewsletterFormType] => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const resolver = yupResolver(
         Yup.object().shape({
             email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
@@ -40,7 +40,7 @@ type NewsletterFormMetaType = {
 export const useNewsletterFormMeta = (
     formProviderMethods: UseFormReturn<NewsletterFormType>,
 ): NewsletterFormMetaType => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQueryApi();
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
 

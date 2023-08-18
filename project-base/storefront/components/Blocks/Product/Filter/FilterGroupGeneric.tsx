@@ -8,7 +8,7 @@ import {
 import { FilterGroupIcon } from './FilterGroupIcon';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { useFilterShowLess } from 'hooks/filter/useFilterShowLess';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
@@ -32,7 +32,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     defaultNumberOfShownItems,
     filterField,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [isGroupOpen, setIsGroupOpen] = useState(true);
     const { filter, updateFilterFlags, updateFilterBrands } = useQueryParams();
     const defaultSelectedFlags = useSessionStore((s) => s.defaultProductFiltersMap.flags);

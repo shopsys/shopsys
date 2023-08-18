@@ -1,6 +1,6 @@
 import { ProductPriceFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 
 type ProductPriceProps = {
     productPrice: ProductPriceFragmentApi;
@@ -9,7 +9,7 @@ type ProductPriceProps = {
 const TEST_IDENTIFIER = 'blocks-product-price';
 
 export const ProductPrice: FC<ProductPriceProps> = ({ productPrice }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     return (

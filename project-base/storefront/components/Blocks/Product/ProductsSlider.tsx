@@ -3,7 +3,7 @@ import { ListedProductFragmentApi } from 'graphql/generated';
 import { RefObject, createRef, useEffect, useRef, useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { ProductsListContent } from './ProductsList/ProductsListContent';
 import { Arrow } from 'components/Basic/Icon/IconsSvg';
 
@@ -19,7 +19,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     gtmMessageOrigin = GtmMessageOriginType.other,
     dataTestId,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const sliderRef = useRef<HTMLDivElement>(null);
     const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLDivElement>>>();
     const [activeIndex, setActiveIndex] = useState(0);

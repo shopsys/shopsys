@@ -1,13 +1,13 @@
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
 const TEST_IDENTIFIER = 'pages-cart-cartpreview';
 
 export const CartPreview: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { cart, isCartEmpty } = useCurrentCart();
 

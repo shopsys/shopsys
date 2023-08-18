@@ -13,13 +13,13 @@ import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSideProps
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useGtmCartViewEvent } from 'gtm/hooks/useGtmCartViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { GtmPageType } from 'gtm/types/enums';
 
 const CartPage: FC<ServerSidePropsType> = () => {
     const { url } = useDomainConfig();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], url);
     const currentCart = useCurrentCart();
 

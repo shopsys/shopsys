@@ -13,7 +13,7 @@ import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Translate } from 'next-translate';
 import { useCallback } from 'react';
@@ -29,7 +29,7 @@ type LoginProps = {
 const TEST_IDENTIFIER = 'blocks-popup-login';
 
 export const Login: FC<LoginProps> = ({ defaultEmail }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { url } = useDomainConfig();
     const [resetPasswordUrl, registrationUrl] = getInternationalizedStaticUrls(

@@ -7,7 +7,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { StoreDetailFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { createMapMarker } from 'helpers/createMapMarker';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
@@ -24,7 +24,7 @@ type StoreDetailContentProps = {
 const TEST_IDENTIFIER = 'pages-storedetail';
 
 export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const storeCoordinates = createMapMarker(store.locationLatitude, store.locationLongitude);
     const { url } = useDomainConfig();
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);

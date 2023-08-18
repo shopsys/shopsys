@@ -4,7 +4,7 @@ import { ArrowSecondary } from 'components/Basic/Icon/IconsSvg';
 import { Link } from 'components/Basic/Link/Link';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 
 type ProductComparePopupProps = {
@@ -12,7 +12,7 @@ type ProductComparePopupProps = {
 };
 
 export const ProductComparePopup: FC<ProductComparePopupProps> = ({ onCloseCallback }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [productComparisonUrl] = getInternationalizedStaticUrls(['/product-comparison'], url);
 

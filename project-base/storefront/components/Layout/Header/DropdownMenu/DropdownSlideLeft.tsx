@@ -1,6 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Arrow } from 'components/Basic/Icon/IconsSvg';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { DropdownListLevels } from 'types/dropdown';
 
 type DropdownSlideLeftProps = {
@@ -11,7 +11,7 @@ type DropdownSlideLeftProps = {
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-slideleft';
 
 export const DropdownSlideLeft: FC<DropdownSlideLeftProps> = ({ goToMenu, onClickEvent }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <span

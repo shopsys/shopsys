@@ -12,7 +12,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
 import { FunctionComponentProps } from 'types/globals';
@@ -48,7 +48,7 @@ export const ProductListItem = forwardRef<HTMLDivElement, ProductItemProps>(
         ref,
     ) => {
         const { url } = useDomainConfig();
-        const t = useTypedTranslationFunction();
+        const { t } = useTranslation();
 
         return (
             <div

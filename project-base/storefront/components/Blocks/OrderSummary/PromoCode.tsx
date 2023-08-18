@@ -7,7 +7,7 @@ import {
 } from './OrderSummaryElements';
 import { PriceFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 
 type PromoCodeProps = {
     promoCode: string;
@@ -17,7 +17,7 @@ type PromoCodeProps = {
 const TEST_IDENTIFIER = 'blocks-ordersummary-promocode';
 
 export const PromoCode: FC<PromoCodeProps> = ({ discount, promoCode }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     return (

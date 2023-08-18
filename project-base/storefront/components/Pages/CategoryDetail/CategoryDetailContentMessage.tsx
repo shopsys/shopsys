@@ -1,8 +1,8 @@
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 
 export const CategoryDetailContentMessage: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <div className="p-12 text-center">

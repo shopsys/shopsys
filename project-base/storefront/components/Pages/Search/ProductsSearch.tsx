@@ -7,7 +7,7 @@ import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { ListedProductConnectionPreviewFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
@@ -18,7 +18,7 @@ type ProductsSearchProps = {
 };
 
 export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const router = useRouter();
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const { url } = useDomainConfig();

@@ -1,7 +1,7 @@
 import { Button } from 'components/Forms/Button/Button';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useMediaMin } from 'hooks/ui/useMediaMin';
 import { usePagination } from 'hooks/ui/usePagination';
 import { useQueryParams } from 'hooks/useQueryParams';
@@ -29,7 +29,7 @@ export const Pagination: FC<PaginationProps> = ({
     const { currentPage, updatePagination, loadMore, currentLoadMore } = useQueryParams();
     const currentPageWithLoadMore = Math.min(currentPage + currentLoadMore, Math.ceil(totalCount / DEFAULT_PAGE_SIZE));
     const paginationButtons = usePagination(totalCount, currentPageWithLoadMore, !isDesktop, DEFAULT_PAGE_SIZE);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     if (!paginationButtons || paginationButtons.length === 1) {
         return null;

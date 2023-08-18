@@ -23,7 +23,7 @@ import {
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
@@ -41,7 +41,7 @@ type EditProfileContentProps = {
 const TEST_IDENTIFIER = 'form-edit-profile';
 
 export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustomerUser }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [, customerEditProfile] = useChangePersonalDataMutationApi();
 
     const [formProviderMethods] = useCustomerChangeProfileForm({

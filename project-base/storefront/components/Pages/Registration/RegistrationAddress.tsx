@@ -7,13 +7,13 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
 import { useCountriesQueryApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 
 export const RegistrationAddress: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const { setValue } = formProviderMethods;
     const formMeta = useRegistrationFormMeta(formProviderMethods);

@@ -1,5 +1,5 @@
 import { HamburgerIcon } from './HamburgerIcon';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -11,7 +11,7 @@ type HamburgerMenuProps = {
 const TEST_IDENTIFIER = 'layout-header-hamburgermenu';
 
 export const HamburgerMenu: FC<HamburgerMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <div

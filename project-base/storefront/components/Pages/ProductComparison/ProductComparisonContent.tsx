@@ -8,7 +8,7 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { ComparedProductFragmentApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/canUseDom';
 import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'helpers/twMerge';
@@ -18,7 +18,7 @@ type ProductComparisonContentProps = {
 };
 
 export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ productsCompare }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const {
         isArrowLeftActive,
         isArrowRightActive,

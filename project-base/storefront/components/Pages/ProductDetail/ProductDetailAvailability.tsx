@@ -1,7 +1,7 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Arrow } from 'components/Basic/Icon/IconsSvg';
 import { AvailabilityStatusEnumApi, ProductDetailFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { RefObject } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -13,7 +13,7 @@ type ProductDetailAvailabilityProps = {
 const TEST_IDENTIFIER = 'pages-productdetail-productdetailavailability';
 
 export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ product, scrollTarget }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const scrollOnClickHandler = () => {
         if (scrollTarget.current !== null) {

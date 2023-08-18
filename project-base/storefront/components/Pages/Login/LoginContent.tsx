@@ -9,7 +9,7 @@ import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Translate } from 'next-translate';
 import { useRouter } from 'next/router';
@@ -25,7 +25,7 @@ type LoginContentProps = {
 const TEST_IDENTIFIER = 'pages-login-submit';
 
 export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { url } = useDomainConfig();
     const router = useRouter();

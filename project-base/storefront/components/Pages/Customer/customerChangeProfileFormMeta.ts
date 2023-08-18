@@ -15,7 +15,7 @@ import {
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
@@ -24,7 +24,7 @@ import * as Yup from 'yup';
 export const useCustomerChangeProfileForm = (
     defaultValues: CustomerChangeProfileFormType,
 ): [UseFormReturn<CustomerChangeProfileFormType>, CustomerChangeProfileFormType] => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const resolver = yupResolver(
         Yup.object().shape({
@@ -85,7 +85,7 @@ type CustomerChangeProfileFormMetaType = {
 export const useCustomerChangeProfileFormMeta = (
     formProviderMethods: UseFormReturn<CustomerChangeProfileFormType>,
 ): CustomerChangeProfileFormMetaType => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const companyCustomer = formProviderMethods.formState.dirtyFields.companyCustomer;
     const errors = formProviderMethods.formState.errors;
 

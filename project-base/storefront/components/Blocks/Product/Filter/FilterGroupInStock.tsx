@@ -1,7 +1,7 @@
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
 import { FilterGroupIcon } from './FilterGroupIcon';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useState } from 'react';
 
@@ -13,7 +13,7 @@ type FilterGroupInStockProps = {
 const TEST_IDENTIFIER = 'blocks-product-filter-filtergroup-instock';
 
 export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, inStockCount }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [isGroupOpen, setIsGroupOpen] = useState(true);
 
     const { filter, updateFilterInStock } = useQueryParams();

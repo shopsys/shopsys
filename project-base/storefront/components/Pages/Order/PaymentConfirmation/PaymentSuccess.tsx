@@ -3,7 +3,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useOrderSentPageContentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { GtmPageType } from 'gtm/types/enums';
 
 type PaymentSuccessProps = {
@@ -11,7 +11,7 @@ type PaymentSuccessProps = {
 };
 
 export const PaymentSuccess: FC<PaymentSuccessProps> = ({ orderUuid }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.payment_success);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 

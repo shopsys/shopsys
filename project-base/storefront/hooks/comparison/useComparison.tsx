@@ -6,13 +6,13 @@ import {
     useRemoveProductFromComparisonMutationApi,
 } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useRef, useState } from 'react';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
 
 export const useComparison = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const isUserLoggedIn = !!useCurrentCustomerData();
     const [, addProductToComparison] = useAddProductToComparisonMutationApi();
     const [, removeProductFromComparison] = useRemoveProductFromComparisonMutationApi();

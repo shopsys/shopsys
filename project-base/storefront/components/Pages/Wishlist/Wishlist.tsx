@@ -1,4 +1,4 @@
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
@@ -13,7 +13,7 @@ import { useWishlist } from 'hooks/useWishlist';
 import { RemoveThin } from 'components/Basic/Icon/IconsSvg';
 
 export const Wishlist: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { wishlist, fetching, handleCleanWishlist } = useWishlist();
     const { url } = useDomainConfig();
     const router = useRouter();

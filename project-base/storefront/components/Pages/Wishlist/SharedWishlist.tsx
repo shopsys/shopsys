@@ -1,4 +1,4 @@
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
@@ -11,7 +11,7 @@ type SharedWishlistProps = {
 };
 
 export const SharedWishlist: FC<SharedWishlistProps> = ({ urlQueryParamId }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { products, fetching } = useSharedWishlist(urlQueryParamId.split(','));
 
     if (fetching) {

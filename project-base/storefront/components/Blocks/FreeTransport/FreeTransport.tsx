@@ -1,13 +1,13 @@
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 
 const TEST_IDENTIFIER = 'blocks-freetransport';
 
 export const FreeTransport: FC = () => {
     const { cart, isCartEmpty } = useCurrentCart();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const amount = cart?.remainingAmountWithVatForFreeTransport;
 

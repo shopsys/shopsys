@@ -16,7 +16,7 @@ import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSideProps
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useMemo } from 'react';
@@ -24,7 +24,7 @@ import { GtmPageType } from 'gtm/types/enums';
 import { getNumberFromUrlQuery } from 'helpers/parsing/urlParsing';
 
 const OrdersPage: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { currentPage } = useQueryParams();
     const { url } = useDomainConfig();
     const [{ data: ordersData, fetching }] = useOrdersQueryApi({

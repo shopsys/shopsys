@@ -13,7 +13,7 @@ import { setTokensToCookies } from 'helpers/auth/tokens';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import Trans from 'next-translate/Trans';
 import dynamic from 'next/dynamic';
@@ -32,7 +32,7 @@ type RegistrationAfterOrderProps = {
 export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOrderUuid }) => {
     const contactInformation = useCurrentUserContactInformation();
     const [, register] = useRegistrationMutationApi();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);

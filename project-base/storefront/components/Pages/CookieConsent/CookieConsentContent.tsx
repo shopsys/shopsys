@@ -2,7 +2,7 @@ import { UserConsentForm } from 'components/Blocks/UserConsent/UserConsentForm';
 import { showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 
@@ -11,7 +11,7 @@ type CookieConsentContentProps = {
 };
 
 export const CookieConsentContent: FC<CookieConsentContentProps> = ({ breadcrumbs }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { push } = useRouter();
 
     const onSetCallback = useCallback(() => {

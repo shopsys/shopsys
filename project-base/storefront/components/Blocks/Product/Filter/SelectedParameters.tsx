@@ -3,7 +3,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useSessionStore } from 'store/useSessionStore';
 import { getHasDefaultFilters } from 'helpers/filterOptions/seoCategories';
@@ -18,7 +18,7 @@ type SelectedParametersProps = {
 };
 
 export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const defaultProductFiltersMap = useSessionStore((s) => s.defaultProductFiltersMap);
 

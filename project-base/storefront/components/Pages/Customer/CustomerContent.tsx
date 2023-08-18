@@ -5,7 +5,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 
 type CustomerContentProps = {
@@ -13,7 +13,7 @@ type CustomerContentProps = {
 };
 
 export const CustomerContent: FC<CustomerContentProps> = ({ breadcrumbs }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { logout } = useAuth();
     const { url } = useDomainConfig();
     const [customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(

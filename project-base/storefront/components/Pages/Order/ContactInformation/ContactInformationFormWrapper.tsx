@@ -7,14 +7,14 @@ import { ContactInformationCustomer } from 'components/Pages/Order/ContactInform
 import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/ContactInformationDeliveryAddress';
 import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 
 export const ContactInformationFormWrapper: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const formProviderMethods = useFormContext<ContactInformation>();
