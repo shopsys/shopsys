@@ -63,48 +63,49 @@ jobs:
                     echo "DOCKER_STOREFRONT_CI_IMAGE_EXISTS=${DOCKER_STOREFRONT_CI_IMAGE_EXISTS}" >> $GITHUB_OUTPUT
                     echo "DOCKER_ELASTICSEARCH_REPOSITORY_TAG=${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}" >> $GITHUB_OUTPUT
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_OUTPUT
-            -   name: Copy and rename docker-compose.github-actions.yml.dist to docker-compose.yml
-                run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
-            -   name: Update docker-compose.yml file with right PHP-FPM image
-                run: "sed -i \"s#php-fpm-image#${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}#\" ./docker-compose.yml"
-            -   name: Update docker-compose.yml file with right Storefront image
-                run: "sed -i \"s#storefront-image#${{ steps.variables.outputs.DOCKER_STOREFRONT_CI_REPOSITORY_TAG }}#\" ./docker-compose.yml"
-            -   name: Update docker-compose.yml file with right Elasticsearch image
-                run: "sed -i \"s#elasticsearch-image#${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}#\" ./docker-compose.yml"
-            -   name: Copy and rename docker-compose.github-actions.review.yml.dist to docker-compose.review.yml
-                run: cp -f ./docker/conf/docker-compose.github-actions.review.yml.dist ./docker-compose.review.yml
-            -   name: Copy and rename docker-compose.github-actions.review.simplified.yml.dist to docker-compose.review.simplified.yml
-                run: cp -f ./docker/conf/docker-compose.github-actions.review.simplified.yml.dist ./docker-compose.review.simplified.yml
-            -   name: Update docker-compose.review.yml file with right PHP-FPM image
-                run: "sed -i \"s#php-fpm-image#${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}#\" ./docker-compose.review.yml"
-            -   name: Update docker-compose.review.yml file with right Storefront image
-                run: "sed -i \"s#storefront-image#${{ steps.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}#\" ./docker-compose.review.yml"
-            -   name: Update docker-compose.review.yml file with right Elasticsearch image
-                run: "sed -i \"s#elasticsearch-image#${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}#\" ./docker-compose.review.yml"
+            -   name: Prepare docker-compose.yml file from docker-compose.github-actions.yml.dist
+                run: |
+                    sh .github/prepare-docker-compose-file.sh \
+                    "./docker/conf/docker-compose.github-actions.yml.dist" \
+                    "./docker-compose.yml" \
+                    "${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}" \
+                    "${{ steps.variables.outputs.DOCKER_STOREFRONT_CI_REPOSITORY_TAG }}" \
+                    "${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}"
+            -   name: Prepare docker-compose.review.yml file from docker-compose.github-actions.review.yml.dist
+                run: |
+                    sh .github/prepare-docker-compose-file.sh \
+                    "./docker/conf/docker-compose.github-actions.review.yml.dist" \
+                    "./docker-compose.review.yml" \
+                    "${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}" \
+                    "${{ steps.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}" \
+                    "${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}"
+            -   name: Prepare docker-compose.review.simplified.yml file from docker-compose.github-actions.review.simplified.yml.dist
+                run: |
+                    sh .github/prepare-docker-compose-file.sh \
+                    "./docker/conf/docker-compose.github-actions.review.simplified.yml.dist" \
+                    "./docker-compose.review.simplified.yml" \
+                    "${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}" \
+                    "${{ steps.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}"
             -   name: Set TRAEFIK_HOSTS ENV variables
                 run: |
                     HOST=${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                     echo "TRAEFIK_HOSTS=\`$HOST\`, \`cz.$HOST\`" >> $GITHUB_ENV
-            -   name: Update docker-compose.review.simplified.yml file with right PHP-FPM image
-                run: "sed -i \"s#php-fpm-image#${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}#\" ./docker-compose.review.simplified.yml"
-            -   name: Update docker-compose.review.simplified.yml file with right Storefront image
-                run: "sed -i \"s#storefront-image#${{ steps.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}#\" ./docker-compose.review.simplified.yml"
-            -   name: Update docker-compose.review.yml file with BRANCH_NAME_ESCAPED ENV variable
-                run: "sed -i \"s#BRANCH_NAME#${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}#\" ./docker-compose.review.yml"
-            -   name: Update docker-compose.review.yml file with TRAEFIK_HOSTS ENV variable
-                run: "sed -i \"s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#\" ./docker-compose.review.yml"
-            -   name: Update docker-compose.review.simplified.yml file with BRANCH_NAME_ESCAPED ENV variable
-                run: "sed -i \"s#BRANCH_NAME#${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}#\" ./docker-compose.review.simplified.yml"
-            -   name: Update docker-compose.review.simplified.yml file with TRAEFIK_HOSTS ENV variable
-                run: "sed -i \"s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#\" ./docker-compose.review.simplified.yml"
-            -   name: Copy and rename docker-compose.github-actions.cypress.yml.dist to docker-compose.cypress.yml
-                run: cp -f ./docker/conf/docker-compose.github-actions.cypress.yml.dist ./docker-compose.cypress.yml
-            -   name: Update docker-compose.cypress.yml file with right PHP-FPM image
-                run: "sed -i \"s#php-fpm-image#${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}#\" ./docker-compose.cypress.yml"
-            -   name: Update docker-compose.cypress.yml file with right Storefront image
-                run: "sed -i \"s#storefront-image#${{ steps.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}#\" ./docker-compose.cypress.yml"
-            -   name: Update docker-compose.cypress.yml file with right Elasticsearch image
-                run: "sed -i \"s#elasticsearch-image#${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}#\" ./docker-compose.cypress.yml"
+            -   name: Replace variables in docker-compose.review.yml
+                run: |
+                    sed -i "s#BRANCH_NAME#${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}#" ./docker-compose.review.yml
+                    sed -i "s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#" ./docker-compose.review.yml
+            -   name: Replace variables in docker-compose.review.simplified.yml
+                run: |
+                    sed -i "s#BRANCH_NAME#${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}#" ./docker-compose.review.simplified.yml
+                    sed -i "s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#" ./docker-compose.review.simplified.yml
+            -   name: Prepare docker-compose.cypress.yml file from docker-compose.github-actions.cypress.yml.dist
+                run: |
+                    sh .github/prepare-docker-compose-file.sh \
+                    "./docker/conf/docker-compose.github-actions.cypress.yml.dist" \
+                    "./docker-compose.cypress.yml" \
+                    "${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}" \
+                    "${{ steps.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}" \
+                    "${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}"
             -   name: Upload docker-compose.yml to artifacts
                 uses: actions/upload-artifact@v3
                 with:
