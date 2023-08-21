@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Category;
 
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -15,8 +16,11 @@ class CategoryHierarchyTest extends GraphQlTestCase
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
 
+        $printersName = t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
+        $printersSlug = TransformString::stringToFriendlyUrlSlug($printersName);
+
         $response = $this->getResponseContentForGql(self::QUERY_FOLDER . '/SingleCategoryQuery.graphql', [
-            'urlSlug' => 'printers',
+            'urlSlug' => $printersSlug,
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'category');
 
@@ -27,7 +31,7 @@ class CategoryHierarchyTest extends GraphQlTestCase
                     'uuid' => 'dea6764b-a03b-4171-8243-46e730c8b90b',
                 ],
                 [
-                    'name' => t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'name' => $printersName,
                     'uuid' => 'a1c81439-e169-48f3-8432-98934b0ee2d7',
                 ],
             ],
@@ -113,14 +117,14 @@ class CategoryHierarchyTest extends GraphQlTestCase
                         ],
                     ],
                     [
-                        'name' => 'Cameras & Photo',
+                        'name' => t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'categoryHierarchy' => [
                             [
                                 'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                                 'uuid' => 'dea6764b-a03b-4171-8243-46e730c8b90b',
                             ],
                             [
-                                'name' => 'Cameras & Photo',
+                                'name' => t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                                 'uuid' => '4b31f43c-ed0a-4db6-979b-10c27d7791f3',
                             ],
                         ],
