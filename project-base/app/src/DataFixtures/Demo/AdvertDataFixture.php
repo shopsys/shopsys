@@ -46,7 +46,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
             $advertData = $this->advertDataFactory->create();
             $advertData->uuid = array_pop($this->uuidPool);
             $advertData->domainId = $domainId;
-            $advertData->name = t('Demo advert', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN);
+            $advertData->name = t('Demo advert', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
             $advertData->type = Advert::TYPE_CODE;
             $advertData->hidden = false;
             $advertData->positionName = 'footer';
@@ -56,7 +56,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
             $advertData = $this->advertDataFactory->create();
             $advertData->uuid = array_pop($this->uuidPool);
             $advertData->domainId = $domainId;
-            $advertData->name = t('Demo category advert', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN);
+            $advertData->name = t('Demo category advert', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
             $advertData->type = Advert::TYPE_CODE;
             $advertData->hidden = false;
             $advertData->positionName = AdvertPositionRegistry::POSITION_CATEGORIES_ABOVE_PRODUCT_LIST;
