@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\FriendlyUrl;
 
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -66,31 +67,43 @@ class FriendlyUrlTest extends GraphQlTestCase
      */
     private function getEntityNameByFriendlyUrlProvider(): array
     {
+        $canonName = t('Canon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $canonSlug = TransformString::stringToFriendlyUrlSlug($canonName);
+
+        $privacyPolicyName = t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $privacyPolicySlug = TransformString::stringToFriendlyUrlSlug($privacyPolicyName);
+
+        $electronicsName = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $electronicsSlug = TransformString::stringToFriendlyUrlSlug($electronicsName);
+
+        $canonMg3550Name = t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $canonMg3550Slug = TransformString::stringToFriendlyUrlSlug($canonMg3550Name);
+
         return [
             [
                 'graphQlType' => 'brand',
-                'urlSlug' => 'canon/',
-                'expectedName' => t('Canon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                'urlSlug' => $canonSlug . '/',
+                'expectedName' => $canonName,
             ],
             [
                 'graphQlType' => 'brand',
-                'urlSlug' => 'canon',
-                'expectedName' => t('Canon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                'urlSlug' => $canonSlug,
+                'expectedName' => $canonName,
             ],
             [
                 'graphQlType' => 'article',
-                'urlSlug' => 'privacy-policy/',
-                'expectedName' => t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                'urlSlug' => $privacyPolicySlug . '/',
+                'expectedName' => $privacyPolicyName,
             ],
             [
                 'graphQlType' => 'category',
-                'urlSlug' => 'electronics/',
-                'expectedName' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                'urlSlug' => $electronicsSlug . '/',
+                'expectedName' => $electronicsName,
             ],
             [
                 'graphQlType' => 'product',
-                'urlSlug' => 'canon-mg3550/',
-                'expectedName' => t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                'urlSlug' => $canonMg3550Slug . '/',
+                'expectedName' => $canonMg3550Name,
             ],
         ];
     }
