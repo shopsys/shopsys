@@ -49,11 +49,11 @@ class CategoriesSearchTest extends GraphQlTestCase
         $this->assertCategories($query, $categoriesExpected);
     }
 
-    public function testSearchWithLastTwoProducts(): void
+    public function testSearchWithLastCategory(): void
     {
         $query = '            
             query {
-                categoriesSearch(last: 2, search: "a") {
+                categoriesSearch(last: 1, search: "' . t('audio', [], Translator::TESTS_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '") {
                     edges {
                         node {
                             name
@@ -63,7 +63,6 @@ class CategoriesSearchTest extends GraphQlTestCase
             }';
 
         $categoriesExpected = [
-            ['name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
             ['name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
         ];
 

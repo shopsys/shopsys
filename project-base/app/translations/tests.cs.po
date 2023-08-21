@@ -6,3 +6,6 @@ msgstr ""
 
 msgid "book"
 msgstr "kniha"
+
+msgid "audio"
+msgstr "audio"
