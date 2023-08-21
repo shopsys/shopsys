@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -683,8 +684,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
     public function testGetProductFilterOptionsForSearchInCategory(): void
     {
+        $translatedName = t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
+
         $query = 'query {
-          category(urlSlug: "tv-audio") {
+          category(urlSlug: "' . $slug . '") {
             products(search: "FHD") {
               productFilterOptions {
                 minimalPrice
@@ -830,8 +834,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         $price = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('3499');
 
+        $translatedName = t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
+
         $query = 'query {
-          flag(urlSlug: "action") {
+          flag(urlSlug: "' . $slug . '") {
             products(search: "Hello") {      
               productFilterOptions {
                 minimalPrice
@@ -942,8 +949,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
         $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
 
+        $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
+
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderFilterInCategory.graphql', [
-            'urlSlug' => 'personal-computers-accessories',
+            'urlSlug' => $slug,
         ]);
 
         $result = $this->getResponseDataForGraphQlType($response, 'category');
@@ -968,8 +978,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
         $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
 
+        $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
+
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderFilterInCategory.graphql', [
-            'urlSlug' => 'personal-computers-accessories',
+            'urlSlug' => $slug,
             'filter' => $filter,
         ]);
 
