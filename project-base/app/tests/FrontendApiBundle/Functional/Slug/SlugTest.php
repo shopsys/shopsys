@@ -22,17 +22,17 @@ class SlugTest extends GraphQlTestCase
 
         yield [
             'typename' => 'RegularProduct',
-            'name' => '21,5” Hyundai 22MT44',
+            'name' => '21,5" Hyundai 22MT44',
         ];
 
         yield [
             'typename' => 'Variant',
-            'name' => '27” Hyundai T27D590EY',
+            'name' => '27" Hyundai T27D590EY',
         ];
 
         yield [
             'typename' => 'MainVariant',
-            'name' => '32” Hyundai 32PFL4400',
+            'name' => '32" Hyundai 32PFL4400',
         ];
 
         yield [

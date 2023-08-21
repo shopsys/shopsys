@@ -192,7 +192,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                         'orderingMode' => 'PRIORITY',
                         'defaultOrderingMode' => 'PRIORITY',
                         'edges' => [
-                            ['node' => ['name' => t('32” Hyundai 32PFL4400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())]],
+                            ['node' => ['name' => t('32" Hyundai 32PFL4400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())]],
                         ],
                     ],
                 ],
