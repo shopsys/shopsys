@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\ParameterFilter;
 use App\DataFixtures\Demo\ParameterDataFixture;
 use App\FrontendApi\Model\Component\Constraints\ParameterFilter;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -17,8 +18,11 @@ class ParameterFilterValidationTest extends GraphQlTestCase
         /** @var \App\Model\Product\Parameter\Parameter $parameterSlider */
         $parameterSlider = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
 
+        $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
+
         $mutation = 'query {
-  category(urlSlug: "/personal-computers-accessories") {
+  category(urlSlug: "' . $slug . '") {
     products(filter: {
       parameters: [{
         parameter: "' . $parameterSlider->getUuid() . '"
@@ -43,8 +47,11 @@ class ParameterFilterValidationTest extends GraphQlTestCase
         /** @var \App\Model\Product\Parameter\Parameter $parameterNonSlider */
         $parameterNonSlider = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()));
 
+        $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
+
         $mutation = 'query {
-  category(urlSlug: "/personal-computers-accessories") {
+  category(urlSlug: "' . $slug . '") {
     products(filter: {
       parameters: [{
         parameter: "' . $parameterNonSlider->getUuid() . '"
