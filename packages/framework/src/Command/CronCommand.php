@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -192,22 +191,11 @@ class CronCommand extends Command
     }
 
     /**
-     * @phpstan-ignore-next-line
      * @param int $runEveryMin
      * @return \DateTimeImmutable
      */
-    private function getCurrentRoundedTime(/* int $runEveryMin */)
+    private function getCurrentRoundedTime(int $runEveryMin)
     {
-        $runEveryMin = DeprecationHelper::triggerNewArgumentInMethod(
-            __METHOD__,
-            '$runEveryMin',
-            'int',
-            func_get_args(),
-            0,
-            CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
-            true,
-        );
-
         $time = new DateTime('now', $this->getCronTimeZone());
         $time->modify('-' . $time->format('s') . ' sec');
         $time->modify('-' . ($time->format('i') % $runEveryMin) . ' min');

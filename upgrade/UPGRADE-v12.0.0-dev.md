@@ -709,3 +709,157 @@ There you can find links to upgrade notes for other versions too.
            ```
    - first unused parameter `$message` from `Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsException` exception constructor has been removed, update you code appropriately
    - see #project-base-diff to add required configurations to your project and check suggested changes to your project
+
+## Removed deprecations
+
+- check that your code don't use any removed code ([#2719](https://github.com/shopsys/shopsys/pull/2719))
+    - `Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade`
+        - method `__construct`  changed its interface:
+            ```diff
+                public function __construct(
+                    protected readonly EntityManagerInterface $em,
+                    protected readonly CronModuleRepository $cronModuleRepository,
+                    protected readonly CronFilter $cronFilter,
+            -       protected ?CronModuleRunFactory $cronModuleRunFactory = null,
+            +       protected readonly CronModuleRunFactory $cronModuleRunFactory,
+                )
+            ```
+    - `Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor`
+        - property `$canRunTo` was removed
+        - method `__construct`  changed its interface:
+            ```diff
+                public function __construct(
+            -       int $secondsTimeout,
+            -       protected ?CronConfig $cronConfig = null,
+            +       protected readonly CronConfig $cronConfig,
+                )
+            ```
+        - method `canRun` changed its interface
+            ```
+            -   public function canRun(): bool
+            +   public function canRun(CronModuleInterface $cronModule): bool
+            ```
+    - `Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig`
+        - method `registerCronModuleInstance` changed its interface
+            ```diff
+                public function registerCronModuleInstance(
+                    $service,
+                    string $serviceId,
+                    string $timeHours,
+                    string $timeMinutes,
+                    string $instanceName,
+                    ?string $readableName = null,
+            +       int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
+            +       int $timeoutIteratedCronSec = CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
+                ): void
+            ```
+    - `Shopsys\FrameworkBundle\Controller\Admin\DefaultController`
+        - constant `HOUR_IN_SECONDS` was removed
+        - method `getFormattedDuration()` was removed
+        - method `__construct`  changed its interface:
+            ```diff
+                public function __construct(
+                    protected readonly StatisticsFacade $statisticsFacade,
+                    protected readonly StatisticsProcessingFacade $statisticsProcessingFacade,
+                    protected readonly MailTemplateFacade $mailTemplateFacade,
+                    protected readonly UnitFacade $unitFacade,
+                    protected readonly Setting $setting,
+                    protected readonly AvailabilityFacade $availabilityFacade,
+                    protected readonly CronModuleFacade $cronModuleFacade,
+                    protected readonly GridFactory $gridFactory,
+                    protected readonly CronConfig $cronConfig,
+                    protected readonly CronFacade $cronFacade,
+            -       protected ?BreadcrumbOverrider $breadcrumbOverrider = null,
+            -       protected ?DateTimeFormatterExtension $dateTimeFormatterExtension = null,
+            +       protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+            +       protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
+                )
+            ```
+    - ENV variable `MAILER_DELIVERY_WHITELIST` was removed
+    - ENV variable `MAILER_MASTER_EMAIL_ADDRESS` was removed
+    - `Shopsys\FrameworkBundle\Controller\Admin\SuperadminController`
+        - method `__construct`  changed its interface:
+            ```diff
+                public function __construct(
+                    protected readonly ModuleList $moduleList,
+                    protected readonly ModuleFacade $moduleFacade,
+                    protected readonly PricingSetting $pricingSetting,
+                    protected readonly DelayedPricingSetting $delayedPricingSetting,
+                    protected readonly GridFactory $gridFactory,
+                    protected readonly Localization $localization,
+                    protected readonly LocalizedRouterFactory $localizedRouterFactory,
+            -       protected ?MailSettingFacade $mailSettingFacade = null,
+            -       protected ?MailerSettingProvider $mailerSettingProvider = null,
+            -       protected ?AdminDomainTabsFacade $adminDomainTabsFacade = null,
+            +       protected readonly MailSettingFacade $mailSettingFacade,
+            +       protected readonly MailerSettingProvider $mailerSettingProvider,
+            +       protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+                )
+            ```
+        - variable `isOverridden` is no longer passed to `@ShopsysFramework/Admin/Content/Superadmin/mailWhitelist.html.twig` template while rendering `mailWhitelistAction`
+    - `Shopsys\FrameworkBundle\Model\Mail\EventListener\EnvelopeListener`
+        - method `getAllowedRecipients` was removed
+    - class `Shopsys\FrameworkBundle\Model\Mail\Exception\MasterMailNotSetException` was removed
+    - `Shopsys\FrameworkBundle\Model\Mail\Mailer`
+        - method `send` was removed, use `sendForDomain` instead
+        - method `getMessageWithReplacedVariables` changed its interface
+            ```diff
+                protected function getMessageWithReplacedVariables(
+                    MessageData $messageData,
+            +       int $domainId,
+            -   ): Symfony\Component\Mime\Email {
+            +   ): Shopsys\FrameworkBundle\Model\Mail\Email
+            ```
+    - `Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider`
+        - property `$mailerWhitelistExpressions` was removed
+        - property `$mailerMasterEmailAddress` was removed
+        - method `getMailerWhitelistExpressions` was removed
+        - method `isMailerWhitelistExpressionsSet` was removed
+        - method `getMailerMasterEmailAddress` was removed
+        - method `isMailerMasterEmailSet` was removed
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+            -       string $mailerWhitelist,
+            -       string $mailerMasterEmailAddress,
+                    string $mailerDsn,
+            -       protected readonly ?bool $whitelistForced = null,
+            -       protected ?MailSettingFacade $mailSettingFacade = null,
+            +       protected readonly bool $whitelistForced,
+            +       protected readonly MailSettingFacade $mailSettingFacade,
+                )
+            ```
+    - method `Shopsys\FrameworkBundle\Model\Advert\AdvertRepository::getAdvertByPositionQueryBuilder()` now throws exception when `POSITION_PRODUCT_LIST` is requested without category
+    - `Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertsQuery`
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    protected readonly AdvertFacade $advertFacade,
+                    protected readonly Domain $domain,
+            -       protected ?CategoryFacade $categoryFacade = null,
+            +       protected readonly CategoryFacade $categoryFacade,
+                )
+            ```
+        - method `advertsQuery` now throws exception when `POSITION_PRODUCT_LIST` is requested without category
+    - `Shopsys\FrameworkBundle\Model\Product\Search\AggregationResultToProductFilterCountDataTransformer`
+        - method `translateFlagsPlusNumbers` was removed, use `getFlagCount` instead
+        - method `translateBrandsPlusNumbers` was removed, use `getBrandCount` instead
+        - method `getFlagCount` is now public
+        - method `getBrandCount` is now public
+    - `Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository`
+        - second parameter in `calculateBrandsPlusNumbers` changed its name from `plusFlagsQuery` to `plusBrandsQuery`
+    - `Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation`
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    protected readonly FrontendCustomerUserProvider $frontendCustomerUserProvider,
+                    protected readonly UserPasswordHasherInterface $userPasswordHasher,
+                    protected readonly TokenFacade $tokenFacade,
+            -       protected ?DefaultLoginRateLimiter $loginRateLimiter = null,
+            -       protected ?RequestStack $requestStack = null,
+            +       protected readonly DefaultLoginRateLimiter $loginRateLimiter,
+            +       protected readonly RequestStack $requestStack,
+                )
+            ```
+    - remove setter injection in `App\Controller\Front\RobotsController`
+        - see #project-base-diff for more details

@@ -598,9 +598,6 @@ msgstr ""
 msgid "Currency settings modified"
 msgstr ""
 
-msgid "Currently the ENV variable MAILER_DELIVERY_WHITELIST is set and overrides this setting."
-msgstr ""
-
 msgid "Customer"
 msgstr ""
 

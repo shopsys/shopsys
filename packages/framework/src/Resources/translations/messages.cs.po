@@ -598,9 +598,6 @@ msgstr "Měna <strong>{{ name }}</strong> byla smazána"
 msgid "Currency settings modified"
 msgstr "Nastavení měn bylo upraveno"
 
-msgid "Currently the ENV variable MAILER_DELIVERY_WHITELIST is set and overrides this setting."
-msgstr "Nyní je nastavena environment proměnná MAILER_DELIVERY_WHITELIST, která přepisuje toto nastavení."
-
 msgid "Customer"
 msgstr "Zákazník"
 

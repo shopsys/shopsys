@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Form\Admin\Module\ModulesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\InputPriceTypeFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\MailWhitelistFormType;
@@ -26,8 +25,6 @@ use Symfony\Component\Routing\RequestContext;
 
 class SuperadminController extends AdminBaseController
 {
-    use SetterInjectionTrait;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleList $moduleList
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
@@ -36,9 +33,9 @@ class SuperadminController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade|null $mailSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider|null $mailerSettingProvider
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade|null $adminDomainTabsFacade
+     * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         protected readonly ModuleList $moduleList,
@@ -48,40 +45,10 @@ class SuperadminController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly Localization $localization,
         protected readonly LocalizedRouterFactory $localizedRouterFactory,
-        protected /* readonly */ ?MailSettingFacade $mailSettingFacade = null,
-        protected /* readonly */ ?MailerSettingProvider $mailerSettingProvider = null,
-        protected /* readonly */ ?AdminDomainTabsFacade $adminDomainTabsFacade = null,
+        protected readonly MailSettingFacade $mailSettingFacade,
+        protected readonly MailerSettingProvider $mailerSettingProvider,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setMailSettingFacade(MailSettingFacade $mailSettingFacade): void
-    {
-        $this->setDependency($mailSettingFacade, 'mailSettingFacade');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setMailerSettingProvider(MailerSettingProvider $mailerSettingProvider): void
-    {
-        $this->setDependency($mailerSettingProvider, 'mailerSettingProvider');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setAdminDomainTabsFacade(AdminDomainTabsFacade $adminDomainTabsFacade): void
-    {
-        $this->setDependency($adminDomainTabsFacade, 'adminDomainTabsFacade');
     }
 
     /**
@@ -241,7 +208,6 @@ class SuperadminController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/mailWhitelist.html.twig', [
             'form' => $form->createView(),
-            'isOverridden' => $this->mailerSettingProvider->isMailerWhitelistExpressionsSet(),
             'isWhitelistForced' => $this->mailerSettingProvider->isWhitelistForced(),
         ]);
     }

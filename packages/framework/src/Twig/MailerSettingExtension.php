@@ -41,7 +41,6 @@ class MailerSettingExtension extends AbstractExtension
     public function isMailerSettingUnusual()
     {
         return $this->mailerSettingProvider->isDeliveryDisabled()
-            || $this->mailerSettingProvider->isMailerMasterEmailSet()
             || $this->mailerSettingProvider->isWhitelistEnabled($this->domain->getId());
     }
 
@@ -52,7 +51,6 @@ class MailerSettingExtension extends AbstractExtension
     {
         return $this->twigEnvironment->render('@ShopsysFramework/Common/Mailer/settingInfo.html.twig', [
             'isDeliveryDisabled' => $this->mailerSettingProvider->isDeliveryDisabled(),
-            'mailerMasterEmailAddress' => $this->mailerSettingProvider->isMailerMasterEmailSet() ? $this->mailerSettingProvider->getMailerMasterEmailAddress() : null,
             'isWhitelistEnabled' => $this->mailerSettingProvider->isWhitelistEnabled($this->domain->getId()),
             'mailerWhitelistExpressions' => $this->mailerSettingProvider->getWhitelistPatternsAsArray($this->domain->getId()),
         ]);
