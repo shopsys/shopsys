@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Category;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
+use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -55,12 +57,44 @@ class CategoryTest extends GraphQlTestCase
             }
         ';
 
+        $readyCategorySeoMixLinks = [
+            [
+                'name' => t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-od-nejdrazsiho',
+            ],
+            [
+                'name' => t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-barva-cerna',
+            ],
+            [
+                'name' => t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-barva-cervena',
+            ],
+            [
+                'name' => t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-led-uhlopricka-30-akce',
+            ],
+            [
+                'name' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-bez-hdmi-akce',
+            ],
+            [
+                'name' => t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-full-hd-led-usb',
+            ],
+        ];
+
+        ArraySorter::sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $this->getLocaleForFirstDomain());
+
+        $electronicsName = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $electronicsSlug = '/' . TransformString::stringToFriendlyUrlSlug($electronicsName);
+
         $arrayExpected = [
             'data' => [
                 'category' => [
-                    'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                    'name' => $electronicsName,
                     'description' => t('Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.).', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                    'slug' => '/electronics',
+                    'slug' => $electronicsSlug,
                     'seoH1' => t('Electronic devices', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                     'seoTitle' => t('Electronic stuff', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                     'seoMetaDescription' => t(
@@ -77,36 +111,11 @@ class CategoryTest extends GraphQlTestCase
                     ],
                     'breadcrumb' => [
                         [
-                            'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                            'name' => $electronicsName,
                             'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $this->category->getId()]),
                         ],
                     ],
-                    'readyCategorySeoMixLinks' => [
-                        [
-                            'name' => t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-od-nejdrazsiho',
-                        ],
-                        [
-                            'name' => t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-barva-cerna',
-                        ],
-                        [
-                            'name' => t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-barva-cervena',
-                        ],
-                        [
-                            'name' => t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-led-uhlopricka-30-akce',
-                        ],
-                        [
-                            'name' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-bez-hdmi-akce',
-                        ],
-                        [
-                            'name' => t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-full-hd-led-usb',
-                        ],
-                    ],
+                    'readyCategorySeoMixLinks' => $readyCategorySeoMixLinks,
                     'linkedCategories' => [
                         ['name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                         ['name' => t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
