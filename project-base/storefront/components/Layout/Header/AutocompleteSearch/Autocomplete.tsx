@@ -87,7 +87,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                 if (areAllResultsEmpty(autocompleteSearchResults)) {
                     return (
                         <div className="flex items-center">
-                            <Icon iconType="image" icon="warning" alt="warning" />
+                            <Icon icon="warning" alt="warning" />
                             <span className="flex-1 pl-4 text-sm">
                                 {t('Could not find any results for the given query.')}
                             </span>

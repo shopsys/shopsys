@@ -1,5 +1,6 @@
 import { PromoCodeInfo } from './PromoCodeInfo';
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Plus } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
@@ -106,7 +107,7 @@ export const PromoCode: FC = () => {
                             onClick={() => setIsContentVisible(!isContentVisible)}
                             data-testid={TEST_IDENTIFIER + '-add-button'}
                         >
-                            <Icon iconType="icon" icon="Plus" className="mr-3 w-3" />
+                            <Icon icon={<Plus />} className="mr-3 w-3" />
                             {t('I have a discount coupon')}
                         </div>
                         <Transition

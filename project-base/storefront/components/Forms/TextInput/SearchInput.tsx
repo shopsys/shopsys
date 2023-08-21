@@ -1,4 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Search } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -55,7 +56,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 disabled={isSearchButtonDisabled}
                 title={t('Search')}
             >
-                <Icon iconType="icon" icon="Search" className="w-5" />
+                <Icon icon={<Search />} className="w-5" />
             </button>
             {isLoading && (
                 <div className="absolute top-[calc(50%-16px)] right-4 flex h-8 w-8 items-center justify-center">

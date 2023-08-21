@@ -1,4 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { RemoveBold } from 'components/Basic/Icon/IconsSvg';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { MouseEventHandler } from 'react';
 
@@ -18,7 +19,7 @@ export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onItemRemo
             data-testid={TEST_IDENTIFIER}
             title={t('Remove from cart')}
         >
-            <Icon iconType="icon" icon="RemoveBold" className="mx-auto w-2 basis-2" />
+            <Icon icon={<RemoveBold />} className="mx-auto w-2 basis-2" />
         </button>
     );
 };

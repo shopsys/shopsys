@@ -3,6 +3,7 @@ import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Arrow } from 'components/Basic/Icon/IconsSvg';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
@@ -314,6 +315,6 @@ const ResetButton: FC<ResetButtonProps> = ({ text, dataTestId, onClick }) => (
         className="flex w-full items-center bg-whitesmoke px-2 py-1 text-sm"
     >
         {text}
-        <Icon iconType="icon" icon="Arrow" className="ml-2" />
+        <Icon icon={<Arrow />} className="ml-2" />
     </button>
 );

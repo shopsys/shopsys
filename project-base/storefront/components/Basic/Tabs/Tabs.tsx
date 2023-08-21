@@ -11,6 +11,7 @@ import {
     Tabs as TabsReact,
 } from 'react-tabs';
 import { twJoin } from 'tailwind-merge';
+import { Arrow } from '../Icon/IconsSvg';
 
 /**
  * In background of styled tab parts we are using - react-tabs components
@@ -73,8 +74,7 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
             >
                 {headingTextMobile}
                 <Icon
-                    iconType="icon"
-                    icon="Arrow"
+                    icon={<Arrow />}
                     className={twJoin('w-4 rotate-0 transition', isActiveOnMobile && '-rotate-180 ')}
                 />
             </h3>

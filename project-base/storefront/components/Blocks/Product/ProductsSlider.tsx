@@ -5,6 +5,7 @@ import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { ProductsListContent } from './ProductsList/ProductsListContent';
+import { Arrow } from 'components/Basic/Icon/IconsSvg';
 
 type ProductsSliderProps = {
     products: ListedProductFragmentApi[];
@@ -93,6 +94,6 @@ const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title 
         onClick={onClick}
         disabled={isDisabled}
     >
-        <Icon className={twMergeCustom('rotate-90', type === 'next' && '-rotate-90')} iconType="icon" icon="Arrow" />
+        <Icon className={twMergeCustom('rotate-90', type === 'next' && '-rotate-90')} icon={<Arrow />} />
     </button>
 );

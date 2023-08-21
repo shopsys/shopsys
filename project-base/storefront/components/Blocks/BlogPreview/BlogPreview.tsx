@@ -6,6 +6,7 @@ import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
 import { BlogPreviewSide } from './BlogPreviewSide';
+import { ArrowRight } from 'components/Basic/Icon/IconsSvg';
 
 export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
 const TEST_IDENTIFIER = 'blocks-blogpreview';
@@ -40,11 +41,7 @@ export const BlogPreview: FC = () => {
                     >
                         <>
                             {t('View all')}
-                            <Icon
-                                iconType="icon"
-                                icon="ArrowRight"
-                                className="relative top-0 ml-2 text-xs text-creamWhite"
-                            />
+                            <Icon icon={<ArrowRight />} className="relative top-0 ml-2 text-xs text-creamWhite" />
                         </>
                     </ExtendedNextLink>
                 )}

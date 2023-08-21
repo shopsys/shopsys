@@ -9,6 +9,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { getHasDefaultFilters } from 'helpers/filterOptions/seoCategories';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
+import { Remove, RemoveThin } from 'components/Basic/Icon/IconsSvg';
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
 
@@ -190,20 +191,14 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions 
             </div>
             <div className="flex cursor-pointer items-center text-sm text-greyLight" onClick={resetAllFilters}>
                 <div className="font-bold uppercase">{t('Clear all')}</div>
-                <Icon iconType="icon" icon="Remove" className="ml-2 cursor-pointer text-greenLight" />
+                <Icon icon={<Remove />} className="ml-2 cursor-pointer text-greenLight" />
             </div>
         </div>
     );
 };
 
 const SelectedParametersIcon: FC<{ onClick: () => void }> = ({ onClick, dataTestId }) => (
-    <Icon
-        iconType="icon"
-        icon="RemoveThin"
-        onClick={onClick}
-        className="ml-3 w-3 cursor-pointer"
-        data-testid={dataTestId}
-    />
+    <Icon icon={<RemoveThin />} onClick={onClick} className="ml-3 w-3 cursor-pointer" data-testid={dataTestId} />
 );
 
 const getCheckedFlags = (

@@ -1,5 +1,4 @@
-import { IconSvg } from './IconSvg';
-import { IconName } from './IconsSvgMap';
+import { twMergeCustom } from 'helpers/twMerge';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
@@ -8,26 +7,22 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, ne
 type IconProps = NativeProps &
     (
         | {
-              iconType: 'icon';
-              icon: IconName;
+              icon: JSX.Element;
               alt?: never;
               width?: never;
               height?: never;
           }
         | {
-              iconType: 'image';
               icon: string;
-              alt: string;
+              alt: string | undefined;
               width?: number;
               height?: number;
           }
     );
 
-export const Icon: FC<IconProps> = ({ icon, iconType, height, width, title, alt, ...props }) => (
+export const Icon: FC<IconProps> = ({ icon, height, width, title, alt, className, ...props }) => (
     <>
-        {iconType === 'icon' ? (
-            <IconSvg icon={icon} {...props} />
-        ) : (
+        {typeof icon === 'string' ? (
             <img
                 src={`/icons/${icon}.png`}
                 height={height !== undefined ? height : '24'}
@@ -36,6 +31,17 @@ export const Icon: FC<IconProps> = ({ icon, iconType, height, width, title, alt,
                 alt={alt}
                 data-testid={'basic-icon-' + icon}
             />
+        ) : (
+            <i
+                className={twMergeCustom(
+                    'inline-flex w-[14px] text-center font-normal normal-case leading-none [&>svg]:h-full [&>svg]:w-full',
+                    className,
+                )}
+                data-testid={'basic-icon-iconsvg-' + icon}
+                {...props}
+            >
+                {icon}
+            </i>
         )}
     </>
 );

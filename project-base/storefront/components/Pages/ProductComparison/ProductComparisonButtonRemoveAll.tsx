@@ -1,4 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { RemoveThin } from 'components/Basic/Icon/IconsSvg';
 import { useComparison } from 'hooks/comparison/useComparison';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twJoin } from 'tailwind-merge';
@@ -20,7 +21,7 @@ export const ProductComparisonButtonRemoveAll: FC<ProductComparisonButtonRemoveA
             onClick={handleCleanComparison}
         >
             <span className="mr-3 text-sm">{t('Delete all')}</span>
-            <Icon iconType="icon" icon="RemoveThin" className="w-3" />
+            <Icon icon={<RemoveThin />} className="w-3" />
         </div>
     );
 };

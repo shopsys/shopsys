@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { useWishlist } from 'hooks/useWishlist';
+import { RemoveThin } from 'components/Basic/Icon/IconsSvg';
 
 export const Wishlist: FC = () => {
     const t = useTypedTranslationFunction();
@@ -51,7 +52,7 @@ export const Wishlist: FC = () => {
                             }}
                         >
                             <span className="mr-3 text-sm">{t('Delete all from wishlist')}</span>
-                            <Icon iconType="icon" icon="RemoveThin" className="w-3" />
+                            <Icon icon={<RemoveThin />} className="w-3" />
                         </div>
                         <div className="flex w-full flex-col items-center lg:w-1/2 lg:flex-row">
                             <TextInput

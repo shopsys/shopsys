@@ -16,6 +16,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 import { GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
+import { EmptyCart, Cart as CartIcon } from 'components/Basic/Icon/IconsSvg';
 
 const TEST_IDENTIFIER = 'layout-header-cart-';
 
@@ -54,7 +55,7 @@ export const Cart: FC = ({ className }) => {
             >
                 <>
                     <span className="relative flex text-lg">
-                        <Icon iconType="icon" icon="Cart" className="w-5" />
+                        <Icon icon={<CartIcon />} className="w-5" />
                         <CartCount dataTestId={TEST_IDENTIFIER + 'itemcount'}>{cart?.items.length ?? 0}</CartCount>
                     </span>
                     <span
@@ -99,7 +100,7 @@ export const Cart: FC = ({ className }) => {
                 ) : (
                     <div className="relative flex h-20 items-center justify-between px-5">
                         <span className="text-dark">{t('Your cart is currently empty.')}</span>
-                        <Icon iconType="icon" icon="EmptyCart" className={twJoin('w-20 rotate-6 text-orange')} />
+                        <Icon icon={<EmptyCart />} className={twJoin('w-20 rotate-6 text-orange')} />
                     </div>
                 )}
             </div>
@@ -110,7 +111,7 @@ export const Cart: FC = ({ className }) => {
                     className="relative flex h-full w-full items-center justify-center text-white no-underline transition-colors hover:text-white hover:no-underline"
                 >
                     <>
-                        <Icon iconType="icon" icon="Cart" className="w-5 text-white" />
+                        <Icon icon={<CartIcon />} className="w-5 text-white" />
                         <CartCount>{cart?.items.length ?? 0}</CartCount>
                     </>
                 </ExtendedNextLink>

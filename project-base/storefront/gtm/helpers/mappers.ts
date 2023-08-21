@@ -7,7 +7,6 @@ import {
     ProductDetailFragmentApi,
     SimpleProductFragmentApi,
 } from 'graphql/generated';
-import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'gtm/types/objects';
 import { ProductInterfaceType } from 'types/product';
@@ -75,7 +74,9 @@ const mapGtmProductInterfaceImageUrl = (productInterface: ProductInterfaceType):
     }
 
     if ('images' in productInterface && Array.isArray(productInterface.images)) {
-        return getFirstImageOrNull(productInterface.images)?.sizes.find((size) => size.size === 'default')?.url;
+        return productInterface.images.length
+            ? productInterface.images[0].sizes.find((size) => size.size === 'default')?.url
+            : undefined;
     }
 
     return undefined;

@@ -5,6 +5,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useWishlist } from 'hooks/useWishlist';
 import { MenuIconicItem, MenuIconicItemLink, MenuIconicItemIcon } from './MenuIconicElements';
 import { MenuIconicItemUser } from './MenuIconicItemUser';
+import { Compare, Heart, HeartFull, Marker } from 'components/Basic/Icon/IconsSvg';
 
 const TEST_IDENTIFIER = 'layout-header-menuiconic';
 
@@ -22,7 +23,7 @@ export const MenuIconic: FC = () => {
         <ul className="flex" data-testid={TEST_IDENTIFIER}>
             <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-stores'} className="max-lg:hidden">
                 <MenuIconicItemLink href={storesUrl}>
-                    <MenuIconicItemIcon icon="Marker" />
+                    <MenuIconicItemIcon icon={<Marker />} />
                     {t('Stores')}
                 </MenuIconicItemLink>
             </MenuIconicItem>
@@ -32,14 +33,14 @@ export const MenuIconic: FC = () => {
             </MenuIconicItem>
             <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-comparison'} className="max-lg:hidden">
                 <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison')}>
-                    <MenuIconicItemIcon icon="Compare" />
+                    <MenuIconicItemIcon icon={<Compare />} />
                     {!!comparison?.products.length && <span>{comparison.products.length}</span>}
                 </MenuIconicItemLink>
             </MenuIconicItem>
 
             <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-wishlist'} className="max-lg:hidden">
                 <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')}>
-                    <MenuIconicItemIcon icon={wishlist?.products.length ? 'HeartFull' : 'Heart'} />
+                    <MenuIconicItemIcon icon={wishlist?.products.length ? <HeartFull /> : <Heart />} />
                     {!!wishlist?.products.length && <span>{wishlist.products.length}</span>}
                 </MenuIconicItemLink>
             </MenuIconicItem>

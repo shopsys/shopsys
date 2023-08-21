@@ -3,7 +3,7 @@ import { ImgHTMLAttributes } from 'react';
 import { twMergeCustom } from 'helpers/twMerge';
 
 type ImageProps = {
-    image: ImageSizesFragmentApi | null;
+    image: ImageSizesFragmentApi | null | undefined;
     alt: string | null | undefined;
     type: string;
     loading?: ImgHTMLAttributes<HTMLImageElement>['loading'];

@@ -1,4 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { HeartFull, Heart } from 'components/Basic/Icon/IconsSvg';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
@@ -32,8 +33,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
             >
                 <Icon
                     className={twMergeCustom('m-2', 'text-grey', isProductInWishlist && 'text-green')}
-                    iconType="icon"
-                    icon={isProductInWishlist ? 'HeartFull' : 'Heart'}
+                    icon={isProductInWishlist ? <HeartFull /> : <Heart />}
                 />
                 {isWithText && (
                     <span className="ml-1">
