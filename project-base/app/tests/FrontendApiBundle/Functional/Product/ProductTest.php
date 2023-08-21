@@ -397,14 +397,14 @@ class ProductTest extends GraphQlTestCase
                                 'name' => 'Ostrava',
                             ],
                             'exposed' => true,
-                            'availabilityInformation' => 'Available immediately',
+                            'availabilityInformation' => t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
                         ], [
                             'store' => [
                                 'name' => 'Pardubice',
                             ],
                             'exposed' => false,
-                            'availabilityInformation' => 'Available in one week',
+                            'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
                         ],
                     ],

@@ -84,7 +84,7 @@ class ProductAvailabilityFacade
     {
         $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
 
-        return $this->getWeeksAvailabilityMessageByWeeks($weeks);
+        return $this->getWeeksAvailabilityMessageByWeeks($weeks, $domainId);
     }
 
     /**
@@ -278,13 +278,16 @@ class ProductAvailabilityFacade
 
         $productStoresAvailabilityInformationList = [];
 
+        $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
+
         foreach ($productStores as $productStore) {
-            $availabilityInformation = t('Available immediately');
+            $availabilityInformation = t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
+
             $availabilityStatus = AvailabilityStatusEnum::InStock;
 
             if ($isOutOfStock) {
                 $availabilityStatus = AvailabilityStatusEnum::OutOfStock;
-                $availabilityInformation = t('Unavailable');
+                $availabilityInformation = t('Unavailable', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
             } else {
                 $stock = $productStore->getStore()->getStock();
 
@@ -295,7 +298,7 @@ class ProductAvailabilityFacade
                 }
 
                 if ($productStock === null || $productStock->getProductQuantity() <= 0) {
-                    $availabilityInformation = $this->getWeeksAvailabilityMessageByWeeks($weeks);
+                    $availabilityInformation = $this->getWeeksAvailabilityMessageByWeeks($weeks, $domainId);
                 }
             }
 
@@ -313,13 +316,18 @@ class ProductAvailabilityFacade
 
     /**
      * @param int $weeks
+     * @param int $domainId
      * @return string
      */
-    private function getWeeksAvailabilityMessageByWeeks(int $weeks): string
+    private function getWeeksAvailabilityMessageByWeeks(int $weeks, int $domainId): string
     {
+        $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
+
         return t(
             '{0,1} Available in one week|[2,Inf] Available in %count% weeks',
             ['%count%' => $weeks],
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
+            $domainLocale,
         );
     }
 
