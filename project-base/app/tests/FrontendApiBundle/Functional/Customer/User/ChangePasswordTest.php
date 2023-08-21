@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class ChangePasswordTest extends GraphQlWithLoginTestCase
@@ -55,7 +56,7 @@ mutation {
     }
 }';
         $expectedViolationMessages = [
-            0 => t('New password must be at least {{ limit }} characters long', ['{{ limit }}' => 6], 'validators'),
+            0 => t('New password must be at least {{ limit }} characters long', ['{{ limit }}' => 6], Translator::VALIDATOR_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
         ];
 
         $response = $this->getResponseContentForQuery($query);
