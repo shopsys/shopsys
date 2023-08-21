@@ -1,5 +1,5 @@
 import { ListedProductFragmentApi } from 'graphql/generated';
-import { RefObject, createRef, useEffect, useRef, useState } from 'react';
+import { RefObject, createRef, useEffect, useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
@@ -12,6 +12,8 @@ type ProductsSliderProps = {
     gtmMessageOrigin?: GtmMessageOriginType;
 };
 
+const productTwClass = 'snap-center border-b-0 md:snap-start';
+
 export const ProductsSlider: FC<ProductsSliderProps> = ({
     products,
     gtmProductListName,
@@ -19,8 +21,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     dataTestId,
 }) => {
     const { t } = useTranslation();
-    const sliderRef = useRef<HTMLDivElement>(null);
-    const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLDivElement>>>();
+    const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLLIElement>>>();
     const [activeIndex, setActiveIndex] = useState(0);
     const isWithControls = products.length > 4;
 
@@ -66,18 +67,14 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                 </div>
             )}
 
-            <div
+            <ProductsListContent
+                productRefs={productElementRefs}
+                products={products}
                 className="grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] [&::-webkit-scrollbar]:hidden"
-                ref={sliderRef}
-            >
-                <ProductsListContent
-                    productRefs={productElementRefs}
-                    products={products}
-                    gtmProductListName={gtmProductListName}
-                    gtmMessageOrigin={gtmMessageOrigin}
-                    className="snap-center border-b-0 md:snap-start"
-                />
-            </div>
+                gtmProductListName={gtmProductListName}
+                gtmMessageOrigin={gtmMessageOrigin}
+                classNameProduct={productTwClass}
+            />
         </div>
     );
 };

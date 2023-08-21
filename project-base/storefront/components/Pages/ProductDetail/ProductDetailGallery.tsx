@@ -3,16 +3,9 @@ import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
-import dynamic from 'next/dynamic';
 import { useState } from 'react';
-
-const ProductDetailGalleryImages = dynamic(() =>
-    import('./ProductDetailGalleryImages').then((component) => component.ProductDetailGalleryImages),
-);
-
-const ProductDetailGallerySlider = dynamic(() =>
-    import('./ProductDetailGallerySlider').then((component) => component.ProductDetailGallerySlider),
-);
+import { ProductDetailGalleryImages } from './ProductDetailGalleryImages';
+import { ProductDetailGallerySlider } from './ProductDetailGallerySlider';
 
 type ProductDetailGalleryProps = {
     images: ImageSizesFragmentApi[];

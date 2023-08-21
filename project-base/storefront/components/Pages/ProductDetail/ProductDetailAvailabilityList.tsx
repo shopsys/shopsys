@@ -19,6 +19,7 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
         return (
             <div className="block w-full vl:max-w-xl">
                 <Heading type="h3">{t('Availability in stores')}</Heading>
+
                 <ul ref={ref}>
                     {storeAvailabilities.map(
                         (storeAvailability, index) =>
@@ -31,6 +32,7 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                                     <strong className="mr-2 w-36" data-testid={TEST_IDENTIFIER + index + '-store'}>
                                         {storeAvailability.store.storeName}
                                     </strong>
+
                                     <span
                                         className={twJoin(
                                             'flex-1 pr-3 text-sm',
@@ -43,6 +45,7 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                                     >
                                         {storeAvailability.availabilityInformation}
                                     </span>
+
                                     <ExtendedNextLink
                                         href={storeAvailability.store.slug}
                                         type="store"
@@ -51,7 +54,7 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                                     >
                                         <>
                                             {t('Store detail')}
-                                            <ArrowRightIcon />
+                                            <ArrowRightIcon className="ml-1" />
                                         </>
                                     </ExtendedNextLink>
                                 </li>

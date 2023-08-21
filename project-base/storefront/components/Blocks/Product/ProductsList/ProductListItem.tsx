@@ -15,7 +15,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
 import { FunctionComponentProps } from 'types/globals';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { RemoveBoldIcon } from 'components/Basic/Icon/IconsSvg';
 
 type ProductItemProps = {
@@ -31,7 +30,7 @@ type ProductItemProps = {
 
 const getDataTestId = (catalogNumber: string) => 'blocks-product-list-listeditem-' + catalogNumber;
 
-export const ProductListItem = forwardRef<HTMLDivElement, ProductItemProps>(
+export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
     (
         {
             product,
@@ -50,7 +49,7 @@ export const ProductListItem = forwardRef<HTMLDivElement, ProductItemProps>(
         const { t } = useTranslation();
 
         return (
-            <div
+            <li
                 ref={ref}
                 className={twMergeCustom(
                     'relative flex flex-col justify-between rounded-t border-b border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
@@ -90,9 +89,12 @@ export const ProductListItem = forwardRef<HTMLDivElement, ProductItemProps>(
                     </div>
 
                     <div className="mt-auto flex-1 px-3 pb-5">
-                        <Heading type="h3" className="mb-1 h-10 overflow-hidden !text-lg !leading-5">
+                        <div
+                            className="mb-1 h-10 overflow-hidden text-lg font-bold leading-5 text-dark"
+                            data-testid={getDataTestId(product.catalogNumber) + '-name'}
+                        >
                             {product.fullName}
-                        </Heading>
+                        </div>
 
                         <ProductPrice productPrice={product.price} />
 
@@ -128,7 +130,7 @@ export const ProductListItem = forwardRef<HTMLDivElement, ProductItemProps>(
                     gtmMessageOrigin={gtmMessageOrigin}
                     listIndex={listIndex}
                 />
-            </div>
+            </li>
         );
     },
 );
