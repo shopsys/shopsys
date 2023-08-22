@@ -243,9 +243,6 @@
     "google/cloud-storage": {
         "version": "v1.15.0"
     },
-    "google/crc32": {
-        "version": "v0.1.0"
-    },
     "guzzlehttp/guzzle": {
         "version": "6.4.1"
     },
