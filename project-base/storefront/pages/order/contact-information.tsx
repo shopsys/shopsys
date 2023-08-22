@@ -73,9 +73,13 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     useEffect(() => {
         if (customer === undefined) {
             if (user?.companyCustomer) {
-                formProviderMethods.setValue(formMeta.fields.customer.name, CustomerTypeEnum.CompanyCustomer);
+                formProviderMethods.setValue(formMeta.fields.customer.name, CustomerTypeEnum.CompanyCustomer, {
+                    shouldValidate: true,
+                });
             } else {
-                formProviderMethods.setValue(formMeta.fields.customer.name, CustomerTypeEnum.CommonCustomer);
+                formProviderMethods.setValue(formMeta.fields.customer.name, CustomerTypeEnum.CommonCustomer, {
+                    shouldValidate: true,
+                });
             }
         }
     }, []);

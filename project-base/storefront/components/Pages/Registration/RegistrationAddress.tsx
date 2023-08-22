@@ -25,7 +25,7 @@ export const RegistrationAddress: FC = () => {
 
     useEffect(() => {
         if (countriesAsSelectOptions.length > 0) {
-            setValue(formMeta.fields.country.name, countriesAsSelectOptions[0]);
+            setValue(formMeta.fields.country.name, countriesAsSelectOptions[0], { shouldValidate: true });
         }
     }, [countriesAsSelectOptions, formMeta.fields.country.name, setValue]);
 

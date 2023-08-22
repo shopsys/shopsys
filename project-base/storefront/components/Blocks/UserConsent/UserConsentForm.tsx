@@ -37,7 +37,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 
     const acceptAllCookieChoices = useCallback(() => {
         for (const key in formMeta.fields) {
-            formProviderMethods.setValue(key as keyof UserConsentFormType, true);
+            formProviderMethods.setValue(key as keyof UserConsentFormType, true, { shouldValidate: true });
         }
 
         saveCookieChoices();
@@ -45,7 +45,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 
     const rejectAllCookieChoices = useCallback(() => {
         for (const key in formMeta.fields) {
-            formProviderMethods.setValue(key as keyof UserConsentFormType, false);
+            formProviderMethods.setValue(key as keyof UserConsentFormType, false, { shouldValidate: true });
         }
 
         saveCookieChoices();
