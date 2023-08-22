@@ -12,9 +12,7 @@ export const FilterGroupTitle: FC<{ onClick: () => void }> = ({ children, onClic
     </div>
 );
 
-export const FilterGroupContent: FC<{ isOpen: boolean }> = ({ children, isOpen }) => (
-    <div className={twJoin('mb-6 flex-col flex-wrap', isOpen ? 'flex' : 'hidden')}>{children}</div>
-);
+export const FilterGroupContent: FC = ({ children }) => <div className="mb-6 flex flex-col flex-wrap">{children}</div>;
 
 export const FilterGroupContentItem: FC<{ isDisabled: boolean }> = ({ children, isDisabled, dataTestId }) => (
     <div className={twJoin('mb-3', isDisabled && 'pointer-events-none opacity-30')} data-testid={dataTestId}>

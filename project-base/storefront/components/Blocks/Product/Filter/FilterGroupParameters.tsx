@@ -62,98 +62,100 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                 {title}
                 <FilterGroupIcon isOpen={!isGroupCollapsed} />
             </FilterGroupTitle>
-            <FilterGroupContent isOpen={!isGroupCollapsed}>
-                {isCheckboxType && (
-                    <>
-                        {defaultOptions.map((parameterValueOption, index) => {
-                            const isChecked = getIsSelectedParameterValue(
-                                defaultSelectedParameters,
-                                selectedParameter?.values,
-                                parameter.uuid,
-                                parameterValueOption.uuid,
-                            );
-                            const id = `parameters.${parameterIndex}.values.${index}.checked`;
+            {isGroupCollapsed && (
+                <FilterGroupContent>
+                    {isCheckboxType && (
+                        <>
+                            {defaultOptions.map((parameterValueOption, index) => {
+                                const isChecked = getIsSelectedParameterValue(
+                                    defaultSelectedParameters,
+                                    selectedParameter?.values,
+                                    parameter.uuid,
+                                    parameterValueOption.uuid,
+                                );
+                                const id = `parameters.${parameterIndex}.values.${index}.checked`;
 
-                            return (
-                                <FilterGroupContentItem
-                                    key={parameterValueOption.uuid}
-                                    isDisabled={parameterValueOption.count === 0 && !isChecked}
-                                    dataTestId={getDataTestId(parameterIndex) + '-' + index}
-                                >
-                                    <Checkbox
+                                return (
+                                    <FilterGroupContentItem
+                                        key={parameterValueOption.uuid}
+                                        isDisabled={parameterValueOption.count === 0 && !isChecked}
+                                        dataTestId={getDataTestId(parameterIndex) + '-' + index}
+                                    >
+                                        <Checkbox
+                                            id={id}
+                                            name={id}
+                                            label={parameterValueOption.text}
+                                            onChange={() =>
+                                                updateFilterParameters(parameter.uuid, parameterValueOption.uuid)
+                                            }
+                                            value={isChecked}
+                                            count={parameterValueOption.count}
+                                        />
+                                    </FilterGroupContentItem>
+                                );
+                            })}
+                            {!!hiddenOptions.length && (
+                                <ShowAllButton onClick={() => setIsWithAllItemsShown((prev) => !prev)}>
+                                    {isWithAllItemsShown ? t('show less') : t('show more')}
+                                </ShowAllButton>
+                            )}
+                        </>
+                    )}
+
+                    {parameter.__typename === 'ParameterColorFilterOption' && (
+                        <div className="flex flex-wrap">
+                            {parameter.values.map((parameterValue, index) => {
+                                const isChecked = getIsSelectedParameterValue(
+                                    defaultSelectedParameters,
+                                    selectedParameter?.values,
+                                    parameter.uuid,
+                                    parameterValue.uuid,
+                                );
+                                const id = `parameters.${parameterIndex}.values.${index}.checked`;
+
+                                return (
+                                    <CheckboxColor
+                                        key={parameterValue.uuid}
+                                        bgColor={parameterValue.rgbHex ?? undefined}
+                                        dataTestId={getDataTestId(index)}
                                         id={id}
                                         name={id}
-                                        label={parameterValueOption.text}
-                                        onChange={() =>
-                                            updateFilterParameters(parameter.uuid, parameterValueOption.uuid)
-                                        }
+                                        disabled={parameterValue.count === 0 && !isChecked}
+                                        onChange={() => updateFilterParameters(parameter.uuid, parameterValue.uuid)}
                                         value={isChecked}
-                                        count={parameterValueOption.count}
+                                        label={parameterValue.text}
                                     />
-                                </FilterGroupContentItem>
-                            );
-                        })}
-                        {!!hiddenOptions.length && (
-                            <ShowAllButton onClick={() => setIsWithAllItemsShown((prev) => !prev)}>
-                                {isWithAllItemsShown ? t('show less') : t('show more')}
-                            </ShowAllButton>
-                        )}
-                    </>
-                )}
-
-                {parameter.__typename === 'ParameterColorFilterOption' && (
-                    <div className="flex flex-wrap">
-                        {parameter.values.map((parameterValue, index) => {
-                            const isChecked = getIsSelectedParameterValue(
-                                defaultSelectedParameters,
-                                selectedParameter?.values,
-                                parameter.uuid,
-                                parameterValue.uuid,
-                            );
-                            const id = `parameters.${parameterIndex}.values.${index}.checked`;
-
-                            return (
-                                <CheckboxColor
-                                    key={parameterValue.uuid}
-                                    bgColor={parameterValue.rgbHex ?? undefined}
-                                    dataTestId={getDataTestId(index)}
-                                    id={id}
-                                    name={id}
-                                    disabled={parameterValue.count === 0 && !isChecked}
-                                    onChange={() => updateFilterParameters(parameter.uuid, parameterValue.uuid)}
-                                    value={isChecked}
-                                    label={parameterValue.text}
-                                />
-                            );
-                        })}
-                    </div>
-                )}
-                {parameter.__typename === 'ParameterSliderFilterOption' && (
-                    <RangeSlider
-                        min={parameter.minimalValue}
-                        max={parameter.maximalValue}
-                        minValue={selectedParameter?.minimalValue ?? parameter.minimalValue}
-                        maxValue={selectedParameter?.maximalValue ?? parameter.maximalValue}
-                        setMinValueCallback={(value) =>
-                            updateFilterParameters(
-                                parameter.uuid,
-                                undefined,
-                                parameter.minimalValue === value ? undefined : value,
-                                selectedParameter?.maximalValue,
-                            )
-                        }
-                        setMaxValueCallback={(value) =>
-                            updateFilterParameters(
-                                parameter.uuid,
-                                undefined,
-                                selectedParameter?.minimalValue,
-                                parameter.maximalValue === value ? undefined : value,
-                            )
-                        }
-                        isDisabled={!parameter.isSelectable}
-                    />
-                )}
-            </FilterGroupContent>
+                                );
+                            })}
+                        </div>
+                    )}
+                    {parameter.__typename === 'ParameterSliderFilterOption' && (
+                        <RangeSlider
+                            min={parameter.minimalValue}
+                            max={parameter.maximalValue}
+                            minValue={selectedParameter?.minimalValue ?? parameter.minimalValue}
+                            maxValue={selectedParameter?.maximalValue ?? parameter.maximalValue}
+                            setMinValueCallback={(value) =>
+                                updateFilterParameters(
+                                    parameter.uuid,
+                                    undefined,
+                                    parameter.minimalValue === value ? undefined : value,
+                                    selectedParameter?.maximalValue,
+                                )
+                            }
+                            setMaxValueCallback={(value) =>
+                                updateFilterParameters(
+                                    parameter.uuid,
+                                    undefined,
+                                    selectedParameter?.minimalValue,
+                                    parameter.maximalValue === value ? undefined : value,
+                                )
+                            }
+                            isDisabled={!parameter.isSelectable}
+                        />
+                    )}
+                </FilterGroupContent>
+            )}
         </FilterGroupWrapper>
     );
 };

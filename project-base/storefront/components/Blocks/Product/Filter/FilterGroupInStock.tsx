@@ -24,16 +24,18 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, inStock
                 {title}
                 <FilterGroupIcon isOpen={isGroupOpen} />
             </FilterGroupTitle>
-            <FilterGroupContent isOpen={isGroupOpen}>
-                <Checkbox
-                    name="onlyInStock"
-                    id="onlyInStock"
-                    onChange={() => updateFilterInStock(!filter?.onlyInStock)}
-                    label={t('In stock')}
-                    count={inStockCount}
-                    value={!!filter?.onlyInStock}
-                />
-            </FilterGroupContent>
+            {isGroupOpen && (
+                <FilterGroupContent>
+                    <Checkbox
+                        name="onlyInStock"
+                        id="onlyInStock"
+                        onChange={() => updateFilterInStock(!filter?.onlyInStock)}
+                        label={t('In stock')}
+                        count={inStockCount}
+                        value={!!filter?.onlyInStock}
+                    />
+                </FilterGroupContent>
+            )}
         </FilterGroupWrapper>
     );
 };
