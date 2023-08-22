@@ -12,8 +12,9 @@ class AkeneoImportProductCronModule implements SimpleCronModuleInterface
     /**
      * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportProductFacade $akeneoImportProductFacade
      */
-    public function __construct(protected AkeneoImportProductFacade $akeneoImportProductFacade)
-    {
+    public function __construct(
+        private readonly AkeneoImportProductFacade $akeneoImportProductFacade,
+    ) {
     }
 
     /**

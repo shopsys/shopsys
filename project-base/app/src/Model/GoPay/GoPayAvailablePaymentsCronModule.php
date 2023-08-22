@@ -17,21 +17,18 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
 {
     private Logger $logger;
 
-    private EntityManagerInterface $em;
-
     /**
      * @param array $goPayConfig
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $paymentMethodFacade
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private array $goPayConfig,
-        private GoPayPaymentMethodFacade $paymentMethodFacade,
-        EntityManagerInterface $entityManager,
-        private Domain $domain,
+        private readonly array $goPayConfig,
+        private readonly GoPayPaymentMethodFacade $paymentMethodFacade,
+        private readonly EntityManagerInterface $em,
+        private readonly Domain $domain,
     ) {
-        $this->em = $entityManager;
     }
 
     /**

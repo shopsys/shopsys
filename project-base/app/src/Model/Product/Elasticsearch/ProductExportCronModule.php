@@ -26,7 +26,7 @@ class ProductExportCronModule extends BaseProductExportCronModule
         IndexFacade $indexFacade,
         IndexDefinitionLoader $indexDefinitionLoader,
         Domain $domain,
-        private EventDispatcherInterface $eventDispatcher,
+        private readonly EventDispatcherInterface $eventDispatcher,
     ) {
         parent::__construct($index, $indexFacade, $indexDefinitionLoader, $domain);
     }
