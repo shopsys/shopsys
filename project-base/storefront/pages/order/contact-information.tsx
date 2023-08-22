@@ -180,6 +180,10 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
             updateUserState({
                 cartUuid: null,
             });
+
+            if (!user) {
+                query.registrationData = JSON.stringify(formValues);
+            }
             resetContactInformation();
 
             router.replace(

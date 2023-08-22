@@ -20,11 +20,14 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useRouter } from 'next/router';
 import { GtmPageType } from 'gtm/types/enums';
 import { PaymentTypeEnum } from 'types/payment';
+import { useRef } from 'react';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
 
 export type OrderConfirmationQuery = {
     orderUuid: string | undefined;
     orderEmail: string | undefined;
     orderPaymentType: string | undefined;
+    registrationData?: string;
 };
 
 const TEST_IDENTIFIER = 'pages-orderconfirmation';
@@ -32,10 +35,13 @@ const TEST_IDENTIFIER = 'pages-orderconfirmation';
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { query } = useRouter();
-    const { orderUuid, orderEmail, orderPaymentType } = query as OrderConfirmationQuery;
+    const { orderUuid, orderEmail, orderPaymentType, registrationData } = query as OrderConfirmationQuery;
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const isUserLoggedIn = !!useCurrentCustomerData();
+    const parsedRegistrationData = useRef<ContactInformation | undefined>(
+        registrationData ? (JSON.parse(registrationData) as ContactInformation) : undefined,
+    );
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -72,11 +78,15 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                         </div>
                     </div>
                 </Webline>
-                {!isUserLoggedIn &&
+                {!!parsedRegistrationData.current &&
+                    !isUserLoggedIn &&
                     orderUuid &&
                     !isInformationAboutUserRegistrationFetching &&
                     isCustomerUserRegisteredData?.isCustomerUserRegistered === false && (
-                        <RegistrationAfterOrder lastOrderUuid={orderUuid} />
+                        <RegistrationAfterOrder
+                            lastOrderUuid={orderUuid}
+                            registrationData={parsedRegistrationData.current}
+                        />
                     )}
             </CommonLayout>
         </PageGuard>
