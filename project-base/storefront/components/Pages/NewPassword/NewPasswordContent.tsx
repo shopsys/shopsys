@@ -1,6 +1,6 @@
 import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './recoveryPasswordFormMeta';
 import { Link } from 'components/Basic/Link/Link';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
@@ -132,12 +132,9 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
                             }}
                         />
                         <div className="mt-8 flex w-full justify-between">
-                            <Button
-                                type="submit"
-                                isWithDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}
-                            >
+                            <SubmitButton isWithDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}>
                                 {t('Set new password')}
-                            </Button>
+                            </SubmitButton>
                         </div>
                     </Form>
                 </FormProvider>

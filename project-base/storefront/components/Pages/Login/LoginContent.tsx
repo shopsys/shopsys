@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
@@ -76,9 +76,7 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
                         }}
                     />
                     <div className="mt-8 flex w-full justify-center">
-                        <Button type="submit" dataTestId={TEST_IDENTIFIER}>
-                            {t('Log in')}
-                        </Button>
+                        <SubmitButton dataTestId={TEST_IDENTIFIER}>{t('Log in')}</SubmitButton>
                     </div>
                 </Form>
             </FormProvider>

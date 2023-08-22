@@ -3,7 +3,7 @@ import { RegistrationCompany } from './RegistrationCompany';
 import { RegistrationPassword } from './RegistrationPassword';
 import { RegistrationUser } from './RegistrationUser';
 import { useRegistrationForm, useRegistrationFormMeta } from './registrationFormMeta';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
@@ -126,7 +126,7 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                             }}
                         />
                         <div className="mt-8 flex w-full justify-center">
-                            <Button type="submit">{t('Sign up')}</Button>
+                            <SubmitButton>{t('Sign up')}</SubmitButton>
                         </div>
                     </Form>
                 </FormProvider>

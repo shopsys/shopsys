@@ -1,7 +1,7 @@
 import { useContactForm, useContactFormMeta } from './contactFormMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
@@ -124,17 +124,14 @@ export const ContactContent: FC = () => {
                                     }}
                                 />
                             </div>
-                            <Button
-                                type="submit"
-                                variant="primary"
-                                isWithDisabledLook={!formProviderMethods.formState.isValid}
-                            >
+                            <SubmitButton variant="primary" isWithDisabledLook={!formProviderMethods.formState.isValid}>
                                 {t('Send message')}
-                            </Button>
+                            </SubmitButton>
                         </Form>
                     </FormProvider>
                 </Webline>
             </div>
+
             {isErrorPopupVisible && (
                 <ErrorPopup
                     onCloseCallback={() => setErrorPopupVisibility(false)}

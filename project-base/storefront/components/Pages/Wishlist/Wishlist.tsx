@@ -4,7 +4,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
@@ -62,15 +62,14 @@ export const Wishlist: FC = () => {
                                     return false;
                                 }}
                             />
-                            <Button
-                                type="submit"
+                            <SubmitButton
                                 onClick={() => {
                                     navigator.clipboard.writeText(buildShareUrl());
                                 }}
                                 className="mt-2 lg:ml-2 lg:mt-0"
                             >
                                 {t('Copy')}
-                            </Button>
+                            </SubmitButton>
                         </div>
                     </div>
                 )}
