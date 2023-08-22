@@ -1,7 +1,7 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { ListedProductFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 
 type ProductDetailAccessoriesProps = {
@@ -9,7 +9,7 @@ type ProductDetailAccessoriesProps = {
 };
 
 export const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = ({ accessories }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     if (accessories.length === 0) {
         return null;

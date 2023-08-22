@@ -13,7 +13,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { ImageSizesFragmentApi, MainVariantDetailFragmentApi } from 'graphql/generated';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { ProductDetailGallery } from './ProductDetailGallery';
@@ -27,7 +27,7 @@ const TEST_IDENTIFIER = 'pages-productdetail-';
 
 export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContentProps> = ({ product, fetching }) => {
     const router = useRouter();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const mainVariantImagesWithVariantImages = useMemo(() => {
         const variantImages = product.variants.reduce((mappedVariantImages, variant) => {
             if (variant.mainImage) {

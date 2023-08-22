@@ -6,12 +6,12 @@ import { onGtmCreateOrderEventHandler, onGtmPaymentFailEventHandler } from 'gtm/
 import { getGtmCreateOrderEventFromLocalStorage } from 'gtm/helpers/helpers';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const router = useRouter();
     const [checkPaymentStatusResult, checkPaymentStatus] = useCheckPaymentStatusMutationApi();
 

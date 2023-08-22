@@ -14,14 +14,14 @@ import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useGtmPaymentAndTransportPageViewEvent } from 'gtm/hooks/useGtmPaymentAndTransportPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmPageType } from 'gtm/types/enums';
 import Head from 'next/head';
 
 const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const isUserLoggedIn = !!useCurrentCustomerData();
     const [{ data: transportsData }] = useTransportsQueryApi({

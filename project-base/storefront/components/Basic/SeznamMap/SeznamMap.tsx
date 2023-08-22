@@ -4,7 +4,7 @@ import { SeznamMapMarkerLayer } from './SeznamMapMarkerLayer';
 import { SeznamMapMounter } from './SeznamMapMounter';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { showErrorMessage } from 'helpers/toasts';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useState } from 'react';
 import { LatLngLiteral, MapMarker } from 'types/map';
@@ -19,7 +19,7 @@ type SeznamMapProps = {
 };
 
 export const SeznamMap: FC<SeznamMapProps> = ({ markers, center, zoom, activeMarkerHandler, activeMarkerId }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [map, setMap] = useState<SMap | null>(null);
     const {
         defaultLocale,

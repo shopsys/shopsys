@@ -3,7 +3,7 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Phone } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 
 // TODO PRG
@@ -15,7 +15,7 @@ const dummyData = {
 const TEST_IDENTIFIER = 'layout-footer-footerboxinfo';
 
 export const FooterBoxInfo: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 

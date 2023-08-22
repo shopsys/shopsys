@@ -9,7 +9,7 @@ import { useCurrentCart } from 'connectors/cart/Cart';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
 import { useRemovePromoCodeFromCart } from 'hooks/cart/useRemovePromoCodeFromCart';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useCalcElementHeight } from 'hooks/ui/useCalcElementHeight';
 import dynamic from 'next/dynamic';
 import { ChangeEventHandler, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
@@ -30,7 +30,7 @@ const TEST_IDENTIFIER = 'blocks-promocode';
 
 export const PromoCode: FC = () => {
     const { promoCode } = useCurrentCart();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [isContentVisible, setIsContentVisible] = useState(false);
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);

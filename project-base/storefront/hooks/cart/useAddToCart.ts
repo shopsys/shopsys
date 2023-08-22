@@ -4,7 +4,7 @@ import { AddToCartMutationApi, useAddToCartMutationApi } from 'graphql/generated
 import { onGtmChangeCartItemEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmMappedCart } from 'gtm/helpers/gtm';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
@@ -22,7 +22,7 @@ export const useAddToCart = (
     gtmProductListName: GtmProductListNameType,
 ): [AddToCartAction, boolean] => {
     const [{ fetching }, addToCart] = useAddToCartMutationApi();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const isUserLoggedIn = !!useCurrentCustomerData();
     const { cart } = useCurrentCart();
     const domainConfig = useDomainConfig();

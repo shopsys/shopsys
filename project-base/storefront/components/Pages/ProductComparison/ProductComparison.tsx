@@ -7,7 +7,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmSliderProductListViewEvent } from 'gtm/hooks/productList/useGtmSliderProductListViewEvent';
 import { useComparison } from 'hooks/comparison/useComparison';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { GtmProductListNameType } from 'gtm/types/enums';
 import { Info } from 'components/Basic/Icon/IconsSvg';
 
@@ -16,7 +16,7 @@ type ProductComparisonProps = {
 };
 
 export const ProductComparison: FC<ProductComparisonProps> = ({ breadcrumb }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const { comparison, fetching } = useComparison();
     const comparedProducts = comparison?.products ?? [];

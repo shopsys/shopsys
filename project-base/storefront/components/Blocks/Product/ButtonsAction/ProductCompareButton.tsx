@@ -1,6 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Compare } from 'components/Basic/Icon/IconsSvg';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'helpers/twMerge';
 
 type ProductCompareButtonProps = {
@@ -17,7 +17,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
     isProductInComparison,
     toggleProductInComparison,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <div className={twMergeCustom('flex items-center', className)}>

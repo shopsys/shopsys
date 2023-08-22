@@ -7,7 +7,7 @@ import { CartItemFragmentApi } from 'graphql/generated';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { AddToCartAction } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler, useRef } from 'react';
 
 type CartListItemProps = {
@@ -24,7 +24,7 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRem
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const spinboxRef = useRef<HTMLInputElement>(null);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     const onChangeValueHandler = () => {

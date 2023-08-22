@@ -13,7 +13,7 @@ import {
     usePrivacyPolicyArticleUrlQueryApi,
     useTermsAndConditionsArticleUrlQueryApi,
 } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import Trans from 'next-translate/Trans';
 import dynamic from 'next/dynamic';
@@ -26,7 +26,7 @@ import { twJoin } from 'tailwind-merge';
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
 export const ContactInformationContent: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const formProviderMethods = useFormContext<ContactInformation>();
     const { trigger, formState } = formProviderMethods;

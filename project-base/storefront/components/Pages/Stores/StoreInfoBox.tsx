@@ -2,7 +2,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Link } from 'components/Basic/Link/Link';
 import { ListedStoreFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { Remove } from 'components/Basic/Icon/IconsSvg';
@@ -13,7 +13,7 @@ type StoreInfoBoxProps = {
 };
 
 export const StoreInfoBox: FC<StoreInfoBoxProps> = ({ store, closeInfoBoxCallback }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <div className="top-0 left-0 z-above flex h-full w-full flex-col items-center justify-center bg-white py-4 text-center vl:absolute vl:px-10">

@@ -1,13 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { NewPasswordFormType } from 'types/form';
 import * as Yup from 'yup';
 
 export const useRecoveryPasswordForm = (): [UseFormReturn<NewPasswordFormType>, NewPasswordFormType] => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const resolver = yupResolver(
         Yup.object().shape({
             newPassword: Yup.string()
@@ -59,7 +59,7 @@ type NewPasswordFormMetaType = {
 export const useRecoveryPasswordFormMeta = (
     formProviderMethods: UseFormReturn<NewPasswordFormType>,
 ): NewPasswordFormMetaType => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const formMeta = useMemo(
         () => ({

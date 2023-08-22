@@ -3,7 +3,7 @@ import { Arrow, Phone, Remove } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -23,7 +23,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
     const [addressToBeDeleted, setAddressToBeDeleted] = useState<string | undefined>(undefined);
     const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutationApi();
     const [, setDefaultDeliveryAddress] = useSetDefaultDeliveryAddressMutationApi();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const deleteItemHandler = async (deliveryAddressUuid: string | undefined) => {
         if (deliveryAddressUuid === undefined) {

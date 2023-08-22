@@ -1,7 +1,7 @@
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { CartFragmentApi, useRemovePromoCodeFromCartMutationApi } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType } from 'gtm/types/enums';
@@ -14,7 +14,7 @@ type RemovePromoCodeHandler = (
 export const useRemovePromoCodeFromCart = (): [RemovePromoCodeHandler, boolean] => {
     const [{ fetching }, removePromoCode] = useRemovePromoCodeFromCartMutationApi();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const removePromoCodeHandler = useCallback<RemovePromoCodeHandler>(
         async (promoCodeToBeRemoved: string, messages: { success: string; error: string }) => {

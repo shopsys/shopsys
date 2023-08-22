@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useWishlist } from 'hooks/useWishlist';
@@ -10,7 +10,7 @@ import { useComparison } from 'hooks/comparison/useComparison';
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-submenu';
 
 export const SubMenu: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const isUserLoggedIn = !!useCurrentCustomerData();
     const [storesUrl, loginUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls(

@@ -2,7 +2,7 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Search } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'helpers/twMerge';
@@ -26,7 +26,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     isLoading,
     className,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const enterKeyPressHandler: KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.key === 'Enter' && onEnterPressCallback !== undefined) {

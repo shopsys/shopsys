@@ -1,6 +1,6 @@
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { ComparedProductFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
 type ProductComparisonBodyProps = {
@@ -9,7 +9,7 @@ type ProductComparisonBodyProps = {
 };
 
 export const ProductComparisonBody: FC<ProductComparisonBodyProps> = (props) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <tbody>

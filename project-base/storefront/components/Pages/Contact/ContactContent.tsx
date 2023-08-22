@@ -13,7 +13,7 @@ import { useContactMutationApi, usePrivacyPolicyArticleUrlQueryApi, useSettingsQ
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import dynamic from 'next/dynamic';
 import React, { useCallback } from 'react';
@@ -24,7 +24,7 @@ import { GtmMessageOriginType } from 'gtm/types/enums';
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 export const ContactContent: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [formProviderMethods, defaultValues] = useContactForm();
     const formMeta = useContactFormMeta(formProviderMethods);
     const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-only' });

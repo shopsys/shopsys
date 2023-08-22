@@ -1,7 +1,7 @@
 import { Link } from 'components/Basic/Link/Link';
 import { showErrorMessage } from 'helpers/toasts';
 import { GoPayCreatePaymentSetupApi, usePayOrderMutationApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 
@@ -10,7 +10,7 @@ type GoPayGatewayProps = {
 };
 
 export const GoPayGateway: FC<GoPayGatewayProps> = ({ orderUuid }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [isRedirectLinkVisible, setRedirectLinkVisibility] = useState(false);
     const [goPayPaymentSetup, setGoPayPaymentSetup] = useState<GoPayCreatePaymentSetupApi | undefined>(undefined);
     const [, payOrder] = usePayOrderMutationApi();

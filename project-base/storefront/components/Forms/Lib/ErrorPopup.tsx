@@ -2,7 +2,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getGtmShowMessageEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { ReactElement, useEffect, useMemo } from 'react';
 import { GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
 
@@ -23,7 +23,7 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({
     fields,
     gtmMessageOrigin = GtmMessageOriginType.other,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     useEffect(() => {
         for (const fieldName in fields) {

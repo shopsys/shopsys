@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
 type OrderStepsProps = {
@@ -12,7 +12,7 @@ type OrderStepsProps = {
 const TEST_IDENTIFIER = 'blocks-ordersteps-';
 
 export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [cartUrl, transportAndPaymentUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/transport-and-payment'],
         domainUrl,

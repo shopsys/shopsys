@@ -5,7 +5,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { CartItemFragmentApi } from 'graphql/generated';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
@@ -36,7 +36,7 @@ export const AddToCart: FC<AddToCartProps> = ({
     className,
 }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [changeCartItemQuantity, fetching] = useAddToCart(gtmMessageOrigin, gtmProductListName);
     const [popupData, setPopupData] = useState<CartItemFragmentApi | undefined>(undefined);
 

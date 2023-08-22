@@ -29,7 +29,7 @@ import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useGtmContactInformationPageViewEvent } from 'gtm/hooks/useGtmContactInformationPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
@@ -58,7 +58,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const [orderCreating, setOrderCreating] = useState(false);
     const currentCart = useCurrentCart();
     const [changePaymentInCart] = useChangePaymentInCart();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [{ fetching }, createOrder] = useCreateOrderMutationApi();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);

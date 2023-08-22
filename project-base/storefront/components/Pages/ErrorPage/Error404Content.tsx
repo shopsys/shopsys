@@ -3,12 +3,12 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import React from 'react';
 import { GtmPageType } from 'gtm/types/enums';
 
 export const Error404Content: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.not_found);
     useGtmPageViewEvent(gtmStaticPageViewEvent);

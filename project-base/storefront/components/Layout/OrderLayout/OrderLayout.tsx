@@ -5,7 +5,7 @@ import { OrderSummary } from 'components/Blocks/OrderSummary/OrderSummary';
 import { Header } from 'components/Layout/Header/Header';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 
 type OrderLayoutProps = {
@@ -14,7 +14,7 @@ type OrderLayoutProps = {
 };
 
 export const OrderLayout: FC<OrderLayoutProps> = ({ activeStep, isTransportOrPaymentLoading, children }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
 
     return (

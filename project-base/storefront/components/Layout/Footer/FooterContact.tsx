@@ -1,10 +1,10 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Instagram, Youtube } from 'components/Basic/Icon/IconsSvg';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 
 export const FooterContact: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <>

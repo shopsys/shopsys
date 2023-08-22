@@ -1,12 +1,12 @@
 import { useSettingsQueryApi } from 'graphql/generated';
 import { formatPrice } from 'helpers/formaters/formatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 
 type FormatPriceFunctionType = (price: string | number, options?: { explicitZero?: boolean }) => string;
 
 export const useFormatPrice = (): FormatPriceFunctionType => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-first' });
     const { defaultLocale = 'en' } = useDomainConfig();
 

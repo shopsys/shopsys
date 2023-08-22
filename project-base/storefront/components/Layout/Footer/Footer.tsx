@@ -3,7 +3,7 @@ import { FooterBoxInfo } from './FooterBoxInfo';
 import { FooterCopyright } from './FooterCopyright';
 import { FooterMenu } from './FooterMenu';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 
 type FooterProps = {
@@ -13,7 +13,7 @@ type FooterProps = {
 const FOOTER_TEST_IDENTIFIER = 'layout-footer';
 
 export const Footer: FC<FooterProps> = ({ simpleFooter }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [cookieConsentUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
 

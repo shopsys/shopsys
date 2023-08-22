@@ -1,5 +1,5 @@
 import { TextInput } from 'components/Forms/TextInput/TextInput';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import {
     ChangeEvent,
     ChangeEventHandler,
@@ -51,7 +51,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     setMaxValueCallback,
     isDisabled,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const step = getStep(min, max);
 
     const [minValueInput, setMinValueInput] = useState(min);

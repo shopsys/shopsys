@@ -3,12 +3,12 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 
 export const RegistrationPassword: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
 

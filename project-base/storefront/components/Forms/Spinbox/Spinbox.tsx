@@ -1,5 +1,5 @@
 import { useForwardedRef } from 'hooks/typescript/useForwardedRef';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 type SpinboxProps = {
@@ -16,7 +16,7 @@ const TEST_IDENTIFIER = 'forms-spinbox-';
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
     ({ min, max, onChangeValueCallback, step, defaultValue, size, id }, spinboxForwardedRef) => {
-        const t = useTypedTranslationFunction();
+        const { t } = useTranslation();
         const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
         const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
         const intervalRef = useRef<NodeJS.Timer | null>(null);

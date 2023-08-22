@@ -1,5 +1,5 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useQueryParams } from 'hooks/useQueryParams';
 
 export const useSeoTitleWithPagination = (
@@ -7,7 +7,7 @@ export const useSeoTitleWithPagination = (
     name: string | null | undefined,
     seoTitle?: string | null | undefined,
 ) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { currentPage, currentLoadMore } = useQueryParams();
     const title = seoTitle || name;
 

@@ -3,7 +3,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { ArrowRight } from 'components/Basic/Icon/IconsSvg';
 import { AvailabilityStatusEnumApi, StoreAvailabilityFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -15,7 +15,7 @@ const TEST_IDENTIFIER = 'pages-productdetail-availabilitylist-';
 
 export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetailAvailabilityListProps>(
     ({ storeAvailabilities }, ref) => {
-        const t = useTypedTranslationFunction();
+        const { t } = useTranslation();
 
         return (
             <div className="block w-full vl:max-w-xl">

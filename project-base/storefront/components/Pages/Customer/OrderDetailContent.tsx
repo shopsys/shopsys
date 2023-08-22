@@ -6,7 +6,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi, OrderDetailFragmentApi } from 'graphql/generated';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'helpers/twMerge';
 
 type OrderDetailContentProps = {
@@ -17,7 +17,7 @@ type OrderDetailContentProps = {
 const TEST_IDENTIFIER = 'pages-customer-orderdetail-';
 
 export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcrumbs }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { formatDateAndTime } = useFormatDate();
 

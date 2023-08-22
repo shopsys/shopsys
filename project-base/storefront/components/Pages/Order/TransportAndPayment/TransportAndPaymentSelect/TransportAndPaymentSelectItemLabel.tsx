@@ -1,6 +1,6 @@
 import { ListedStoreFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { Translate } from 'next-translate';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 
@@ -21,7 +21,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     description,
     pickupPlaceDetail,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     return (

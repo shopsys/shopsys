@@ -1,13 +1,13 @@
 import { FooterMenuItem } from 'components/Layout/Footer/FooterMenuItem';
 import { ArticlePlacementTypeEnumApi, SimpleNotBlogArticleFragmentApi, useArticlesQueryApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { FooterContact } from './FooterContact';
 
 const TEST_IDENTIFIER = 'layout-footer-footermenu';
 
 export const FooterMenu: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [{ data }] = useArticlesQueryApi({
         variables: {
             placement: [

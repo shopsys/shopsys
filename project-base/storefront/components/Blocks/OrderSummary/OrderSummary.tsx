@@ -5,7 +5,7 @@ import { TransportAndPayment } from './TransportAndPayment';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 
 type OrderSummaryProps = {
     isTransportOrPaymentLoading?: boolean;
@@ -14,7 +14,7 @@ type OrderSummaryProps = {
 const TEST_IDENTIFIER = 'blocks-ordersummary';
 
 export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoading }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { cart, transport, payment, promoCode } = useCurrentCart();
 
     if (cart === null) {

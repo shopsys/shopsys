@@ -12,7 +12,7 @@ import { onGtmAutocompleteResultClickEventHandler, onGtmProductClickEventHandler
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { forwardRef, useCallback, useMemo } from 'react';
@@ -39,7 +39,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
     isAutocompleteActive,
 }) => {
     const router = useRouter();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { url } = useDomainConfig();
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);

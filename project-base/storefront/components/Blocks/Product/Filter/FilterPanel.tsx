@@ -7,7 +7,7 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Remove } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
 import { ProductFilterOptionsFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { memo } from 'react';
 import { ParametersType } from 'types/productFilter';
 
@@ -28,7 +28,7 @@ const DEFAULT_NUMBER_OF_SHOWN_PARAMETERS = 5;
 
 export const FilterPanel = memo<FilterPanelProps>(
     ({ productFilterOptions: filterOptions, panelCloseHandler, totalCount }) => {
-        const t = useTypedTranslationFunction();
+        const { t } = useTranslation();
 
         return (
             <div

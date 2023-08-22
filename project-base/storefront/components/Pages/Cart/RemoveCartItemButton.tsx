@@ -1,6 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { RemoveBold } from 'components/Basic/Icon/IconsSvg';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler } from 'react';
 
 type RemoveCartItemButtonProps = {
@@ -10,7 +10,7 @@ type RemoveCartItemButtonProps = {
 const TEST_IDENTIFIER = 'pages-cart-removecartitembutton';
 
 export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onItemRemove }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <button

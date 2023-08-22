@@ -17,7 +17,7 @@ import { ProductDetailFragmentApi } from 'graphql/generated';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useComparison } from 'hooks/comparison/useComparison';
 import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { Fragment, useRef } from 'react';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
@@ -32,7 +32,7 @@ type ProductDetailContentProps = {
 const TEST_IDENTIFIER = 'pages-productdetail-';
 
 export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, fetching }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const scrollTarget = useRef<HTMLUListElement>(null);
     const router = useRouter();
     const { isProductInComparison, toggleProductInComparison } = useComparison();

@@ -7,7 +7,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { BreadcrumbFragmentApi, SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
@@ -31,7 +31,7 @@ type SearchContentProps = {
 
 export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching, breadcrumbs }) => {
     const router = useRouter();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { width } = useGetWindowSize();
     const [areArticlesResultsVisible, setArticlesResultsVisibility] = useState(false);
     const [areBrandsResultsVisible, setBrandsResultsVisibility] = useState(false);

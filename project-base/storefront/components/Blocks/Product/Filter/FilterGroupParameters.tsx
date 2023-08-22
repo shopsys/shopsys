@@ -9,7 +9,7 @@ import { FilterGroupIcon } from './FilterGroupIcon';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useState } from 'react';
 import { ParametersType } from 'types/productFilter';
@@ -32,7 +32,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     dataTestId,
     parameterIndex,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [isGroupCollapsed, setIsGroupCollapsed] = useState(parameter.isCollapsed);
     const { filter, updateFilterParameters } = useQueryParams();
     const defaultSelectedParameters = useSessionStore((s) => s.defaultProductFiltersMap.parameters);

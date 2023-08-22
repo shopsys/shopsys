@@ -7,13 +7,13 @@ import {
     useSharedWishlistQueryApi,
     useWishlistQueryApi,
 } from 'graphql/generated';
-import { useTypedTranslationFunction } from './typescript/useTypedTranslationFunction';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import useTranslation from 'next-translate/useTranslation';
 
 export const useWishlist = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const isUserLoggedIn = !!useCurrentCustomerData();
 

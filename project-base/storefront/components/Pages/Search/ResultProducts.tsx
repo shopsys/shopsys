@@ -1,6 +1,6 @@
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { ListedProductFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 
@@ -19,7 +19,7 @@ export const ResultProducts: FC<ResultProductsProps> = ({
     fetching,
     loadMoreFetching,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <>

@@ -15,7 +15,7 @@ import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
@@ -30,7 +30,7 @@ type PersonalDataOverviewContentProps = {
 };
 
 export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> = ({ breadcrumbs, contentSiteText }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [, personalDataOverview] = usePersonalDataRequestMutationApi();
     const [formProviderMethods] = usePersonalDataOverviewForm();
     const formMeta = usePersonalDataOverviewFormMeta(formProviderMethods);

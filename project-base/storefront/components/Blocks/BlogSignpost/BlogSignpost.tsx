@@ -2,7 +2,7 @@ import { BlogSignpostIcon } from './BlogSignpostIcon';
 import { BlogSignpostItem } from './BlogSignpostItem';
 import { Children } from './Children';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
 
@@ -14,7 +14,7 @@ type BlogSingpostProps = {
 const TEST_IDENTIFIER = 'blocks-blogsignpost-';
 
 export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <div className="flex flex-col rounded bg-primary p-7">

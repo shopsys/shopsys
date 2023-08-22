@@ -1,7 +1,7 @@
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { Button } from 'components/Forms/Button/Button';
 import { ListedProductFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/dist/client/router';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 
@@ -16,7 +16,7 @@ const TEST_IDENTIFIER = 'blocks-product-action';
 
 export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListName, gtmMessageOrigin, listIndex }) => {
     const router = useRouter();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     if (product.isMainVariant) {
         return (

@@ -6,7 +6,7 @@ import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { CartItemFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
@@ -23,7 +23,7 @@ const AddToCartPopup = dynamic(() =>
 
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const [changeCartItemQuantity, fetching] = useAddToCart(
         GtmMessageOriginType.product_detail_page,

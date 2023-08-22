@@ -7,13 +7,13 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { GtmPageType } from 'gtm/types/enums';
 
 const NewPasswordPage: FC<ServerSidePropsType> = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [newPasswordUrl] = getInternationalizedStaticUrls(['/new-password'], url);
     const breadcrumbs: BreadcrumbFragmentApi[] = [

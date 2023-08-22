@@ -1,7 +1,7 @@
 import { ProductVariantsTableRow } from './ProductVariantsTableRow';
 import { Variant } from './Variant';
 import { MainVariantDetailFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
 
@@ -11,7 +11,7 @@ type ProductVariantsTableProps = {
 };
 
 export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingDenied, variants }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <>

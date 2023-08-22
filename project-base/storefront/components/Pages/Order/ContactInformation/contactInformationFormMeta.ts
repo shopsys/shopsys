@@ -16,7 +16,7 @@ import {
 } from 'components/Forms/validationRules';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
@@ -25,7 +25,7 @@ import { CustomerTypeEnum } from 'types/customer';
 import * as Yup from 'yup';
 
 export const useContactInformationForm = (): [UseFormReturn<ContactInformation>, ContactInformation] => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const contactInformationValues = useCurrentUserContactInformation();
 
     const resolver = yupResolver(
@@ -116,7 +116,7 @@ type ContactInformationFormMetaType = {
 export const useContactInformationFormMeta = (
     formProviderMethods: UseFormReturn<ContactInformation>,
 ): ContactInformationFormMetaType => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { pickupPlace } = useCurrentCart();
     const isEmailValid = formProviderMethods.formState.errors.email === undefined;
 

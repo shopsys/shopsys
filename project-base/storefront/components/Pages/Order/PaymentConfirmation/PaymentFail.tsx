@@ -3,11 +3,11 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { GtmPageType } from 'gtm/types/enums';
 
 export const PaymentFail: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.payment_fail);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 

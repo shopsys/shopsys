@@ -1,4 +1,4 @@
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
 
 type SeznamMapControlsProps = {
@@ -6,7 +6,7 @@ type SeznamMapControlsProps = {
 };
 
 export const SeznamMapControls: FC<SeznamMapControlsProps> = ({ map }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     useEffect(() => {
         const control = new SMap.Control.Mouse(SMap.MOUSE_PAN | SMap.MOUSE_ZOOM | SMap.MOUSE_WHEEL);

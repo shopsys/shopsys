@@ -1,6 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { HeartFull, Heart } from 'components/Basic/Icon/IconsSvg';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'helpers/twMerge';
@@ -21,7 +21,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
     isProductInWishlist,
     toggleProductInWishlist,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     return (
         <div className={twMergeCustom('flex items-center', className)}>

@@ -2,7 +2,7 @@ import { showSuccessMessage } from 'helpers/toasts';
 import { Exact, LoginApi, LoginVariablesApi, LogoutApi, Maybe, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
 import { canUseDom } from 'helpers/canUseDom';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { OperationResult } from 'urql';
@@ -32,7 +32,7 @@ export type LogoutHandler = () => Promise<
 export const useAuth = (): { login: typeof login; logout: typeof logout } => {
     const [, loginMutation] = useLoginApi();
     const [, logoutMutation] = useLogoutApi();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const updateUserState = usePersistStore((store) => store.updateUserState);
     const updateLoginLoadingState = usePersistStore((store) => store.updateLoginLoadingState);
 

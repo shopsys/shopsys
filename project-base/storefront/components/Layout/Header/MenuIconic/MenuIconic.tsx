@@ -1,6 +1,6 @@
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useComparison } from 'hooks/comparison/useComparison';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useWishlist } from 'hooks/useWishlist';
 import { MenuIconicItem, MenuIconicItemLink, MenuIconicItemIcon } from './MenuIconicElements';
@@ -10,7 +10,7 @@ import { Compare, Heart, HeartFull, Marker } from 'components/Basic/Icon/IconsSv
 const TEST_IDENTIFIER = 'layout-header-menuiconic';
 
 export const MenuIconic: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [storesUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls(
         ['/stores', '/product-comparison', '/wishlist'],

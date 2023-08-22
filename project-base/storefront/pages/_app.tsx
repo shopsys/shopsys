@@ -8,7 +8,7 @@ import i18nConfig from 'i18n';
 import { AppProps as NextAppProps } from 'next/app';
 import { ReactElement, useMemo } from 'react';
 import { AppPageContent } from 'components/Pages/App/AppPageContent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { createClient } from 'urql/createClient';
 import { Provider, ssrExchange } from 'urql';
 import { initDayjsLocale } from 'helpers/formaters/formatDate';
@@ -30,7 +30,7 @@ process.on('uncaughtException', logException);
 function MyApp({ Component, pageProps, err }: AppProps): ReactElement | null {
     const { defaultLocale, publicGraphqlEndpoint } = pageProps.domainConfig;
     initDayjsLocale(defaultLocale);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const urqlClient = useMemo(
         () =>

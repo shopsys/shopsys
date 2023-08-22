@@ -18,7 +18,7 @@ import {
 } from 'components/Forms/validationRules';
 import { usePrivacyPolicyArticleUrlQueryApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
@@ -27,7 +27,7 @@ import { RegistrationFormType } from 'types/form';
 import * as Yup from 'yup';
 
 export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, RegistrationFormType] => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const resolver = yupResolver(
         Yup.object().shape({
             email: validateEmail(t),
@@ -111,7 +111,7 @@ type RegistrationFormMetaType = {
 export const useRegistrationFormMeta = (
     formProviderMethods: UseFormReturn<RegistrationFormType>,
 ): RegistrationFormMetaType => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const isEmailValid = formProviderMethods.formState.errors.email === undefined;
     const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQueryApi();
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;

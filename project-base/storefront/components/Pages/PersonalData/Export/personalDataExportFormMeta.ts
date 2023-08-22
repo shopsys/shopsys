@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PersonalDataExportFormType } from 'types/form';
@@ -10,7 +10,7 @@ export const usePersonalDataExportForm = (): [
     UseFormReturn<PersonalDataExportFormType>,
     PersonalDataExportFormType,
 ] => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const resolver = yupResolver(
         Yup.object().shape({
             email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
@@ -39,7 +39,7 @@ type PersonalDataExportFormMetaType = {
 export const usePersonalDataExportFormMeta = (
     formProviderMethods: UseFormReturn<PersonalDataExportFormType>,
 ): PersonalDataExportFormMetaType => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     const formMeta = useMemo(
         () => ({

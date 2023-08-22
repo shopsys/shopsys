@@ -10,7 +10,7 @@ import { BreadcrumbFragmentApi, ListedOrderFragmentApi } from 'graphql/generated
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRef } from 'react';
 
@@ -24,7 +24,7 @@ type OrdersContentProps = {
 const TEST_IDENTIFIER = 'pages-customer-orders-';
 
 export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, breadcrumbs, orders, totalCount }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { formatDateAndTime } = useFormatDate();
     const { url } = useDomainConfig();

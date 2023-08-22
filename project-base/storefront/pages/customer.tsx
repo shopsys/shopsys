@@ -7,12 +7,12 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { GtmPageType } from 'gtm/types/enums';
 
 const CustomerPage: FC = () => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [customerUrl] = getInternationalizedStaticUrls(['/customer'], url);
     const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Customer'), slug: customerUrl }];

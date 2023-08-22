@@ -3,7 +3,7 @@ import { CartFragmentApi, useChangePaymentInCartMutationApi } from 'graphql/gene
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { onGtmPaymentChangeEventHandler } from 'gtm/helpers/eventHandlers';
 import { useGtmCartInfo } from 'gtm/helpers/gtm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useLatest } from 'hooks/ui/useLatest';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
@@ -17,7 +17,7 @@ export type ChangePaymentHandler = (
 export const useChangePaymentInCart = (): [ChangePaymentHandler, boolean] => {
     const [{ fetching }, changePaymentInCart] = useChangePaymentInCartMutationApi();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { gtmCartInfo } = useGtmCartInfo();
 
     const gtmCart = useLatest(gtmCartInfo);

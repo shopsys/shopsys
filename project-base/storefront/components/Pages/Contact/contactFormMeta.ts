@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
@@ -8,7 +8,7 @@ import { ContactFormType } from 'types/form';
 import * as Yup from 'yup';
 
 export const useContactForm = (): [UseFormReturn<ContactFormType>, ContactFormType] => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const user = useCurrentCustomerData();
 
     const resolver = yupResolver(
@@ -43,7 +43,7 @@ type ContactFormMetaType = {
 };
 
 export const useContactFormMeta = (formProviderMethods: UseFormReturn<ContactFormType>): ContactFormMetaType => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const errors = formProviderMethods.formState.errors;
 
     const formMeta = useMemo(

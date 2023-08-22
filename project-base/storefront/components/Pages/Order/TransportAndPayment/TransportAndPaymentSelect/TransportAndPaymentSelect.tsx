@@ -19,7 +19,7 @@ import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import getConfig from 'next/config';
 import { useEffect, useState } from 'react';
@@ -48,7 +48,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     changePaymentInCart,
     isTransportSelectionLoading,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { defaultLocale, currencyCode } = useDomainConfig();
     const [preSelectedTransport, setPreselectedTransport] =
         useState<TransportWithAvailablePaymentsAndStoresFragmentApi | null>(null);

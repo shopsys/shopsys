@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CategoryDetailFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
 type AdvancedSeoCategoriesProps = {
@@ -8,7 +8,7 @@ type AdvancedSeoCategoriesProps = {
 };
 
 export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCategorySeoMixLinks }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
 
     if (readyCategorySeoMixLinks.length === 0) {
         return null;

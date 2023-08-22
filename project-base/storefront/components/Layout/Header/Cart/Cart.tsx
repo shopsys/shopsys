@@ -8,7 +8,7 @@ import { useCurrentCart } from 'connectors/cart/Cart';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -22,7 +22,7 @@ const TEST_IDENTIFIER = 'layout-header-cart-';
 
 export const Cart: FC = ({ className }) => {
     const router = useRouter();
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { cart, isCartEmpty, isFetching } = useCurrentCart();
     const { url } = useDomainConfig();

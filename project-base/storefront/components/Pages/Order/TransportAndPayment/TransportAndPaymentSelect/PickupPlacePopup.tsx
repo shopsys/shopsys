@@ -3,7 +3,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 
 type PickupPlacePopupProps = {
@@ -19,7 +19,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
     onChangePickupPlaceCallback,
     onClosePickupPlacePopupCallback,
 }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const [selectedStoreUuid, setSelectedStoreUuid] = useState('');
 
     const onConfirmPickupPlaceHandler = () => {

@@ -1,4 +1,4 @@
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import useTranslation from 'next-translate/useTranslation';
 import { MenuIconicItemLink, MenuIconicItemIcon, MenuIconicSubItemLink } from './MenuIconicElements';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -7,7 +7,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { User } from 'components/Basic/Icon/IconsSvg';
 
 export const MenuIconicItemUserAuthenticated: FC = ({ dataTestId }) => {
-    const t = useTypedTranslationFunction();
+    const { t } = useTranslation();
     const { logout } = useAuth();
     const { url } = useDomainConfig();
     const [customerUrl, customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
