@@ -1,6 +1,6 @@
 # Shopsys Project-base
 
-This repository is part of Shopsys Platform - a **scalable ecommerce framework** for fast-growing ecommerce sites created and maintained by in-house developers or outsourcing agencies.
+This repository is part of Shopsys Platform - a **scalable ecommerce platform** for fast-growing ecommerce sites created and maintained by in-house developers or outsourcing agencies.
 
 Shopsys/project-base repository contains the fully ready base for building your Shopsys Platform projects. This repository is READ-ONLY and it is maintained by monorepo [shopsys/shopsys](https://github.com/shopsys/shopsys).
 
