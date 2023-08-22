@@ -1,4 +1,5 @@
 import { getDomainConfig } from 'helpers/domain/domainConfig';
+import Script from 'next/script';
 
 export const GtmHeadScript: FC = () => {
     if (typeof window === 'undefined') {
@@ -11,7 +12,8 @@ export const GtmHeadScript: FC = () => {
     }
 
     return (
-        <script
+        <Script
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
                 __html: `
                 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

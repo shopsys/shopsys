@@ -15,7 +15,6 @@ import {
 } from 'graphql/generated';
 import { logException } from 'helpers/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
-import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import useTranslation from 'next-translate/useTranslation';
@@ -59,17 +58,6 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
     const clearPacketeryPickupPoint = usePersistStore((store) => store.clearPacketeryPickupPoint);
 
-    const onSelectPacketeryPickupPlaceCallback = (
-        packeteryPoint: PacketeryExtendedPoint | null,
-        packeteryTransport: TransportWithAvailablePaymentsAndStoresFragmentApi,
-    ) => {
-        if (packeteryPoint !== null) {
-            const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
-            setPacketeryPickupPoint(mappedPacketeryPoint);
-            changeTransportInCart(packeteryTransport.uuid, mappedPacketeryPoint);
-        }
-    };
-
     const openPacketeryPopup = (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
         if (!pickupPlace) {
             const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
@@ -81,8 +69,12 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
             packeteryPick(
                 packeteryApiKey,
-                (point) => {
-                    onSelectPacketeryPickupPlaceCallback(point, newTransport);
+                (packeteryPoint) => {
+                    if (packeteryPoint) {
+                        const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
+                        setPacketeryPickupPoint(mappedPacketeryPoint);
+                        changeTransportInCart(newTransport.uuid, mappedPacketeryPoint);
+                    }
                 },
                 { language: defaultLocale },
             );
@@ -103,35 +95,35 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     const handlePaymentChange = async (newPaymentUuid: string | null) =>
         await changePaymentInCart(newPaymentUuid, paymentGoPayBankSwift);
 
-    const handleTransportChange = async (newTransportUuid: string | null) => {
-        const potentialNewTransport = transports.find((transport) => transport.uuid === newTransportUuid);
+    const handleTransportChange = async (selectedTransportUuid: string | null) => {
+        const selectedTransport = transports.find((transport) => transport.uuid === selectedTransportUuid);
 
-        if (potentialNewTransport?.uuid === transport?.uuid) {
+        if (selectedTransport?.uuid === transport?.uuid) {
             return;
         }
 
-        if (!potentialNewTransport) {
+        if (!selectedTransport) {
             await changeTransportInCart(null, null);
             await handlePaymentChange(null);
 
             return;
         }
 
-        if (potentialNewTransport.isPersonalPickup || potentialNewTransport.transportType.code === 'packetery') {
+        if (selectedTransport.isPersonalPickup || selectedTransport.transportType.code === 'packetery') {
             if (!preSelectedPickupPlace) {
-                openPersonalPickupPopup(potentialNewTransport);
+                openPersonalPickupPopup(selectedTransport);
 
                 return;
             }
 
-            await changeTransportInCart(newTransportUuid, preSelectedPickupPlace);
+            await changeTransportInCart(selectedTransportUuid, preSelectedPickupPlace);
             setPreSelectedPickupPlace(null);
 
             return;
         }
 
-        if (newTransportUuid !== transport?.uuid) {
-            await changeTransportInCart(newTransportUuid, null);
+        if (selectedTransportUuid !== transport?.uuid) {
+            await changeTransportInCart(selectedTransportUuid, null);
         }
     };
 

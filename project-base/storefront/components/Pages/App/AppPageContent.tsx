@@ -10,7 +10,6 @@ import { usePersistStore } from 'store/usePersistStore';
 import { Error500ContentWithBoundary } from '../ErrorPage/Error500Content';
 import { Error503Content } from '../ErrorPage/Error503Content';
 import { GtmHeadScript } from 'gtm/GtmHeadScript';
-import Head from 'next/head';
 import { useLoginLoader } from 'hooks/app/useLoginLoader';
 import { usePageLoader } from 'hooks/app/usePageLoader';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
@@ -47,9 +46,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps, 
 
     return (
         <>
-            <Head>
-                <GtmHeadScript />
-            </Head>
+            <GtmHeadScript />
             <Fonts />
             <div className="absolute left-0 top-0 z-overlay h-[1px] w-[1px]" id="portal" />
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
