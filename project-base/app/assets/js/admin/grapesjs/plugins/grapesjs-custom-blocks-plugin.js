@@ -55,4 +55,15 @@ export default grapesjs.plugins.add('custom-blocks', (editor, options) => {
             </div>
         `
     });
+
+    editor.Blocks.add('map', {
+        select: true,
+        label: 'Map',
+        category: 'Basic',
+        attributes: { class: 'fa fa-map-o' },
+        content: {
+            type: 'map',
+            style: { height: '350px', width: '100%' }
+        }
+    });
 });
