@@ -11,9 +11,12 @@ use App\Model\Order\PromoCode\PromoCodeDataFactory;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
+use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class OrderWithPromoCodeTest extends AbstractOrderTestCase
+class OrderWithPromoCodeTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     /**
      * @inject
      */

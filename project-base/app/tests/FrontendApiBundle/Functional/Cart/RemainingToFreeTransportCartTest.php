@@ -9,10 +9,13 @@ use App\DataFixtures\Demo\SettingValueDataFixture;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Tests\FrontendApiBundle\Functional\Order\AbstractOrderTestCase;
+use Tests\FrontendApiBundle\Functional\Order\OrderTestTrait;
+use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class RemainingToFreeTransportCartTest extends AbstractOrderTestCase
+class RemainingToFreeTransportCartTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     private Product $testingProduct;
 
     /**

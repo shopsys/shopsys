@@ -18,3 +18,11 @@ CartMutation:
                         type: RemoveFromCartInput!
                         validation: cascade
                 resolve: "@=mutation('removeFromCartMutation', args, validator)"
+            AddOrderItemsToCart:
+                type: Cart!
+                description: "Fills cart based on a given order, possibly merging it with the current cart"
+                args:
+                    input:
+                        type: AddOrderItemsToCartInput!
+                        validation: cascade
+                resolve: "@=mutation('addOrderItemsToCartMutation', args, validator)"

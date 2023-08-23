@@ -204,4 +204,12 @@ class Cart
     {
         $this->modifiedAt = $modifiedAt;
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
+     */
+    public function getCustomerUser(): ?CustomerUser
+    {
+        return $this->customerUser;
+    }
 }

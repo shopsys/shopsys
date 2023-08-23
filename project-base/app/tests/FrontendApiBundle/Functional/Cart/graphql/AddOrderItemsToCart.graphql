@@ -1,0 +1,27 @@
+mutation AddOrderItemsToCart(
+    $orderUuid: Uuid!,
+    $cartUuid: Uuid,
+    $shouldMerge: Boolean
+) {
+    AddOrderItemsToCart(
+        input: {
+            orderUuid: $orderUuid,
+            cartUuid: $cartUuid,
+            shouldMerge: $shouldMerge
+        }) {
+        uuid
+        items {
+            quantity
+            product {
+                name
+            }
+        }
+        modifications {
+            multipleAddedProductModifications {
+                notAddedProducts {
+                    name
+                }
+            }
+        }
+    }
+}

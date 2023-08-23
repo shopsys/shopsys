@@ -28,6 +28,7 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
  * @method \App\Model\Cart\Item\CartItem[] getItems()
  * @method \App\Model\Cart\Item\CartItem getItemById(int $itemId)
  * @method \App\Model\Cart\Item\CartItem|null findSimilarItemByItem(\App\Model\Cart\Item\CartItem $item)
+ * @method \App\Model\Customer\User\CustomerUser|null getCustomerUser()
  */
 class Cart extends BaseCart
 {

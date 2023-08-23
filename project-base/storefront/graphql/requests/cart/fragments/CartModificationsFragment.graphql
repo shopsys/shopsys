@@ -13,4 +13,9 @@ fragment CartModificationsFragment on CartModificationsResult {
         ...CartPromoCodeModificationsFragment
     }
     someProductWasRemovedFromEshop
+    multipleAddedProductModifications {
+        notAddedProducts {
+            fullName
+        }
+    }
 }

@@ -4,15 +4,23 @@ import { Image } from 'components/Basic/Image/Image';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Cell, CellHead, Row, Table } from 'components/Basic/Table/Table';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
+import { Button } from 'components/Forms/Button/Button';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi, ListedOrderFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import dynamic from 'next/dynamic';
 import { useRef } from 'react';
+
+const NotAddedProductsPopup = dynamic(() =>
+    import('./NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),
+);
+const MergeCartsPopup = dynamic(() => import('./MergeCartsPopup').then((component) => component.MergeCartsPopup));
 
 type OrdersContentProps = {
     isLoading: boolean;
@@ -30,6 +38,14 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, breadcrumbs, 
     const { url } = useDomainConfig();
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
+    const {
+        orderForPrefillingUuid,
+        setOrderForPrefillingUuid,
+        addOrderItemsToEmptyCart,
+        mergeOrderItemsWithCurrentCart,
+        notAddedProductNames,
+        setNotAddedProductNames,
+    } = useAddOrderItemsToCart();
 
     return (
         <>
@@ -109,6 +125,15 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, breadcrumbs, 
                                         <Cell isWithoutWrap align="right" data-testid={TEST_IDENTIFIER + 'total-price'}>
                                             {formatPrice(order.totalPrice.priceWithVat)}
                                         </Cell>
+                                        <Cell data-testid={TEST_IDENTIFIER + 'repeat-order'}>
+                                            <Button
+                                                onClick={() => addOrderItemsToEmptyCart(order.uuid)}
+                                                size="small"
+                                                className="bg-white text-greyDarker hover:bg-orangeLight hover:text-greyDark"
+                                            >
+                                                {t('Repeat order')}
+                                            </Button>
+                                        </Cell>
                                         <Cell data-testid={TEST_IDENTIFIER + 'detail-link'}>
                                             <ExtendedNextLink
                                                 href={{
@@ -131,6 +156,21 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, breadcrumbs, 
                     <Pagination totalCount={totalCount || 0} paginationScrollTargetRef={paginationScrollTargetRef} />
                 </Webline>
             </div>
+
+            {!!orderForPrefillingUuid && (
+                <MergeCartsPopup
+                    mergeOrderItemsWithCurrentCart={mergeOrderItemsWithCurrentCart}
+                    orderForPrefillingUuid={orderForPrefillingUuid}
+                    onCloseCallback={() => setOrderForPrefillingUuid(undefined)}
+                />
+            )}
+
+            {!!notAddedProductNames?.length && (
+                <NotAddedProductsPopup
+                    notAddedProductNames={notAddedProductNames}
+                    onCloseCallback={() => setNotAddedProductNames(undefined)}
+                />
+            )}
         </>
     );
 };

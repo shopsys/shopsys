@@ -10,5 +10,7 @@ CartModificationsResult:
                 type: "CartPaymentModificationsResult!"
             promoCodeModifications:
                 type: "CartPromoCodeModificationsResult!"
+            multipleAddedProductModifications:
+                type: "CartMultipleAddedProductModificationsResult!"
             someProductWasRemovedFromEshop:
                 type: "Boolean!"

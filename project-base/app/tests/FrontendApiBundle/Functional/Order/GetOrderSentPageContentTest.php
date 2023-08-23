@@ -7,9 +7,12 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\FrontendApi\Model\Order\OrderFacade;
+use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class GetOrderSentPageContentTest extends AbstractOrderTestCase
+class GetOrderSentPageContentTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     /**
      * @inject
      */

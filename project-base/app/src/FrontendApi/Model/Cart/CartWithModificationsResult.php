@@ -60,6 +60,13 @@ class CartWithModificationsResult
         'noLongerApplicablePromoCode' => [],
     ];
 
+    /**
+     * @var array<string, array<int, string>>
+     */
+    private array $multipleAddedProductModifications = [
+        'notAddedProducts' => [],
+    ];
+
     private ?Price $totalPrice = null;
 
     private ?Price $totalItemsPrice = null;
@@ -102,6 +109,7 @@ class CartWithModificationsResult
         $this->cartModifications['transportModifications'] = $this->transportModifications;
         $this->cartModifications['paymentModifications'] = $this->paymentModifications;
         $this->cartModifications['promoCodeModifications'] = $this->promoCodeModifications;
+        $this->cartModifications['multipleAddedProductModifications'] = $this->multipleAddedProductModifications;
 
         return $this->cartModifications;
     }
@@ -387,5 +395,15 @@ class CartWithModificationsResult
             || count($this->itemModifications['cartItemsWithChangedQuantity']) > 0
             || count($this->itemModifications['noLongerAvailableCartItemsDueToQuantity']) > 0
             ;
+    }
+
+    /**
+     * @param \App\Model\Product\Product[] $products
+     */
+    public function addProductsNotAddedByMultipleAddition(array $products): void
+    {
+        foreach ($products as $product) {
+            $this->multipleAddedProductModifications['notAddedProducts'][] = $product;
+        }
     }
 }

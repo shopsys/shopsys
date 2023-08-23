@@ -16,9 +16,12 @@ use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation;
+use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class TransportInOrderValidationTest extends AbstractOrderTestCase
+class TransportInOrderValidationTest extends GraphQlTestCase
 {
+    use OrderTestTrait;
+
     /**
      * @inject
      */
@@ -63,7 +66,7 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
     public function testTransportUnavailable(): void
     {
         $this->addCardPaymentToDemoCart();
-        $this->addPplTransportToDemoCart();
+        $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->hidePplTransport();
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
@@ -91,7 +94,7 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
     public function testTransportPriceChanged(): void
     {
         $this->addCardPaymentToDemoCart();
-        $this->addPplTransportToDemoCart();
+        $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->changePplTransportPrice();
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
@@ -171,7 +174,7 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
     public function testTransportWeightLimitExceeded(): void
     {
         $this->addCardPaymentToDemoCart();
-        $this->addPplTransportToDemoCart();
+        $this->addPplTransportToCart(CartDataFixture::CART_UUID);
         $this->setPplTransportWeightLimit();
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
