@@ -16,7 +16,7 @@ import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
 import { FunctionComponentProps } from 'types/globals';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { RemoveBold } from 'components/Basic/Icon/IconsSvg';
+import { RemoveBoldIcon } from 'components/Basic/Icon/IconsSvg';
 
 type ProductItemProps = {
     product: ListedProductFragmentApi;
@@ -65,7 +65,7 @@ export const ProductListItem = forwardRef<HTMLDivElement, ProductItemProps>(
                         data-testid={getDataTestId(product.catalogNumber) + '-wishlist-remove'}
                         title={t('Remove from wishlist')}
                     >
-                        <RemoveBold className="mx-auto w-2 basis-2" />
+                        <RemoveBoldIcon className="mx-auto w-2 basis-2" />
                     </button>
                 )}
 

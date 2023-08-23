@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Arrow, Spinner } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon, SpinnerIcon } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
 import { useRouter } from 'next/router';
 import { twJoin } from 'tailwind-merge';
@@ -55,7 +55,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                     className="font-bold uppercase text-dark no-underline"
                 >
                     <>
-                        <Arrow className="relative top-0 mr-1 rotate-90 text-greyLight" />
+                        <ArrowIcon className="relative top-0 mr-1 rotate-90 text-greyLight" />
                         {buttonBack}
                     </>
                 </ExtendedNextLink>
@@ -67,9 +67,9 @@ export const OrderAction: FC<OrderActionProps> = ({
                     isWithDisabledLook={hasDisabledLook}
                     onClick={onNextStepHandler}
                 >
-                    {isLoading && <Spinner className="w-5" />}
+                    {isLoading && <SpinnerIcon className="w-5" />}
                     <span>{buttonNext}</span>
-                    <Arrow className="relative top-0 ml-1 -rotate-90 text-white" />
+                    <ArrowIcon className="relative top-0 ml-1 -rotate-90 text-white" />
                 </Button>
             </div>
         </div>

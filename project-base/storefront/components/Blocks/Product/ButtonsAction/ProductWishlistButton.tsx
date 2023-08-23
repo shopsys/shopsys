@@ -1,4 +1,4 @@
-import { Heart } from 'components/Basic/Icon/IconsSvg';
+import { HeartIcon } from 'components/Basic/Icon/IconsSvg';
 import useTranslation from 'next-translate/useTranslation';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
@@ -30,7 +30,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
                 title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
                 onClick={toggleProductInWishlist}
             >
-                <Heart
+                <HeartIcon
                     isFull={isProductInWishlist}
                     className={twMergeCustom('m-2', 'text-grey', isProductInWishlist && 'text-green')}
                 />

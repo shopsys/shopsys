@@ -1,5 +1,5 @@
 import { twJoin } from 'tailwind-merge';
-import { MapMarker } from '../Icon/IconsSvg';
+import { MapMarkerIcon } from '../Icon/IconsSvg';
 
 interface SeznamMapMarkerIconProps {
     isActive: boolean;
@@ -7,7 +7,7 @@ interface SeznamMapMarkerIconProps {
 }
 
 export const SeznamMapMarkerIcon: FC<SeznamMapMarkerIconProps> = ({ isActive, isClickable }) => (
-    <MapMarker
+    <MapMarkerIcon
         className={twJoin(
             'w-8 transition-transform',
             isActive ? 'origin-bottom scale-125 text-orange' : 'text-greyDark',

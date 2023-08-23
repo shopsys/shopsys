@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Arrow } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { NavigationLeaf } from 'components/Layout/Header/Navigation/NavigationLeaf';
 import { CategoriesByColumnFragmentApi } from 'graphql/generated';
 import { twJoin } from 'tailwind-merge';
@@ -25,7 +25,7 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
                 <>
                     {props.navigationItem.name}
                     {hasChildren && (
-                        <Arrow className="ml-2 text-white group-hover:rotate-180 group-hover:text-orangeLight" />
+                        <ArrowIcon className="ml-2 text-white group-hover:rotate-180 group-hover:text-orangeLight" />
                     )}
                 </>
             </ExtendedNextLink>

@@ -1,4 +1,4 @@
-import { Arrow } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import useEmblaCarousel, { EmblaOptionsType } from 'embla-carousel-react';
 import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
@@ -129,6 +129,6 @@ const ImageSliderControl: FC<ImageSliderControlProps> = ({ isNext, onClick, enab
         onClick={onClick}
         disabled={!enabled}
     >
-        <Arrow className={isNext ? '-rotate-90' : 'rotate-90'} />
+        <ArrowIcon className={isNext ? '-rotate-90' : 'rotate-90'} />
     </button>
 );

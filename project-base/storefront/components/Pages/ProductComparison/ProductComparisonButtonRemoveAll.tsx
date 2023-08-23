@@ -1,4 +1,4 @@
-import { RemoveThin } from 'components/Basic/Icon/IconsSvg';
+import { RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
 import { useComparison } from 'hooks/comparison/useComparison';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
@@ -20,7 +20,7 @@ export const ProductComparisonButtonRemoveAll: FC<ProductComparisonButtonRemoveA
             onClick={handleCleanComparison}
         >
             <span className="mr-3 text-sm">{t('Delete all')}</span>
-            <RemoveThin className="w-3" />
+            <RemoveThinIcon className="w-3" />
         </div>
     );
 };

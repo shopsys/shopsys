@@ -1,5 +1,5 @@
 import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './Autocomplete';
-import { Close } from 'components/Basic/Icon/IconsSvg';
+import { CloseIcon } from 'components/Basic/Icon/IconsSvg';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAutocompleteSearchQueryApi } from 'graphql/generated';
@@ -114,11 +114,11 @@ export const AutocompleteSearch: FC = () => {
                                 onClick={() => setAutocompleteSearchQueryValue('')}
                             >
                                 {isDesktop ? (
-                                    <Close />
+                                    <CloseIcon />
                                 ) : (
                                     <>
                                         <div className="flex w-4 items-center justify-center">
-                                            <Close />
+                                            <CloseIcon />
                                         </div>
                                         <span className="ml-1 w-7 text-xs">{t('Close')}</span>
                                     </>

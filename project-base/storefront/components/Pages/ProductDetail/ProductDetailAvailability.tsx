@@ -1,4 +1,4 @@
-import { Arrow } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { AvailabilityStatusEnumApi, ProductDetailFragmentApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
 import { RefObject } from 'react';
@@ -33,7 +33,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
                 onClick={scrollOnClickHandler}
             >
                 {product.availability.name}
-                <Arrow className="text-dark" />
+                <ArrowIcon className="text-dark" />
             </a>
             {product.availableStoresCount > 0 && (
                 <span className="mr-1 text-sm" data-testid={TEST_IDENTIFIER + '-availability'}>

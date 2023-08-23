@@ -1,6 +1,6 @@
 import { SearchProductsWrapper } from './SearchProductsWrapper';
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { Filter } from 'components/Basic/Icon/IconsSvg';
+import { FilterIcon } from 'components/Basic/Icon/IconsSvg';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
@@ -62,7 +62,7 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                         className="relative mb-3 flex h-12 w-full cursor-pointer flex-row justify-center rounded bg-primary py-3 px-8 font-bold uppercase leading-7 text-white vl:hidden"
                         onClick={handlePanelOpenerClick}
                     >
-                        <Filter className="mr-3 w-6 font-bold text-white" />
+                        <FilterIcon className="mr-3 w-6 font-bold text-white" />
                         {t('Filter')}
                     </div>
                     <SortingBar

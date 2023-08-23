@@ -15,7 +15,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 import { GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
-import { EmptyCart, Cart as CartIcon } from 'components/Basic/Icon/IconsSvg';
+import { EmptyCartIcon, CartIcon as CartIcon } from 'components/Basic/Icon/IconsSvg';
 
 const TEST_IDENTIFIER = 'layout-header-cart-';
 
@@ -99,7 +99,7 @@ export const Cart: FC = ({ className }) => {
                 ) : (
                     <div className="relative flex h-20 items-center justify-between px-5">
                         <span className="text-dark">{t('Your cart is currently empty.')}</span>
-                        <EmptyCart className={twJoin('w-20 rotate-6 text-orange')} />
+                        <EmptyCartIcon className={twJoin('w-20 rotate-6 text-orange')} />
                     </div>
                 )}
             </div>

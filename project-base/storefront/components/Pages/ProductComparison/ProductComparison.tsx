@@ -8,7 +8,7 @@ import { useGtmSliderProductListViewEvent } from 'gtm/hooks/productList/useGtmSl
 import { useComparison } from 'hooks/comparison/useComparison';
 import useTranslation from 'next-translate/useTranslation';
 import { GtmProductListNameType } from 'gtm/types/enums';
-import { Info } from 'components/Basic/Icon/IconsSvg';
+import { InfoIcon } from 'components/Basic/Icon/IconsSvg';
 
 type ProductComparisonProps = {
     breadcrumb: BreadcrumbFragmentApi[];
@@ -25,7 +25,7 @@ export const ProductComparison: FC<ProductComparisonProps> = ({ breadcrumb }) =>
             <ProductComparisonContent productsCompare={comparedProducts} />
         ) : (
             <div className="my-[75px] flex items-center">
-                <Info className="mr-4 w-8" />
+                <InfoIcon className="mr-4 w-8" />
 
                 <Heading type="h3" className="!mb-0">
                     {t('Comparison does not contain any products yet.')}

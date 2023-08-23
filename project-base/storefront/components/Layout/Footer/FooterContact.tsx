@@ -1,6 +1,6 @@
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Instagram, Youtube } from 'components/Basic/Icon/IconsSvg';
 import { IconImage } from 'components/Basic/Icon/IconImage';
+import { InstagramIcon, YoutubeIcon } from 'components/Basic/Icon/IconsSvg';
 import useTranslation from 'next-translate/useTranslation';
 
 export const FooterContact: FC = () => {
@@ -14,13 +14,13 @@ export const FooterContact: FC = () => {
 
             <div className="flex h-24 w-full max-w-xs overflow-hidden rounded border-2 border-greyLight">
                 <FooterContactSocialsItem href="#" title="Instagram">
-                    <Instagram className="w-8 text-white" />
+                    <InstagramIcon className="w-8 text-white" />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Facebook">
                     <IconImage icon="facebook" className="w-8" alt={t('Facebook')} />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Youtube">
-                    <Youtube className="w-11 text-[#d93738]" />
+                    <YoutubeIcon className="w-11 text-[#d93738]" />
                 </FooterContactSocialsItem>
             </div>
 

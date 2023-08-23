@@ -12,7 +12,7 @@ import Image from 'next/image';
 import { useCallback, useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { MapMarker } from 'types/map';
-import { Marker } from 'components/Basic/Icon/IconsSvg';
+import { MarkerIcon } from 'components/Basic/Icon/IconsSvg';
 
 type StoresContentProps = {
     stores: ListedStoreConnectionFragmentApi;
@@ -95,7 +95,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                                 >
                                     <>
                                         <div className="flex flex-row items-center text-lg text-primary">
-                                            <Marker className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
+                                            <MarkerIcon className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
                                             <StoreButton>{store.name}</StoreButton>
                                         </div>
 

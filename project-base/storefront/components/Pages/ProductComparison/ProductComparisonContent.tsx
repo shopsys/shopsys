@@ -2,7 +2,7 @@ import { ProductComparisonBody } from './ProductComparisonBody';
 import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
 import { ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
-import { Arrow } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { ComparedProductFragmentApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/canUseDom';
@@ -122,7 +122,7 @@ const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onCl
         disabled={!isActive}
         onClick={onClick}
     >
-        <Arrow
+        <ArrowIcon
             className={twJoin('w-5 text-dark', isRight ? '-rotate-90' : 'rotate-90', !isActive && 'text-greyLight')}
         />
     </button>
