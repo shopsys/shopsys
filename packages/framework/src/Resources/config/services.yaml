@@ -178,6 +178,12 @@ services:
         arguments:
             - '%shopsys.default_db_schema_filepath%'
 
+    Shopsys\FrameworkBundle\Component\Doctrine\RemoveEntityColumnsSubscriber:
+        arguments:
+            - '@annotations.reader'
+        tags:
+            - { name: doctrine.event_subscriber, priority: -100 }
+
     Shopsys\FrameworkBundle\Component\Domain\Domain:
         factory: ['@Shopsys\FrameworkBundle\Component\Domain\DomainFactory', create]
         arguments:
