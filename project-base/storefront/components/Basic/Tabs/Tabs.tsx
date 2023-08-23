@@ -1,4 +1,3 @@
-import { Icon } from '../Icon/Icon';
 import React, { useState } from 'react';
 import {
     Tab,
@@ -73,10 +72,7 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
                 onClick={mobileTab}
             >
                 {headingTextMobile}
-                <Icon
-                    icon={<Arrow />}
-                    className={twJoin('w-4 rotate-0 transition', isActiveOnMobile && '-rotate-180 ')}
-                />
+                <Arrow className={twJoin('w-4 rotate-0 transition', isActiveOnMobile && '-rotate-180 ')} />
             </h3>
             <div className={twJoin('py-5 ', isActiveOnMobile ? 'block' : 'hidden lg:block')}>{children}</div>
         </TabPanel>

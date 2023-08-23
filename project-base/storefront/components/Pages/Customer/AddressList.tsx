@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Arrow, Phone, Remove } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
@@ -82,14 +81,13 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                             <br />
                             {address.telephone && (
                                 <>
-                                    <Icon icon={<Phone />} className="relative top-[2px] mr-1" />
+                                    <Phone className="relative top-[2px] mr-1" />
                                     {address.telephone}
                                 </>
                             )}
                         </div>
 
-                        <Icon
-                            icon={<Remove />}
+                        <Remove
                             onClick={() => setAddressToBeDeleted(address.uuid)}
                             className="absolute right-5 top-5 w-3 cursor-pointer text-greyLight hover:text-red"
                         />
@@ -102,12 +100,12 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                         {t('Do you really want to delete this delivery address?')}
                         <div className="mt-4 flex flex-row flex-nowrap justify-between">
                             <Button onClick={() => setAddressToBeDeleted(undefined)}>
-                                <Icon icon={<Arrow />} className="relative mr-4 rotate-90 text-white" />
+                                <Arrow className="relative mr-4 rotate-90 text-white" />
                                 {t('No')}
                             </Button>
                             <Button onClick={() => deleteItemHandler(addressToBeDeleted)}>
                                 {t('Yes')}
-                                <Icon icon={<Arrow />} className="relative ml-4 -rotate-90" />
+                                <Arrow className="relative ml-4 -rotate-90" />
                             </Button>
                         </div>
                     </div>

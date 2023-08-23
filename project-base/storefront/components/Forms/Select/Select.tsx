@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Arrow } from 'components/Basic/Icon/IconsSvg';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { ReactNode } from 'react';
@@ -20,7 +19,7 @@ type SelectProps = NativeProps & {
 const DropdownIndicator = (props: any) => {
     return (
         <components.DropdownIndicator {...props}>
-            <Icon icon={<Arrow />} />
+            <Arrow className="text-greyDark" />
         </components.DropdownIndicator>
     );
 };

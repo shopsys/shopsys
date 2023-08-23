@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Arrow } from 'components/Basic/Icon/IconsSvg';
 import { NavigationLeaf } from 'components/Layout/Header/Navigation/NavigationLeaf';
 import { CategoriesByColumnFragmentApi } from 'graphql/generated';
@@ -20,16 +19,13 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
                 type="category"
                 href={props.navigationItem.link}
                 className={twJoin(
-                    'relative m-0 block px-2 py-4 text-sm font-bold uppercase text-white no-underline after:absolute after:bottom-0 after:left-0 after:right-0 after:hidden after:h-1 after:bg-orange after:content-[""] hover:text-orangeLight hover:no-underline hover:after:block group-hover:text-orangeLight group-hover:no-underline after:group-hover:block vl:text-base',
+                    'relative m-0 flex items-center px-2 py-4 text-sm font-bold uppercase text-white no-underline hover:text-orangeLight hover:no-underline group-hover:text-orangeLight group-hover:no-underline vl:text-base',
                 )}
             >
                 <>
                     {props.navigationItem.name}
                     {hasChildren && (
-                        <Icon
-                            icon={<Arrow />}
-                            className="ml-2 text-white group-hover:rotate-180 group-hover:text-orangeLight"
-                        />
+                        <Arrow className="ml-2 text-white group-hover:rotate-180 group-hover:text-orangeLight" />
                     )}
                 </>
             </ExtendedNextLink>

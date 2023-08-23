@@ -11,7 +11,6 @@ import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
-import { Icon } from 'components/Basic/Icon/Icon';
 import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
@@ -66,7 +65,7 @@ export const ProductListItem = forwardRef<HTMLDivElement, ProductItemProps>(
                         data-testid={getDataTestId(product.catalogNumber) + '-wishlist-remove'}
                         title={t('Remove from wishlist')}
                     >
-                        <Icon icon={<RemoveBold />} className="mx-auto w-2 basis-2" />
+                        <RemoveBold className="mx-auto w-2 basis-2" />
                     </button>
                 )}
 

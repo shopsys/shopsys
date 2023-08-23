@@ -1,6 +1,5 @@
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
@@ -191,14 +190,14 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions 
             </div>
             <div className="flex cursor-pointer items-center text-sm text-greyLight" onClick={resetAllFilters}>
                 <div className="font-bold uppercase">{t('Clear all')}</div>
-                <Icon icon={<Remove />} className="ml-2 cursor-pointer text-greenLight" />
+                <Remove className="ml-2 cursor-pointer text-greenLight" />
             </div>
         </div>
     );
 };
 
 const SelectedParametersIcon: FC<{ onClick: () => void }> = ({ onClick, dataTestId }) => (
-    <Icon icon={<RemoveThin />} onClick={onClick} className="ml-3 w-3 cursor-pointer" data-testid={dataTestId} />
+    <RemoveThin onClick={onClick} className="ml-3 w-3 cursor-pointer" data-testid={dataTestId} />
 );
 
 const getCheckedFlags = (

@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Phone } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
@@ -34,7 +33,7 @@ export const FooterBoxInfo: FC = () => {
                     {t('Need advice?')}
                 </div>
                 <div className="mb-6 flex flex-wrap items-center lg:mb-0 lg:mr-2 lg:flex-1 vl:justify-center">
-                    <Icon icon={<Phone />} className="mr-3 w-5 text-orange" />
+                    <Phone className="mr-3 w-5 text-orange" />
                     <a
                         className="mr-4 font-bold text-white no-underline hover:text-white lg:text-lg"
                         href={'tel:' + dummyData.phone}

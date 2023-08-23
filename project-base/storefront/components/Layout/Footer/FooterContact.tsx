@@ -14,13 +14,13 @@ export const FooterContact: FC = () => {
 
             <div className="flex h-24 w-full max-w-xs overflow-hidden rounded border-2 border-greyLight">
                 <FooterContactSocialsItem href="#" title="Instagram">
-                    <Icon icon={<Instagram />} className="w-8 text-white" />
+                    <Instagram className="w-8 text-white" />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Facebook">
                     <Icon icon="facebook" className="w-8" alt={t('Facebook')} />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Youtube">
-                    <Icon icon={<Youtube />} className="w-11 text-[#d93738]" />
+                    <Youtube className="w-11 text-[#d93738]" />
                 </FooterContactSocialsItem>
             </div>
 

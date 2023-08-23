@@ -1,6 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ListItem } from './ListItem';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
@@ -55,7 +54,7 @@ export const Cart: FC = ({ className }) => {
             >
                 <>
                     <span className="relative flex text-lg">
-                        <Icon icon={<CartIcon />} className="w-5" />
+                        <CartIcon className="w-5" />
                         <CartCount dataTestId={TEST_IDENTIFIER + 'itemcount'}>{cart?.items.length ?? 0}</CartCount>
                     </span>
                     <span
@@ -100,7 +99,7 @@ export const Cart: FC = ({ className }) => {
                 ) : (
                     <div className="relative flex h-20 items-center justify-between px-5">
                         <span className="text-dark">{t('Your cart is currently empty.')}</span>
-                        <Icon icon={<EmptyCart />} className={twJoin('w-20 rotate-6 text-orange')} />
+                        <EmptyCart className={twJoin('w-20 rotate-6 text-orange')} />
                     </div>
                 )}
             </div>
@@ -111,7 +110,7 @@ export const Cart: FC = ({ className }) => {
                     className="relative flex h-full w-full items-center justify-center text-white no-underline transition-colors hover:text-white hover:no-underline"
                 >
                     <>
-                        <Icon icon={<CartIcon />} className="w-5 text-white" />
+                        <CartIcon className="w-5 text-white" />
                         <CartCount>{cart?.items.length ?? 0}</CartCount>
                     </>
                 </ExtendedNextLink>

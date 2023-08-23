@@ -1,5 +1,5 @@
 import useTranslation from 'next-translate/useTranslation';
-import { MenuIconicItemLink, MenuIconicItemIcon } from './MenuIconicElements';
+import { MenuIconicItemLink } from './MenuIconicElements';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Login } from 'components/Blocks/Popup/Login/Login';
 import { useState } from 'react';
@@ -20,7 +20,7 @@ export const MenuIconicItemUserUnauthenticated: FC = ({ dataTestId }) => {
                 className="cursor-pointer max-lg:hidden"
                 dataTestId={dataTestId + '-link-popup'}
             >
-                <MenuIconicItemIcon icon={<User />} />
+                <User className="mr-2 w-4 text-white" />
                 {t('Login')}
             </MenuIconicItemLink>
 
@@ -29,7 +29,7 @@ export const MenuIconicItemUserUnauthenticated: FC = ({ dataTestId }) => {
                     className="relative flex h-full w-full items-center justify-center text-white transition-colors"
                     onClick={handleLogin}
                 >
-                    <MenuIconicItemIcon icon={<User />} className="mr-0" />
+                    <User className="w-4 text-white" />
                 </div>
             </div>
 

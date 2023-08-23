@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'helpers/isElementVisible';
 import { Phone } from 'components/Basic/Icon/IconsSvg';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
@@ -29,7 +28,7 @@ export const HeaderContact: FC = () => {
         <div className="order-2 ml-auto flex" data-testid={TEST_IDENTIFIER}>
             <div className="relative flex flex-1 flex-col items-start bg-primary py-4 pr-4 lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex flex-wrap items-center lg:flex-1 xl:justify-center">
-                    <Icon icon={<Phone />} className="mr-3 w-5 text-orange" />
+                    <Phone className="mr-3 w-5 text-orange" />
                     <a className="font-bold text-creamWhite no-underline lg:mr-4" href={'tel:' + dummyData.phone}>
                         {dummyData.phone}
                     </a>

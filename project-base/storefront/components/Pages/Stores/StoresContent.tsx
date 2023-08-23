@@ -1,7 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { StoreInfoBox } from './StoreInfoBox';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi, ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
@@ -96,7 +95,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                                 >
                                     <>
                                         <div className="flex flex-row items-center text-lg text-primary">
-                                            <Icon icon={<Marker />} className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
+                                            <Marker className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
                                             <StoreButton>{store.name}</StoreButton>
                                         </div>
 

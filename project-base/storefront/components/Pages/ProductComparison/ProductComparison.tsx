@@ -1,6 +1,5 @@
 import { ProductComparisonContent } from './ProductComparisonContent';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -26,7 +25,7 @@ export const ProductComparison: FC<ProductComparisonProps> = ({ breadcrumb }) =>
             <ProductComparisonContent productsCompare={comparedProducts} />
         ) : (
             <div className="my-[75px] flex items-center">
-                <Icon icon={<Info />} className="mr-4 w-8" />
+                <Info className="mr-4 w-8" />
 
                 <Heading type="h3" className="!mb-0">
                     {t('Comparison does not contain any products yet.')}

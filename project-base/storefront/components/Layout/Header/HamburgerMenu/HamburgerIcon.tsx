@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Close, Menu } from 'components/Basic/Icon/IconsSvg';
 
 type HamburgerIconProps = {
@@ -7,8 +6,8 @@ type HamburgerIconProps = {
 
 export const HamburgerIcon: FC<HamburgerIconProps> = ({ isMenuOpened }) => {
     if (isMenuOpened) {
-        return <Icon icon={<Close />} />;
+        return <Close />;
     }
 
-    return <Icon icon={<Menu />} className="w-4" />;
+    return <Menu className="w-4" />;
 };

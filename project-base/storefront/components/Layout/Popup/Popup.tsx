@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Remove } from 'components/Basic/Icon/IconsSvg';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Portal } from 'components/Basic/Portal/Portal';
@@ -52,7 +51,7 @@ export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButt
                             className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-0 bg-creamWhite text-xs text-grey no-underline outline-none"
                             onClick={onClickCloseActionHandler}
                         >
-                            <Icon icon={<Remove />} className="w-6 text-primary" />
+                            <Remove className="w-6 text-primary" />
                         </button>
                     </div>
                 )}

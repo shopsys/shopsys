@@ -1,6 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -82,7 +81,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
 
                     <div className="mt-6 flex items-center justify-between rounded border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline vl:hover:-translate-x-1 vl:hover:shadow-lg">
                         <div className="flex flex-row items-center text-lg text-primary">
-                            <Icon icon={<Chat />} className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
+                            <Chat className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
                             <ExtendedNextLink
                                 href={contactUrl}
                                 passHref

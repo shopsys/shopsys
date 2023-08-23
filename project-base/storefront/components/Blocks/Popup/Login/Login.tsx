@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Warning } from 'components/Basic/Icon/IconsSvg';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
@@ -96,7 +95,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                                 </Button>
                             </div>
                             <div className="flex items-center gap-1 whitespace-nowrap rounded border-primary py-2 px-2 text-sm text-primary lg:mt-5 lg:border-2 lg:px-3 lg:py-3">
-                                <Icon icon={<Warning />} className=" h-5 w-9 text-red" />
+                                <Warning className=" h-5 w-9 text-red" />
                                 <ExtendedNextLink href={resetPasswordUrl} type="static">
                                     <div className="block text-sm text-primary underline hover:no-underline">
                                         {t('Lost your password?')}

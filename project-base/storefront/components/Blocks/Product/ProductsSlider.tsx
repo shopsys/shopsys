@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { RefObject, createRef, useEffect, useRef, useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
@@ -94,6 +93,6 @@ const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title 
         onClick={onClick}
         disabled={isDisabled}
     >
-        <Icon className={twMergeCustom('rotate-90', type === 'next' && '-rotate-90')} icon={<Arrow />} />
+        <Arrow className={twMergeCustom('rotate-90', type === 'next' && '-rotate-90')} />
     </button>
 );

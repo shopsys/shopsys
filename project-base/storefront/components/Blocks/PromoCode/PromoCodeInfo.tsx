@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Cross } from 'components/Basic/Icon/IconsSvg';
 import useTranslation from 'next-translate/useTranslation';
 
@@ -23,8 +22,7 @@ export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallbac
             </div>
             <div className="flex items-center font-bold" data-testid={TEST_IDENTIFIER + '-code'}>
                 {promoCode}
-                <Icon
-                    icon={<Cross />}
+                <Cross
                     onClick={onRemovePromoCodeHandler}
                     className="mr-1 w-4 cursor-pointer text-greyDark hover:text-primary"
                 />

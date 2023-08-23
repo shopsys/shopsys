@@ -1,5 +1,5 @@
 import useTranslation from 'next-translate/useTranslation';
-import { MenuIconicItemLink, MenuIconicItemIcon, MenuIconicSubItemLink } from './MenuIconicElements';
+import { MenuIconicItemLink, MenuIconicSubItemLink } from './MenuIconicElements';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useAuth } from 'hooks/auth/useAuth';
@@ -23,7 +23,7 @@ export const MenuIconicItemUserAuthenticated: FC = ({ dataTestId }) => {
                     className="rounded-t p-3 group-hover:bg-white group-hover:text-dark max-lg:hidden"
                     dataTestId={dataTestId + '-my-account'}
                 >
-                    <MenuIconicItemIcon icon={<User />} className="group-hover:text-dark" />
+                    <User className="mr-2 w-4 text-white group-hover:text-dark" />
                     {t('My account')}
                 </MenuIconicItemLink>
 
@@ -47,7 +47,7 @@ export const MenuIconicItemUserAuthenticated: FC = ({ dataTestId }) => {
             <div className="order-2 ml-1 flex h-9 w-9 cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
                 <ExtendedNextLink href={customerUrl} type="static">
                     <div className="relative flex h-full w-full items-center justify-center text-white transition-colors">
-                        <MenuIconicItemIcon icon={<User />} className="mr-0" />
+                        <User className="w-4 text-white" />
                     </div>
                 </ExtendedNextLink>
             </div>

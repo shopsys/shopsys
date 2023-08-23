@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Cross } from 'components/Basic/Icon/IconsSvg';
 import { FieldError } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
@@ -26,8 +25,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, dataTe
 
     return (
         <div className="relative mt-2" data-testid={getDataTestId(dataTestId)}>
-            <Icon
-                icon={<Cross />}
+            <Cross
                 className={twJoin(
                     'absolute flex w-4 text-red',
                     isInputOrTextArea && `right-5 -translate-y-1/2 ${isTextInputSmall ? '-top-8' : '-top-9'}`,

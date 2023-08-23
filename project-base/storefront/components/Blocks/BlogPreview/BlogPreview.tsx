@@ -1,6 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { BlogPreviewMain } from './BlogPreviewMain';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';
@@ -41,7 +40,7 @@ export const BlogPreview: FC = () => {
                     >
                         <>
                             {t('View all')}
-                            <Icon icon={<ArrowRight />} className="relative top-0 ml-2 text-xs text-creamWhite" />
+                            <ArrowRight className="relative top-0 ml-2 text-xs text-creamWhite" />
                         </>
                     </ExtendedNextLink>
                 )}
