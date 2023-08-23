@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { NavigationLeaf } from 'components/Layout/Header/Navigation/NavigationLeaf';
 import { CategoriesByColumnFragmentApi } from 'graphql/generated';
+import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type NavigationItemProps = {
@@ -11,10 +12,16 @@ type NavigationItemProps = {
 const TEST_IDENTIFIER = 'layout-header-navigation-navigationitem';
 
 export const NavigationItem: FC<NavigationItemProps> = (props) => {
+    const [isMenuOpened, setIsMenuOpened] = useState(false);
     const hasChildren = props.navigationItem.categoriesByColumns.length > 0;
 
     return (
-        <li className="group inline-block p-0 align-middle last:mr-0 lg:mr-6 xl:mr-12" data-testid={TEST_IDENTIFIER}>
+        <li
+            className="group inline-block p-0 align-middle last:mr-0 lg:mr-6 xl:mr-12"
+            data-testid={TEST_IDENTIFIER}
+            onMouseEnter={() => setIsMenuOpened(true)}
+            onMouseLeave={() => setIsMenuOpened(false)}
+        >
             <ExtendedNextLink
                 type="category"
                 href={props.navigationItem.link}
@@ -29,8 +36,9 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
                     )}
                 </>
             </ExtendedNextLink>
-            {hasChildren && (
-                <div className="pointer-events-none absolute left-0 right-0 z-menu block bg-white py-12 px-14 opacity-0 shadow-md group-hover:pointer-events-auto group-hover:opacity-100">
+
+            {hasChildren && isMenuOpened && (
+                <div className="absolute left-0 right-0 z-menu block bg-white py-12 px-14 shadow-md">
                     <div className="-ml-11 flex">
                         <NavigationLeaf columnCategories={props.navigationItem.categoriesByColumns} />
                     </div>
