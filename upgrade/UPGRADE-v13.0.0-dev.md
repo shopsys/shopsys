@@ -31,3 +31,5 @@ There you can find links to upgrade notes for other versions too.
         - after update add this to your migration: `$this->sql('ALTER TABLE stores DROP COLUMN opening_hours');`
 - change url for listing personal detail from email ([#2725](https://github.com/shopsys/shopsys/pull/2725))
     - see #project-base-diff to update your project
+- fix product video UX ([#2746](https://github.com/shopsys/shopsys/pull/2746))
+    - see #project-base-diff to update your project

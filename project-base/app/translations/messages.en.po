@@ -583,9 +583,6 @@ msgstr ""
 msgid "Do you really want to remove this blog article?"
 msgstr ""
 
-msgid "Do you really want to remove this blog category?"
-msgstr ""
-
 msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr ""
 
@@ -2248,10 +2245,10 @@ msgstr ""
 msgid "You have to set redirect code for redirect."
 msgstr ""
 
-msgid "Youtube URL"
+msgid "Youtube ID"
 msgstr ""
 
-msgid "Youtube URL ID"
+msgid "Youtube URL"
 msgstr ""
 
 msgid "blog articles"

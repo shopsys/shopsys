@@ -583,9 +583,6 @@ msgstr "Opravdu chcete smazat tuto skupinu práv pro administrátora?"
 msgid "Do you really want to remove this blog article?"
 msgstr "Opravdu chcete odebrat tento článek blogu?"
 
-msgid "Do you really want to remove this blog category?"
-msgstr "Opravdu chcete odebrat tuto rubriku blogu?"
-
 msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr "Opravdu chcete smazat tuto kategorii i s jejich SEO mixy?"
 
@@ -2248,11 +2245,11 @@ msgstr "Úspěšně jste zaplatili objednávku."
 msgid "You have to set redirect code for redirect."
 msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
 
+msgid "Youtube ID"
+msgstr ""
+
 msgid "Youtube URL"
 msgstr "Youtube URL"
-
-msgid "Youtube URL ID"
-msgstr "Youtube URL ID"
 
 msgid "blog articles"
 msgstr "článků blogu"
