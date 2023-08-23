@@ -130,16 +130,16 @@ export const cache = cacheExchange({
                 invalidateFields(cache, ['currentCustomerUser']);
             },
             AddToCart(result, args: AddToCartMutationVariablesApi, cache) {
-                const newCart =
+                const addToCartResult =
                     typeof result.AddToCart !== 'undefined' ? (result.AddToCart as AddToCartResultApi) : undefined;
-                manuallyUpdateCartFragment(cache, newCart?.cart, args.input.cartUuid);
+                manuallyUpdateCartFragment(cache, addToCartResult?.cart, addToCartResult?.cart.uuid || null);
             },
             AddOrderItemsToCart(result, args: AddOrderItemsToCartMutationVariablesApi, cache) {
                 const newCart =
                     typeof result.AddOrderItemsToCart !== 'undefined'
                         ? (result.AddOrderItemsToCart as CartApi)
                         : undefined;
-                manuallyUpdateCartFragment(cache, newCart, args.input.cartUuid);
+                manuallyUpdateCartFragment(cache, newCart, newCart?.uuid || null);
             },
             ChangeTransportInCart(result, args: ChangeTransportInCartMutationVariablesApi, cache) {
                 const newCart =
@@ -243,10 +243,10 @@ const invalidateFields = (cache: Cache, fields: string[]): void => {
 const manuallyUpdateCartFragment = (cache: Cache, newCart: CartApi | undefined, cartUuid: string | null) => {
     if (newCart) {
         cache.updateQuery({ query: CartQueryDocumentApi, variables: { cartUuid } }, (data) => {
-            if (data) {
-                data.cart = newCart;
-            }
-            return data;
+            const updatedData = data || { __typename: 'Cart', cart: null };
+            updatedData.cart = newCart;
+
+            return updatedData;
         });
     }
 };
