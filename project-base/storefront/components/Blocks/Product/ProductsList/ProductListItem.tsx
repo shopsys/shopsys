@@ -102,6 +102,7 @@ export const ProductListItem = forwardRef<HTMLDivElement, ProductItemProps>(
                             <ProductAvailableStoresCount
                                 isMainVariant={product.isMainVariant}
                                 availableStoresCount={product.availableStoresCount}
+                                className="mb-3"
                             />
                             <ProductExposedStoresCount
                                 isMainVariant={product.isMainVariant}

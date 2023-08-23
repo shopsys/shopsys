@@ -26,4 +26,7 @@ fragment CategoryDetailFragment on Category {
     }
     seoTitle
     seoMetaDescription
+    bestsellers {
+        ...ListedProductFragment
+    }
 }

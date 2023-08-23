@@ -1,4 +1,5 @@
 import useTranslation from 'next-translate/useTranslation';
+import { twMergeCustom } from 'helpers/twMerge';
 
 type ProductExposedStoresCountProps = {
     isMainVariant: boolean;
@@ -10,6 +11,7 @@ const TEST_IDENTIFIER = 'blocks-product-exposed';
 export const ProductExposedStoresCount: FC<ProductExposedStoresCountProps> = ({
     exposedStoresCount,
     isMainVariant,
+    className,
 }) => {
     const { t } = useTranslation();
 
@@ -18,7 +20,7 @@ export const ProductExposedStoresCount: FC<ProductExposedStoresCountProps> = ({
     }
 
     return (
-        <div className="mb-3 text-sm text-black" data-testid={TEST_IDENTIFIER}>
+        <div className={twMergeCustom('text-sm text-black', className)} data-testid={TEST_IDENTIFIER}>
             {t('You can check this item in {{ count }} stores', { count: exposedStoresCount })}
         </div>
     );

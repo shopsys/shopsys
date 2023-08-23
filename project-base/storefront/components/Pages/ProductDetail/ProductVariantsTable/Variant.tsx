@@ -57,6 +57,7 @@ export const Variant: FC<VariantProps> = ({
                     <ProductAvailableStoresCount
                         isMainVariant={false}
                         availableStoresCount={variant.availableStoresCount}
+                        className="mb-3"
                     />
                     <ProductExposedStoresCount isMainVariant={false} exposedStoresCount={variant.exposedStoresCount} />
                 </Cell>
