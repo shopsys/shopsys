@@ -1,6 +1,6 @@
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Instagram, Youtube } from 'components/Basic/Icon/IconsSvg';
+import { IconImage } from 'components/Basic/Icon/IconImage';
 import useTranslation from 'next-translate/useTranslation';
 
 export const FooterContact: FC = () => {
@@ -17,7 +17,7 @@ export const FooterContact: FC = () => {
                     <Instagram className="w-8 text-white" />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Facebook">
-                    <Icon icon="facebook" className="w-8" alt={t('Facebook')} />
+                    <IconImage icon="facebook" className="w-8" alt={t('Facebook')} />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Youtube">
                     <Youtube className="w-11 text-[#d93738]" />
@@ -26,10 +26,10 @@ export const FooterContact: FC = () => {
 
             <div className="mt-4 flex flex-wrap justify-center gap-5">
                 <FooterContactLangsItem href="#" text={t('Czechia')}>
-                    <Icon icon="cz" width={24} height={16} alt={t('Czechia')} />
+                    <IconImage icon="cz" width={24} height={16} alt={t('Czechia')} />
                 </FooterContactLangsItem>
                 <FooterContactLangsItem href="#" text={t('Slovakia')}>
-                    <Icon icon="sk" width={24} height={16} alt={t('Slovakia')} />
+                    <IconImage icon="sk" width={24} height={16} alt={t('Slovakia')} />
                 </FooterContactLangsItem>
             </div>
         </>

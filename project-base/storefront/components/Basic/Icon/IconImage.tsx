@@ -3,14 +3,14 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, never, 'onClick' | 'title'>;
 
-type IconProps = NativeProps & {
+type IconImageProps = NativeProps & {
     icon: string;
     alt: string | undefined;
     width?: number;
     height?: number;
 };
 
-export const Icon: FC<IconProps> = ({ icon, height, width, ...props }) => {
+export const IconImage: FC<IconImageProps> = ({ icon, height, width, ...props }) => {
     return (
         <img
             src={`/icons/${icon}.png`}
