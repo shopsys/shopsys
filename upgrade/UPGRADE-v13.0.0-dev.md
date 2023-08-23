@@ -33,3 +33,5 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - fix product video UX ([#2746](https://github.com/shopsys/shopsys/pull/2746))
     - see #project-base-diff to update your project
+- fix filtering in ReadyCategorySeoMix ([#2747](https://github.com/shopsys/shopsys/pull/2747))
+    - see #project-base-diff to update your project
