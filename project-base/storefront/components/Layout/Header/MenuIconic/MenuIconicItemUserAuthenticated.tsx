@@ -23,7 +23,7 @@ export const MenuIconicItemUserAuthenticated: FC = ({ dataTestId }) => {
                     className="rounded-t p-3 group-hover:bg-white group-hover:text-dark max-lg:hidden"
                     dataTestId={dataTestId + '-my-account'}
                 >
-                    <UserIcon className="mr-2 w-4 text-white group-hover:text-dark" />
+                    <UserIcon className="w-4 text-white group-hover:text-dark" />
                     {t('My account')}
                 </MenuIconicItemLink>
 

@@ -17,7 +17,7 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
 
     return (
         <li
-            className="group inline-block p-0 align-middle last:mr-0 lg:mr-6 xl:mr-12"
+            className="group"
             data-testid={TEST_IDENTIFIER}
             onMouseEnter={() => setIsMenuOpened(true)}
             onMouseLeave={() => setIsMenuOpened(false)}

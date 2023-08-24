@@ -3,11 +3,7 @@ import { forwardRef } from 'react';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 
 export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, dataTestId, title }) => (
-    <li
-        className={twMergeCustom('relative mr-5 flex last:mr-0 xl:mr-8', className)}
-        data-testid={dataTestId}
-        title={title}
-    >
+    <li className={className} data-testid={dataTestId} title={title}>
         {children}
     </li>
 );
@@ -36,6 +32,9 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, h
     );
 };
 
+const menuIconicItemLinkTwClass =
+    'flex items-center justify-center py-4 px-3 gap-2 rounded-tr-none text-sm text-white no-underline transition-colors hover:text-white hover:no-underline';
+
 export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, className, dataTestId, href, title, onClick }, _) => {
@@ -44,10 +43,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
                 <ExtendedNextLink
                     href={href}
                     type="static"
-                    className={twMergeCustom(
-                        'flex items-center justify-center rounded-tr-none text-sm text-white no-underline transition-colors hover:text-white hover:no-underline',
-                        className,
-                    )}
+                    className={twMergeCustom(menuIconicItemLinkTwClass, className)}
                     onClick={onClick}
                     data-testid={dataTestId}
                     title={title}
@@ -58,17 +54,14 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
         }
 
         return (
-            <span
-                className={twMergeCustom(
-                    'flex items-center justify-center rounded-tr-none text-sm text-white no-underline transition-colors hover:text-white hover:no-underline',
-                    className,
-                )}
+            <div
+                className={twMergeCustom(menuIconicItemLinkTwClass, className)}
                 title={title}
                 onClick={onClick}
                 data-testid={dataTestId}
             >
                 {children}
-            </span>
+            </div>
         );
     },
 );

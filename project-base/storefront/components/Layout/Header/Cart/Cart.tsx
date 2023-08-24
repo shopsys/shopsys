@@ -48,25 +48,23 @@ export const Cart: FC = ({ className }) => {
                 href={cartUrl}
                 type="static"
                 className={twJoin(
-                    'hidden items-center rounded bg-orangeLight py-4 pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
+                    'hidden items-center gap-x-4 rounded bg-orangeLight py-4 pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
                 )}
                 data-testid={TEST_IDENTIFIER + 'block'}
             >
                 <>
                     <span className="relative flex text-lg">
-                        <CartIcon className="w-5" />
-                        <CartCount dataTestId={TEST_IDENTIFIER + 'itemcount'}>{cart?.items.length ?? 0}</CartCount>
+                        <CartIcon className="w-6 lg:w-5" />
+                        <CartCount>{cart?.items.length ?? 0}</CartCount>
                     </span>
-                    <span
-                        className="ml-4 hidden text-sm font-bold lg:block"
-                        data-testid={TEST_IDENTIFIER + 'totalprice'}
-                    >
+                    <span className="hidden text-sm font-bold lg:block" data-testid={TEST_IDENTIFIER + 'totalprice'}>
                         {formatPrice(cart?.totalItemsPrice.priceWithVat ?? 0, {
                             explicitZero: true,
                         })}
                     </span>
                 </>
             </ExtendedNextLink>
+
             <div
                 className={twJoin(
                     'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 p-5 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded lg:rounded-tr-none lg:bg-white lg:opacity-0 lg:shadow-md',
@@ -103,14 +101,15 @@ export const Cart: FC = ({ className }) => {
                     </>
                 )}
             </div>
-            <div className="flex h-10 w-10 cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
+
+            <div className="flex cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
                 <ExtendedNextLink
                     href={cartUrl}
                     type="static"
-                    className="relative flex h-full w-full items-center justify-center text-white no-underline transition-colors hover:text-white hover:no-underline"
+                    className="relative flex h-full w-full items-center justify-center p-3 text-white no-underline transition-colors hover:text-white hover:no-underline"
                 >
                     <>
-                        <CartIcon className="w-5 text-white" />
+                        <CartIcon className="w-6 text-white" />
                         <CartCount>{cart?.items.length ?? 0}</CartCount>
                     </>
                 </ExtendedNextLink>

@@ -1,7 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
@@ -22,34 +21,32 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumb, type }) => {
     }
 
     return (
-        <Webline>
+        <div
+            className="mb-8 flex items-center gap-2 border-b-2 border-greyLighter py-3 lg:border-none lg:py-0"
+            data-testid={TEST_IDENTIFIER}
+        >
             <BreadcrumbsMetadata breadcrumbs={breadcrumb} />
-            <div
-                className="-mx-5 mb-9 flex items-center border-b-2 border-greyLighter py-3 px-5 lg:mx-0 lg:border-none lg:p-0"
-                data-testid={TEST_IDENTIFIER}
-            >
-                <ArrowIcon className="mr-3 w-3 rotate-90 text-greyLight lg:hidden" />
-                <BreadcrumbsLink href="/" dataTestId={TEST_IDENTIFIER + '-item-root'}>
-                    {t('Home page')}
-                </BreadcrumbsLink>
-                <BreadcrumbsSpan>/</BreadcrumbsSpan>
-                {breadcrumb.slice(0, breadcrumb.length - 1).map((breadcrumb, index) => (
-                    <Fragment key={index}>
-                        <BreadcrumbsLink
-                            href={breadcrumb.slug}
-                            type={type}
-                            dataTestId={TEST_IDENTIFIER + '-item-' + index}
-                        >
-                            {breadcrumb.name}
-                        </BreadcrumbsLink>
-                        <BreadcrumbsSpan>/</BreadcrumbsSpan>
-                    </Fragment>
-                ))}
-                <BreadcrumbsSpan dataTestId={TEST_IDENTIFIER + '-item-last'}>
-                    {breadcrumb[breadcrumb.length - 1].name}
-                </BreadcrumbsSpan>
-            </div>
-        </Webline>
+
+            <ArrowIcon className="mr-3 w-3 rotate-90 text-greyLight lg:hidden" />
+
+            <BreadcrumbsLink href="/" dataTestId={TEST_IDENTIFIER + '-item-root'}>
+                {t('Home page')}
+            </BreadcrumbsLink>
+
+            <BreadcrumbsSpan>/</BreadcrumbsSpan>
+            {breadcrumb.slice(0, breadcrumb.length - 1).map((breadcrumb, index) => (
+                <Fragment key={index}>
+                    <BreadcrumbsLink href={breadcrumb.slug} type={type} dataTestId={TEST_IDENTIFIER + '-item-' + index}>
+                        {breadcrumb.name}
+                    </BreadcrumbsLink>
+                    <BreadcrumbsSpan>/</BreadcrumbsSpan>
+                </Fragment>
+            ))}
+
+            <BreadcrumbsSpan dataTestId={TEST_IDENTIFIER + '-item-last'}>
+                {breadcrumb[breadcrumb.length - 1].name}
+            </BreadcrumbsSpan>
+        </div>
     );
 };
 
