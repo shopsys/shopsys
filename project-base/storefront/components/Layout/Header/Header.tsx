@@ -23,9 +23,7 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
 
     return (
         <div className="flex flex-wrap items-center pt-2 pb-3 lg:pt-4 vl:pt-6 vl:pb-4 " data-testid={TEST_IDENTIFIER}>
-            <div className="order-1 mr-auto flex flex-1 vl:mr-5 vl:flex-none xl:mr-8">
-                <Logo />
-            </div>
+            <Logo className="order-1 mr-auto flex flex-1 vl:mr-5 vl:flex-none xl:mr-8" />
             {simpleHeader ? (
                 <HeaderContact />
             ) : (

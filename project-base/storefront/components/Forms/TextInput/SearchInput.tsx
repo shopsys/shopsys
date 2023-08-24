@@ -1,29 +1,32 @@
-import { SearchIcon } from 'components/Basic/Icon/IconsSvg';
+import { CloseIcon, SearchIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
-import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import useTranslation from 'next-translate/useTranslation';
 import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'helpers/twMerge';
 
-type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value', never>;
+type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, 'onChange', never>;
 
 type SearchInputProps = NativeProps & {
+    value: string;
     label: string;
     isSearchButtonDisabled?: boolean;
-    onEnterPressCallback?: () => void;
     isLoading: boolean;
+    onClear: () => void;
+    onEnterPressCallback?: () => void;
 };
+
+const TEST_IDENTIFIER = 'layout-header-search-autocomplete-input';
 
 export const SearchInput: FC<SearchInputProps> = ({
     label,
     isSearchButtonDisabled,
-    onChange,
     value,
-    onEnterPressCallback,
-    dataTestId,
     isLoading,
     className,
+    onChange,
+    onClear,
+    onEnterPressCallback,
 }) => {
     const { t } = useTranslation();
 
@@ -34,34 +37,45 @@ export const SearchInput: FC<SearchInputProps> = ({
     };
 
     return (
-        <LabelWrapper label={label} isWithoutLabel htmlFor={dataTestId} inputType="text-input">
+        <div className="relative w-full">
             <input
-                id={dataTestId}
+                id={TEST_IDENTIFIER}
                 onChange={onChange}
                 value={value}
                 placeholder={label}
                 type="search"
+                autoComplete="off"
                 onKeyUp={enterKeyPressHandler}
-                data-testid={dataTestId}
+                data-testid={TEST_IDENTIFIER}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer mb-0 h-12 w-full rounded border-2 border-white bg-white pr-11 pl-4 text-dark placeholder:text-grey placeholder:opacity-100 focus:outline-none [&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner [&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none [&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none',
+                    'peer mb-0 h-12 w-full rounded border-2 border-white bg-white pr-20 pl-4 text-dark placeholder:text-grey placeholder:opacity-100 focus:outline-none [&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner [&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none [&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none',
+                    value ? 'pr-20' : 'pr-12',
                     className,
                 )}
             />
-            <button
-                className="absolute right-4 top-3 cursor-pointer border-none"
-                type="submit"
-                disabled={isSearchButtonDisabled}
-                title={t('Search')}
-            >
-                <SearchIcon className="w-5" />
-            </button>
-            {isLoading && (
-                <div className="absolute top-[calc(50%-16px)] right-4 flex h-8 w-8 items-center justify-center">
-                    <Loader className="w-8 text-white" />
+
+            {isLoading ? (
+                <Loader className="absolute right-4 top-1/2 w-5 -translate-y-1/2 text-dark" />
+            ) : (
+                <button
+                    className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer border-none"
+                    type="submit"
+                    disabled={isSearchButtonDisabled}
+                    title={t('Search')}
+                >
+                    <SearchIcon className="w-5" />
+                </button>
+            )}
+
+            {!!value && (
+                <div
+                    className="absolute right-11 top-1/2 flex -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-greyLighter p-2"
+                    onClick={onClear}
+                >
+                    <CloseIcon />
                 </div>
             )}
-        </LabelWrapper>
+        </div>
     );
 };

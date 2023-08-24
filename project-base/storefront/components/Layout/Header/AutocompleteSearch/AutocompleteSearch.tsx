@@ -1,142 +1,99 @@
-import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './Autocomplete';
-import { CloseIcon } from 'components/Basic/Icon/IconsSvg';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useAutocompleteSearchQueryApi } from 'graphql/generated';
+import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/hooks/useGtmAutocompleteResultsViewEvent';
 import { useDebounce } from 'hooks/helpers/useDebounce';
 import useTranslation from 'next-translate/useTranslation';
-import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { ChangeEventHandler, useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { Overlay } from 'components/Basic/Overlay/Overlay';
+import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './AutocompleteSearchPopup';
 
-const Autocomplete = dynamic(() => import('./Autocomplete').then((component) => component.Autocomplete));
+const AutocompleteSearchPopup = dynamic(() =>
+    import('./AutocompleteSearchPopup').then((component) => component.AutocompleteSearchPopup),
+);
 
 export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
-const TEST_IDENTIFIER = 'layout-header-search-autocomplete-input';
 
 export const AutocompleteSearch: FC = () => {
     const router = useRouter();
-    const [autocompleteSearchQueryValue, setAutocompleteSearchQueryValue] = useState('');
-    const debouncedAutocompleteSearchQuery = useDebounce(autocompleteSearchQueryValue, 200);
-    const [hasAutocompleteSearchFocus, setAutocompleteSearchFocus] = useState(false);
-    const [{ data: autocompleteSearchData, fetching: areSearchResultsLoading }] = useAutocompleteSearchQueryApi({
-        variables: {
-            search: debouncedAutocompleteSearchQuery,
-            maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
-            maxProductCount: AUTOCOMPLETE_PRODUCT_LIMIT,
-        },
-        pause: debouncedAutocompleteSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH,
-        requestPolicy: 'network-only',
-    });
-
-    const autocompleteSearchInRef = useRef<HTMLDivElement>(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const [searchData, setSearchData] = useState<AutocompleteSearchQueryApi>();
+    const [searchQueryValue, setSearchQueryValue] = useState('');
+    const debouncedSearchQuery = useDebounce(searchQueryValue, 200);
     const { url } = useDomainConfig();
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
     const { t } = useTranslation();
-    const [isDesktop, setIsDesktop] = useState(false);
-    const { width } = useGetWindowSize();
 
-    useGtmAutocompleteResultsViewEvent(autocompleteSearchData, debouncedAutocompleteSearchQuery);
+    const isWithValidSearchQuery = searchQueryValue.length >= MINIMAL_SEARCH_QUERY_LENGTH;
+
+    const [{ data: fetchedSearchData, fetching: isFetchingSearchData }] = useAutocompleteSearchQueryApi({
+        variables: {
+            search: debouncedSearchQuery,
+            maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
+            maxProductCount: AUTOCOMPLETE_PRODUCT_LIMIT,
+        },
+        pause: debouncedSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH,
+        requestPolicy: 'network-only',
+    });
 
     useEffect(() => {
-        const onDocumentClickHandler: EventListener = (event) => {
-            if (autocompleteSearchInRef.current === null || !(event.target instanceof HTMLElement)) {
-                setAutocompleteSearchFocus(false);
-                return;
-            }
+        setSearchData(fetchedSearchData);
+    }, [fetchedSearchData]);
 
-            if (autocompleteSearchInRef.current.contains(event.target)) {
-                setAutocompleteSearchFocus(true);
-            } else {
-                setAutocompleteSearchFocus(false);
-            }
-        };
+    useEffect(() => {
+        if (!isWithValidSearchQuery) {
+            setSearchData(undefined);
+        }
+    }, [searchQueryValue]);
 
-        document.addEventListener('click', onDocumentClickHandler);
+    const isSearchResultsPopupVisible = isOpen && isWithValidSearchQuery && !!searchData;
 
-        return () => document.removeEventListener('click', onDocumentClickHandler);
-    }, []);
-
-    useResizeWidthEffect(
-        width,
-        desktopFirstSizes.tablet,
-        () => setIsDesktop(true),
-        () => setIsDesktop(false),
-    );
-
-    const onAutocompleteSearchHandler = useCallback(() => {
-        router.push({ pathname: searchUrl, query: { q: autocompleteSearchQueryValue } });
-    }, [router, autocompleteSearchQueryValue, searchUrl]);
-
-    const onChangeAutocompleteSearchQueryValueHandler: ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
-        setAutocompleteSearchQueryValue(event.currentTarget.value);
-    }, []);
+    useGtmAutocompleteResultsViewEvent(searchData, debouncedSearchQuery);
 
     return (
         <>
-            <div className="h-12 lg:relative">
+            <div
+                className={twJoin('relative flex w-full transition-all', isWithValidSearchQuery && 'z-[10002]')}
+                onFocus={() => setIsOpen(true)}
+            >
+                <SearchInput
+                    className="w-full border-2 border-white max-vl:border-primaryLight"
+                    label={t("Type what you're looking for")}
+                    onEnterPressCallback={() =>
+                        router.push({
+                            pathname: searchUrl,
+                            query: { q: searchQueryValue },
+                        })
+                    }
+                    value={searchQueryValue}
+                    isLoading={isFetchingSearchData}
+                    onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
+                    onClear={() => setSearchQueryValue('')}
+                />
+
                 <div
                     className={twJoin(
-                        'transition lg:absolute lg:left-0 lg:top-0 lg:z-[1] lg:max-h-[50px] lg:w-full',
-                        hasAutocompleteSearchFocus && 'lg:max-h-auto',
+                        'absolute left-0 -bottom-3 z-aboveOverlay flex w-full origin-top translate-y-full scale-y-90 flex-col gap-6 rounded bg-creamWhite p-5 px-7 pb-6 shadow-md transition-all lg:rounded',
+                        isSearchResultsPopupVisible
+                            ? 'pointer-events-auto scale-y-100 opacity-100'
+                            : 'pointer-events-none opacity-0',
                     )}
-                    ref={autocompleteSearchInRef}
                 >
-                    <div
-                        className={twJoin(
-                            'relative flex w-full transition-all lg:focus-within:w-[576px]',
-                            hasAutocompleteSearchFocus && 'z-[1021] lg:w-[576px]',
-                        )}
-                    >
-                        <SearchInput
-                            className={twJoin(
-                                'border-2',
-                                hasAutocompleteSearchFocus
-                                    ? 'max-vl:w-full max-vl:!border-primaryLight'
-                                    : 'border-white',
-                            )}
-                            label={t("Type what you're looking for")}
-                            dataTestId={TEST_IDENTIFIER}
-                            onEnterPressCallback={onAutocompleteSearchHandler}
-                            value={autocompleteSearchQueryValue}
-                            onChange={onChangeAutocompleteSearchQueryValueHandler}
-                            isLoading={areSearchResultsLoading}
+                    {isSearchResultsPopupVisible && (
+                        <AutocompleteSearchPopup
+                            autocompleteSearchResults={searchData}
+                            autocompleteSearchQueryValue={searchQueryValue}
+                            onClickLink={() => setIsOpen(false)}
                         />
-                        {hasAutocompleteSearchFocus && autocompleteSearchQueryValue.length > 0 && (
-                            <div
-                                className="absolute -top-8 right-0 flex h-10 w-16 min-w-[72px] -translate-y-1/2 cursor-pointer items-center justify-center rounded bg-orangeLight px-2 transition lg:right-11 lg:top-1/2 lg:h-5 lg:w-5 lg:min-w-fit lg:rounded-full lg:bg-greyLighter lg:px-0"
-                                onClick={() => setAutocompleteSearchQueryValue('')}
-                            >
-                                {isDesktop ? (
-                                    <CloseIcon />
-                                ) : (
-                                    <>
-                                        <div className="flex w-4 items-center justify-center">
-                                            <CloseIcon />
-                                        </div>
-                                        <span className="ml-1 w-7 text-xs">{t('Close')}</span>
-                                    </>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                    <Autocomplete
-                        autocompleteSearchResults={autocompleteSearchData}
-                        isAutocompleteActive={
-                            hasAutocompleteSearchFocus &&
-                            autocompleteSearchQueryValue.length >= MINIMAL_SEARCH_QUERY_LENGTH &&
-                            autocompleteSearchData !== undefined
-                        }
-                        autocompleteSearchQueryValue={autocompleteSearchQueryValue}
-                    />
+                    )}
                 </div>
             </div>
+
+            <Overlay isActive={isSearchResultsPopupVisible} onClick={() => setIsOpen(false)} />
         </>
     );
 };
