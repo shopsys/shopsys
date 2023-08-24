@@ -1,12 +1,12 @@
 import { link, url } from 'fixtures/demodata';
 
-export function clickOnCategoryFromMenu(categoryName: string) {
+export const clickOnCategoryFromMenu = (categoryName: string) => {
     cy.get('[data-testid="layout-header-navigation"] [data-testid="layout-header-navigation-navigationitem"]')
         .contains(categoryName)
         .click();
 }
 
-export function searchProductByNameTypeEnterAndCheckResult(productName: string, productCatnum: string) {
+export const searchProductByNameTypeEnterAndCheckResult = (productName: string, productCatnum: string) => {
     const productListSelector = '[data-testid="blocks-product-list-listeditem-' + productCatnum;
 
     typeToSearchInput(productName);
@@ -17,14 +17,14 @@ export function searchProductByNameTypeEnterAndCheckResult(productName: string, 
     cy.get(productListSelector + '-name').contains(productName);
 }
 
-export function typeToSearchInput(searchText: string) {
+export const typeToSearchInput = (searchText: string) => {
     cy.get('[data-testid="layout-header-search-autocomplete-input"]').type(searchText);
 }
 
-export function clickOnUserIconInHeader() {
+export const clickOnUserIconInHeader = () => {
     cy.get('[data-testid="layout-header-menuiconic-login-link-popup"]').click();
 }
 
-export function checkUserIsLoggedIn() {
+export const checkUserIsLoggedIn = () => {
     cy.get('[data-testid="layout-header-menuiconic-login-my-account"]').contains(link.myAccount);
 }

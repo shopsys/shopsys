@@ -1,6 +1,6 @@
 import { textCode, url } from 'fixtures/demodata';
 
-export function checkProductInCart(productCatnum: string, productName: string) {
+export const checkProductInCart = (productCatnum: string, productName: string) => {
     const cartProductItemSelector =
         '[data-testid="pages-cart-list-item-' +
         productCatnum +
@@ -10,8 +10,8 @@ export function checkProductInCart(productCatnum: string, productName: string) {
     cy.get(cartProductItemSelector).contains(productName);
     cy.get(cartProductItemSelector).contains(productCatnumWebString);
     cy.url().should('contain', url.cart);
-}
+};
 
-export function checkTotalPriceInCart(totalPrice: string) {
+export const checkTotalPriceInCart = (totalPrice: string) => {
     cy.get('[data-testid="pages-cart-cartpreview-total"]').contains(totalPrice);
-}
+};

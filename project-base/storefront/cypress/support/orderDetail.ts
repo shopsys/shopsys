@@ -1,9 +1,9 @@
-export function checkBasicInformationAndNoteInOrderDetail(note: string) {
+export const checkBasicInformationAndNoteInOrderDetail = (note: string) => {
     cy.get('[data-testid="pages-customer-orderdetail-creationDate"]');
     cy.get('[data-testid="pages-customer-orderdetail-note"]').contains(note);
-}
+};
 
-export function checkBillingAdressInOrderDetail(
+export const checkBillingAdressInOrderDetail = (
     firtName: string,
     lastName: string,
     email: string,
@@ -12,7 +12,7 @@ export function checkBillingAdressInOrderDetail(
     city: string,
     postCode: string,
     country: string,
-) {
+) => {
     cy.get('[data-testid="pages-customer-orderdetail-firstName"]').contains(firtName);
     cy.get('[data-testid="pages-customer-orderdetail-lastName"]').contains(lastName);
     cy.get('[data-testid="pages-customer-orderdetail-email"]').contains(email);
@@ -21,9 +21,9 @@ export function checkBillingAdressInOrderDetail(
     cy.get('[data-testid="pages-customer-orderdetail-city"]').contains(city);
     cy.get('[data-testid="pages-customer-orderdetail-postcode"]').contains(postCode);
     cy.get('[data-testid="pages-customer-orderdetail-country"]').contains(country);
-}
+};
 
-export function checkDeliveryAdressInOrderDetail(
+export const checkDeliveryAdressInOrderDetail = (
     firtName: string,
     lastName: string,
     phone: string,
@@ -31,7 +31,7 @@ export function checkDeliveryAdressInOrderDetail(
     city: string,
     postCode: string,
     country: string,
-) {
+) => {
     cy.get('[data-testid="pages-customer-orderdetail-deliveryFirstName"]').contains(firtName);
     cy.get('[data-testid="pages-customer-orderdetail-deliveryLastName"]').contains(lastName);
     cy.get('[data-testid="pages-customer-orderdetail-deliveryTelephone"]').contains(phone);
@@ -39,9 +39,9 @@ export function checkDeliveryAdressInOrderDetail(
     cy.get('[data-testid="pages-customer-orderdetail-deliveryCity"]').contains(city);
     cy.get('[data-testid="pages-customer-orderdetail-deliveryPostcode"]').contains(postCode);
     cy.get('[data-testid="pages-customer-orderdetail-deliveryCountry"]').contains(country);
-}
+};
 
-export function checkOneItemInOrderDetail(
+export const checkOneItemInOrderDetail = (
     rowNumber: number,
     itemName: string,
     itemUnitPrice: string,
@@ -49,7 +49,7 @@ export function checkOneItemInOrderDetail(
     vat: string,
     itemPriceWithoutVat: string,
     itemPriceVat: string,
-) {
+) => {
     const itemNameSelector =
         '[data-testid="pages-customer-orderdetail-item-' +
         rowNumber +
@@ -87,4 +87,4 @@ export function checkOneItemInOrderDetail(
     cy.get(itemVatSelector).contains(vat);
     cy.get(itemPriceWithoutVatSelector).contains(itemPriceWithoutVat);
     cy.get(itemPriceVatSelector).contains(itemPriceVat);
-}
+};
