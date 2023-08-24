@@ -1,8 +1,8 @@
 import { products, totalPrice, url } from 'fixtures/demodata';
-import { checkProductInCart, checkTotalPriceInCart } from 'integration/Functions/cart';
-import { checkProductAndGoToCartFromCartPopupWindow } from 'integration/Functions/cartPopupWindow';
-import { searchProductByNameTypeEnterAndCheckResult } from 'integration/Functions/header';
-import { addProductToCartFromProductList } from 'integration/Functions/productList';
+import { checkProductInCart, checkTotalPriceInCart } from 'support/cart';
+import { checkProductAndGoToCartFromCartPopupWindow } from 'support/cartPopupWindow';
+import { searchProductByNameTypeEnterAndCheckResult } from 'support/header';
+import { addProductToCartFromProductList } from 'support/productList';
 
 it('Search results - Adding product to cart from search results list and check product in cart', () => {
     cy.visit('/');

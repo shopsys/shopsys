@@ -10,35 +10,35 @@ import {
     transport,
     url,
 } from 'fixtures/demodata';
-import { checkProductAndGoToCartFromCartPopupWindow } from 'integration/Functions/cartPopupWindow';
-import { saveCookiesOptionsInCookiesBar } from 'integration/Functions/cookies';
-import { addProductToCartFromPromotedProductsOnHomepage } from 'integration/Functions/homepage';
+import { checkProductInCart } from 'support/cart';
+import { checkProductAndGoToCartFromCartPopupWindow } from 'support/cartPopupWindow';
+import { saveCookiesOptionsInCookiesBar } from 'support/cookies';
+import { addProductToCartFromPromotedProductsOnHomepage } from 'support/homepage';
 import {
     checkBasicInformationAndNoteInOrderDetail,
     checkBillingAdressInOrderDetail,
     checkDeliveryAdressInOrderDetail,
     checkOneItemInOrderDetail,
-} from 'integration/Functions/orderDetail';
+} from 'support/orderDetail';
 import {
-    checkOrderSummaryWithOneItem,
-    checkTransportPrice,
-    choosePayment,
-    chooseTransportToHome,
     continueToSecondStep,
+    checkTransportPrice,
+    chooseTransportToHome,
+    choosePayment,
+    checkOrderSummaryWithOneItem,
     continueToThirdStep,
-} from 'integration/Functions/orderSecondStep';
+} from 'support/orderSecondStep';
 import {
     checkFinishOrderPageAsUnregistredCustomer,
     clickOnOrderDetailButtonOnThankYouPage,
-} from 'integration/Functions/orderThankYouPage';
+} from 'support/orderThankYouPage';
 import {
-    clickOnSendOrderButton,
-    fillBillingAdressInThirdStep,
-    fillCustomerInformationInThirdStep,
     fillEmailInThirdStep,
+    fillCustomerInformationInThirdStep,
+    fillBillingAdressInThirdStep,
     fillInNoteInThirdStep,
-} from 'integration/Functions/orderThirdStep';
-import { checkProductInCart } from 'integration/Functions/cart';
+    clickOnSendOrderButton,
+} from 'support/orderThirdStep';
 
 it('Creating an order as unlogged user with one item, Czech post and cash on delivery', () => {
     cy.visit('/');

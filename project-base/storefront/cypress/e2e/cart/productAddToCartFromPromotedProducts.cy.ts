@@ -1,7 +1,7 @@
 import { products, totalPrice, url } from 'fixtures/demodata';
-import { checkProductInCart, checkTotalPriceInCart } from 'integration/Functions/cart';
-import { checkProductAndGoToCartFromCartPopupWindow } from 'integration/Functions/cartPopupWindow';
-import { addProductToCartFromPromotedProductsOnHomepage } from 'integration/Functions/homepage';
+import { checkProductInCart, checkTotalPriceInCart } from 'support/cart';
+import { checkProductAndGoToCartFromCartPopupWindow } from 'support/cartPopupWindow';
+import { addProductToCartFromPromotedProductsOnHomepage } from 'support/homepage';
 
 it('Homepage promoted products - Adding product to cart from promoted products on homepage and check product in cart', () => {
     cy.visit('/');

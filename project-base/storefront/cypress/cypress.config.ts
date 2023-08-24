@@ -8,7 +8,7 @@ export default defineConfig({
     videosFolder: 'videos',
     e2e: {
         baseUrl: 'http://127.0.0.1:8000/',
-        specPattern: 'integration/Tests/**/*.cy.ts',
+        specPattern: 'e2e/**/*.cy.ts',
         supportFile: 'support/index.ts',
     },
 });

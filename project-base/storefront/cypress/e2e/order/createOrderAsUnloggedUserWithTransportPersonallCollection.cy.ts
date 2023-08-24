@@ -11,36 +11,36 @@ import {
     transport,
     url,
 } from 'fixtures/demodata';
-import { checkProductInCart } from 'integration/Functions/cart';
-import { checkProductAndGoToCartFromCartPopupWindow } from 'integration/Functions/cartPopupWindow';
-import { saveCookiesOptionsInCookiesBar } from 'integration/Functions/cookies';
-import { addProductToCartFromPromotedProductsOnHomepage } from 'integration/Functions/homepage';
+import { checkProductInCart } from 'support/cart';
+import { checkProductAndGoToCartFromCartPopupWindow } from 'support/cartPopupWindow';
+import { saveCookiesOptionsInCookiesBar } from 'support/cookies';
+import { addProductToCartFromPromotedProductsOnHomepage } from 'support/homepage';
 import {
     checkBasicInformationAndNoteInOrderDetail,
     checkBillingAdressInOrderDetail,
     checkDeliveryAdressInOrderDetail,
     checkOneItemInOrderDetail,
-} from 'integration/Functions/orderDetail';
+} from 'support/orderDetail';
 import {
-    checkOrderSummaryWithOneItem,
-    checkSelectedStoreInTransportList,
-    checkTransportPrice,
-    choosePayment,
-    chooseTransportPersonalCollectionAndStore,
     continueToSecondStep,
+    checkTransportPrice,
+    chooseTransportPersonalCollectionAndStore,
+    checkSelectedStoreInTransportList,
+    choosePayment,
+    checkOrderSummaryWithOneItem,
     continueToThirdStep,
-} from 'integration/Functions/orderSecondStep';
+} from 'support/orderSecondStep';
 import {
     checkFinishOrderPageAsUnregistredCustomer,
     clickOnOrderDetailButtonOnThankYouPage,
-} from 'integration/Functions/orderThankYouPage';
+} from 'support/orderThankYouPage';
 import {
-    clickOnSendOrderButton,
-    fillBillingAdressInThirdStep,
-    fillCustomerInformationInThirdStep,
     fillEmailInThirdStep,
+    fillCustomerInformationInThirdStep,
+    fillBillingAdressInThirdStep,
     fillInNoteInThirdStep,
-} from 'integration/Functions/orderThirdStep';
+    clickOnSendOrderButton,
+} from 'support/orderThirdStep';
 
 it('Creating an order as unlogged user with one item, Personal collection and Cash', () => {
     cy.visit('/');

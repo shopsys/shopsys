@@ -1,5 +1,5 @@
 import { customer1 } from 'fixtures/demodata';
-import { loginFromHeader } from 'integration/Functions/login';
+import { loginFromHeader } from 'support/login';
 
 it('Login from header', () => {
     cy.visit('/');
