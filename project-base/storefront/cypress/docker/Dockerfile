@@ -4,4 +4,6 @@ WORKDIR /app
 
 COPY --chown=node:node . /app
 
+USER node
+
 CMD npm ci && npx cypress run
