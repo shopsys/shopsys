@@ -62,7 +62,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                 {title}
                 <FilterGroupIcon isOpen={!isGroupCollapsed} />
             </FilterGroupTitle>
-            {isGroupCollapsed && (
+            {!isGroupCollapsed && (
                 <FilterGroupContent>
                     {isCheckboxType && (
                         <>
