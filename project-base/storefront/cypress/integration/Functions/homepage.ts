@@ -1,4 +1,4 @@
-export function productClickFromPromotedProductsOnHomepage(productCatnum, productName) {
+export function productClickFromPromotedProductsOnHomepage(productCatnum: string, productName: string) {
     const sliderProductItemSelector = `
     [data-testid="blocks-product-slider-promoted-products"] 
     [data-testid="blocks-product-list-listeditem-${productCatnum}-name"]
@@ -7,7 +7,7 @@ export function productClickFromPromotedProductsOnHomepage(productCatnum, produc
     cy.get(sliderProductItemSelector).contains(productName).click();
 }
 
-export function addProductToCartFromPromotedProductsOnHomepage(productCatnum) {
+export function addProductToCartFromPromotedProductsOnHomepage(productCatnum: string) {
     const sliderProductItemSelector = `
     [data-testid="blocks-product-slider-promoted-products"] 
     [data-testid="blocks-product-list-listeditem-${productCatnum}"] 

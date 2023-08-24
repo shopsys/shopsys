@@ -1,7 +1,7 @@
-import { products, totalPrice, url } from '../../../fixtures/demodata';
-import { checkProductInCart, checkTotalPriceInCart } from '../../Functions/cart';
-import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/cartPopupWindow';
-import { addProductVariantToCartFromProductDetail } from '../../Functions/productDetail';
+import { products, totalPrice, url } from 'fixtures/demodata';
+import { checkProductInCart, checkTotalPriceInCart } from 'integration/Functions/cart';
+import { checkProductAndGoToCartFromCartPopupWindow } from 'integration/Functions/cartPopupWindow';
+import { addProductVariantToCartFromProductDetail } from 'integration/Functions/productDetail';
 
 it('Product variant - Adding variant product to cart from product detail and check product in cart', () => {
     cy.visit(products.philips32PFL4308.url);

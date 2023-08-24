@@ -1,4 +1,4 @@
-import { link, placeholder, url } from '../../fixtures/demodata';
+import { link, placeholder, url } from 'fixtures/demodata';
 
 export function checkFinishOrderPageAsUnregistredCustomer() {
     cy.url().should('contain', url.order.thanYouPage);

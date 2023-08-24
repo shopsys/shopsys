@@ -1,7 +1,7 @@
-import { products, totalPrice, url } from '../../../fixtures/demodata';
-import { checkProductInCart, checkTotalPriceInCart } from '../../Functions/cart';
-import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/cartPopupWindow';
-import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/homepage';
+import { products, totalPrice, url } from 'fixtures/demodata';
+import { checkProductInCart, checkTotalPriceInCart } from 'integration/Functions/cart';
+import { checkProductAndGoToCartFromCartPopupWindow } from 'integration/Functions/cartPopupWindow';
+import { addProductToCartFromPromotedProductsOnHomepage } from 'integration/Functions/homepage';
 
 it('Homepage promoted products - Adding product to cart from promoted products on homepage and check product in cart', () => {
     cy.visit('/');

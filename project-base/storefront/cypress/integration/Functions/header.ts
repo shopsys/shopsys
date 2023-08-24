@@ -1,12 +1,12 @@
-import { link, url } from '../../fixtures/demodata';
+import { link, url } from 'fixtures/demodata';
 
-export function clickOnCategoryFromMenu(categoryName) {
+export function clickOnCategoryFromMenu(categoryName: string) {
     cy.get('[data-testid="layout-header-navigation"] [data-testid="layout-header-navigation-navigationitem"]')
         .contains(categoryName)
         .click();
 }
 
-export function searchProductByNameTypeEnterAndCheckResult(productName, productCatnum) {
+export function searchProductByNameTypeEnterAndCheckResult(productName: string, productCatnum: string) {
     const productListSelector = '[data-testid="blocks-product-list-listeditem-' + productCatnum;
 
     typeToSearchInput(productName);
@@ -17,7 +17,7 @@ export function searchProductByNameTypeEnterAndCheckResult(productName, productC
     cy.get(productListSelector + '-name').contains(productName);
 }
 
-export function typeToSearchInput(searchText) {
+export function typeToSearchInput(searchText: string) {
     cy.get('[data-testid="layout-header-search-autocomplete-input"]').type(searchText);
 }
 

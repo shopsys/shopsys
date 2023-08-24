@@ -3,7 +3,11 @@
     "version": "0.1.0",
     "description": "Acceptance tests of Shopsys Platform Storefront",
     "private": true,
+    "scripts": {
+        "typecheck": "tsc --pretty --noEmit --project tsconfig.json"
+    },
     "devDependencies": {
-        "cypress": "^12.3.0"
+        "cypress": "^12.3.0",
+        "typescript": "^5.1.6"
     }
 }

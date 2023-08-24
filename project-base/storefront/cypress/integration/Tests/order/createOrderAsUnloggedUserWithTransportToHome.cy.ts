@@ -1,7 +1,6 @@
 import {
     countryCZ,
     customer1,
-    freePrice,
     orderNote,
     payment,
     products,
@@ -10,39 +9,38 @@ import {
     totalPrice,
     transport,
     url,
-} from '../../../fixtures/demodata';
-import { checkProductInCart } from '../../Functions/cart';
-import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/cartPopupWindow';
-import { saveCookiesOptionsInCookiesBar } from '../../Functions/cookies';
-import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/homepage';
+} from 'fixtures/demodata';
+import { checkProductAndGoToCartFromCartPopupWindow } from 'integration/Functions/cartPopupWindow';
+import { saveCookiesOptionsInCookiesBar } from 'integration/Functions/cookies';
+import { addProductToCartFromPromotedProductsOnHomepage } from 'integration/Functions/homepage';
 import {
     checkBasicInformationAndNoteInOrderDetail,
     checkBillingAdressInOrderDetail,
     checkDeliveryAdressInOrderDetail,
     checkOneItemInOrderDetail,
-} from '../../Functions/orderDetail';
+} from 'integration/Functions/orderDetail';
 import {
     checkOrderSummaryWithOneItem,
-    checkSelectedStoreInTransportList,
     checkTransportPrice,
     choosePayment,
-    chooseTransportPersonalCollectionAndStore,
+    chooseTransportToHome,
     continueToSecondStep,
     continueToThirdStep,
-} from '../../Functions/orderSecondStep';
+} from 'integration/Functions/orderSecondStep';
 import {
     checkFinishOrderPageAsUnregistredCustomer,
     clickOnOrderDetailButtonOnThankYouPage,
-} from '../../Functions/orderThankYouPage';
+} from 'integration/Functions/orderThankYouPage';
 import {
     clickOnSendOrderButton,
     fillBillingAdressInThirdStep,
     fillCustomerInformationInThirdStep,
     fillEmailInThirdStep,
     fillInNoteInThirdStep,
-} from '../../Functions/orderThirdStep';
+} from 'integration/Functions/orderThirdStep';
+import { checkProductInCart } from 'integration/Functions/cart';
 
-it('Creating an order as unlogged user with one item, Personal collection and Cash', () => {
+it('Creating an order as unlogged user with one item, Czech post and cash on delivery', () => {
     cy.visit('/');
     saveCookiesOptionsInCookiesBar();
     addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
@@ -53,19 +51,18 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
 
     // second step
     cy.url().should('contain', url.order.secondStep);
-    checkTransportPrice('2', freePrice); // fist argument = position of transport list (start from id 0)
-    chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
-    checkSelectedStoreInTransportList(transport.personalCollection.storeOstrava.name);
-    choosePayment(payment.cash);
+    checkTransportPrice(0, transport.czechPost.priceWithVat); // fist argument = position of transport list (start from id 0)
+    chooseTransportToHome(transport.czechPost.name);
+    choosePayment(payment.onDelivery.name);
     checkOrderSummaryWithOneItem(
         products.helloKitty.namePrefixSuffix,
-        '1', // product qunatity
+        1, // item quantity
         products.helloKitty.priceWithVat,
-        transport.personalCollection.name,
-        freePrice,
-        payment.cash,
-        freePrice,
-        totalPrice.cart1,
+        transport.czechPost.name,
+        transport.czechPost.priceWithVat,
+        payment.onDelivery.name,
+        payment.onDelivery.priceWithVat,
+        totalPrice.order1,
     );
     continueToThirdStep();
 
@@ -77,13 +74,13 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
     fillInNoteInThirdStep(orderNote);
     checkOrderSummaryWithOneItem(
         products.helloKitty.namePrefixSuffix,
-        '1', // product quantity
+        1, // item quantity
         products.helloKitty.priceWithVat,
-        transport.personalCollection.name,
-        freePrice,
-        payment.cash,
-        freePrice,
-        totalPrice.cart1,
+        transport.czechPost.name,
+        transport.czechPost.priceWithVat,
+        payment.onDelivery.name,
+        payment.onDelivery.priceWithVat,
+        totalPrice.order1,
     );
     clickOnSendOrderButton();
 
@@ -107,28 +104,36 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
         customer1.firstName,
         customer1.lastName,
         customer1.phone,
-        transport.personalCollection.storeOstrava.street,
-        transport.personalCollection.storeOstrava.city,
-        transport.personalCollection.storeOstrava.postcode,
+        customer1.billingStreet,
+        customer1.billingCity,
+        customer1.billingPostCode,
         countryCZ,
     );
     checkOneItemInOrderDetail(
-        '0', // row number
+        0, // row number
         products.helloKitty.namePrefixSuffix,
         products.helloKitty.priceWithVat,
-        '1', // item quantity
+        1, // item qunatity
         standartRate,
         products.helloKitty.priceWithoutVat,
         products.helloKitty.priceWithVat,
     );
-    checkOneItemInOrderDetail('1', payment.cash, freePrice, '1', zeroRate, freePrice, freePrice);
     checkOneItemInOrderDetail(
-        '2', // row number
-        transport.personalCollection.name,
-        freePrice,
-        '1', // item quantity
+        1, // row mumber
+        payment.onDelivery.name,
+        payment.onDelivery.priceWithVat,
+        1, // item quantity
+        zeroRate,
+        payment.onDelivery.priceWithoutVat,
+        payment.onDelivery.priceWithVat,
+    );
+    checkOneItemInOrderDetail(
+        2, // row number
+        transport.czechPost.name,
+        transport.czechPost.priceWithVat,
+        1, // item quantity
         standartRate,
-        freePrice,
-        freePrice,
+        transport.czechPost.priceWithoutVat,
+        transport.czechPost.priceWithVat,
     );
 });

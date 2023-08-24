@@ -1,4 +1,4 @@
-export function addProductToCartFromProductList(productCatnum) {
+export function addProductToCartFromProductList(productCatnum:string) {
     const productSelector =
         '[data-testid="blocks-product-list-listeditem-' +
         productCatnum +

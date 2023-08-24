@@ -1,9 +1,18 @@
-export function checkBasicInformationAndNoteInOrderDetail(note) {
+export function checkBasicInformationAndNoteInOrderDetail(note: string) {
     cy.get('[data-testid="pages-customer-orderdetail-creationDate"]');
     cy.get('[data-testid="pages-customer-orderdetail-note"]').contains(note);
 }
 
-export function checkBillingAdressInOrderDetail(firtName, lastName, email, phone, street, city, postCode, country) {
+export function checkBillingAdressInOrderDetail(
+    firtName: string,
+    lastName: string,
+    email: string,
+    phone: string,
+    street: string,
+    city: string,
+    postCode: string,
+    country: string,
+) {
     cy.get('[data-testid="pages-customer-orderdetail-firstName"]').contains(firtName);
     cy.get('[data-testid="pages-customer-orderdetail-lastName"]').contains(lastName);
     cy.get('[data-testid="pages-customer-orderdetail-email"]').contains(email);
@@ -14,7 +23,15 @@ export function checkBillingAdressInOrderDetail(firtName, lastName, email, phone
     cy.get('[data-testid="pages-customer-orderdetail-country"]').contains(country);
 }
 
-export function checkDeliveryAdressInOrderDetail(firtName, lastName, phone, street, city, postCode, country) {
+export function checkDeliveryAdressInOrderDetail(
+    firtName: string,
+    lastName: string,
+    phone: string,
+    street: string,
+    city: string,
+    postCode: string,
+    country: string,
+) {
     cy.get('[data-testid="pages-customer-orderdetail-deliveryFirstName"]').contains(firtName);
     cy.get('[data-testid="pages-customer-orderdetail-deliveryLastName"]').contains(lastName);
     cy.get('[data-testid="pages-customer-orderdetail-deliveryTelephone"]').contains(phone);
@@ -25,13 +42,13 @@ export function checkDeliveryAdressInOrderDetail(firtName, lastName, phone, stre
 }
 
 export function checkOneItemInOrderDetail(
-    rowNumber,
-    itemName,
-    itemUnitPrice,
-    itemQuantity,
-    vat,
-    itemPriceWithoutVat,
-    itemPriceVat,
+    rowNumber: number,
+    itemName: string,
+    itemUnitPrice: string,
+    itemQuantity: number,
+    vat: string,
+    itemPriceWithoutVat: string,
+    itemPriceVat: string,
 ) {
     const itemNameSelector =
         '[data-testid="pages-customer-orderdetail-item-' +

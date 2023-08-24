@@ -1,47 +1,47 @@
-import { quantityUnit, transport } from '../../fixtures/demodata';
+import { quantityUnit, transport } from 'fixtures/demodata';
 
 export function continueToSecondStep() {
     cy.get('[data-testid="blocks-orderaction-next"]').click();
 }
 
-export function checkTransportPrice(position, transportPrice) {
+export function checkTransportPrice(position: number, transportPrice: string) {
     cy.get('[data-testid="pages-order-transport"] [data-testid="pages-order-transport-item"]')
         .eq(position)
         .contains(transportPrice);
 }
 
-export function chooseTransportPersonalCollectionAndStore(storeName) {
+export function chooseTransportPersonalCollectionAndStore(storeName: string) {
     cy.get('[data-testid="pages-order-selectitem-label-name"]').contains(transport.personalCollection.name).click();
     cy.get('[data-testid="layout-popup"]');
     cy.get('[data-testid="pages-order-selectitem-label-name"]').contains(storeName).click();
     cy.get('[data-testid="pages-order-pickupplace-popup-confirm"]').click();
 }
 
-export function chooseTransportToHome(transportName) {
+export function chooseTransportToHome(transportName: string) {
     cy.get('[data-testid="pages-order-transport"] [data-testid="pages-order-selectitem-label-name"]')
         .contains(transportName)
         .click('left');
 }
 
-export function checkSelectedStoreInTransportList(storeName) {
+export function checkSelectedStoreInTransportList(storeName: string) {
     cy.get('[data-testid="pages-order-selectitem-label-place"]').contains(storeName);
 }
 
-export function choosePayment(paymentName) {
+export function choosePayment(paymentName: string) {
     cy.get('[data-testid="pages-order-payment"] [data-testid="pages-order-selectitem-label-name"]')
         .contains(paymentName)
         .click('left');
 }
 
 export function checkOrderSummaryWithOneItem(
-    productName,
-    productQuantity,
-    productPrice,
-    transportName,
-    transportPrice,
-    paymentName,
-    paymentPrice,
-    totalOrderPrice,
+    productName: string,
+    productQuantity: number,
+    productPrice: string,
+    transportName: string,
+    transportPrice: string,
+    paymentName: string,
+    paymentPrice: string,
+    totalOrderPrice: string,
 ) {
     const productQuantityWithUnit = productQuantity + ' ' + quantityUnit;
     cy.get('[data-testid="blocks-ordersummary-singleproduct-count"]').contains(productQuantityWithUnit);

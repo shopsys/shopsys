@@ -1,8 +1,8 @@
-import { categories, products, totalPrice, url } from '../../../fixtures/demodata';
-import { checkProductInCart, checkTotalPriceInCart } from '../../Functions/cart';
-import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/cartPopupWindow';
-import { clickOnCategoryFromMenu } from '../../Functions/header';
-import { addProductToCartFromProductList } from '../../Functions/productList';
+import { categories, products, totalPrice, url } from 'fixtures/demodata';
+import { checkProductInCart, checkTotalPriceInCart } from 'integration/Functions/cart';
+import { checkProductAndGoToCartFromCartPopupWindow } from 'integration/Functions/cartPopupWindow';
+import { clickOnCategoryFromMenu } from 'integration/Functions/header';
+import { addProductToCartFromProductList } from 'integration/Functions/productList';
 
 it('Product list - Adding product to cart from product list and check product in cart', () => {
     cy.visit('/');

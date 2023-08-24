@@ -1,6 +1,6 @@
-import { customer1, url } from '../../../fixtures/demodata';
-import { checkUserIsLoggedIn } from '../../Functions/header';
-import { fillInEmailAndPasswordOnLoginPage } from '../../Functions/login';
+import { customer1, url } from 'fixtures/demodata';
+import { checkUserIsLoggedIn } from 'integration/Functions/header';
+import { fillInEmailAndPasswordOnLoginPage } from 'integration/Functions/login';
 
 it('Login from login page', () => {
     cy.visit(url.login);

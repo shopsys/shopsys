@@ -9,17 +9,17 @@ import {
     totalPrice,
     transport,
     url,
-} from '../../../fixtures/demodata';
-import { checkProductInCart } from '../../Functions/cart';
-import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/cartPopupWindow';
-import { saveCookiesOptionsInCookiesBar } from '../../Functions/cookies';
-import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/homepage';
+} from 'fixtures/demodata';
+import { checkProductInCart } from 'integration/Functions/cart';
+import { checkProductAndGoToCartFromCartPopupWindow } from 'integration/Functions/cartPopupWindow';
+import { saveCookiesOptionsInCookiesBar } from 'integration/Functions/cookies';
+import { addProductToCartFromPromotedProductsOnHomepage } from 'integration/Functions/homepage';
 import {
     checkBasicInformationAndNoteInOrderDetail,
     checkBillingAdressInOrderDetail,
     checkDeliveryAdressInOrderDetail,
     checkOneItemInOrderDetail,
-} from '../../Functions/orderDetail';
+} from 'integration/Functions/orderDetail';
 import {
     checkOrderSummaryWithOneItem,
     checkTransportPrice,
@@ -27,18 +27,18 @@ import {
     chooseTransportToHome,
     continueToSecondStep,
     continueToThirdStep,
-} from '../../Functions/orderSecondStep';
+} from 'integration/Functions/orderSecondStep';
 import {
     checkFinishOrderPageAsUnloggedCustomerWithEmailWithExistingRegistration,
     clickOnOrderDetailButtonOnThankYouPage,
-} from '../../Functions/orderThankYouPage';
+} from 'integration/Functions/orderThankYouPage';
 import {
     clickOnSendOrderButton,
     fillBillingAdressInThirdStep,
     fillCustomerInformationInThirdStep,
     fillEmailInThirdStep,
     fillInNoteInThirdStep,
-} from '../../Functions/orderThirdStep';
+} from 'integration/Functions/orderThirdStep';
 
 it('Creating an order with one item, Czech post and cash on delivery as unlogged user but with an email which has an existing registration', () => {
     cy.visit('/');
@@ -51,12 +51,12 @@ it('Creating an order with one item, Czech post and cash on delivery as unlogged
 
     // second step
     cy.url().should('contain', url.order.secondStep);
-    checkTransportPrice('0', transport.czechPost.priceWithVat); // fist argument = position of transport list (start from id 0)
+    checkTransportPrice(0, transport.czechPost.priceWithVat); // fist argument = position of transport list (start from id 0)
     chooseTransportToHome(transport.czechPost.name);
     choosePayment(payment.onDelivery.name);
     checkOrderSummaryWithOneItem(
         products.helloKitty.namePrefixSuffix,
-        '1', // item quantity
+        1, // item quantity
         products.helloKitty.priceWithVat,
         transport.czechPost.name,
         transport.czechPost.priceWithVat,
@@ -74,7 +74,7 @@ it('Creating an order with one item, Czech post and cash on delivery as unlogged
     fillInNoteInThirdStep(orderNote);
     checkOrderSummaryWithOneItem(
         products.helloKitty.namePrefixSuffix,
-        '1', // item quantity
+        1, // item quantity
         products.helloKitty.priceWithVat,
         transport.czechPost.name,
         transport.czechPost.priceWithVat,
@@ -110,28 +110,28 @@ it('Creating an order with one item, Czech post and cash on delivery as unlogged
         countryCZ,
     );
     checkOneItemInOrderDetail(
-        '0', // row number
+        0, // row number
         products.helloKitty.namePrefixSuffix,
         products.helloKitty.priceWithVat,
-        '1', // item qunatity
+        1, // item qunatity
         standartRate,
         products.helloKitty.priceWithoutVat,
         products.helloKitty.priceWithVat,
     );
     checkOneItemInOrderDetail(
-        '1', // row mumber
+        1, // row mumber
         payment.onDelivery.name,
         payment.onDelivery.priceWithVat,
-        '1', // item quantity
+        1, // item quantity
         zeroRate,
         payment.onDelivery.priceWithoutVat,
         payment.onDelivery.priceWithVat,
     );
     checkOneItemInOrderDetail(
-        '2', // row number
+        2, // row number
         transport.czechPost.name,
         transport.czechPost.priceWithVat,
-        '1', // item quantity
+        1, // item quantity
         standartRate,
         transport.czechPost.priceWithoutVat,
         transport.czechPost.priceWithVat,

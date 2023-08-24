@@ -1,7 +1,7 @@
-import { brandSencor, products, totalPrice, url } from '../../../fixtures/demodata';
-import { checkProductInCart, checkTotalPriceInCart } from '../../Functions/cart';
-import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/cartPopupWindow';
-import { addProductToCartFromProductList } from '../../Functions/productList';
+import { brandSencor, products, totalPrice, url } from 'fixtures/demodata';
+import { checkProductInCart, checkTotalPriceInCart } from 'integration/Functions/cart';
+import { checkProductAndGoToCartFromCartPopupWindow } from 'integration/Functions/cartPopupWindow';
+import { addProductToCartFromProductList } from 'integration/Functions/productList';
 
 it('Brand list - Adding product to cart from brand list and check product in cart', () => {
     cy.visit(url.brandOverwiev);
