@@ -1,5 +1,4 @@
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
-import { FilterGroupIcon } from './FilterGroupIcon';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import useTranslation from 'next-translate/useTranslation';
 import { useQueryParams } from 'hooks/useQueryParams';
@@ -20,10 +19,11 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, inStock
 
     return (
         <FilterGroupWrapper dataTestId={TEST_IDENTIFIER}>
-            <FilterGroupTitle onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
-                {title}
-                <FilterGroupIcon isOpen={isGroupOpen} />
-            </FilterGroupTitle>
+            <FilterGroupTitle
+                title={title}
+                isOpen={isGroupOpen}
+                onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}
+            />
             {isGroupOpen && (
                 <FilterGroupContent>
                     <Checkbox

@@ -1,5 +1,4 @@
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
-import { FilterGroupIcon } from './FilterGroupIcon';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { getPriceRounded } from 'helpers/mappers/price';
 import { useQueryParams } from 'hooks/useQueryParams';
@@ -36,10 +35,11 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinP
 
     return (
         <FilterGroupWrapper dataTestId={TEST_IDENTIFIER}>
-            <FilterGroupTitle onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
-                {title}
-                <FilterGroupIcon isOpen={isGroupOpen} />
-            </FilterGroupTitle>
+            <FilterGroupTitle
+                title={title}
+                isOpen={isGroupOpen}
+                onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}
+            />
             {isGroupOpen && (
                 <FilterGroupContent>
                     <RangeSlider

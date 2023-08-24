@@ -5,7 +5,6 @@ import {
     FilterGroupWrapper,
     ShowAllButton,
 } from './FilterElements';
-import { FilterGroupIcon } from './FilterGroupIcon';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
@@ -58,10 +57,12 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
 
     return (
         <FilterGroupWrapper dataTestId={dataTestId}>
-            <FilterGroupTitle onClick={() => setIsGroupCollapsed((currentGroupVisibility) => !currentGroupVisibility)}>
-                {title}
-                <FilterGroupIcon isOpen={!isGroupCollapsed} />
-            </FilterGroupTitle>
+            <FilterGroupTitle
+                title={title}
+                isOpen={!isGroupCollapsed}
+                onClick={() => setIsGroupCollapsed(!isGroupCollapsed)}
+            />
+
             {!isGroupCollapsed && (
                 <FilterGroupContent>
                     {isCheckboxType && (
@@ -74,17 +75,19 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                     parameterValueOption.uuid,
                                 );
                                 const id = `parameters.${parameterIndex}.values.${index}.checked`;
+                                const isDisabled = parameterValueOption.count === 0 && !isChecked;
 
                                 return (
                                     <FilterGroupContentItem
                                         key={parameterValueOption.uuid}
                                         dataTestId={getDataTestId(parameterIndex) + '-' + index}
+                                        isDisabled={isDisabled}
                                     >
                                         <Checkbox
                                             id={id}
                                             name={id}
                                             label={parameterValueOption.text}
-                                            disabled={parameterValueOption.count === 0 && !isChecked}
+                                            disabled={isDisabled}
                                             onChange={() =>
                                                 updateFilterParameters(parameter.uuid, parameterValueOption.uuid)
                                             }

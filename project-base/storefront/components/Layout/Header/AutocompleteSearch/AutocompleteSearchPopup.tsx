@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import {
@@ -18,6 +17,7 @@ import { useRouter } from 'next/router';
 import { forwardRef, useMemo } from 'react';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 import { GtmProductListNameType, GtmSectionType } from 'gtm/types/enums';
+import { IconImage } from 'components/Basic/Icon/IconImage';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
 export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;
@@ -75,7 +75,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
     if (!isWithResults) {
         return (
             <div className="flex items-center">
-                <Icon icon="warning" alt="warning" />
+                <IconImage icon="warning" alt="warning" />
                 <span className="flex-1 pl-4 text-sm">{t('Could not find any results for the given query.')}</span>
             </div>
         );
