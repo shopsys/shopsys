@@ -1,5 +1,5 @@
-import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'helpers/twMerge';
+import useTranslation from 'next-translate/useTranslation';
 
 type ProductExposedStoresCountProps = {
     isMainVariant: boolean;

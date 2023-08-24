@@ -52,7 +52,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             <li
                 ref={ref}
                 className={twMergeCustom(
-                    'relative flex flex-col justify-between rounded-t border-b border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
+                    'relative flex flex-col justify-between gap-3 border-b border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
                     className,
                 )}
                 data-testid={getDataTestId(product.catalogNumber)}
@@ -71,15 +71,15 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 <ExtendedNextLink
                     type="product"
                     href={product.slug}
-                    className="relative flex h-full flex-col no-underline hover:no-underline"
+                    className="flex h-full flex-col gap-3 no-underline hover:no-underline"
                     onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
                 >
-                    <div className="relative flex w-full items-center justify-center px-3 pt-4 pb-3">
+                    <div className="relative">
                         <Image
                             image={product.mainImage}
                             type="list"
                             alt={product.mainImage?.name || product.fullName}
-                            className="h-40 lg:hover:mix-blend-multiply"
+                            className="h-40 justify-center lg:hover:mix-blend-multiply"
                         />
                         {!!product.flags.length && (
                             <div className="absolute top-3 left-4 flex flex-col">
@@ -88,32 +88,29 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         )}
                     </div>
 
-                    <div className="mt-auto flex-1 px-3 pb-5">
-                        <div
-                            className="mb-1 h-10 overflow-hidden text-lg font-bold leading-5 text-dark"
-                            data-testid={getDataTestId(product.catalogNumber) + '-name'}
-                        >
-                            {product.fullName}
-                        </div>
+                    <div
+                        className="h-10 overflow-hidden text-lg font-bold leading-5 text-dark"
+                        data-testid={getDataTestId(product.catalogNumber) + '-name'}
+                    >
+                        {product.fullName}
+                    </div>
 
-                        <ProductPrice productPrice={product.price} />
+                    <ProductPrice productPrice={product.price} />
 
-                        <div className="text-sm text-black">
-                            {product.availability.name}
-                            <ProductAvailableStoresCount
-                                isMainVariant={product.isMainVariant}
-                                availableStoresCount={product.availableStoresCount}
-                                className="mb-3"
-                            />
-                            <ProductExposedStoresCount
-                                isMainVariant={product.isMainVariant}
-                                exposedStoresCount={product.exposedStoresCount}
-                            />
-                        </div>
+                    <div className="flex flex-col gap-1 text-sm text-black">
+                        <div>{product.availability.name}</div>
+                        <ProductAvailableStoresCount
+                            isMainVariant={product.isMainVariant}
+                            availableStoresCount={product.availableStoresCount}
+                        />
+                        <ProductExposedStoresCount
+                            isMainVariant={product.isMainVariant}
+                            exposedStoresCount={product.exposedStoresCount}
+                        />
                     </div>
                 </ExtendedNextLink>
 
-                <div className="mb-2 flex justify-end gap-2">
+                <div className="flex justify-end gap-2">
                     <ProductCompareButton
                         isProductInComparison={isProductInComparison}
                         toggleProductInComparison={toggleProductInComparison}
