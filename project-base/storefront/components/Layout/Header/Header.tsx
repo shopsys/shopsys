@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import { AutocompleteSearch } from './AutocompleteSearch/AutocompleteSearch';
 import { Cart } from './Cart/Cart';
 import { HeaderContact } from './Contact/HeaderContact';
@@ -5,8 +6,9 @@ import { DropdownMenu } from './DropdownMenu/DropdownMenu';
 import { HamburgerMenu } from './HamburgerMenu/HamburgerMenu';
 import { Logo } from './Logo/Logo';
 import { MenuIconic } from './MenuIconic/MenuIconic';
-import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { useCallback, useState } from 'react';
+
+const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 type HeaderProps = {
     simpleHeader?: boolean;

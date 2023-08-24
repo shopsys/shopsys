@@ -9,12 +9,13 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './AutocompleteSearchPopup';
 
 const AutocompleteSearchPopup = dynamic(() =>
     import('./AutocompleteSearchPopup').then((component) => component.AutocompleteSearchPopup),
 );
+
+const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
 
