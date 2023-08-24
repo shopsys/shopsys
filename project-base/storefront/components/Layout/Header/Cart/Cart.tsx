@@ -69,8 +69,8 @@ export const Cart: FC = ({ className }) => {
             </ExtendedNextLink>
             <div
                 className={twJoin(
-                    'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded lg:rounded-tr-none lg:bg-white lg:opacity-0 lg:shadow-md',
-                    !isCartEmpty ? 'lg:w-[510px] lg:px-5 lg:pt-1 lg:pb-6' : 'lg:w-[400px] lg:py-4',
+                    'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 p-5 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded lg:rounded-tr-none lg:bg-white lg:opacity-0 lg:shadow-md',
+                    isCartEmpty ? 'lg:flex lg:w-96 lg:flex-nowrap lg:items-center lg:justify-between' : 'lg:w-[510px]',
                 )}
                 data-testid={TEST_IDENTIFIER + 'detail'}
             >
@@ -97,10 +97,10 @@ export const Cart: FC = ({ className }) => {
                         </div>
                     </>
                 ) : (
-                    <div className="relative flex h-20 items-center justify-between px-5">
+                    <>
                         <span className="text-dark">{t('Your cart is currently empty.')}</span>
-                        <EmptyCartIcon className={twJoin('w-20 rotate-6 text-orange')} />
-                    </div>
+                        <EmptyCartIcon className={twJoin('w-20 text-orange')} />
+                    </>
                 )}
             </div>
             <div className="flex h-10 w-10 cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
@@ -121,7 +121,7 @@ export const Cart: FC = ({ className }) => {
 
 const CartCount: FC = ({ children, dataTestId }) => (
     <span
-        className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold text-white lg:-top-2 lg:-right-2"
+        className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold leading-normal text-white lg:-top-2 lg:-right-2"
         data-testid={dataTestId}
     >
         {children}
