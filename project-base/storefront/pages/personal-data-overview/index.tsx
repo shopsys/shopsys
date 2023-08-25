@@ -30,9 +30,8 @@ const PersonalDataOverviewPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout title={t('Personal Data Overview')}>
+            <CommonLayout title={t('Personal Data Overview')} breadcrumbs={breadcrumbs}>
                 <PersonalDataOverviewContent
-                    breadcrumbs={breadcrumbs}
                     contentSiteText={personalDataPageTextResult.data?.personalDataPage?.displaySiteContent}
                 />
             </CommonLayout>

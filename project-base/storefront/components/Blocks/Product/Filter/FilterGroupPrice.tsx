@@ -35,11 +35,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinP
 
     return (
         <FilterGroupWrapper dataTestId={TEST_IDENTIFIER}>
-            <FilterGroupTitle
-                title={title}
-                isOpen={isGroupOpen}
-                onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}
-            />
+            <FilterGroupTitle title={title} isOpen={isGroupOpen} onClick={() => setIsGroupOpen(!isGroupOpen)} />
             {isGroupOpen && (
                 <FilterGroupContent>
                     <RangeSlider

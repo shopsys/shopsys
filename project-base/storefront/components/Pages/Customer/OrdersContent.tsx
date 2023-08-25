@@ -5,9 +5,8 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { Cell, CellHead, Row, Table } from 'components/Basic/Table/Table';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { Button } from 'components/Forms/Button/Button';
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BreadcrumbFragmentApi, ListedOrderFragmentApi } from 'graphql/generated';
+import { ListedOrderFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
@@ -26,12 +25,11 @@ type OrdersContentProps = {
     isLoading: boolean;
     orders: ListedOrderFragmentApi[] | undefined;
     totalCount: number | undefined;
-    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'pages-customer-orders-';
 
-export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, breadcrumbs, orders, totalCount }) => {
+export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, totalCount }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { formatDateAndTime } = useFormatDate();
@@ -50,7 +48,6 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, breadcrumbs, 
     return (
         <>
             <Webline>
-                <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
                 <div className="text-center">
                     <Heading type="h1">{t('My orders')}</Heading>
                 </div>

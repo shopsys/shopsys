@@ -4,8 +4,6 @@ import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { GtmPageType } from 'gtm/types/enums';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
@@ -25,10 +23,7 @@ const WishlistPage: FC<ServerSidePropsType> = () => {
     const urlQueryParamId = router.query.id as string | undefined;
 
     return (
-        <CommonLayout title={t('Wishlist')}>
-            <Webline>
-                <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
-            </Webline>
+        <CommonLayout title={t('Wishlist')} breadcrumbs={breadcrumbs}>
             {urlQueryParamId ? <SharedWishlist urlQueryParamId={urlQueryParamId} /> : <Wishlist />}
         </CommonLayout>
     );

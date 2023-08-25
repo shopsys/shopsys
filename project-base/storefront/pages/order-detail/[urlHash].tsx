@@ -36,13 +36,10 @@ const OrderDetailByHashPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <PageGuard
-                accessCondition={orderData?.order !== undefined && orderData.order !== null}
-                errorRedirectUrl="/"
-            >
-                {orderData?.order !== undefined && orderData.order !== null && (
-                    <CommonLayout title={`${t('Order number')} ${orderData.order.number}`}>
-                        <OrderDetailContent order={orderData.order} breadcrumbs={breadcrumbs} />
+            <PageGuard accessCondition={!!orderData?.order} errorRedirectUrl="/">
+                {!!orderData?.order && (
+                    <CommonLayout title={`${t('Order number')} ${orderData.order.number}`} breadcrumbs={breadcrumbs}>
+                        <OrderDetailContent order={orderData.order} />
                     </CommonLayout>
                 )}
             </PageGuard>

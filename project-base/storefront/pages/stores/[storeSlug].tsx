@@ -1,6 +1,4 @@
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
 import { StorePageSkeleton } from 'components/Pages/StoreDetail/StorePageSkeleton';
 import {
@@ -30,12 +28,7 @@ const StoreDetailPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout title={storeDetailData?.store?.storeName}>
-            {!!storeDetailData?.store?.breadcrumb && (
-                <Webline>
-                    <Breadcrumbs key="breadcrumb" breadcrumb={storeDetailData.store.breadcrumb} />
-                </Webline>
-            )}
+        <CommonLayout title={storeDetailData?.store?.storeName} breadcrumbs={storeDetailData?.store?.breadcrumb}>
             {!!storeDetailData?.store && !fetching ? (
                 <StoreDetailContent store={storeDetailData.store} />
             ) : (

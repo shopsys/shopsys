@@ -1,18 +1,12 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 
-type CustomerContentProps = {
-    breadcrumbs: BreadcrumbFragmentApi[];
-};
-
-export const CustomerContent: FC<CustomerContentProps> = ({ breadcrumbs }) => {
+export const CustomerContent: FC = () => {
     const { t } = useTranslation();
     const { logout } = useAuth();
     const { url } = useDomainConfig();
@@ -27,8 +21,8 @@ export const CustomerContent: FC<CustomerContentProps> = ({ breadcrumbs }) => {
                 <div className="text-center">
                     <Heading type="h1">{t('Customer')}</Heading>
                 </div>
-                <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
+
             <Webline>
                 <ul className="mb-8 flex flex-col flex-wrap gap-4 md:flex-row">
                     <CustomerListItem>
@@ -36,11 +30,13 @@ export const CustomerContent: FC<CustomerContentProps> = ({ breadcrumbs }) => {
                             {t('My orders')}
                         </ExtendedNextLink>
                     </CustomerListItem>
+
                     <CustomerListItem>
                         <ExtendedNextLink href={customerEditProfileUrl} type="static">
                             {t('Edit profile')}
                         </ExtendedNextLink>
                     </CustomerListItem>
+
                     <CustomerListItem>
                         <a onClick={logout}>{t('Logout')}</a>
                     </CustomerListItem>

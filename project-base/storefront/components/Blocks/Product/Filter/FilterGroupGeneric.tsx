@@ -57,47 +57,45 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
 
     return (
         <FilterGroupWrapper dataTestId={getDataTestId(filterField)}>
-            <FilterGroupTitle
-                title={title}
-                isOpen={isGroupOpen}
-                onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}
-            />
-            <FilterGroupContent>
-                {defaultOptions && (
-                    <>
-                        {defaultOptions.map((option, index) => {
-                            const isFlagAndSelectedByDefault =
-                                filterField === 'flags' && defaultSelectedFlags.has(option.uuid);
-                            const isChecked = !!selectedItems?.includes(option.uuid) || isFlagAndSelectedByDefault;
-                            const isDisabled = option.count === 0 && !isChecked;
+            <FilterGroupTitle title={title} isOpen={isGroupOpen} onClick={() => setIsGroupOpen(!isGroupOpen)} />
+            {isGroupOpen && (
+                <FilterGroupContent>
+                    {defaultOptions && (
+                        <>
+                            {defaultOptions.map((option, index) => {
+                                const isFlagAndSelectedByDefault =
+                                    filterField === 'flags' && defaultSelectedFlags.has(option.uuid);
+                                const isChecked = !!selectedItems?.includes(option.uuid) || isFlagAndSelectedByDefault;
+                                const isDisabled = option.count === 0 && !isChecked;
 
-                            return (
-                                <FilterGroupContentItem
-                                    key={option.uuid}
-                                    isDisabled={isDisabled}
-                                    dataTestId={getDataTestId(filterField) + '-' + index}
-                                >
-                                    <Checkbox
-                                        id={`${filterField}.${index}.checked`}
-                                        name={`${filterField}.${index}.checked`}
-                                        label={option.name}
-                                        disabled={isDisabled}
-                                        onChange={() => handleCheck(option.uuid)}
-                                        value={isChecked}
-                                        count={option.count}
-                                    />
-                                </FilterGroupContentItem>
-                            );
-                        })}
+                                return (
+                                    <FilterGroupContentItem
+                                        key={option.uuid}
+                                        isDisabled={isDisabled}
+                                        dataTestId={getDataTestId(filterField) + '-' + index}
+                                    >
+                                        <Checkbox
+                                            id={`${filterField}.${index}.checked`}
+                                            name={`${filterField}.${index}.checked`}
+                                            label={option.name}
+                                            disabled={isDisabled}
+                                            onChange={() => handleCheck(option.uuid)}
+                                            value={isChecked}
+                                            count={option.count}
+                                        />
+                                    </FilterGroupContentItem>
+                                );
+                            })}
 
-                        {isShowLessMoreShown && (
-                            <ShowAllButton onClick={() => setAreAllItemsShown((prev) => !prev)}>
-                                {isWithAllItemsShown ? t('show less') : t('show more')}
-                            </ShowAllButton>
-                        )}
-                    </>
-                )}
-            </FilterGroupContent>
+                            {isShowLessMoreShown && (
+                                <ShowAllButton onClick={() => setAreAllItemsShown((prev) => !prev)}>
+                                    {isWithAllItemsShown ? t('show less') : t('show more')}
+                                </ShowAllButton>
+                            )}
+                        </>
+                    )}
+                </FilterGroupContent>
+            )}
         </FilterGroupWrapper>
     );
 };

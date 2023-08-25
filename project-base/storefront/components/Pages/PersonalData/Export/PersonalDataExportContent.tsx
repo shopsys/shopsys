@@ -6,11 +6,7 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { UserText } from 'components/Basic/UserText/UserText';
 import { showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import {
-    BreadcrumbFragmentApi,
-    PersonalDataAccessRequestTypeEnumApi,
-    usePersonalDataRequestMutationApi,
-} from 'graphql/generated';
+import { PersonalDataAccessRequestTypeEnumApi, usePersonalDataRequestMutationApi } from 'graphql/generated';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
@@ -25,11 +21,10 @@ import { GtmMessageOriginType } from 'gtm/types/enums';
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 type PersonalDataExportContentProps = {
-    breadcrumbs: BreadcrumbFragmentApi[];
     contentSiteText: string | undefined;
 };
 
-export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ breadcrumbs, contentSiteText }) => {
+export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ contentSiteText }) => {
     const { t } = useTranslation();
     const [, personalDataExport] = usePersonalDataRequestMutationApi();
     const [formProviderMethods] = usePersonalDataExportForm();
@@ -44,7 +39,7 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                 type: PersonalDataAccessRequestTypeEnumApi.ExportApi,
             });
 
-            if (personalDataExportResult.data?.RequestPersonalDataAccess !== undefined) {
+            if (personalDataExportResult.data?.RequestPersonalDataAccess) {
                 showSuccessMessage(formMeta.messages.success);
             }
 
@@ -56,8 +51,8 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
 
     return (
         <>
-            <SimpleLayout heading={t('Personal Data Export')} breadcrumb={breadcrumbs}>
-                {contentSiteText !== undefined && (
+            <SimpleLayout heading={t('Personal Data Export')}>
+                {!!contentSiteText && (
                     <div className="mb-5 block text-justify">
                         <UserText htmlContent={contentSiteText} />
                     </div>

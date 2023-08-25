@@ -24,8 +24,8 @@ const LoginPage: FC<ServerSidePropsType> = () => {
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout title={t('Login')}>
-            <LoginContent breadcrumbs={breadcrumbs} />
+        <CommonLayout title={t('Login')} breadcrumbs={breadcrumbs}>
+            <LoginContent />
         </CommonLayout>
     );
 };

@@ -9,7 +9,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { BreadcrumbFragmentApi, useRegistrationMutationApi } from 'graphql/generated';
+import { useRegistrationMutationApi } from 'graphql/generated';
 import { setTokensToCookies } from 'helpers/auth/tokens';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
@@ -26,11 +26,7 @@ import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
-type RegistrationContentProps = {
-    breadcrumbs: BreadcrumbFragmentApi[];
-};
-
-export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs }) => {
+export const RegistrationContent: FC = () => {
     const { t } = useTranslation();
     const [, register] = useRegistrationMutationApi();
     const cartUuid = usePersistStore((store) => store.cartUuid);
@@ -75,7 +71,7 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
 
     return (
         <>
-            <SimpleLayout heading={t('Registration')} breadcrumb={breadcrumbs}>
+            <SimpleLayout heading={t('Registration')}>
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}>
                         <div className="mb-10">

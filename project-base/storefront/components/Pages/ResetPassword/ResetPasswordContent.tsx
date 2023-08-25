@@ -5,7 +5,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { BreadcrumbFragmentApi, usePasswordRecoveryMutationApi } from 'graphql/generated';
+import { usePasswordRecoveryMutationApi } from 'graphql/generated';
 import 'helpers/getInternationalizedStaticUrls';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
@@ -21,11 +21,7 @@ import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
-type ResetPasswordContentProps = {
-    breadcrumbs: BreadcrumbFragmentApi[];
-};
-
-export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumbs }) => {
+export const ResetPasswordContent: FC = () => {
     const { t } = useTranslation();
     const [, resetPassword] = usePasswordRecoveryMutationApi();
     const [formProviderMethods, defaultValues] = usePasswordResetForm();
@@ -55,7 +51,7 @@ export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumb
 
     return (
         <>
-            <SimpleLayout heading={t('Forgotten password')} breadcrumb={breadcrumbs}>
+            <SimpleLayout heading={t('Forgotten password')}>
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)}>
                         <TextInputControlled

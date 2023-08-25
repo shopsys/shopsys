@@ -19,11 +19,7 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, inStock
 
     return (
         <FilterGroupWrapper dataTestId={TEST_IDENTIFIER}>
-            <FilterGroupTitle
-                title={title}
-                isOpen={isGroupOpen}
-                onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}
-            />
+            <FilterGroupTitle title={title} isOpen={isGroupOpen} onClick={() => setIsGroupOpen(!isGroupOpen)} />
             {isGroupOpen && (
                 <FilterGroupContent>
                     <Checkbox

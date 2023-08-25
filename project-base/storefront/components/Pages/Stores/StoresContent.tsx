@@ -3,7 +3,7 @@ import { StoreInfoBox } from './StoreInfoBox';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { BreadcrumbFragmentApi, ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
+import { ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { createMapMarker } from 'helpers/createMapMarker';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';
@@ -16,10 +16,9 @@ import { MarkerIcon } from 'components/Basic/Icon/IconsSvg';
 
 type StoresContentProps = {
     stores: ListedStoreConnectionFragmentApi;
-    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
-export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) => {
+export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
     const { t } = useTranslation();
     const { defaultLocale } = useDomainConfig();
     const [activeStoreIndex, setActiveStoreIndex] = useState<number>();
@@ -46,7 +45,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
     const selectedStore = activeStoreIndex !== undefined ? mappedStores?.[activeStoreIndex] : undefined;
 
     return (
-        <SimpleLayout standardWidth heading={t('Stores')} breadcrumb={breadcrumbs}>
+        <SimpleLayout standardWidth heading={t('Stores')}>
             {mappedStores && (
                 <>
                     <div className="mb-8 flex w-full flex-col vl:h-[500px] vl:flex-row">

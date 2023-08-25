@@ -6,11 +6,7 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { UserText } from 'components/Basic/UserText/UserText';
 import { showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import {
-    BreadcrumbFragmentApi,
-    PersonalDataAccessRequestTypeEnumApi,
-    usePersonalDataRequestMutationApi,
-} from 'graphql/generated';
+import { PersonalDataAccessRequestTypeEnumApi, usePersonalDataRequestMutationApi } from 'graphql/generated';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
@@ -25,11 +21,10 @@ import { GtmMessageOriginType } from 'gtm/types/enums';
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
 type PersonalDataOverviewContentProps = {
-    breadcrumbs: BreadcrumbFragmentApi[];
     contentSiteText: string | undefined;
 };
 
-export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> = ({ breadcrumbs, contentSiteText }) => {
+export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> = ({ contentSiteText }) => {
     const { t } = useTranslation();
     const [, personalDataOverview] = usePersonalDataRequestMutationApi();
     const [formProviderMethods] = usePersonalDataOverviewForm();
@@ -56,7 +51,7 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
 
     return (
         <>
-            <SimpleLayout heading={t('Personal Data Overview')} breadcrumb={breadcrumbs}>
+            <SimpleLayout heading={t('Personal Data Overview')}>
                 {contentSiteText !== undefined && (
                     <div className="[&_section]:mb-5 [&_section]:block [&_section]:text-justify ">
                         <UserText htmlContent={contentSiteText} />

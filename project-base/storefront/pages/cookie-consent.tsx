@@ -21,8 +21,8 @@ const CookieConsentPage: FC<ServerSidePropsType> = () => {
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout title={t('Cookie consent update')}>
-            <CookieConsentContent breadcrumbs={breadcrumbs} />
+        <CommonLayout title={t('Cookie consent update')} breadcrumbs={breadcrumbs}>
+            <CookieConsentContent />
         </CommonLayout>
     );
 };

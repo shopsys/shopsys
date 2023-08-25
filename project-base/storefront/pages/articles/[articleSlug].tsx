@@ -1,6 +1,4 @@
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
 import { ArticlePageSkeleton } from 'components/Pages/Article/ArticlePageSkeleton';
 import {
@@ -34,12 +32,11 @@ const ArticleDetailPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout title={article?.seoTitle} description={article?.seoMetaDescription}>
-            {!!article?.breadcrumb && (
-                <Webline>
-                    <Breadcrumbs key="breadcrumb" breadcrumb={article.breadcrumb} />
-                </Webline>
-            )}
+        <CommonLayout
+            title={article?.seoTitle}
+            description={article?.seoMetaDescription}
+            breadcrumbs={article?.breadcrumb}
+        >
             {!!article && !fetching ? <ArticleDetailContent article={article} /> : <ArticlePageSkeleton />}
         </CommonLayout>
     );
