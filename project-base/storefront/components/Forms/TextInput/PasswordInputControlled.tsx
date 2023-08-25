@@ -34,7 +34,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
         fieldState: { invalid, error },
         field,
     } = useController({ name, control });
-    const passwordInputId = formName + name;
+    const passwordInputId = formName + '-' + name;
 
     const [inputType, setInputType] = useState<'text' | 'password'>('password');
 

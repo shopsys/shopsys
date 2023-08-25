@@ -1,12 +1,7 @@
 export const addProductToCartFromProductDetail = () => {
-    cy.get('[data-testid="pages-productdetail-addtocart-button"]').click();
+    cy.getByDataTestId('pages-productdetail-addtocart-button').click();
 };
 
 export const addProductVariantToCartFromProductDetail = (productCatnum: string) => {
-    const productVariantItemSelector =
-        '[data-testid="pages-productdetail-variant-' +
-        productCatnum +
-        '"] ' +
-        '[data-testid="blocks-product-addtocart"]';
-    cy.get(productVariantItemSelector).click();
+    cy.getByDataTestId(['pages-productdetail-variant-' + productCatnum, 'blocks-product-addtocart']).click();
 };

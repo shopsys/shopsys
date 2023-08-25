@@ -1,6 +1,4 @@
 export const checkProductAndGoToCartFromCartPopupWindow = (productName: string) => {
-    cy.get('[data-testid="layout-popup"] [data-testid="blocks-product-addtocartpopup-product-name"]').contains(
-        productName,
-    );
-    cy.get('[data-testid="layout-popup"] [data-testid="basic-link-button"]').click();
+    cy.getByDataTestId(['layout-popup', 'blocks-product-addtocartpopup-product-name']).contains(productName);
+    cy.getByDataTestId(['layout-popup', 'basic-link-button']).click();
 };

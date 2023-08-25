@@ -1,3 +1,3 @@
 export const checkSuccessfulFlashMessage = (message: string) => {
-    cy.get('[data-testid="toast-success"]').contains(message);
-}
+    cy.getByDataTestId('toast-success').contains(message);
+};

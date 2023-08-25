@@ -1,4 +1,4 @@
 export const saveCookiesOptionsInCookiesBar = () => {
-    cy.get('[data-testid="blocks-userconsent"] [data-testid="blocks-userconsent-save"]').click();
-    cy.get('[data-testid="blocks-userconsent"]').should('not.exist');
+    cy.getByDataTestId(['blocks-userconsent', 'blocks-userconsent-save']).click();
+    cy.getByDataTestId('blocks-userconsent').should('not.exist');
 };

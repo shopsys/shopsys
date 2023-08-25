@@ -23,7 +23,7 @@ export const fillBillingAdressInThirdStep = (street: string, city: string, postC
 };
 
 export const clickOnSendOrderButton = () => {
-    cy.get('[data-testid="blocks-orderaction-next"]').click();
+    cy.getByDataTestId('blocks-orderaction-next').click();
 };
 
 export const fillInNoteInThirdStep = (note: string) => {

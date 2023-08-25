@@ -1,18 +1,16 @@
 export const productClickFromPromotedProductsOnHomepage = (productCatnum: string, productName: string) => {
-    const sliderProductItemSelector = `
-    [data-testid="blocks-product-slider-promoted-products"] 
-    [data-testid="blocks-product-list-listeditem-${productCatnum}-name"]
-    `;
-
-    cy.get(sliderProductItemSelector).contains(productName).click();
+    cy.getByDataTestId([
+        'blocks-product-slider-promoted-products',
+        'blocks-product-list-listeditem-' + productCatnum + '-name',
+    ])
+        .contains(productName)
+        .click();
 };
 
 export const addProductToCartFromPromotedProductsOnHomepage = (productCatnum: string) => {
-    const sliderProductItemSelector = `
-    [data-testid="blocks-product-slider-promoted-products"] 
-    [data-testid="blocks-product-list-listeditem-${productCatnum}"] 
-    button[data-testid="blocks-product-addtocart"]
-    `;
-
-    cy.get(sliderProductItemSelector).click();
+    cy.getByDataTestId([
+        'blocks-product-slider-promoted-products',
+        'blocks-product-list-listeditem-' + productCatnum,
+        'blocks-product-addtocart',
+    ]).click();
 };
