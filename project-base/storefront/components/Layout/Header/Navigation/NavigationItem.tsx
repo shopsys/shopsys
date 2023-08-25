@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
-import { NavigationLeaf } from 'components/Layout/Header/Navigation/NavigationLeaf';
+import { NavigationItemColumn } from 'components/Layout/Header/Navigation/NavigationItemColumn';
 import { CategoriesByColumnFragmentApi } from 'graphql/generated';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -38,10 +38,8 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
             </ExtendedNextLink>
 
             {hasChildren && isMenuOpened && (
-                <div className="absolute left-0 right-0 z-menu block bg-white py-12 px-14 shadow-md">
-                    <div className="-ml-11 flex">
-                        <NavigationLeaf columnCategories={props.navigationItem.categoriesByColumns} />
-                    </div>
+                <div className="absolute left-0 right-0 z-menu grid grid-cols-4 gap-11 bg-white py-12 px-10 shadow-md">
+                    <NavigationItemColumn columnCategories={props.navigationItem.categoriesByColumns} />
                 </div>
             )}
         </li>
