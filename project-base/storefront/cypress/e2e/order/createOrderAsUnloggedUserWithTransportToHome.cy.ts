@@ -49,14 +49,13 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
     cy.url().should('contain', url.cart);
     continueToSecondStep();
 
-    // second step
     cy.url().should('contain', url.order.secondStep);
-    checkTransportPrice(0, transport.czechPost.priceWithVat); // fist argument = position of transport list (start from id 0)
+    checkTransportPrice(0, transport.czechPost.priceWithVat);
     chooseTransportToHome(transport.czechPost.name);
     choosePayment(payment.onDelivery.name);
     checkOrderSummaryWithOneItem(
         products.helloKitty.namePrefixSuffix,
-        1, // item quantity
+        1,
         products.helloKitty.priceWithVat,
         transport.czechPost.name,
         transport.czechPost.priceWithVat,
@@ -66,7 +65,6 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
     );
     continueToThirdStep();
 
-    // third step
     cy.url().should('contain', url.order.thirdStep);
     fillEmailInThirdStep(customer1.email);
     fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
@@ -74,7 +72,7 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
     fillInNoteInThirdStep(orderNote);
     checkOrderSummaryWithOneItem(
         products.helloKitty.namePrefixSuffix,
-        1, // item quantity
+        1,
         products.helloKitty.priceWithVat,
         transport.czechPost.name,
         transport.czechPost.priceWithVat,
@@ -84,11 +82,9 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
     );
     clickOnSendOrderButton();
 
-    // thank you page order
     checkFinishOrderPageAsUnregistredCustomer();
     clickOnOrderDetailButtonOnThankYouPage();
 
-    // order detail
     checkBasicInformationAndNoteInOrderDetail(orderNote);
     checkBillingAdressInOrderDetail(
         customer1.firstName,
@@ -110,28 +106,28 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
         countryCZ,
     );
     checkOneItemInOrderDetail(
-        0, // row number
+        0,
         products.helloKitty.namePrefixSuffix,
         products.helloKitty.priceWithVat,
-        1, // item qunatity
+        1,
         standartRate,
         products.helloKitty.priceWithoutVat,
         products.helloKitty.priceWithVat,
     );
     checkOneItemInOrderDetail(
-        1, // row mumber
+        1,
         payment.onDelivery.name,
         payment.onDelivery.priceWithVat,
-        1, // item quantity
+        1,
         zeroRate,
         payment.onDelivery.priceWithoutVat,
         payment.onDelivery.priceWithVat,
     );
     checkOneItemInOrderDetail(
-        2, // row number
+        2,
         transport.czechPost.name,
         transport.czechPost.priceWithVat,
-        1, // item quantity
+        1,
         standartRate,
         transport.czechPost.priceWithoutVat,
         transport.czechPost.priceWithVat,

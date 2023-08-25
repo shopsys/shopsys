@@ -51,15 +51,14 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
     cy.url().should('contain', url.cart);
     continueToSecondStep();
 
-    // second step
     cy.url().should('contain', url.order.secondStep);
-    checkTransportPrice(2, freePrice); // fist argument = position of transport list (start from id 0)
+    checkTransportPrice(2, freePrice);
     chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
     checkSelectedStoreInTransportList(transport.personalCollection.storeOstrava.name);
     choosePayment(payment.cash);
     checkOrderSummaryWithOneItem(
         products.helloKitty.namePrefixSuffix,
-        1, // product qunatity
+        1,
         products.helloKitty.priceWithVat,
         transport.personalCollection.name,
         freePrice,
@@ -69,7 +68,6 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
     );
     continueToThirdStep();
 
-    // third step
     cy.url().should('contain', url.order.thirdStep);
     fillEmailInThirdStep(customer1.email);
     fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
@@ -77,7 +75,7 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
     fillInNoteInThirdStep(orderNote);
     checkOrderSummaryWithOneItem(
         products.helloKitty.namePrefixSuffix,
-        1, // product quantity
+        1,
         products.helloKitty.priceWithVat,
         transport.personalCollection.name,
         freePrice,
@@ -87,11 +85,9 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
     );
     clickOnSendOrderButton();
 
-    // thank you page order
     checkFinishOrderPageAsUnregistredCustomer();
     clickOnOrderDetailButtonOnThankYouPage();
 
-    // order detail
     checkBasicInformationAndNoteInOrderDetail(orderNote);
     checkBillingAdressInOrderDetail(
         customer1.firstName,
@@ -113,22 +109,14 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
         countryCZ,
     );
     checkOneItemInOrderDetail(
-        0, // row number
+        0,
         products.helloKitty.namePrefixSuffix,
         products.helloKitty.priceWithVat,
-        1, // item quantity
+        1,
         standartRate,
         products.helloKitty.priceWithoutVat,
         products.helloKitty.priceWithVat,
     );
     checkOneItemInOrderDetail(1, payment.cash, freePrice, 1, zeroRate, freePrice, freePrice);
-    checkOneItemInOrderDetail(
-        2, // row number
-        transport.personalCollection.name,
-        freePrice,
-        1, // item quantity
-        standartRate,
-        freePrice,
-        freePrice,
-    );
+    checkOneItemInOrderDetail(2, transport.personalCollection.name, freePrice, 1, standartRate, freePrice, freePrice);
 });
