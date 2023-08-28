@@ -1,6 +1,6 @@
 {% macro productVideoRow(formData, escape) %}
-    <tr>
-        <td >
+    <tr class='table-form__row'>
+        <td>
             {%  if escape %}
                 {{ form_errors(formData, { errors_attr: { class: 'table-form__cell__error'}})|escape }}
                 {{ form_widget(formData, { attr: { class: 'form-line__item' } })|escape }}
@@ -19,12 +19,6 @@
 {% block _product_form_videosGroup_widget %}
     <div class="form-group">
         <table class="table-form">
-            <thead>
-            <tr class="table-form__row">
-                <th class="table-form__cell table-form__cell--label">{{ 'Youtube URL ID'|trans }}</th>
-                <th class="table-form__cell"></th>
-            </tr>
-            </thead>
             <tbody class="js-videos-collection" data-prototype="{{ _self.productVideoRow(form.children.productVideosData.vars.prototype, true)}}"
             data-index="{{ form.children.productVideosData.children|length }}">
                 {% for productVideosDataRow in form.children.productVideosData %}
