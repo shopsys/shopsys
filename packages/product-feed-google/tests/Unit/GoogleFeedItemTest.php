@@ -151,7 +151,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertNull($googleFeedItem->getDescription());
         self::assertEquals('https://example.com/product-1', $googleFeedItem->getLink());
         self::assertNull($googleFeedItem->getImageLink());
-        self::assertEquals('in stock', $googleFeedItem->getAvailability());
+        self::assertEquals('in_stock', $googleFeedItem->getAvailability());
         self::assertThat($googleFeedItem->getPrice()->getPriceWithoutVat(), new IsMoneyEqual(Money::zero()));
         self::assertThat($googleFeedItem->getPrice()->getPriceWithVat(), new IsMoneyEqual(Money::zero()));
         self::assertEquals('EUR', $googleFeedItem->getCurrency()->getCode());
@@ -198,7 +198,7 @@ class GoogleFeedItemTest extends TestCase
 
         $googleFeedItem = $this->googleFeedItemFactory->create($product, $this->defaultDomain);
 
-        self::assertEquals('out of stock', $googleFeedItem->getAvailability());
+        self::assertEquals('out_of_stock', $googleFeedItem->getAvailability());
     }
 
     public function testGoogleFeedItemWithEan()

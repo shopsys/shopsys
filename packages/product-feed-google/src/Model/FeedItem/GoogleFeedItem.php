@@ -12,8 +12,8 @@ class GoogleFeedItem implements FeedItemInterface
 {
     protected const IDENTIFIER_TYPE_EAN = 'gtin';
     protected const IDENTIFIER_TYPE_PARTNO = 'mpn';
-    protected const AVAILABILITY_OUT_OF_STOCK = 'out of stock';
-    protected const AVAILABILITY_IN_STOCK = 'in stock';
+    protected const AVAILABILITY_OUT_OF_STOCK = 'out_of_stock';
+    protected const AVAILABILITY_IN_STOCK = 'in_stock';
 
     /**
      * @param int $id
