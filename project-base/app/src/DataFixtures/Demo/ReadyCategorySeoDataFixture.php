@@ -132,6 +132,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of Electronics from most expensive seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
+        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
         $choseCategorySeoMixCombinationArray['flagId'] = null;
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             // 'USB' => 'Yes'
