@@ -156,7 +156,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $choseCategorySeoMixCombinationArray['flagId'] = null;
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             // 'Colour' => 'Black'
-            62 => 199,
+            63 => 210,
         ];
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
@@ -172,7 +172,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
 
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             // 'Colour' => 'Red'
-            62 => 197,
+            63 => 206,
         ];
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
