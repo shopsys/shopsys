@@ -1,6 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Icon } from 'components/Basic/Icon/Icon';
-import { Remove } from 'components/Basic/Icon/IconsSvg';
+import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
@@ -81,7 +80,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                     calcMaxMarginLeft();
                 }}
             >
-                <Icon className="w-4 text-grey" icon={<Remove />} />
+                <RemoveIcon className="w-4 text-grey" />
             </div>
 
             {product.flags.length > 0 && (

@@ -1,5 +1,4 @@
-import { Icon } from 'components/Basic/Icon/Icon';
-import { Cart } from 'components/Basic/Icon/IconsSvg';
+import { CartIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
@@ -69,7 +68,7 @@ export const AddToCart: FC<AddToCartProps> = ({
                 onClick={onAddToCartHandler}
                 dataTestId={TEST_IDENTIFIER}
             >
-                {fetching ? <Loader className="w-4 text-white" /> : <Icon icon={<Cart />} className="text-white" />}
+                {fetching ? <Loader className="w-4 text-white" /> : <CartIcon className="text-white" />}
                 <span>{t('Add to cart')}</span>
             </Button>
 

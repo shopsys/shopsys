@@ -1,11 +1,10 @@
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Link } from 'components/Basic/Link/Link';
 import { ListedStoreFragmentApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
-import { Remove } from 'components/Basic/Icon/IconsSvg';
+import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 
 type StoreInfoBoxProps = {
     store: ListedStoreFragmentApi;
@@ -17,9 +16,8 @@ export const StoreInfoBox: FC<StoreInfoBoxProps> = ({ store, closeInfoBoxCallbac
 
     return (
         <div className="top-0 left-0 z-above flex h-full w-full flex-col items-center justify-center bg-white py-4 text-center vl:absolute vl:px-10">
-            <Icon
+            <RemoveIcon
                 onClick={closeInfoBoxCallback}
-                icon={<Remove />}
                 className="absolute top-4 right-4 w-5 cursor-pointer text-primary transition-colors hover:text-orangeDarker "
             />
 

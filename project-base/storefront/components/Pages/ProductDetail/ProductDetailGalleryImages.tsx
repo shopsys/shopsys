@@ -1,6 +1,5 @@
 import { Gallery } from 'components/Basic/Gallery/Gallery';
-import { Icon } from 'components/Basic/Icon/Icon';
-import { Play } from 'components/Basic/Icon/IconsSvg';
+import { PlayIcon } from 'components/Basic/Icon/IconsSvg';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
@@ -116,7 +115,7 @@ export const ProductDetailGalleryImages: FC<ProductDetailGalleryImagesProps> = (
                                 <Image image={videoImage} type="thumbnailSmall" alt={videoId.description} />
 
                                 <div className="absolute top-4 left-6 flex h-8 w-8 items-center justify-center rounded-full bg-dark bg-opacity-50 text-white">
-                                    <Icon icon={<Play />} className="ml-1" />
+                                    <PlayIcon className="ml-1" />
                                 </div>
                             </div>
                         );

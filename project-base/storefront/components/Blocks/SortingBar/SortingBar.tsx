@@ -1,6 +1,5 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'helpers/isElementVisible';
-import { Sort } from 'components/Basic/Icon/IconsSvg';
+import { SortIcon } from 'components/Basic/Icon/IconsSvg';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { DEFAULT_SORT } from 'helpers/filterOptions/seoCategories';
@@ -75,7 +74,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                             onClick={() => setToggleSortMenu((prev) => !prev)}
                             data-testid={TEST_IDENTIFIER + '-selected'}
                         >
-                            <Icon icon={<Sort />} className="w-5 align-middle" />
+                            <SortIcon className="w-5 align-middle" />
                             <div className="pl-2 text-justify font-bold text-dark">
                                 <div className="uppercase leading-5">{t('Sort')}</div>
                                 <div

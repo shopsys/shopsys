@@ -1,7 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
-import { Icon } from 'components/Basic/Icon/Icon';
-import { Arrow } from 'components/Basic/Icon/IconsSvg';
+import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -29,7 +28,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumb, type }) => {
                 className="-mx-5 mb-9 flex items-center border-b-2 border-greyLighter py-3 px-5 lg:mx-0 lg:border-none lg:p-0"
                 data-testid={TEST_IDENTIFIER}
             >
-                <Icon icon={<Arrow />} className="mr-3 w-3 rotate-90 text-greyLight lg:hidden" />
+                <ArrowIcon className="mr-3 w-3 rotate-90 text-greyLight lg:hidden" />
                 <BreadcrumbsLink href="/" dataTestId={TEST_IDENTIFIER + '-item-root'}>
                     {t('Home page')}
                 </BreadcrumbsLink>

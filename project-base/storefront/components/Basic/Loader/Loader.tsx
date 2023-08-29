@@ -1,4 +1,3 @@
-import { Icon } from '../Icon/Icon';
-import { Spinner } from '../Icon/IconsSvg';
+import { SpinnerIcon } from '../Icon/IconsSvg';
 
-export const Loader: FC = ({ className }) => <Icon icon={<Spinner />} className={className} />;
+export const Loader: FC = ({ className }) => <SpinnerIcon className={className} />;

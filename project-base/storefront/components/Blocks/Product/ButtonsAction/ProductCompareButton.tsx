@@ -1,5 +1,4 @@
-import { Icon } from 'components/Basic/Icon/Icon';
-import { Compare } from 'components/Basic/Icon/IconsSvg';
+import { CompareIcon } from 'components/Basic/Icon/IconsSvg';
 import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'helpers/twMerge';
 
@@ -27,10 +26,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
                 title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
                 onClick={toggleProductInComparison}
             >
-                <Icon
-                    className={twMergeCustom('m-2 text-grey', isProductInComparison && 'text-green')}
-                    icon={<Compare />}
-                />
+                <CompareIcon className={twMergeCustom('m-2 text-grey', isProductInComparison && 'text-green')} />
                 {isWithText && (
                     <span className="ml-1">{isProductInComparison ? t('Remove from comparison') : t('Compare')}</span>
                 )}

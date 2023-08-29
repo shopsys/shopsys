@@ -1,5 +1,4 @@
-import { Icon } from 'components/Basic/Icon/Icon';
-import { Cart } from 'components/Basic/Icon/IconsSvg';
+import { CartIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
@@ -68,7 +67,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                                     variant="primary"
                                     dataTestId={TEST_IDENTIFIER + '-button'}
                                 >
-                                    {fetching ? <Loader className="w-7" /> : <Icon icon={<Cart />} />}
+                                    {fetching ? <Loader className="w-7" /> : <CartIcon />}
 
                                     {t('Add to cart')}
                                 </Button>

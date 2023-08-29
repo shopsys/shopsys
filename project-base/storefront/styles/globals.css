@@ -72,6 +72,10 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
+svg {
+    @apply inline-flex h-full w-[14px] text-center font-normal normal-case leading-none;
+}
+
 /* Firefox */
 input[type='number'] {
     -moz-appearance: textfield;
@@ -88,7 +92,7 @@ input[type='number'] {
 }
 
 .select__indicator {
-    @apply !flex h-12 w-12 !items-center !justify-center !p-0 transition-all [&_i]:!text-greyDark;
+    @apply !flex h-12 w-12 !items-center !justify-center !p-0 transition-all;
 }
 
 .select__menu {

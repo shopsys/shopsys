@@ -1,7 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Icon } from 'components/Basic/Icon/Icon';
-import { ArrowRight } from 'components/Basic/Icon/IconsSvg';
+import { ArrowRightIcon } from 'components/Basic/Icon/IconsSvg';
 import { AvailabilityStatusEnumApi, StoreAvailabilityFragmentApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
 import { forwardRef } from 'react';
@@ -52,7 +51,7 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                                     >
                                         <>
                                             {t('Store detail')}
-                                            <Icon icon={<ArrowRight />} />
+                                            <ArrowRightIcon />
                                         </>
                                     </ExtendedNextLink>
                                 </li>

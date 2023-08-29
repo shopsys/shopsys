@@ -1,6 +1,5 @@
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Icon } from 'components/Basic/Icon/Icon';
-import { ArrowSecondary } from 'components/Basic/Icon/IconsSvg';
+import { ArrowSecondaryIcon } from 'components/Basic/Icon/IconsSvg';
 import { Link } from 'components/Basic/Link/Link';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
@@ -25,7 +24,7 @@ export const ProductComparePopup: FC<ProductComparePopupProps> = ({ onCloseCallb
                 <Link isButton href={productComparisonUrl}>
                     <>
                         <span>{t('Show products comparison')}</span>
-                        <Icon className="rotate-90" icon={<ArrowSecondary />} />
+                        <ArrowSecondaryIcon className="rotate-90" />
                     </>
                 </Link>
             </div>

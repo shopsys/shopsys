@@ -1,12 +1,11 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { BlogPreviewMain } from './BlogPreviewMain';
-import { Icon } from 'components/Basic/Icon/Icon';
 import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { BlogPreviewSide } from './BlogPreviewSide';
-import { ArrowRight } from 'components/Basic/Icon/IconsSvg';
+import { ArrowRightIcon } from 'components/Basic/Icon/IconsSvg';
 
 export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
 const TEST_IDENTIFIER = 'blocks-blogpreview';
@@ -41,7 +40,7 @@ export const BlogPreview: FC = () => {
                     >
                         <>
                             {t('View all')}
-                            <Icon icon={<ArrowRight />} className="relative top-0 ml-2 text-xs text-creamWhite" />
+                            <ArrowRightIcon className="relative top-0 ml-2 text-xs text-creamWhite" />
                         </>
                     </ExtendedNextLink>
                 )}
