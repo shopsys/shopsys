@@ -30,7 +30,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, added
     return (
         <Popup onCloseCallback={onCloseCallback} className="w-11/12 max-w-2xl" hideCloseButton>
             <div className="mb-4 flex w-full items-center md:mb-6">
-                <CheckmarkIcon className="mr-4 w-7" />
+                <CheckmarkIcon className="mr-4 w-7 text-greenDark" />
                 <Heading type="h2" className="mb-0 text-xl normal-case text-primary">
                     {t('Great choice! We have added your item to the cart')}
                 </Heading>

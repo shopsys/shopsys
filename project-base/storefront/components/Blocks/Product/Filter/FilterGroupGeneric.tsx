@@ -74,13 +74,13 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                                 return (
                                     <FilterGroupContentItem
                                         key={option.uuid}
-                                        isDisabled={option.count === 0 && !isChecked}
                                         dataTestId={getDataTestId(filterField) + '-' + index}
                                     >
                                         <Checkbox
                                             id={`${filterField}.${index}.checked`}
                                             name={`${filterField}.${index}.checked`}
                                             label={option.name}
+                                            disabled={option.count === 0 && !isChecked}
                                             onChange={() => handleCheck(option.uuid)}
                                             value={isChecked}
                                             count={option.count}

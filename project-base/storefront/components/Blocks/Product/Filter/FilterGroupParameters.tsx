@@ -78,13 +78,13 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 return (
                                     <FilterGroupContentItem
                                         key={parameterValueOption.uuid}
-                                        isDisabled={parameterValueOption.count === 0 && !isChecked}
                                         dataTestId={getDataTestId(parameterIndex) + '-' + index}
                                     >
                                         <Checkbox
                                             id={id}
                                             name={id}
                                             label={parameterValueOption.text}
+                                            disabled={parameterValueOption.count === 0 && !isChecked}
                                             onChange={() =>
                                                 updateFilterParameters(parameter.uuid, parameterValueOption.uuid)
                                             }
@@ -94,6 +94,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                     </FilterGroupContentItem>
                                 );
                             })}
+
                             {!!hiddenOptions.length && (
                                 <ShowAllButton onClick={() => setIsWithAllItemsShown((prev) => !prev)}>
                                     {isWithAllItemsShown ? t('show less') : t('show more')}
