@@ -38,3 +38,5 @@ There you can find links to upgrade notes for other versions too.
 - update your tests to be multilingual ([#2742](https://github.com/shopsys/shopsys/pull/2742))
     - add `ContainerAwareInterface` to migrations that use `MultidomainMigrationTrait`
     - see #project-base-diff to update your project
+- fix NodeJS and PostgreSQL installation in php-fpm docker image ([#2758](https://github.com/shopsys/shopsys/pull/2758))
+    - see #project-base-diff to update your project
