@@ -17,7 +17,15 @@ export type CheckboxProps = NativeProps & {
 
 export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
     ({ id, name, label, count, required, disabled, onChange, value, dataTestId }, checkboxForwardedRef) => (
-        <LabelWrapper label={label} count={count} required={required} htmlFor={id} checked={value} inputType="checkbox">
+        <LabelWrapper
+            label={label}
+            count={count}
+            required={required}
+            htmlFor={id}
+            checked={value}
+            inputType="checkbox"
+            disabled={disabled}
+        >
             <input
                 // class "peer" is used for styling in LabelWrapper
                 className="peer sr-only"

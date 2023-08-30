@@ -34,7 +34,7 @@ tr,
 td,
 th,
 textarea {
-    @apply font-default leading-default text-dark;
+    @apply font-default text-dark;
 }
 
 td,

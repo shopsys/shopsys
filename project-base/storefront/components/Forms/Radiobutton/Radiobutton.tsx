@@ -43,14 +43,16 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
             <LabelWrapper
                 htmlFor={id}
                 label={
-                    <div>
+                    <>
                         {!!image && (
                             <Image alt={image.name} type="default" image={image} className="mr-3 h-6 max-h-full w-11" />
                         )}
                         {label}
-                    </div>
+                    </>
                 }
                 inputType="radio"
+                checked={checked}
+                disabled={disabled}
             >
                 <input
                     className="peer sr-only"
