@@ -18,7 +18,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmPageType } from 'gtm/types/enums';
-import Head from 'next/head';
+import Script from 'next/script';
 
 const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -39,9 +39,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
 
     return (
         <>
-            <Head>
-                <script src="https://widget.packeta.com/v6/www/js/library.js" async />
-            </Head>
+            <Script strategy="afterInteractive" src="https://widget.packeta.com/v6/www/js/library.js" />
             <MetaRobots content="noindex" />
             <EmptyCartWrapper currentCart={currentCart} title={t('Order')}>
                 <OrderLayout
