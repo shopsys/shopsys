@@ -18,6 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ReadyCategorySeoMixFacade
@@ -311,6 +312,13 @@ class ReadyCategorySeoMixFacade
         $parameterValueIdsByParameterId = [];
 
         foreach ($parametersFilterData as $parameterFilterData) {
+            if (array_key_exists($parameterFilterData['parameter'], $parameterIdsByUuids) === false) {
+                throw new ParameterNotFoundException(sprintf(
+                    'Parameter with uuid "%s" was not found',
+                    $parameterFilterData['parameter'],
+                ));
+            }
+
             $parameterId = $parameterIdsByUuids[$parameterFilterData['parameter']];
 
             if (count($parameterFilterData['values']) === 0) {
@@ -319,7 +327,16 @@ class ReadyCategorySeoMixFacade
                 $text = $parameterFilterData['minimalValue'];
                 $parameterValueId = $this->parameterFacade->getParameterValueIdByText((string)$text, $currentLocale);
             } else {
-                $parameterValueId = $parameterValueIdsByUuids[reset($parameterFilterData['values'])];
+                $parameterUuid = reset($parameterFilterData['values']);
+
+                if (array_key_exists($parameterUuid, $parameterValueIdsByUuids) === false) {
+                    throw new ParameterValueNotFoundException(sprintf(
+                        'Parameter value with uuid "%s" was not found',
+                        $parameterUuid,
+                    ));
+                }
+
+                $parameterValueId = $parameterValueIdsByUuids[$parameterUuid];
             }
             $parameterValueIdsByParameterId[$parameterId] = $parameterValueId;
         }
