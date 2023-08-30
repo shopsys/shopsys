@@ -1,5 +1,5 @@
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
@@ -417,7 +417,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             </FormLine>
                         </>
                     )}
-                    <Button type="submit">{t('Save profile')}</Button>
+                    <SubmitButton>{t('Save profile')}</SubmitButton>
                 </Form>
             </FormProvider>
             {isErrorPopupVisible && (

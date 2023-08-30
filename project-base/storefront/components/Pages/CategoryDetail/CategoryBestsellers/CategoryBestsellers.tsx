@@ -38,7 +38,7 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
 
             {products.length > NUMBER_OF_VISIBLE_ITEMS && (
                 <div className="text-center">
-                    <Button type="button" size="small" onClick={() => setIsCollapsed((prev) => !prev)}>
+                    <Button size="small" onClick={() => setIsCollapsed((prev) => !prev)}>
                         <span>{isCollapsed ? t('show more') : t('show less')}</span>
                     </Button>
                 </div>

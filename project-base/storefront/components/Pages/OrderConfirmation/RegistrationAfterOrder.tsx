@@ -1,6 +1,6 @@
 import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './registrationAfterOrderFormMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
@@ -121,15 +121,14 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
                                             label: formMeta.fields.privacyPolicy.label,
                                         }}
                                     />
-                                    <Button
+                                    <SubmitButton
                                         dataTestId={TEST_IDENTIFIER}
-                                        type="submit"
                                         variant="primary"
                                         style={{ width: '100%' }}
                                         isWithDisabledLook={!formProviderMethods.formState.isValid}
                                     >
                                         {t('Create account')}
-                                    </Button>
+                                    </SubmitButton>
                                 </FormProvider>
                             </Form>
                         </div>

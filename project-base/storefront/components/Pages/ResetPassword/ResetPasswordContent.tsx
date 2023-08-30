@@ -1,5 +1,5 @@
 import { usePasswordResetForm, usePasswordResetFormMeta } from './passwordResetFormMeta';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
@@ -71,9 +71,9 @@ export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumb
                             }}
                         />
                         <div className="mt-8 flex w-full justify-center">
-                            <Button type="submit" isWithDisabledLook={invalid || value.length === 0}>
+                            <SubmitButton isWithDisabledLook={invalid || value.length === 0}>
                                 {t('Reset password')}
-                            </Button>
+                            </SubmitButton>
                         </div>
                     </Form>
                 </FormProvider>

@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { WarningIcon } from 'components/Basic/Icon/IconsSvg';
 import { Link } from 'components/Basic/Link/Link';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
@@ -90,9 +90,9 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                         />
                         <div className="mt-5 mb-5 flex items-center justify-between gap-2 lg:mb-0 lg:block lg:border-none lg:p-0">
                             <div className="order-1 flex w-full justify-end">
-                                <Button type="submit" dataTestId="blocks-popup-login-submit" className="max-lg:!px-3">
+                                <SubmitButton dataTestId="blocks-popup-login-submit" className="max-lg:!px-3">
                                     {t('Log-in')}
-                                </Button>
+                                </SubmitButton>
                             </div>
                             <div className="flex items-center gap-1 whitespace-nowrap rounded border-primary py-2 px-2 text-sm text-primary lg:mt-5 lg:border-2 lg:px-3 lg:py-3">
                                 <WarningIcon className=" h-5 w-9 text-red" />

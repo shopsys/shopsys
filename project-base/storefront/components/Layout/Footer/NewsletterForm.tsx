@@ -1,6 +1,6 @@
 import { useNewsletterForm, useNewsletterFormMeta } from './newsletterFormMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
@@ -75,13 +75,12 @@ export const NewsletterForm: FC = () => {
                                     }}
                                 />
                                 <div className="flex flex-col">
-                                    <Button
+                                    <SubmitButton
                                         className="max-lg:mt-3 lg:ml-3"
-                                        type="submit"
                                         isWithDisabledLook={!formProviderMethods.formState.isValid}
                                     >
                                         {t('Send')}
-                                    </Button>
+                                    </SubmitButton>
                                 </div>
                             </div>
                             <CheckboxControlled

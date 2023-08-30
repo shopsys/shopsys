@@ -1,5 +1,5 @@
 import { usePersonalDataOverviewForm, usePersonalDataOverviewFormMeta } from './personalDataOverviewFormMeta';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
@@ -77,7 +77,7 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
                             }}
                         />
                         <div className="mt-8 flex w-full justify-center">
-                            <Button type="submit">{t('Send')}</Button>
+                            <SubmitButton>{t('Send')}</SubmitButton>
                         </div>
                     </Form>
                 </FormProvider>

@@ -2,7 +2,7 @@ import { PromoCodeInfo } from './PromoCodeInfo';
 import { PlusIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
@@ -134,16 +134,15 @@ export const PromoCode: FC = () => {
                                             value={promoCodeValue}
                                             onChange={onChangePromoCodeValueHandler}
                                         />
-                                        <Button
+                                        <SubmitButton
                                             className="!rounded-r !rounded-l-none !px-3"
-                                            type="submit"
                                             isWithDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
                                             dataTestId={TEST_IDENTIFIER + '-apply-button'}
                                             onClick={onApplyPromoCodeHandler}
                                         >
                                             {fetchingApplyPromoCode && <Loader className="w-4 text-white" />}
                                             {t('Apply')}
-                                        </Button>
+                                        </SubmitButton>
                                     </div>
                                 </div>
                             )}

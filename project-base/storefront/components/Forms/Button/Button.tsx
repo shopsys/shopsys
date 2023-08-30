@@ -1,40 +1,21 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react';
-import { useFormContext } from 'react-hook-form';
 import { twMergeCustom } from 'helpers/twMerge';
 
-type NativeButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'disabled'>;
+type NativeButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'disabled'>;
 
-type Props = NativeButtonProps &
-    Omit<NativeButtonProps, 'type' | 'disabled'> & {
-        type?: 'button' | 'submit' | 'reset';
-        isDisabled?: boolean;
-        isWithDisabledLook?: boolean;
-        size?: 'small';
-        variant?: 'primary' | 'secondary';
-    };
+export type ButtonProps = NativeButtonProps & {
+    isDisabled?: boolean;
+    isWithDisabledLook?: boolean;
+    size?: 'small';
+    variant?: 'primary' | 'secondary';
+};
 
-export const Button: FC<Props> = forwardRef(
+export const Button: FC<ButtonProps> = forwardRef(
     (
-        {
-            children,
-            type = 'button',
-            dataTestId,
-            className,
-            isDisabled: isDisabledDefault,
-            isWithDisabledLook,
-            size,
-            variant,
-            ...props
-        },
+        { children, dataTestId, className, isDisabled, isWithDisabledLook, size, variant, ...props },
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _,
     ) => {
-        const formProviderMethods = useFormContext();
-
-        // formProviderMethods may be null probably when it is not used in FormProvider context - see https://github.com/react-hook-form/react-hook-form/discussions/3894
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        const isDisabled = isDisabledDefault || (type === 'submit' && formProviderMethods?.formState.isSubmitting);
-
         return (
             <button
                 className={twMergeCustom(
@@ -47,7 +28,7 @@ export const Button: FC<Props> = forwardRef(
                     isDisabled && 'pointer-events-none',
                     className,
                 )}
-                type={type}
+                type="button"
                 data-testid={dataTestId}
                 {...props}
             >

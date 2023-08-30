@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon, SpinnerIcon } from 'components/Basic/Icon/IconsSvg';
-import { Button } from 'components/Forms/Button/Button';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { useRouter } from 'next/router';
 import { twJoin } from 'tailwind-merge';
 
@@ -61,16 +61,11 @@ export const OrderAction: FC<OrderActionProps> = ({
                 </ExtendedNextLink>
             </div>
             <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0" data-testid={TEST_IDENTIFIER + 'next'}>
-                <Button
-                    type="submit"
-                    variant="primary"
-                    isWithDisabledLook={hasDisabledLook}
-                    onClick={onNextStepHandler}
-                >
+                <SubmitButton variant="primary" isWithDisabledLook={hasDisabledLook} onClick={onNextStepHandler}>
                     {isLoading && <SpinnerIcon className="w-5" />}
                     <span>{buttonNext}</span>
                     <ArrowIcon className="relative top-0 ml-1 -rotate-90 text-white" />
-                </Button>
+                </SubmitButton>
             </div>
         </div>
     );
