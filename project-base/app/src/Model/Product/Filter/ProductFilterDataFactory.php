@@ -18,15 +18,15 @@ class ProductFilterDataFactory
 
     /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
-     * @return \App\Model\Product\Filter\ProductFilterData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      */
-    public function createProductFilterDataFromReadyCategorySeoMix(
+    public function updateProductFilterDataFromReadyCategorySeoMix(
         ReadyCategorySeoMix $readyCategorySeoMix,
-    ): ProductFilterData {
-        $productFilterData = $this->create();
-
+        ProductFilterData $productFilterData,
+    ): void {
         if ($readyCategorySeoMix->getFlag() !== null) {
-            $productFilterData->flags = [$readyCategorySeoMix->getFlag()];
+            $productFilterData->flags[] = $readyCategorySeoMix->getFlag();
+            $productFilterData->flags = array_values($productFilterData->flags);
         }
 
         foreach ($readyCategorySeoMix->getReadyCategorySeoMixParameterParameterValues() as $readyCategorySeoMixParameterParameterValue) {
@@ -35,7 +35,5 @@ class ProductFilterDataFactory
             $parameterFilterData->values = [$readyCategorySeoMixParameterParameterValue->getParameterValue()];
             $productFilterData->parameters[] = $parameterFilterData;
         }
-
-        return $productFilterData;
     }
 }

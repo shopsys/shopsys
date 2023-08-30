@@ -102,7 +102,14 @@ class ProductsQuery extends BaseProductsQuery
         } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
             $category = $categoryOrReadyCategorySeoMix->getCategory();
             $readyCategorySeoMix = $categoryOrReadyCategorySeoMix;
-            $productFilterData = $this->productFilterDataFactory->createProductFilterDataFromReadyCategorySeoMix($categoryOrReadyCategorySeoMix);
+
+            $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
+                $argument,
+                $category,
+            );
+
+            $this->productFilterDataFactory->updateProductFilterDataFromReadyCategorySeoMix($categoryOrReadyCategorySeoMix, $productFilterData);
+
             $orderingMode = $categoryOrReadyCategorySeoMix->getOrdering();
             $defaultOrderingMode = $orderingMode;
         } else {
