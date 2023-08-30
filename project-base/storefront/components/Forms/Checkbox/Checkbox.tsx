@@ -1,11 +1,12 @@
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
+import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
     'id' | 'onChange',
-    'name' | 'disabled' | 'required' | 'onBlur'
+    'name' | 'disabled' | 'required' | 'onBlur' | 'className'
 >;
 
 export type CheckboxProps = NativeProps & {
@@ -16,7 +17,7 @@ export type CheckboxProps = NativeProps & {
 };
 
 export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
-    ({ id, name, label, count, required, disabled, onChange, value, dataTestId }, checkboxForwardedRef) => (
+    ({ id, name, label, count, required, disabled, onChange, value, dataTestId, className }, checkboxForwardedRef) => (
         <LabelWrapper
             label={label}
             count={count}
@@ -28,7 +29,7 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
         >
             <input
                 // class "peer" is used for styling in LabelWrapper
-                className="peer sr-only"
+                className={twMergeCustom('peer sr-only', className)}
                 id={id}
                 disabled={disabled}
                 required={required}

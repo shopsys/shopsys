@@ -22,9 +22,9 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
 
     return (
         <div className="rounded bg-blueLight px-3 py-4" data-testid={TEST_IDENTIFIER}>
-            <a
+            <div
                 className={twJoin(
-                    'flex items-center font-bold no-underline hover:no-underline',
+                    'flex cursor-pointer items-center font-bold no-underline hover:no-underline',
                     product.availability.status === AvailabilityStatusEnumApi.InStockApi &&
                         'text-inStock hover:text-inStock',
                     product.availability.status === AvailabilityStatusEnumApi.OutOfStockApi &&
@@ -33,8 +33,9 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
                 onClick={scrollOnClickHandler}
             >
                 {product.availability.name}
-                <ArrowIcon className="text-dark" />
-            </a>
+                <ArrowIcon className="ml-1 text-dark" />
+            </div>
+
             {product.availableStoresCount > 0 && (
                 <span className="mr-1 text-sm" data-testid={TEST_IDENTIFIER + '-availability'}>
                     {t('This item is available immediately in {{ count }} stores', {
@@ -42,6 +43,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
                     })}
                 </span>
             )}
+
             {product.exposedStoresCount > 0 && (
                 <span className="mr-1 text-sm" data-testid={TEST_IDENTIFIER + '-exposed'}>
                     {t('You can check this item in {{ count }} stores', { count: product.exposedStoresCount })}

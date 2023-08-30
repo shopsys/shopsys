@@ -6,7 +6,7 @@ import { Control, useController } from 'react-hook-form';
 type CheckboxControlledProps = {
     name: string;
     render: (input: JSX.Element, currentValue: any) => ReactElement<any, any> | null;
-    checkboxProps: Pick<CheckboxProps, 'count' | 'disabled' | 'label' | 'required' | 'dataTestId'>;
+    checkboxProps: Pick<CheckboxProps, 'count' | 'disabled' | 'label' | 'required' | 'dataTestId' | 'className'>;
     control: Control<any>;
     formName: string;
 };

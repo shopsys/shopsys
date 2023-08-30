@@ -16,7 +16,10 @@ type ProductsListProps = {
     products: ListedProductFragmentApi[];
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
-    productRefs?: RefObject<HTMLDivElement>[];
+    ref?: RefObject<HTMLUListElement>;
+    productRefs?: RefObject<HTMLLIElement>[];
+    className?: string;
+    classNameProduct?: string;
 };
 
 export const ProductsListContent: FC<ProductsListProps> = ({
@@ -25,6 +28,9 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     gtmMessageOrigin = GtmMessageOriginType.other,
     productRefs,
     className,
+    classNameProduct,
+    ref,
+    dataTestId,
 }) => {
     const { currentPage } = useQueryParams();
     const { isPopupCompareOpen, toggleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
@@ -33,21 +39,23 @@ export const ProductsListContent: FC<ProductsListProps> = ({
 
     return (
         <>
-            {products.map((product, index) => (
-                <ProductListItem
-                    ref={productRefs?.[index]}
-                    key={product.uuid}
-                    className={className}
-                    product={product}
-                    listIndex={(currentPage - 1) * DEFAULT_PAGE_SIZE + index}
-                    gtmProductListName={gtmProductListName}
-                    gtmMessageOrigin={gtmMessageOrigin}
-                    isProductInComparison={isProductInComparison(product.uuid)}
-                    toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
-                    isProductInWishlist={isProductInWishlist(product.uuid)}
-                    toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
-                />
-            ))}
+            <ul ref={ref} className={className} data-testid={dataTestId}>
+                {products.map((product, index) => (
+                    <ProductListItem
+                        ref={productRefs?.[index]}
+                        key={product.uuid}
+                        className={classNameProduct}
+                        product={product}
+                        listIndex={(currentPage - 1) * DEFAULT_PAGE_SIZE + index}
+                        gtmProductListName={gtmProductListName}
+                        gtmMessageOrigin={gtmMessageOrigin}
+                        isProductInComparison={isProductInComparison(product.uuid)}
+                        toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
+                        isProductInWishlist={isProductInWishlist(product.uuid)}
+                        toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
+                    />
+                ))}
+            </ul>
 
             {isPopupCompareOpen && <ProductComparePopup onCloseCallback={() => setIsPopupCompareOpen(false)} />}
         </>

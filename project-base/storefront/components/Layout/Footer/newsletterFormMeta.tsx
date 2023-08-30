@@ -64,12 +64,11 @@ export const useNewsletterFormMeta = (
                             i18nKey="PrivacyPolicyCheckbox"
                             defaultTrans="I take note of the <lnk1>processing of personal data</lnk1>."
                             components={{
-                                lnk1:
-                                    privacyPolicyArticleUrl !== undefined ? (
-                                        <Link href={privacyPolicyArticleUrl} isExternal target="_blank" />
-                                    ) : (
-                                        <span></span>
-                                    ),
+                                lnk1: privacyPolicyArticleUrl ? (
+                                    <Link href={privacyPolicyArticleUrl} isExternal target="_blank" />
+                                ) : (
+                                    <></>
+                                ),
                             }}
                         />
                     ),
