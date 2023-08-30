@@ -1,9 +1,11 @@
 ARG DEBIAN_VERSION=bullseye
+ARG NODE_MAJOR=16
 
 FROM php:8.1-fpm-${DEBIAN_VERSION} as base
 
-ARG DEBIAN_VERSION
 ARG project_root=.
+ARG NODE_MAJOR
+ARG DEBIAN_VERSION
 
 # install required tools
 # git for computing diffs and for npm to download packages
@@ -14,10 +16,20 @@ ARG project_root=.
 # unzip to ommit composer zip packages corruption
 # dialog for apt-get to be
 # ca-certificates to ensure certificates are up to date
-RUN apt-get update && apt-get install -y wget gnupg g++ locales unzip ca-certificates dialog apt-utils git && apt-get clean
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    wget \
+    gnupg \
+    g++ \
+    locales \
+    unzip \
+    ca-certificates \
+    dialog \
+    apt-utils \
+    git && \
+    apt-get clean
 
 # Install NodeJS
-ENV NODE_MAJOR=16
 RUN mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
@@ -35,7 +47,7 @@ RUN chmod +x /usr/local/bin/docker-install-composer && \
 # libpg-dev for connection to postgres database
 # autoconf needed by "redis" extension
 RUN apt-get update && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends \
     bash-completion \
     libpng-dev \
     libjpeg-dev \
