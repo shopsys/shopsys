@@ -46,7 +46,15 @@ build-storefront:
         - build
     script:
         - cp ./app/schema.graphql ./storefront/schema.graphql
-        - docker build -f ./storefront/docker/Dockerfile --target production --compress --build-arg SENTRY_RELEASE=${CI_COMMIT_SHORT_SHA} -t ${STOREFRONT_TAG} ./storefront
+        - docker build -f ./storefront/docker/Dockerfile
+            --target production
+            --compress
+            --build-arg SENTRY_RELEASE=${CI_COMMIT_SHORT_SHA}
+            --build-arg SENTRY_URL=${SENTRY_URL}
+            --build-arg SENTRY_ORG=shopsys
+            --build-arg SENTRY_PROJECT=${SENTRY_PROJECT}
+            --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
+            -t ${STOREFRONT_TAG} ./storefront
         - docker push ${STOREFRONT_TAG}
     interruptible: true
 
