@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use League\Flysystem\StorageAttributes;
 use League\Flysystem\UnableToDeleteFile;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
@@ -217,6 +218,16 @@ class FileUpload
     }
 
     /**
+     * @param \League\Flysystem\StorageAttributes $uploadedFile
+     * @param int $currentTimestamp
+     * @return bool
+     */
+    protected function shouldDeleteFile(StorageAttributes $uploadedFile, int $currentTimestamp): bool
+    {
+        return $uploadedFile->isFile() && $currentTimestamp - $uploadedFile->lastModified() >= static::DELETE_OLD_FILES_SECONDS;
+    }
+
+    /**
      * @return int Count of deleted files
      */
     public function deleteOldUploadedFiles(): int
@@ -226,11 +237,8 @@ class FileUpload
         $uploadedFiles = $this->filesystem->listContents($this->getTemporaryDirectory());
 
         foreach ($uploadedFiles as $uploadedFile) {
-            if (
-                $uploadedFile['type'] === 'file'
-                && $currentTimestamp - $uploadedFile['timestamp'] >= static::DELETE_OLD_FILES_SECONDS
-            ) {
-                $this->filesystem->delete($uploadedFile['path']);
+            if ($this->shouldDeleteFile($uploadedFile, $currentTimestamp)) {
+                $this->filesystem->delete($uploadedFile->path());
                 $deletedCounter++;
             }
         }
