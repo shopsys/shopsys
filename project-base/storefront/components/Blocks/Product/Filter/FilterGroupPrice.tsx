@@ -40,16 +40,18 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinP
                 {title}
                 <FilterGroupIcon isOpen={isGroupOpen} />
             </FilterGroupTitle>
-            <FilterGroupContent isOpen={isGroupOpen}>
-                <RangeSlider
-                    min={minPriceOption}
-                    max={maxPriceOption}
-                    minValue={minimalPrice || minPriceOption}
-                    maxValue={maximalPrice || maxPriceOption}
-                    setMinValueCallback={setMinimalPrice}
-                    setMaxValueCallback={setMaximalPrice}
-                />
-            </FilterGroupContent>
+            {isGroupOpen && (
+                <FilterGroupContent>
+                    <RangeSlider
+                        min={minPriceOption}
+                        max={maxPriceOption}
+                        minValue={minimalPrice || minPriceOption}
+                        maxValue={maximalPrice || maxPriceOption}
+                        setMinValueCallback={setMinimalPrice}
+                        setMaxValueCallback={setMaximalPrice}
+                    />
+                </FilterGroupContent>
+            )}
         </FilterGroupWrapper>
     );
 };

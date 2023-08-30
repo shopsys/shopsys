@@ -62,40 +62,42 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                 {title}
                 <FilterGroupIcon isOpen={isGroupOpen} />
             </FilterGroupTitle>
-            <FilterGroupContent isOpen={isGroupOpen}>
-                {defaultOptions && (
-                    <>
-                        {defaultOptions.map((option, index) => {
-                            const isFlagAndSelectedByDefault =
-                                filterField === 'flags' && defaultSelectedFlags.has(option.uuid);
-                            const isChecked = !!selectedItems?.includes(option.uuid) || isFlagAndSelectedByDefault;
+            {isGroupOpen && (
+                <FilterGroupContent>
+                    {defaultOptions && (
+                        <>
+                            {defaultOptions.map((option, index) => {
+                                const isFlagAndSelectedByDefault =
+                                    filterField === 'flags' && defaultSelectedFlags.has(option.uuid);
+                                const isChecked = !!selectedItems?.includes(option.uuid) || isFlagAndSelectedByDefault;
 
-                            return (
-                                <FilterGroupContentItem
-                                    key={option.uuid}
-                                    isDisabled={option.count === 0 && !isChecked}
-                                    dataTestId={getDataTestId(filterField) + '-' + index}
-                                >
-                                    <Checkbox
-                                        id={`${filterField}.${index}.checked`}
-                                        name={`${filterField}.${index}.checked`}
-                                        label={option.name}
-                                        onChange={() => handleCheck(option.uuid)}
-                                        value={isChecked}
-                                        count={option.count}
-                                    />
-                                </FilterGroupContentItem>
-                            );
-                        })}
+                                return (
+                                    <FilterGroupContentItem
+                                        key={option.uuid}
+                                        isDisabled={option.count === 0 && !isChecked}
+                                        dataTestId={getDataTestId(filterField) + '-' + index}
+                                    >
+                                        <Checkbox
+                                            id={`${filterField}.${index}.checked`}
+                                            name={`${filterField}.${index}.checked`}
+                                            label={option.name}
+                                            onChange={() => handleCheck(option.uuid)}
+                                            value={isChecked}
+                                            count={option.count}
+                                        />
+                                    </FilterGroupContentItem>
+                                );
+                            })}
 
-                        {isShowLessMoreShown && (
-                            <ShowAllButton onClick={() => setAreAllItemsShown((prev) => !prev)}>
-                                {isWithAllItemsShown ? t('show less') : t('show more')}
-                            </ShowAllButton>
-                        )}
-                    </>
-                )}
-            </FilterGroupContent>
+                            {isShowLessMoreShown && (
+                                <ShowAllButton onClick={() => setAreAllItemsShown((prev) => !prev)}>
+                                    {isWithAllItemsShown ? t('show less') : t('show more')}
+                                </ShowAllButton>
+                            )}
+                        </>
+                    )}
+                </FilterGroupContent>
+            )}
         </FilterGroupWrapper>
     );
 };
