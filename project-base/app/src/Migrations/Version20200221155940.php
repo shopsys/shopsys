@@ -5,41 +5,66 @@ declare(strict_types=1);
 namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-final class Version20200221155940 extends AbstractMigration
+final class Version20200221155940 extends AbstractMigration implements ContainerAwareInterface
 {
+    use MultidomainMigrationTrait;
+
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
     public function up(Schema $schema): void
     {
+        $translationId = 1;
+
         $this->sql('TRUNCATE TABLE flags CASCADE');
         $this->sql('ALTER TABLE flags ADD akeneo_code VARCHAR(255) NOT NULL');
 
         $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (1, \'#ffffff\', true, \'flag__product_sale\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (1, 1, \'Výprodej\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (2, 1, \'Sale\', \'en\')');
+
+        foreach ($this->getAllLocales() as $locale) {
+            $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (\'' . $translationId . '\', 1, \'' . t('Sale', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) . '\', \'' . $locale . '\')');
+            $translationId++;
+        }
 
         $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (2, \'#ffffff\', true, \'flag__product_action\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (3, 2, \'Akce\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (4, 2, \'Action\', \'en\')');
+
+        foreach ($this->getAllLocales() as $locale) {
+            $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (\'' . $translationId . '\', 2, \'' . t('Action', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) . '\', \'' . $locale . '\')');
+            $translationId++;
+        }
 
         $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (3, \'#ffffff\', true, \'flag__product_new\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (5, 3, \'Novinka\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (6, 3, \'New\', \'en\')');
+
+        foreach ($this->getAllLocales() as $locale) {
+            $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (\'' . $translationId . '\', 3, \'' . t('New', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) . '\', \'' . $locale . '\')');
+            $translationId++;
+        }
 
         $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (4, \'#ffffff\', true, \'flag__product_made_in_cz\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (7, 4, \'Vyrobeno v ČR\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (8, 4, \'Made in CZ\', \'en\')');
+
+        foreach ($this->getAllLocales() as $locale) {
+            $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (\'' . $translationId . '\', 4, \'' . t('Made in CZ', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) . '\', \'' . $locale . '\')');
+            $translationId++;
+        }
 
         $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (5, \'#ffffff\', true, \'flag__product_made_in_sk\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (9, 5, \'Vyrobeno v SK\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (10, 5, \'Made in SK\', \'en\')');
+
+        foreach ($this->getAllLocales() as $locale) {
+            $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (\'' . $translationId . '\', 5, \'' . t('Made in SK', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) . '\', \'' . $locale . '\')');
+            $translationId++;
+        }
 
         $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (6, \'#ffffff\', true, \'flag__product_made_in_de\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (11, 6, \'Vyrobeno v DE\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (12, 6, \'Made in DE\', \'en\')');
+
+        foreach ($this->getAllLocales() as $locale) {
+            $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (\'' . $translationId . '\', 6, \'' . t('Made in DE', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) . '\', \'' . $locale . '\')');
+            $translationId++;
+        }
     }
 
     /**

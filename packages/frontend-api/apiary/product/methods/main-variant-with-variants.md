@@ -35,10 +35,10 @@ Lists variants for main variant
                     "name": "Hyundai 22HD44D",
                     "variants": [
                         {
-                            "name": "51,5” Hyundai 22HD44D"
+                            "name": "51,5\" Hyundai 22HD44D"
                         },
                         {
-                            "name": "60” Hyundai 22HD44D"
+                            "name": "60\" Hyundai 22HD44D"
                         },
                         {
                             "name": "Hyundai 22HD44D"

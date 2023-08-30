@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
 use App\DataFixtures\Demo\ReadyCategorySeoDataFixture;
 use App\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -57,6 +58,35 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
             }
         ';
 
+        $readyCategorySeoMixLinks = [
+            [
+                'name' => t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-od-nejdrazsiho',
+            ],
+            [
+                'name' => t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-barva-cerna',
+            ],
+            [
+                'name' => t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-barva-cervena',
+            ],
+            [
+                'name' => t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-led-uhlopricka-30-akce',
+            ],
+            [
+                'name' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-bez-hdmi-akce',
+            ],
+            [
+                'name' => t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'slug' => 'elektro-full-hd-led-usb',
+            ],
+        ];
+
+        ArraySorter::sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $this->getLocaleForFirstDomain());
+
         $arrayExpected = [
             'data' => [
                 'slug' => [
@@ -77,32 +107,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                             'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $readyCategorySeoMix->getCategory()->getId()]),
                         ],
                     ],
-                    'readyCategorySeoMixLinks' => [
-                        [
-                            'name' => t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-od-nejdrazsiho',
-                        ],
-                        [
-                            'name' => t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-barva-cerna',
-                        ],
-                        [
-                            'name' => t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-barva-cervena',
-                        ],
-                        [
-                            'name' => t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-led-uhlopricka-30-akce',
-                        ],
-                        [
-                            'name' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-bez-hdmi-akce',
-                        ],
-                        [
-                            'name' => t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                            'slug' => 'elektro-full-hd-led-usb',
-                        ],
-                    ],
+                    'readyCategorySeoMixLinks' => $readyCategorySeoMixLinks,
                     'linkedCategories' => [
                         ['name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                         ['name' => t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
@@ -192,7 +197,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                         'orderingMode' => 'PRIORITY',
                         'defaultOrderingMode' => 'PRIORITY',
                         'edges' => [
-                            ['node' => ['name' => t('32” Hyundai 32PFL4400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())]],
+                            ['node' => ['name' => t('32" Hyundai 32PFL4400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())]],
                         ],
                     ],
                 ],

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\ParameterGroupDataFactory;
@@ -3166,7 +3165,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('27” Hyundai T27D590EY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('27" Hyundai T27D590EY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3210,7 +3209,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('21,5” Hyundai 22MT44', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('21,5" Hyundai 22MT44', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768, DVB-T/C, HDMI, SCART, D-Sub, USB, speakers, Energ. Class A ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3255,7 +3254,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('30” Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('30" Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768, DVB-T/C, HDMI, SCART, D-Sub, USB, speakers, Energ. Class A', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3299,7 +3298,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('51,5” Hyundai 22HD44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('51,5" Hyundai 22HD44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3339,7 +3338,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('60” Hyundai 22HD44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('60" Hyundai 22HD44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3380,7 +3379,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('27” Hyundai T27D590EY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('27" Hyundai T27D590EY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3425,7 +3424,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('27” Hyundai T27D590EZ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('27" Hyundai T27D590EZ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3469,7 +3468,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('32” Hyundai 32PFL4400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('32" Hyundai 32PFL4400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 32 inches 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 32 inches 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -6026,7 +6025,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('27” Hyundai PLASMA T27D590EY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('27" Hyundai PLASMA T27D590EY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -6166,10 +6165,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 /** @var \App\Model\Product\Unit\Unit $unit */
                 $unit = $this->persistentReferenceFacade->getReference($unitReferenceName);
                 $parameterData->unit = $unit;
-            }
-
-            if ($parameterNamesByLocale['cs'] === 'Barva') {
-                $parameterData->akeneoCode = Parameter::COLOR_PARAMETER_AKENEO_CODE;
             }
 
             /** @var \App\Model\Product\Parameter\Parameter|null $parameter */

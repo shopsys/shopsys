@@ -401,7 +401,7 @@ class GetStoreTest extends GraphQlTestCase
                 'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'slug' => '/ostrava',
                 'isDefault' => true,
-                'description' => t('Store in Ostrava Přívoz', [], 'dataFixture', $firstDomainLocale),
+                'description' => t('Store in Ostrava Přívoz', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'street' => 'Koksární 10',
                 'city' => 'Ostrava',
                 'postcode' => '70200',
@@ -415,7 +415,7 @@ class GetStoreTest extends GraphQlTestCase
                 'locationLongitude' => '18.2738861',
                 'breadcrumb' => [
                     [
-                        'name' => t('Department stores'),
+                        'name' => t('Department stores', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'slug' => $storesSlug,
                     ],
                     [
@@ -428,7 +428,7 @@ class GetStoreTest extends GraphQlTestCase
                 'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'slug' => '/pardubice',
                 'isDefault' => false,
-                'description' => t('Store v Pardubice', [], 'dataFixture', $firstDomainLocale),
+                'description' => t('Store v Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'street' => 'Bratranců Veverkových 2722',
                 'city' => 'Pardubice',
                 'postcode' => '53002',
@@ -442,7 +442,7 @@ class GetStoreTest extends GraphQlTestCase
                 'locationLongitude' => '15.7707169',
                 'breadcrumb' => [
                     [
-                        'name' => t('Department stores'),
+                        'name' => t('Department stores', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'slug' => $storesSlug,
                     ],
                     [

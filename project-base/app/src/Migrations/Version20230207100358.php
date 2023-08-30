@@ -8,8 +8,9 @@ use App\Model\SeoPage\SeoPage;
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20230207100358 extends AbstractMigration
+class Version20230207100358 extends AbstractMigration implements ContainerAwareInterface
 {
     use MultidomainMigrationTrait;
 
@@ -81,13 +82,6 @@ class Version20230207100358 extends AbstractMigration
         $this->createSeoPages();
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema): void
-    {
-    }
-
     private function createSeoPages(): void
     {
         foreach (self::PREDEFINED_SEO_PAGES as $pageName => $pageSlugsIndexedByLocale) {
@@ -143,5 +137,12 @@ class Version20230207100358 extends AbstractMigration
                 'entityId' => $seoPageId,
             ]);
         }
+    }
+
+    /**
+     * @param \Doctrine\DBAL\Schema\Schema $schema
+     */
+    public function down(Schema $schema): void
+    {
     }
 }

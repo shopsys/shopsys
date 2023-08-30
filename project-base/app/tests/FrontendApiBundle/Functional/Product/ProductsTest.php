@@ -28,9 +28,9 @@ class ProductsTest extends ProductsGraphQlTestCase
         $productsExpected = [
             ['name' => t('100 Czech crowns ticket', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('27” Hyundai T27D590EY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('27” Hyundai T27D590EZ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('30” Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('27" Hyundai T27D590EY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('27" Hyundai T27D590EZ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('30" Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
         ];
 
         $this->assertProducts($query, 'products', $productsExpected);
@@ -137,7 +137,7 @@ class ProductsTest extends ProductsGraphQlTestCase
 
         return [
             [
-                'name' => t('30” Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('30" Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'shortDescription' => t(
                     'Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768',
                     [],
@@ -235,7 +235,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                 'isUsingStock' => true,
                 'namePrefix' => null,
                 'nameSuffix' => null,
-                'fullName' => t('30” Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'fullName' => t('30" Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'catalogNumber' => '7700769',
                 'partNumber' => '22MT44D',
                 'ean' => '8845781245931',

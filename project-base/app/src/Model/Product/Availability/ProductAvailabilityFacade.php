@@ -9,6 +9,8 @@ use App\Model\Product\Product;
 use App\Model\Stock\ProductStock;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Store\ProductStoreFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 
 class ProductAvailabilityFacade
@@ -24,11 +26,13 @@ class ProductAvailabilityFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly Setting $setting,
         private readonly ProductStockFacade $productStockFacade,
         private readonly ProductStoreFacade $productStoreFacade,
+        private readonly Domain $domain,
     ) {
         $this->productAvailabilityDomainCache = [];
     }
@@ -40,12 +44,14 @@ class ProductAvailabilityFacade
      */
     public function getProductAvailabilityInformationByDomainId(Product $product, int $domainId): string
     {
+        $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
+
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
-            return t('In stock');
+            return t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
         }
 
         if ($product->hasPreorder() === false) {
-            return t('Out of stock');
+            return t('Out of stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
         }
 
         return $this->getDeliveryWeeksAvailabilityMessageByProductAndDomainId($product, $domainId);
@@ -78,7 +84,7 @@ class ProductAvailabilityFacade
     {
         $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
 
-        return $this->getWeeksAvailabilityMessageByWeeks($weeks);
+        return $this->getWeeksAvailabilityMessageByWeeks($weeks, $domainId);
     }
 
     /**
@@ -272,13 +278,16 @@ class ProductAvailabilityFacade
 
         $productStoresAvailabilityInformationList = [];
 
+        $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
+
         foreach ($productStores as $productStore) {
-            $availabilityInformation = t('Available immediately');
+            $availabilityInformation = t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
+
             $availabilityStatus = AvailabilityStatusEnum::InStock;
 
             if ($isOutOfStock) {
                 $availabilityStatus = AvailabilityStatusEnum::OutOfStock;
-                $availabilityInformation = t('Unavailable');
+                $availabilityInformation = t('Unavailable', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
             } else {
                 $stock = $productStore->getStore()->getStock();
 
@@ -289,7 +298,7 @@ class ProductAvailabilityFacade
                 }
 
                 if ($productStock === null || $productStock->getProductQuantity() <= 0) {
-                    $availabilityInformation = $this->getWeeksAvailabilityMessageByWeeks($weeks);
+                    $availabilityInformation = $this->getWeeksAvailabilityMessageByWeeks($weeks, $domainId);
                 }
             }
 
@@ -307,13 +316,18 @@ class ProductAvailabilityFacade
 
     /**
      * @param int $weeks
+     * @param int $domainId
      * @return string
      */
-    private function getWeeksAvailabilityMessageByWeeks(int $weeks): string
+    private function getWeeksAvailabilityMessageByWeeks(int $weeks, int $domainId): string
     {
+        $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
+
         return t(
             '{0,1} Available in one week|[2,Inf] Available in %count% weeks',
             ['%count%' => $weeks],
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
+            $domainLocale,
         );
     }
 

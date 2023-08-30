@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Slug;
 
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -15,82 +16,99 @@ class SlugTest extends GraphQlTestCase
     public function getDataForSlugTest(): iterable
     {
         yield [
-            'slug' => '/ostrava',
             'typename' => 'Store',
             'name' => 'Ostrava',
         ];
 
         yield [
-            'slug' => '/21-5-hyundai-22mt44',
             'typename' => 'RegularProduct',
-            'name' => '21,5” Hyundai 22MT44',
+            'name' => '21,5" Hyundai 22MT44',
         ];
 
         yield [
-            'slug' => '/27-hyundai-t27d590ey',
             'typename' => 'Variant',
-            'name' => '27” Hyundai T27D590EY',
+            'name' => '27" Hyundai T27D590EY',
         ];
 
         yield [
-            'slug' => '/32-hyundai-32pfl4400',
             'typename' => 'MainVariant',
-            'name' => '32” Hyundai 32PFL4400',
+            'name' => '32" Hyundai 32PFL4400',
         ];
 
         yield [
-            'slug' => '/tv-audio',
             'typename' => 'Category',
             'name' => 'TV, audio',
         ];
 
         yield [
-            'slug' => '/elektro-bez-hdmi-akce',
             'typename' => 'Category',
             'name' => 'Electronics',
+            'parameters' => [],
+            'slug' => '/elektro-bez-hdmi-akce',
         ];
 
         yield [
-            'slug' => '/main-blog-page-en',
             'typename' => 'BlogCategory',
             'name' => 'Main blog page - %locale%',
-            'parameters' => [
-                '%locale%' => 'en',
-            ],
+            [],
+            null,
+            true,
         ];
 
         yield [
-            'slug' => '/blog-article-example-37-en',
             'typename' => 'BlogArticle',
             'name' => 'Blog article example %counter% %locale%',
             'parameters' => [
                 '%counter%' => '37',
-                '%locale%' => 'en',
             ],
+            null,
+            true,
         ];
 
         yield [
-            'slug' => '/brother',
             'typename' => 'Brand',
             'name' => 'Brother',
         ];
 
         yield [
-            'slug' => '/made-in-de',
             'typename' => 'Flag',
             'name' => 'Made in DE',
+            [],
+            null,
+            false,
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
         ];
     }
 
     /**
      * @dataProvider getDataForSlugTest
-     * @param string $slug
      * @param string $typename
      * @param string $name
      * @param array $parameters
+     * @param string|null $slug
+     * @param bool|null $useLocale
+     * @param string|null $translationDomain
      */
-    public function testSlug(string $slug, string $typename, string $name, array $parameters = []): void
-    {
+    public function testSlug(
+        string $typename,
+        string $name,
+        array $parameters = [],
+        ?string $slug = null,
+        ?bool $useLocale = false,
+        ?string $translationDomain = Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+    ): void {
+        if ($useLocale === true) {
+            $parameters['%locale%'] = $this->getFirstDomainLocale();
+        }
+
+        $translatedName = t($name, $parameters, $translationDomain, $this->getFirstDomainLocale());
+
+        if ($slug === null) {
+            $slug = '/' . TransformString::stringToFriendlyUrlSlug($translatedName);
+        }
+
+        $escapedName = str_replace('"', '\\"', $translatedName);
+
         $query = 'query slug {
     slug(slug: "' . $slug . '") {
         __typename
@@ -102,7 +120,7 @@ class SlugTest extends GraphQlTestCase
     "data": {
         "slug": {
             "__typename": "' . $typename . '",
-            "name": "' . t($name, $parameters, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+            "name": "' . $escapedName . '"
         }
     }
 }';

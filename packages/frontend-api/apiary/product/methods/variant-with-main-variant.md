@@ -32,7 +32,7 @@ Adds main variant for variants
                 "query": {
                     "__typename": "Variant",
                     "uuid": "81075e9a-29dc-4d37-b7aa-20800e8959cc",
-                    "name": "51,5” Hyundai 22HD44D",
+                    "name": "51,5\" Hyundai 22HD44D",
                     "mainVariant": {
                         "name": "Hyundai 22HD44D"
                     }

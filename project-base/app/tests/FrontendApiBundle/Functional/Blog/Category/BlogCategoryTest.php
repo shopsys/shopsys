@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Blog\Category;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
 use App\Model\Blog\Category\BlogCategory;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -73,9 +74,12 @@ class BlogCategoryTest extends GraphQlTestCase
 
     public function testGetBlogCategoryByUrlSlug(): void
     {
+        $firstSubsectionName = t('First subsection %locale%', ['%locale%' => $this->getFirstDomainLocale()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+        $firstSubsectionSlug = TransformString::stringToFriendlyUrlSlug($firstSubsectionName);
+
         $query = '
             query {
-                blogCategory(urlSlug: "first-subsection-en") {
+                blogCategory(urlSlug: "' . $firstSubsectionSlug . '") {
                     uuid
                     name
                     description

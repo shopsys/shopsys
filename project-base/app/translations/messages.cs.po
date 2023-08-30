@@ -1123,6 +1123,15 @@ msgstr "Přihlásit se"
 msgid "Login"
 msgstr "Přihlášení"
 
+msgid "Made in CZ"
+msgstr "Vyrobeno v CZ"
+
+msgid "Made in DE"
+msgstr "Vyrobeno v DE"
+
+msgid "Made in SK"
+msgstr "Vyrobeno v SK"
+
 msgid "Mail setting - full"
 msgstr "Nastavení e-mailů - vše"
 
@@ -1191,6 +1200,9 @@ msgstr "Byla upravena položka navigace <strong><a href=\"{{ url }}\">{{ name }}
 
 msgid "Navigation item <strong>{{ name }}</strong> has been removed"
 msgstr "Položka navigace <strong>{{ name }}</strong> byla odebrána"
+
+msgid "New"
+msgstr "Novinka"
 
 msgid "New SEO page"
 msgstr "Nová SEO stránka"
@@ -1528,6 +1540,9 @@ msgstr "Prefix (např. \"JARO_\")"
 msgid "Price"
 msgstr "Cena"
 
+msgid "Price hit"
+msgstr "Cenový hit"
+
 msgid "Pricing group"
 msgstr "Cenová skupina"
 
@@ -1717,6 +1732,9 @@ msgstr "SEO stránky"
 msgid "SVG icon settings"
 msgstr "Nastavení SVG ikon"
 
+msgid "Sale"
+msgstr "Výprodej"
+
 msgid "Sale category settings"
 msgstr "Nastavení výprodejové kategorie"
 
@@ -1860,6 +1878,9 @@ msgstr "Slug"
 
 msgid "Sorting priority"
 msgstr "Priorita řazení"
+
+msgid "Standard"
+msgstr "Standardní"
 
 msgid "Stocking"
 msgstr "Skladovost"

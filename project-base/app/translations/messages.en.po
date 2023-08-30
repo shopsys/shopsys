@@ -1123,6 +1123,15 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+msgid "Made in CZ"
+msgstr ""
+
+msgid "Made in DE"
+msgstr ""
+
+msgid "Made in SK"
+msgstr ""
+
 msgid "Mail setting - full"
 msgstr ""
 
@@ -1190,6 +1199,9 @@ msgid "Navigation item <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has
 msgstr ""
 
 msgid "Navigation item <strong>{{ name }}</strong> has been removed"
+msgstr ""
+
+msgid "New"
 msgstr ""
 
 msgid "New SEO page"
@@ -1528,6 +1540,9 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
+msgid "Price hit"
+msgstr ""
+
 msgid "Pricing group"
 msgstr ""
 
@@ -1717,6 +1732,9 @@ msgstr ""
 msgid "SVG icon settings"
 msgstr ""
 
+msgid "Sale"
+msgstr ""
+
 msgid "Sale category settings"
 msgstr ""
 
@@ -1859,6 +1877,9 @@ msgid "Slug"
 msgstr ""
 
 msgid "Sorting priority"
+msgstr ""
+
+msgid "Standard"
 msgstr ""
 
 msgid "Stocking"
