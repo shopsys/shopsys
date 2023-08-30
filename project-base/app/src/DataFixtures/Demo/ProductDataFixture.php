@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\ParameterGroupDataFactory;
@@ -6166,10 +6165,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 /** @var \App\Model\Product\Unit\Unit $unit */
                 $unit = $this->persistentReferenceFacade->getReference($unitReferenceName);
                 $parameterData->unit = $unit;
-            }
-
-            if ($parameterNamesByLocale['cs'] === 'Barva') {
-                $parameterData->akeneoCode = Parameter::COLOR_PARAMETER_AKENEO_CODE;
             }
 
             /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
