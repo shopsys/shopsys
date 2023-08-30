@@ -6,13 +6,13 @@
     },
     "analysis": {
       "filter": {
-        "czech_stop": {
+        "english_stop": {
           "type": "stop",
-          "stopwords": "_czech_"
+          "stopwords": "_english_"
         },
-        "czech_stemmer": {
+        "english_stemmer": {
           "type": "stemmer",
-          "language": "czech"
+          "language": "english"
         },
         "edge_ngram": {
           "type": "edgeNGram",
@@ -44,8 +44,8 @@
           "tokenizer": "standard",
           "filter": [
             "lowercase",
-            "czech_stemmer",
-            "czech_stop",
+            "english_stemmer",
+            "english_stop",
             "asciifolding"
           ]
         },
@@ -135,7 +135,7 @@
           },
           "keyword": {
             "type": "icu_collation_keyword",
-            "language": "cs",
+            "language": "en",
             "index": false
           }
         }
@@ -147,13 +147,15 @@
         "fields": {
           "keyword": {
             "type": "icu_collation_keyword",
-            "language": "cs",
+            "language": "en",
             "index": false
           }
         }
       },
       "text": {
-        "type": "text"
+        "type": "text",
+        "analyzer": "edge_ngram_without_diacritic_html",
+        "search_analyzer": "full_without_diacritic_html"
       },
       "url": {
         "type": "text"
@@ -198,7 +200,7 @@
           "name": {
             "type": "text"
           },
-          "slug":  {
+          "slug": {
             "type": "keyword"
           }
         }
