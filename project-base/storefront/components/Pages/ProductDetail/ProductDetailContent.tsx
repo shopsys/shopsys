@@ -88,9 +88,11 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
             <Webline dataTestId={TEST_IDENTIFIER + 'availability'}>
                 <ProductDetailAvailabilityList ref={scrollTarget} storeAvailabilities={product.storeAvailabilities} />
             </Webline>
-            <Webline dataTestId={TEST_IDENTIFIER + 'accessories'} className="mt-5">
-                <ProductDetailAccessories accessories={product.accessories} />
-            </Webline>
+            {!!product.accessories.length && (
+                <Webline dataTestId={TEST_IDENTIFIER + 'accessories'} className="mt-5">
+                    <ProductDetailAccessories accessories={product.accessories} />
+                </Webline>
+            )}
         </Fragment>
     );
 };
