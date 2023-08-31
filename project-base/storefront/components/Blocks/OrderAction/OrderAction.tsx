@@ -54,7 +54,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                     {buttonBack}
                 </ExtendedNextLink>
             </div>
-            <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0" data-testid={TEST_IDENTIFIER + 'next'}>
+            <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0">
                 <SubmitButton isWithDisabledLook={hasDisabledLook} variant="primary" onClick={onNextStepHandler}>
                     {isLoading && <SpinnerIcon className="w-5" />}
                     <span>{buttonNext}</span>

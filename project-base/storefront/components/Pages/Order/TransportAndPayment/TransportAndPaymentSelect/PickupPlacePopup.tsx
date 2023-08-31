@@ -38,7 +38,11 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
     };
 
     return (
-        <Popup className="w-11/12 max-w-4xl" onCloseCallback={onClosePickupPlacePopupHandler}>
+        <Popup
+            className="w-11/12 max-w-4xl"
+            contentClassName="overflow-y-auto"
+            onCloseCallback={onClosePickupPlacePopupHandler}
+        >
             <div className="h2 mb-3">{t('Choose the store where you are going to pick up your order')}</div>
             <StoreSelect
                 selectedStoreUuid={selectedStoreUuid}

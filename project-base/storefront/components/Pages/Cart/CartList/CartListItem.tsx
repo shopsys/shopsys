@@ -24,8 +24,6 @@ export const CartListItem: FC<CartListItemProps> = ({
     onItemRemove,
     onItemQuantityChange,
 }) => {
-    const itemCatnum = product.catalogNumber;
-
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const spinboxRef = useRef<HTMLInputElement>(null);
     const { t } = useTranslation();
@@ -50,7 +48,7 @@ export const CartListItem: FC<CartListItemProps> = ({
     return (
         <div
             className="relative flex flex-row flex-wrap items-center gap-4 border-b border-greyLighter py-5 vl:flex-nowrap"
-            data-testid={TEST_IDENTIFIER + itemCatnum}
+            data-testid={TEST_IDENTIFIER + listIndex}
         >
             <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0">
                 <div className="flex h-12 w-24 shrink-0" data-testid={TEST_IDENTIFIER + 'image'}>

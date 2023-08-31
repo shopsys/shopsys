@@ -35,7 +35,9 @@ export const CustomerContent: FC = () => {
                     </CustomerListItem>
 
                     <CustomerListItem>
-                        <a onClick={logout}>{t('Logout')}</a>
+                        <a data-testid="customer-page-logout" onClick={logout}>
+                            {t('Logout')}
+                        </a>
                     </CustomerListItem>
                 </ul>
             </Webline>

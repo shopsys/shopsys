@@ -101,14 +101,14 @@ export const PromoCode: FC = () => {
                     </>
                 ) : (
                     <>
-                        <div
+                        <button
                             className="mb-3 inline-flex cursor-pointer items-center rounded bg-orangeLight py-3 px-4 text-sm font-bold uppercase text-grey transition hover:bg-orangeLight"
                             data-testid={TEST_IDENTIFIER + '-add-button'}
                             onClick={() => setIsContentVisible(!isContentVisible)}
                         >
                             <PlusIcon className="mr-3 w-3" />
                             {t('I have a discount coupon')}
-                        </div>
+                        </button>
                         <Transition
                             unmountOnExit
                             in={isContentVisible}

@@ -9,11 +9,12 @@ const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((c
 type PopupProps = {
     onCloseCallback: () => void;
     hideCloseButton?: boolean;
+    contentClassName?: string;
 };
 
 const TEST_IDENTIFIER = 'layout-popup';
 
-export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButton, className }) => {
+export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButton, className, contentClassName }) => {
     useKeypress('Escape', onCloseCallback);
 
     return (
@@ -38,7 +39,7 @@ export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButt
                         </button>
                     </div>
                 )}
-                <div className="p-4">{children}</div>
+                <div className={twMergeCustom('p-4', contentClassName)}>{children}</div>
             </div>
         </Portal>
     );
