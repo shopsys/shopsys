@@ -1,16 +1,20 @@
 const priceWithVatHelloKitty = '€139.96';
 
 export const brandSencor = 'Sencor';
+
 export const buttonName = {
     login: 'Login',
 };
+
 export const categories = {
     elektro: {
         name: 'Gadgets',
         url: '/electronics',
     },
 };
+
 export const countryCZ = 'Czech republic';
+
 export const customer1 = {
     email: 'no-reply123@shopsys.com',
     emailRegistered: 'no-reply@shopsys.com',
@@ -22,16 +26,21 @@ export const customer1 = {
     billingPostCode: '70200',
     password: 'user123',
 };
+
 export const flashMessages = {
     successfulSaveCookiesOptions: 'Your cookie preferences have been set.',
 };
+
 export const freePrice = 'Free';
+
 export const link = {
     orderDetail: 'Track',
     loginInHeader: 'Log-in',
     myAccount: 'My account',
 };
+
 export const orderNote = 'poznámka v objednávce';
+
 export const payment = {
     cash: 'Cash',
     onDelivery: {
@@ -40,6 +49,7 @@ export const payment = {
         priceWithoutVat: '€2.00',
     },
 };
+
 export const placeholder = {
     password: 'Password',
     email: 'Your email',
@@ -52,6 +62,7 @@ export const placeholder = {
     coupone: 'Coupon',
     note: 'Note',
 };
+
 export const products = {
     helloKitty: {
         name: '22" Sencor SLE 22F46DM4 HELLO KITTY',
@@ -70,10 +81,13 @@ export const products = {
         name: '54" Philips CRT 32PFL4308',
         catnum: '9176588',
     },
-};
+
 export const quantityUnit = 'pc';
+
 export const zeroRate = '0 %';
+
 export const standartRate = '21 %';
+
 export const textCode = 'Code';
 
 export const totalPrice = {
@@ -81,6 +95,7 @@ export const totalPrice = {
     cart2: '€492.40',
     order1: '€146.80',
 };
+
 export const transport = {
     personalCollection: {
         name: 'Personal collection',
@@ -97,6 +112,7 @@ export const transport = {
         priceWithoutVat: '€4',
     },
 };
+
 export const url = {
     cart: '/cart',
     search: '/search?q=',
