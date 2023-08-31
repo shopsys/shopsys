@@ -562,6 +562,9 @@ There you can find links to upgrade notes for other versions too.
             )
         ```
 - apply new coding standards in your application
+   - during run of `composer install` you will run into errors and warnings about not compatible types in your app because of introduction of typed properties and parameters in vendor classes, and you have to fix these problems manually
+   - go through all of your `Command` classes that extend `\Symfony\Component\Console\Command\Command` and add `@phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint` annotation to `$defaultName` property
+   - if you have any `Constraints` implemented in your project add `@phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint` annotation to your `$errorNames` property
    - run `php phing standards-fix` multiple times after no problems are found or after only problems that need to be fixed manually are found
        - fix all manually fixable problems
    - run `php phing phpstan` and fix all problems found
