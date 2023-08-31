@@ -105,23 +105,24 @@ class ImageFacade extends BaseImageFacade
         ?string $type = null,
     ): string {
         $image = $this->getImageByObject($imageOrEntity, $type);
-        $cacheId = $this->getCacheIdForImageUrl($image->getId(), $domainConfig->getId(), $type, $sizeName);
+        $cacheId = $this->getCacheIdForImageUrl($image->getId(), $domainConfig->getId());
 
-        return $this->cache->get(
+        $friendlyUrlSeoEntityName = $this->cache->get(
             $cacheId,
-            function () use ($image, $domainConfig, $sizeName) {
+            function () use ($image, $domainConfig) {
                 if (!$this->imageLocator->imageExists($image)) {
                     throw new ImageNotFoundException();
                 }
 
                 $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
-                $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
 
-                return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
-                    . $this->imageUrlPrefix
-                    . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $sizeName, $friendlyUrlSeoEntityName);
+                return $this->getFriendlyUrlSlug($seoEntityName);
             },
         );
+
+        return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
+            . $this->imageUrlPrefix
+            . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $sizeName, $friendlyUrlSeoEntityName);
     }
 
     /**
@@ -270,26 +271,25 @@ class ImageFacade extends BaseImageFacade
         $cacheId = $this->getCacheIdForImageUrl(
             $image->getId(),
             $domainConfig->getId(),
-            $image->getType(),
-            $sizeName,
             $additionalSizeIndex,
         );
 
-        return $this->cache->get(
+        $friendlyUrlSeoEntityName = $this->cache->get(
             $cacheId,
-            function () use ($image, $domainConfig, $additionalSizeIndex, $sizeName) {
+            function () use ($image, $domainConfig) {
                 if (!$this->imageLocator->imageExists($image)) {
                     throw new ImageNotFoundException();
                 }
 
                 $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
-                $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
 
-                return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
-                    . $this->imageUrlPrefix
-                    . $this->imageLocator->getRelativeAdditionalImageFilepathWithSlug($image, $additionalSizeIndex, $sizeName, $friendlyUrlSeoEntityName);
+                return $this->getFriendlyUrlSlug($seoEntityName);
             },
         );
+
+        return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
+            . $this->imageUrlPrefix
+            . $this->imageLocator->getRelativeAdditionalImageFilepathWithSlug($image, $additionalSizeIndex, $sizeName, $friendlyUrlSeoEntityName);
     }
 
     /**
@@ -412,34 +412,20 @@ class ImageFacade extends BaseImageFacade
     }
 
     /**
-     * @return bool
-     */
-    public function clearImageCache(): bool
-    {
-        return $this->cache->clear();
-    }
-
-    /**
      * @param int $imageId
      * @param int $domainId
-     * @param string|null $type
-     * @param string|null $sizeName
      * @param int|null $additionalIndex
      * @return string
      */
     private function getCacheIdForImageUrl(
         int $imageId,
         int $domainId,
-        ?string $type,
-        ?string $sizeName,
         ?int $additionalIndex = null,
     ): string {
         return sprintf(
-            'ImageUrl_imageId-%d_domainId-%d_type-%s_size-%s_additionalIndex-%s',
+            'ImageUrl_imageId-%d_domainId-%d_type-%s',
             $imageId,
             $domainId,
-            $type,
-            $sizeName,
             $additionalIndex,
         );
     }
