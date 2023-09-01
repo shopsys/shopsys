@@ -5,8 +5,17 @@ import { twMergeCustom } from 'helpers/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    'id' | 'onChange',
-    'name' | 'disabled' | 'required' | 'onBlur' | 'onKeyPress' | 'className' | 'type' | 'children' | 'autoComplete'
+    'id',
+    | 'name'
+    | 'disabled'
+    | 'required'
+    | 'onBlur'
+    | 'onKeyDown'
+    | 'className'
+    | 'type'
+    | 'children'
+    | 'autoComplete'
+    | 'onChange'
 >;
 
 export type TextInputProps = NativeProps & {
@@ -30,7 +39,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             required,
             onBlur,
             onChange,
-            onKeyPress,
+            onKeyDown,
             className,
             dataTestId,
             value,
@@ -64,7 +73,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 name={name}
                 onBlur={onBlur}
                 onChange={onChange}
-                onKeyPress={onKeyPress}
+                onKeyDown={onKeyDown}
                 required={required}
                 value={value}
                 type={type}

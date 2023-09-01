@@ -27,19 +27,21 @@ const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((compon
 
 export const ContactInformationContent: FC = () => {
     const { t } = useTranslation();
+    const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const formProviderMethods = useFormContext<ContactInformation>();
-    const { trigger, formState } = formProviderMethods;
-    const formMeta = useContactInformationFormMeta(formProviderMethods);
     const isUserLoggedIn = !!useCurrentCustomerData();
+    const { formState } = formProviderMethods;
+
+    const formMeta = useContactInformationFormMeta(formProviderMethods);
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
-    const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
-    const [isEmailAlreadyRegistered, setIsEmailAlreadyRegistered] = useState(false);
-    const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
     const [{ data: termsAndConditionsArticleUrlData }] = useTermsAndConditionsArticleUrlQueryApi();
-    const termsAndConditionsArticleUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
     const [{ data: privacyPolicyArticleUrlData }] = usePrivacyPolicyArticleUrlQueryApi();
+
+    const termsAndConditionsArticleUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
+    const isEmailFilledCorrectly = !!emailValue && !formState.errors.email;
+
     const [{ data: isCustomerUserRegisteredData }] = useIsCustomerUserRegisteredQueryApi({
         variables: {
             email: emailValue,
@@ -47,36 +49,11 @@ export const ContactInformationContent: FC = () => {
         pause: !isEmailFilledCorrectly,
     });
 
-    const loginHandler = () => {
-        setIsLoginPopupOpened(true);
-    };
-
     useEffect(() => {
-        if (isUserLoggedIn === true) {
+        if (isUserLoggedIn) {
             setIsLoginPopupOpened(false);
         }
     }, [isUserLoggedIn]);
-
-    const onCloseLoginPopupHandler = () => {
-        setIsLoginPopupOpened(false);
-    };
-
-    useEffect(() => {
-        if (formState.touchedFields.email !== undefined) {
-            setIsEmailFilledCorrectly(formState.errors.email === undefined);
-            return;
-        }
-
-        if (emailValue.length > 0) {
-            trigger('email', { shouldFocus: true }).then((isEmailValid) => {
-                setIsEmailFilledCorrectly(isEmailValid);
-            });
-        }
-    }, [emailValue, trigger, formState.touchedFields, formState.errors]);
-
-    useEffect(() => {
-        setIsEmailAlreadyRegistered(!!isCustomerUserRegisteredData?.isCustomerUserRegistered);
-    }, [isCustomerUserRegisteredData?.isCustomerUserRegistered]);
 
     return (
         <>
@@ -94,12 +71,12 @@ export const ContactInformationContent: FC = () => {
                     required: true,
                     type: 'email',
                     autoComplete: 'email',
-                    onBlur: () => updateContactInformation({ email: emailValue }),
+                    onChange: () => updateContactInformation({ email: emailValue }),
                 }}
             />
 
-            {isEmailAlreadyRegistered && !isUserLoggedIn && (
-                <Button size="small" type="button" onClick={loginHandler} className="mb-5">
+            {isCustomerUserRegisteredData?.isCustomerUserRegistered && !isUserLoggedIn && (
+                <Button size="small" type="button" onClick={() => setIsLoginPopupOpened(true)} className="mb-5">
                     {t('User with this email is already registered. Do you want to sign in')}
                 </Button>
             )}
@@ -138,8 +115,9 @@ export const ContactInformationContent: FC = () => {
                     }}
                 />
             </div>
+
             {isLoginPopupOpened && (
-                <Popup onCloseCallback={onCloseLoginPopupHandler}>
+                <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
                     <Heading type="h2">{t('Login')}</Heading>
                     <Login defaultEmail={emailValue} />
                 </Popup>

@@ -136,7 +136,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     const onChangeMinInputHandler: ChangeEventHandler<HTMLInputElement> = (event) =>
         setMinValueInput(parseFloat(event.currentTarget.value));
 
-    const onKeyPressHandler: KeyboardEventHandler<HTMLInputElement> = (event) =>
+    const onKeyDownHandler: KeyboardEventHandler<HTMLInputElement> = (event) =>
         event.key === 'Enter' && event.currentTarget.blur();
 
     const onChangeMinHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -219,7 +219,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                         value={minValueInput}
                         onChange={onChangeMinInputHandler}
                         onBlur={onBlurMinHandler}
-                        onKeyPress={onKeyPressHandler}
+                        onKeyDown={onKeyDownHandler}
                         disabled={isDisabled}
                     />
                 </div>
@@ -235,7 +235,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                         value={maxValueInput}
                         onChange={onChangeMaxInputHandler}
                         onBlur={onBlurMaxHandler}
-                        onKeyPress={onKeyPressHandler}
+                        onKeyDown={onKeyDownHandler}
                         disabled={isDisabled}
                     />
                 </div>

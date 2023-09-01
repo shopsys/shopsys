@@ -11,7 +11,8 @@ type TextInputControlledProps = {
         | 'disabled'
         | 'required'
         | 'onBlur'
-        | 'onKeyPress'
+        | 'onKeyDown'
+        | 'onChange'
         | 'type'
         | 'label'
         | 'inputSize'
@@ -39,7 +40,7 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
         (event) => {
             field.onBlur();
 
-            if (textInputProps.onBlur !== undefined) {
+            if (textInputProps.onBlur) {
                 textInputProps.onBlur(event);
             }
         },
