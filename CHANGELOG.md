@@ -21,6 +21,7 @@ There is a list of all the repositories maintained by monorepo:
 * [shopsys/s3-bridge]
 * [shopsys/read-model]
 * [shopsys/frontend-api]
+* [shopsys/php-platform]
 
 Packages are formatted by release version. You can see all the changes done to package that you carry about with this tree.
 
@@ -59,7 +60,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * [framework] introduced new phing target demo-data that wipes and completely installs demo data including export to Elasticsearch by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2520
 * [shopsys] resolve deprecations after update to Symfony 5.4 by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2521
 * [shopsys] added Translator constant for validators by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2565
-* [frontent-api] GQL resolvers refactoring by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2563
+* [frontend-api] GQL resolvers refactoring by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2563
 * [shopsys] updated Elasticsearch image to newest version in order to support arm processors by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2569
 * [frontend-api] UserEntityNotFoundError has been renamed to EntityNotFoundUserError by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2571
 * [shopsys] removed previously deprecated features by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2455
@@ -3509,6 +3510,7 @@ That's why is this section formatted differently.
 [shopsys/read-model]: https://github.com/shopsys/read-model
 [shopsys/backend-api]: https://github.com/shopsys/backend-api
 [shopsys/frontend-api]: https://github.com/shopsys/frontend-api
+[shopsys/php-platform]: https://github.com/shopsys/php-platform
 
 [@pk16011990]: https://github.com/pk16011990
 [@stanoMilan]: https://github.com/stanoMilan

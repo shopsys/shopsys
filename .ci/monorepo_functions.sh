@@ -22,6 +22,7 @@ get_all_packages() {
         form-types-bundle \
         migrations \
         monorepo-tools \
+        php-platform \
         project-base"
 }
 
