@@ -1,5 +1,16 @@
-import { buttonName } from 'fixtures/demodata';
-import { checkUserIsLoggedIn, clickOnUserIconInHeader } from './header';
+import { buttonName, link } from 'fixtures/demodata';
+
+export const checkIfLoginLinkIsVisible = () => {
+    cy.getByDataTestId('layout-header-menuiconic-login-link-popup').should('be.visible');
+};
+
+export const clickOnUserIconInHeader = () => {
+    cy.getByDataTestId('layout-header-menuiconic-login-link-popup').click();
+};
+
+export const checkUserIsLoggedIn = () => {
+    cy.getByDataTestId('my-account-link').contains(link.myAccount);
+};
 
 export const loginFromHeader = (email: string, password: string) => {
     clickOnUserIconInHeader();

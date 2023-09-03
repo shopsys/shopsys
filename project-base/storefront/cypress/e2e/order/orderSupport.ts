@@ -1,4 +1,4 @@
-import { placeholder } from 'fixtures/demodata';
+import { link, placeholder, url } from 'fixtures/demodata';
 
 export const fillEmailInThirdStep = (email: string) => {
     cy.get('#contact-information-form-email').should('have.attr', 'placeholder', placeholder.email).type(email);
@@ -28,4 +28,21 @@ export const clickOnSendOrderButton = () => {
 
 export const fillInNoteInThirdStep = (note: string) => {
     cy.get('#contact-information-form-note').should('have.attr', 'placeholder', placeholder.note).type(note);
+};
+
+export const checkFinishOrderPageAsUnregistredCustomer = () => {
+    cy.url().should('contain', url.order.orderConfirmation);
+    cy.getByDataTestId('pages-orderconfirmation')
+        .get('#registration-after-order-form-password')
+        .should('have.attr', 'placeholder', placeholder.password);
+};
+
+export const checkFinishOrderPageAsUnloggedCustomerWithEmailWithExistingRegistration = () => {
+    cy.url().should('contain', url.order.orderConfirmation);
+    cy.getByDataTestId('pages-orderconfirmation').get('#registration-after-order-form-password').should('not.exist');
+};
+
+export const clickOnOrderDetailButtonOnThankYouPage = () => {
+    cy.getByDataTestId('pages-orderconfirmation').contains(link.orderDetail).click();
+    cy.url().should('contain', url.order.orderDetail);
 };

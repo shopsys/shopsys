@@ -31,7 +31,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
 
     return (
         <>
-            <h1 className="mb-3" data-testid={`${TEST_IDENTIFIER}-heading`}>{`${t(
+            <h1 className="mb-3" data-testid={TEST_IDENTIFIER + '-heading'}>{`${t(
                 'Search results for',
             )} "${getStringFromUrlQuery(router.query.q)}"`}</h1>
             {isFetchingInitialData ? (

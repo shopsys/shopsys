@@ -8,6 +8,9 @@
     },
     "devDependencies": {
         "cypress": "^12.3.0",
+        "cypress-real-events": "^1.10.0",
+        "cypress-set-device-pixel-ratio": "^1.0.4",
+        "cypress-visual-regression": "^3.0.0",
         "typescript": "^5.1.6"
     }
 }

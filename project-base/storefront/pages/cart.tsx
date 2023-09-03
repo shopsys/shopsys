@@ -57,7 +57,9 @@ const CartPage: FC<ServerSidePropsType> = () => {
                     )}
 
                     {isWithFetchedCart && !cart?.items.length && (
-                        <p className="my-28 text-center text-2xl">{t('Your cart is currently empty.')}</p>
+                        <p className="my-28 text-center text-2xl" data-testid="cart-page-empty-cart-text">
+                            {t('Your cart is currently empty.')}
+                        </p>
                     )}
                 </Webline>
             </CommonLayout>

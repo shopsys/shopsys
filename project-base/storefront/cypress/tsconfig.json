@@ -2,12 +2,13 @@
     "compilerOptions": {
         "target": "es5",
         "lib": ["es5", "dom"],
-        "types": ["cypress", "node", "cypress.d.ts"],
+        "types": ["cypress", "node", "cypress-visual-regression", "cypress-real-events"],
         "baseUrl": ".",
         "skipLibCheck": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "incremental": true
+        "incremental": true,
+        "esModuleInterop": true
     },
     "include": ["**/*.ts", "**/*.cy.ts"]
 }
