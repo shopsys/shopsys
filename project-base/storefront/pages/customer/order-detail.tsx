@@ -32,7 +32,7 @@ const OrderDetailPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <PageGuard accessCondition={!error} errorRedirectUrl={customerOrdersUrl}>
+            <PageGuard isWithAccess={!error} errorRedirectUrl={customerOrdersUrl}>
                 <CommonLayout title={`${t('Order number')} ${orderNumber}`} breadcrumbs={breadcrumbs}>
                     {orderData?.order && <OrderDetailContent order={orderData.order} />}
                 </CommonLayout>
