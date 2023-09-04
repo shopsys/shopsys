@@ -6,6 +6,7 @@ BASIC_AUTH_PATH="${BASE_PATH}/deploy/basicHttpAuth"
 DEPLOY_TARGET_PATH="${BASE_PATH}/var/deployment/deploy"
 CI_ENVIRONMENT_SLUG=${CI_ENVIRONMENT_SLUG}
 SENTRY_DSN=${SENTRY_DSN}
+S3_REGION=${S3_REGION:-'us-east-1'}
 
 function deploy() {
     DOMAINS=(
@@ -54,6 +55,7 @@ function deploy() {
         ["S3_ENDPOINT"]=${S3_ENDPOINT}
         ["S3_ACCESS_KEY"]=${S3_ACCESS_KEY}
         ["S3_SECRET"]=${S3_SECRET}
+        ["S3_REGION"]=${S3_REGION}
         ["S3_BUCKET_NAME"]=${PROJECT_NAME}
 
         ["CDN_DOMAIN"]=${CDN_DOMAIN}
