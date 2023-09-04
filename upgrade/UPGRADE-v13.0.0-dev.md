@@ -40,3 +40,9 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - fix NodeJS and PostgreSQL installation in php-fpm docker image ([#2758](https://github.com/shopsys/shopsys/pull/2758))
     - see #project-base-diff to update your project
+- use shopsys/php-image docker image instead of building it in project ([#2762](https://github.com/shopsys/shopsys/pull/2762))
+    - following files may be deleted as they are already present in the pre-built docker image
+        - docker/php-fpm/docker-install-composer
+        - docker/php-fpm/docker-php-entrypoint
+        - docker/php-fpm/phing-completion
+    - see #project-base-diff to update your project
