@@ -1,8 +1,6 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
 import { BlogCategoryPageSkeleton } from 'components/Pages/BlogCategory/BlogCategoryPageSkeleton';
 import {
@@ -41,16 +39,12 @@ const BlogCategoryPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout title={seoTitle} description={blogCategoryData?.blogCategory?.seoMetaDescription}>
-            {!!blogCategoryData?.blogCategory?.breadcrumb && (
-                <Webline>
-                    <Breadcrumbs
-                        type="blogCategory"
-                        key="breadcrumb"
-                        breadcrumb={blogCategoryData.blogCategory.breadcrumb}
-                    />
-                </Webline>
-            )}
+        <CommonLayout
+            title={seoTitle}
+            description={blogCategoryData?.blogCategory?.seoMetaDescription}
+            breadcrumbs={blogCategoryData?.blogCategory?.breadcrumb}
+            breadcrumbsType="blogCategory"
+        >
             {!!blogCategoryData?.blogCategory && !fetching ? (
                 <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />
             ) : (

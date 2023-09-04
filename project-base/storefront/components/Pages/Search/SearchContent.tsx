@@ -2,10 +2,9 @@ import { ProductsSearch } from './ProductsSearch';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { Button } from 'components/Forms/Button/Button';
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
-import { BreadcrumbFragmentApi, SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
+import { SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
@@ -25,11 +24,10 @@ enum NUMBER_OF_VISIBLE_ITEMS {
 
 type SearchContentProps = {
     searchResults: SearchQueryApi | undefined;
-    breadcrumbs: BreadcrumbFragmentApi[];
     fetching: boolean;
 };
 
-export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching, breadcrumbs }) => {
+export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching }) => {
     const router = useRouter();
     const { t } = useTranslation();
     const { width } = useGetWindowSize();
@@ -71,92 +69,87 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching,
     );
 
     return (
-        <>
-            <Breadcrumbs breadcrumb={breadcrumbs} />
-            <Webline>
-                <Heading type="h1">{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
-                {isFetchingInitialData ? (
-                    <CategoryDetailPageSkeleton />
-                ) : (
-                    !!searchResults && (
-                        <>
-                            {searchResults.articlesSearch.length > 0 && (
-                                <div className="mt-6">
-                                    <Heading type="h3">{t('Found articles')}</Heading>
-                                    <SearchResultsBlock areAllResultsVisible={areArticlesResultsVisible}>
-                                        <SimpleNavigation
-                                            listedItems={searchResults.articlesSearch}
-                                            imageType="searchThumbnail"
-                                        />
-                                    </SearchResultsBlock>
-                                    {numberOfVisible < searchResults.articlesSearch.length && (
-                                        <ShowResultsButtonWrapper>
-                                            <Button
-                                                size="small"
-                                                onClick={() => {
-                                                    setArticlesResultsVisibility((currentState) => !currentState);
-                                                }}
-                                            >
-                                                {areArticlesResultsVisible ? t('Hide results') : t('Show all results')}
-                                            </Button>
-                                        </ShowResultsButtonWrapper>
-                                    )}
-                                </div>
-                            )}
-
-                            {searchResults.brandSearch.length > 0 && (
-                                <div className="mt-6">
-                                    <Heading type="h3">{t('Found brands')}</Heading>
-                                    <SearchResultsBlock areAllResultsVisible={areBrandsResultsVisible}>
-                                        <SimpleNavigation listedItems={searchResults.brandSearch} />
-                                    </SearchResultsBlock>
-                                    {numberOfVisible < searchResults.brandSearch.length && (
-                                        <ShowResultsButtonWrapper>
-                                            <Button
-                                                size="small"
-                                                onClick={() => {
-                                                    setBrandsResultsVisibility((currentState) => !currentState);
-                                                }}
-                                            >
-                                                {areBrandsResultsVisible ? t('Hide results') : t('Show all results')}
-                                            </Button>
-                                        </ShowResultsButtonWrapper>
-                                    )}
-                                </div>
-                            )}
-
-                            {searchResults.categoriesSearch.totalCount > 0 && !!mappedCategoriesSearchResults && (
-                                <div className="mt-6">
-                                    <Heading type="h3">{t('Found categories')}</Heading>
-                                    <SearchResultsBlock areAllResultsVisible={areCategoriesResultsVisible}>
-                                        <SimpleNavigation listedItems={mappedCategoriesSearchResults} />
-                                    </SearchResultsBlock>
-                                    {numberOfVisible < mappedCategoriesSearchResults.length && (
-                                        <ShowResultsButtonWrapper>
-                                            <Button
-                                                size="small"
-                                                onClick={() => {
-                                                    setCategoriesResultsVisibility((currentState) => !currentState);
-                                                }}
-                                            >
-                                                {areCategoriesResultsVisible
-                                                    ? t('Hide results')
-                                                    : t('Show all results')}
-                                            </Button>
-                                        </ShowResultsButtonWrapper>
-                                    )}
-                                </div>
-                            )}
-
+        <Webline>
+            <Heading type="h1">{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
+            {isFetchingInitialData ? (
+                <CategoryDetailPageSkeleton />
+            ) : (
+                !!searchResults && (
+                    <>
+                        {searchResults.articlesSearch.length > 0 && (
                             <div className="mt-6">
-                                <Heading type="h3">{title}</Heading>
-                                <ProductsSearch productsSearch={searchResults.productsSearch} />
+                                <Heading type="h3">{t('Found articles')}</Heading>
+                                <SearchResultsBlock areAllResultsVisible={areArticlesResultsVisible}>
+                                    <SimpleNavigation
+                                        listedItems={searchResults.articlesSearch}
+                                        imageType="searchThumbnail"
+                                    />
+                                </SearchResultsBlock>
+                                {numberOfVisible < searchResults.articlesSearch.length && (
+                                    <ShowResultsButtonWrapper>
+                                        <Button
+                                            size="small"
+                                            onClick={() => {
+                                                setArticlesResultsVisibility((currentState) => !currentState);
+                                            }}
+                                        >
+                                            {areArticlesResultsVisible ? t('Hide results') : t('Show all results')}
+                                        </Button>
+                                    </ShowResultsButtonWrapper>
+                                )}
                             </div>
-                        </>
-                    )
-                )}
-            </Webline>
-        </>
+                        )}
+
+                        {searchResults.brandSearch.length > 0 && (
+                            <div className="mt-6">
+                                <Heading type="h3">{t('Found brands')}</Heading>
+                                <SearchResultsBlock areAllResultsVisible={areBrandsResultsVisible}>
+                                    <SimpleNavigation listedItems={searchResults.brandSearch} />
+                                </SearchResultsBlock>
+                                {numberOfVisible < searchResults.brandSearch.length && (
+                                    <ShowResultsButtonWrapper>
+                                        <Button
+                                            size="small"
+                                            onClick={() => {
+                                                setBrandsResultsVisibility((currentState) => !currentState);
+                                            }}
+                                        >
+                                            {areBrandsResultsVisible ? t('Hide results') : t('Show all results')}
+                                        </Button>
+                                    </ShowResultsButtonWrapper>
+                                )}
+                            </div>
+                        )}
+
+                        {searchResults.categoriesSearch.totalCount > 0 && !!mappedCategoriesSearchResults && (
+                            <div className="mt-6">
+                                <Heading type="h3">{t('Found categories')}</Heading>
+                                <SearchResultsBlock areAllResultsVisible={areCategoriesResultsVisible}>
+                                    <SimpleNavigation listedItems={mappedCategoriesSearchResults} />
+                                </SearchResultsBlock>
+                                {numberOfVisible < mappedCategoriesSearchResults.length && (
+                                    <ShowResultsButtonWrapper>
+                                        <Button
+                                            size="small"
+                                            onClick={() => {
+                                                setCategoriesResultsVisibility((currentState) => !currentState);
+                                            }}
+                                        >
+                                            {areCategoriesResultsVisible ? t('Hide results') : t('Show all results')}
+                                        </Button>
+                                    </ShowResultsButtonWrapper>
+                                )}
+                            </div>
+                        )}
+
+                        <div className="mt-6">
+                            <Heading type="h3">{title}</Heading>
+                            <ProductsSearch productsSearch={searchResults.productsSearch} />
+                        </div>
+                    </>
+                )
+            )}
+        </Webline>
     );
 };
 

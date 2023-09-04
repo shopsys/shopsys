@@ -57,7 +57,6 @@ export const Variant: FC<VariantProps> = ({
                     <ProductAvailableStoresCount
                         isMainVariant={false}
                         availableStoresCount={variant.availableStoresCount}
-                        className="mb-3"
                     />
                     <ProductExposedStoresCount isMainVariant={false} exposedStoresCount={variant.exposedStoresCount} />
                 </Cell>
@@ -93,7 +92,7 @@ type CellProps = { onClick?: () => void };
 const Cell: FC<CellProps> = ({ className, children, dataTestId, onClick }) => (
     <td
         className={twMergeCustom(
-            'block pl-14 text-left align-middle text-xs lg:table-cell lg:border-b lg:border-greyLighter lg:p-1',
+            'block pl-16 text-left align-middle text-xs lg:table-cell lg:border-b lg:border-greyLighter lg:px-1 lg:py-2',
             className,
         )}
         data-testid={dataTestId}

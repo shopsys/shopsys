@@ -22,8 +22,9 @@ const OrderDetailByHashPage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const router = useRouter();
+    const orderNumber = getStringFromUrlQuery(router.query.urlHash);
     const [{ data: orderData }] = useOrderDetailByHashQueryApi({
-        variables: { urlHash: getStringFromUrlQuery(router.query.urlHash) },
+        variables: { urlHash: orderNumber },
     });
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
     const breadcrumbs: BreadcrumbFragmentApi[] = [
@@ -36,15 +37,10 @@ const OrderDetailByHashPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <PageGuard
-                accessCondition={orderData?.order !== undefined && orderData.order !== null}
-                errorRedirectUrl="/"
-            >
-                {orderData?.order !== undefined && orderData.order !== null && (
-                    <CommonLayout title={`${t('Order number')} ${orderData.order.number}`}>
-                        <OrderDetailContent order={orderData.order} breadcrumbs={breadcrumbs} />
-                    </CommonLayout>
-                )}
+            <PageGuard isWithAccess={!!orderData?.order} errorRedirectUrl="/">
+                <CommonLayout title={`${t('Order number')} ${orderNumber}`} breadcrumbs={breadcrumbs}>
+                    {!!orderData?.order && <OrderDetailContent order={orderData.order} />}
+                </CommonLayout>
             </PageGuard>
         </>
     );

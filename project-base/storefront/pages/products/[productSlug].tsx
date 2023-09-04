@@ -1,6 +1,4 @@
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
 import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
 import { ProductDetailPageSkeleton } from 'components/Pages/ProductDetail/ProductDetailPageSkeleton';
@@ -36,12 +34,12 @@ const ProductDetailPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout title={product?.seoTitle || product?.name} description={product?.seoMetaDescription}>
-            {!!product?.breadcrumb && (
-                <Webline>
-                    <Breadcrumbs type="category" key="breadcrumb" breadcrumb={product.breadcrumb} />
-                </Webline>
-            )}
+        <CommonLayout
+            title={product?.seoTitle || product?.name}
+            description={product?.seoMetaDescription}
+            breadcrumbs={product?.breadcrumb}
+            breadcrumbsType="category"
+        >
             {fetching && <ProductDetailPageSkeleton />}
 
             {product?.__typename === 'RegularProduct' && <ProductDetailContent product={product} fetching={fetching} />}

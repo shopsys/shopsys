@@ -1,7 +1,6 @@
 import { SearchProductsWrapper } from './SearchProductsWrapper';
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { FilterIcon } from 'components/Basic/Icon/IconsSvg';
-import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { ListedProductConnectionPreviewFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
@@ -11,6 +10,9 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import dynamic from 'next/dynamic';
+
+const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 type ProductsSearchProps = {
     productsSearch: ListedProductConnectionPreviewFragmentApi;

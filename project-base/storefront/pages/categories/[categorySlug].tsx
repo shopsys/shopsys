@@ -1,8 +1,6 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
 import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { useCategoryDetailData } from 'components/Pages/CategoryDetail/helpers';
@@ -57,12 +55,12 @@ const CategoryDetailPage: NextPage = () => {
     const isSkeletonVisible = !filter && !originalCategorySlug && !sort && fetching;
 
     return (
-        <CommonLayout title={seoTitle} description={categoryData?.seoMetaDescription}>
-            {!!categoryData?.breadcrumb && (
-                <Webline>
-                    <Breadcrumbs type="category" key="breadcrumb" breadcrumb={categoryData.breadcrumb} />
-                </Webline>
-            )}
+        <CommonLayout
+            title={seoTitle}
+            description={categoryData?.seoMetaDescription}
+            breadcrumbs={categoryData?.breadcrumb}
+            breadcrumbsType="category"
+        >
             {isSkeletonVisible ? (
                 <CategoryDetailPageSkeleton />
             ) : (

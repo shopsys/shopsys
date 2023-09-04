@@ -46,13 +46,8 @@ const OrdersPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout title={t('My orders')}>
-                <OrdersContent
-                    isLoading={fetching}
-                    orders={mappedOrders}
-                    totalCount={ordersData?.orders?.totalCount}
-                    breadcrumbs={breadcrumbs}
-                />
+            <CommonLayout title={t('My orders')} breadcrumbs={breadcrumbs}>
+                <OrdersContent isLoading={fetching} orders={mappedOrders} totalCount={ordersData?.orders?.totalCount} />
             </CommonLayout>
         </>
     );

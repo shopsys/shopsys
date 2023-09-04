@@ -61,8 +61,8 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     return (
         <>
             <MetaRobots content="noindex, nofollow" />
-            <CommonLayout title={title}>
-                <SearchContent searchResults={searchData} breadcrumbs={breadcrumbs} fetching={fetching} />
+            <CommonLayout title={title} breadcrumbs={breadcrumbs}>
+                <SearchContent searchResults={searchData} fetching={fetching} />
             </CommonLayout>
         </>
     );

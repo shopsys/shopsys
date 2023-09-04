@@ -17,21 +17,12 @@ export const MenuIconicItemUserUnauthenticated: FC = ({ dataTestId }) => {
         <>
             <MenuIconicItemLink
                 onClick={handleLogin}
-                className="cursor-pointer max-lg:hidden"
+                className="cursor-pointer"
                 dataTestId={dataTestId + '-link-popup'}
             >
-                <UserIcon className="mr-2 w-4 text-white" />
-                {t('Login')}
+                <UserIcon className="w-5 lg:w-4" />
+                <span className="hidden lg:inline-block">{t('Login')}</span>
             </MenuIconicItemLink>
-
-            <div className="order-2 ml-1 flex h-9 w-9 cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
-                <div
-                    className="relative flex h-full w-full items-center justify-center text-white transition-colors"
-                    onClick={handleLogin}
-                >
-                    <UserIcon className="w-4 text-white" />
-                </div>
-            </div>
 
             {isLoginPopupOpened && (
                 <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>

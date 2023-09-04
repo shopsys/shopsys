@@ -1,9 +1,11 @@
 import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
-import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { canUseDom } from 'helpers/canUseDom';
 import { MouseEventHandler, useEffect, useRef } from 'react';
 import { twMergeCustom } from 'helpers/twMerge';
+import dynamic from 'next/dynamic';
+
+const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 type PopupProps = {
     onCloseCallback: () => void;

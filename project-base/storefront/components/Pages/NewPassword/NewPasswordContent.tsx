@@ -6,7 +6,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { BreadcrumbFragmentApi, useRecoverPasswordMutationApi } from 'graphql/generated';
+import { useRecoverPasswordMutationApi } from 'graphql/generated';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
@@ -26,17 +26,13 @@ const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then(
 type NewPasswordContentProps = {
     hash: string;
     email: string;
-    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
-export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, email, hash }) => {
+export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash }) => {
     const { t } = useTranslation();
     const [, newPassword] = useRecoverPasswordMutationApi();
     const { url } = useDomainConfig();
-    const [newPasswordUrl, resetPasswordUrl] = getInternationalizedStaticUrls(
-        ['/new-password', '/reset-password'],
-        url,
-    );
+    const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
     const [formProviderMethods] = useRecoveryPasswordForm();
     const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
@@ -92,7 +88,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
 
     if (hash === '' || email === '') {
         return (
-            <SimpleLayout heading={t('Set new password')} breadcrumb={breadcrumbs}>
+            <SimpleLayout heading={t('Set new password')}>
                 <Trans
                     i18nKey="ResendRecoveryLink"
                     defaultTrans="Error occured while loading form data. <0/> Please try to resend new password recovery link <lnk1>on this page</lnk1>."
@@ -107,10 +103,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
 
     return (
         <>
-            <SimpleLayout
-                heading={t('Set new password')}
-                breadcrumb={[{ __typename: 'Link', name: t('Set new password'), slug: newPasswordUrl }]}
-            >
+            <SimpleLayout heading={t('Set new password')}>
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}>
                         <PasswordInputControlled

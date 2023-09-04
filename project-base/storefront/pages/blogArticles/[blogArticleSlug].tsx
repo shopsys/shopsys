@@ -1,6 +1,4 @@
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
 import { BlogArticlePageSkeleton } from 'components/Pages/BlogArticle/BlogArticlePageSkeleton';
 import {
@@ -35,16 +33,9 @@ const BlogArticleDetailPage: NextPage = () => {
         <CommonLayout
             title={blogArticleData?.blogArticle?.seoTitle}
             description={blogArticleData?.blogArticle?.seoMetaDescription}
+            breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
+            breadcrumbsType="blogCategory"
         >
-            {!!blogArticleData?.blogArticle?.breadcrumb && (
-                <Webline>
-                    <Breadcrumbs
-                        key="breadcrumb"
-                        type="blogCategory"
-                        breadcrumb={blogArticleData.blogArticle.breadcrumb}
-                    />
-                </Webline>
-            )}
             {!!blogArticleData?.blogArticle && !fetching ? (
                 <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
             ) : (

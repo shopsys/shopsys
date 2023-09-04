@@ -1,17 +1,15 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { NavigationSubList } from 'components/Layout/Header/Navigation/NavigationSubList';
+import { NavigationItemColumnCategoryList } from 'components/Layout/Header/Navigation/NavigationItemColumnCategoryList';
 import { ColumnCategoryFragmentApi } from 'graphql/generated';
 
-type NavigationColumnCategoryProps = {
+type NavigationItemColumnCategoryProps = {
     columnCategory: ColumnCategoryFragmentApi;
 };
 
-const TEST_IDENTIFIER = 'layout-header-navigation-navigationcolumncategory';
-
-export const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = ({ columnCategory }) => {
+export const NavigationItemColumnCategory: FC<NavigationItemColumnCategoryProps> = ({ columnCategory }) => {
     return (
-        <li className="mb-9 w-full last:mb-0" data-testid={TEST_IDENTIFIER}>
+        <li>
             <ExtendedNextLink
                 href={columnCategory.slug}
                 type="static"
@@ -24,6 +22,7 @@ export const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = ({ co
                     className="h-16 mix-blend-multiply"
                 />
             </ExtendedNextLink>
+
             <ExtendedNextLink
                 href={columnCategory.slug}
                 type="static"
@@ -31,8 +30,9 @@ export const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = ({ co
             >
                 {columnCategory.name}
             </ExtendedNextLink>
+
             {columnCategory.children.length > 0 && (
-                <NavigationSubList columnCategoryChildren={columnCategory.children} />
+                <NavigationItemColumnCategoryList columnCategoryChildren={columnCategory.children} />
             )}
         </li>
     );

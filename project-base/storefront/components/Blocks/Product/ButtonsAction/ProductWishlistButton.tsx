@@ -23,23 +23,17 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
     const { t } = useTranslation();
 
     return (
-        <div className={twMergeCustom('flex items-center', className)}>
-            <div
-                className="flex cursor-pointer items-center"
-                data-testid={TEST_IDENTIFIER}
-                title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
-                onClick={toggleProductInWishlist}
-            >
-                <HeartIcon
-                    isFull={isProductInWishlist}
-                    className={twMergeCustom('m-2', 'text-grey', isProductInWishlist && 'text-green')}
-                />
-                {isWithText && (
-                    <span className="ml-1">
-                        {isProductInWishlist ? t('Remove from wishlist') : t('Add to wishlist')}
-                    </span>
-                )}
-            </div>
+        <div
+            className={twMergeCustom('flex cursor-pointer items-center gap-2 p-2', className)}
+            data-testid={TEST_IDENTIFIER}
+            title={isProductInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
+            onClick={toggleProductInWishlist}
+        >
+            <HeartIcon
+                isFull={isProductInWishlist}
+                className={twMergeCustom('text-grey', isProductInWishlist && 'text-green')}
+            />
+            {isWithText && <span>{isProductInWishlist ? t('Remove from wishlist') : t('Add to wishlist')}</span>}
         </div>
     );
 };

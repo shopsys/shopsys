@@ -13,9 +13,9 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
             {title}
         </Heading>
 
-        <ul className="">
+        <ul className="flex flex-col gap-1 lg:gap-4">
             {items.map((item) => (
-                <li className="mb-1 last:mb-0 lg:mb-4" key={item.uuid}>
+                <li key={item.uuid}>
                     <ExtendedNextLink
                         href={item.__typename === 'ArticleSite' ? item.slug : item.url}
                         type="static"

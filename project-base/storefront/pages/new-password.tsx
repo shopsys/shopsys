@@ -46,8 +46,15 @@ const NewPasswordPage: FC<ServerSidePropsType> = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout title={t('Set new password')}>
-                <NewPasswordContent hash={hashParam} email={emailParam} breadcrumbs={breadcrumbs} />
+            <CommonLayout
+                title={t('Set new password')}
+                breadcrumbs={
+                    hash === '' || email === ''
+                        ? breadcrumbs
+                        : [{ __typename: 'Link', name: t('Set new password'), slug: newPasswordUrl }]
+                }
+            >
+                <NewPasswordContent hash={hashParam} email={emailParam} />
             </CommonLayout>
         </>
     );

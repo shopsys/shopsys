@@ -1,18 +1,15 @@
 import { useRouter } from 'next/router';
 
 type PageGuardProps = {
-    accessCondition: boolean;
+    isWithAccess: boolean;
     errorRedirectUrl: string;
 };
 
-export const PageGuard: FC<PageGuardProps> = ({ accessCondition, errorRedirectUrl, children }) => {
+export const PageGuard: FC<PageGuardProps> = ({ isWithAccess, errorRedirectUrl, children }) => {
     const router = useRouter();
 
-    if (!accessCondition) {
-        if (typeof window !== 'undefined') {
-            router.replace(errorRedirectUrl);
-        }
-
+    if (!isWithAccess) {
+        router.replace(errorRedirectUrl);
         return null;
     }
 

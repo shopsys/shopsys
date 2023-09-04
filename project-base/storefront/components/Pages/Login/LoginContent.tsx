@@ -5,7 +5,6 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
@@ -18,13 +17,9 @@ import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import * as Yup from 'yup';
 
-type LoginContentProps = {
-    breadcrumbs: BreadcrumbFragmentApi[];
-};
-
 const TEST_IDENTIFIER = 'pages-login-submit';
 
-export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
+export const LoginContent: FC = () => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { url } = useDomainConfig();
@@ -51,7 +46,7 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
     );
 
     return (
-        <SimpleLayout heading={t('Login')} breadcrumb={breadcrumbs}>
+        <SimpleLayout heading={t('Login')}>
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
                     <TextInputControlled

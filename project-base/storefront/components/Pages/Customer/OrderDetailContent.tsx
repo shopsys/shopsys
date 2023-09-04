@@ -2,9 +2,8 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Row, Cell, CellHead, Table, CellMinor } from 'components/Basic/Table/Table';
 import { Button } from 'components/Forms/Button/Button';
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BreadcrumbFragmentApi, OrderDetailFragmentApi } from 'graphql/generated';
+import { OrderDetailFragmentApi } from 'graphql/generated';
 import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
@@ -19,12 +18,11 @@ const MergeCartsPopup = dynamic(() => import('./MergeCartsPopup').then((componen
 
 type OrderDetailContentProps = {
     order: OrderDetailFragmentApi;
-    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'pages-customer-orderdetail-';
 
-export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcrumbs }) => {
+export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { formatDateAndTime } = useFormatDate();
@@ -40,8 +38,6 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
     return (
         <>
             <Webline className="mb-2">
-                <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
-
                 <div className="flex flex-col items-center justify-between lg:mb-4 lg:flex-row">
                     <div className="w-1/5" />
                     <Heading type="h1" className="lg:mb-0">

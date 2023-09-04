@@ -23,8 +23,8 @@ const CustomerPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout title={t('Customer')}>
-                <CustomerContent breadcrumbs={breadcrumbs} />
+            <CommonLayout title={t('Customer')} breadcrumbs={breadcrumbs}>
+                <CustomerContent />
             </CommonLayout>
         </>
     );

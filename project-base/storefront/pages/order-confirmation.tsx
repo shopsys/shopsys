@@ -56,7 +56,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
         });
 
     return (
-        <PageGuard accessCondition={!!orderUuid} errorRedirectUrl={cartUrl}>
+        <PageGuard isWithAccess={!!orderUuid} errorRedirectUrl={cartUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Thank you for your order')}>
                 <Webline>

@@ -72,9 +72,11 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             <Webline dataTestId={TEST_IDENTIFIER + 'description'}>
                 <ProductDetailTabs description={product.description} parameters={product.parameters} />
             </Webline>
-            <Webline dataTestId={TEST_IDENTIFIER + 'accessories'} className="mt-5">
-                <ProductDetailAccessories accessories={product.accessories} />
-            </Webline>
+            {!!product.accessories.length && (
+                <Webline dataTestId={TEST_IDENTIFIER + 'accessories'} className="mt-5">
+                    <ProductDetailAccessories accessories={product.accessories} />
+                </Webline>
+            )}
         </>
     );
 };

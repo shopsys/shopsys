@@ -5,7 +5,6 @@ import {
     FilterGroupWrapper,
     ShowAllButton,
 } from './FilterElements';
-import { FilterGroupIcon } from './FilterGroupIcon';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { useFilterShowLess } from 'hooks/filter/useFilterShowLess';
 import useTranslation from 'next-translate/useTranslation';
@@ -58,10 +57,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
 
     return (
         <FilterGroupWrapper dataTestId={getDataTestId(filterField)}>
-            <FilterGroupTitle onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
-                {title}
-                <FilterGroupIcon isOpen={isGroupOpen} />
-            </FilterGroupTitle>
+            <FilterGroupTitle title={title} isOpen={isGroupOpen} onClick={() => setIsGroupOpen(!isGroupOpen)} />
             {isGroupOpen && (
                 <FilterGroupContent>
                     {defaultOptions && (
@@ -70,17 +66,19 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                                 const isFlagAndSelectedByDefault =
                                     filterField === 'flags' && defaultSelectedFlags.has(option.uuid);
                                 const isChecked = !!selectedItems?.includes(option.uuid) || isFlagAndSelectedByDefault;
+                                const isDisabled = option.count === 0 && !isChecked;
 
                                 return (
                                     <FilterGroupContentItem
                                         key={option.uuid}
+                                        isDisabled={isDisabled}
                                         dataTestId={getDataTestId(filterField) + '-' + index}
                                     >
                                         <Checkbox
                                             id={`${filterField}.${index}.checked`}
                                             name={`${filterField}.${index}.checked`}
                                             label={option.name}
-                                            disabled={option.count === 0 && !isChecked}
+                                            disabled={isDisabled}
                                             onChange={() => handleCheck(option.uuid)}
                                             value={isChecked}
                                             count={option.count}

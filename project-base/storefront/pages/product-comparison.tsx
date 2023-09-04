@@ -14,15 +14,15 @@ const ProductComparisonPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [productComparisonUrl] = getInternationalizedStaticUrls(['/product-comparison'], url);
-    const breadcrumb: BreadcrumbFragmentApi[] = [
+    const breadcrumbs: BreadcrumbFragmentApi[] = [
         { __typename: 'Link', name: t('Product comparison'), slug: productComparisonUrl },
     ];
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.product_comparison, breadcrumb);
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.product_comparison, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout title={t('Product comparison')}>
-            <ProductComparison breadcrumb={breadcrumb} />
+        <CommonLayout title={t('Product comparison')} breadcrumbs={breadcrumbs}>
+            <ProductComparison />
         </CommonLayout>
     );
 };

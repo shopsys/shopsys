@@ -1,7 +1,5 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
-import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailContent';
 import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import {
@@ -61,12 +59,12 @@ const BrandDetailPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout title={seoTitle} description={brandDetailData?.brand?.seoMetaDescription}>
-            {!!brandDetailData?.brand?.breadcrumb && (
-                <Webline>
-                    <Breadcrumbs key="breadcrumb" breadcrumb={brandDetailData.brand.breadcrumb} />
-                </Webline>
-            )}
+        <CommonLayout
+            title={seoTitle}
+            description={brandDetailData?.brand?.seoMetaDescription}
+            breadcrumbs={brandDetailData?.brand?.breadcrumb}
+            breadcrumbsType="category"
+        >
             {!filter && fetching ? (
                 <CategoryDetailPageSkeleton />
             ) : (

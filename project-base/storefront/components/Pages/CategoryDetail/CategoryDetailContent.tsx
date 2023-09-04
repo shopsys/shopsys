@@ -2,7 +2,6 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { AdvancedSeoCategories } from './AdvancedSeoCategories';
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
@@ -17,6 +16,9 @@ import { twJoin } from 'tailwind-merge';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { CategoryBestsellers } from './CategoryBestsellers/CategoryBestsellers';
 import { FilterIcon } from 'components/Basic/Icon/IconsSvg';
+import dynamic from 'next/dynamic';
+
+const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 type CategoryDetailContentProps = {
     category: CategoryDetailFragmentApi;

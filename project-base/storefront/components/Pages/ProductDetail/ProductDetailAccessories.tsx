@@ -11,10 +11,6 @@ type ProductDetailAccessoriesProps = {
 export const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = ({ accessories }) => {
     const { t } = useTranslation();
 
-    if (accessories.length === 0) {
-        return null;
-    }
-
     return (
         <>
             <Heading type="h2">{t('You can also buy')}</Heading>

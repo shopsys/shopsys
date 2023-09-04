@@ -47,7 +47,8 @@ export const FilterPanel = memo<FilterPanelProps>(
 
                     <SelectedParameters filterOptions={filterOptions} />
                 </div>
-                <div className="h-full overflow-y-scroll px-5 vl:static vl:overflow-visible">
+
+                <div className="h-full divide-y divide-border overflow-y-scroll px-5 vl:static vl:overflow-visible">
                     <FilterGroupPrice
                         title={t('Price')}
                         initialMinPrice={filterOptions.minimalPrice}
@@ -84,6 +85,7 @@ export const FilterPanel = memo<FilterPanelProps>(
                         />
                     ))}
                 </div>
+
                 <div className="flex items-center justify-end border-t-2 border-greyLight p-5 vl:hidden">
                     <Button
                         size="small"

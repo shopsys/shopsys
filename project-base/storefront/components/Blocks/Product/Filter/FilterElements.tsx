@@ -1,21 +1,32 @@
 import { twJoin } from 'tailwind-merge';
+import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 
 export const FilterGroupWrapper: FC = ({ children, dataTestId }) => (
-    <div className="border-b border-border last:border-none" data-testid={dataTestId}>
+    <div className="" data-testid={dataTestId}>
         {children}
     </div>
 );
 
-export const FilterGroupTitle: FC<{ onClick: () => void }> = ({ children, onClick }) => (
-    <div className="relative block cursor-pointer py-6 pr-5 font-bold uppercase text-black" onClick={onClick}>
-        {children}
+export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () => void }> = ({
+    isOpen,
+    title,
+    onClick,
+}) => (
+    <div
+        className="flex cursor-pointer items-center justify-between py-6 font-bold uppercase text-black"
+        onClick={onClick}
+    >
+        {title}
+        <ArrowIcon className={twJoin('rotate-0 select-none text-xs transition', isOpen && 'rotate-180')} />
     </div>
 );
 
-export const FilterGroupContent: FC = ({ children }) => <div className="mb-6 flex flex-col flex-wrap">{children}</div>;
+export const FilterGroupContent: FC = ({ children }) => (
+    <div className="flex flex-col flex-wrap gap-3 pb-6">{children}</div>
+);
 
-export const FilterGroupContentItem: FC = ({ children, dataTestId }) => (
-    <div className={twJoin('mb-3')} data-testid={dataTestId}>
+export const FilterGroupContentItem: FC<{ isDisabled: boolean }> = ({ children, isDisabled, dataTestId }) => (
+    <div className={twJoin('', isDisabled && 'pointer-events-none opacity-30')} data-testid={dataTestId}>
         {children}
     </div>
 );

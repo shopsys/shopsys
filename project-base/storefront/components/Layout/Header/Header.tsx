@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import { AutocompleteSearch } from './AutocompleteSearch/AutocompleteSearch';
 import { Cart } from './Cart/Cart';
 import { HeaderContact } from './Contact/HeaderContact';
@@ -5,8 +6,9 @@ import { DropdownMenu } from './DropdownMenu/DropdownMenu';
 import { HamburgerMenu } from './HamburgerMenu/HamburgerMenu';
 import { Logo } from './Logo/Logo';
 import { MenuIconic } from './MenuIconic/MenuIconic';
-import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { useCallback, useState } from 'react';
+
+const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
 type HeaderProps = {
     simpleHeader?: boolean;
@@ -22,21 +24,22 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     }, []);
 
     return (
-        <div className="flex flex-wrap items-center pt-2 pb-3 lg:pt-4 vl:pt-6 vl:pb-4 " data-testid={TEST_IDENTIFIER}>
-            <div className="order-1 mr-auto flex flex-1 vl:mr-5 vl:flex-none xl:mr-8">
-                <Logo />
-            </div>
+        <div
+            className="flex flex-wrap items-center gap-y-3 py-3 lg:gap-x-7 lg:pb-5 lg:pt-6"
+            data-testid={TEST_IDENTIFIER}
+        >
+            <Logo className="order-1 mr-auto flex flex-1 vl:flex-none" />
             {simpleHeader ? (
                 <HeaderContact />
             ) : (
                 <>
-                    <div className="vl:max-[400px] order-6 mt-3 w-full lg:order-4 lg:mt-5 vl:order-2 vl:mt-0 vl:ml-auto vl:mr-5 vl:flex-1 xl:mr-8">
+                    <div className="order-6 h-12 w-full transition lg:relative lg:order-4 lg:w-full vl:order-2 vl:flex-1">
                         <AutocompleteSearch />
                     </div>
-                    <div className="order-2 flex lg:mr-5 lg:ml-auto xl:mr-8">
+                    <div className="order-2 flex">
                         <MenuIconic />
                     </div>
-                    <div className="order-4 ml-4 flex h-10 w-auto cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
+                    <div className="order-4 ml-3 flex cursor-pointer items-center justify-center text-lg lg:hidden">
                         <HamburgerMenu onMenuToggleHandler={onMenuToggleHandler} isMenuOpened={isMenuOpened} />
                         <DropdownMenu onMenuToggleHandler={onMenuToggleHandler} isMenuOpened={isMenuOpened} />
                     </div>

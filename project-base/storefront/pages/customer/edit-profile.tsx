@@ -32,8 +32,8 @@ const EditProfilePage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout title={t('Edit profile')}>
-                <SimpleLayout heading={t('Edit profile')} breadcrumb={breadcrumbs}>
+            <CommonLayout title={t('Edit profile')} breadcrumbs={breadcrumbs}>
+                <SimpleLayout heading={t('Edit profile')}>
                     {currentCustomerUserData !== undefined && currentCustomerUserData !== null && (
                         <EditProfileContent currentCustomerUser={currentCustomerUserData} />
                     )}
