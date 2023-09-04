@@ -13,11 +13,13 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Controller\Admin\DefaultController as BaseDefaultController;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
+use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade;
+use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -40,6 +42,8 @@ class DefaultController extends BaseDefaultController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \App\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      */
     public function __construct(
@@ -53,7 +57,9 @@ class DefaultController extends BaseDefaultController
         GridFactory $gridFactory,
         CronConfig $cronConfig,
         CronFacade $cronFacade,
-        private TransferIssueFacade $transferIssueFacade,
+        BreadcrumbOverrider $breadcrumbOverrider,
+        DateTimeFormatterExtension $dateTimeFormatterExtension,
+        private readonly TransferIssueFacade $transferIssueFacade,
     ) {
         parent::__construct(
             $statisticsFacade,
@@ -66,6 +72,8 @@ class DefaultController extends BaseDefaultController
             $gridFactory,
             $cronConfig,
             $cronFacade,
+            $breadcrumbOverrider,
+            $dateTimeFormatterExtension,
         );
     }
 

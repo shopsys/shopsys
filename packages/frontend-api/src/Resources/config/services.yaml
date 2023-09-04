@@ -26,11 +26,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation:
         arguments:
-            $loginRateLimiter: '@?security.login_throttling.frontend_api.limiter'
-        calls:
-            -   method: setDefaultLoginRateLimiter
-                arguments:
-                    $loginRateLimiter: '@?security.login_throttling.frontend_api.limiter'
+            $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:  ~
 

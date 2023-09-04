@@ -148,27 +148,26 @@ class ProductFilterCountDataElasticsearchRepository
         }
         $flagsPlusNumberResult = $this->client->search($plusFlagsQuery->getFlagsPlusNumbersQuery($flagIds));
 
-        return $this->aggregationResultToCountDataTransformer->translateFlagsPlusNumbers($flagsPlusNumberResult);
+        return $this->aggregationResultToCountDataTransformer->getFlagCount($flagsPlusNumberResult);
     }
 
     /**
-     * @deprecated Parameter $plusFlagsQuery will be renamed to $plusBrandsQuery in next major
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $plusFlagsQuery
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $plusBrandsQuery
      * @return int[]
      */
     protected function calculateBrandsPlusNumbers(
         ProductFilterData $productFilterData,
-        FilterQuery $plusFlagsQuery,
+        FilterQuery $plusBrandsQuery,
     ): array {
         $brandsIds = [];
 
         foreach ($productFilterData->brands as $brand) {
             $brandsIds[] = $brand->getId();
         }
-        $brandsPlusNumberResult = $this->client->search($plusFlagsQuery->getBrandsPlusNumbersQuery($brandsIds));
+        $brandsPlusNumberResult = $this->client->search($plusBrandsQuery->getBrandsPlusNumbersQuery($brandsIds));
 
-        return $this->aggregationResultToCountDataTransformer->translateBrandsPlusNumbers($brandsPlusNumberResult);
+        return $this->aggregationResultToCountDataTransformer->getBrandCount($brandsPlusNumberResult);
     }
 
     /**

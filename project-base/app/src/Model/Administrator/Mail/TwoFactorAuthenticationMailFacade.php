@@ -19,10 +19,10 @@ class TwoFactorAuthenticationMailFacade implements AuthCodeMailerInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private Mailer $mailer,
-        private MailTemplateFacade $mailTemplateFacade,
-        private TwoFactorAuthenticationMail $twoFactorAuthenticationMail,
-        private Domain $domain,
+        private readonly Mailer $mailer,
+        private readonly MailTemplateFacade $mailTemplateFacade,
+        private readonly TwoFactorAuthenticationMail $twoFactorAuthenticationMail,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -36,6 +36,6 @@ class TwoFactorAuthenticationMailFacade implements AuthCodeMailerInterface
             $this->domain->getId(),
         );
         $messageData = $this->twoFactorAuthenticationMail->createMessage($mailTemplate, $administrator);
-        $this->mailer->send($messageData);
+        $this->mailer->sendForDomain($messageData, $this->domain->getId());
     }
 }

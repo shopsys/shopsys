@@ -27,7 +27,7 @@ class OrderMailFacade extends BaseOrderMailFacade
         foreach ($mailTemplates as $mailTemplate) {
             $messageData = $this->orderMail->createMessage($mailTemplate, $order);
             $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
-            $this->mailer->send($messageData);
+            $this->mailer->sendForDomain($messageData, $order->getDomainId());
         }
     }
 }

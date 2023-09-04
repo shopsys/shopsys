@@ -16,12 +16,6 @@
         </div>
     {% endif %}
 
-    {% if isOverridden %}
-        <div class="in-message in-message--warning margin-bottom-30">
-            {{ 'Currently the ENV variable MAILER_DELIVERY_WHITELIST is set and overrides this setting.'|trans }}
-        </div>
-    {% endif %}
-
     {{ form_start(form) }}
     {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
         {% block fixed_bar_content %}

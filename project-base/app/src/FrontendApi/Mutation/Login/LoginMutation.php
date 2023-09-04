@@ -12,8 +12,10 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation as BaseLoginMutation;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter;
 
 /**
  * @property \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
@@ -24,15 +26,19 @@ class LoginMutation extends BaseLoginMutation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
      * @param \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $userPasswordHasher
      * @param \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
+     * @param \Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter $loginRateLimiter
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \App\FrontendApi\Model\Cart\MergeCartFacade $mergeCartFacade
      */
     public function __construct(
         FrontendCustomerUserProvider $frontendCustomerUserProvider,
         UserPasswordHasherInterface $userPasswordHasher,
         TokenFacade $tokenFacade,
+        DefaultLoginRateLimiter $loginRateLimiter,
+        RequestStack $requestStack,
         private readonly MergeCartFacade $mergeCartFacade,
     ) {
-        parent::__construct($frontendCustomerUserProvider, $userPasswordHasher, $tokenFacade);
+        parent::__construct($frontendCustomerUserProvider, $userPasswordHasher, $tokenFacade, $loginRateLimiter, $requestStack);
     }
 
     /**

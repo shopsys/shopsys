@@ -30,7 +30,7 @@ class CustomerMailFacade extends BaseCustomerMailFacade
         MailTemplateFacade $mailTemplateFacade,
         RegistrationMail $registrationMail,
         UploadedFileFacade $uploadedFileFacade,
-        private CustomerActivationMail $customerActivationMail,
+        private readonly CustomerActivationMail $customerActivationMail,
     ) {
         parent::__construct($mailer, $mailTemplateFacade, $registrationMail, $uploadedFileFacade);
     }
@@ -43,6 +43,6 @@ class CustomerMailFacade extends BaseCustomerMailFacade
         $mailTemplate = $this->mailTemplateFacade->get(CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $customerUser->getDomainId());
         $messageData = $this->customerActivationMail->createMessage($mailTemplate, $customerUser);
         $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
-        $this->mailer->send($messageData);
+        $this->mailer->sendForDomain($messageData, $customerUser->getDomainId());
     }
 }
