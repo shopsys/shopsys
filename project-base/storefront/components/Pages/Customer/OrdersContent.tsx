@@ -107,7 +107,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                             {order.productItems.length}
                                         </Cell>
                                         <Cell data-testid={TEST_IDENTIFIER + 'transport'}>
-                                            <div className="relative top-1 mr-1 inline-flex w-10 justify-center">
+                                            <div className="flex items-center gap-2">
                                                 <Image
                                                     image={order.transport.mainImage}
                                                     type="default"
@@ -115,8 +115,8 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                                     width={36}
                                                     height={20}
                                                 />
+                                                {order.transport.name}
                                             </div>
-                                            {order.transport.name}
                                         </Cell>
                                         <Cell data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment.name}</Cell>
                                         <Cell isWithoutWrap align="right" data-testid={TEST_IDENTIFIER + 'total-price'}>
