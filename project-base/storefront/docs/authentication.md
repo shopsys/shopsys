@@ -1,6 +1,6 @@
-### Authentication
+# Authentication
 
-#### Frontend API
+## Frontend API
 
 If you didn't do it previously, you have to generate private keys for Frontend API.
 
@@ -8,7 +8,7 @@ If you didn't do it previously, you have to generate private keys for Frontend A
 php phing frontend-generate-new-keys
 ```
 
-#### Authentication mechanism
+## Authentication mechanism
 
 Authentication is performed via [@urql/auth-exchange](https://formidable.com/open-source/urql/docs/advanced/authentication).
 Proper options for authExchange can be obtained with `getAuthExchangeOptions` from `urql/authExchange.ts` and it can be used for server-side rendering and client side requests.

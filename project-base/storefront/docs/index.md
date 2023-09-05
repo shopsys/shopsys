@@ -1,4 +1,4 @@
-This is documentation for Shopsys Platform Storefront.
+# Documentation for Shopsys Platform Storefront
 
 ## Ways to use Shopsys Storefront
 
@@ -10,7 +10,7 @@ If Docker way is too robust for you or you do not need whole application running
 ### Docker way
 
 With Docker, you have Shopsys Storefront already running.
-Storefront is running on http://127.0.0.1:3000
+Storefront is running on <http://127.0.0.1:3000>
 
 #### Restart PNPM
 
@@ -37,11 +37,11 @@ pnpm install
 pnpm run dev
 ```
 
-After this command open http://127.0.0.1:3000/ in your browser.
+After this command open <http://127.0.0.1:3000/> in your browser.
 
 ### Additional commands available for both ways (in Docker way they need to be run inside the storefront container)
 
-#### Build the app for production.
+#### Build the app for production
 
 ```plain
 pnpm run build

@@ -7,8 +7,6 @@ These hooks are responsible for handling of asynchronous GTM events according to
 Hook used to handle viewing of a paginated products list, e.g. category detail, brand detail, or flag detail.
 It is triggered every time page (and therefore products) change.
 
-### Hook Signature:
-
 ```typescript
 export const useGtmPaginatedProductListViewEvent = (
     paginatedProducts: ListedProductFragmentApi[] | undefined, // array of displayed products, if loaded and available
@@ -23,8 +21,6 @@ export const useGtmPaginatedProductListViewEvent = (
 Hook used to handle viewing of a products list inside a slider, such as promoted products on homepage.
 It is triggered every time page therefore products change.
 
-### Hook Signature:
-
 ```typescript
 export const useGtmSliderProductListViewEvent = (
     products: ListedProductFragmentApi[] | undefined, // array of displayed products, if loaded and available
@@ -37,8 +33,6 @@ export const useGtmSliderProductListViewEvent = (
 ## useGtmAutocompleteResultsViewEvent
 
 Hook used to handle viewing of autocomplete search results. It is triggered every time the search keyword changes.
-
-### Hook Signature:
 
 ```typescript
 export const useGtmAutocompleteResultsViewEvent = (
@@ -54,8 +48,6 @@ export const useGtmAutocompleteResultsViewEvent = (
 
 Basic hook used to handle viewing of a page. It is sometimes accompanied with one of the hooks below if the page is of a special type. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent` or `useGtmFriendlyPageViewEvent` based on the type of the page ('static' vs 'friendly URL').
 
-### Hook Signature:
-
 ```typescript
 export const useGtmPageViewEvent = (
     gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
@@ -69,8 +61,6 @@ export const useGtmPageViewEvent = (
 
 Hook used to handle viewing of the cart page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
 
-### Hook Signature:
-
 ```typescript
 export const useGtmCartViewEvent = (
     gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
@@ -82,8 +72,6 @@ export const useGtmCartViewEvent = (
 ## useGtmContactInformationPageViewEvent
 
 Hook used to handle viewing of the contact information page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
-
-### Hook Signature:
 
 ```typescript
 export const useGtmContactInformationPageViewEvent = (
@@ -97,8 +85,6 @@ export const useGtmContactInformationPageViewEvent = (
 
 Hook used to handle viewing of the transport and payment page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
 
-### Hook Signature:
-
 ```typescript
 export const useGtmPaymentAndTransportPageViewEvent = (
     gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
@@ -110,8 +96,6 @@ export const useGtmPaymentAndTransportPageViewEvent = (
 ## useGtmProductDetailViewEvent
 
 Hook used to handle viewing of the product detail page.
-
-### Hook Signature:
 
 ```typescript
 export const useGtmProductDetailViewEvent = (

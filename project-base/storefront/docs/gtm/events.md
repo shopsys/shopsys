@@ -6,8 +6,6 @@ These objects represent all GTM events. They are composed from GtmEventInterface
 
 This interface is a generic type that includes an event of type EventType and the property \_clear of boolean type. The remaining properties are of type EventContent, which is a type argument through which one can extend this generic interface.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmEventInterface<EventType, EventContent> = {
     event: EventType; // the type of the event
@@ -18,8 +16,6 @@ export type GtmEventInterface<EventType, EventContent> = {
 ## GtmPageViewEventType
 
 This type is used for page view tracking.
-
-### Event Object Properties:
 
 ```typescript
 export type GtmPageViewEventType = GtmEventInterface<
@@ -41,8 +37,6 @@ export type GtmPageViewEventType = GtmEventInterface<
 
 This type is used for consent update tracking.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmConsentUpdateEventType = GtmEventInterface<
     GtmEventType.consent_update, // the type of the event
@@ -55,8 +49,7 @@ export type GtmConsentUpdateEventType = GtmEventInterface<
 ## GtmChangeCartItemEventType
 
 This type is used for tracking both adding and removing cart items.
-
-### Event Object Properties (all are inherited):
+(all are inherited)
 
 ```typescript
 export type GtmChangeCartItemEventType = GtmAddToCartEventType | GtmRemoveFromCartEventType;
@@ -65,8 +58,6 @@ export type GtmChangeCartItemEventType = GtmAddToCartEventType | GtmRemoveFromCa
 ## GtmAddToCartEventType
 
 This type is used for tracking adding items to a cart. Keep in mind that adding does not need to mean the product has not been added before. It can also mean increasing product's quantity.
-
-### Event Object Properties:
 
 ```typescript
 export type GtmAddToCartEventType = GtmEventInterface<
@@ -88,8 +79,6 @@ export type GtmAddToCartEventType = GtmEventInterface<
 
 This type is used for tracking removing items from a cart.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmRemoveFromCartEventType = GtmEventInterface<
     GtmEventType.remove_from_cart, // the type of the event
@@ -110,8 +99,6 @@ export type GtmRemoveFromCartEventType = GtmEventInterface<
 
 This type is used for tracking cart view events.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmCartViewEventType = GtmEventInterface<
     GtmEventType.cart_view, // the type of the event
@@ -130,8 +117,6 @@ export type GtmCartViewEventType = GtmEventInterface<
 
 This type is used for tracking when a user views a list of products.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmProductListViewEventType = GtmEventInterface<
     GtmEventType.product_list_view, // the type of the event
@@ -148,8 +133,6 @@ export type GtmProductListViewEventType = GtmEventInterface<
 
 This type is used for tracking when a user clicks on a product and is redirected to product detail page.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmProductClickEventType = GtmEventInterface<
     GtmEventType.product_click, // the type of the event
@@ -165,8 +148,6 @@ export type GtmProductClickEventType = GtmEventInterface<
 ## GtmProductDetailViewEventType
 
 This type is used for tracking when a user views the details of a product.
-
-### Event Object Properties:
 
 ```typescript
 export type GtmProductDetailViewEventType = GtmEventInterface<
@@ -186,8 +167,6 @@ export type GtmProductDetailViewEventType = GtmEventInterface<
 
 This type is used for tracking when a user views the payment and transport page.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmPaymentAndTransportPageViewEventType = GtmEventInterface<
     GtmEventType.payment_and_transport_page_view, // the type of the event
@@ -206,8 +185,6 @@ export type GtmPaymentAndTransportPageViewEventType = GtmEventInterface<
 
 This type is used for tracking when a user views autocomplete search results.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmAutocompleteResultsViewEventType = GtmEventInterface<
     GtmEventType.autocomplete_results_view, // the type of the event
@@ -225,8 +202,6 @@ export type GtmAutocompleteResultsViewEventType = GtmEventInterface<
 
 This type is used for tracking clicks on autocomplete results.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmAutocompleteResultClickEventType = GtmEventInterface<
     GtmEventType.autocomplete_result_click, // the type of the event
@@ -243,8 +218,6 @@ export type GtmAutocompleteResultClickEventType = GtmEventInterface<
 ## GtmTransportChangeEventType
 
 This type is used for tracking changes to the transport option during checkout.
-
-### Event Object Properties:
 
 ```typescript
 export type GtmTransportChangeEventType = GtmEventInterface<
@@ -271,8 +244,6 @@ export type GtmTransportChangeEventType = GtmEventInterface<
 
 This type is used for tracking when a user views the contact information page during checkout.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmContactInformationPageViewEventType = GtmEventInterface<
     GtmEventType.contact_information_page_view, // the type of the event
@@ -291,8 +262,6 @@ export type GtmContactInformationPageViewEventType = GtmEventInterface<
 ## GtmPaymentChangeEventType
 
 This type is used for tracking changes to the payment option during checkout.
-
-### Event Object Properties:
 
 ```typescript
 export type GtmPaymentChangeEventType = GtmEventInterface<
@@ -316,8 +285,6 @@ export type GtmPaymentChangeEventType = GtmEventInterface<
 
 This type is used for tracking when a payment fails.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmPaymentFailEventType = GtmEventInterface<
     GtmEventType.payment_fail, // the type of the event
@@ -332,8 +299,6 @@ export type GtmPaymentFailEventType = GtmEventInterface<
 ## GtmCreateOrderEventOrderPartType
 
 This type represents the order part of the GtmCreateOrderEventType. It is stored in local storage before redirecting to payment gate, if the user has chosen to pay using a payment that requires a redirect.
-
-### Event Object Properties:
 
 ```typescript
 export type GtmCreateOrderEventOrderPartType = {
@@ -356,8 +321,6 @@ export type GtmCreateOrderEventOrderPartType = {
 
 This type represents the payment part of the GtmCreateOrderEventType. It is never stored in local storage, but always set when an order is created according to the current information about the payment.
 
-### Event Object Properties:
-
 ```typescript
 export type GtmPurchaseEventPaymentPartType = {
     isPaymentSuccessful: boolean | undefined; // whether the payment was successful or not, if available
@@ -367,8 +330,6 @@ export type GtmPurchaseEventPaymentPartType = {
 ## GtmCreateOrderEventType
 
 This type is used for tracking when an order is created by the user. It consists of the GtmCreateOrderEventOrderPartType, GtmPurchaseEventPaymentPartType, and GtmUserInfoType objects.
-
-### Event Object Properties:
 
 ```typescript
 export type GtmCreateOrderEventType = GtmEventInterface<
@@ -383,8 +344,6 @@ export type GtmCreateOrderEventType = GtmEventInterface<
 ## GtmShowMessageEventType
 
 This type is used for tracking when a message is displayed to the user.
-
-### Event Object Properties:
 
 ```typescript
 export type GtmShowMessageEventType = GtmEventInterface<
@@ -403,8 +362,6 @@ export type GtmShowMessageEventType = GtmEventInterface<
 ## GtmSendFormEventType
 
 This type is used for tracking when a form is submitted by the user.
-
-### Event Object Properties:
 
 ```typescript
 export type GtmSendFormEventType = GtmEventInterface<

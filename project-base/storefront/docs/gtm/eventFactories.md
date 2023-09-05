@@ -4,8 +4,6 @@ These factories are responsible for creating and preparing GTM event object. The
 
 ## getGtmCartViewEvent
 
-### Event Factory Signature:
-
 ```typescript
 export const getGtmCartViewEvent = (
     currencyCode: string; // the code of the currency used on the domain
@@ -19,8 +17,6 @@ export const getGtmCartViewEvent = (
 
 ## getGtmContactInformationPageViewEvent
 
-### Event Factory Signature:
-
 ```typescript
 export const getGtmContactInformationPageViewEvent = (
     gtmCartInfo: GtmCartInfoType, // the cart of the current user in the shape of GTM cart information
@@ -30,8 +26,6 @@ export const getGtmContactInformationPageViewEvent = (
 ```
 
 ## getGtmPaymentAndTransportPageViewEvent
-
-### Event Factory Signature:
 
 ```typescript
 export const getGtmPaymentAndTransportPageViewEvent = (
@@ -44,8 +38,6 @@ export const getGtmPaymentAndTransportPageViewEvent = (
 
 ## getGtmPaymentFailEvent
 
-### Event Factory Signature:
-
 ```typescript
 export const getGtmPaymentFailEvent = (
     orderId: string, // ID of the order for which the payment has failed
@@ -55,8 +47,6 @@ export const getGtmPaymentFailEvent = (
 ```
 
 ## getGtmCreateOrderEvent
-
-### Event Factory Signature:
 
 ```typescript
 export const getGtmCreateOrderEvent = (
@@ -69,8 +59,6 @@ export const getGtmCreateOrderEvent = (
 ```
 
 ## getGtmCreateOrderEventOrderPart
-
-### Event Factory Signature:
 
 ```typescript
 export const getGtmCreateOrderEventOrderPart = (
@@ -87,8 +75,6 @@ export const getGtmCreateOrderEventOrderPart = (
 
 ## getGtmCreateOrderEventUserPart
 
-### Event Factory Signature:
-
 ```typescript
 export const getGtmCreateOrderEventUserPart = (
     user: CurrentCustomerType | null | undefined, // information about current user
@@ -100,8 +86,6 @@ export const getGtmCreateOrderEventUserPart = (
 
 ## getGtmSendFormEvent
 
-### Event Factory Signature:
-
 ```typescript
 export const getGtmSendFormEvent = (
     form: GtmFormType, // type of the form submitted by the user
@@ -111,8 +95,6 @@ export const getGtmSendFormEvent = (
 ```
 
 ## getGtmProductClickEvent
-
-### Event Factory Signature:
 
 ```typescript
 export const getGtmProductClickEvent = (
@@ -127,8 +109,6 @@ export const getGtmProductClickEvent = (
 
 ## getGtmProductDetailViewEvent
 
-### Event Factory Signature:
-
 ```typescript
 export const getGtmProductDetailViewEvent = (
     product: ProductDetailFragmentApi | MainVariantDetailFragmentApi, // information about the product displayed on on the product detail page
@@ -141,8 +121,6 @@ export const getGtmProductDetailViewEvent = (
 
 ## getGtmAutocompleteResultsViewEvent
 
-### Event Factory Signature:
-
 ```typescript
 export const getGtmAutocompleteResultsViewEvent = (
     searchResult: AutocompleteSearchQueryApi, // object with all autocomplete search results
@@ -153,8 +131,6 @@ export const getGtmAutocompleteResultsViewEvent = (
 ```
 
 ## getGtmAutocompleteResultClickEvent
-
-### Event Factory Signature:
 
 ```typescript
 export const getGtmAutocompleteResultClickEvent = (
@@ -168,8 +144,6 @@ export const getGtmAutocompleteResultClickEvent = (
 
 ## useGtmStaticPageViewEvent
 
-### Event Factory Signature:
-
 ```typescript
 export const useGtmStaticPageViewEvent = (
     pageType: GtmPageType, // type of the page viewed by the user
@@ -181,8 +155,6 @@ export const useGtmStaticPageViewEvent = (
 
 ## useGtmFriendlyPageViewEvent
 
-### Event Factory Signature:
-
 ```typescript
 export const useGtmFriendlyPageViewEvent = (
     friendlyUrlPageData: FriendlyUrlPageType | null | undefined, // data for the friendly URL page
@@ -192,8 +164,6 @@ export const useGtmFriendlyPageViewEvent = (
 ```
 
 ## getGtmPageViewEvent
-
-### Event Factory Signature:
 
 ```typescript
 export const getGtmPageViewEvent = (
@@ -209,8 +179,6 @@ export const getGtmPageViewEvent = (
 ```
 
 ## getGtmChangeCartItemEvent
-
-### Event Factory Signature:
 
 ```typescript
 export const getGtmChangeCartItemEvent = (
@@ -231,8 +199,6 @@ export const getGtmChangeCartItemEvent = (
 
 ## getGtmPaymentChangeEvent
 
-### Event Factory Signature:
-
 ```typescript
 export const getGtmPaymentChangeEvent = (
     gtmCartInfo: GtmCartInfoType, // the cart of the current user in the shape of GTM cart information, if available
@@ -243,8 +209,6 @@ export const getGtmPaymentChangeEvent = (
 ```
 
 ## getGtmTransportChangeEvent
-
-### Event Factory Signature:
 
 ```typescript
 export const getGtmTransportChangeEvent = (
@@ -258,8 +222,6 @@ export const getGtmTransportChangeEvent = (
 ```
 
 ## getGtmProductListViewEvent
-
-### Event Factory Signature:
 
 ```typescript
 export const getGtmProductListViewEvent = (
@@ -275,8 +237,6 @@ export const getGtmProductListViewEvent = (
 
 ## getGtmShowMessageEvent
 
-### Event Factory Signature:
-
 ```typescript
 export const getGtmShowMessageEvent = (
     type: GtmMessageType, // type of the message shown to the user (e.g. error, information)
@@ -289,8 +249,6 @@ export const getGtmShowMessageEvent = (
 ```
 
 ## getGtmConsentUpdateEvent
-
-### Event Factory Signature:
 
 ```typescript
 export const getGtmConsentUpdateEvent = (
