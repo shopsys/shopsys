@@ -1,4 +1,11 @@
 title: Storefront
 arrange:
   - index.md
+  - coding-standards.md
+  - typescript.md
   - authentication.md
+  - unit-tests.md
+  - redis-graphql-cache.md
+  - image.md
+  - robots.txt.md
+  - gtm

@@ -2,10 +2,14 @@
 
 Storefront is client for consuming and displaying data from [Frontend API](../frontend-api/introduction-to-frontend-api.md).
 
-- [Introduction to Frontend API](./introduction-to-frontend-api.md)
-- [Pagination in Frontend API](./pagination.md)
-- [Authentication in Frontend API](./authentication.md)
-- [API Methods](https://shopsysframework.docs.apiary.io/)
+- [Coding Standards](./coding-standards.md)
+- [Typescript](./typescript.md)
+- [Authentication](./authentication.md)
+- [Unit testing](./unit-tests.md)
+- [Redis GraphQL cache](./redis-graphql-cache.md)
+- [Image Component](./image.md)
+- [Dynamic Robots.txt](./robots.txt.md)
+- [GTM](./gtm/index.md)
 
 ## Ways to use Shopsys Storefront
 
