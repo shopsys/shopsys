@@ -1,5 +1,12 @@
 # Documentation for Shopsys Platform Storefront
 
+Storefront is client for consuming and displaying data from [Frontend API](../frontend-api/introduction-to-frontend-api.md).
+
+- [Introduction to Frontend API](./introduction-to-frontend-api.md)
+- [Pagination in Frontend API](./pagination.md)
+- [Authentication in Frontend API](./authentication.md)
+- [API Methods](https://shopsysframework.docs.apiary.io/)
+
 ## Ways to use Shopsys Storefront
 
 There are two ways to use Shopsys Storefront on your machine.
