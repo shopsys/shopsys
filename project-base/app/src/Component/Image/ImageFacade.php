@@ -271,7 +271,6 @@ class ImageFacade extends BaseImageFacade
         $cacheId = $this->getCacheIdForImageUrl(
             $image->getId(),
             $domainConfig->getId(),
-            $additionalSizeIndex,
         );
 
         $friendlyUrlSeoEntityName = $this->cache->get(
@@ -414,19 +413,16 @@ class ImageFacade extends BaseImageFacade
     /**
      * @param int $imageId
      * @param int $domainId
-     * @param int|null $additionalIndex
      * @return string
      */
     private function getCacheIdForImageUrl(
         int $imageId,
         int $domainId,
-        ?int $additionalIndex = null,
     ): string {
         return sprintf(
-            'ImageUrl_imageId-%d_domainId-%d_type-%s',
+            'ImageUrl_imageId-%d_domainId-%d',
             $imageId,
             $domainId,
-            $additionalIndex,
         );
     }
 }
