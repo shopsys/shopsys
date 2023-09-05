@@ -526,7 +526,7 @@ jobs:
             -   name: Build Storefront part of application
                 run: |
                     docker compose cp ./project-base/app/schema.graphql storefront:/home/node/app/schema.graphql
-                    docker compose exec storefront pnpm install --prod --frozen-lockfile
+                    docker compose exec storefront pnpm install --frozen-lockfile
             -   name: Check no NEXT_PUBLIC_ variables are used in Storefront
                 run: |
                     docker compose exec --user root storefront apk add grep
