@@ -8,9 +8,9 @@ Object representing user consent for tracking of different third-party services.
 
 ```typescript
 export type GtmReviewConsentsType = {
-    seznam: boolean; // boolean pointer saying if the user has consented to Seznam tracking
-    google: boolean; // boolean pointer saying if the user has consented to Google tracking
-    heureka: boolean; // boolean pointer saying if the user has consented to Heureka tracking
+  seznam: boolean; // boolean pointer saying if the user has consented to Seznam tracking
+  google: boolean; // boolean pointer saying if the user has consented to Google tracking
+  heureka: boolean; // boolean pointer saying if the user has consented to Heureka tracking
 };
 ```
 
@@ -19,10 +19,13 @@ export type GtmReviewConsentsType = {
 Interface representing basic information about a web page.
 
 ```typescript
-export type GtmPageInfoInterface<PageType = GtmPageType, ExtendedPageProperties = object> = ExtendedPageProperties & {
-    type: PageType; // type of the page, can be GtmPageType.category_detail or GtmPageType.seo_category_detail, GtmPageType.blog_article_detail or GtmPageType.brand_detail
-    pageId: string; // unique identifier of the page
-    breadcrumbs: BreadcrumbFragmentApi[]; // breadcrumbs to the current page
+export type GtmPageInfoInterface<
+  PageType = GtmPageType,
+  ExtendedPageProperties = object
+> = ExtendedPageProperties & {
+  type: PageType; // type of the page, can be GtmPageType.category_detail or GtmPageType.seo_category_detail, GtmPageType.blog_article_detail or GtmPageType.brand_detail
+  pageId: string; // unique identifier of the page
+  breadcrumbs: BreadcrumbFragmentApi[]; // breadcrumbs to the current page
 };
 ```
 
@@ -32,11 +35,11 @@ Object representing additional information about a web page that displays a cate
 
 ```typescript
 export type GtmCategoryDetailPageInfoType = GtmPageInfoInterface<
-    GtmPageType.category_detail | GtmPageType.seo_category_detail, // type of the page, can be either GtmPageType.category_detail or GtmPageType.seo_category_detail
-    {
-        category: string[]; // array of strings representing the category hierarchy of the page
-        categoryId: number[]; // array of category IDs representing the category hierarchy of the page
-    }
+  GtmPageType.category_detail | GtmPageType.seo_category_detail, // type of the page, can be either GtmPageType.category_detail or GtmPageType.seo_category_detail
+  {
+    category: string[]; // array of strings representing the category hierarchy of the page
+    categoryId: number[]; // array of category IDs representing the category hierarchy of the page
+  }
 >;
 ```
 
@@ -46,10 +49,10 @@ Object representing additional information about a web page that displays a blog
 
 ```typescript
 export type GtmBlogArticleDetailPageInfoType = GtmPageInfoInterface<
-    GtmPageType.blog_article_detail, // type of the page, should always be GtmPageType.blog_article_detail
-    {
-        articleId: number; // unique identifier of the blog article
-    }
+  GtmPageType.blog_article_detail, // type of the page, should always be GtmPageType.blog_article_detail
+  {
+    articleId: number; // unique identifier of the blog article
+  }
 >;
 ```
 
@@ -59,10 +62,10 @@ Object representing additional information about a web page that displays a bran
 
 ```typescript
 export type GtmBrandDetailPageInfoType = GtmPageInfoInterface<
-    GtmPageType.brand_detail, // type of the page, should always be GtmPageType.brand_detail
-    {
-        brandId: number; // unique identifier of the brand
-    }
+  GtmPageType.brand_detail, // type of the page, should always be GtmPageType.brand_detail
+  {
+    brandId: number; // unique identifier of the brand
+  }
 >;
 ```
 
@@ -72,10 +75,10 @@ Union type representing all possible types of web pages. Can be either GtmCatego
 
 ```typescript
 export type GtmPageInfoType =
-    | GtmCategoryDetailPageInfoType // page information for category detail or SEO category detail pages
-    | GtmBlogArticleDetailPageInfoType // page information for blog article detail pages
-    | GtmBrandDetailPageInfoType // page information for brand detail pages
-    | GtmPageInfoInterface; // basic page information without additional properties
+  | GtmCategoryDetailPageInfoType // page information for category detail or SEO category detail pages
+  | GtmBlogArticleDetailPageInfoType // page information for blog article detail pages
+  | GtmBrandDetailPageInfoType // page information for brand detail pages
+  | GtmPageInfoInterface; // basic page information without additional properties
 ```
 
 ## GtmCartInfoType
@@ -84,12 +87,12 @@ Object representing information about a user's cart.
 
 ```typescript
 export type GtmCartInfoType = {
-    abandonedCartUrl: string | undefined; // URL of the cart which can be used for recovery of an abandoned cart, optional
-    currencyCode: string; // the code of the currency used on the domain
-    valueWithoutVat: number; // total value of the cart without VAT
-    valueWithVat: number; // total value of the cart with VAT
-    products: GtmCartItemType[] | undefined; // array of products in the cart, if available
-    promoCodes?: string[]; // array of promo codes applied to the cart, optional
+  abandonedCartUrl: string | undefined; // URL of the cart which can be used for recovery of an abandoned cart, optional
+  currencyCode: string; // the code of the currency used on the domain
+  valueWithoutVat: number; // total value of the cart without VAT
+  valueWithVat: number; // total value of the cart with VAT
+  products: GtmCartItemType[] | undefined; // array of products in the cart, if available
+  promoCodes?: string[]; // array of promo codes applied to the cart, optional
 };
 ```
 
@@ -99,19 +102,19 @@ Object representing information about a user.
 
 ```typescript
 export type GtmUserInfoType = {
-    id?: string; // ID of the user, optional
-    email?: string; // email of the user, optional
-    emailHash?: string; // SHA256 hashed email of the user, optional
-    firstName?: string; // first name of the user, optional
-    lastName?: string; // last name of the user, optional
-    telephone?: string; // telephone number of the user, optional
-    street?: string; // street address of the user, optional
-    city?: string; // city of the user, optional
-    postcode?: string; // postal code of the user, optional
-    country?: string; // country of the user, optional
-    type?: GtmUserType; // type of the user (e.g. B2B or B2C), optional
-    status: GtmUserStatus; // status of the user (e.g. visitor or customer)
-    group?: string; // group of the user, optional
+  id?: string; // ID of the user, optional
+  email?: string; // email of the user, optional
+  emailHash?: string; // SHA256 hashed email of the user, optional
+  firstName?: string; // first name of the user, optional
+  lastName?: string; // last name of the user, optional
+  telephone?: string; // telephone number of the user, optional
+  street?: string; // street address of the user, optional
+  city?: string; // city of the user, optional
+  postcode?: string; // postal code of the user, optional
+  country?: string; // country of the user, optional
+  type?: GtmUserType; // type of the user (e.g. B2B or B2C), optional
+  status: GtmUserStatus; // status of the user (e.g. visitor or customer)
+  group?: string; // group of the user, optional
 };
 ```
 
@@ -121,9 +124,9 @@ Object representing a user's consent for tracking in different categories.
 
 ```typescript
 export type GtmConsentInfoType = {
-    statistics: GtmConsent; // user consent status for statistics tracking
-    marketing: GtmConsent; // user consent status for marketing tracking
-    preferences: GtmConsent; // user consent status for preference tracking
+  statistics: GtmConsent; // user consent status for statistics tracking
+  marketing: GtmConsent; // user consent status for marketing tracking
+  preferences: GtmConsent; // user consent status for preference tracking
 };
 ```
 
@@ -133,18 +136,18 @@ Interface representing information about a product. Is extended for specific cas
 
 ```typescript
 export type GtmProductInterface = {
-    id: number; // product ID
-    name: string; // product name
-    availability: string; // product availability status
-    flags: string[]; // array of product flags
-    priceWithoutVat: number; // product price without VAT
-    priceWithVat: number; // product price with VAT
-    vatAmount: number; // VAT amount
-    sku: string; // product catalog number
-    url: string; // product URL
-    brand: string; // product brand name
-    categories: string[]; // array of product categories
-    imageUrl?: string; // optional product image URL
+  id: number; // product ID
+  name: string; // product name
+  availability: string; // product availability status
+  flags: string[]; // array of product flags
+  priceWithoutVat: number; // product price without VAT
+  priceWithVat: number; // product price with VAT
+  vatAmount: number; // VAT amount
+  sku: string; // product catalog number
+  url: string; // product URL
+  brand: string; // product brand name
+  categories: string[]; // array of product categories
+  imageUrl?: string; // optional product image URL
 };
 ```
 
@@ -154,7 +157,7 @@ Type that extends GtmProductInterface and adds an optional listIndex property, w
 
 ```typescript
 export type GtmListedProductType = GtmProductInterface & {
-    listIndex?: number; // index of the product in a list (e.g., search results)
+  listIndex?: number; // index of the product in a list (e.g., search results)
 };
 ```
 
@@ -164,7 +167,7 @@ Type that extends GtmListedProductType and adds a required quantity property, wh
 
 ```typescript
 export type GtmCartItemType = GtmListedProductType & {
-    quantity: number; // product quantity in the cart
+  quantity: number; // product quantity in the cart
 };
 ```
 
@@ -174,7 +177,7 @@ Type that represents extra transport details.
 
 ```typescript
 export type GtmShippingInfoType = {
-    transportDetail: string; // transport method details
-    transportExtra: string[]; // array of extra transport details
+  transportDetail: string; // transport method details
+  transportExtra: string[]; // array of extra transport details
 };
 ```

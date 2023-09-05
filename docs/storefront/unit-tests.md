@@ -43,36 +43,36 @@ You can read more about the config options in the [Vitest docs](https://vitest.d
 
 ```js
 export default defineConfig({
-    // tsConfigPaths allows us to test our codebase which uses absolute imports based on the TS basePath
-    plugins: [react(), tsconfigPaths()],
-    test: {
-        environment: 'jsdom',
-        rootDir: './',
-        // testMatch tells vitest where to search for tests
-        testMatch: ['vitest/**/*.test.js'],
-        // the two options below take care of clearing and preparing your mocks for every test
-        clearMocks: true,
-        restoreMocks: true,
-    },
-    resolve: {
-        // these are the directories which are loaded for our tests
-        // all directories which are included (even indirectly) in our tests should be added here
-        moduleDirectories: [
-            'node_modules',
-            'components',
-            'connectors',
-            'graphql',
-            'helpers',
-            'hooks',
-            'pages',
-            'store',
-            'styles',
-            'typeHelpers',
-            'types',
-            'urql',
-            'utils',
-        ],
-    },
+  // tsConfigPaths allows us to test our codebase which uses absolute imports based on the TS basePath
+  plugins: [react(), tsconfigPaths()],
+  test: {
+    environment: 'jsdom',
+    rootDir: './',
+    // testMatch tells vitest where to search for tests
+    testMatch: ['vitest/**/*.test.js'],
+    // the two options below take care of clearing and preparing your mocks for every test
+    clearMocks: true,
+    restoreMocks: true
+  },
+  resolve: {
+    // these are the directories which are loaded for our tests
+    // all directories which are included (even indirectly) in our tests should be added here
+    moduleDirectories: [
+      'node_modules',
+      'components',
+      'connectors',
+      'graphql',
+      'helpers',
+      'hooks',
+      'pages',
+      'store',
+      'styles',
+      'typeHelpers',
+      'types',
+      'urql',
+      'utils'
+    ]
+  }
 });
 ```
 
@@ -108,7 +108,7 @@ export const getBar = () => getFoo();
 export const getFooBar = () => 'foobar';
 
 export const EXPORTED_CONSTANT = {
-    FOO: 'bar',
+  FOO: 'bar'
 } as const;
 
 export const UNUSED_CONSTANT = 'foobar';
@@ -136,9 +136,9 @@ export const getExportedVariable = () => EXPORTED_CONSTANT.FOO;
 import { useSessionStore } from 'store/useSessionStore';
 
 export const useModuleValue = () => {
-    const domainConfig = useSessionStore((s) => s.domainConfig);
+  const domainConfig = useSessionStore((s) => s.domainConfig);
 
-    return domainConfig.currencyCode;
+  return domainConfig.currencyCode;
 };
 ```
 
@@ -159,8 +159,8 @@ vi.mock('./foo', () => ({ getFoo: vi.fn(() => 'foo default mock') }));
 
 // test uses default mock, does not need mock override
 test('test using default function mock', () => {
-    // as you can see above, the getBar function uses the getFoo function internally
-    expect(getBar()).toBe('foo default mock');
+  // as you can see above, the getBar function uses the getFoo function internally
+  expect(getBar()).toBe('foo default mock');
 });
 ```
 
@@ -179,9 +179,9 @@ vi.mock('./foo', () => ({ getFoo: vi.fn(() => 'foo default mock') }));
 
 // test uses modified behavior of the mock, needs mock override
 test('test using overriden function mock', () => {
-    // type assertion is needed to hack typescript and allow vitest methods
-    (getFoo as Mock).mockImplementation(() => 'bar');
-    expect(getBar()).toBe('bar');
+  // type assertion is needed to hack typescript and allow vitest methods
+  (getFoo as Mock).mockImplementation(() => 'bar');
+  expect(getBar()).toBe('bar');
 });
 ```
 
@@ -195,18 +195,18 @@ import { expect, Mock, test, vi } from 'vitest';
 
 // default mock of the next/router module
 vi.mock('next/router', () => ({
-    // next/router now only contains the useRouter hook
-    useRouter: vi.fn(() => ({
-        // useRouter now only contains these two properties
-        asPath: '/original',
-        // your mocks can even have a different interface
-        push: vi.fn(() => 'mock push'),
-    })),
+  // next/router now only contains the useRouter hook
+  useRouter: vi.fn(() => ({
+    // useRouter now only contains these two properties
+    asPath: '/original',
+    // your mocks can even have a different interface
+    push: vi.fn(() => 'mock push')
+  }))
 }));
 
 test('test using default module mock', async () => {
-    // type assertion is needed if the interface of the function changes
-    expect((useRouter as Mock)().push()).toBe('mock push');
+  // type assertion is needed if the interface of the function changes
+  expect((useRouter as Mock)().push()).toBe('mock push');
 });
 ```
 
@@ -220,20 +220,20 @@ import { expect, Mock, test, vi } from 'vitest';
 
 // default mock of the next/router module
 vi.mock('next/router', () => ({
-    useRouter: vi.fn(() => ({
-        asPath: '/original',
-        push: vi.fn(() => 'mock push'),
-    })),
+  useRouter: vi.fn(() => ({
+    asPath: '/original',
+    push: vi.fn(() => 'mock push')
+  }))
 }));
 
 test('test using overriden module mock', () => {
-    (useRouter as Mock).mockImplementation(() => ({
-        asPath: '/overriden',
-        push: vi.fn(() => 'overriden mock push'),
-    }));
+  (useRouter as Mock).mockImplementation(() => ({
+    asPath: '/overriden',
+    push: vi.fn(() => 'overriden mock push')
+  }));
 
-    expect(useRouter().asPath).toBe('/overriden');
-    expect((useRouter as Mock)().push()).toBe('overriden mock push');
+  expect(useRouter().asPath).toBe('/overriden');
+  expect((useRouter as Mock)().push()).toBe('overriden mock push');
 });
 ```
 
@@ -251,14 +251,14 @@ These functions cannot be mocked as straightforwardly as the functions in the ex
 import { vi } from 'vitest';
 
 vi.mock('store/useSessionStore', () => ({
-    // selector is used when the mocked function accepts an anonymous function which then returns data
-    useSessionStore: vi.fn((selector) => {
-        return selector({
-            domainConfig: {
-                currencyCode: 'USD',
-            },
-        });
-    }),
+  // selector is used when the mocked function accepts an anonymous function which then returns data
+  useSessionStore: vi.fn((selector) => {
+    return selector({
+      domainConfig: {
+        currencyCode: 'USD'
+      }
+    });
+  })
 }));
 ```
 
@@ -271,25 +271,25 @@ import { expect, Mock, test, vi } from 'vitest';
 import { useSessionStore } from 'store/useSessionStore';
 
 vi.mock('store/useSessionStore', () => ({
-    useSessionStore: vi.fn((selector) => {
-        return selector({
-            domainConfig: {
-                currencyCode: 'USD',
-            },
-        });
-    }),
+  useSessionStore: vi.fn((selector) => {
+    return selector({
+      domainConfig: {
+        currencyCode: 'USD'
+      }
+    });
+  })
 }));
 
 test('test using overriden module mock which is called in another file', () => {
-    (useSessionStore as unknown as Mock).mockImplementation((selector) => {
-        return selector({
-            domainConfig: {
-                currencyCode: 'CZK',
-            },
-        });
+  (useSessionStore as unknown as Mock).mockImplementation((selector) => {
+    return selector({
+      domainConfig: {
+        currencyCode: 'CZK'
+      }
     });
+  });
 
-    expect(useModuleValue()).toBe('CZK');
+  expect(useModuleValue()).toBe('CZK');
 });
 ```
 
@@ -304,13 +304,13 @@ import { vi } from 'vitest';
 const mockGetFooBar = vi.fn(() => 'default foobar mock');
 
 vi.mock('./partially-used-file', async (importOriginal) => {
-    const actualModuleContents = await importOriginal<any>();
+  const actualModuleContents = await importOriginal<any>();
 
-    return {
-        // the rest of the module stays in place, only the getFooBar method is mocked
-        ...actualModuleContents,
-        getFooBar: mockGetFooBar,
-    };
+  return {
+    // the rest of the module stays in place, only the getFooBar method is mocked
+    ...actualModuleContents,
+    getFooBar: mockGetFooBar
+  };
 });
 ```
 
@@ -322,9 +322,9 @@ If you want to mock a variable, not a function, you will still have to treat it 
 import { vi } from 'vitest';
 
 vi.mock('./partially-used-file', () => ({
-    EXPORTED_CONSTANT: {
-        FOO: 'mocked bar',
-    },
+  EXPORTED_CONSTANT: {
+    FOO: 'mocked bar'
+  }
 }));
 ```
 
@@ -335,9 +335,9 @@ import { vi } from 'vitest';
 
 const mockExportedConstantGetter = vi.fn(() => ({ FOO: 'mocked bar' }));
 vi.mock('./partially-used-file', () => ({
-    get EXPORTED_CONSTANT() {
-        return mockExportedConstantGetter;
-    },
+  get EXPORTED_CONSTANT() {
+    return mockExportedConstantGetter;
+  }
 }));
 ```
 
@@ -351,14 +351,16 @@ import { getExportedVariable } from './with-exported-variable';
 
 const mockExportedConstantGetter = vi.fn(() => ({ FOO: 'mocked bar' }));
 vi.mock('./partially-used-file', () => ({
-    get EXPORTED_CONSTANT() {
-        return mockExportedConstantGetter;
-    },
+  get EXPORTED_CONSTANT() {
+    return mockExportedConstantGetter;
+  }
 }));
 
 test('test using overriden mock of an exported variable', async () => {
-    mockExportedConstantGetter.mockImplementation(() => ({ FOO: 'overriden mocked bar' }));
-    // this function gets the value from the exported variable
-    expect(getExportedVariable()).toBe('overriden mocked bar');
+  mockExportedConstantGetter.mockImplementation(() => ({
+    FOO: 'overriden mocked bar'
+  }));
+  // this function gets the value from the exported variable
+  expect(getExportedVariable()).toBe('overriden mocked bar');
 });
 ```
