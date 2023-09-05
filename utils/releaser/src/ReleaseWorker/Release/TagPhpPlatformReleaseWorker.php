@@ -41,19 +41,18 @@ final class TagPhpPlatformReleaseWorker extends AbstractShopsysReleaseWorker
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
         $tempDirectory = trim($this->processRunner->run('mktemp -d -t shopsys-release-XXXX'));
-        $packageName = 'php-platform';
         $versionString = $version->getOriginalString();
 
-        $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', $packageName));
+        $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME));
         $this->processRunner->run(
-            sprintf('cd %s && git clone https://github.com/shopsys/%s.git', $tempDirectory, $packageName),
+            sprintf('cd %s && git clone https://github.com/shopsys/%s.git', $tempDirectory, AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME),
         );
 
         $this->processRunner->run(
             sprintf(
                 'cd %s/%s && git checkout %s && git tag %s',
                 $tempDirectory,
-                $packageName,
+                AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME,
                 $initialBranchName,
                 $versionString,
             ),
@@ -63,20 +62,20 @@ final class TagPhpPlatformReleaseWorker extends AbstractShopsysReleaseWorker
             sprintf(
                 'cd %s/%s && git log --graph --oneline --decorate=short --color | head',
                 $tempDirectory,
-                $packageName,
+                AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME,
             ),
         );
 
         $this->symfonyStyle->writeln(trim($output));
 
         $isTaggedProperly = $this->symfonyStyle->ask(
-            sprintf('Package shopsys/%s: Is the tag on right commit and should be pushed?', $packageName),
+            sprintf('Package shopsys/%s: Is the tag on right commit and should be pushed?', AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME),
             'yes',
         );
 
         if (!$isTaggedProperly) {
             $this->confirm(
-                sprintf('Please fix the problem in shopsys/%s and split the monorepo again. This step will be repeated after you confirm.', $packageName),
+                sprintf('Please fix the problem in shopsys/%s and split the monorepo again. This step will be repeated after you confirm.', AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME),
             );
             $this->processRunner->run('rm -r ' . $tempDirectory);
             $this->work($version);
@@ -85,24 +84,24 @@ final class TagPhpPlatformReleaseWorker extends AbstractShopsysReleaseWorker
         }
 
         $this->processRunner->run(
-            sprintf('cd %s/%s && git push origin %s', $tempDirectory, $packageName, $versionString),
+            sprintf('cd %s/%s && git push origin %s', $tempDirectory, AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME, $versionString),
         );
 
 
         $this->processRunner->run('rm -r ' . $tempDirectory);
         $this->symfonyStyle->note([
-            sprintf('Wait for Github Actions to build a tagged version of %s (approx 1 hour)', $packageName),
-            sprintf('You can track progress on https://github.com/shopsys/%s/actions', $packageName),
+            sprintf('Wait for Github Actions to build a tagged version of %s (approx 1 hour)', AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME),
+            sprintf('You can track progress on https://github.com/shopsys/%s/actions', AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME),
         ]);
         $this->confirm(
-            sprintf('Confirm that there are new version of %s on Docker Hub (https://hub.docker.com/r/shopsys/%1$s/tags)', $packageName),
+            sprintf('Confirm that there are new version of %s on Docker Hub (https://hub.docker.com/r/shopsys/%1$s/tags)', AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME),
         );
 
         $this->dockerfileVersionFileManipulator->updateDockerFileVersion($versionString);
 
         $infoMessage = sprintf(
             '%s base image version in Dockerfile set to "%s"',
-            $packageName,
+            AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME,
             $versionString,
         );
         $this->symfonyStyle->note($infoMessage);

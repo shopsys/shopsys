@@ -19,6 +19,8 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 {
     public const MAIN_BRANCH_NAME = 'master';
 
+    public const PHP_PLATFORM_PACKAGE_NAME = 'php-platform';
+
     /**
      * If you modify this list do not forget updating:
      *      /.ci/monorepo_functions.sh

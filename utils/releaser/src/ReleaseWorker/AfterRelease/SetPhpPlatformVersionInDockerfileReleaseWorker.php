@@ -29,7 +29,8 @@ final class SetPhpPlatformVersionInDockerfileReleaseWorker extends AbstractShops
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
         return sprintf(
-            'Set php-platform in Dockerfile to "%s" version',
+            'Set %s in Dockerfile to "%s" version',
+            AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME,
             $this->getDevelopmentVersionString($version),
         );
     }
@@ -48,7 +49,8 @@ final class SetPhpPlatformVersionInDockerfileReleaseWorker extends AbstractShops
 
         $this->commit(
             sprintf(
-                'php-platform base image version in Dockerfile set to "%s"',
+                '%s base image version in Dockerfile set to "%s"',
+                AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME,
                 $developmentVersion,
             ),
         );
