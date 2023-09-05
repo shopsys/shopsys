@@ -122,6 +122,10 @@ services:
     Shopsys\FrontendApiBundle\Model\Order\OrderRepository:
         alias: App\FrontendApi\Model\Order\OrderRepository
 
+    App\FrontendApi\Mutation\Login\LoginMutation:
+        arguments:
+            $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
+
     Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation:
         alias: App\FrontendApi\Mutation\Login\LoginMutation
         public: true

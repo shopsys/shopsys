@@ -120,7 +120,7 @@ class CronFacadeTest extends TestCase
         /** @var \Symfony\Bridge\Monolog\Logger $loggerMock */
         $loggerMock = $this->createMock(Logger::class);
 
-        $cronModuleExecutor = new CronModuleExecutor(240, $cronConfig);
+        $cronModuleExecutor = new CronModuleExecutor($cronConfig);
 
         return new CronFacade($loggerMock, $cronConfig, $cronModuleFacade, $cronModuleExecutor);
     }

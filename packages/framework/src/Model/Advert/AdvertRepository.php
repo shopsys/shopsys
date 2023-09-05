@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Advert;
 
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+use LogicException;
 use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException;
 
 class AdvertRepository
@@ -44,7 +44,7 @@ class AdvertRepository
     protected function getAdvertByPositionQueryBuilder($positionName, $domainId, $category = null)
     {
         if (AdvertPositionRegistry::isCategoryPosition($positionName) && $category === null) {
-            DeprecationHelper::trigger('Retrieving advert on product list page without setting category is deprecated and will be disabled in next major.');
+            throw new LogicException('Cannot retrieve advert on product list page without setting category.');
         }
 
         $dateToday = (new DateTimeImmutable())->format('Y-m-d 00:00:00');

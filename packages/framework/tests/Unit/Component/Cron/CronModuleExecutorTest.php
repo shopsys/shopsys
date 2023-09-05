@@ -100,6 +100,6 @@ class CronModuleExecutorTest extends TestCase
             );
         }
 
-        return new CronModuleExecutor(1, $cronConfig);
+        return new CronModuleExecutor($cronConfig);
     }
 }
