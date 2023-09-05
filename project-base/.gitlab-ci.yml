@@ -83,6 +83,7 @@ test:storefront-standards-with-codegen:
         - corepack enable
         - corepack prepare --activate pnpm@8.6.0
         - pnpm config set store-dir .pnpm-store
+        - apk add --no-cache grep
         - cp ./app/schema.graphql ./storefront/schema.graphql
         - cd ./storefront
     script:
