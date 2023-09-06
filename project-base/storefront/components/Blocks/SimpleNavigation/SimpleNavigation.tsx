@@ -7,11 +7,18 @@ type SimpleNavigationProps = {
     listedItems: ListedItemPropType[];
     imageType?: string;
     isWithoutSlider?: true;
+    itemClassName?: string;
 };
 
 const TEST_IDENTIFIER = 'blocks-simplenavigation';
 
-export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, imageType, isWithoutSlider, className }) => {
+export const SimpleNavigation: FC<SimpleNavigationProps> = ({
+    listedItems,
+    imageType,
+    isWithoutSlider,
+    className,
+    itemClassName,
+}) => {
     return (
         <ul
             className={twMergeCustom(
@@ -29,6 +36,7 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, image
                     listedItem={listedItem}
                     imageType={imageType}
                     dataTestId={TEST_IDENTIFIER + '-' + index}
+                    className={itemClassName}
                 >
                     {listedItem.name}
                 </SimpleNavigationListItem>

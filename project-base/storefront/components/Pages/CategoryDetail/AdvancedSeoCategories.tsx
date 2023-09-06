@@ -6,17 +6,19 @@ type AdvancedSeoCategoriesProps = {
     readyCategorySeoMixLinks: CategoryDetailFragmentApi['readyCategorySeoMixLinks'];
 };
 
+const simpleNavigationItemTwClass = 'lg:justify-center text-center';
+
 export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCategorySeoMixLinks }) => {
     const { t } = useTranslation();
-
-    if (!readyCategorySeoMixLinks.length) {
-        return null;
-    }
 
     return (
         <>
             <div className="mb-3 break-words font-bold text-dark lg:text-lg">{t('Favorite categories')}</div>
-            <SimpleNavigation listedItems={readyCategorySeoMixLinks} className="mb-5" />
+            <SimpleNavigation
+                listedItems={readyCategorySeoMixLinks}
+                className="mb-5"
+                itemClassName={simpleNavigationItemTwClass}
+            />
         </>
     );
 };
