@@ -89,7 +89,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
 
         let deliveryInfo;
 
-        if (currentCart.pickupPlace !== null) {
+        if (currentCart.pickupPlace) {
             deliveryInfo = {
                 deliveryFirstName: formValues.differentDeliveryAddress
                     ? formValues.deliveryFirstName
@@ -141,12 +141,12 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
         });
 
         if (
-            createOrderResult.data !== undefined &&
-            createOrderResult.data.CreateOrder.orderCreated === true &&
-            createOrderResult.data.CreateOrder.order !== null &&
-            currentCart.cart !== null &&
-            currentCart.transport !== null &&
-            currentCart.payment !== null
+            createOrderResult.data &&
+            createOrderResult.data.CreateOrder.orderCreated &&
+            createOrderResult.data.CreateOrder.order &&
+            currentCart.cart &&
+            currentCart.transport &&
+            currentCart.payment
         ) {
             const gtmCreateOrderEventOrderPart = getGtmCreateOrderEventOrderPart(
                 currentCart.cart,
@@ -199,9 +199,9 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
         setOrderCreating(false);
 
         if (
-            createOrderResult.data !== undefined &&
-            createOrderResult.data.CreateOrder.orderCreated === false &&
-            createOrderResult.data.CreateOrder.cart !== null
+            createOrderResult.data &&
+            !createOrderResult.data.CreateOrder.orderCreated &&
+            createOrderResult.data.CreateOrder.cart
         ) {
             handleCartModifications(createOrderResult.data.CreateOrder.cart.modifications, t, changePaymentInCart);
         }
@@ -219,6 +219,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     return (
         <>
             <MetaRobots content="noindex" />
+
             <EmptyCartWrapper currentCart={currentCart} title={t('Order')} enableHandling={!orderCreating}>
                 <OrderLayout activeStep={3}>
                     <FormProvider {...formProviderMethods}>
@@ -236,9 +237,11 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                         </Form>
                     </FormProvider>
                 </OrderLayout>
+
                 <Webline type="dark">
                     <Footer simpleFooter />
                 </Webline>
+
                 {isErrorPopupVisible && (
                     <ErrorPopup
                         onCloseCallback={() => setErrorPopupVisibility(false)}
