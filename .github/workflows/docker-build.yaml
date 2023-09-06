@@ -146,7 +146,7 @@ jobs:
                     username: ${{ github.actor }}
                     password: ${{ secrets.GITHUB_TOKEN }}
             -   name: Build custom base image if requested
-                if: "contains(github.event.pull_request.labels.*.name, 'build-php')"
+                if: "contains(github.event.pull_request.labels.*.name, 'Use docker-compose defined services for review')"
                 run: |
                     TAG=`grep -m1 -E '^FROM [^ ]+' project-base/app/docker/php-fpm/Dockerfile | awk '{print $2}' | cut -d ':' -f 1,2`
                     docker build --tag ${TAG} --no-cache --compress -f ./packages/php-image/Dockerfile ./packages/php-image
