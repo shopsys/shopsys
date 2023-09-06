@@ -91,9 +91,11 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     </div>
                 )}
 
-                {label}
-                {!!count && !checked && count > 0 && ` (${count})`}
-                {required && <span className="ml-1 text-red">*</span>}
+                <span>
+                    {label}
+                    {!!count && !checked && count > 0 && ` (${count})`}
+                    {required && <span className="ml-1 text-red">*</span>}
+                </span>
             </label>
         )}
     </div>
