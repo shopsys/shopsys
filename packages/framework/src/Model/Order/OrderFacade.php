@@ -120,17 +120,15 @@ class OrderFacade
             $customerUser,
         );
 
-        $this->fillOrderItems($order, $orderPreview);
+        $this->em->persist($order);
+        $this->em->flush();
 
-        foreach ($order->getItems() as $orderItem) {
-            $this->em->persist($orderItem);
-        }
+        $this->fillOrderItems($order, $orderPreview);
 
         $order->setTotalPrice(
             $this->orderPriceCalculation->getOrderTotalPrice($order),
         );
 
-        $this->em->persist($order);
         $this->em->flush();
 
         return $order;
