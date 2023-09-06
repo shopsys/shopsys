@@ -626,11 +626,11 @@ jobs:
                 run: |
                     mv set-urls-for-review.sh ${BRANCH_NAME}/set-urls-for-review.sh
             -   name: Move docker-compose.review.yml to branch folder
-                if: "contains(github.event.pull_request.labels.*.name, 'review-isolated')"
+                if: "contains(github.event.pull_request.labels.*.name, 'Use PHP Dockerfile instead of built image')"
                 run: |
                     mv docker-compose.review.yml ${BRANCH_NAME}/docker-compose.yml
             -   name: Move docker-compose.review.simplified.yml to branch folder
-                if: "!contains(github.event.pull_request.labels.*.name, 'review-isolated')"
+                if: "!contains(github.event.pull_request.labels.*.name, 'Use PHP Dockerfile instead of built image')"
                 run: |
                     mv docker-compose.review.simplified.yml ${BRANCH_NAME}/docker-compose.yml
             -   name: Start project
