@@ -241,7 +241,7 @@ test('test using overriden module mock', () => {
 
 Some libraries, or even your own code, can export functions which need an anonymous function, a so called selector, to correctly return a value. One of these examples is the useSessionStore hook which we use in the following manner:
 
-```tsx
+```ts
 const foo = useSessionStore((s) => s.foo);
 ```
 
@@ -318,7 +318,7 @@ vi.mock('./partially-used-file', async (importOriginal) => {
 
 If you want to mock a variable, not a function, you will still have to treat it as a function in a way. Specifically, you will not mock the variable itself, but its getter. This way it can also be overriden in specific tests. However, if you do not care about the possibility of mock override in different tests, you can also do it in a simple way like this:
 
-```tsx
+```ts
 import { vi } from 'vitest';
 
 vi.mock('./partially-used-file', () => ({
@@ -330,7 +330,7 @@ vi.mock('./partially-used-file', () => ({
 
 But as mentioned above, the more robust way to do it is this:
 
-```tsx
+```ts
 import { vi } from 'vitest';
 
 const mockExportedConstantGetter = vi.fn(() => ({ FOO: 'mocked bar' }));

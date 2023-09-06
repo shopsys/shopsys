@@ -26,12 +26,3 @@
 ```plain
 - .editorconfig
 ```
-
-## Babel
-
-- rules are defined in file:
-
-```plain
-- .babelrc
-
-```

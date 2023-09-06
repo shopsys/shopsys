@@ -3,6 +3,7 @@ arrange:
   - index.md
   - coding-standards.md
   - typescript.md
+  - best-practises.md
   - authentication.md
   - unit-tests.md
   - redis-graphql-cache.md
