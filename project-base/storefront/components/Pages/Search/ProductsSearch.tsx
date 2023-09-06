@@ -1,5 +1,4 @@
 import { SearchProductsWrapper } from './SearchProductsWrapper';
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { FilterIcon } from 'components/Basic/Icon/IconsSvg';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
@@ -7,7 +6,6 @@ import { ListedProductConnectionPreviewFragmentApi, ProductOrderingModeEnumApi }
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import dynamic from 'next/dynamic';
@@ -20,12 +18,10 @@ type ProductsSearchProps = {
 
 export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
     const { t } = useTranslation();
-    const router = useRouter();
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const { url } = useDomainConfig();
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
-    const isFiltered = 'filter' in router.query;
 
     const handlePanelOpenerClick = () => {
         const body = document.getElementsByTagName('body')[0];
@@ -40,7 +36,6 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
 
     return (
         <>
-            {isFiltered && <MetaRobots content="noindex, follow" />}
             <div className="relative mb-8 flex flex-col vl:mb-10 vl:flex-row vl:flex-wrap">
                 <div
                     className={twJoin(

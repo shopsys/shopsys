@@ -9,7 +9,7 @@ type SideProps = {
 };
 
 export const BlogPreviewSide: FC<SideProps> = ({ articles }) => (
-    <>
+    <div className="grid snap-x snap-mandatory auto-cols-[80%] gap-4 overflow-y-hidden overscroll-x-contain max-vl:grid-flow-col max-vl:overflow-x-auto md:auto-cols-[40%] lg:gap-6 vl:flex vl:basis-1/3 vl:flex-col vl:gap-3">
         {articles.map((article) => (
             <div className="flex flex-1 snap-start flex-col gap-2 vl:flex-row" key={article.uuid}>
                 <ArticleLink href={article.link} className="vl:basis-32">
@@ -39,5 +39,5 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles }) => (
                 </div>
             </div>
         ))}
-    </>
+    </div>
 );

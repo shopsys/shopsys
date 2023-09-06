@@ -35,6 +35,7 @@ import {
     getProductListSortFromUrlQuery,
     getSlugFromServerSideUrl,
 } from 'helpers/parsing/urlParsing';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 
 const CategoryDetailPage: NextPage = () => {
     const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
@@ -55,18 +56,22 @@ const CategoryDetailPage: NextPage = () => {
     const isSkeletonVisible = !filter && !originalCategorySlug && !sort && fetching;
 
     return (
-        <CommonLayout
-            title={seoTitle}
-            description={categoryData?.seoMetaDescription}
-            breadcrumbs={categoryData?.breadcrumb}
-            breadcrumbsType="category"
-        >
-            {isSkeletonVisible ? (
-                <CategoryDetailPageSkeleton />
-            ) : (
-                !!categoryData && <CategoryDetailContent category={categoryData} />
-            )}
-        </CommonLayout>
+        <>
+            {!!filter && <MetaRobots content="noindex, follow" />}
+
+            <CommonLayout
+                title={seoTitle}
+                description={categoryData?.seoMetaDescription}
+                breadcrumbs={categoryData?.breadcrumb}
+                breadcrumbsType="category"
+            >
+                {isSkeletonVisible ? (
+                    <CategoryDetailPageSkeleton />
+                ) : (
+                    !!categoryData && <CategoryDetailContent category={categoryData} />
+                )}
+            </CommonLayout>
+        </>
     );
 };
 

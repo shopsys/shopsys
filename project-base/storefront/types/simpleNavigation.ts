@@ -17,5 +17,5 @@ export type ListedItemPropType = (
           name: string;
       }
 ) & {
-    __typename?: 'ArticleSite' | 'BlogArticle' | 'Category' | 'Brand';
+    __typename?: 'ArticleSite' | 'BlogArticle' | 'Category' | 'Brand' | 'Link';
 };

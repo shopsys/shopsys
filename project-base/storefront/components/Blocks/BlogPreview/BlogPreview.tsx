@@ -53,11 +53,7 @@ export const BlogPreview: FC = () => {
                     </div>
                 )}
 
-                {!!blogSideItems && (
-                    <div className="grid snap-x snap-mandatory auto-cols-[80%] gap-4 overscroll-x-contain max-vl:grid-flow-col max-vl:overflow-x-auto md:auto-cols-[40%] lg:gap-6 vl:flex vl:basis-1/3 vl:flex-col vl:gap-3">
-                        <BlogPreviewSide articles={blogSideItems} />
-                    </div>
-                )}
+                {!!blogSideItems && <BlogPreviewSide articles={blogSideItems} />}
             </div>
         </div>
     );

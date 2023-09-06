@@ -64,7 +64,6 @@ export const ProductDetailGallerySlider: FC<ProductDetailGallerySliderProps> = (
                         >
                             <img
                                 className="h-full w-full object-contain"
-                                loading="lazy"
                                 src={galleryItem.sizes.find((size) => size.size === 'default')?.url}
                             />
                         </div>
