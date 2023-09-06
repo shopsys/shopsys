@@ -21,7 +21,7 @@ There is a list of all the repositories maintained by monorepo:
 * [shopsys/s3-bridge]
 * [shopsys/read-model]
 * [shopsys/frontend-api]
-* [shopsys/php-platform]
+* [shopsys/php-image]
 
 Packages are formatted by release version. You can see all the changes done to package that you carry about with this tree.
 
@@ -3510,7 +3510,7 @@ That's why is this section formatted differently.
 [shopsys/read-model]: https://github.com/shopsys/read-model
 [shopsys/backend-api]: https://github.com/shopsys/backend-api
 [shopsys/frontend-api]: https://github.com/shopsys/frontend-api
-[shopsys/php-platform]: https://github.com/shopsys/php-platform
+[shopsys/php-image]: https://github.com/shopsys/php-image
 
 [@pk16011990]: https://github.com/pk16011990
 [@stanoMilan]: https://github.com/stanoMilan

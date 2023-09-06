@@ -3,9 +3,9 @@ on:
         tags:
             - '**'
     workflow_dispatch:
-name: Build PHP Platform Docker image for released version
+name: Build PHP Image for released version
 jobs:
-    rebuild-php-fpm-images:
+    build-tagged-version:
         name: Build tag
         runs-on: ubuntu-22.04
         permissions:
@@ -24,5 +24,5 @@ jobs:
                 uses: docker/setup-buildx-action@v2
             -   name: Build PHP-FPM image and push it to DockerHub
                 run: |
-                    TAG=shopsys/php-platform:${{ github.ref_name }}
+                    TAG=shopsys/php-image:${{ github.ref_name }}
                     docker buildx build --push --tag ${TAG} --no-cache --platform linux/arm64,linux/amd64 --compress -f ./Dockerfile .

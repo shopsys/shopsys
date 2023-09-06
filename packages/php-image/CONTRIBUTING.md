@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for your contributions to Shopsys PHP Platform package.
+Thank you for your contributions to Shopsys PHP Image package.
 Together we are making Shopsys Platform better.
 
 This repository is READ-ONLY.
