@@ -11,7 +11,7 @@ use Shopsys\Releaser\ReleaseWorker\Release\CreateAndCommitLockFilesReleaseWorker
 use Shopsys\Releaser\ReleaseWorker\Release\CreateAndPushGitTagReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CreateAndPushGitTagsExceptProjectBaseReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\MergeReleaseCandidateBranchReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Release\TagPhpPlatformReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Release\TagPhpImageReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\VerifyInitialBranchReleaseWorker;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -29,7 +29,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(MergeReleaseCandidateBranchReleaseWorker::class);
     $services->set(CreateAndPushGitTagsExceptProjectBaseReleaseWorker::class);
     $services->set(CreateAndCommitLockFilesReleaseWorker::class);
-    $services->set(TagPhpPlatformReleaseWorker::class);
+    $services->set(TagPhpImageReleaseWorker::class);
     $services->set(CreateAndPushGitTagReleaseWorker::class);
     $services->set(CheckReleaseDraftAndReleaseItReleaseWorker::class);
 };

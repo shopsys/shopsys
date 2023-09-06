@@ -19,7 +19,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 {
     public const MAIN_BRANCH_NAME = 'master';
 
-    public const PHP_PLATFORM_PACKAGE_NAME = 'php-image';
+    public const PHP_IMAGE_PACKAGE_NAME = 'php-image';
 
     /**
      * If you modify this list do not forget updating:

@@ -9,7 +9,7 @@ use Shopsys\Releaser\FileManipulator\DockerfileVersionFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
 
-final class SetPhpPlatformVersionInDockerfileReleaseWorker extends AbstractShopsysReleaseWorker
+final class SetPhpImageVersionInDockerfileReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \Shopsys\Releaser\FileManipulator\DockerfileVersionFileManipulator $dockerfileVersionFileManipulator
@@ -30,7 +30,7 @@ final class SetPhpPlatformVersionInDockerfileReleaseWorker extends AbstractShops
     ): string {
         return sprintf(
             'Set %s in Dockerfile to "%s" version',
-            AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME,
+            AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
             $this->getDevelopmentVersionString($version),
         );
     }
@@ -50,7 +50,7 @@ final class SetPhpPlatformVersionInDockerfileReleaseWorker extends AbstractShops
         $this->commit(
             sprintf(
                 '%s base image version in Dockerfile set to "%s"',
-                AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME,
+                AbstractShopsysReleaseWorker::PHP_IMAGE_PACKAGE_NAME,
                 $developmentVersion,
             ),
         );
