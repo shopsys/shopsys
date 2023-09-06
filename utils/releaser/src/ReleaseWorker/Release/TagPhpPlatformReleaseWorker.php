@@ -29,7 +29,7 @@ final class TagPhpPlatformReleaseWorker extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return 'Tag php-platform with the same version as the release and replace FROM in Dockerfile';
+        return sprintf('Tag %s with the same version as the release and replace FROM in Dockerfile', AbstractShopsysReleaseWorker::PHP_PLATFORM_PACKAGE_NAME);
     }
 
     /**
