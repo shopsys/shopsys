@@ -4,7 +4,7 @@
 
 If you didn't do it previously, you have to generate private keys for Frontend API.
 
-```plain
+```bash
 php phing frontend-generate-new-keys
 ```
 
@@ -42,7 +42,7 @@ For logging the user in/out we can use `useAuth` hook.
 
 User login
 
-```plain
+```ts
 const [[loginResult, login]] = useAuth();
 
 login(email: string, password: string);
@@ -54,7 +54,7 @@ If everything is OK, user is logged in.
 
 User logout
 
-```plain
+```ts
 const [, [, logout]] = useAuth();
 
 logout();

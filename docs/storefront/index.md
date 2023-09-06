@@ -30,7 +30,7 @@ You might also want to restart PNPM when something is not working correctly.
 In such cases, you do not need to stop all running containers and start them again, just to recreate container of the storefront.
 To do that run this command outside the container:
 
-```plain
+```bash
 docker-compose up -d --force-recreate storefront
 ```
 
@@ -38,13 +38,13 @@ docker-compose up -d --force-recreate storefront
 
 #### Install all dependencies
 
-```plain
+```bash
 pnpm install
 ```
 
 #### Start app
 
-```plain
+```bash
 pnpm run dev
 ```
 
@@ -54,30 +54,30 @@ After this command open <http://127.0.0.1:3000/> in your browser.
 
 #### Build the app for production
 
-```plain
+```bash
 pnpm run build
 ```
 
 #### Run the built app in production mode
 
-```plain
+```bash
 pnpm start
 ```
 
 #### Run eslint for code
 
-```plain
+```bash
 pnpm run lint
 ```
 
 #### Run eslint and fix code
 
-```plain
+```bash
 pnpm run lint--fix
 ```
 
 #### Run prettier format code
 
-```plain
+```bash
 pnpm run format
 ```

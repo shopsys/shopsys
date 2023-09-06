@@ -4,7 +4,7 @@
 
 -   code clarity, easy way to set the default value
 
-```ts
+```tsx
 const RangeSlider: FC<RangeSliderProps> = ({
     min,
     max,
@@ -24,7 +24,7 @@ const RangeSlider: FC<RangeSliderProps> = ({
 
 -   code clarity, it is not initialized every time a component is rendered
 
-```ts
+```tsx
 const TEST_IDENTIFIER = 'blocks-product-filter';
 
 const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDependency }) => {
@@ -49,7 +49,7 @@ const mySuperHandler = useCallback((id: number) => {
     // do something
 }, []);
 
-<a onClick={() => mySuperHandler(1)}>Click me</a>
+<a onClick={() => mySuperHandler(1)}>Click me</a>;
 ```
 
 good way:
@@ -61,11 +61,14 @@ const mySuperHandler = (id: number) => () => {
 };
 
 // with useCallback
-const mySuperHandler = useCallback((id: number) => () => {
-    // do something
-}, []);
+const mySuperHandler = useCallback(
+    (id: number) => () => {
+        // do something
+    },
+    [],
+);
 
-<a onClick={mySuperHandler(1)}>Click me</a>
+<a onClick={mySuperHandler(1)}>Click me</a>;
 ```
 
 ### \_\_typename in the GraphQL fragments

@@ -13,7 +13,7 @@ It is very likely, that if your project requires customization of the logic, thi
 
 Hook used to allow the application to work with cart information mapped according to the GTM requirements. It is a hook wrapper of the underlying `getGtmMappedCart` function, which takes care of the mapping itself. The hook handles the default state where no cart is available
 
-```typescript
+```ts
 export const useGtmCartInfo = (): {
   gtmCartInfo: GtmCartInfoType | null;
   isCartLoaded: boolean;
@@ -48,7 +48,7 @@ export const useGtmCartInfo = (): {
 
 Function used to map the cart information to be suitable for GTM. Uses other helpers to get different parts of the mapped object.
 
-```typescript
+```ts
 export const getGtmMappedCart = (
   cart: CartFragmentApi,
   promoCode: string | null,
@@ -64,7 +64,7 @@ export const getGtmMappedCart = (
 
 Function used to generate an abandoned cart URL.
 
-```typescript
+```ts
 const getAbandonedCartUrl = (
   isUserLoggedIn: boolean,
   domain: DomainConfigType,
@@ -97,7 +97,7 @@ const getAbandonedCartUrl = (
 
 Function used to create page info objects for various entities which can be displayed on the friendly URL page. It handles special cases, such as category detail, blog article detail, brand detail, and so on. If for some reason page type cannot be deterimed, it returns a default page info object.
 
-```typescript
+```ts
 export const getGtmPageInfoTypeForFriendlyUrl = (
   friendlyUrlPageData: FriendlyUrlPageType | null | undefined
 ): GtmPageInfoType => {
@@ -128,7 +128,7 @@ Helper functions used to generate specific properties for the friendly URL page,
 - blog article
 - brand
 
-```typescript
+```ts
 const getPageInfoForCategoryDetailPage = (
   defaultPageInfo: GtmPageInfoInterface,
   categoryDetailData: CategoryDetailFragmentApi
@@ -155,7 +155,7 @@ const getPageInfoForBrandDetailPage = (
 
 Essential function used to push all event to the data layer.
 
-```typescript
+```ts
 export const gtmSafePushEvent = (
   event: GtmEventInterface<GtmEventType, unknown>
 ): void => {
@@ -170,7 +170,7 @@ export const gtmSafePushEvent = (
 
 Basic function used to get the user information in a GTM-suitable format. It takes care of dispatching the initial creation based on the contact information from order and it also handles overwriting of these information with credentials of a logged-in customer.
 
-```typescript
+```ts
 export const getGtmUserInfo = (
   currentSignedInCustomer: CurrentCustomerType | null | undefined,
   userContactInformation: ContactInformation
@@ -195,7 +195,7 @@ export const getGtmUserInfo = (
 
 Gets the basic information about the user. Because of the fact that untouched fields from the contact information form are not stored as null or undefined, but as empty string, it must check for the length of the string and only include the datapoint if it is really filled.
 
-```typescript
+```ts
 const getGtmUserInfoForVisitor = (
   userContactInformation: ContactInformation
 ) => ({
@@ -212,7 +212,7 @@ const getGtmUserInfoForVisitor = (
 
 Method used to help differentiate between B2B and B2C customers. Prepared for further extension of the logic.
 
-```typescript
+```ts
 const getGtmUserType = (
   customerType: CustomerTypeEnum | undefined
 ): GtmUserType | undefined => {
@@ -236,7 +236,7 @@ Method used to overwrite default information about the customer with the informa
 - other properties are only overwritten, if they haven't been filled before
 - `type` is filled in based on the previous value of the field and on the value currently signed-in customer
 
-```typescript
+```ts
 const overwriteGtmUserInfoWithLoggedCustomer = (
   userInfo: GtmUserInfoType,
   currentSignedInCustomer: CurrentCustomerType,

@@ -7,7 +7,7 @@ These hooks are responsible for handling of asynchronous GTM events according to
 Hook used to handle viewing of a paginated products list, e.g. category detail, brand detail, or flag detail.
 It is triggered every time page (and therefore products) change.
 
-```typescript
+```ts
 export const useGtmPaginatedProductListViewEvent = (
   paginatedProducts: ListedProductFragmentApi[] | undefined, // array of displayed products, if loaded and available
   gtmProductListName: GtmProductListNameType // name of the viewed paginated list
@@ -21,7 +21,7 @@ export const useGtmPaginatedProductListViewEvent = (
 Hook used to handle viewing of a products list inside a slider, such as promoted products on homepage.
 It is triggered every time page therefore products change.
 
-```typescript
+```ts
 export const useGtmSliderProductListViewEvent = (
   products: ListedProductFragmentApi[] | undefined, // array of displayed products, if loaded and available
   gtmProuctListName: GtmProductListNameType // name of the viewed paginated list
@@ -34,7 +34,7 @@ export const useGtmSliderProductListViewEvent = (
 
 Hook used to handle viewing of autocomplete search results. It is triggered every time the search keyword changes.
 
-```typescript
+```ts
 export const useGtmAutocompleteResultsViewEvent = (
   searchResult: AutocompleteSearchQueryApi | undefined, // object containing all autocomplete search results, if loaded and available
   keyword: string, // search keyword for which the results were found
@@ -48,7 +48,7 @@ export const useGtmAutocompleteResultsViewEvent = (
 
 Basic hook used to handle viewing of a page. It is sometimes accompanied with one of the hooks below if the page is of a special type. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent` or `useGtmFriendlyPageViewEvent` based on the type of the page ('static' vs 'friendly URL').
 
-```typescript
+```ts
 export const useGtmPageViewEvent = (
   gtmPageViewEvent: GtmPageViewEventType, // object containing information about the viewed page
   fetching?: boolean // boolean pointer saying if the results are still loading
@@ -61,7 +61,7 @@ export const useGtmPageViewEvent = (
 
 Hook used to handle viewing of the cart page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
 
-```typescript
+```ts
 export const useGtmCartViewEvent = (
   gtmPageViewEvent: GtmPageViewEventType // object containing information about the viewed page
 ): void => {
@@ -73,7 +73,7 @@ export const useGtmCartViewEvent = (
 
 Hook used to handle viewing of the contact information page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
 
-```typescript
+```ts
 export const useGtmContactInformationPageViewEvent = (
   gtmPageViewEvent: GtmPageViewEventType // object containing information about the viewed page
 ): void => {
@@ -85,7 +85,7 @@ export const useGtmContactInformationPageViewEvent = (
 
 Hook used to handle viewing of the transport and payment page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
 
-```typescript
+```ts
 export const useGtmPaymentAndTransportPageViewEvent = (
   gtmPageViewEvent: GtmPageViewEventType // object containing information about the viewed page
 ): void => {
@@ -97,7 +97,7 @@ export const useGtmPaymentAndTransportPageViewEvent = (
 
 Hook used to handle viewing of the product detail page.
 
-```typescript
+```ts
 export const useGtmProductDetailViewEvent = (
   productDetailData: ProductDetailFragmentApi | MainVariantDetailFragmentApi, // information about the displayed product
   slug: string, // slug of the page

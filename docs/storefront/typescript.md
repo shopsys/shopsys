@@ -14,7 +14,7 @@
 
 - when writing components with TypeScript for compile-time checking and PropTypes for run-time checking, you can take advantage of the following type, which you can use to type the props object:
 
-```typescript
+```tsx
 function MyComponent( props: InferProps<typeof MyComponent.propTypes>){...}
 ```
 
@@ -25,7 +25,7 @@ function MyComponent( props: InferProps<typeof MyComponent.propTypes>){...}
 - there will be situations in which this may not be enough (e.g. when passing native onClick events or style object containing CSS properties)
 - in cases like these, you can extend the props object with the following TypeScript syntax:
 
-```typescript
+```tsx
 function MyComponent(
   props: InferProps<typeof MyComponent.propTypes> & {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -38,7 +38,7 @@ function MyComponent(
 - generally, every prop you would not explicitly define with PropTypes, you would define like this
 - in the code, you can see native props, where we define props in two separate rows. **The first one is for required props** and **the second one is for optional props**
 
-```typescript
+```ts
 type NativeProps = ExtractNativePropsFromDefault<
   InputHTMLAttributes<HTMLInputElement>,
   'name' | 'id',
@@ -50,7 +50,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 
 - then, if you want to make the prop optional, just provide a default value
 
-```typescript
+```tsx
 MyComponent.defaultProps = {
   name: 'John Doe'
 };
@@ -61,7 +61,7 @@ MyComponent.defaultProps = {
 - sometimes, you will have an enum-like prop (e.g. size prop for button), for which you will have a couple of predefined values (let's say "large" and "small")
 - to make this work, you will have to type the oneOf generic function but also provide the values as arguments to the function itself:
 
-```plain
+```ts
 size: PropTypes.oneOf<'large' | 'small'>(['large', 'small']).isRequired,
 ```
 
@@ -69,7 +69,7 @@ size: PropTypes.oneOf<'large' | 'small'>(['large', 'small']).isRequired,
 
 - when you have a default case in a switch statement or if/else block which are dependent on a prop, you will need to provide an explicit "default" case together with the default prop value
 
-```plain
+```tsx
 ...
 
 switch(props.variant){
@@ -96,17 +96,17 @@ MyComponent.propTypes{
 
 - when using the component, you will not need to provide the prop value if you wish to go with the default case
 
-```plain
-<MyComponent /> (default)
-<MyComponent variant="primary" /> (primary)
-<MyComponent variant="secondary" /> (secondary)
+```tsx
+<MyComponent /> // default
+<MyComponent variant="primary" /> // primary
+<MyComponent variant="secondary" /> // secondary
 ```
 
 ### Passing props to component
 
 - you can easily pass props which have the same name using the spread operator, then specify the rest of the props explicitly
 
-```plain
+```tsx
 <input {...props} type="checkbox" />
 ```
 
@@ -118,7 +118,7 @@ MyComponent.propTypes{
 
 - you can pass in the types for the form fields using TypeScript types or interfaces
 
-```plain
+```ts
 type FormFieldsTypes = {
   name: string;
   age: number;
@@ -133,6 +133,6 @@ const formProviderMethods = useForm<FormFieldsTypes>({...})
 
 - when working with submit handlers, you can specify both the method and the form fields
 
-```plain
+```ts
 const formSubmitHandler: SubmitHandler<FormValues> = (formFields) => {...}
 ```

@@ -6,7 +6,7 @@ These objects are used all across the GTM module for representation of various o
 
 Object representing user consent for tracking of different third-party services. Contains boolean properties seznam, google, and heureka to indicate if the user has consented to tracking by these services.
 
-```typescript
+```ts
 export type GtmReviewConsentsType = {
   seznam: boolean; // boolean pointer saying if the user has consented to Seznam tracking
   google: boolean; // boolean pointer saying if the user has consented to Google tracking
@@ -18,7 +18,7 @@ export type GtmReviewConsentsType = {
 
 Interface representing basic information about a web page.
 
-```typescript
+```ts
 export type GtmPageInfoInterface<
   PageType = GtmPageType,
   ExtendedPageProperties = object
@@ -33,7 +33,7 @@ export type GtmPageInfoInterface<
 
 Object representing additional information about a web page that displays a category or subcategory. Extends the GtmPageInfoInterface.
 
-```typescript
+```ts
 export type GtmCategoryDetailPageInfoType = GtmPageInfoInterface<
   GtmPageType.category_detail | GtmPageType.seo_category_detail, // type of the page, can be either GtmPageType.category_detail or GtmPageType.seo_category_detail
   {
@@ -47,7 +47,7 @@ export type GtmCategoryDetailPageInfoType = GtmPageInfoInterface<
 
 Object representing additional information about a web page that displays a blog article. Extends the GtmPageInfoInterface.
 
-```typescript
+```ts
 export type GtmBlogArticleDetailPageInfoType = GtmPageInfoInterface<
   GtmPageType.blog_article_detail, // type of the page, should always be GtmPageType.blog_article_detail
   {
@@ -60,7 +60,7 @@ export type GtmBlogArticleDetailPageInfoType = GtmPageInfoInterface<
 
 Object representing additional information about a web page that displays a brand or manufacturer. Extends the GtmPageInfoInterface.
 
-```typescript
+```ts
 export type GtmBrandDetailPageInfoType = GtmPageInfoInterface<
   GtmPageType.brand_detail, // type of the page, should always be GtmPageType.brand_detail
   {
@@ -73,7 +73,7 @@ export type GtmBrandDetailPageInfoType = GtmPageInfoInterface<
 
 Union type representing all possible types of web pages. Can be either GtmCategoryDetailPageInfoType, GtmBlogArticleDetailPageInfoType, GtmBrandDetailPageInfoType, or GtmPageInfoInterface.
 
-```typescript
+```ts
 export type GtmPageInfoType =
   | GtmCategoryDetailPageInfoType // page information for category detail or SEO category detail pages
   | GtmBlogArticleDetailPageInfoType // page information for blog article detail pages
@@ -85,7 +85,7 @@ export type GtmPageInfoType =
 
 Object representing information about a user's cart.
 
-```typescript
+```ts
 export type GtmCartInfoType = {
   abandonedCartUrl: string | undefined; // URL of the cart which can be used for recovery of an abandoned cart, optional
   currencyCode: string; // the code of the currency used on the domain
@@ -100,7 +100,7 @@ export type GtmCartInfoType = {
 
 Object representing information about a user.
 
-```typescript
+```ts
 export type GtmUserInfoType = {
   id?: string; // ID of the user, optional
   email?: string; // email of the user, optional
@@ -122,7 +122,7 @@ export type GtmUserInfoType = {
 
 Object representing a user's consent for tracking in different categories.
 
-```typescript
+```ts
 export type GtmConsentInfoType = {
   statistics: GtmConsent; // user consent status for statistics tracking
   marketing: GtmConsent; // user consent status for marketing tracking
@@ -134,7 +134,7 @@ export type GtmConsentInfoType = {
 
 Interface representing information about a product. Is extended for specific cases of products, such as listed products or cart items.
 
-```typescript
+```ts
 export type GtmProductInterface = {
   id: number; // product ID
   name: string; // product name
@@ -155,7 +155,7 @@ export type GtmProductInterface = {
 
 Type that extends GtmProductInterface and adds an optional listIndex property, which represents the index of the product in a list (such as search results).
 
-```typescript
+```ts
 export type GtmListedProductType = GtmProductInterface & {
   listIndex?: number; // index of the product in a list (e.g., search results)
 };
@@ -165,7 +165,7 @@ export type GtmListedProductType = GtmProductInterface & {
 
 Type that extends GtmListedProductType and adds a required quantity property, which represents the quantity of the product in the cart. GtmListedProductType, as described above, extends GtmProductInterface and adds an optional listIndex property. Therefore, GtmCartItemType includes all properties defined in GtmProductInterface, GtmListedProductType, and adds the quantity property.
 
-```typescript
+```ts
 export type GtmCartItemType = GtmListedProductType & {
   quantity: number; // product quantity in the cart
 };
@@ -175,7 +175,7 @@ export type GtmCartItemType = GtmListedProductType & {
 
 Type that represents extra transport details.
 
-```typescript
+```ts
 export type GtmShippingInfoType = {
   transportDetail: string; // transport method details
   transportExtra: string[]; // array of extra transport details
