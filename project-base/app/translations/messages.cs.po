@@ -1828,9 +1828,6 @@ msgstr "Nastavení"
 msgid "Shipping instructions"
 msgstr "Přepravní instrukce"
 
-msgid "Short description"
-msgstr "Krátký popis"
-
 msgid "Short description 1"
 msgstr "Krátký popis 1"
 

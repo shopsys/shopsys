@@ -1828,9 +1828,6 @@ msgstr ""
 msgid "Shipping instructions"
 msgstr ""
 
-msgid "Short description"
-msgstr ""
-
 msgid "Short description 1"
 msgstr ""
 

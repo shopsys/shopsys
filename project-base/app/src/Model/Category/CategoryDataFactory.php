@@ -82,10 +82,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         parent::fillNew($categoryData);
 
         $categoryData->parametersCollapsed = [];
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $categoryData->shortDescription[$domainId] = null;
-        }
     }
 
     /**
@@ -95,10 +91,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     protected function fillFromCategory(BaseCategoryData $categoryData, BaseCategory $category): void
     {
         parent::fillFromCategory($categoryData, $category);
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $categoryData->shortDescription[$domainId] = $category->getShortDescription($domainId);
-        }
 
         $categoryData->akeneoCode = $category->getAkeneoCode();
         $categoryData->parametersCollapsed = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);

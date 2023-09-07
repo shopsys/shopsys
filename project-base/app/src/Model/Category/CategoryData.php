@@ -22,11 +22,6 @@ class CategoryData extends BaseCategoryData
     public $parametersCollapsed;
 
     /**
-     * @var string[]|null[]
-     */
-    public $shortDescription;
-
-    /**
      * @var int[]|null[]
      */
     public $parametersPosition;
@@ -40,7 +35,6 @@ class CategoryData extends BaseCategoryData
     {
         parent::__construct();
 
-        $this->shortDescription = [];
         $this->parametersPosition = [];
         $this->linkedCategories = [];
     }
