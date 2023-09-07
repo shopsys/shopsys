@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
  */
 class Article implements OrderableEntityInterface
 {
-    public const PLACEMENT_TOP_MENU = 'topMenu';
     public const PLACEMENT_FOOTER = 'footer';
     public const PLACEMENT_NONE = 'none';
 

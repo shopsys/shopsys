@@ -160,9 +160,6 @@ msgstr ""
 msgid "Articles in footer"
 msgstr ""
 
-msgid "Articles in upper menu"
-msgstr ""
-
 msgid "Articles without positioning"
 msgstr ""
 
@@ -2294,9 +2291,6 @@ msgid "from most expensive"
 msgstr ""
 
 msgid "from the cheapest"
-msgstr ""
-
-msgid "in upper menu"
 msgstr ""
 
 msgid "new customers"

@@ -46,3 +46,8 @@ There you can find links to upgrade notes for other versions too.
         - docker/php-fpm/docker-php-entrypoint
         - docker/php-fpm/phing-completion
     - see #project-base-diff to update your project
+- remove usage of article placement ([#2776](https://github.com/shopsys/shopsys/pull/2776))
+    - placement `Shopsys\FrameworkBundle\Model\Article\Article::PLACEMENT_TOP_MENU` was removed along with the usages
+    - already existing articles with this placement will be migrated to `Shopsys\FrameworkBundle\Model\Article\Article::PLACEMENT_NONE` placement
+        - if you intend to keep using this placement, you can skip DB Migration `Shopsys\FrameworkBundle\Migrations\Version20230907132822` 
+    - see #project-base-diff to update your project

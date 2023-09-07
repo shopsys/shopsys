@@ -214,9 +214,6 @@ msgstr ""
 msgid "Articles in footer"
 msgstr ""
 
-msgid "Articles in upper menu"
-msgstr ""
-
 msgid "Articles overview"
 msgstr ""
 
@@ -2588,9 +2585,6 @@ msgid "in category (between first and second row of products)"
 msgstr ""
 
 msgid "in footer"
-msgstr ""
-
-msgid "in upper menu"
 msgstr ""
 
 msgid "include"

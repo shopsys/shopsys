@@ -9958,14 +9958,6 @@ Articles in 4th footer column
 </td>
 </tr>
 <tr>
-<td valign="top"><strong>topMenu</strong></td>
-<td>
-
-Articles in top menu
-
-</td>
-</tr>
-<tr>
 <td valign="top"><strong>none</strong></td>
 <td>
 

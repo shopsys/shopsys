@@ -123,7 +123,6 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
         $builderArticleDataGroup->add('placement', ChoiceType::class, [
             'required' => true,
             'choices' => [
-                t('in upper menu') => Article::PLACEMENT_TOP_MENU,
                 t('Articles in footer') . ' 1' => Article::PLACEMENT_FOOTER_1,
                 t('Articles in footer') . ' 2' => Article::PLACEMENT_FOOTER_2,
                 t('Articles in footer') . ' 3' => Article::PLACEMENT_FOOTER_3,

@@ -28,7 +28,7 @@ class ArticleTest extends TransactionFunctionalTestCase
         $articleData = $this->articleDataFactory->create();
 
         $articleData->name = 'Demonstrative name';
-        $articleData->placement = 'topMenu';
+        $articleData->placement = Article::PLACEMENT_FOOTER_1;
         $articleData->seoTitle = 'Demonstrative seo title';
         $articleData->seoMetaDescription = 'Demonstrative seo description';
         $articleData->seoH1 = 'Demonstrative seo H1';
@@ -47,7 +47,7 @@ class ArticleTest extends TransactionFunctionalTestCase
         $refreshedArticle = $this->em->getRepository(Article::class)->find($articleId);
 
         $this->assertSame('Demonstrative name', $refreshedArticle->getName());
-        $this->assertSame('topMenu', $refreshedArticle->getPlacement());
+        $this->assertSame(Article::PLACEMENT_FOOTER_1, $refreshedArticle->getPlacement());
         $this->assertSame('Demonstrative seo title', $refreshedArticle->getSeoTitle());
         $this->assertSame('Demonstrative seo description', $refreshedArticle->getSeoMetaDescription());
         $this->assertSame('Demonstrative seo H1', $refreshedArticle->getSeoH1());
