@@ -1,12 +1,21 @@
 title: Storefront
 arrange:
   - index.md
+  - setup-storefront.md
+  - project-structure.md
+  - dependecies.md
   - coding-standards.md
   - typescript.md
+  - tailwind.md
   - best-practises.md
+  - translations.md
+  - graphql.md
+  - caching.md
+  - store-management.md
   - authentication.md
-  - unit-tests.md
-  - redis-graphql-cache.md
-  - image.md
-  - robots.txt.md
+  - image-component.md
   - gtm
+  - robots.txt.md
+  - unit-tests.md
+  - cypress.md
+  - bundle-analyzer.md

@@ -2,27 +2,18 @@
 
 ## Eslint
 
-- can show you error on demand when you are writing your code - and I have to install editor plugin to use it (can be used on server side in any test)
-- rules are defined in files:
+Can show you errors on demand when you are writing your code - and I have to install an editor plugin to use it (can be used on server side in any test).
 
-```plain
-- .eslintignore, .eslintrc.json
-```
+Rules are defined in files `.eslintignore` and `.eslintrc.js`.
 
 ## Prettier
 
-- can format you code on save or can be fired by key shortcut - and I have to install editor plugin to use it
-- rules are defined in file:
+Can format you code on save or can be fired by key shortcut - and I have to install an editor plugin to use it.
 
-```plain
-- .prettierrc
-```
+Rules are defined in files `.prettierignore` and `prettier.config.js`.
 
 ## Editorconfig
 
-- adds coding standards into your IDE even if you don't have any plugin installed
-- rules are defined in file:
+Adds coding standards into your IDE even if you don't have any plugin installed.
 
-```plain
-- .editorconfig
-```
+Rules are defined in file `.editorconfig`.

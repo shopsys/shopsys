@@ -1,18 +1,18 @@
 # Setup Storefront
 
-There are two ways to use Shopsys Storefront on your machine.
+There are two ways to use Shopsys Platform Storefront on your machine.
 First and easiest way is when you have installed your project using Docker.
 With Docker, you have everything running already.
-If Docker way is too robust for you or you do not need whole application running, you can run Shopsys Storefront natively.
+If Docker is too robust for you or you do not need the whole application running, you can run Shopsys Platform Storefront natively.
 
 ## Docker way
 
-With Docker, you have Shopsys Storefront already running.
+With Docker, you have Shopsys Platform Storefront already running.
 Storefront is running on <http://127.0.0.1:3000>
 
 ### Restart PNPM
 
-When you change `next.config.js` file, and you want new settings to be applied, you need to restart PNPM.
+When you change the `next.config.js` file, and you want new settings to be applied, you need to restart PNPM.
 You might also want to restart PNPM when something is not working correctly.
 In such cases, you do not need to stop all running containers and start them again, just to recreate container of the storefront.
 To do that run this command outside the container:

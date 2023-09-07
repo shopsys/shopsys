@@ -1,3 +1,3 @@
 # Shopsys Platform StoreFront
 
-All related Storefront documentation is available in documentation of Shopsys Platform in section [Storefront](https://docs.shopsys.com/storefront).
+Storefront documentation is available in the documentation of Shopsys Platform in the section [Storefront](https://docs.shopsys.com/storefront).
