@@ -1,6 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { AnchorHTMLAttributes } from 'react';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import { ExtendedNextLink } from '../ExtendedNextLink/ExtendedNextLink';
 import { twMergeCustom } from 'helpers/twMerge';
 

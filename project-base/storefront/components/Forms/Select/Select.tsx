@@ -3,7 +3,7 @@ import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { ReactNode } from 'react';
 import SelectReact from 'react-select';
 import { components, Props } from 'react-select';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
     Props,

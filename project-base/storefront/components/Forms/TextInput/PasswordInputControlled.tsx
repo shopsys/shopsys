@@ -3,7 +3,7 @@ import { TextInput } from './TextInput';
 import { InputHTMLAttributes, ReactElement, useCallback, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, never, 'name'>;
 

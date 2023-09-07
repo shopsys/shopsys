@@ -1,5 +1,5 @@
 import { LabelHTMLAttributes, ReactNode } from 'react';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'helpers/twMerge';
 import { CheckmarkIcon } from 'components/Basic/Icon/IconsSvg';
 

@@ -1,6 +1,6 @@
 import { FormEvent, FormHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<FormHTMLAttributes<HTMLFormElement>, never, 'onSubmit' | 'style'>;
 

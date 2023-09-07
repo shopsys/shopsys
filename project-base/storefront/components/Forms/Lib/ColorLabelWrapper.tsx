@@ -1,7 +1,7 @@
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
 import { LabelHTMLAttributes } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor'>;
 
