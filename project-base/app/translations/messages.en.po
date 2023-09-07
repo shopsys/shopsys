@@ -1726,9 +1726,6 @@ msgstr ""
 msgid "SEO pages"
 msgstr ""
 
-msgid "SVG icon settings"
-msgstr ""
-
 msgid "Sale"
 msgstr ""
 

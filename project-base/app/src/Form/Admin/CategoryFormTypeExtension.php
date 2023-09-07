@@ -8,7 +8,6 @@ use App\Component\Form\FormBuilderHelper;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Parameter\ParameterRepository;
-use App\Model\Svg\SvgProvider;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -28,7 +27,6 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     public const DISABLED_FIELDS = [];
 
     /**
-     * @param \App\Model\Svg\SvgProvider $svgProvider
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \App\Model\Category\CategoryFacade $categoryFacade
@@ -37,13 +35,12 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
-        private SvgProvider $svgProvider,
-        private ParameterRepository $parameterRepository,
-        private FormBuilderHelper $formBuilderHelper,
-        private CategoryFacade $categoryFacade,
-        private RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer,
-        private CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
-        private Localization $localization,
+        private readonly ParameterRepository $parameterRepository,
+        private readonly FormBuilderHelper $formBuilderHelper,
+        private readonly CategoryFacade $categoryFacade,
+        private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer,
+        private readonly CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
+        private readonly Localization $localization,
     ) {
     }
 
@@ -52,14 +49,6 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $settingsBuilder = $builder->get('settings');
-        $settingsBuilder
-            ->add('svgIcon', ChoiceType::class, [
-                'label' => t('SVG icon settings'),
-                'required' => false,
-                'choices' => $this->svgProvider->getAllSvgIconsNames(),
-            ]);
-
         /** @var \Ivory\OrderedForm\Builder\OrderedFormBuilder $builderShortDescriptionGroup */
         $builderShortDescriptionGroup = $builder->create('shortDescriptionGroup', GroupType::class, [
             'label' => t('Short description'),

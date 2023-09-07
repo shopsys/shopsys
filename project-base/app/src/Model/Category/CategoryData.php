@@ -17,11 +17,6 @@ class CategoryData extends BaseCategoryData
     public $akeneoCode;
 
     /**
-     * @var string|null
-     */
-    public $svgIcon;
-
-    /**
      * @var \App\Model\Product\Parameter\Parameter[]
      */
     public $parametersCollapsed;

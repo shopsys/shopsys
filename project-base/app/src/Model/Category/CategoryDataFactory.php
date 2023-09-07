@@ -101,7 +101,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         }
 
         $categoryData->akeneoCode = $category->getAkeneoCode();
-        $categoryData->svgIcon = $category->getSvgIcon();
         $categoryData->parametersCollapsed = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
         $categoryData->parametersPosition = $this->getParametersSortedByPositionFilteredByCategory($category);
 

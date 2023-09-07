@@ -1726,9 +1726,6 @@ msgstr "SEO stránka"
 msgid "SEO pages"
 msgstr "SEO stránky"
 
-msgid "SVG icon settings"
-msgstr "Nastavení SVG ikon"
-
 msgid "Sale"
 msgstr "Výprodej"
 
