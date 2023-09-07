@@ -17,9 +17,7 @@ jobs:
         name: Prepare variables and artifacts
         runs-on: ubuntu-22.04
         outputs:
-            DOCKER_PHP_FPM_BASE_REPOSITORY_TAG: ${{ steps.variables.outputs.DOCKER_PHP_FPM_BASE_REPOSITORY_TAG }}
             DOCKER_PHP_FPM_REPOSITORY_TAG: ${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}
-            DOCKER_PHP_FPM_IMAGE_EXISTS: ${{ steps.variables.outputs.DOCKER_PHP_FPM_IMAGE_EXISTS }}
             DOCKER_STOREFRONT_REPOSITORY_TAG: ${{ steps.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}
             DOCKER_STOREFRONT_CI_REPOSITORY_TAG: ${{ steps.variables.outputs.DOCKER_STOREFRONT_CI_REPOSITORY_TAG }}
             DOCKER_STOREFRONT_CI_IMAGE_EXISTS: ${{ steps.variables.outputs.DOCKER_STOREFRONT_CI_IMAGE_EXISTS }}
@@ -38,10 +36,7 @@ jobs:
                     DOCKER_USERNAME: ${{ github.repository_owner }}
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/app/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
-                    DOCKER_PHP_FPM_BASE_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
-                    DOCKER_PHP_FPM_REPOSITORY_TAG=${DOCKER_PHP_FPM_BASE_REPOSITORY_TAG}-${{ github.sha }}
-                    DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
+                    DOCKER_PHP_FPM_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/php-fpm:github-action-${{ github.sha }}
                     DOCKER_STOREFRONT_IMAGE_TAG=github-action-${{ github.sha }}
                     DOCKER_STOREFRONT_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/storefront:${DOCKER_STOREFRONT_IMAGE_TAG}
                     DOCKER_STOREFRONT_CI_IMAGE_TAG=github-action-`find project-base/storefront/docker -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`-ci
@@ -55,9 +50,7 @@ jobs:
                     BRANCH_NAME_ESCAPED="${BRANCH_NAME//./-}"
                     echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_OUTPUT
                     echo "BRANCH_NAME_ESCAPED=${BRANCH_NAME_ESCAPED}" >> $GITHUB_OUTPUT
-                    echo "DOCKER_PHP_FPM_BASE_REPOSITORY_TAG=${DOCKER_PHP_FPM_BASE_REPOSITORY_TAG}" >> $GITHUB_OUTPUT
                     echo "DOCKER_PHP_FPM_REPOSITORY_TAG=${DOCKER_PHP_FPM_REPOSITORY_TAG}" >> $GITHUB_OUTPUT
-                    echo "DOCKER_PHP_FPM_IMAGE_EXISTS=${DOCKER_PHP_FPM_IMAGE_EXISTS}" >> $GITHUB_OUTPUT
                     echo "DOCKER_STOREFRONT_REPOSITORY_TAG=${DOCKER_STOREFRONT_REPOSITORY_TAG}" >> $GITHUB_OUTPUT
                     echo "DOCKER_STOREFRONT_CI_REPOSITORY_TAG=${DOCKER_STOREFRONT_CI_REPOSITORY_TAG}" >> $GITHUB_OUTPUT
                     echo "DOCKER_STOREFRONT_CI_IMAGE_EXISTS=${DOCKER_STOREFRONT_CI_IMAGE_EXISTS}" >> $GITHUB_OUTPUT
@@ -152,23 +145,15 @@ jobs:
                     registry: ghcr.io
                     username: ${{ github.actor }}
                     password: ${{ secrets.GITHUB_TOKEN }}
-            -   name: Build PHP-FPM image and push it to GitHub Container Registry
-                if: needs.variables.outputs.DOCKER_PHP_FPM_IMAGE_EXISTS == 0
+            -   name: Build custom base image if requested
+                if: "contains(github.event.pull_request.labels.*.name, 'Use docker-compose defined services for review')"
                 run: |
-                    .github/build-php-fpm-image.sh ${{ needs.variables.outputs.DOCKER_PHP_FPM_BASE_REPOSITORY_TAG }}
-                    docker image push ${{ needs.variables.outputs.DOCKER_PHP_FPM_BASE_REPOSITORY_TAG }}
+                    TAG=`grep -m1 -E '^FROM [^ ]+' project-base/app/docker/php-fpm/Dockerfile | awk '{print $2}' | cut -d ':' -f 1,2`
+                    docker build --tag ${TAG} --no-cache --compress -f ./packages/php-image/Dockerfile ./packages/php-image
             -   name: Create branch specific PHP-FPM image with project files
                 run: |
-                    docker run -d --name php-fpm ${{ needs.variables.outputs.DOCKER_PHP_FPM_BASE_REPOSITORY_TAG }}
-                    docker cp ./ php-fpm:/var/www/html
-                    docker exec --user root php-fpm chown -R www-data:www-data /var/www/html
-                    docker exec php-fpm rm -rf /var/www/html/composer.lock /var/www/html/project-base/package-lock.json /var/www/html/project-base/migrations-lock.yml
-                    docker exec php-fpm composer install
-                    docker exec php-fpm php phing -D production.confirm.action=y build-deploy-part-1-db-independent
-            -   name: Push branch specific PHP-FPM image to GitHub Container Registry
-                run: |
-                    docker commit -m="Include Composer and NPM files" php-fpm ${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}
-                    docker image push ${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}
+                    .github/build-php-fpm-image.sh "${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}" ci
+                    docker image push "${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}"
     build-storefront-image:
         if: |
             github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' || 
@@ -490,9 +475,6 @@ jobs:
                 uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
-            -   name: Build PHP-FPM image
-                if: needs.variables.outputs.DOCKER_PHP_FPM_IMAGE_EXISTS == 0
-                run: .github/build-php-fpm-image.sh ${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}
             -   name: Build Elasticsearch image
                 if: needs.variables.outputs.DOCKER_ELASTICSEARCH_IMAGE_EXISTS == 0
                 run: .github/build-elasticsearch-image.sh ${{ needs.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}
@@ -502,17 +484,18 @@ jobs:
             -   name: Build Storefront CI image
                 if: needs.variables.outputs.DOCKER_STOREFRONT_CI_IMAGE_EXISTS == 0
                 run: .github/build-storefront-ci-image.sh ${{ needs.variables.outputs.DOCKER_STOREFRONT_CI_REPOSITORY_TAG }}
-            -   name: Copy and rename docker-compose.github-actions.yml.dist to docker-compose.yml
-                run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
-            -   name: Update docker-compose.yml file with right PHP-FPM image
-                run: "sed -i \"s#php-fpm-image#${{ needs.variables.outputs.DOCKER_PHP_FPM_BASE_REPOSITORY_TAG }}#\" ./docker-compose.yml"
-            -   name: Update docker-compose.yml file with right Elasticsearch image
-                run: "sed -i \"s#elasticsearch-image#${{ needs.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}#\" ./docker-compose.yml"
-            -   name: Update docker-compose.yml file with right Storefront image
-                run: "sed -i \"s#storefront-image#${{ needs.variables.outputs.DOCKER_STOREFRONT_CI_REPOSITORY_TAG }}#\" ./docker-compose.yml"
+            -   name: Build PHP-FPM image
+                run: .github/build-php-fpm-image.sh php-fpm:base base
+            -   name: Prepare docker-compose.yml file from docker-compose.github-actions.yml.dist
+                run: |
+                    sh .github/prepare-docker-compose-file.sh \
+                    "./docker/conf/docker-compose.github-actions.yml.dist" \
+                    "./docker-compose.yml" \
+                    "php-fpm:base" \
+                    "${{ needs.variables.outputs.DOCKER_STOREFRONT_CI_REPOSITORY_TAG }}" \
+                    "${{ needs.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}"
             -   name: Build PHP-FPM part of application
                 run: |
-                    docker compose pull --parallel webserver postgres redis selenium-server php-fpm elasticsearch storefront
                     docker compose up -d --force-recreate
                     docker cp ./ shopsys-framework-php-fpm:/var/www/html
                     docker compose exec -T --user root php-fpm chown -R www-data:www-data /var/www/html
@@ -643,11 +626,11 @@ jobs:
                 run: |
                     mv set-urls-for-review.sh ${BRANCH_NAME}/set-urls-for-review.sh
             -   name: Move docker-compose.review.yml to branch folder
-                if: "contains(github.event.pull_request.labels.*.name, 'review-isolated')"
+                if: "contains(github.event.pull_request.labels.*.name, 'Use PHP Dockerfile instead of built image')"
                 run: |
                     mv docker-compose.review.yml ${BRANCH_NAME}/docker-compose.yml
             -   name: Move docker-compose.review.simplified.yml to branch folder
-                if: "!contains(github.event.pull_request.labels.*.name, 'review-isolated')"
+                if: "!contains(github.event.pull_request.labels.*.name, 'Use PHP Dockerfile instead of built image')"
                 run: |
                     mv docker-compose.review.simplified.yml ${BRANCH_NAME}/docker-compose.yml
             -   name: Start project
@@ -658,7 +641,6 @@ jobs:
                     docker compose down -v --remove-orphans || true
                     docker compose up -d --wait --force-recreate
                     ./set-urls-for-review.sh setUrlsToDomainsUrls
-                    docker compose exec -T php-fpm php phing -D change.environment=prod environment-change
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys demo-data error-pages-generate warmup
                     ./set-urls-for-review.sh printDomains
             -   name: Add Review URL to Pull request description
