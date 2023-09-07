@@ -1,4 +1,4 @@
-import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
+import { desktopFirstSizes, mobileFirstSizes } from 'helpers/mediaQueries';
 import { canUseDom } from 'helpers/canUseDom';
 import { isServer } from 'helpers/isServer';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';

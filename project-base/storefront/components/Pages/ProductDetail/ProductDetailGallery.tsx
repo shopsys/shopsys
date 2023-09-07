@@ -1,5 +1,5 @@
 import { isElementVisible } from 'helpers/isElementVisible';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { desktopFirstSizes } from 'helpers/mediaQueries';
 import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
