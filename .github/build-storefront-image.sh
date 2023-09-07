@@ -8,4 +8,5 @@ docker image build \
     --no-cache \
     --compress \
     -f project-base/storefront/docker/Dockerfile \
+    --output type=tar,dest=/tmp/storefront-image.tar \
     ./project-base/storefront

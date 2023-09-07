@@ -12,4 +12,5 @@ docker image build \
     --no-cache \
     --compress \
     -f project-base/app/docker/php-fpm/Dockerfile \
+    --output type=tar,dest=/tmp/php-image.tar \
     .
