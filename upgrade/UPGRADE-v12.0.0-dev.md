@@ -866,3 +866,5 @@ There you can find links to upgrade notes for other versions too.
             ```
     - remove setter injection in `App\Controller\Front\RobotsController`
         - see #project-base-diff for more details
+- update doctrine/orm to latest version ([#2774](https://github.com/shopsys/shopsys/pull/2774))
+    - see #project-base-diff for more details
