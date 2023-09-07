@@ -14,6 +14,7 @@ use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Flag\Flag;
+use App\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use App\Model\Product\Parameter\ParameterFacade;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -22,6 +23,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery as BaseCategoryQuery;
@@ -121,8 +123,13 @@ class CategoryQuery extends BaseCategoryQuery
                     throw new ReadyCategorySeoMixNotFoundUserError(sprintf('ReadyCategorySeoMix with URL slug "%s" does not exist.', $urlSlug));
                 }
 
-                if ($this->isSortingDifferentFromReadyCategorySeoMix($info, $readyCategorySeoMix) || $this->isFilterSet($info)) {
-                    return $readyCategorySeoMix->getCategory();
+                $matchingReadyCategorySeoMix = $this->findMatchingReadyCategorySeoMix($info, $readyCategorySeoMix->getCategory());
+
+                if (
+                    $matchingReadyCategorySeoMix !== $readyCategorySeoMix &&
+                    ($this->isFilterSet($info) || $this->isSortingDifferentFromReadyCategorySeoMix($info, $readyCategorySeoMix))
+                ) {
+                    return $matchingReadyCategorySeoMix ?? $readyCategorySeoMix->getCategory();
                 }
 
                 return $readyCategorySeoMix;
@@ -161,21 +168,17 @@ class CategoryQuery extends BaseCategoryQuery
     private function findMatchingReadyCategorySeoMix(ResolveInfo $info, Category $category): ?ReadyCategorySeoMix
     {
         $variableValues = $info->variableValues;
-        $onlyInStock = $variableValues['filter']['onlyInStock'] ?? false;
-        $minimalPrice = $variableValues['filter']['minimalPrice'] ?? null;
-        $maximalPrice = $variableValues['filter']['maximalPrice'] ?? null;
-        $brandChoices = $variableValues['filter']['brands'] ?? [];
 
-        if ($onlyInStock || isset($minimalPrice) || isset($maximalPrice) || count($brandChoices) > 0) {
+        try {
+            return $this->readyCategorySeoMixFacade->findReadyCategorySeoMixByQueryInputData(
+                $category->getId(),
+                $variableValues['filter']['parameters'] ?? [],
+                $variableValues['filter']['flags'] ?? [],
+                $variableValues['orderingMode'] ?? ProductsQuery::getDefaultOrderingModeForListing(),
+            );
+        } catch (ParameterValueNotFoundException | ParameterNotFoundException) {
             return null;
         }
-
-        return $this->readyCategorySeoMixFacade->findReadyCategorySeoMixByQueryInputData(
-            $category->getId(),
-            $variableValues['filter']['parameters'] ?? [],
-            $variableValues['filter']['flags'] ?? [],
-            $variableValues['orderingMode'] ?? ProductsQuery::getDefaultOrderingModeForListing(),
-        );
     }
 
     /**

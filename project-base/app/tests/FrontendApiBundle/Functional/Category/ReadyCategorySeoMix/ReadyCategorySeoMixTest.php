@@ -286,7 +286,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
         $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
         $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/../../_graphql/query/ReadyCategorySeoMixQuery.graphql', [
-            'orderingMode' => 'PRIORITY',
+            'orderingMode' => 'NAME_ASC',
         ]);
 
         $this->assertNull($data['originalCategorySlug']);

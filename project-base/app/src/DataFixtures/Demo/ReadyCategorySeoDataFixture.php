@@ -132,6 +132,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of Electronics from most expensive seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
+        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
         $choseCategorySeoMixCombinationArray['flagId'] = null;
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             // 'USB' => 'Yes'
@@ -156,7 +157,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $choseCategorySeoMixCombinationArray['flagId'] = null;
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             // 'Colour' => 'Black'
-            62 => 199,
+            63 => 210,
         ];
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
@@ -172,7 +173,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
 
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             // 'Colour' => 'Red'
-            62 => 197,
+            63 => 206,
         ];
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
