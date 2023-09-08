@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'helpers/twMerge';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 import { ListedItemPropType } from 'types/simpleNavigation';
@@ -18,12 +19,13 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
     className,
 }) => {
     const itemImage = 'mainImage' in listedItem ? listedItem.mainImage : null;
+    const href = getStringWithoutTrailingSlash(listedItem.slug) + '/';
 
     return (
         <li data-testid={dataTestId}>
             <ExtendedNextLink
                 type={linkType}
-                href={`/${listedItem.slug}`}
+                href={href}
                 className={twMergeCustom(
                     'flex h-full w-full cursor-pointer flex-col items-center justify-center rounded bg-greyVeryLight px-2 py-4 no-underline transition hover:bg-whitesmoke hover:no-underline lg:flex-row lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
                     className,
