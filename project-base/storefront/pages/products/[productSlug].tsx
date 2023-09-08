@@ -75,6 +75,18 @@ export const getServerSideProps = getServerSidePropsWrapper(
                         notFound: true,
                     };
                 }
+
+                if (
+                    productResponse.data?.product?.__typename === 'Variant' &&
+                    productResponse.data.product.mainVariant?.slug
+                ) {
+                    return {
+                        redirect: {
+                            destination: productResponse.data.product.mainVariant.slug,
+                            permanent: false,
+                        },
+                    };
+                }
             }
 
             const initServerSideData = await initServerSideProps({
