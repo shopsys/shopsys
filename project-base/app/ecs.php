@@ -179,7 +179,6 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Model/Order/PromoCode/PromoCodeFlag/PromoCodeFlag.php',
             __DIR__ . '/src/Model/Order/PromoCode/PromoCodeLimit.php',
             __DIR__ . '/src/Model/Order/PromoCode/PromoCodePricingGroup.php',
-            __DIR__ . '/src/Model/Store/ProductStore.php',
         ],
         'SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.UnusedProperty' => [
             __DIR__ . '/src/Model/Category/LinkedCategory/LinkedCategory.php',

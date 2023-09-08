@@ -394,8 +394,6 @@
     "Write to us": "Write to us",
     "Yes": "Yes",
     "You can also buy": "You can also buy",
-    "You can check this item in {{ count }} stores_one": "You can check this item in {{ count }} store",
-    "You can check this item in {{ count }} stores_other": "You can check this item in {{ count }} stores",
     "You have exceeded the weight limit of the selected transport.": "You have exceeded the weight limit of the selected transport.",
     "You have no orders": "You have no orders",
     "You have successfully subscribed to our newsletter": "You have successfully subscribed to our newsletter.",

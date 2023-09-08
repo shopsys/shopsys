@@ -18,7 +18,6 @@ class StoreFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
@@ -27,7 +26,6 @@ class StoreFacade
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
         private readonly ImageFacade $imageFacade,
         private readonly EntityManagerInterface $em,
-        private readonly ProductStoreFacade $productStoreFacade,
         private readonly ProductRepository $productRepository,
     ) {
     }
@@ -53,7 +51,6 @@ class StoreFacade
         $this->createFriendlyUrl($store);
 
         $this->imageFacade->manageImages($store, $storeData->image);
-        $this->productStoreFacade->createProductStoreRelationForStoreId($store->getId());
         $this->productRepository->markAllProductsForExport();
 
         return $store;

@@ -8,7 +8,7 @@ use App\Component\Setting\Setting;
 use App\Model\Product\Product;
 use App\Model\Stock\ProductStock;
 use App\Model\Stock\ProductStockFacade;
-use App\Model\Store\ProductStoreFacade;
+use App\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
@@ -25,13 +25,13 @@ class ProductAvailabilityFacade
     /**
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
-     * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
+     * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly Setting $setting,
         private readonly ProductStockFacade $productStockFacade,
-        private readonly ProductStoreFacade $productStoreFacade,
+        private readonly StoreFacade $storeFacade,
         private readonly Domain $domain,
     ) {
         $this->productAvailabilityDomainCache = [];
@@ -159,41 +159,6 @@ class ProductAvailabilityFacade
             }
         }
 
-        return  $count;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
-    public function getProductCountExposedInStoresInformationByDomainId(Product $product, int $domainId): string
-    {
-        $count = $this->getExposedStoresCount($product, $domainId);
-
-        return t(
-            '{0}|{1}Can be viewed in <span class="box-detail__avail__text__strong">%count%</span> store|[2,Inf]Can be viewed in <span class="box-detail__avail__text__strong">%count%</span> stores',
-            ['%count%' => $count],
-        );
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return int
-     */
-    public function getExposedStoresCount(Product $product, int $domainId): int
-    {
-        $productStores = $this->productStoreFacade->getProductStoresByProductAndDomainId($product, $domainId);
-
-        $count = 0;
-
-        foreach ($productStores as $productStore) {
-            if ($productStore->isProductExposed()) {
-                $count++;
-            }
-        }
-
         return $count;
     }
 
@@ -264,7 +229,7 @@ class ProductAvailabilityFacade
         Product $product,
         int $domainId,
     ): array {
-        $productStores = $this->productStoreFacade->getProductStoresByProductAndDomainId($product, $domainId);
+        $stores = $this->storeFacade->getStoresListEnabledOnDomain($domainId);
 
         $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
         $isOutOfStock = true;
@@ -280,16 +245,15 @@ class ProductAvailabilityFacade
 
         $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
-        foreach ($productStores as $productStore) {
-            $availabilityInformation = t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
-
+        foreach ($stores as $store) {
             $availabilityStatus = AvailabilityStatusEnum::InStock;
+            $availabilityInformation = t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
 
             if ($isOutOfStock) {
                 $availabilityStatus = AvailabilityStatusEnum::OutOfStock;
                 $availabilityInformation = t('Unavailable', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
             } else {
-                $stock = $productStore->getStore()->getStock();
+                $stock = $store->getStock();
 
                 $productStock = null;
 
@@ -302,11 +266,10 @@ class ProductAvailabilityFacade
                 }
             }
 
-            $productStoresAvailabilityInformationList[$productStore->getStore()->getId()] = new ProductStoreAvailabilityInformation(
-                $productStore->getStore()->getName(),
-                $productStore->getStore()->getId(),
+            $productStoresAvailabilityInformationList[$store->getId()] = new ProductStoreAvailabilityInformation(
+                $store->getName(),
+                $store->getId(),
                 $availabilityInformation,
-                $productStore->isProductExposed(),
                 $availabilityStatus,
             );
         }
@@ -555,7 +518,7 @@ class ProductAvailabilityFacade
         int $quantityOnAllStocks,
         int $domainId,
     ): int {
-        //php_int_max serves as a numerical indicator of unavailability of goods
+        // php_int_max serves as a numerical indicator of unavailability of goods
         $productBetweenStockTransferDays = PHP_INT_MAX;
 
         if ($quantityOnAllStocks >= $quantifiedProduct->getQuantity()) {
@@ -565,21 +528,21 @@ class ProductAvailabilityFacade
         /** @var \App\Model\Product\Product $product */
         $product = $quantifiedProduct->getProduct();
 
-        //relation between product and stock doesn't exists
+        // relation between product and stock doesn't exist
         if ($productStock === null) {
             $defaultVendorDeliveryDays = $this->getDeliveryDaysByDomainId($product, $domainId);
 
             return min($defaultVendorDeliveryDays, $productBetweenStockTransferDays);
         }
 
-        //the product is in the stock
+        // the product is in the stock
         $quantityOnStock = $productStock->getProductQuantity();
 
         if ($quantityOnStock >= $quantifiedProduct->getQuantity()) {
             return 0;
         }
 
-        //we choose whether it is faster to transfer the product from other stocks
+        // we choose whether it is faster to transfer the product from other stocks
         if ($productBetweenStockTransferDays < PHP_INT_MAX) {
             return $productBetweenStockTransferDays;
         }

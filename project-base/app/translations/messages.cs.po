@@ -790,9 +790,6 @@ msgstr "Vyjmuté prodejny"
 msgid "Expand"
 msgstr "Rozbalit"
 
-msgid "Exposed in Stores"
-msgstr "Vystavení na prodejnách"
-
 msgid "Extended SEO categories"
 msgstr "Rozšířené SEO kategorie"
 
@@ -1023,9 +1020,6 @@ msgstr "Interní poznámka"
 
 msgid "Invalid two-factor authentication code."
 msgstr "Neplatný kód dvoufaktorového ověření."
-
-msgid "Is exhibited"
-msgstr "Je vystaven"
 
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr "Je vysoce doporučeno toto nastavení otestovat na vývojovém nebo CI serveru před tím, než bude použita v produkci!"
@@ -2316,9 +2310,6 @@ msgstr "{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] 
 
 msgid "{0}|{1}Available in <span class=\"box-detail__avail__text__strong\">%count%</span> store|[2,Inf]Available in <span class=\"box-detail__avail__text__strong\">%count%</span> stores"
 msgstr "{0}|{1}Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejnách"
-
-msgid "{0}|{1}Can be viewed in <span class=\"box-detail__avail__text__strong\">%count%</span> store|[2,Inf]Can be viewed in <span class=\"box-detail__avail__text__strong\">%count%</span> stores"
-msgstr "{0}|{1}Můžete si prohlédnout na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejně|[2,Inf]Můžete si prohlédnout na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejnách"
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
 msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vytvořeny <strong>%count%</strong> slevové kupóny|[5,Inf] Bylo vytvořeno <strong>%count%</strong> slevových kupónů"

@@ -2,7 +2,6 @@ import { ProductVariantsTableRow } from './ProductVariantsTableRow';
 import { Image } from 'components/Basic/Image/Image';
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
-import { ProductExposedStoresCount } from 'components/Blocks/Product/ProductExposedStoresCount';
 import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailAvailabilityList';
 import { MainVariantDetailFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
@@ -58,7 +57,6 @@ export const Variant: FC<VariantProps> = ({
                         isMainVariant={false}
                         availableStoresCount={variant.availableStoresCount}
                     />
-                    <ProductExposedStoresCount isMainVariant={false} exposedStoresCount={variant.exposedStoresCount} />
                 </Cell>
                 <Cell className="lg:text-right" dataTestId={TEST_IDENTIFIER + 'price'}>
                     {formatPrice(variant.price.priceWithVat)}

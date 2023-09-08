@@ -28,10 +28,10 @@ class ProductVideoDataFactory
      */
     public function createFromProductVideo(ProductVideo $productVideo): ProductVideoData
     {
-        $productStoreData = $this->createInstance();
+        $productVideoData = $this->createInstance();
 
-        $productStoreData->id = $productVideo->getId();
-        $productStoreData->videoToken = $productVideo->getVideoToken();
+        $productVideoData->id = $productVideo->getId();
+        $productVideoData->videoToken = $productVideo->getVideoToken();
 
         $mappedTranslations = [];
 
@@ -39,8 +39,8 @@ class ProductVideoDataFactory
             $mappedTranslations[$videoTranslation->getLocale()] = $videoTranslation->getDescription();
         }
 
-        $productStoreData->videoTokenDescriptions = $mappedTranslations;
+        $productVideoData->videoTokenDescriptions = $mappedTranslations;
 
-        return $productStoreData;
+        return $productVideoData;
     }
 }

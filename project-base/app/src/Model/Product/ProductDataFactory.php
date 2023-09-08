@@ -10,9 +10,6 @@ use App\Model\ProductVideo\ProductVideoRepository;
 use App\Model\Stock\ProductStockDataFactory;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
-use App\Model\Store\ProductStoreDataFactory;
-use App\Model\Store\ProductStoreFacade;
-use App\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
@@ -54,10 +51,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Stock\ProductStockDataFactory $stockProductDataFactory
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Setting\Setting $setting
-     * @param \App\Model\Store\StoreFacade $storeFacade
-     * @param \App\Model\Store\ProductStoreDataFactory $productStoreDataFactory
      * @param \App\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
-     * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
      * @param \App\Model\ProductVideo\ProductVideoRepository $productVideoRepository
      */
     public function __construct(
@@ -78,10 +72,7 @@ class ProductDataFactory extends BaseProductDataFactory
         private readonly ProductStockDataFactory $stockProductDataFactory,
         private readonly ProductFacade $productFacade,
         private readonly Setting $setting,
-        private readonly StoreFacade $storeFacade,
-        private readonly ProductStoreDataFactory $productStoreDataFactory,
         private readonly ProductVideoDataFactory $productVideoDataFactory,
-        private readonly ProductStoreFacade $productStoreFacade,
         private readonly ProductVideoRepository $productVideoRepository,
     ) {
         parent::__construct(
@@ -119,7 +110,6 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData = $this->createInstance();
         $this->fillNew($productData);
         $this->fillStockProductByStocks($productData);
-        $this->fillStoreProductByStores($productData);
 
         return $productData;
     }
@@ -133,7 +123,6 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData = $this->createInstance();
         $this->fillFromProduct($productData, $product);
         $this->fillStockProductByProduct($productData, $product);
-        $this->fillStoreProductByProduct($productData, $product);
         $this->fillProductFilesAttributesFromProduct($productData, $product);
         $this->fillProductVideosByProductId($productData, $product);
 
@@ -307,35 +296,12 @@ class ProductDataFactory extends BaseProductDataFactory
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     */
-    private function fillStoreProductByStores(ProductData $productData): void
-    {
-        foreach ($this->storeFacade->getAllStores() as $store) {
-            $productData->productStoreData[$store->getId()] = $this->productStoreDataFactory->createFromStore($store);
-        }
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product $product
      */
     private function fillProductVideosByProductId(ProductData $productData, Product $product): void
     {
         foreach ($this->productVideoRepository->findByProductId($product->getId()) as $video) {
             $productData->productVideosData[$video->getid()] = $this->productVideoDataFactory->createFromProductVideo($video);
-        }
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product $product
-     */
-    private function fillStoreProductByProduct(ProductData $productData, Product $product): void
-    {
-        $this->fillStoreProductByStores($productData);
-
-        foreach ($this->productStoreFacade->getProductStoresByProduct($product) as $productStore) {
-            $productData->productStoreData[$productStore->getStore()->getId()] = $this->productStoreDataFactory->createFromProductStore($productStore);
         }
     }
 }

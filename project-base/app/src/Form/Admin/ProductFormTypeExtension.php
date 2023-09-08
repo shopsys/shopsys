@@ -98,7 +98,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setSeoGroup($builder);
         $this->setShortDescriptionsUspGroup($builder);
         $this->setStocksGroup($builder);
-        $this->setStoresGroup($builder);
         $this->setDisplayAvailabilityGroup($builder, $product);
         $this->setPricesGroup($builder, $product);
         $this->setTransferredFilesGroup($builder, $product);
@@ -317,24 +316,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         ]);
 
         $builder->add($stockGroupBuilder);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
-    private function setStoresGroup(FormBuilderInterface $builder): void
-    {
-        $storeGroupBuilder = $builder->create('storesGroup', GroupType::class, [
-            'label' => t('Exposed in Stores'),
-        ]);
-
-        $storeGroupBuilder->add('productStoreData', CollectionType::class, [
-            'required' => false,
-            'entry_type' => StoreProductFormType::class,
-            'render_form_row' => false,
-        ]);
-
-        $builder->add($storeGroupBuilder);
     }
 
     /**

@@ -368,9 +368,6 @@
       "product_available_stores_count_information": {
         "type": "text"
       },
-      "product_count_exposed_in_stores": {
-        "type": "text"
-      },
       "store_availabilities_information": {
         "type": "nested",
         "properties": {
@@ -382,9 +379,6 @@
           },
           "availability_information": {
             "type": "text"
-          },
-          "exposed": {
-            "type": "boolean"
           },
           "availability_status": {
             "type": "text"
@@ -415,9 +409,6 @@
         "type": "text"
       },
       "available_stores_count": {
-        "type": "integer"
-      },
-      "exposed_stores_count": {
         "type": "integer"
       },
       "related_products": {

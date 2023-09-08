@@ -1,7 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
-import { ProductExposedStoresCount } from 'components/Blocks/Product/ProductExposedStoresCount';
 import { AvailabilityStatusEnumApi, ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmProductListNameType } from 'gtm/types/enums';
@@ -60,11 +59,6 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                 <ProductAvailableStoresCount
                     isMainVariant={product.isMainVariant}
                     availableStoresCount={product.availableStoresCount}
-                />
-                <ProductExposedStoresCount
-                    isMainVariant={product.isMainVariant}
-                    exposedStoresCount={product.exposedStoresCount}
-                    className="text-inStock"
                 />
             </div>
 

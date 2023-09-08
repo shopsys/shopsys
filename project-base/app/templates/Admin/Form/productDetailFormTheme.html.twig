@@ -25,31 +25,3 @@
 
     {% do form.setRendered() %} {# When any stock does not exist, form is not rendered #}
 {% endblock %}
-
-{% block _product_form_storesGroup_productStoreData_widget %}
-    <div class="js-form-group form-group" id="{{ form.vars.id }}">
-            <table class="table-form" id="product_form_parameters">
-                <thead>
-                <tr class="table-form__row">
-                    <th class="table-form__cell table-form__cell--label">{{ 'Store'|trans }}</th>
-                    <th class="table-form__cell">{{ 'Is exhibited'|trans }}</th>
-                </tr>
-                </thead>
-                <tbody data-index="{{ form|length }}">
-                {% for exposedForm in form %}
-                    <tr class="js-form-group table-form__row">
-                        <td class="table-form__cell table-form__cell--del-before">
-                            {{ form_label(exposedForm.productExposed, exposedForm.vars.value.name) }}
-                            {{ form_errors(exposedForm.productExposed, { errors_attr: { class: 'table-form__cell__error' } } ) }}
-                        </td>
-                        <td class="table-form__cell">
-                            {{ form_widget(exposedForm.productExposed) }}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-    </div>
-
-    {% do form.setRendered() %} {# When any store does not exist, form is not rendered #}
-{% endblock %}

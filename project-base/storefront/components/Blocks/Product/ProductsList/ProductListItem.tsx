@@ -3,7 +3,6 @@ import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/Pr
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
-import { ProductExposedStoresCount } from 'components/Blocks/Product/ProductExposedStoresCount';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { ListedProductFragmentApi } from 'graphql/generated';
@@ -102,10 +101,6 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         <ProductAvailableStoresCount
                             isMainVariant={product.isMainVariant}
                             availableStoresCount={product.availableStoresCount}
-                        />
-                        <ProductExposedStoresCount
-                            isMainVariant={product.isMainVariant}
-                            exposedStoresCount={product.exposedStoresCount}
                         />
                     </div>
                 </ExtendedNextLink>

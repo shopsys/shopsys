@@ -545,20 +545,17 @@ class RetrieveCartTest extends GraphQlTestCase
                     'store' => [
                         'name' => 'Ostrava',
                     ],
-                    'exposed' => true,
                     'availabilityInformation' => t('Available immediately', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
                 ], [
                     'store' => [
                         'name' => 'Pardubice',
                     ],
-                    'exposed' => false,
                     'availabilityInformation' => t('{0,1} Available in one week|[2,Inf] Available in %count% weeks', ['%count%' => 1], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
                 ],
             ],
             'availableStoresCount' => 1,
-            'exposedStoresCount' => 1,
             'breadcrumb' => [
                 [
                     'name' => $mainCategory->getName($firstDomainLocale),
@@ -645,12 +642,10 @@ class RetrieveCartTest extends GraphQlTestCase
                 store {
                     name
                 }
-                exposed
                 availabilityInformation
                 availabilityStatus
             }
             availableStoresCount
-            exposedStoresCount
             breadcrumb {
                 name
                 slug
