@@ -1,4 +1,4 @@
-BRANCH_NAME=$1
+BRANCH_NAME=${1,,}
 
 if [ -n "$BRANCH_NAME" ]; then
     echo "Info: Trying to cancel review for branch $BRANCH_NAME"
