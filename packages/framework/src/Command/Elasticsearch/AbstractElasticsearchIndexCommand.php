@@ -13,12 +13,14 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 abstract class AbstractElasticsearchIndexCommand extends Command
 {
     private const ARGUMENT_INDEX_NAME = 'name';
+    protected const OPTION_DOMAIN_ID = 'domainId';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry $indexRegistry
@@ -43,6 +45,12 @@ abstract class AbstractElasticsearchIndexCommand extends Command
                 InputArgument::OPTIONAL,
                 $this->getArgumentNameDescription(),
             )
+            ->addOption(
+                static::OPTION_DOMAIN_ID,
+                null,
+                InputOption::VALUE_REQUIRED,
+                'Limit command to only one domain.',
+            )
             ->setDescription($this->getCommandDescription());
     }
 
@@ -55,10 +63,11 @@ abstract class AbstractElasticsearchIndexCommand extends Command
     {
         $symfonyStyleIo = new SymfonyStyle($input, $output);
         $indexName = $input->getArgument(self::ARGUMENT_INDEX_NAME);
+        $domainId = $input->getOption(static::OPTION_DOMAIN_ID) !== null ? (int)$input->getOption(static::OPTION_DOMAIN_ID) : null;
         $output->writeln($this->getActionStartedMessage());
 
         foreach ($this->getAffectedIndexes($indexName) as $index) {
-            $this->executeForIndex($output, $index);
+            $this->executeForIndex($output, $index, $domainId);
         }
 
         $symfonyStyleIo->success($this->getActionFinishedMessage());
@@ -82,14 +91,27 @@ abstract class AbstractElasticsearchIndexCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
+     * @param int|null $domainId
      */
-    protected function executeForIndex(OutputInterface $output, AbstractIndex $index): void
-    {
-        foreach ($this->domain->getAll() as $domainConfig) {
+    protected function executeForIndex(
+        OutputInterface $output,
+        AbstractIndex $index,
+        ?int $domainId = null,
+    ): void {
+        if ($domainId !== null) {
+            $domainConfig = $this->domain->getDomainConfigById($domainId);
+
             $this->executeCommand(
                 $this->indexDefinitionLoader->getIndexDefinition($index::getName(), $domainConfig->getId()),
                 $output,
             );
+        } else {
+            foreach ($this->domain->getAll() as $domainConfig) {
+                $this->executeCommand(
+                    $this->indexDefinitionLoader->getIndexDefinition($index::getName(), $domainConfig->getId()),
+                    $output,
+                );
+            }
         }
     }
 

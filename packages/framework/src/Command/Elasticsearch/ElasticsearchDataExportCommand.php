@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexExportedEvent;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -39,17 +40,31 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
         parent::__construct($indexRegistry, $indexFacade, $indexDefinitionLoader, $domain);
     }
 
+    protected function configure(): void
+    {
+        parent::configure();
+
+        $this->addOption(
+            self::OPTION_DOMAIN_ID,
+            null,
+            InputOption::VALUE_REQUIRED,
+            'Limit command to only one domain. Products will not be marked as exported.',
+        );
+    }
+
     /**
      * {@inheritdoc}
      */
-    protected function executeForIndex(OutputInterface $output, AbstractIndex $index): void
+    protected function executeForIndex(OutputInterface $output, AbstractIndex $index, ?int $domainId = null): void
     {
-        parent::executeForIndex($output, $index);
+        parent::executeForIndex($output, $index, $domainId);
 
-        $this->eventDispatcher->dispatch(
-            new IndexExportedEvent($index),
-            IndexExportedEvent::INDEX_EXPORTED,
-        );
+        if ($domainId === null) {
+            $this->eventDispatcher->dispatch(
+                new IndexExportedEvent($index),
+                IndexExportedEvent::INDEX_EXPORTED,
+            );
+        }
     }
 
     /**
