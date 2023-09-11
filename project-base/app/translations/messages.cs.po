@@ -160,9 +160,6 @@ msgstr "Články - zobrazení"
 msgid "Articles in footer"
 msgstr "Články v patičce"
 
-msgid "Articles in upper menu"
-msgstr "Články v horním menu"
-
 msgid "Articles without positioning"
 msgstr "Články bez umístění"
 
@@ -2295,9 +2292,6 @@ msgstr "od nejdražšího"
 
 msgid "from the cheapest"
 msgstr "od nejlevnějšího"
-
-msgid "in upper menu"
-msgstr "v horním menu"
 
 msgid "new customers"
 msgstr "noví zákazníci"

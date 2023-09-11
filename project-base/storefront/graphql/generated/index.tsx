@@ -211,9 +211,7 @@ export enum ArticlePlacementTypeEnumApi {
   /** Articles in 4th footer column */
   Footer4Api = 'footer4',
   /** Articles without specific placement */
-  NoneApi = 'none',
-  /** Articles in top menu */
-  TopMenuApi = 'topMenu'
+  NoneApi = 'none'
 }
 
 export type ArticleSiteApi = ArticleInterfaceApi & BreadcrumbApi & NotBlogArticleInterfaceApi & SlugApi & {

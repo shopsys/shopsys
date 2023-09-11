@@ -214,9 +214,6 @@ msgstr "Údaje článku"
 msgid "Articles in footer"
 msgstr "Články v patičce"
 
-msgid "Articles in upper menu"
-msgstr "Články v horním menu"
-
 msgid "Articles overview"
 msgstr "Přehled článků"
 
@@ -2589,9 +2586,6 @@ msgstr "v kategorii (mezi prvním a druhým řádkem produktů)"
 
 msgid "in footer"
 msgstr "v patičce"
-
-msgid "in upper menu"
-msgstr "v horním menu"
 
 msgid "include"
 msgstr "obsahuje"

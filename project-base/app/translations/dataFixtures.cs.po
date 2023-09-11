@@ -1096,9 +1096,6 @@ msgstr "Lokalizace"
 msgid "Logitech S120 black"
 msgstr "Logitech S120 black"
 
-msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue."
-msgstr "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue."
-
 msgid "Luxury automatic coffee machine Jura Impressa Z9 One Touch packed with Swiss precision and elegance, which sets new standards. This machine brings you jeich on several levels, such as coffee quality, easy to use and attractive design."
 msgstr "JURA Impressa J9 TFT Carbon Automatický kávovar/espresso,barevný LCD"
 
@@ -1221,9 +1218,6 @@ msgstr "Nové počítače s USB"
 
 msgid "New driving rules and tips just for you!"
 msgstr "Prostudujte si nová pravidla silničního provozu platná od 1. července 2006!"
-
-msgid "News"
-msgstr "Novinky"
 
 msgid "Nikon COS 700D"
 msgstr "Nikon COS 700D"
@@ -1545,18 +1539,6 @@ msgstr "Sennheiser HD 700"
 
 msgid "Sensitivity (ISO)"
 msgstr "Citlivost (ISO)"
-
-msgid "Shopping guide"
-msgstr "Jak nakupovat"
-
-msgid "Shopping guide - Tips and tricks how to quickly find what you are looking for"
-msgstr "Jak nakupovat - Tipy a triky jak rychle najít co potřebujete"
-
-msgid "Shopping guide for quick shopping"
-msgstr "Nákupní rádce pro rychlý nákup"
-
-msgid "Shopping guide to improve your shopping experience"
-msgstr "Zlepšení zážitku z nakupovaní"
 
 msgid "Shopsys Platform - Title page"
 msgstr "Shopsys Platform - Titulní strana"

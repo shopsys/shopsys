@@ -169,7 +169,6 @@ class ArticleFacade
     public function getAvailablePlacementChoices(): array
     {
         return [
-            t('in upper menu') => Article::PLACEMENT_TOP_MENU,
             t('in footer') => Article::PLACEMENT_FOOTER,
             t('without positioning') => Article::PLACEMENT_NONE,
         ];

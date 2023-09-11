@@ -66,7 +66,6 @@ class ArticleController extends BaseArticleController
      */
     public function listAction(): Response
     {
-        $gridTop = $this->getGrid(Article::PLACEMENT_TOP_MENU);
         $gridFooter1 = $this->getGrid(Article::PLACEMENT_FOOTER_1);
         $gridFooter2 = $this->getGrid(Article::PLACEMENT_FOOTER_2);
         $gridFooter3 = $this->getGrid(Article::PLACEMENT_FOOTER_3);
@@ -75,7 +74,6 @@ class ArticleController extends BaseArticleController
         $articlesCountOnSelectedDomain = $this->articleFacade->getAllArticlesCountByDomainId($this->adminDomainTabsFacade->getSelectedDomainId());
 
         return $this->render('@ShopsysFramework/Admin/Content/Article/list.html.twig', [
-            'gridViewTop' => $gridTop->createView(),
             'gridViewFooter1' => $gridFooter1->createView(),
             'gridViewFooter2' => $gridFooter2->createView(),
             'gridViewFooter3' => $gridFooter3->createView(),

@@ -161,8 +161,6 @@ enum ArticlePlacementTypeEnum {
   footer3
   """Articles in 4th footer column"""
   footer4
-  """Articles in top menu"""
-  topMenu
   """Articles without specific placement"""
   none
 }
