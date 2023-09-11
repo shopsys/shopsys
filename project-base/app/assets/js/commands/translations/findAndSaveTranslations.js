@@ -45,7 +45,13 @@ function findAndSaveTranslations (translations, dirWithJsFiles, dirWithTranslati
                         allTranslations[translatedObject.lang] = [];
                     }
 
-                    allTranslations[translatedObject.lang] = allTranslations[translatedObject.lang].concat(translatedObject.translated);
+                    const filteredTranslated = translatedObject.translated.filter(
+                        item => !allTranslations[translatedObject.lang].some(
+                            translation => translation.msgid === item.msgid
+                        ) && item.msgstr !== ''
+                    );
+
+                    allTranslations[translatedObject.lang] = allTranslations[translatedObject.lang].concat(filteredTranslated);
                 });
 
             fs.writeFile(outputDirForExportedTranslations + 'translations.json', JSON.stringify(allTranslations), (writeErr) => {
