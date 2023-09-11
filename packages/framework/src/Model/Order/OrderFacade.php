@@ -387,6 +387,9 @@ class OrderFacade
                 $product,
             );
 
+            $this->em->persist($orderItem);
+            $this->em->flush();
+
             if ($quantifiedItemDiscount !== null) {
                 $this->addOrderItemDiscount(
                     $orderItem,
@@ -488,7 +491,7 @@ class OrderFacade
             $orderItem->getName(),
         );
 
-        $this->orderItemFactory->createProduct(
+        $discount = $this->orderItemFactory->createProduct(
             $orderItem->getOrder(),
             $name,
             $quantifiedItemDiscount->inverse(),
@@ -498,6 +501,8 @@ class OrderFacade
             null,
             null,
         );
+
+        $this->em->persist($discount);
     }
 
     /**
