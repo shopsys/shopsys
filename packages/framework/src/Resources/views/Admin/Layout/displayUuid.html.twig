@@ -1,0 +1,6 @@
+{% set keys = _context|keys %}
+{% if (keys[1] is defined) and (attribute(_context[keys[1]], 'uuid') is defined) %}
+    <span class="edit-uuid">
+        {{ _context[keys[1]].uuid }}
+    </span>
+{% endif %}
