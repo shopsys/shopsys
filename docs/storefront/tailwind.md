@@ -11,8 +11,8 @@ Sometimes you need to implement more complex logic then just put simple classNam
 `twJoin` you can use in case you just want to split classNames into several groups for better readability.
 
 ```tsx
-<div className={twJoin("w-8 text-red", "hover:text-blue hover:scale-125")}>
-    Hello world
+<div className={twJoin('w-8 text-red', 'hover:text-blue hover:scale-125')}>
+  Hello world
 </div>
 ```
 
@@ -20,13 +20,13 @@ Sometimes you need to implement more complex logic then just put simple classNam
 
 ```tsx
 <div
-    className={twMergeCustom(
-        "text-black",
-        isWithError && "text-red",
-        props.className
-    )}
+  className={twMergeCustom(
+    'text-black',
+    isWithError && 'text-red',
+    props.className
+  )}
 >
-    Hello world
+  Hello world
 </div>
 ```
 
@@ -44,7 +44,7 @@ It's not necessary but highly recommended to add these lines to the user setting
 
 This allows you to use Tailwind IntelliSense also in variables (not only in `className` props). Name of the variable needs to be consisted of the `TwClass` string (like `childrenTwClass`) It is useful for several cases:
 
--   Where you have to pass multiple classNames to the component. For example `className` for wrapper and at the same time `className` for child components in the loop.
+- Where you have to pass multiple classNames to the component. For example `className` for wrapper and at the same time `className` for child components in the loop.
 
 ```tsx
 const simpleNavigationItemTwClass = 'lg:justify-center text-center'
@@ -56,7 +56,7 @@ const simpleNavigationItemTwClass = 'lg:justify-center text-center'
 />
 ```
 
--   You have multiple places where you need to use the same `className` or to export the variable.
+- You have multiple places where you need to use the same `className` or to export the variable.
 
 ```tsx
 const sharedTwClass = 'lg:justify-center text-center'

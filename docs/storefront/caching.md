@@ -28,11 +28,11 @@ query is not cached
 
 ```graphql
 query NavigationQuery {
-    navigation {
-        name
-        link
-        ...CategoriesByColumnFragment
-    }
+  navigation {
+    name
+    link
+    ...CategoriesByColumnFragment
+  }
 }
 ```
 
@@ -40,10 +40,10 @@ query is cached for 1 hour
 
 ```graphql
 query NavigationQuery @_redisCache(ttl: 3600) {
-    navigation {
-        name
-        link
-        ...CategoriesByColumnFragment
-    }
+  navigation {
+    name
+    link
+    ...CategoriesByColumnFragment
+  }
 }
 ```

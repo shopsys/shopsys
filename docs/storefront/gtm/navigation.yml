@@ -1,9 +1,9 @@
 title: GTM
 arrange:
-  - index.md
-  - intro.md
-  - objects.md
-  - events.md
-  - hooks.md
-  - eventFactories.md
-  - eventHandlers.md
+    - index.md
+    - intro.md
+    - objects.md
+    - events.md
+    - hooks.md
+    - eventFactories.md
+    - eventHandlers.md

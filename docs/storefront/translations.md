@@ -9,16 +9,16 @@ All available translations you can find under `/project-base/storefront/public/l
 Wherever you want to use a translated string you first need to import the `useTranslation` hook from `next-translate`.
 
 ```ts
-import useTranslation from "next-translate/useTranslation";
+import useTranslation from 'next-translate/useTranslation';
 ```
 
 then you are able to use it in component/hook
 
 ```tsx
 const TranslatedStringComponent: FC = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    return <div>{t("translated")}</div>;
+  return <div>{t('translated')}</div>;
 };
 ```
 
