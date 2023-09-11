@@ -1,13 +1,5 @@
 const fs = require('fs');
 
-const getFrameworkVendorDir = () => {
-    if (isMonorepo()) {
-        return '../packages/framework';
-    }
-
-    return './vendor/shopsys/framework';
-};
-
 const getFrameworkNodeModulesDir = () => {
     if (isMonorepo()) {
         return '../packages/framework/assets';
@@ -20,4 +12,4 @@ const isMonorepo = () => {
     return fs.existsSync('../packages');
 };
 
-module.exports = { getFrameworkVendorDir, getFrameworkNodeModulesDir };
+module.exports = { getFrameworkNodeModulesDir };
