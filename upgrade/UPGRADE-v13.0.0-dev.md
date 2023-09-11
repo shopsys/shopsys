@@ -63,3 +63,21 @@ There you can find links to upgrade notes for other versions too.
         ```
 - fix and improve JS translations in administration ([#2779](https://github.com/shopsys/shopsys/pull/2779))
     - see #project-base-diff to update your project
+- remove misleading url addresses list from administration ([#2782](https://github.com/shopsys/shopsys/pull/2782))
+    - `Shopsys\FrameworkBundle\Controller\Admin\SuperadminController`
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    protected readonly ModuleList $moduleList,
+                    protected readonly ModuleFacade $moduleFacade,
+                    protected readonly PricingSetting $pricingSetting,
+                    protected readonly DelayedPricingSetting $delayedPricingSetting,
+            -       protected readonly GridFactory $gridFactory,
+                    protected readonly Localization $localization,
+                    protected readonly LocalizedRouterFactory $localizedRouterFactory,
+                    protected readonly MailSettingFacade $mailSettingFacade,
+                    protected readonly MailerSettingProvider $mailerSettingProvider,
+                    protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+                ) {
+            ```
+        - method `loadDataForUrls()` was removed
