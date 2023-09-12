@@ -8,6 +8,8 @@ use App\Model\Order\PromoCode\Grid\PromoCodeMassGeneratedBatchGridFactory;
 use League\Csv\Writer;
 use Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController as BasePromoCodeController;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
+use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory;
@@ -38,26 +40,32 @@ class PromoCodeController extends BasePromoCodeController
         PromoCodeDataFactoryInterface $promoCodeDataFactory,
         PromoCodeGridFactory $promoCodeGridFactory,
         BreadcrumbOverrider $breadcrumbOverrider,
-        private PromoCodeMassGeneratedBatchGridFactory $promoCodeMassGeneratedBatchGridFactory,
+        private readonly PromoCodeMassGeneratedBatchGridFactory $promoCodeMassGeneratedBatchGridFactory,
     ) {
         parent::__construct($promoCodeFacade, $administratorGridFacade, $promoCodeDataFactory, $promoCodeGridFactory, $breadcrumbOverrider);
     }
 
     /**
+     * @Route("/promo-code/list")
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(Request $request): Response
     {
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
 
-        $grid = $this->promoCodeGridFactory->create();
+        $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
+        $quickSearchForm->handleRequest($request);
+
+        $grid = $this->promoCodeGridFactory->create(search: $quickSearchForm->getData()->text);
         $grid->enablePaging();
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($administrator, $grid);
 
         return $this->render('Admin/Content/PromoCode/list.html.twig', [
             'gridView' => $grid->createView(),
+            'quickSearchForm' => $quickSearchForm->createView(),
         ]);
     }
 

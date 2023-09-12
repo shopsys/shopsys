@@ -96,3 +96,10 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - change default db server in adminer in local environment ([#2803](https://github.com/shopsys/shopsys/pull/2803))
     - see #project-base-diff to update your project
+- allow quick searching in promo codes ([#2786](https://github.com/shopsys/shopsys/pull/2786))
+    - method `Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController::listAction` changed its interface:
+        ```diff
+        -    public function listAction()
+        +    public function listAction(Request $request): Response
+        ```
+    - see #project-base-diff to update your project

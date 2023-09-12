@@ -1762,6 +1762,9 @@ msgstr "Hledání"
 msgid "Search [verb]"
 msgstr "Vyhledat"
 
+msgid "Search by code..."
+msgstr "Vyhledat podle kódu..."
+
 msgid "Search by slug..."
 msgstr "Vyhledat podle slugu..."
 
