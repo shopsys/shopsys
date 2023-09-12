@@ -712,6 +712,8 @@ There you can find links to upgrade notes for other versions too.
            ```
    - first unused parameter `$message` from `Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsException` exception constructor has been removed, update you code appropriately
    - see #project-base-diff to add required configurations to your project and check suggested changes to your project
+- update your project to work with newest version of `overblog/graphql-bundle` ([#2788](https://github.com/shopsys/shopsys/pull/2788))
+   - see #project-base-dif to update your project
 
 ## Removed deprecations
 
