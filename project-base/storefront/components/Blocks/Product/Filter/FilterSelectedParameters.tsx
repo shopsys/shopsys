@@ -12,11 +12,11 @@ import { RemoveIcon, RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
 
-type SelectedParametersProps = {
+type FilterSelectedParametersProps = {
     filterOptions: ProductFilterOptionsFragmentApi;
 };
 
-export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions }) => {
+export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ filterOptions }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const defaultProductFiltersMap = useSessionStore((s) => s.defaultProductFiltersMap);

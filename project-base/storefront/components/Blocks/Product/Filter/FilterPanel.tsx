@@ -2,7 +2,7 @@ import { FilterGroupGeneric } from './FilterGroupGeneric';
 import { FilterGroupInStock } from './FilterGroupInStock';
 import { FilterGroupParameters } from './FilterGroupParameters';
 import { FilterGroupPrice } from './FilterGroupPrice';
-import { SelectedParameters } from './SelectedParameters';
+import { FilterSelectedParameters } from './FilterSelectedParameters';
 import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
 import { ProductFilterOptionsFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
@@ -45,7 +45,7 @@ export const FilterPanel = memo<FilterPanelProps>(
                         </span>
                     </div>
 
-                    <SelectedParameters filterOptions={filterOptions} />
+                    <FilterSelectedParameters filterOptions={filterOptions} />
                 </div>
 
                 <div className="h-full divide-y divide-border overflow-y-scroll px-5 vl:static vl:overflow-visible">
