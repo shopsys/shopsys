@@ -45,10 +45,7 @@ export type AddProductResultApi = {
 export type AddToCartInputApi = {
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
-  /**
-   * True if quantity should be set no matter the current state of the cart. False
-   * if quantity should be added to the already existing same item in the cart
-   */
+  /** True if quantity should be set no matter the current state of the cart. False if quantity should be added to the already existing same item in the cart */
   isAbsoluteQuantity: InputMaybe<Scalars['Boolean']['input']>;
   /** Product UUID */
   productUuid: Scalars['Uuid']['input'];
@@ -436,11 +433,7 @@ export type BrandFilterOptionApi = {
   brand: BrandApi;
   /** Count of products that will be filtered if this filter option is applied. */
   count: Scalars['Int']['output'];
-  /**
-   * If true than count parameter is number of products that will be displayed if
-   * this filter option is applied, if false count parameter is number of products
-   * that will be added to current products result.
-   */
+  /** If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result. */
   isAbsolute: Scalars['Boolean']['output'];
 };
 
@@ -576,10 +569,7 @@ export type CategoryApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   mainImage: Maybe<ImageApi>;
   /** Localized category name (domain dependent) */
   name: Scalars['String']['output'];
-  /**
-   * Original category URL slug (for CategorySeoMixes slug of assigned category is
-   * returned, null is returned for regular category)
-   */
+  /** Original category URL slug (for CategorySeoMixes slug of assigned category is returned, null is returned for regular category) */
   originalCategorySlug: Maybe<Scalars['String']['output']>;
   /** Ancestor category */
   parent: Maybe<CategoryApi>;
@@ -910,11 +900,7 @@ export type FlagFilterOptionApi = {
   count: Scalars['Int']['output'];
   /** Flag */
   flag: FlagApi;
-  /**
-   * If true than count parameter is number of products that will be displayed if
-   * this filter option is applied, if false count parameter is number of products
-   * that will be added to current products result.
-   */
+  /** If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result. */
   isAbsolute: Scalars['Boolean']['output'];
   /** Indicator whether the option is already selected (used for "ready category seo mixes") */
   isSelected: Scalars['Boolean']['output'];
@@ -1140,10 +1126,7 @@ export type MutationApi = {
   Logout: Scalars['Boolean']['output'];
   /** Subscribe for e-mail newsletter */
   NewsletterSubscribe: Scalars['Boolean']['output'];
-  /**
-   * Pay order(create payment transaction in payment gateway) and get payment setup
-   * data for redirect or creating JS payment gateway layer
-   */
+  /** Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer */
   PayOrder: PaymentSetupCreationDataApi;
   /** Recover password using hash required from RequestPasswordRecovery */
   RecoverPassword: LoginResultApi;
@@ -1721,11 +1704,7 @@ export type ParameterValueColorFilterOptionApi = {
   __typename?: 'ParameterValueColorFilterOption';
   /** Count of products that will be filtered if this filter option is applied. */
   count: Scalars['Int']['output'];
-  /**
-   * If true than count parameter is number of products that will be displayed if
-   * this filter option is applied, if false count parameter is number of products
-   * that will be added to current products result.
-   */
+  /** If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result. */
   isAbsolute: Scalars['Boolean']['output'];
   /** Indicator whether the option is already selected (used for "ready category seo mixes") */
   isSelected: Scalars['Boolean']['output'];
@@ -1742,11 +1721,7 @@ export type ParameterValueFilterOptionApi = {
   __typename?: 'ParameterValueFilterOption';
   /** Count of products that will be filtered if this filter option is applied. */
   count: Scalars['Int']['output'];
-  /**
-   * If true than count parameter is number of products that will be displayed if
-   * this filter option is applied, if false count parameter is number of products
-   * that will be added to current products result.
-   */
+  /** If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result. */
   isAbsolute: Scalars['Boolean']['output'];
   /** Indicator whether the option is already selected (used for "ready category seo mixes") */
   isSelected: Scalars['Boolean']['output'];
@@ -1989,10 +1964,7 @@ export type ProductMainImageArgsApi = {
 /** A connection to a list of items. */
 export type ProductConnectionApi = {
   __typename?: 'ProductConnection';
-  /**
-   * The default ordering mode that is set for the given connection (e.g. in a
-   * category, search page, or ready category SEO mix)
-   */
+  /** The default ordering mode that is set for the given connection (e.g. in a category, search page, or ready category SEO mix) */
   defaultOrderingMode: Maybe<ProductOrderingModeEnumApi>;
   /** Information to aid in pagination. */
   edges: Maybe<Array<Maybe<ProductEdgeApi>>>;
@@ -2121,10 +2093,7 @@ export type QueryApi = {
   adverts: Array<AdvertApi>;
   /** Returns article filtered using UUID or URL slug */
   article: Maybe<NotBlogArticleInterfaceApi>;
-  /**
-   * Returns list of articles that can be paginated using `first`, `last`, `before`
-   * and `after` keywords and filtered by `placement`
-   */
+  /** Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement` */
   articles: ArticleConnectionApi;
   /** Returns list of searched articles and blog articles */
   articlesSearch: Array<ArticleInterfaceApi>;

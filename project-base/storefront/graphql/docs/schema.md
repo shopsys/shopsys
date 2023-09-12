@@ -248,8 +248,7 @@ Returns article filtered using UUID or URL slug
 <td valign="top"><a href="#articleconnection">ArticleConnection</a>!</td>
 <td>
 
-Returns list of articles that can be paginated using `first`, `last`, `before`
-and `after` keywords and filtered by `placement`
+Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement`
 
 </td>
 </tr>
@@ -1340,8 +1339,7 @@ Subscribe for e-mail newsletter
 <td valign="top"><a href="#paymentsetupcreationdata">PaymentSetupCreationData</a>!</td>
 <td>
 
-Pay order(create payment transaction in payment gateway) and get payment setup
-data for redirect or creating JS payment gateway layer
+Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer
 
 </td>
 </tr>
@@ -2812,9 +2810,7 @@ Count of products that will be filtered if this filter option is applied.
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
-If true than count parameter is number of products that will be displayed if
-this filter option is applied, if false count parameter is number of products
-that will be added to current products result.
+If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result.
 
 </td>
 </tr>
@@ -3303,8 +3299,7 @@ Localized category name (domain dependent)
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Original category URL slug (for CategorySeoMixes slug of assigned category is
-returned, null is returned for regular category)
+Original category URL slug (for CategorySeoMixes slug of assigned category is returned, null is returned for regular category)
 
 </td>
 </tr>
@@ -4107,9 +4102,7 @@ Flag
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
-If true than count parameter is number of products that will be displayed if
-this filter option is applied, if false count parameter is number of products
-that will be added to current products result.
+If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result.
 
 </td>
 </tr>
@@ -6017,9 +6010,7 @@ Count of products that will be filtered if this filter option is applied.
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
-If true than count parameter is number of products that will be displayed if
-this filter option is applied, if false count parameter is number of products
-that will be added to current products result.
+If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result.
 
 </td>
 </tr>
@@ -6090,9 +6081,7 @@ Count of products that will be filtered if this filter option is applied.
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
-If true than count parameter is number of products that will be displayed if
-this filter option is applied, if false count parameter is number of products
-that will be added to current products result.
+If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result.
 
 </td>
 </tr>
@@ -6496,8 +6485,7 @@ A connection to a list of items.
 <td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a></td>
 <td>
 
-The default ordering mode that is set for the given connection (e.g. in a
-category, search page, or ready category SEO mix)
+The default ordering mode that is set for the given connection (e.g. in a category, search page, or ready category SEO mix)
 
 </td>
 </tr>
@@ -8525,8 +8513,7 @@ Cart identifier, new cart will be created if not provided and customer is not lo
 <td valign="top"><a href="#boolean">Boolean</a></td>
 <td>
 
-True if quantity should be set no matter the current state of the cart. False
-if quantity should be added to the already existing same item in the cart
+True if quantity should be set no matter the current state of the cart. False if quantity should be added to the already existing same item in the cart
 
 </td>
 </tr>

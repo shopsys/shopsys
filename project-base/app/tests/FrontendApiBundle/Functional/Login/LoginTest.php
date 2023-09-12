@@ -63,7 +63,6 @@ class LoginTest extends GraphQlTestCase
                 [
                     'message' => 'Token is not valid.',
                     'extensions' => [
-                        'category' => 'token',
                         'userCode' => 'invalid-token',
                     ],
                 ],
