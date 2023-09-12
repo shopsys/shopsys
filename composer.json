@@ -179,8 +179,7 @@
         "zalas/phpunit-injector": "^2.0"
     },
     "conflict": {
-        "symfony/symfony": "*",
-        "doctrine/orm": "2.12.0 || >=2.16.0"
+        "symfony/symfony": "*"
     },
     "scripts": {
         "post-install-cmd": [
