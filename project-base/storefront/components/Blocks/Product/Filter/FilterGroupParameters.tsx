@@ -107,7 +107,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                     )}
 
                     {parameter.__typename === 'ParameterColorFilterOption' && (
-                        <div className="flex flex-wrap">
+                        <div className="flex flex-wrap gap-1">
                             {parameter.values.map((parameterValue, index) => {
                                 const isChecked = getIsSelectedParameterValue(
                                     defaultSelectedParameters,

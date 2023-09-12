@@ -22,7 +22,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
     htmlFor,
     children,
 }) => (
-    <div className="relative mr-1 mb-1 flex w-6">
+    <div className="relative flex w-6">
         {children}
         <Tooltip label={label}>
             <label
