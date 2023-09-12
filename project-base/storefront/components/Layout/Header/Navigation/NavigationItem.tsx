@@ -39,7 +39,10 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
 
             {hasChildren && isMenuOpened && (
                 <div className="absolute left-0 right-0 z-menu grid grid-cols-4 gap-11 bg-white py-12 px-10 shadow-md">
-                    <NavigationItemColumn columnCategories={props.navigationItem.categoriesByColumns} />
+                    <NavigationItemColumn
+                        columnCategories={props.navigationItem.categoriesByColumns}
+                        onLinkClick={() => setIsMenuOpened(false)}
+                    />
                 </div>
             )}
         </li>
