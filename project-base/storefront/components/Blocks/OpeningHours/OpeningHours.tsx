@@ -17,7 +17,7 @@ export const OpeningHours: FC<{ openingHours: OpeningHoursApi }> = ({ openingHou
     ];
 
     return (
-        <div className={twMergeCustom('flex w-full flex-col items-center text-left', className)}>
+        <div className={twMergeCustom('flex w-full flex-col items-center gap-2 text-left', className)}>
             {openingHours.openingHoursOfDays.map(
                 ({ firstOpeningTime, firstClosingTime, secondOpeningTime, secondClosingTime, dayOfWeek }) => {
                     const isToday = openingHours.dayOfWeek === dayOfWeek;
@@ -30,7 +30,7 @@ export const OpeningHours: FC<{ openingHours: OpeningHoursApi }> = ({ openingHou
                         <div
                             key={dayOfWeek}
                             className={twJoin(
-                                'flex flex-col items-center py-1 md:flex-row',
+                                'flex w-full flex-col items-center md:w-auto md:flex-row',
                                 isToday ? 'font-bold' : 'font-normal',
                             )}
                         >

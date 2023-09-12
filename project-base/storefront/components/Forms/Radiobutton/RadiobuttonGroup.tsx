@@ -5,7 +5,7 @@ import { Control, useController } from 'react-hook-form';
 type RadiobuttonGroupProps = {
     name: string;
     render: (input: JSX.Element, key: string) => ReactElement<any, any> | null;
-    radiobuttons: Pick<RadiobuttonProps, 'disabled' | 'image' | 'label' | 'value' | 'dataTestId'>[];
+    radiobuttons: Pick<RadiobuttonProps, 'disabled' | 'label' | 'value' | 'dataTestId'>[];
     control: Control<any>;
     formName: string;
 };
