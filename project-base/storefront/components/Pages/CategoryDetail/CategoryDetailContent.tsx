@@ -82,11 +82,11 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                         className="mb-6"
                     />
 
-                    {category.readyCategorySeoMixLinks.length && (
+                    {!!category.readyCategorySeoMixLinks.length && (
                         <AdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
                     )}
 
-                    {category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
+                    {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
                     <div className="flex flex-col gap-3 sm:flex-row">
                         <div
