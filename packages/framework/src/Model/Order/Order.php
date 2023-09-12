@@ -313,6 +313,7 @@ class Order
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
         $this->origin = $orderData->origin;
         $this->uuid = $orderData->uuid ?: Uuid::uuid4()->toString();
+        $this->setTotalPrice(new OrderTotalPrice(Money::zero(), Money::zero(), Money::zero()));
     }
 
     /**

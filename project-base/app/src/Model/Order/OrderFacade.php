@@ -312,6 +312,9 @@ class OrderFacade extends BaseOrderFacade
                 $product,
             );
 
+            $this->em->persist($orderItem);
+            $this->em->flush();
+
             if ($quantifiedItemDiscount === null) {
                 continue;
             }
@@ -324,6 +327,8 @@ class OrderFacade extends BaseOrderFacade
                 $orderPreview->getPromoCodeIdentifier(),
             );
             $orderItem->setRelatedOrderItem($coupon);
+
+            $this->em->persist($coupon);
         }
     }
 
@@ -513,6 +518,7 @@ class OrderFacade extends BaseOrderFacade
         );
 
         $order->addItem($orderPayment);
+        $this->em->persist($orderPayment);
     }
 
     /**
@@ -552,6 +558,7 @@ class OrderFacade extends BaseOrderFacade
         );
 
         $order->addItem($orderTransport);
+        $this->em->persist($orderTransport);
     }
 
     /**
@@ -574,11 +581,13 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->vatPercent = '0';
         $orderItemData->quantity = 1;
 
-        $this->orderItemFactory->createProductByOrderItemData(
+        $roundingItem = $this->orderItemFactory->createProductByOrderItemData(
             $orderItemData,
             $order,
             null,
         );
+
+        $this->em->persist($roundingItem);
     }
 
     /**

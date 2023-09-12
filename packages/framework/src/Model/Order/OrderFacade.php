@@ -120,17 +120,15 @@ class OrderFacade
             $customerUser,
         );
 
-        $this->fillOrderItems($order, $orderPreview);
+        $this->em->persist($order);
+        $this->em->flush();
 
-        foreach ($order->getItems() as $orderItem) {
-            $this->em->persist($orderItem);
-        }
+        $this->fillOrderItems($order, $orderPreview);
 
         $order->setTotalPrice(
             $this->orderPriceCalculation->getOrderTotalPrice($order),
         );
 
-        $this->em->persist($order);
         $this->em->flush();
 
         return $order;
@@ -389,6 +387,9 @@ class OrderFacade
                 $product,
             );
 
+            $this->em->persist($orderItem);
+            $this->em->flush();
+
             if ($quantifiedItemDiscount !== null) {
                 $this->addOrderItemDiscount(
                     $orderItem,
@@ -490,7 +491,7 @@ class OrderFacade
             $orderItem->getName(),
         );
 
-        $this->orderItemFactory->createProduct(
+        $discount = $this->orderItemFactory->createProduct(
             $orderItem->getOrder(),
             $name,
             $quantifiedItemDiscount->inverse(),
@@ -500,6 +501,8 @@ class OrderFacade
             null,
             null,
         );
+
+        $this->em->persist($discount);
     }
 
     /**
