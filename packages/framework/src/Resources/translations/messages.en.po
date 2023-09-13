@@ -2251,6 +2251,9 @@ msgstr ""
 msgid "The change will be applied to products in 10 minutes"
 msgstr ""
 
+msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
+msgstr ""
+
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr ""
 

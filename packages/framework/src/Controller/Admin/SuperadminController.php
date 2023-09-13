@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
-use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
-use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
 use Shopsys\FrameworkBundle\Form\Admin\Module\ModulesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\InputPriceTypeFormType;
@@ -21,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\RequestContext;
 
 class SuperadminController extends AdminBaseController
 {
@@ -30,7 +27,6 @@ class SuperadminController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Pricing\DelayedPricingSetting $delayedPricingSetting
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
@@ -42,7 +38,6 @@ class SuperadminController extends AdminBaseController
         protected readonly ModuleFacade $moduleFacade,
         protected readonly PricingSetting $pricingSetting,
         protected readonly DelayedPricingSetting $delayedPricingSetting,
-        protected readonly GridFactory $gridFactory,
         protected readonly Localization $localization,
         protected readonly LocalizedRouterFactory $localizedRouterFactory,
         protected readonly MailSettingFacade $mailSettingFacade,
@@ -95,42 +90,7 @@ class SuperadminController extends AdminBaseController
      */
     public function urlsAction()
     {
-        $allLocales = $this->localization->getLocalesOfAllDomains();
-        $dataSource = new ArrayDataSource($this->loadDataForUrls($allLocales));
-
-        $grid = $this->gridFactory->create('urlsList', $dataSource);
-
-        foreach ($allLocales as $locale) {
-            $grid->addColumn($locale, $locale, $this->localization->getLanguageName($locale));
-        }
-
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/urlsListGrid.html.twig', [
-            'gridView' => $grid->createView(),
-        ]);
-    }
-
-    /**
-     * @param array $locales
-     * @return array
-     */
-    protected function loadDataForUrls(array $locales)
-    {
-        $data = [];
-        $requestContext = new RequestContext();
-
-        foreach ($locales as $locale) {
-            $rowIndex = 0;
-            $allRoutes = $this->localizedRouterFactory->getRouter($locale, $requestContext)
-                ->getRouteCollection()
-                ->all();
-
-            foreach ($allRoutes as $route) {
-                $data[$rowIndex][$locale] = $route->getPath();
-                $rowIndex++;
-            }
-        }
-
-        return $data;
+        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/urlsListGrid.html.twig');
     }
 
     /**

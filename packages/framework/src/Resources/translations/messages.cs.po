@@ -2251,6 +2251,9 @@ msgstr "Obchodní podmínky"
 msgid "The change will be applied to products in 10 minutes"
 msgstr "Změna se u zboží projeví do 10 minut"
 
+msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
+msgstr "Aktuální seznam URL adres lze nalézt v repozitáři projektu v souboru \"storefront/config/staticRewritePaths.js\"."
+
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. Státy se stejnou prioritou budou seřazeny abecedně."
 
