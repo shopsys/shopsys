@@ -61,7 +61,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                     <div
                         key={address.uuid}
                         className={twJoin(
-                            'relative mb-5 flex w-full flex-row flex-wrap rounded border border-grey p-5',
+                            'mb-5 flex w-full items-center justify-between rounded border border-grey p-5',
                             defaultDeliveryAddress?.uuid === address.uuid
                                 ? 'border-primary bg-greyVeryLight'
                                 : 'cursor-pointer',
@@ -81,7 +81,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                             <br />
                             {address.telephone && (
                                 <>
-                                    <PhoneIcon className="relative top-[2px] mr-1" />
+                                    <PhoneIcon className="mr-1" />
                                     {address.telephone}
                                 </>
                             )}
@@ -89,7 +89,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
 
                         <RemoveIcon
                             onClick={() => setAddressToBeDeleted(address.uuid)}
-                            className="absolute right-5 top-5 w-3 cursor-pointer text-greyLight hover:text-red"
+                            className="w-7 shrink-0 cursor-pointer p-2 text-greyLight hover:text-red"
                         />
                     </div>
                 ))}
