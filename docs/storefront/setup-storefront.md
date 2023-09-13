@@ -10,10 +10,10 @@ If Docker way is too robust for you or you do not need the whole application run
 With Docker, you have Shopsys Platform Storefront already running.
 Storefront is running on <http://127.0.0.1:3000>
 
-### Restart PNPM
+### Restart Next
 
-When you change `next.config.js` file, and you want the new settings to be applied, you need to restart PNPM.
-You might also want to restart PNPM when something is not working correctly.
+When you change `next.config.js` file, and you want the new settings to be applied, you need to restart the Next application.
+You might also want to restart it when something is not working correctly.
 In such cases, you do not need to stop all running containers and start them again, just to recreate container of the Storefront.
 To do that, run this command outside the container:
 
