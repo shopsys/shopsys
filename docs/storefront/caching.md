@@ -1,18 +1,16 @@
 # Caching
 
-We use several ways for caching layer.
+We use several caching layers. Each of them serves a different purpose. Whereas the Urql cache exchange is present in the client's browser, Redis is present on the server and is shared among all users.
 
 ## 1. Urql cache exchange
 
-TODO
-
 ## 2. Redis GraphQL cache
 
-This cache is used for selected queries and is intended for server side only. The reason is to improve server side performance of the Storefront.
+This cache is used for selected queries and is intended for server-side only. The goal is to improve server-side performance of the Storefront.
 
 ### How does it work
 
-The cache is set via the graphql directive `@_redisCache` which accepts TTL in seconds.
+The cache is set via a graphql directive `@_redisCache` which accepts TTL in seconds.
 
 The custom URQl fetcher tries to read the data from the cache, if it does not find it, it calls the API.
 
@@ -20,7 +18,7 @@ The cache can be deactivated (e.g. for development purposes) by setting `GRAPHQL
 
 ### How to use it
 
-To apply cache to some query, simply set the `@_redisCache` directive on the query.
+To apply cache to a query, simply set the `@_redisCache` directive on it.
 
 #### Example
 

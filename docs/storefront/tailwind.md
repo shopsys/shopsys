@@ -1,14 +1,14 @@
 # Tailwind CSS
 
-For styling purposes we use [Tailwind CSS](https://tailwindcss.com/) framework.
+For styling purposes we use the [Tailwind CSS](https://tailwindcss.com/) framework.
 
-When it's better to use another solution (add rule to CSS file or include inline `style`) we don't restrict you to use what you think is the best for your case.
+When it's better to use other solutions (add rules to a CSS file or include in inline `style`) we don't rescrict you and you can use what you think is the best for your case.
 
 ## Working with classNames
 
-Sometimes you need to implement more complex logic then just put simple className strings. Then we have two utilities `twJoin` and `twMergeCustom` to help you solve this.
+Sometimes you need to implement a more complex logic than just putting a simple className string. Then we have two utilities: `twJoin` and `twMergeCustom` to help you solve this.
 
-`twJoin` you can use in case you just want to split classNames into several groups for better readability.
+You can use `twJoin` in case you just want to split classNames into several groups for better readability.
 
 ```tsx
 <div className={twJoin('w-8 text-red', 'hover:text-blue hover:scale-125')}>
@@ -16,7 +16,7 @@ Sometimes you need to implement more complex logic then just put simple classNam
 </div>
 ```
 
-`twMergeCustom` you use in case you would need to conditionally render classNames or even better case would be combining static classNames with classNames from the props. Here is a simplified usage of the usual use case.
+You can use `twMergeCustom` in case you need to conditionally render classNames or to combine static classNames with classNames from the props. Here is a simplified example of a usual usecase.
 
 ```tsx
 <div
@@ -32,7 +32,7 @@ Sometimes you need to implement more complex logic then just put simple classNam
 
 ## Usage of Tailwind classes outside of className prop
 
-It's not necessary but highly recommended to add these lines to the user settings for your IDE.
+It's not necessary, but highly recommended, to add these lines to the user settings in your IDE.
 
 ```json
   "tailwindCSS.experimental.classRegex": [
@@ -42,9 +42,9 @@ It's not necessary but highly recommended to add these lines to the user setting
   ]
 ```
 
-This allows you to use Tailwind IntelliSense also in variables (not only in `className` props). Name of the variable needs to be consisted of the `TwClass` string (like `childrenTwClass`) It is useful for several cases:
+This allows you to use Tailwind IntelliSense also in variables (not olny in `className` props). Name of the variable needs to consist of the `TwClass` string (like `childrenTwClass`) It is useful for several cases:
 
-- Where you have to pass multiple classNames to the component. For example `className` for wrapper and at the same time `className` for child components in the loop.
+- When you have to pass multiple classNames to a component. For example `className` for a wrapper and at the same time `className` for a child component in a loop.
 
 ```tsx
 const simpleNavigationItemTwClass = 'lg:justify-center text-center'

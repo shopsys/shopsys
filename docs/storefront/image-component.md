@@ -1,13 +1,13 @@
 # Image Component
 
-UI component to show images served by API with correct sizes on different devices.
+UI component to show images served by the API with correct sizes on different devices.
 
 ## Components props
 
-- **image** - ImageSizesFragmentApi - nullable, property served from API
-- **alt** - string - alternative text for image
-- **type** - string - size variant of image according to images.yaml (example)
-- **loading** - optional - html loading attribute to specific image loading behavior (auto, lazy, eager)
+- **image** - `ImageSizesFragmentApi` - nullable, property served from the API
+- **alt** - `string` - alternative text for image
+- **type** - `string` - size variant of image according to `images.yaml` (example)
+- **loading** - optional - HTML loading attribute for a specific image loading behavior (auto, lazy, eager)
 - **testId** - optional - string, used for testing
 
 ## Code example

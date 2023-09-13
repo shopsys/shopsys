@@ -32,14 +32,14 @@ npx cypress run
 
 ## Tests Results
 
-Text results you should be able to see in your terminal after Cypress finishes the testing.
+Text results you should be able to see in your terminal after Cypress finish the testing.
 
 There are also generated videos (for all scenarios) in folder `/project-base/storefront/cypress/videos` and screenshots (for failed scenarios) in folder `/project-base/storefront/cypress/screenshots`.
 
 ## Test scenarios
 
-Test scenarios are placed in the folder `/project-base/storefront/cypress/integration`. They are splitted into two folders `/Functions` and `/Tests`.
+Test scenarios are places in folder `/project-base/storefront/cypress/integration`. They are splitted into two folder `/Functions` and `/Tests`.
 
-**Functions** are meant for reusable actions used in test scenarios.
+**Functions** are meant for reusable actions used in tests scenarios.
 
-**Tests** are scenarios itself splitted into several folders according to the tested part in Storefront application.
+**Tests** are scenarios itself splitted into several folders according to tested part in Storefront application.

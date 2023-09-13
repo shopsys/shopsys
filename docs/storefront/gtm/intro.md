@@ -168,7 +168,7 @@ export const gtmSafePushEvent = (
 
 ## getGtmUserInfo
 
-Basic function used to get the user information in a GTM-suitable format. It takes care of dispatching the initial creation based on the contact information from order and it also handles overwriting of these information with credentials of a logged-in customer.
+Basic function used to get the user information in a GTM-suitable format. It takes care of dispatching the initial creation based on the contact information from order and it also handles overwriting of these information with credentials of an authenticated customer.
 
 ```ts
 export const getGtmUserInfo = (
@@ -233,8 +233,8 @@ const getGtmUserType = (
 Method used to overwrite default information about the customer with the information from his account. Here the logic is following:
 
 - `status`, `id`, and `group` are always overwritten
-- other properties are only overwritten, if they haven't been filled before
-- `type` is filled in based on the previous value of the field and on the value currently signed-in customer
+- other properties are only overwritten if they haven't been filled before
+- `type` is filled in based on the previous value of the field and on the value currently authenticated customer
 
 ```ts
 const overwriteGtmUserInfoWithLoggedCustomer = (

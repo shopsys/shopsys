@@ -34,10 +34,9 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
 
 ## \_\_typename in the GraphQL fragments
 
-- we use the `__typename` for business logic a lot in our codebase
+- we use the `__typename` for business logic in our codebase
 - there is a bug (or a behavior) in the URQl package that causes the `__typename` to be missing when it is read from the cache
-- to ensure that the `__typename` is always available, we add it to the fragments
--
+- to ensure that the `__typename` is always available, we add it to all fragments
 
 ## Don't use default exports and index files
 
@@ -51,7 +50,7 @@ export const MySuperComponent = () => {
 
 ## Don't spread props everywhere
 
-- spread only the props that are needed or destructure all props and use only the ones that are needed
+- spread only the props that are needed, or destructure all props and use only the ones that are needed
 
 wrong way:
 
