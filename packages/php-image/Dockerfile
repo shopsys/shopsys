@@ -10,6 +10,7 @@ ARG DEBIAN_VERSION
 # autoconf needed to install "Redis" extension
 # bash-completion for Phing target completion
 # ca-certificates to ensure certificates are up to date
+# cron to be able to schedule and automate recurring tasks and jobs
 # gnupg and g++ for gd extension
 # git for computing diffs and for npm to download packages
 # htop for quick monitoring
@@ -31,6 +32,7 @@ RUN apt-get update && \
         autoconf \
         bash-completion \
         ca-certificates \
+        cron \
         g++ \
         git \
         gnupg \
