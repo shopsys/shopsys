@@ -37,7 +37,13 @@ class ErrorCodeSubscriber implements EventSubscriberInterface
         }
 
         $formattedError = $event->getFormattedError();
-        $extensions = $formattedError->offsetGet('extensions');
+
+        $extensions = [];
+
+        if ($formattedError->offsetExists('extensions')) {
+            $extensions = $formattedError->offsetGet('extensions');
+        }
+
         $extensions['userCode'] = $userCode;
         $extensions['code'] = $code;
         $formattedError->offsetSet('extensions', $extensions);

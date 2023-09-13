@@ -48,7 +48,6 @@ class SeoPageTest extends GraphQlTestCase
 
         $extensions = $errors[0]['extensions'];
 
-        $this->assertSame('user', $extensions['category']);
         $this->assertSame('seo-page-not-found', $extensions['userCode']);
         $this->assertSame(404, $extensions['code']);
     }
