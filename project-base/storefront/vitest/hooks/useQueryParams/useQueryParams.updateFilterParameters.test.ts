@@ -29,6 +29,7 @@ const DEFAULT_SEO_CATEGORY_PARAMETERS = new Map([
     ['default-parameter-2', new Set(['default-parameter-value-3', 'default-parameter-value-4'])],
 ]);
 const DEFAULT_SEO_CATEGORY_FLAGS = new Set(['default-flag-1', 'default-flag-2']);
+const DEFAULT_SEO_CATEGORY_BRANDS = new Set(['default-brand-1', 'default-brand-2']);
 
 vi.mock('helpers/filterOptions/seoCategories', async (importOriginal) => {
     const actualSeoCategoriesModule = await importOriginal<any>();
@@ -516,6 +517,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
             return selector({
                 defaultProductFiltersMap: {
                     sort: ProductOrderingModeEnumApi.PriceAscApi,
+                    brands: DEFAULT_SEO_CATEGORY_BRANDS,
                     flags: DEFAULT_SEO_CATEGORY_FLAGS,
                     parameters: DEFAULT_SEO_CATEGORY_PARAMETERS,
                 },
@@ -531,7 +533,8 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                 query: {
                     categorySlug: ORIGINAL_CATEGORY_URL,
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        flags: ['default-flag-1', 'default-flag-2'],
+                        brands: Array.from(DEFAULT_SEO_CATEGORY_BRANDS),
+                        flags: Array.from(DEFAULT_SEO_CATEGORY_FLAGS),
                         parameters: [
                             {
                                 parameter: 'default-parameter-1',
@@ -550,7 +553,8 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                 pathname: ORIGINAL_CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        flags: ['default-flag-1', 'default-flag-2'],
+                        brands: Array.from(DEFAULT_SEO_CATEGORY_BRANDS),
+                        flags: Array.from(DEFAULT_SEO_CATEGORY_FLAGS),
                         parameters: [
                             {
                                 parameter: 'default-parameter-1',
@@ -631,6 +635,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                 defaultProductFiltersMap: {
                     sort: ProductOrderingModeEnumApi.PriceAscApi,
                     flags: DEFAULT_SEO_CATEGORY_FLAGS,
+                    brands: DEFAULT_SEO_CATEGORY_BRANDS,
                     parameters: DEFAULT_SEO_CATEGORY_PARAMETERS,
                 },
                 originalCategorySlug: ORIGINAL_CATEGORY_URL,
@@ -645,7 +650,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                 query: {
                     categorySlug: ORIGINAL_CATEGORY_URL,
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        flags: ['default-flag-1', 'default-flag-2'],
+                        flags: Array.from(DEFAULT_SEO_CATEGORY_FLAGS),
                         parameters: [
                             {
                                 parameter: 'default-parameter-1',
@@ -669,7 +674,7 @@ describe('useQueryParams().updateFilterParameters tests', () => {
                 pathname: ORIGINAL_CATEGORY_URL,
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
-                        flags: ['default-flag-1', 'default-flag-2'],
+                        flags: Array.from(DEFAULT_SEO_CATEGORY_FLAGS),
                         parameters: [
                             {
                                 parameter: 'default-parameter-1',

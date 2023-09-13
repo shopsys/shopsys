@@ -28,6 +28,7 @@ export const SEO_SENSITIVE_FILTERS = {
     AVAILABILITY: false,
     PRICE: false,
     FLAGS: true,
+    BRANDS: false,
     PARAMETERS: {
         CHECKBOX: true,
         SLIDER: false,
@@ -36,6 +37,7 @@ export const SEO_SENSITIVE_FILTERS = {
 
 export const getEmptyDefaultProductFiltersMap = (): DefaultProductFiltersMapType => ({
     flags: new Set(),
+    brands: new Set(),
     sort: DEFAULT_SORT,
     parameters: new Map(),
 });
@@ -83,6 +85,18 @@ export const getChangedDefaultFiltersAfterFlagChange = (
 ): FilterOptionsUrlQueryType => {
     if (!defaultProductFiltersMap.flags.delete(changedFlagUuid)) {
         defaultProductFiltersMap.flags.add(changedFlagUuid);
+    }
+
+    return getChangedDefaultFilters(defaultProductFiltersMap, filter);
+};
+
+export const getChangedDefaultFiltersAfterBrandChange = (
+    defaultProductFiltersMap: DefaultProductFiltersMapType,
+    filter: FilterOptionsUrlQueryType | null,
+    changedBrandUuid: string,
+): FilterOptionsUrlQueryType => {
+    if (!defaultProductFiltersMap.brands.delete(changedBrandUuid)) {
+        defaultProductFiltersMap.brands.add(changedBrandUuid);
     }
 
     return getChangedDefaultFilters(defaultProductFiltersMap, filter);
@@ -175,6 +189,7 @@ export const getChangedDefaultFilters = (
     filter: FilterOptionsUrlQueryType | null,
 ) => ({
     ...filter,
+    brands: Array.from(updatedProductFiltersMap.brands),
     flags: Array.from(updatedProductFiltersMap.flags),
     parameters: Array.from(updatedProductFiltersMap.parameters)
         .map(([updatedParameterUuid, updatedParameterValues]) => ({

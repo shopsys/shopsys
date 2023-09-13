@@ -7,6 +7,7 @@ import {
     DEFAULT_SORT,
     getChangedDefaultFilters,
     getChangedDefaultFiltersAfterAvailabilityChange,
+    getChangedDefaultFiltersAfterBrandChange,
     getChangedDefaultFiltersAfterFlagChange,
     getChangedDefaultFiltersAfterMaximumPriceChange,
     getChangedDefaultFiltersAfterMinimumPriceChange,
@@ -158,6 +159,16 @@ export const useQueryParams = () => {
     };
 
     const updateFilterBrands = (selectedUuid: string) => {
+        if (SEO_SENSITIVE_FILTERS.BRANDS && originalCategorySlug) {
+            pushQueryFilter(
+                getChangedDefaultFiltersAfterBrandChange(defaultProductFiltersMap, filter, selectedUuid),
+                originalCategorySlug,
+                defaultProductFiltersMap.sort,
+            );
+
+            return;
+        }
+
         pushQueryFilter({ ...filter, brands: handleUpdateFilter(selectedUuid, filter?.brands) });
     };
 
