@@ -16,7 +16,7 @@ Proper options for authExchange can be obtained with `getAuthExchangeOptions` fr
 Following options are created for `authExchange`:
 
 `addAuthToOperation`
-Responsible for adding access token as `Authorization: Bearer xxx` header to each request made with urql.
+Responsible for adding access token as `Authorization: Bearer xxx` header to each request made with URQL.
 Authorization header is not added when no `authState` exists (no previously authenticated user) or when `RefreshTokens` mutation is performed.
 Because when `RefreshToken` mutation is performed, access token can be already invalid and FE API blocks every request with invalid access token.
 
@@ -26,7 +26,7 @@ Check whether error returned from the API is an authentication error (e.g. HTTP 
 `refreshAuth`
 This function parses the refresh token from the token cookie and tries to refresh the access token. It uses `setTokensToCookies` to both refresh them and then store them in a cookie. In the case of a successful refresh, tokens are immediately available for subsequent requests.
 
-While the urql is refreshing tokens, all other calls are paused.
+While the URQL is refreshing tokens, all other calls are paused.
 After successful refresh, previously forbidden requests are re-executed with the new access token.
 
 For logging the user in/out we can use `useAuth` hook.

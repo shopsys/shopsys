@@ -35,7 +35,7 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
 ## \_\_typename in the GraphQL fragments
 
 - we use the `__typename` for business logic in our codebase
-- there is a bug (or a behavior) in the URQl package that causes the `__typename` to be missing when it is read from the cache
+- there is a bug (or a behavior) in the URQL package that causes the `__typename` to be missing when it is read from the cache
 - to ensure that the `__typename` is always available, we add it to all fragments
 
 ## Don't use default exports and index files

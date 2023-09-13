@@ -2,7 +2,7 @@
 
 On Storefront we use and consume the backend GraphQL API. We don't use raw GraphQL, but we write our queries and mutations and then generate the hooks and types with a library (`graphql-code-generator`) .
 
-Under the hood of `graphql-code-generator` , the `urql` GraphQL client is used. We use also `urql` for other chores, such as for caching the GraphQL layer (see the [docs](./caching.md) for more info about our caching logic).
+Under the hood of `graphql-code-generator` , the `urql` GraphQL client is used. We also use URQL for other chores, such as for caching the GraphQL layer (see the [docs](./caching.md) for more info about our caching logic).
 
 ## Structure
 
