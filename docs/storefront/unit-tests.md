@@ -37,7 +37,7 @@ pnpm test--update
 
 ## Config
 
-Before diving deep into the cookbook for storefront unit tests, there are a couple of interesting vitest config options which should be explained.
+Before diving deep into the cookbook for Storefront unit tests, there are a couple of interesting vitest config options which should be explained.
 
 You can read more about the config options in the [Vitest docs](https://vitest.dev/config/).
 

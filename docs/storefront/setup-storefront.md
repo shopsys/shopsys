@@ -14,7 +14,7 @@ Storefront is running on <http://127.0.0.1:3000>
 
 When you change `next.config.js` file, and you want the new settings to be applied, you need to restart PNPM.
 You might also want to restart PNPM when something is not working correctly.
-In such cases, you do not need to stop all running containers and start them again, just to recreate container of the storefront.
+In such cases, you do not need to stop all running containers and start them again, just to recreate container of the Storefront.
 To do that, run this command outside the container:
 
 ```bash
@@ -39,7 +39,7 @@ After running this command, open <http://127.0.0.1:3000/> in your browser.
 
 ## Additional commands available for both ways
 
-In Docker way they need to be run inside the storefront container.
+In Docker way they need to be run inside the Storefront container.
 
 ### Build the app for production
 
