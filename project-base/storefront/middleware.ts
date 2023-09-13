@@ -43,7 +43,7 @@ export const middleware: NextMiddleware = async (request) => {
         });
 
         if (!pageTypeResponse.ok) {
-            return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url));
+            return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), { status: 404 });
         }
 
         const pageTypeParsedResponse: { route: FriendlyPageTypesValue; redirectTo: string } =
@@ -60,7 +60,10 @@ export const middleware: NextMiddleware = async (request) => {
     } catch (e) {
         logException(e);
 
-        return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url));
+        return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), {
+            status: 500,
+            statusText: 'Middleware runtime error',
+        });
     }
 };
 
@@ -81,7 +84,7 @@ const rewriteDynamicPages = (pageType: FriendlyPageTypesValue, rewriteUrl: strin
         host,
     );
 
-    return NextResponse.rewrite(newUrl);
+    return NextResponse.rewrite(newUrl, pageTypeKey ? undefined : { status: 404 });
 };
 
 const getHostFromRequest = (request: NextRequest): string => {

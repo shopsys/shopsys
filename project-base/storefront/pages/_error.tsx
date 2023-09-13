@@ -26,9 +26,10 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ hasGetInitialPropsRun, err, statu
 };
 
 ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context: any) => {
+    const statusCode = context.res.statusCode || 500;
     const errorInitialProps: any = await NextErrorComponent.getInitialProps({
         res: context.res,
-        err: context.err,
+        err: context.err || statusCode === 500 ? context.res.statusText : null,
     } as any);
     const serverSideProps = await initServerSideProps({ context, redisClient, domainConfig, t });
     // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
@@ -48,22 +49,18 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
     //    Boundary. Read more about what types of exceptions are caught by Error
     //    Boundaries: https://reactjs.org/docs/error-boundaries.html
 
-    if (context.err) {
-        logException(context.err);
-    } else {
-        // If this point is reached, getInitialProps was called without any
-        // information about what the error might be. This is unexpected and may
-        // indicate a bug introduced in Next.js, so record it in Sentry
-        logException(new Error(`_error.js getInitialProps missing data at path: ${context.asPath}`));
+    if (statusCode !== 404) {
+        logException(context.err || new Error(`_error.js getInitialProps missing data at path: ${context.asPath}`));
     }
 
     // Flushing before returning is necessary if deploying to Vercel, see
     // https://vercel.com/docs/platform/limits#streaming-responses
     await flush(2000);
+    const props = 'props' in serverSideProps ? serverSideProps.props : {};
 
     return {
         ...errorPageProps,
-        ...('props' in serverSideProps ? serverSideProps.props : {}),
+        ...{ ...props, statusCode },
     };
 });
 
