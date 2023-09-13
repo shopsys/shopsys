@@ -1,6 +1,4 @@
 const Encore = require('@symfony/webpack-encore');
-const EventHooksPlugin = require('event-hooks-webpack-plugin');
-const processTrans = require('./assets/js/commands/translations/process');
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const StylelintPlugin = require('stylelint-webpack-plugin');
@@ -33,25 +31,6 @@ Encore
     .configureWatchOptions(function (watchOptions) {
         watchOptions.ignored = '**/*.json';
     })
-    .addPlugin(new EventHooksPlugin({
-        beforeRun: () => {
-            const dirWithJsFiles = [
-                sources.getFrameworkNodeModulesDir() + '/js/**/*.js',
-                './assets/js/**/*.js'
-            ];
-            const dirWithTranslations = [
-                sources.getFrameworkVendorDir() + '/src/Resources/translations/*.po',
-                './translations/*.po',
-            ];
-            const outputDirForExportedTranslations = './assets/js/';
-
-            try {
-                processTrans(dirWithJsFiles, dirWithTranslations, outputDirForExportedTranslations);
-            } catch (e) {
-                console.log('Parsing files for translations has failed.');
-            }
-        }
-    }))
     .addPlugin(new CopyPlugin({
         patterns: [
             {

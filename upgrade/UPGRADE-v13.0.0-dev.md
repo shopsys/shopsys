@@ -61,3 +61,5 @@ There you can find links to upgrade notes for other versions too.
         +       ?int $domainId = null
             ): void
         ```
+- fix and improve JS translations in administration ([#2779](https://github.com/shopsys/shopsys/pull/2779))
+    - see #project-base-diff to update your project
