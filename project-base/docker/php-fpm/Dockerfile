@@ -1,21 +1,40 @@
-FROM php:8.1-fpm-bullseye as base
+ARG DEBIAN_VERSION=bullseye
+ARG NODE_MAJOR=16
+
+FROM php:8.1-fpm-${DEBIAN_VERSION} as base
 
 ARG project_root=.
+ARG NODE_MAJOR
+ARG DEBIAN_VERSION
 
 # install required tools
-# git for computing diffs
+# git for computing diffs and for npm to download packages
 # wget for installation of other tools
 # gnupg and g++ for gd extension
 # locales for locale-gen command
 # apt-utils so package configuartion does not get delayed
 # unzip to ommit composer zip packages corruption
 # dialog for apt-get to be
-# git for computing diffs and for npm to download packages
-RUN apt-get update && apt-get install -y wget gnupg g++ locales unzip dialog apt-utils git && apt-get clean
+# ca-certificates to ensure certificates are up to date
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    wget \
+    gnupg \
+    g++ \
+    locales \
+    unzip \
+    ca-certificates \
+    cron \
+    dialog \
+    apt-utils \
+    git && \
+    apt-get clean
 
 # Install NodeJS
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get update && apt-get install -y nodejs && apt-get clean
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && apt-get install nodejs -y && apt-get clean
 
 # install Composer
 COPY ${project_root}/docker/php-fpm/docker-install-composer /usr/local/bin/docker-install-composer
@@ -29,7 +48,7 @@ RUN chmod +x /usr/local/bin/docker-install-composer && \
 # libpg-dev for connection to postgres database
 # autoconf needed by "redis" extension
 RUN apt-get update && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends \
     bash-completion \
     libpng-dev \
     libjpeg-dev \
@@ -58,8 +77,8 @@ RUN docker-php-ext-install \
     zip
 
 # install PostgreSQl client for dumping database
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-    sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -sc)-pgdg main" > /etc/apt/sources.list.d/PostgreSQL.list' && \
+RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/keyrings/postgresql.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/postgresql.gpg] https://apt.postgresql.org/pub/repos/apt/ $DEBIAN_VERSION-pgdg main" | tee /etc/apt/sources.list.d/PostgreSQL.list && \
     apt-get update && apt-get install -y postgresql-12 postgresql-client-12 && apt-get clean
 
 # install redis extension
@@ -133,6 +152,11 @@ COPY --chown=www-data:www-data / /var/www/html
 RUN composer install --optimize-autoloader --no-interaction --no-progress --no-dev
 
 RUN php phing build-deploy-part-1-db-independent clean
+
+
+FROM production as production-project
+
+RUN chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh merge
 
 ########################################################################################################################
 
