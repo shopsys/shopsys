@@ -174,10 +174,16 @@ Especially useful when you need to change the structure and don't need to have f
 Exports all data for index to Elasticsearch.
 
 !!! note
-From v9.1.1 and higher the export command also run migration for Elasticsearch structure when necessary
+    From v9.1.1 and higher the export command also run migration for Elasticsearch structure when necessary
+
+!!! note
+    If you want to export only data of one domain e.g. when you are introducing new domain in production, you can use `php bin/console shopsys:elasticsearch:data-export --domain-id=<DOMAIN_ID>`
 
 #### elasticsearch-export-changed
 Exports only changed data for index to Elasticsearch.
+
+!!! note
+    If you want to export only data of one domain e.g. when you are introducing new domain in production, you can use `php bin/console shopsys:elasticsearch:changed-data-export --domain-id=<DOMAIN_ID>`
 
 ### Coding standards
 
