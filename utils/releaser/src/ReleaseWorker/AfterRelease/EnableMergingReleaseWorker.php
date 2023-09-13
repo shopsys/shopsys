@@ -32,7 +32,7 @@ final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
     ): void {
         $this->symfonyStyle->note(
             sprintf(
-                'Enable merging to "%s" - let your colleagues know in "team_ssfw_devs" Slack channel, and erase the red cross from the "merge" column on the whiteboard in the office.',
+                'Enable merging to "%s" - let your colleagues know in "team_ssfw" Slack channel, and erase the red cross from the "merge" column on the whiteboard in the office.',
                 $this->currentBranchName,
             ),
         );
