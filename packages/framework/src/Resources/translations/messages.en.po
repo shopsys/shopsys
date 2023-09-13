@@ -454,6 +454,9 @@ msgstr ""
 msgid "Cookies information settings modified."
 msgstr ""
 
+msgid "Copied to clipboard!"
+msgstr ""
+
 msgid "Countries"
 msgstr ""
 
