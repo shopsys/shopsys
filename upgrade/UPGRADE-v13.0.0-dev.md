@@ -51,3 +51,13 @@ There you can find links to upgrade notes for other versions too.
     - already existing articles with this placement will be migrated to `Shopsys\FrameworkBundle\Model\Article\Article::PLACEMENT_NONE` placement
         - if you intend to keep using this placement, you can skip DB Migration `Shopsys\FrameworkBundle\Migrations\Version20230907132822` 
     - see #project-base-diff to update your project
+- update your Elasticsearch Commands to support optional domainId ([#2780](https://github.com/shopsys/shopsys/pull/2780))
+    - `\Shopsys\FrameworkBundle\Command\Elasticsearch\AbstractElasticsearchIndexCommand`
+        - `executeForIndex()` changed its interface
+        ```diff
+            protected function executeForIndex(
+                OutputInterface $output,
+                AbstractIndex $index,
+        +       ?int $domainId = null
+            ): void
+        ```
