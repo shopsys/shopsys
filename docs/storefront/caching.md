@@ -49,18 +49,14 @@ The cache is configured with:
 ### Utility Functions
 
 - `invalidateFields`: Given a cache instance and a list of fields, this function invalidates these fields in the cache. This can be useful after certain operations, like a user login or logout, where you might want to invalidate cached data to fetch fresh data from the server.
-  
 - `manuallyUpdateCartFragment`: Manually updates the cart fragment in the cache.
-
 - `clearComparisonQueryFragment` & `clearWishlistQueryFragment`: Clear the comparison or wishlist fragment from the cache.
-
 - `getOptimisticChangeTransportInCartResult` & `getOptimisticChangePaymentInCartResult`: These functions provide the optimistic results for the respective mutations.
-
 - `getPaymentFromTransport`: Helper function to get a specific payment method from a transport based on its UUID.
 
 When using this module, ensure you're familiar with the URQL graph cache and its related concepts. It's also crucial to be aware of the GraphQL schema and the generated GraphQL types, as they play a vital role in how the cache is managed.
 
-## 2. Redis GraphQL cache
+## Redis GraphQL cache
 
 This cache is used for selected queries and is intended for server-side only. The goal is to improve server-side performance of the Storefront.
 
