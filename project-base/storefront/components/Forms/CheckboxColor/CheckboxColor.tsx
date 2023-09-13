@@ -1,7 +1,7 @@
 import { ColorLabelWrapper } from 'components/Forms/Lib/ColorLabelWrapper';
 import { InputHTMLAttributes } from 'react';
 import tinycolor from 'tinycolor2';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,

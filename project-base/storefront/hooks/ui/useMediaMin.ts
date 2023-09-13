@@ -1,4 +1,4 @@
-import { mobileFirstSizes } from 'components/Theme/mediaQueries';
+import { mobileFirstSizes } from 'helpers/mediaQueries';
 import { useEffect, useState } from 'react';
 
 export const useMediaMin = (breakpoint: keyof typeof mobileFirstSizes, debounce = false): boolean | undefined => {

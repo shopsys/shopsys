@@ -1,6 +1,6 @@
 import { isElementVisible } from 'helpers/isElementVisible';
 import { SortIcon } from 'components/Basic/Icon/IconsSvg';
-import { mobileFirstSizes } from 'components/Theme/mediaQueries';
+import { mobileFirstSizes } from 'helpers/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { DEFAULT_SORT } from 'helpers/filterOptions/seoCategories';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';

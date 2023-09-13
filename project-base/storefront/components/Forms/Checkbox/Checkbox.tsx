@@ -1,7 +1,7 @@
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,

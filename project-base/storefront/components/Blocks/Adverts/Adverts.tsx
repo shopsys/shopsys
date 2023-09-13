@@ -2,7 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { isElementVisible } from 'helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { desktopFirstSizes } from 'helpers/mediaQueries';
 import { AdvertsFragmentApi, CategoryDetailFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';

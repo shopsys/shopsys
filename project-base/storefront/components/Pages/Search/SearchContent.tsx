@@ -3,7 +3,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
+import { desktopFirstSizes, mobileFirstSizes } from 'helpers/mediaQueries';
 import { SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';

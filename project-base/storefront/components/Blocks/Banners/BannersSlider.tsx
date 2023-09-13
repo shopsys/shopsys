@@ -5,7 +5,7 @@ import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import { useEffect, useRef, useState } from 'react';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { desktopFirstSizes } from 'helpers/mediaQueries';
 import Skeleton from 'react-loading-skeleton';
 
 type BannersSliderProps = {

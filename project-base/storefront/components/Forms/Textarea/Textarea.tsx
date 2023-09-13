@@ -1,7 +1,7 @@
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { forwardRef, TextareaHTMLAttributes } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
     TextareaHTMLAttributes<HTMLTextAreaElement>,

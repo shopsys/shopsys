@@ -1,6 +1,6 @@
 import { isElementVisible } from 'helpers/isElementVisible';
 import { PhoneIcon } from 'components/Basic/Icon/IconsSvg';
-import { mobileFirstSizes } from 'components/Theme/mediaQueries';
+import { mobileFirstSizes } from 'helpers/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useState } from 'react';
