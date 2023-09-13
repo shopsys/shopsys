@@ -88,9 +88,9 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
-                    <div className="flex flex-col gap-3 sm:flex-row">
+                    <div className="flex flex-col items-stretch gap-3 sm:flex-row">
                         <div
-                            className="relative flex w-full cursor-pointer flex-row items-center justify-center rounded bg-primary py-3 px-8 font-bold uppercase text-white vl:mb-3 vl:hidden"
+                            className="relative flex flex-1 cursor-pointer items-center justify-center rounded bg-primary p-3 font-bold uppercase text-white vl:mb-3 vl:hidden"
                             onClick={handlePanelOpenerClick}
                         >
                             <FilterIcon className="mr-3 w-6 font-bold text-white" />
@@ -100,6 +100,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                         <SortingBar
                             sorting={category.products.orderingMode}
                             totalCount={category.products.totalCount}
+                            className="flex-1"
                         />
                     </div>
 
