@@ -30,6 +30,8 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
     * Administration menu and grids.
 * [Frontend API](./frontend-api)
     * Information about the frontend GraphQL API dedicated for connecting external storefront or mobile app.
+* [Storefront](./storefront)
+    * Documentation for demo frontend client.
 * [Extensibility](./extensibility/index.md)
     * How to customize the behavior of Shopsys Platform to suit your needs.
 * [Automated Testing](./automated-testing/index.md)
