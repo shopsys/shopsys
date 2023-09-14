@@ -1,11 +1,11 @@
 # GTM Event Hooks
 
-These hooks are responsible for handling of asynchronous GTM events according to how React's lifecycle works. They do not return anything, just handle the asynchronous event. They are usually used for events such as page view or list view.
+These hooks are responsible for handling asynchronous GTM events according to how React's lifecycle works. They do not return anything, just handle the asynchronous event. They are usually used for events such as page views or list views.
 
 ## useGtmPaginatedProductListViewEvent
 
 Hook used to handle viewing of a paginated products list, e.g. category detail, brand detail, or flag detail.
-It is triggered every time page (and therefore products) change.
+It is triggered every time the page (and therefore products) change.
 
 ```ts
 export const useGtmPaginatedProductListViewEvent = (
@@ -18,8 +18,8 @@ export const useGtmPaginatedProductListViewEvent = (
 
 ## useGtmSliderProductListViewEvent
 
-Hook used to handle viewing of a products list inside a slider, such as promoted products on homepage.
-It is triggered every time page therefore products change.
+The hook is used to handle the viewing of a product list inside a slider, such as promoted products on the homepage.
+It is triggered every time the page, therefore products change.
 
 ```ts
 export const useGtmSliderProductListViewEvent = (
@@ -32,7 +32,7 @@ export const useGtmSliderProductListViewEvent = (
 
 ## useGtmAutocompleteResultsViewEvent
 
-Hook used to handle viewing of autocomplete search results. It is triggered every time the search keyword changes.
+Hook used to handle the viewing of autocomplete search results. It is triggered every time the search keyword changes.
 
 ```ts
 export const useGtmAutocompleteResultsViewEvent = (
@@ -46,7 +46,7 @@ export const useGtmAutocompleteResultsViewEvent = (
 
 ## useGtmPageViewEvent
 
-Basic hook used to handle viewing of a page. It is sometimes accompanied with one of the hooks below if the page is of a special type. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent` or `useGtmFriendlyPageViewEvent` based on the type of the page ('static' vs 'friendly URL').
+Basic hook used to handle viewing of a page. It is sometimes accompanied by one of the hooks below if the page is of a special type. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent` or `useGtmFriendlyPageViewEvent` based on the page type ('static' vs. 'friendly URL').
 
 ```ts
 export const useGtmPageViewEvent = (
@@ -59,7 +59,7 @@ export const useGtmPageViewEvent = (
 
 ## useGtmCartViewEvent
 
-Hook used to handle viewing of the cart page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
+Hook used to handle the viewing of the cart page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
 
 ```ts
 export const useGtmCartViewEvent = (
@@ -83,7 +83,7 @@ export const useGtmContactInformationPageViewEvent = (
 
 ## useGtmPaymentAndTransportPageViewEvent
 
-Hook used to handle viewing of the transport and payment page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
+Hook used to handle the viewing of the transport and payment page. The parameter used for this hook can be taken from `useGtmStaticPageViewEvent`.
 
 ```ts
 export const useGtmPaymentAndTransportPageViewEvent = (
@@ -95,7 +95,7 @@ export const useGtmPaymentAndTransportPageViewEvent = (
 
 ## useGtmProductDetailViewEvent
 
-Hook used to handle viewing of the product detail page.
+Hook used to handle the viewing of the product detail page.
 
 ```ts
 export const useGtmProductDetailViewEvent = (

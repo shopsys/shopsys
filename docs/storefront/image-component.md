@@ -1,6 +1,6 @@
 # Image Component
 
-UI component to show images served by the API with correct sizes on different devices.
+UI component shows images served by the API with correct sizes on different devices.
 
 ## Components props
 

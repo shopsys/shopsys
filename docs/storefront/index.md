@@ -1,6 +1,6 @@
 # Documentation for Shopsys Platform Storefront
 
-Storefront is a client for consuming and displaying data from [Frontend API](../frontend-api/introduction-to-frontend-api.md). These sections should help you answer all your questions:
+The Storefront is a client for consuming and displaying data from [Frontend API](../frontend-api/introduction-to-frontend-api.md). These sections should help you answer all your questions:
 
 - [Setup Storefront](./setup-storefront.md)
 - [Project Structure](./project-structure.md)

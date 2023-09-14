@@ -1,9 +1,9 @@
 # Setup Storefront
 
-There are two ways to use Shopsys Platform Storefront on your machine.
+There are two ways to use the Shopsys Platform Storefront on your machine.
 The first and easiest way is when you have installed your project using Docker.
 With Docker, you have everything running already.
-If Docker way is too robust for you or you do not need the whole application running, you can run Shopsys Platform Storefront natively.
+If Docker way is too robust for you or you do not need the whole application running, you can run the Shopsys Platform Storefront natively.
 
 ## Docker way
 
@@ -12,9 +12,9 @@ Storefront is running on <http://127.0.0.1:3000>
 
 ### Restart Next
 
-When you change `next.config.js` file, and you want the new settings to be applied, you need to restart the Next application.
-You might also want to restart it when something is not working correctly.
-In such cases, you do not need to stop all running containers and start them again, just to recreate container of the Storefront.
+When you change the `next.config.js` file, and you want the new settings to be applied, you need to restart the Next application.
+You can also restart it when something is not working correctly.
+In such cases, you do not need to stop all running containers and start them again just to recreate the container of the Storefront.
 To do that, run this command outside the container:
 
 ```bash

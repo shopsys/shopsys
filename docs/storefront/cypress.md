@@ -1,18 +1,18 @@
 # Cypress
 
-For E2E testing we use [Cypress](https://www.cypress.io/). It's available to be run in Docker or natively.
+For E2E testing, we use [Cypress](https://www.cypress.io/). It's available to be run in Docker or natively.
 
 ## Setup
 
 ### Run in Docker
 
-From root of the project run
+From the root of the project run
 
 ```bash
 make run-acceptance-tests
 ```
 
-This will prepare both backend and frontend for Cypress to be able to test scenarios on correct setup.
+This will prepare both the backend and frontend for Cypress to be able to test scenarios on the correct setup.
 
 ### Run natively
 
@@ -32,14 +32,14 @@ npx cypress run
 
 ## Tests Results
 
-Text results you should be able to see in your terminal after Cypress finish the testing.
+You should be able to see text results in your terminal after Cypress finishes the testing.
 
 There are also generated videos (for all scenarios) in folder `/project-base/storefront/cypress/videos` and screenshots (for failed scenarios) in folder `/project-base/storefront/cypress/screenshots`.
 
 ## Test scenarios
 
-Test scenarios are places in folder `/project-base/storefront/cypress/integration`. They are splitted into two folder `/Functions` and `/Tests`.
+Test scenarios are placed in folder `/project-base/storefront/cypress/integration`. They are split into two folders `/Functions` and `/Tests`.
 
-**Functions** are meant for reusable actions used in tests scenarios.
+**Functions** are meant for reusable actions used in test scenarios.
 
-**Tests** are scenarios itself splitted into several folders according to tested part in Storefront application.
+**Tests** are scenarios itself split into several folders according to the tested part in the Storefront application.

@@ -7,11 +7,11 @@ These functions and helpers are responsible for some of the main logic in GTM. I
 - page information mapping
   are happening.
 
-It is very likely, that if your project requires customization of the logic, this is the file where the modifications are going to take place. Below you can see descriptions of almost all functions. Only self-descriptive and primitive functions are omitted.
+It is very likely that if your project requires customization of the logic, this is the file where the modifications are going to take place. Below, you can see descriptions of almost all functions. Only self-descriptive and primitive functions are omitted.
 
 ## useGtmCartInfo
 
-Hook used to allow the application to work with cart information mapped according to the GTM requirements. It is a hook wrapper of the underlying `getGtmMappedCart` function, which takes care of the mapping itself. The hook handles the default state where no cart is available
+The hook allows the application to work with cart information mapped according to the GTM requirements. It is a hook wrapper of the underlying `getGtmMappedCart` function, which takes care of the mapping itself. The hook handles the default state where no cart is available.
 
 ```ts
 export const useGtmCartInfo = (): {
@@ -46,7 +46,7 @@ export const useGtmCartInfo = (): {
 
 ## getGtmMappedCart
 
-Function used to map the cart information to be suitable for GTM. Uses other helpers to get different parts of the mapped object.
+The function used to map the cart information to be suitable for GTM. It uses other helpers to get different parts of the mapped object.
 
 ```ts
 export const getGtmMappedCart = (
@@ -62,7 +62,7 @@ export const getGtmMappedCart = (
 
 ## getAbandonedCartUrl
 
-Function used to generate an abandoned cart URL.
+The function is used to generate an abandoned cart URL.
 
 ```ts
 const getAbandonedCartUrl = (
@@ -95,7 +95,7 @@ const getAbandonedCartUrl = (
 
 ## getGtmPageInfoTypeForFriendlyUrl
 
-Function used to create page info objects for various entities which can be displayed on the friendly URL page. It handles special cases, such as category detail, blog article detail, brand detail, and so on. If for some reason page type cannot be deterimed, it returns a default page info object.
+Function used to create page info objects for various entities, which can be displayed on the friendly URL page. It handles special cases, such as category detail, blog article detail, brand detail, and so on. If, for some reason, page type cannot be determined, it returns a default page info object.
 
 ```ts
 export const getGtmPageInfoTypeForFriendlyUrl = (
@@ -122,7 +122,7 @@ export const getGtmPageInfoTypeForFriendlyUrl = (
 
 ## getPageInfoForCategoryDetailPage, getPageInfoForBlogArticleDetailPage, getPageInfoForBrandDetailPage
 
-Helper functions used to generate specific properties for the friendly URL page, if the displayed entity is of type:
+Helper functions are used to generate specific properties for the friendly URL page if the displayed entity is of type:
 
 - category
 - blog article
@@ -153,7 +153,7 @@ const getPageInfoForBrandDetailPage = (
 
 ## gtmSafePushEvent
 
-Essential function used to push all event to the data layer.
+The essential function is used to push all events to the data layer.
 
 ```ts
 export const gtmSafePushEvent = (
@@ -168,7 +168,7 @@ export const gtmSafePushEvent = (
 
 ## getGtmUserInfo
 
-Basic function used to get the user information in a GTM-suitable format. It takes care of dispatching the initial creation based on the contact information from order and it also handles overwriting of these information with credentials of an authenticated customer.
+The basic function is used to get the user information in a GTM-suitable format. It dispatches the initial creation based on the contact information from the order and handles overwriting of this information with the credentials of an authenticated customer.
 
 ```ts
 export const getGtmUserInfo = (
@@ -193,7 +193,7 @@ export const getGtmUserInfo = (
 
 ## getGtmUserInfoForVisitor
 
-Gets the basic information about the user. Because of the fact that untouched fields from the contact information form are not stored as null or undefined, but as empty string, it must check for the length of the string and only include the datapoint if it is really filled.
+It gets the basic information about the user. Because of the fact that untouched fields from the contact information form are not stored as null or undefined, but as empty string, it must check for the length of the string and only include the datapoint if it is really filled.
 
 ```ts
 const getGtmUserInfoForVisitor = (
@@ -230,11 +230,11 @@ const getGtmUserType = (
 
 ## overwriteGtmUserInfoWithLoggedCustomer
 
-Method used to overwrite default information about the customer with the information from his account. Here the logic is following:
+Method used to overwrite default information about the customer with the information from his account. Here, the logic is as follows:
 
 - `status`, `id`, and `group` are always overwritten
 - other properties are only overwritten if they haven't been filled before
-- `type` is filled in based on the previous value of the field and on the value currently authenticated customer
+- `type` is filled in based on the previous value of the field and on the value of the currently authenticated customer
 
 ```ts
 const overwriteGtmUserInfoWithLoggedCustomer = (

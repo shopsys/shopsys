@@ -6,11 +6,11 @@ We use several caching layers. Each of them serves a different purpose. Whereas 
 
 ### Introduction
 
-The URQL library provides a flexible and efficient way to interact with GraphQL APIs in your JavaScript or TypeScript application. A significant part of this interaction is dealing with caching to reduce network requests, improve responsiveness, and manage local state. This is where the Graphcache exchange comes in.
+The URQL library provides a flexible and efficient way to interact with GraphQL APIs in your JavaScript or TypeScript application. A significant part of this interaction is dealing with caching to reduce network requests, improve responsiveness, and manage the local state. This is where the Graphcache exchange comes in.
 
 #### What is Graphcache?
 
-Graphcache is an advanced, normalized caching utility that comes as an exchange for the URQL library. Exchanges in URQL are modular pieces of logic that can be added to the core functionality, and Graphcache is one such exchange designed specifically for caching.
+Graphcache is an advanced, normalized caching utility that comes as an exchange for the URQL library. Exchanges in URQL are modular pieces of logic that can be added to the core functionality, and Graphcache is one such exchange explicitly designed for caching.
 
 While URQL comes with basic caching out of the box, Graphcache offers:
 
@@ -44,25 +44,25 @@ The cache is configured with:
 1. **Schema**: The GraphQL introspection schema.
 2. **Keys**: This is a mapping between GraphQL types and their keying functions.
 3. **Updates**: This provides update logic after mutations. It determines how the cache should be invalidated or updated after specific mutations like `Login`, `Logout`, `AddToCart`, etc.
-4. **Optimistic**: For some mutations like `ChangeTransportInCart` and `ChangePaymentInCart`, the module provides optimistic updates. This means even before the mutation result comes back from the server, the cache is updated in an optimistic manner based on certain assumptions.
+4. **Optimistic**: The module provides optimistic updates for some mutations like `ChangeTransportInCart` and `ChangePaymentInCart`. This means even before the mutation result comes back from the server, the cache is updated in an optimistic manner based on certain assumptions.
 
 ### Utility Functions
 
 - `invalidateFields`: Given a cache instance and a list of fields, this function invalidates these fields in the cache. This can be useful after certain operations, like a user login or logout, where you might want to invalidate cached data to fetch fresh data from the server.
 - `manuallyUpdateCartFragment`: Manually updates the cart fragment in the cache.
 - `clearComparisonQueryFragment` & `clearWishlistQueryFragment`: Clear the comparison or wishlist fragment from the cache.
-- `getOptimisticChangeTransportInCartResult` & `getOptimisticChangePaymentInCartResult`: These functions provide the optimistic results for the respective mutations.
+- `getOptimisticChangeTransportInCartResult` & `getOptimisticChangePaymentInCartResult`: These functions provide optimistic results for the respective mutations.
 - `getPaymentFromTransport`: Helper function to get a specific payment method from a transport based on its UUID.
 
 When using this module, ensure you're familiar with the URQL graph cache and its related concepts. It's also crucial to be aware of the GraphQL schema and the generated GraphQL types, as they play a vital role in how the cache is managed.
 
 ## Redis GraphQL cache
 
-This cache is used for selected queries and is intended for server-side only. The goal is to improve server-side performance of the Storefront.
+This cache is used for selected queries and is intended for server-side only. The goal is to improve the server-side performance of the Storefront.
 
 ### How does it work
 
-The cache is set via a graphql directive `@_redisCache` which accepts TTL in seconds.
+The cache is set via a graphql directive `@_redisCache`, which accepts TTL in seconds.
 
 The custom URQL fetcher tries to read the data from the cache, if it does not find it, it calls the API.
 

@@ -1,10 +1,10 @@
 # GTM Event Objects
 
-These objects represent all GTM events. They are composed from GtmEventInterface, GtmEventType, and the content of the event. Each event has a description of all its properties.
+These objects represent all GTM events. They are composed of GtmEventInterface, GtmEventType, and the content of the event. Each event has a description of all its properties.
 
 ## GtmEventInterface<EventType, EventContent>
 
-This interface is a generic type that includes an event of type EventType and the property \_clear of boolean type. The remaining properties are of type EventContent, which is a type argument through which one can extend this generic interface.
+This interface is a generic type that includes an event of type EventType and the property \_clear of boolean type. The remaining properties are of EventContent, a type argument through which one can extend this generic interface.
 
 ```ts
 export type GtmEventInterface<EventType, EventContent> = {
@@ -59,7 +59,7 @@ export type GtmChangeCartItemEventType =
 
 ## GtmAddToCartEventType
 
-This type is used for tracking adding items to a cart. Keep in mind that adding does not need to mean the product has not been added before. It can also mean increasing product's quantity.
+This type is used for tracking adding items to a cart. Keep in mind that adding does not need to mean the product has not been added before. It can also mean increasing the product's quantity.
 
 ```ts
 export type GtmAddToCartEventType = GtmEventInterface<
@@ -167,7 +167,7 @@ export type GtmProductDetailViewEventType = GtmEventInterface<
 
 ## GtmPaymentAndTransportPageViewEventType
 
-This type is used for tracking when a user views the payment and transport page.
+This type tracks when a user views the payment and transport page.
 
 ```ts
 export type GtmPaymentAndTransportPageViewEventType = GtmEventInterface<
@@ -300,7 +300,7 @@ export type GtmPaymentFailEventType = GtmEventInterface<
 
 ## GtmCreateOrderEventOrderPartType
 
-This type represents the order part of the GtmCreateOrderEventType. It is stored in local storage before redirecting to payment gate, if the user has chosen to pay using a payment that requires a redirect.
+This type represents the order part of the GtmCreateOrderEventType. It is stored in local storage before redirecting to the payment gate if the user has chosen to pay using a payment that requires a redirect.
 
 ```ts
 export type GtmCreateOrderEventOrderPartType = {
@@ -331,7 +331,7 @@ export type GtmPurchaseEventPaymentPartType = {
 
 ## GtmCreateOrderEventType
 
-This type is used for tracking when an order is created by the user. It consists of the GtmCreateOrderEventOrderPartType, GtmPurchaseEventPaymentPartType, and GtmUserInfoType objects.
+This type is used for tracking when the user creates an order. It consists of the GtmCreateOrderEventOrderPartType, GtmPurchaseEventPaymentPartType, and GtmUserInfoType objects.
 
 ```ts
 export type GtmCreateOrderEventType = GtmEventInterface<
@@ -363,7 +363,7 @@ export type GtmShowMessageEventType = GtmEventInterface<
 
 ## GtmSendFormEventType
 
-This type is used for tracking when a form is submitted by the user.
+This type is used for tracking when the user submits a form.
 
 ```ts
 export type GtmSendFormEventType = GtmEventInterface<

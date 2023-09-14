@@ -1,10 +1,10 @@
 # GTM Objects
 
-These objects are used all across the GTM module for representation of various objects mapped according to what the data layer requires.
+These objects are used all across the GTM module to represent various objects mapped according to what the data layer requires.
 
 ## GtmReviewConsentsType
 
-Object representing user consent for tracking of different third-party services. Contains boolean properties seznam, google, and heureka to indicate if the user has consented to tracking by these services.
+The object representing user consent for tracking of different third-party services. It contains boolean properties seznam, google, and heureka to indicate if the user has consented to tracking by these services.
 
 ```ts
 export type GtmReviewConsentsType = {
@@ -45,7 +45,7 @@ export type GtmCategoryDetailPageInfoType = GtmPageInfoInterface<
 
 ## GtmBlogArticleDetailPageInfoType
 
-Object representing additional information about a web page that displays a blog article. Extends the GtmPageInfoInterface.
+The object represents additional information about a web page that displays a blog article. Extends the GtmPageInfoInterface.
 
 ```ts
 export type GtmBlogArticleDetailPageInfoType = GtmPageInfoInterface<
@@ -58,7 +58,7 @@ export type GtmBlogArticleDetailPageInfoType = GtmPageInfoInterface<
 
 ## GtmBrandDetailPageInfoType
 
-Object representing additional information about a web page that displays a brand or manufacturer. Extends the GtmPageInfoInterface.
+The object represents additional information about a web page that displays a brand or manufacturer. Extends the GtmPageInfoInterface.
 
 ```ts
 export type GtmBrandDetailPageInfoType = GtmPageInfoInterface<
@@ -71,7 +71,7 @@ export type GtmBrandDetailPageInfoType = GtmPageInfoInterface<
 
 ## GtmPageInfoType
 
-Union type representing all possible types of web pages. Can be either GtmCategoryDetailPageInfoType, GtmBlogArticleDetailPageInfoType, GtmBrandDetailPageInfoType, or GtmPageInfoInterface.
+The union type represents all possible types of web pages. It can be either GtmCategoryDetailPageInfoType, GtmBlogArticleDetailPageInfoType, GtmBrandDetailPageInfoType, or GtmPageInfoInterface.
 
 ```ts
 export type GtmPageInfoType =
@@ -98,7 +98,7 @@ export type GtmCartInfoType = {
 
 ## GtmUserInfoType
 
-Object representing information about a user.
+The Object represents information about a user.
 
 ```ts
 export type GtmUserInfoType = {
@@ -120,7 +120,7 @@ export type GtmUserInfoType = {
 
 ## GtmConsentInfoType
 
-Object representing a user's consent for tracking in different categories.
+The object represents a user's consent for tracking in different categories.
 
 ```ts
 export type GtmConsentInfoType = {
@@ -132,7 +132,7 @@ export type GtmConsentInfoType = {
 
 ## GtmProductInterface
 
-Interface representing information about a product. Is extended for specific cases of products, such as listed products or cart items.
+The interface represents information about a product. It is extended for specific cases of products, such as listed products or cart items.
 
 ```ts
 export type GtmProductInterface = {
@@ -163,7 +163,7 @@ export type GtmListedProductType = GtmProductInterface & {
 
 ## GtmCartItemType
 
-Type that extends GtmListedProductType and adds a required quantity property, which represents the quantity of the product in the cart. GtmListedProductType, as described above, extends GtmProductInterface and adds an optional listIndex property. Therefore, GtmCartItemType includes all properties defined in GtmProductInterface, GtmListedProductType, and adds the quantity property.
+Type that extends GtmListedProductType and adds a required quantity property, representing the product quantity in the cart. GtmListedProductType, as described above, extends GtmProductInterface and adds an optional listIndex property. Therefore, GtmCartItemType includes all properties defined in GtmProductInterface, GtmListedProductType, and adds the quantity property.
 
 ```ts
 export type GtmCartItemType = GtmListedProductType & {
