@@ -56,11 +56,6 @@ class ProductData extends BaseProductData
     public $stockProductData;
 
     /**
-     * @var \App\Model\Store\ProductStoreData[]
-     */
-    public $productStoreData;
-
-    /**
      * @var bool
      */
     public $downloadAssemblyInstructionFiles = false;
@@ -148,7 +143,6 @@ class ProductData extends BaseProductData
         $this->namePrefix = [];
         $this->nameSufix = [];
         $this->stockProductData = [];
-        $this->productStoreData = [];
         $this->assemblyInstructionCode = [];
         $this->productTypePlanCode = [];
         $this->assemblyInstructionFileUrl = [];

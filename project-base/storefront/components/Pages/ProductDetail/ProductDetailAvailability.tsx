@@ -43,12 +43,6 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
                     })}
                 </span>
             )}
-
-            {product.exposedStoresCount > 0 && (
-                <span className="mr-1 text-sm" data-testid={TEST_IDENTIFIER + '-exposed'}>
-                    {t('You can check this item in {{ count }} stores', { count: product.exposedStoresCount })}
-                </span>
-            )}
         </div>
     );
 };

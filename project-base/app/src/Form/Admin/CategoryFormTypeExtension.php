@@ -8,12 +8,8 @@ use App\Component\Form\FormBuilderHelper;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Parameter\ParameterRepository;
-use App\Model\Svg\SvgProvider;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer;
@@ -28,7 +24,6 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     public const DISABLED_FIELDS = [];
 
     /**
-     * @param \App\Model\Svg\SvgProvider $svgProvider
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \App\Model\Category\CategoryFacade $categoryFacade
@@ -37,13 +32,12 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
-        private SvgProvider $svgProvider,
-        private ParameterRepository $parameterRepository,
-        private FormBuilderHelper $formBuilderHelper,
-        private CategoryFacade $categoryFacade,
-        private RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer,
-        private CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
-        private Localization $localization,
+        private readonly ParameterRepository $parameterRepository,
+        private readonly FormBuilderHelper $formBuilderHelper,
+        private readonly CategoryFacade $categoryFacade,
+        private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer,
+        private readonly CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
+        private readonly Localization $localization,
     ) {
     }
 
@@ -52,30 +46,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $settingsBuilder = $builder->get('settings');
-        $settingsBuilder
-            ->add('svgIcon', ChoiceType::class, [
-                'label' => t('SVG icon settings'),
-                'required' => false,
-                'choices' => $this->svgProvider->getAllSvgIconsNames(),
-            ]);
-
-        /** @var \Ivory\OrderedForm\Builder\OrderedFormBuilder $builderShortDescriptionGroup */
-        $builderShortDescriptionGroup = $builder->create('shortDescriptionGroup', GroupType::class, [
-            'label' => t('Short description'),
-        ]);
-
-        $builderShortDescriptionGroup->add('shortDescription', MultidomainType::class, [
-            'entry_type' => CKEditorType::class,
-            'required' => false,
-            'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
-        ]);
-
-        $builder->add($builderShortDescriptionGroup);
-
-        $builderShortDescriptionGroup->setPosition(['after' => 'seo']);
-
-        $this->buildFilterParameters($builder, $options['category'], $options);
+        $this->buildFilterParameters($builder, $options['category']);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
 
@@ -97,9 +68,8 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param \App\Model\Category\Category|null $category
-     * @param array $options
      */
-    private function buildFilterParameters(FormBuilderInterface $builder, ?Category $category, array $options): void
+    private function buildFilterParameters(FormBuilderInterface $builder, ?Category $category): void
     {
         if ($category === null) {
             return;

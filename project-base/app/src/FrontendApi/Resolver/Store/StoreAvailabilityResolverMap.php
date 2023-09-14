@@ -23,7 +23,6 @@ class StoreAvailabilityResolverMap extends ResolverMap
     {
         return [
             'StoreAvailability' => [
-                'exposed' => static fn ($storeAvailability) => $storeAvailability['exposed'],
                 'availabilityInformation' => static fn ($storeAvailability) => $storeAvailability['availability_information'],
                 'availabilityStatus' => static fn ($storeAvailability) => $storeAvailability['availability_status'],
                 'store' => function ($storeAvailability) {

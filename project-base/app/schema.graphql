@@ -836,8 +836,6 @@ type MainVariant implements Product & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
-  "Number of the stores where the product is exposed"
-  exposedStoresCount: Int!
   "List of downloadable files"
   files: [File!]!
   "List of flags"
@@ -1489,8 +1487,6 @@ interface Product {
   description: String
   "EAN"
   ean: String
-  "Number of the stores where the product is exposed"
-  exposedStoresCount: Int!
   "List of downloadable files"
   files: [File!]!
   "List of flags"
@@ -1862,8 +1858,6 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
-  "Number of the stores where the product is exposed"
-  exposedStoresCount: Int!
   "List of downloadable files"
   files: [File!]!
   "List of flags"
@@ -2041,8 +2035,6 @@ type StoreAvailability {
   availabilityInformation: String!
   "Availability status in a format suitable for usage in the code"
   availabilityStatus: AvailabilityStatusEnum!
-  "Is product exposed on this store"
-  exposed: Boolean!
   "Store"
   store: Store
 }
@@ -2142,8 +2134,6 @@ type Variant implements Product & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
-  "Number of the stores where the product is exposed"
-  exposedStoresCount: Int!
   "List of downloadable files"
   files: [File!]!
   "List of flags"

@@ -790,9 +790,6 @@ msgstr ""
 msgid "Expand"
 msgstr ""
 
-msgid "Exposed in Stores"
-msgstr ""
-
 msgid "Extended SEO categories"
 msgstr ""
 
@@ -1022,9 +1019,6 @@ msgid "Internal note"
 msgstr ""
 
 msgid "Invalid two-factor authentication code."
-msgstr ""
-
-msgid "Is exhibited"
 msgstr ""
 
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
@@ -1726,9 +1720,6 @@ msgstr ""
 msgid "SEO pages"
 msgstr ""
 
-msgid "SVG icon settings"
-msgstr ""
-
 msgid "Sale"
 msgstr ""
 
@@ -1829,9 +1820,6 @@ msgid "Settings"
 msgstr ""
 
 msgid "Shipping instructions"
-msgstr ""
-
-msgid "Short description"
 msgstr ""
 
 msgid "Short description 1"
@@ -2321,9 +2309,6 @@ msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
 msgstr ""
 
 msgid "{0}|{1}Available in <span class=\"box-detail__avail__text__strong\">%count%</span> store|[2,Inf]Available in <span class=\"box-detail__avail__text__strong\">%count%</span> stores"
-msgstr ""
-
-msgid "{0}|{1}Can be viewed in <span class=\"box-detail__avail__text__strong\">%count%</span> store|[2,Inf]Can be viewed in <span class=\"box-detail__avail__text__strong\">%count%</span> stores"
 msgstr ""
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"

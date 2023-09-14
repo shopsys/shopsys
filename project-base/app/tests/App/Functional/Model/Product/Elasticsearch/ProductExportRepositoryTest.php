@@ -78,7 +78,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'name_sufix',
             'is_sale_exclusion',
             'product_available_stores_count_information',
-            'product_count_exposed_in_stores',
             'product_videos',
             'store_availabilities_information',
             'files',
@@ -91,7 +90,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'searching_short_descriptions',
             'slug',
             'available_stores_count',
-            'exposed_stores_count',
             'related_products',
         ];
     }

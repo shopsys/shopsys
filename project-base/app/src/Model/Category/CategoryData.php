@@ -17,19 +17,9 @@ class CategoryData extends BaseCategoryData
     public $akeneoCode;
 
     /**
-     * @var string|null
-     */
-    public $svgIcon;
-
-    /**
      * @var \App\Model\Product\Parameter\Parameter[]
      */
     public $parametersCollapsed;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $shortDescription;
 
     /**
      * @var int[]|null[]
@@ -45,7 +35,6 @@ class CategoryData extends BaseCategoryData
     {
         parent::__construct();
 
-        $this->shortDescription = [];
         $this->parametersPosition = [];
         $this->linkedCategories = [];
     }

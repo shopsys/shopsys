@@ -552,7 +552,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
             $stockProductData->productQuantity = 0;
         }
 
-        $this->productFacade->editProductStockAndStoreRelation($productData, $this->testingProduct);
+        $this->productFacade->editProductStockRelation($productData, $this->testingProduct);
         $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
         $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
         $this->em->clear();

@@ -1312,9 +1312,6 @@ msgstr ""
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
 msgstr ""
 
-msgid "Our electronics include devices used for entertainment, communicationsand home office activities."
-msgstr ""
-
 msgid "Out of stock"
 msgstr ""
 

@@ -46,9 +46,6 @@ Product:
             availableStoresCount:
                 type: "Int!"
                 description: "Number of the stores where the product is available"
-            exposedStoresCount:
-                type: "Int!"
-                description: "Number of the stores where the product is exposed"
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"

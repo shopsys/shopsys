@@ -63,12 +63,10 @@ query Product($uuid: Uuid) {
             store {
                 name
             }
-            exposed
             availabilityInformation
             availabilityStatus
         }
         availableStoresCount
-        exposedStoresCount
         breadcrumb {
             name
             slug

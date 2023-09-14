@@ -167,12 +167,10 @@ fragment TestProductFragment on Product {
         store {
             name
         }
-        exposed
         availabilityInformation
         availabilityStatus
     }
     availableStoresCount
-    exposedStoresCount
     breadcrumb {
         name
         slug
@@ -243,12 +241,10 @@ fragment TestMainVariantFragment on MainVariant {
         store {
             name
         }
-        exposed
         availabilityInformation
         availabilityStatus
     }
     availableStoresCount
-    exposedStoresCount
     breadcrumb {
         name
         slug

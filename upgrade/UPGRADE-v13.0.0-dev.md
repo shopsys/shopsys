@@ -81,3 +81,5 @@ There you can find links to upgrade notes for other versions too.
                 ) {
             ```
         - method `loadDataForUrls()` was removed
+- Products - Exposed in Stores, Category - SVG icon, and Category - Short description have been removed ([#2777](https://github.com/shopsys/shopsys/pull/2777))
+    - if you use this functionality (e.g. from Commerce Cloud version), you can skip DB migration 20230908095905

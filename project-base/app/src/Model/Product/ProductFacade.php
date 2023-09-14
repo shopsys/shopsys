@@ -9,9 +9,6 @@ use App\Model\ProductVideo\ProductVideoFacade;
 use App\Model\Stock\ProductStockData;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
-use App\Model\Store\ProductStoreData;
-use App\Model\Store\ProductStoreFacade;
-use App\Model\Store\StoreFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -95,12 +92,10 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
-     * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
-     * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \App\Model\ProductVideo\ProductVideoFacade $productVideoFacade
      */
     public function __construct(
-        private string $productFilesUrlPrefix,
+        private readonly string $productFilesUrlPrefix,
         EntityManagerInterface $em,
         ProductRepository $productRepository,
         ProductVisibilityFacade $productVisibilityFacade,
@@ -123,10 +118,8 @@ class ProductFacade extends BaseProductFacade
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
         ProductExportScheduler $productExportScheduler,
-        private ProductStockFacade $productStockFacade,
-        private StockFacade $stockFacade,
-        private ProductStoreFacade $productStoreFacade,
-        private StoreFacade $storeFacade,
+        private readonly ProductStockFacade $productStockFacade,
+        private readonly StockFacade $stockFacade,
         private readonly ProductVideoFacade $productVideoFacade,
     ) {
         parent::__construct(
@@ -164,7 +157,7 @@ class ProductFacade extends BaseProductFacade
         /** @var \App\Model\Product\Product $product */
         $product = parent::create($productData);
 
-        $this->editProductStockAndStoreRelation($productData, $product);
+        $this->editProductStockRelation($productData, $product);
 
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
@@ -237,7 +230,7 @@ class ProductFacade extends BaseProductFacade
             $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getMainVariant()->getId());
         }
 
-        $this->editProductStockAndStoreRelation($productData, $product);
+        $this->editProductStockRelation($productData, $product);
 
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
@@ -420,17 +413,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product $product
      */
-    public function editProductStockAndStoreRelation(ProductData $productData, Product $product): void
-    {
-        $this->editProductStockRelation($productData, $product);
-        $this->editProductStoreRelation($productData, $product);
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product $product
-     */
-    private function editProductStockRelation(ProductData $productData, Product $product): void
+    public function editProductStockRelation(ProductData $productData, Product $product): void
     {
         $stockIds = array_map(
             fn (ProductStockData $productStockData): int => $productStockData->stockId,
@@ -443,26 +426,6 @@ class ProductFacade extends BaseProductFacade
             $product,
             $stocksIndexedById,
             $productData->stockProductData,
-        );
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product $product
-     */
-    private function editProductStoreRelation(ProductData $productData, Product $product): void
-    {
-        $storeIds = array_map(
-            fn (ProductStoreData $productStoreData): int => $productStoreData->storeId,
-            $productData->productStoreData,
-        );
-
-        $storesIndexedById = $this->storeFacade->getStoresByIdsIndexedById($storeIds);
-
-        $this->productStoreFacade->editProductStoreRelations(
-            $product,
-            $storesIndexedById,
-            $productData->productStoreData,
         );
     }
 }

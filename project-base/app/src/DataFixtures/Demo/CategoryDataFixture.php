@@ -81,13 +81,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $locale,
             );
-            $categoryData->shortDescription[$domainConfig->getId()] = t(
-                'Our electronics include devices used for entertainment, communications'
-                    . 'and home office activities.',
-                [],
-                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale,
-            );
 
             $categoryData->seoH1s[$domainConfig->getId()] = t(
                 'Electronic devices',

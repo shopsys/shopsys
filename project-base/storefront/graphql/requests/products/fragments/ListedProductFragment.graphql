@@ -20,7 +20,6 @@ fragment ListedProductFragment on Product {
         ...AvailabilityFragment
     }
     availableStoresCount
-    exposedStoresCount
     catalogNumber
     brand {
         ...SimpleBrandFragment

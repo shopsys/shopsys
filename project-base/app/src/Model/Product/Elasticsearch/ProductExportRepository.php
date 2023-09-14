@@ -224,7 +224,6 @@ class ProductExportRepository extends BaseProductExportRepository
             'name_sufix' => $product->getNameSufix($locale),
             'is_sale_exclusion' => $product->getSaleExclusion($domainId),
             'product_available_stores_count_information' => $this->productAvailabilityFacade->getProductAvailableStoresCountInformationByDomainId($product, $domainId),
-            'product_count_exposed_in_stores' => $this->productAvailabilityFacade->getProductCountExposedInStoresInformationByDomainId($product, $domainId),
             'store_availabilities_information' => $this->extractStoreAvailabilitiesInformation($product, $domainId),
             'files' => $this->productFacade->getDownloadFilesForProductByDomainConfig($product, $this->domain->getDomainConfigById($domainId)),
             'usps' => $product->getAllNonEmptyShortDescriptionUsp($domainId),
@@ -236,7 +235,6 @@ class ProductExportRepository extends BaseProductExportRepository
             'searching_short_descriptions' => $searchingShortDescriptions,
             'slug' => $mainFriendlyUrl->getSlug(),
             'available_stores_count' => $this->productAvailabilityFacade->getAvailableStoresCount($product, $domainId),
-            'exposed_stores_count' => $this->productAvailabilityFacade->getExposedStoresCount($product, $domainId),
             'related_products' => $relatedProductsId,
             'breadcrumb' => $this->extractBreadcrumb($product, $domainId, $locale),
             'product_videos' => array_map(function (ProductVideo $productVideo) use ($locale) {
@@ -574,7 +572,6 @@ class ProductExportRepository extends BaseProductExportRepository
                 'store_name' => $item->getStoreName(),
                 'store_id' => $item->getStoreId(),
                 'availability_information' => $item->getAvailabilityInformation(),
-                'exposed' => $item->isExposedProduct(),
                 'availability_status' => $item->getAvailabilityStatus()->value,
             ];
         }

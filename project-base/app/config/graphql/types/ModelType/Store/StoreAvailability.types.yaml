@@ -3,9 +3,6 @@ StoreAvailability:
     config:
         description: "Represents an availability in an individual store"
         fields:
-            exposed:
-                type: "Boolean!"
-                description: "Is product exposed on this store"
             availabilityInformation:
                 type: "String!"
                 description: "Detailed information about availability"

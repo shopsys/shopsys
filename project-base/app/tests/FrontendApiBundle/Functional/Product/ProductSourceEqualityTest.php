@@ -120,12 +120,10 @@ class ProductSourceEqualityTest extends GraphQlTestCase
                 store {
                     name
                 }
-                exposed
                 availabilityInformation
                 availabilityStatus
             }
             availableStoresCount
-            exposedStoresCount
             breadcrumb {
                 name
                 slug

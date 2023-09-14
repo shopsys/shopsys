@@ -4566,15 +4566,6 @@ EAN
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Number of the stores where the product is exposed
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>files</strong></td>
 <td valign="top">[<a href="#file">File</a>!]!</td>
 <td>
@@ -6910,15 +6901,6 @@ EAN
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Number of the stores where the product is exposed
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>files</strong></td>
 <td valign="top">[<a href="#file">File</a>!]!</td>
 <td>
@@ -7671,15 +7653,6 @@ Availability status in a format suitable for usage in the code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>exposed</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Is product exposed on this store
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>store</strong></td>
 <td valign="top"><a href="#store">Store</a></td>
 <td>
@@ -8100,15 +8073,6 @@ List of categories
 <td>
 
 EAN
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Number of the stores where the product is exposed
 
 </td>
 </tr>
@@ -10711,15 +10675,6 @@ List of categories
 <td>
 
 EAN
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Number of the stores where the product is exposed
 
 </td>
 </tr>
