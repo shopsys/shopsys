@@ -12,11 +12,11 @@ import { RemoveIcon, RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
 
-type SelectedParametersProps = {
+type FilterSelectedParametersProps = {
     filterOptions: ProductFilterOptionsFragmentApi;
 };
 
-export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions }) => {
+export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ filterOptions }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const defaultProductFiltersMap = useSessionStore((s) => s.defaultProductFiltersMap);
@@ -45,6 +45,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions 
             <Heading type="h4" className="uppercase">
                 {t('Selected filters')}
             </Heading>
+
             <div className="mb-4 flex flex-col gap-3">
                 {!!checkedBrands?.length && (
                     <SelectedParametersList>
@@ -109,25 +110,15 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions 
                             <SelectedParametersName>{selectedParameterOptions?.name}:</SelectedParametersName>
                             {isSliderParameter ? (
                                 <SelectedParametersListItem key={selectedParameterOptions.uuid}>
-                                    {selectedParameterOptions.minimalValue && (
-                                        <>
-                                            <span>{t('from')}&nbsp;</span>
-                                            {selectedParameterOptions.minimalValue}
-                                            {selectedParameterOptions.unit?.name !== undefined
-                                                ? `\xa0${selectedParameterOptions.unit.name}`
-                                                : ''}
-                                            {selectedParameterOptions.maximalValue && ' '}
-                                        </>
-                                    )}
-                                    {selectedParameterOptions.maximalValue && (
-                                        <>
-                                            <span>{t('to')}&nbsp;</span>
-                                            {selectedParameterOptions.maximalValue}
-                                            {selectedParameterOptions.unit?.name !== undefined
-                                                ? `\xa0${selectedParameterOptions.unit.name}`
-                                                : ''}
-                                        </>
-                                    )}
+                                    <span>{t('from')}&nbsp;</span>
+                                    {selectedParameter.minimalValue || selectedParameterOptions.minimalValue}
+                                    {!!selectedParameterOptions.unit?.name &&
+                                        `\xa0${selectedParameterOptions.unit.name}`}
+
+                                    <span>&nbsp;{t('to')}&nbsp;</span>
+                                    {selectedParameter.maximalValue || selectedParameterOptions.maximalValue}
+                                    {selectedParameterOptions.unit?.name && `\xa0${selectedParameterOptions.unit.name}`}
+
                                     <SelectedParametersIcon
                                         onClick={() => updateFilterParameters(selectedParameterOptions.uuid, undefined)}
                                     />
