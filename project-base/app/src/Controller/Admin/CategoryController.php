@@ -6,14 +6,13 @@ namespace App\Controller\Admin;
 
 use App\Component\Form\FormBuilderHelper;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Controller\Admin\CategoryController as BaseCategoryController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,18 +26,18 @@ class CategoryController extends BaseCategoryController
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $categorySeoMixFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,
         CategoryDataFactoryInterface $categoryDataFactory,
-        RequestStack $requestStack,
         Domain $domain,
         BreadcrumbOverrider $breadcrumbOverrider,
+        AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         private readonly FormBuilderHelper $formBuilderHelper,
         private readonly ReadyCategorySeoMixFacade $categorySeoMixFacade,
     ) {
@@ -47,7 +46,7 @@ class CategoryController extends BaseCategoryController
             $categoryDataFactory,
             $domain,
             $breadcrumbOverrider,
-            $requestStack,
+            $adminDomainFilterTabsFacade,
         );
     }
 
@@ -58,35 +57,24 @@ class CategoryController extends BaseCategoryController
      */
     public function listAction(Request $request): Response
     {
-        if (count($this->domain->getAll()) > 1) {
-            if ($request->query->has('domain')) {
-                $domainId = (int)$request->query->get('domain');
-            } else {
-                $domainId = (int)$this->requestStack->getSession()->get('categories_selected_domain_id', static::ALL_DOMAINS);
-            }
+        $domainFilterNamespace = 'category';
+        $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);
+
+        if ($selectedDomainId === null) {
+            $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren(
+                $request->getLocale(),
+            );
         } else {
-            $domainId = static::ALL_DOMAINS;
-        }
-
-        if ($domainId !== static::ALL_DOMAINS) {
-            try {
-                $this->domain->getDomainConfigById($domainId);
-            } catch (InvalidDomainIdException $ex) {
-                $domainId = static::ALL_DOMAINS;
-            }
-        }
-
-        $this->requestStack->getSession()->set('categories_selected_domain_id', $domainId);
-
-        if ($domainId === static::ALL_DOMAINS) {
-            $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren($request->getLocale());
-        } else {
-            $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain($domainId, $request->getLocale());
+            $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
+                $selectedDomainId,
+                $request->getLocale(),
+            );
         }
 
         return $this->render('/Admin/Content/Category/list.html.twig', [
             'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
-            'isForAllDomains' => ($domainId === static::ALL_DOMAINS),
+            'isForAllDomains' => ($selectedDomainId === null),
+            'domainFilterNamespace' => $domainFilterNamespace,
             'disabledFormFields' => $this->formBuilderHelper->hasFormDisabledFields(),
             'getAllCategoryIdsInSeoMixes' => $this->categorySeoMixFacade->getAllCategoryIdsInSeoMixes(),
         ]);
