@@ -6,11 +6,10 @@ import { CheckmarkIcon } from 'components/Basic/Icon/IconsSvg';
 type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor'>;
 
 type LabelWrapperProps = NativeProps & {
-    label: string | ReactNode | ReactNode[];
+    label: string | ReactNode | ReactNode[] | undefined;
     count?: number;
     inputType: 'textarea' | 'text-input' | 'checkbox' | 'radio' | 'selectbox';
     required?: boolean;
-    isWithoutLabel?: boolean;
     checked?: boolean;
     disabled?: boolean;
     selectBoxLabelIsFloated?: boolean;
@@ -21,7 +20,6 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
     count,
     inputType,
     required,
-    isWithoutLabel,
     checked,
     disabled,
     selectBoxLabelIsFloated,
@@ -31,7 +29,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
 }) => (
     <div className="relative w-full">
         {children}
-        {!isWithoutLabel && (
+        {!!label && (
             <label
                 htmlFor={htmlFor}
                 // "peer" here is input passed from parent component
@@ -91,11 +89,11 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     </div>
                 )}
 
-                <span>
+                <div className="w-full">
                     {label}
-                    {!!count && !checked && count > 0 && ` (${count})`}
+                    {!!count && !checked && ` (${count})`}
                     {required && <span className="ml-1 text-red">*</span>}
-                </span>
+                </div>
             </label>
         )}
     </div>

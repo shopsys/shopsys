@@ -73,7 +73,7 @@ input::-webkit-inner-spin-button {
 }
 
 svg {
-    @apply inline-flex h-full w-[14px] text-center font-normal normal-case leading-none;
+    @apply inline-flex w-[14px] text-center font-normal normal-case leading-none;
 }
 
 /* Firefox */

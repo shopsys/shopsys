@@ -189,7 +189,6 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 value={transportItem.uuid}
                 checked={isActive}
                 dataTestId={TEST_IDENTIFIER + 'transport-item-input'}
-                image={transportItem.mainImage}
                 onChangeCallback={handleTransportChange}
                 label={
                     <TransportAndPaymentSelectItemLabel
@@ -197,6 +196,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         daysUntilDelivery={transportItem.daysUntilDelivery}
                         price={transportItem.price}
                         description={transportItem.description}
+                        image={transportItem.mainImage}
                         pickupPlaceDetail={getPickupPlaceDetail(transportItem)}
                     />
                 }
@@ -216,13 +216,13 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 value={paymentItem.uuid}
                 checked={isActive}
                 dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
-                image={paymentItem.mainImage}
                 onChangeCallback={handlePaymentChange}
                 label={
                     <TransportAndPaymentSelectItemLabel
                         name={paymentItem.name}
                         price={paymentItem.price}
                         description={paymentItem.description}
+                        image={paymentItem.mainImage}
                     />
                 }
             />

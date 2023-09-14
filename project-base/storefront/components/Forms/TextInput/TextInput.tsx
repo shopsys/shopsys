@@ -20,11 +20,10 @@ type NativeProps = ExtractNativePropsFromDefault<
 
 export type TextInputProps = NativeProps & {
     value: any;
-    label: ReactNode;
+    label?: ReactNode;
     hasError?: boolean;
     dataTestId?: string;
     inputSize?: 'small' | 'default';
-    isWithoutLabel?: boolean;
 };
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -44,20 +43,12 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             dataTestId,
             value,
             type,
-            isWithoutLabel,
             children,
             autoComplete,
         },
         textInputForwarderRef,
     ) => (
-        <LabelWrapper
-            className={className}
-            label={label}
-            required={required}
-            htmlFor={id}
-            inputType="text-input"
-            isWithoutLabel={isWithoutLabel}
-        >
+        <LabelWrapper className={className} label={label} required={required} htmlFor={id} inputType="text-input">
             <input
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
