@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Payment\Service;
 
 use App\FrontendApi\Model\Payment\PaymentSetupCreationData;
+use App\Model\GoPay\Exception\GoPayNotConfiguredException;
 use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use App\Model\GoPay\GoPayFacade;
 use App\Model\Order\Order;
@@ -98,7 +99,7 @@ class PaymentServiceFacade
                 if ($update) {
                     $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
                 }
-            } catch (PaymentServiceFacadeNotRegisteredException $exception) {
+            } catch (PaymentServiceFacadeNotRegisteredException | GoPayNotConfiguredException $exception) {
                 $this->logger->error($exception->getMessage());
             }
         }
