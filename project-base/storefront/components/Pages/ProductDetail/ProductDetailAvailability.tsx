@@ -9,8 +9,6 @@ type ProductDetailAvailabilityProps = {
     scrollTarget: RefObject<HTMLUListElement>;
 };
 
-const TEST_IDENTIFIER = 'pages-productdetail-productdetailavailability';
-
 export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ product, scrollTarget }) => {
     const { t } = useTranslation();
 
@@ -21,7 +19,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
     };
 
     return (
-        <div className="rounded bg-blueLight px-3 py-4" data-testid={TEST_IDENTIFIER}>
+        <div className="rounded bg-blueLight px-3 py-4">
             <div
                 className={twJoin(
                     'flex cursor-pointer items-center font-bold no-underline hover:no-underline',
@@ -36,8 +34,8 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
                 <ArrowIcon className="ml-1 text-dark" />
             </div>
 
-            {product.availableStoresCount > 0 && (
-                <span className="mr-1 text-sm" data-testid={TEST_IDENTIFIER + '-availability'}>
+            {!!product.availableStoresCount && (
+                <span className="mr-1 text-sm">
                     {t('This item is available immediately in {{ count }} stores', {
                         count: product.availableStoresCount,
                     })}

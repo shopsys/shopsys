@@ -14,31 +14,30 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
     const { t } = useTranslation();
 
     return (
-        <>
-            <table className="mb-5 w-full">
-                <thead className="max-lg:hidden">
-                    <ProductVariantsTableRow>
-                        <Cell className="max-lg:w-10 lg:w-24" />
-                        <Cell>{t('Name')}</Cell>
-                        <Cell>{t('Availability')}</Cell>
-                        <Cell className="lg:text-right">{t('Price with VAT')}</Cell>
-                        <Cell className="lg:w-60" />
-                    </ProductVariantsTableRow>
-                </thead>
-                <tbody className="max-lg:ml-0 max-lg:flex max-lg:flex-wrap md:-ml-1">
-                    {variants.map((variant, index) => (
-                        <Variant
-                            key={variant.uuid}
-                            variant={variant}
-                            isSellingDenied={isSellingDenied}
-                            gtmProductListName={GtmProductListNameType.product_detail_variants_table}
-                            gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
-                            listIndex={index}
-                        />
-                    ))}
-                </tbody>
-            </table>
-        </>
+        <table className="w-full">
+            <thead className="max-lg:hidden">
+                <ProductVariantsTableRow>
+                    <Cell className="max-lg:w-10 lg:w-24" />
+                    <Cell>{t('Name')}</Cell>
+                    <Cell>{t('Availability')}</Cell>
+                    <Cell className="lg:text-right">{t('Price with VAT')}</Cell>
+                    <Cell className="lg:w-60" />
+                </ProductVariantsTableRow>
+            </thead>
+
+            <tbody className="max-lg:ml-0 max-lg:flex max-lg:flex-wrap md:-ml-1">
+                {variants.map((variant, index) => (
+                    <Variant
+                        key={variant.uuid}
+                        variant={variant}
+                        isSellingDenied={isSellingDenied}
+                        gtmProductListName={GtmProductListNameType.product_detail_variants_table}
+                        gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
+                        listIndex={index}
+                    />
+                ))}
+            </tbody>
+        </table>
     );
 };
 
