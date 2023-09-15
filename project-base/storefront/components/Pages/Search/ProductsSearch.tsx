@@ -36,7 +36,7 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
 
     return (
         <>
-            <div className="relative mb-8 flex flex-col vl:mb-10 vl:flex-row vl:flex-wrap">
+            <div className="relative mb-8 flex flex-col vl:mb-10 vl:flex-row vl:flex-wrap vl:gap-12">
                 <div
                     className={twJoin(
                         'fixed top-0 left-0 bottom-0 right-10 max-w-md -translate-x-full vl:static vl:w-80 vl:translate-x-0 vl:transition-none',
@@ -53,8 +53,10 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                         totalCount={productsSearch.totalCount}
                     />
                 </div>
+
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
-                <div className="flex flex-1 flex-col vl:pl-12" ref={paginationScrollTargetRef}>
+
+                <div className="flex flex-1 flex-col" ref={paginationScrollTargetRef}>
                     <div
                         className="relative mb-3 flex h-12 w-full cursor-pointer flex-row justify-center rounded bg-primary py-3 px-8 font-bold uppercase leading-7 text-white vl:hidden"
                         onClick={handlePanelOpenerClick}
@@ -62,6 +64,7 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                         <FilterIcon className="mr-3 w-6 font-bold text-white" />
                         {t('Filter')}
                     </div>
+
                     <SortingBar
                         sorting={productsSearch.orderingMode}
                         totalCount={productsSearch.totalCount}
@@ -71,6 +74,7 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                             ProductOrderingModeEnumApi.PriceDescApi,
                         ]}
                     />
+
                     <SearchProductsWrapper
                         paginationScrollTargetRef={paginationScrollTargetRef}
                         productsSearch={productsSearch}

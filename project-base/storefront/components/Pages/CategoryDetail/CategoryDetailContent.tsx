@@ -44,7 +44,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
     return (
         <Webline>
             <div
-                className="mb-7 flex scroll-mt-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap"
+                className="mb-7 flex scroll-mt-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap vl:gap-12"
                 ref={paginationScrollTargetRef}
             >
                 <div
@@ -66,7 +66,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
 
-                <div className="flex flex-1 flex-col vl:pl-12">
+                <div className="flex flex-1 flex-col">
                     <Adverts positionName="productList" className="mb-5" />
 
                     <Heading type="h1">{title}</Heading>
