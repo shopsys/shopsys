@@ -23,6 +23,7 @@
                 <div class="wrap-bar">
                     <h1 class="wrap-bar__heading">
                         {% block h1 %}{{ 'Administration'|trans }}{% endblock %}
+                        {% include '@ShopsysFramework/Admin/Layout/displayUuid.html.twig' %}
                     </h1>
                     {% block btn %}{% endblock %}
                 </div>

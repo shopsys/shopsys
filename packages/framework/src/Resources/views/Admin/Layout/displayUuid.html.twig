@@ -1,0 +1,9 @@
+{% set keys = _context|keys %}
+{% if (keys[1] is defined) and (attribute(_context[keys[1]], 'uuid') is defined) %}
+    {% set uuid = _context[keys[1]].uuid %}
+    <span class="edit-uuid cursor-pointer js-copy-to-clipboard"
+          data-content="{{ uuid }}"
+          data-placement="right"
+          title="{{ uuid }}"
+    >UUID {{ icon('duplicate') }}</span>
+{% endif %}

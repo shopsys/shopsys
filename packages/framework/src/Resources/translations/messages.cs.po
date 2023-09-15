@@ -454,6 +454,9 @@ msgstr "Nastavení informací o cookies"
 msgid "Cookies information settings modified."
 msgstr "Bylo upraveno nastavení informací o cookies."
 
+msgid "Copied to clipboard!"
+msgstr "Zkopírováno do schránky!"
+
 msgid "Countries"
 msgstr "Státy"
 
