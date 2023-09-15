@@ -85,11 +85,11 @@ jobs:
                     echo "TRAEFIK_HOSTS=\`$HOST\`, \`cz.$HOST\`" >> $GITHUB_ENV
             -   name: Replace variables in docker-compose.review.yml
                 run: |
-                    sed -i "s#BRANCH_NAME#${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}#" ./docker-compose.review.yml
+                    sed -i "s#BRANCH_NAME#${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}#g" ./docker-compose.review.yml
                     sed -i "s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#" ./docker-compose.review.yml
             -   name: Replace variables in docker-compose.review.simplified.yml
                 run: |
-                    sed -i "s#BRANCH_NAME#${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}#" ./docker-compose.review.simplified.yml
+                    sed -i "s#BRANCH_NAME#${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}#g" ./docker-compose.review.simplified.yml
                     sed -i "s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#" ./docker-compose.review.simplified.yml
             -   name: Prepare docker-compose.cypress.yml file from docker-compose.github-actions.cypress.yml.dist
                 run: |
