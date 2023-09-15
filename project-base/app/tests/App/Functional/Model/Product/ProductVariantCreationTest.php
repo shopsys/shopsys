@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
@@ -135,6 +136,23 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
 
         $this->assertTrue($mainVariant->isMainVariant());
         $this->assertContainsAllVariants([$secondProduct, $thirdProduct], $mainVariant);
+    }
+
+    public function testVariantWithImageCanBeCreated(): void
+    {
+        /** @var \App\Model\Product\Product $mainProduct */
+        $mainProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7');
+
+        $variants = [
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '8'),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '88'),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '89'),
+        ];
+
+        $mainVariant = $this->productVariantFacade->createVariant($mainProduct, $variants);
+
+        $this->assertTrue($mainVariant->isMainVariant());
+        $this->assertContainsAllVariants($variants, $mainVariant);
     }
 
     /**
