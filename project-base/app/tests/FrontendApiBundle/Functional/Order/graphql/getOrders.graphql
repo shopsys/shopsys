@@ -1,0 +1,12 @@
+query getOrders ($first: Int, $last: Int) {
+    orders (first: $first, last: $last) {
+        edges {
+            node {
+                status
+                totalPrice {
+                    priceWithVat
+                }
+            }
+        }
+    }
+}

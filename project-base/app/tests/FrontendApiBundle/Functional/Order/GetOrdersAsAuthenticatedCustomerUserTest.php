@@ -4,244 +4,101 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
-use App\DataFixtures\Demo\VatDataFixture;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use App\DataFixtures\Demo\OrderDataFixture;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
     use OrderTestTrait;
 
-    public function testGetAllCustomerUserOrders(): void
-    {
-        $this->markTestSkipped('This test is skipped because of the issue with rounding');
+    private const EXPECTED_ORDER_IDS = [4, 5, 3, 1, 2, 6];
 
-        // @phpstan-ignore-next-line Test is skipped
-        foreach ($this->getOrdersDataProvider() as $datasetIndex => $dataSet) {
-            [$query, $expectedOrdersData] = $dataSet;
+    /**
+     * @dataProvider getOrdersDataProvider
+     * @param array $queryVariables
+     * @param int|null $offsetInExpected
+     * @param int|null $lengthInExpected
+     */
+    public function testGetAllCustomerUserOrders(
+        array $queryVariables,
+        ?int $offsetInExpected,
+        ?int $lengthInExpected,
+    ): void {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/getOrders.graphql', $queryVariables);
 
-            $graphQlType = 'orders';
-            $response = $this->getResponseContentForQuery($query);
-            $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'orders');
 
-            $message = sprintf('Dataset index: %d', $datasetIndex);
+        $expectedUserOrders = $this->getExpectedUserOrders($offsetInExpected, $lengthInExpected);
 
-            $this->assertArrayHasKey('edges', $responseData, $message);
-            $this->assertCount(count($expectedOrdersData), $responseData['edges'], $message);
+        $this->assertArrayHasKey('edges', $responseData);
+        $this->assertSameSize(
+            $expectedUserOrders,
+            $responseData['edges'],
+        );
 
-            foreach ($responseData['edges'] as $orderIndex => $edge) {
-                $orderMessage = $message . sprintf(' [Order index: %d]', $orderIndex);
-                $this->assertArrayHasKey('node', $edge, $orderMessage);
+        foreach ($responseData['edges'] as $orderIndex => $edge) {
+            $orderMessage = sprintf(
+                'Hint: check data and sort of order with ID #%d',
+                self::EXPECTED_ORDER_IDS[$orderIndex + $offsetInExpected],
+            );
 
-                $expectedOrderData = array_shift($expectedOrdersData);
-                $this->assertArrayHasKey('status', $edge['node'], $orderMessage);
-                $this->assertSame($expectedOrderData['status'], $edge['node']['status'], $orderMessage);
 
-                $this->assertArrayHasKey('totalPrice', $edge['node'], $orderMessage);
-                $this->assertArrayHasKey('priceWithVat', $edge['node']['totalPrice'], $orderMessage);
-                $this->assertSame($expectedOrderData['priceWithVat'], $edge['node']['totalPrice']['priceWithVat'], $orderMessage);
-            }
+            $this->assertArrayHasKey('node', $edge, $orderMessage);
+
+            $expectedOrderData = array_shift($expectedUserOrders);
+            $this->assertArrayHasKey('status', $edge['node'], $orderMessage);
+            $this->assertSame($expectedOrderData['status'], $edge['node']['status'], $orderMessage);
+
+            $this->assertArrayHasKey('totalPrice', $edge['node'], $orderMessage);
+            $this->assertArrayHasKey('priceWithVat', $edge['node']['totalPrice'], $orderMessage);
+            $this->assertSame($expectedOrderData['priceWithVat'], $edge['node']['totalPrice']['priceWithVat'], $orderMessage);
         }
     }
 
     /**
      * @return iterable
-     * @phpstan-ignore-next-line Test is skipped
      */
-    private function getOrdersDataProvider(): iterable
+    public function getOrdersDataProvider(): iterable
     {
-        return [
-            [
-                $this->getOrdersWithoutFilterQuery(),
-                $this->getExpectedUserOrders(),
-            ],
-            [
-                $this->getFirstOrdersQuery(2),
-                array_slice($this->getExpectedUserOrders(), 0, 2),
-            ],
-            [
-                $this->getFirstOrdersQuery(1),
-                array_slice($this->getExpectedUserOrders(), 0, 1),
-            ],
-            [
-                $this->getLastOrdersQuery(1),
-                array_slice($this->getExpectedUserOrders(), 5, 1),
-            ],
-            [
-                $this->getLastOrdersQuery(2),
-                array_slice($this->getExpectedUserOrders(), 4, 2),
-            ],
-        ];
+        // all orders
+        yield [[], null, null];
+
+        // first 2 orders
+        yield [['first' => 2], 0, 2];
+
+        // first 1 order
+        yield [['first' => 1], 0, 1];
+
+        // last 1 order
+        yield [['last' => 1], 5, 1];
+
+        //last 2 orders
+        yield [['last' => 2], 4, 2];
     }
 
     /**
-     * @return string
-     */
-    private function getOrdersWithoutFilterQuery(): string
-    {
-        return '
-            {
-                orders {
-                    edges {
-                        node {
-                            status
-                            totalPrice {
-                                priceWithVat
-                            }
-                        }
-                    }
-                }
-            }
-        ';
-    }
-
-    /**
-     * @param int $numberOfOrders
-     * @return string
-     */
-    private function getFirstOrdersQuery(int $numberOfOrders): string
-    {
-        return '
-            {
-                orders (first:' . $numberOfOrders . ') {
-                    edges {
-                        node {
-                            status
-                            totalPrice {
-                                priceWithVat
-                            }
-                        }
-                    }
-                }
-            }
-        ';
-    }
-
-    /**
-     * @param int $numberOfOrders
-     * @return string
-     */
-    private function getLastOrdersQuery(int $numberOfOrders): string
-    {
-        return '
-            {
-                orders (last:' . $numberOfOrders . ') {
-                    edges {
-                        node {
-                            status
-                            totalPrice {
-                                priceWithVat
-                            }
-                        }
-                    }
-                }
-            }
-        ';
-    }
-
-    /**
+     * @param int|null $offset
+     * @param int|null $length
      * @return array
      */
-    private function getExpectedUserOrders(): array
+    private function getExpectedUserOrders(?int $offset, ?int $length): array
     {
-        $firstDomainLocale = $this->getLocaleForFirstDomain();
-        $domainId = $this->domain->getId();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
-        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
+        $ordersArray = [];
 
-        $expectedOrderItems1 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh)],
-        ];
-        $expectedOrder1 = [
-            'status' => t('In Progress', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            'priceWithVat' => self::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems1,
-            )->getPriceWithVat()->getAmount(),
-        ];
+        foreach (self::EXPECTED_ORDER_IDS as $orderId) {
+            /** @var \App\Model\Order\Order $order */
+            $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . $orderId);
 
-        $expectedOrderItems2 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('8173.55', $vatHigh, 8)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('17842.98', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh, 2)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
-        ];
-        $expectedOrder2 = [
-            'status' => t('Done', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            'priceWithVat' => self::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems2,
-            )->getPriceWithVat()->getAmount(),
-        ];
+            $ordersArray[] = [
+                'status' => $order->getStatus()->getName(),
+                'priceWithVat' => $order->getTotalPriceWithVat()->getAmount(),
+            ];
+        }
 
-        $expectedOrderItems3 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('263.64', $vatHigh, 6)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('4.96', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero)],
-        ];
-        $expectedOrder3 = [
-            'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            'priceWithVat' => self::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems3,
-            )->getPriceWithVat()->getAmount(),
-        ];
+        if ($offset !== null) {
+            return array_slice($ordersArray, $offset, $length);
+        }
 
-        $expectedOrderItems4 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('1314.05', $vatHigh, 2)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('818.18', $vatHigh, 3)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
-        ];
-        $expectedOrder4 = [
-            'status' => t('Done', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            'priceWithVat' => self::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems4,
-            )->getPriceWithVat()->getAmount(),
-        ];
-
-        $expectedOrderItems5 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('437.19', $vatHigh, 2)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('180.17', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('429.75', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3.31', $vatHigh, 5)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
-        ];
-        $expectedOrder5 = [
-            'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            'priceWithVat' => self::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems5,
-            )->getPriceWithVat()->getAmount(),
-        ];
-
-        $expectedOrderItems6 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('98.35', $vatHigh, 2)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('19743.80', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3.31', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('90.08', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('164.46', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('437.19', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero)],
-        ];
-        $expectedOrder6 = [
-            'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            'priceWithVat' => self::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems6,
-            )->getPriceWithVat()->getAmount(),
-        ];
-
-        return [
-            $expectedOrder1,
-            $expectedOrder2,
-            $expectedOrder3,
-            $expectedOrder4,
-            $expectedOrder5,
-            $expectedOrder6,
-        ];
+        return $ordersArray;
     }
 }

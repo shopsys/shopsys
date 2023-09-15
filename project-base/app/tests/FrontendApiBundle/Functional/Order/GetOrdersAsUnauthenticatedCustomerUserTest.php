@@ -10,7 +10,7 @@ class GetOrdersAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
 {
     public function testGetAllCustomerUserOrders(): void
     {
-        $response = $this->getResponseContentForQuery($this->getOrdersWithoutFilterQuery());
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/getOrders.graphql');
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
@@ -20,26 +20,5 @@ class GetOrdersAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
             'Token is not valid.',
             $errors[0]['message'],
         );
-    }
-
-    /**
-     * @return string
-     */
-    private function getOrdersWithoutFilterQuery(): string
-    {
-        return '
-            {
-                orders {
-                    edges {
-                        node {
-                            status
-                            totalPrice {
-                                priceWithVat
-                            }
-                        }
-                    }
-                }
-            }
-        ';
     }
 }
