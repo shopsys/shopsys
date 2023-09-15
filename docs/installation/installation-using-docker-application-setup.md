@@ -3,7 +3,7 @@
 This guide expects that you have already set up your Docker environment.
 If you have not already done that check the [Installation using Docker](./installation-guide.md#installation-using-docker).
 
-## 1. Set up the Shopsys Platform application
+## 1. Set up Shopsys Platform application
 Now that the Docker environment is prepared we can setup the application itself.
 
 ### 1.1. Connect into terminal of the Docker container

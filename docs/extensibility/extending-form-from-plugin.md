@@ -1,18 +1,18 @@
 # Extending Form From Plugin
-Sometimes your plugin needs some extra information to be included in an entity, for example, you need to track the weight of products.
+Sometimes, your plugin needs some extra information to be included in an entity. For example, you need to track the weight of products.
 This can be solved by extending the entity CRUD model with your custom sub-form.
 
 To do so you should implement [`PluginCrudExtensionInterface`](https://github.com/shopsys/shopsys/blob/master/packages/plugin-interface/src/PluginCrudExtensionInterface.php) and [tag the service in a DI container](http://symfony.com/doc/current/service_container/tags.html) with `shopsys.crud_extension` tag.
-The tag should have a `type` attribute defining which CRUD model should be extended (eg. `"product"`).
+The tag should have a `type` attribute defining which CRUD model should be extended (e.g., `"product"`).
 
 Each form extension has its label, form type and methods for managing the form data.
 
-For more information about working with plugins you can see [shopsys/plugin-interface](https://github.com/shopsys/plugin-interface) repository.
+For more information about working with plugins, you can see [shopsys/plugin-interface](https://github.com/shopsys/plugin-interface) repository.
 
 ## Example
-As an example usage we will use `HeurekaProductCrudExtension`.
+As an example usage, we will use `HeurekaProductCrudExtension`.
 
-First you need to add your form type that you want to show in administration. (eg. `product-feed-heureka/src/Form/HeurekaProductFormType.php`)
+First, you must add your form type you want to show in administration. (e.g., `product-feed-heureka/src/Form/HeurekaProductFormType.php`)
 ```php
 
 //...
@@ -48,8 +48,8 @@ class HeurekaProductFormType extends AbstractType
 
 ```
 
-Then you need to add the CRUD extension, in our example it's `product-feed-heureka/src/Form/HeurekaProductCrudExtension.php`.
-Here you need to add methods for handling data and methods `getFormTypeClass` to set what form should be used and `getFormLabel` so the form can have fitting label.
+Then, you need to add the CRUD extension. In our example, it's `product-feed-heureka/src/Form/HeurekaProductCrudExtension.php`.
+Here, you need to add methods for handling data and methods `getFormTypeClass` to set what form should be used and `getFormLabel` so the form can have a fitting label.
 
 ```php
 

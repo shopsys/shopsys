@@ -1,7 +1,7 @@
 # Creating a Multidomain Design
 
 This guide shows you, how to distinguish your multiple domains by using custom styles and/or Twig templates.
-If you want to know the basic technologies we use for the frontend implementation, you can read [Design Implementation and Customization article](../frontend/design-implementation-and-customization.md).
+To know the basic technologies we use for frontend implementation, you can read [Design Implementation and Customization article](../frontend/design-implementation-and-customization.md).
 
 ## Model scenarios
 
@@ -23,10 +23,10 @@ Edit `assets/styles/frontend/domain2/core/variables.less`:
 !!! hint
     If you are not familiar with `phing`, there is [a separate article](../introduction/console-commands-for-application-management-phing-targets.md) about it as well.
 
-### Scenario 2 - I want to change layout in footer on my 2nd domain
+### Scenario 2 - I want to change the layout in the footer on my 2nd domain
 
-In the footer, among other things, are on the right side contact phone number and email, list of articles and link to contact page.
-Let us say we want to change the elements so the list of articles goes first, then link to contact page, and the phone number and email are last.
+In the footer, among other things, are on the right side contact phone number and email, a list of articles and a link to the contact page.
+Let us say we want to change the elements so the list of articles goes first, then the link to the contact page, and the phone number and email are last.
 
 Open [`domains.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml) and set `design_id` parameter for your 2nd domain.
 
@@ -63,4 +63,4 @@ Since there are two independent parameters for using custom styles and Twig temp
 you are able to combine them arbitrarily to achieve a multidomain design that suits your needs.
 E.g. you can have 2 color sets and 3 distinct layouts, and then 6 domains with all the possible combinations.
 
-It is important to keep in mind that second (and any other than the first) domain is not covered by tests so be aware when using different templates.
+It is important to keep in mind that tests do not cover any other than the first domain, so be aware when using different templates.

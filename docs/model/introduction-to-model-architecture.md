@@ -7,7 +7,7 @@ The definition of a model is adopted from [Domain Driven Design (DDD)](https://s
 Model is a system of abstractions that describes selected aspect of a domain.
 
 Domain is a sphere of knowledge or activity we build application logic around.
-The domain of Shopsys Platform is ecommerce.
+The domain of Shopsys Platform is e-commerce.
 
 !!! note
     In Shopsys Platform, we also use the term domain for another concept which is an instance of eshop data accessible through an individual url address.  
@@ -19,8 +19,8 @@ Domain model of Shopsys Platform is located in [`Shopsys\FrameworkBundle\Model`]
 Its concept is to separate behavior and properties of objects from its persistence.
 This separation is suitable for code reusability, easier testing and it fulfills the Single Responsibility Principle.
 
-Code belonging to the same feature is grouped together (eg. `Cart` and `CartItem`).
-Names of classes and methods are based on real world vocabulary to be more intuitive (eg. `OrderHashGenerator` or `getSellableProductsInCategory()`).
+Code belonging to the same feature is grouped together (e.g., `Cart` and `CartItem`).
+Names of classes and methods are based on real world vocabulary to be more intuitive (e.g., `OrderHashGenerator` or `getSellableProductsInCategory()`).
 
 Model is mostly divided into three parts: Entity, Repository and Facade.
 
@@ -33,12 +33,12 @@ One entity class usually represents one table in the database and one instance o
 The entity is composed of fields, which can be mapped to columns in the table.
 Doctrine ORM annotations are used to define the details about the database mapping (types of columns, relations, etc.).
 
-Entities are inspired by Rich Domain Model. That means entity is usually the place where domain logic belongs (e.g. `Product::changeVat()` sets vat and marks product for price recalculation).
+Entities are inspired by Rich Domain Model. That means entity is usually the place where domain logic belongs (e.g., `Product::changeVat()` sets vat and marks product for price recalculation).
 However, the rule applies only to the situations where there is no external dependency required. In other words, entities should deal with their own data only and must not be dependent on any other services,
 i.e. they must not require the services in constructor nor as arguments of their methods.
 When there is a need for a service in a given scenario, [`Facade`](#facade) is used to provide the desired use case.
 
-Entities can be used by all layers of the model and even outside of model (eg. controller or templates).
+Entities can be used by all layers of the model and even outside of model (e.g., controller or templates).
 
 You'll find more about our entities specialities in a [detailed article](entities.md).
 
@@ -240,14 +240,14 @@ class CartFacade
 ```
 
 ## Cooperation of layers
-The controller handles the request (eg. [saved data](./entities.md#entity-data) from form) and passes data to the facade.
+The controller handles the request (e.g., [saved data](./entities.md#entity-data) from form) and passes data to the facade.
 The facade receives data from the controller and requests appropriate entities from the repository.
 Entities and supporting classes (like recalculators, schedulers) processes data and returns output to the facade, that persist it by entity manager.
 
 ## Model extension
 Entity extension is described in [Entity Extension article](../extensibility/entity-extension.md).
 
-Other parts of a model can be extended by class inheritance and adding an alias to your `services.yaml`, eg.:
+Other parts of a model can be extended by class inheritance and adding an alias to your `services.yaml`, e.g.:
 ```yaml
 services:
     Shopsys\FrameworkBundle\Model\Article\ArticleFacade: '@App\Model\Article\ArticleFacade'

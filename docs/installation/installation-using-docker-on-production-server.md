@@ -249,7 +249,7 @@ We can do the whole process manually of write the commands into some deployment 
 We need to clone project repository with the specific tag or commit hash into some workspace.  
 
 ```sh
-git clone <YOUR_PROJECT_REPOSITORY> (e.g. https://github.com/shopsys/project-base.git)
+git clone <YOUR_PROJECT_REPOSITORY> (e.g., https://github.com/shopsys/project-base.git)
 cd project-base
 git checkout $commit_hash
 ```
@@ -329,7 +329,7 @@ chown -R 33:33 /var/www/production-content
 and start containers with docker-compose.
 
 ```sh
-cd <PROJECT_ROOT_PATH> #(e.g. /var/www/html)
+cd <PROJECT_ROOT_PATH> #(e.g., /var/www/html)
 docker-compose -p production up -d
 ```
 
@@ -388,7 +388,7 @@ We log into the server using ssh.
 Now we are logged in production server and we start to deploy newly built production image.
 
 ```sh
-cd <PROJECT_ROOT_PATH> (e.g. /var/www/html)
+cd <PROJECT_ROOT_PATH> (e.g., /var/www/html)
 
 # make sure that container for building the application image is cleared
 docker rm -f build-php-fpm-container
@@ -421,7 +421,7 @@ docker rm -f build-php-fpm-container
 ```
 
 !!! warning
-    During `build-deploy-part-2-db-dependent` phing target `elasticsearch-index-migrate` is called and can cause error when you change the type of field to another (eg. you change it from `bool` to `integer`).
+    During `build-deploy-part-2-db-dependent` phing target `elasticsearch-index-migrate` is called and can cause error when you change the type of field to another (e.g., you change it from `bool` to `integer`).
     If you need to make this change, please add new field with the correct type and delete the old field instead
 
 !!! tip

@@ -1,6 +1,6 @@
 # Start Building Your Application
 
-Installation of the Shopsys Platform is complete and now you can start building your application.
+Installation of Shopsys Platform is complete and now you can start building your application.
 Here are first steps you should start with.
 
 !!! note
@@ -35,7 +35,7 @@ We highly recommend to set up domains in the beginning of your project correctly
 ## Set up locales
 
 A locale is a combination of language and national settings like a collation of language-specific characters.
-We use [ISO 639-1 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) to specify locale *(eg. `cs`, `de`, `en`, `sk`)*.
+We use [ISO 639-1 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) to specify locale *(e.g., `cs`, `de`, `en`, `sk`)*.
 Every domain has defined one locale and also administration has defined its locale.
 
 When you install new project, locales are set like this
@@ -49,7 +49,7 @@ In case you want to change domain locale read [locale settings](./how-to-set-up-
 ## Set up Elasticsearch
 
 We use Elasticsearch on the frontend for product searching, filtering and for fast listing of products to provide better performance.
-You are likely to adjust the Elasticsearch configuration for example if you have a technical shop where the inflection of product names doesn't make sense (we use inflection during searching by default).
+You are likely to adjust the Elasticsearch configuration for example, if you have a technical shop where the inflection of product names doesn't make sense (we use inflection during searching by default).
 
 !!! note
     Find more in detailed article about [Elasticsearch](../model/elasticsearch.md) usage.
@@ -60,7 +60,7 @@ The most often change is adding [fields](https://www.elastic.co/guide/en/elastic
 ## Set up routing
 
 Routing is a mechanism that maps URL path to controllers and methods.
-You are likely to adjust routing when you need translated routes for a new locale (e.g. when you have a domain with German localization, and want to have a list of orders under URL `/befehle`).
+You are likely to adjust routing when you need translated routes for a new locale (e.g., when you have a domain with German localization, and want to have a list of orders under URL `/befehle`).
 
 *We use Symfony routing, so please find more in the [official documentation](https://symfony.com/doc/3.4/routing.html)*
 
@@ -71,8 +71,8 @@ You can adjust the routing in `config/shopsys-routing/routing_friendly_url.yaml`
 A default currency is a currency that is displayed when showing a price in a certain part of the system.
 The default currency is different for administration and for each of domains and you can adjust the default currency for each one individually.
 
-The administration default currency is used in twig templates eg. as `{{ value|priceWithCurrencyAdmin }}`.
-The default currency for domain is used eg. as `{{ cartItemDiscount.priceWithVat|price }}`.
+The administration default currency is used in twig templates e.g., as `{{ value|priceWithCurrencyAdmin }}`.
+The default currency for domain is used e.g., as `{{ cartItemDiscount.priceWithVat|price }}`.
 
 *Note: Read more in a dedicated article about [price filters](../model/how-to-work-with-money.md#price) and [administration price filter](../model/how-to-work-with-money.md#pricewithcurrencyadmin).*
 
@@ -118,7 +118,7 @@ switch ($domainId) {
 ```
 
 ## Fine-tune your configuration
-If all developers working on your project use the same version of PHP (e.g. because all use Shopsys Platform via Docker), you can use higher versions of the libraries and tools installed via Composer.
+If all developers working on your project use the same version of PHP (e.g., because all use Shopsys Platform via Docker), you can use higher versions of the libraries and tools installed via Composer.
 To do so, remove the `config.platform.php` option from your `composer.json`:
 ```diff
      "config": {

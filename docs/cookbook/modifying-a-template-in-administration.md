@@ -8,9 +8,9 @@ We will demonstrate this procedure with the example "How to display a product tr
 This tutorial assumes that the product already contains the transfer status attribute.
 If you need to extend the product with a new attribute, see the tutorial [Adding new attribute to an entity](./adding-new-attribute-to-an-entity.md).
 
-Modifying the bundle templates that are located in the vendor can be done via overriding these templates.
+Modifying the bundle templates that are located in the vendor can be done by overriding these templates.
 
-*If you need to extend or modify the form itself, it is not necessary to use the overriding and consequently to lose an upgradeability.
+*If you need to extend or modify the form itself, it is unnecessary to use the overriding and consequently lose upgradeability.
 For the extensions of the forms, see [Enable administrator to edit the `extId` field](./adding-new-attribute-to-an-entity.md#enable-administrator-to-edit-the-extId-field).*
 
 #### The first step is to create a copy of the original twig template that you want to modify.
@@ -25,12 +25,12 @@ therefore, the copy must be located in
 templates/bundles/ShopsysFrameworkBundle/Admin/Content/Product/detail.html.twig
 ```
 
-See especially the new directory `ShopsysFrameworkBundle` whose title is based on the name of the bundle with original template.
+See especially the new directory `ShopsysFrameworkBundle` whose title is based on the bundle's name with the original template.
 Thanks to this exact location, your new copy of the template will be used instead of the original template from the FrameworkBundle during the rendering process.
-At this point, you just need to modify your copy of the template in such a way that product transfer status will be displayed on the page.
+At this point, you just need to modify your copy of the template so that the product transfer status will be displayed on the page.
 
 !!! note
-    If you want to change only some block you can override the original template. For that, you need to use `extends` macro with an exclamation mark to prevent template cycling. For example: `{% extends '@!ShopsysFramework/Admin/Content/Product/detail.html.twig' %}`
+    If you want to change only some block, you can override the original template. For that, you need to use the `extends` macro with an exclamation mark to prevent template cycling. For example: `{% extends '@!ShopsysFramework/Admin/Content/Product/detail.html.twig' %}`.
     More information can be found in [official Symfony documentation](https://symfony.com/doc/current/bundles/override.html#templates)
 
 #### The second step is the modification of the copy itself
@@ -61,7 +61,7 @@ View in the administration before the modification:
 
 ![Admin product detail before](img/modifying-a-template-product-before.png)
 
-Now, add the simple condition, wrapped into the divs for a prettier look, into `templates/bundles/ShopsysFrameworkBundle/Admin/Content/Product/detail.html.twig` to display the product transfer status
+Now, add the simple condition, wrapped into the divs for a prettier look, into `templates/bundles/ShopsysFrameworkBundle/Admin/Content/Product/detail.html.twig` to display the product transfer status.
 
 ```twig
     <div class="form-line">

@@ -32,7 +32,7 @@ The directory is configured using `%shopsys.elasticsearch.structure_dir%` parame
 - elasticsearch-export
 - elasticsearch-export-changed
 
-These commands takes action for all registered indexes. You can also define a single index for given action by defining parameter `elasticsearch.index` (e.g. `elasticsearch-index-recreate -D elasticsearch.index=product` will recreate a structure for index `product`).
+These commands takes action for all registered indexes. You can also define a single index for given action by defining parameter `elasticsearch.index` (e.g., `elasticsearch-index-recreate -D elasticsearch.index=product` will recreate a structure for index `product`).
 
 ### Product data export
 No data are automatically stored in Elasticsearch by "itself".
@@ -57,7 +57,7 @@ Following product attributes are exported into Elasticsearch (i.e. the search or
 * calculated_selling_denied (calculated true/false value whether the product is already sold out)
 * selling_denied (true/false value whether the product can be sold)
 * availability (translation of product availability)
-* main_variant (true/false value whether the product is main variant or not. You can find more about behaviour of variants [here](../functional/behavior-of-product-variants.md))
+* main_variant (true/false value whether the product is main variant or not. You can find more about behavior of variants [here](../functional/behavior-of-product-variants.md))
 * detail_url (absolute url to page with products detail)
 * visibility (all visibilities for all pricing groups and domains)
 
@@ -117,7 +117,7 @@ Configurations use the `<index>/<domain_id>.json` naming pattern.
 
 You can easily check if there is a product exported in the Elasticsearch by putting following url address into your browser
   `http://127.0.0.1:9200/product_{domain ID}/_doc/{product ID}?pretty`
-  eg. `http://127.0.0.1:9200/product_1/_doc/52?pretty`
+  e.g., `http://127.0.0.1:9200/product_1/_doc/52?pretty`
 
 #### Export fails
 

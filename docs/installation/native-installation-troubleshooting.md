@@ -35,7 +35,7 @@ Shopsys Platform normalizes the names of locales present in different systems by
 
 However, if your operating system does not provide the required locales you can try:
 
-* On Linux: Install additional locales to your system (eg. on Debian Linux this can be done by installing [locales-all](https://packages.debian.org/cs/stable/locales-all) package) and restart the database server.
+* On Linux: Install additional locales to your system (e.g., on Debian Linux this can be done by installing [locales-all](https://packages.debian.org/cs/stable/locales-all) package) and restart the database server.
 * On Windows: Make sure you use PostgreSQL distribution that supports multiple locales. We recommend to use [EnterpriseDB PostgreSQL distribution](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads#windows).
 * Otherwise: The only other option is to create the database collation mentioned in the exception manually using a locale that your OS supports.  
   (Note: every OS should support special locale `"C"` or `"POSIX"`.)

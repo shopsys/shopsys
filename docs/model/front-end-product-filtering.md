@@ -14,7 +14,7 @@ Currently, there are two implementations of `ProductOnCurrentDomainFacadeInterfa
     - much faster than filtering through SQL and remains fast independently on the number of selected filters
  - `ProductOnCurrentDomainFacade`
     - filters data through SQL
-    - slower than Elasticsearch, but on the other hand can be used easily on more complex pricing models (for example exact price is calculated with SQL function)
+    - slower than Elasticsearch, but on the other hand can be used easily on more complex pricing models (for example, exact price is calculated with SQL function)
 
 ## Filtering through Elasticsearch
 Behavior of the filter is defined in the class `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade`.

@@ -20,7 +20,7 @@ internal_directories:
 ```
 
 ### Public directories
-Directories that needs to be available for public usage, for example feeds or sitemaps.
+Directories that needs to be available for public usage, for example, feeds or sitemaps.
 
 These directories are grouped under `public_directores` in `config/directories.yaml` file and their definition is relative path to the root directory of a project.
 

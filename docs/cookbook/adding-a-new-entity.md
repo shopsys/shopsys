@@ -1,5 +1,5 @@
 # Adding a New Entity
-This article provides step by step instructions on how to add a new entity to your project.
+This article provides step-by-step instructions on how to add a new entity to your project.
 Basic information about custom entities can be found in the [separate article](../model/custom-entities.md).
 
 Let's say we need to keep an agenda of salesmen. After finishing this cookbook, the new salesman entity will not be presented on the FE in any fashion,
@@ -112,12 +112,12 @@ class Version20190301122526 extends AbstractMigration
 ```
 
 !!! tip
-    We recommend you to check this migration whether everything is set as expected.
-    If the system doesn't generate the migration, the entity is probably in an incorrect namespace or has wrong Doctrine annotation mapping.
+    We recommend you check this migration and verify that everything is set up as expected.
+    If the system doesn't generate the migration, the entity is probably in an incorrect namespace or has the wrong Doctrine annotation mapping.
 
 ## 4. Add default salesmen
 
-Now we add some entries into the new database table by modifying the database migration.
+Now, we add some entries into the new database table by modifying the database migration.
 
 ```diff
 namespace App\Migrations;
@@ -155,7 +155,7 @@ class Version20190301122526 extends AbstractMigration
 }
 ```
 
-## 5. Execute migrations to propagate all the changes to database
+## 5. Execute migrations to propagate all the changes to the database
 
 Run a console command
 

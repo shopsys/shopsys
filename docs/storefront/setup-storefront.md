@@ -1,9 +1,9 @@
 # Setup Storefront
 
-There are two ways to use the Shopsys Platform Storefront on your machine.
+There are two ways to use Shopsys Platform Storefront on your machine.
 The first and easiest way is when you have installed your project using Docker.
 With Docker, you have everything running already.
-If Docker way is too robust for you or you do not need the whole application running, you can run the Shopsys Platform Storefront natively.
+If Docker way is too robust for you or you do not need the whole application running, you can run Shopsys Platform Storefront natively.
 
 ## Docker way
 

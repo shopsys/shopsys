@@ -35,8 +35,8 @@ Modules are developed in separate packages with [semantic versioning](http://sem
 You can install a module just by requiring its package via Composer and registering it in your application.
 
 So far, we created packages for [HTTP Smoke testing](https://github.com/shopsys/http-smoke-testing) or [database migrations](https://github.com/shopsys/migrations),
-and extracted product XML feeds (eg. [Google Shopping product feed](https://github.com/shopsys/product-feed-google)).
-Other candidates for extraction into modules are for example payment methods gateways, package shipping integrations or analytic service integrations.
+and extracted product XML feeds (e.g., [Google Shopping product feed](https://github.com/shopsys/product-feed-google)).
+Other candidates for extraction into modules are for example, payment methods gateways, package shipping integrations or analytic service integrations.
 
 ![Shopsys Platform package architecture schema](../img/package-architecture.png 'Shopsys Platform Package Architecture')
 
@@ -53,11 +53,11 @@ For more detailed instructions, follow [Installation Using Docker](../installati
 `composer create-project` ensures that new project will be created from the latest release of `shopsys/project-base`  
 `git clone` creates a new project from current repository master branch  
 We do not recommend forking for the same reason.
-Forking also copies the `shopsys/project-base` under your Github account and the copy is public by default, and you probably do not need that.
+Forking also copies the `shopsys/project-base` under your GitHub account and the copy is public by default, and you probably do not need that.
 
 ### Upgrading
 We know that upgrading should be as easy as possible, ideally without requiring any modification of your code.
-This goal is very hard to achieve while both providing unlimited customizability and innovating the Shopsys Platform itself,
+This goal is very hard to achieve while both providing unlimited customizability and innovating Shopsys Platform itself,
 as the project’s every customization has to work well with every new release.
 
 #### Framework and modules

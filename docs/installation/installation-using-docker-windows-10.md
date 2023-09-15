@@ -2,7 +2,7 @@
 **Expected installation time:** less than 1 hour.
 
 This guide covers building new projects based on Shopsys Platform.
-In case you want to contribute to the Shopsys Platform itself, you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
+In case you want to contribute to Shopsys Platform itself, you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
 Take a look at the article about [Monorepo](../introduction/monorepo.md) for more information.
 
 ## Supported systems

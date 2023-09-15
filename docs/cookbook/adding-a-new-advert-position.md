@@ -12,7 +12,7 @@ All the positions are defined in `AdvertPositionRegistry` class that provides th
 
 If you want to add a new custom position, let us say on the product detail page, you need to follow these steps:
 
-Create a new class that extends `AdvertPositionRegistry` and override `getAllLabelsIndexedByNames()` method where you add a translated description for your new advert position to the existing ones.
+Create a new class that extends `AdvertPositionRegistry` and override `getAllLabelsIndexedByNames()` method, where you add a translated description for your new advert position to the existing ones.
 
 ```php
 namespace App\Model\Advert;
@@ -47,10 +47,10 @@ Render the new advert on the product detail page (or wherever else you want) by 
 {{ render(controller('App\\Controller\\Front\\AdvertController::boxAction',{'positionName' : 'productDetail'})) }}
 ```
 
-If you misspell the position name (or otherwise use a non-registered one) an exception will be thrown including the list of all registered positions.
-So don't worry about calling the controller in a wrong way.
+If you misspell the position name (or otherwise use a non-registered one), an exception will be thrown including the list of all registered positions.
+So don't worry about calling the controller in the wrong way.
 
-Add new entry into `noticer` section in `config/images.yaml` config if you want to provide additional information about the new position for the images overview admin page (`Settings > Image size > Image size` on URL `admin/image/overview/`)
+Add a new entry into `noticer` section in `config/images.yaml` config if you want to provide additional information about the new position for the images overview admin page (`Settings > Image size > Image size` on URL `admin/image/overview/`)
 
 ```yaml
 -   name: noticer
@@ -66,7 +66,7 @@ Add new entry into `noticer` section in `config/images.yaml` config if you want 
 ## Conclusion
 
 An administrator can now pick the newly created position when creating an ad in the *Marketing > Advertising system* section.
-The advert will then display on the page we edited in the third step (eg. the product detail page).
+The advert will then be displayed on the page we edited in the third step (e.g., the product detail page).
 This allows quick customization of the online store visuals via the administration.
 
 Adding further advert positions will be even simpler as you only add a new item in your already existing implementation of `AdvertPositionRegistry`.

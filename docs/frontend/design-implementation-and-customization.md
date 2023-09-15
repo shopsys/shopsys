@@ -21,8 +21,8 @@ In order to change your multidomain appearance, you can set two parameters [`dom
     - you can create your own directories structure in the sub-folder that suits your needs
 - `design_id`
     - allows you to define a design identifier
-    - the parameter can be a number (e.g. domain ID), however, you can use a string identifier as well (e.g. "flat-design") so you are able to use the same design across multiple domains
-    - if you want to use custom template for a particular domain, duplicate the original one that is used for the first domain and add `.design_id` value as a suffix to its name (e.g. `detail.html.twig` -> `detail.flat-design.html.twig`)
+    - the parameter can be a number (e.g., domain ID), however, you can use a string identifier as well (e.g., "flat-design") so you are able to use the same design across multiple domains
+    - if you want to use custom template for a particular domain, duplicate the original one that is used for the first domain and add `.design_id` value as a suffix to its name (e.g., `detail.html.twig` -> `detail.flat-design.html.twig`)
     - all the multi-design templates must be located in the same folders as their originals
         - there is a huge advantage from the usability point of view - when you change a controller, you need to change all the related multi-design templates.
         In such a case, you see all the templates in the same folder and you do not need to seek for them anywhere else

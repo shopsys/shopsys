@@ -1,14 +1,14 @@
 # Adding Ajax Load More Button into Pagination
 
-In this cookbook, we will add a paginated brand list including ajax "load more" button to a product list page.
+In this cookbook, we will add a paginated brand list, including an ajax "load more" button to a product list page.
 After finishing the guide, you will know how to use multiple paginations on one page.
 
 !!! note
-    After this change you will have paginated also `/brands-list/` page (`front_brand_list` route).
+    After this change, you will have paginated also `/brands-list/` page (`front_brand_list` route).
 
 ## Implementation of Brand Pagination
 
-First we need to extend `Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository` by creating `BrandRepository.php` in `/src/Model/Product/Brand` and we add `getPaginationResult` method.
+First, we need to extend `Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository` by creating `BrandRepository.php` in `/src/Model/Product/Brand`, and we add `getPaginationResult` method.
 
 ```php
 namespace App\Model\Product\Brand;
@@ -72,7 +72,7 @@ class BrandFacade extends BaseBrandFacade
 }
 ```
 
-After we have extended `BrandRepository` and `BrandFacade` we need to set them to be used instead of the framework classes in our application.
+After we have extended `BrandRepository` and `BrandFacade`, we need to set them to be used instead of the framework classes in our application.
 This is done via configuration in `services.yaml`.
 
 ```yaml
@@ -81,9 +81,9 @@ This is done via configuration in `services.yaml`.
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade: '@App\Model\Product\Brand\BrandFacade'
 ```
 
-Next we will modify the brand list twig template where we replace the whole content and create twig template for rendering paging controls and paginated items via ajax where we move the original content from brand list template.
-We will use `paginator.loadMoreButton(paginationResult, url('front_brand_list'), pageQueryParameter)` twig component that will asynchronously load next page when user clicks on its button.
-We will also define `pageQueryParameter` variable so it will have unique name and it will not interfere with other paging component on the same page.
+Next, we will modify the brand list twig template, replacing the whole content and creating a twig template for rendering paging controls and paginated items via ajax, where we move the original content from the brand list template.
+We will use `paginator.loadMoreButton(paginationResult, url('front_brand_list'), pageQueryParameter)` twig component that will asynchronously load the next page when the user clicks on its button.
+We will also define `pageQueryParameter` variable so it will have a unique name and it will not interfere with other paging components on the same page.
 
 ```twig
 {# templates/Front/Content/Brand/list.html.twig #}
@@ -101,10 +101,10 @@ We will also define `pageQueryParameter` variable so it will have unique name an
 {% endblock %}
 ```
 
-There are two important css classes that must be used.
+There are two important CSS classes that must be used.
 
-- `js-list-with-paginator` - element with this class encapsulate paging component
-- `js-list` - fragment from which new items are pulled during asynchronous call
+- `js-list-with-paginator` - element with this class encapsulates paging component
+- `js-list` - fragment from which new items are pulled during an asynchronous call
 
 ```twig
 {# templates/Front/Content/Brand/ajaxList.html.twig #}
@@ -133,10 +133,10 @@ There are two important css classes that must be used.
 </div>
 ```
 
-After that we will modify `listAction` method in `BrandController` so `Brand` list page will be paginated and we will be able to integrate it into another list page that has other paginated items.
-We will implement also constants for page query parameter `const PAGE_QUERY_PARAMETER = 'brandPage'` and for the count of items on one page `const ITEMS_PER_PAGE = 5;`.
+After that, we will modify `listAction` method in `BrandController` so `Brand` list page will be paginated, and we will be able to integrate it into another list page with other paginated items.
+We will also implement constants for page query parameter `const PAGE_QUERY_PARAMETER = 'brandPage'` and for the count of items on one page `const ITEMS_PER_PAGE = 5;`.
 
-To be able to determine whether the request for brand list is called from the template, we need to add dependency on `Symfony\Component\HttpFoundation\RequestStack` into our `BrandController`.
+To determine whether the request for the brand list is called from the template, we need to add the dependency on `Symfony\Component\HttpFoundation\RequestStack` into our `BrandController`.
 
 ```php
 const PAGE_QUERY_PARAMETER = 'brandPage';
@@ -164,7 +164,7 @@ public function __construct(
  */
 public function listAction(Request $request)
 {
-    // check whether request is called directly via route or via Twig template
+    // check whether the request is called directly via route or via the Twig template
     $isMainRequest = $this->requestStack->getMainRequest() === $request;
 
     if ($request->isXmlHttpRequest() || !$isMainRequest) {
@@ -185,14 +185,14 @@ public function listAction(Request $request)
 ### Customizing the "load more" button text
 
 By default, the "load more" button displays general text - "Load next X item(s)".
-There is an option `buttonTextCallback` available for `Shopsys.AjaxMoreLoader` javascript component that you can use to customize the displayed text to fit your use case.
+The option `buttonTextCallback` is available for `Shopsys.AjaxMoreLoader` javascript component that you can use to customize the displayed text to fit your use case.
 You can see the usage of the option in [`productList.js`](https://github.com/shopsys/shopsys/blob/master/project-base/assets/js/frontend/product/productList.js).
 
 ## Integration of Paginated Brand List
 
-Now we have working implementation of paginated `Brand` list page that can be loaded also from asynchronous calls.
-We can try to integrate it into another `Product` list page that is also paginated with page query parameter `page`.
-Only thing we need to do is to modify template for `Product` page.
+We have implemented a paginated `Brand` list page that can also be loaded from asynchronous calls.
+We can integrate it into another `Product` list page that is also paginated with the page query parameter `page`.
+We only need to modify the template for the `Product` page.
 We will add twig code into `main_content` block.
 
 ```twig
@@ -202,5 +202,5 @@ We will add twig code into `main_content` block.
 
 ## Conclusion
 
-Customer can see 2 paginated lists with buttons for loading items from next pages on each `Product` list page.
-Since there are unique page query parameters, paginated lists can have displayed different page indexes after browser is loaded with these page query parameters.
+Customers can see 2 paginated lists with buttons for loading items from the next pages on each `Product` list page.
+Since there are unique page query parameters, paginated lists can display different page indexes after the browser is loaded with these page query parameters.
