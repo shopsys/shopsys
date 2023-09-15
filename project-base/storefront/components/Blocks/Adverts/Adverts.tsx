@@ -1,12 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Image } from 'components/Basic/Image/Image';
-import { isElementVisible } from 'helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { desktopFirstSizes } from 'helpers/mediaQueries';
 import { AdvertsFragmentApi, CategoryDetailFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
-import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type PositionNameType =
@@ -36,22 +31,12 @@ export const Adverts: FC<AdvertsProps> = ({
     isSingle,
 }) => {
     const [{ data: advertsData }] = useAdvertsQueryApi();
-    const [isMobile, setIsMobile] = useState(false);
-    const { width } = useGetWindowSize();
 
     const filteredAdverts = advertsData?.adverts.filter((advert) => advert.positionName === positionName);
     const displayedAdverts =
         isSingle && filteredAdverts?.length
             ? [filteredAdverts[Math.floor(Math.random() * filteredAdverts.length)]]
             : filteredAdverts;
-
-    useResizeWidthEffect(
-        width,
-        desktopFirstSizes.tablet,
-        () => setIsMobile(false),
-        () => setIsMobile(true),
-        () => setIsMobile(isElementVisible([{ min: 0, max: desktopFirstSizes.tablet }], width)),
-    );
 
     const content = !!displayedAdverts?.length && (
         <div className={twJoin(withGapBottom && 'mb-8', withGapTop && 'mt-8', !withWebline && className)}>
@@ -61,10 +46,21 @@ export const Adverts: FC<AdvertsProps> = ({
                         return null;
                     }
 
-                    const itemImage = isMobile ? advert.mainImageMobile : advert.mainImage;
+                    const mainImage = advert.mainImage?.sizes.find(({ size }) => size === positionName);
+                    const mainImageMobile = advert.mainImageMobile?.sizes.find(({ size }) => size === positionName);
 
                     const ImageComponent = (
-                        <Image image={itemImage} type={advert.positionName} alt={itemImage?.name || advert.name} />
+                        <picture>
+                            {/* use min-width equal to Tailwind "lg" breakpoint */}
+                            <source srcSet={mainImage?.url} media="(min-width: 48.0625em)" />
+                            <img
+                                src={mainImageMobile?.url}
+                                alt={advert.mainImage?.name || advert.mainImageMobile?.name || advert.name}
+                                width={mainImageMobile?.width || undefined}
+                                height={mainImageMobile?.height || undefined}
+                                className="w-full"
+                            />
+                        </picture>
                     );
 
                     return (
@@ -86,7 +82,7 @@ export const Adverts: FC<AdvertsProps> = ({
     );
 
     if (withWebline && content) {
-        return wrapWithWebline(content, className);
+        return <Webline className={className}>{content}</Webline>;
     }
 
     return content || null;
@@ -100,17 +96,16 @@ const shouldBeShown = (
     if (!advert || advert.positionName !== positionName) {
         return false;
     }
-    if (advert.positionName === 'productListMiddle' && advert.categories.length === 0) {
+
+    if (advert.positionName === 'productListMiddle' && !advert.categories.length) {
         return false;
     }
+
     for (const category of advert.categories) {
         if (category.slug === currentCategory?.slug || category.slug === currentCategory?.originalCategorySlug) {
             return true;
         }
     }
-    return positionName !== 'productListMiddle' && advert.positionName === positionName;
-};
 
-const wrapWithWebline = (content: JSX.Element, className: string | undefined) => {
-    return <Webline className={className}>{content}</Webline>;
+    return positionName !== 'productListMiddle' && advert.positionName === positionName;
 };
