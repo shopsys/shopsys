@@ -870,3 +870,5 @@ There you can find links to upgrade notes for other versions too.
         - see #project-base-diff for more details
 - update installation of NodeJS and Postgres in your Dockerfile ([#2792](https://github.com/shopsys/shopsys/pull/2792))
     - see #project-base-diff for more details
+- add test for variant creation from products with images ([#2801](https://github.com/shopsys/shopsys/pull/2801))
+    - see #project-base-diff for more details

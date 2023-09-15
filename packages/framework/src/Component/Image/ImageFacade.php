@@ -465,8 +465,8 @@ class ImageFacade
                 $this->imageConfig->getImageEntityConfig($targetEntity)->getEntityName(),
                 $this->getEntityId($targetEntity),
                 $sourceImage->getNames(),
-                $sourceImage->getType(),
                 $sourceImage->getFilename(),
+                $sourceImage->getType(),
             );
 
             $this->em->persist($targetImage);
