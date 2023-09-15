@@ -84,6 +84,7 @@ class OrderItemFormType extends AbstractType
                 ])->addModelTransformer(new InverseTransformer()),
             )
             ->add('vatPercent', NumberType::class, [
+                'input' => 'string',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
                 ],
