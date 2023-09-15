@@ -656,13 +656,6 @@ services:
         tags:
             - { name: shopsys.friendly_url_provider }
 
-    Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener:
-        class: App\Component\HttpFoundation\TransactionalMasterRequestListener
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
-
     App\Component\Image\ImageLocator:
         arguments: ['%shopsys.image_dir%']
 

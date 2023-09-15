@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
-use App\Component\HttpFoundation\TransactionalMasterRequestListener;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\FrontendApi\Model\Flag\FlagFacade;
 use App\FrontendApi\Model\Parameter\ParameterFacade;
@@ -17,6 +16,7 @@ use App\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
@@ -78,7 +78,7 @@ class ReadyCategorySeoMixFacade
         try {
             $this->validateReadyCategoryMixFriendlyUrls($readyCategorySeoMix);
         } catch (ReadyCategorySeoMixUrlsContainBadDomainUrlException | ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException $e) {
-            TransactionalMasterRequestListener::setTransactionHasBeenRollbacked();
+            TransactionalMasterRequestListener::setTransactionManuallyRollbacked();
             $this->em->rollback();
 
             throw $e;
