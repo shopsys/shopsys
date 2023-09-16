@@ -92,3 +92,5 @@ There you can find links to upgrade notes for other versions too.
         -   $this->assertContainsAllVariants([$mainProduct, ...$variants], $mainVariant);
         +   $this->assertContainsAllVariants($variants, $mainVariant);
         ```
+- rewrite the `GetOrdersAsAuthenticatedCustomerUserTest` test ([#2805](https://github.com/shopsys/shopsys/pull/2805))
+    - see #project-base-diff to update your project
