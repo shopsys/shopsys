@@ -872,3 +872,5 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff for more details
 - add test for variant creation from products with images ([#2801](https://github.com/shopsys/shopsys/pull/2801))
     - see #project-base-diff for more details
+- use TestCurrencyProvider from the framework ([#2662](https://github.com/shopsys/shopsys/pull/2662))
+    - remove class `Tests\App\Functional\Model\Pricing\Currency\TestCurrencyProvider` and use `Tests\FrameworkBundle\Test\Provider\TestCurrencyProvider` instead

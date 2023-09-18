@@ -19,9 +19,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
-use Tests\App\Functional\Model\Pricing\Currency\TestCurrencyProvider;
 use Tests\App\Test\FunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
+use Tests\FrameworkBundle\Test\Provider\TestCurrencyProvider;
 
 class OrderPreviewCalculationTest extends FunctionalTestCase
 {

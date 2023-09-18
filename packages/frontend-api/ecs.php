@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
+use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
@@ -35,6 +37,12 @@ return static function (ECSConfig $ecsConfig): void {
         FunctionLengthSniff::class => [
             __DIR__ . '/tests/FrontendApiBundle/Functional/Article/GetArticlesTest.php',
             __DIR__ . '/src/Model/Resolver/Products/ProductResolverMap.php',
+        ],
+        PhpdocToPropertyTypeFixer::class => [
+            __DIR__ . '/src/*',
+        ],
+        DeclareStrictTypesFixer::class => [
+            __DIR__ . '/src/*',
         ],
     ]);
 

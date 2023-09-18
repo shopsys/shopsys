@@ -28,7 +28,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Tests\FrameworkBundle\Unit\Model\Order\TestOrderProvider;
+use Tests\FrameworkBundle\Test\Provider\TestOrderProvider;
 use Twig\Environment;
 
 class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
