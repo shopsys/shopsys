@@ -1,0 +1,42 @@
+on:
+    workflow_dispatch:
+        inputs:
+            branch_name:
+                description: 'Branch name'
+                required: true
+                type: string
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
+name: Monorepo force split branch
+jobs:
+    forced-branch-split:
+        if:  ${{ inputs.branch_name }} != ${{ vars.MAIN_BRANCH_NAME }}
+        name: Forcing split of branch ${{ inputs.branch_name }} package ${{ matrix.packages }}
+        runs-on: ubuntu-22.04
+        strategy:
+            matrix:
+                packages: [
+                    'coding-standards',
+                    'form-types-bundle',
+                    'framework',
+                    'frontend-api',
+                    'google-cloud-bundle',
+                    'http-smoke-testing',
+                    'migrations',
+                    'monorepo-tools',
+                    'plugin-interface',
+                    'project-base',
+                    'product-feed-google',
+                    'product-feed-heureka',
+                    'product-feed-heureka-delivery',
+                    'product-feed-zbozi',
+                    'read-model',
+                    's3-bridge'
+                ]
+            fail-fast: true
+        steps:
+            -   name: GIT checkout branch - ${{ inputs.branch_name }}
+                uses: actions/checkout@v3
+                with:
+                    ref: refs/heads/${{ inputs.branch_name }}
