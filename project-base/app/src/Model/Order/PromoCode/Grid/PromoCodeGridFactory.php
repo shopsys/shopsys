@@ -24,17 +24,18 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
     public function __construct(
         EntityManagerInterface $em,
         GridFactory $gridFactory,
-        private AdminDomainTabsFacade $adminDomainTabsFacade,
-        private PromoCodeLimitRepository $promoCodeLimitRepository,
+        private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        private readonly PromoCodeLimitRepository $promoCodeLimitRepository,
     ) {
         parent::__construct($em, $gridFactory);
     }
 
     /**
      * @param bool $withEditButton
+     * @param string|null $search
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create($withEditButton = true)
+    public function create($withEditButton = true, ?string $search = null)
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -42,11 +43,19 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
             ->from(PromoCode::class, 'pc')
             ->where('pc.domainId = :domainId')
             ->setParameter('domainId', $this->adminDomainTabsFacade->getSelectedDomainId());
+
         $manipulator = function ($row) {
             $row['pc']['percent'] = $this->getLimitsByPromoCodeId($row['pc']['id']);
 
             return $row;
         };
+
+        if ($search !== null) {
+            $queryBuilder
+                ->andWhere('LOWER(pc.code) LIKE LOWER(:search)')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
         $dataSource = new QueryBuilderWithRowManipulatorDataSource($queryBuilder, 'pc.id', $manipulator);
 
         $grid = $this->gridFactory->create('promoCodeList', $dataSource);
