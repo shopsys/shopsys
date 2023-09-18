@@ -94,3 +94,5 @@ There you can find links to upgrade notes for other versions too.
         ```
 - rewrite the `GetOrdersAsAuthenticatedCustomerUserTest` test ([#2805](https://github.com/shopsys/shopsys/pull/2805))
     - see #project-base-diff to update your project
+- change default db server in adminer in local environment ([#2803](https://github.com/shopsys/shopsys/pull/2803))
+    - see #project-base-diff to update your project
