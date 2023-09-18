@@ -101,6 +101,13 @@ services:
             - '@Redis'
             - { 'prefix': '%env(REDIS_PREFIX)%session:', ttl: 604800 }
 
+    Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener:
+        class: App\Component\HttpFoundation\TransactionalMasterRequestListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
     Psr\Container\ContainerInterface:
         alias: service_container
 

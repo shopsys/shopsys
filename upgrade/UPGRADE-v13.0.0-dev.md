@@ -103,3 +103,5 @@ There you can find links to upgrade notes for other versions too.
         +    public function listAction(Request $request): Response
         ```
     - see #project-base-diff to update your project
+- stop wrapping Frontend API queries in database transaction ([#2809](https://github.com/shopsys/shopsys/pull/2809))
+    - see #project-base-diff to update your project
