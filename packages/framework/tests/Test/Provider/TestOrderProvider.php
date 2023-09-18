@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\FrameworkBundle\Unit\Model\Order;
+namespace Tests\FrameworkBundle\Test\Provider;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
