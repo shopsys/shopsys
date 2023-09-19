@@ -29,10 +29,6 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
         [data?.blogCategory?.blogArticles.edges],
     );
 
-    if (!mappedArticles?.length && !fetching) {
-        return null;
-    }
-
     return (
         <>
             {!!mappedArticles?.length && !fetching ? (
@@ -44,6 +40,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
                     ))}
                 </div>
             )}
+
             <Pagination
                 paginationScrollTargetRef={paginationScrollTargetRef}
                 totalCount={data?.blogCategory?.blogArticles.totalCount ?? 0}

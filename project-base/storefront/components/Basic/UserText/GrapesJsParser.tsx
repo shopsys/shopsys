@@ -1,7 +1,7 @@
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { useProductsByCatnumsApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { parseCatnums } from 'helpers/parsing/grapesJsParser';
+import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { replaceAll } from 'helpers/replaceAll';
 import { memo } from 'react';
 import { UserText } from './UserText';
@@ -14,6 +14,8 @@ type GrapesJsParserProps = {
 export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text, uuid }) => {
     const catnums = parseCatnums(text);
     const [allProductsResponse] = useProductsByCatnumsApi({ variables: { catnums } });
+
+    const dividedParts = text.split(GJS_PRODUCTS_SEPARATOR).filter(Boolean);
 
     const renderArticleProductList = (part: string) => {
         if (!allProductsResponse.data?.productsByCatnums.length) {
@@ -58,7 +60,7 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text, uuid }) => 
         return <UserText key={uuid} htmlContent={part} isGrapesJs />;
     };
 
-    return renderGrapesJsParts(text);
+    return <>{dividedParts.map(renderGrapesJsParts)}</>;
 });
 
 GrapesJsParser.displayName = 'GrapesJsParser';

@@ -9,18 +9,16 @@ type BlogArticleDetailContentProps = {
     blogArticle: BlogArticleDetailFragmentApi;
 };
 
-const TEST_IDENTIFIER = 'pages-blogarticle-';
-
 export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ blogArticle }) => {
     const { formatDate } = useFormatDate();
 
     return (
         <Webline>
-            <ArticleTitle dataTestId={TEST_IDENTIFIER + 'title'}>{blogArticle.seoH1 || blogArticle.name}</ArticleTitle>
+            <ArticleTitle>{blogArticle.seoH1 || blogArticle.name}</ArticleTitle>
             <div className="px-5">
                 <div className="mb-12 flex w-full flex-col">
                     {blogArticle.mainImage && (
-                        <div className="mb-10 flex overflow-hidden" data-testid={TEST_IDENTIFIER + 'image'}>
+                        <div className="mb-10 flex overflow-hidden">
                             <Image
                                 image={blogArticle.mainImage}
                                 type="default"
@@ -28,13 +26,12 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                             />
                         </div>
                     )}
-                    <div
-                        className="mb-2 text-left text-xs font-semibold text-grey"
-                        data-testid={TEST_IDENTIFIER + 'date'}
-                    >
+
+                    <div className="mb-2 text-left text-xs font-semibold text-grey">
                         {formatDate(blogArticle.publishDate, 'l')}
                     </div>
-                    {blogArticle.text !== null && <GrapesJsParser text={blogArticle.text} uuid={blogArticle.uuid} />}
+
+                    {!!blogArticle.text && <GrapesJsParser text={blogArticle.text} uuid={blogArticle.uuid} />}
                 </div>
             </div>
         </Webline>
