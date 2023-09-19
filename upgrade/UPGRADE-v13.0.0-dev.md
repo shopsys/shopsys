@@ -5,6 +5,62 @@ This guide contains instructions to upgrade from version v12.0.0 to v13.0.0-dev.
 **Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/13.0/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
 
+The version 13.0.0 of the Shopsys Platform is a huge milestone in the history of the project.
+It brings a lot of new features and improvements, but also some breaking changes.
+
+The most significant change is the replacement of the Twig storefront with a JS Storefront built in Next.js.
+This change is a major shift in the way the storefront operates and is customized.
+
+## You have three options for upgrading to version 13.0.0:
+
+1. **Keep the existing Twig storefront without incorporating new features**
+   This is the simplest option, but you won't be able to take advantage of the new features introduced in version 13.0.0.
+   You still get the fixes, and you will be ready to upgrade to the new storefront in the future.
+2. **Keep the existing Twig storefront and add new features**
+   This option allows you to benefit from the new features while keeping your existing storefront.
+   However, you will need to implement these features on the storefront yourself.
+3. **Reinvent the storefront and use new features**
+   This is the most comprehensive option.
+   You will replace your Twig storefront with the new JS Storefront powered by GraphQL.
+   This will allow you to take full advantage of all the new features and improvements in version 13.0.0.
+
+### Option 1: Keep the existing Twig storefront without incorporating new features
+
+This is a quick and easy option that will allow you to upgrade to version 13.0.0 without major changes in your storefront.
+You will be able to take advantage of the new features in the future when you decide.
+
+- you will need to update the shopsys/* dependencies to version 13.0.0 and then follow the common steps for all upgrade options
+    - it's possible that some DB migrations will be missing in the project-base, if so, you can add them manually following the output of the db-check Phing target
+
+### Option 2: Keep the existing Twig storefront and add new features
+
+This option allows you to benefit from the new features while keeping your existing storefront.
+
+You will need to follow these steps:
+
+- update the shopsys/* dependencies to version 13.0.0
+- follow the common steps for all upgrade options
+- examine the changes in the project-base and apply them to your project
+    - this may be the most time-consuming part of the upgrade depending on the size of your project and the nature of custom changes
+- for any new feature you want to use (improved Stocks, Stores, Opening hours, Blog articles, etc.) you will need to implement the functionality on your existing Twig Storefront
+
+### Option 3: Reinvent the storefront and use new features
+
+This is the most comprehensive option, but allows you to fully benefit from all the new features and improvements in version 13.0.0.
+
+You will need to follow these steps:
+
+- update the shopsys/* dependencies to version 13.0.0
+- enable Frontend API
+- follow the common steps for all upgrade options
+- examine the changes in the project-base and apply them to your project  
+- adjust the existing JS storefront to your needs
+    - you can use the new JS storefront as a starting point for your customizations
+    - you will need to adjust the design to match your needs
+    - you will need to implement the customizations from your previous storefront implementation
+
+## Common steps for all upgrade options
+
 - split functional and frontend-api tests into separate suites ([#2641](https://github.com/shopsys/shopsys/pull/2641))
     - see #project-base-diff to update your project
 - use TestCurrencyProvider from the framework ([#2662](https://github.com/shopsys/shopsys/pull/2662))
@@ -29,6 +85,8 @@ There you can find links to upgrade notes for other versions too.
             ```
     - to start using opening hours of stores set store opening hours in administration or create specialized migrations for it
         - after update add this to your migration: `$this->sql('ALTER TABLE stores DROP COLUMN opening_hours');`
+    - add the new configuration option `timezone` to every domain in your `config/domains.yaml` and set it to the domain desired timezone
+    - see #project-base-diff to update your project
 - change url for listing personal detail from email ([#2725](https://github.com/shopsys/shopsys/pull/2725))
     - see #project-base-diff to update your project
 - fix product video UX ([#2746](https://github.com/shopsys/shopsys/pull/2746))
