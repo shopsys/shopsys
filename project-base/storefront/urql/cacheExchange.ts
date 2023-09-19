@@ -61,6 +61,7 @@ export const cache = cacheExchange({
         CartItem: keyUuid,
         CartItemModificationsResult: keyNull,
         CartModificationsResult: keyNull,
+        CartMultipleAddedProductModificationsResult: keyNull,
         CartPaymentModificationsResult: keyNull,
         CartTransportModificationsResult: keyNull,
         CartPromoCodeModificationsResult: keyNull,
