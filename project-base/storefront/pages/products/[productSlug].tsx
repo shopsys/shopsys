@@ -39,6 +39,7 @@ const ProductDetailPage: NextPage = () => {
             description={product?.seoMetaDescription}
             breadcrumbs={product?.breadcrumb}
             breadcrumbsType="category"
+            canonicalQueryParams={[]}
         >
             {fetching && <ProductDetailPageSkeleton />}
 

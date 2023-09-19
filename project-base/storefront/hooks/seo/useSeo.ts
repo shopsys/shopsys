@@ -1,26 +1,27 @@
 import { useSeoPageQueryApi, useSettingsQueryApi } from 'graphql/generated';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
-import { generateCanonicalUrl } from 'helpers/seo/generateCanonicalUrl';
+import { CanonicalQueryParameters, generateCanonicalUrl } from 'helpers/seo/generateCanonicalUrl';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 
 type UseSeoHookReturn = {
-    title: string | null;
-    titleSuffix: string | null;
-    description: string | null;
-    ogTitle: string | null;
-    ogDescription: string | null;
-    ogImageUrl: string | null;
-    canonicalUrl: string | null;
+    title: string | null | undefined;
+    titleSuffix: string | null | undefined;
+    description: string | null | undefined;
+    ogTitle: string | null | undefined;
+    ogDescription: string | null | undefined;
+    ogImageUrl: string | null | undefined;
+    canonicalUrl: string | null | undefined;
 };
 
 type UseSeoHookProps = {
     defaultTitle?: string | null;
     defaultDescription?: string | null;
+    canonicalQueryParams?: CanonicalQueryParameters;
 };
 
-const useSeo = ({ defaultTitle, defaultDescription }: UseSeoHookProps): UseSeoHookReturn => {
+const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseSeoHookProps): UseSeoHookReturn => {
     const { url } = useDomainConfig();
     const router = useRouter();
 
@@ -33,23 +34,21 @@ const useSeo = ({ defaultTitle, defaultDescription }: UseSeoHookProps): UseSeoHo
         variables: {
             pageSlug: pageSlug!,
         },
-        pause: pageSlug === null,
+        pause: !pageSlug,
     });
 
-    const preferredTitle = seoPageData?.seoPage?.title ?? null;
-    const preferredDescription = seoPageData?.seoPage?.metaDescription ?? null;
-    const preferredCanonicalUrl = seoPageData?.seoPage?.canonicalUrl ?? null;
-    const preferredOgTitle = seoPageData?.seoPage?.ogTitle ?? null;
-    const preferredOgDescription = seoPageData?.seoPage?.ogDescription ?? null;
-    const preferredOgImageUrl = seoPageData?.seoPage?.ogImage?.sizes[0]?.url ?? null;
+    const preferredTitle = seoPageData?.seoPage?.title;
+    const preferredDescription = seoPageData?.seoPage?.metaDescription;
+    const preferredCanonicalUrl = seoPageData?.seoPage?.canonicalUrl;
+    const preferredOgTitle = seoPageData?.seoPage?.ogTitle;
+    const preferredOgDescription = seoPageData?.seoPage?.ogDescription;
+    const preferredOgImageUrl = seoPageData?.seoPage?.ogImage?.sizes[0]?.url;
 
-    const fallbackTitle = settingsData?.settings?.seo.title ?? null;
-    const fallbackDescription = settingsData?.settings?.seo.metaDescription ?? null;
-    const fallbackTitleSuffix = settingsData?.settings?.seo.titleAddOn ?? null;
+    const fallbackTitle = settingsData?.settings?.seo.title;
+    const fallbackDescription = settingsData?.settings?.seo.metaDescription;
+    const fallbackTitleSuffix = settingsData?.settings?.seo.titleAddOn;
 
-    const canonicalUrl = useMemo(() => {
-        return preferredCanonicalUrl ?? generateCanonicalUrl(router, url);
-    }, [router, url, preferredCanonicalUrl]);
+    const canonicalUrl = preferredCanonicalUrl || generateCanonicalUrl(router, url, canonicalQueryParams);
 
     return {
         title: preferredTitle ?? defaultTitle ?? fallbackTitle,

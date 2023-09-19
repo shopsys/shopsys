@@ -36,6 +36,7 @@ const ArticleDetailPage: NextPage = () => {
             title={article?.seoTitle}
             description={article?.seoMetaDescription}
             breadcrumbs={article?.breadcrumb}
+            canonicalQueryParams={[]}
         >
             {!!article && !fetching ? <ArticleDetailContent article={article} /> : <ArticlePageSkeleton />}
         </CommonLayout>
