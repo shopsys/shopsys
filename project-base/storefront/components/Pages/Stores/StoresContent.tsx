@@ -67,6 +67,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
                                     alt={t('Stores')}
                                     width={210}
                                     height={160}
+                                    priority
                                 />
                             </div>
 
