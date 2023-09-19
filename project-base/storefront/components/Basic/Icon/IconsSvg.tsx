@@ -353,7 +353,7 @@ export const HeartIcon: SvgFC<{ isFull: boolean }> = ({ isFull, ...props }) => (
 );
 
 export const EmptyCartIcon: SvgFC = (props) => (
-    <svg {...props} width="572" height="512" viewBox="0 0 572 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg {...props} viewBox="0 0 572 512" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
             fillRule="evenodd"
             clipRule="evenodd"
