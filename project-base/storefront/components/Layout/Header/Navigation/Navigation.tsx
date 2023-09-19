@@ -6,7 +6,7 @@ const TEST_IDENTIFIER = 'layout-header-navigation';
 export const Navigation: FC = () => {
     const [{ data: navigationData }] = useNavigationQueryApi();
 
-    if (navigationData?.navigation === undefined || navigationData.navigation.length === 0) {
+    if (!navigationData?.navigation.length) {
         return null;
     }
 
