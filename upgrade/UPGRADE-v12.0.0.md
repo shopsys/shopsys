@@ -1,6 +1,6 @@
-# [Upgrade from v11.1.0 to v12.0.0-dev](https://github.com/shopsys/shopsys/compare/v11.1...12.0)
+# [Upgrade from v11.1.0 to v12.0.0](https://github.com/shopsys/shopsys/compare/v11.1...v12.0.0)
 
-This guide contains instructions to upgrade from version v11.1.0 to v12.0.0-dev.
+This guide contains instructions to upgrade from version v11.1.0 to v12.0.0.
 
 **Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/12.0/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
@@ -10,7 +10,7 @@ There you can find links to upgrade notes for other versions too.
         - type of property `$media` changed from having no type to `string`
         - type of property `$url` changed from having no type to `string`
 - remove unused dependencies and attributes ([#1954](https://github.com/shopsys/shopsys/pull/1954))
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/75ed7c3f7aca0e37fd4d6dc933f498a7c99b91c1) to update your project
     - `Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelationValidator`
         - removed property `$domain`
         - removed property `$paymentPriceCalculation`
@@ -331,7 +331,7 @@ There you can find links to upgrade notes for other versions too.
             +       protected readonly CdnFacade $cdnFacade,
                 ) {
             ```
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/e68e886cd748e8994b39015e24385b4e1309c7d0) to update your project
 - added typehints and return types to `Shopsys\FrameworkBundle\Component\Image\ImageFacade` ([#1935](https://github.com/shopsys/shopsys/pull/1935))
     - parameter `$orderedImages` of `saveImageOrdering()` changed from no type to `array`
     - parameter `$entity` of `deleteImages()` changed from no type to `object`
@@ -419,7 +419,7 @@ There you can find links to upgrade notes for other versions too.
     +       protected readonly LockInterface $lock,
         ) {
     ```
-    - see #project-base-diff for more details
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/0f10faaa9668e8ffd87fcc76683aa86ea0b72a73), [project-base-diff](https://github.com/shopsys/project-base/commit/be3e9a6640de63023f9c0e10bca4dc5a1365fe74) and [project-base-diff](https://github.com/shopsys/project-base/commit/e128cdd6a665e642cbe91b862d72f561c9e099df) for more details
 - fix deprecated usage of required parameters after optional parameters
     - `Shopsys\ReadModelBundle\Product\Listed\ListedProductView` class:
         - method `__construct` changed order of its parameters, new order is like this:
@@ -561,14 +561,13 @@ There you can find links to upgrade notes for other versions too.
                 protected readonly ?int $height = null, 
             )
         ```
-- apply new coding standards in your application
+- apply new coding standards in your application ([#2617](https://github.com/shopsys/shopsys/pull/2617))
    - during run of `composer install` you will run into errors and warnings about not compatible types in your app because of introduction of typed properties and parameters in vendor classes, and you have to fix these problems manually
    - go through all of your `Command` classes that extend `\Symfony\Component\Console\Command\Command` and add `@phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint` annotation to `$defaultName` property
    - if you have any `Constraints` implemented in your project add `@phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint` annotation to your `$errorNames` property
    - run `php phing standards-fix` multiple times after no problems are found or after only problems that need to be fixed manually are found
        - fix all manually fixable problems
    - run `php phing phpstan` and fix all problems found
-   - see #project-base-diff to see changes that you should consider applying to your project
    - fix deprecated usage of required parameters after optional parameters
        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductView` class:
            - method `__construct` changed order of its parameters, new order is like this:
@@ -711,12 +710,23 @@ There you can find links to upgrade notes for other versions too.
                )
            ```
    - first unused parameter `$message` from `Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsException` exception constructor has been removed, update you code appropriately
-   - see #project-base-diff to add required configurations to your project and check suggested changes to your project
+   - see project-base-diff to see changes that you should consider applying to your project
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/f86402c2e73d4616db773f32f1be19f080e37fc0)
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/6293e546281137f426c572823b56b4ed8fcd5d98)
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/1c9fa1a74e1bc76acffc6bfc7fa4334abcaf0a01)
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/86d5717ac0a6f4d0e68539429fd463e5ad67fc2f)
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/189a6052967151a6d60fec73e0ac428ce13b0a04)
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/07af589ae8321e3485b33cb0ee56857ac55651fe)
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/fbdcaf2ec97d20c3a717b4ec136c393e910e7fb5)
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/853b0b4d50b6b4a6451d5e4d0030375aaddd9af2)
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/1b065acb26712a8ab55f74f385fb29b6d4be8232)
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/98b72cb06464c65241362f8aa5d5769e59819323)
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/53c4c2c18e1f9efbb3636a1fcdf11f74e977186a)
+      - [project-base-diff](https://github.com/shopsys/project-base/commit/b7160e50cf43b7962dad5493a1a6cedd6372b5b6)
 - update your project to work with newest version of `overblog/graphql-bundle` ([#2788](https://github.com/shopsys/shopsys/pull/2788))
-   - see #project-base-dif to update your project
-
-## Removed deprecations
-
+   - see [project-base-diff](https://github.com/shopsys/project-base/commit/0e2758c968a1164f47d0153b4b15effa47a1ea5f) to update your project
+- updated Codeception in your project to version 5 ([#2611](https://github.com/shopsys/shopsys/pull/2611))
+   - see [project-base-diff](https://github.com/shopsys/project-base/commit/8143b9b7b5af172d67484c22bcbb66f22a3890b2) to update your project
 - check that your code don't use any removed code ([#2719](https://github.com/shopsys/shopsys/pull/2719))
     - `Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade`
         - method `__construct`  changed its interface:
@@ -867,10 +877,12 @@ There you can find links to upgrade notes for other versions too.
                 )
             ```
     - remove setter injection in `App\Controller\Front\RobotsController`
-        - see #project-base-diff for more details
+        - see [project-base-diff](https://github.com/shopsys/project-base/commit/be15f13a8b997466ce04f337ac71bf3ed7c968f2) for more details
 - update installation of NodeJS and Postgres in your Dockerfile ([#2792](https://github.com/shopsys/shopsys/pull/2792))
-    - see #project-base-diff for more details
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/0cb52e00a5f07c28278f6c6ce8653069b73be0f2) for more details
 - add test for variant creation from products with images ([#2801](https://github.com/shopsys/shopsys/pull/2801))
-    - see #project-base-diff for more details
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/694408b3301c6fb683943ca00b83da06a4942158) for more details
 - use TestCurrencyProvider from the framework ([#2662](https://github.com/shopsys/shopsys/pull/2662))
     - remove class `Tests\App\Functional\Model\Pricing\Currency\TestCurrencyProvider` and use `Tests\FrameworkBundle\Test\Provider\TestCurrencyProvider` instead
+- use TestOrderProvider from the framework ([#2810](https://github.com/shopsys/shopsys/pull/2810))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/0827cc14f81e27d03cf55d07356213f20b991973) to update your project
