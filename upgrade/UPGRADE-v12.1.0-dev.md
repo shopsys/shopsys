@@ -1,4 +1,4 @@
-# [Upgrade from v12.0.0 to v12.1.0-dev](https://github.com/shopsys/shopsys/compare/v12.0.0...12.0)
+# [Upgrade from v12.0.0 to v12.1.0-dev](https://github.com/shopsys/shopsys/compare/v12.0.0...12.1)
 
 This guide contains instructions to upgrade from version v12.0.0 to v12.1.0-dev.
 
