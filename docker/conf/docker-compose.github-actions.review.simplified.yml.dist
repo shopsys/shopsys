@@ -33,6 +33,7 @@ services:
             DATABASE_NAME: BRANCH_NAME
             ELASTIC_SEARCH_INDEX_PREFIX: BRANCH_NAME
             REDIS_PREFIX: BRANCH_NAME
+            FORCE_ELASTIC_LIMITS: true
         networks:
             - default
             - services-network

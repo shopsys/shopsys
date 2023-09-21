@@ -1030,3 +1030,8 @@ services:
     Shopsys\FrameworkBundle\Component\Redis\RedisClientFacade:
         arguments:
             - '@snc_redis.global'
+
+    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionModifier:
+        arguments:
+            $environment: '%kernel.environment%'
+            $forceElasticLimit: '%env(FORCE_ELASTIC_LIMITS)%'

@@ -15,12 +15,14 @@ class IndexDefinition
      * @param string $definitionsDirectory
      * @param string $indexPrefix
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionModifier $indexDefinitionModifier
      */
     public function __construct(
         protected readonly string $indexName,
         protected readonly string $definitionsDirectory,
         protected readonly string $indexPrefix,
         protected readonly int $domainId,
+        protected readonly IndexDefinitionModifier $indexDefinitionModifier,
     ) {
     }
 
@@ -38,7 +40,7 @@ class IndexDefinition
             );
         }
 
-        return $decodedDefinition;
+        return $this->indexDefinitionModifier->modifyDefinition($decodedDefinition);
     }
 
     /**
