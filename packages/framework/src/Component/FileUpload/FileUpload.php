@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
+use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use League\Flysystem\StorageAttributes;
-use League\Flysystem\UnableToDeleteFile;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
@@ -79,7 +79,7 @@ class FileUpload
 
             try {
                 $this->filesystem->delete($filepath);
-            } catch (UnableToDeleteFile $ex) {
+            } catch (FilesystemException) {
                 return false;
             }
         }
@@ -111,11 +111,7 @@ class FileUpload
      */
     public function getAbsoluteTemporaryFilepath($temporaryFilename)
     {
-        return $this->parameterBag->get(
-            'kernel.project_dir',
-        ) . $this->getTemporaryDirectory() . '/' . TransformString::safeFilename(
-            $temporaryFilename,
-        );
+        return $this->parameterBag->get('kernel.project_dir') . $this->getTemporaryDirectory() . '/' . TransformString::safeFilename($temporaryFilename);
     }
 
     /**
@@ -186,7 +182,6 @@ class FileUpload
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
 
-        /** @var \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload $fileForUpload */
         foreach ($filesForUpload as $key => $fileForUpload) {
             $sourceFilepath = TransformString::removeDriveLetterFromPath(
                 $this->getTemporaryFilepath($fileForUpload->getTemporaryFilename()),
