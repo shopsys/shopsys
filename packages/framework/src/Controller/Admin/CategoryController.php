@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Nette\Utils\Json;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -14,27 +14,24 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AdminBaseController
 {
-    protected const ALL_DOMAINS = 0;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface $categoryDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
         protected readonly CategoryDataFactoryInterface $categoryDataFactory,
         protected readonly Domain $domain,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
-        protected readonly RequestStack $requestStack,
+        protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
     ) {
     }
 
@@ -128,40 +125,24 @@ class CategoryController extends AdminBaseController
      */
     public function listAction(Request $request): Response
     {
-        if (count($this->domain->getAll()) > 1) {
-            if ($request->query->has('domain')) {
-                $domainId = (int)$request->query->get('domain');
-            } else {
-                $domainId = (int)$this->requestStack->getSession()->get('categories_selected_domain_id', static::ALL_DOMAINS);
-            }
-        } else {
-            $domainId = static::ALL_DOMAINS;
-        }
+        $domainFilterNamespace = 'category';
+        $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);
 
-        if ($domainId !== static::ALL_DOMAINS) {
-            try {
-                $this->domain->getDomainConfigById($domainId);
-            } catch (InvalidDomainIdException $ex) {
-                $domainId = static::ALL_DOMAINS;
-            }
-        }
-
-        $this->requestStack->getSession()->set('categories_selected_domain_id', $domainId);
-
-        if ($domainId === static::ALL_DOMAINS) {
+        if ($selectedDomainId === null) {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren(
                 $request->getLocale(),
             );
         } else {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
-                $domainId,
+                $selectedDomainId,
                 $request->getLocale(),
             );
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Category/list.html.twig', [
             'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
-            'isForAllDomains' => ($domainId === static::ALL_DOMAINS),
+            'domainFilterNamespace' => $domainFilterNamespace,
+            'isForAllDomains' => ($selectedDomainId === null),
         ]);
     }
 
@@ -205,19 +186,6 @@ class CategoryController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_category_list');
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function listDomainTabsAction(): Response
-    {
-        $domainId = $this->requestStack->getSession()->get('categories_selected_domain_id', static::ALL_DOMAINS);
-
-        return $this->render('@ShopsysFramework/Admin/Content/Category/domainTabs.html.twig', [
-            'domainConfigs' => $this->domain->getAll(),
-            'selectedDomainId' => $domainId,
-        ]);
     }
 
     /**

@@ -2,7 +2,7 @@
 {% import _self as self %}
 
 {% block main_content %}
-    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\CategoryController::listDomainTabsAction')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
 
     {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel, disabledFormFields, getAllCategoryIdsInSeoMixes) %}
         {% import _self as self %}

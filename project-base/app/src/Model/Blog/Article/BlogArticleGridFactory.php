@@ -17,20 +17,19 @@ class BlogArticleGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private BlogArticleRepository $blogArticleRepository,
-        private GridFactory $gridFactory,
-        private Domain $domain,
+        private readonly BlogArticleRepository $blogArticleRepository,
+        private readonly GridFactory $gridFactory,
+        private readonly Domain $domain,
     ) {
     }
 
     /**
-     * @param int $domainId
-     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
+     * @param int|null $domainId
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(int $domainId): Grid
+    public function create(?int $domainId): Grid
     {
-        if ($domainId === 0) {
+        if ($domainId === null) {
             $locale = $this->domain->getLocale();
             $queryBuilder = $this->blogArticleRepository->getAllBlogArticlesByLocaleQueryBuilder(
                 $locale,

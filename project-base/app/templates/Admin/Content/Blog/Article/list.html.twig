@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block main_content %}
-    {{ render(controller('App\\Controller\\Admin\\BlogArticleController::listDomainTabsAction')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
 
     {{ gridView.render() }}
 {% endblock %}

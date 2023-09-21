@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -36,6 +37,7 @@ class OrderController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade $orderItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface $orderDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
@@ -47,6 +49,7 @@ class OrderController extends AdminBaseController
         protected readonly OrderItemFacade $orderItemFacade,
         protected readonly Domain $domain,
         protected readonly OrderDataFactoryInterface $orderDataFactory,
+        protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
     ) {
     }
 
@@ -132,6 +135,8 @@ class OrderController extends AdminBaseController
      */
     public function listAction(Request $request)
     {
+        $domainFilterNamespace = 'orders';
+
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
         $advancedSearchForm = $this->advancedSearchOrderFacade->createAdvancedSearchOrderForm($request);
@@ -150,6 +155,14 @@ class OrderController extends AdminBaseController
             );
         } else {
             $queryBuilder = $this->orderFacade->getOrderListQueryBuilderByQuickSearchData($quickSearchForm->getData());
+        }
+
+        $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);
+
+        if ($selectedDomainId !== null) {
+            $queryBuilder
+                ->andWhere('o.domainId = :selectedDomainId')
+                ->setParameter('selectedDomainId', $selectedDomainId);
         }
 
         $dataSource = new QueryBuilderWithRowManipulatorDataSource(
@@ -187,6 +200,7 @@ class OrderController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/Order/list.html.twig', [
             'gridView' => $grid->createView(),
+            'domainFilterNamespace' => $domainFilterNamespace,
             'quickSearchForm' => $quickSearchForm->createView(),
             'advancedSearchForm' => $advancedSearchForm->createView(),
             'isAdvancedSearchFormSubmitted' => $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(

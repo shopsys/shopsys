@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCityFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCreateDateFilter;
-use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderDomainFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderEmailFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderLastNameFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderNameFilter;
@@ -24,7 +22,6 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderNumberFilter $orderNumberFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCreateDateFilter $orderCreateDateFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderPriceFilterWithVatFilter $orderPriceFilterWithVatFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderDomainFilter $orderDomainFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderStatusFilter $orderStatusFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderProductFilter $orderProductFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderPhoneNumberFilter $orderPhoneNumberFilter
@@ -33,13 +30,12 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderLastNameFilter $orderLastNameFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderEmailFilter $orderEmailFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderCityFilter $orderCityFilter
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @throws \Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterAlreadyExistsException
      */
     public function __construct(
         OrderNumberFilter $orderNumberFilter,
         OrderCreateDateFilter $orderCreateDateFilter,
         OrderPriceFilterWithVatFilter $orderPriceFilterWithVatFilter,
-        OrderDomainFilter $orderDomainFilter,
         OrderStatusFilter $orderStatusFilter,
         OrderProductFilter $orderProductFilter,
         OrderPhoneNumberFilter $orderPhoneNumberFilter,
@@ -48,7 +44,6 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
         OrderLastNameFilter $orderLastNameFilter,
         OrderEmailFilter $orderEmailFilter,
         OrderCityFilter $orderCityFilter,
-        Domain $domain,
     ) {
         parent::__construct();
 
@@ -56,10 +51,6 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
         $this->registerFilter($orderNumberFilter);
         $this->registerFilter($orderCreateDateFilter);
         $this->registerFilter($orderStatusFilter);
-
-        if ($domain->isMultidomain()) {
-            $this->registerFilter($orderDomainFilter);
-        }
         $this->registerFilter($orderProductFilter);
         $this->registerFilter($orderNameFilter);
         $this->registerFilter($orderLastNameFilter);

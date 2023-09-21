@@ -105,3 +105,56 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - stop wrapping Frontend API queries in database transaction ([#2809](https://github.com/shopsys/shopsys/pull/2809))
     - see #project-base-diff to update your project
+- add order filter by domain in admin ([#2796](https://github.com/shopsys/shopsys/pull/2796))
+    - `Shopsys\FrameworkBundle\Controller\Admin\CategoryController`
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    protected readonly CategoryFacade $categoryFacade,
+                    protected readonly CategoryDataFactoryInterface $categoryDataFactory,
+                    protected readonly Domain $domain,
+                    protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+            -       protected readonly RequestStack $requestStack,
+            +       protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
+                ) {
+            ```
+        - constant `ALL_DOMAINS` was removed
+        - method `listDomainTabsAction()` was removed 
+    - `Shopsys\FrameworkBundle\Controller\Admin\OrderController`
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    protected readonly OrderFacade $orderFacade,
+                    protected readonly AdvancedSearchOrderFacade $advancedSearchOrderFacade,
+                    protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
+                    protected readonly AdministratorGridFacade $administratorGridFacade,
+                    protected readonly GridFactory $gridFactory,
+                    protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+                    protected readonly OrderItemFacade $orderItemFacade,
+                    protected readonly Domain $domain,
+                    protected readonly OrderDataFactoryInterface $orderDataFactory,
+            +       protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
+                ) {
+            ```
+    - `Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig`
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    OrderNumberFilter $orderNumberFilter,
+                    OrderCreateDateFilter $orderCreateDateFilter,
+                    OrderPriceFilterWithVatFilter $orderPriceFilterWithVatFilter,
+            -       OrderDomainFilter $orderDomainFilter,
+                    OrderStatusFilter $orderStatusFilter,
+                    OrderProductFilter $orderProductFilter,
+                    OrderPhoneNumberFilter $orderPhoneNumberFilter,
+                    OrderStreetFilter $orderStreetFilter,
+                    OrderNameFilter $orderNameFilter,
+                    OrderLastNameFilter $orderLastNameFilter,
+                    OrderEmailFilter $orderEmailFilter,
+                    OrderCityFilter $orderCityFilter,
+            -       Domain $domain,
+                ) {
+            ```
+    - class `Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderDomainFilter` was removed
+    - Twig template `@ShopsysFramework/Admin/Content/Category/domainTabs.html.twig` was removed
+    - see #project-base-diff to update your project

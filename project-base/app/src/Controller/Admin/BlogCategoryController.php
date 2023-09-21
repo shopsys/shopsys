@@ -9,35 +9,28 @@ use App\Model\Blog\Category\BlogCategoryDataFactory;
 use App\Model\Blog\Category\BlogCategoryFacade;
 use App\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
 use Nette\Utils\Json;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BlogCategoryController extends AdminBaseController
 {
-    private const ALL_DOMAINS = 0;
-    private const SESSION_BLOG_CATEGORIES_SELECTED_DOMAIN_ID = 'blog_categories_selected_domain_id';
-
     /**
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      * @param \App\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      */
     public function __construct(
-        private BlogCategoryFacade $blogCategoryFacade,
-        private BlogCategoryDataFactory $blogCategoryDataFactory,
-        private SessionInterface $session,
-        private Domain $domain,
-        private BreadcrumbOverrider $breadcrumbOverrider,
+        private readonly BlogCategoryFacade $blogCategoryFacade,
+        private readonly BlogCategoryDataFactory $blogCategoryDataFactory,
+        private readonly BreadcrumbOverrider $breadcrumbOverrider,
+        private readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
     ) {
     }
 
@@ -128,35 +121,24 @@ class BlogCategoryController extends AdminBaseController
      */
     public function listAction(Request $request): Response
     {
-        if (count($this->domain->getAll()) > 1) {
-            if ($request->query->has('domain')) {
-                $domainId = (int)$request->query->get('domain');
-            } else {
-                $domainId = (int)$this->session->get(self::SESSION_BLOG_CATEGORIES_SELECTED_DOMAIN_ID, self::ALL_DOMAINS);
-            }
+        $domainFilterNamespace = 'blog-category';
+        $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);
+
+        if ($selectedDomainId === null) {
+            $blogCategoriesWithPreloadedChildren = $this->blogCategoryFacade->getAllBlogCategoriesWithPreloadedChildren(
+                $request->getLocale(),
+            );
         } else {
-            $domainId = self::ALL_DOMAINS;
-        }
-
-        if ($domainId !== self::ALL_DOMAINS) {
-            try {
-                $this->domain->getDomainConfigById($domainId);
-            } catch (InvalidDomainIdException $ex) {
-                $domainId = self::ALL_DOMAINS;
-            }
-        }
-
-        $this->session->set(self::SESSION_BLOG_CATEGORIES_SELECTED_DOMAIN_ID, $domainId);
-
-        if ($domainId === self::ALL_DOMAINS) {
-            $blogCategoriesWithPreloadedChildren = $this->blogCategoryFacade->getAllBlogCategoriesWithPreloadedChildren($request->getLocale());
-        } else {
-            $blogCategoriesWithPreloadedChildren = $this->blogCategoryFacade->getVisibleBlogCategoriesWithPreloadedChildrenOnDomain($domainId, $request->getLocale());
+            $blogCategoriesWithPreloadedChildren = $this->blogCategoryFacade->getVisibleBlogCategoriesWithPreloadedChildrenOnDomain(
+                $selectedDomainId,
+                $request->getLocale(),
+            );
         }
 
         return $this->render('Admin/Content/Blog/Category/list.html.twig', [
             'blogCategoriesWithPreloadedChildren' => $blogCategoriesWithPreloadedChildren,
-            'isForAllDomains' => ($domainId === self::ALL_DOMAINS),
+            'isForAllDomains' => ($selectedDomainId === null),
+            'domainFilterNamespace' => $domainFilterNamespace,
         ]);
     }
 
@@ -200,19 +182,6 @@ class BlogCategoryController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_blogcategory_list');
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function listDomainTabsAction(): Response
-    {
-        $domainId = $this->session->get(self::SESSION_BLOG_CATEGORIES_SELECTED_DOMAIN_ID, self::ALL_DOMAINS);
-
-        return $this->render('Admin/Content/Blog/Category/domainTabs.html.twig', [
-            'domainConfigs' => $this->domain->getAll(),
-            'selectedDomainId' => $domainId,
-        ]);
     }
 
     /**
