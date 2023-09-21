@@ -30,10 +30,14 @@ class GoPayClientFactory
      */
     protected function getConfigByLocale(string $locale): array
     {
+        if (!array_key_exists($locale, $this->config)) {
+            throw new GoPayNotConfiguredException();
+        }
+
         $configByLocale = $this->config[$locale];
         $this->config = array_merge($this->config, $configByLocale);
 
-        if ($this->config['goid'] === null) {
+        if ($this->config['goid'] === null || $this->config['goid'] === '') {
             throw new GoPayNotConfiguredException();
         }
 
