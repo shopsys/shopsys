@@ -236,7 +236,7 @@ service:merge_request:
 
 .deploy: &deploy
     image:
-        name: shopsys/kubernetes-buildpack:0.9
+        name: shopsys/kubernetes-buildpack:1.1
     stage: deploy
     needs:
         - build
@@ -296,7 +296,7 @@ deploy:devel:
 test:gatling:
     stage: test
     image:
-        name: shopsys/kubernetes-buildpack:0.9
+        name: shopsys/kubernetes-buildpack:1.1
     tags:
         - tests
     variables:
