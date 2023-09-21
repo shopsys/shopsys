@@ -5,6 +5,8 @@
 #
 # Usage: tag_refs_backup.sh
 
+echo "Running: git for-each-ref --format=\"%(refname)\" refs/tags/"
 for TAG_REF in $(git for-each-ref --format="%(refname)" refs/tags/); do
+    echo "Running: update-ref refs/original-tags/$TAG_REF $TAG_REF"
     git update-ref refs/original-tags/$TAG_REF $TAG_REF
 done

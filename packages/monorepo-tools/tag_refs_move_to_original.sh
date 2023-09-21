@@ -4,7 +4,10 @@
 #
 # Usage: tag_refs_move_to_original.sh
 
+echo "Running: git for-each-ref --format=\"%(refname)\" refs/original-tags/"
 for TAG_REF in $(git for-each-ref --format="%(refname)" refs/original-tags/); do
+    echo "Running: update-ref refs/original/${TAG_REF#refs/original-tags/} $TAG_REF"
     git update-ref refs/original/"${TAG_REF#refs/original-tags/}" $TAG_REF
+    echo "Running: update-ref -d $TAG_REF"
     git update-ref -d $TAG_REF
 done

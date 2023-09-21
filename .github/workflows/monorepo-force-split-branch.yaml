@@ -10,9 +10,9 @@ concurrency:
     cancel-in-progress: true
 name: Monorepo force split branch
 jobs:
-    forced-branch-split:
+    check-repository-can-be-split:
         if:  ${{ inputs.branch_name }} != ${{ vars.MAIN_BRANCH_NAME }}
-        name: Forcing split of branch ${{ inputs.branch_name }} package ${{ matrix.packages }}
+        name: Check if ${{ inputs.branch_name }} can be forced split to package ${{ matrix.packages }}
         runs-on: ubuntu-22.04
         strategy:
             matrix:
@@ -37,6 +37,95 @@ jobs:
             fail-fast: true
         steps:
             -   name: GIT checkout branch - ${{ inputs.branch_name }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: refs/heads/${{ inputs.branch_name }}
+                    fetch-depth: 0
+            -   name: Prepare variables and files to be used for splitting
+                run: |
+                    WORKSPACE=${WORKSPACE:-$PWD}
+                    SUBDIRECTORY=$(.github/monorepo-functions.sh get_package_subdirectory "${{ matrix.packages }}")
+                    echo "SUBDIRECTORY=${SUBDIRECTORY}" >> $GITHUB_ENV
+                    echo "WORKSPACE=${WORKSPACE}" >> $GITHUB_ENV
+                    echo "REMOTE=https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/${{ matrix.packages }}.git" >> $GITHUB_ENV
+            -   name: Clone repository as bare
+                run: |
+                    git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+                    mkdir -p split/${{ matrix.packages }}
+                    git clone --bare .git split/${{ matrix.packages }}
+                    cd split/${{ matrix.packages }}
+                    ${WORKSPACE}/packages/monorepo-tools/rewrite_history_from.sh ${SUBDIRECTORY} ${{ inputs.branch_name }}
+
+                    echo "Running git push ${REMOTE} ${{ inputs.branch_name }} --dry-run --force --verbose"
+                    
+                    git push ${REMOTE} ${{ inputs.branch_name }} --dry-run --force --verbose
+
+                    if [[ $? -eq 0 ]]; then
+                        echo "The split package '${{ matrix.packages }}' can be pushed into '${REMOTE}'!"
+                    else
+                        echo "The split package '${{ matrix.packages }}' cannot be pushed into '${REMOTE}'!"
+                        exit 1
+                    fi
+            -   name: Upload ${{ matrix.packages }} repository directory as artifact
+                uses: actions/upload-artifact@v3
+                with:
+                    name: split-${{ matrix.packages }}
+                    path: split/${{ matrix.packages }}
+    splitting-repositories:
+        name: Split ${{ inputs.branch_name }} to package ${{ matrix.packages }}
+        needs: check-repository-can-be-split
+        runs-on: ubuntu-22.04
+        strategy:
+            matrix:
+                packages: [
+                    'coding-standards',
+                    'form-types-bundle',
+                    'framework',
+                    'frontend-api',
+                    'google-cloud-bundle',
+                    'http-smoke-testing',
+                    'migrations',
+                    'monorepo-tools',
+                    'plugin-interface',
+                    'project-base',
+                    'product-feed-google',
+                    'product-feed-heureka',
+                    'product-feed-heureka-delivery',
+                    'product-feed-zbozi',
+                    'read-model',
+                    's3-bridge'
+                ]
+            fail-fast: false
+        steps:
+            -   name: GIT checkout branch - ${{ inputs.branch_name }}
+                uses: actions/checkout@v4
+                with:
+                    ref: refs/heads/${{ inputs.branch_name }}
+                    fetch-depth: 0
+            -   name: Prepare variables and files to be used for splitting
+                run: |
+                    WORKSPACE=${WORKSPACE:-$PWD}
+                    SUBDIRECTORY=$(.github/monorepo-functions.sh get_package_subdirectory "${{ matrix.packages }}")
+                    echo "SUBDIRECTORY=${SUBDIRECTORY}" >> $GITHUB_ENV
+                    echo "WORKSPACE=${WORKSPACE}" >> $GITHUB_ENV
+                    echo "REMOTE=https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/${{ matrix.packages }}.git" >> $GITHUB_ENV
+            -   name: Download ${{ matrix.packages }} repository directory from artifacts
+                uses: actions/download-artifact@v3
+                with:
+                    name: split-${{ matrix.packages }}
+                    path: split/${{ matrix.packages }}
+            -   name: Split repository
+                run: |
+                    git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+                    cd split/${{ matrix.packages }}
+
+                    echo "Running git push ${REMOTE} ${{ inputs.branch_name }} --force --verbose"
+                    
+                    git push ${REMOTE} ${{ inputs.branch_name }} --force --verbose
+
+                    if [[ $? -eq 0 ]]; then
+                        echo "The split package '${{ matrix.packages }}' has been pushed into '${REMOTE}'!"
+                    else
+                        echo "The split package '${{ matrix.packages }}' cannot been pushed into '${REMOTE}'!"
+                        exit 1
+                    fi
