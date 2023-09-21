@@ -39,27 +39,23 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             <ProductMetadata product={product} />
 
             <Webline className="flex flex-col gap-8">
-                <div>
-                    {!!(product.images.length || product.productVideos.length) && (
-                        <ProductDetailGallery
-                            images={mainVariantImagesWithVariantImages}
-                            productName={product.name}
-                            flags={product.flags}
-                            videoIds={product.productVideos}
-                        />
-                    )}
+                <ProductDetailGallery
+                    images={mainVariantImagesWithVariantImages}
+                    productName={product.name}
+                    flags={product.flags}
+                    videoIds={product.productVideos}
+                />
 
-                    <div className="gap-2">
-                        <ProductDetailPrefix>{product.namePrefix}</ProductDetailPrefix>
+                <div className="gap-2">
+                    <ProductDetailPrefix>{product.namePrefix}</ProductDetailPrefix>
 
-                        <ProductDetailHeading>
-                            {product.name} {product.nameSuffix}
-                        </ProductDetailHeading>
+                    <ProductDetailHeading>
+                        {product.name} {product.nameSuffix}
+                    </ProductDetailHeading>
 
-                        <ProductDetailCode>
-                            {t('Code')}: {product.catalogNumber}
-                        </ProductDetailCode>
-                    </div>
+                    <ProductDetailCode>
+                        {t('Code')}: {product.catalogNumber}
+                    </ProductDetailCode>
                 </div>
 
                 <ProductVariantsTable variants={product.variants} isSellingDenied={product.isSellingDenied} />

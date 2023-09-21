@@ -16,10 +16,7 @@ export const Gallery: FC<GalleryProps> = ({ selector, children, className }) => 
         publicRuntimeConfig: { lightgalleryLicenseKey },
     } = getConfig();
 
-    const TwClass = twMergeCustom(
-        'relative flex flex-row items-start justify-start overflow-hidden lg:rounded basis-3/5',
-        className,
-    );
+    const TwClass = twMergeCustom('relative flex flex-row items-start justify-start', className);
 
     return (
         <LightGallery
