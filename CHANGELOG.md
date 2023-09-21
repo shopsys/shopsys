@@ -42,16 +42,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * [shopsys] updated Dockerfile to update installation of NodeJS and Postgres in PHP-FPM Dockerfile by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2792
 * [framework] encapsulation of AdditionalImageData by @pk16011990 in https://github.com/shopsys/shopsys/pull/1934
 * [shopsys] updated codeception to version 5 by @TomasLudvik https://github.com/shopsys/shopsys/pull/2611
+* [coding-standards] updated slevomat coding standards by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2646
+* [shopsys] inheritdoc docblock is now unified and fixed automatically by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2612
 
 ### :cloud: Infrastructure
 * [shopsys] improvements for deployment/running in cluster by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2609
 * [shopsys] CDN support by @grossmannmartin https://github.com/shopsys/shopsys/pull/2602
-
-### :placard: Other Changes
-* [coding-standards] updated slevomat coding standards by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2646
-* [shopsys] inheritdoc docblock is now unified and fixed automatically by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2612
-* [s3-bridge] fixed bundle conventions by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2645
-* [framework] fixed seoRobotsTxtContent null value in settings by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2731
 
 ## [v11.1.0](https://github.com/shopsys/shopsys/compare/v11.0.0...v11.1.0) (2023-08-08)
 
