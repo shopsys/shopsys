@@ -166,9 +166,6 @@ msgstr ""
 msgid "All domains"
 msgstr ""
 
-msgid "All emails will be sent only to entered address."
-msgstr ""
-
 msgid "All emails will be sent only to entered addresses."
 msgstr ""
 
@@ -1406,9 +1403,6 @@ msgid "Make modification"
 msgstr ""
 
 msgid "Marketing"
-msgstr ""
-
-msgid "Master email %masterMail% set"
 msgstr ""
 
 msgid "Max duration (mm:ss)"

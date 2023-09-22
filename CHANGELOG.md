@@ -27,6 +27,79 @@ Packages are formatted by release version. You can see all the changes done to p
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) as explained in the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/).
 
+## [v12.0.0](https://github.com/shopsys/shopsys/compare/v11.1.0...v12.0.0) (2023-09-22)
+
+### :bug: Bug Fixes
+* [framework] fixed variant creation by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2801
+* [framework] fixed bestsellers edit in admin by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2799
+* [framework] fixed order edit error due to invalid type in vat object by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2800
+* [framework] fixed seoRobotsTxtContent null value in settings by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2731
+
+### :hammer: Developer experience and refactoring
+* [shopsys] removed deprecations before release 12.0 by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2719
+* [framework] upgraded doctrine/orm to latest version by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2774
+* [shopsys] updated overblog/graphql-bundle to stable version 1.0.0 with dependencies by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2788
+* [shopsys] updated Dockerfile to update installation of NodeJS and Postgres in PHP-FPM Dockerfile by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2792
+* [framework] encapsulation of AdditionalImageData by @pk16011990 in https://github.com/shopsys/shopsys/pull/1934
+* [shopsys] updated codeception to version 5 by @TomasLudvik https://github.com/shopsys/shopsys/pull/2611
+* [coding-standards] updated slevomat coding standards by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2646
+* [shopsys] inheritdoc docblock is now unified and fixed automatically by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2612
+
+### :cloud: Infrastructure
+* [shopsys] improvements for deployment/running in cluster by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2609
+* [shopsys] CDN support by @grossmannmartin https://github.com/shopsys/shopsys/pull/2602
+
+## [v11.1.0](https://github.com/shopsys/shopsys/compare/v11.0.0...v11.1.0) (2023-08-08)
+
+### :sparkles: Enhancements and features
+* [shopsys] added detailed cron run information for administrators by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2581
+* [shopsys] adverts on product list can now be set only for range of categories by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2583
+* [shopsys] added ability to change periodicity and length of cron runs by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2584
+* [framework] columns in grid can now be reordered by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2564
+* [shopsys] added ability to change content of robots.txt file through administration by @radek-bruha in https://github.com/shopsys/shopsys/pull/2591
+* [shopsys] users and admins now have only five tries to log in one minute by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2599
+* [framework] cron overview is now available for admin in the default state by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2600
+* [shopsys] added ability to change email whitelist through administration by @radek-bruha in https://github.com/shopsys/shopsys/pull/2592
+* [shopsys] don't show 500 error page when you have 405 http code by @sspooky13 in https://github.com/shopsys/shopsys/pull/2666
+
+### :bug: Bug Fixes
+* [framework] AdministrationFacade: support requests without _route parameter by @mposchl in https://github.com/shopsys/shopsys/pull/2373
+* [shopsys] updated acceptance tests because they were no longer working locally by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2610
+* [shopsys] too many attempts js error is now translated on frontend by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2613
+* [framework] removed class duplication in expanded choice by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2614
+
+### :hammer: Developer experience and refactoring
+* [framework] added missing getters to UploadedFile by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2582
+* [framework] bin/console base phing targets are now more verbose by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/2507
+* [framework] Transport::getPrice() - fix error message by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/2506
+* [framework] added commonly used methods to Price class by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2589
+* [framework] build-demo-dev-quick phing target now correctly recreates elasticsearch structure by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2590
+* [framework] removed DRY violation in AggregationResultToProductFilterCountDtaTransformer and fixed property name by @sspooky13 in https://github.com/shopsys/shopsys/pull/2501
+* [shopsys] checking if order status update email should be sent is done directly in OrderMailFacade instead in multiple places by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2588
+* [shopsys] updated installation docs for macOS using Mutagen by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2593
+* [shopsys] added BlankLineBeforeStatementFixer for ensuring empty line before statements by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2128
+* [framework] RegisterProjectFrameworkClassExtensionCompilerPass now ensures that both class and interface alias are registered in Symfony services by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2605
+* [project-base] config folder is now less confusing by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2607
+
+### :link: Frontend API
+* [shopsys] authentication failure now return errors as array by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2387
+* [frontend-api] empty strings are now considered nulls in frontend API by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2601
+
+### :book: Documentation
+* [docs] changed bc promise link to supported version by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2606
+
+### :art: Design & appearance
+* [framework] improved elasticsearch debug panel readability in Symfony Profiler by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2509
+* [framework] Do not show loader element in load order preview by @sspooky13 in https://github.com/shopsys/shopsys/pull/2425
+* [framework] admin: order items table sizes are now fixed by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2597
+
+### :cloud: Infrastructure
+* added review stage by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2619
+* fixed review canceling jobs by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2626
+* fix canceling review after branch merge by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2627
+* fixed actions for rebuilding images and building  by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2628
+* rebuild-docker-images.yaml now use personal token to push images by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2630
+
 ## [v11.0.0](https://github.com/shopsys/shopsys/compare/v10.0.5...v11.0.0) (2023-03-02)
 
 ### :construction: Changes that require additional implementation if you are using Frontend API
@@ -2212,16 +2285,16 @@ The changelog was generated during the release process using [Github Changelog G
     - all Base Data Fixtures were removed
     - the data are created either in database migrations or in Demo Data Fixtures
 - [#271 - Complete refactoring of feeds functionality](https://github.com/shopsys/shopsys/pull/271)
-  - modules are responsible for querying the data to improve performance
-  - interfaces from package product-feed-interface are not used anymore as they were only important with open-box architecture
-  - only relevant data is fetched from the database, should result in enhanced performance
-  - FeedInterface and FeedInfoInterface define the way feeds are registered in the system
-  - FeedExport is responsible for the actual generation of a file in batches on a specific domain
-  - FeedRenderer is responsible for rendering the feed from Twig template
-  - FeedPathProvider is responsible for providing the correct filepath and url to the specified feed on a domain
-  - ProductUrlsBatchLoader and ProductParametersBatchLoader are responsible for loading product data in batches
-  - cron modules use the logger for debug information
-  - DailyFeedCronModule is responsible for continuation of the correct feed after waking up
+    - modules are responsible for querying the data to improve performance
+    - interfaces from package product-feed-interface are not used anymore as they were only important with open-box architecture
+    - only relevant data is fetched from the database, should result in enhanced performance
+    - FeedInterface and FeedInfoInterface define the way feeds are registered in the system
+    - FeedExport is responsible for the actual generation of a file in batches on a specific domain
+    - FeedRenderer is responsible for rendering the feed from Twig template
+    - FeedPathProvider is responsible for providing the correct filepath and url to the specified feed on a domain
+    - ProductUrlsBatchLoader and ProductParametersBatchLoader are responsible for loading product data in batches
+    - cron modules use the logger for debug information
+    - DailyFeedCronModule is responsible for continuation of the correct feed after waking up
 - [#182 - Cart: flush() is called only if there are really some changes in cart items](https://github.com/shopsys/shopsys/pull/182)
 - admin menu is now implemented using the KnpMenuBundle as a part of [#335 - Possibility to add a new administration page](https://github.com/shopsys/shopsys/pull/335)
     - old implementation using the `admin_menu.yml` configuration along with `AdminMenuYamlFileExtractor` was removed
@@ -2362,7 +2435,7 @@ It was only important with [the original open-box architecture](https://blog.sho
     - added definition of Components in [components.md](./docs/introduction/components.md):
     - by this definition, classes that did not match it were moved or refactored.
     - FriendlyUrlGenerator refactored: FriendlyUrlGeneratorFacade does not know anything about particular entities that the friendly urls are generated for.
-        These data are now served from implementations of FriendlyUrlDataProviderInterface.
+      These data are now served from implementations of FriendlyUrlDataProviderInterface.
 - [#143 - Shopsys framework now uses latest version of Shopsys coding standards](https://github.com/shopsys/shopsys/pull/143) [Shopsys Coding Standards dev-master](./packages/coding-standards) is now used
     - version of coding-standards package was updated to dev-master in [composer.json](./packages/framework/composer.json)
     - modified [travis script](./packages/framework/project-base/.travis.yml)
@@ -2376,7 +2449,7 @@ It was only important with [the original open-box architecture](https://blog.sho
     - all occurrences of netdevelo were changed to shopsys
 - [#257 - Admin: reset.less: disable scrollbar normalization in order to fix problems with jQuery UI drag&drop]( https://github.com/shopsys/shopsys/pull/257)
     - dragged item is now at correct position
-        -scrollbar normalization was disabled for sortable components
+        - scrollbar normalization was disabled for sortable components
 - [#261 - Sending personal data to Heureka can be disabled](https://github.com/shopsys/shopsys/pull/261)
     - the last step of cart contains opt-out checkbox to disable sending personal data to Heureka (if Heureka Verified by Customers is enabled on the domain)
 - [#206 clearing Setting's cache is now done via DoctrineEventListener](https://github.com/shopsys/shopsys/pull/206)
@@ -2412,10 +2485,10 @@ It was only important with [the original open-box architecture](https://blog.sho
 - [#173 - remove editData from model: all editData from framework model were merged into Data](https://github.com/shopsys/shopsys/pull/173):
     - remove editData from model: all editData from framework model were merged into its Data relatives
         - merged model EditData into Data with its Factory and modified Facade and Controller for
-                - Product
-                - Payment
-                - Transport
-                - Brand
+            - Product
+            - Payment
+            - Transport
+            - Brand
 - [#176 - Admin: Validation for free shipping is inconsistent](https://github.com/shopsys/shopsys/pull/176)
     - `Resources/views/Admin/Content/TransportAndPayment/freeTransportAndPaymentLimitSetting.html.twig`: `form_errors` was included for `form_widget` for consistency of admin forms
 - [#228 - show selectbox options](https://github.com/shopsys/shopsys/pull/228)
@@ -2469,10 +2542,10 @@ It was only important with [the original open-box architecture](https://blog.sho
 - [#266 ecs fix and unification in monorepo](https://github.com/shopsys/shopsys/pull/266)
     - ObjectIsCreatedByFactorySniff: cover edge case
         - previous implementation failed eg. when creating a class using a variable (new $className;)
-   - autoload-easy-coding-standard.yml renamed to easy-coding-standard.yml as it is not autoloaded in any way
-   - all phing targets excluding *-diff use --clear-cache option
-   - all packages use their own configuration file
-   - all packeges skip ObjectIsCreatedByFactorySniff in tests folder
+    - autoload-easy-coding-standard.yml renamed to easy-coding-standard.yml as it is not autoloaded in any way
+    - all phing targets excluding *-diff use --clear-cache option
+    - all packages use their own configuration file
+    - all packeges skip ObjectIsCreatedByFactorySniff in tests folder
 
 ### [shopsys/coding-standards]
 #### Added
@@ -2598,7 +2671,7 @@ It was only important with [the original open-box architecture](https://blog.sho
         - there is only "indexes" expression used now
 - [#103 - Defaultly rendered form types](https://github.com/shopsys/shopsys/pull/103):
     - `CustomerFormType`, `PaymentFormType` and `TransportFormType` are now all rendered using FormType classes and they
-        are ready for extension from `project-base` side.
+      are ready for extension from `project-base` side.
 - [#70 - extraction of project-independent part of Shopsys\Environment](https://github.com/shopsys/shopsys/pull/70):
     - moved constants with types of environment from [shopsys/project-base](https://github.com/shopsys/project-base)
         - moved from `\Shopsys\Environment` to `\Shopsys\FrameworkBundle\Component\Environment\EnvironmentType`
@@ -2662,16 +2735,16 @@ It was only important with [the original open-box architecture](https://blog.sho
 - [#110 - PHP-FPM Docker image tweaked for easier usage](https://github.com/shopsys/shopsys/pull/110):
     - PHP-FPM Docker image tweaked for easier usage
     - switched to Docker image `php:7.2-fpm-alpine` instead of `phpdockerio/php72-fpm:latest`
-            - official PHP Docker image is much more stable and provides tags other than `latest`
-            - built on Alpine linux which uses `apk` instead of `apt-get`
-            - in the container there is no `bash` installed, use `sh` instead
+      - official PHP Docker image is much more stable and provides tags other than `latest`
+      - built on Alpine linux which uses `apk` instead of `apt-get`
+      - in the container there is no `bash` installed, use `sh` instead
     - all installation guides verified and tweaked
         - Docker installation supported on Linux, MacOS and Windows 10 Pro and higher (recommended way of installing the application)
         - native installation is also supported (recommended on Windows 10 Home and lower)
     - as a rule, using minor versions of docker images (eg. `1.2` or `1.2-alpine`) if possible
     - docs and `docker-compose.yml` templates reflect [changes of Docker images in shopsys/project-base]
     - `docker-compose-win.yml.dist` created for Windows OS which creates local volume because of permission problems with
-        `postgresql` mounting
+      `postgresql` mounting
     - docs: changed `./phing` instruction code with `php phing` to make it work with all operating systems
 
 #### Fixed
@@ -2726,7 +2799,7 @@ It was only important with [the original open-box architecture](https://blog.sho
 ### [shopsys/framework]
 #### Added
 - extracted core functionality of [Shopsys Framework](http://www.shopsys-framework.com/)
-from its open-box repository [shopsys/project-base](https://github.com/shopsys/project-base)
+  from its open-box repository [shopsys/project-base](https://github.com/shopsys/project-base)
     - this will allow the core to be upgraded via `composer update` in different project implementations
     - core functionality includes:
         - all Shopsys-specific Symfony commands
@@ -2781,7 +2854,7 @@ from its open-box repository [shopsys/project-base](https://github.com/shopsys/p
 ### [shopsys/product-feed-interface]
 #### Removed
 - `HeurekaCategoryNameProviderInterface` as it is specific to Heureka product feed
-   - [shopsys/product-feed-heureka](https://github.com/shopsys/product-feed-heureka) manages Heureka categories on its own since v0.5.0
+    - [shopsys/product-feed-heureka](https://github.com/shopsys/product-feed-heureka) manages Heureka categories on its own since v0.5.0
 
 ### [shopsys/monorepo-tools]
 #### Added
@@ -3122,25 +3195,25 @@ That's why is this section formatted differently.
 ### [shopsys/plugin-interface]
 #### [0.3.0](https://github.com/shopsys/plugin-interface/compare/v0.2.0...v0.3.0) - 2017-10-04
 ##### Added
- - [CONTRIBUTING.md](https://github.com/shopsys/plugin-interface/blob/master/CONTRIBUTING.md)
- - `DataStorageInterface` can return all saved data via `getAll()`
- - `IteratedCronModuleInterface` and `SimpleCronModuleInterface`
+- [CONTRIBUTING.md](https://github.com/shopsys/plugin-interface/blob/master/CONTRIBUTING.md)
+- `DataStorageInterface` can return all saved data via `getAll()`
+- `IteratedCronModuleInterface` and `SimpleCronModuleInterface`
 
 #### [0.2.0](https://github.com/shopsys/plugin-interface/compare/v0.1.0...v0.2.0) - 2017-09-06
 ##### Added
- - This Changelog
- - interface for loading plugin's demo data
-     - `PluginDataFixtureInterface`
+- This Changelog
+- interface for loading plugin's demo data
+    - `PluginDataFixtureInterface`
 
 #### [0.1.0] - 2017-08-04
 ##### Added
- - Package of interfaces providing compatibility between [Shopsys Framework](https://www.shopsys-framework.com) and plugins
-     - interfaces responsible for retrieving and saving plugin custom data
-         - `DataStorageInterface`
-         - `PluginDataStorageProviderInterface`
-     - interface responsible for extending CRUD with plugin custom sub-forms
-         - `PluginCrudExtensionInterface`
- - `.travis.yml` file with Travis CI configuration
+- Package of interfaces providing compatibility between [Shopsys Framework](https://www.shopsys-framework.com) and plugins
+    - interfaces responsible for retrieving and saving plugin custom data
+        - `DataStorageInterface`
+        - `PluginDataStorageProviderInterface`
+    - interface responsible for extending CRUD with plugin custom sub-forms
+        - `PluginCrudExtensionInterface`
+- `.travis.yml` file with Travis CI configuration
 
 ### [shopsys/project-base]
 #### [6.0.0-beta21] - 2018-03-05
@@ -3196,7 +3269,7 @@ That's why is this section formatted differently.
 - users and administrators are logged out of all the sessions except the current one on password change (this is required in Symfony 4)
 - running Phing without parameter now shows list of available targets instead of building application
 - updated presta/sitemap-bundle to version 1.5.2 in order to avoid deprecated calls
- - updated SitemapListener to avoid using of deprecated SitemapListenerInterface
+- updated SitemapListener to avoid using of deprecated SitemapListenerInterface
 - updated symfony/swiftmailer-bundle to version 3.2.0 in order to fix deprecated calls
 - all calls of Form::isValid() are called only on submitted forms in order to prevent deprecated call
 - symlink so root/bin acts like root/project-base/bin
