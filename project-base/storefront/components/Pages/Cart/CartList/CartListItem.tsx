@@ -44,22 +44,25 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRem
 
     return (
         <div
-            className="relative flex flex-row flex-wrap border-b border-greyLighter p-3 lg:py-5 lg:px-0"
+            className="relative flex flex-row flex-wrap items-center gap-4 border-b border-greyLighter py-5 vl:flex-nowrap"
             data-testid={TEST_IDENTIFIER + itemCatnum}
         >
-            <div className="mb-6 flex w-[93px] pr-4 vl:mb-0" data-testid={TEST_IDENTIFIER + 'image'}>
-                <ExtendedNextLink href={item.product.slug} type="product" className="relative h-full w-full">
-                    <Image
-                        image={item.product.mainImage}
-                        type="thumbnailExtraSmall"
-                        alt={item.product.mainImage?.name || item.product.fullName}
-                    />
-                </ExtendedNextLink>
+            <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0">
+                <div className="flex w-24 shrink-0" data-testid={TEST_IDENTIFIER + 'image'}>
+                    <ExtendedNextLink href={item.product.slug} type="product" className="relative h-full w-full">
+                        <Image
+                            image={item.product.mainImage}
+                            type="thumbnailExtraSmall"
+                            alt={item.product.mainImage?.name || item.product.fullName}
+                        />
+                    </ExtendedNextLink>
+                </div>
+                <div className="flex flex-col items-start gap-4 text-sm font-bold vl:flex-1 vl:flex-row vl:items-center">
+                    <CartListItemInfo item={item} />
+                </div>
             </div>
-            <div className="mb-5 flex w-[calc(100%-93px)] flex-col items-start pr-7 text-sm font-bold vl:mb-0 vl:flex-1 vl:flex-row vl:items-center vl:pr-4">
-                <CartListItemInfo item={item} />
-            </div>
-            <div className="flex w-28 items-center vl:w-36 vl:pr-4 " data-testid={TEST_IDENTIFIER + 'spinbox'}>
+
+            <div className="flex w-28 items-center vl:w-36" data-testid={TEST_IDENTIFIER + 'spinbox'}>
                 <Spinbox
                     id={item.uuid}
                     min={1}
@@ -70,25 +73,22 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRem
                     onChangeValueCallback={onChangeValueHandler}
                 />
             </div>
-            <div
-                className="vl:pr-15 ml-auto flex items-center vl:ml-0 vl:w-32"
-                data-testid={TEST_IDENTIFIER + 'itemprice'}
-            >
-                <span className="text-sm">
-                    {formatPrice(item.product.price.priceWithVat) + '\u00A0/\u00A0' + t('pc')}
-                </span>
+
+            <div className="flex items-center justify-end text-sm vl:w-32" data-testid={TEST_IDENTIFIER + 'itemprice'}>
+                {formatPrice(item.product.price.priceWithVat) + '\u00A0/\u00A0' + t('pc')}
             </div>
+
             <div
-                className="ml-auto flex w-32 items-center justify-end vl:ml-0 vl:pr-4"
+                className="ml-auto flex items-center justify-end text-sm text-primary lg:text-base vl:w-32"
                 data-testid={TEST_IDENTIFIER + 'totalprice'}
             >
-                <span className="text-sm text-primary lg:text-base">
-                    {formatPrice(mapPriceForCalculations(item.product.price.priceWithVat) * item.quantity)}
-                </span>
+                {formatPrice(mapPriceForCalculations(item.product.price.priceWithVat) * item.quantity)}
             </div>
-            <div className="absolute right-3 top-3 flex items-center lg:right-0 lg:top-4 vl:static">
-                <RemoveCartItemButton onItemRemove={onItemRemove} />
-            </div>
+
+            <RemoveCartItemButton
+                onItemRemove={onItemRemove}
+                className="absolute right-0 top-5 flex items-center vl:static"
+            />
         </div>
     );
 };

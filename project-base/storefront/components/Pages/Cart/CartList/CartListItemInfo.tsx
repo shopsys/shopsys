@@ -13,13 +13,13 @@ export const CartListItemInfo: FC<CartListItemInfoProps> = ({ item }) => {
 
     return (
         <>
-            <div className="h-full pr-4 text-left vl:w-[16.875rem]" data-testid={TEST_IDENTIFIER + 'name'}>
+            <div className="h-full text-left vl:w-[16.875rem]" data-testid={TEST_IDENTIFIER + 'name'}>
                 <ExtendedNextLink
                     href={item.product.slug}
                     type="product"
                     className="text-sm font-bold uppercase leading-4 text-dark no-underline hover:text-dark hover:no-underline"
                 >
-                    <span className="mr-5">{item.product.fullName}</span>
+                    <span>{item.product.fullName}</span>
                 </ExtendedNextLink>
                 <div className="text-sm text-greyLight">
                     {t('Code')}: {item.product.catalogNumber}

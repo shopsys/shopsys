@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
@@ -19,35 +18,33 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
     );
 
     return (
-        <Webline>
-            <ul className="-mr-5 mb-6 flex justify-between border-b border-greyLighter p-0 lg:mb-3">
-                <OrderStepsListItem dataTestId={TEST_IDENTIFIER + '1'}>
-                    {activeStep > 1 ? (
-                        <OrderStepsListItemLink isActive={false} isClickable href={cartUrl}>
-                            {'1. ' + t('Cart')}
-                        </OrderStepsListItemLink>
-                    ) : (
-                        <OrderStepsListItemLink isActive={activeStep === 1}>{'1. ' + t('Cart')}</OrderStepsListItemLink>
-                    )}
-                </OrderStepsListItem>
-                <OrderStepsListItem dataTestId={TEST_IDENTIFIER + '2'}>
-                    {activeStep > 2 ? (
-                        <OrderStepsListItemLink isActive={false} isClickable href={transportAndPaymentUrl}>
-                            {'2. ' + t('Transport and payment')}
-                        </OrderStepsListItemLink>
-                    ) : (
-                        <OrderStepsListItemLink isActive={activeStep === 2}>
-                            {'2. ' + t('Transport and payment')}
-                        </OrderStepsListItemLink>
-                    )}
-                </OrderStepsListItem>
-                <OrderStepsListItem dataTestId={TEST_IDENTIFIER + '3'}>
-                    <OrderStepsListItemLink isActive={activeStep === 3}>
-                        {'3. ' + t('Contact information')}
+        <ul className="-mr-5 mb-6 flex justify-between border-b border-greyLighter p-0 lg:mb-3">
+            <OrderStepsListItem dataTestId={TEST_IDENTIFIER + '1'}>
+                {activeStep > 1 ? (
+                    <OrderStepsListItemLink isActive={false} isClickable href={cartUrl}>
+                        {'1. ' + t('Cart')}
                     </OrderStepsListItemLink>
-                </OrderStepsListItem>
-            </ul>
-        </Webline>
+                ) : (
+                    <OrderStepsListItemLink isActive={activeStep === 1}>{'1. ' + t('Cart')}</OrderStepsListItemLink>
+                )}
+            </OrderStepsListItem>
+            <OrderStepsListItem dataTestId={TEST_IDENTIFIER + '2'}>
+                {activeStep > 2 ? (
+                    <OrderStepsListItemLink isActive={false} isClickable href={transportAndPaymentUrl}>
+                        {'2. ' + t('Transport and payment')}
+                    </OrderStepsListItemLink>
+                ) : (
+                    <OrderStepsListItemLink isActive={activeStep === 2}>
+                        {'2. ' + t('Transport and payment')}
+                    </OrderStepsListItemLink>
+                )}
+            </OrderStepsListItem>
+            <OrderStepsListItem dataTestId={TEST_IDENTIFIER + '3'}>
+                <OrderStepsListItemLink isActive={activeStep === 3}>
+                    {'3. ' + t('Contact information')}
+                </OrderStepsListItemLink>
+            </OrderStepsListItem>
+        </ul>
     );
 };
 
