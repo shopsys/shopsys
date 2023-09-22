@@ -27,7 +27,7 @@ Packages are formatted by release version. You can see all the changes done to p
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) as explained in the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/).
 
-## [v12.0.0](https://github.com/shopsys/shopsys/compare/v11.1.0...v12.0.0) (2023-09-19)
+## [v12.0.0](https://github.com/shopsys/shopsys/compare/v11.1.0...v12.0.0) (2023-09-22)
 
 ### :bug: Bug Fixes
 * [framework] fixed variant creation by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2801
