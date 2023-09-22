@@ -10,29 +10,27 @@ type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputEl
 type SearchInputProps = NativeProps & {
     value: string;
     label: string;
-    isSearchButtonDisabled?: boolean;
     isLoading: boolean;
     onClear: () => void;
-    onEnterPressCallback?: () => void;
+    onSearch?: () => void;
 };
 
 const TEST_IDENTIFIER = 'layout-header-search-autocomplete-input';
 
 export const SearchInput: FC<SearchInputProps> = ({
     label,
-    isSearchButtonDisabled,
     value,
     isLoading,
     className,
     onChange,
     onClear,
-    onEnterPressCallback,
+    onSearch,
 }) => {
     const { t } = useTranslation();
 
     const enterKeyPressHandler: KeyboardEventHandler<HTMLInputElement> = (event) => {
-        if (event.key === 'Enter' && onEnterPressCallback !== undefined) {
-            onEnterPressCallback();
+        if (event.key === 'Enter' && onSearch) {
+            onSearch();
         }
     };
 
@@ -61,8 +59,8 @@ export const SearchInput: FC<SearchInputProps> = ({
                 <button
                     className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer border-none"
                     type="submit"
-                    disabled={isSearchButtonDisabled}
                     title={t('Search')}
+                    onClick={onSearch}
                 >
                     <SearchIcon className="w-5" />
                 </button>

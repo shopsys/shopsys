@@ -21,7 +21,7 @@ export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
 
 export const AutocompleteSearch: FC = () => {
     const router = useRouter();
-    const [isOpen, setIsOpen] = useState(false);
+    const [isSearchResultsPopupOpen, setIsSearchResultsPopupOpen] = useState(false);
     const [searchData, setSearchData] = useState<AutocompleteSearchQueryApi>();
     const [searchQueryValue, setSearchQueryValue] = useState('');
     const debouncedSearchQuery = useDebounce(searchQueryValue, 200);
@@ -51,7 +51,17 @@ export const AutocompleteSearch: FC = () => {
         }
     }, [searchQueryValue]);
 
-    const isSearchResultsPopupVisible = isOpen && isWithValidSearchQuery && !!searchData;
+    const isSearchResultsPopupVisible = isSearchResultsPopupOpen && isWithValidSearchQuery && !!searchData;
+
+    const handleSearch = () => {
+        if (isWithValidSearchQuery) {
+            router.push({
+                pathname: searchUrl,
+                query: { q: searchQueryValue },
+            });
+            setIsSearchResultsPopupOpen(false);
+        }
+    };
 
     useGtmAutocompleteResultsViewEvent(searchData, debouncedSearchQuery);
 
@@ -59,17 +69,12 @@ export const AutocompleteSearch: FC = () => {
         <>
             <div
                 className={twJoin('relative flex w-full transition-all', isWithValidSearchQuery && 'z-[10002]')}
-                onFocus={() => setIsOpen(true)}
+                onFocus={() => setIsSearchResultsPopupOpen(true)}
             >
                 <SearchInput
                     className="w-full border-2 border-white max-vl:border-primaryLight"
                     label={t("Type what you're looking for")}
-                    onEnterPressCallback={() =>
-                        router.push({
-                            pathname: searchUrl,
-                            query: { q: searchQueryValue },
-                        })
-                    }
+                    onSearch={handleSearch}
                     value={searchQueryValue}
                     isLoading={isFetchingSearchData}
                     onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
@@ -88,13 +93,13 @@ export const AutocompleteSearch: FC = () => {
                         <AutocompleteSearchPopup
                             autocompleteSearchResults={searchData}
                             autocompleteSearchQueryValue={searchQueryValue}
-                            onClickLink={() => setIsOpen(false)}
+                            onClickLink={() => setIsSearchResultsPopupOpen(false)}
                         />
                     )}
                 </div>
             </div>
 
-            <Overlay isActive={isSearchResultsPopupVisible} onClick={() => setIsOpen(false)} />
+            <Overlay isActive={isSearchResultsPopupVisible} onClick={() => setIsSearchResultsPopupOpen(false)} />
         </>
     );
 };

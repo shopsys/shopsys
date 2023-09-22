@@ -54,7 +54,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
                             </div>
                         )}
 
-                        {!!searchResults.categoriesSearch.totalCount && !!mappedCategoriesSearchResults && (
+                        {!!mappedCategoriesSearchResults?.length && (
                             <div className="mt-6">
                                 <Heading type="h3">{t('Found categories')}</Heading>
                                 <SimpleNavigation listedItems={mappedCategoriesSearchResults} />
