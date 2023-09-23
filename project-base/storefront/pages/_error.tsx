@@ -8,6 +8,9 @@ import { NextPage } from 'next';
 import NextErrorComponent, { ErrorProps } from 'next/error';
 import { ReactElement } from 'react';
 
+const MIDDLEWARE_STATUS_CODE_KEY = 'middleware-status-code';
+const MIDDLEWARE_STATUS_MESSAGE_KEY = 'middleware-status-message';
+
 type ErrorPageProps = ErrorProps & {
     hasGetInitialPropsRun: boolean;
     err?: any;
@@ -26,10 +29,13 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ hasGetInitialPropsRun, err, statu
 };
 
 ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context: any) => {
-    const statusCode = context.res.statusCode || 500;
+    const middlewareStatusCode = Number.parseInt(context.res.getHeader(MIDDLEWARE_STATUS_CODE_KEY) || '');
+    const middlewareStatusMessage = context.res.getHeader(MIDDLEWARE_STATUS_MESSAGE_KEY);
+
+    const statusCode = middlewareStatusCode || context.res.statusCode || 500;
     const errorInitialProps: any = await NextErrorComponent.getInitialProps({
         res: context.res,
-        err: context.err || statusCode === 500 ? context.res.statusText : null,
+        err: middlewareStatusMessage || context.err,
     } as any);
     const serverSideProps = await initServerSideProps({ context, redisClient, domainConfig, t });
     // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
@@ -55,7 +61,12 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
 
     // Flushing before returning is necessary if deploying to Vercel, see
     // https://vercel.com/docs/platform/limits#streaming-responses
+
+    // eslint-disable-next-line require-atomic-updates
+    context.res.statusCode = statusCode;
     await flush(2000);
+
+    // eslint-disable-next-line require-atomic-updates
     const props = 'props' in serverSideProps ? serverSideProps.props : {};
 
     return {
