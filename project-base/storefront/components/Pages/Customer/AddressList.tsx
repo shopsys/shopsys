@@ -41,6 +41,10 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
     };
 
     const setDefaultItemHandler = async (deliveryAddressUuid: string) => {
+        if (defaultDeliveryAddress?.uuid === deliveryAddressUuid) {
+            return;
+        }
+
         const result = await setDefaultDeliveryAddress({ deliveryAddressUuid });
 
         if (result.error !== undefined) {
