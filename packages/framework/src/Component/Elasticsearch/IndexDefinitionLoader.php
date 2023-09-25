@@ -9,10 +9,12 @@ class IndexDefinitionLoader
     /**
      * @param string $indexDefinitionsDirectory
      * @param string $indexPrefix
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionModifier $indexDefinitionModifier
      */
     public function __construct(
         protected readonly string $indexDefinitionsDirectory,
         protected readonly string $indexPrefix,
+        protected readonly IndexDefinitionModifier $indexDefinitionModifier,
     ) {
     }
 
@@ -23,6 +25,6 @@ class IndexDefinitionLoader
      */
     public function getIndexDefinition(string $indexName, int $domainId): IndexDefinition
     {
-        return new IndexDefinition($indexName, $this->indexDefinitionsDirectory, $this->indexPrefix, $domainId);
+        return new IndexDefinition($indexName, $this->indexDefinitionsDirectory, $this->indexPrefix, $domainId, $this->indexDefinitionModifier);
     }
 }

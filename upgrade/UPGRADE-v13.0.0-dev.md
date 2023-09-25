@@ -222,3 +222,24 @@ You will need to follow these steps:
             public function setFileKeyAsUploaded(string $key): void;
         ```
     - see #project-base-diff to update your project
+- allow elasticsearch different index setting per environment for elasticsearch ([#2823](https://github.com/shopsys/shopsys/pull/2823))
+    - new environment variable `FORCE_ELASTIC_LIMITS` may be used to force 1 shard and 0 replicas for elasticsearch indexes regardless of the settings in index definition JSON files
+    - method `Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition::__construct()` changed its interface
+        ```diff
+            public function __construct(
+                protected readonly string $indexName,
+                protected readonly string $definitionsDirectory,
+                protected readonly string $indexPrefix,
+                protected readonly int $domainId,
+        +       protected readonly IndexDefinitionModifier $indexDefinitionModifier,
+            ) {
+        ```
+    - method `Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader::__construct()` changed its interface
+        ```
+            public function __construct(
+                protected readonly string $indexDefinitionsDirectory,
+                protected readonly string $indexPrefix,
+        +       protected readonly IndexDefinitionModifier $indexDefinitionModifier,
+            ) {
+        ```
+    - see #project-base-diff to update your project

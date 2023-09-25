@@ -45,6 +45,7 @@ services:
             PACKETERY_REST_API_URL: ~
             PACKETERY_API_PASSWORD: ~
             PACKETERY_SENDER: ~
+            FORCE_ELASTIC_LIMITS: true
         labels:
             - traefik.enable=false
         networks:
