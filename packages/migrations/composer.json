@@ -39,7 +39,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.20",
-        "shopsys/coding-standards": "12.0.0"
+        "shopsys/coding-standards": "12.0.x-dev"
     },
     "config": {
         "allow-plugins": {
