@@ -194,13 +194,6 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                 </Row>
 
                                 <Row>
-                                    <CellMinor>{t('First name')}</CellMinor>
-                                    <Cell dataTestId={TEST_IDENTIFIER + 'deliveryFirstName'}>
-                                        {order.deliveryFirstName}
-                                    </Cell>
-                                </Row>
-
-                                <Row>
                                     <CellMinor>{t('Last name')}</CellMinor>
                                     <Cell dataTestId={TEST_IDENTIFIER + 'deliveryLastName'}>
                                         {order.deliveryLastName}
