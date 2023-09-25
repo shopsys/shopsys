@@ -41,7 +41,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                             {!!store.description && (
                                 <InfoItem>
                                     <StoreHeading text={t('Store description')} />
-                                    {store.description}
+                                    <div dangerouslySetInnerHTML={{ __html: store.description }} />
                                 </InfoItem>
                             )}
 
