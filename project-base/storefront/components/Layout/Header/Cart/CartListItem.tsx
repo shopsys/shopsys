@@ -15,6 +15,7 @@ const TEST_IDENTIFIER = 'layout-header-cart-listitem';
 
 export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantity }, onItemRemove }) => {
     const formatPrice = useFormatPrice();
+    const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
 
     return (
         <li
@@ -30,7 +31,7 @@ export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantit
             />
 
             <ExtendedNextLink
-                href={product.slug}
+                href={productSlug}
                 type="product"
                 className="flex-1 cursor-pointer text-sm font-bold text-greyDark no-underline outline-none"
             >

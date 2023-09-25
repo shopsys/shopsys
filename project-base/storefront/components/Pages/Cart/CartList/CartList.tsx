@@ -6,7 +6,7 @@ import { useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 
 type CartListProps = {
-    items?: CartItemFragmentApi[];
+    items: CartItemFragmentApi[];
 };
 
 export const CartList: FC<CartListProps> = ({ items: cartItems }) => {
@@ -15,10 +15,6 @@ export const CartList: FC<CartListProps> = ({ items: cartItems }) => {
         GtmMessageOriginType.cart,
         GtmProductListNameType.cart,
     );
-
-    if (cartItems === undefined) {
-        return null;
-    }
 
     return (
         <ul className="relative mb-6 border-greyLighter lg:mb-8">

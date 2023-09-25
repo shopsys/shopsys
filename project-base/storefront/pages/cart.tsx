@@ -34,7 +34,9 @@ const CartPage: FC<ServerSidePropsType> = () => {
                 <CommonLayout title={t('Cart')}>
                     <Webline>
                         <OrderSteps activeStep={1} domainUrl={url} />
-                        <CartList items={currentCart.cart?.items} />
+
+                        {currentCart.cart?.items && <CartList items={currentCart.cart.items} />}
+
                         <CartSummary />
 
                         <OrderAction
