@@ -179,6 +179,18 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     }
 
     /**
+     * @param string $key
+     */
+    public function setFileKeyAsUploaded(string $key): void
+    {
+        if ($key !== static::UPLOAD_KEY) {
+            throw new InvalidFileKeyException($key);
+        }
+
+        $this->temporaryFilename = null;
+    }
+
+    /**
      * @param string|null $temporaryFilename
      */
     public function setTemporaryFilename(?string $temporaryFilename): void

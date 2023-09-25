@@ -216,3 +216,9 @@ You will need to follow these steps:
     - class `Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter\OrderDomainFilter` was removed
     - Twig template `@ShopsysFramework/Admin/Content/Category/domainTabs.html.twig` was removed
     - see #project-base-diff to update your project
+- prevent FileNotFoundException on second flush of uploaded file ([#2655](https://github.com/shopsys/shopsys/pull/2655))
+    - interface `Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface` has new method
+        ```php
+            public function setFileKeyAsUploaded(string $key): void;
+        ```
+    - see #project-base-diff to update your project

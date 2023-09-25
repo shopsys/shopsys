@@ -136,6 +136,18 @@ class UploadedFile implements EntityFileUploadInterface
     }
 
     /**
+     * @param string $key
+     */
+    public function setFileKeyAsUploaded(string $key): void
+    {
+        if ($key !== static::UPLOAD_KEY) {
+            throw new InvalidFileKeyException($key);
+        }
+
+        $this->temporaryFilename = '';
+    }
+
+    /**
      * @param string $temporaryFilename
      */
     public function setTemporaryFilename(string $temporaryFilename): void
