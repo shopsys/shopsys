@@ -96,7 +96,7 @@ input[type='number'] {
 }
 
 .select__menu {
-    @apply !m-0 !overflow-hidden !rounded-b !border-2 !border-t-0 !border-border !shadow-none;
+    @apply !z-[3] !m-0 !overflow-hidden !rounded-b !border-2 !border-t-0 !border-border !shadow-none;
 }
 
 .select__menu-list {
