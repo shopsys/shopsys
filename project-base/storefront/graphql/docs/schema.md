@@ -2880,6 +2880,15 @@ Remaining amount for free transport and payment; null = transport cannot be free
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>roundingPrice</strong></td>
+<td valign="top"><a href="#price">Price</a></td>
+<td>
+
+Rounding amount if payment has rounding allowed
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>selectedPickupPlaceIdentifier</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -10260,6 +10269,15 @@ Hierarchy of the current element in relation to the structure
 <td colspan="2" valign="top"><strong>remainingAmountWithVatForFreeTransport</strong></td>
 <td valign="top"><a href="#money">Money</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roundingPrice</strong></td>
+<td valign="top"><a href="#price">Price</a></td>
+<td>
+
+Rounding amount if payment has rounding allowed
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>selectedPickupPlaceIdentifier</strong></td>

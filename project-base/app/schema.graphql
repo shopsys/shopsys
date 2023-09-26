@@ -347,6 +347,8 @@ type Cart implements CartInterface {
   promoCode: String
   "Remaining amount for free transport and payment; null = transport cannot be free"
   remainingAmountWithVatForFreeTransport: Money
+  "Rounding amount if payment has rounding allowed"
+  roundingPrice: Price
   "Selected pickup place identifier if provided"
   selectedPickupPlaceIdentifier: String
   totalDiscountPrice: Price!
@@ -374,6 +376,8 @@ interface CartInterface {
   paymentGoPayBankSwift: String
   promoCode: String
   remainingAmountWithVatForFreeTransport: Money
+  "Rounding amount if payment has rounding allowed"
+  roundingPrice: Price
   selectedPickupPlaceIdentifier: String
   totalDiscountPrice: Price!
   "Total items price (excluding transport and payment)"
