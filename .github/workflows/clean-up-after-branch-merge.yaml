@@ -20,7 +20,7 @@ jobs:
         needs: variables
         steps:
             -   name: GIT checkout branch - ${{ vars.MAIN_BRANCH_NAME }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: 'refs/heads/${{ vars.MAIN_BRANCH_NAME }}'
                     path: cancel-review-after-branch-merge
