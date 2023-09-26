@@ -77,6 +77,8 @@ class CartWithModificationsResult
 
     private ?Money $remainingAmountWithVatForFreeTransport = null;
 
+    private ?Price $roundingPrice = null;
+
     /**
      * @param \App\Model\Cart\Cart $cart
      */
@@ -405,5 +407,21 @@ class CartWithModificationsResult
         foreach ($products as $product) {
             $this->multipleAddedProductModifications['notAddedProducts'][] = $product;
         }
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    public function getRoundingPrice(): ?Price
+    {
+        return $this->roundingPrice;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
+     */
+    public function setRoundingPrice(?Price $roundingPrice): void
+    {
+        $this->roundingPrice = $roundingPrice;
     }
 }

@@ -28,3 +28,6 @@ CartInterface:
                 type: "Money"
             paymentGoPayBankSwift:
                 type: "String"
+            roundingPrice:
+                type: "Price"
+                description: "Rounding amount if payment has rounding allowed"
