@@ -1,0 +1,21 @@
+overblog_graphql:
+    definitions:
+        schema:
+            query: Query
+            mutation: Mutation
+        mappings:
+            types:
+                -   type: yaml
+                    dir: "%kernel.project_dir%/config/graphql/types"
+        builders:
+            args:
+                -   alias: "PaginatorArgumentsBuilder"
+                    class: App\FrontendApi\Component\Arguments\PaginatorArgumentsBuilder
+                -   alias: "BlogArticlePaginatorArgumentsBuilder"
+                    class: App\FrontendApi\Model\BlogArticle\BlogArticlePaginatorArgumentsBuilder
+    security:
+        handle_cors: true
+        query_max_complexity: 1110
+        enable_introspection: '%kernel.debug%'
+    services:
+        promise_adapter: "webonyx_graphql.sync_promise_adapter"
