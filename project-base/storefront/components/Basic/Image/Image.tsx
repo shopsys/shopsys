@@ -28,7 +28,7 @@ export const Image: FC<ImageProps> = ({
     const img: ImageSizeFragmentApi | null = image?.sizes.find((i) => i.size === type) ?? null;
 
     const imageTwClass = twMergeCustom(
-        'object-contain [image-rendering:-webkit-optimize-contrast] max-w-full max-h-full',
+        'object-contain [image-rendering:-webkit-optimize-contrast] max-w-full max-h-full mx-auto',
         className,
     );
 
@@ -46,7 +46,7 @@ export const Image: FC<ImageProps> = ({
     }
 
     return (
-        <picture className={twMergeCustom('flex items-center justify-center', wrapperClassName)}>
+        <picture className={wrapperClassName}>
             {img.additionalSizes.map((size) => (
                 <source key={size.url} srcSet={size.url} media={size.media} />
             ))}

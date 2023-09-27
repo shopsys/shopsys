@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -12,13 +11,13 @@ export const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = ({ ac
     const { t } = useTranslation();
 
     return (
-        <>
-            <Heading type="h2">{t('You can also buy')}</Heading>
+        <div>
+            <div className="text-xl font-bold">{t('You can also buy')}</div>
             <ProductsSlider
                 products={accessories}
                 gtmProductListName={GtmProductListNameType.product_detail_accessories}
                 gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
             />
-        </>
+        </div>
     );
 };

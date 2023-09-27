@@ -44,7 +44,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
     return (
         <Webline>
             <div
-                className="mb-7 flex scroll-mt-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap"
+                className="mb-7 flex scroll-mt-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap vl:gap-12"
                 ref={paginationScrollTargetRef}
             >
                 <div
@@ -66,7 +66,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
 
-                <div className="flex flex-1 flex-col vl:pl-12">
+                <div className="flex flex-1 flex-col">
                     <Adverts positionName="productList" className="mb-5" />
 
                     <Heading type="h1">{title}</Heading>
@@ -88,9 +88,9 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
-                    <div className="flex flex-col gap-3 sm:flex-row">
+                    <div className="flex flex-col items-stretch gap-3 sm:flex-row">
                         <div
-                            className="relative flex w-full cursor-pointer flex-row items-center justify-center rounded bg-primary py-3 px-8 font-bold uppercase text-white vl:mb-3 vl:hidden"
+                            className="relative flex flex-1 cursor-pointer items-center justify-center rounded bg-primary p-3 font-bold uppercase text-white vl:mb-3 vl:hidden"
                             onClick={handlePanelOpenerClick}
                         >
                             <FilterIcon className="mr-3 w-6 font-bold text-white" />
@@ -100,6 +100,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                         <SortingBar
                             sorting={category.products.orderingMode}
                             totalCount={category.products.totalCount}
+                            className="flex-1"
                         />
                     </div>
 

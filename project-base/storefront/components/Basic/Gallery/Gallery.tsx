@@ -5,17 +5,21 @@ import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import lgVideo from 'lightgallery/plugins/video';
 import getConfig from 'next/config';
 import LightGallery from 'lightgallery/react';
+import { twMergeCustom } from 'helpers/twMerge';
 
 type GalleryProps = {
     selector: string;
 };
 
-export const Gallery: FC<GalleryProps> = ({ selector, children }) => {
+export const Gallery: FC<GalleryProps> = ({ selector, children, className }) => {
     const {
         publicRuntimeConfig: { lightgalleryLicenseKey },
     } = getConfig();
 
-    const TwClass = 'relative mb-5 flex flex-row items-start justify-start overflow-hidden lg:rounded basis-3/5';
+    const TwClass = twMergeCustom(
+        'relative flex flex-row items-start justify-start overflow-hidden lg:rounded basis-3/5',
+        className,
+    );
 
     return (
         <LightGallery

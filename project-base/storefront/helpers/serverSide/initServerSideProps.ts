@@ -31,11 +31,13 @@ export type ServerSidePropsType = {
     domainConfig: DomainConfigType;
 };
 
+type QueriesArray = { query: string | DocumentNode; variables?: { [key: string]: unknown } }[];
+
 type InitServerSidePropsParameters = {
     domainConfig: DomainConfigType;
     context: GetServerSidePropsContext;
     authenticationRequired?: boolean;
-    prefetchedQueries?: { query: string | DocumentNode; variables?: { [key: string]: unknown } }[];
+    prefetchedQueries?: QueriesArray;
 } & (
     | {
           client: Client;
@@ -57,7 +59,7 @@ export const initServerSideProps = async ({
     redisClient,
     t,
     authenticationRequired = false,
-    prefetchedQueries = [],
+    prefetchedQueries: additionalPrefetchQueries = [],
     client,
     ssrExchange: ssrExchangeOverride,
 }: InitServerSidePropsParameters): Promise<GetServerSidePropsResult<ServerSidePropsType>> => {
@@ -73,37 +75,41 @@ export const initServerSideProps = async ({
                 publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
             }));
 
-        prefetchedQueries.push({ query: NotificationBarsDocumentApi });
-        prefetchedQueries.push({ query: NavigationQueryDocumentApi });
-        prefetchedQueries.push({
-            query: ArticlesQueryDocumentApi,
-            variables: {
-                placement: [
-                    ArticlePlacementTypeEnumApi.Footer1Api,
-                    ArticlePlacementTypeEnumApi.Footer2Api,
-                    ArticlePlacementTypeEnumApi.Footer3Api,
-                    ArticlePlacementTypeEnumApi.Footer4Api,
-                ],
-                first: 100,
-            },
-        });
-        prefetchedQueries.push({ query: AdvertsQueryDocumentApi });
-        prefetchedQueries.push({ query: CurrentCustomerUserQueryDocumentApi });
-        prefetchedQueries.push({ query: SettingsQueryDocumentApi });
-
         const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);
 
-        if (seoPageSlug) {
-            prefetchedQueries.push({
-                query: SeoPageQueryDocumentApi,
+        const prefetchQueries: QueriesArray = [
+            { query: NotificationBarsDocumentApi },
+            { query: NavigationQueryDocumentApi },
+            {
+                query: ArticlesQueryDocumentApi,
                 variables: {
-                    pageSlug: seoPageSlug,
+                    placement: [
+                        ArticlePlacementTypeEnumApi.Footer1Api,
+                        ArticlePlacementTypeEnumApi.Footer2Api,
+                        ArticlePlacementTypeEnumApi.Footer3Api,
+                        ArticlePlacementTypeEnumApi.Footer4Api,
+                    ],
+                    first: 100,
                 },
-            });
-        }
+            },
+            { query: AdvertsQueryDocumentApi },
+            { query: CurrentCustomerUserQueryDocumentApi },
+            { query: SettingsQueryDocumentApi },
+            ...(seoPageSlug
+                ? [
+                      {
+                          query: SeoPageQueryDocumentApi,
+                          variables: {
+                              pageSlug: seoPageSlug,
+                          },
+                      },
+                  ]
+                : []),
+            ...additionalPrefetchQueries,
+        ];
 
         const resolvedQueries = await Promise.all(
-            prefetchedQueries.map((queryObject) =>
+            prefetchQueries.map((queryObject) =>
                 currentClient.query(queryObject.query, queryObject.variables).toPromise(),
             ),
         );

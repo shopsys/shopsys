@@ -6,7 +6,7 @@ import { DropdownMenu } from './DropdownMenu/DropdownMenu';
 import { HamburgerMenu } from './HamburgerMenu/HamburgerMenu';
 import { Logo } from './Logo/Logo';
 import { MenuIconic } from './MenuIconic/MenuIconic';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
@@ -19,16 +19,15 @@ const TEST_IDENTIFIER = 'layout-header';
 export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
 
-    const onMenuToggleHandler = useCallback(() => {
-        setIsMenuOpened((prev) => !prev);
-    }, []);
+    const onMenuToggleHandler = () => setIsMenuOpened(!isMenuOpened);
 
     return (
         <div
-            className="flex flex-wrap items-center gap-y-3 py-3 lg:gap-x-7 lg:pb-5 lg:pt-6"
+            className="flex flex-wrap items-center justify-between gap-y-3 py-3 lg:gap-x-7 lg:pb-5 lg:pt-6"
             data-testid={TEST_IDENTIFIER}
         >
-            <Logo className="order-1 mr-auto flex flex-1 vl:flex-none" />
+            <Logo />
+
             {simpleHeader ? (
                 <HeaderContact />
             ) : (

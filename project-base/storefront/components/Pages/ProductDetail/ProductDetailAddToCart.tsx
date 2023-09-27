@@ -42,8 +42,8 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
     return (
         <>
-            <div className="mb-4 block rounded bg-blueLight p-3 lg:mb-3" data-testid={TEST_IDENTIFIER}>
-                <div className="mb-4 text-2xl font-bold text-primary" data-testid={TEST_IDENTIFIER + '-price'}>
+            <div className="flex flex-col gap-4 rounded bg-blueLight p-3" data-testid={TEST_IDENTIFIER}>
+                <div className="text-2xl font-bold text-primary" data-testid={TEST_IDENTIFIER + '-price'}>
                     {formatPrice(product.price.priceWithVat)}
                 </div>
                 {product.isSellingDenied ? (
