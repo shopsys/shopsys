@@ -1,4 +1,4 @@
-query NotificationBars @_redisCache(ttl: 3600) {
+query NotificationBars @redisCache(ttl: 3600) {
     notificationBars {
         ...NotificationBarsFragment
     }

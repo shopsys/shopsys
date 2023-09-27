@@ -5230,7 +5230,7 @@ export function useTermsAndConditionsArticleUrlQueryApi(options?: Omit<Urql.UseQ
   return Urql.useQuery<TermsAndConditionsArticleUrlQueryApi, TermsAndConditionsArticleUrlQueryVariablesApi>({ query: TermsAndConditionsArticleUrlQueryDocumentApi, ...options });
 };
 export const ArticlesQueryDocumentApi = gql`
-    query ArticlesQuery($placement: [ArticlePlacementTypeEnum!], $first: Int) @_redisCache(ttl: 3600) {
+    query ArticlesQuery($placement: [ArticlePlacementTypeEnum!], $first: Int) @redisCache(ttl: 3600) {
   articles(placement: $placement, first: $first) {
     edges {
       __typename
@@ -5257,7 +5257,7 @@ export function useBlogArticleDetailQueryApi(options?: Omit<Urql.UseQueryArgs<Bl
   return Urql.useQuery<BlogArticleDetailQueryApi, BlogArticleDetailQueryVariablesApi>({ query: BlogArticleDetailQueryDocumentApi, ...options });
 };
 export const BlogArticlesQueryDocumentApi = gql`
-    query BlogArticlesQuery($first: Int, $onlyHomepageArticles: Boolean) @_redisCache(ttl: 3600) {
+    query BlogArticlesQuery($first: Int, $onlyHomepageArticles: Boolean) @redisCache(ttl: 3600) {
   blogArticles(first: $first, onlyHomepageArticles: $onlyHomepageArticles) {
     ...BlogArticleConnectionFragment
   }
@@ -5610,7 +5610,7 @@ export function useFlagDetailQueryApi(options?: Omit<Urql.UseQueryArgs<FlagDetai
   return Urql.useQuery<FlagDetailQueryApi, FlagDetailQueryVariablesApi>({ query: FlagDetailQueryDocumentApi, ...options });
 };
 export const NavigationQueryDocumentApi = gql`
-    query NavigationQuery @_redisCache(ttl: 3600) {
+    query NavigationQuery @redisCache(ttl: 3600) {
   navigation {
     ...CategoriesByColumnFragment
   }
@@ -5630,7 +5630,7 @@ export function useNewsletterSubscribeMutationApi() {
   return Urql.useMutation<NewsletterSubscribeMutationApi, NewsletterSubscribeMutationVariablesApi>(NewsletterSubscribeMutationDocumentApi);
 };
 export const NotificationBarsDocumentApi = gql`
-    query NotificationBars @_redisCache(ttl: 3600) {
+    query NotificationBars @redisCache(ttl: 3600) {
   notificationBars {
     ...NotificationBarsFragment
   }
@@ -6132,7 +6132,7 @@ export function useSeoPageQueryApi(options: Omit<Urql.UseQueryArgs<SeoPageQueryV
   return Urql.useQuery<SeoPageQueryApi, SeoPageQueryVariablesApi>({ query: SeoPageQueryDocumentApi, ...options });
 };
 export const SettingsQueryDocumentApi = gql`
-    query SettingsQuery @_redisCache(ttl: 3600) {
+    query SettingsQuery @redisCache(ttl: 3600) {
   settings {
     pricing {
       ...PricingSettingFragment
