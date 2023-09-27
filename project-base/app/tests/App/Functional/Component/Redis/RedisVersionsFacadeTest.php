@@ -15,7 +15,9 @@ class RedisVersionsFacadeTest extends FunctionalTestCase
         $oldVersionKey = '20190308130158.test';
         $notVersionKey = '2019030813015.test';
 
-        $redisClient = self::getContainer()->get('snc_redis.test');
+        /** @var \Redis $redisClient */
+        $redisClient = self::getContainer()->get('snc_redis.global');
+
         $redisClient->set($currentVersionKey, 'test');
         $redisClient->set($oldVersionKey, 'test');
         $redisClient->set($notVersionKey, 'test');
