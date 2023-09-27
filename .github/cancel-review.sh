@@ -7,6 +7,7 @@ if [ -n "$BRANCH_NAME" ]; then
         cd "../$BRANCH_NAME"
 
         docker compose exec php-fpm php phing -D production.confirm.action=y elasticsearch-index-delete clean-redis clean-redis-old
+        docker compose exec php-fpm php ./bin/console shopsys:redis:clean-storefront-cache --queries --translations
         docker compose exec php-fpm php ./bin/console doctrine:database:drop --force
 
         docker compose down -v --remove-orphans

@@ -23,7 +23,7 @@ class CleanStorefrontCacheFacade
     /**
      * @param string $locale
      */
-    public function cleanStorefrontTranslationCache(string $locale): void
+    public function cleanStorefrontTranslationCache(string $locale = ''): void
     {
         $keyPattern = 'translates:' . $locale . '*';
         $this->cleanStorefrontCacheByKeyPattern($keyPattern);
