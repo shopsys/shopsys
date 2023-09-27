@@ -98,15 +98,12 @@ export const mapGtmShippingInfo = (pickupPlace: ListedStoreFragmentApi | null): 
     };
 };
 
-export const getGtmPickupPlaceFromStore = (
-    pickupPlaceIdentifier: string,
-    store: ListedStoreFragmentApi,
-): ListedStoreFragmentApi => ({
+export const getGtmPickupPlaceFromStore = (store: ListedStoreFragmentApi): ListedStoreFragmentApi => ({
     __typename: 'Store',
     locationLatitude: null,
     locationLongitude: null,
     slug: '',
-    identifier: pickupPlaceIdentifier,
+    identifier: store.identifier,
     name: store.name,
     city: store.city,
     country: {

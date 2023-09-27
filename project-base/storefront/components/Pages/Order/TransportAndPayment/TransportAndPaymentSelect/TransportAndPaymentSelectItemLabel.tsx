@@ -11,7 +11,7 @@ type TransportAndPaymentSelectItemLabelProps = {
     daysUntilDelivery?: number;
     description?: string | null;
     image?: ImageSizesFragmentApi | null;
-    pickupPlaceDetail?: ListedStoreFragmentApi | null;
+    pickupPlaceDetail?: ListedStoreFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'pages-order-selectitem-label';
