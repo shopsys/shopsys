@@ -1,8 +1,6 @@
 import { ContactInformationFormWrapper } from './ContactInformationFormWrapper';
 import { useContactInformationFormMeta } from './contactInformationFormMeta';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
-import { Login } from 'components/Blocks/Popup/Login/Login';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
@@ -16,18 +14,18 @@ import {
 import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import Trans from 'next-translate/Trans';
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 
-const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
+type ContactInformationContentProps = {
+    setIsLoginPopupOpened: Dispatch<SetStateAction<boolean>>;
+};
 
-export const ContactInformationContent: FC = () => {
+export const ContactInformationContent: FC<ContactInformationContentProps> = ({ setIsLoginPopupOpened }) => {
     const { t } = useTranslation();
-    const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const formProviderMethods = useFormContext<ContactInformation>();
     const isUserLoggedIn = !!useCurrentCustomerData();
@@ -115,13 +113,6 @@ export const ContactInformationContent: FC = () => {
                     }}
                 />
             </div>
-
-            {isLoginPopupOpened && (
-                <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
-                    <Heading type="h2">{t('Login')}</Heading>
-                    <Login defaultEmail={emailValue} />
-                </Popup>
-            )}
         </>
     );
 };
