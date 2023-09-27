@@ -60,27 +60,27 @@ class CategoryTest extends GraphQlTestCase
         $readyCategorySeoMixLinks = [
             [
                 'name' => t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => 'elektro-od-nejdrazsiho',
+                'slug' => '/elektro-od-nejdrazsiho',
             ],
             [
                 'name' => t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => 'elektro-barva-cerna',
+                'slug' => '/elektro-barva-cerna',
             ],
             [
                 'name' => t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => 'elektro-barva-cervena',
+                'slug' => '/elektro-barva-cervena',
             ],
             [
                 'name' => t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => 'elektro-led-uhlopricka-30-akce',
+                'slug' => '/elektro-led-uhlopricka-30-akce',
             ],
             [
                 'name' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => 'elektro-bez-hdmi-akce',
+                'slug' => '/elektro-bez-hdmi-akce',
             ],
             [
                 'name' => t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'slug' => 'elektro-full-hd-led-usb',
+                'slug' => '/elektro-full-hd-led-usb',
             ],
         ];
 

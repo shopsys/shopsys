@@ -41,7 +41,7 @@ class ReadyCategorySeoMixBatchLoader
             $result[] = array_map(
                 fn (ReadyCategorySeoMix $readyCategorySeoMix) => [
                     'name' => $readyCategorySeoMix->getH1(),
-                    'slug' => $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
+                    'slug' => '/' . $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
                         $this->domain->getId(),
                         'front_category_seo',
                         $readyCategorySeoMix->getId(),
