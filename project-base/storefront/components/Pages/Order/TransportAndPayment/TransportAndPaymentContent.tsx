@@ -1,117 +1,67 @@
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import {
-    LastOrderFragmentApi,
-    ListedStoreFragmentApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-    useStoreQueryApi,
-} from 'graphql/generated';
+import { useTransportsQueryApi } from 'graphql/generated';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
-import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'gtm/helpers/mappers';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
-import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
+import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
+import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
 import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType } from 'gtm/types/enums';
+import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
+import {
+    getTransportAndPaymentValidationMessages,
+    useHandleTransportAndPaymentLoadingAndRedirect,
+    useLoadTransportAndPaymentFromLastOrder,
+} from './helpers';
+import Skeleton from 'react-loading-skeleton';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
-type TransportAndPaymentContentProps = {
-    transports: TransportWithAvailablePaymentsAndStoresFragmentApi[] | undefined;
-    lastOrder: LastOrderFragmentApi | null;
-    changeTransportInCart: ChangeTransportHandler;
-    changePaymentInCart: ChangePaymentHandler;
-    isTransportSelectionLoading: boolean;
-    isPaymentSelectionLoading: boolean;
-};
-
-type TransportAndPaymentErrorsType = {
-    transport: {
-        name: 'transport';
-        label: string;
-        errorMessage: string | undefined;
-    };
-    payment: {
-        name: 'payment';
-        label: string;
-        errorMessage: string | undefined;
-    };
-    goPaySwift: {
-        name: 'goPaySwift';
-        label: string;
-        errorMessage: string | undefined;
-    };
-};
-
-export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = ({
-    transports,
-    lastOrder,
-    changePaymentInCart,
-    changeTransportInCart,
-    isPaymentSelectionLoading,
-    isTransportSelectionLoading,
-}) => {
+export const TransportAndPaymentContent: FC = () => {
     const router = useRouter();
     const { url } = useDomainConfig();
     const { t } = useTranslation();
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
     const [isErrorPopupVisible, setErrorPopupVisibility] = useState(false);
-    const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
-
     const [cartUrl, contactInformationUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/contact-information'],
         url,
     );
 
-    const [{ data: pickupPlaceData }] = useStoreQueryApi({
-        pause: lastOrder?.transport.transportType.code === 'packetery' || !lastOrder?.pickupPlaceIdentifier,
-        variables: { uuid: lastOrder?.pickupPlaceIdentifier ?? null },
+    const [changeTransportInCart, isTransportSelectionLoading] = useChangeTransportInCart();
+    const [changePaymentInCart, isPaymentSelectionLoading] = useChangePaymentInCart();
+    const [{ data: transportsData, fetching: areTransportsLoading }] = useTransportsQueryApi({
+        variables: { cartUuid },
+        requestPolicy: 'network-only',
     });
 
-    const transportAndPaymentValidationMessages = useMemo(() => {
-        const errors: Partial<TransportAndPaymentErrorsType> = {};
+    const [isLoadingTransportAndPaymentFromLastOrder, lastOrderPickupPlace] = useLoadTransportAndPaymentFromLastOrder(
+        changeTransportInCart,
+        changePaymentInCart,
+    );
 
-        if (!transport) {
-            errors.transport = {
-                name: 'transport',
-                label: t('Choose transport'),
-                errorMessage: t('Please select transport'),
-            };
-        } else {
-            if (transport.isPersonalPickup && pickupPlace?.identifier === undefined) {
-                errors.transport = {
-                    name: 'transport',
-                    label: t('Choose transport'),
-                    errorMessage: t('Please select transport with a personal pickup place'),
-                };
-            }
-            if (!payment) {
-                errors.payment = {
-                    name: 'payment',
-                    label: t('Choose payment'),
-                    errorMessage: t('Please select payment'),
-                };
-            }
-            if (payment?.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT' && !paymentGoPayBankSwift) {
-                errors.goPaySwift = {
-                    name: 'goPaySwift',
-                    label: t('Choose your bank'),
-                    errorMessage: t('Please select your bank'),
-                };
-            }
-        }
+    const validationMessages = getTransportAndPaymentValidationMessages(
+        transport,
+        pickupPlace,
+        payment,
+        paymentGoPayBankSwift,
+        t,
+    );
 
-        return errors;
-    }, [transport, payment, paymentGoPayBankSwift, pickupPlace?.identifier, t]);
+    const isTransportAndPaymentSkeletonVisible = useHandleTransportAndPaymentLoadingAndRedirect(
+        areTransportsLoading,
+        isLoadingTransportAndPaymentFromLastOrder,
+    );
 
     const onSelectTransportAndPaymentHandler = () => {
-        if (hasValidationErrors(transportAndPaymentValidationMessages)) {
+        if (hasValidationErrors(validationMessages)) {
             setErrorPopupVisibility(true);
 
             return;
@@ -120,58 +70,46 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
         router.push(contactInformationUrl);
     };
 
-    const lastOrderPickupPlace: ListedStoreFragmentApi | null = useMemo(() => {
-        if (!lastOrder?.pickupPlaceIdentifier) {
-            return null;
-        }
-
-        if (packeteryPickupPoint?.identifier === lastOrder.pickupPlaceIdentifier) {
-            return packeteryPickupPoint;
-        }
-
-        if (pickupPlaceData?.store) {
-            return getGtmPickupPlaceFromStore(lastOrder.pickupPlaceIdentifier, pickupPlaceData.store);
-        }
-
-        return getGtmPickupPlaceFromLastOrder(lastOrder.pickupPlaceIdentifier, lastOrder);
-    }, [lastOrder, packeteryPickupPoint, pickupPlaceData?.store]);
-
     return (
         <>
-            {transports && (
-                <TransportAndPaymentSelect
-                    transports={transports}
-                    lastOrderPickupPlace={lastOrderPickupPlace}
-                    lastOrderTransportUuid={lastOrder?.transport.uuid ?? null}
-                    lastOrderPaymentUuid={lastOrder?.payment.uuid ?? null}
-                    changeTransportInCart={changeTransportInCart}
-                    changePaymentInCart={changePaymentInCart}
-                    isTransportSelectionLoading={isTransportSelectionLoading}
-                />
-            )}
+            <OrderLayout
+                activeStep={2}
+                isTransportOrPaymentLoading={isTransportSelectionLoading || isPaymentSelectionLoading}
+                contentSkeleton={isTransportAndPaymentSkeletonVisible ? <Skeleton className="h-64 w-full" /> : null}
+            >
+                {!!transportsData?.transports.length && (
+                    <TransportAndPaymentSelect
+                        transports={transportsData.transports}
+                        lastOrderPickupPlace={lastOrderPickupPlace}
+                        changeTransportInCart={changeTransportInCart}
+                        changePaymentInCart={changePaymentInCart}
+                        isTransportSelectionLoading={isTransportSelectionLoading}
+                    />
+                )}
 
-            <OrderAction
-                buttonBack={t('Back')}
-                buttonNext={t('Contact information')}
-                hasDisabledLook={
-                    hasValidationErrors(transportAndPaymentValidationMessages) ||
-                    isTransportSelectionLoading ||
-                    isPaymentSelectionLoading
-                }
-                isLoading={(isTransportSelectionLoading || isPaymentSelectionLoading) && !!transport && !!payment}
-                withGapTop
-                withGapBottom
-                buttonBackLink={cartUrl}
-                nextStepClickHandler={onSelectTransportAndPaymentHandler}
-            />
-
-            {isErrorPopupVisible && (
-                <ErrorPopup
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
-                    fields={transportAndPaymentValidationMessages}
-                    gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
+                <OrderAction
+                    buttonBack={t('Back')}
+                    buttonNext={t('Contact information')}
+                    hasDisabledLook={
+                        hasValidationErrors(validationMessages) ||
+                        isTransportSelectionLoading ||
+                        isPaymentSelectionLoading
+                    }
+                    isLoading={(isTransportSelectionLoading || isPaymentSelectionLoading) && !!transport && !!payment}
+                    withGapTop
+                    withGapBottom
+                    buttonBackLink={cartUrl}
+                    nextStepClickHandler={onSelectTransportAndPaymentHandler}
                 />
-            )}
+
+                {isErrorPopupVisible && (
+                    <ErrorPopup
+                        onCloseCallback={() => setErrorPopupVisibility(false)}
+                        fields={validationMessages}
+                        gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
+                    />
+                )}
+            </OrderLayout>
         </>
     );
 };
