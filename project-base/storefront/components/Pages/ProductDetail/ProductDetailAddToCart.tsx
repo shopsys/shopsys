@@ -67,7 +67,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                                     variant="primary"
                                     dataTestId={TEST_IDENTIFIER + '-button'}
                                 >
-                                    {fetching ? <Loader className="w-7" /> : <CartIcon />}
+                                    {fetching ? <Loader className="w-[18px]" /> : <CartIcon className="w-[18px]" />}
 
                                     {t('Add to cart')}
                                 </Button>
