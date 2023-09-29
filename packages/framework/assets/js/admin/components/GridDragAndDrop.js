@@ -103,12 +103,6 @@ export default class GridDragAndDrop {
                 new Window({
                     content: Translator.trans('Order saved')
                 });
-            },
-            error: function () {
-                // eslint-disable-next-line no-new
-                new Window({
-                    content: Translator.trans('Order saving failed')
-                });
             }
         });
         $grid.trigger('save');
