@@ -308,3 +308,11 @@ div.smap .cluster img {
 .lg-outer .lg-video-cont.lg-has-youtube .lg-dummy-img {
     @apply !hidden;
 }
+
+.lg-outer .lg-thumb-outer.lg-grab .lg-thumb-item {
+    @apply !flex items-center justify-center;
+}
+
+.lg-outer .lg-thumb-item img {
+    @apply !h-auto max-h-full !w-auto max-w-full;
+}
