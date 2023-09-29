@@ -78,7 +78,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
 
     return (
         <div className="flex flex-col gap-6 vl:flex-row" ref={sliderBoxRef} data-testid={dataTestId}>
-            <div ref={sliderRef} className="keen-slider h-[250px] rounded vl:basis-4/5">
+            <div ref={sliderRef} className="keen-slider h-[283px] rounded vl:basis-3/4">
                 {isRecognizingWindowWidth ? (
                     <div className="flex h-full w-full items-center justify-center">
                         <Skeleton className="h-full" containerClassName="h-full w-full" />

@@ -2,7 +2,7 @@ import { textCode, url } from '../../fixtures/demodata';
 
 export function checkProductInCart(catnum, productName) {
     const cartProductItemSelector =
-        '[data-testid="pages-cart-list-item-' + catnum + '"] ' + '[data-testid="pages-cart-list-item-iteminfo-name"]';
+        '[data-testid="pages-cart-list-item-' + catnum + '"] ' + '[data-testid="pages-cart-list-item-name"]';
     const productCatnum = textCode + ': ' + catnum;
     cy.get(cartProductItemSelector).contains(productName);
     cy.get(cartProductItemSelector).contains(productCatnum);

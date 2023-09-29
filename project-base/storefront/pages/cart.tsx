@@ -32,10 +32,13 @@ const CartPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
             <EmptyCartWrapper currentCart={currentCart} title={t('Cart')} isCartPage>
                 <CommonLayout title={t('Cart')}>
-                    <OrderSteps activeStep={1} domainUrl={url} />
-                    <CartList items={currentCart.cart?.items} />
-                    <CartSummary />
                     <Webline>
+                        <OrderSteps activeStep={1} domainUrl={url} />
+
+                        {currentCart.cart?.items && <CartList items={currentCart.cart.items} />}
+
+                        <CartSummary />
+
                         <OrderAction
                             buttonBack={t('Back')}
                             buttonNext={t('Transport and payment')}
