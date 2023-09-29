@@ -164,6 +164,7 @@ You will need to follow these steps:
 - stop wrapping Frontend API queries in database transaction ([#2809](https://github.com/shopsys/shopsys/pull/2809))
     - see #project-base-diff to update your project
 - add order filter by domain in admin ([#2796](https://github.com/shopsys/shopsys/pull/2796))
+    - see also #project-base-diff (#2844) for permission fix
     - `Shopsys\FrameworkBundle\Controller\Admin\CategoryController`
         - method `__construct` changed its interface
             ```diff

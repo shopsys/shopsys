@@ -436,6 +436,7 @@ security:
         - { path: ^/%admin_url%/product-picker/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/_grid/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/multidomain/select-domain/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/multidomain/filter-domain/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/sso/, roles: ROLE_ADMIN }
         - { path: ^/efconnect, roles: ROLE_ADMIN }
         - { path: ^/elfinder, roles: ROLE_ADMIN }
