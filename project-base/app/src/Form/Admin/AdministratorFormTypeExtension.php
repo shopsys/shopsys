@@ -25,8 +25,8 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
      * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      */
     public function __construct(
-        private Security $security,
-        private AdministratorRoleGroupFacade $administratorRoleGroupFacade,
+        private readonly Security $security,
+        private readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
     ) {
     }
 
@@ -60,21 +60,21 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
             'label' => t('Password'),
         ]);
 
-        $builderSettingsGroup->add('roleGroup', ChoiceType::class, [
-            'required' => false,
-            'choices' => $this->administratorRoleGroupFacade->getAll(),
-            'placeholder' => t('Custom'),
-            'multiple' => false,
-            'label' => t('Role Group'),
-            'choice_label' => function (AdministratorRoleGroup $administratorRoleGroup) {
-                return $administratorRoleGroup->getName();
-            },
-            'attr' => [
-                'class' => 'js-role-group-select',
-            ],
-        ]);
-
         if ($this->security->isGranted(Roles::ROLE_ADMINISTRATOR_FULL)) {
+            $builderSettingsGroup->add('roleGroup', ChoiceType::class, [
+                'required' => false,
+                'choices' => $this->administratorRoleGroupFacade->getAll(),
+                'placeholder' => t('Custom'),
+                'multiple' => false,
+                'label' => t('Role Group'),
+                'choice_label' => function (AdministratorRoleGroup $administratorRoleGroup) {
+                    return $administratorRoleGroup->getName();
+                },
+                'attr' => [
+                    'class' => 'js-role-group-select',
+                ],
+            ]);
+
             $builderSettingsGroup->add('roles', ChoiceType::class, [
                 'required' => false,
                 'choices' => Roles::getAvailableAdministratorRolesChoices(),
@@ -86,12 +86,14 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
                 ],
             ]);
         } elseif ($options['administrator'] !== null) {
-            $builder->add('roles', DisplayOnlyType::class, [
+            $builderSettingsGroup->add('roleGroup', DisplayOnlyType::class, [
+                'label' => t('Role Group'),
+                'data' => $options['administrator']->getRoleGroup()?->getName() ?? t('Custom'),
+            ]);
+
+            $builderSettingsGroup->add('roles', DisplayOnlyType::class, [
                 'label' => t('Role'),
                 'data' => $this->getAdministratorRolesList($options['administrator']),
-                'attr' => [
-                    'class' => 'js-role-group-custom',
-                ],
             ]);
         }
     }
