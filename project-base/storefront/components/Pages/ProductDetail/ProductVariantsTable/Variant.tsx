@@ -37,8 +37,8 @@ export const Variant: FC<VariantProps> = ({
     return (
         <>
             <ProductVariantsTableRow key={variant.uuid} dataTestId={TEST_IDENTIFIER + variant.catalogNumber}>
-                <Cell className="max-lg:float-left max-lg:w-10 max-lg:pl-0 lg:w-24">
-                    <div className="w-16">
+                <Cell className="float-left w-10 pl-0 lg:float-none">
+                    <div className="w-20 pr-2">
                         <Image
                             image={variant.mainImage}
                             alt={variant.mainImage?.name || variant.fullName}
@@ -90,7 +90,7 @@ type CellProps = { onClick?: () => void };
 const Cell: FC<CellProps> = ({ className, children, dataTestId, onClick }) => (
     <td
         className={twMergeCustom(
-            'block pl-16 text-left align-middle text-xs lg:table-cell lg:border-b lg:border-greyLighter lg:px-1 lg:py-2',
+            'block pl-20 text-left align-middle text-xs lg:table-cell lg:border-b lg:border-greyLighter lg:px-1 lg:py-2',
             className,
         )}
         data-testid={dataTestId}
