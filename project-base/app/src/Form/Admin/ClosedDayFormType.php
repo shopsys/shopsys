@@ -36,6 +36,7 @@ class ClosedDayFormType extends AbstractType
         $builder
             ->add('date', DatePickerType::class, [
                 'required' => true,
+                'input' => 'datetime_immutable',
                 'label' => t('Date'),
                 'widget' => 'single_text',
                 'attr' => [
