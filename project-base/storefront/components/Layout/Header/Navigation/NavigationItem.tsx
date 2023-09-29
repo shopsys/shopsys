@@ -11,9 +11,10 @@ type NavigationItemProps = {
 
 const TEST_IDENTIFIER = 'layout-header-navigation-navigationitem';
 
-export const NavigationItem: FC<NavigationItemProps> = (props) => {
+export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem }) => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
-    const hasChildren = props.navigationItem.categoriesByColumns.length > 0;
+    const hasChildren = !!navigationItem.categoriesByColumns.length;
+    const isWithoutCategoryLink = navigationItem.link === `/#`;
 
     return (
         <li
@@ -23,24 +24,22 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
             onMouseLeave={() => setIsMenuOpened(false)}
         >
             <ExtendedNextLink
-                type="category"
-                href={props.navigationItem.link}
+                type={isWithoutCategoryLink ? 'static' : 'category'}
+                href={navigationItem.link}
                 className={twJoin(
                     'relative m-0 flex items-center px-2 py-4 text-sm font-bold uppercase text-white no-underline hover:text-orangeLight hover:no-underline group-hover:text-orangeLight group-hover:no-underline vl:text-base',
                 )}
             >
-                <>
-                    {props.navigationItem.name}
-                    {hasChildren && (
-                        <ArrowIcon className="ml-2 text-white group-hover:rotate-180 group-hover:text-orangeLight" />
-                    )}
-                </>
+                {navigationItem.name}
+                {hasChildren && (
+                    <ArrowIcon className="ml-2 text-white group-hover:rotate-180 group-hover:text-orangeLight" />
+                )}
             </ExtendedNextLink>
 
             {hasChildren && isMenuOpened && (
                 <div className="absolute left-0 right-0 z-menu grid grid-cols-4 gap-11 bg-white py-12 px-10 shadow-md">
                     <NavigationItemColumn
-                        columnCategories={props.navigationItem.categoriesByColumns}
+                        columnCategories={navigationItem.categoriesByColumns}
                         onLinkClick={() => setIsMenuOpened(false)}
                     />
                 </div>
