@@ -273,9 +273,11 @@ security:
         - { path: ^/%admin_url%/category/, roles: ROLE_CATEGORY_VIEW }
         # pricing groups
         - { path: ^/%admin_url%/pricing/group/delete, roles: ROLE_PRICING_GROUP_FULL }
+        - { path: ^/%admin_url%/pricing/group/list, roles: ROLE_PRICING_GROUP_FULL, methods: [POST] }
         - { path: ^/%admin_url%/pricing/group/, roles: ROLE_PRICING_GROUP_VIEW }
         # vats
         - { path: ^/%admin_url%/vat/delete, roles: ROLE_VAT_FULL }
+        - { path: ^/%admin_url%/vat/list, roles: ROLE_VAT_FULL, methods: [POST] }
         - { path: ^/%admin_url%/vat/, roles: ROLE_VAT_VIEW }
         # articles
         - { path: ^/%admin_url%/article/delete, roles: ROLE_ARTICLE_FULL }
@@ -434,6 +436,9 @@ security:
         - { path: ^/%admin_url%/transfer/list/, roles: ROLE_TRANSFER_VIEW }
         # special paths for file manager in wysiwyg, product picker, grid, domain selector, login as user.
         - { path: ^/%admin_url%/product-picker/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/_grid/save-form/, roles: ROLE_ALL }
+        - { path: ^/%admin_url%/_grid/save-ordering/, roles: ROLE_ALL }
+        - { path: ^/%admin_url%/_grid/get-form/, roles: ROLE_ALL }
         - { path: ^/%admin_url%/_grid/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/multidomain/select-domain/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/multidomain/filter-domain/, roles: ROLE_ADMIN }
