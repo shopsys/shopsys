@@ -13,10 +13,17 @@ import { useComparison } from 'hooks/comparison/useComparison';
 import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { Fragment, useRef } from 'react';
+import { useRef } from 'react';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { useWishlist } from 'hooks/useWishlist';
 import { ProductDetailGallery } from './ProductDetailGallery';
+import dynamic from 'next/dynamic';
+
+const ProductComparePopup = dynamic(() =>
+    import('components/Blocks/Product/ButtonsAction/ProductComparePopup').then(
+        (component) => component.ProductComparePopup,
+    ),
+);
 
 type ProductDetailContentProps = {
     product: ProductDetailFragmentApi;
@@ -29,7 +36,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
     const { t } = useTranslation();
     const scrollTarget = useRef<HTMLUListElement>(null);
     const router = useRouter();
-    const { isProductInComparison, toggleProductInComparison } = useComparison();
+    const { isProductInComparison, toggleProductInComparison, isPopupCompareOpen, setIsPopupCompareOpen } =
+        useComparison();
     const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
 
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
@@ -93,6 +101,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
 
                 {!!product.accessories.length && <ProductDetailAccessories accessories={product.accessories} />}
             </Webline>
+            {isPopupCompareOpen && <ProductComparePopup onCloseCallback={() => setIsPopupCompareOpen(false)} />}
         </>
     );
 };
