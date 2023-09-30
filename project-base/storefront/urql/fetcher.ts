@@ -5,7 +5,7 @@ import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 
 const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)`;
 const QUERY_NAME_REGEXP = `query\\s([A-z]*)(\\([A-z:!0-9$,\\s]*\\))?\\s@redisCache`;
-const REDIS_PREFIX_PATTERN = `${process.env.REDIS_PREFIX}:fe:queryCache:`;
+const getRedisPrefixPattern = () => `${process.env.REDIS_PREFIX}:fe:queryCache:`;
 
 const removeDirectiveFromQuery = (query: string) => query.replace(new RegExp(CACHE_REGEXP), '');
 
@@ -41,7 +41,7 @@ export const fetcher =
             const body = removeDirectiveFromQuery(init.body);
             const host = (init.headers ? new Headers(init.headers) : new Headers()).get('OriginalHost');
             const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
-            const hash = `${REDIS_PREFIX_PATTERN}${queryName}:${host}:${md5(body).toString().substring(0, 7)}`;
+            const hash = `${getRedisPrefixPattern()}${queryName}:${host}:${md5(body).toString().substring(0, 7)}`;
 
             const fromCache = await redisClient.get(hash);
 
