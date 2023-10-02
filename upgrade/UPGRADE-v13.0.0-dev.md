@@ -243,3 +243,5 @@ You will need to follow these steps:
             ) {
         ```
     - see #project-base-diff to update your project
+- update overblog settings to embrace composer autoloader for faster class loading ([#2830](https://github.com/shopsys/shopsys/pull/2830))
+    - see #project-base-diff to update your project

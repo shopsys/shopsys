@@ -6,6 +6,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "project-base/app/src/",
+            "Overblog\\GraphQLBundle\\__DEFINITIONS__\\": "project-base/app/var/overblogCompiledClasses",
             "Shopsys\\CodingStandards\\": "packages/coding-standards/src/",
             "Shopsys\\FormTypesBundle\\": "packages/form-types-bundle/src/",
             "Shopsys\\FrontendApiBundle\\": "packages/frontend-api/src/",

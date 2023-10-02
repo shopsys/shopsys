@@ -8,6 +8,7 @@
             "App\\": [
                 "src/"
             ],
+            "Overblog\\GraphQLBundle\\__DEFINITIONS__\\": "var/overblogCompiledClasses",
             "Sniffer\\": [
                 "sniffer/"
             ]
