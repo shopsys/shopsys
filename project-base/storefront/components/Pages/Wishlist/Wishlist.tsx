@@ -1,5 +1,4 @@
 import useTranslation from 'next-translate/useTranslation';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
@@ -38,57 +37,55 @@ export const Wishlist: FC = () => {
 
     return (
         <>
-            <Webline>
-                <Heading type="h1" className="!text-big lg:!text-h1">
-                    {t('Wishlist')}
-                </Heading>
-                {!!wishlist?.products.length && (
-                    <div className="flex w-full flex-col items-center justify-between border-b border-greyLighter pb-2 lg:flex-row">
-                        <div
-                            className="mb-2 cursor-pointer items-center rounded bg-greyVeryLight py-2 px-4 transition-colors hover:bg-greyLighter sm:inline-flex lg:mb-0"
-                            onClick={() => {
-                                handleCleanWishlist();
+            <Heading type="h1" className="!text-big lg:!text-h1">
+                {t('Wishlist')}
+            </Heading>
+            {!!wishlist?.products.length && (
+                <div className="flex w-full flex-col items-center justify-between border-b border-greyLighter pb-2 lg:flex-row">
+                    <div
+                        className="mb-2 cursor-pointer items-center rounded bg-greyVeryLight py-2 px-4 transition-colors hover:bg-greyLighter sm:inline-flex lg:mb-0"
+                        onClick={() => {
+                            handleCleanWishlist();
+                        }}
+                    >
+                        <span className="mr-3 text-sm">{t('Delete all from wishlist')}</span>
+                        <RemoveThinIcon className="w-3" />
+                    </div>
+                    <div className="flex w-full flex-col items-center lg:w-1/2 lg:flex-row">
+                        <TextInput
+                            id="copyUrl-input"
+                            value={buildShareUrl()}
+                            label={t('Send a link to this wishlist')}
+                            onChange={() => {
+                                return false;
                             }}
-                        >
-                            <span className="mr-3 text-sm">{t('Delete all from wishlist')}</span>
-                            <RemoveThinIcon className="w-3" />
-                        </div>
-                        <div className="flex w-full flex-col items-center lg:w-1/2 lg:flex-row">
-                            <TextInput
-                                id="copyUrl-input"
-                                value={buildShareUrl()}
-                                label={t('Send a link to this wishlist')}
-                                onChange={() => {
-                                    return false;
-                                }}
-                            />
-                            <SubmitButton
-                                onClick={() => {
-                                    navigator.clipboard.writeText(buildShareUrl());
-                                }}
-                                className="mt-2 lg:ml-2 lg:mt-0"
-                            >
-                                {t('Copy')}
-                            </SubmitButton>
-                        </div>
-                    </div>
-                )}
-
-                {wishlist?.products.length ? (
-                    <div>
-                        <ProductsList
-                            products={wishlist.products}
-                            gtmProductListName={GtmProductListNameType.wishlist}
-                            gtmMessageOrigin={GtmMessageOriginType.other}
-                            fetching={fetching}
                         />
+                        <SubmitButton
+                            onClick={() => {
+                                navigator.clipboard.writeText(buildShareUrl());
+                            }}
+                            className="mt-2 lg:ml-2 lg:mt-0"
+                        >
+                            {t('Copy')}
+                        </SubmitButton>
                     </div>
-                ) : (
-                    <div>
-                        <strong>{t('There are no products in the wishlist. Add some first.')}</strong>
-                    </div>
-                )}
-            </Webline>
+                </div>
+            )}
+
+            {wishlist?.products.length ? (
+                <div>
+                    <ProductsList
+                        products={wishlist.products}
+                        gtmProductListName={GtmProductListNameType.wishlist}
+                        gtmMessageOrigin={GtmMessageOriginType.other}
+                        fetching={fetching}
+                    />
+                </div>
+            ) : (
+                <div>
+                    <strong>{t('There are no products in the wishlist. Add some first.')}</strong>
+                </div>
+            )}
         </>
     );
 };

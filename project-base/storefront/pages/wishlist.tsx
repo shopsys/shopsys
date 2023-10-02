@@ -11,6 +11,7 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/ini
 import { useRouter } from 'next/router';
 import SharedWishlist from 'components/Pages/Wishlist/SharedWishlist';
 import { Wishlist } from 'components/Pages/Wishlist/Wishlist';
+import { Webline } from 'components/Layout/Webline/Webline';
 
 const WishlistPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -24,7 +25,7 @@ const WishlistPage: FC<ServerSidePropsType> = () => {
 
     return (
         <CommonLayout title={t('Wishlist')} breadcrumbs={breadcrumbs}>
-            {urlQueryParamId ? <SharedWishlist urlQueryParamId={urlQueryParamId} /> : <Wishlist />}
+            <Webline>{urlQueryParamId ? <SharedWishlist urlQueryParamId={urlQueryParamId} /> : <Wishlist />}</Webline>
         </CommonLayout>
     );
 };

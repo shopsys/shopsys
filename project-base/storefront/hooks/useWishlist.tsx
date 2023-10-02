@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
     ListedProductFragmentApi,
     useAddProductToWishlistMutationApi,
@@ -16,6 +16,7 @@ export const useWishlist = () => {
     const { t } = useTranslation();
 
     const isUserLoggedIn = !!useCurrentCustomerData();
+    const [isFetchingPaused, setIsFetchingPaused] = useState(true);
 
     const updateWishlistUuid = usePersistStore((s) => s.updateWishlistUuid);
     const wishlistUuid = usePersistStore((s) => s.wishlistUuid);
@@ -25,11 +26,17 @@ export const useWishlist = () => {
     const [, cleanWishlist] = useCleanWishlistMutationApi();
     const [{ data, fetching }] = useWishlistQueryApi({
         variables: { wishlistUuid },
-        pause: !wishlistUuid && !isUserLoggedIn,
+        pause: isFetchingPaused,
     });
 
     useEffect(() => {
-        updateWishlistUuid(data?.wishlist?.uuid ?? null);
+        setIsFetchingPaused(!wishlistUuid && !isUserLoggedIn);
+    }, [wishlistUuid]);
+
+    useEffect(() => {
+        if (data?.wishlist?.uuid) {
+            updateWishlistUuid(data.wishlist.uuid);
+        }
     }, [data?.wishlist?.uuid]);
 
     const handleCleanWishlist = async () => {
