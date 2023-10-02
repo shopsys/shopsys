@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'helpers/twMerge';
+import { twJoin } from 'tailwind-merge';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 import { ListedItemPropType } from 'types/simpleNavigation';
 
@@ -41,7 +42,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
                     />
                 )}
 
-                <div className="max-w-full text-center lg:text-left">
+                <div className={twJoin('max-w-full text-center ', itemImage && 'lg:text-left')}>
                     <span className="block max-w-full text-sm text-dark">{listedItem.name}</span>
                     {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
                         <span className="ml-2 whitespace-nowrap text-sm text-greyLight">({listedItem.totalCount})</span>
