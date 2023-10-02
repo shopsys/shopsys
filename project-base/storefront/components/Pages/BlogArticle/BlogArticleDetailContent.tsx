@@ -31,7 +31,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                         {formatDate(blogArticle.publishDate, 'l')}
                     </div>
 
-                    {!!blogArticle.text && <GrapesJsParser text={blogArticle.text} uuid={blogArticle.uuid} />}
+                    {!!blogArticle.text && <GrapesJsParser text={blogArticle.text} />}
                 </div>
             </div>
         </Webline>
