@@ -11,7 +11,6 @@ import {
 } from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { canUseDom } from 'helpers/canUseDom';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useMemo } from 'react';
@@ -191,10 +190,8 @@ export const getGtmReviewConsents = (): GtmReviewConsentsType => ({
 });
 
 export const gtmSafePushEvent = (event: GtmEventInterface<GtmEventType, unknown>): void => {
-    if (canUseDom()) {
-        window.dataLayer = window.dataLayer ?? [];
-        window.dataLayer.push(event);
-    }
+    window.dataLayer = window.dataLayer ?? [];
+    window.dataLayer.push(event);
 };
 
 export const getGtmConsentInfo = (userConsent: UserConsentFormType | null): GtmConsentInfoType => ({

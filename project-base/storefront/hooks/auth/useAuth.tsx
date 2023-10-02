@@ -1,7 +1,6 @@
 import { showSuccessMessage } from 'helpers/toasts';
 import { Exact, LoginApi, LoginVariablesApi, LogoutApi, Maybe, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
-import { canUseDom } from 'helpers/canUseDom';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
@@ -56,9 +55,7 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
                 loginResult.data.Login.showCartMergeInfo ? 'loading-with-cart-modifications' : 'loading',
             );
 
-            if (canUseDom()) {
-                window.location.href = rewriteUrl ?? router.asPath;
-            }
+            window.location.href = rewriteUrl ?? router.asPath;
         }
 
         return loginResult;
@@ -72,9 +69,7 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
             removeTokensFromCookies();
             showSuccessMessage(t('Successfully logged out'));
 
-            if (canUseDom()) {
-                router.reload();
-            }
+            router.reload();
         }
 
         return logoutResult;

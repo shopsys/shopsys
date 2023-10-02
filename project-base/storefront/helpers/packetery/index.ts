@@ -1,16 +1,11 @@
 import { PacketeryExtendedPoint, PacketeryPickFunction } from './types';
 import { ListedStoreFragmentApi } from 'graphql/generated';
-import { canUseDom } from 'helpers/canUseDom';
 
 /**
  * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html
  */
 
 export const packeteryPick: PacketeryPickFunction = (apiKey, callback, opts, inElement) => {
-    if (!canUseDom()) {
-        return;
-    }
-
     let defaultInElement: HTMLElement | undefined | null = inElement;
 
     if (defaultInElement === undefined) {
