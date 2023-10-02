@@ -8,7 +8,7 @@ const TEST_IDENTIFIER = 'layout-header-logo';
 export const Logo: FC = () => (
     <>
         <LogoMetadata />
-        <ExtendedNextLink href="/" type="static" className="max-vl:flex-1">
+        <ExtendedNextLink href="/" type="static" className="flex-1 vl:flex-none">
             <NextImage
                 src="/images/logo.svg"
                 width={163}
