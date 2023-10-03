@@ -37,7 +37,6 @@ jobs:
                 uses: actions/checkout@v4
                 with:
                     ref: 'refs/heads/${{ vars.MAIN_BRANCH_NAME }}'
-                    path: cancel-review-after-branch-merge
             -   name: Prepare variables for removing split branches from packages
                 run: |
                     echo "REMOTE_TEMPLATE=https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/" >> $GITHUB_ENV
