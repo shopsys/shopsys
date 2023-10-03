@@ -30,7 +30,7 @@ snc_redis:
             alias: 'storefront_graphql_query'
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
-                prefix: '%env(REDIS_PREFIX)%:fe:queryCache:'
+                prefix: '%env(REDIS_PREFIX)%:fe:'
         image:
             type: 'phpredis'
             alias: 'image'
