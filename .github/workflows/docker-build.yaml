@@ -27,7 +27,7 @@ jobs:
             BRANCH_NAME_ESCAPED: ${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Extract variables to output
@@ -136,7 +136,7 @@ jobs:
             packages: write
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
@@ -166,7 +166,7 @@ jobs:
             packages: write
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
@@ -194,7 +194,7 @@ jobs:
             packages: write
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
@@ -222,7 +222,7 @@ jobs:
             packages: write
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
@@ -273,7 +273,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -318,7 +318,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -347,7 +347,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -384,7 +384,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -425,7 +425,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.cypress.yml from artifacts
@@ -472,7 +472,7 @@ jobs:
         needs: variables
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Build Elasticsearch image
@@ -667,7 +667,7 @@ jobs:
             REVIEW_RESULT: ${{ needs.review.result }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
             -   name: Build successful

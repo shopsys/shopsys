@@ -15,7 +15,7 @@ jobs:
             contents: read
         steps:
             -   name: GIT checkout branch - refs/heads/${{ matrix.branches }}
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     ref: refs/heads/${{ matrix.branches }}
             -   name: Login to DockerHub

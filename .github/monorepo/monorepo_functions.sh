@@ -1,4 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
+set -eu -o pipefail
+
+# ANSI color codes
+RED="\e[31m"
+GREEN="\e[32m"
+BLUE="\e[34m"
+NC="\e[0m"
 
 # Lists packages that should be split
 # If you modify this list do not forget updating:
@@ -37,9 +45,23 @@ get_package_subdirectory() {
     fi
 }
 
-# Gets a remote into which a package should be pushed
-get_package_remote() {
-    PACKAGE=$1
+assert_remote_template_variable() {
+    if [[ "$REMOTE_TEMPLATE" == "" ]]; then
+        echo -e "${RED}You must provide a remote template!${NC}"
+        exit 1
+    fi
+}
 
-    echo "git@github.com:shopsys/$PACKAGE.git"
+assert_split_branch_is_not_protected() {
+    if [[ "$SPLIT_BRANCH" == "master" || "$SPLIT_BRANCH" == "main" || "$SPLIT_BRANCH" =~ ^[0-9]+\.[0-9]+$ ]]; then
+        echo -e "${RED}You cannot work with master, main or version-like branch!${NC}"
+        exit 1
+    fi
+}
+
+assert_split_branch_variable() {
+    if [[ "$SPLIT_BRANCH" == "" ]]; then
+        echo -e "${RED}You must provide a branch name to work on!${NC}"
+        exit 1
+    fi
 }
