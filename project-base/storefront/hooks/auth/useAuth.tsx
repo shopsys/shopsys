@@ -28,7 +28,7 @@ export type LogoutHandler = () => Promise<
         }>
     >
 >;
-export const useAuth = (): { login: typeof login; logout: typeof logout } => {
+export const useAuth = () => {
     const [, loginMutation] = useLoginApi();
     const [, logoutMutation] = useLogoutApi();
     const { t } = useTranslation();

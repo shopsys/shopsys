@@ -1,50 +1,33 @@
-import {
-    useCurrentCustomerUserQueryApi,
-    CurrentCustomerUserQueryApi,
-    DeliveryAddressFragmentApi,
-} from 'graphql/generated';
-import { useMemo } from 'react';
+import { useCurrentCustomerUserQueryApi, DeliveryAddressFragmentApi } from 'graphql/generated';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 
 export function useCurrentCustomerData(): CurrentCustomerType | null | undefined {
     const [{ data }] = useCurrentCustomerUserQueryApi();
 
-    return useMemo(() => {
-        if (!data?.currentCustomerUser) {
-            return undefined;
-        }
-
-        return mapCurrentCustomerApiData(data.currentCustomerUser);
-    }, [data?.currentCustomerUser]);
-}
-
-const mapCurrentCustomerApiData = (
-    apiCurrentCustomerData: CurrentCustomerUserQueryApi['currentCustomerUser'],
-): CurrentCustomerType | null => {
-    if (!apiCurrentCustomerData) {
-        return null;
+    if (!data?.currentCustomerUser) {
+        return undefined;
     }
 
-    const isCompanyCustomer = apiCurrentCustomerData.__typename === 'CompanyCustomerUser';
+    const { currentCustomerUser } = data;
+    const isCompanyCustomer = currentCustomerUser.__typename === 'CompanyCustomerUser';
 
     return {
-        ...apiCurrentCustomerData,
+        ...currentCustomerUser,
         companyCustomer: isCompanyCustomer,
-        telephone: apiCurrentCustomerData.telephone ? apiCurrentCustomerData.telephone : '',
-        companyName: isCompanyCustomer && apiCurrentCustomerData.companyName ? apiCurrentCustomerData.companyName : '',
-        companyNumber:
-            isCompanyCustomer && apiCurrentCustomerData.companyNumber ? apiCurrentCustomerData.companyNumber : '',
+        telephone: currentCustomerUser.telephone ? currentCustomerUser.telephone : '',
+        companyName: isCompanyCustomer && currentCustomerUser.companyName ? currentCustomerUser.companyName : '',
+        companyNumber: isCompanyCustomer && currentCustomerUser.companyNumber ? currentCustomerUser.companyNumber : '',
         companyTaxNumber:
-            isCompanyCustomer && apiCurrentCustomerData.companyTaxNumber ? apiCurrentCustomerData.companyTaxNumber : '',
-        defaultDeliveryAddress: apiCurrentCustomerData.defaultDeliveryAddress
-            ? mapDeliveryAddress(apiCurrentCustomerData.defaultDeliveryAddress)
+            isCompanyCustomer && currentCustomerUser.companyTaxNumber ? currentCustomerUser.companyTaxNumber : '',
+        defaultDeliveryAddress: currentCustomerUser.defaultDeliveryAddress
+            ? mapDeliveryAddress(currentCustomerUser.defaultDeliveryAddress)
             : undefined,
-        deliveryAddresses: mapDeliveryAddresses(apiCurrentCustomerData.deliveryAddresses),
+        deliveryAddresses: mapDeliveryAddresses(currentCustomerUser.deliveryAddresses),
         passwordOld: '',
         passwordFirst: '',
         passwordSecond: '',
     };
-};
+}
 
 export const mapDeliveryAddress = (apiDeliveryAddressData: DeliveryAddressFragmentApi): DeliveryAddressType => {
     return {
