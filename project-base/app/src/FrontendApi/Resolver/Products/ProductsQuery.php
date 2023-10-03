@@ -294,7 +294,7 @@ class ProductsQuery extends BaseProductsQuery
      * @param string[] $catnums
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function productsByCatnumsQuery($catnums): Promise
+    public function productsByCatnumsQuery(array $catnums): Promise
     {
         $productIds = $this->productRepository->getProductIdsByCatnums($catnums);
 

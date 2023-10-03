@@ -13,7 +13,7 @@ ProductQuery:
                 description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
             productsByCatnums:
                 type: "[Product!]!"
-                resolve: '@=query("productsByCatnumsQuery", [args["catnums"]])'
+                resolve: '@=query("productsByCatnumsQuery", args["catnums"])'
                 args:
                     catnums:
                         type: "[String!]!"
