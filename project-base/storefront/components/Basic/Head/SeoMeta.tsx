@@ -1,4 +1,5 @@
 import logMessage from 'helpers/errors/logMessage';
+import { CanonicalQueryParameters } from 'helpers/seo/generateCanonicalUrl';
 import useSeo from 'hooks/seo/useSeo';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import Head from 'next/head';
@@ -8,14 +9,16 @@ import { useEffect, useState } from 'react';
 type SeoMetaProps = {
     defaultTitle?: string | null;
     defaultDescription?: string | null;
+    canonicalQueryParams?: CanonicalQueryParameters;
 };
 
-export const SeoMeta: FC<SeoMetaProps> = ({ defaultTitle, defaultDescription }) => {
+export const SeoMeta: FC<SeoMetaProps> = ({ defaultTitle, defaultDescription, canonicalQueryParams }) => {
     const [areMissingRequiredTagsReported, setAreMissingRequiredTagsReported] = useState(false);
 
     const { title, titleSuffix, description, ogTitle, ogDescription, ogImageUrl, canonicalUrl } = useSeo({
         defaultTitle,
         defaultDescription,
+        canonicalQueryParams,
     });
 
     const currentUri = useRouter().asPath;
@@ -23,7 +26,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({ defaultTitle, defaultDescription }) 
     const currentUrlWithDomain = url.substring(0, url.length - 1) + currentUri;
 
     useEffect(() => {
-        if (title === null && !areMissingRequiredTagsReported) {
+        if (!title && !areMissingRequiredTagsReported) {
             logMessage('Missing required tags', [
                 {
                     key: 'tags',
@@ -37,13 +40,11 @@ export const SeoMeta: FC<SeoMetaProps> = ({ defaultTitle, defaultDescription }) 
     return (
         <Head>
             <title>{`${title} ${titleSuffix}`}</title>
-            {description !== null && <meta name="description" content={description} />}
-            {ogTitle !== null && <meta name="og:title" content={ogTitle} />}
-            {ogDescription !== null && <meta name="og:description" content={ogDescription} />}
-            {ogImageUrl !== null && <meta property="og:image" content={ogImageUrl} />}
-            {canonicalUrl !== null && canonicalUrl !== currentUrlWithDomain && (
-                <link rel="canonical" href={canonicalUrl} />
-            )}
+            {description && <meta name="description" content={description} />}
+            {ogTitle && <meta name="og:title" content={ogTitle} />}
+            {ogDescription && <meta name="og:description" content={ogDescription} />}
+            {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+            {canonicalUrl && canonicalUrl !== currentUrlWithDomain && <link rel="canonical" href={canonicalUrl} />}
         </Head>
     );
 };

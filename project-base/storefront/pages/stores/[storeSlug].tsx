@@ -28,7 +28,11 @@ const StoreDetailPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout title={storeDetailData?.store?.storeName} breadcrumbs={storeDetailData?.store?.breadcrumb}>
+        <CommonLayout
+            title={storeDetailData?.store?.storeName}
+            breadcrumbs={storeDetailData?.store?.breadcrumb}
+            canonicalQueryParams={[]}
+        >
             {!!storeDetailData?.store && !fetching ? (
                 <StoreDetailContent store={storeDetailData.store} />
             ) : (

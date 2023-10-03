@@ -9,17 +9,26 @@ import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
+import { CanonicalQueryParameters } from 'helpers/seo/generateCanonicalUrl';
 
 type CommonLayoutProps = {
     title?: string | null;
     description?: string | null;
     breadcrumbs?: BreadcrumbFragmentApi[];
     breadcrumbsType?: FriendlyPagesTypesKeys;
+    canonicalQueryParams?: CanonicalQueryParameters;
 };
 
-export const CommonLayout: FC<CommonLayoutProps> = ({ children, description, title, breadcrumbs, breadcrumbsType }) => (
+export const CommonLayout: FC<CommonLayoutProps> = ({
+    children,
+    description,
+    title,
+    breadcrumbs,
+    breadcrumbsType,
+    canonicalQueryParams,
+}) => (
     <>
-        <SeoMeta defaultTitle={title} defaultDescription={description} />
+        <SeoMeta defaultTitle={title} defaultDescription={description} canonicalQueryParams={canonicalQueryParams} />
 
         <NotificationBars />
 

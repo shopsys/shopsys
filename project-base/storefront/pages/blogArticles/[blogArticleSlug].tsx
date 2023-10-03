@@ -35,6 +35,7 @@ const BlogArticleDetailPage: NextPage = () => {
             description={blogArticleData?.blogArticle?.seoMetaDescription}
             breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
             breadcrumbsType="blogCategory"
+            canonicalQueryParams={[]}
         >
             {!!blogArticleData?.blogArticle && !fetching ? (
                 <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
