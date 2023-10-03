@@ -1,6 +1,6 @@
 # Open Source License Acknowledgements and Third-Party Copyrights
 
-Shopsys Platform is licensed under the terms of the [Shopsys Community License](./LICENSE).
+Shopsys Platform is licensed under the terms of the [Shopsys Platform Development License](./LICENSE).
 
 Shopsys Platform utilizes third party software from various sources. Portions of this software are copyrighted by their respective owners as indicated in the copyright notices below.
 
