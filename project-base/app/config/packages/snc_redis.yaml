@@ -18,7 +18,7 @@ snc_redis:
             alias: 'global'
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
-                prefix: '%env(REDIS_PREFIX)%'
+                prefix: '%env(REDIS_PREFIX)%:'
         main_friendly_url_slugs:
             type: 'phpredis'
             alias: 'main_friendly_url_slugs'
