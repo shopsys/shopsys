@@ -5,8 +5,8 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useWishlist } from 'hooks/useWishlist';
 import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
 import { CompareIcon, HeartIcon, MarkerIcon } from 'components/Basic/Icon/IconsSvg';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import dynamic from 'next/dynamic';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 const TEST_IDENTIFIER = 'layout-header-menuiconic';
 
@@ -31,7 +31,7 @@ export const MenuIconic: FC = () => {
     );
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
-    const isUserLoggedIn = !!useCurrentCustomerData();
+    const isUserLoggedIn = useIsUserLoggedIn();
 
     return (
         <ul className="flex items-center gap-1" data-testid={TEST_IDENTIFIER}>

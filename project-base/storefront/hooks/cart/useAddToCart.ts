@@ -6,9 +6,9 @@ import { getGtmMappedCart } from 'gtm/helpers/gtm';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 export type AddToCartAction = (
     productUuid: string,
@@ -23,7 +23,7 @@ export const useAddToCart = (
 ): [AddToCartAction, boolean] => {
     const [{ fetching }, addToCart] = useAddToCartMutationApi();
     const { t } = useTranslation();
-    const isUserLoggedIn = !!useCurrentCustomerData();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const { cart } = useCurrentCart();
     const domainConfig = useDomainConfig();
     const cartUuid = usePersistStore((store) => store.cartUuid);

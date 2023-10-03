@@ -12,13 +12,13 @@ import {
     useTermsAndConditionsArticleUrlQueryApi,
 } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import Trans from 'next-translate/Trans';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 type ContactInformationContentProps = {
     setIsLoginPopupOpened: Dispatch<SetStateAction<boolean>>;
@@ -28,7 +28,7 @@ export const ContactInformationContent: FC<ContactInformationContentProps> = ({ 
     const { t } = useTranslation();
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const formProviderMethods = useFormContext<ContactInformation>();
-    const isUserLoggedIn = !!useCurrentCustomerData();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const { formState } = formProviderMethods;
 
     const formMeta = useContactInformationFormMeta(formProviderMethods);

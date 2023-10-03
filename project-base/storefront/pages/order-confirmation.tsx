@@ -16,12 +16,12 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/ini
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useRouter } from 'next/router';
 import { GtmPageType } from 'gtm/types/enums';
 import { PaymentTypeEnum } from 'types/payment';
 import { useRef } from 'react';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 export type OrderConfirmationQuery = {
     orderUuid: string | undefined;
@@ -38,7 +38,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { orderUuid, orderEmail, orderPaymentType, registrationData } = query as OrderConfirmationQuery;
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
-    const isUserLoggedIn = !!useCurrentCustomerData();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const parsedRegistrationData = useRef<ContactInformation | undefined>(
         registrationData ? (JSON.parse(registrationData) as ContactInformation) : undefined,
     );

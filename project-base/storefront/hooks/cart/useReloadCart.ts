@@ -6,14 +6,14 @@ import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useClient } from 'urql';
 import { CartQueryDocumentApi } from 'graphql/generated';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 export const useReloadCart = (): void => {
     const { modifications } = useCurrentCart(false);
     const [changePaymentInCart] = useChangePaymentInCart();
     const { t } = useTranslation();
     const router = useRouter();
-    const isUserLoggedIn = !!useCurrentCustomerData();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const client = useClient();
 

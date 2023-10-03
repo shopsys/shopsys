@@ -11,14 +11,14 @@ import {
     useCartQueryApi,
 } from 'graphql/generated';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { Translate } from 'next-translate';
 import { usePersistStore } from 'store/usePersistStore';
 import { CurrentCartType } from 'types/cart';
 import { GtmMessageOriginType } from 'gtm/types/enums';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
-    const isUserLoggedIn = !!useCurrentCustomerData();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
