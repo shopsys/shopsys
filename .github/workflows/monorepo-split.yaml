@@ -4,7 +4,7 @@ on:
             - 'master'
             - '[0-9]+.[0-9]+'
 concurrency:
-    group: ${{ github.ref }}
+    group: monorepo-split-${{ github.ref }}
     cancel-in-progress: true
 name: Monorepo split
 jobs:

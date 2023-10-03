@@ -6,7 +6,7 @@ on:
                 required: true
                 type: string
 concurrency:
-    group: ${{ github.ref }}
+    group: monorepo-split-${{ github.ref }}
     cancel-in-progress: true
 name: Monorepo force split branch
 jobs:
