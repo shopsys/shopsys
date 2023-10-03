@@ -1,0 +1,52 @@
+#!/bin/bash
+
+set -e -o pipefail
+
+SPLIT_BRANCH=$1
+REMOTE_TEMPLATE=$2
+FORCE=${3:-false}
+
+set -u
+
+# Import functions
+. $(dirname "$0")/monorepo_functions.sh
+
+assert_split_branch_variable
+assert_remote_template_variable
+
+if [[ "$FORCE" == true ]]; then
+    assert_split_branch_is_not_protected
+fi
+
+echo -e "${BLUE}Splitting branch '$SPLIT_BRANCH'...${NC}"
+
+WORKSPACE=`pwd`
+
+if [[ "$FORCE" == true ]]; then
+    PUSH_OPTS="--force"
+else
+    PUSH_OPTS="--tags"
+fi
+
+for PACKAGE in $(get_all_packages); do
+    cd ${WORKSPACE}
+
+    echo -e "${BLUE}Start processing ${GREEN}\"${PACKAGE}\"${NC}"
+
+    mkdir -p ${WORKSPACE}/split/${PACKAGE}
+    git clone --bare .git ${WORKSPACE}/split/${PACKAGE}
+    cd ${WORKSPACE}/split/${PACKAGE}
+
+    echo -e "${BLUE}Rewriting history of ${GREEN}\"${PACKAGE}\"${NC}"
+    git filter-repo --subdirectory-filter $(get_package_subdirectory "$PACKAGE")
+
+    echo -e "${BLUE}Check if branch ${GREEN}\"${SPLIT_BRANCH}\" ${BLUE}can be pushed to remote package ${GREEN}\"${PACKAGE}\"${NC}"
+    git push "${REMOTE_TEMPLATE}${PACKAGE}.git" ${SPLIT_BRANCH} --dry-run ${PUSH_OPTS} --verbose
+done
+
+echo -e "${BLUE}Pushing to remotes${NC}"
+for PACKAGE in $(get_all_packages); do
+    echo -e "${BLUE}Push ${GREEN}\"${PACKAGE}\"${NC}"
+    cd ${WORKSPACE}/split/${PACKAGE}
+     git push "${REMOTE_TEMPLATE}${PACKAGE}.git" ${SPLIT_BRANCH} ${PUSH_OPTS} --verbose
+done

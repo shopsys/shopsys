@@ -1,0 +1,32 @@
+on:
+    workflow_dispatch:
+        inputs:
+            branch_name:
+                description: 'Branch name'
+                required: true
+                type: string
+concurrency:
+    group: monorepo-split-${{ github.ref }}
+    cancel-in-progress: true
+name: Monorepo force split branch
+jobs:
+    force-split-branch:
+        name: Forcing split of branch ${{ inputs.branch_name }}
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ inputs.branch_name }}
+                uses: actions/checkout@v4
+                with:
+                    ref: refs/heads/${{ inputs.branch_name }}
+                    fetch-depth: 0
+            -   name: Prepare variables and files to be used for splitting
+                run: |
+                    echo "REMOTE_TEMPLATE=https://${{ secrets.ACTIONS_GIT_PUSH_TOKEN }}@github.com/shopsys/" >> $GITHUB_ENV
+            -   name: Install git-filter-repo
+                run: |
+                    sudo apt-get update
+                    sudo apt-get install -y git-filter-repo
+            -   name: Split repositories
+                run: |
+                    git config -l | grep 'http\..*\.extraheader' | cut -d= -f1 | xargs -L1 git config --unset-all
+                    bash ./.github/monorepo/split-repositories.sh "${{ inputs.branch_name }}" "${REMOTE_TEMPLATE}" true
