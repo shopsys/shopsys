@@ -175,6 +175,11 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             ->add('vendorDeliveryDate', TextType::class, [
                 'required' => false,
                 'label' => t('Supplier\'s delivery time'),
+                'constraints' => [
+                    new Constraints\Type(['type' => 'numeric', 'message' => 'Supplier\'s delivery time must be a number']),
+                    new Constraints\GreaterThanOrEqual(['value' => 0, 'message' => 'Supplier\'s delivery time must be 0 or more']),
+                ],
+
             ])
             ->add('usingStock', YesNoType::class, [
                 'data' => true,
