@@ -8,4 +8,5 @@ class TransportTypeEnum
 {
     public const TYPE_COMMON = 'common';
     public const TYPE_PACKETERY = 'packetery';
+    public const TYPE_PERSONAL_PICKUP = 'personal_pickup';
 }

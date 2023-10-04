@@ -25,14 +25,14 @@ class TransportType extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \App\Model\Transport\Type\TransportTypeTranslation[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\Transport\Type\TransportTypeTranslation>
      * @Prezent\Translations(targetEntity="App\Model\Transport\Type\TransportTypeTranslation")
      */
     protected $translations;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100, unique=true)
+     * @ORM\Column(type="string", length=25, unique=true)
      */
     private string $code;
 

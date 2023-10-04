@@ -83,7 +83,6 @@ class TransportDataFactory extends BaseTransportDataFactory
     {
         $transportData = $this->createInstance();
         $this->fillFromTransport($transportData, $transport);
-        $transportData->personalPickup = $transport->isPersonalPickup();
         $transportData->daysUntilDelivery = $transport->getDaysUntilDelivery();
         $transportData->transportType = $transport->getTransportType();
         $transportData->trackingUrl = $transport->getTrackingUrl();

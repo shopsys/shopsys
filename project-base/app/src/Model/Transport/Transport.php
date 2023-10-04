@@ -25,15 +25,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
  */
 class Transport extends BaseTransport
 {
-    public const TYPE_COMMON = 'common';
-    public const TYPE_PACKAGE = 'package';
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $personalPickup;
-
     /**
      * @var int
      * @ORM\Column(type="integer")
@@ -82,7 +73,6 @@ class Transport extends BaseTransport
     {
         parent::setData($transportData);
 
-        $this->personalPickup = $transportData->personalPickup;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->trackingUrl = $transportData->trackingUrl;
         $this->transportType = $transportData->transportType;
@@ -99,14 +89,6 @@ class Transport extends BaseTransport
         foreach ($transportData->trackingInstructions as $locale => $trackingInstruction) {
             $this->translation($locale)->setTrackingInstruction($trackingInstruction);
         }
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPersonalPickup(): bool
-    {
-        return $this->personalPickup;
     }
 
     /**
@@ -156,6 +138,14 @@ class Transport extends BaseTransport
     public function getMaxWeight(): ?int
     {
         return $this->maxWeight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPersonalPickup(): bool
+    {
+        return $this->transportType->getCode() === TransportTypeEnum::TYPE_PERSONAL_PICKUP;
     }
 
     /**

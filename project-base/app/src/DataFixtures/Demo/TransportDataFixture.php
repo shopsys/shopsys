@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Transport\TransportDataFactory;
+use App\Model\Transport\Type\TransportTypeEnum;
+use App\Model\Transport\Type\TransportTypeFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -37,12 +39,14 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
+     * @param \App\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
         private readonly TransportDataFactory $transportDataFactory,
         private readonly Domain $domain,
         private readonly PriceConverter $priceConverter,
+        private readonly TransportTypeFacade $transportTypeFacade,
     ) {
     }
 
@@ -97,7 +101,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             );
         }
 
-        $transportData->personalPickup = true;
+        $transportData->transportType = $this->transportTypeFacade->getByCode(TransportTypeEnum::TYPE_PERSONAL_PICKUP);
 
         $this->setPriceForAllDomains($transportData, Money::zero());
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
@@ -110,8 +114,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->description[$locale] = t('Suitable for all kinds of goods', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->instructions[$locale] = t('Expect delivery by the end of next month', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-
-        $transportData->personalPickup = false;
 
         $this->setPriceForAllDomains($transportData, Money::zero());
         $this->createTransport(self::TRANSPORT_DRONE, $transportData);

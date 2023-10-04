@@ -134,8 +134,8 @@ class CartTransportTest extends GraphQlTestCase
             'position' => 2,
             'daysUntilDelivery' => 0,
             'transportType' => [
-                'name' => t('Standard', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'code' => 'common',
+                'name' => t('Personal pickup', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'code' => 'personal_pickup',
             ],
             'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
             'images' => [
