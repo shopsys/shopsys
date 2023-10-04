@@ -246,3 +246,31 @@ You will need to follow these steps:
     - see #project-base-diff to update your project
 - update overblog settings to embrace composer autoloader for faster class loading ([#2830](https://github.com/shopsys/shopsys/pull/2830))
     - see #project-base-diff to update your project
+- add ability to set readable frequency name to your cron ([#2854](https://github.com/shopsys/shopsys/pull/2854))
+    - method `Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig::registerCronModuleInstance()` changed its interface
+        ```diff
+            public function registerCronModuleInstance(
+                $service,
+                string $serviceId,
+                string $timeHours,
+                string $timeMinutes,
+                string $instanceName,
+                ?string $readableName = null,
+        +       ?string $readableFrequency = null,
+                int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
+                int $timeoutIteratedCronSec = CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
+            ) {
+        ```
+    - method `Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig::__construct()` changed its interface
+        ```diff
+            public function __construct(
+                protected readonly SimpleCronModuleInterface|IteratedCronModuleInterface $service,
+                protected readonly string $serviceId,
+                protected readonly string $timeHours,
+                protected readonly string $timeMinutes,
+                protected readonly ?string $readableName = null,
+        +       protected readonly ?string $readableFrequency = null,
+                protected readonly int $runEveryMin = self::RUN_EVERY_MIN_DEFAULT,
+                protected readonly int $timeoutIteratedCronSec = self::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
+            ) {
+        ```

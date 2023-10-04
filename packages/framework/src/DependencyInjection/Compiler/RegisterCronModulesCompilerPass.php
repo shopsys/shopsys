@@ -37,6 +37,7 @@ class RegisterCronModulesCompilerPass implements CompilerPassInterface
                         $tag['minutes'],
                         $instanceName,
                         $tag['readableName'] ?? null,
+                        $tag['readableFrequency'] ?? null,
                         $instanceConfig['run_every_min'],
                         $instanceConfig['timeout_iterated_cron_sec'],
                     ],

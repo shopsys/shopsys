@@ -22,6 +22,7 @@ class CronModuleConfig implements CronTimeInterface
      * @param string $timeHours
      * @param string $timeMinutes
      * @param string|null $readableName
+     * @param string|null $readableFrequency
      * @param int $runEveryMin
      * @param int $timeoutIteratedCronSec
      */
@@ -31,6 +32,7 @@ class CronModuleConfig implements CronTimeInterface
         protected readonly string $timeHours,
         protected readonly string $timeMinutes,
         protected readonly ?string $readableName = null,
+        protected readonly ?string $readableFrequency = null,
         protected readonly int $runEveryMin = self::RUN_EVERY_MIN_DEFAULT,
         protected readonly int $timeoutIteratedCronSec = self::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
     ) {
@@ -98,6 +100,10 @@ class CronModuleConfig implements CronTimeInterface
      */
     public function getReadableFrequency(): string
     {
+        if ($this->readableFrequency !== null) {
+            return $this->readableFrequency;
+        }
+
         if ($this->timeHours === '*' && $this->timeMinutes === '*') {
             return t('On each run (usually every 5 minutes)');
         }

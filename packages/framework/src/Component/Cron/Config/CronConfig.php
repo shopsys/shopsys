@@ -33,6 +33,7 @@ class CronConfig
      * @param string $timeMinutes
      * @param string $instanceName
      * @param string|null $readableName
+     * @param string|null $readableFrequency
      * @param int $runEveryMin
      * @param int $timeoutIteratedCronSec
      */
@@ -43,6 +44,7 @@ class CronConfig
         string $timeMinutes,
         string $instanceName,
         ?string $readableName = null,
+        ?string $readableFrequency = null,
         int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
         int $timeoutIteratedCronSec = CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
     ): void {
@@ -52,7 +54,7 @@ class CronConfig
         $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);
         $this->cronTimeResolver->validateTimeString($timeMinutes, 55, 5);
 
-        $cronModuleConfig = new CronModuleConfig($service, $serviceId, $timeHours, $timeMinutes, $readableName, $runEveryMin, $timeoutIteratedCronSec);
+        $cronModuleConfig = new CronModuleConfig($service, $serviceId, $timeHours, $timeMinutes, $readableName, $readableFrequency, $runEveryMin, $timeoutIteratedCronSec);
         $cronModuleConfig->assignToInstance($instanceName);
 
         $this->cronModuleConfigs[] = $cronModuleConfig;
