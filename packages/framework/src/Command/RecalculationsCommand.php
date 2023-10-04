@@ -65,15 +65,15 @@ class RecalculationsCommand extends Command
         $output->writeln('<fg=green>Products visibility.</fg=green>');
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
 
+        $output->writeln('<fg=green>Calculate selling (because of main variant price recalculation)</fg=green>');
+        $this->productSellingDeniedRecalculator->calculateSellingDeniedForAll();
+
         $output->writeln('<fg=green>Products price again (because of variants).</fg=green>');
         // Main variant is set for recalculations after change of variants visibility.
         $this->productPriceRecalculator->runAllScheduledRecalculations();
 
         $output->writeln('<fg=green>Products availability.</fg=green>');
         $this->productAvailabilityRecalculator->runAllScheduledRecalculations();
-
-        $output->writeln('<fg=green>Products selling denial.</fg=green>');
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForAll();
 
         return Command::SUCCESS;
     }
