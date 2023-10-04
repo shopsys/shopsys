@@ -37,10 +37,16 @@ export default class Ajax {
         $.ajax(options);
     }
 
-    static showDefaultError () {
+    static showDefaultError (response) {
+        let content = Translator.trans('Error occurred, try again please.');
+
+        if (response.status === 403) {
+            content = Translator.trans('You don\'t have permission to perform this action.');
+        }
+
         // eslint-disable-next-line no-new
         new Window({
-            content: Translator.trans('Error occurred, try again please.')
+            content: content
         });
     }
 
