@@ -36,15 +36,19 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useRouter } from 'next/router';
 import { OrderConfirmationQuery } from 'pages/order-confirmation';
 import React, { useEffect, useState } from 'react';
-import { FormProvider, SubmitHandler } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { CustomerTypeEnum } from 'types/customer';
 import { GtmMessageOriginType, GtmPageType } from 'gtm/types/enums';
 import dynamic from 'next/dynamic';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Login } from 'components/Blocks/Popup/Login/Login';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
+const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
 const ContactInformationPage: FC<ServerSidePropsType> = () => {
+    const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
     const router = useRouter();
     const domainConfig = useDomainConfig();
     const cartUuid = usePersistStore((store) => store.cartUuid);
@@ -62,6 +66,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const [{ fetching }, createOrder] = useCreateOrderMutationApi();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const user = useCurrentCustomerData();
     const userContactInformation = useCurrentUserContactInformation();
@@ -224,7 +229,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                 <OrderLayout activeStep={3}>
                     <FormProvider {...formProviderMethods}>
                         <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
-                            <ContactInformationContent />
+                            <ContactInformationContent setIsLoginPopupOpened={setIsLoginPopupOpened} />
                             <OrderAction
                                 buttonBack={t('Back')}
                                 buttonNext={t('Submit order')}
@@ -248,6 +253,12 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                         fields={formMeta.fields}
                         gtmMessageOrigin={GtmMessageOriginType.contact_information_page}
                     />
+                )}
+                {isLoginPopupOpened && (
+                    <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
+                        <Heading type="h2">{t('Login')}</Heading>
+                        <Login defaultEmail={emailValue} />
+                    </Popup>
                 )}
             </EmptyCartWrapper>
         </>
