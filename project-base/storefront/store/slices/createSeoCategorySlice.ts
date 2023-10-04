@@ -4,6 +4,7 @@ import { StateCreator } from 'zustand';
 
 export type DefaultProductFiltersMapType = {
     flags: Set<string>;
+    brands: Set<string>;
     sort: ProductOrderingModeEnumApi;
     parameters: Map<string, Set<string>>;
 };

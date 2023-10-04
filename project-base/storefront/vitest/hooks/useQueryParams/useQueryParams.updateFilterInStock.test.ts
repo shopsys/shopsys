@@ -24,11 +24,13 @@ const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
 const CATEGORY_URL = '/category-url';
 const CATEGORY_PATHNAME = '/categories/[categorySlug]';
 const ORIGINAL_CATEGORY_URL = '/original-category-slug';
-const DEFAULT_SEO_CATEGORY_PARAMETERS = new Map([
-    ['default-parameter-1', new Set(['default-parameter-value-1', 'default-parameter-value-2'])],
-    ['default-parameter-2', new Set(['default-parameter-value-3', 'default-parameter-value-4'])],
-]);
-const DEFAULT_SEO_CATEGORY_FLAGS = new Set(['default-flag-1', 'default-flag-2']);
+const GET_DEFAULT_SEO_CATEGORY_PARAMETERS = () =>
+    new Map([
+        ['default-parameter-1', new Set(['default-parameter-value-1', 'default-parameter-value-2'])],
+        ['default-parameter-2', new Set(['default-parameter-value-3', 'default-parameter-value-4'])],
+    ]);
+const GET_DEFAULT_SEO_CATEGORY_FLAGS = () => new Set(['default-flag-1', 'default-flag-2']);
+const GET_DEFAULT_SEO_CATEGORY_BRANDS = () => new Set(['default-brand-1', 'default-brand-2']);
 
 vi.mock('helpers/filterOptions/seoCategories', async (importOriginal) => {
     const actualSeoCategoriesModule = await importOriginal<any>();
@@ -121,8 +123,9 @@ describe('useQueryParams().updateFilterInStock tests', () => {
             return selector({
                 defaultProductFiltersMap: {
                     sort: ProductOrderingModeEnumApi.PriceAscApi,
-                    flags: DEFAULT_SEO_CATEGORY_FLAGS,
-                    parameters: DEFAULT_SEO_CATEGORY_PARAMETERS,
+                    brands: GET_DEFAULT_SEO_CATEGORY_BRANDS(),
+                    flags: GET_DEFAULT_SEO_CATEGORY_FLAGS(),
+                    parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
                 },
                 originalCategorySlug: ORIGINAL_CATEGORY_URL,
             });
@@ -137,7 +140,8 @@ describe('useQueryParams().updateFilterInStock tests', () => {
                     categorySlug: ORIGINAL_CATEGORY_URL,
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
                         onlyInStock: true,
-                        flags: ['default-flag-1', 'default-flag-2'],
+                        brands: Array.from(GET_DEFAULT_SEO_CATEGORY_BRANDS()),
+                        flags: Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()),
                         parameters: [
                             {
                                 parameter: 'default-parameter-1',
@@ -157,7 +161,8 @@ describe('useQueryParams().updateFilterInStock tests', () => {
                 query: {
                     [FILTER_QUERY_PARAMETER_NAME]: JSON.stringify({
                         onlyInStock: true,
-                        flags: ['default-flag-1', 'default-flag-2'],
+                        brands: Array.from(GET_DEFAULT_SEO_CATEGORY_BRANDS()),
+                        flags: Array.from(GET_DEFAULT_SEO_CATEGORY_FLAGS()),
                         parameters: [
                             {
                                 parameter: 'default-parameter-1',
