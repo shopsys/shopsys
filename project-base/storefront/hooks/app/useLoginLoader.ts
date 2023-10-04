@@ -6,7 +6,7 @@ import { usePersistStore } from 'store/usePersistStore';
 export const useLoginLoader = () => {
     const { t } = useTranslation();
     const loginLoading = usePersistStore((store) => store.loginLoading);
-    const updateGeneralState = usePersistStore((store) => store.updateLoginLoadingState);
+    const updateLoginLoadingState = usePersistStore((store) => store.updateLoginLoadingState);
 
     useEffect(() => {
         if (!loginLoading) {
@@ -19,8 +19,6 @@ export const useLoginLoader = () => {
             showInfoMessage(t('Your cart has been modified. Please check the changes.'));
         }
 
-        updateGeneralState(null);
+        updateLoginLoadingState(null);
     }, []);
-
-    return null;
 };

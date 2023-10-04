@@ -1,5 +1,5 @@
 import { ContactInformationSlice, createContactInformationSlice } from './slices/createContactInformationSlice';
-import { LoginLoadingSlice, createLoginLoadingSlice } from './slices/createGeneralSlice';
+import { LoginLoadingSlice, createLoginLoadingSlice } from './slices/createLoginLoadingSlice';
 import { PacketerySlice, createPacketerySlice } from './slices/createPacketerySlice';
 import { createUserSlice, UserSlice } from './slices/createUserSlice';
 import { create } from 'zustand';
