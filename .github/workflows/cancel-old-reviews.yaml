@@ -8,10 +8,10 @@ jobs:
         name: Cancel reviews older than seven days
         runs-on: [ self-hosted, linux, review-stage ]
         steps:
-            -   name: GIT checkout branch - ${{ vars.MAIN_BRANCH_NAME }}
+            -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
                 with:
-                    ref: 'refs/heads/${{ vars.MAIN_BRANCH_NAME }}'
+                    ref: ${{ github.ref }}
                     path: cancel-old-reviews
             -   name: Cancel reviews older than seven days
                 working-directory: cancel-old-reviews
