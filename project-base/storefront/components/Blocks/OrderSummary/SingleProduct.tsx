@@ -18,7 +18,7 @@ export const SingleProduct: FC<SingleProductProps> = ({ item }) => {
                 image={item.product.mainImage}
                 type="thumbnailExtraSmall"
                 alt={item.product.mainImage?.name || item.product.fullName}
-                className="mr-4 w-14"
+                className="mr-4 h-14 w-14"
             />
 
             <div className="flex flex-1 items-center">
