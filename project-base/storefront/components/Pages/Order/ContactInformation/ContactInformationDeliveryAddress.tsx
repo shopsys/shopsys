@@ -86,13 +86,13 @@ export const ContactInformationDeliveryAddress: FC = () => {
                 }
             }
         } else if (deliveryAddressUuid === '') {
-            setValue(formMeta.fields.deliveryFirstName.name, '', { shouldValidate: true });
-            setValue(formMeta.fields.deliveryLastName.name, '', { shouldValidate: true });
-            setValue(formMeta.fields.deliveryCompanyName.name, '', { shouldValidate: true });
-            setValue(formMeta.fields.deliveryTelephone.name, '', { shouldValidate: true });
-            setValue(formMeta.fields.deliveryStreet.name, '', { shouldValidate: true });
-            setValue(formMeta.fields.deliveryCity.name, '', { shouldValidate: true });
-            setValue(formMeta.fields.deliveryPostcode.name, '', { shouldValidate: true });
+            setValue(formMeta.fields.deliveryFirstName.name, '');
+            setValue(formMeta.fields.deliveryLastName.name, '');
+            setValue(formMeta.fields.deliveryCompanyName.name, '');
+            setValue(formMeta.fields.deliveryTelephone.name, '');
+            setValue(formMeta.fields.deliveryStreet.name, '');
+            setValue(formMeta.fields.deliveryCity.name, '');
+            setValue(formMeta.fields.deliveryPostcode.name, '');
             setValue(formMeta.fields.deliveryCountry.name, countriesAsSelectOptions[0], { shouldValidate: true });
         }
     }, [deliveryAddressUuid, countriesAsSelectOptions]);
