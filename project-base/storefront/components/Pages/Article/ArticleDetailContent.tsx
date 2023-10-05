@@ -20,7 +20,7 @@ export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article })
             <div className="px-5 lg:flex" data-testid={TEST_IDENTIFIER + 'content'}>
                 {article.text !== null && (
                     <div className="order-2 mb-16 flex w-full flex-col">
-                        <GrapesJsParser text={article.text} uuid={article.uuid} />
+                        <GrapesJsParser text={article.text} />
                     </div>
                 )}
             </div>

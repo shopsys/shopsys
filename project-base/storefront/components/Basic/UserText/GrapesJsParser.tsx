@@ -1,66 +1,37 @@
-import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { useProductsByCatnumsApi } from 'graphql/generated';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'helpers/parsing/grapesJsParser';
-import { replaceAll } from 'helpers/replaceAll';
 import { memo } from 'react';
 import { UserText } from './UserText';
+import { GrapesJsProducts } from './GrapesJsProducts';
 
 type GrapesJsParserProps = {
     text: string;
-    uuid: string;
 };
 
-export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text, uuid }) => {
+export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text }) => {
     const catnums = parseCatnums(text);
-    const [allProductsResponse] = useProductsByCatnumsApi({ variables: { catnums } });
+    const [{ data: allProductsResponse, fetching }] = useProductsByCatnumsApi({ variables: { catnums } });
 
     const dividedParts = text.split(GJS_PRODUCTS_SEPARATOR).filter(Boolean);
 
-    const renderArticleProductList = (part: string) => {
-        if (!allProductsResponse.data?.productsByCatnums.length) {
-            return (
-                <ProductsList
-                    products={[]}
-                    gtmProductListName={GtmProductListNameType.other}
-                    gtmMessageOrigin={GtmMessageOriginType.other}
-                    key={uuid}
-                />
-            );
-        }
+    return (
+        <>
+            {dividedParts.map((part: string, index: number) => {
+                if (part.match(/\[gjc-comp-(.*?)\]/g)) {
+                    return (
+                        <GrapesJsProducts
+                            key={index}
+                            rawProductPart={part}
+                            allFetchedProducts={allProductsResponse}
+                            fetching={fetching}
+                        />
+                    );
+                }
 
-        const products = [];
-
-        const productCatnums = replaceAll(part, /\[gjc-comp-ProductList&#61;|\]/g, '').split(',');
-        for (const productCatnum of productCatnums) {
-            const matchingProduct = allProductsResponse.data.productsByCatnums.find(
-                (blogArticleProduct) => blogArticleProduct.catalogNumber === productCatnum,
-            );
-
-            if (matchingProduct) {
-                products.push(matchingProduct);
-            }
-        }
-
-        return (
-            <ProductsList
-                products={products}
-                gtmProductListName={GtmProductListNameType.other}
-                gtmMessageOrigin={GtmMessageOriginType.other}
-                key={uuid}
-            />
-        );
-    };
-
-    const renderGrapesJsParts = (part: string) => {
-        if (part.match(/\[gjc-comp-(.*?)\]/g)) {
-            return renderArticleProductList(part);
-        }
-
-        return <UserText key={uuid} htmlContent={part} isGrapesJs />;
-    };
-
-    return <>{dividedParts.map(renderGrapesJsParts)}</>;
+                return <UserText htmlContent={part} isGrapesJs key={index} />;
+            })}
+        </>
+    );
 });
 
 GrapesJsParser.displayName = 'GrapesJsParser';
