@@ -78,7 +78,9 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                         <CellHead isWithoutWrap align="right">
                                             {t('Number of items')}
                                         </CellHead>
-                                        <CellHead isWithoutWrap>{t('Shipping')}</CellHead>
+                                        <CellHead isWithoutWrap className=" min-w-[150px]">
+                                            {t('Shipping')}
+                                        </CellHead>
                                         <CellHead isWithoutWrap>{t('Payment')}</CellHead>
                                         <CellHead isWithoutWrap align="right">
                                             {t('Total price including VAT')}
@@ -114,8 +116,9 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                                     alt={order.transport.mainImage?.name || order.transport.name}
                                                     width={36}
                                                     height={20}
+                                                    className="h-9 w-9"
                                                 />
-                                                {order.transport.name}
+                                                <span className="flex-1">{order.transport.name}</span>
                                             </div>
                                         </Cell>
                                         <Cell data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment.name}</Cell>

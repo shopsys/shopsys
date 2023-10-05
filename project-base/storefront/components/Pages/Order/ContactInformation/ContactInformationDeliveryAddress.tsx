@@ -51,7 +51,6 @@ export const ContactInformationDeliveryAddress: FC = () => {
 
                 setValue(formMeta.fields.deliveryFirstName.name, formValues.firstName, { shouldValidate: true });
                 setValue(formMeta.fields.deliveryLastName.name, formValues.lastName, { shouldValidate: true });
-                setValue(formMeta.fields.deliveryCompanyName.name, formValues.companyName, { shouldValidate: true });
                 setValue(formMeta.fields.deliveryTelephone.name, formValues.telephone, { shouldValidate: true });
                 setValue(formMeta.fields.deliveryStreet.name, pickupPlace.street, { shouldValidate: true });
                 setValue(formMeta.fields.deliveryCity.name, pickupPlace.city, { shouldValidate: true });
@@ -61,7 +60,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                 updateContactInformation({ ...pickupPlace, country: selectedCountryOption });
             }
         }
-    }, [countriesAsSelectOptions]);
+    }, [countriesAsSelectOptions, isDifferentDeliveryAddress]);
 
     useEffect(() => {
         if (user && deliveryAddressUuid) {

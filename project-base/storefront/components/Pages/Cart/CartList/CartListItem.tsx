@@ -59,6 +59,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                             image={product.mainImage}
                             type="thumbnailExtraSmall"
                             alt={product.mainImage?.name || product.fullName}
+                            className="h-14"
                         />
                     </ExtendedNextLink>
                 </div>
