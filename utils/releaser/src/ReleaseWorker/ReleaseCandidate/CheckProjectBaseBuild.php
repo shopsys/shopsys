@@ -8,7 +8,7 @@ use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
 
-final class BuildProjectBaseOnHeimdallReleaseWorker extends AbstractShopsysReleaseWorker
+final class CheckProjectBaseBuild extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
@@ -19,7 +19,7 @@ final class BuildProjectBaseOnHeimdallReleaseWorker extends AbstractShopsysRelea
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return '[Manually] Build project-base on Heimdall';
+        return '[Manually] Check project-base build on GitHub Actions';
     }
 
     /**
@@ -30,7 +30,10 @@ final class BuildProjectBaseOnHeimdallReleaseWorker extends AbstractShopsysRelea
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->symfonyStyle->note('use test-rc-project-base on Heimdall');
+        $this->symfonyStyle->note([
+            'check project-base build on GitHub Actions',
+            '  https://github.com/shopsys/project-base/actions/workflows/run-checks-tests.yaml',
+        ]);
 
         $this->confirm('Confirm the build is ok');
     }
