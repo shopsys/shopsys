@@ -18,6 +18,13 @@ final class GithubActionsStatusReporter
     private const EXTRA_PACKAGES = [];
 
     /**
+     * Packages that are on Packagist, but the GitHub Actions are not run on them
+     */
+    private const IGNORED_PACKAGES = [
+        'shopsys/deployment',
+    ];
+
+    /**
      * @var string[]
      */
     private array $statusForPackages = [];
@@ -45,6 +52,7 @@ final class GithubActionsStatusReporter
     ): array {
         $packages = $this->packageProvider->getPackagesByOrganization($organization, AbstractShopsysReleaseWorker::EXCLUDED_PACKAGES);
         $packages = array_merge($packages, self::EXTRA_PACKAGES);
+        $packages = array_diff($packages, self::IGNORED_PACKAGES);
 
         $urls = $this->createApiUrls($packages, $branch);
 
