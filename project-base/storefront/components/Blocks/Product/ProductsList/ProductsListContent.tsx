@@ -31,6 +31,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     classNameProduct,
     ref,
     dataTestId,
+    children,
 }) => {
     const { currentPage } = useQueryParams();
     const { isPopupCompareOpen, toggleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
@@ -55,6 +56,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
                         toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
                     />
                 ))}
+                {children}
             </ul>
 
             {isPopupCompareOpen && <ProductComparePopup onCloseCallback={() => setIsPopupCompareOpen(false)} />}

@@ -45,19 +45,19 @@ export const ProductsList: FC<ProductsListProps> = ({
                     gtmProductListName={gtmProductListName}
                     gtmMessageOrigin={gtmMessageOrigin}
                     dataTestId={TEST_IDENTIFIER}
-                />
+                >
+                    {category && (
+                        <Adverts
+                            positionName="productListSecondRow"
+                            currentCategory={category}
+                            className="col-span-full row-start-2 mx-auto justify-center pl-2"
+                            isSingle
+                        />
+                    )}
+                </ProductsListContent>
 
                 {loadMoreFetching &&
                     createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => <ProductListItemSkeleton key={index} />)}
-
-                {category && (
-                    <Adverts
-                        positionName="productListSecondRow"
-                        currentCategory={category}
-                        className="col-span-full row-start-2 mx-auto justify-center pl-2"
-                        isSingle
-                    />
-                )}
             </>
         );
     }
