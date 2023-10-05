@@ -1,5 +1,5 @@
 import { ProductListItemSkeleton } from 'components/Blocks/Product/ProductsList/ProductListItemSkeleton';
-import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
+import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { ProductsByCatnumsApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { createEmptyArray } from 'helpers/arrayUtils';
@@ -41,7 +41,7 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetched
     }
 
     return (
-        <ProductsList
+        <ProductsSlider
             products={products}
             gtmProductListName={GtmProductListNameType.other}
             gtmMessageOrigin={GtmMessageOriginType.other}
