@@ -67,13 +67,13 @@ export const initServerSideProps = async ({
         const currentSsrCache = ssrExchangeOverride ?? ssrExchange({ isClient: false });
         const currentClient =
             client ??
-            (await createClient({
+            createClient({
                 ssrExchange: currentSsrCache,
                 redisClient,
                 context,
                 t,
                 publicGraphqlEndpoint: domainConfig.publicGraphqlEndpoint,
-            }));
+            });
 
         const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);
 

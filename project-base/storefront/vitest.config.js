@@ -10,6 +10,7 @@ export default defineConfig({
         testMatch: ['vitest/**/*.test.js'],
         clearMocks: true,
         restoreMocks: true,
+        setupFiles: 'dotenv/config',
     },
     resolve: {
         moduleDirectories: [

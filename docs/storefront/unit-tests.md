@@ -364,3 +364,65 @@ test('test using overridden mock of an exported variable', async () => {
   expect(getExportedVariable()).toBe('overridden mocked bar');
 });
 ```
+
+#### 10. Testing asychronous hooks inside components
+
+Sometimes you want to test asynchronous code in components using hooks (e.g. calling an API). In a case like that, there are a couple of things which will make your life easier.
+
+```tsx
+    test('created client (and URQL) do not filter out Redis cache directive on the client (in component)', async () => {
+        (isServer as Mock).mockImplementation(() => false);
+
+        // You can define multiple components inside your tests, if you need nesting
+        const UrqlWrapper: FC = ({ children }) => {
+            const publicGraphqlEndpoint = TEST_URL;
+
+            return (
+                <Provider
+                    value={createClient({
+                        // You can mock the t function like this (naively)
+                        t: () => 'foo' as any,
+                        ssrExchange: ssrExchange(),
+                        publicGraphqlEndpoint,
+                        redisClient: mockRedisClient,
+                    })}
+                >
+                    {children}
+                </Provider>
+            );
+        };
+
+        const InnerComponentWithUrqlClient: FC = () => {
+            useQuery({
+                query: QUERY_OBJECT,
+            });
+
+            return null;
+        };
+
+        // Render is your friend once you want to run your component logic
+        render(
+            <UrqlWrapper>
+                <InnerComponentWithUrqlClient />
+            </UrqlWrapper>,
+        );
+
+        // waitFor from the React Testing Library allows you to wait for async events caused by code in your components
+        await waitFor(() => {
+            // Inside you can still expect using vitest
+            expect(mockRequestWithFetcher).toBeCalledWith(
+                'http://test.ts/graphql/',
+                expect.objectContaining({ body: REQUEST_BODY }),
+            );
+        });
+    });
+```
+
+You also want to clean up after yourself and your async component tests, as otherwise it can affect other tests. To do it, you can use the cleanup function from the React Testing Library.
+
+```tsx
+describe('createClient test', () => {
+    afterEach(cleanup);
+    ...
+    test( ...
+```

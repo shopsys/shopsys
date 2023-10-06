@@ -1,5 +1,6 @@
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
+// eslint-disable-next-line no-restricted-imports
 import { initUrqlClient } from 'next-urql';
 import getConfig from 'next/config';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
@@ -23,7 +24,6 @@ export const createClient = ({
     const { serverRuntimeConfig } = getConfig();
     const internalGraphqlEndpoint = serverRuntimeConfig?.internalGraphqlEndpoint ?? undefined;
     const publicGraphqlEndpointObject = new URL(publicGraphqlEndpoint);
-    const fetch = redisClient ? fetcher(redisClient) : undefined;
 
     return initUrqlClient(
         {
@@ -35,7 +35,7 @@ export const createClient = ({
                     'X-Forwarded-Proto': publicGraphqlEndpointObject.protocol === 'https:' ? 'on' : 'off',
                 },
             },
-            fetch,
+            fetch: fetcher(redisClient),
         },
         false,
     );

@@ -1,7 +1,7 @@
 query ArticlesQuery(
     $placement: [ArticlePlacementTypeEnum!],
     $first: Int
-) @_redisCache(ttl: 3600) {
+) @redisCache(ttl: 3600) {
     articles(placement: $placement, first: $first) {
         edges {
             __typename

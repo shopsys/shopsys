@@ -92,7 +92,16 @@ module.exports = {
                 "name": "next/link",
                 "message": "Please use ExtendedNextLink instead"
             },
-
+            {
+                "name": "urql",
+                "importNames": ["createClient"],
+                "message": "Please use the custom createClient function from storefront/urql/fetcher.ts"
+            },
+            {
+                "name": "next-urql",
+                "importNames": ["initUrqlClient"],
+                "message": "Please use the custom createClient function from storefront/urql/fetcher.ts"
+            }
         ],
         'react-hooks/rules-of-hooks': 'error',
         'react/no-unknown-property': [
