@@ -274,3 +274,5 @@ You will need to follow these steps:
                 protected readonly int $timeoutIteratedCronSec = self::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
             ) {
         ```
+- update LICENSE in your project as LICENSE has changed with this version ([#2849](https://github.com/shopsys/shopsys/pull/2849))
+    - see #project-base-diff to update your project
