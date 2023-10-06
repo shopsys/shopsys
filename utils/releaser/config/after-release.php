@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\BeHappyReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckDocsReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckHeimdallBuildReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckPackagesGithubActionsBuildsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckPackagesOnPackagistReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckShopsysInstallReleaseWorker;
@@ -33,7 +32,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(VerifyInitialBranchReleaseWorker::class);
     $services->set(CheckUncommittedChangesReleaseWorker::class);
     $services->set(CheckPackagesOnPackagistReleaseWorker::class);
-    $services->set(CheckHeimdallBuildReleaseWorker::class);
     $services->set(CheckPackagesGithubActionsBuildsReleaseWorker::class);
     $services->set(RemoveLockFilesReleaseWorker::class);
     $services->set(SetFrameworkBundleVersionToDevReleaseWorker::class);
