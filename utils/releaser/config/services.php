@@ -5,7 +5,6 @@ declare(strict_types=1);
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use Shopsys\Releaser\Command\ReleaseCommand as ShopsysReleaseCommand;
-use Shopsys\Releaser\FileManipulator\MonorepoUpgradeFileManipulator;
 use Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider;
 use Shopsys\Releaser\ReleaseWorker\ReleaseWorkerProvider as ShopsysReleaseWorkerProvider;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -13,8 +12,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symplify\MonorepoBuilder\Release\Command\ReleaseCommand;
 use Symplify\MonorepoBuilder\Release\ReleaseWorkerProvider;
 use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-use Twig\Loader\LoaderInterface;
 
 /**
  * @param \Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $containerConfigurator
@@ -44,9 +41,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->load('Shopsys\\Releaser\\', __DIR__ . '/../src')
         ->exclude([__DIR__ . '/../src/Exception']);
 
-    $services->set(MonorepoUpgradeFileManipulator::class)
-        ->args(['shopsys/shopsys']);
-
     $services->set(ClientInterface::class, Client::class);
 
     $services->set(QuestionHelper::class);
@@ -55,9 +49,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->args([['packages', 'project-base/app']]);
 
     $services->set(Environment::class);
-
-    $services->set(LoaderInterface::class, FilesystemLoader::class)
-        ->args([['upgrade/template']]);
 
     $services->set(ReleaseCommand::class, ShopsysReleaseCommand::class);
 
