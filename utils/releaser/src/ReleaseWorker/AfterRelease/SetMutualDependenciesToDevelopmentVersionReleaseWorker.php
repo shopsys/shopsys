@@ -64,16 +64,6 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
         $this->confirm(
             sprintf('Confirm you have pushed the new commit into the "%s" branch', $this->currentBranchName),
         );
-
-        if ($this->currentBranchName === AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME) {
-            return;
-        }
-
-        $this->symfonyStyle->note(
-            sprintf('You are not on master branch so you have to split "%s" branch using tool-monorepo-force-split-branch manually on Heimdall now.
-            You will need the split monorepo later for verifying local intallation.', $this->currentBranchName),
-        );
-        $this->confirm('Confirm the monorepo split is running.');
     }
 
     /**
