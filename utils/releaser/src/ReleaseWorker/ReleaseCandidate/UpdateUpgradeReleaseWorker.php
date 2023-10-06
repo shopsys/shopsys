@@ -6,30 +6,19 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
 use Nette\Utils\FileSystem;
 use PharIo\Version\Version;
-use Shopsys\Releaser\FileManipulator\GeneralUpgradeFileManipulator;
-use Shopsys\Releaser\FileManipulator\MonorepoUpgradeFileManipulator;
 use Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 use Symplify\SmartFileSystem\SmartFileInfo;
-use Twig\Environment;
 
 final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    private string $nextDevelopmentVersionString;
-
     /**
-     * @param \Shopsys\Releaser\FileManipulator\MonorepoUpgradeFileManipulator $monorepoUpgradeFileManipulator
-     * @param \Shopsys\Releaser\FileManipulator\GeneralUpgradeFileManipulator $generalUpgradeFileManipulator
      * @param \Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator $versionUpgradeFileManipulator
-     * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
-        private readonly MonorepoUpgradeFileManipulator $monorepoUpgradeFileManipulator,
-        private readonly GeneralUpgradeFileManipulator $generalUpgradeFileManipulator,
         private readonly VersionUpgradeFileManipulator $versionUpgradeFileManipulator,
-        private readonly Environment $twigEnvironment,
     ) {
     }
 
@@ -42,7 +31,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return 'Prepare all upgrading files for the release.';
+        return 'Prepare the upgrading file for the release.';
     }
 
     /**
@@ -53,12 +42,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->nextDevelopmentVersionString = $this->askForNextDevelopmentVersion($version, true)->getOriginalString();
-
-        $this->updateUpgradeFileForMonorepo($version);
-        $this->createUpgradeFileForNewVersionFromDevelopmentVersion($version, $initialBranchName);
-        $this->createUpgradeFileForNextDevelopmentVersion($version, $initialBranchName);
-        $this->updateGeneralUpgradeFile($version);
+        $this->updateUpgradeFileWithReleasedVersion($version, $initialBranchName);
 
         $this->symfonyStyle->success(Message::SUCCESS);
         $this->symfonyStyle->note(
@@ -69,9 +53,11 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
             'Typically, you need to:
             - check the correctness of the order of Shopsys packages and sections,
             - check whether there are no duplicated instructions for modifying docker related files,
-            - change the links from master to the %1$s version in UPGRADE-%1$s.md file
+            - check links whether they point to the repository in the "%s" version
             - make sure, that every subsection of UPGRADE notes has link to correct pull request
-            - replace all occurrences of #project-base-diff with link to project-base commit of the change',
+            - replace all occurrences of #project-base-diff with link to project-base commit of the change
+                - you can find the commit hashes quickly by executing following on the project-base repository:
+                  git log --oneline --format="%%H %%s" | grep -E \'\(#\d+\)$\'',
             $versionString,
         ));
 
@@ -92,29 +78,11 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * @param \PharIo\Version\Version $version
-     */
-    private function updateUpgradeFileForMonorepo(Version $version)
-    {
-        $upgradeFilePath = getcwd() . '/upgrade/upgrading-monorepo.md';
-        $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
-
-        $newUpgradeContent = $this->monorepoUpgradeFileManipulator->processFileToString(
-            $upgradeFileInfo,
-            $version,
-            $this->currentBranchName,
-            $this->nextDevelopmentVersionString,
-        );
-
-        FileSystem::write($upgradeFilePath, $newUpgradeContent);
-    }
-
-    /**
-     * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    private function createUpgradeFileForNewVersionFromDevelopmentVersion(Version $version, string $initialBranchName)
+    private function updateUpgradeFileWithReleasedVersion(Version $version, string $initialBranchName): void
     {
-        $upgradeFilePath = getcwd() . '/upgrade/UPGRADE-' . $version->getOriginalString() . '-dev.md';
+        $upgradeFilePath = getcwd() . '/UPGRADE-' . $initialBranchName . '.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
 
         $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString(
@@ -124,42 +92,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         );
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
-        FileSystem::rename($upgradeFilePath, getcwd() . '/upgrade/UPGRADE-' . $version->getOriginalString() . '.md');
 
         $this->processRunner->run('git add .');
-    }
-
-    /**
-     * @param \PharIo\Version\Version $version
-     */
-    private function updateGeneralUpgradeFile(Version $version)
-    {
-        $upgradeFilePath = getcwd() . '/UPGRADE.md';
-        $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
-
-        $newUpgradeContent = $this->generalUpgradeFileManipulator->updateLinks(
-            $upgradeFileInfo,
-            $version,
-            $this->nextDevelopmentVersionString,
-        );
-
-        FileSystem::write($upgradeFilePath, $newUpgradeContent);
-    }
-
-    /**
-     * @param \PharIo\Version\Version $version
-     * @param string $initialBranchName
-     */
-    private function createUpgradeFileForNextDevelopmentVersion(Version $version, string $initialBranchName)
-    {
-        $content = $this->twigEnvironment->render(
-            'UPGRADE-next-development-version.md.twig',
-            [
-                'versionString' => $version->getOriginalString(),
-                'initialBranchName' => $initialBranchName,
-                'nextDevelopmentVersion' => $this->nextDevelopmentVersionString,
-            ],
-        );
-        FileSystem::write(getcwd() . '/upgrade/UPGRADE-' . $this->nextDevelopmentVersionString . '.md', $content);
     }
 }
