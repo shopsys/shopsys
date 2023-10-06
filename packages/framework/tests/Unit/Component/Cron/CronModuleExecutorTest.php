@@ -95,6 +95,7 @@ class CronModuleExecutorTest extends TestCase
                 '*',
                 CronModuleConfig::DEFAULT_INSTANCE_NAME,
                 'testing cron',
+                'every minute',
                 CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
                 1,
             );

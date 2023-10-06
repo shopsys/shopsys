@@ -11,6 +11,9 @@ If you want to show Cron overview table for non-superadmin users you need add pa
 !!! note
     All default crons are translated only to English. If you want to translate it to another language, you need to set `readableName` property for cron in `config/services/cron.yaml`.
 
+!!! note
+    If you have different cron frequency set using crontab and you want to set readable frequency manually, you can use `readableFrequency` property for cron in `config/services/cron.yaml`.
+
 ## Default Cron Commands
 There is some prepared configuration in a file [`config/services/cron.yaml`](https://github.com/shopsys/project-base/blob/master/config/services/cron.yaml) in `project-base`.
 !!! note

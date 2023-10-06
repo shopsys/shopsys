@@ -151,6 +151,7 @@ class CronFacadeTest extends TestCase
                 '*',
                 CronModuleConfig::DEFAULT_INSTANCE_NAME,
                 'testing cron',
+                'every minute',
                 CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
                 CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
             );
