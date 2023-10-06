@@ -112,9 +112,6 @@ msgstr ""
 msgid "All - view"
 msgstr ""
 
-msgid "All domains"
-msgstr ""
-
 msgid "Allow overselling"
 msgstr ""
 
@@ -335,6 +332,9 @@ msgid "Category name"
 msgstr ""
 
 msgid "Category with prefilled filters"
+msgstr ""
+
+msgid "Center"
 msgstr ""
 
 msgid "Choose this category and continue"
@@ -835,6 +835,9 @@ msgstr ""
 msgid "Feeds - view"
 msgstr ""
 
+msgid "File"
+msgstr ""
+
 msgid "File not found in main filesystem. Please try again later."
 msgstr ""
 
@@ -1006,6 +1009,9 @@ msgstr ""
 msgid "In stock"
 msgstr ""
 
+msgid "Inside layout"
+msgstr ""
+
 msgid "Instagram URL"
 msgstr ""
 
@@ -1063,6 +1069,9 @@ msgstr ""
 msgid "Last order"
 msgstr ""
 
+msgid "Left"
+msgstr ""
+
 msgid "Legal conditions"
 msgstr ""
 
@@ -1079,6 +1088,9 @@ msgid "Limits"
 msgstr ""
 
 msgid "Link"
+msgstr ""
+
+msgid "Link Block"
 msgstr ""
 
 msgid "Link URL"
@@ -1399,6 +1411,9 @@ msgstr ""
 msgid "Out of stock"
 msgstr ""
 
+msgid "Outside layout"
+msgstr ""
+
 msgid "Package tracking"
 msgstr ""
 
@@ -1451,6 +1466,9 @@ msgid "Password again"
 msgstr ""
 
 msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
+msgstr ""
+
+msgid "Path to file"
 msgstr ""
 
 msgid "Payment authorized"
@@ -1517,6 +1535,9 @@ msgid "Please excuse this error, we are working on fixing it. If needed, contact
 msgstr ""
 
 msgid "Position of image"
+msgstr ""
+
+msgid "Position of link"
 msgstr ""
 
 msgid "Postcode"
@@ -1664,6 +1685,9 @@ msgid "Remaining number of uses"
 msgstr ""
 
 msgid "Return back"
+msgstr ""
+
+msgid "Right"
 msgstr ""
 
 msgid "Role"
@@ -2075,6 +2099,9 @@ msgid "Two factor authentication was enabled"
 msgstr ""
 
 msgid "Type"
+msgstr ""
+
+msgid "Type of image"
 msgstr ""
 
 msgid "Type plan"
