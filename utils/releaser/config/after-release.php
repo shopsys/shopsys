@@ -16,7 +16,6 @@ use Shopsys\Releaser\ReleaseWorker\AfterRelease\RemoveLockFilesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\SetFrameworkBundleVersionToDevReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\SetMutualDependenciesToDevelopmentVersionReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\SetPhpImageVersionInDockerfileReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\AfterRelease\UpdateDemoProjectBaseReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\VerifyInitialBranchReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -41,7 +40,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(MeasurePerformanceReleaseWorker::class);
     $services->set(EnsureReleaseHighlightsPostIsReleasedReleaseWorker::class);
     $services->set(PostInfoToSlackReleaseWorker::class);
-    $services->set(UpdateDemoProjectBaseReleaseWorker::class);
     $services->set(CheckDocsReleaseWorker::class);
     $services->set(BeHappyReleaseWorker::class);
 };
