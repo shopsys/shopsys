@@ -8,7 +8,6 @@ use App\Form\DisplayVariablesType;
 use App\Model\Order\Mail\OrderMail;
 use App\Model\Transport\Type\TransportTypeFacade;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -46,10 +45,6 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                     new NotBlank(),
                 ],
                 'label' => t('Transport type'),
-            ])
-            ->add('personalPickup', YesNoType::class, [
-                'required' => false,
-                'label' => t('Personal pickup'),
             ])
             ->add('daysUntilDelivery', TextType::class, [
                 'required' => true,

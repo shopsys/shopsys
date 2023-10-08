@@ -70,14 +70,14 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
     );
 
     const [{ data: pickupPlaceData }] = useStoreQueryApi({
-        pause: lastOrder?.pickupPlaceIdentifier === undefined || lastOrder.pickupPlaceIdentifier === null,
+        pause: lastOrder?.transport.transportType.code === 'packetery' || !lastOrder?.pickupPlaceIdentifier,
         variables: { uuid: lastOrder?.pickupPlaceIdentifier ?? null },
     });
 
     const transportAndPaymentValidationMessages = useMemo(() => {
         const errors: Partial<TransportAndPaymentErrorsType> = {};
 
-        if (transport === null) {
+        if (!transport) {
             errors.transport = {
                 name: 'transport',
                 label: t('Choose transport'),
@@ -91,14 +91,14 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
                     errorMessage: t('Please select transport with a personal pickup place'),
                 };
             }
-            if (payment === null) {
+            if (!payment) {
                 errors.payment = {
                     name: 'payment',
                     label: t('Choose payment'),
                     errorMessage: t('Please select payment'),
                 };
             }
-            if (payment?.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT' && paymentGoPayBankSwift === null) {
+            if (payment?.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT' && !paymentGoPayBankSwift) {
                 errors.goPaySwift = {
                     name: 'goPaySwift',
                     label: t('Choose your bank'),
@@ -121,7 +121,7 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
     };
 
     const lastOrderPickupPlace: ListedStoreFragmentApi | null = useMemo(() => {
-        if (lastOrder?.pickupPlaceIdentifier === undefined || lastOrder.pickupPlaceIdentifier === null) {
+        if (!lastOrder?.pickupPlaceIdentifier) {
             return null;
         }
 
@@ -129,7 +129,7 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
             return packeteryPickupPoint;
         }
 
-        if (pickupPlaceData?.store !== undefined && pickupPlaceData.store !== null) {
+        if (pickupPlaceData?.store) {
             return getGtmPickupPlaceFromStore(lastOrder.pickupPlaceIdentifier, pickupPlaceData.store);
         }
 
@@ -138,7 +138,7 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
 
     return (
         <>
-            {transports !== undefined && transports.length > 0 && (
+            {transports && (
                 <TransportAndPaymentSelect
                     transports={transports}
                     lastOrderPickupPlace={lastOrderPickupPlace}
@@ -149,6 +149,7 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
                     isTransportSelectionLoading={isTransportSelectionLoading}
                 />
             )}
+
             <OrderAction
                 buttonBack={t('Back')}
                 buttonNext={t('Contact information')}
@@ -157,14 +158,13 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
                     isTransportSelectionLoading ||
                     isPaymentSelectionLoading
                 }
-                isLoading={
-                    (isTransportSelectionLoading || isPaymentSelectionLoading) && transport !== null && payment !== null
-                }
+                isLoading={(isTransportSelectionLoading || isPaymentSelectionLoading) && !!transport && !!payment}
                 withGapTop
                 withGapBottom
                 buttonBackLink={cartUrl}
                 nextStepClickHandler={onSelectTransportAndPaymentHandler}
             />
+
             {isErrorPopupVisible && (
                 <ErrorPopup
                     onCloseCallback={() => setErrorPopupVisibility(false)}

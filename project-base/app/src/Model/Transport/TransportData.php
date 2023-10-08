@@ -51,7 +51,6 @@ class TransportData extends BaseTransportData
     {
         parent::__construct();
 
-        $this->personalPickup = false;
         $this->maxWeight = null;
     }
 }
