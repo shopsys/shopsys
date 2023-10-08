@@ -39,8 +39,8 @@ final class CheckLatestVersionOfReleaserReleaseWorker extends AbstractShopsysRel
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
         $this->symfonyStyle->note(
-            'It is possible, that in current master branch there is improved version of Releaser.
-            Check that and update releaser in version branch by replacing Releaser directory with one from master branch.',
+            'It is possible, that in current default (highest numbered) branch there is improved version of Releaser.
+            Check that and update releaser in version branch by replacing Releaser directory with one from the default (highest numbered) branch.',
         );
 
         $this->symfonyStyle->warning(

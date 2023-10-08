@@ -30,7 +30,10 @@ final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWork
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->symfonyStyle->note('Push your branch and split it using tool-monorepo-force-split-branch on Heimdall');
+        $this->symfonyStyle->note([
+            'Push your branch and force split it on GitHub Actions',
+            'https://github.com/shopsys/shopsys/actions/workflows/monorepo-force-split-branch.yaml',
+        ]);
         $this->symfonyStyle->note('Do not worry, it is quite common that some builds fail on Github Actions at this point.');
         $this->confirm('Continue after the branch is split');
     }

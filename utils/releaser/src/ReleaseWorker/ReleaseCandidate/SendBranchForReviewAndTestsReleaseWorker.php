@@ -30,9 +30,15 @@ final class SendBranchForReviewAndTestsReleaseWorker extends AbstractShopsysRele
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->symfonyStyle->note(
-            'Keep in mind that if there are any notes from the code review or tests, you need to address them, commit and push the fixes, force-split your branch using tool-monorepo-force-split-branch and build test-rc-project-base special job on Heimdall',
-        );
+        $this->symfonyStyle->note(['Keep in mind that if there are any notes from the code review or tests, you need to:',
+            ' - address them',
+            ' - commit and push the fixes',
+            ' - force-split your branch using GitHub Actions',
+            '       https://github.com/shopsys/shopsys/actions/workflows/monorepo-force-split-branch.yaml',
+            ' - run the tests again',
+            ' - check project-base build on GitHub Actions',
+            '       https://github.com/shopsys/project-base/actions/workflows/run-checks-tests.yaml',
+        ]);
         $this->confirm('Confirm the branch is sent to code-review');
     }
 

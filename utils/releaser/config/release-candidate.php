@@ -3,10 +3,9 @@
 declare(strict_types=1);
 
 use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\BuildProjectBaseOnHeimdallReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckBranchSplitReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckLatestVersionOfReleaserReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckPackagesGithubActionsBuildsReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckProjectBaseBuild;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckReleaseBlogPostReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckShopsysInstallReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckUncommittedChangesReleaseWorker;
@@ -40,7 +39,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(CheckLatestVersionOfReleaserReleaseWorker::class);
     $services->set(VerifyInitialBranchReleaseWorker::class);
     $services->set(CheckUncommittedChangesReleaseWorker::class);
-    $services->set(CheckBranchSplitReleaseWorker::class);
     $services->set(CheckPackagesGithubActionsBuildsReleaseWorker::class);
     $services->set(CreateBranchReleaseWorker::class);
     $services->set(CheckReleaseBlogPostReleaseWorker::class);
@@ -59,7 +57,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(TestYourBranchLocallyReleaseWorker::class);
     $services->set(ForceYourBranchSplitReleaseWorker::class);
     $services->set(CheckShopsysInstallReleaseWorker::class);
-    $services->set(BuildProjectBaseOnHeimdallReleaseWorker::class);
+    $services->set(CheckProjectBaseBuild::class);
     $services->set(VerifyMinorUpgradeReleaseWorker::class);
     $services->set(SendBranchForReviewAndTestsReleaseWorker::class);
 };

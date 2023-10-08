@@ -30,14 +30,9 @@ final class VerifyMinorUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->symfonyStyle->note(sprintf(
-            'When releasing a minor version, you need to verify there are no BC-breaks. Suggested steps:
-            - install demoshop project,
-            - in demoshop composer.json, change a version of all shopsys/* packages to "dev-%s",
-            - build the demoshop application using "php phing build-demo-dev, 
-            - run acceptance tests using "php phing tests-acceptance"',
-            $this->createBranchName($version),
-        ));
+        $this->symfonyStyle->note('When releasing a minor version, you need to verify there are no BC-breaks. Suggested steps:
+        - use https://github.com/Roave/BackwardCompatibilityCheck tool
+        - manually examine the output and validate whether the reported changes are considered a BC Break by us');
         $this->confirm('Confirm the minor version does not contain any BC-breaks.');
     }
 
