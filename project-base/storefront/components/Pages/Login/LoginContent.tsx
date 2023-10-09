@@ -12,8 +12,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Translate } from 'next-translate';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
-import { FormProvider, SubmitHandler } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import * as Yup from 'yup';
 
@@ -27,23 +26,20 @@ export const LoginContent: FC = () => {
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
     const { login } = useAuth();
 
-    const onLoginHandler = useCallback<SubmitHandler<{ email: string; password: string }>>(
-        async (data) => {
-            let redirectUrl = url;
+    const onLoginHandler = async (data: { email: string; password: string }) => {
+        let redirectUrl = url;
 
-            if (typeof router.query.r === 'string') {
-                redirectUrl = router.query.r;
-            }
+        if (typeof router.query.r === 'string') {
+            redirectUrl = router.query.r;
+        }
 
-            const loginResult = await login(
-                { email: data.email, password: data.password, previousCartUuid: cartUuid },
-                redirectUrl,
-            );
+        const loginResult = await login(
+            { email: data.email, password: data.password, previousCartUuid: cartUuid },
+            redirectUrl,
+        );
 
-            handleFormErrors(loginResult.error, formProviderMethods, t);
-        },
-        [cartUuid, formProviderMethods, login, router.query.r, t, url],
-    );
+        handleFormErrors(loginResult.error, formProviderMethods, t);
+    };
 
     return (
         <SimpleLayout heading={t('Login')}>

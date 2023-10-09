@@ -1,6 +1,5 @@
 import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { Portal } from 'components/Basic/Portal/Portal';
-import { canUseDom } from 'helpers/canUseDom';
 import { MouseEventHandler, useEffect, useRef } from 'react';
 import { twMergeCustom } from 'helpers/twMerge';
 import dynamic from 'next/dynamic';
@@ -22,10 +21,6 @@ export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButt
     }).current;
 
     useEffect(() => {
-        if (!canUseDom()) {
-            return undefined;
-        }
-
         document.addEventListener('keydown', onEscapeButtonPressHandler);
 
         return () => document.removeEventListener('keydown', onEscapeButtonPressHandler);

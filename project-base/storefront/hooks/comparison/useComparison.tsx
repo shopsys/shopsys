@@ -8,12 +8,12 @@ import {
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useRef, useState } from 'react';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 export const useComparison = () => {
     const { t } = useTranslation();
-    const isUserLoggedIn = !!useCurrentCustomerData();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const [, addProductToComparison] = useAddProductToComparisonMutationApi();
     const [, removeProductFromComparison] = useRemoveProductFromComparisonMutationApi();
     const [, cleanComparison] = useCleanComparisonMutationApi();

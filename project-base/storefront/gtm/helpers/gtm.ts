@@ -11,9 +11,7 @@ import {
 } from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { canUseDom } from 'helpers/canUseDom';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useMemo } from 'react';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
@@ -41,11 +39,12 @@ import {
     GtmUserInfoType,
 } from 'gtm/types/objects';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
     const { cart, promoCode, isFetching } = useCurrentCart();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const isUserLoggedIn = !!useCurrentCustomerData();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const domainConfig = useDomainConfig();
 
     return useMemo(() => {
@@ -191,10 +190,8 @@ export const getGtmReviewConsents = (): GtmReviewConsentsType => ({
 });
 
 export const gtmSafePushEvent = (event: GtmEventInterface<GtmEventType, unknown>): void => {
-    if (canUseDom()) {
-        window.dataLayer = window.dataLayer ?? [];
-        window.dataLayer.push(event);
-    }
+    window.dataLayer = window.dataLayer ?? [];
+    window.dataLayer.push(event);
 };
 
 export const getGtmConsentInfo = (userConsent: UserConsentFormType | null): GtmConsentInfoType => ({

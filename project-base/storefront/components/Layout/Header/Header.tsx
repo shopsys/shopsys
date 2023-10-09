@@ -23,7 +23,7 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
 
     return (
         <div
-            className="flex flex-wrap items-center justify-between gap-y-3 py-3 lg:gap-x-7 lg:pb-5 lg:pt-6"
+            className="flex flex-wrap items-center gap-y-3 py-3 lg:gap-x-7 lg:pb-5 lg:pt-6"
             data-testid={TEST_IDENTIFIER}
         >
             <Logo />

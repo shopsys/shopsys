@@ -5,7 +5,6 @@ import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { ComparedProductFragmentApi } from 'graphql/generated';
-import { canUseDom } from 'helpers/canUseDom';
 import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useMemo } from 'react';
@@ -60,11 +59,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ pr
     }, [productsCompare]);
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            if (canUseDom()) {
-                calcMaxMarginLeft();
-            }
-        }
+        calcMaxMarginLeft();
     }, [calcMaxMarginLeft]);
 
     return (

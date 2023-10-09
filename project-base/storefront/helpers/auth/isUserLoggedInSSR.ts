@@ -7,10 +7,7 @@ export const isUserLoggedInSSR = (currentClient: Client): boolean => {
         {},
     );
 
-    const isLogged =
-        customerQueryResult?.data?.currentCustomerUser !== undefined &&
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        customerQueryResult?.data?.currentCustomerUser !== null;
+    const isLogged = !!customerQueryResult?.data?.currentCustomerUser;
 
     return isLogged;
 };

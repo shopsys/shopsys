@@ -15,15 +15,15 @@ import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { useGtmPaymentAndTransportPageViewEvent } from 'gtm/hooks/useGtmPaymentAndTransportPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
 import { GtmPageType } from 'gtm/types/enums';
 import Script from 'next/script';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const isUserLoggedIn = !!useCurrentCustomerData();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const [{ data: transportsData }] = useTransportsQueryApi({
         variables: { cartUuid },
         requestPolicy: 'cache-and-network',

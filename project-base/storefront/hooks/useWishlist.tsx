@@ -7,15 +7,15 @@ import {
     useSharedWishlistQueryApi,
     useWishlistQueryApi,
 } from 'graphql/generated';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { usePersistStore } from 'store/usePersistStore';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import useTranslation from 'next-translate/useTranslation';
+import { useIsUserLoggedIn } from './auth/useIsUserLoggedIn';
 
 export const useWishlist = () => {
     const { t } = useTranslation();
 
-    const isUserLoggedIn = !!useCurrentCustomerData();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const [isFetchingPaused, setIsFetchingPaused] = useState(true);
 
     const updateWishlistUuid = usePersistStore((s) => s.updateWishlistUuid);

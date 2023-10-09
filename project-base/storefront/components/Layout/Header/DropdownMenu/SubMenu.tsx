@@ -3,16 +3,16 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { useAuth } from 'hooks/auth/useAuth';
 import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useWishlist } from 'hooks/useWishlist';
 import { useComparison } from 'hooks/comparison/useComparison';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-submenu';
 
 export const SubMenu: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const isUserLoggedIn = !!useCurrentCustomerData();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const [storesUrl, loginUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls(
         ['/stores', '/login', '/product-comparison', '/wishlist'],
         url,

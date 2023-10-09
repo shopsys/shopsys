@@ -1,5 +1,4 @@
 import { desktopFirstSizes, mobileFirstSizes } from 'helpers/mediaQueries';
-import { canUseDom } from 'helpers/canUseDom';
 import { isServer } from 'helpers/isServer';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import { GtmDeviceTypes } from 'gtm/types/enums';
@@ -13,14 +12,10 @@ export const getGtmDeviceType = (): GtmDeviceTypes => {
     if (typeof navigator === 'undefined') {
         return GtmDeviceTypes.unknown;
     }
-    if (canUseDom()) {
-        if (window.innerWidth <= desktopFirstSizes.mobile) {
-            return GtmDeviceTypes.mobile;
-        }
-        return window.innerWidth >= mobileFirstSizes.vl ? GtmDeviceTypes.desktop : GtmDeviceTypes.tablet;
+    if (window.innerWidth <= desktopFirstSizes.mobile) {
+        return GtmDeviceTypes.mobile;
     }
-
-    return GtmDeviceTypes.unknown;
+    return window.innerWidth >= mobileFirstSizes.vl ? GtmDeviceTypes.desktop : GtmDeviceTypes.tablet;
 };
 
 export const getRandomPageId = (): string => uuidV4();
