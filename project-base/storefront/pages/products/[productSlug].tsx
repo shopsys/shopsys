@@ -1,4 +1,3 @@
-import { SkeletonPageProductDetail } from 'components/Blocks/Skeleton/SkeletonPageProductDetail';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
 import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
@@ -39,10 +38,9 @@ const ProductDetailPage: NextPage = () => {
             breadcrumbsType="category"
             canonicalQueryParams={[]}
             description={product?.seoMetaDescription}
+            isFetchingData={fetching}
             title={product?.seoTitle || product?.name}
         >
-            {fetching && <SkeletonPageProductDetail />}
-
             {product?.__typename === 'RegularProduct' && <ProductDetailContent fetching={fetching} product={product} />}
 
             {product?.__typename === 'MainVariant' && (

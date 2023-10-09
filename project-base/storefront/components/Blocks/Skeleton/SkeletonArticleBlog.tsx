@@ -5,8 +5,5 @@ export const SkeletonArticleBlog: FC = () => (
         <div className="h-full w-36">
             <Skeleton className="block h-full" />
         </div>
-        <div className="h-full flex-1">
-            <Skeleton className="block h-full" />
-        </div>
     </div>
 );

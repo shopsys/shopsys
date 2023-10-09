@@ -1,6 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
-import { SkeletonPageCategoryDetail } from 'components/Blocks/Skeleton/SkeletonPageCategoryDetail';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
 import { useCategoryDetailData } from 'components/Pages/CategoryDetail/helpers';
@@ -14,7 +13,6 @@ import {
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
-import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { useHandleDefaultFiltersUpdate } from 'helpers/filterOptions/seoCategories';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore';
@@ -40,7 +38,7 @@ import { createClient } from 'urql/createClient';
 const CategoryDetailPage: NextPage = () => {
     const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
     const { sort, filter } = useQueryParams();
-    const [categoryData, fetching] = useCategoryDetailData(mapParametersFilter(filter));
+    const [categoryData, fetching] = useCategoryDetailData(filter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
 
@@ -50,10 +48,10 @@ const CategoryDetailPage: NextPage = () => {
         categoryData?.seoTitle,
     );
 
+    const isFetchingData = (!filter && !originalCategorySlug && !sort && fetching) || !categoryData;
+
     const pageViewEvent = useGtmFriendlyPageViewEvent(categoryData);
     useGtmPageViewEvent(pageViewEvent, fetching);
-
-    const isSkeletonVisible = !filter && !originalCategorySlug && !sort && fetching;
 
     return (
         <>
@@ -63,13 +61,10 @@ const CategoryDetailPage: NextPage = () => {
                 breadcrumbs={categoryData?.breadcrumb}
                 breadcrumbsType="category"
                 description={categoryData?.seoMetaDescription}
+                isFetchingData={isFetchingData}
                 title={seoTitle}
             >
-                {isSkeletonVisible ? (
-                    <SkeletonPageCategoryDetail />
-                ) : (
-                    !!categoryData && <CategoryDetailContent category={categoryData} />
-                )}
+                {!!categoryData && <CategoryDetailContent category={categoryData} />}
             </CommonLayout>
         </>
     );

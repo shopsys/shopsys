@@ -8,7 +8,7 @@ const TEST_IDENTIFIER = 'layout-header-logo';
 export const Logo: FC = () => (
     <>
         <LogoMetadata />
-        <ExtendedNextLink className="flex-1 vl:flex-none" href="/" type="static">
+        <ExtendedNextLink className="flex-1 vl:flex-none" href="/" type="homepage">
             <NextImage
                 priority
                 alt="Shopsys logo"

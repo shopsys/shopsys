@@ -1,4 +1,3 @@
-import { SkeletonPageArticle } from 'components/Blocks/Skeleton/SkeletonPageArticle';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
 import {
@@ -32,13 +31,8 @@ const ArticleDetailPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout
-            breadcrumbs={article?.breadcrumb}
-            canonicalQueryParams={[]}
-            description={article?.seoMetaDescription}
-            title={article?.seoTitle}
-        >
-            {!!article && !fetching ? <ArticleDetailContent article={article} /> : <SkeletonPageArticle />}
+        <CommonLayout breadcrumbs={article?.breadcrumb} canonicalQueryParams={[]} isFetchingData={fetching}>
+            {!!article && <ArticleDetailContent article={article} />}
         </CommonLayout>
     );
 };

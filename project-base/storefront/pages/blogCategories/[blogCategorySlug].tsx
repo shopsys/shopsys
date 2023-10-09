@@ -1,5 +1,4 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
-import { SkeletonPageBlogCategory } from 'components/Blocks/Skeleton/SkeletonPageBlogCategory';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -43,13 +42,10 @@ const BlogCategoryPage: NextPage = () => {
             breadcrumbs={blogCategoryData?.blogCategory?.breadcrumb}
             breadcrumbsType="blogCategory"
             description={blogCategoryData?.blogCategory?.seoMetaDescription}
+            isFetchingData={fetching}
             title={seoTitle}
         >
-            {!!blogCategoryData?.blogCategory && !fetching ? (
-                <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />
-            ) : (
-                <SkeletonPageBlogCategory />
-            )}
+            {!!blogCategoryData?.blogCategory && <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />}
         </CommonLayout>
     );
 };

@@ -1,4 +1,3 @@
-import { SkeletonPageStore } from 'components/Blocks/Skeleton/SkeletonPageStore';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
 import {
@@ -31,13 +30,10 @@ const StoreDetailPage: NextPage = () => {
         <CommonLayout
             breadcrumbs={storeDetailData?.store?.breadcrumb}
             canonicalQueryParams={[]}
+            isFetchingData={fetching}
             title={storeDetailData?.store?.storeName}
         >
-            {!!storeDetailData?.store && !fetching ? (
-                <StoreDetailContent store={storeDetailData.store} />
-            ) : (
-                <SkeletonPageStore />
-            )}
+            {!!storeDetailData?.store && <StoreDetailContent store={storeDetailData.store} />}
         </CommonLayout>
     );
 };

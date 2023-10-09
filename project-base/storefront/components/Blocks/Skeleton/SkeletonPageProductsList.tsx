@@ -1,9 +1,9 @@
+import { SkeletonProductListItem } from './SkeletonProductListItem';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import Skeleton from 'react-loading-skeleton';
-import { SkeletonProductListItem } from './SkeletonProductListItem';
 
-export const SkeletonPageCategoryDetail: FC = () => (
+export const SkeletonPageProductsList: FC = () => (
     <Webline>
         <div className="flex flex-row items-stretch gap-5">
             <Skeleton className="hidden h-[1000px] w-[300px] vl:block" />

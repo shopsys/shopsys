@@ -1,5 +1,4 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
-import { SkeletonPageCategoryDetail } from 'components/Blocks/Skeleton/SkeletonPageCategoryDetail';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -55,12 +54,13 @@ const FlagDetailPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout breadcrumbs={flagDetailData?.flag?.breadcrumb} breadcrumbsType="category" title={seoTitle}>
-            {!filter && fetching ? (
-                <SkeletonPageCategoryDetail />
-            ) : (
-                !!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />
-            )}
+        <CommonLayout
+            breadcrumbs={flagDetailData?.flag?.breadcrumb}
+            breadcrumbsType="category"
+            isFetchingData={!filter && fetching && !flagDetailData}
+            title={seoTitle}
+        >
+            {!!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />}
         </CommonLayout>
     );
 };
