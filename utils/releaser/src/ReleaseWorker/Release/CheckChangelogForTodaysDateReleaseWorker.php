@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker\Release;
 
+use LogicException;
 use Nette\Utils\DateTime;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Strings;
@@ -12,6 +13,7 @@ use Shopsys\Releaser\FileManipulator\ChangelogFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
+use Symplify\SmartFileSystem\Exception\FileNotFoundException;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysReleaseWorker
@@ -19,8 +21,9 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
     /**
      * @param \Shopsys\Releaser\FileManipulator\ChangelogFileManipulator $changelogFileManipulator
      */
-    public function __construct(private readonly ChangelogFileManipulator $changelogFileManipulator)
-    {
+    public function __construct(
+        private readonly ChangelogFileManipulator $changelogFileManipulator,
+    ) {
     }
 
     /**
@@ -48,23 +51,35 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $changelogFilePath = getcwd() . '/CHANGELOG.md';
-        $smartFileInfo = new SmartFileInfo($changelogFilePath);
-        $fileContent = $smartFileInfo->getContents();
-
+        $changelogFilePath = getcwd() . '/CHANGELOG-' . $initialBranchName . '.md';
         $todayInString = $this->getTodayAsString();
+
+
 
         /**
          * @see https://regex101.com/r/izBgtv/6
          */
-        $pattern = '#\#\# \[' . preg_quote($version->getOriginalString()) . '\]\(.*\) \((\d+-\d+-\d+)\)#';
-        $match = Strings::match($fileContent, $pattern);
+        $pattern = '#\#\# \[' . preg_quote($version->getOriginalString(), '#') . '\]\(.*\) \((\d+-\d+-\d+)\)#';
 
-        if ($match === null) {
-            $this->symfonyStyle->error(
-                'Unable to find current release headline. You need to check the release date in CHANGELOG.md manually.',
-            );
-            $this->confirm('Confirm you have manually checked the release date in CHANGELOG.md');
+        try {
+            $smartFileInfo = new SmartFileInfo($changelogFilePath);
+            $fileContent = $smartFileInfo->getContents();
+
+            $match = Strings::match($fileContent, $pattern);
+
+            if ($match === null) {
+                throw new LogicException('Release headline not found in file');
+            }
+        } catch (FileNotFoundException) {
+            $this->symfonyStyle->error(sprintf('Unable to find file "%s".', $changelogFilePath));
+            $this->renderCommonError();
+
+            return;
+        } catch (LogicException) {
+            $this->symfonyStyle->error('Unable to find current release headline in file "%s".');
+            $this->renderCommonError();
+
+            return;
         }
 
         if ($todayInString !== $match[1]) {
@@ -76,7 +91,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
             FileSystem::write($changelogFilePath, $newChangelogContent);
 
             $infoMessage = sprintf(
-                'CHANGELOG.md date for "%s" version was updated to "%s".',
+                $smartFileInfo->getFilename() . ' date for "%s" version was updated to "%s".',
                 $version->getVersionString(),
                 $todayInString,
             );
@@ -84,6 +99,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
 
             $this->commit($infoMessage);
         }
+
         $this->symfonyStyle->success(Message::SUCCESS);
     }
 
@@ -93,6 +109,15 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
     private function getTodayAsString(): string
     {
         return (new DateTime())->format('Y-m-d');
+    }
+
+    private function renderCommonError(): void
+    {
+        $this->symfonyStyle->error('You need to check the release date in the appropriate changelog file manually.');
+
+        $this->confirm('Confirm you have manually checked the release date in the appropriate changelog file');
+
+        $this->symfonyStyle->success(Message::SUCCESS);
     }
 
     /**
