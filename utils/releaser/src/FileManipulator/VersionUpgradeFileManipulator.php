@@ -12,14 +12,11 @@ final class VersionUpgradeFileManipulator
 {
     /**
      * @var string
-     * @see https://regex101.com/r/izBgtv/7
+     * @see https://regex101.com/r/HArQ3c/1
      */
-    private const HEADLINE_WITH_LINK_PATTERN = '#\# \[Upgrade from [\w.-]+ to [\w.-]+\]\(.+\)#';
+    private const HEADLINE_WITH_LINK_PATTERN = '#(\#\# \[Upgrade from [\w.-]+ to [\w.-]+\]\(.+\))#';
 
-    /**
-     * @var string
-     */
-    private const FILE_CONTENT_INFORMATION_PATTERN = '#This guide contains instructions to upgrade from version .* to .*-dev#';
+    private const HEADLINE_TEMPLATE = '## [Upgrade from %s to %s](https://github.com/shopsys/shopsys/compare/%s...%s)' . PHP_EOL . PHP_EOL . '$1';
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
@@ -31,29 +28,29 @@ final class VersionUpgradeFileManipulator
     {
         $content = $this->updateHeadline($version, $splFileInfo->getContents(), $initialBranchName);
 
-        return $this->updateFileContentInformation($version, $content);
+        return $this->addNewPatchHeadline($version, $content, $initialBranchName);
     }
 
     /**
      * Before:
-     * # [Upgrade from v0.9.0 to v1.0.0-dev](https://github.com/shopsys/shopsys/compare/v0.9.0...1.0)
+     * ## [Upgrade from v12.0.0 to v12.1.0-dev](https://github.com/shopsys/shopsys/compare/v12.0.0...12.1)
      *
      * After:
-     * # [Upgrade from v0.9.0 to v1.0.0](https://github.com/shopsys/shopsys/compare/v0.9.0...v1.0.0)
+     * ## [Upgrade from v12.0.0 to v12.1.0](https://github.com/shopsys/shopsys/compare/v12.0.0...v12.1.0)
      *
      * @param \PharIo\Version\Version $version
      * @param string $content
      * @param string $initialBranchName
      * @return string
      */
-    private function updateHeadline(Version $version, string $content, string $initialBranchName): string
+    public function updateHeadline(Version $version, string $content, string $initialBranchName): string
     {
         $versionString = $version->getOriginalString();
 
         return Strings::replace(
             $content,
             self::HEADLINE_WITH_LINK_PATTERN,
-            function ($match) use ($versionString, $initialBranchName) {
+            static function ($match) use ($versionString, $initialBranchName) {
                 return str_replace(
                     [$versionString . '-dev', '...' . $initialBranchName],
                     [$versionString, '...' . $versionString],
@@ -65,25 +62,34 @@ final class VersionUpgradeFileManipulator
 
     /**
      * Before:
-     * This guide contains instructions to upgrade from version v0.9.0 to v1.0.0-dev
+     * ## [Upgrade from v12.0.0 to v12.1.0](https://github.com/shopsys/shopsys/compare/v12.0.0...v12.1.0)
      *
      * After:
-     * This guide contains instructions to upgrade from version v0.9.0 to v1.0.0
+     * ## [Upgrade from v12.1.0 to v12.1.1-dev](https://github.com/shopsys/shopsys/compare/v12.0.0...12.1)
+     *
+     * ## [Upgrade from v12.0.0 to v12.1.0](https://github.com/shopsys/shopsys/compare/v12.0.0...v12.1.0)
      *
      * @param \PharIo\Version\Version $version
      * @param string $content
+     * @param string $initialBranchName
      * @return string
      */
-    private function updateFileContentInformation(Version $version, string $content): string
+    private function addNewPatchHeadline(Version $version, string $content, string $initialBranchName): string
     {
-        $versionString = $version->getOriginalString();
+        $nextPatchVersionString = 'v' . $version->getMajor()->getValue() . '.' . $version->getMinor()->getValue() . '.' . ($version->getPatch()->getValue() + 1);
+        $nextPatchVersion = new Version($nextPatchVersionString);
 
         return Strings::replace(
             $content,
-            self::FILE_CONTENT_INFORMATION_PATTERN,
-            function ($match) use ($versionString) {
-                return str_replace($versionString . '-dev', $versionString, $match[0]);
-            },
+            self::HEADLINE_WITH_LINK_PATTERN,
+            sprintf(
+                self::HEADLINE_TEMPLATE,
+                $version->getOriginalString(),
+                $nextPatchVersion->getOriginalString() . '-dev',
+                $version->getOriginalString(),
+                $initialBranchName,
+            ),
+            1,
         );
     }
 }
