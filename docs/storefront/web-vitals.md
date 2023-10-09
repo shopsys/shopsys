@@ -145,9 +145,9 @@ In the [second part](https://github.com/shopsys/shopsys/pull/2745/files) of the 
 
 This refactoring was sort of experimental. It was about refactoring different kinds of sliders that we currently use.
 
-One was refactoring the [SimpleNavigation](https://github.com/shopsys/shopsys/blob/13.0/project-base/storefront/components/Blocks/SimpleNavigation/SimpleNavigation.tsx) component, which is responsible for displaying slider on smaller viewports and regular list on regular and bigger viewports. This is used in several places where it is not required to control sliding behavior by buttons (just sliding on the screen). This was previously accomplished by the keen-slider library (Javascript solution). Now, it’s our own pure CSS solution.
+One was refactoring the [SimpleNavigation](https://github.com/shopsys/shopsys/blob/14.0/project-base/storefront/components/Blocks/SimpleNavigation/SimpleNavigation.tsx) component, which is responsible for displaying slider on smaller viewports and regular list on regular and bigger viewports. This is used in several places where it is not required to control sliding behavior by buttons (just sliding on the screen). This was previously accomplished by the keen-slider library (Javascript solution). Now, it’s our own pure CSS solution.
 
-Second was a more experimental solution for a specific use case. That place is [ProductSlider](https://github.com/shopsys/shopsys/blob/13.0/project-base/storefront/components/Blocks/Product/ProductsSlider.tsx). Which has also been freed from the keen-slider library and uses our simplified (yet limited) solution with a little bit of Javascript. This might not be an ideal solution for every project so we consider it as an alternative rather than replacement.
+Second was a more experimental solution for a specific use case. That place is [ProductSlider](https://github.com/shopsys/shopsys/blob/14.0/project-base/storefront/components/Blocks/Product/ProductsSlider.tsx). Which has also been freed from the keen-slider library and uses our simplified (yet limited) solution with a little bit of Javascript. This might not be an ideal solution for every project so we consider it as an alternative rather than replacement.
 
 ## 8. Refactor checkbox and radiobutton elements
 
