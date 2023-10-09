@@ -1,0 +1,30 @@
+on:
+    schedule:
+        -   cron: '0 1 * * *'
+    workflow_dispatch:
+name: Composer security check
+jobs:
+    security-check:
+        name: Run composer security check for branch ${{ matrix.branches }}
+        runs-on: ubuntu-22.04
+        strategy:
+            matrix:
+                branches: ['12.0', '12.1', '13.0']
+            fail-fast: false
+        steps:
+            -   name: GIT checkout branch - ${{ matrix.branches }}
+                uses: actions/checkout@v4
+                with:
+                    ref: 'refs/heads/${{ matrix.branches }}'
+            -   name: Prepare variables
+                run: |
+                    DOCKER_PHP_FPM_REPOSITORY_TAG=ghcr.io/${{ github.repository_owner }}/php-fpm:github-action-${{ github.sha }}
+                    echo "DOCKER_PHP_FPM_REPOSITORY_TAG=${DOCKER_PHP_FPM_REPOSITORY_TAG}" >> $GITHUB_ENV
+            -   name: Run security check inside PHP-FPM container
+                run: |
+                    .github/build-php-fpm-image.sh $DOCKER_PHP_FPM_REPOSITORY_TAG base
+                    docker run -d --name php-fpm -v ./:/var/www/html $DOCKER_PHP_FPM_REPOSITORY_TAG
+                    docker exec --user root php-fpm chown -R www-data:www-data /var/www/html
+                    docker exec php-fpm composer install
+                    docker exec php-fpm composer update
+                    docker exec php-fpm composer security-check
