@@ -19,7 +19,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return 'Dump new features to CHANGELOG.md, save new release as draft and [Manually] check everything is ok';
+        return 'Dump new features to appropriate CHANGELOG-XX.X.md, save new release as draft and [Manually] check everything is ok';
     }
 
     /**
@@ -41,16 +41,16 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
 
         $this->symfonyStyle->note('Choose previous highest tag as Previous tag and then click on Generate release notes.');
 
-        $this->symfonyStyle->note('Copy contents of release to CHANGELOG.md with appropriate title and correct formatting.');
+        $this->symfonyStyle->note('Copy contents of release to appropriate CHANGELOG-XX.X.md with appropriate title and correct formatting.');
 
         $this->symfonyStyle->note(
             sprintf(
-                'Save release as draft and commit new CHANGELOG.md with message "changelog is now updated for %s release"',
+                'Save release as draft and commit new changelog content with message "changelog is now updated for %s release"',
                 $version->getOriginalString(),
             ),
         );
 
-        $this->confirm('Confirm you have checked CHANGELOG.md and the changes are committed. Also confirm that release is saved as draft.');
+        $this->confirm('Confirm you have checked appropriate CHANGELOG-XX.X.md and the changes are committed. Also confirm that release is saved as draft.');
     }
 
     /**
