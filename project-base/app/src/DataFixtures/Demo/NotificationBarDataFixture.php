@@ -20,9 +20,9 @@ class NotificationBarDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        readonly private NotificationBarFacade $notificationBarFacade,
-        readonly private NotificationBarDataFactory $notificationBarDataFactory,
-        readonly private Domain $domain,
+        private readonly NotificationBarFacade $notificationBarFacade,
+        private readonly NotificationBarDataFactory $notificationBarDataFactory,
+        private readonly Domain $domain,
     ) {
     }
 

@@ -15,8 +15,8 @@ class StoresBatchLoader
      * @param \App\Model\Store\StoreFacade $storeFacade
      */
     public function __construct(
-        readonly private PromiseAdapter $promiseAdapter,
-        readonly private StoreFacade $storeFacade,
+        private readonly PromiseAdapter $promiseAdapter,
+        private readonly StoreFacade $storeFacade,
     ) {
     }
 
