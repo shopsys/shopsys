@@ -80,6 +80,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                     <SimpleNavigation
                         className="mb-6"
                         listedItems={[...category.children, ...category.linkedCategories]}
+                        linkType="category"
                     />
 
                     {!!category.readyCategorySeoMixLinks.length && (

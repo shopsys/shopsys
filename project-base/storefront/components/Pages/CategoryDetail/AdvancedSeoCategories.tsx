@@ -18,6 +18,7 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCat
                 className="mb-5"
                 itemClassName={simpleNavigationItemTwClass}
                 listedItems={readyCategorySeoMixLinks}
+                linkType="category"
             />
         </>
     );

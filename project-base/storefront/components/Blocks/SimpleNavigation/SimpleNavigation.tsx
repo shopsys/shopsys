@@ -1,5 +1,5 @@
 import { SimpleNavigationListItem } from './SimpleNavigationListItem';
-import { getSearchResultLinkType } from 'helpers/mappers/simpleNavigation';
+import { ExtendedLinkPageType } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twMergeCustom } from 'helpers/twMerge';
 import { ListedItemPropType } from 'types/simpleNavigation';
 
@@ -8,6 +8,7 @@ type SimpleNavigationProps = {
     imageType?: string;
     isWithoutSlider?: true;
     itemClassName?: string;
+    linkType: ExtendedLinkPageType;
 };
 
 const TEST_IDENTIFIER = 'blocks-simplenavigation';
@@ -18,6 +19,7 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({
     isWithoutSlider,
     className,
     itemClassName,
+    linkType,
 }) => {
     return (
         <ul
@@ -35,7 +37,7 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({
                     className={itemClassName}
                     dataTestId={TEST_IDENTIFIER + '-' + index}
                     imageType={imageType}
-                    linkType={getSearchResultLinkType(listedItem)}
+                    linkType={linkType}
                     listedItem={listedItem}
                 >
                     {listedItem.name}

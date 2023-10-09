@@ -16,7 +16,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({ columnCate
                         <ExtendedNextLink
                             className="mb-4 flex justify-center rounded bg-dark bg-opacity-5 p-2"
                             href={columnCategory.slug}
-                            type="static"
+                            type="category"
                             onClick={onLinkClick}
                         >
                             <Image
@@ -30,7 +30,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({ columnCate
                         <ExtendedNextLink
                             className="mb-1 block font-bold text-dark no-underline"
                             href={columnCategory.slug}
-                            type="static"
+                            type="category"
                             onClick={onLinkClick}
                         >
                             {columnCategory.name}

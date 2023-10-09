@@ -8,5 +8,5 @@ export const PromotedCategories: FC = () => {
         return null;
     }
 
-    return <SimpleNavigation listedItems={promotedCategoriesData.promotedCategories} />;
+    return <SimpleNavigation listedItems={promotedCategoriesData.promotedCategories} linkType="category" />;
 };

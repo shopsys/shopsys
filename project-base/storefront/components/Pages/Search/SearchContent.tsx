@@ -43,6 +43,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
                                 <SimpleNavigation
                                     imageType="searchThumbnail"
                                     listedItems={searchResults.articlesSearch}
+                                    linkType="article"
                                 />
                             </div>
                         )}
@@ -50,14 +51,14 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
                         {!!searchResults.brandSearch.length && (
                             <div className="mt-6">
                                 <Heading type="h3">{t('Found brands')}</Heading>
-                                <SimpleNavigation listedItems={searchResults.brandSearch} />
+                                <SimpleNavigation listedItems={searchResults.brandSearch} linkType="brand" />
                             </div>
                         )}
 
                         {!!mappedCategoriesSearchResults?.length && (
                             <div className="mt-6">
                                 <Heading type="h3">{t('Found categories')}</Heading>
-                                <SimpleNavigation listedItems={mappedCategoriesSearchResults} />
+                                <SimpleNavigation listedItems={mappedCategoriesSearchResults} linkType="category" />
                             </div>
                         )}
 

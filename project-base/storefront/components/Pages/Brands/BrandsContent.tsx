@@ -5,13 +5,13 @@ import { useBrandsQueryApi } from 'graphql/generated';
 export const BrandsContent: FC = () => {
     const [{ data: brandsData }] = useBrandsQueryApi();
 
-    if (brandsData === undefined) {
+    if (!brandsData) {
         return null;
     }
 
     return (
         <Webline>
-            <SimpleNavigation isWithoutSlider listedItems={brandsData.brands} />
+            <SimpleNavigation listedItems={brandsData.brands} isWithoutSlider linkType="brand" />
         </Webline>
     );
 };
