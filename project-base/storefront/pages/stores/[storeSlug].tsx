@@ -1,6 +1,6 @@
+import { SkeletonPageStore } from 'components/Blocks/Skeleton/SkeletonPageStore';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
-import { StorePageSkeleton } from 'components/Pages/StoreDetail/StorePageSkeleton';
 import {
     StoreDetailQueryApi,
     StoreDetailQueryDocumentApi,
@@ -36,7 +36,7 @@ const StoreDetailPage: NextPage = () => {
             {!!storeDetailData?.store && !fetching ? (
                 <StoreDetailContent store={storeDetailData.store} />
             ) : (
-                <StorePageSkeleton />
+                <SkeletonPageStore />
             )}
         </CommonLayout>
     );

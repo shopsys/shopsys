@@ -1,8 +1,8 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { SkeletonPageCategoryDetail } from 'components/Blocks/Skeleton/SkeletonPageCategoryDetail';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
-import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { useCategoryDetailData } from 'components/Pages/CategoryDetail/helpers';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
@@ -66,7 +66,7 @@ const CategoryDetailPage: NextPage = () => {
                 title={seoTitle}
             >
                 {isSkeletonVisible ? (
-                    <CategoryDetailPageSkeleton />
+                    <SkeletonPageCategoryDetail />
                 ) : (
                     !!categoryData && <CategoryDetailContent category={categoryData} />
                 )}

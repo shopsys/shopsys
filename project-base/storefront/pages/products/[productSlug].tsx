@@ -1,7 +1,7 @@
+import { SkeletonPageProductDetail } from 'components/Blocks/Skeleton/SkeletonPageProductDetail';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
 import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
-import { ProductDetailPageSkeleton } from 'components/Pages/ProductDetail/ProductDetailPageSkeleton';
 import {
     ProductDetailQueryApi,
     ProductDetailQueryDocumentApi,
@@ -41,7 +41,7 @@ const ProductDetailPage: NextPage = () => {
             description={product?.seoMetaDescription}
             title={product?.seoTitle || product?.name}
         >
-            {fetching && <ProductDetailPageSkeleton />}
+            {fetching && <SkeletonPageProductDetail />}
 
             {product?.__typename === 'RegularProduct' && <ProductDetailContent fetching={fetching} product={product} />}
 

@@ -1,7 +1,7 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { SkeletonPageBlogCategory } from 'components/Blocks/Skeleton/SkeletonPageBlogCategory';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
-import { BlogCategoryPageSkeleton } from 'components/Pages/BlogCategory/BlogCategoryPageSkeleton';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     BlogCategoryArticlesDocumentApi,
@@ -48,7 +48,7 @@ const BlogCategoryPage: NextPage = () => {
             {!!blogCategoryData?.blogCategory && !fetching ? (
                 <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />
             ) : (
-                <BlogCategoryPageSkeleton />
+                <SkeletonPageBlogCategory />
             )}
         </CommonLayout>
     );

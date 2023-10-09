@@ -1,6 +1,6 @@
+import { SkeletonPageArticle } from 'components/Blocks/Skeleton/SkeletonPageArticle';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
-import { ArticlePageSkeleton } from 'components/Pages/Article/ArticlePageSkeleton';
 import {
     ArticleDetailQueryApi,
     ArticleDetailQueryDocumentApi,
@@ -38,7 +38,7 @@ const ArticleDetailPage: NextPage = () => {
             description={article?.seoMetaDescription}
             title={article?.seoTitle}
         >
-            {!!article && !fetching ? <ArticleDetailContent article={article} /> : <ArticlePageSkeleton />}
+            {!!article && !fetching ? <ArticleDetailContent article={article} /> : <SkeletonPageArticle />}
         </CommonLayout>
     );
 };

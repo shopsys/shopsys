@@ -1,7 +1,7 @@
 import { Webline } from 'components/Layout/Webline/Webline';
 import Skeleton from 'react-loading-skeleton';
 
-export const StorePageSkeleton: FC = () => (
+export const SkeletonPageStore: FC = () => (
     <Webline>
         <div className="flex flex-row items-stretch gap-16">
             <Skeleton className="hidden h-[600px] w-[600px] vl:block" />

@@ -1,7 +1,7 @@
 import { BlogArticlesList } from './BlogArticlesList';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
-import { BlogArticleSkeleton } from 'components/Pages/BlogArticle/BlogArticleSkeleton';
+import { SkeletonArticleBlog } from 'components/Blocks/Skeleton/SkeletonArticleBlog';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { ListedBlogArticleFragmentApi, useBlogCategoryArticlesApi } from 'graphql/generated';
 import { createEmptyArray } from 'helpers/arrayUtils';
@@ -36,7 +36,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
             ) : (
                 <div className="flex flex-col gap-10">
                     {createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
-                        <BlogArticleSkeleton key={index} />
+                        <SkeletonArticleBlog key={index} />
                     ))}
                 </div>
             )}

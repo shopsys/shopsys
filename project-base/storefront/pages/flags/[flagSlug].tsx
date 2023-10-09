@@ -1,6 +1,6 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { SkeletonPageCategoryDetail } from 'components/Blocks/Skeleton/SkeletonPageCategoryDetail';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
@@ -57,7 +57,7 @@ const FlagDetailPage: NextPage = () => {
     return (
         <CommonLayout breadcrumbs={flagDetailData?.flag?.breadcrumb} breadcrumbsType="category" title={seoTitle}>
             {!filter && fetching ? (
-                <CategoryDetailPageSkeleton />
+                <SkeletonPageCategoryDetail />
             ) : (
                 !!flagDetailData?.flag && <FlagDetailContent flag={flagDetailData.flag} />
             )}

@@ -2,7 +2,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import Skeleton from 'react-loading-skeleton';
 
-export const ProductDetailPageSkeleton: FC = () => (
+export const SkeletonPageProductDetail: FC = () => (
     <>
         <Webline>
             <div className="flex flex-col lg:flex-row">

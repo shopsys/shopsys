@@ -1,6 +1,6 @@
+import { SkeletonPageBlogArticle } from 'components/Blocks/Skeleton/SkeletonPageBlogArticle';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
-import { BlogArticlePageSkeleton } from 'components/Pages/BlogArticle/BlogArticlePageSkeleton';
 import {
     BlogArticleDetailQueryApi,
     BlogArticleDetailQueryDocumentApi,
@@ -40,7 +40,7 @@ const BlogArticleDetailPage: NextPage = () => {
             {!!blogArticleData?.blogArticle && !fetching ? (
                 <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
             ) : (
-                <BlogArticlePageSkeleton />
+                <SkeletonPageBlogArticle />
             )}
         </CommonLayout>
     );

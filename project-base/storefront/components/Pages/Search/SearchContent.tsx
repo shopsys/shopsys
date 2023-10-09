@@ -1,8 +1,8 @@
 import { ProductsSearch } from './ProductsSearch';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
+import { SkeletonPageCategoryDetail } from 'components/Blocks/Skeleton/SkeletonPageCategoryDetail';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
@@ -33,7 +33,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
         <Webline>
             <Heading type="h1">{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
             {isFetchingInitialData ? (
-                <CategoryDetailPageSkeleton />
+                <SkeletonPageCategoryDetail />
             ) : (
                 !!searchResults && (
                     <>

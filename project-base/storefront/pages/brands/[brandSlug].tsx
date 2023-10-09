@@ -1,7 +1,7 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { SkeletonPageCategoryDetail } from 'components/Blocks/Skeleton/SkeletonPageCategoryDetail';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailContent';
-import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     BrandDetailQueryApi,
@@ -66,7 +66,7 @@ const BrandDetailPage: NextPage = () => {
             title={seoTitle}
         >
             {!filter && fetching ? (
-                <CategoryDetailPageSkeleton />
+                <SkeletonPageCategoryDetail />
             ) : (
                 !!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />
             )}
