@@ -6,13 +6,14 @@ getBuildExitCodeBasedOnJobResults() {
     TESTS_RESULT=$3
     TESTS_ACCEPTANCE_RESULT=$4
     STANDARDS_STOREFRONT_RESULT=$5
-    REVIEW_RESULT=$6
+    TRANSLATIONS_DUMP_RESULT=$6
+    REVIEW_RESULT=$7
 
     if [[ "$BUILD_FORK_RESULT" == "success" ]]; then
         return 0
     fi
 
-    if [[ "$STANDARDS_RESULT" == "success" && "$TESTS_RESULT" == "success" && "$TESTS_ACCEPTANCE_RESULT" == "success" && "$STANDARDS_STOREFRONT_RESULT" == "success" && "$REVIEW_RESULT" == "success" ]]; then
+    if [[ "$STANDARDS_RESULT" == "success" && "$TESTS_RESULT" == "success" && "$TESTS_ACCEPTANCE_RESULT" == "success" && "$STANDARDS_STOREFRONT_RESULT" == "success" && "$TRANSLATIONS_DUMP_RESULT" == "success" && "$REVIEW_RESULT" == "success" ]]; then
         return 0
     else
         return 1

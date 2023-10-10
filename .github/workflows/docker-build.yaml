@@ -463,6 +463,44 @@ jobs:
             -   name: Cypress container logs
                 if: ${{ failure() }}
                 run: docker compose logs cypress
+    translations-dump-check:
+        name: Check all translations are dumped
+        needs: build-php-fpm-image
+        if: |
+            always() && !failure() && !cancelled() &&
+            (
+                github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
+                github.ref_protected == true
+            ) &&
+            (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped')
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Download docker-compose.yml from artifacts
+                uses: actions/download-artifact@v3
+                with:
+                    name: docker-compose
+            -   name: Build application
+                run: docker compose up -d php-fpm storefront
+            -   name: Check translations are dumped
+                run: |
+                    docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
+                    docker compose exec -T php-fpm php phing translations-dump
+                    docker compose cp php-fpm:/var/www/html/ .
+                    cp -a ./html/. ./
+                    rm -rf ./html
+                    docker compose exec -T storefront npm run translate
+                    if [ -n "$(git status --porcelain)" ]; then
+                        echo "Not all translations are dumped";
+                        git status
+                        exit 1;
+                    else
+                        echo "All translations are dumped";
+                        exit 0;
+                    fi
     build-fork-docker-images:
         if: |
             github.event.pull_request.head.repo.full_name != 'shopsys/shopsys' && 
@@ -504,6 +542,22 @@ jobs:
                 run: docker compose exec -T php-fpm php phing tests
             -   name: Run acceptance tests
                 run: docker compose exec -T php-fpm php phing tests-acceptance
+            -   name: Check translations are dumped
+                run: |
+                    docker compose exec -T php-fpm php phing translations-dump
+                    docker compose cp php-fpm:/var/www/html/ .
+                    rm -rf ./html/.git
+                    cp -a ./html/. ./
+                    rm -rf ./html
+                    docker compose exec -T storefront npm run translate
+                    if [ -n "$(git status --porcelain)" ]; then
+                        echo "Not all translations are dumped";
+                        git status
+                        exit 1;
+                    else
+                        echo "All translations are dumped";
+                        exit 0;
+                    fi
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
@@ -663,7 +717,7 @@ jobs:
     build-successful:
         if: ${{ always() }}
         name: Build successful
-        needs: [tests-acceptance, standards, tests-unit-functional-smoke, standards-storefront, review, build-fork-docker-images]
+        needs: [tests-acceptance, standards, tests-unit-functional-smoke, standards-storefront, translations-dump-check, review, build-fork-docker-images]
         runs-on: ubuntu-22.04
         env:
             BUILD_FORK_RESULT: ${{ needs.build-fork-docker-images.result }}
@@ -671,6 +725,7 @@ jobs:
             TESTS_RESULT: ${{ needs.tests-unit-functional-smoke.result }}
             TESTS_ACCEPTANCE_RESULT: ${{ needs.tests-acceptance.result }}
             STANDARDS_STOREFRONT_RESULT: ${{ needs.standards-storefront.result }}
+            TRANSLATIONS_DUMP_RESULT: ${{ needs.translations-dump-check.result }}
             REVIEW_RESULT: ${{ needs.review.result }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -679,5 +734,5 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Build successful
                 run: |
-                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${REVIEW_RESULT} > /dev/null ; echo $?`
+                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} > /dev/null ; echo $?`
                     exit "${EXIT_CODE}"
