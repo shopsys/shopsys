@@ -121,9 +121,6 @@ msgstr ""
 msgid "27\""
 msgstr ""
 
-msgid "275 kWh/year"
-msgstr ""
-
 msgid "27\" Hyundai PLASMA T27D590EY"
 msgstr ""
 
@@ -131,6 +128,9 @@ msgid "27\" Hyundai T27D590EY"
 msgstr ""
 
 msgid "27\" Hyundai T27D590EZ"
+msgstr ""
+
+msgid "275 kWh/year"
 msgstr ""
 
 msgid "295 x 240 x 15 mm <br /> cartridge with active carbon"
@@ -157,13 +157,13 @@ msgstr ""
 msgid "310 x 480 x 10"
 msgstr ""
 
+msgid "32\" Hyundai 32PFL4400"
+msgstr ""
+
 msgid "32\" Philips 32PFL4308"
 msgstr ""
 
 msgid "320 x 300 x 10 mm"
-msgstr ""
-
-msgid "32\" Hyundai 32PFL4400"
 msgstr ""
 
 msgid "36\""
@@ -283,10 +283,10 @@ msgstr ""
 msgid "60\""
 msgstr ""
 
-msgid "600 ml"
+msgid "60\" Hyundai 22HD44D"
 msgstr ""
 
-msgid "60\" Hyundai 22HD44D"
+msgid "600 ml"
 msgstr ""
 
 msgid "6400"
