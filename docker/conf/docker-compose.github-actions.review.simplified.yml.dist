@@ -34,6 +34,14 @@ services:
             ELASTIC_SEARCH_INDEX_PREFIX: BRANCH_NAME
             REDIS_PREFIX: BRANCH_NAME
             FORCE_ELASTIC_LIMITS: true
+            GOPAY_EN_GOID: GOPAY_GOID
+            GOPAY_EN_CLIENTID: GOPAY_CLIENTID
+            GOPAY_EN_CLIENTSECRET: GOPAY_CLIENTSECRET
+            GOPAY_CS_GOID: GOPAY_GOID
+            GOPAY_CS_CLIENTID: GOPAY_CLIENTID
+            GOPAY_CS_CLIENTSECRET: GOPAY_CLIENTSECRET
+            PACKETERY_API_KEY: PACKETERY_API_KEY_VALUE
+            PACKETERY_API_PASSWORD: PACKETERY_API_PASSWORD_VALUE
         networks:
             - default
             - services-network
@@ -86,6 +94,7 @@ services:
         image: storefront-image
         environment:
             REDIS_PREFIX: BRANCH_NAME
+            PACKETERY_API_KEY: PACKETERY_API_KEY_VALUE
         networks:
             - default
             - services-network
