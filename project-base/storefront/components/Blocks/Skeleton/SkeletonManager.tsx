@@ -1,9 +1,11 @@
 import { SkeletonPageArticle } from './SkeletonPageArticle';
 import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';
+import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductsList } from './SkeletonPageProductsList';
 import { SkeletonPageProductsListSimple } from './SkeletonPageProductsListSimple';
 import { SkeletonPageStore } from './SkeletonPageStore';
+import { SkeletonPageStores } from './SkeletonPageStores';
 import { useEffect } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 
@@ -27,8 +29,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({ isFetchingData, isPa
 
     switch (redirectPageType) {
         case 'homepage':
-            // TODO add proper skeleton
-            return <SkeletonPageArticle />;
+            return <SkeletonPageHome />;
         case 'product':
             return <SkeletonPageProductDetail />;
         case 'category':
@@ -42,8 +43,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({ isFetchingData, isPa
         case 'blogCategory':
             return <SkeletonPageBlogCategory />;
         case 'stores':
-            // TODO add proper skeleton
-            return <SkeletonPageArticle />;
+            return <SkeletonPageStores />;
         case 'store':
             return <SkeletonPageStore />;
         default:
