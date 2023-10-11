@@ -1,5 +1,4 @@
 import { getDomainIdFromHostname } from 'helpers/domain/getDomainIdFromHostname';
-import { logException } from 'helpers/errors/logException';
 import { NextMiddleware, NextRequest, NextResponse } from 'next/server';
 import {
     FriendlyPageTypesValue,
@@ -75,8 +74,6 @@ export const middleware: NextMiddleware = async (request) => {
 
         return rewriteDynamicPages(pageTypeParsedResponse.route, request.url, search);
     } catch (e) {
-        logException(e);
-
         return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), {
             headers: [
                 [MIDDLEWARE_STATUS_CODE_KEY, '500'],

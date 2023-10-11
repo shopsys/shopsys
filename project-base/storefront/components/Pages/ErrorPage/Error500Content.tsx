@@ -10,12 +10,10 @@ export const Error500ContentWithBoundary: FC<FallbackProps> = ({ resetErrorBound
     const router = useRouter();
 
     useEffect(() => {
-        const handleResetFromErrorState = () => resetErrorBoundary();
-
-        router.events.on('routeChangeComplete', handleResetFromErrorState);
+        router.events.on('routeChangeComplete', resetErrorBoundary);
 
         return () => {
-            router.events.off('routeChangeComplete', handleResetFromErrorState);
+            router.events.off('routeChangeComplete', resetErrorBoundary);
         };
     }, [resetErrorBoundary, router.events]);
 
