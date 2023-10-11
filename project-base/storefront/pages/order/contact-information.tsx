@@ -1,9 +1,7 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { Form } from 'components/Forms/Form/Form';
-import { Footer } from 'components/Layout/Footer/Footer';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
 import { ContactInformationContent } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
 import {
@@ -242,10 +240,6 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                         </Form>
                     </FormProvider>
                 </OrderLayout>
-
-                <Webline type="dark">
-                    <Footer simpleFooter />
-                </Webline>
 
                 {isErrorPopupVisible && (
                     <ErrorPopup

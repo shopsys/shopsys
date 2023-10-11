@@ -13,23 +13,15 @@ import {
     TransportWithAvailablePaymentsAndStoresFragmentApi,
     useGoPaySwiftsQueryApi,
 } from 'graphql/generated';
-import { logException } from 'helpers/errors/logException';
-import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import getConfig from 'next/config';
-import { useEffect, useState } from 'react';
-import { usePersistStore } from 'store/usePersistStore';
-
-const { publicRuntimeConfig } = getConfig();
+import { getPickupPlaceDetail, usePaymentChangeInSelect, useTransportChangeInSelect } from '../helpers';
 
 type TransportAndPaymentSelectProps = {
     transports: TransportWithAvailablePaymentsAndStoresFragmentApi[];
     lastOrderPickupPlace: ListedStoreFragmentApi | null;
-    lastOrderTransportUuid: string | null;
-    lastOrderPaymentUuid: string | null;
     changeTransportInCart: ChangeTransportHandler;
     changePaymentInCart: ChangePaymentHandler;
     isTransportSelectionLoading: boolean;
@@ -40,139 +32,23 @@ const TEST_IDENTIFIER = 'pages-order-';
 export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     transports,
     lastOrderPickupPlace,
-    lastOrderTransportUuid,
-    lastOrderPaymentUuid,
     changeTransportInCart,
     changePaymentInCart,
     isTransportSelectionLoading,
 }) => {
     const { t } = useTranslation();
-    const { defaultLocale, currencyCode } = useDomainConfig();
-    const [preSelectedTransport, setPreselectedTransport] =
-        useState<TransportWithAvailablePaymentsAndStoresFragmentApi | null>(null);
-    const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState<ListedStoreFragmentApi | null>(
-        lastOrderPickupPlace,
-    );
+    const { currencyCode } = useDomainConfig();
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
     const [getGoPaySwiftsResult] = useGoPaySwiftsQueryApi({ variables: { currencyCode } });
-    const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
-    const clearPacketeryPickupPoint = usePersistStore((store) => store.clearPacketeryPickupPoint);
-
-    const openPacketeryPopup = (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
-        if (!pickupPlace) {
-            const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
-
-            if (!packeteryApiKey?.length) {
-                logException(new Error(`Packeta API key was not set`));
-                return;
-            }
-
-            packeteryPick(
-                packeteryApiKey,
-                (packeteryPoint) => {
-                    if (packeteryPoint) {
-                        const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
-                        setPacketeryPickupPoint(mappedPacketeryPoint);
-                        changeTransportInCart(newTransport.uuid, mappedPacketeryPoint);
-                    }
-                },
-                { language: defaultLocale },
-            );
-        }
-    };
-
-    const openPersonalPickupPopup = (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
-        if (newTransport.transportType.code === 'packetery') {
-            openPacketeryPopup(newTransport);
-
-            return;
-        }
-
-        clearPacketeryPickupPoint();
-        setPreselectedTransport(newTransport);
-    };
-
-    const handlePaymentChange = async (newPaymentUuid: string | null) =>
-        await changePaymentInCart(newPaymentUuid, paymentGoPayBankSwift);
-
-    const handleTransportChange = async (selectedTransportUuid: string | null) => {
-        const selectedTransport = transports.find((transport) => transport.uuid === selectedTransportUuid);
-
-        if (selectedTransport?.uuid === transport?.uuid) {
-            return;
-        }
-
-        if (!selectedTransport) {
-            await changeTransportInCart(null, null);
-            await handlePaymentChange(null);
-
-            return;
-        }
-
-        if (selectedTransport.isPersonalPickup || selectedTransport.transportType.code === 'packetery') {
-            if (!preSelectedPickupPlace) {
-                openPersonalPickupPopup(selectedTransport);
-
-                return;
-            }
-
-            await changeTransportInCart(selectedTransportUuid, preSelectedPickupPlace);
-            setPreSelectedPickupPlace(null);
-
-            return;
-        }
-
-        if (selectedTransportUuid !== transport?.uuid) {
-            await changeTransportInCart(selectedTransportUuid, null);
-        }
-    };
-
-    const handleGoPaySwiftChange = async (newGoPaySwiftValue: string | null) => {
-        await changePaymentInCart(payment?.uuid ?? null, newGoPaySwiftValue);
-    };
-
-    const loadPresetsFromLastOrder = async () => {
-        if (!transport) {
-            await handleTransportChange(lastOrderTransportUuid);
-        }
-        if (!payment) {
-            await handlePaymentChange(lastOrderPaymentUuid);
-        }
-    };
-
-    useEffect(() => {
-        loadPresetsFromLastOrder();
-    }, []);
-
-    const resetPaymentAndGoPayBankSwift = () => changePaymentInCart(null, null);
-
-    const resetAll = async () => {
-        await handleTransportChange(null);
-        await handlePaymentChange(null);
-        clearPacketeryPickupPoint();
-    };
-
-    const onChangePickupPlaceHandler = (selectedPickupPlace: ListedStoreFragmentApi | null) => {
-        if (selectedPickupPlace && preSelectedTransport) {
-            changeTransportInCart(preSelectedTransport.uuid, selectedPickupPlace);
-        } else {
-            handleTransportChange(null);
-            clearPacketeryPickupPoint();
-        }
-
-        setPreselectedTransport(null);
-    };
-
-    const onClosePickupPlacePopupHandler = () => {
-        clearPacketeryPickupPoint();
-        setPreselectedTransport(null);
-    };
-
-    const getPickupPlaceDetail = (transportItem: TransportWithAvailablePaymentsAndStoresFragmentApi) =>
-        transport?.uuid === transportItem.uuid &&
-        transportItem.stores?.edges?.some((storeEdge) => storeEdge?.node?.identifier === pickupPlace?.identifier)
-            ? pickupPlace
-            : null;
+    const { changePayment, changeGoPaySwift, resetPaymentAndGoPayBankSwift } =
+        usePaymentChangeInSelect(changePaymentInCart);
+    const {
+        preSelectedTransport,
+        changeTransport,
+        changePickupPlace,
+        closePickupPlacePopup,
+        resetTransportAndPayment,
+    } = useTransportChangeInSelect(transports, lastOrderPickupPlace, changeTransportInCart, changePaymentInCart);
 
     const renderTransportListItem = (
         transportItem: TransportWithAvailablePaymentsAndStoresFragmentApi,
@@ -189,7 +65,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 value={transportItem.uuid}
                 checked={isActive}
                 dataTestId={TEST_IDENTIFIER + 'transport-item-input'}
-                onChangeCallback={handleTransportChange}
+                onChangeCallback={changeTransport}
                 label={
                     <TransportAndPaymentSelectItemLabel
                         name={transportItem.name}
@@ -197,7 +73,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         price={transportItem.price}
                         description={transportItem.description}
                         image={transportItem.mainImage}
-                        pickupPlaceDetail={getPickupPlaceDetail(transportItem)}
+                        pickupPlaceDetail={getPickupPlaceDetail(transport, pickupPlace, transportItem)}
                     />
                 }
             />
@@ -216,7 +92,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 value={paymentItem.uuid}
                 checked={isActive}
                 dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
-                onChangeCallback={handlePaymentChange}
+                onChangeCallback={changePayment}
                 label={
                     <TransportAndPaymentSelectItemLabel
                         name={paymentItem.name}
@@ -242,7 +118,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     </ul>
                     {!!transport && (
                         <ResetButton
-                            onClick={resetAll}
+                            onClick={resetTransportAndPayment}
                             dataTestId={TEST_IDENTIFIER + 'reset-transport'}
                             text={t('Change transport type')}
                         />
@@ -250,8 +126,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     {!!preSelectedTransport && (
                         <PickupPlacePopup
                             transport={preSelectedTransport}
-                            onChangePickupPlaceCallback={onChangePickupPlaceHandler}
-                            onClosePickupPlacePopupCallback={onClosePickupPlacePopupHandler}
+                            onChangePickupPlaceCallback={changePickupPlace}
+                            onClosePickupPlacePopupCallback={closePickupPlacePopup}
                         />
                     )}
                 </div>
@@ -276,7 +152,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                         name="goPaySwift"
                                         id={goPaySwift.swift}
                                         value={goPaySwift.swift}
-                                        onChangeCallback={handleGoPaySwiftChange}
+                                        onChangeCallback={changeGoPaySwift}
                                         checked={paymentGoPayBankSwift === goPaySwift.swift}
                                         label={goPaySwift.name}
                                     />

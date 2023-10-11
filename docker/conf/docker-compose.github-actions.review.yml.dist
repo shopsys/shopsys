@@ -57,6 +57,14 @@ services:
         environment:
             IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
             FORCE_ELASTIC_LIMITS: true
+            GOPAY_EN_GOID: GOPAY_GOID
+            GOPAY_EN_CLIENTID: GOPAY_CLIENTID
+            GOPAY_EN_CLIENTSECRET: GOPAY_CLIENTSECRET
+            GOPAY_CS_GOID: GOPAY_GOID
+            GOPAY_CS_CLIENTID: GOPAY_CLIENTID
+            GOPAY_CS_CLIENTSECRET: GOPAY_CLIENTSECRET
+            PACKETERY_API_KEY: PACKETERY_API_KEY_VALUE
+            PACKETERY_API_PASSWORD: PACKETERY_API_PASSWORD_VALUE
         networks:
             - default
         labels:
@@ -110,6 +118,8 @@ services:
             - default
         labels:
             - traefik.enable=false
+        environment:
+            PACKETERY_API_KEY: PACKETERY_API_KEY_VALUE
 
     redis:
         image: redis:7.0-alpine
