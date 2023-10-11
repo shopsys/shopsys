@@ -148,7 +148,7 @@ You will need to follow these steps:
 - remove usage of article placement ([#2776](https://github.com/shopsys/shopsys/pull/2776))
     - placement `Shopsys\FrameworkBundle\Model\Article\Article::PLACEMENT_TOP_MENU` was removed along with the usages
     - already existing articles with this placement will be migrated to `Shopsys\FrameworkBundle\Model\Article\Article::PLACEMENT_NONE` placement
-        - if you intend to keep using this placement, you can skip DB Migration `Shopsys\FrameworkBundle\Migrations\Version20230907132822` 
+        - if you intend to keep using this placement, you can skip DB Migration `Shopsys\FrameworkBundle\Migrations\Version20230907132822`
     - see #project-base-diff to update your project
 - update your Elasticsearch Commands to support optional domainId ([#2780](https://github.com/shopsys/shopsys/pull/2780))
     - `\Shopsys\FrameworkBundle\Command\Elasticsearch\AbstractElasticsearchIndexCommand`
@@ -219,7 +219,7 @@ You will need to follow these steps:
                 ) {
             ```
         - constant `ALL_DOMAINS` was removed
-        - method `listDomainTabsAction()` was removed 
+        - method `listDomainTabsAction()` was removed
     - `Shopsys\FrameworkBundle\Controller\Admin\OrderController`
         - method `__construct` changed its interface
             ```diff
