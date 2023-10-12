@@ -146,6 +146,12 @@
         "guzzlehttp/psr7": "<=1.8.3, >=2.0.0, <=2.1.0"
     },
     "scripts": {
+        "pre-install-cmd": [
+            "./check-composer-json.sh"
+        ],
+        "pre-update-cmd": [
+            "./check-composer-json.sh"
+        ],
         "post-install-cmd": [
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
