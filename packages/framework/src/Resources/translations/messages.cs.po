@@ -2512,6 +2512,9 @@ msgstr "Nelze vybrat zboží, které je hlavní variantou"
 msgid "You cannot choose product that is variant"
 msgstr "Nelze vybrat zboží, které je variantou"
 
+msgid "You don't have permission to perform this action."
+msgstr "Nemáte oprávnění k provedení této akce."
+
 msgid "You have made changes, don't forget to save them!"
 msgstr "Provedli jste změny, nezapomeňte je uložit!"
 
