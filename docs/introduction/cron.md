@@ -2,9 +2,9 @@
 
 ## Basics
 Cron is a tool to run background jobs and is essential for the production environment.
-Periodically executed Cron modules recalculate visibility, generate XML feeds and sitemaps, provide error reporting etc.
+Periodically executed Cron modules recalculate visibility, generate XML feeds and sitemaps, provide error reporting, etc.
 
-By default you can configure your own cron configurations in `config/services/cron.yaml` file.
+By default, you can configure your own cron configurations in `config/services/cron.yaml` file.
 
 If you want to show Cron overview table for non-superadmin users you need add parameter `shopsys.display_cron_overview_for_superadmin_only` set to `false` in your `config/parameters.yaml`:
 
@@ -31,8 +31,13 @@ The instance of cron is actually a named group of cron jobs.
 
 You can learn how to set up multiple cron instances in [Working with Multiple Cron Instances](../cookbook/working-with-multiple-cron-instances.md) cookbook.
 
+!!! note
+    By default it is not possible to run all crons at once. 
+    There is one situation when you can require such behaviour - on CI server to test, that no cron is failing. 
+    For such case there is phing target `run-all-crons-serially`.
+
 ## Cron Limitations
-One cron run can only be run for a limited time by default to prevent high memory usage of long-running jobs in PHP.
+One cron run can only be run for a limited time by default to prevent high-memory usage of long-running jobs in PHP.
 In `shopsys/framework/src/Resources/config/cron.yaml` is set the default timeout to `240 seconds`:
 
 ```yaml
@@ -48,4 +53,4 @@ That's usually not a problem as long-running cron modules are not executed every
 but in some cases, the overall time of the "every 5 minutes" cron modules can be higher (for example considerable amount of products to export to Elasticsearch).
 Then it's possible, some cron modules will never be run.
 
-It's crucial to monitor your crons and, if necessary update their periodicity and timeout or split them into [multiple Cron Instances](#multiple-cron-instances).
+It's crucial to monitor your crons and, if necessary, update their periodicity and timeout or split them into [multiple Cron Instances](#multiple-cron-instances).
