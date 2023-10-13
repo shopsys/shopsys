@@ -26,7 +26,7 @@ services:
     App\Model\Product\ImportProductsCronModule:
         tags:
 -            - { name: shopsys.cron, hours: '*/3', minutes: '0' }
-+            - { name: shopsys.cron, hours: '*/3', minutes: '0', instanceName: products}
++            - { name: shopsys.cron, hours: '*/3', minutes: '0', instanceName: products }
 ```
 
 !!! note

@@ -24,6 +24,7 @@ class CronCommand extends Command
     private const OPTION_MODULE = 'module';
     private const OPTION_LIST = 'list';
     private const OPTION_INSTANCE_NAME = 'instance-name';
+    private const OPTION_RUN_ALL_SERIALLY = 'run-all-serially';
 
     /**
      * @var string
@@ -57,6 +58,12 @@ class CronCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'specific cron instance identifier',
+            )
+            ->addOption(
+                self::OPTION_RUN_ALL_SERIALLY,
+                null,
+                InputOption::VALUE_NONE,
+                'run all crons serially (this is not safe to run in production environment)',
             );
     }
 
@@ -67,6 +74,7 @@ class CronCommand extends Command
     {
         $optionList = $input->getOption(self::OPTION_LIST);
         $optionInstanceName = $input->getOption(self::OPTION_INSTANCE_NAME);
+        $optionRunAllSerially = $input->getOption(self::OPTION_RUN_ALL_SERIALLY);
 
         if ($optionList === true) {
             $this->listAllCronModulesSortedByServiceId($input, $output, $this->cronFacade);
@@ -80,6 +88,13 @@ class CronCommand extends Command
             return Command::FAILURE;
         }
 
+        if ($optionRunAllSerially === true) {
+            foreach ($this->cronFacade->getAll() as $cronModuleConfig) {
+                $this->cronFacade->runModuleByServiceId($cronModuleConfig->getServiceId());
+            }
+
+            return Command::SUCCESS;
+        }
 
         $instanceName = $optionInstanceName ?? $this->chooseInstance($input, $output);
         $this->runCron($input, $this->cronFacade, $this->mutexFactory, $instanceName);

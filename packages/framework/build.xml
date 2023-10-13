@@ -278,6 +278,15 @@
         </exec>
     </target>
 
+    <target name="cron-run-all-serially" depends="production-protection" description="This target will run all crons serially. It is not supposed to be run in the production environment but on CI servers to test that all crons run without errors.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:cron"/>
+            <arg value="--run-all-serially"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
+
     <target name="cron-watch" description="Cron watch target is running until cron instance ends, then is terminated.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
