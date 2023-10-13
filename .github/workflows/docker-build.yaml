@@ -501,6 +501,39 @@ jobs:
                         echo "All translations are dumped";
                         exit 0;
                     fi
+    check-console-commands:
+        name: Check that all console commands that are not used during installation are passing
+        needs: build-php-fpm-image
+        if: |
+            always() && !failure() && !cancelled() &&
+            (
+                github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
+                github.ref_protected == true
+            ) &&
+            (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped')
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Download docker-compose.yml from artifacts
+                uses: actions/download-artifact@v3
+                with:
+                    name: docker-compose
+            -   name: Build application
+                run: |
+                    docker compose up -d
+                    docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction --dev
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
+            -   name: Check all commands are passing
+                run: |
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y cron-list cron-run-all-serially cron-watch maintenance-on maintenance-off elasticsearch-export-changed
+                    docker compose exec -T php-fpm php bin/console shopsys:categories:recalculate
+                    docker compose exec -T php-fpm php bin/console shopsys:cdn-domain-url:replace
+                    docker compose exec -T php-fpm php bin/console shopsys:clean-opcache
+                    docker compose exec -T php-fpm php bin/console shopsys:database:dump dump.sql
+                    docker compose exec -T php-fpm php bin/console shopsys:domains:info
     build-fork-docker-images:
         if: |
             github.event.pull_request.head.repo.full_name != 'shopsys/shopsys' && 
@@ -558,6 +591,14 @@ jobs:
                         echo "All translations are dumped";
                         exit 0;
                     fi
+            -   name: Check all not previously used commands are passing
+                run: |
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y frontend-api-enable cron-list cron-run-all-serially cron-watch maintenance-on maintenance-off elasticsearch-export-changed
+                    docker compose exec -T php-fpm php bin/console shopsys:categories:recalculate
+                    docker compose exec -T php-fpm php bin/console shopsys:cdn-domain-url:replace
+                    docker compose exec -T php-fpm php bin/console shopsys:clean-opcache
+                    docker compose exec -T php-fpm php bin/console shopsys:database:dump dump.sql
+                    docker compose exec -T php-fpm php bin/console shopsys:domains:info
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
