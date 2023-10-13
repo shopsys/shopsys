@@ -1,6 +1,6 @@
 # https://editorconfig.org
 root = true
 
-[*.yml]
+[*]
 indent_size = 4
 indent_style = space
