@@ -1,0 +1,10 @@
+PaymentStatus:
+    type: object
+    config:
+        fields:
+            isPaid:
+                type: "Boolean!"
+                description: "Whether the order is already paid or not"
+            transactionCount:
+                type: "Int!"
+                description: "Count of already processed transactions"

@@ -55,9 +55,10 @@ class PaymentMutationTest extends GraphQlTestCase
             __DIR__ . '/graphql/CheckPaymentMutation.graphql',
             ['orderUuid' => $order->getUuid()],
         );
-        $this->assertArrayHasKey('data', $response);
-        $this->assertArrayHasKey('CheckPaymentStatus', $response['data']);
-        $this->assertTrue($response['data']['CheckPaymentStatus']);
+        $content = $this->getResponseDataForGraphQlType($response, 'CheckPaymentStatus');
+
+        $this->assertTrue($content['isPaid']);
+        $this->assertSame(2, $content['transactionCount']);
 
 
         $this->em->clear();

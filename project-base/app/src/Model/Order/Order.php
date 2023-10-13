@@ -204,6 +204,14 @@ class Order extends BaseOrder
     }
 
     /**
+     * @return int
+     */
+    public function getPaymentTransactionsCount(): int
+    {
+        return $this->paymentTransactions->count();
+    }
+
+    /**
      * @return bool
      */
     public function isMaxTransactionCountReached(): bool

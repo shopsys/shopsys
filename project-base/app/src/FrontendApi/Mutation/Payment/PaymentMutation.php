@@ -52,9 +52,9 @@ class PaymentMutation extends AbstractMutation
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return bool
+     * @return array{isPaid: bool, transactionCount: int}
      */
-    public function checkPaymentStatusMutation(Argument $argument): bool
+    public function checkPaymentStatusMutation(Argument $argument): array
     {
         try {
             $uuid = $argument['orderUuid'];
@@ -62,7 +62,10 @@ class PaymentMutation extends AbstractMutation
 
             $this->paymentServiceFacade->updatePaymentTransactionsByOrder($order);
 
-            return $order->isPaid();
+            return [
+                'isPaid' => $order->isPaid(),
+                'transactionCount' => $order->getPaymentTransactionsCount(),
+            ];
         } catch (Throwable $exception) {
             throw new Error($exception->getMessage(), null, null, [], null, $exception);
         }
