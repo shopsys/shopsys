@@ -41,8 +41,8 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
         );
 
         $this->symfonyStyle->note('Installing dependencies');
-        $this->processRunner->run(sprintf('cd %s/project-base && composer update && npm install', $tempDirectory));
-        $this->processRunner->run(sprintf('cd %s/project-base && php phing db-rebuild', $tempDirectory));
+        $this->processRunner->run(sprintf('cd %s/project-base/app && composer update && npm install', $tempDirectory));
+        $this->processRunner->run(sprintf('cd %s/project-base/app && php phing db-rebuild', $tempDirectory));
 
         $this->symfonyStyle->note('Committing changes in composer.lock, symfony.lock, package-lock.json, and migrations-lock.yml');
         $this->processRunner->run(sprintf('cp %s/project-base/app/composer.lock %s/project-base/app/composer.lock', $tempDirectory, $currentDir));
