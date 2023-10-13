@@ -105,6 +105,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   add consumers and RabbitMQ to deployed application ([#2904](https://github.com/shopsys/shopsys/pull/2904))
     -   set new environment variables `RABBITMQ_DEFAULT_USER`, `RABBITMQ_DEFAULT_PASS`, `RABBITMQ_IP_WHITELIST` in your deployment tool (with use of the default config it will be Gitlab CI)
     -   see #project-base-diff to update your project
+-   re-enable phing target cron ([#2875](https://github.com/shopsys/shopsys/pull/2875))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
