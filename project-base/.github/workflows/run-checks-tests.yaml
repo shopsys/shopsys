@@ -13,8 +13,49 @@ jobs:
                 run: echo 1 | ./scripts/configure.sh
             -   name: Install composer dependencies
                 run: docker-compose exec -T php-fpm composer install
-            -   name: Ensure Symfony 4 version
-                run: docker-compose exec -T php-fpm composer update
+            -   name: Build application
+                run: docker-compose exec -T php-fpm php phing db-create test-db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate
+            -   name: Check standards
+                run: docker-compose exec -T php-fpm php phing standards
+            -   name: Run tests
+                run: docker-compose exec -T php-fpm php phing tests
+            -   name: Run acceptance tests
+                run: docker-compose exec -T php-fpm php phing tests-acceptance
+            -   name: PHP-FPM container logs
+                if: ${{ failure() }}
+                run: docker-compose logs php-fpm
+            -   name: Copy Codeception logs from container
+                if: ${{ failure() }}
+                run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./var/log
+            -   name: Upload Codeception logs to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v2
+                with:
+                    name: acceptance-logs
+                    path: ./var/log
+    build-whole-application-for-single-domain:
+        name: Build application and run standards checks and tests on single domain
+        runs-on: 'ubuntu-20.04'
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Configure application
+                run: echo 1 | ./scripts/configure.sh
+            -   name: Remove other domains than first one from configs
+                run: |
+                    # delete all domain URLs except URLs for domain with ID 1 in app/config/domains.yaml and app/config/domains_urls.yaml
+                    sed -i '/id: 2/{:a;Q}' app/config/domains_urls.yaml
+                    sed -i '/id: 2/{:a;Q}' app/config/domains.yaml
+
+                    # sed is removing all content from match to end of file, unfortunately it adds new line (\n) after the replacement
+                    # more info: https://stackoverflow.com/questions/50559170/delete-last-line-break-using-sed
+                    # when there is more than one last line left, the build will fail because of our coding standards
+                    truncate -s -1 app/config/domains_urls.yaml
+                    truncate -s -1 app/config/domains.yaml
+            -   name: Install composer dependencies
+                run: docker-compose exec -T php-fpm composer install
             -   name: Build application
                 run: docker-compose exec -T php-fpm php phing db-create test-db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate
             -   name: Check standards
