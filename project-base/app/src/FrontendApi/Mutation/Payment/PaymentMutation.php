@@ -6,6 +6,8 @@ namespace App\FrontendApi\Mutation\Payment;
 
 use App\FrontendApi\Model\Order\OrderFacade;
 use App\FrontendApi\Model\Payment\PaymentSetupCreationData;
+use App\FrontendApi\Mutation\Payment\Exception\MaxTransactionCountReachedUserError;
+use App\FrontendApi\Mutation\Payment\Exception\OrderAlreadyPaidUserError;
 use App\Model\Payment\Service\PaymentServiceFacade;
 use GraphQL\Error\Error;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -30,10 +32,18 @@ class PaymentMutation extends AbstractMutation
      */
     public function payOrderMutation(Argument $argument): PaymentSetupCreationData
     {
-        try {
-            $uuid = $argument['orderUuid'];
-            $order = $this->orderFacade->getByUuid($uuid);
+        $uuid = $argument['orderUuid'];
+        $order = $this->orderFacade->getByUuid($uuid);
 
+        if ($order->isPaid()) {
+            throw new OrderAlreadyPaidUserError('Order is already paid');
+        }
+
+        if ($order->isMaxTransactionCountReached()) {
+            throw new MaxTransactionCountReachedUserError('Max transaction count reached');
+        }
+
+        try {
             return $this->paymentServiceFacade->payOrder($order);
         } catch (Throwable $exception) {
             throw new Error($exception->getMessage(), null, null, [], null, $exception);

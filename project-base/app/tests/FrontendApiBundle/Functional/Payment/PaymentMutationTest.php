@@ -5,77 +5,105 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Payment;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\Model\Payment\Transaction\PaymentTransactionDataFactory;
+use App\Model\Payment\Transaction\PaymentTransactionFacade;
+use GoPay\Definition\Response\PaymentStatus;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentMutationTest extends GraphQlTestCase
 {
+    /**
+     * @inject
+     */
+    private PaymentTransactionFacade $paymentTransactionFacade;
+
+    /**
+     * @inject
+     */
+    private PaymentTransactionDataFactory $paymentTransactionDataFactory;
+
     public function testPayOrderWithGoPay(): void
     {
         /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_CZ);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
 
-        $mutation = $this->getPayOrderMutation($order->getUuid());
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/PayOrderMutation.graphql',
+            ['orderUuid' => $order->getUuid()],
+        );
+        $content = $this->getResponseDataForGraphQlType($response, 'PayOrder');
 
-        $content = $this->getResponseContentForQuery($mutation);
-
-        $this->assertArrayHasKey('data', $content);
-        $this->assertArrayHasKey('PayOrder', $content['data']);
-        $this->assertArrayHasKey('goPayCreatePaymentSetup', $content['data']['PayOrder']);
-        $this->assertArrayHasKey('gatewayUrl', $content['data']['PayOrder']['goPayCreatePaymentSetup']);
-        $this->assertArrayHasKey('goPayId', $content['data']['PayOrder']['goPayCreatePaymentSetup']);
-        $this->assertArrayHasKey('embedJs', $content['data']['PayOrder']['goPayCreatePaymentSetup']);
-        $this->assertSame('https://example.com?supertoken=xyz123456', $content['data']['PayOrder']['goPayCreatePaymentSetup']['gatewayUrl']);
-        $this->assertSame('987654321', $content['data']['PayOrder']['goPayCreatePaymentSetup']['goPayId']);
-    }
-
-    /**
-     * @param string $orderUuid
-     * @return string
-     */
-    private function getPayOrderMutation(string $orderUuid): string
-    {
-        return '
-            mutation {
-                PayOrder(orderUuid: "' . $orderUuid . '") {
-                    goPayCreatePaymentSetup {
-                        gatewayUrl
-                        goPayId
-                        embedJs
-                    }
-                }
-            }
-        ';
+        $this->assertArrayHasKey('goPayCreatePaymentSetup', $content);
+        $this->assertArrayHasKey('gatewayUrl', $content['goPayCreatePaymentSetup']);
+        $this->assertArrayHasKey('goPayId', $content['goPayCreatePaymentSetup']);
+        $this->assertArrayHasKey('embedJs', $content['goPayCreatePaymentSetup']);
+        $this->assertSame('https://example.com?supertoken=xyz123456', $content['goPayCreatePaymentSetup']['gatewayUrl']);
+        $this->assertSame('987654321', $content['goPayCreatePaymentSetup']['goPayId']);
     }
 
     public function testCheckPaymentStatusWithGoPay(): void
     {
         /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_CZ);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
 
-        $mutation = $this->getPayOrderMutation($order->getUuid());
-        $this->getResponseContentForQuery($mutation);
+        $this->getResponseContentForGql(
+            __DIR__ . '/graphql/PayOrderMutation.graphql',
+            ['orderUuid' => $order->getUuid()],
+        );
 
-        $mutation = $this->getCheckPaymentStatusMutation($order->getUuid());
-        $content = $this->getResponseContentForQuery($mutation);
-        $this->assertArrayHasKey('data', $content);
-        $this->assertArrayHasKey('CheckPaymentStatus', $content['data']);
-        $this->assertTrue($content['data']['CheckPaymentStatus']);
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/CheckPaymentMutation.graphql',
+            ['orderUuid' => $order->getUuid()],
+        );
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('CheckPaymentStatus', $response['data']);
+        $this->assertTrue($response['data']['CheckPaymentStatus']);
+
+
+        $this->em->clear();
+        /** @var \App\Model\Order\Order $order */
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
 
         foreach ($order->getPaymentTransactions() as $paymentTransaction) {
             $this->assertSame('PAID', $paymentTransaction->getExternalPaymentStatus());
         }
     }
 
-    /**
-     * @param string $orderUuid
-     * @return string
-     */
-    private function getCheckPaymentStatusMutation(string $orderUuid): string
+    public function testOrderCannotBePaidForAlreadyPaidOrder(): void
     {
-        return '
-            mutation {
-                CheckPaymentStatus(orderUuid: "' . $orderUuid . '")
-            }
-        ';
+        // set transaction as paid
+        $paymentTransaction = $this->paymentTransactionFacade->getById(1);
+        $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);
+        $paymentTransactionData->externalPaymentStatus = PaymentStatus::PAID;
+        $this->paymentTransactionFacade->edit(1, $paymentTransactionData);
+
+        /** @var \App\Model\Order\Order $order */
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/PayOrderMutation.graphql',
+            ['orderUuid' => $order->getUuid()],
+        );
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertSame($errors[0]['extensions']['userCode'], 'order-already-paid');
+    }
+
+    public function testOrderCannotBePaidForPaymentWithTwoTransactions(): void
+    {
+        /** @var \App\Model\Order\Order $order */
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_14);
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/PayOrderMutation.graphql',
+            ['orderUuid' => $order->getUuid()],
+        );
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertSame($errors[0]['extensions']['userCode'], 'max-transaction-count-reached');
     }
 }

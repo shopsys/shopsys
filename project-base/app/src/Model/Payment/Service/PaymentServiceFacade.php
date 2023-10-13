@@ -17,7 +17,6 @@ use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageTrait;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class PaymentServiceFacade
 {
@@ -33,18 +32,15 @@ class PaymentServiceFacade
      * @param \App\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
      * @param \App\Model\GoPay\GoPayFacade $goPayFacade
      * @param \Psr\Log\LoggerInterface $logger
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct(
-        private PaymentTransactionFacade $paymentTransactionFacade,
-        private PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        private readonly PaymentTransactionFacade $paymentTransactionFacade,
+        private readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
         GoPayFacade $goPayFacade,
-        private LoggerInterface $logger,
-        ContainerInterface $container,
+        private readonly LoggerInterface $logger,
     ) {
         $this->paymentServices = [];
         $this->paymentServices[Payment::TYPE_GOPAY] = $goPayFacade;
-        $this->container = $container;
     }
 
     /**
@@ -99,7 +95,7 @@ class PaymentServiceFacade
                 if ($update) {
                     $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
                 }
-            } catch (PaymentServiceFacadeNotRegisteredException | GoPayNotConfiguredException $exception) {
+            } catch (PaymentServiceFacadeNotRegisteredException|GoPayNotConfiguredException $exception) {
                 $this->logger->error($exception->getMessage());
             }
         }

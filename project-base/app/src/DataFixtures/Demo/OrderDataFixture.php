@@ -23,7 +23,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
 {
     public const ORDER_PREFIX = 'order_';
     private const ORDER_WITH_GOPAY_PAYMENT_PREFIX = 'order_with_gopay_payment_';
-    public const ORDER_WITH_GOPAY_PAYMENT_CZ = 'order_with_gopay_payment_1';
+    public const ORDER_WITH_GOPAY_PAYMENT_1 = 'order_with_gopay_payment_1';
+    public const ORDER_WITH_GOPAY_PAYMENT_14 = 'order_with_gopay_payment_14';
 
     /**
      * @var string[]
@@ -160,7 +161,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             ],
             $customerUser,
         );
-        $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT_PREFIX . $domainId, $order);
+        $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT_PREFIX . $order->getId(), $order);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
@@ -472,8 +473,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         $orderData = $this->orderDataFactory->create();
-        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
-        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE);
         $orderData->trackingNumber = '48172539041';
         $orderData->firstName = 'Pavla';
@@ -488,7 +489,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -10 day'))->setTime(8, 14, 8);
-        $this->createOrder(
+        $order = $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '15' => 1,
@@ -497,6 +498,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '3' => 1,
             ],
         );
+        $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT_PREFIX . $order->getId(), $order);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);

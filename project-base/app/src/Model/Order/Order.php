@@ -7,6 +7,7 @@ namespace App\Model\Order;
 use App\Model\Order\Mail\OrderMail;
 use App\Model\Payment\Transaction\PaymentTransaction;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
@@ -44,6 +45,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  */
 class Order extends BaseOrder
 {
+    public const MAX_TRANSACTION_COUNT = 2;
+
     /**
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -91,10 +94,10 @@ class Order extends BaseOrder
     private ?string $pickupPlaceIdentifier;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Payment\Transaction\PaymentTransaction[]
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\Payment\Transaction\PaymentTransaction>
      * @ORM\OneToMany(targetEntity="App\Model\Payment\Transaction\PaymentTransaction", mappedBy="order", cascade={"persist"})
      */
-    private $paymentTransactions;
+    private Collection $paymentTransactions;
 
     /**
      * @var string|null
@@ -183,7 +186,7 @@ class Order extends BaseOrder
      */
     public function isPaid(): bool
     {
-        foreach ($this->getPaymentTransactions() as $paymentTransaction) {
+        foreach ($this->paymentTransactions as $paymentTransaction) {
             if ($paymentTransaction->isPaid()) {
                 return true;
             }
@@ -198,6 +201,14 @@ class Order extends BaseOrder
     public function getPaymentTransactions(): array
     {
         return $this->paymentTransactions->getValues();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMaxTransactionCountReached(): bool
+    {
+        return $this->paymentTransactions->count() >= self::MAX_TRANSACTION_COUNT;
     }
 
     /**
