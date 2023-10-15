@@ -72,6 +72,7 @@
     * [ParameterValueFilterOption](#parametervaluefilteroption)
     * [Payment](#payment)
     * [PaymentSetupCreationData](#paymentsetupcreationdata)
+    * [PaymentStatus](#paymentstatus)
     * [PersonalData](#personaldata)
     * [PersonalDataPage](#personaldatapage)
     * [Price](#price)
@@ -1201,7 +1202,7 @@ Add a transport to the cart, or remove a transport from the cart
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>CheckPaymentStatus</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td valign="top"><a href="#paymentstatus">PaymentStatus</a>!</td>
 <td>
 
 check payment status of order after callback from payment service
@@ -6279,6 +6280,48 @@ UUID
 <td>
 
 Identifiers of GoPay payment method
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### PaymentStatus
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>isPaid</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the order is already paid or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>paymentType</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Type of payment
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>transactionCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Count of already processed transactions
 
 </td>
 </tr>

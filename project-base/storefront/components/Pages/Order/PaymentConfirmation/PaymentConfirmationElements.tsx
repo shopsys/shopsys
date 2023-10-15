@@ -14,8 +14,14 @@ export const PaymentWrapper: FC = ({ children }) => (
 
 type MessageProps = { message?: string };
 
-export const Message: FC<MessageProps> = ({ children, message }) => (
-    <div className="text-center lg:text-left" dangerouslySetInnerHTML={{ __html: message ?? '' }}>
-        {children}
-    </div>
-);
+export const Message: FC<MessageProps> = ({ children, message }) => {
+    if (message) {
+        return (
+            <div className="text-center lg:text-left" dangerouslySetInnerHTML={{ __html: message }}>
+                {children}
+            </div>
+        );
+    }
+
+    return <div className="text-center lg:text-left">{children}</div>;
+};

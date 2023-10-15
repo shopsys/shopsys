@@ -8,3 +8,6 @@ PaymentStatus:
             transactionCount:
                 type: "Int!"
                 description: "Count of already processed transactions"
+            paymentType:
+                type: "String!"
+                description: "Type of payment"

@@ -65,6 +65,7 @@ class PaymentMutation extends AbstractMutation
             return [
                 'isPaid' => $order->isPaid(),
                 'transactionCount' => $order->getPaymentTransactionsCount(),
+                'paymentType' => $order->getPayment()->getType(),
             ];
         } catch (Throwable $exception) {
             throw new Error($exception->getMessage(), null, null, [], null, $exception);

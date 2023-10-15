@@ -1113,7 +1113,7 @@ export type MutationApi = {
   /** Add a transport to the cart, or remove a transport from the cart */
   ChangeTransportInCart: CartApi;
   /** check payment status of order after callback from payment service */
-  CheckPaymentStatus: Scalars['Boolean']['output'];
+  CheckPaymentStatus: PaymentStatusApi;
   /** Send message to the site owner */
   Contact: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
@@ -1793,6 +1793,16 @@ export type PaymentSetupCreationDataApi = {
   __typename?: 'PaymentSetupCreationData';
   /** Identifiers of GoPay payment method */
   goPayCreatePaymentSetup: Maybe<GoPayCreatePaymentSetupApi>;
+};
+
+export type PaymentStatusApi = {
+  __typename?: 'PaymentStatus';
+  /** Whether the order is already paid or not */
+  isPaid: Scalars['Boolean']['output'];
+  /** Type of payment */
+  paymentType: Scalars['String']['output'];
+  /** Count of already processed transactions */
+  transactionCount: Scalars['Int']['output'];
 };
 
 export type PersonalDataApi = {
@@ -3307,7 +3317,7 @@ export type CheckPaymentStatusMutationVariablesApi = Exact<{
 }>;
 
 
-export type CheckPaymentStatusMutationApi = { __typename?: 'Mutation', CheckPaymentStatus: boolean };
+export type CheckPaymentStatusMutationApi = { __typename?: 'Mutation', CheckPaymentStatus: { __typename?: 'PaymentStatus', isPaid: boolean, transactionCount: number, paymentType: string } };
 
 export type CreateOrderMutationVariablesApi = Exact<{
   firstName: Scalars['String']['input'];
@@ -5641,7 +5651,11 @@ export function useNotificationBarsApi(options?: Omit<Urql.UseQueryArgs<Notifica
 };
 export const CheckPaymentStatusMutationDocumentApi = gql`
     mutation CheckPaymentStatusMutation($orderUuid: Uuid!) {
-  CheckPaymentStatus(orderUuid: $orderUuid)
+  CheckPaymentStatus(orderUuid: $orderUuid) {
+    isPaid
+    transactionCount
+    paymentType
+  }
 }
     `;
 

@@ -1,52 +1,69 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentConfirmationContent } from 'components/Pages/Order/PaymentConfirmation/PaymentConfirmationContent';
-import { OrderSentPageContentDocumentApi, useCheckPaymentStatusMutationApi } from 'graphql/generated';
+import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
 import { onGtmCreateOrderEventHandler, onGtmPaymentFailEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmCreateOrderEventFromLocalStorage } from 'gtm/helpers/helpers';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const router = useRouter();
-    const [checkPaymentStatusResult, checkPaymentStatus] = useCheckPaymentStatusMutationApi();
+    const wasUpdatedPaymentStatusRef = useRef(false);
+    const [{ data: paymentStatusData, fetching: isPaymentStatusFetching }, updatePaymentStatusMutation] =
+        useCheckPaymentStatusMutationApi();
 
     const { orderIdentifier } = router.query;
-
     const orderUuidParam = getOrderUuid(orderIdentifier);
 
-    useEffect(() => {
-        checkPaymentStatus({ orderUuid: orderUuidParam }).then(({ data: checkPaymentStatusResultData }) => {
-            const { gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart } =
-                getGtmCreateOrderEventFromLocalStorage();
-            if (
-                checkPaymentStatusResultData?.CheckPaymentStatus === undefined ||
-                !gtmCreateOrderEventOrderPart ||
-                !gtmCreateOrderEventUserPart
-            ) {
-                return;
-            }
+    const updatePaymentStatus = async () => {
+        const checkPaymentStatusActionResult = await updatePaymentStatusMutation({ orderUuid: orderUuidParam });
 
-            if (checkPaymentStatusResultData.CheckPaymentStatus) {
-                onGtmCreateOrderEventHandler(gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart, true);
-            } else {
-                onGtmPaymentFailEventHandler(gtmCreateOrderEventOrderPart.id);
-            }
-        });
+        const { gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart } = getGtmCreateOrderEventFromLocalStorage();
+        if (
+            !checkPaymentStatusActionResult.data?.CheckPaymentStatus ||
+            !gtmCreateOrderEventOrderPart ||
+            !gtmCreateOrderEventUserPart
+        ) {
+            return;
+        }
+
+        if (checkPaymentStatusActionResult.data.CheckPaymentStatus.isPaid) {
+            onGtmCreateOrderEventHandler(gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart, true);
+        } else {
+            onGtmPaymentFailEventHandler(gtmCreateOrderEventOrderPart.id);
+        }
+    };
+
+    useEffect(() => {
+        if (!wasUpdatedPaymentStatusRef.current) {
+            updatePaymentStatus();
+            wasUpdatedPaymentStatusRef.current = true;
+        }
     }, []);
 
     return (
         <>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Order sent')}>
-                <PaymentConfirmationContent
-                    isSuccess={checkPaymentStatusResult.data?.CheckPaymentStatus === true}
-                    orderUuid={orderUuidParam}
-                />
+                <Webline>
+                    {isPaymentStatusFetching || !paymentStatusData ? (
+                        <Skeleton className="h-60" containerClassName="h-full w-full" />
+                    ) : (
+                        <PaymentConfirmationContent
+                            canPaymentBeRepeated={paymentStatusData.UpdatePaymentStatus.transactionCount < 2}
+                            isPaid={paymentStatusData.UpdatePaymentStatus.isPaid}
+                            orderPaymentType={paymentStatusData.UpdatePaymentStatus.paymentType}
+                            orderUuid={orderUuidParam}
+                        />
+                    )}
+                </Webline>
             </CommonLayout>
         </>
     );

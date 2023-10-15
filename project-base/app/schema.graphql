@@ -919,7 +919,7 @@ type Mutation {
   "Add a transport to the cart, or remove a transport from the cart"
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
   "check payment status of order after callback from payment service"
-  CheckPaymentStatus(orderUuid: Uuid!): Boolean!
+  CheckPaymentStatus(orderUuid: Uuid!): PaymentStatus!
   "Remove all products from Comparison and remove it."
   cleanComparison(comparisonUuid: Uuid): String!
   "Remove all products from wishlist and remove it."
@@ -1397,6 +1397,15 @@ input PaymentInput {
 type PaymentSetupCreationData {
   "Identifiers of GoPay payment method"
   goPayCreatePaymentSetup: GoPayCreatePaymentSetup
+}
+
+type PaymentStatus {
+  "Whether the order is already paid or not"
+  isPaid: Boolean!
+  "Type of payment"
+  paymentType: String!
+  "Count of already processed transactions"
+  transactionCount: Int!
 }
 
 type PersonalData {

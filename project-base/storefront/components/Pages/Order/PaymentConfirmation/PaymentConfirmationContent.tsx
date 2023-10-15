@@ -2,9 +2,24 @@ import { PaymentFail } from './PaymentFail';
 import { PaymentSuccess } from './PaymentSuccess';
 
 type PaymentConfirmationContentProps = {
-    isSuccess: boolean;
+    isPaid: boolean;
     orderUuid: string;
+    orderPaymentType: string;
+    canPaymentBeRepeated: boolean;
 };
 
-export const PaymentConfirmationContent: FC<PaymentConfirmationContentProps> = ({ isSuccess, orderUuid }) =>
-    isSuccess ? <PaymentSuccess orderUuid={orderUuid} /> : <PaymentFail />;
+export const PaymentConfirmationContent: FC<PaymentConfirmationContentProps> = ({
+    isPaid,
+    orderUuid,
+    orderPaymentType,
+    canPaymentBeRepeated,
+}) =>
+    isPaid ? (
+        <PaymentSuccess orderUuid={orderUuid} />
+    ) : (
+        <PaymentFail
+            canPaymentBeRepeated={canPaymentBeRepeated}
+            orderPaymentType={orderPaymentType}
+            orderUuid={orderUuid}
+        />
+    );
