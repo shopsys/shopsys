@@ -90,14 +90,16 @@ class ProductController extends BaseProductController
     /**
      * This route is used by GrapesJS to load Names of products
      *
-     * @Route("/product/names-by-catnums/{catnums}")
-     * @param string $catnums
+     * @Route("/product/names-by-catnums", methods={"post"}, condition="request.isXmlHttpRequest()")
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function productNamesByCatnumsAction(string $catnums): JsonResponse
+    public function productNamesByCatnumsAction(Request $request): JsonResponse
     {
+        $catnums = $request->get('catnums');
+
         $response = [];
-        $products = $this->productFacade->findAllByCatnums(explode(',', $catnums));
+        $products = $this->productFacade->findAllByCatnums($catnums);
 
         foreach ($products as $product) {
             $response[$product->getCatnum()] = $product->getName();

@@ -16,14 +16,17 @@ export default grapesjs.plugins.add('products', editor => {
         const components = element.components();
 
         if (productsCatnumString) {
-            const response = $.get({
-                url: `${window.location.origin}/admin/product/names-by-catnums/${productsCatnumString}`,
+            const splitProductCatnums = productsCatnumString.split(',').map(product => product.trim());
+
+            const response = $.post({
+                url: `${window.location.origin}/admin/product/names-by-catnums`,
+                data: { catnums: splitProductCatnums },
                 async: false
             });
 
             const productNames = response.status === 200 ? response.responseJSON : undefined;
 
-            for (const product of productsCatnumString.split(',')) {
+            for (const product of splitProductCatnums) {
                 if (productNames[product] !== undefined) {
                     components.add('<div class="gjs-product"></div>').addAttributes({
                         [dataProduct]: product,
