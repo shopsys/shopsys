@@ -39,7 +39,7 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
         $results = [];
 
         foreach ($parameters as $parameter) {
-            $filledParameter = [];
+            $filledParameter = $parameter;
             $filledParameter['parameter_id'] = $parameter['parameter_id'] ?? '';
             $filledParameter['parameter_uuid'] = $parameter['parameter_uuid'] ?? '';
             $filledParameter['parameter_name'] = $parameter['parameter_name'] ?? '';
