@@ -3,7 +3,7 @@ import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { ProductsByCatnumsApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { createEmptyArray } from 'helpers/arrayUtils';
-import { replaceAll } from 'helpers/replaceAll';
+import { parseCatnums } from 'helpers/parsing/grapesJsParser';
 
 type GrapesJsProps = {
     rawProductPart: string;
@@ -14,7 +14,7 @@ type GrapesJsProps = {
 export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetchedProducts, fetching }) => {
     const products = [];
 
-    const productCatnums = replaceAll(rawProductPart, /\[gjc-comp-ProductList&#61;|\]/g, '').split(',');
+    const productCatnums = parseCatnums(rawProductPart);
 
     for (const productCatnum of productCatnums) {
         const matchingProduct = allFetchedProducts?.productsByCatnums.find(
