@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Payment;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\DataFixtures\Demo\PaymentDataFixture;
 use App\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use GoPay\Definition\Response\PaymentStatus;
@@ -59,6 +60,7 @@ class PaymentMutationTest extends GraphQlTestCase
 
         $this->assertTrue($content['isPaid']);
         $this->assertSame(2, $content['transactionCount']);
+        $this->assertSame(PaymentDataFixture::PAYMENT_GOPAY, $content['paymentType']);
 
 
         $this->em->clear();

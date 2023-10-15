@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
+const MAX_ALLOWED_PAYMENT_TRANSACTIONS = 2;
+
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const router = useRouter();
@@ -57,10 +59,13 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                         <Skeleton className="h-60" containerClassName="h-full w-full" />
                     ) : (
                         <PaymentConfirmationContent
-                            canPaymentBeRepeated={paymentStatusData.UpdatePaymentStatus.transactionCount < 2}
                             isPaid={paymentStatusData.UpdatePaymentStatus.isPaid}
                             orderPaymentType={paymentStatusData.UpdatePaymentStatus.paymentType}
                             orderUuid={orderUuidParam}
+                            canPaymentBeRepeated={
+                                paymentStatusData.UpdatePaymentStatus.transactionCount <
+                                MAX_ALLOWED_PAYMENT_TRANSACTIONS
+                            }
                         />
                     )}
                 </Webline>
