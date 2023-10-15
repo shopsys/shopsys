@@ -190,7 +190,36 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $blogArticleData->descriptions[$locale] = '<div class="gjs-text-ckeditor">' . t('description - Lorem ipsum dolor sit amet, <div class="gjs-products" data-products="9177759,7700768,9146508"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="7700768"></div><div class="gjs-product" data-product="9146508"></div></div> consectetur <div class="gjs-products" data-products="9177759,9176508"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="9176508"></div></div> adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale) . '</div>';
+            $blogArticleData->descriptions[$locale] = t(
+                '<div class="gjs-text-ckeditor">
+                    description - Lorem ipsum dolor sit amet,
+                </div>
+                %productsFirstRow%
+                <div class="gjs-text-ckeditor">
+                    consectetur
+                </div>
+                %productsSecondRow%
+                <div class="gjs-text-ckeditor">adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu,
+                    laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta.
+                    Vivamus pulvinar sem non auctor dictum.
+                    Morbi eleifend semper enim, eu faucibus tortor posuere vitae.
+                    Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt.
+                    Aenean sed velit massa. Nullam interdum eget est ut convallis.
+                    Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.
+                    \nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu.
+                    Vivamus convallis quam vulputate faucibus facilisis.
+                    Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a.
+                    Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam.
+                    In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere.
+                    Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.
+                </div>',
+                [
+                    '%productsFirstRow%' => '<div class="gjs-products" data-products="9177759,7700768,9146508"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="7700768"></div><div class="gjs-product" data-product="9146508"></div></div>',
+                    '%productsSecondRow%' => '<div class="gjs-products" data-products="9177759,9176508"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="9176508"></div></div>',
+                ],
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                $locale,
+            );
             $blogArticleData->perexes[$locale] = t('%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu.', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
