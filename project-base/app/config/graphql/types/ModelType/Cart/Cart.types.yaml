@@ -41,3 +41,6 @@ Cart:
             paymentGoPayBankSwift:
                 type: "String"
                 description: "Selected bank swift code of goPay payment bank transfer"
+            roundingPrice:
+                type: "Price"
+                description: "Rounding amount if payment has rounding allowed"

@@ -5,17 +5,24 @@ import {
     OrderSummaryTextAndImage,
 } from './OrderSummaryElements';
 import { Image } from 'components/Basic/Image/Image';
-import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
+import {
+    PriceFragmentApi,
+    SimplePaymentFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+} from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
+import useTranslation from 'next-translate/useTranslation';
 
 type TransportAndPaymentProps = {
     transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null;
     payment: SimplePaymentFragmentApi | null;
+    roundingPrice: PriceFragmentApi | null;
 };
 
 const TEST_IDENTIFIER = 'blocks-ordersummary';
 
-export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, transport }) => {
+export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, transport, roundingPrice }) => {
+    const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     return (
@@ -54,6 +61,16 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                         </OrderSummaryTextAndImage>
                         <OrderSummaryPrice dataTestId={TEST_IDENTIFIER + '-payment-price'}>
                             <strong>{formatPrice(payment.price.priceWithVat)}</strong>
+                        </OrderSummaryPrice>
+                    </OrderSummaryRow>
+                )}
+                {roundingPrice && (
+                    <OrderSummaryRow>
+                        <OrderSummaryTextAndImage dataTestId={TEST_IDENTIFIER + '-rounding-name'}>
+                            {t('Rounding')}
+                        </OrderSummaryTextAndImage>
+                        <OrderSummaryPrice dataTestId={TEST_IDENTIFIER + '-rounding-price'}>
+                            <strong>{formatPrice(roundingPrice.priceWithVat)}</strong>
                         </OrderSummaryPrice>
                     </OrderSummaryRow>
                 )}

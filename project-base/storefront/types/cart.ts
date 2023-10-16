@@ -3,6 +3,7 @@ import {
     CartModificationsFragmentApi,
     ListedStoreFragmentApi,
     Maybe,
+    PriceFragmentApi,
     SimplePaymentFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
@@ -18,4 +19,5 @@ export type CurrentCartType = {
     isLoading: boolean;
     isFetching: boolean;
     modifications: Maybe<CartModificationsFragmentApi>;
+    roundingPrice: Maybe<PriceFragmentApi>;
 };

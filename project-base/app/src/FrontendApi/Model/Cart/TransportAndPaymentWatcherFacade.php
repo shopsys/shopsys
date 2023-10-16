@@ -98,6 +98,7 @@ class TransportAndPaymentWatcherFacade
         $this->cartWithModificationsResult->setTotalItemsPrice($orderPreview->getProductsPrice());
         $this->cartWithModificationsResult->setTotalDiscountPrice($orderPreview->getTotalPriceDiscount());
         $this->cartWithModificationsResult->setTotalPriceWithoutDiscountTransportAndPayment($orderPreview->getTotalPriceWithoutDiscountTransportAndPayment());
+        $this->cartWithModificationsResult->setRoundingPrice($orderPreview->getRoundingPrice());
 
         $this->checkTransport($cart);
         $this->checkPayment($cart);

@@ -26,4 +26,7 @@ fragment CartFragment on CartInterface {
     promoCode
     selectedPickupPlaceIdentifier
     paymentGoPayBankSwift
+    roundingPrice {
+        ...PriceFragment
+    }
 }

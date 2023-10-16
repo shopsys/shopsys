@@ -15,7 +15,7 @@ const TEST_IDENTIFIER = 'blocks-ordersummary';
 
 export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoading }) => {
     const { t } = useTranslation();
-    const { cart, transport, payment, promoCode } = useCurrentCart();
+    const { cart, transport, payment, promoCode, roundingPrice } = useCurrentCart();
 
     if (cart === null) {
         return null;
@@ -41,7 +41,13 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                             {isTransportOrPaymentLoading && (transport || payment) && (
                                 <LoaderWithOverlay className="w-8" />
                             )}
-                            {(transport || payment) && <TransportAndPayment transport={transport} payment={payment} />}
+                            {(transport || payment) && (
+                                <TransportAndPayment
+                                    transport={transport}
+                                    payment={payment}
+                                    roundingPrice={roundingPrice}
+                                />
+                            )}
                             {promoCode && <PromoCode promoCode={promoCode} discount={cart.totalDiscountPrice} />}
                         </div>
 
