@@ -52,6 +52,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))
     -   see #project-base-diff to update your project
+-   remove link from administrator and customers breadcrumb ([#2881](https://github.com/shopsys/shopsys/pull/2881))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

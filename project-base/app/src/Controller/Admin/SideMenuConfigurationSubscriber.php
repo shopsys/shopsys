@@ -64,7 +64,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function configureCustomersMenu(ConfigureMenuEvent $event): void
     {
         $customersMenu = $event->getMenu();
-        $customersMenu->setUri('');
+        $customersMenu->setUri(null);
         $customersExtras = $customersMenu->getExtras();
         unset($customersExtras['routes']);
         $customersMenu->setExtras($customersExtras);
@@ -258,7 +258,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $administratorMenu = $event->getMenu();
 
-        $administratorMenu->setUri('');
+        $administratorMenu->setUri(null);
         $administratorExtras = $administratorMenu->getExtras();
         unset($administratorExtras['routes']);
         $administratorMenu->setExtras($administratorExtras);
