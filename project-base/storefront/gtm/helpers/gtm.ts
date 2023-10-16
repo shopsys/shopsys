@@ -41,7 +41,7 @@ import {
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { logException } from 'helpers/errors/logException';
-import { canUseDom } from 'helpers/canUseDom';
+import { isClient } from 'helpers/isClient';
 
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
     const { cart, promoCode, isFetching } = useCurrentCart();
@@ -192,7 +192,7 @@ export const getGtmReviewConsents = (): GtmReviewConsentsType => ({
 });
 
 export const gtmSafePushEvent = (event: GtmEventInterface<GtmEventType, unknown>): void => {
-    if (canUseDom()) {
+    if (isClient) {
         window.dataLayer = window.dataLayer ?? [];
         window.dataLayer.push(event);
     } else {

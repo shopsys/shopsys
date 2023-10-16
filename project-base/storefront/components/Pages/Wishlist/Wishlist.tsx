@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { useWishlist } from 'hooks/useWishlist';
 import { RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
-import { canUseDom } from 'helpers/canUseDom';
+import { isClient } from 'helpers/isClient';
 
 export const Wishlist: FC = () => {
     const { t } = useTranslation();
@@ -19,7 +19,7 @@ export const Wishlist: FC = () => {
 
     const buildShareUrl = (): string => {
         if (!wishlist) {
-            return canUseDom() ? window.location.href : '';
+            return isClient ? window.location.href : '';
         }
 
         return (

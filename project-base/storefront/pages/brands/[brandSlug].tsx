@@ -16,7 +16,7 @@ import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/isServer';
+import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,

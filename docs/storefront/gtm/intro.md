@@ -157,7 +157,7 @@ The essential function is used to push all events to the data layer. If this fun
 
 ```ts
 export const gtmSafePushEvent = (event: GtmEventInterface<GtmEventType, unknown>): void => {
-    if (canUseDom()) {
+    if (isClient) {
         window.dataLayer = window.dataLayer ?? [];
         window.dataLayer.push(event);
     } else {

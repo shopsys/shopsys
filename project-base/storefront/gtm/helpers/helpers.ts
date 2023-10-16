@@ -1,15 +1,15 @@
 import { desktopFirstSizes, mobileFirstSizes } from 'helpers/mediaQueries';
-import { isServer } from 'helpers/isServer';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import { GtmDeviceTypes } from 'gtm/types/enums';
 import { GtmCreateOrderEventOrderPartType } from 'gtm/types/events';
 import { GtmUserInfoType } from 'gtm/types/objects';
 import { v4 as uuidV4 } from 'uuid';
+import { isClient } from 'helpers/isClient';
 
 const GTM_CREATE_ORDER_OBJECT_LOCAL_STORAGE_KEY = 'gtmCreateOrderEvent' as const;
 
 export const getGtmDeviceType = (): GtmDeviceTypes => {
-    if (isServer()) {
+    if (!isClient) {
         return GtmDeviceTypes.unknown;
     }
     if (window.innerWidth <= desktopFirstSizes.mobile) {
@@ -37,7 +37,7 @@ export const saveGtmCreateOrderEventInLocalStorage = (
     gtmCreateOrderEventOrderPart: GtmCreateOrderEventOrderPartType,
     gtmCreateOrderEventUserPart: GtmUserInfoType,
 ): void => {
-    if (isServer()) {
+    if (!isClient) {
         return;
     }
     const stringifiedGtmCreateOrderEvent = JSON.stringify({
@@ -52,7 +52,7 @@ export const getGtmCreateOrderEventFromLocalStorage = (): {
     gtmCreateOrderEventOrderPart: GtmCreateOrderEventOrderPartType | undefined;
     gtmCreateOrderEventUserPart: GtmUserInfoType | undefined;
 } => {
-    if (isServer()) {
+    if (!isClient) {
         return {
             gtmCreateOrderEventOrderPart: undefined,
             gtmCreateOrderEventUserPart: undefined,
@@ -77,7 +77,7 @@ export const getGtmCreateOrderEventFromLocalStorage = (): {
 };
 
 export const removeGtmCreateOrderEventFromLocalStorage = (): void => {
-    if (isServer()) {
+    if (!isClient) {
         return;
     }
 

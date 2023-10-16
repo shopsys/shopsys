@@ -1,7 +1,7 @@
 import { onGtmShowMessageEventHandler } from 'gtm/helpers/eventHandlers';
 import { toast } from 'react-toastify';
 import { GtmMessageDetailType, GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
-import { canUseDom } from './canUseDom';
+import { isClient } from './isClient';
 
 const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
     if (type === 'error') {
@@ -22,7 +22,7 @@ const showMessage = (message: string, type: 'info' | 'error' | 'success'): void 
 };
 
 export const showErrorMessage = (message: string, gtmMessageOrigin?: GtmMessageOriginType): void => {
-    if (canUseDom()) {
+    if (isClient) {
         showMessage(message, 'error');
         onGtmShowMessageEventHandler(
             GtmMessageType.error,
@@ -34,7 +34,7 @@ export const showErrorMessage = (message: string, gtmMessageOrigin?: GtmMessageO
 };
 
 export const showInfoMessage = (message: string, gtmMessageOrigin?: GtmMessageOriginType): void => {
-    if (canUseDom()) {
+    if (isClient) {
         showMessage(message, 'info');
         onGtmShowMessageEventHandler(
             GtmMessageType.information,
@@ -46,7 +46,7 @@ export const showInfoMessage = (message: string, gtmMessageOrigin?: GtmMessageOr
 };
 
 export const showSuccessMessage = (message: string): void => {
-    if (canUseDom()) {
+    if (isClient) {
         showMessage(message, 'success');
     }
 };
