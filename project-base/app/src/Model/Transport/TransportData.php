@@ -13,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
 class TransportData extends BaseTransportData
 {
     /**
-     * @var bool
-     */
-    public $personalPickup;
-
-    /**
      * @var string
      */
     public string $type;
