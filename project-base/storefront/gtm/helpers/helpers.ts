@@ -9,7 +9,7 @@ import { v4 as uuidV4 } from 'uuid';
 const GTM_CREATE_ORDER_OBJECT_LOCAL_STORAGE_KEY = 'gtmCreateOrderEvent' as const;
 
 export const getGtmDeviceType = (): GtmDeviceTypes => {
-    if (typeof navigator === 'undefined') {
+    if (isServer()) {
         return GtmDeviceTypes.unknown;
     }
     if (window.innerWidth <= desktopFirstSizes.mobile) {

@@ -1,8 +1,9 @@
 import { getDomainConfig } from 'helpers/domain/domainConfig';
+import { isServer } from 'helpers/isServer';
 import Script from 'next/script';
 
 export const GtmHeadScript: FC = () => {
-    if (typeof window === 'undefined') {
+    if (isServer()) {
         return null;
     }
 

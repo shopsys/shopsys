@@ -9,17 +9,17 @@ import { useRouter } from 'next/router';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { useWishlist } from 'hooks/useWishlist';
 import { RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
+import { canUseDom } from 'helpers/canUseDom';
 
 export const Wishlist: FC = () => {
     const { t } = useTranslation();
     const { wishlist, fetching, handleCleanWishlist } = useWishlist();
     const { url } = useDomainConfig();
     const router = useRouter();
-    const windowLocation = typeof window !== 'undefined' ? window.location.href : '';
 
     const buildShareUrl = (): string => {
         if (!wishlist) {
-            return windowLocation;
+            return canUseDom() ? window.location.href : '';
         }
 
         return (

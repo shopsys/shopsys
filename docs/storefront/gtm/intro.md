@@ -153,16 +153,16 @@ const getPageInfoForBrandDetailPage = (
 
 ## gtmSafePushEvent
 
-The essential function is used to push all events to the data layer.
+The essential function is used to push all events to the data layer. If this function is used outside of an available window, an error is logged to Sentry (and to console in dev).
 
 ```ts
-export const gtmSafePushEvent = (
-  event: GtmEventInterface<GtmEventType, unknown>
-): void => {
-  if (canUseDom()) {
-    window.dataLayer = window.dataLayer ?? [];
-    window.dataLayer.push(event);
-  }
+export const gtmSafePushEvent = (event: GtmEventInterface<GtmEventType, unknown>): void => {
+    if (canUseDom()) {
+        window.dataLayer = window.dataLayer ?? [];
+        window.dataLayer.push(event);
+    } else {
+        logException(new Error('Tried to use GTM safe push without available window. Please, fix this behavior.'));
+    }
 };
 ```
 
