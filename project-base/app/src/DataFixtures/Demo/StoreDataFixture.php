@@ -12,6 +12,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
@@ -86,9 +87,15 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private function getDemoData(): array
     {
         $firstDomainConfig = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
-        $secondDomainConfig = $this->domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID);
 
-        return [
+        try {
+            $secondDomainConfig = $this->domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID);
+            $isSecondDomainAvailable = true;
+        } catch (InvalidDomainIdException) {
+            $isSecondDomainAvailable = false;
+        }
+
+        $stores = [
             [
                 self::ATTR_NAME => 'Ostrava',
                 self::ATTR_IS_DEFAULT => true,
@@ -121,7 +128,11 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_LOCATION_LATITUDE => '50.0346875',
                 self::ATTR_LOCATION_LONGITUDE => '15.7707169',
                 self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
-            ], [
+            ],
+        ];
+
+        if ($isSecondDomainAvailable) {
+            $stores[] = [
                 self::ATTR_NAME => 'Žilina',
                 self::ATTR_IS_DEFAULT => false,
                 self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_SECOND_DOMAIN,
@@ -137,8 +148,10 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_LOCATION_LATITUDE => '49.2030444',
                 self::ATTR_LOCATION_LONGITUDE => '18.7499042',
                 self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
-            ],
-        ];
+            ];
+        }
+
+        return $stores;
     }
 
     /**
