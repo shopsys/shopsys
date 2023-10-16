@@ -61,3 +61,16 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))
     -   see #project-base-diff to update your project
+- set products for export to elastic after changing quantity after completing, editing, or deleting order ([#2587](https://github.com/shopsys/shopsys/pull/2587))
+    - method `Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade::__construct()` changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly EntityManagerInterface $em,
+                protected readonly ProductHiddenRecalculator $productHiddenRecalculator,
+                protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
+                protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
+                protected readonly ProductVisibilityFacade $productVisibilityFacade,
+                protected readonly ModuleFacade $moduleFacade,
+        +       protected readonly ProductRepository $productRepository,
+            )
+        ```
