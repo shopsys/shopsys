@@ -33,6 +33,42 @@ jobs:
                 with:
                     name: acceptance-logs
                     path: ./var/log
+
+            -   name: Build Storefront part of application
+                run: |
+                    docker compose cp php-fpm:/var/www/html/schema.graphql schema.graphql
+                    docker compose cp ./schema.graphql storefront:/home/node/app/schema.graphql
+                    docker compose exec storefront pnpm install --frozen-lockfile
+            -   name: Check Storefront standards
+                run: docker compose exec storefront pnpm run check
+            -   name: Run storefront unit tests
+                run: docker compose exec storefront pnpm test--no-watch
+            -   name: Run Cypress tests
+                run: docker compose run cypress
+            -   name: Upload Cypress videos to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v3
+                with:
+                    name: cypress-videos
+                    path: ./videos
+            -   name: Upload Cypress screenshots to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v3
+                with:
+                    name: cypress-screenshots
+                    path: ./screenshots
+            -   name: PHP-FPM container logs
+                if: ${{ failure() }}
+                run: docker compose logs php-fpm
+            -   name: Nginx container logs
+                if: ${{ failure() }}
+                run: docker compose logs webserver
+            -   name: Storefront container logs
+                if: ${{ failure() }}
+                run: docker compose logs storefront
+            -   name: Cypress container logs
+                if: ${{ failure() }}
+                run: docker compose logs cypress
     build-whole-application-for-single-domain:
         name: Build application and run standards checks and tests on single domain
         runs-on: ubuntu-22.04
@@ -41,6 +77,9 @@ jobs:
                 uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
+            -   name: Remove all but first domain from next.config.js
+                run: |
+                    node ./.github/keep-only-first-domain.js
             -   name: Configure application
                 run: echo 1 | ./scripts/configure.sh
             -   name: Remove other domains than first one from configs
@@ -76,3 +115,39 @@ jobs:
                 with:
                     name: acceptance-logs
                     path: ./var/log
+
+            -   name: Build Storefront part of application
+                run: |
+                    docker compose cp php-fpm:/var/www/html/schema.graphql schema.graphql
+                    docker compose cp ./schema.graphql storefront:/home/node/app/schema.graphql
+                    docker compose exec storefront pnpm install --frozen-lockfile
+            -   name: Check Storefront standards
+                run: docker compose exec storefront pnpm run check
+            -   name: Run storefront unit tests
+                run: docker compose exec storefront pnpm test--no-watch
+            -   name: Run Cypress tests
+                run: docker compose run cypress
+            -   name: Upload Cypress videos to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v3
+                with:
+                    name: cypress-videos
+                    path: ./videos
+            -   name: Upload Cypress screenshots to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v3
+                with:
+                    name: cypress-screenshots
+                    path: ./screenshots
+            -   name: PHP-FPM container logs
+                if: ${{ failure() }}
+                run: docker compose logs php-fpm
+            -   name: Nginx container logs
+                if: ${{ failure() }}
+                run: docker compose logs webserver
+            -   name: Storefront container logs
+                if: ${{ failure() }}
+                run: docker compose logs storefront
+            -   name: Cypress container logs
+                if: ${{ failure() }}
+                run: docker compose logs cypress
