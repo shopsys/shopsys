@@ -95,7 +95,11 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                     </div>
                 </div>
 
-                <ProductDetailTabs description={product.description} parameters={product.parameters} />
+                <ProductDetailTabs
+                    description={product.description}
+                    parameters={product.parameters}
+                    relatedProducts={product.relatedProducts}
+                />
 
                 <ProductDetailAvailabilityList ref={scrollTarget} storeAvailabilities={product.storeAvailabilities} />
 

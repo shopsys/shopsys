@@ -60,7 +60,11 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
 
                 <ProductVariantsTable isSellingDenied={product.isSellingDenied} variants={product.variants} />
 
-                <ProductDetailTabs description={product.description} parameters={product.parameters} />
+                <ProductDetailTabs
+                    description={product.description}
+                    parameters={product.parameters}
+                    relatedProducts={product.relatedProducts}
+                />
 
                 {!!product.accessories.length && <ProductDetailAccessories accessories={product.accessories} />}
             </Webline>

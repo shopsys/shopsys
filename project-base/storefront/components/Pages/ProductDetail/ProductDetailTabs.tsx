@@ -1,15 +1,18 @@
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Basic/UserText/UserText';
-import { ParameterFragmentApi } from 'graphql/generated';
+import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
+import { ListedProductFragmentApi, ParameterFragmentApi } from 'graphql/generated';
+import { GtmProductListNameType } from 'gtm/types/enums';
 import useTranslation from 'next-translate/useTranslation';
 
 type ProductDetailTabsProps = {
     description: string | null;
     parameters: ParameterFragmentApi[];
+    relatedProducts: ListedProductFragmentApi[];
 };
 
-export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, parameters }) => {
+export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, parameters, relatedProducts }) => {
     const { t } = useTranslation();
 
     const formatParameterValue = (valueText: string, index: number) => {
@@ -22,6 +25,8 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 <TabsListItem>{t('Overview')}</TabsListItem>
 
                 {!!parameters.length && <TabsListItem>{t('Parameters')}</TabsListItem>}
+
+                {!!relatedProducts.length && <TabsListItem>{t('Related Products')}</TabsListItem>}
             </TabsList>
 
             <TabsContent headingTextMobile={t('Overview')}>
@@ -43,6 +48,15 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                             </Row>
                         ))}
                     </Table>
+                </TabsContent>
+            )}
+
+            {!!relatedProducts.length && (
+                <TabsContent headingTextMobile={t('Related Products')}>
+                    <ProductsSlider
+                        products={relatedProducts}
+                        gtmProductListName={GtmProductListNameType.product_detail_related_products}
+                    />
                 </TabsContent>
             )}
         </Tabs>

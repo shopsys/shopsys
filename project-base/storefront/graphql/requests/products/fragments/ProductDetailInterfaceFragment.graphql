@@ -45,4 +45,7 @@ fragment ProductDetailInterfaceFragment on Product {
     productVideos {
         ...VideoTokenFragment
     }
+    relatedProducts {
+        ...ListedProductFragment
+    }
 }
