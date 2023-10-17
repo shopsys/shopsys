@@ -5,6 +5,7 @@ import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
+import { ProductDetailUsps } from './ProductDetailUsps';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
@@ -75,6 +76,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                         {product.shortDescription && (
                             <div data-testid={TEST_IDENTIFIER + 'short-description'}>{product.shortDescription}</div>
                         )}
+
+                        {product.usps.length > 0 && <ProductDetailUsps usps={product.usps} />}
 
                         <ProductDetailAddToCart product={product} />
 

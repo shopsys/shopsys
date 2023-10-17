@@ -1,6 +1,7 @@
 fragment ProductDetailFragment on RegularProduct {
-    ... ProductDetailInterfaceFragment
+    ...ProductDetailInterfaceFragment
     shortDescription
+    usps
     storeAvailabilities {
         ...StoreAvailabilityFragment
     }
