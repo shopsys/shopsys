@@ -32,9 +32,7 @@ The instance of cron is actually a named group of cron jobs.
 You can learn how to set up multiple cron instances in [Working with Multiple Cron Instances](../cookbook/working-with-multiple-cron-instances.md) cookbook.
 
 !!! note
-    By default it is not possible to run all crons at once. 
-    There is one situation when you can require such behaviour - on CI server to test, that no cron is failing. 
-    For such case there is phing target `run-all-crons-serially`.
+    For testing purposes (e.g., on CI server) there is a special phing target `run-all-crons-serially` that allows you to run all the CRON modules serially.
 
 ## Cron Limitations
 One cron run can only be run for a limited time by default to prevent high-memory usage of long-running jobs in PHP.
