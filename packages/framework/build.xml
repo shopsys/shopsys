@@ -253,7 +253,7 @@
         </exec>
     </target>
 
-    <target name="cron" description="Runs background jobs. Should be executed periodically by system Cron every 5 minutes.">
+    <target name="cron" description="Runs background jobs.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:cron"/>
