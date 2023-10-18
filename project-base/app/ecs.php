@@ -133,7 +133,9 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/DataFixtures/Demo/CategoryDataFixture.php',
             __DIR__ . '/src/Controller/Front/OrderController.php',
             __DIR__ . '/src/Model/Order/OrderFacade.php',
-            __DIR__ . '/src/FrontendApi/Resolver/Category/CategoryResolverMap.php'],
+            __DIR__ . '/src/Model/Product/Search/ProductElasticsearchConverter.php',
+            __DIR__ . '/src/FrontendApi/Resolver/Category/CategoryResolverMap.php',
+        ],
         CamelCapsFunctionNameSniff::class => [
             __DIR__ . '/tests/App/Test/Codeception/ActorInterface.php',
         ],

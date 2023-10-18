@@ -26,6 +26,21 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
         $result['available_stores_count'] = $product['available_stores_count'] ?? 0;
         $result['related_products'] = $product['related_products'] ?? [];
         $result['product_videos'] = $product['product_videos'] ?? [];
+        $result['searching_names'] = $product['searching_names'] ?? '';
+        $result['searching_catnums'] = $product['searching_catnums'] ?? '';
+        $result['searching_partnos'] = $product['searching_partnos'] ?? '';
+        $result['searching_eans'] = $product['searching_eans'] ?? '';
+        $result['searching_short_descriptions'] = $product['searching_short_descriptions'] ?? '';
+        $result['searching_descriptions'] = $product['searching_descriptions'] ?? '';
+        $result['is_available'] = $product['is_available'] ?? false;
+        $result['availability_dispatch_time'] = $product['availability_dispatch_time'] ?? null;
+        $result['uuid'] = $product['uuid'] ?? '00000000-0000-0000-0000-000000000000';
+        $result['unit'] = $product['unit'] ?? '';
+        $result['stock_quantity'] = $product['stock_quantity'] ?? 0;
+        $result['is_sale_exclusion'] = $product['is_sale_exclusion'] ?? true;
+        $result['files'] = $product['files'] ?? [];
+        $result['main_category_path'] = $product['main_category_path'] ?? '';
+        $result['breadcrumb'] = $product['breadcrumb'] ?? [];
 
         return $result;
     }
@@ -39,7 +54,7 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
         $results = [];
 
         foreach ($parameters as $parameter) {
-            $filledParameter = [];
+            $filledParameter = $parameter;
             $filledParameter['parameter_id'] = $parameter['parameter_id'] ?? '';
             $filledParameter['parameter_uuid'] = $parameter['parameter_uuid'] ?? '';
             $filledParameter['parameter_name'] = $parameter['parameter_name'] ?? '';

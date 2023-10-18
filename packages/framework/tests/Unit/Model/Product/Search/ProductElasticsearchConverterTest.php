@@ -83,9 +83,9 @@ class ProductElasticsearchConverterTest extends TestCase
             'parameters' => [
                 [
                     'parameter_id' => 1,
+                    'parameter_value_id' => 1,
                     'parameter_uuid' => '',
                     'parameter_name' => '',
-                    'parameter_value_id' => 1,
                     'parameter_value_uuid' => '',
                     'parameter_value_text' => '',
                 ],

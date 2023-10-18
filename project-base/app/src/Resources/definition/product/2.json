@@ -414,6 +414,20 @@
       "related_products": {
         "type": "integer"
       },
+      "accessories": {
+        "type": "integer"
+      },
+      "product_videos": {
+        "type": "nested",
+        "properties": {
+          "description": {
+            "type": "text"
+          },
+          "token": {
+            "type": "text"
+          }
+        }
+      },
       "breadcrumb": {
         "properties": {
           "name": {
