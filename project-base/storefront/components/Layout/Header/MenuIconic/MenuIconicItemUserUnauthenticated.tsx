@@ -1,10 +1,10 @@
-import useTranslation from 'next-translate/useTranslation';
 import { MenuIconicItemLink } from './MenuIconicElements';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Login } from 'components/Blocks/Popup/Login/Login';
-import { useState } from 'react';
-import dynamic from 'next/dynamic';
 import { UserIcon } from 'components/Basic/Icon/IconsSvg';
+import { Login } from 'components/Blocks/Popup/Login/Login';
+import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
@@ -16,9 +16,9 @@ export const MenuIconicItemUserUnauthenticated: FC = ({ dataTestId }) => {
     return (
         <>
             <MenuIconicItemLink
-                onClick={handleLogin}
                 className="cursor-pointer"
                 dataTestId={dataTestId + '-link-popup'}
+                onClick={handleLogin}
             >
                 <UserIcon className="w-5 lg:w-4" />
                 <span className="hidden lg:inline-block">{t('Login')}</span>

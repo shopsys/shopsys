@@ -1,11 +1,11 @@
 import { ResultProducts } from './ResultProducts';
-import { Pagination } from 'components/Blocks/Pagination/Pagination';
-import { getMappedProducts } from 'helpers/mappers/products';
-import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
-import { RefObject } from 'react';
-import { GtmProductListNameType } from 'gtm/types/enums';
 import { useSearchProductsData } from './helpers';
+import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ListedProductConnectionPreviewFragmentApi } from 'graphql/generated';
+import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
+import { GtmProductListNameType } from 'gtm/types/enums';
+import { getMappedProducts } from 'helpers/mappers/products';
+import { RefObject } from 'react';
 
 type SearchProductsWrapperProps = {
     paginationScrollTargetRef: RefObject<HTMLDivElement>;
@@ -36,10 +36,10 @@ export const SearchProductsWrapper: FC<SearchProductsWrapperProps> = ({
                 />
             )}
             <Pagination
-                paginationScrollTargetRef={paginationScrollTargetRef}
-                totalCount={productsSearch.totalCount}
                 isWithLoadMore
                 hasNextPage={hasNextPage}
+                paginationScrollTargetRef={paginationScrollTargetRef}
+                totalCount={productsSearch.totalCount}
             />
         </>
     );

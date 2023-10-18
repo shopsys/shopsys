@@ -1,15 +1,15 @@
+import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './AutocompleteSearchPopup';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/hooks/useGtmAutocompleteResultsViewEvent';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useDebounce } from 'hooks/helpers/useDebounce';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './AutocompleteSearchPopup';
 
 const AutocompleteSearchPopup = dynamic(() =>
     import('./AutocompleteSearchPopup').then((component) => component.AutocompleteSearchPopup),
@@ -73,12 +73,12 @@ export const AutocompleteSearch: FC = () => {
             >
                 <SearchInput
                     className="w-full border-2 border-white max-vl:border-primaryLight"
-                    label={t("Type what you're looking for")}
-                    onSearch={handleSearch}
-                    value={searchQueryValue}
                     isLoading={isFetchingSearchData}
+                    label={t("Type what you're looking for")}
+                    value={searchQueryValue}
                     onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
                     onClear={() => setSearchQueryValue('')}
+                    onSearch={handleSearch}
                 />
 
                 <div
@@ -91,8 +91,8 @@ export const AutocompleteSearch: FC = () => {
                 >
                     {isSearchResultsPopupVisible && (
                         <AutocompleteSearchPopup
-                            autocompleteSearchResults={searchData}
                             autocompleteSearchQueryValue={searchQueryValue}
+                            autocompleteSearchResults={searchData}
                             onClickLink={() => setIsSearchResultsPopupOpen(false)}
                         />
                     )}

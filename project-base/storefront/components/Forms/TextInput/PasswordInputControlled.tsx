@@ -1,5 +1,5 @@
-import { FormLineError } from '../Lib/FormLineError';
 import { TextInput } from './TextInput';
+import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { InputHTMLAttributes, ReactElement, useCallback, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
@@ -43,27 +43,27 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
     return render(
         <>
             <TextInput
-                label={passwordInputProps.label}
-                id={passwordInputId}
-                name={name}
-                hasError={invalid}
-                onBlur={field.onBlur}
-                type={inputType}
-                onChange={field.onChange}
-                ref={field.ref}
-                value={field.value}
-                inputSize={passwordInputProps.inputSize}
                 required
                 dataTestId={passwordInputProps.dataTestId}
+                hasError={invalid}
+                id={passwordInputId}
+                inputSize={passwordInputProps.inputSize}
+                label={passwordInputProps.label}
+                name={name}
+                ref={field.ref}
+                type={inputType}
+                value={field.value}
+                onBlur={field.onBlur}
+                onChange={field.onChange}
             >
                 <img
+                    alt="eye icon"
+                    src="/svg/eye.svg"
                     className={twJoin(
                         'absolute top-1/2 right-4 w-6 -translate-y-1/2 cursor-pointer',
                         inputType === 'text' && 'opacity-50',
                     )}
-                    src="/svg/eye.svg"
                     onClick={togglePasswordVisibilityHandler}
-                    alt="eye icon"
                 />
             </TextInput>
             <FormLineError error={error} inputType="text-input-password" textInputSize={passwordInputProps.inputSize} />

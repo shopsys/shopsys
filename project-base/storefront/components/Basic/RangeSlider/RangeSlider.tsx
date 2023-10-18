@@ -178,28 +178,28 @@ export const RangeSlider: FC<RangeSliderProps> = ({
             data-testid={TEST_IDENTIFIER}
         >
             <RangeSliderThumb
-                isActive={minValueThumb !== min}
-                type="range"
-                min={min}
-                max={max}
-                step={step}
-                value={minValueThumb}
-                onChange={onChangeMinHandler}
+                aria-label={t('from')}
                 data-testid={TEST_IDENTIFIER + '-left-thumb'}
                 disabled={isDisabled}
-                aria-label={t('from')}
+                isActive={minValueThumb !== min}
+                max={max}
+                min={min}
+                step={step}
+                type="range"
+                value={minValueThumb}
+                onChange={onChangeMinHandler}
             />
             <RangeSliderThumb
-                isActive={maxValueThumb !== max}
-                type="range"
-                min={min}
-                max={max}
-                step={step}
-                value={maxValueThumb}
-                onChange={onChangeMaxHandler}
+                aria-label={t('to')}
                 data-testid={TEST_IDENTIFIER + '-right-thumb'}
                 disabled={isDisabled}
-                aria-label={t('to')}
+                isActive={maxValueThumb !== max}
+                max={max}
+                min={min}
+                step={step}
+                type="range"
+                value={maxValueThumb}
+                onChange={onChangeMaxHandler}
             />
             <div className="relative w-full">
                 <div className="absolute z-above h-1 w-full rounded bg-greyLighter" />
@@ -212,15 +212,15 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     data-testid={TEST_IDENTIFIER + '-left-value'}
                 >
                     <TextInput
+                        disabled={isDisabled}
                         id={TEST_IDENTIFIER + '-left-value'}
+                        inputSize="small"
                         label={t('from')}
                         type="number"
-                        inputSize="small"
                         value={minValueInput}
-                        onChange={onChangeMinInputHandler}
                         onBlur={onBlurMinHandler}
+                        onChange={onChangeMinInputHandler}
                         onKeyDown={onKeyDownHandler}
-                        disabled={isDisabled}
                     />
                 </div>
                 <div
@@ -228,15 +228,15 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     data-testid={TEST_IDENTIFIER + '-right-value'}
                 >
                     <TextInput
+                        disabled={isDisabled}
                         id={TEST_IDENTIFIER + '-right-value'}
+                        inputSize="small"
                         label={t('to')}
                         type="number"
-                        inputSize="small"
                         value={maxValueInput}
-                        onChange={onChangeMaxInputHandler}
                         onBlur={onBlurMaxHandler}
+                        onChange={onChangeMaxInputHandler}
                         onKeyDown={onKeyDownHandler}
-                        disabled={isDisabled}
                     />
                 </div>
             </div>
@@ -258,6 +258,9 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ dataTestId, isActive, dis
 
     return (
         <input
+            data-testid={dataTestId}
+            disabled={disabled}
+            type="range"
             className={twJoin(
                 'pointer-events-none absolute top-6 z-[3] h-0 w-full appearance-none outline-none',
                 webkitTwClass,
@@ -269,9 +272,6 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ dataTestId, isActive, dis
                 disabled &&
                     '[&::-webkit-slider-thumb]:cursor-not-allowed [&::-moz-range-thumb]:cursor-not-allowed [&::-ms-thumb]:cursor-not-allowed',
             )}
-            disabled={disabled}
-            type="range"
-            data-testid={dataTestId}
             {...props}
         />
     );

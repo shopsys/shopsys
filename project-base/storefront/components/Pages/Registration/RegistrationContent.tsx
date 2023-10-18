@@ -7,14 +7,15 @@ import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
-import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useRegistrationMutationApi } from 'graphql/generated';
+import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
+import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 import { setTokensToCookies } from 'helpers/auth/tokens';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
+import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -22,7 +23,6 @@ import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
-import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
@@ -104,18 +104,18 @@ export const RegistrationContent: FC = () => {
                         </div>
 
                         <CheckboxControlled
-                            name={formMeta.fields.gdprAgreement.name}
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
+                            name={formMeta.fields.gdprAgreement.name}
                             render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
                             checkboxProps={{
                                 label: formMeta.fields.gdprAgreement.label,
                             }}
                         />
                         <CheckboxControlled
-                            name={formMeta.fields.newsletterSubscription.name}
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
+                            name={formMeta.fields.newsletterSubscription.name}
                             render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
                             checkboxProps={{
                                 label: formMeta.fields.newsletterSubscription.label,
@@ -130,9 +130,9 @@ export const RegistrationContent: FC = () => {
 
             {isErrorPopupVisible && (
                 <ErrorPopup
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
                     fields={formMeta.fields}
                     gtmMessageOrigin={GtmMessageOriginType.other}
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
                 />
             )}
         </>

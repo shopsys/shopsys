@@ -20,9 +20,9 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                     {blogArticle.mainImage && (
                         <div className="mb-10 flex overflow-hidden">
                             <Image
+                                alt={blogArticle.mainImage.name || blogArticle.name}
                                 image={blogArticle.mainImage}
                                 type="default"
-                                alt={blogArticle.mainImage.name || blogArticle.name}
                             />
                         </div>
                     )}

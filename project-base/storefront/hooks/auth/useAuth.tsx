@@ -1,6 +1,6 @@
-import { showSuccessMessage } from 'helpers/toasts';
 import { Exact, LoginApi, LoginVariablesApi, LogoutApi, Maybe, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
+import { showSuccessMessage } from 'helpers/toasts';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';

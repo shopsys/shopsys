@@ -1,8 +1,8 @@
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
 import { BlogCategoryPageSkeleton } from 'components/Pages/BlogCategory/BlogCategoryPageSkeleton';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     BlogCategoryArticlesDocumentApi,
     BlogCategoryQueryApi,
@@ -11,17 +11,17 @@ import {
     useBlogCategoryQueryApi,
 } from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
+import { getNumberFromUrlQuery, getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
+import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
-import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
-import { getNumberFromUrlQuery, getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
-import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { createClient } from 'urql/createClient';
 
 const BlogCategoryPage: NextPage = () => {
     const router = useRouter();
@@ -40,10 +40,10 @@ const BlogCategoryPage: NextPage = () => {
 
     return (
         <CommonLayout
-            title={seoTitle}
-            description={blogCategoryData?.blogCategory?.seoMetaDescription}
             breadcrumbs={blogCategoryData?.blogCategory?.breadcrumb}
             breadcrumbsType="blogCategory"
+            description={blogCategoryData?.blogCategory?.seoMetaDescription}
+            title={seoTitle}
         >
             {!!blogCategoryData?.blogCategory && !fetching ? (
                 <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />

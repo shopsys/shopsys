@@ -1,9 +1,9 @@
-import { RedisClientType } from 'redis';
-import { Mock, afterEach, describe, expect, test, vi } from 'vitest';
 import { cleanup, render, waitFor } from '@testing-library/react';
-import { createClient } from 'urql/createClient';
-import { Provider, ssrExchange, useQuery } from 'urql';
 import gql from 'graphql-tag';
+import { RedisClientType } from 'redis';
+import { Provider, ssrExchange, useQuery } from 'urql';
+import { createClient } from 'urql/createClient';
+import { Mock, afterEach, describe, expect, test, vi } from 'vitest';
 
 const mockRequestWithFetcher = vi.fn(async () => undefined);
 

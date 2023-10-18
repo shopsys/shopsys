@@ -25,8 +25,8 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
     return (
         <li data-testid={dataTestId}>
             <ExtendedNextLink
-                type={linkType}
                 href={href}
+                type={linkType}
                 className={twMergeCustom(
                     'flex h-full w-full cursor-pointer flex-col items-center justify-center gap-2 rounded bg-greyVeryLight px-2 py-4 no-underline transition hover:bg-whitesmoke hover:no-underline lg:flex-row lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
                     className,
@@ -34,11 +34,11 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
             >
                 {itemImage && (
                     <Image
-                        width={64}
+                        alt={itemImage.name || listedItem.name}
                         className="h-12 min-w-[64px] mix-blend-multiply"
                         image={itemImage}
                         type={imageType ?? 'default'}
-                        alt={itemImage.name || listedItem.name}
+                        width={64}
                     />
                 )}
 

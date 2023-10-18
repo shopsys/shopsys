@@ -1,8 +1,8 @@
+import { ArticleLink } from './BlogPreviewElements';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { ListedBlogArticleFragmentApi } from 'graphql/generated';
 import { Fragment } from 'react';
-import { ArticleLink } from './BlogPreviewElements';
 
 type MainProps = {
     articles: ListedBlogArticleFragmentApi[];
@@ -16,14 +16,14 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles }) => (
                 className="hidden flex-1 flex-col text-white no-underline first:flex hover:text-white hover:no-underline lg:flex"
             >
                 <ArticleLink
-                    href={article.link}
                     className="block text-lg font-bold leading-5 text-white no-underline hover:text-white hover:underline"
+                    href={article.link}
                 >
                     <Image
-                        image={article.mainImage}
-                        type="list"
                         alt={article.mainImage?.name || article.name}
                         className="rounded"
+                        image={article.mainImage}
+                        type="list"
                     />
                 </ArticleLink>
 
@@ -35,8 +35,8 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles }) => (
                     ))}
 
                     <ArticleLink
-                        href={article.link}
                         className="block text-lg font-bold leading-5 text-white no-underline hover:text-white hover:underline"
+                        href={article.link}
                     >
                         {article.name}
                     </ArticleLink>

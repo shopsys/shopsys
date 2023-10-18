@@ -1,9 +1,9 @@
+import { Image } from 'components/Basic/Image/Image';
+import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { ImageSizesFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import useTranslation from 'next-translate/useTranslation';
 import { Translate } from 'next-translate';
-import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
-import { Image } from 'components/Basic/Image/Image';
+import useTranslation from 'next-translate/useTranslation';
 
 type TransportAndPaymentSelectItemLabelProps = {
     name: string;
@@ -31,10 +31,10 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
         <div className="flex w-full flex-row items-center gap-3" data-testid={TEST_IDENTIFIER}>
             <Image
                 alt={image?.name}
-                type="default"
-                image={image}
-                wrapperClassName="shrink-0"
                 className="h-6 w-11 shrink-0 basis-11"
+                image={image}
+                type="default"
+                wrapperClassName="shrink-0"
             />
 
             <div className="flex flex-1 flex-col text-sm lg:flex-auto lg:basis-full lg:flex-row lg:items-center lg:gap-3">
@@ -63,8 +63,8 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                         <div className="my-1 text-greyLight">{t('Open') + ': '}</div>
 
                         <OpeningHours
-                            openingHours={pickupPlaceDetail.openingHours}
                             className="items-start gap-1 lg:items-start"
+                            openingHours={pickupPlaceDetail.openingHours}
                         />
                     </div>
                 )}

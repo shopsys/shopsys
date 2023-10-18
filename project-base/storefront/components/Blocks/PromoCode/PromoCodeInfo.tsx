@@ -23,8 +23,8 @@ export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallbac
             <div className="flex items-center font-bold" data-testid={TEST_IDENTIFIER + '-code'}>
                 {promoCode}
                 <CrossIcon
-                    onClick={onRemovePromoCodeHandler}
                     className="mr-1 w-4 cursor-pointer text-greyDark hover:text-primary"
+                    onClick={onRemovePromoCodeHandler}
                 />
             </div>
             <p data-testid={TEST_IDENTIFIER + '-description'}>

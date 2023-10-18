@@ -1,5 +1,5 @@
+import { MapMarkerIcon } from 'components/Basic/Icon/IconsSvg';
 import { twJoin } from 'tailwind-merge';
-import { MapMarkerIcon } from '../Icon/IconsSvg';
 
 interface SeznamMapMarkerIconProps {
     isActive: boolean;

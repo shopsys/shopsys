@@ -2,13 +2,13 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ProductComparison } from 'components/Pages/ProductComparison/ProductComparison';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { GtmPageType } from 'gtm/types/enums';
+import useTranslation from 'next-translate/useTranslation';
 
 const ProductComparisonPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -21,7 +21,7 @@ const ProductComparisonPage: FC<ServerSidePropsType> = () => {
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout title={t('Product comparison')} breadcrumbs={breadcrumbs}>
+        <CommonLayout breadcrumbs={breadcrumbs} title={t('Product comparison')}>
             <ProductComparison />
         </CommonLayout>
     );

@@ -9,16 +9,16 @@ import {
     useArticleDetailQueryApi,
 } from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
+import { parseCatnums } from 'helpers/parsing/grapesJsParser';
+import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
-import { parseCatnums } from 'helpers/parsing/grapesJsParser';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
+import { createClient } from 'urql/createClient';
 
 const ArticleDetailPage: NextPage = () => {
     const router = useRouter();
@@ -33,10 +33,10 @@ const ArticleDetailPage: NextPage = () => {
 
     return (
         <CommonLayout
-            title={article?.seoTitle}
-            description={article?.seoMetaDescription}
             breadcrumbs={article?.breadcrumb}
             canonicalQueryParams={[]}
+            description={article?.seoMetaDescription}
+            title={article?.seoTitle}
         >
             {!!article && !fetching ? <ArticleDetailContent article={article} /> : <ArticlePageSkeleton />}
         </CommonLayout>

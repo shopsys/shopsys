@@ -1,18 +1,18 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { StoreInfoBox } from './StoreInfoBox';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { MarkerIcon } from 'components/Basic/Icon/IconsSvg';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { createMapMarker } from 'helpers/createMapMarker';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 import Image from 'next/image';
 import { useCallback, useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { MapMarker } from 'types/map';
-import { MarkerIcon } from 'components/Basic/Icon/IconsSvg';
 
 type StoresContentProps = {
     stores: ListedStoreConnectionFragmentApi;
@@ -51,9 +51,9 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
                     <div className="mb-8 flex w-full flex-col vl:h-[500px] vl:flex-row">
                         <div className="h-[250px] w-full md:h-[350px] vl:h-auto vl:w-[calc(100%-420px)]">
                             <SeznamMap
-                                markers={markers}
                                 activeMarkerHandler={activeMarkerHandler}
                                 activeMarkerId={selectedStore?.slug}
+                                markers={markers}
                             />
                         </div>
                         <div className="relative flex flex-col items-center justify-center overflow-hidden border-2 border-greyLighter p-8 max-vl:border-t-0 vl:h-full vl:w-[420px] vl:border-l-0">
@@ -63,15 +63,15 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
                                 </span>
 
                                 <Image
-                                    src={`/images/stores_${defaultLocale}.png`}
-                                    alt={t('Stores')}
-                                    width={210}
-                                    height={160}
                                     priority
+                                    alt={t('Stores')}
+                                    height={160}
+                                    src={`/images/stores_${defaultLocale}.png`}
+                                    width={210}
                                 />
                             </div>
 
-                            <Heading type="h3" className="m-0 lg:mt-6">
+                            <Heading className="m-0 lg:mt-6" type="h3">
                                 {t('Stores')}
                             </Heading>
 
@@ -89,9 +89,9 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
                             mappedStores.map((store) => (
                                 <ExtendedNextLink
                                     key={store.slug}
+                                    className="mb-4 flex w-full items-center justify-between rounded border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline lg:w-auto vl:hover:-translate-x-1 vl:hover:shadow-lg"
                                     href={store.slug}
                                     type="store"
-                                    className="mb-4 flex w-full items-center justify-between rounded border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline lg:w-auto vl:hover:-translate-x-1 vl:hover:shadow-lg"
                                 >
                                     <>
                                         <div className="flex flex-row items-center text-lg text-primary">

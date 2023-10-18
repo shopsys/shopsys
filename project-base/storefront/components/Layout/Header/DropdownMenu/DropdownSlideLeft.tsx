@@ -15,8 +15,8 @@ export const DropdownSlideLeft: FC<DropdownSlideLeftProps> = ({ goToMenu, onClic
     return (
         <span
             className="relative -top-6 ml-8 inline-flex cursor-pointer items-center text-xs uppercase text-dark"
-            onClick={() => onClickEvent({ goToMenu })}
             data-testid={TEST_IDENTIFIER}
+            onClick={() => onClickEvent({ goToMenu })}
         >
             <ArrowIcon className="mr-2 rotate-90" />
             {t('Back')}

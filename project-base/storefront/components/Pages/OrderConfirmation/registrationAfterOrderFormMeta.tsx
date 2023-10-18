@@ -2,8 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'components/Basic/Link/Link';
 import { useTermsAndConditionsArticleUrlQueryApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
@@ -68,14 +68,14 @@ export const useRegistrationAfterOrderFormMeta = (
                     name: 'privacyPolicy' as const,
                     label: (
                         <Trans
-                            i18nKey="I agree with terms and conditions and privacy policy"
                             defaultTrans="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
+                            i18nKey="I agree with terms and conditions and privacy policy"
                             components={{
                                 lnk1:
                                     termsAndConditionUrl !== undefined ? (
-                                        <Link href={termsAndConditionUrl} isExternal target="_blank" />
+                                        <Link isExternal href={termsAndConditionUrl} target="_blank" />
                                     ) : (
-                                        <span></span>
+                                        <span />
                                     ),
                             }}
                         />

@@ -24,7 +24,7 @@ export const SeznamMapMarkerLayer: FC<SeznamMapMarkerLayerProps> = ({
         (isActive: boolean) => {
             const iconWrapper = document.createElement('div');
             iconWrapper.innerHTML = renderToStaticMarkup(
-                <SeznamMapMarkerIcon isClickable={isMarkersClickable} isActive={isActive} />,
+                <SeznamMapMarkerIcon isActive={isActive} isClickable={isMarkersClickable} />,
             );
 
             return iconWrapper;

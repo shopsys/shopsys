@@ -16,8 +16,8 @@ import {
 } from 'components/Forms/validationRules';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import useTranslation from 'next-translate/useTranslation';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';

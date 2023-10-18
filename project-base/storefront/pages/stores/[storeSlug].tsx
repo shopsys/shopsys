@@ -8,15 +8,15 @@ import {
     useStoreDetailQueryApi,
 } from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
-import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
+import { createClient } from 'urql/createClient';
 
 const StoreDetailPage: NextPage = () => {
     const router = useRouter();
@@ -29,9 +29,9 @@ const StoreDetailPage: NextPage = () => {
 
     return (
         <CommonLayout
-            title={storeDetailData?.store?.storeName}
             breadcrumbs={storeDetailData?.store?.breadcrumb}
             canonicalQueryParams={[]}
+            title={storeDetailData?.store?.storeName}
         >
             {!!storeDetailData?.store && !fetching ? (
                 <StoreDetailContent store={storeDetailData.store} />

@@ -1,6 +1,6 @@
 import { UserConsentForm } from 'components/Blocks/UserConsent/UserConsentForm';
-import { showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { showSuccessMessage } from 'helpers/toasts';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';

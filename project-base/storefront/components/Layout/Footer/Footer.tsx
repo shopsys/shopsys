@@ -1,10 +1,10 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { FooterBoxInfo } from './FooterBoxInfo';
 import { FooterCopyright } from './FooterCopyright';
 import { FooterMenu } from './FooterMenu';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 
 type FooterProps = {
     simpleFooter?: boolean;
@@ -30,9 +30,9 @@ export const Footer: FC<FooterProps> = ({ simpleFooter }) => {
                 )}
                 <FooterCopyright />
                 <ExtendedNextLink
+                    className="self-center text-greyLight no-underline transition hover:text-whitesmoke hover:no-underline"
                     href={cookieConsentUrl}
                     type="static"
-                    className="self-center text-greyLight no-underline transition hover:text-whitesmoke hover:no-underline"
                 >
                     {t('Cookie consent update')}
                 </ExtendedNextLink>

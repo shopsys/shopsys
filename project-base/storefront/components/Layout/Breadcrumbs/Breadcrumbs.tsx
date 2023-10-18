@@ -27,17 +27,17 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
 
     return (
         <div
+            data-testid={TEST_IDENTIFIER}
             className={twMergeCustom(
                 'flex items-center gap-2 border-b-2 border-greyLighter py-3 lg:ml-4 lg:border-none lg:py-0',
                 className,
             )}
-            data-testid={TEST_IDENTIFIER}
         >
             <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />
 
             <ArrowIcon className="mr-3 w-3 rotate-90 text-greyLight lg:hidden" />
 
-            <BreadcrumbsLink href="/" dataTestId={TEST_IDENTIFIER + '-item-root'}>
+            <BreadcrumbsLink dataTestId={TEST_IDENTIFIER + '-item-root'} href="/">
                 {t('Home page')}
             </BreadcrumbsLink>
 
@@ -46,9 +46,9 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
             {linkedBreadcrumbs.map((linkedBreadcrumb, index) => (
                 <Fragment key={index}>
                     <BreadcrumbsLink
+                        dataTestId={TEST_IDENTIFIER + '-item-' + index}
                         href={linkedBreadcrumb.slug}
                         type={type}
-                        dataTestId={TEST_IDENTIFIER + '-item-' + index}
                     >
                         {linkedBreadcrumb.name}
                     </BreadcrumbsLink>
@@ -69,10 +69,10 @@ const BreadcrumbsSpan: FC = ({ children, dataTestId }) => (
 
 const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKeys }> = ({ href, type, children, dataTestId }) => (
     <ExtendedNextLink
-        href={href}
-        type={type || 'static'}
         className="hidden text-greyLight no-underline last-of-type:inline lg:inline lg:text-primary lg:underline"
         data-testid={dataTestId}
+        href={href}
+        type={type || 'static'}
     >
         {children}
     </ExtendedNextLink>

@@ -9,7 +9,7 @@ type FooterMenuItemProps = {
 
 export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
     <>
-        <Heading type="h3" className="text-center font-bold uppercase text-white lg:text-left">
+        <Heading className="text-center font-bold uppercase text-white lg:text-left" type="h3">
             {title}
         </Heading>
 
@@ -17,11 +17,11 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
             {items.map((item) => (
                 <li key={item.uuid}>
                     <ExtendedNextLink
-                        href={item.__typename === 'ArticleSite' ? item.slug : item.url}
-                        type="static"
                         className="block text-sm text-greyLight no-underline hover:text-greyLight"
-                        target={item.external ? '_blank' : undefined}
+                        href={item.__typename === 'ArticleSite' ? item.slug : item.url}
                         rel={item.external ? 'nofollow noreferrer noopener' : undefined}
+                        target={item.external ? '_blank' : undefined}
+                        type="static"
                     >
                         {item.name}
                     </ExtendedNextLink>

@@ -50,47 +50,47 @@ export const FilterPanel = memo<FilterPanelProps>(
 
                 <div className="h-full divide-y divide-border overflow-y-scroll px-5 vl:static vl:overflow-visible">
                     <FilterGroupPrice
-                        title={t('Price')}
-                        initialMinPrice={filterOptions.minimalPrice}
                         initialMaxPrice={filterOptions.maximalPrice}
+                        initialMinPrice={filterOptions.minimalPrice}
+                        title={t('Price')}
                     />
 
-                    <FilterGroupInStock title={t('Availability')} inStockCount={filterOptions.inStock} />
+                    <FilterGroupInStock inStockCount={filterOptions.inStock} title={t('Availability')} />
 
                     {!!filterOptions.flags?.length && (
                         <FilterGroupGeneric
-                            title={t('Flags')}
-                            filterField="flags"
                             defaultNumberOfShownItems={DEFAULT_NUMBER_OF_SHOWN_FLAGS}
+                            filterField="flags"
                             options={filterOptions.flags.map(({ flag, ...rest }) => ({ ...flag, ...rest }))}
+                            title={t('Flags')}
                         />
                     )}
 
                     {!!filterOptions.brands?.length && (
                         <FilterGroupGeneric
-                            title={t('Brands')}
-                            filterField="brands"
                             defaultNumberOfShownItems={DEFAULT_NUMBER_OF_SHOWN_BRANDS}
+                            filterField="brands"
                             options={filterOptions.brands.map(({ brand, ...rest }) => ({ ...brand, ...rest }))}
+                            title={t('Brands')}
                         />
                     )}
 
                     {filterOptions.parameters?.map((parameter, index) => (
                         <FilterGroupParameters
                             key={parameter.uuid}
+                            defaultNumberOfShownParameters={DEFAULT_NUMBER_OF_SHOWN_PARAMETERS}
+                            parameter={parameter as ParametersType}
                             parameterIndex={index}
                             title={parameter.name}
-                            parameter={parameter as ParametersType}
-                            defaultNumberOfShownParameters={DEFAULT_NUMBER_OF_SHOWN_PARAMETERS}
                         />
                     ))}
                 </div>
 
                 <div className="flex items-center justify-end border-t-2 border-greyLight p-5 vl:hidden">
                     <Button
+                        className="inline-block lowercase first-letter:uppercase"
                         size="small"
                         onClick={panelCloseHandler}
-                        className="inline-block lowercase first-letter:uppercase"
                     >
                         {t('Show')}
                         {` ${totalCount} `}

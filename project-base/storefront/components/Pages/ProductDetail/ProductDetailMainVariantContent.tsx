@@ -1,16 +1,16 @@
 import { ProductDetailCode, ProductDetailHeading, ProductDetailPrefix } from './ProductDetaiElements';
 import { ProductDetailAccessories } from './ProductDetailAccessories';
+import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductVariantsTable } from './ProductVariantsTable/ProductVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ImageSizesFragmentApi, MainVariantDetailFragmentApi } from 'graphql/generated';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import { ProductDetailGallery } from './ProductDetailGallery';
 
 type ProductDetailMainVariantContentProps = {
     product: MainVariantDetailFragmentApi;
@@ -40,9 +40,9 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
 
             <Webline className="flex flex-col gap-8">
                 <ProductDetailGallery
+                    flags={product.flags}
                     images={mainVariantImagesWithVariantImages}
                     productName={product.name}
-                    flags={product.flags}
                     videoIds={product.productVideos}
                 />
 
@@ -58,7 +58,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                     </ProductDetailCode>
                 </div>
 
-                <ProductVariantsTable variants={product.variants} isSellingDenied={product.isSellingDenied} />
+                <ProductVariantsTable isSellingDenied={product.isSellingDenied} variants={product.variants} />
 
                 <ProductDetailTabs description={product.description} parameters={product.parameters} />
 

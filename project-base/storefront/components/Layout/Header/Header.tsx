@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import { AutocompleteSearch } from './AutocompleteSearch/AutocompleteSearch';
 import { Cart } from './Cart/Cart';
 import { HeaderContact } from './Contact/HeaderContact';
@@ -6,6 +5,7 @@ import { DropdownMenu } from './DropdownMenu/DropdownMenu';
 import { HamburgerMenu } from './HamburgerMenu/HamburgerMenu';
 import { Logo } from './Logo/Logo';
 import { MenuIconic } from './MenuIconic/MenuIconic';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
@@ -39,11 +39,11 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
                         <MenuIconic />
                     </div>
                     <div className="order-4 ml-3 flex cursor-pointer items-center justify-center text-lg lg:hidden">
-                        <HamburgerMenu onMenuToggleHandler={onMenuToggleHandler} isMenuOpened={isMenuOpened} />
-                        <DropdownMenu onMenuToggleHandler={onMenuToggleHandler} isMenuOpened={isMenuOpened} />
+                        <HamburgerMenu isMenuOpened={isMenuOpened} onMenuToggleHandler={onMenuToggleHandler} />
+                        <DropdownMenu isMenuOpened={isMenuOpened} onMenuToggleHandler={onMenuToggleHandler} />
                     </div>
                     <Cart className="order-3 vl:order-4" />
-                    <Overlay isActive={isMenuOpened} onClick={onMenuToggleHandler} isHiddenOnDesktop />
+                    <Overlay isHiddenOnDesktop isActive={isMenuOpened} onClick={onMenuToggleHandler} />
                 </>
             )}
         </div>

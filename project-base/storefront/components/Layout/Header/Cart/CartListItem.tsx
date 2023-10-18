@@ -19,21 +19,21 @@ export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantit
 
     return (
         <li
-            className="flex w-full items-center gap-x-3 border-b border-greyLighter py-3"
             key={uuid}
+            className="flex w-full items-center gap-x-3 border-b border-greyLighter py-3"
             data-testid={TEST_IDENTIFIER}
         >
             <Image
-                image={product.mainImage}
                 alt={product.mainImage?.name || product.fullName}
-                type="thumbnail"
                 className="h-11 w-11"
+                image={product.mainImage}
+                type="thumbnail"
             />
 
             <ExtendedNextLink
+                className="flex-1 cursor-pointer text-sm font-bold text-greyDark no-underline outline-none"
                 href={productSlug}
                 type="product"
-                className="flex-1 cursor-pointer text-sm font-bold text-greyDark no-underline outline-none"
             >
                 {product.fullName}
             </ExtendedNextLink>

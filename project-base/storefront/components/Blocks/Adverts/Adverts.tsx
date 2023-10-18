@@ -52,13 +52,13 @@ export const Adverts: FC<AdvertsProps> = ({
                     const ImageComponent = (
                         <picture>
                             {/* use min-width equal to Tailwind "lg" breakpoint */}
-                            <source srcSet={mainImage?.url} media="(min-width: 48.0625em)" />
+                            <source media="(min-width: 48.0625em)" srcSet={mainImage?.url} />
                             <img
-                                src={mainImageMobile?.url}
                                 alt={advert.mainImage?.name || advert.mainImageMobile?.name || advert.name}
-                                width={mainImageMobile?.width || undefined}
-                                height={mainImageMobile?.height || undefined}
                                 className="w-full"
+                                height={mainImageMobile?.height || undefined}
+                                src={mainImageMobile?.url}
+                                width={mainImageMobile?.width || undefined}
                             />
                         </picture>
                     );
@@ -76,7 +76,7 @@ export const Adverts: FC<AdvertsProps> = ({
                     );
                 }
 
-                return <div dangerouslySetInnerHTML={{ __html: advert.code }} key={index} />;
+                return <div key={index} dangerouslySetInnerHTML={{ __html: advert.code }} />;
             })}
         </div>
     );

@@ -2,8 +2,8 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { PhoneIcon } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 
 // TODO PRG
 const dummyData = {
@@ -23,9 +23,9 @@ export const FooterBoxInfo: FC = () => {
             <picture>
                 <source srcSet="/images/need_advice2x.webp 2x, /images/need_advice2x.webp 1x" />
                 <img
+                    alt={t('Need advice?')}
                     className="absolute left-0 bottom-0 block h-12 w-12 translate-y-1/2 lg:h-16 lg:w-16"
                     src="/images/need_advice.webp"
-                    alt={t('Need advice?')}
                 />
             </picture>
             <div className="relative ml-16 flex flex-1 flex-col items-start rounded bg-primary p-4 before:absolute before:-left-1 before:-bottom-1 before:h-6 before:w-4 before:rounded-bl before:bg-primary before:content-[''] before:[transform:rotate(0deg)skewX(-41deg)scale(1.414,0.707)] lg:ml-24 lg:flex-row lg:items-center lg:justify-between lg:py-5 lg:pr-5 lg:pl-8">
@@ -43,7 +43,7 @@ export const FooterBoxInfo: FC = () => {
                     <p className="m-0 text-sm text-white">{dummyData.opening}</p>
                 </div>
                 <ExtendedNextLink href={contactUrl} type="static">
-                    <Button variant="secondary" className="z-above">
+                    <Button className="z-above" variant="secondary">
                         {t('Write to us')}
                     </Button>
                 </ExtendedNextLink>

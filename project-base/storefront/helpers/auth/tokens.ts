@@ -1,5 +1,5 @@
-import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { getCookie, setCookie, deleteCookie } from 'cookies-next';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { OptionalTokenType } from 'urql/types';
 
 export const removeTokensFromCookies = (context?: GetServerSidePropsContext | NextPageContext): void => {

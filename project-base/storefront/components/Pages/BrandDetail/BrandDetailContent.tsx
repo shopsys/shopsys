@@ -1,8 +1,8 @@
 import { BrandDetailProductsWrapper } from './BrandDetailProductsWrapper';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
-import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { UserText } from 'components/Basic/UserText/UserText';
+import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BrandDetailFragmentApi } from 'graphql/generated';
 import { useRef } from 'react';
@@ -22,7 +22,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 <Heading type="h1">{brand.seoH1 !== null ? brand.seoH1 : brand.name}</Heading>
                 <div className="mb-5 flex w-full flex-col justify-start md:flex-row">
                     <div className="mr-5 min-w-[13.75rem] self-start" data-testid={TEST_IDENTIFIER + 'image'}>
-                        <Image image={brand.mainImage} type="default" alt={brand.mainImage?.name || brand.name} />
+                        <Image alt={brand.mainImage?.name || brand.name} image={brand.mainImage} type="default" />
                     </div>
                     <div
                         className="self-start  md:self-center [&>section]:text-base [&>section]:text-dark"
@@ -33,7 +33,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 </div>
             </Webline>
             <Webline>
-                <div ref={paginationScrollTargetRef} className="scroll-mt-5">
+                <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
                     <SortingBar sorting={brand.products.orderingMode} totalCount={brand.products.totalCount} />
                     <BrandDetailProductsWrapper brand={brand} paginationScrollTargetRef={paginationScrollTargetRef} />
                 </div>

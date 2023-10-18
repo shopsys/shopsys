@@ -19,16 +19,16 @@ export const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLeve
             return (
                 <Fragment key={blogCategoryChild.uuid}>
                     <BlogSignpostItem
-                        isActive={isActive}
-                        href={blogCategoryChild.link}
-                        itemLevel={itemLevel}
                         dataTestId={TEST_IDENTIFIER + index}
+                        href={blogCategoryChild.link}
+                        isActive={isActive}
+                        itemLevel={itemLevel}
                     >
                         <BlogSignpostIcon isActive={isActive} />
                         {blogCategoryChild.name}
                     </BlogSignpostItem>
                     {blogCategoryChild.children !== undefined && blogCategoryChild.children.length > 0 && (
-                        <Children blogCategory={blogCategoryChild} activeItem={activeItem} itemLevel={itemLevel + 1} />
+                        <Children activeItem={activeItem} blogCategory={blogCategoryChild} itemLevel={itemLevel + 1} />
                     )}
                 </Fragment>
             );

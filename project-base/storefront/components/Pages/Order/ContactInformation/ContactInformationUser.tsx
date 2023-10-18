@@ -19,13 +19,13 @@ export const ContactInformationUser: FC = () => {
             <Heading type="h3">{t('Customer information')}</Heading>
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.telephone.name}
                 render={(textInput) => (
                     <FormLine bottomGap className="flex-none lg:w-[65%]">
                         {textInput}
                     </FormLine>
                 )}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.telephone.label,
                     required: true,
@@ -37,13 +37,13 @@ export const ContactInformationUser: FC = () => {
             <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                 <TextInputControlled
                     control={formProviderMethods.control}
+                    formName={formMeta.formName}
                     name={formMeta.fields.firstName.name}
                     render={(textInput) => (
                         <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                             {textInput}
                         </FormLine>
                     )}
-                    formName={formMeta.formName}
                     textInputProps={{
                         label: formMeta.fields.firstName.label,
                         required: true,
@@ -54,13 +54,13 @@ export const ContactInformationUser: FC = () => {
                 />
                 <TextInputControlled
                     control={formProviderMethods.control}
+                    formName={formMeta.formName}
                     name={formMeta.fields.lastName.name}
                     render={(textInput) => (
                         <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                             {textInput}
                         </FormLine>
                     )}
-                    formName={formMeta.formName}
                     textInputProps={{
                         label: formMeta.fields.lastName.label,
                         required: true,

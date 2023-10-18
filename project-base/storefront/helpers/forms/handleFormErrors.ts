@@ -1,8 +1,8 @@
-import { showErrorMessage } from 'helpers/toasts';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
+import { showErrorMessage } from 'helpers/toasts';
 import { Translate } from 'next-translate';
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
-import { GtmMessageOriginType } from 'gtm/types/enums';
 import { CombinedError } from 'urql';
 
 export const handleFormErrors = <T extends FieldValues>(

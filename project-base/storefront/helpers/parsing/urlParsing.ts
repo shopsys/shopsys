@@ -1,8 +1,8 @@
-import { ParsedUrlQuery } from 'querystring';
-import { UrlQueries } from 'hooks/useQueryParams';
-import { FriendlyPagesDestinations } from 'types/friendlyUrl';
 import { getStringWithoutLeadingSlash } from './stringWIthoutSlash';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { UrlQueries } from 'hooks/useQueryParams';
+import { ParsedUrlQuery } from 'querystring';
+import { FriendlyPagesDestinations } from 'types/friendlyUrl';
 
 const ignoredUrlQueries: (string | undefined)[] = Object.values(FriendlyPagesDestinations).map(
     (pagePath) => pagePath.match(/\[(\w+)\]/)?.[1],

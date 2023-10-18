@@ -8,8 +8,9 @@ export const LogoMetadata: FC = () => {
     return (
         <Head>
             <script
-                type="application/ld+json"
+                key="logo-metadata"
                 id="logo-metadata"
+                type="application/ld+json"
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
                         '@context': 'https://schema.org',
@@ -18,7 +19,6 @@ export const LogoMetadata: FC = () => {
                         logo: logoUrl,
                     }),
                 }}
-                key="logo-metadata"
             />
         </Head>
     );

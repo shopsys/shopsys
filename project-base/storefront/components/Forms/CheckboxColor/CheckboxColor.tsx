@@ -27,25 +27,25 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
     dataTestId,
 }) => (
     <ColorLabelWrapper
-        label={label}
-        htmlFor={id}
         bgColor={bgColor}
-        isLightColor={tinycolor(bgColor).isLight()}
-        isDisabled={disabled}
+        htmlFor={id}
         isActive={value}
+        isDisabled={disabled}
+        isLightColor={tinycolor(bgColor).isLight()}
+        label={label}
     >
         <input
-            className="peer sr-only"
             aria-label={label}
+            checked={value}
+            className="peer sr-only"
+            data-testid={dataTestId}
             disabled={disabled}
-            required={required}
             id={id}
             name={name}
-            checked={value}
+            required={required}
+            type="checkbox"
             value={value}
             onChange={onChange}
-            type="checkbox"
-            data-testid={dataTestId}
         />
     </ColorLabelWrapper>
 );

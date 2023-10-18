@@ -7,11 +7,11 @@ import { ContactInformationCustomer } from 'components/Pages/Order/ContactInform
 import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/ContactInformationDeliveryAddress';
 import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
+import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
-import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 
 export const ContactInformationFormWrapper: FC = () => {
     const { t } = useTranslation();
@@ -48,9 +48,9 @@ export const ContactInformationFormWrapper: FC = () => {
 
                 <Heading type="h3">{t('Note')}</Heading>
                 <TextareaControlled
-                    name={formMeta.fields.note.name}
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    name={formMeta.fields.note.name}
                     render={(textarea) => (
                         <FormLine bottomGap className="flex-none lg:w-[65%]">
                             {textarea}

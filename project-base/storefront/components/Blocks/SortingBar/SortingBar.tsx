@@ -1,14 +1,14 @@
+import { SortingBarItem } from './SortingBarItem';
 import { SortIcon } from 'components/Basic/Icon/IconsSvg';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { DEFAULT_SORT } from 'helpers/filterOptions/seoCategories';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
-import useTranslation from 'next-translate/useTranslation';
+import { twMergeCustom } from 'helpers/twMerge';
 import { useQueryParams } from 'hooks/useQueryParams';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { SortingBarItem } from './SortingBarItem';
-import { twMergeCustom } from 'helpers/twMerge';
 
 type SortingBarProps = {
     totalCount: number;
@@ -78,9 +78,9 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                     return (
                         <SortingBarItem
                             key={sortOption}
+                            href={sortHref}
                             isActive={isSelectedSortOption}
                             onClick={() => updateSort(sortOption)}
-                            href={sortHref}
                         >
                             {sortOptionsLabels[sortOption]}
                         </SortingBarItem>

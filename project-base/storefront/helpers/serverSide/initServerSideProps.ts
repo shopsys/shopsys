@@ -1,5 +1,3 @@
-import { logException } from '../errors/logException';
-import { createClient } from 'urql/createClient';
 import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
@@ -12,18 +10,20 @@ import {
     SeoPageQueryDocumentApi,
     SettingsQueryDocumentApi,
 } from 'graphql/generated';
+import { getUnauthenticatedRedirectSSR } from 'helpers/auth/getUnauthenticatedRedirectSSR';
+import { isUserLoggedInSSR } from 'helpers/auth/isUserLoggedInSSR';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
+import { logException } from 'helpers/errors/logException';
 import { getServerSideInternationalizedStaticUrl } from 'helpers/getInternationalizedStaticUrls';
+import { parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { Translate } from 'next-translate';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
-import { parseCatnums } from 'helpers/parsing/grapesJsParser';
-import { Translate } from 'next-translate';
-import { isUserLoggedInSSR } from 'helpers/auth/isUserLoggedInSSR';
-import { getUnauthenticatedRedirectSSR } from 'helpers/auth/getUnauthenticatedRedirectSSR';
+import { createClient } from 'urql/createClient';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;

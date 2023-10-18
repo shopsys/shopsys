@@ -1,14 +1,14 @@
-import { showErrorMessage } from 'helpers/toasts';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { AddToCartMutationApi, useAddToCartMutationApi } from 'graphql/generated';
 import { onGtmChangeCartItemEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmMappedCart } from 'gtm/helpers/gtm';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
-import useTranslation from 'next-translate/useTranslation';
-import { useDomainConfig } from 'hooks/useDomainConfig';
-import { usePersistStore } from 'store/usePersistStore';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { showErrorMessage } from 'helpers/toasts';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
+import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
+import { usePersistStore } from 'store/usePersistStore';
 
 export type AddToCartAction = (
     productUuid: string,

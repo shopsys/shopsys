@@ -9,15 +9,6 @@ import {
     CartFragmentApi,
     CategoryDetailFragmentApi,
 } from 'graphql/generated';
-import { DomainConfigType } from 'helpers/domain/domainConfig';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useMemo } from 'react';
-import { ContactInformation } from 'store/slices/createContactInformationSlice';
-import { usePersistStore } from 'store/usePersistStore';
-import { CurrentCustomerType, CustomerTypeEnum } from 'types/customer';
-import { UserConsentFormType } from 'types/form';
-import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import {
     GtmConsent,
     GtmEventType,
@@ -38,10 +29,19 @@ import {
     GtmReviewConsentsType,
     GtmUserInfoType,
 } from 'gtm/types/objects';
+import { DomainConfigType } from 'helpers/domain/domainConfig';
+import { logException } from 'helpers/errors/logException';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { isClient } from 'helpers/isClient';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
-import { logException } from 'helpers/errors/logException';
-import { isClient } from 'helpers/isClient';
+import { useDomainConfig } from 'hooks/useDomainConfig';
+import { useMemo } from 'react';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
+import { CurrentCustomerType, CustomerTypeEnum } from 'types/customer';
+import { UserConsentFormType } from 'types/form';
+import { FriendlyUrlPageType } from 'types/friendlyUrl';
 
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
     const { cart, promoCode, isFetching } = useCurrentCart();

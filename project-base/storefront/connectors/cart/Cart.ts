@@ -1,4 +1,3 @@
-import { showInfoMessage } from 'helpers/toasts';
 import {
     CartItemModificationsFragmentApi,
     CartModificationsFragmentApi,
@@ -10,12 +9,13 @@ import {
     TransportWithAvailablePaymentsAndStoresFragmentApi,
     useCartQueryApi,
 } from 'graphql/generated';
+import { GtmMessageOriginType } from 'gtm/types/enums';
+import { showInfoMessage } from 'helpers/toasts';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { Translate } from 'next-translate';
 import { usePersistStore } from 'store/usePersistStore';
 import { CurrentCartType } from 'types/cart';
-import { GtmMessageOriginType } from 'gtm/types/enums';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const isUserLoggedIn = useIsUserLoggedIn();

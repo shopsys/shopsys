@@ -4,8 +4,8 @@ import { SeznamMapMarkerLayer } from './SeznamMapMarkerLayer';
 import { SeznamMapMounter } from './SeznamMapMounter';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { showErrorMessage } from 'helpers/toasts';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { LatLngLiteral, MapMarker } from 'types/map';
 import { SeznamMapLoaderLang } from 'types/seznamMap';
@@ -37,6 +37,7 @@ export const SeznamMap: FC<SeznamMapProps> = ({ markers, center, zoom, activeMar
     return (
         <div className="relative h-full w-full">
             <SeznamMapMounter
+                loaderConfig={{ lang: defaultLocale as SeznamMapLoaderLang }}
                 mapContainerClassName="h-full w-full"
                 zoom={zoom ?? defaultZoom}
                 center={
@@ -45,24 +46,23 @@ export const SeznamMap: FC<SeznamMapProps> = ({ markers, center, zoom, activeMar
                         lng: longitude,
                     }
                 }
-                loaderConfig={{ lang: defaultLocale as SeznamMapLoaderLang }}
                 loaderAPIConfig={{
                     jak: true,
                     poi: false,
                     pano: false,
                     suggest: false,
                 }}
-                onLoad={onLoad}
                 onError={onError}
+                onLoad={onLoad}
             >
                 {map ? (
-                    <SeznamMapLayer map={map} activeMarkerHandler={activeMarkerHandler}>
+                    <SeznamMapLayer activeMarkerHandler={activeMarkerHandler} map={map}>
                         <SeznamMapControls map={map} />
                         <SeznamMapMarkerLayer
+                            activeMarkerId={activeMarkerId}
+                            isMarkersClickable={!!activeMarkerHandler}
                             map={map}
                             markers={markers}
-                            isMarkersClickable={!!activeMarkerHandler}
-                            activeMarkerId={activeMarkerId}
                         />
                     </SeznamMapLayer>
                 ) : (

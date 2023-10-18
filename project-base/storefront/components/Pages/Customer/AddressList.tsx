@@ -1,13 +1,13 @@
 import { ArrowIcon, PhoneIcon, RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { Button } from 'components/Forms/Button/Button';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
+import { GtmMessageOriginType } from 'gtm/types/enums';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { DeliveryAddressType } from 'types/customer';
-import { GtmMessageOriginType } from 'gtm/types/enums';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
@@ -64,13 +64,13 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                 {deliveryAddresses.map((address, index) => (
                     <div
                         key={address.uuid}
+                        data-testid={TEST_IDENTIFIER + '-item-' + index}
                         className={twJoin(
                             'mb-5 flex w-full items-center justify-between rounded border border-grey p-5',
                             defaultDeliveryAddress?.uuid === address.uuid
                                 ? 'border-primary bg-greyVeryLight'
                                 : 'cursor-pointer',
                         )}
-                        data-testid={TEST_IDENTIFIER + '-item-' + index}
                         onClick={() => setDefaultItemHandler(address.uuid)}
                     >
                         <div>
@@ -92,14 +92,14 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                         </div>
 
                         <RemoveIcon
-                            onClick={() => setAddressToBeDeleted(address.uuid)}
                             className="w-7 shrink-0 cursor-pointer p-2 text-greyLight hover:text-red"
+                            onClick={() => setAddressToBeDeleted(address.uuid)}
                         />
                     </div>
                 ))}
             </div>
             {addressToBeDeleted && (
-                <Popup onCloseCallback={() => setAddressToBeDeleted(undefined)} className="w-11/12 lg:w-4/5 vl:w-auto">
+                <Popup className="w-11/12 lg:w-4/5 vl:w-auto" onCloseCallback={() => setAddressToBeDeleted(undefined)}>
                     <div className="flex flex-col">
                         {t('Do you really want to delete this delivery address?')}
                         <div className="mt-4 flex flex-row flex-nowrap justify-between">

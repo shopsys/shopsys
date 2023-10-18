@@ -1,10 +1,10 @@
+import { Dayjs, extend, locale } from 'dayjs';
+import dayjs from 'dayjs';
 import 'dayjs/locale/cs';
 import 'dayjs/locale/sk';
-import { Dayjs, extend, locale } from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import utcPlugin from 'dayjs/plugin/utc';
 import timezonePlugin from 'dayjs/plugin/timezone';
-import dayjs from 'dayjs';
+import utcPlugin from 'dayjs/plugin/utc';
 
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);

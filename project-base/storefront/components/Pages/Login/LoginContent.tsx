@@ -8,9 +8,9 @@ import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Translate } from 'next-translate';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
@@ -47,9 +47,9 @@ export const LoginContent: FC = () => {
                 <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
                     <TextInputControlled
                         control={formProviderMethods.control}
+                        formName="login-form"
                         name="email"
                         render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                        formName="login-form"
                         textInputProps={{
                             label: t('Your email'),
                             required: true,
@@ -59,9 +59,9 @@ export const LoginContent: FC = () => {
                     />
                     <PasswordInputControlled
                         control={formProviderMethods.control}
+                        formName="login-form"
                         name="password"
                         render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                        formName="login-form"
                         passwordInputProps={{
                             label: t('Password'),
                         }}

@@ -13,7 +13,7 @@ export const Navigation: FC = () => {
     return (
         <ul className="relative hidden w-full lg:flex lg:gap-6 xl:gap-12" data-testid={TEST_IDENTIFIER}>
             {navigationData.navigation.map((navigationItem, index) => (
-                <NavigationItem navigationItem={navigationItem} key={index} />
+                <NavigationItem key={index} navigationItem={navigationItem} />
             ))}
         </ul>
     );

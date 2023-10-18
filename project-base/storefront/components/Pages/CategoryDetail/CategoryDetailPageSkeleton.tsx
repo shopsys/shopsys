@@ -11,7 +11,7 @@ export const CategoryDetailPageSkeleton: FC = () => (
             <div className="w-full">
                 <div className="mb-12 flex w-full flex-col gap-4 ">
                     <Skeleton className="h-9 w-5/6" />
-                    <Skeleton count={4} className="mb-3 h-4" />
+                    <Skeleton className="mb-3 h-4" count={4} />
                 </div>
                 <div className="mb-7 flex flex-wrap gap-2">
                     {createEmptyArray(4).map((_, index) => (
@@ -34,7 +34,7 @@ export const CategoryDetailPageSkeleton: FC = () => (
                             <Skeleton className="h-12 w-32" />
                         </div>
                         <div className="mt-10 hidden items-center justify-between vl:flex">
-                            <Skeleton count={3} className="h-9 w-24" containerClassName="flex gap-3" />
+                            <Skeleton className="h-9 w-24" containerClassName="flex gap-3" count={3} />
                             <Skeleton className="h-4 w-20" />
                         </div>
                         <div className="mb-7 grid w-full grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-y-4 xl:grid-cols-4">

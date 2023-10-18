@@ -1,4 +1,4 @@
-import { LabelWrapper } from '../Lib/LabelWrapper';
+import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { forwardRef, InputHTMLAttributes, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
@@ -37,21 +37,21 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
         );
 
         return (
-            <LabelWrapper htmlFor={id} label={label} inputType="radio" checked={checked} disabled={disabled}>
+            <LabelWrapper checked={checked} disabled={disabled} htmlFor={id} inputType="radio" label={label}>
                 <input
-                    className="peer sr-only"
-                    value={value}
-                    name={name}
-                    disabled={disabled}
                     checked={checked}
+                    className="peer sr-only"
+                    data-testid={dataTestId}
+                    disabled={disabled}
                     id={id}
+                    name={name}
+                    readOnly={!onChange}
+                    ref={radiobuttonForwardedRef}
                     type="radio"
-                    onClick={onClickHandler}
+                    value={value}
                     onBlur={onBlur}
                     onChange={onChange}
-                    ref={radiobuttonForwardedRef}
-                    readOnly={!onChange}
-                    data-testid={dataTestId}
+                    onClick={onClickHandler}
                 />
             </LabelWrapper>
         );

@@ -1,7 +1,7 @@
 import { OpeningHoursApi } from 'graphql/generated';
+import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
-import { twMergeCustom } from 'helpers/twMerge';
 
 export const OpeningHours: FC<{ openingHours: OpeningHoursApi }> = ({ openingHours, className }) => {
     const { t } = useTranslation();

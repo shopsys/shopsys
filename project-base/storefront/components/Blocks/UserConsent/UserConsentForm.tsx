@@ -5,8 +5,8 @@ import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwit
 import { useCookiesArticleUrlQueryApi } from 'graphql/generated';
 import { onGtmConsentUpdateEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmConsentInfo } from 'gtm/helpers/gtm';
-import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
@@ -56,14 +56,14 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
             <Heading type="h2">{t('Cookie consent')}</Heading>
             <p>
                 <Trans
-                    i18nKey="cookiePolicyLink"
                     defaultTrans="To learn more, you can read our <link>cookie policy</link>"
+                    i18nKey="cookiePolicyLink"
                     components={{
                         link:
                             cookiesArticleUrl !== undefined ? (
-                                <a href={cookiesArticleUrl} target="_blank" rel="noreferrer"></a>
+                                <a href={cookiesArticleUrl} rel="noreferrer" target="_blank" />
                             ) : (
-                                <span></span>
+                                <span />
                             ),
                     }}
                 />

@@ -1,10 +1,10 @@
+import { CategoryBestsellersListItem } from './CategoryBestsellersListItem';
 import { Button } from 'components/Forms/Button/Button';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { useGtmSliderProductListViewEvent } from 'gtm/hooks/productList/useGtmSliderProductListViewEvent';
 import { GtmProductListNameType } from 'gtm/types/enums';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
-import { CategoryBestsellersListItem } from './CategoryBestsellersListItem';
 
 const NUMBER_OF_VISIBLE_ITEMS = 3;
 
@@ -29,9 +29,9 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
                 {shownProducts.map((product, index) => (
                     <CategoryBestsellersListItem
                         key={product.uuid}
-                        product={product}
                         gtmProductListName={GtmProductListNameType.bestsellers}
                         listIndex={index}
+                        product={product}
                     />
                 ))}
             </div>

@@ -1,4 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { IconImage } from 'components/Basic/Icon/IconImage';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import {
@@ -8,16 +9,15 @@ import {
     SimpleProductFragmentApi,
 } from 'graphql/generated';
 import { onGtmAutocompleteResultClickEventHandler, onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
+import { GtmProductListNameType, GtmSectionType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { forwardRef, useMemo } from 'react';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
-import { GtmProductListNameType, GtmSectionType } from 'gtm/types/enums';
-import { IconImage } from 'components/Basic/Icon/IconImage';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
 export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;
@@ -75,7 +75,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
     if (!isWithResults) {
         return (
             <div className="flex items-center">
-                <IconImage icon="warning" alt="warning" />
+                <IconImage alt="warning" icon="warning" />
                 <span className="flex-1 pl-4 text-sm">{t('Could not find any results for the given query.')}</span>
             </div>
         );
@@ -102,14 +102,14 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                             (product, index) =>
                                 index < AUTOCOMPLETE_PRODUCT_LIMIT && (
                                     <li
-                                        className="text-sm"
                                         key={product.slug}
+                                        className="text-sm"
                                         data-testid={TEST_IDENTIFIER + '-products-' + index}
                                     >
                                         <ExtendedNextLink
+                                            className="flex cursor-pointer items-center gap-2 text-dark no-underline outline-none lg:flex-col lg:items-start"
                                             href={product.slug}
                                             type="product"
-                                            className="flex cursor-pointer items-center gap-2 text-dark no-underline outline-none lg:flex-col lg:items-start"
                                             onClick={handleClickLink(
                                                 onProductDetailRedirectHandler(
                                                     product,
@@ -119,11 +119,11 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                                             )}
                                         >
                                             <Image
+                                                alt={product.mainImage?.name || product.fullName}
                                                 className="flex h-16 w-20 items-center justify-center"
-                                                wrapperClassName={imageTwClass}
                                                 image={product.mainImage}
                                                 type="thumbnailMedium"
-                                                alt={product.mainImage?.name || product.fullName}
+                                                wrapperClassName={imageTwClass}
                                             />
 
                                             <span className="flex-1">{product.fullName}</span>
@@ -230,6 +230,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
 
             <div className="flex justify-center">
                 <Button
+                    dataTestId={TEST_IDENTIFIER + '-all-button'}
                     size="small"
                     onClick={handleClickLink(() =>
                         router.push({
@@ -237,7 +238,6 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                             query: { q: autocompleteSearchQueryValue },
                         }),
                     )}
-                    dataTestId={TEST_IDENTIFIER + '-all-button'}
                 >
                     {t('View all results')}
                 </Button>
@@ -261,9 +261,9 @@ const SearchResultLink: FC<{ onClick: () => void; href: string; type: FriendlyPa
     ({ children, onClick, href, type }, _) => (
         <ExtendedNextLink
             className="text-sm font-bold text-dark no-underline"
-            onClick={onClick}
             href={href}
             type={type}
+            onClick={onClick}
         >
             {children}
         </ExtendedNextLink>

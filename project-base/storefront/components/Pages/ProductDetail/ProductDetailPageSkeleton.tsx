@@ -38,7 +38,7 @@ export const ProductDetailPageSkeleton: FC = () => (
             </div>
             <div className="mb-14 mt-10 flex justify-between gap-5 pr-[15%] lg:mt-5 lg:justify-start lg:pr-0">
                 {createEmptyArray(2).map((_, index) => (
-                    <div className="flex items-center gap-4 lg:flex-col" key={index}>
+                    <div key={index} className="flex items-center gap-4 lg:flex-col">
                         <Skeleton className="h-11 w-11" />
                         <Skeleton className="h-3 w-16" />
                     </div>

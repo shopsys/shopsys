@@ -1,10 +1,10 @@
-import { desktopFirstSizes, mobileFirstSizes } from 'helpers/mediaQueries';
-import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import { GtmDeviceTypes } from 'gtm/types/enums';
 import { GtmCreateOrderEventOrderPartType } from 'gtm/types/events';
 import { GtmUserInfoType } from 'gtm/types/objects';
-import { v4 as uuidV4 } from 'uuid';
 import { isClient } from 'helpers/isClient';
+import { desktopFirstSizes, mobileFirstSizes } from 'helpers/mediaQueries';
+import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
+import { v4 as uuidV4 } from 'uuid';
 
 const GTM_CREATE_ORDER_OBJECT_LOCAL_STORAGE_KEY = 'gtmCreateOrderEvent' as const;
 

@@ -1,5 +1,12 @@
+import { Fonts } from './Fonts';
+import { Error500ContentWithBoundary } from 'components/Pages/ErrorPage/Error500Content';
+import { Error503Content } from 'components/Pages/ErrorPage/Error503Content';
+import { GtmHeadScript } from 'gtm/GtmHeadScript';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { useLoginLoader } from 'hooks/app/useLoginLoader';
+import { usePageLoader } from 'hooks/app/usePageLoader';
+import { useReloadCart } from 'hooks/cart/useReloadCart';
 import { useSetDomainConfig } from 'hooks/useDomainConfig';
 import { NextComponentType, NextPageContext } from 'next';
 import dynamic from 'next/dynamic';
@@ -7,13 +14,6 @@ import { useRouter } from 'next/router';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
 import { usePersistStore } from 'store/usePersistStore';
-import { Error500ContentWithBoundary } from '../ErrorPage/Error500Content';
-import { Error503Content } from '../ErrorPage/Error503Content';
-import { GtmHeadScript } from 'gtm/GtmHeadScript';
-import { useLoginLoader } from 'hooks/app/useLoginLoader';
-import { usePageLoader } from 'hooks/app/usePageLoader';
-import { useReloadCart } from 'hooks/cart/useReloadCart';
-import { Fonts } from './Fonts';
 
 const UserConsentContainer = dynamic(
     () =>

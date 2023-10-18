@@ -22,15 +22,15 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
                 <div className="border-r-1 static z-[2] flex h-full min-w-[115px] max-w-[182px] shrink-0 border-greyVeryLight bg-white sm:w-auto sm:min-w-[205px] sm:max-w-none md:min-w-[250px] md:max-w-none lg:min-w-[256px]" />
                 {props.productsCompare.map((product, index) => (
                     <div
-                        className="border-r-1 flex min-w-[calc(182px+12px*2)] max-w-[calc(182px+12px*2)] shrink-0 basis-64 items-center border-greyVeryLight py-3 px-1 sm:min-w-[calc(205px+20px*2)] sm:max-w-[calc(205px+20px*2)]"
                         key={`headSticky-${product.uuid}`}
+                        className="border-r-1 flex min-w-[calc(182px+12px*2)] max-w-[calc(182px+12px*2)] shrink-0 basis-64 items-center border-greyVeryLight py-3 px-1 sm:min-w-[calc(205px+20px*2)] sm:max-w-[calc(205px+20px*2)]"
                         style={index === 0 ? { marginLeft: -props.tableMarginLeft } : undefined}
                     >
                         <a className="w-16" href={product.slug}>
                             <Image
+                                alt={product.mainImage?.name || product.fullName}
                                 image={product.mainImage}
                                 type="listVerySmall"
-                                alt={product.mainImage?.name || product.fullName}
                             />
                         </a>
                         <div className="ml-2 flex flex-1 flex-col">

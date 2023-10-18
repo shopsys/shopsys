@@ -8,8 +8,8 @@ import { CartItemFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
@@ -28,10 +28,10 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, added
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
 
     return (
-        <Popup onCloseCallback={onCloseCallback} className="w-11/12 max-w-2xl" hideCloseButton>
+        <Popup hideCloseButton className="w-11/12 max-w-2xl" onCloseCallback={onCloseCallback}>
             <div className="mb-4 flex w-full items-center md:mb-6">
                 <CheckmarkIcon className="mr-4 w-7 text-greenDark" />
-                <Heading type="h2" className="mb-0 text-xl normal-case text-primary">
+                <Heading className="mb-0 text-xl normal-case text-primary" type="h2">
                     {t('Great choice! We have added your item to the cart')}
                 </Heading>
             </div>
@@ -43,9 +43,9 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, added
                 {!!product.mainImage && (
                     <div className="mb-4 flex w-24 items-center justify-center md:mb-0">
                         <Image
+                            alt={product.mainImage.name || product.fullName}
                             image={product.mainImage}
                             type="thumbnailMedium"
-                            alt={product.mainImage.name || product.fullName}
                         />
                     </div>
                 )}
@@ -68,14 +68,14 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, added
 
             <div className="flex flex-col text-center md:flex-row md:items-center md:justify-between md:p-0">
                 <Button
-                    onClick={onCloseCallback}
-                    dataTestId={TEST_IDENTIFIER + '-button-back'}
                     className="mt-2 lg:w-auto lg:justify-start"
+                    dataTestId={TEST_IDENTIFIER + '-button-back'}
+                    onClick={onCloseCallback}
                 >
                     {t('Back to shop')}
                 </Button>
 
-                <Link className="mt-2 w-full lg:w-auto lg:justify-start" href={cartUrl} isButton>
+                <Link isButton className="mt-2 w-full lg:w-auto lg:justify-start" href={cartUrl}>
                     {t('To cart')}
                 </Link>
             </div>

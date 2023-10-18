@@ -17,9 +17,9 @@ export const RegistrationUser: FC = () => {
         <>
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.email.name}
                 render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.email.label,
                     required: true,
@@ -29,9 +29,9 @@ export const RegistrationUser: FC = () => {
             />
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.firstName.name}
                 render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.firstName.label,
                     required: true,
@@ -41,9 +41,9 @@ export const RegistrationUser: FC = () => {
             />
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.lastName.name}
                 render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.lastName.label,
                     required: true,
@@ -53,9 +53,9 @@ export const RegistrationUser: FC = () => {
             />
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.telephone.name}
                 render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.telephone.label,
                     required: true,
@@ -65,9 +65,9 @@ export const RegistrationUser: FC = () => {
             />
             <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                 <RadiobuttonGroup
-                    name={formMeta.fields.customer.name}
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    name={formMeta.fields.customer.name}
                     radiobuttons={[
                         {
                             label: t('Private person'),

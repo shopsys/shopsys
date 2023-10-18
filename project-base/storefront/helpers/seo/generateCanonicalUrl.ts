@@ -1,12 +1,12 @@
-import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
-import { NextRouter } from 'next/router';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import {
     PAGE_QUERY_PARAMETER_NAME,
     SEARCH_QUERY_PARAMETER_NAME,
     FILTER_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParamNames';
+import { NextRouter } from 'next/router';
 
 const DEFAULT_CANONICAL_QUERY_PARAMS = [
     PAGE_QUERY_PARAMETER_NAME,

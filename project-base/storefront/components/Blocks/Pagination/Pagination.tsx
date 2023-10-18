@@ -1,10 +1,10 @@
 import { Button } from 'components/Forms/Button/Button';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
-import useTranslation from 'next-translate/useTranslation';
 import { useMediaMin } from 'hooks/ui/useMediaMin';
 import { usePagination } from 'hooks/ui/usePagination';
 import { useQueryParams } from 'hooks/useQueryParams';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { Fragment, MouseEventHandler, RefObject, forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -50,7 +50,7 @@ export const Pagination: FC<PaginationProps> = ({
             <div className="w-2/5" />
             <div className="order-2 my-3 flex justify-center vl:order-1 vl:w-1/5">
                 {isWithLoadMore && hasNextPage && (
-                    <Button onClick={loadMore} variant="primary" className="h-11 px-3 vl:h-7">
+                    <Button className="h-11 px-3 vl:h-7" variant="primary" onClick={loadMore}>
                         {t('Load more')}
                     </Button>
                 )}
@@ -72,14 +72,14 @@ export const Pagination: FC<PaginationProps> = ({
                                 <PaginationButton isDotButton>&#8230;</PaginationButton>
                             )}
                             {currentPageWithLoadMore === pageNumber ? (
-                                <PaginationButton dataTestId={TEST_IDENTIFIER + '-' + pageNumber} isActive>
+                                <PaginationButton isActive dataTestId={TEST_IDENTIFIER + '-' + pageNumber}>
                                     {pageNumber}
                                 </PaginationButton>
                             ) : (
                                 <PaginationButton
                                     dataTestId={TEST_IDENTIFIER + '-' + pageNumber}
-                                    onClick={onChangePage(pageNumber)}
                                     href={pageHref}
+                                    onClick={onChangePage(pageNumber)}
                                 >
                                     {pageNumber}
                                 </PaginationButton>
@@ -118,6 +118,8 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
 
         return (
             <Tag
+                data-testid={dataTestId}
+                href={href}
                 className={twJoin(
                     'flex h-11 w-11 items-center  justify-center rounded border font-bold no-underline hover:no-underline vl:h-7 vl:w-7',
                     (isActive || isDotButton) && 'hover:cursor-default',
@@ -125,9 +127,7 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
                         ? 'border-none bg-primary text-white hover:bg-primaryDarker hover:text-white'
                         : 'border-white bg-white',
                 )}
-                href={href}
                 onClick={handleOnClick}
-                data-testid={dataTestId}
             >
                 {children}
             </Tag>

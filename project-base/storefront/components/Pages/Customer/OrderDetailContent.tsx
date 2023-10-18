@@ -4,11 +4,11 @@ import { Row, Cell, CellHead, Table, CellMinor } from 'components/Basic/Table/Ta
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { OrderDetailFragmentApi } from 'graphql/generated';
+import { twMergeCustom } from 'helpers/twMerge';
 import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
-import { twMergeCustom } from 'helpers/twMerge';
 import dynamic from 'next/dynamic';
 
 const NotAddedProductsPopup = dynamic(() =>
@@ -40,11 +40,11 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
             <Webline className="mb-2">
                 <div className="flex flex-col items-center justify-between lg:mb-4 lg:flex-row">
                     <div className="w-1/5" />
-                    <Heading type="h1" className="lg:mb-0">
+                    <Heading className="lg:mb-0" type="h1">
                         {t('Order number')} {order.number}
                     </Heading>
                     <div className="flex items-center justify-end lg:w-1/5">
-                        <Button onClick={() => addOrderItemsToEmptyCart(order.uuid)} className="lg:px-2 lg:py-1">
+                        <Button className="lg:px-2 lg:py-1" onClick={() => addOrderItemsToEmptyCart(order.uuid)}>
                             {t('Repeat order')}
                         </Button>
                     </div>
@@ -76,8 +76,8 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                             {order.trackingUrl ? (
                                                 <ExtendedNextLink
                                                     href={order.trackingUrl}
-                                                    type="static"
                                                     target="_blank"
+                                                    type="static"
                                                 >
                                                     {order.trackingNumber}
                                                 </ExtendedNextLink>
@@ -246,7 +246,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
 
                 {!!order.items.length && (
                     <div className="mt-10">
-                        <Heading type="h2" className="text-center">
+                        <Heading className="text-center" type="h2">
                             {t('Your purchase')}
                         </Heading>
 
@@ -285,8 +285,8 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                             ))}
                             <Row>
                                 <Cell
-                                    colSpan={6}
                                     className="w-full text-right"
+                                    colSpan={6}
                                     dataTestId={TEST_IDENTIFIER + 'ordet-total-pricevat'}
                                 >
                                     <b>

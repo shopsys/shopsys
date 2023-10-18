@@ -45,9 +45,9 @@ export const ContactInformationAddress: FC = () => {
             <FormLine className="flex-none lg:w-[65%]">
                 <TextInputControlled
                     control={formProviderMethods.control}
+                    formName={formMeta.formName}
                     name={formMeta.fields.street.name}
                     render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                    formName={formMeta.formName}
                     textInputProps={{
                         label: formMeta.fields.street.label,
                         required: true,
@@ -60,9 +60,9 @@ export const ContactInformationAddress: FC = () => {
             <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                 <TextInputControlled
                     control={formProviderMethods.control}
+                    formName={formMeta.formName}
                     name={formMeta.fields.city.name}
                     render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                    formName={formMeta.formName}
                     textInputProps={{
                         label: formMeta.fields.city.label,
                         required: true,
@@ -73,13 +73,13 @@ export const ContactInformationAddress: FC = () => {
                 />
                 <TextInputControlled
                     control={formProviderMethods.control}
+                    formName={formMeta.formName}
                     name={formMeta.fields.postcode.name}
                     render={(textInput) => (
                         <FormLine bottomGap className="w-full flex-none lg:w-[142px]">
                             {textInput}
                         </FormLine>
                     )}
-                    formName={formMeta.formName}
                     textInputProps={{
                         label: formMeta.fields.postcode.label,
                         required: true,
@@ -95,16 +95,16 @@ export const ContactInformationAddress: FC = () => {
                     render={({ fieldState: { invalid, error }, field }) => (
                         <>
                             <Select
+                                hasError={invalid}
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}
-                                onChange={field.onChange}
                                 value={countriesAsSelectOptions.find((option) => option.value === field.value.value)}
-                                hasError={invalid}
+                                onChange={field.onChange}
                             />
                             <FormLineError
+                                dataTestId={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
                                 error={error}
                                 inputType="select"
-                                dataTestId={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
                             />
                         </>
                     )}

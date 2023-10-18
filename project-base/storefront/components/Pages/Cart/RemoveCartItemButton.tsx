@@ -14,13 +14,13 @@ export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onItemRemo
 
     return (
         <button
+            data-testid={TEST_IDENTIFIER}
+            title={t('Remove from cart')}
             className={twMergeCustom(
                 'flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-none bg-whitesmoke outline-none transition hover:bg-blueLight',
                 className,
             )}
             onClick={onItemRemove}
-            data-testid={TEST_IDENTIFIER}
-            title={t('Remove from cart')}
         >
             <RemoveBoldIcon className="mx-auto w-2" />
         </button>

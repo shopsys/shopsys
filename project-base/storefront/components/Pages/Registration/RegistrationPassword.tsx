@@ -18,29 +18,29 @@ export const RegistrationPassword: FC = () => {
             <FormColumn>
                 <PasswordInputControlled
                     control={formProviderMethods.control}
-                    name={formMeta.fields.passwordFirst.name}
-                    render={(passwordInput) => (
-                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                            {passwordInput}
-                        </FormLine>
-                    )}
                     formName={formMeta.formName}
+                    name={formMeta.fields.passwordFirst.name}
                     passwordInputProps={{
                         label: formMeta.fields.passwordFirst.label,
                     }}
-                />
-                <PasswordInputControlled
-                    control={formProviderMethods.control}
-                    name={formMeta.fields.passwordSecond.name}
                     render={(passwordInput) => (
                         <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                             {passwordInput}
                         </FormLine>
                     )}
+                />
+                <PasswordInputControlled
+                    control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    name={formMeta.fields.passwordSecond.name}
                     passwordInputProps={{
                         label: formMeta.fields.passwordSecond.label,
                     }}
+                    render={(passwordInput) => (
+                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
+                            {passwordInput}
+                        </FormLine>
+                    )}
                 />
             </FormColumn>
         </>

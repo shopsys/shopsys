@@ -1,4 +1,3 @@
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import {
     useAddProductToComparisonMutationApi,
     useCleanComparisonMutationApi,
@@ -6,10 +5,11 @@ import {
     useRemoveProductFromComparisonMutationApi,
 } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useRef, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 export const useComparison = () => {
     const { t } = useTranslation();

@@ -10,5 +10,5 @@ export const Banners: FC = () => {
         return null;
     }
 
-    return <BannersSlider sliderItems={sliderItemsData.sliderItems} dataTestId={TEST_IDENTIFIER} />;
+    return <BannersSlider dataTestId={TEST_IDENTIFIER} sliderItems={sliderItemsData.sliderItems} />;
 };

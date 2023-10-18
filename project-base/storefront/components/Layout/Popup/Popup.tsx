@@ -1,8 +1,8 @@
 import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { Portal } from 'components/Basic/Portal/Portal';
-import { MouseEventHandler, useEffect, useRef } from 'react';
 import { twMergeCustom } from 'helpers/twMerge';
 import dynamic from 'next/dynamic';
+import { MouseEventHandler, useEffect, useRef } from 'react';
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
@@ -34,9 +34,9 @@ export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButt
         <Portal>
             <Overlay isActive onClick={onClickCloseActionHandler} />
             <div
-                role="dialog"
                 aria-modal
                 data-testid={TEST_IDENTIFIER}
+                role="dialog"
                 className={twMergeCustom(
                     'fixed top-1/2 left-1/2 z-aboveOverlay flex max-h-full max-w-screen-lg -translate-x-1/2 -translate-y-1/2 cursor-auto flex-col rounded bg-creamWhite p-1 shadow-2xl transition-opacity',
                     className,

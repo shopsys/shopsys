@@ -89,12 +89,12 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         const content = (
             <>
                 <SpinboxButton
-                    onClick={() => onChangeValueHandler(-step)}
-                    onMouseDown={() => setIsHoldingDecrease(true)}
-                    onMouseUp={() => setIsHoldingDecrease(false)}
-                    onMouseLeave={() => setIsHoldingDecrease(false)}
                     dataTestId={TEST_IDENTIFIER + 'decrease'}
                     title={t('Decrease')}
+                    onClick={() => onChangeValueHandler(-step)}
+                    onMouseDown={() => setIsHoldingDecrease(true)}
+                    onMouseLeave={() => setIsHoldingDecrease(false)}
+                    onMouseUp={() => setIsHoldingDecrease(false)}
                 >
                     -
                 </SpinboxButton>
@@ -102,22 +102,22 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 <input
                     aria-label={`${t('Quantity')} ${id}`}
                     className="h-full min-w-0 flex-1 border-0 p-0 text-center text-lg font-bold text-dark outline-none"
-                    ref={spinboxRef}
-                    defaultValue={defaultValue}
-                    onInput={onInputHandler}
-                    type="number"
-                    min={min}
-                    max={max}
                     data-testid={TEST_IDENTIFIER + 'input'}
+                    defaultValue={defaultValue}
+                    max={max}
+                    min={min}
+                    ref={spinboxRef}
+                    type="number"
+                    onInput={onInputHandler}
                 />
 
                 <SpinboxButton
-                    onClick={() => onChangeValueHandler(step)}
-                    onMouseDown={() => setIsHoldingIncrease(true)}
-                    onMouseUp={() => setIsHoldingIncrease(false)}
-                    onMouseLeave={() => setIsHoldingIncrease(false)}
                     dataTestId={TEST_IDENTIFIER + 'increase'}
                     title={t('Increase')}
+                    onClick={() => onChangeValueHandler(step)}
+                    onMouseDown={() => setIsHoldingIncrease(true)}
+                    onMouseLeave={() => setIsHoldingIncrease(false)}
+                    onMouseUp={() => setIsHoldingIncrease(false)}
                 >
                     +
                 </SpinboxButton>

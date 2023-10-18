@@ -26,13 +26,13 @@ export const ContactInformationCompany: FC = () => {
             <Heading type="h3">{t('Company data')}</Heading>
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.companyName.name}
                 render={(textInput) => (
                     <FormLine bottomGap className="flex-none lg:w-[65%]">
                         {textInput}
                     </FormLine>
                 )}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.companyName.label,
                     required: true,
@@ -43,13 +43,13 @@ export const ContactInformationCompany: FC = () => {
             />
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.companyNumber.name}
                 render={(textInput) => (
                     <FormLine bottomGap className="flex-none lg:w-[65%]">
                         {textInput}
                     </FormLine>
                 )}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.companyNumber.label,
                     required: true,
@@ -59,13 +59,13 @@ export const ContactInformationCompany: FC = () => {
             />
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.companyTaxNumber.name}
                 render={(textInput) => (
                     <FormLine bottomGap className="flex-none lg:w-[65%]">
                         {textInput}
                     </FormLine>
                 )}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.companyTaxNumber.label,
                     required: false,

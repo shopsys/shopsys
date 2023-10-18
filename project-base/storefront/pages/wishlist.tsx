@@ -1,17 +1,17 @@
-import { BreadcrumbFragmentApi } from 'graphql/generated';
-import useTranslation from 'next-translate/useTranslation';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
-import { useDomainConfig } from 'hooks/useDomainConfig';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { GtmPageType } from 'gtm/types/enums';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useRouter } from 'next/router';
+import { Webline } from 'components/Layout/Webline/Webline';
 import SharedWishlist from 'components/Pages/Wishlist/SharedWishlist';
 import { Wishlist } from 'components/Pages/Wishlist/Wishlist';
-import { Webline } from 'components/Layout/Webline/Webline';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
 
 const WishlistPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -24,7 +24,7 @@ const WishlistPage: FC<ServerSidePropsType> = () => {
     const urlQueryParamId = router.query.id as string | undefined;
 
     return (
-        <CommonLayout title={t('Wishlist')} breadcrumbs={breadcrumbs}>
+        <CommonLayout breadcrumbs={breadcrumbs} title={t('Wishlist')}>
             <Webline>{urlQueryParamId ? <SharedWishlist urlQueryParamId={urlQueryParamId} /> : <Wishlist />}</Webline>
         </CommonLayout>
     );

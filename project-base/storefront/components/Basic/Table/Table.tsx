@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
 import { twMergeCustom } from 'helpers/twMerge';
+import { ReactNode } from 'react';
 
 type TableProps = {
     head?: ReactNode;
@@ -36,6 +36,7 @@ export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, cl
     return (
         <Tag
             colSpan={colSpan}
+            data-testid={dataTestId}
             className={twMergeCustom(
                 'px-2 py-4 text-sm text-dark ',
 
@@ -45,7 +46,6 @@ export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, cl
                 isWithoutWrap && 'whitespace-nowrap',
                 className,
             )}
-            data-testid={dataTestId}
         >
             {children}
         </Tag>
@@ -53,7 +53,7 @@ export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, cl
 };
 
 export const CellHead: FC<CellProps> = ({ className, children, ...props }) => (
-    <Cell className={twMergeCustom('font-bold text-greyLight', className)} isHead {...props}>
+    <Cell isHead className={twMergeCustom('font-bold text-greyLight', className)} {...props}>
         {children}
     </Cell>
 );

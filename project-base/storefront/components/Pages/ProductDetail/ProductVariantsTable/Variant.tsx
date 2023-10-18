@@ -4,12 +4,12 @@ import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailAvailabilityList';
 import { MainVariantDetailFragmentApi } from 'graphql/generated';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { twMergeCustom } from 'helpers/twMerge';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { twMergeCustom } from 'helpers/twMerge';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
@@ -40,8 +40,8 @@ export const Variant: FC<VariantProps> = ({
                 <Cell className="float-left w-10 pl-0 lg:float-none">
                     <div className="w-20 pr-2">
                         <Image
-                            image={variant.mainImage}
                             alt={variant.mainImage?.name || variant.fullName}
+                            image={variant.mainImage}
                             type="default"
                         />
                     </div>
@@ -49,13 +49,13 @@ export const Variant: FC<VariantProps> = ({
                 <Cell dataTestId={TEST_IDENTIFIER + 'name'}>{variant.fullName}</Cell>
                 <Cell
                     className="cursor-pointer"
-                    onClick={() => setAvailabilityPopupVisibility(true)}
                     dataTestId={TEST_IDENTIFIER + 'availability'}
+                    onClick={() => setAvailabilityPopupVisibility(true)}
                 >
                     {variant.availability.name}
                     <ProductAvailableStoresCount
-                        isMainVariant={false}
                         availableStoresCount={variant.availableStoresCount}
+                        isMainVariant={false}
                     />
                 </Cell>
                 <Cell className="lg:text-right" dataTestId={TEST_IDENTIFIER + 'price'}>
@@ -66,18 +66,18 @@ export const Variant: FC<VariantProps> = ({
                         <>{t('This item can no longer be purchased')}</>
                     ) : (
                         <AddToCart
-                            productUuid={variant.uuid}
-                            minQuantity={1}
-                            maxQuantity={variant.stockQuantity}
                             gtmMessageOrigin={gtmMessageOrigin}
                             gtmProductListName={gtmProductListName}
                             listIndex={listIndex}
+                            maxQuantity={variant.stockQuantity}
+                            minQuantity={1}
+                            productUuid={variant.uuid}
                         />
                     )}
                 </Cell>
             </ProductVariantsTableRow>
             {isAvailabilityPopupVisible && (
-                <Popup onCloseCallback={() => setAvailabilityPopupVisibility(false)} className="w-11/12 max-w-2xl">
+                <Popup className="w-11/12 max-w-2xl" onCloseCallback={() => setAvailabilityPopupVisibility(false)}>
                     <ProductDetailAvailabilityList storeAvailabilities={variant.storeAvailabilities} />
                 </Popup>
             )}
@@ -89,11 +89,11 @@ type CellProps = { onClick?: () => void };
 
 const Cell: FC<CellProps> = ({ className, children, dataTestId, onClick }) => (
     <td
+        data-testid={dataTestId}
         className={twMergeCustom(
             'block pl-20 text-left align-middle text-xs lg:table-cell lg:border-b lg:border-greyLighter lg:px-1 lg:py-2',
             className,
         )}
-        data-testid={dataTestId}
         onClick={onClick}
     >
         {children}

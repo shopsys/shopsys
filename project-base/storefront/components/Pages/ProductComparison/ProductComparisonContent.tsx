@@ -2,14 +2,14 @@ import { ProductComparisonBody } from './ProductComparisonBody';
 import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
 import { ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
-import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { ComparedProductFragmentApi } from 'graphql/generated';
+import { twMergeCustom } from 'helpers/twMerge';
 import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { twMergeCustom } from 'helpers/twMerge';
 
 type ProductComparisonContentProps = {
     productsCompare: ComparedProductFragmentApi[];
@@ -65,7 +65,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ pr
     return (
         <>
             <div className="mb-8 flex items-end">
-                <Heading type="h1" className="mb-0 w-full lg:w-auto lg:flex-1">
+                <Heading className="mb-0 w-full lg:w-auto lg:flex-1" type="h1">
                     {t('Product comparison')}&nbsp;({productsCompare.length})
                 </Heading>
             </div>
@@ -78,23 +78,23 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ pr
                         onClick={() => handleSlideLeft()}
                     />
                     <ContentArrow
+                        isRight
                         isActive={isArrowRightActive}
                         isShowed={isArrowRightShowed}
                         onClick={() => handleSlideRight()}
-                        isRight
                     />
                 </div>
                 <ProductComparisonHeadSticky productsCompare={productsCompare} tableMarginLeft={tableMarginLeft} />
                 <div>
                     <table
                         className="table-fixed border-collapse transition-all"
-                        style={{ marginLeft: -tableMarginLeft }}
                         id="js-table-compare"
+                        style={{ marginLeft: -tableMarginLeft }}
                     >
                         <ProductComparisonHead productsCompare={productsCompare} />
                         <ProductComparisonBody
-                            productsCompare={productsCompare}
                             parametersDataState={getParametersDataState}
+                            productsCompare={productsCompare}
                         />
                     </table>
                 </div>
@@ -107,6 +107,7 @@ type ContentArrowProps = { onClick: () => void; isActive: boolean; isRight?: boo
 
 const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onClick }) => (
     <button
+        disabled={!isActive}
         className={twMergeCustom(
             'absolute right-0 top-40 z-[2] h-10 w-10 cursor-pointer items-center justify-center rounded border border-greenVeryLight bg-greyVeryLight transition-colors vl:static',
             isActive ? 'hover:bg-greyLight' : 'cursor-default border border-greyLight bg-white',
@@ -114,7 +115,6 @@ const ContentArrow: FC<ContentArrowProps> = ({ isActive, isRight, isShowed, onCl
             !isRight && 'right-auto left-0',
             isShowed ? 'flex' : 'hidden',
         )}
-        disabled={!isActive}
         onClick={onClick}
     >
         <ArrowIcon

@@ -3,8 +3,8 @@ import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsLis
 import { FlagDetailFragmentApi, FlagProductsQueryDocumentApi } from 'graphql/generated';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { getMappedProducts } from 'helpers/mappers/products';
 import { useProductsData } from 'helpers/loadMore';
+import { getMappedProducts } from 'helpers/mappers/products';
 import { RefObject } from 'react';
 
 type FlagDetailProductsWrapperProps = {
@@ -24,17 +24,17 @@ export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ 
     return (
         <>
             <ProductsList
-                gtmProductListName={GtmProductListNameType.flag_detail}
                 fetching={fetching}
+                gtmMessageOrigin={GtmMessageOriginType.other}
+                gtmProductListName={GtmProductListNameType.flag_detail}
                 loadMoreFetching={loadMoreFetching}
                 products={flagListedProducts}
-                gtmMessageOrigin={GtmMessageOriginType.other}
             />
             <Pagination
-                totalCount={flag.products.totalCount}
-                paginationScrollTargetRef={paginationScrollTargetRef}
                 isWithLoadMore
                 hasNextPage={hasNextPage}
+                paginationScrollTargetRef={paginationScrollTargetRef}
+                totalCount={flag.products.totalCount}
             />
         </>
     );

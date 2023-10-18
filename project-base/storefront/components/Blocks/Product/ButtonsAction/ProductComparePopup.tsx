@@ -3,8 +3,8 @@ import { ArrowSecondaryIcon } from 'components/Basic/Icon/IconsSvg';
 import { Link } from 'components/Basic/Link/Link';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 
 type ProductComparePopupProps = {
     onCloseCallback: () => void;

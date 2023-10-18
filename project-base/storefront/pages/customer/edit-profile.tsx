@@ -5,13 +5,13 @@ import { EditProfileContent } from 'components/Pages/Customer/EditProfileContent
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { GtmPageType } from 'gtm/types/enums';
+import useTranslation from 'next-translate/useTranslation';
 
 const EditProfilePage: FC = () => {
     const { t } = useTranslation();
@@ -32,7 +32,7 @@ const EditProfilePage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout title={t('Edit profile')} breadcrumbs={breadcrumbs}>
+            <CommonLayout breadcrumbs={breadcrumbs} title={t('Edit profile')}>
                 <SimpleLayout heading={t('Edit profile')}>
                     {currentCustomerUserData !== undefined && currentCustomerUserData !== null && (
                         <EditProfileContent currentCustomerUser={currentCustomerUserData} />

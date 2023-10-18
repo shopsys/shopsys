@@ -1,6 +1,6 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 
 export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, dataTestId, title }) => (
     <li className={className} data-testid={dataTestId} title={title}>
@@ -16,9 +16,9 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, h
             <ExtendedNextLink
                 className="block py-3 px-5 text-sm text-dark no-underline"
                 data-testid={dataTestId}
-                onClick={onClick}
                 href={href}
                 type="static"
+                onClick={onClick}
             >
                 {children}
             </ExtendedNextLink>
@@ -41,12 +41,12 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
         if (href) {
             return (
                 <ExtendedNextLink
-                    href={href}
-                    type="static"
                     className={twMergeCustom(menuIconicItemLinkTwClass, className)}
-                    onClick={onClick}
                     data-testid={dataTestId}
+                    href={href}
                     title={title}
+                    type="static"
+                    onClick={onClick}
                 >
                     {children}
                 </ExtendedNextLink>
@@ -56,9 +56,9 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
         return (
             <div
                 className={twMergeCustom(menuIconicItemLinkTwClass, className)}
+                data-testid={dataTestId}
                 title={title}
                 onClick={onClick}
-                data-testid={dataTestId}
             >
                 {children}
             </div>

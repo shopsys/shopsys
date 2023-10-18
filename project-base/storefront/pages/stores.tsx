@@ -2,11 +2,11 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoresContent } from 'components/Pages/Stores/StoresContent';
 import { BreadcrumbFragmentApi, StoresQueryDocumentApi, useStoresQueryApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
-import { GtmPageType } from 'gtm/types/enums';
 
 const StoresPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -17,11 +17,9 @@ const StoresPage: FC<ServerSidePropsType> = () => {
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <>
-            <CommonLayout title={t('Stores')} breadcrumbs={breadcrumbs}>
-                {storesData?.stores && <StoresContent stores={storesData.stores} />}
-            </CommonLayout>
-        </>
+        <CommonLayout breadcrumbs={breadcrumbs} title={t('Stores')}>
+            {storesData?.stores && <StoresContent stores={storesData.stores} />}
+        </CommonLayout>
     );
 };
 

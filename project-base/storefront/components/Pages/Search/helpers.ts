@@ -1,5 +1,5 @@
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     ProductOrderingModeEnumApi,
     Maybe,

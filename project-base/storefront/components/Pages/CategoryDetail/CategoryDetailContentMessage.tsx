@@ -1,5 +1,5 @@
-import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 
 export const CategoryDetailContentMessage: FC = () => {
     const { t } = useTranslation();
@@ -10,7 +10,7 @@ export const CategoryDetailContentMessage: FC = () => {
                 <strong>{t('No results match the filter')}</strong>
             </div>
             <div>
-                <Trans i18nKey="ProductsNoResults" components={{ 0: <br /> }} />
+                <Trans components={{ 0: <br /> }} i18nKey="ProductsNoResults" />
             </div>
         </div>
     );

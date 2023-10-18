@@ -8,14 +8,14 @@ import { CartSummary } from 'components/Pages/Cart/CartSummary';
 import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmCartViewEvent } from 'gtm/hooks/useGtmCartViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useGtmCartViewEvent } from 'gtm/hooks/useGtmCartViewEvent';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { GtmPageType } from 'gtm/types/enums';
+import useTranslation from 'next-translate/useTranslation';
 
 const CartPage: FC<ServerSidePropsType> = () => {
     const { url } = useDomainConfig();
@@ -30,7 +30,7 @@ const CartPage: FC<ServerSidePropsType> = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <EmptyCartWrapper currentCart={currentCart} title={t('Cart')} isCartPage>
+            <EmptyCartWrapper isCartPage currentCart={currentCart} title={t('Cart')}>
                 <CommonLayout title={t('Cart')}>
                     <Webline>
                         <OrderSteps activeStep={1} domainUrl={url} />
@@ -40,13 +40,13 @@ const CartPage: FC<ServerSidePropsType> = () => {
                         <CartSummary />
 
                         <OrderAction
+                            withGapBottom
                             buttonBack={t('Back')}
+                            buttonBackLink="/"
                             buttonNext={t('Transport and payment')}
+                            buttonNextLink={transportAndPaymentUrl}
                             hasDisabledLook={false}
                             withGapTop={false}
-                            withGapBottom
-                            buttonBackLink="/"
-                            buttonNextLink={transportAndPaymentUrl}
                         />
                     </Webline>
                 </CommonLayout>

@@ -1,7 +1,7 @@
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 
 const TEST_IDENTIFIER = 'blocks-freetransport';
 
@@ -22,10 +22,10 @@ export const FreeTransport: FC = () => {
             <Wrapper dataTestId={TEST_IDENTIFIER}>
                 <Trans
                     i18nKey="FreeTransportAmountLeft"
+                    values={{ amountFormatted: amountFormatted }}
                     components={{
                         0: <strong />,
                     }}
-                    values={{ amountFormatted: amountFormatted }}
                 />
             </Wrapper>
         );

@@ -13,8 +13,9 @@ export const BreadcrumbsMetadata: FC<BreadcrumbsMetadataProps> = ({ breadcrumbs 
     return (
         <Head>
             <script
-                type="application/ld+json"
+                key="breadcrumbs-metadata"
                 id="breadcrumbs-metadata"
+                type="application/ld+json"
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
                         '@context': 'https://schema.org',
@@ -31,7 +32,6 @@ export const BreadcrumbsMetadata: FC<BreadcrumbsMetadataProps> = ({ breadcrumbs 
                         }),
                     }),
                 }}
-                key="breadcrumbs-metadata"
             />
         </Head>
     );

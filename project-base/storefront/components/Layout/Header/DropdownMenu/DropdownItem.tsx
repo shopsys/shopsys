@@ -54,12 +54,12 @@ export const DropdownItem: FC<DropdownItemProps> = ({
     return (
         <div
             className={twJoin('flex border-b border-greyLighter last:border-b-0', variant === 'small' && 'mx-8')}
-            onClick={scrollToTop}
             data-testid={TEST_IDENTIFIER}
+            onClick={scrollToTop}
         >
             <ExtendedNextLink
-                type="category"
                 href={itemLink}
+                type="category"
                 className={twJoin(
                     'flex-1 font-bold text-dark no-underline',
                     variant === 'small' ? 'py-4 text-sm' : 'py-5 pr-11 pl-8 text-base uppercase',

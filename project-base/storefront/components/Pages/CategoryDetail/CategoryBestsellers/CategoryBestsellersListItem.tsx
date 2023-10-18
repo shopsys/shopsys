@@ -29,17 +29,17 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
             <div className="flex w-full items-center lg:basis-7/12">
                 <div data-testid={TEST_IDENTIFIER + 'name'}>
                     <ExtendedNextLink
-                        type="product"
-                        href={product.slug}
                         className="flex items-center gap-5 font-bold no-underline"
+                        href={product.slug}
+                        type="product"
                         onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
                     >
                         <Image
+                            alt={product.fullName}
+                            className="max-h-[80px] max-w-[80px]"
                             dataTestId={TEST_IDENTIFIER + 'image'}
                             image={product.mainImage}
                             type="list"
-                            alt={product.fullName}
-                            className="max-h-[80px] max-w-[80px]"
                         />
                         <span>{product.fullName}</span>
                     </ExtendedNextLink>
@@ -57,8 +57,8 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                 </span>
 
                 <ProductAvailableStoresCount
-                    isMainVariant={product.isMainVariant}
                     availableStoresCount={product.availableStoresCount}
+                    isMainVariant={product.isMainVariant}
                 />
             </div>
 

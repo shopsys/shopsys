@@ -2,6 +2,7 @@ import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCur
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     FlagDetailQueryApi,
     FlagDetailQueryDocumentApi,
@@ -11,30 +12,29 @@ import {
     FlagProductsQueryVariablesApi,
     useFlagDetailQueryApi,
 } from 'graphql/generated';
-import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import {
-    FILTER_QUERY_PARAMETER_NAME,
-    LOAD_MORE_QUERY_PARAMETER_NAME,
-    PAGE_QUERY_PARAMETER_NAME,
-    SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParamNames';
-import { createClient } from 'urql/createClient';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
+import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore';
 import {
     getNumberFromUrlQuery,
     getProductListSortFromUrlQuery,
     getSlugFromServerSideUrl,
     getSlugFromUrl,
 } from 'helpers/parsing/urlParsing';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+} from 'helpers/queryParamNames';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { getRedirectWithOffsetPage } from 'helpers/loadMore';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { createClient } from 'urql/createClient';
 
 const FlagDetailPage: NextPage = () => {
     const router = useRouter();
@@ -55,7 +55,7 @@ const FlagDetailPage: NextPage = () => {
     useGtmPageViewEvent(pageViewEvent, fetching);
 
     return (
-        <CommonLayout title={seoTitle} breadcrumbs={flagDetailData?.flag?.breadcrumb} breadcrumbsType="category">
+        <CommonLayout breadcrumbs={flagDetailData?.flag?.breadcrumb} breadcrumbsType="category" title={seoTitle}>
             {!filter && fetching ? (
                 <CategoryDetailPageSkeleton />
             ) : (

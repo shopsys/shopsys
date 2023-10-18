@@ -1,10 +1,10 @@
-import useTranslation from 'next-translate/useTranslation';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
+import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { useSharedWishlist } from 'hooks/useWishlist';
+import useTranslation from 'next-translate/useTranslation';
 
 type SharedWishlistProps = {
     urlQueryParamId: string;
@@ -25,7 +25,7 @@ export const SharedWishlist: FC<SharedWishlistProps> = ({ urlQueryParamId }) => 
                     <div className="mb-7 flex flex-wrap">
                         <div className="mb-4 flex w-full items-end vl:mb-0 vl:flex-1">
                             <div className="flex-1 vl:flex-none">
-                                <Heading type="h1" className="!mb-0 !leading-7">
+                                <Heading className="!mb-0 !leading-7" type="h1">
                                     {t('Shared wishlist')}
                                 </Heading>
                             </div>
@@ -33,10 +33,10 @@ export const SharedWishlist: FC<SharedWishlistProps> = ({ urlQueryParamId }) => 
                     </div>
 
                     <ProductsList
-                        products={products}
-                        gtmProductListName={GtmProductListNameType.sharedWishlist}
                         fetching={fetching}
                         gtmMessageOrigin={GtmMessageOriginType.other}
+                        gtmProductListName={GtmProductListNameType.sharedWishlist}
+                        products={products}
                     />
                 </>
             ) : (

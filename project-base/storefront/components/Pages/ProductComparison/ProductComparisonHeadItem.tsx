@@ -5,11 +5,11 @@ import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ComparedProductFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
-import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
-import useTranslation from 'next-translate/useTranslation';
-import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useCallback } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
+import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
+import { useCallback } from 'react';
 
 type ProductComparisonItemProps = {
     product: ComparedProductFragmentApi;
@@ -41,15 +41,15 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                 <div className="flex flex-col items-center ">
                     <div className="flex h-[185px] w-full items-center justify-center pt-4 pb-3">
                         <Image
+                            alt={product.mainImage?.name || product.fullName}
                             image={product.mainImage}
                             type="list"
-                            alt={product.mainImage?.name || product.fullName}
                         />
                     </div>
                     <ExtendedNextLink
+                        className="text-primary no-underline hover:no-underline"
                         href={product.slug}
                         type="product"
-                        className="text-primary no-underline hover:no-underline"
                         onClick={() =>
                             onProductDetailRedirectHandler(
                                 product,
@@ -66,10 +66,10 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                 </div>
                 <div className="mt-auto">
                     <ProductAction
-                        product={product}
-                        gtmProductListName={GtmProductListNameType.product_comparison_page}
                         gtmMessageOrigin={GtmMessageOriginType.other}
+                        gtmProductListName={GtmProductListNameType.product_comparison_page}
                         listIndex={listIndex}
+                        product={product}
                     />
                 </div>
             </div>

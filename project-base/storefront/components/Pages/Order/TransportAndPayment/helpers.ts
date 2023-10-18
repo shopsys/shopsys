@@ -1,4 +1,5 @@
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import {
     LastOrderFragmentApi,
     LastOrderQueryApi,
@@ -12,19 +13,18 @@ import {
     StoreQueryVariablesApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
+import { getGtmPickupPlaceFromStore, getGtmPickupPlaceFromLastOrder } from 'gtm/helpers/mappers';
 import { logException } from 'helpers/errors/logException';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import { Translate } from 'next-translate';
 import getConfig from 'next/config';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
-import { getGtmPickupPlaceFromStore, getGtmPickupPlaceFromLastOrder } from 'gtm/helpers/mappers';
-import { Translate } from 'next-translate';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useRouter } from 'next/router';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useClient } from 'urql';
 
 const { publicRuntimeConfig } = getConfig();

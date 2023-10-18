@@ -9,15 +9,15 @@ import {
     useProductDetailQueryApi,
 } from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
-import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
+import { createClient } from 'urql/createClient';
 
 const ProductDetailPage: NextPage = () => {
     const router = useRouter();
@@ -35,18 +35,18 @@ const ProductDetailPage: NextPage = () => {
 
     return (
         <CommonLayout
-            title={product?.seoTitle || product?.name}
-            description={product?.seoMetaDescription}
             breadcrumbs={product?.breadcrumb}
             breadcrumbsType="category"
             canonicalQueryParams={[]}
+            description={product?.seoMetaDescription}
+            title={product?.seoTitle || product?.name}
         >
             {fetching && <ProductDetailPageSkeleton />}
 
-            {product?.__typename === 'RegularProduct' && <ProductDetailContent product={product} fetching={fetching} />}
+            {product?.__typename === 'RegularProduct' && <ProductDetailContent fetching={fetching} product={product} />}
 
             {product?.__typename === 'MainVariant' && (
-                <ProductDetailMainVariantContent product={product} fetching={fetching} />
+                <ProductDetailMainVariantContent fetching={fetching} product={product} />
             )}
         </CommonLayout>
     );

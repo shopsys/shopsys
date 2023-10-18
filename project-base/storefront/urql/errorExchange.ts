@@ -1,13 +1,13 @@
-import { showErrorMessage } from 'helpers/toasts';
 import { CartQueryDocumentApi } from 'graphql/generated';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { removeTokensFromCookies } from 'helpers/auth/tokens';
 import { isFlashMessageError, isNoLogError } from 'helpers/errors/applicationErrors';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { logException } from 'helpers/errors/logException';
+import { showErrorMessage } from 'helpers/toasts';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
 import { ParsedErrors } from 'types/error';
-import { GtmMessageOriginType } from 'gtm/types/enums';
 import { Exchange } from 'urql';
 import { pipe, tap } from 'wonka';
 

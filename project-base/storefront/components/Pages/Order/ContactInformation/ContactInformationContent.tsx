@@ -11,14 +11,14 @@ import {
     usePrivacyPolicyArticleUrlQueryApi,
     useTermsAndConditionsArticleUrlQueryApi,
 } from 'graphql/generated';
-import useTranslation from 'next-translate/useTranslation';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 
 type ContactInformationContentProps = {
     setIsLoginPopupOpened: Dispatch<SetStateAction<boolean>>;
@@ -57,13 +57,13 @@ export const ContactInformationContent: FC<ContactInformationContentProps> = ({ 
         <>
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.email.name}
                 render={(textInput) => (
                     <FormLine bottomGap className="flex-none lg:w-[65%]">
                         {textInput}
                     </FormLine>
                 )}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.email.label,
                     required: true,
@@ -74,7 +74,7 @@ export const ContactInformationContent: FC<ContactInformationContentProps> = ({ 
             />
 
             {isCustomerUserRegisteredData?.isCustomerUserRegistered && !isUserLoggedIn && (
-                <Button size="small" type="button" onClick={() => setIsLoginPopupOpened(true)} className="mb-5">
+                <Button className="mb-5" size="small" type="button" onClick={() => setIsLoginPopupOpened(true)}>
                     {t('User with this email is already registered. Do you want to sign in')}
                 </Button>
             )}
@@ -84,29 +84,29 @@ export const ContactInformationContent: FC<ContactInformationContentProps> = ({ 
             <div className={twJoin(!isEmailFilledCorrectly && 'pointer-events-none opacity-50')}>
                 <p className="mb-4">
                     <Trans
-                        i18nKey="ContactInformationInfo"
                         defaultTrans="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
+                        i18nKey="ContactInformationInfo"
                         components={{
                             lnk1:
                                 termsAndConditionsArticleUrl !== undefined ? (
-                                    <Link href={termsAndConditionsArticleUrl} isExternal target="_blank" />
+                                    <Link isExternal href={termsAndConditionsArticleUrl} target="_blank" />
                                 ) : (
-                                    <span></span>
+                                    <span />
                                 ),
                             lnk2:
                                 privacyPolicyArticleUrl !== undefined ? (
-                                    <Link href={privacyPolicyArticleUrl} isExternal target="_blank" />
+                                    <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
                                 ) : (
-                                    <span></span>
+                                    <span />
                                 ),
                         }}
                     />
                 </p>
 
                 <CheckboxControlled
-                    name={formMeta.fields.newsletterSubscription.name}
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    name={formMeta.fields.newsletterSubscription.name}
                     render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
                     checkboxProps={{
                         label: formMeta.fields.newsletterSubscription.label,

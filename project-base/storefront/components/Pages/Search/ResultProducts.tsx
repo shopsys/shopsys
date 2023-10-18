@@ -1,8 +1,8 @@
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { ListedProductFragmentApi } from 'graphql/generated';
-import useTranslation from 'next-translate/useTranslation';
-import Trans from 'next-translate/Trans';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 
 type ResultProductsProps = {
     products: ListedProductFragmentApi[];
@@ -25,11 +25,11 @@ export const ResultProducts: FC<ResultProductsProps> = ({
         <>
             {areProductsShowed && (
                 <ProductsList
-                    products={products}
-                    gtmProductListName={GtmProductListNameType.search_results}
                     fetching={fetching}
-                    loadMoreFetching={loadMoreFetching}
                     gtmMessageOrigin={GtmMessageOriginType.other}
+                    gtmProductListName={GtmProductListNameType.search_results}
+                    loadMoreFetching={loadMoreFetching}
+                    products={products}
                 />
             )}
             {!areProductsShowed && !noProductsFound && (
@@ -38,7 +38,7 @@ export const ResultProducts: FC<ResultProductsProps> = ({
                         <strong>{t('No results match the filter')}</strong>
                     </div>
                     <div>
-                        <Trans i18nKey="ProductsNoResults" components={{ 0: <br /> }} />
+                        <Trans components={{ 0: <br /> }} i18nKey="ProductsNoResults" />
                     </div>
                 </div>
             )}

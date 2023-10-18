@@ -1,8 +1,8 @@
+import { GrapesJsProducts } from './GrapesJsProducts';
+import { UserText } from './UserText';
 import { useProductsByCatnumsApi } from 'graphql/generated';
 import { GJS_PRODUCTS_SEPARATOR, parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { memo } from 'react';
-import { UserText } from './UserText';
-import { GrapesJsProducts } from './GrapesJsProducts';
 
 type GrapesJsParserProps = {
     text: string;
@@ -21,14 +21,14 @@ export const GrapesJsParser: FC<GrapesJsParserProps> = memo(({ text }) => {
                     return (
                         <GrapesJsProducts
                             key={index}
-                            rawProductPart={part}
                             allFetchedProducts={allProductsResponse}
                             fetching={fetching}
+                            rawProductPart={part}
                         />
                     );
                 }
 
-                return <UserText htmlContent={part} isGrapesJs key={index} />;
+                return <UserText key={index} isGrapesJs htmlContent={part} />;
             })}
         </>
     );

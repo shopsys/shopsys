@@ -20,9 +20,9 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                     <div className="mb-3 w-full text-center md:mb-0 md:w-48">
                         <ExtendedNextLink href={blogArticle.link} type="blogArticle">
                             <Image
+                                alt={blogArticle.mainImage?.name || blogArticle.name}
                                 image={blogArticle.mainImage}
                                 type="list"
-                                alt={blogArticle.mainImage?.name || blogArticle.name}
                             />
                         </ExtendedNextLink>
                     </div>
@@ -39,11 +39,11 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                         </div>
 
                         <ExtendedNextLink
+                            className="group hover:no-underline"
                             href={blogArticle.link}
                             type="blogArticle"
-                            className="group hover:no-underline"
                         >
-                            <Heading type="h2" className="group-hover:text-primary">
+                            <Heading className="group-hover:text-primary" type="h2">
                                 {blogArticle.name}
                             </Heading>
                         </ExtendedNextLink>

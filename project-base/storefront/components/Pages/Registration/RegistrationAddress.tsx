@@ -38,9 +38,9 @@ export const RegistrationAddress: FC = () => {
             <Heading type="h3">{t('Billing address')}</Heading>
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.street.name}
                 render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.street.label,
                     required: true,
@@ -51,9 +51,9 @@ export const RegistrationAddress: FC = () => {
             <FormColumn>
                 <TextInputControlled
                     control={formProviderMethods.control}
+                    formName={formMeta.formName}
                     name={formMeta.fields.city.name}
                     render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                    formName={formMeta.formName}
                     textInputProps={{
                         label: formMeta.fields.city.label,
                         required: true,
@@ -63,13 +63,13 @@ export const RegistrationAddress: FC = () => {
                 />
                 <TextInputControlled
                     control={formProviderMethods.control}
+                    formName={formMeta.formName}
                     name={formMeta.fields.postcode.name}
                     render={(textInput) => (
                         <FormLine bottomGap className="w-full flex-none lg:w-[142px]">
                             {textInput}
                         </FormLine>
                     )}
-                    formName={formMeta.formName}
                     textInputProps={{
                         label: formMeta.fields.postcode.label,
                         required: true,
@@ -84,16 +84,16 @@ export const RegistrationAddress: FC = () => {
                     render={({ fieldState: { invalid, error }, field }) => (
                         <>
                             <Select
+                                hasError={invalid}
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}
-                                onChange={field.onChange}
                                 value={countriesAsSelectOptions.find((option) => option.value === field.value.value)}
-                                hasError={invalid}
+                                onChange={field.onChange}
                             />
                             <FormLineError
+                                dataTestId={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
                                 error={error}
                                 inputType="select"
-                                dataTestId={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
                             />
                         </>
                     )}

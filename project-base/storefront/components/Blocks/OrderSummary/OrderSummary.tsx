@@ -23,7 +23,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
 
     return (
         <>
-            <Adverts positionName="cartPreview" withGapBottom />
+            <Adverts withGapBottom positionName="cartPreview" />
             <div className="w-full vl:max-w-md" data-testid={TEST_IDENTIFIER}>
                 <h3 className="mb-3 font-bold lg:text-lg">{t('Your order')}</h3>
 
@@ -43,12 +43,12 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                             )}
                             {(transport || payment) && (
                                 <TransportAndPayment
-                                    transport={transport}
                                     payment={payment}
                                     roundingPrice={roundingPrice}
+                                    transport={transport}
                                 />
                             )}
-                            {promoCode && <PromoCode promoCode={promoCode} discount={cart.totalDiscountPrice} />}
+                            {promoCode && <PromoCode discount={cart.totalDiscountPrice} promoCode={promoCode} />}
                         </div>
 
                         <TotalPrice totalPrice={cart.totalPrice} />

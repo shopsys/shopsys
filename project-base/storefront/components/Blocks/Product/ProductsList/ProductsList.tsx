@@ -1,13 +1,13 @@
+import { ProductListItemSkeleton } from './ProductListItemSkeleton';
+import { ProductsListContent } from './ProductsListContent';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
+import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/CategoryDetailContentMessage';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { CategoryDetailFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
-import { createEmptyArray } from 'helpers/arrayUtils';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { ProductListItemSkeleton } from './ProductListItemSkeleton';
-import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/CategoryDetailContentMessage';
-import { ProductsListContent } from './ProductsListContent';
-import { useQueryParams } from 'hooks/useQueryParams';
+import { createEmptyArray } from 'helpers/arrayUtils';
 import { calculatePageSize } from 'helpers/loadMore';
+import { useQueryParams } from 'hooks/useQueryParams';
 
 type ProductsListProps = {
     products: ListedProductFragmentApi[] | undefined;
@@ -41,17 +41,17 @@ export const ProductsList: FC<ProductsListProps> = ({
             <>
                 <ProductsListContent
                     className={productListTwClass}
-                    products={products}
-                    gtmProductListName={gtmProductListName}
-                    gtmMessageOrigin={gtmMessageOrigin}
                     dataTestId={TEST_IDENTIFIER}
+                    gtmMessageOrigin={gtmMessageOrigin}
+                    gtmProductListName={gtmProductListName}
+                    products={products}
                 >
                     {category && (
                         <Adverts
-                            positionName="productListSecondRow"
-                            currentCategory={category}
-                            className="col-span-full row-start-2 mx-auto justify-center pl-2"
                             isSingle
+                            className="col-span-full row-start-2 mx-auto justify-center pl-2"
+                            currentCategory={category}
+                            positionName="productListSecondRow"
                         />
                     )}
                 </ProductsListContent>

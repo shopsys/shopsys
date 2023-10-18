@@ -2,6 +2,7 @@ import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCur
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailContent';
 import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     BrandDetailQueryApi,
     BrandDetailQueryDocumentApi,
@@ -11,32 +12,31 @@ import {
     BrandProductsQueryVariablesApi,
     useBrandDetailQueryApi,
 } from 'graphql/generated';
+import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import {
-    FILTER_QUERY_PARAMETER_NAME,
-    LOAD_MORE_QUERY_PARAMETER_NAME,
-    PAGE_QUERY_PARAMETER_NAME,
-    SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParamNames';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore';
 import {
     getNumberFromUrlQuery,
     getProductListSortFromUrlQuery,
     getSlugFromServerSideUrl,
     getSlugFromUrl,
 } from 'helpers/parsing/urlParsing';
-import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+} from 'helpers/queryParamNames';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { getRedirectWithOffsetPage } from 'helpers/loadMore';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { createClient } from 'urql/createClient';
 
 const BrandDetailPage: NextPage = () => {
     const router = useRouter();
@@ -60,10 +60,10 @@ const BrandDetailPage: NextPage = () => {
 
     return (
         <CommonLayout
-            title={seoTitle}
-            description={brandDetailData?.brand?.seoMetaDescription}
             breadcrumbs={brandDetailData?.brand?.breadcrumb}
             breadcrumbsType="category"
+            description={brandDetailData?.brand?.seoMetaDescription}
+            title={seoTitle}
         >
             {!filter && fetching ? (
                 <CategoryDetailPageSkeleton />

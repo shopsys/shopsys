@@ -1,11 +1,11 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
-import useTranslation from 'next-translate/useTranslation';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
+import { useComparison } from 'hooks/comparison/useComparison';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useWishlist } from 'hooks/useWishlist';
-import { useComparison } from 'hooks/comparison/useComparison';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
+import useTranslation from 'next-translate/useTranslation';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-submenu';
 
@@ -23,14 +23,14 @@ export const SubMenu: FC = () => {
 
     return (
         <div className="mt-5 flex flex-col" data-testid={TEST_IDENTIFIER}>
-            <SubMenuItem href={storesUrl} dataTestId={TEST_IDENTIFIER + '-1'}>
+            <SubMenuItem dataTestId={TEST_IDENTIFIER + '-1'} href={storesUrl}>
                 {t('Stores')}
             </SubMenuItem>
-            <SubMenuItem href={productComparisonUrl} dataTestId={TEST_IDENTIFIER + '-3'}>
+            <SubMenuItem dataTestId={TEST_IDENTIFIER + '-3'} href={productComparisonUrl}>
                 {t('Comparison')}
                 {!!comparison?.products.length && <span>&nbsp;({comparison.products.length})</span>}
             </SubMenuItem>
-            <SubMenuItem href={wishlistUrl} dataTestId={TEST_IDENTIFIER + '-4'}>
+            <SubMenuItem dataTestId={TEST_IDENTIFIER + '-4'} href={wishlistUrl}>
                 {t('Wishlist')}
                 {!!wishlist?.products.length && <span>&nbsp;({wishlist.products.length})</span>}
             </SubMenuItem>
@@ -38,7 +38,7 @@ export const SubMenu: FC = () => {
             {isUserLoggedIn ? (
                 <SubMenuItem onClick={logout}>{t('Logout')}</SubMenuItem>
             ) : (
-                <SubMenuItem href={loginUrl} dataTestId={TEST_IDENTIFIER + '-2'}>
+                <SubMenuItem dataTestId={TEST_IDENTIFIER + '-2'} href={loginUrl}>
                     {t('Sign in')}
                 </SubMenuItem>
             )}
@@ -49,14 +49,14 @@ export const SubMenu: FC = () => {
 const SubMenuItem: FC<{ onClick?: () => void; href?: string }> = ({ children, dataTestId, onClick, href }) => {
     if (href) {
         return (
-            <ExtendedNextLink href={href} passHref type="static" className="mb-5 px-8 text-sm text-dark no-underline">
+            <ExtendedNextLink passHref className="mb-5 px-8 text-sm text-dark no-underline" href={href} type="static">
                 {children}
             </ExtendedNextLink>
         );
     }
 
     return (
-        <a className="mb-5 px-8 text-sm text-dark no-underline" onClick={onClick} data-testid={dataTestId}>
+        <a className="mb-5 px-8 text-sm text-dark no-underline" data-testid={dataTestId} onClick={onClick}>
             {children}
         </a>
     );

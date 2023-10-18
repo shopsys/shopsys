@@ -15,13 +15,13 @@ export const ProductFlags: FC<ProductFlagsProps> = ({ flags }) => {
         <>
             {flags.map(({ name, rgbColor }, key) => (
                 <div
+                    key={key}
+                    data-testid={TEST_IDENTIFIER + key}
+                    style={{ backgroundColor: rgbColor || '#cdb3ff' }}
                     className={twJoin(
                         'mb-1 mr-auto inline-flex rounded py-1 px-2 text-xs uppercase text-black',
                         tinycolor(rgbColor).isDark() && 'text-whitesmoke',
                     )}
-                    style={{ backgroundColor: rgbColor || '#cdb3ff' }}
-                    key={key}
-                    data-testid={TEST_IDENTIFIER + key}
                 >
                     {name}
                 </div>

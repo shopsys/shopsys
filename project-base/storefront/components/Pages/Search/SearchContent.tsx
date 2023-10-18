@@ -2,14 +2,14 @@ import { ProductsSearch } from './ProductsSearch';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
+import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
+import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import { CategoryDetailPageSkeleton } from '../CategoryDetail/CategoryDetailPageSkeleton';
-import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
 
 type SearchContentProps = {
     searchResults: SearchQueryApi | undefined;
@@ -41,8 +41,8 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
                             <div className="mt-6">
                                 <Heading type="h3">{t('Found articles')}</Heading>
                                 <SimpleNavigation
-                                    listedItems={searchResults.articlesSearch}
                                     imageType="searchThumbnail"
+                                    listedItems={searchResults.articlesSearch}
                                 />
                             </div>
                         )}

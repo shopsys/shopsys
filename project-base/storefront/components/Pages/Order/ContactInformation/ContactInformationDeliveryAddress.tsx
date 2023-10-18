@@ -105,17 +105,17 @@ export const ContactInformationDeliveryAddress: FC = () => {
             <Heading type="h3">{t('Delivery address')}</Heading>
 
             <CheckboxControlled
-                name={formMeta.fields.differentDeliveryAddress.name}
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
+                name={formMeta.fields.differentDeliveryAddress.name}
+                checkboxProps={{
+                    label: formMeta.fields.differentDeliveryAddress.label,
+                }}
                 render={(checkbox) => (
                     <FormLine className="flex-none lg:w-[65%]">
                         <ChoiceFormLine>{checkbox}</ChoiceFormLine>
                     </FormLine>
                 )}
-                checkboxProps={{
-                    label: formMeta.fields.differentDeliveryAddress.label,
-                }}
             />
 
             <div className="pb-10">
@@ -125,9 +125,9 @@ export const ContactInformationDeliveryAddress: FC = () => {
                             <FormLine bottomGap className="flex-none lg:w-[65%]">
                                 <div className="flex w-full flex-col">
                                     <RadiobuttonGroup
-                                        name={formMeta.fields.deliveryAddressUuid.name}
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
+                                        name={formMeta.fields.deliveryAddressUuid.name}
                                         radiobuttons={[
                                             ...user.deliveryAddresses.map((deliveryAddress) => ({
                                                 label: (
@@ -154,8 +154,8 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                         ]}
                                         render={(radiobutton, key) => (
                                             <div
-                                                className="relative mt-4 flex w-full flex-wrap rounded border-2 border-border p-5"
                                                 key={key}
+                                                className="relative mt-4 flex w-full flex-wrap rounded border-2 border-border p-5"
                                             >
                                                 {radiobutton}
                                             </div>
@@ -172,13 +172,13 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                 <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                                     <TextInputControlled
                                         control={formProviderMethods.control}
+                                        formName={formMeta.formName}
                                         name={formMeta.fields.deliveryFirstName.name}
                                         render={(textInput) => (
                                             <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                                 {textInput}
                                             </FormLine>
                                         )}
-                                        formName={formMeta.formName}
                                         textInputProps={{
                                             label: formMeta.fields.deliveryFirstName.label,
                                             required: true,
@@ -194,13 +194,13 @@ export const ContactInformationDeliveryAddress: FC = () => {
 
                                     <TextInputControlled
                                         control={formProviderMethods.control}
+                                        formName={formMeta.formName}
                                         name={formMeta.fields.deliveryLastName.name}
                                         render={(textInput) => (
                                             <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                                 {textInput}
                                             </FormLine>
                                         )}
-                                        formName={formMeta.formName}
                                         textInputProps={{
                                             label: formMeta.fields.deliveryLastName.label,
                                             required: true,
@@ -217,13 +217,13 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                 {!pickupPlace && (
                                     <TextInputControlled
                                         control={formProviderMethods.control}
+                                        formName={formMeta.formName}
                                         name={formMeta.fields.deliveryCompanyName.name}
                                         render={(textInput) => (
                                             <FormLine bottomGap className="flex-none lg:w-[65%]">
                                                 {textInput}
                                             </FormLine>
                                         )}
-                                        formName={formMeta.formName}
                                         textInputProps={{
                                             label: formMeta.fields.deliveryCompanyName.label,
                                             type: 'text',
@@ -238,13 +238,13 @@ export const ContactInformationDeliveryAddress: FC = () => {
 
                                 <TextInputControlled
                                     control={formProviderMethods.control}
+                                    formName={formMeta.formName}
                                     name={formMeta.fields.deliveryTelephone.name}
                                     render={(textInput) => (
                                         <FormLine bottomGap className="flex-none lg:w-[65%]">
                                             {textInput}
                                         </FormLine>
                                     )}
-                                    formName={formMeta.formName}
                                     textInputProps={{
                                         label: formMeta.fields.deliveryTelephone.label,
                                         required: true,
@@ -261,13 +261,13 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                     <>
                                         <TextInputControlled
                                             control={formProviderMethods.control}
+                                            formName={formMeta.formName}
                                             name={formMeta.fields.deliveryStreet.name}
                                             render={(textInput) => (
                                                 <FormLine bottomGap className="flex-none lg:w-[65%]">
                                                     {textInput}
                                                 </FormLine>
                                             )}
-                                            formName={formMeta.formName}
                                             textInputProps={{
                                                 label: formMeta.fields.deliveryStreet.label,
                                                 required: true,
@@ -283,9 +283,9 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                         <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                                             <TextInputControlled
                                                 control={formProviderMethods.control}
+                                                formName={formMeta.formName}
                                                 name={formMeta.fields.deliveryCity.name}
                                                 render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                                formName={formMeta.formName}
                                                 textInputProps={{
                                                     label: formMeta.fields.deliveryCity.label,
                                                     required: true,
@@ -300,13 +300,13 @@ export const ContactInformationDeliveryAddress: FC = () => {
 
                                             <TextInputControlled
                                                 control={formProviderMethods.control}
+                                                formName={formMeta.formName}
                                                 name={formMeta.fields.deliveryPostcode.name}
                                                 render={(textInput) => (
                                                     <FormLine bottomGap className="w-full flex-none lg:w-[142px]">
                                                         {textInput}
                                                     </FormLine>
                                                 )}
-                                                formName={formMeta.formName}
                                                 textInputProps={{
                                                     label: formMeta.fields.deliveryPostcode.label,
                                                     required: true,
@@ -326,18 +326,18 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 render={({ fieldState: { invalid, error }, field }) => (
                                                     <>
                                                         <Select
-                                                            label={formMeta.fields.deliveryCountry.label}
                                                             hasError={invalid}
+                                                            label={formMeta.fields.deliveryCountry.label}
                                                             options={countriesAsSelectOptions}
+                                                            value={countriesAsSelectOptions.find(
+                                                                (option) => option.value === field.value.value,
+                                                            )}
                                                             onChange={(...data) => {
                                                                 field.onChange(...data);
                                                                 updateContactInformation({
                                                                     deliveryCountry: data[0] as SelectOptionType,
                                                                 });
                                                             }}
-                                                            value={countriesAsSelectOptions.find(
-                                                                (option) => option.value === field.value.value,
-                                                            )}
                                                         />
 
                                                         <FormLineError

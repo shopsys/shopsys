@@ -18,9 +18,9 @@ export const ContactInformationCustomer: FC = () => {
             <Heading type="h3">{formMeta.fields.customer.label}</Heading>
             <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                 <RadiobuttonGroup
-                    name={formMeta.fields.customer.name}
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
+                    name={formMeta.fields.customer.name}
                     radiobuttons={[
                         {
                             label: t('Private person'),

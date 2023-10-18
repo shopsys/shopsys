@@ -1,11 +1,11 @@
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { BrandDetailFragmentApi, BrandProductsQueryDocumentApi } from 'graphql/generated';
-import { getMappedProducts } from 'helpers/mappers/products';
-import { useProductsData } from 'helpers/loadMore';
 import { useGtmPaginatedProductListViewEvent } from 'gtm/hooks/productList/useGtmPaginatedProductListViewEvent';
-import { RefObject } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
+import { useProductsData } from 'helpers/loadMore';
+import { getMappedProducts } from 'helpers/mappers/products';
+import { RefObject } from 'react';
 
 type BrandDetailProductsWrapperProps = {
     brand: BrandDetailFragmentApi;
@@ -27,17 +27,17 @@ export const BrandDetailProductsWrapper: FC<BrandDetailProductsWrapperProps> = (
     return (
         <>
             <ProductsList
-                gtmProductListName={GtmProductListNameType.brand_detail}
                 fetching={fetching}
+                gtmMessageOrigin={GtmMessageOriginType.other}
+                gtmProductListName={GtmProductListNameType.brand_detail}
                 loadMoreFetching={loadMoreFetching}
                 products={listedBrandProducts}
-                gtmMessageOrigin={GtmMessageOriginType.other}
             />
             <Pagination
-                paginationScrollTargetRef={paginationScrollTargetRef}
-                totalCount={brand.products.totalCount}
                 isWithLoadMore
                 hasNextPage={hasNextPage}
+                paginationScrollTargetRef={paginationScrollTargetRef}
+                totalCount={brand.products.totalCount}
             />
         </>
     );

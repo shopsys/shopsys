@@ -13,15 +13,15 @@ export const BannersSliderItem: FC<BannersSliderItemProps> = ({
     const imageSize = image?.sizes.find((i) => i.size === 'default');
 
     return (
-        <a href={link} className="keen-slider__slide w-full">
+        <a className="keen-slider__slide w-full" href={link}>
             {!imageSize ? (
-                <BannerImage src="images/optimized-noimage.webp" alt="no image" />
+                <BannerImage alt="no image" src="images/optimized-noimage.webp" />
             ) : (
                 <picture>
                     {imageSize.additionalSizes.map((additionalSize) => (
-                        <source key={additionalSize.url} srcSet={additionalSize.url} media={additionalSize.media} />
+                        <source key={additionalSize.url} media={additionalSize.media} srcSet={additionalSize.url} />
                     ))}
-                    <BannerImage src={imageSize.url} alt={image?.name || name} />
+                    <BannerImage alt={image?.name || name} src={imageSize.url} />
                 </picture>
             )}
         </a>
@@ -29,5 +29,5 @@ export const BannersSliderItem: FC<BannersSliderItemProps> = ({
 };
 
 const BannerImage: FC<{ src: string; alt: string }> = ({ src, alt }) => (
-    <img className="block h-full w-full object-cover" src={src} alt={alt} />
+    <img alt={alt} className="block h-full w-full object-cover" src={src} />
 );
