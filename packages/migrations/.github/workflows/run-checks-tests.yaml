@@ -3,7 +3,7 @@ name: "Checks and tests"
 jobs:
     checks-and-tests:
         name: Run checks and tests in PHP ${{ matrix.php-versions }} ${{ matrix.composer-prefered-dependencies }}
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         strategy:
             matrix:
                 php-versions: ['8.1']

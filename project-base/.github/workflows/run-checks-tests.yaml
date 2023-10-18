@@ -3,7 +3,7 @@ name: "Docker build"
 jobs:
     build-whole-application:
         name: Build application and run standards checks and tests
-        runs-on: 'ubuntu-20.04'
+        runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
                     path: ./var/log
     build-whole-application-for-single-domain:
         name: Build application and run standards checks and tests on single domain
-        runs-on: 'ubuntu-20.04'
+        runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
