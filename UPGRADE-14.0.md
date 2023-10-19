@@ -73,3 +73,6 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))
     -   see #project-base-diff to update your project
+- remove unnecessary default value for domain config in zustand ([#2888](https://github.com/shopsys/shopsys/pull/2888))
+  - you probably do not need the default value as well, as we set it right at the beginning of page load
+  - see #project-base-diff to update your project
