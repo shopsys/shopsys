@@ -3,8 +3,8 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 
 export const CustomerContent: FC = () => {
     const { t } = useTranslation();

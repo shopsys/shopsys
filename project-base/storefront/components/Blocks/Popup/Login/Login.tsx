@@ -7,18 +7,18 @@ import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { blurInput } from 'helpers/forms/blurInput';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Translate } from 'next-translate';
+import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
-import { GtmMessageOriginType } from 'gtm/types/enums';
 import * as Yup from 'yup';
 
 type LoginProps = {
@@ -69,9 +69,9 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                     <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
                         <TextInputControlled
                             control={formProviderMethods.control}
+                            formName="login-form"
                             name="email"
                             render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                            formName="login-form"
                             textInputProps={{
                                 label: t('Your email'),
                                 required: true,
@@ -81,16 +81,16 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                         />
                         <PasswordInputControlled
                             control={formProviderMethods.control}
+                            formName="login-form"
                             name="password"
                             render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                            formName="login-form"
                             passwordInputProps={{
                                 label: t('Password'),
                             }}
                         />
                         <div className="mt-5 mb-5 flex items-center justify-between gap-2 lg:mb-0 lg:block lg:border-none lg:p-0">
                             <div className="order-1 flex w-full justify-end">
-                                <SubmitButton dataTestId="blocks-popup-login-submit" className="max-lg:!px-3">
+                                <SubmitButton className="max-lg:!px-3" dataTestId="blocks-popup-login-submit">
                                     {t('Log-in')}
                                 </SubmitButton>
                             </div>

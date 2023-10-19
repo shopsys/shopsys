@@ -18,13 +18,13 @@ export const Webline: FC<WeblineProps> = ({ children, dataTestId, type, classNam
     if (type) {
         return (
             <div
+                data-testid={getDataTestId(dataTestId, type)}
                 className={twJoin(
                     type === 'colored' && 'bg-primary',
                     type === 'dark' && 'bg-greyDark',
                     type === 'light' && 'bg-orangeLight',
                     type === 'blog' && 'bg-[url("/images/blog-background.webp")] bg-cover bg-center bg-no-repeat',
                 )}
-                data-testid={getDataTestId(dataTestId, type)}
             >
                 {content}
             </div>

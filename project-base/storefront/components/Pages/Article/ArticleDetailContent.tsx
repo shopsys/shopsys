@@ -1,8 +1,8 @@
 import { ArticleTitle } from './ArticleTitle';
+import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleDetailFragmentApi } from 'graphql/generated';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
-import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 
 type ArticleDetailContentProps = {
     article: ArticleDetailFragmentApi;

@@ -9,7 +9,6 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { AddressList } from 'components/Pages/Customer/AddressList';
 import {
     useCustomerChangeProfileForm,
@@ -20,8 +19,10 @@ import {
     useChangePersonalDataMutationApi,
     useCountriesQueryApi,
 } from 'graphql/generated';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -29,7 +30,6 @@ import { useMemo } from 'react';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
-import { GtmMessageOriginType } from 'gtm/types/enums';
 import { CombinedError } from 'urql';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
@@ -169,9 +169,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                     <Heading type="h2">{t('Personal data')}</Heading>
                     <TextInputControlled
                         control={formProviderMethods.control}
+                        formName={formMeta.formName}
                         name={formMeta.fields.email.name}
                         render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                        formName={formMeta.formName}
                         textInputProps={{
                             label: formMeta.fields.email.label,
                             required: false,
@@ -191,13 +191,13 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                     <FormColumn>
                         <TextInputControlled
                             control={formProviderMethods.control}
+                            formName={formMeta.formName}
                             name={formMeta.fields.firstName.name}
                             render={(textInput) => (
                                 <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                     {textInput}
                                 </FormLine>
                             )}
-                            formName={formMeta.formName}
                             textInputProps={{
                                 label: formMeta.fields.firstName.label,
                                 required: true,
@@ -208,13 +208,13 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         />
                         <TextInputControlled
                             control={formProviderMethods.control}
+                            formName={formMeta.formName}
                             name={formMeta.fields.lastName.name}
                             render={(textInput) => (
                                 <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                     {textInput}
                                 </FormLine>
                             )}
-                            formName={formMeta.formName}
                             textInputProps={{
                                 label: formMeta.fields.lastName.label,
                                 required: true,
@@ -226,9 +226,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                     </FormColumn>
                     <TextInputControlled
                         control={formProviderMethods.control}
+                        formName={formMeta.formName}
                         name={formMeta.fields.telephone.name}
                         render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                        formName={formMeta.formName}
                         textInputProps={{
                             label: formMeta.fields.telephone.label,
                             required: true,
@@ -238,23 +238,28 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         }}
                     />
                     <CheckboxControlled
-                        name={formMeta.fields.newsletterSubscription.name}
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
+                        name={formMeta.fields.newsletterSubscription.name}
+                        checkboxProps={{
+                            label: formMeta.fields.newsletterSubscription.label,
+                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.newsletterSubscription.name,
+                        }}
                         render={(checkbox) => (
                             <FormLine bottomGap>
                                 <ChoiceFormLine>{checkbox}</ChoiceFormLine>
                             </FormLine>
                         )}
-                        checkboxProps={{
-                            label: formMeta.fields.newsletterSubscription.label,
-                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.newsletterSubscription.name,
-                        }}
                     />
                     <Heading type="h2">{t('Change password')}</Heading>
                     <PasswordInputControlled
                         control={formProviderMethods.control}
+                        formName={formMeta.formName}
                         name={formMeta.fields.passwordOld.name}
+                        passwordInputProps={{
+                            label: formMeta.fields.passwordOld.label,
+                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.passwordOld.name,
+                        }}
                         render={(passwordInput) => (
                             <FormColumn>
                                 <FormLine bottomGap className="w-full flex-none lg:w-1/2">
@@ -262,40 +267,35 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 </FormLine>
                             </FormColumn>
                         )}
-                        formName={formMeta.formName}
-                        passwordInputProps={{
-                            label: formMeta.fields.passwordOld.label,
-                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.passwordOld.name,
-                        }}
                     />
                     <FormColumn>
                         <PasswordInputControlled
                             control={formProviderMethods.control}
-                            name={formMeta.fields.passwordFirst.name}
-                            render={(passwordInput) => (
-                                <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                                    {passwordInput}
-                                </FormLine>
-                            )}
                             formName={formMeta.formName}
+                            name={formMeta.fields.passwordFirst.name}
                             passwordInputProps={{
                                 label: formMeta.fields.passwordFirst.label,
                                 dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.passwordFirst.name,
                             }}
-                        />
-                        <PasswordInputControlled
-                            control={formProviderMethods.control}
-                            name={formMeta.fields.passwordSecond.name}
                             render={(passwordInput) => (
                                 <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                     {passwordInput}
                                 </FormLine>
                             )}
+                        />
+                        <PasswordInputControlled
+                            control={formProviderMethods.control}
                             formName={formMeta.formName}
+                            name={formMeta.fields.passwordSecond.name}
                             passwordInputProps={{
                                 label: formMeta.fields.passwordSecond.label,
                                 dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.passwordSecond.name,
                             }}
+                            render={(passwordInput) => (
+                                <FormLine bottomGap className="w-full flex-none lg:w-1/2">
+                                    {passwordInput}
+                                </FormLine>
+                            )}
                         />
                     </FormColumn>
                     {currentCustomerUser.companyCustomer && (
@@ -303,9 +303,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             <Heading type="h2">{t('Company information')}</Heading>
                             <TextInputControlled
                                 control={formProviderMethods.control}
+                                formName={formMeta.formName}
                                 name={formMeta.fields.companyName.name}
                                 render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                formName={formMeta.formName}
                                 textInputProps={{
                                     label: formMeta.fields.companyName.label,
                                     required: false,
@@ -316,9 +316,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             />
                             <TextInputControlled
                                 control={formProviderMethods.control}
+                                formName={formMeta.formName}
                                 name={formMeta.fields.companyNumber.name}
                                 render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                formName={formMeta.formName}
                                 textInputProps={{
                                     label: formMeta.fields.companyNumber.label,
                                     required: false,
@@ -328,9 +328,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             />
                             <TextInputControlled
                                 control={formProviderMethods.control}
+                                formName={formMeta.formName}
                                 name={formMeta.fields.companyTaxNumber.name}
                                 render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                formName={formMeta.formName}
                                 textInputProps={{
                                     label: formMeta.fields.companyTaxNumber.label,
                                     required: false,
@@ -343,9 +343,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                     <Heading type="h2">{t('Billing address')}</Heading>
                     <TextInputControlled
                         control={formProviderMethods.control}
+                        formName={formMeta.formName}
                         name={formMeta.fields.street.name}
                         render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                        formName={formMeta.formName}
                         textInputProps={{
                             label: formMeta.fields.street.label,
                             required: true,
@@ -357,9 +357,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                     <FormColumn>
                         <TextInputControlled
                             control={formProviderMethods.control}
+                            formName={formMeta.formName}
                             name={formMeta.fields.city.name}
                             render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                            formName={formMeta.formName}
                             textInputProps={{
                                 label: formMeta.fields.city.label,
                                 required: true,
@@ -370,13 +370,13 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         />
                         <TextInputControlled
                             control={formProviderMethods.control}
+                            formName={formMeta.formName}
                             name={formMeta.fields.postcode.name}
                             render={(textInput) => (
                                 <FormLine bottomGap className="w-full flex-none lg:w-[142px]">
                                     {textInput}
                                 </FormLine>
                             )}
-                            formName={formMeta.formName}
                             textInputProps={{
                                 label: formMeta.fields.postcode.label,
                                 required: true,
@@ -392,14 +392,14 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             render={({ fieldState: { invalid, error }, field }) => (
                                 <>
                                     <Select
+                                        dataTestId={TEST_IDENTIFIER + '-' + formMeta.fields.country.name}
+                                        hasError={invalid}
+                                        label={formMeta.fields.country.label}
                                         options={countriesAsSelectOptions}
-                                        onChange={field.onChange}
                                         value={countriesAsSelectOptions.find(
                                             (option) => option.value === field.value.value,
                                         )}
-                                        hasError={invalid}
-                                        label={formMeta.fields.country.label}
-                                        dataTestId={TEST_IDENTIFIER + '-' + formMeta.fields.country.name}
+                                        onChange={field.onChange}
                                     />
                                     <FormLineError error={error} inputType="select" />
                                 </>
@@ -411,8 +411,8 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             <Heading type="h2">{t('Delivery addresses')}</Heading>
                             <FormLine bottomGap>
                                 <AddressList
-                                    deliveryAddresses={currentCustomerUser.deliveryAddresses}
                                     defaultDeliveryAddress={currentCustomerUser.defaultDeliveryAddress}
+                                    deliveryAddresses={currentCustomerUser.deliveryAddresses}
                                 />
                             </FormLine>
                         </>
@@ -422,9 +422,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
             </FormProvider>
             {isErrorPopupVisible && (
                 <ErrorPopup
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
                     fields={formMeta.fields}
                     gtmMessageOrigin={GtmMessageOriginType.other}
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
                 />
             )}
         </>

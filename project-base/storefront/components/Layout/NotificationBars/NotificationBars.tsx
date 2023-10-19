@@ -1,10 +1,10 @@
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useNotificationBarsApi } from 'graphql/generated';
 import { getTokensFromCookies } from 'helpers/auth/tokens';
 import { useAuth } from 'hooks/auth/useAuth';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import decode from 'jwt-decode';
 import Trans from 'next-translate/Trans';
 import { memo, useEffect, useState } from 'react';
@@ -33,7 +33,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
     return (
         <>
             {bars?.map((item, index) => (
-                <div className="py-2" style={{ backgroundColor: item.rgbColor }} key={index}>
+                <div key={index} className="py-2" style={{ backgroundColor: item.rgbColor }}>
                     <Webline>
                         <div
                             className={twJoin(
@@ -44,10 +44,10 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                             {!!item.mainImage && (
                                 <div className="mr-3 flex w-11">
                                     <Image
-                                        image={item.mainImage}
-                                        type="default"
                                         alt={item.mainImage.name || item.text}
                                         className="mr-3"
+                                        image={item.mainImage}
+                                        type="default"
                                     />
                                 </div>
                             )}
@@ -65,16 +65,16 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                     <Webline>
                         <div className="flex items-center justify-center text-center text-sm font-bold text-dark">
                             <Trans
-                                i18nKey="adminLoggedInAsCustomerWarning"
                                 defaultTrans="Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>"
+                                i18nKey="adminLoggedInAsCustomerWarning"
                                 values={{ email: loggedAsUserEmail }}
                                 components={{
                                     button: (
                                         <Button
-                                            type="button"
                                             size="small"
-                                            variant="secondary"
                                             style={{ marginLeft: '10px' }}
+                                            type="button"
+                                            variant="secondary"
                                             onClick={logout}
                                         />
                                     ),

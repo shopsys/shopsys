@@ -9,14 +9,14 @@ export const StorePageSkeleton: FC = () => (
             <div className="w-full">
                 <div className="mb-12 flex w-full flex-col gap-4 ">
                     <Skeleton className="h-9 w-1/2" />
-                    <Skeleton count={3} className="mb-3 h-4" />
+                    <Skeleton className="mb-3 h-4" count={3} />
                 </div>
 
                 <div className="flex">
                     <div className="flex w-full flex-col">
                         <div className="mb-7">
                             <Skeleton className="mb-4 h-6 w-40" />
-                            <Skeleton count={5} className="mb-2 h-6 w-40 rounded" />
+                            <Skeleton className="mb-2 h-6 w-40 rounded" count={5} />
                         </div>
                         <Skeleton className="h-12 w-full" />
                     </div>
@@ -24,6 +24,6 @@ export const StorePageSkeleton: FC = () => (
             </div>
         </div>
 
-        <Skeleton count={4} className="h-48" containerClassName="mt-10 flex justify-between gap-2" />
+        <Skeleton className="h-48" containerClassName="mt-10 flex justify-between gap-2" count={4} />
     </Webline>
 );

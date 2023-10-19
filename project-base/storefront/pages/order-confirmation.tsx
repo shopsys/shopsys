@@ -10,18 +10,18 @@ import {
     useOrderSentPageContentApi,
 } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { GtmPageType } from 'gtm/types/enums';
-import { PaymentTypeEnum } from 'types/payment';
 import { useRef } from 'react';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
+import { PaymentTypeEnum } from 'types/payment';
 
 export type OrderConfirmationQuery = {
     orderUuid: string | undefined;
@@ -56,7 +56,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
         });
 
     return (
-        <PageGuard isWithAccess={!!orderUuid} errorRedirectUrl={cartUrl}>
+        <PageGuard errorRedirectUrl={cartUrl} isWithAccess={!!orderUuid}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Thank you for your order')}>
                 <Webline>

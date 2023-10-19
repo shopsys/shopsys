@@ -22,8 +22,8 @@ export const RadiobuttonGroup: FC<RadiobuttonGroupProps> = ({ name, radiobuttons
                     <Radiobutton
                         {...field}
                         {...radiobutton}
-                        id={radiobuttonId}
                         checked={field.value === radiobutton.value}
+                        id={radiobuttonId}
                     />,
                     radiobuttonId,
                 );

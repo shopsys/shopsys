@@ -1,7 +1,7 @@
+import { twMergeCustom } from 'helpers/twMerge';
 import { HTMLAttributes } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
-import { twMergeCustom } from 'helpers/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLHeadingElement>, never, 'style' | 'onClick'>;
 type HeadingType = 'h1' | 'h2' | 'h3' | 'h4';
@@ -14,6 +14,7 @@ const getDataTestId = (type: HeadingType) => 'basic-heading-' + type;
 
 export const Heading: FC<HeadingProps> = ({ type, type: HeadingTag, className, ...props }) => (
     <HeadingTag
+        data-testid={getDataTestId(type)}
         className={twMergeCustom(
             twJoin(
                 'mb-3 break-words font-bold text-dark ',
@@ -24,7 +25,6 @@ export const Heading: FC<HeadingProps> = ({ type, type: HeadingTag, className, .
             ),
             className,
         )}
-        data-testid={getDataTestId(type)}
         {...props}
     />
 );

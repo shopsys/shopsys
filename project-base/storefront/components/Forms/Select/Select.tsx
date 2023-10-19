@@ -28,11 +28,11 @@ const Control = (props: any) => {
     return (
         <LabelWrapper
             {...props.children}
+            htmlFor={props.id}
+            inputType="selectbox"
             label={props.selectProps.label}
             required={props.selectProps.required}
             selectBoxLabelIsFloated={props.menuIsOpen === true || props.hasValue === true}
-            htmlFor={props.id}
-            inputType="selectbox"
         >
             <components.Control
                 // class "peer" is used for styling in LabelWrapper
@@ -46,12 +46,14 @@ const Control = (props: any) => {
 export const Select: FC<SelectProps> = ({ hasError, onChange, options, defaultValue, isDisabled, value, ...props }) => {
     return (
         <SelectReact
-            onChange={onChange}
-            options={options}
+            classNamePrefix="select"
+            components={{ Control, DropdownIndicator }}
             defaultValue={defaultValue}
             isDisabled={isDisabled}
+            isSearchable={false}
+            options={options}
+            placeholder={props.label}
             value={value}
-            classNamePrefix="select"
             styles={{
                 indicatorSeparator: () => ({}),
                 control: (styles) =>
@@ -59,9 +61,7 @@ export const Select: FC<SelectProps> = ({ hasError, onChange, options, defaultVa
                         ? { ...styles, boxShadow: 'none', backgroundColor: 'white', borderColor: '#ec5353' }
                         : styles,
             }}
-            placeholder={props.label}
-            components={{ Control, DropdownIndicator }}
-            isSearchable={false}
+            onChange={onChange}
             {...props}
         />
     );

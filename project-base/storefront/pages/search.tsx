@@ -1,20 +1,27 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     BreadcrumbFragmentApi,
     SearchProductsQueryDocumentApi,
     SearchQueryDocumentApi,
     useSearchQueryApi,
 } from 'graphql/generated';
+import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
-import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { getRedirectWithOffsetPage } from 'helpers/loadMore';
+import {
+    getNumberFromUrlQuery,
+    getProductListSortFromUrlQuery,
+    getSlugFromServerSideUrl,
+    getStringFromUrlQuery,
+} from 'helpers/parsing/urlParsing';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
@@ -22,19 +29,12 @@ import {
     SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParamNames';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { GtmPageType } from 'gtm/types/enums';
-import {
-    getNumberFromUrlQuery,
-    getProductListSortFromUrlQuery,
-    getSlugFromServerSideUrl,
-    getStringFromUrlQuery,
-} from 'helpers/parsing/urlParsing';
-import { getRedirectWithOffsetPage } from 'helpers/loadMore';
+import useTranslation from 'next-translate/useTranslation';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -61,8 +61,8 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     return (
         <>
             <MetaRobots content="noindex, nofollow" />
-            <CommonLayout title={title} breadcrumbs={breadcrumbs}>
-                <SearchContent searchResults={searchData} fetching={fetching} />
+            <CommonLayout breadcrumbs={breadcrumbs} title={title}>
+                <SearchContent fetching={fetching} searchResults={searchData} />
             </CommonLayout>
         </>
     );

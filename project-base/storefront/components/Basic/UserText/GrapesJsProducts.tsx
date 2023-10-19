@@ -42,9 +42,9 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetched
 
     return (
         <ProductsSlider
-            products={products}
-            gtmProductListName={GtmProductListNameType.other}
             gtmMessageOrigin={GtmMessageOriginType.other}
+            gtmProductListName={GtmProductListNameType.other}
+            products={products}
         />
     );
 };

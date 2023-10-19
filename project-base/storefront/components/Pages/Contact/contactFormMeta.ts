@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import useTranslation from 'next-translate/useTranslation';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { ContactFormType } from 'types/form';

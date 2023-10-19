@@ -1,12 +1,12 @@
 import { ProductComparisonContent } from './ProductComparisonContent';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { InfoIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useGtmSliderProductListViewEvent } from 'gtm/hooks/productList/useGtmSliderProductListViewEvent';
+import { GtmProductListNameType } from 'gtm/types/enums';
 import { useComparison } from 'hooks/comparison/useComparison';
 import useTranslation from 'next-translate/useTranslation';
-import { GtmProductListNameType } from 'gtm/types/enums';
-import { InfoIcon } from 'components/Basic/Icon/IconsSvg';
 
 export const ProductComparison: FC = () => {
     const { t } = useTranslation();
@@ -19,7 +19,7 @@ export const ProductComparison: FC = () => {
         <div className="my-[75px] flex items-center">
             <InfoIcon className="mr-4 w-8" />
 
-            <Heading type="h3" className="!mb-0">
+            <Heading className="!mb-0" type="h3">
                 {t('Comparison does not contain any products yet.')}
             </Heading>
         </div>

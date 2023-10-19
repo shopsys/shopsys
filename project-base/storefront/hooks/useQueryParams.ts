@@ -1,9 +1,5 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import {
-    getQueryWithoutSlugTypeParameterFromParsedUrlQuery,
-    getUrlQueriesWithoutDynamicPageQueries,
-} from 'helpers/parsing/urlParsing';
-import {
     DEFAULT_SORT,
     getChangedDefaultFilters,
     getChangedDefaultFiltersAfterAvailabilityChange,
@@ -17,6 +13,11 @@ import {
     SEO_SENSITIVE_FILTERS,
 } from 'helpers/filterOptions/seoCategories';
 import {
+    getQueryWithoutSlugTypeParameterFromParsedUrlQuery,
+    getUrlQueriesWithoutDynamicPageQueries,
+} from 'helpers/parsing/urlParsing';
+import { getDynamicPageQueryKey } from 'helpers/parsing/urlParsing';
+import {
     FILTER_QUERY_PARAMETER_NAME,
     LOAD_MORE_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
@@ -26,7 +27,6 @@ import {
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
-import { getDynamicPageQueryKey } from 'helpers/parsing/urlParsing';
 
 export type FilterQueries = FilterOptionsUrlQueryType | undefined;
 

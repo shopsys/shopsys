@@ -35,16 +35,16 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinP
 
     return (
         <FilterGroupWrapper dataTestId={TEST_IDENTIFIER}>
-            <FilterGroupTitle title={title} isOpen={isGroupOpen} onClick={() => setIsGroupOpen(!isGroupOpen)} />
+            <FilterGroupTitle isOpen={isGroupOpen} title={title} onClick={() => setIsGroupOpen(!isGroupOpen)} />
             {isGroupOpen && (
                 <FilterGroupContent>
                     <RangeSlider
-                        min={minPriceOption}
                         max={maxPriceOption}
-                        minValue={minimalPrice || minPriceOption}
                         maxValue={maximalPrice || maxPriceOption}
-                        setMinValueCallback={setMinimalPrice}
+                        min={minPriceOption}
+                        minValue={minimalPrice || minPriceOption}
                         setMaxValueCallback={setMaximalPrice}
+                        setMinValueCallback={setMinimalPrice}
                     />
                 </FilterGroupContent>
             )}

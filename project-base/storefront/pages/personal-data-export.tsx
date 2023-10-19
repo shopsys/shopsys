@@ -7,13 +7,13 @@ import {
     usePersonalDataPageTextQueryApi,
 } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { GtmPageType } from 'gtm/types/enums';
+import useTranslation from 'next-translate/useTranslation';
 
 const PersonalDataExportPage: FC = () => {
     const { t } = useTranslation();
@@ -30,7 +30,7 @@ const PersonalDataExportPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout title={t('Personal Data Export')} breadcrumbs={breadcrumbs}>
+            <CommonLayout breadcrumbs={breadcrumbs} title={t('Personal Data Export')}>
                 <PersonalDataExportContent
                     contentSiteText={personalDataPageTextResult.data?.personalDataPage?.exportSiteContent}
                 />

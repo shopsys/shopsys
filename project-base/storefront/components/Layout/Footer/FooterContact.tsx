@@ -8,7 +8,7 @@ export const FooterContact: FC = () => {
 
     return (
         <>
-            <Heading type="h4" className="text-center uppercase text-white">
+            <Heading className="text-center uppercase text-white" type="h4">
                 {t('Follow Us')}
             </Heading>
 
@@ -17,7 +17,7 @@ export const FooterContact: FC = () => {
                     <InstagramIcon className="w-8 text-white" />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Facebook">
-                    <IconImage icon="facebook" className="w-8" alt={t('Facebook')} />
+                    <IconImage alt={t('Facebook')} className="w-8" icon="facebook" />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Youtube">
                     <YoutubeIcon className="w-11 text-[#d93738]" />
@@ -26,10 +26,10 @@ export const FooterContact: FC = () => {
 
             <div className="mt-4 flex flex-wrap justify-center gap-5">
                 <FooterContactLangsItem href="#" text={t('Czechia')}>
-                    <IconImage icon="cz" width={24} height={16} alt={t('Czechia')} />
+                    <IconImage alt={t('Czechia')} height={16} icon="cz" width={24} />
                 </FooterContactLangsItem>
                 <FooterContactLangsItem href="#" text={t('Slovakia')}>
-                    <IconImage icon="sk" width={24} height={16} alt={t('Slovakia')} />
+                    <IconImage alt={t('Slovakia')} height={16} icon="sk" width={24} />
                 </FooterContactLangsItem>
             </div>
         </>

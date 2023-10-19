@@ -1,5 +1,7 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { Heading } from 'components/Basic/Heading/Heading';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
+import { Login } from 'components/Blocks/Popup/Login/Login';
 import { Form } from 'components/Forms/Form/Form';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
@@ -9,8 +11,8 @@ import {
     useContactInformationFormMeta,
 } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
 import { handleCartModifications, useCurrentCart } from 'connectors/cart/Cart';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateOrderMutationApi } from 'graphql/generated';
-import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import {
     getGtmCreateOrderEventOrderPart,
     getGtmCreateOrderEventUserPart,
@@ -19,28 +21,26 @@ import {
 import { onGtmCreateOrderEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmReviewConsents } from 'gtm/helpers/gtm';
 import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/helpers/helpers';
+import { useGtmContactInformationPageViewEvent } from 'gtm/hooks/useGtmContactInformationPageViewEvent';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmMessageOriginType, GtmPageType } from 'gtm/types/enums';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getIsPaymentWithPaymentGate } from 'helpers/mappers/payment';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useGtmContactInformationPageViewEvent } from 'gtm/hooks/useGtmContactInformationPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { OrderConfirmationQuery } from 'pages/order-confirmation';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { CustomerTypeEnum } from 'types/customer';
-import { GtmMessageOriginType, GtmPageType } from 'gtm/types/enums';
-import dynamic from 'next/dynamic';
-import { Heading } from 'components/Basic/Heading/Heading';
-import { Login } from 'components/Blocks/Popup/Login/Login';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
@@ -223,19 +223,19 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <EmptyCartWrapper currentCart={currentCart} title={t('Order')} enableHandling={!orderCreating}>
+            <EmptyCartWrapper currentCart={currentCart} enableHandling={!orderCreating} title={t('Order')}>
                 <OrderLayout activeStep={3}>
                     <FormProvider {...formProviderMethods}>
                         <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
                             <ContactInformationContent setIsLoginPopupOpened={setIsLoginPopupOpened} />
                             <OrderAction
+                                withGapBottom
                                 buttonBack={t('Back')}
+                                buttonBackLink={transportAndPaymentUrl}
                                 buttonNext={t('Submit order')}
                                 hasDisabledLook={!formProviderMethods.formState.isValid}
-                                withGapTop={false}
-                                withGapBottom
-                                buttonBackLink={transportAndPaymentUrl}
                                 isLoading={fetching}
+                                withGapTop={false}
                             />
                         </Form>
                     </FormProvider>
@@ -243,9 +243,9 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
 
                 {isErrorPopupVisible && (
                     <ErrorPopup
-                        onCloseCallback={() => setErrorPopupVisibility(false)}
                         fields={formMeta.fields}
                         gtmMessageOrigin={GtmMessageOriginType.contact_information_page}
+                        onCloseCallback={() => setErrorPopupVisibility(false)}
                     />
                 )}
                 {isLoginPopupOpened && (

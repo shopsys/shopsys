@@ -2,13 +2,13 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CookieConsentContent } from 'components/Pages/CookieConsent/CookieConsentContent';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { GtmPageType } from 'gtm/types/enums';
+import useTranslation from 'next-translate/useTranslation';
 
 const CookieConsentPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -21,7 +21,7 @@ const CookieConsentPage: FC<ServerSidePropsType> = () => {
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout title={t('Cookie consent update')} breadcrumbs={breadcrumbs}>
+        <CommonLayout breadcrumbs={breadcrumbs} title={t('Cookie consent update')}>
             <CookieConsentContent />
         </CommonLayout>
     );

@@ -50,9 +50,9 @@ export const OrderAction: FC<OrderActionProps> = ({
         >
             <div className="order-2 lg:order-1" data-testid={TEST_IDENTIFIER + 'back'}>
                 <ExtendedNextLink
+                    className="font-bold uppercase text-dark no-underline"
                     href={buttonBackLink}
                     type="static"
-                    className="font-bold uppercase text-dark no-underline"
                 >
                     <>
                         <ArrowIcon className="relative top-0 mr-1 rotate-90 text-greyLight" />
@@ -61,7 +61,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                 </ExtendedNextLink>
             </div>
             <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0" data-testid={TEST_IDENTIFIER + 'next'}>
-                <SubmitButton variant="primary" isWithDisabledLook={hasDisabledLook} onClick={onNextStepHandler}>
+                <SubmitButton isWithDisabledLook={hasDisabledLook} variant="primary" onClick={onNextStepHandler}>
                     {isLoading && <SpinnerIcon className="w-5" />}
                     <span>{buttonNext}</span>
                     <ArrowIcon className="relative top-0 ml-1 -rotate-90 text-white" />

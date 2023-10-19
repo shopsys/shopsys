@@ -5,15 +5,15 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
 import { useRemovePromoCodeFromCart } from 'hooks/cart/useRemovePromoCodeFromCart';
-import useTranslation from 'next-translate/useTranslation';
 import { useCalcElementHeight } from 'hooks/ui/useCalcElementHeight';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { ChangeEventHandler, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
-import { GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
@@ -103,19 +103,19 @@ export const PromoCode: FC = () => {
                     <>
                         <div
                             className="mb-3 inline-flex cursor-pointer items-center rounded bg-orangeLight py-3 px-4 text-sm font-bold uppercase text-grey transition hover:bg-orangeLight"
-                            onClick={() => setIsContentVisible(!isContentVisible)}
                             data-testid={TEST_IDENTIFIER + '-add-button'}
+                            onClick={() => setIsContentVisible(!isContentVisible)}
                         >
                             <PlusIcon className="mr-3 w-3" />
                             {t('I have a discount coupon')}
                         </div>
                         <Transition
-                            nodeRef={cssTransitionRef}
+                            unmountOnExit
                             in={isContentVisible}
+                            nodeRef={cssTransitionRef}
                             timeout={300}
                             onEnter={calcHeight}
                             onExit={calcHeight}
-                            unmountOnExit
                         >
                             {(state) => (
                                 <div
@@ -129,15 +129,15 @@ export const PromoCode: FC = () => {
                                         <TextInput
                                             className="!mb-0 !w-full max-w-sm !rounded-r-none !border-r-0"
                                             id={TEST_IDENTIFIER + '-input'}
-                                            type="text"
                                             label={t('Coupon')}
+                                            type="text"
                                             value={promoCodeValue}
                                             onChange={onChangePromoCodeValueHandler}
                                         />
                                         <SubmitButton
                                             className="!rounded-r !rounded-l-none !px-3"
-                                            isWithDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
                                             dataTestId={TEST_IDENTIFIER + '-apply-button'}
+                                            isWithDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
                                             onClick={onApplyPromoCodeHandler}
                                         >
                                             {fetchingApplyPromoCode && <Loader className="w-4 text-white" />}
@@ -152,9 +152,9 @@ export const PromoCode: FC = () => {
             </div>
             {isErrorPopupVisible && (
                 <ErrorPopup
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
                     fields={promoCodeValidationMessages}
                     gtmMessageOrigin={GtmMessageOriginType.cart}
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
                 />
             )}
         </>

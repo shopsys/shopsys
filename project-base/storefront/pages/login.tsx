@@ -6,14 +6,14 @@ import {
     CurrentCustomerUserQueryDocumentApi,
 } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { GtmPageType } from 'gtm/types/enums';
+import useTranslation from 'next-translate/useTranslation';
+import { createClient } from 'urql/createClient';
 
 const LoginPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -24,7 +24,7 @@ const LoginPage: FC<ServerSidePropsType> = () => {
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout title={t('Login')} breadcrumbs={breadcrumbs}>
+        <CommonLayout breadcrumbs={breadcrumbs} title={t('Login')}>
             <LoginContent />
         </CommonLayout>
     );

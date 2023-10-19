@@ -4,15 +4,15 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent';
 import { BreadcrumbFragmentApi, OrderDetailQueryDocumentApi, useOrderDetailQueryApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { GtmPageType } from 'gtm/types/enums';
 
 const OrderDetailPage: FC = () => {
     const { t } = useTranslation();
@@ -32,8 +32,8 @@ const OrderDetailPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <PageGuard isWithAccess={!error} errorRedirectUrl={customerOrdersUrl}>
-                <CommonLayout title={`${t('Order number')} ${orderNumber}`} breadcrumbs={breadcrumbs}>
+            <PageGuard errorRedirectUrl={customerOrdersUrl} isWithAccess={!error}>
+                <CommonLayout breadcrumbs={breadcrumbs} title={`${t('Order number')} ${orderNumber}`}>
                     {orderData?.order && <OrderDetailContent order={orderData.order} />}
                 </CommonLayout>
             </PageGuard>

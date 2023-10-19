@@ -8,15 +8,15 @@ const TEST_IDENTIFIER = 'layout-header-logo';
 export const Logo: FC = () => (
     <>
         <LogoMetadata />
-        <ExtendedNextLink href="/" type="static" className="flex-1 vl:flex-none">
+        <ExtendedNextLink className="flex-1 vl:flex-none" href="/" type="static">
             <NextImage
+                priority
+                alt="Shopsys logo"
+                className={twMergeCustom('flex w-32 max-w-full lg:w-40')}
+                data-testid={TEST_IDENTIFIER}
+                height={38}
                 src="/images/logo.svg"
                 width={163}
-                height={38}
-                alt="Shopsys logo"
-                data-testid={TEST_IDENTIFIER}
-                className={twMergeCustom('flex w-32 max-w-full lg:w-40')}
-                priority
             />
         </ExtendedNextLink>
     </>

@@ -40,11 +40,11 @@ export const SeoMeta: FC<SeoMetaProps> = ({ defaultTitle, defaultDescription, ca
     return (
         <Head>
             <title>{`${title} ${titleSuffix}`}</title>
-            {description && <meta name="description" content={description} />}
-            {ogTitle && <meta name="og:title" content={ogTitle} />}
-            {ogDescription && <meta name="og:description" content={ogDescription} />}
-            {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
-            {canonicalUrl && canonicalUrl !== currentUrlWithDomain && <link rel="canonical" href={canonicalUrl} />}
+            {description && <meta content={description} name="description" />}
+            {ogTitle && <meta content={ogTitle} name="og:title" />}
+            {ogDescription && <meta content={ogDescription} name="og:description" />}
+            {ogImageUrl && <meta content={ogImageUrl} property="og:image" />}
+            {canonicalUrl && canonicalUrl !== currentUrlWithDomain && <link href={canonicalUrl} rel="canonical" />}
         </Head>
     );
 };

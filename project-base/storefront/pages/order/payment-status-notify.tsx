@@ -26,7 +26,7 @@ const PaymentStatusNotifyPage: FC<ServerSidePropsType> = () => {
         checkPaymentOnApi(orderUuidParam);
     }, []);
 
-    return <></>;
+    return null;
 };
 
 export const getServerSideProps = getServerSidePropsWrapper(

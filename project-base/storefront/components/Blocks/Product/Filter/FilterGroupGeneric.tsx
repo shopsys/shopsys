@@ -7,8 +7,8 @@ import {
 } from './FilterElements';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { useFilterShowLess } from 'hooks/filter/useFilterShowLess';
-import useTranslation from 'next-translate/useTranslation';
 import { useQueryParams } from 'hooks/useQueryParams';
+import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 
@@ -57,7 +57,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
 
     return (
         <FilterGroupWrapper dataTestId={getDataTestId(filterField)}>
-            <FilterGroupTitle title={title} isOpen={isGroupOpen} onClick={() => setIsGroupOpen(!isGroupOpen)} />
+            <FilterGroupTitle isOpen={isGroupOpen} title={title} onClick={() => setIsGroupOpen(!isGroupOpen)} />
             {isGroupOpen && (
                 <FilterGroupContent>
                     {defaultOptions && (
@@ -71,17 +71,17 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                                 return (
                                     <FilterGroupContentItem
                                         key={option.uuid}
-                                        isDisabled={isDisabled}
                                         dataTestId={getDataTestId(filterField) + '-' + index}
+                                        isDisabled={isDisabled}
                                     >
                                         <Checkbox
-                                            id={`${filterField}.${index}.checked`}
-                                            name={`${filterField}.${index}.checked`}
-                                            label={option.name}
-                                            disabled={isDisabled}
-                                            onChange={() => handleCheck(option.uuid)}
-                                            value={isChecked}
                                             count={option.count}
+                                            disabled={isDisabled}
+                                            id={`${filterField}.${index}.checked`}
+                                            label={option.name}
+                                            name={`${filterField}.${index}.checked`}
+                                            value={isChecked}
+                                            onChange={() => handleCheck(option.uuid)}
                                         />
                                     </FilterGroupContentItem>
                                 );

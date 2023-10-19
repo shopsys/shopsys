@@ -3,13 +3,13 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CustomerContent } from 'components/Pages/Customer/CustomerContent';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { GtmPageType } from 'gtm/types/enums';
+import useTranslation from 'next-translate/useTranslation';
 
 const CustomerPage: FC = () => {
     const { t } = useTranslation();
@@ -23,7 +23,7 @@ const CustomerPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout title={t('Customer')} breadcrumbs={breadcrumbs}>
+            <CommonLayout breadcrumbs={breadcrumbs} title={t('Customer')}>
                 <CustomerContent />
             </CommonLayout>
         </>

@@ -54,12 +54,12 @@ export const CartListItem: FC<CartListItemProps> = ({
         >
             <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0">
                 <div className="flex w-24 shrink-0" data-testid={TEST_IDENTIFIER + 'image'}>
-                    <ExtendedNextLink href={productSlug} type="product" className="relative h-full w-full">
+                    <ExtendedNextLink className="relative h-full w-full" href={productSlug} type="product">
                         <Image
-                            image={product.mainImage}
-                            type="thumbnailExtraSmall"
                             alt={product.mainImage?.name || product.fullName}
                             className="h-14"
+                            image={product.mainImage}
+                            type="thumbnailExtraSmall"
                         />
                     </ExtendedNextLink>
                 </div>
@@ -67,9 +67,9 @@ export const CartListItem: FC<CartListItemProps> = ({
                 <div className="flex flex-col items-start gap-4 text-sm font-bold vl:flex-1 vl:flex-row vl:items-center">
                     <div className="h-full text-left vl:w-[16.875rem]" data-testid={TEST_IDENTIFIER + 'name'}>
                         <ExtendedNextLink
+                            className="text-sm font-bold uppercase leading-4 text-dark no-underline hover:text-dark hover:no-underline"
                             href={productSlug}
                             type="product"
-                            className="text-sm font-bold uppercase leading-4 text-dark no-underline hover:text-dark hover:no-underline"
                         >
                             {product.fullName}
                         </ExtendedNextLink>
@@ -95,12 +95,12 @@ export const CartListItem: FC<CartListItemProps> = ({
 
             <div className="flex w-28 items-center vl:w-36" data-testid={TEST_IDENTIFIER + 'spinbox'}>
                 <Spinbox
-                    id={uuid}
-                    min={1}
-                    max={product.stockQuantity}
-                    step={1}
                     defaultValue={quantity}
+                    id={uuid}
+                    max={product.stockQuantity}
+                    min={1}
                     ref={spinboxRef}
+                    step={1}
                     onChangeValueCallback={onChangeValueHandler}
                 />
             </div>
@@ -117,8 +117,8 @@ export const CartListItem: FC<CartListItemProps> = ({
             </div>
 
             <RemoveCartItemButton
-                onItemRemove={onItemRemove}
                 className="absolute right-0 top-5 flex items-center vl:static"
+                onItemRemove={onItemRemove}
             />
         </div>
     );

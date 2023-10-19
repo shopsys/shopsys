@@ -1,6 +1,6 @@
+import { Button, ButtonProps } from './Button';
 import { forwardRef } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Button, ButtonProps } from './Button';
 
 export const SubmitButton: FC<ButtonProps> = forwardRef(
     (
@@ -15,7 +15,7 @@ export const SubmitButton: FC<ButtonProps> = forwardRef(
         const isDisabled = isDisabledDefault || formProviderMethods?.formState.isSubmitting;
 
         return (
-            <Button {...props} type="submit" isDisabled={isDisabled}>
+            <Button {...props} isDisabled={isDisabled} type="submit">
                 {children}
             </Button>
         );

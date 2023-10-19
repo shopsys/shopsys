@@ -2,8 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'components/Basic/Link/Link';
 import { usePrivacyPolicyArticleUrlQueryApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
@@ -61,13 +61,13 @@ export const useNewsletterFormMeta = (
                     name: 'privacyPolicy' as const,
                     label: (
                         <Trans
-                            i18nKey="PrivacyPolicyCheckbox"
                             defaultTrans="I take note of the <lnk1>processing of personal data</lnk1>."
+                            i18nKey="PrivacyPolicyCheckbox"
                             components={{
                                 lnk1: privacyPolicyArticleUrl ? (
-                                    <Link href={privacyPolicyArticleUrl} isExternal target="_blank" />
+                                    <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
                                 ) : (
-                                    <></>
+                                    <span />
                                 ),
                             }}
                         />

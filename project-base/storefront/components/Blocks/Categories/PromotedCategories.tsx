@@ -1,4 +1,4 @@
-import { SimpleNavigation } from '../SimpleNavigation/SimpleNavigation';
+import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { usePromotedCategoriesQueryApi } from 'graphql/generated';
 
 export const PromotedCategories: FC = () => {

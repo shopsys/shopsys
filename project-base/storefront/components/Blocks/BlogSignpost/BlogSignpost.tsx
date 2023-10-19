@@ -26,15 +26,15 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                     return (
                         <Fragment key={blogCategory.uuid}>
                             <BlogSignpostItem
-                                isActive={isActive}
                                 dataTestId={TEST_IDENTIFIER + index}
                                 href={blogCategory.link}
+                                isActive={isActive}
                             >
                                 <BlogSignpostIcon isActive={isActive} />
                                 {blogCategory.name}
                             </BlogSignpostItem>
                             {!!blogCategory.children?.length && (
-                                <Children blogCategory={blogCategory} activeItem={activeItem} itemLevel={1} />
+                                <Children activeItem={activeItem} blogCategory={blogCategory} itemLevel={1} />
                             )}
                         </Fragment>
                     );

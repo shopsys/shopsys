@@ -3,14 +3,14 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { NewPasswordContent } from 'components/Pages/NewPassword/NewPasswordContent';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { GtmPageType } from 'gtm/types/enums';
 
 const NewPasswordPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -54,7 +54,7 @@ const NewPasswordPage: FC<ServerSidePropsType> = () => {
                         : [{ __typename: 'Link', name: t('Set new password'), slug: newPasswordUrl }]
                 }
             >
-                <NewPasswordContent hash={hashParam} email={emailParam} />
+                <NewPasswordContent email={emailParam} hash={hashParam} />
             </CommonLayout>
         </>
     );

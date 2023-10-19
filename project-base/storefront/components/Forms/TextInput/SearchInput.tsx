@@ -1,9 +1,9 @@
 import { CloseIcon, SearchIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
+import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
-import { twMergeCustom } from 'helpers/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, 'onChange', never>;
 
@@ -37,20 +37,20 @@ export const SearchInput: FC<SearchInputProps> = ({
     return (
         <div className="relative w-full">
             <input
+                autoComplete="off"
+                data-testid={TEST_IDENTIFIER}
                 id={TEST_IDENTIFIER}
-                onChange={onChange}
-                value={value}
                 placeholder={label}
                 type="search"
-                autoComplete="off"
-                onKeyUp={enterKeyPressHandler}
-                data-testid={TEST_IDENTIFIER}
+                value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
                     'peer mb-0 h-12 w-full rounded border-2 border-white bg-white pr-20 pl-4 text-dark placeholder:text-grey placeholder:opacity-100 focus:outline-none [&:-webkit-autofill]:!bg-white [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-white [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-white [&:-webkit-autofill]:focus:!shadow-inner [&:-internal-autofill-selected]:!bg-white [&:-internal-autofill-selected]:!shadow-inner [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none [&::-webkit-cancel-button]:appearance-none [&::-webkit-results-button]:appearance-none [&::-webkit-results-decoration]:appearance-none',
                     value ? 'pr-20' : 'pr-12',
                     className,
                 )}
+                onChange={onChange}
+                onKeyUp={enterKeyPressHandler}
             />
 
             {isLoading ? (
@@ -58,8 +58,8 @@ export const SearchInput: FC<SearchInputProps> = ({
             ) : (
                 <button
                     className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer border-none"
-                    type="submit"
                     title={t('Search')}
+                    type="submit"
                     onClick={onSearch}
                 >
                     <SearchIcon className="w-5" />

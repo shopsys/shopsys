@@ -25,17 +25,17 @@ export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, transport
                     isActive={selectedStoreUuid === pickupPlace.identifier}
                 >
                     <Radiobutton
-                        name="selectedStore"
-                        id={pickupPlace.identifier}
-                        value={pickupPlace.identifier}
                         checked={selectedStoreUuid === pickupPlace.identifier}
-                        onChangeCallback={onSelectStoreCallback}
+                        id={pickupPlace.identifier}
+                        name="selectedStore"
+                        value={pickupPlace.identifier}
                         label={
                             <TransportAndPaymentSelectItemLabel
                                 name={pickupPlace.name}
                                 pickupPlaceDetail={pickupPlace}
                             />
                         }
+                        onChangeCallback={onSelectStoreCallback}
                     />
                 </TransportAndPaymentListItem>
             ))}

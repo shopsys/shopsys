@@ -3,8 +3,8 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { GtmPageType } from 'gtm/types/enums';
+import useTranslation from 'next-translate/useTranslation';
 
 export const PaymentFail: FC = () => {
     const { t } = useTranslation();

@@ -1,11 +1,11 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { BlogPreviewMain } from './BlogPreviewMain';
+import { BlogPreviewSide } from './BlogPreviewSide';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { ArrowRightIcon } from 'components/Basic/Icon/IconsSvg';
 import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
-import { BlogPreviewSide } from './BlogPreviewSide';
-import { ArrowRightIcon } from 'components/Basic/Icon/IconsSvg';
 
 export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
 const TEST_IDENTIFIER = 'blocks-blogpreview';
@@ -34,9 +34,9 @@ export const BlogPreview: FC = () => {
 
                 {!!blogUrl && (
                     <ExtendedNextLink
-                        type="blogCategory"
-                        href={blogUrl}
                         className="mb-2 flex items-center font-bold uppercase text-creamWhite no-underline hover:text-creamWhite hover:no-underline"
+                        href={blogUrl}
+                        type="blogCategory"
                     >
                         <>
                             {t('View all')}

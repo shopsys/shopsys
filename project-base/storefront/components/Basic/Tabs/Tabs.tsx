@@ -1,3 +1,4 @@
+import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import React, { useState } from 'react';
 import {
     Tab,
@@ -10,7 +11,6 @@ import {
     Tabs as TabsReact,
 } from 'react-tabs';
 import { twJoin } from 'tailwind-merge';
-import { ArrowIcon } from '../Icon/IconsSvg';
 
 /**
  * In background of styled tab parts we are using - react-tabs components
@@ -59,8 +59,8 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
 
     return (
         <TabPanel
-            className="flex flex-col flex-wrap lg:hidden [&.isActive]:flex [&.isActive]:lg:pt-12"
             forceRender
+            className="flex flex-col flex-wrap lg:hidden [&.isActive]:flex [&.isActive]:lg:pt-12"
             selectedClassName="isActive"
             {...props}
         >

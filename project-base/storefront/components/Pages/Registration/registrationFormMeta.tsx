@@ -18,8 +18,8 @@ import {
 } from 'components/Forms/validationRules';
 import { usePrivacyPolicyArticleUrlQueryApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
@@ -212,14 +212,14 @@ export const useRegistrationFormMeta = (
                     name: 'gdprAgreement' as const,
                     label: (
                         <Trans
-                            i18nKey="GdprAgreementCheckbox"
                             defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
+                            i18nKey="GdprAgreementCheckbox"
                             components={{
                                 lnk1:
                                     privacyPolicyArticleUrl !== undefined ? (
-                                        <Link href={privacyPolicyArticleUrl} isExternal target="_blank" />
+                                        <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
                                     ) : (
-                                        <span></span>
+                                        <span />
                                     ),
                             }}
                         />

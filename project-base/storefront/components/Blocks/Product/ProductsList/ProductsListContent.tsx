@@ -1,12 +1,12 @@
 import { ProductListItem } from './ProductListItem';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { ListedProductFragmentApi } from 'graphql/generated';
-import { useWishlist } from 'hooks/useWishlist';
-import React, { RefObject } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { useComparison } from 'hooks/comparison/useComparison';
-import dynamic from 'next/dynamic';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { useWishlist } from 'hooks/useWishlist';
+import dynamic from 'next/dynamic';
+import React, { RefObject } from 'react';
 
 const ProductComparePopup = dynamic(() =>
     import('../ButtonsAction/ProductComparePopup').then((component) => component.ProductComparePopup),
@@ -40,19 +40,19 @@ export const ProductsListContent: FC<ProductsListProps> = ({
 
     return (
         <>
-            <ul ref={ref} className={className} data-testid={dataTestId}>
+            <ul className={className} data-testid={dataTestId} ref={ref}>
                 {products.map((product, index) => (
                     <ProductListItem
-                        ref={productRefs?.[index]}
                         key={product.uuid}
                         className={classNameProduct}
-                        product={product}
-                        listIndex={(currentPage - 1) * DEFAULT_PAGE_SIZE + index}
-                        gtmProductListName={gtmProductListName}
                         gtmMessageOrigin={gtmMessageOrigin}
+                        gtmProductListName={gtmProductListName}
                         isProductInComparison={isProductInComparison(product.uuid)}
-                        toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
                         isProductInWishlist={isProductInWishlist(product.uuid)}
+                        listIndex={(currentPage - 1) * DEFAULT_PAGE_SIZE + index}
+                        product={product}
+                        ref={productRefs?.[index]}
+                        toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
                         toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
                     />
                 ))}

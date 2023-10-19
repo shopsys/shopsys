@@ -7,8 +7,8 @@ import {
     CategoryDetailQueryDocumentApi,
     CategoryDetailQueryVariablesApi,
 } from 'graphql/generated';
-import { getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
+import { getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextRouter, useRouter } from 'next/router';
 import { useState, useEffect } from 'react';

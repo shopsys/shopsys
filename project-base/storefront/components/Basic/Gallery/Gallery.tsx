@@ -1,11 +1,11 @@
-import 'lightgallery/css/lightgallery.css';
+import { twMergeCustom } from 'helpers/twMerge';
 import 'lightgallery/css/lg-thumbnail.css';
 import 'lightgallery/css/lg-video.css';
+import 'lightgallery/css/lightgallery.css';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import lgVideo from 'lightgallery/plugins/video';
-import getConfig from 'next/config';
 import LightGallery from 'lightgallery/react';
-import { twMergeCustom } from 'helpers/twMerge';
+import getConfig from 'next/config';
 
 type GalleryProps = {
     selector: string;
@@ -20,13 +20,13 @@ export const Gallery: FC<GalleryProps> = ({ selector, children, className }) => 
 
     return (
         <LightGallery
-            mode="lg-fade"
             thumbnail
-            plugins={[lgThumbnail, lgVideo]}
-            selector={selector}
-            licenseKey={lightgalleryLicenseKey}
             download={false}
             elementClassNames={TwClass}
+            licenseKey={lightgalleryLicenseKey}
+            mode="lg-fade"
+            plugins={[lgThumbnail, lgVideo]}
+            selector={selector}
         >
             {children}
         </LightGallery>

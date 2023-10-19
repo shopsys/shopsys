@@ -1,8 +1,8 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
+import { twMergeCustom } from 'helpers/twMerge';
 import { AnchorHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
-import { ExtendedNextLink } from '../ExtendedNextLink/ExtendedNextLink';
-import { twMergeCustom } from 'helpers/twMerge';
 
 type NativePropsAnchor = ExtractNativePropsFromDefault<
     AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -40,7 +40,7 @@ export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel,
     }
 
     return (
-        <ExtendedNextLink {...props} href={href} passHref type="static">
+        <ExtendedNextLink {...props} passHref href={href} type="static">
             {content}
         </ExtendedNextLink>
     );

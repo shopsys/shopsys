@@ -3,9 +3,9 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import useTranslation from 'next-translate/useTranslation';
 import React from 'react';
-import { GtmPageType } from 'gtm/types/enums';
 
 export const Error404Content: FC = () => {
     const { t } = useTranslation();
@@ -18,7 +18,7 @@ export const Error404Content: FC = () => {
             <Webline>
                 <ErrorPage>
                     <div className="mb-8 max-w-sm">
-                        <img loading="lazy" src="/public/frontend/images/404_m.png" alt={t('404')} />
+                        <img alt={t('404')} loading="lazy" src="/public/frontend/images/404_m.png" />
                     </div>
                     <div>
                         <ErrorPageTextHeading>{t('We have nothing to show you at this url.')}</ErrorPageTextHeading>

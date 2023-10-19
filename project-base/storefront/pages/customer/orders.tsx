@@ -1,8 +1,8 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrdersContent } from 'components/Pages/Customer/OrdersContent';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     BreadcrumbFragmentApi,
     ListedOrderFragmentApi,
@@ -10,18 +10,18 @@ import {
     useOrdersQueryApi,
 } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
+import { getNumberFromUrlQuery } from 'helpers/parsing/urlParsing';
+import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
-import { GtmPageType } from 'gtm/types/enums';
-import { getNumberFromUrlQuery } from 'helpers/parsing/urlParsing';
 
 const OrdersPage: FC = () => {
     const { t } = useTranslation();
@@ -46,7 +46,7 @@ const OrdersPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout title={t('My orders')} breadcrumbs={breadcrumbs}>
+            <CommonLayout breadcrumbs={breadcrumbs} title={t('My orders')}>
                 <OrdersContent isLoading={fetching} orders={mappedOrders} totalCount={ordersData?.orders?.totalCount} />
             </CommonLayout>
         </>

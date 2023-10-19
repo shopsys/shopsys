@@ -7,8 +7,8 @@ import {
     ProductDetailFragmentApi,
     SimpleProductFragmentApi,
 } from 'graphql/generated';
-import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'gtm/types/objects';
+import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { ProductInterfaceType } from 'types/product';
 
 export const mapGtmCartItemType = (

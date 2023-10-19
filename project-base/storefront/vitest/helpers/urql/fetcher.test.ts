@@ -1,7 +1,7 @@
+import { captureException } from '@sentry/nextjs';
 import { RedisClientType } from 'redis';
 import { fetcher } from 'urql/fetcher';
 import { Mock, describe, expect, test, vi } from 'vitest';
-import { captureException } from '@sentry/nextjs';
 
 const isClientGetter = vi.fn();
 vi.mock('helpers/isClient', () => ({

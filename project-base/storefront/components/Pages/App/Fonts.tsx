@@ -8,12 +8,10 @@ const robotoFont = Roboto({
 
 export const Fonts: FC = () => {
     return (
-        <>
-            <style jsx global>{`
-                html {
-                    font-family: ${robotoFont.style.fontFamily};
-                }
-            `}</style>
-        </>
+        <style global jsx>{`
+            html {
+                font-family: ${robotoFont.style.fontFamily};
+            }
+        `}</style>
     );
 };

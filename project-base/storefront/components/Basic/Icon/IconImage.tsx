@@ -13,8 +13,8 @@ type IconImageProps = NativeProps & {
 export const IconImage: FC<IconImageProps> = ({ icon, height, width, ...props }) => {
     return (
         <img
-            src={`/icons/${icon}.png`}
             height={height !== undefined ? height : '24'}
+            src={`/icons/${icon}.png`}
             width={width !== undefined ? width : '24'}
             {...props}
         />

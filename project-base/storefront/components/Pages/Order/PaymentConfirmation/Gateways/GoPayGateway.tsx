@@ -1,6 +1,6 @@
 import { Link } from 'components/Basic/Link/Link';
-import { showErrorMessage } from 'helpers/toasts';
 import { GoPayCreatePaymentSetupApi, usePayOrderMutationApi } from 'graphql/generated';
+import { showErrorMessage } from 'helpers/toasts';
 import useTranslation from 'next-translate/useTranslation';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
@@ -48,9 +48,9 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({ orderUuid }) => {
                 id="go-pay-embedded-js"
                 src={goPayPaymentSetup.embedJs}
                 onLoad={initGoPayCheckout(goPayPaymentSetup.gatewayUrl)}
-            ></Script>
+            />
             {isRedirectLinkVisible && (
-                <Link href={goPayPaymentSetup.gatewayUrl} isButton isExternal>
+                <Link isButton isExternal href={goPayPaymentSetup.gatewayUrl}>
                     {t('Pay with GoPay')}
                 </Link>
             )}

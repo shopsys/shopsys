@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useIsUserLoggedIn } from './auth/useIsUserLoggedIn';
 import {
     ListedProductFragmentApi,
     useAddProductToWishlistMutationApi,
@@ -7,10 +7,10 @@ import {
     useSharedWishlistQueryApi,
     useWishlistQueryApi,
 } from 'graphql/generated';
-import { usePersistStore } from 'store/usePersistStore';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import useTranslation from 'next-translate/useTranslation';
-import { useIsUserLoggedIn } from './auth/useIsUserLoggedIn';
+import { useEffect, useState } from 'react';
+import { usePersistStore } from 'store/usePersistStore';
 
 export const useWishlist = () => {
     const { t } = useTranslation();

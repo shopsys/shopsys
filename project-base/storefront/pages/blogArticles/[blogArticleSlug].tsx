@@ -9,16 +9,16 @@ import {
     useBlogArticleDetailQueryApi,
 } from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
+import { parseCatnums } from 'helpers/parsing/grapesJsParser';
+import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
-import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
-import { parseCatnums } from 'helpers/parsing/grapesJsParser';
+import { createClient } from 'urql/createClient';
 
 const BlogArticleDetailPage: NextPage = () => {
     const router = useRouter();
@@ -31,11 +31,11 @@ const BlogArticleDetailPage: NextPage = () => {
 
     return (
         <CommonLayout
-            title={blogArticleData?.blogArticle?.seoTitle}
-            description={blogArticleData?.blogArticle?.seoMetaDescription}
             breadcrumbs={blogArticleData?.blogArticle?.breadcrumb}
             breadcrumbsType="blogCategory"
             canonicalQueryParams={[]}
+            description={blogArticleData?.blogArticle?.seoMetaDescription}
+            title={blogArticleData?.blogArticle?.seoTitle}
         >
             {!!blogArticleData?.blogArticle && !fetching ? (
                 <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />

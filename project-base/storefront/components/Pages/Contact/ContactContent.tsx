@@ -7,19 +7,19 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
-import { showSuccessMessage } from 'helpers/toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useContactMutationApi, usePrivacyPolicyArticleUrlQueryApi, useSettingsQueryApi } from 'graphql/generated';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
+import { showSuccessMessage } from 'helpers/toasts';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import React, { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ContactFormType } from 'types/form';
-import { GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
@@ -59,6 +59,7 @@ export const ContactContent: FC = () => {
                         <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
                             <TextInputControlled
                                 control={formProviderMethods.control}
+                                formName={formMeta.formName}
                                 name={formMeta.fields.name.name}
                                 render={(textInput) => (
                                     <FormColumn className="lg:w-[calc(65%+0.75rem)]">
@@ -67,7 +68,6 @@ export const ContactContent: FC = () => {
                                         </FormLine>
                                     </FormColumn>
                                 )}
-                                formName={formMeta.formName}
                                 textInputProps={{
                                     label: formMeta.fields.name.label,
                                     required: true,
@@ -77,6 +77,7 @@ export const ContactContent: FC = () => {
                             />
                             <TextInputControlled
                                 control={formProviderMethods.control}
+                                formName={formMeta.formName}
                                 name={formMeta.fields.email.name}
                                 render={(textInput) => (
                                     <FormColumn className="lg:w-[calc(65%+0.75rem)]">
@@ -85,7 +86,6 @@ export const ContactContent: FC = () => {
                                         </FormLine>
                                     </FormColumn>
                                 )}
-                                formName={formMeta.formName}
                                 textInputProps={{
                                     label: formMeta.fields.email.label,
                                     required: true,
@@ -94,9 +94,9 @@ export const ContactContent: FC = () => {
                                 }}
                             />
                             <TextareaControlled
-                                name={formMeta.fields.message.name}
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
+                                name={formMeta.fields.message.name}
                                 render={(textarea) => (
                                     <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                                         <FormLine bottomGap className="w-full">
@@ -112,19 +112,19 @@ export const ContactContent: FC = () => {
                             />
                             <div className="mb-4">
                                 <Trans
-                                    i18nKey="ContactFormInfo"
                                     defaultTrans="By clicking on the Send message button, you agree with the <lnk1>processing of privacy policy</lnk1>."
+                                    i18nKey="ContactFormInfo"
                                     components={{
                                         lnk1:
                                             privacyPolicyArticleUrl !== undefined ? (
-                                                <Link href={privacyPolicyArticleUrl} isExternal target="_blank" />
+                                                <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
                                             ) : (
-                                                <span></span>
+                                                <span />
                                             ),
                                     }}
                                 />
                             </div>
-                            <SubmitButton variant="primary" isWithDisabledLook={!formProviderMethods.formState.isValid}>
+                            <SubmitButton isWithDisabledLook={!formProviderMethods.formState.isValid} variant="primary">
                                 {t('Send message')}
                             </SubmitButton>
                         </Form>
@@ -134,9 +134,9 @@ export const ContactContent: FC = () => {
 
             {isErrorPopupVisible && (
                 <ErrorPopup
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
                     fields={formMeta.fields}
                     gtmMessageOrigin={GtmMessageOriginType.other}
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
                 />
             )}
         </>

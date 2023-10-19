@@ -41,7 +41,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = (props) => 
             </tr>
 
             {props.parametersDataState.map((parameter, parameterIndex) => (
-                <tr className="[&>td]:bg-white [&>td]:odd:bg-greyVeryLight" key={`parameter-${parameterIndex}`}>
+                <tr key={`parameter-${parameterIndex}`} className="[&>td]:bg-white [&>td]:odd:bg-greyVeryLight">
                     <BodyItem isSticky>{parameter.name}</BodyItem>
 
                     {parameter.values.map((value, valueIndex) => (

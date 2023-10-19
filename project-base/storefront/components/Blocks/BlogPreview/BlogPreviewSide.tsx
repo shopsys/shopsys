@@ -1,8 +1,8 @@
+import { ArticleLink } from './BlogPreviewElements';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { ListedBlogArticleFragmentApi } from 'graphql/generated';
 import { Fragment } from 'react';
-import { ArticleLink } from './BlogPreviewElements';
 
 type SideProps = {
     articles: ListedBlogArticleFragmentApi[];
@@ -11,13 +11,13 @@ type SideProps = {
 export const BlogPreviewSide: FC<SideProps> = ({ articles }) => (
     <div className="grid snap-x snap-mandatory auto-cols-[80%] gap-4 overflow-y-hidden overscroll-x-contain max-vl:grid-flow-col max-vl:overflow-x-auto md:auto-cols-[40%] lg:gap-6 vl:flex vl:basis-1/3 vl:flex-col vl:gap-3">
         {articles.map((article) => (
-            <div className="flex flex-1 snap-start flex-col gap-2 vl:flex-row" key={article.uuid}>
-                <ArticleLink href={article.link} className="vl:basis-32">
+            <div key={article.uuid} className="flex flex-1 snap-start flex-col gap-2 vl:flex-row">
+                <ArticleLink className="vl:basis-32" href={article.link}>
                     <Image
-                        image={article.mainImage}
-                        type="list"
                         alt={article.mainImage?.name || article.name}
                         className="rounded"
+                        image={article.mainImage}
+                        type="list"
                     />
                 </ArticleLink>
 
@@ -31,8 +31,8 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles }) => (
                     ))}
 
                     <ArticleLink
-                        href={article.link}
                         className="block text-lg font-bold leading-5 text-creamWhite no-underline hover:text-creamWhite"
+                        href={article.link}
                     >
                         {article.name}
                     </ArticleLink>

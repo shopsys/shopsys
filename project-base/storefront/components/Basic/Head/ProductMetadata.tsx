@@ -15,8 +15,9 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
     return (
         <Head>
             <script
-                type="application/ld+json"
+                key="product-metadata"
                 id="product-metadata"
+                type="application/ld+json"
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
                         '@context': 'https://schema.org/',
@@ -43,7 +44,6 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
                         },
                     }),
                 }}
-                key="product-metadata"
             />
         </Head>
     );

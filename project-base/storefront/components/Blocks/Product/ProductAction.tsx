@@ -1,9 +1,9 @@
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { Button } from 'components/Forms/Button/Button';
 import { ListedProductFragmentApi } from 'graphql/generated';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/dist/client/router';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twJoin } from 'tailwind-merge';
 
 type ProductActionProps = {
@@ -25,6 +25,9 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListN
         return (
             <div className={wrapperTwClass}>
                 <Button
+                    className="!w-full"
+                    dataTestId={TEST_IDENTIFIER + '-choose-variant'}
+                    name="choose-variant"
                     onClick={() =>
                         router.push(
                             {
@@ -35,9 +38,6 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListN
                             },
                         )
                     }
-                    name="choose-variant"
-                    dataTestId={TEST_IDENTIFIER + '-choose-variant'}
-                    className="!w-full"
                 >
                     {t('Choose variant')}
                 </Button>
@@ -52,12 +52,12 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListN
     return (
         <AddToCart
             className={twJoin('w-full', wrapperTwClass)}
-            productUuid={product.uuid}
-            minQuantity={1}
-            maxQuantity={product.stockQuantity}
             gtmMessageOrigin={gtmMessageOrigin}
             gtmProductListName={gtmProductListName}
             listIndex={listIndex}
+            maxQuantity={product.stockQuantity}
+            minQuantity={1}
+            productUuid={product.uuid}
         />
     );
 };

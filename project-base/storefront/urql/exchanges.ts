@@ -1,12 +1,12 @@
 import { dedupExchange } from './dedupExchange';
+import { getErrorExchange } from './errorExchange';
 import { devtoolsExchange } from '@urql/devtools';
 import { authExchange } from '@urql/exchange-auth';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
+import { Translate } from 'next-translate';
 import { ClientOptions, fetchExchange, SSRExchange } from 'urql';
 import { getAuthExchangeOptions } from 'urql/authExchange';
 import { cache } from 'urql/cacheExchange';
-import { getErrorExchange } from './errorExchange';
-import { Translate } from 'next-translate';
 
 export const getUrqlExchanges = (
     ssrExchange: SSRExchange,

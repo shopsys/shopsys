@@ -11,8 +11,8 @@ export const DropdownSlideRight: FC<DropdownItemType> = (dropdownItemProps) => {
     return (
         <span
             className="flex w-11 cursor-pointer items-center justify-center text-dark"
-            onClick={() => context.slideRight(dropdownItemProps)}
             data-testid={TEST_IDENTIFIER}
+            onClick={() => context.slideRight(dropdownItemProps)}
         >
             <ArrowIcon className="w-4 -rotate-90" />
         </span>

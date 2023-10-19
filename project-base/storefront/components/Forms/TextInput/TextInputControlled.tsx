@@ -1,5 +1,5 @@
-import { FormLineError } from '../Lib/FormLineError';
 import { TextInput, TextInputProps } from './TextInput';
+import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { FocusEventHandler, ReactElement, useCallback } from 'react';
 import { Control, useController } from 'react-hook-form';
 
@@ -52,15 +52,15 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
             <TextInput
                 {...textInputProps}
                 {...field}
-                id={textInputId}
                 hasError={invalid}
+                id={textInputId}
                 onBlur={combinedOnBlurHandler}
             />
             <FormLineError
-                error={error}
-                textInputSize={textInputProps.inputSize}
-                inputType="text-input"
                 dataTestId={`${textInputId}-error`}
+                error={error}
+                inputType="text-input"
+                textInputSize={textInputProps.inputSize}
             />
         </>,
     );

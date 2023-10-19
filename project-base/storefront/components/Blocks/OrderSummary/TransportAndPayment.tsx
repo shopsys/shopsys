@@ -34,10 +34,10 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                             {transport.name}
                             <span className="inline-block align-bottom">
                                 <Image
-                                    image={transport.mainImage}
-                                    type="default"
                                     alt={transport.name}
                                     className="h-8 w-8"
+                                    image={transport.mainImage}
+                                    type="default"
                                 />
                             </span>
                         </OrderSummaryTextAndImage>
@@ -52,10 +52,10 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                             {payment.name}
                             <span className="inline-block align-bottom">
                                 <Image
-                                    image={payment.mainImage}
-                                    type="default"
                                     alt={payment.name}
                                     className="h-8 w-8"
+                                    image={payment.mainImage}
+                                    type="default"
                                 />
                             </span>
                         </OrderSummaryTextAndImage>

@@ -21,7 +21,7 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
         <ul className="-mr-5 mb-6 flex justify-between border-b border-greyLighter p-0 lg:mb-3">
             <OrderStepsListItem dataTestId={TEST_IDENTIFIER + '1'}>
                 {activeStep > 1 ? (
-                    <OrderStepsListItemLink isActive={false} isClickable href={cartUrl}>
+                    <OrderStepsListItemLink isClickable href={cartUrl} isActive={false}>
                         {'1. ' + t('Cart')}
                     </OrderStepsListItemLink>
                 ) : (
@@ -30,7 +30,7 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
             </OrderStepsListItem>
             <OrderStepsListItem dataTestId={TEST_IDENTIFIER + '2'}>
                 {activeStep > 2 ? (
-                    <OrderStepsListItemLink isActive={false} isClickable href={transportAndPaymentUrl}>
+                    <OrderStepsListItemLink isClickable href={transportAndPaymentUrl} isActive={false}>
                         {'2. ' + t('Transport and payment')}
                     </OrderStepsListItemLink>
                 ) : (

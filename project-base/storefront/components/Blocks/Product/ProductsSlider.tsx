@@ -1,10 +1,10 @@
+import { ProductsListContent } from './ProductsList/ProductsListContent';
+import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { ListedProductFragmentApi } from 'graphql/generated';
-import { RefObject, createRef, useEffect, useState } from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
-import { ProductsListContent } from './ProductsList/ProductsListContent';
-import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
+import { RefObject, createRef, useEffect, useState } from 'react';
 
 type ProductsSliderProps = {
     products: ListedProductFragmentApi[];
@@ -62,18 +62,18 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
         <div className="relative" data-testid={dataTestId}>
             {isWithControls && (
                 <div className="absolute -top-11 right-0 hidden items-center justify-center vl:flex ">
-                    <SliderButton type="prev" onClick={handlePreviousClick} title={t('Previous products')} />
-                    <SliderButton type="next" onClick={handleNextClick} title={t('Next products')} />
+                    <SliderButton title={t('Previous products')} type="prev" onClick={handlePreviousClick} />
+                    <SliderButton title={t('Next products')} type="next" onClick={handleNextClick} />
                 </div>
             )}
 
             <ProductsListContent
+                className="grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] [&::-webkit-scrollbar]:hidden"
+                classNameProduct={productTwClass}
+                gtmMessageOrigin={gtmMessageOrigin}
+                gtmProductListName={gtmProductListName}
                 productRefs={productElementRefs}
                 products={products}
-                className="grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] [&::-webkit-scrollbar]:hidden"
-                gtmProductListName={gtmProductListName}
-                gtmMessageOrigin={gtmMessageOrigin}
-                classNameProduct={productTwClass}
             />
         </div>
     );
@@ -83,12 +83,12 @@ type SliderButtonProps = { type?: 'prev' | 'next'; onClick: () => void; isDisabl
 
 const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title }) => (
     <button
+        disabled={isDisabled}
+        title={title}
         className={twMergeCustom(
             'ml-1 h-8 w-8 cursor-pointer rounded border-none bg-greyDark pt-1 text-creamWhite outline-none transition hover:bg-greyDarker disabled:bg-greyLighter',
         )}
-        title={title}
         onClick={onClick}
-        disabled={isDisabled}
     >
         <ArrowIcon className={twMergeCustom('-translate-y-[2px] rotate-90', type === 'next' && '-rotate-90')} />
     </button>

@@ -1,7 +1,7 @@
+import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
 import { ProductComparisonHeadItem } from './ProductComparisonHeadItem';
 import { ComparedProductFragmentApi } from 'graphql/generated';
 import { useComparison } from 'hooks/comparison/useComparison';
-import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
 
 type ProductComparisonHeadProps = {
     productsCompare: ComparedProductFragmentApi[];
@@ -18,10 +18,10 @@ export const ProductComparisonHead: FC<ProductComparisonHeadProps> = ({ products
                 </td>
                 {productsCompare.map((product, index) => (
                     <ProductComparisonHeadItem
-                        product={product}
                         key={`head-${product.uuid}`}
-                        productsCompareCount={productsCompare!.length}
                         listIndex={index}
+                        product={product}
+                        productsCompareCount={productsCompare!.length}
                         toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
                     />
                 ))}

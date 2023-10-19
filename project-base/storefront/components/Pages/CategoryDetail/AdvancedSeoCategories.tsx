@@ -15,9 +15,9 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCat
         <>
             <div className="mb-3 break-words font-bold text-dark lg:text-lg">{t('Favorite categories')}</div>
             <SimpleNavigation
-                listedItems={readyCategorySeoMixLinks}
                 className="mb-5"
                 itemClassName={simpleNavigationItemTwClass}
+                listedItems={readyCategorySeoMixLinks}
             />
         </>
     );

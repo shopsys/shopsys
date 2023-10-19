@@ -1,20 +1,20 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { AdvancedSeoCategories } from './AdvancedSeoCategories';
+import { CategoryBestsellers } from './CategoryBestsellers/CategoryBestsellers';
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { FilterIcon } from 'components/Basic/Icon/IconsSvg';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CategoryDetailFragmentApi } from 'graphql/generated';
+import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { CategoryBestsellers } from './CategoryBestsellers/CategoryBestsellers';
-import { FilterIcon } from 'components/Basic/Icon/IconsSvg';
-import dynamic from 'next/dynamic';
-import { useQueryParams } from 'hooks/useQueryParams';
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
@@ -54,11 +54,11 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                     )}
                 >
                     <FilterPanel
-                        productFilterOptions={category.products.productFilterOptions}
-                        orderingMode={category.products.orderingMode}
                         defaultOrderingMode={category.products.defaultOrderingMode}
+                        orderingMode={category.products.orderingMode}
                         originalSlug={category.originalCategorySlug}
                         panelCloseHandler={handlePanelOpenerClick}
+                        productFilterOptions={category.products.productFilterOptions}
                         slug={category.slug}
                         totalCount={category.products.totalCount}
                     />
@@ -67,19 +67,19 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
 
                 <div className="flex flex-1 flex-col">
-                    <Adverts positionName="productList" className="mb-5" />
+                    <Adverts className="mb-5" positionName="productList" />
 
                     <Heading type="h1">{title}</Heading>
 
                     {!!category.description && currentPage === 1 && (
-                        <div dangerouslySetInnerHTML={{ __html: category.description }} className="mb-4" />
+                        <div className="mb-4" dangerouslySetInnerHTML={{ __html: category.description }} />
                     )}
 
-                    <Adverts positionName="productListMiddle" currentCategory={category} className="mb-7" />
+                    <Adverts className="mb-7" currentCategory={category} positionName="productListMiddle" />
 
                     <SimpleNavigation
-                        listedItems={[...category.children, ...category.linkedCategories]}
                         className="mb-6"
+                        listedItems={[...category.children, ...category.linkedCategories]}
                     />
 
                     {!!category.readyCategorySeoMixLinks.length && (
@@ -98,9 +98,9 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                         </div>
 
                         <SortingBar
+                            className="flex-1"
                             sorting={category.products.orderingMode}
                             totalCount={category.products.totalCount}
-                            className="flex-1"
                         />
                     </div>
 

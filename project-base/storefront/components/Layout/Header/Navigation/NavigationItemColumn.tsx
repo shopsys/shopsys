@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ColumnCategoriesFragmentApi } from 'graphql/generated';
 import { Image } from 'components/Basic/Image/Image';
+import { ColumnCategoriesFragmentApi } from 'graphql/generated';
 
 type NavigationItemColumnProps = {
     columnCategories: ColumnCategoriesFragmentApi[];
@@ -10,27 +10,27 @@ type NavigationItemColumnProps = {
 export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({ columnCategories, onLinkClick }) => (
     <>
         {columnCategories.map((columnCategories, columnIndex) => (
-            <ul className="flex flex-col gap-9" key={columnIndex}>
+            <ul key={columnIndex} className="flex flex-col gap-9">
                 {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
                     <li key={columnCategoryIndex}>
                         <ExtendedNextLink
+                            className="mb-4 flex justify-center rounded bg-dark bg-opacity-5 p-2"
                             href={columnCategory.slug}
                             type="static"
-                            className="mb-4 flex justify-center rounded bg-dark bg-opacity-5 p-2"
                             onClick={onLinkClick}
                         >
                             <Image
-                                image={columnCategory.mainImage}
-                                type="default"
                                 alt={columnCategory.mainImage?.name || columnCategory.name}
                                 className="h-16 mix-blend-multiply"
+                                image={columnCategory.mainImage}
+                                type="default"
                             />
                         </ExtendedNextLink>
 
                         <ExtendedNextLink
+                            className="mb-1 block font-bold text-dark no-underline"
                             href={columnCategory.slug}
                             type="static"
-                            className="mb-1 block font-bold text-dark no-underline"
                             onClick={onLinkClick}
                         >
                             {columnCategory.name}
@@ -41,9 +41,9 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({ columnCate
                                 {columnCategory.children.map((columnCategoryChild) => (
                                     <li key={columnCategoryChild.name}>
                                         <ExtendedNextLink
-                                            type="category"
-                                            href={columnCategoryChild.slug}
                                             className="block text-sm text-dark no-underline"
+                                            href={columnCategoryChild.slug}
+                                            type="category"
                                             onClick={onLinkClick}
                                         >
                                             {columnCategoryChild.name}

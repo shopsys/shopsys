@@ -1,19 +1,19 @@
-import '../styles/user-text.css';
+import { AppPageContent } from 'components/Pages/App/AppPageContent';
+import { logException } from 'helpers/errors/logException';
+import { initDayjsLocale } from 'helpers/formaters/formatDate';
+import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import i18nConfig from 'i18n';
+import appWithI18n from 'next-translate/appWithI18n';
+import useTranslation from 'next-translate/useTranslation';
+import { AppProps as NextAppProps } from 'next/app';
+import 'nprogress/nprogress.css';
+import { ReactElement, useMemo } from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'react-toastify/dist/ReactToastify.css';
-import 'nprogress/nprogress.css';
-import '../styles/globals.css';
-import appWithI18n from 'next-translate/appWithI18n';
-import i18nConfig from 'i18n';
-import { AppProps as NextAppProps } from 'next/app';
-import { ReactElement, useMemo } from 'react';
-import { AppPageContent } from 'components/Pages/App/AppPageContent';
-import useTranslation from 'next-translate/useTranslation';
-import { createClient } from 'urql/createClient';
+import 'styles/globals.css';
+import 'styles/user-text.css';
 import { Provider, ssrExchange } from 'urql';
-import { initDayjsLocale } from 'helpers/formaters/formatDate';
-import { logException } from 'helpers/errors/logException';
-import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { createClient } from 'urql/createClient';
 
 type ErrorProps = {
     err?: any;
@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps, err }: AppProps): ReactElement | null {
 
     return (
         <Provider value={urqlClient}>
-            <AppPageContent Component={Component} pageProps={pageProps} err={err} />
+            <AppPageContent Component={Component} err={err} pageProps={pageProps} />
         </Provider>
     );
 }

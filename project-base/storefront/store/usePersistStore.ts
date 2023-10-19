@@ -1,11 +1,11 @@
 import { ContactInformationSlice, createContactInformationSlice } from './slices/createContactInformationSlice';
 import { LoginLoadingSlice, createLoginLoadingSlice } from './slices/createLoginLoadingSlice';
 import { PacketerySlice, createPacketerySlice } from './slices/createPacketerySlice';
+import { UserConsentSlice, createUserConsentSlice } from './slices/createUserConsentSlice';
 import { createUserSlice, UserSlice } from './slices/createUserSlice';
+import { WishlistSlice, createWishlistSlice } from './slices/createWishlistSlice';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { UserConsentSlice, createUserConsentSlice } from './slices/createUserConsentSlice';
-import { WishlistSlice, createWishlistSlice } from './slices/createWishlistSlice';
 
 type PersistStore = LoginLoadingSlice &
     UserSlice &

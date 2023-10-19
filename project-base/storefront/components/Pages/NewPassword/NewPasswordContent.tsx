@@ -4,22 +4,22 @@ import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useRecoverPasswordMutationApi } from 'graphql/generated';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { NewPasswordFormType } from 'types/form';
-import { GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
@@ -90,8 +90,8 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
         return (
             <SimpleLayout heading={t('Set new password')}>
                 <Trans
-                    i18nKey="ResendRecoveryLink"
                     defaultTrans="Error occured while loading form data. <0/> Please try to resend new password recovery link <lnk1>on this page</lnk1>."
+                    i18nKey="ResendRecoveryLink"
                     components={{
                         0: <br />,
                         lnk1: <Link href={resetPasswordUrl} />,
@@ -108,18 +108,18 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                     <Form onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}>
                         <PasswordInputControlled
                             control={formProviderMethods.control}
+                            formName={formMeta.formName}
                             name={formMeta.fields.newPassword.name}
                             render={(passwordInput) => <FormLine bottomGap>{passwordInput}</FormLine>}
-                            formName={formMeta.formName}
                             passwordInputProps={{
                                 label: formMeta.fields.newPassword.label,
                             }}
                         />
                         <PasswordInputControlled
                             control={formProviderMethods.control}
+                            formName={formMeta.formName}
                             name={formMeta.fields.newPasswordAgain.name}
                             render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
-                            formName={formMeta.formName}
                             passwordInputProps={{
                                 label: formMeta.fields.newPasswordAgain.label,
                             }}
@@ -134,9 +134,9 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
             </SimpleLayout>
             {isErrorPopupVisible && (
                 <ErrorPopup
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
                     fields={formMeta.fields}
                     gtmMessageOrigin={GtmMessageOriginType.other}
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
                 />
             )}
         </>

@@ -1,6 +1,6 @@
 import { ImageSizeFragmentApi, ImageSizesFragmentApi } from 'graphql/generated';
-import { ImgHTMLAttributes } from 'react';
 import { twMergeCustom } from 'helpers/twMerge';
+import { ImgHTMLAttributes } from 'react';
 
 type ImageProps = {
     image: ImageSizesFragmentApi | null | undefined;
@@ -35,12 +35,12 @@ export const Image: FC<ImageProps> = ({
     if (!img) {
         return (
             <img
-                src="/images/optimized-noimage.webp"
                 alt={alt || ''}
+                className={twMergeCustom('h-auto w-full', imageTwClass)}
                 data-testid={getDataTestId(dataTestId) + '-empty'}
                 height={height || 160}
+                src="/images/optimized-noimage.webp"
                 width={width || 160}
-                className={twMergeCustom('h-auto w-full', imageTwClass)}
             />
         );
     }
@@ -48,15 +48,15 @@ export const Image: FC<ImageProps> = ({
     return (
         <picture className={wrapperClassName}>
             {img.additionalSizes.map((size) => (
-                <source key={size.url} srcSet={size.url} media={size.media} />
+                <source key={size.url} media={size.media} srcSet={size.url} />
             ))}
             <img
-                className={imageTwClass}
-                width={width ?? (img.width !== null ? img.width : undefined)}
-                height={height ?? (img.height !== null ? img.height : undefined)}
-                src={img.url}
                 alt={alt || ''}
+                className={imageTwClass}
+                height={height ?? (img.height !== null ? img.height : undefined)}
                 loading={loading}
+                src={img.url}
+                width={width ?? (img.width !== null ? img.width : undefined)}
             />
         </picture>
     );

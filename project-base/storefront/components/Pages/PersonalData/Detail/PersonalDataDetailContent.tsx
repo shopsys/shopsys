@@ -34,7 +34,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
 
             {!!userData && (
                 <Webline className="mt-6">
-                    <Heading type="h2" className="mt-6">
+                    <Heading className="mt-6" type="h2">
                         {t('Billing address')}
                     </Heading>
                     <Table>
@@ -113,7 +113,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
 
                     {userData.deliveryAddresses.length > 0 && (
                         <>
-                            <Heading type="h2" className="mt-6">
+                            <Heading className="mt-6" type="h2">
                                 {t('Delivery addresses')}
                             </Heading>
                             <Table>
@@ -252,7 +252,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
             <Webline className="mt-6">
                 {newsLetterSubscriber && (
                     <>
-                        <Heading type="h2" className="mt-6">
+                        <Heading className="mt-6" type="h2">
                             {t('Newsletter')}
                         </Heading>
                         <Table

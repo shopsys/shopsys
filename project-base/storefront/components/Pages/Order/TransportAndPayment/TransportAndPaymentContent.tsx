@@ -1,25 +1,25 @@
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
-import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
-import { useCurrentCart } from 'connectors/cart/Cart';
-import { useTransportsQueryApi } from 'graphql/generated';
-import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
-import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
-import useTranslation from 'next-translate/useTranslation';
-import { useDomainConfig } from 'hooks/useDomainConfig';
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { usePersistStore } from 'store/usePersistStore';
-import { GtmMessageOriginType } from 'gtm/types/enums';
-import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import {
     getTransportAndPaymentValidationMessages,
     useHandleTransportAndPaymentLoadingAndRedirect,
     useLoadTransportAndPaymentFromLastOrder,
 } from './helpers';
+import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
+import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
+import { useCurrentCart } from 'connectors/cart/Cart';
+import { useTransportsQueryApi } from 'graphql/generated';
+import { GtmMessageOriginType } from 'gtm/types/enums';
+import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
+import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
+import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { usePersistStore } from 'store/usePersistStore';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
@@ -71,45 +71,41 @@ export const TransportAndPaymentContent: FC = () => {
     };
 
     return (
-        <>
-            <OrderLayout
-                activeStep={2}
-                isTransportOrPaymentLoading={isTransportSelectionLoading || isPaymentSelectionLoading}
-                contentSkeleton={isTransportAndPaymentSkeletonVisible ? <Skeleton className="h-64 w-full" /> : null}
-            >
-                {!!transportsData?.transports.length && (
-                    <TransportAndPaymentSelect
-                        transports={transportsData.transports}
-                        lastOrderPickupPlace={lastOrderPickupPlace}
-                        changeTransportInCart={changeTransportInCart}
-                        changePaymentInCart={changePaymentInCart}
-                        isTransportSelectionLoading={isTransportSelectionLoading}
-                    />
-                )}
-
-                <OrderAction
-                    buttonBack={t('Back')}
-                    buttonNext={t('Contact information')}
-                    hasDisabledLook={
-                        hasValidationErrors(validationMessages) ||
-                        isTransportSelectionLoading ||
-                        isPaymentSelectionLoading
-                    }
-                    isLoading={(isTransportSelectionLoading || isPaymentSelectionLoading) && !!transport && !!payment}
-                    withGapTop
-                    withGapBottom
-                    buttonBackLink={cartUrl}
-                    nextStepClickHandler={onSelectTransportAndPaymentHandler}
+        <OrderLayout
+            activeStep={2}
+            contentSkeleton={isTransportAndPaymentSkeletonVisible ? <Skeleton className="h-64 w-full" /> : null}
+            isTransportOrPaymentLoading={isTransportSelectionLoading || isPaymentSelectionLoading}
+        >
+            {!!transportsData?.transports.length && (
+                <TransportAndPaymentSelect
+                    changePaymentInCart={changePaymentInCart}
+                    changeTransportInCart={changeTransportInCart}
+                    isTransportSelectionLoading={isTransportSelectionLoading}
+                    lastOrderPickupPlace={lastOrderPickupPlace}
+                    transports={transportsData.transports}
                 />
+            )}
 
-                {isErrorPopupVisible && (
-                    <ErrorPopup
-                        onCloseCallback={() => setErrorPopupVisibility(false)}
-                        fields={validationMessages}
-                        gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
-                    />
-                )}
-            </OrderLayout>
-        </>
+            <OrderAction
+                withGapBottom
+                withGapTop
+                buttonBack={t('Back')}
+                buttonBackLink={cartUrl}
+                buttonNext={t('Contact information')}
+                isLoading={(isTransportSelectionLoading || isPaymentSelectionLoading) && !!transport && !!payment}
+                nextStepClickHandler={onSelectTransportAndPaymentHandler}
+                hasDisabledLook={
+                    hasValidationErrors(validationMessages) || isTransportSelectionLoading || isPaymentSelectionLoading
+                }
+            />
+
+            {isErrorPopupVisible && (
+                <ErrorPopup
+                    fields={validationMessages}
+                    gtmMessageOrigin={GtmMessageOriginType.transport_and_payment_page}
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
+                />
+            )}
+        </OrderLayout>
     );
 };

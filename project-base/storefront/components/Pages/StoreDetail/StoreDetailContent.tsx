@@ -1,18 +1,18 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { ChatIcon } from 'components/Basic/Icon/IconsSvg';
 import { Image } from 'components/Basic/Image/Image';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
-import { Webline } from 'components/Layout/Webline/Webline';
-import { StoreDetailFragmentApi } from 'graphql/generated';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { createMapMarker } from 'helpers/createMapMarker';
-import useTranslation from 'next-translate/useTranslation';
-import { useDomainConfig } from 'hooks/useDomainConfig';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
-import { twJoin } from 'tailwind-merge';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { StoreDetailFragmentApi } from 'graphql/generated';
+import { createMapMarker } from 'helpers/createMapMarker';
+import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
-import { ChatIcon } from 'components/Basic/Icon/IconsSvg';
+import { twJoin } from 'tailwind-merge';
 
 const Gallery = dynamic(() => import('components/Basic/Gallery/Gallery').then((component) => component.Gallery));
 
@@ -29,7 +29,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 
     return (
-        <Webline dataTestId={TEST_IDENTIFIER} className="mb-10">
+        <Webline className="mb-10" dataTestId={TEST_IDENTIFIER}>
             <div className="flex flex-col vl:flex-row vl:gap-5">
                 <div className="text-center vl:order-2 vl:flex-1">
                     <Heading type="h1">{store.storeName}</Heading>
@@ -83,10 +83,10 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         <div className="flex flex-row items-center text-lg text-primary">
                             <ChatIcon className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
                             <ExtendedNextLink
-                                href={contactUrl}
                                 passHref
-                                type="static"
                                 className="relative flex-grow text-primary md:text-lg"
+                                href={contactUrl}
+                                type="static"
                             >
                                 {t('Do you have any questions?')}
                             </ExtendedNextLink>
@@ -101,8 +101,8 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                 <div className="mt-6 w-full basis-96 vl:mt-0 vl:basis-1/2">
                     <SeznamMap
                         center={storeCoordinates}
-                        zoom={15}
                         markers={storeCoordinates ? [storeCoordinates] : []}
+                        zoom={15}
                     />
                 </div>
             </div>
@@ -114,15 +114,15 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                             {store.storeImages.map((image, index) => (
                                 <div
                                     key={index}
-                                    title={store.storeName}
                                     className="lightboxItem basis-[304px] p-3"
                                     data-src={image.sizes.find((size) => size.size === 'default')?.url}
+                                    title={store.storeName}
                                 >
                                     <Image
-                                        image={image}
                                         alt={image.name || `${store.storeName}-${index}`}
-                                        type="thumbnail"
                                         className="cursor-pointer"
+                                        image={image}
+                                        type="thumbnail"
                                     />
                                 </div>
                             ))}
@@ -135,7 +135,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
 };
 
 const StoreHeading: FC<{ text: string }> = ({ text }) => (
-    <Heading type="h3" className="mb-1 block font-normal text-primary">
+    <Heading className="mb-1 block font-normal text-primary" type="h3">
         {text}
     </Heading>
 );

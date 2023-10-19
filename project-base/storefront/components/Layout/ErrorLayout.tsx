@@ -4,7 +4,7 @@ import { Webline } from './Webline/Webline';
 
 export const ErrorLayout: FC = ({ children }) => (
     <>
-        <Webline type="colored" className="relative mb-8">
+        <Webline className="relative mb-8" type="colored">
             <Header simpleHeader />
         </Webline>
         {children}

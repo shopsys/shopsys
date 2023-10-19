@@ -1,6 +1,6 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import useTranslation from 'next-translate/useTranslation';
 import { useQueryParams } from 'hooks/useQueryParams';
+import useTranslation from 'next-translate/useTranslation';
 
 export const useSeoTitleWithPagination = (
     totalCount: number | undefined,

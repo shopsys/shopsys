@@ -1,14 +1,14 @@
 import { useChangePaymentInCart } from './useChangePaymentInCart';
 import { handleCartModifications, useCurrentCart } from 'connectors/cart/Cart';
+import { getCookies } from 'cookies-next';
+import { CartQueryDocumentApi } from 'graphql/generated';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useClient } from 'urql';
-import { CartQueryDocumentApi } from 'graphql/generated';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
-import { getCookies } from 'cookies-next';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 
 export const useReloadCart = (): void => {
     const { modifications } = useCurrentCart(false);

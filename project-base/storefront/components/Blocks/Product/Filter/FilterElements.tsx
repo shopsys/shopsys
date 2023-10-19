@@ -1,5 +1,5 @@
-import { twJoin } from 'tailwind-merge';
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
+import { twJoin } from 'tailwind-merge';
 
 export const FilterGroupWrapper: FC = ({ children, dataTestId }) => (
     <div className="" data-testid={dataTestId}>

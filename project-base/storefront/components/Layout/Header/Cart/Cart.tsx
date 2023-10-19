@@ -1,21 +1,21 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ListItem } from './CartListItem';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { EmptyCartIcon, CartIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { GtmProductListNameType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { twMergeCustom } from 'helpers/twMerge';
 import { useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
-import { GtmProductListNameType } from 'gtm/types/enums';
-import { twMergeCustom } from 'helpers/twMerge';
-import { EmptyCartIcon, CartIcon as CartIcon } from 'components/Basic/Icon/IconsSvg';
 
 const TEST_IDENTIFIER = 'layout-header-cart-';
 
@@ -45,12 +45,12 @@ export const Cart: FC = ({ className }) => {
             )}
 
             <ExtendedNextLink
+                data-testid={TEST_IDENTIFIER + 'block'}
                 href={cartUrl}
                 type="static"
                 className={twJoin(
                     'hidden items-center gap-x-4 rounded bg-orangeLight py-4 pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
                 )}
-                data-testid={TEST_IDENTIFIER + 'block'}
             >
                 <>
                     <span className="relative flex text-lg">
@@ -66,11 +66,11 @@ export const Cart: FC = ({ className }) => {
             </ExtendedNextLink>
 
             <div
+                data-testid={TEST_IDENTIFIER + 'detail'}
                 className={twJoin(
                     'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 p-5 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded lg:rounded-tr-none lg:bg-white lg:opacity-0 lg:shadow-md',
                     isCartEmpty ? 'lg:flex lg:w-96 lg:flex-nowrap lg:items-center lg:justify-between' : 'lg:w-[510px]',
                 )}
-                data-testid={TEST_IDENTIFIER + 'detail'}
             >
                 {!isCartEmpty ? (
                     <>
@@ -86,9 +86,9 @@ export const Cart: FC = ({ className }) => {
                         </ul>
                         <div className="flex w-full justify-end pt-5">
                             <Button
+                                dataTestId={TEST_IDENTIFIER + 'button'}
                                 size="small"
                                 onClick={() => router.push(cartUrl)}
-                                dataTestId={TEST_IDENTIFIER + 'button'}
                             >
                                 {t('Go to cart')}
                             </Button>
@@ -104,9 +104,9 @@ export const Cart: FC = ({ className }) => {
 
             <div className="flex cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
                 <ExtendedNextLink
+                    className="relative flex h-full w-full items-center justify-center p-3 text-white no-underline transition-colors hover:text-white hover:no-underline"
                     href={cartUrl}
                     type="static"
-                    className="relative flex h-full w-full items-center justify-center p-3 text-white no-underline transition-colors hover:text-white hover:no-underline"
                 >
                     <>
                         <CartIcon className="w-6 text-white" />

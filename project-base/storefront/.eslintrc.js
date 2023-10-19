@@ -1,3 +1,6 @@
+const rulesDirPlugin = require('eslint-plugin-rulesdir');
+rulesDirPlugin.RULES_DIR = 'eslint-rules';
+
 module.exports = {
     env: {
         browser: true,
@@ -17,6 +20,7 @@ module.exports = {
         'package.json',
         'tsconfig.json',
         '.pnpm-store/*',
+        'eslint-rules',
     ],
     extends: [
         'eslint:recommended',
@@ -35,7 +39,7 @@ module.exports = {
         tsconfigRootDir: __dirname,
         project: ['tsconfig.json'], // Specify it only for TypeScript files
     },
-    plugins: ['react', 'unused-imports', '@typescript-eslint', 'react-hooks'],
+    plugins: ['react', 'unused-imports', '@typescript-eslint', 'react-hooks', 'no-relative-import-paths', 'rulesdir'],
     rules: {
         'array-callback-return': 'error',
         'block-scoped-var': 'error',
@@ -111,15 +115,35 @@ module.exports = {
             },
         ],
         'react/jsx-curly-brace-presence': [
-            'warn',
+            'error',
             {
                 props: 'never',
                 children: 'never',
                 propElementValues: 'always',
             },
         ],
-        'react/jsx-boolean-value': 'warn',
+        'react/jsx-boolean-value': 'error',
+        'react/jsx-no-useless-fragment': ['error', { "allowExpressions": true }],
+        'react/self-closing-comp': 'error',
+        "react/jsx-sort-props": ['error', {
+            "callbacksLast": true,
+            "shorthandFirst": true,
+            "multiline": "last",
+            reservedFirst: ["key"],
+        }],
+        "no-relative-import-paths/no-relative-import-paths": [
+            "error",
+            { "allowSameFolder": true }
+        ],
     },
+    "overrides": [
+        {
+            "files": ["components/**/*.tsx",],
+            "rules": {
+                'rulesdir/no-helpers-are-exported-from-component-file': 'error',
+            }
+        }
+    ],
     settings: {
         react: {
             version: 'detect',

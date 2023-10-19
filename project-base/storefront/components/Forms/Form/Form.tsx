@@ -19,7 +19,7 @@ export const Form: FC<FormProps> = ({ onSubmit, style, children, className }) =>
     };
 
     return (
-        <form className={className} style={style} onSubmit={controlledOnSubmitHandler} noValidate>
+        <form noValidate className={className} style={style} onSubmit={controlledOnSubmitHandler}>
             {children}
         </form>
     );

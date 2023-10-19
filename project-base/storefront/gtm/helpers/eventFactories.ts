@@ -7,6 +7,7 @@ import {
 } from './gtm';
 import { getGtmDeviceType } from './helpers';
 import { mapGtmCartItemType, mapGtmListedProductType, mapGtmProductDetailType, mapGtmShippingInfo } from './mappers';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import {
     AutocompleteSearchQueryApi,
     BreadcrumbFragmentApi,
@@ -20,17 +21,6 @@ import {
     SimpleProductFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
-import { DomainConfigType } from 'helpers/domain/domainConfig';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
-import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useMemo } from 'react';
-import { ContactInformation } from 'store/slices/createContactInformationSlice';
-import { usePersistStore } from 'store/usePersistStore';
-import { CurrentCustomerType } from 'types/customer';
-import { UserConsentFormType } from 'types/form';
-import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import {
     GtmEventType,
     GtmFormType,
@@ -69,6 +59,16 @@ import {
     GtmReviewConsentsType,
     GtmUserInfoType,
 } from 'gtm/types/objects';
+import { DomainConfigType } from 'helpers/domain/domainConfig';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { useDomainConfig } from 'hooks/useDomainConfig';
+import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
+import { useMemo } from 'react';
+import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
+import { CurrentCustomerType } from 'types/customer';
+import { UserConsentFormType } from 'types/form';
+import { FriendlyUrlPageType } from 'types/friendlyUrl';
 
 export const getGtmCartViewEvent = (
     currencyCode: string,

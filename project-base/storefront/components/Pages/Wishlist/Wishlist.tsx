@@ -1,15 +1,15 @@
-import useTranslation from 'next-translate/useTranslation';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
-import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useRouter } from 'next/router';
-import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
-import { useWishlist } from 'hooks/useWishlist';
 import { RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
+import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
+import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
+import { SubmitButton } from 'components/Forms/Button/SubmitButton';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { isClient } from 'helpers/isClient';
+import { useDomainConfig } from 'hooks/useDomainConfig';
+import { useWishlist } from 'hooks/useWishlist';
+import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
 
 export const Wishlist: FC = () => {
     const { t } = useTranslation();
@@ -37,7 +37,7 @@ export const Wishlist: FC = () => {
 
     return (
         <>
-            <Heading type="h1" className="!text-big lg:!text-h1">
+            <Heading className="!text-big lg:!text-h1" type="h1">
                 {t('Wishlist')}
             </Heading>
             {!!wishlist?.products.length && (
@@ -54,17 +54,17 @@ export const Wishlist: FC = () => {
                     <div className="flex w-full flex-col items-center lg:w-1/2 lg:flex-row">
                         <TextInput
                             id="copyUrl-input"
-                            value={buildShareUrl()}
                             label={t('Send a link to this wishlist')}
+                            value={buildShareUrl()}
                             onChange={() => {
                                 return false;
                             }}
                         />
                         <SubmitButton
+                            className="mt-2 lg:ml-2 lg:mt-0"
                             onClick={() => {
                                 navigator.clipboard.writeText(buildShareUrl());
                             }}
-                            className="mt-2 lg:ml-2 lg:mt-0"
                         >
                             {t('Copy')}
                         </SubmitButton>
@@ -75,10 +75,10 @@ export const Wishlist: FC = () => {
             {wishlist?.products.length ? (
                 <div>
                     <ProductsList
-                        products={wishlist.products}
-                        gtmProductListName={GtmProductListNameType.wishlist}
-                        gtmMessageOrigin={GtmMessageOriginType.other}
                         fetching={fetching}
+                        gtmMessageOrigin={GtmMessageOriginType.other}
+                        gtmProductListName={GtmProductListNameType.wishlist}
+                        products={wishlist.products}
                     />
                 </div>
             ) : (

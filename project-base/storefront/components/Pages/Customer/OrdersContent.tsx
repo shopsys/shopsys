@@ -11,8 +11,8 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 
@@ -52,7 +52,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                     <Heading type="h1">{t('My orders')}</Heading>
                 </div>
             </Webline>
-            <div ref={paginationScrollTargetRef} className="scroll-mt-5">
+            <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
                 <Webline>
                     {(() => {
                         if (isLoading) {
@@ -93,11 +93,11 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                     <Row key={order.uuid} data-testid={TEST_IDENTIFIER + index}>
                                         <Cell data-testid={TEST_IDENTIFIER + 'number'}>
                                             <ExtendedNextLink
+                                                type="static"
                                                 href={{
                                                     pathname: customerOrderDetailUrl,
                                                     query: { orderNumber: order.number },
                                                 }}
-                                                type="static"
                                             >
                                                 {order.number}
                                             </ExtendedNextLink>
@@ -111,12 +111,12 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                         <Cell data-testid={TEST_IDENTIFIER + 'transport'}>
                                             <div className="flex items-center gap-2">
                                                 <Image
+                                                    alt={order.transport.mainImage?.name || order.transport.name}
+                                                    className="h-9 w-9"
+                                                    height={20}
                                                     image={order.transport.mainImage}
                                                     type="default"
-                                                    alt={order.transport.mainImage?.name || order.transport.name}
                                                     width={36}
-                                                    height={20}
-                                                    className="h-9 w-9"
                                                 />
                                                 <span className="flex-1">{order.transport.name}</span>
                                             </div>
@@ -127,20 +127,20 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                         </Cell>
                                         <Cell data-testid={TEST_IDENTIFIER + 'repeat-order'}>
                                             <Button
-                                                onClick={() => addOrderItemsToEmptyCart(order.uuid)}
-                                                size="small"
                                                 className="bg-white text-greyDarker hover:bg-orangeLight hover:text-greyDark"
+                                                size="small"
+                                                onClick={() => addOrderItemsToEmptyCart(order.uuid)}
                                             >
                                                 {t('Repeat order')}
                                             </Button>
                                         </Cell>
                                         <Cell data-testid={TEST_IDENTIFIER + 'detail-link'}>
                                             <ExtendedNextLink
+                                                type="static"
                                                 href={{
                                                     pathname: customerOrderDetailUrl,
                                                     query: { orderNumber: order.number },
                                                 }}
-                                                type="static"
                                             >
                                                 {t('Detail')}
                                             </ExtendedNextLink>
@@ -153,7 +153,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                 </Webline>
 
                 <Webline>
-                    <Pagination totalCount={totalCount || 0} paginationScrollTargetRef={paginationScrollTargetRef} />
+                    <Pagination paginationScrollTargetRef={paginationScrollTargetRef} totalCount={totalCount || 0} />
                 </Webline>
             </div>
 

@@ -1,8 +1,8 @@
 import { HeartIcon } from 'components/Basic/Icon/IconsSvg';
+import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
-import { twMergeCustom } from 'helpers/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'className'>;
 
@@ -30,8 +30,8 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
             onClick={toggleProductInWishlist}
         >
             <HeartIcon
-                isFull={isProductInWishlist}
                 className={twMergeCustom('text-grey', isProductInWishlist && 'text-green')}
+                isFull={isProductInWishlist}
             />
             {isWithText && <span>{isProductInWishlist ? t('Remove from wishlist') : t('Add to wishlist')}</span>}
         </div>

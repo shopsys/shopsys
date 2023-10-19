@@ -13,8 +13,8 @@ export const FooterCopyright: FC = () => {
             </div>
             <div className="flex items-center text-sm text-greyLight">
                 {t('Customized E-shop by')}
-                <a className="ml-2 flex w-20" href="https://www.shopsys.com" target="_blank" rel="noreferrer">
-                    <Image src="/images/logo.svg" width={77} height={18} alt="footer logo" />
+                <a className="ml-2 flex w-20" href="https://www.shopsys.com" rel="noreferrer" target="_blank">
+                    <Image alt="footer logo" height={18} src="/images/logo.svg" width={77} />
                 </a>
             </div>
         </div>

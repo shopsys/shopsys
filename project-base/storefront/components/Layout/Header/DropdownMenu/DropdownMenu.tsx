@@ -49,20 +49,20 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
 
     return (
         <div className="transition-all" data-testid={TEST_IDENTIFIER}>
-            <CSSTransition in={isMenuOpened} timeout={300} classNames="dropdown" onEntering={calcHeight} unmountOnExit>
+            <CSSTransition unmountOnExit classNames="dropdown" in={isMenuOpened} timeout={300} onEntering={calcHeight}>
                 <DropdownMenuContext.Provider value={{ slideRight, onMenuToggleHandler }}>
                     <div
                         className="absolute left-2 right-2 top-0 z-mobileMenu cursor-auto overflow-hidden bg-white shadow-md transition-all"
                         style={{ height: menuHeight }}
                     >
                         <CSSTransition
+                            unmountOnExit
                             in={menuLevel === 'primary'}
                             timeout={300}
                             classNames={twJoin(
                                 'transition-transform',
                                 slideDirection === 'right' ? 'menu-primary-right' : 'menu-primary-left',
                             )}
-                            unmountOnExit
                             onEntering={calcHeight}
                         >
                             <div className="w-full pt-12">
@@ -72,39 +72,39 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
                         </CSSTransition>
 
                         <CSSTransition
+                            unmountOnExit
                             in={menuLevel === 'secondary'}
                             timeout={300}
                             classNames={twJoin(
                                 'transition-transform',
                                 slideDirection === 'right' ? 'menu-secondary-right' : 'menu-secondary-left',
                             )}
-                            unmountOnExit
                             onEntering={calcHeight}
                         >
                             <div className="w-full pt-12">
-                                <DropdownSlideLeft onClickEvent={slideLeft} goToMenu="primary" />
+                                <DropdownSlideLeft goToMenu="primary" onClickEvent={slideLeft} />
                                 <SecondaryList
-                                    navigationItems={navigationData.navigation}
                                     historyOfIndexes={historyOfIndexes}
+                                    navigationItems={navigationData.navigation}
                                 />
                             </div>
                         </CSSTransition>
 
                         <CSSTransition
+                            unmountOnExit
                             in={menuLevel === 'tertiary'}
                             timeout={300}
                             classNames={twJoin(
                                 'transition-transform',
                                 slideDirection === 'right' ? 'menu-tertiary-right' : 'menu-tertiary-left',
                             )}
-                            unmountOnExit
                             onEntering={calcHeight}
                         >
                             <div className="w-full pt-12">
-                                <DropdownSlideLeft onClickEvent={slideLeft} goToMenu="secondary" />
+                                <DropdownSlideLeft goToMenu="secondary" onClickEvent={slideLeft} />
                                 <TertiaryList
-                                    navigationItems={navigationData.navigation}
                                     historyOfIndexes={historyOfIndexes}
+                                    navigationItems={navigationData.navigation}
                                 />
                             </div>
                         </CSSTransition>

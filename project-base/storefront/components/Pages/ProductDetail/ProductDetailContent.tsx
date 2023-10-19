@@ -3,21 +3,21 @@ import { ProductDetailAccessories } from './ProductDetailAccessories';
 import { ProductDetailAddToCart } from './ProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
+import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
+import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ProductDetailFragmentApi } from 'graphql/generated';
+import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useComparison } from 'hooks/comparison/useComparison';
-import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
+import { useWishlist } from 'hooks/useWishlist';
 import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
-import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
-import { useWishlist } from 'hooks/useWishlist';
-import { ProductDetailGallery } from './ProductDetailGallery';
-import dynamic from 'next/dynamic';
 
 const ProductComparePopup = dynamic(() =>
     import('components/Blocks/Product/ButtonsAction/ProductComparePopup').then(
@@ -78,7 +78,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
 
                         <ProductDetailAddToCart product={product} />
 
-                        <ProductDetailAvailability scrollTarget={scrollTarget} product={product} />
+                        <ProductDetailAvailability product={product} scrollTarget={scrollTarget} />
 
                         <div className="flex flex-col gap-y-2 gap-x-4 vl:flex-row">
                             <ProductCompareButton

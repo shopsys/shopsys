@@ -1,14 +1,14 @@
+import { OrderLayoutContentSkeleton } from './OrderLayoutContentSkeleton';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
 import { OrderSummary } from 'components/Blocks/OrderSummary/OrderSummary';
+import { Footer } from 'components/Layout/Footer/Footer';
 import { Header } from 'components/Layout/Header/Header';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { Webline } from 'components/Layout/Webline/Webline';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { OrderLayoutContentSkeleton } from './OrderLayoutContentSkeleton';
-import { Footer } from '../Footer/Footer';
+import useTranslation from 'next-translate/useTranslation';
 import { ReactNode } from 'react';
 
 type OrderLayoutProps = {
@@ -30,10 +30,10 @@ export const OrderLayout: FC<OrderLayoutProps> = ({
         <>
             <SeoMeta defaultTitle={t('Order')} />
             <NotificationBars />
-            <Webline type="colored" className="relative mb-8">
+            <Webline className="relative mb-8" type="colored">
                 <Header simpleHeader />
             </Webline>
-            <Adverts positionName="header" withGapBottom withWebline />
+            <Adverts withGapBottom withWebline positionName="header" />
             <Webline>
                 {contentSkeleton ? (
                     <OrderLayoutContentSkeleton>{contentSkeleton}</OrderLayoutContentSkeleton>
@@ -50,7 +50,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({
                     </>
                 )}
             </Webline>
-            <Adverts positionName="footer" withGapBottom withWebline />
+            <Adverts withGapBottom withWebline positionName="footer" />
             <Webline type="dark">
                 <Footer simpleFooter />
             </Webline>

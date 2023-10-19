@@ -13,6 +13,7 @@ import {
     ProductOrderingModeEnumApi,
 } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
+import { getSlugFromUrl, getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
 import { LOAD_MORE_QUERY_PARAMETER_NAME, PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { Redirect } from 'next';
@@ -20,7 +21,6 @@ import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import { useRef, useState, useEffect } from 'react';
 import { Client, useClient } from 'urql';
-import { getSlugFromUrl, getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
 
 const PRODUCT_LIST_LIMIT = 100;
 

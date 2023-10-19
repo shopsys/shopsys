@@ -6,20 +6,20 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useRegistrationMutationApi } from 'graphql/generated';
+import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
+import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 import { setTokensToCookies } from 'helpers/auth/tokens';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
+import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { RegistrationAfterOrderFormType } from 'types/form';
-import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { RegistrationAfterOrderFormType } from 'types/form';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
@@ -69,10 +69,10 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
             <Webline>
                 <div className="relative mb-20 flex flex-col rounded border-2 border-primary before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-1 before:-translate-x-1/2 before:bg-primary before:content-none lg:flex-row before:lg:block">
                     <div className="w-full p-5 lg:w-1/2 lg:py-8 lg:px-10">
-                        <Heading type="h2" className="mb-5 text-4xl leading-10 [&>strong]:text-primary">
+                        <Heading className="mb-5 text-4xl leading-10 [&>strong]:text-primary" type="h2">
                             <Trans
-                                i18nKey="Finish registration to loyalty program."
                                 components={{ 0: <br />, 1: <strong /> }}
+                                i18nKey="Finish registration to loyalty program."
                             />
                         </Heading>
                         <ul>
@@ -97,35 +97,35 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
                                 <FormProvider {...formProviderMethods}>
                                     <PasswordInputControlled
                                         control={formProviderMethods.control}
+                                        formName={formMeta.formName}
                                         name={formMeta.fields.password.name}
+                                        passwordInputProps={{
+                                            label: formMeta.fields.password.label,
+                                        }}
                                         render={(passwordInput) => (
                                             <div className="mb-7">
                                                 <FormLine>{passwordInput}</FormLine>
                                             </div>
                                         )}
-                                        formName={formMeta.formName}
-                                        passwordInputProps={{
-                                            label: formMeta.fields.password.label,
-                                        }}
                                     />
                                     <CheckboxControlled
-                                        name={formMeta.fields.privacyPolicy.name}
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
+                                        name={formMeta.fields.privacyPolicy.name}
+                                        checkboxProps={{
+                                            label: formMeta.fields.privacyPolicy.label,
+                                        }}
                                         render={(checkbox) => (
                                             <div className="mb-7">
                                                 <ChoiceFormLine>{checkbox}</ChoiceFormLine>
                                             </div>
                                         )}
-                                        checkboxProps={{
-                                            label: formMeta.fields.privacyPolicy.label,
-                                        }}
                                     />
                                     <SubmitButton
                                         dataTestId={TEST_IDENTIFIER}
-                                        variant="primary"
-                                        style={{ width: '100%' }}
                                         isWithDisabledLook={!formProviderMethods.formState.isValid}
+                                        style={{ width: '100%' }}
+                                        variant="primary"
                                     >
                                         {t('Create account')}
                                     </SubmitButton>
@@ -137,9 +137,9 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
             </Webline>
             {isErrorPopupVisible && (
                 <ErrorPopup
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
                     fields={formMeta.fields}
                     gtmMessageOrigin={GtmMessageOriginType.order_confirmation_page}
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
                 />
             )}
         </>

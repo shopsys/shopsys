@@ -9,8 +9,9 @@ export const SearchMetadata: FC = () => {
     return (
         <Head>
             <script
-                type="application/ld+json"
+                key="search-metadata"
                 id="search-metadata"
+                type="application/ld+json"
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
                         '@context': 'https://schema.org',
@@ -26,7 +27,6 @@ export const SearchMetadata: FC = () => {
                         },
                     }),
                 }}
-                key="search-metadata"
             />
         </Head>
     );

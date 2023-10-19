@@ -1,6 +1,6 @@
 import { createDomainSlice, DomainSlice } from './slices/createDomainSlice';
-import { create } from 'zustand';
 import { createSeoCategorySlice, SeoCategorySlice } from './slices/createSeoCategorySlice';
+import { create } from 'zustand';
 
 type SessionStore = DomainSlice & SeoCategorySlice;
 

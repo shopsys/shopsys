@@ -16,9 +16,9 @@ export const RegistrationCompany: FC = () => {
             <Heading type="h3">{t('Company data')}</Heading>
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.companyName.name}
                 render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.companyName.label,
                     required: true,
@@ -28,9 +28,9 @@ export const RegistrationCompany: FC = () => {
             />
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.companyNumber.name}
                 render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.companyNumber.label,
                     required: true,
@@ -39,9 +39,9 @@ export const RegistrationCompany: FC = () => {
             />
             <TextInputControlled
                 control={formProviderMethods.control}
+                formName={formMeta.formName}
                 name={formMeta.fields.companyTaxNumber.name}
                 render={(textInput) => <FormLine>{textInput}</FormLine>}
-                formName={formMeta.formName}
                 textInputProps={{
                     label: formMeta.fields.companyTaxNumber.label,
                     required: false,

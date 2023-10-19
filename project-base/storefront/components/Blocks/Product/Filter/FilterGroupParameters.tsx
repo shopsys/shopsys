@@ -8,12 +8,12 @@ import {
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
-import useTranslation from 'next-translate/useTranslation';
 import { useQueryParams } from 'hooks/useQueryParams';
+import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
-import { ParametersType } from 'types/productFilter';
-import { useSessionStore } from 'store/useSessionStore';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
+import { useSessionStore } from 'store/useSessionStore';
+import { ParametersType } from 'types/productFilter';
 
 type FilterGroupParametersProps = {
     title: string;
@@ -58,8 +58,8 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     return (
         <FilterGroupWrapper dataTestId={dataTestId}>
             <FilterGroupTitle
-                title={title}
                 isOpen={!isGroupCollapsed}
+                title={title}
                 onClick={() => setIsGroupCollapsed(!isGroupCollapsed)}
             />
 
@@ -84,15 +84,15 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                         isDisabled={isDisabled}
                                     >
                                         <Checkbox
-                                            id={id}
-                                            name={id}
-                                            label={parameterValueOption.text}
+                                            count={parameterValueOption.count}
                                             disabled={isDisabled}
+                                            id={id}
+                                            label={parameterValueOption.text}
+                                            name={id}
+                                            value={isChecked}
                                             onChange={() =>
                                                 updateFilterParameters(parameter.uuid, parameterValueOption.uuid)
                                             }
-                                            value={isChecked}
-                                            count={parameterValueOption.count}
                                         />
                                     </FilterGroupContentItem>
                                 );
@@ -122,12 +122,12 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                         key={parameterValue.uuid}
                                         bgColor={parameterValue.rgbHex ?? undefined}
                                         dataTestId={getDataTestId(index)}
-                                        id={id}
-                                        name={id}
                                         disabled={parameterValue.count === 0 && !isChecked}
-                                        onChange={() => updateFilterParameters(parameter.uuid, parameterValue.uuid)}
-                                        value={isChecked}
+                                        id={id}
                                         label={parameterValue.text}
+                                        name={id}
+                                        value={isChecked}
+                                        onChange={() => updateFilterParameters(parameter.uuid, parameterValue.uuid)}
                                     />
                                 );
                             })}
@@ -135,18 +135,11 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                     )}
                     {parameter.__typename === 'ParameterSliderFilterOption' && (
                         <RangeSlider
-                            min={parameter.minimalValue}
+                            isDisabled={!parameter.isSelectable}
                             max={parameter.maximalValue}
-                            minValue={selectedParameter?.minimalValue ?? parameter.minimalValue}
                             maxValue={selectedParameter?.maximalValue ?? parameter.maximalValue}
-                            setMinValueCallback={(value) =>
-                                updateFilterParameters(
-                                    parameter.uuid,
-                                    undefined,
-                                    parameter.minimalValue === value ? undefined : value,
-                                    selectedParameter?.maximalValue,
-                                )
-                            }
+                            min={parameter.minimalValue}
+                            minValue={selectedParameter?.minimalValue ?? parameter.minimalValue}
                             setMaxValueCallback={(value) =>
                                 updateFilterParameters(
                                     parameter.uuid,
@@ -155,7 +148,14 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                     parameter.maximalValue === value ? undefined : value,
                                 )
                             }
-                            isDisabled={!parameter.isSelectable}
+                            setMinValueCallback={(value) =>
+                                updateFilterParameters(
+                                    parameter.uuid,
+                                    undefined,
+                                    parameter.minimalValue === value ? undefined : value,
+                                    selectedParameter?.maximalValue,
+                                )
+                            }
                         />
                     )}
                 </FilterGroupContent>

@@ -46,7 +46,7 @@ export const SeznamMapMounter: FC<SeznamMapMounterProps> = ({
     }, [center, isMapCreated, isMapLoaded, mapOptions, onLoad, zoom]);
 
     return (
-        <div ref={mapContainerRef} className={mapContainerClassName} id={mapId}>
+        <div className={mapContainerClassName} id={mapId} ref={mapContainerRef}>
             {children}
         </div>
     );

@@ -15,12 +15,12 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ isMenuOpened, onMenuTogg
 
     return (
         <div
+            data-testid={TEST_IDENTIFIER}
             className={twJoin(
                 'flex h-10 w-full cursor-pointer items-center rounded bg-orangeLight p-3',
                 isMenuOpened && 'z-aboveMobileMenu',
             )}
             onClick={onMenuToggleHandler}
-            data-testid={TEST_IDENTIFIER}
         >
             <div className="flex w-4 items-center justify-center">
                 <HamburgerIcon isMenuOpened={isMenuOpened} />

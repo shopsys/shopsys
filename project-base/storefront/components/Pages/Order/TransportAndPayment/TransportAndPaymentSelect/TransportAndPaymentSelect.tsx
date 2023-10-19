@@ -6,6 +6,11 @@ import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
+import {
+    getPickupPlaceDetail,
+    usePaymentChangeInSelect,
+    useTransportChangeInSelect,
+} from 'components/Pages/Order/TransportAndPayment/helpers';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import {
     ListedStoreFragmentApi,
@@ -15,9 +20,8 @@ import {
 } from 'graphql/generated';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
-import useTranslation from 'next-translate/useTranslation';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { getPickupPlaceDetail, usePaymentChangeInSelect, useTransportChangeInSelect } from '../helpers';
+import useTranslation from 'next-translate/useTranslation';
 
 type TransportAndPaymentSelectProps = {
     transports: TransportWithAvailablePaymentsAndStoresFragmentApi[];
@@ -56,26 +60,26 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     ) => (
         <TransportAndPaymentListItem
             key={transportItem.uuid}
-            isActive={isActive}
             dataTestId={TEST_IDENTIFIER + 'transport-item' + (isActive ? '-active' : '')}
+            isActive={isActive}
         >
             <Radiobutton
-                name="transport"
-                id={transportItem.uuid}
-                value={transportItem.uuid}
                 checked={isActive}
                 dataTestId={TEST_IDENTIFIER + 'transport-item-input'}
-                onChangeCallback={changeTransport}
+                id={transportItem.uuid}
+                name="transport"
+                value={transportItem.uuid}
                 label={
                     <TransportAndPaymentSelectItemLabel
-                        name={transportItem.name}
                         daysUntilDelivery={transportItem.daysUntilDelivery}
-                        price={transportItem.price}
                         description={transportItem.description}
                         image={transportItem.mainImage}
+                        name={transportItem.name}
                         pickupPlaceDetail={getPickupPlaceDetail(transport, pickupPlace, transportItem)}
+                        price={transportItem.price}
                     />
                 }
+                onChangeCallback={changeTransport}
             />
         </TransportAndPaymentListItem>
     );
@@ -83,24 +87,24 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     const renderPaymentListItem = (paymentItem: SimplePaymentFragmentApi, isActive: boolean) => (
         <TransportAndPaymentListItem
             key={paymentItem.uuid}
-            isActive={isActive}
             dataTestId={TEST_IDENTIFIER + 'payment-item' + (isActive ? '-active' : '')}
+            isActive={isActive}
         >
             <Radiobutton
-                name="payment"
-                id={paymentItem.uuid}
-                value={paymentItem.uuid}
                 checked={isActive}
                 dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
-                onChangeCallback={changePayment}
+                id={paymentItem.uuid}
+                name="payment"
+                value={paymentItem.uuid}
                 label={
                     <TransportAndPaymentSelectItemLabel
-                        name={paymentItem.name}
-                        price={paymentItem.price}
                         description={paymentItem.description}
                         image={paymentItem.mainImage}
+                        name={paymentItem.name}
+                        price={paymentItem.price}
                     />
                 }
+                onChangeCallback={changePayment}
             />
         </TransportAndPaymentListItem>
     );
@@ -118,9 +122,9 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     </ul>
                     {!!transport && (
                         <ResetButton
-                            onClick={resetTransportAndPayment}
                             dataTestId={TEST_IDENTIFIER + 'reset-transport'}
                             text={t('Change transport type')}
+                            onClick={resetTransportAndPayment}
                         />
                     )}
                     {!!preSelectedTransport && (
@@ -149,21 +153,21 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 {getGoPaySwiftsResult.data?.GoPaySwifts.map((goPaySwift) => (
                                     <Radiobutton
                                         key={goPaySwift.swift}
-                                        name="goPaySwift"
+                                        checked={paymentGoPayBankSwift === goPaySwift.swift}
                                         id={goPaySwift.swift}
+                                        label={goPaySwift.name}
+                                        name="goPaySwift"
                                         value={goPaySwift.swift}
                                         onChangeCallback={changeGoPaySwift}
-                                        checked={paymentGoPayBankSwift === goPaySwift.swift}
-                                        label={goPaySwift.name}
                                     />
                                 ))}
                             </>
                         )}
                         {payment !== null && (
                             <ResetButton
-                                onClick={resetPaymentAndGoPayBankSwift}
                                 dataTestId={TEST_IDENTIFIER + 'reset-payment'}
                                 text={t('Change payment type')}
+                                onClick={resetPaymentAndGoPayBankSwift}
                             />
                         )}
                     </div>
@@ -177,9 +181,9 @@ type ResetButtonProps = { text: string; onClick: () => void };
 
 const ResetButton: FC<ResetButtonProps> = ({ text, dataTestId, onClick }) => (
     <button
-        onClick={onClick}
-        data-testid={dataTestId}
         className="flex w-full items-center bg-whitesmoke px-2 py-1 text-sm"
+        data-testid={dataTestId}
+        onClick={onClick}
     >
         {text}
         <ArrowIcon className="ml-2" />

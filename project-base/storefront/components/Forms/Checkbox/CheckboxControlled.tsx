@@ -1,5 +1,5 @@
-import { FormLineError } from '../Lib/FormLineError';
 import { Checkbox, CheckboxProps } from './Checkbox';
+import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
 
@@ -21,7 +21,7 @@ export const CheckboxControlled: FC<CheckboxControlledProps> = ({ name, render, 
     return render(
         <>
             <Checkbox {...checkboxProps} {...field} id={checkboxId} />
-            <FormLineError error={error} inputType="checkbox" dataTestId={checkboxId + '-error'} />
+            <FormLineError dataTestId={checkboxId + '-error'} error={error} inputType="checkbox" />
         </>,
         field.value,
     );

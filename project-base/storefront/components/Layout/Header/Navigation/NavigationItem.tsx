@@ -24,8 +24,8 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem }) => {
             onMouseLeave={() => setIsMenuOpened(false)}
         >
             <ExtendedNextLink
-                type={isWithoutCategoryLink ? 'static' : 'category'}
                 href={navigationItem.link}
+                type={isWithoutCategoryLink ? 'static' : 'category'}
                 className={twJoin(
                     'relative m-0 flex items-center px-2 py-4 text-sm font-bold uppercase text-white no-underline hover:text-orangeLight hover:no-underline group-hover:text-orangeLight group-hover:no-underline vl:text-base',
                 )}

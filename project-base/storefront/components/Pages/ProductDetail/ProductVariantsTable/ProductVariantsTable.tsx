@@ -1,9 +1,9 @@
 import { ProductVariantsTableRow } from './ProductVariantsTableRow';
 import { Variant } from './Variant';
 import { MainVariantDetailFragmentApi } from 'graphql/generated';
-import useTranslation from 'next-translate/useTranslation';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
+import useTranslation from 'next-translate/useTranslation';
 
 type ProductVariantsTableProps = {
     variants: MainVariantDetailFragmentApi['variants'];
@@ -29,11 +29,11 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                 {variants.map((variant, index) => (
                     <Variant
                         key={variant.uuid}
-                        variant={variant}
-                        isSellingDenied={isSellingDenied}
-                        gtmProductListName={GtmProductListNameType.product_detail_variants_table}
                         gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
+                        gtmProductListName={GtmProductListNameType.product_detail_variants_table}
+                        isSellingDenied={isSellingDenied}
                         listIndex={index}
+                        variant={variant}
                     />
                 ))}
             </tbody>

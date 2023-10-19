@@ -14,6 +14,6 @@ type MetaRobotsType = {
 
 export const MetaRobots: FC<MetaRobotsType> = ({ content }) => (
     <Head>
-        <meta name="robots" content={content} />
+        <meta content={content} name="robots" />
     </Head>
 );

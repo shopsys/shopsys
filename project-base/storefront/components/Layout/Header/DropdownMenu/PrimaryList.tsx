@@ -8,7 +8,7 @@ type PrimaryListProps = {
 export const PrimaryList: FC<PrimaryListProps> = ({ navigationItems }) => (
     <>
         {navigationItems.map((navigationItem, index) => (
-            <DropdownItem key={index} navigationItem={navigationItem} index={index} goToMenu="secondary" />
+            <DropdownItem key={index} goToMenu="secondary" index={index} navigationItem={navigationItem} />
         ))}
     </>
 );

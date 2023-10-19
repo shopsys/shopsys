@@ -21,7 +21,7 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                     {storeAvailabilities.map(
                         (storeAvailability, index) =>
                             storeAvailability.store && (
-                                <li className="flex w-full items-center border-b border-greyLighter py-4" key={index}>
+                                <li key={index} className="flex w-full items-center border-b border-greyLighter py-4">
                                     <strong className="mr-2 w-36">{storeAvailability.store.storeName}</strong>
 
                                     <span
@@ -37,9 +37,9 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                                     </span>
 
                                     <ExtendedNextLink
+                                        className="ml-auto flex items-center text-dark no-underline hover:text-dark hover:no-underline"
                                         href={storeAvailability.store.slug}
                                         type="store"
-                                        className="ml-auto flex items-center text-dark no-underline hover:text-dark hover:no-underline"
                                     >
                                         {t('Store detail')}
                                         <ArrowRightIcon className="ml-1" />

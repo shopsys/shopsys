@@ -1,5 +1,5 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twMergeCustom } from 'helpers/twMerge';
-import { ExtendedNextLink } from '../ExtendedNextLink/ExtendedNextLink';
 
 const getDataTestId = (dataTestId?: string) => dataTestId ?? 'basic-flag';
 
@@ -14,10 +14,10 @@ export const Flag: FC<FlagProps> = ({ children, dataTestId, href, className }) =
     if (href) {
         return (
             <ExtendedNextLink
-                type="blogCategory"
-                href={href}
                 className={flagTwClass}
                 data-testid={getDataTestId(dataTestId)}
+                href={href}
+                type="blogCategory"
             >
                 {children}
             </ExtendedNextLink>

@@ -1,8 +1,8 @@
+import { FooterContact } from './FooterContact';
 import { FooterMenuItem } from 'components/Layout/Footer/FooterMenuItem';
 import { ArticlePlacementTypeEnumApi, SimpleNotBlogArticleFragmentApi, useArticlesQueryApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
-import { FooterContact } from './FooterContact';
 
 const TEST_IDENTIFIER = 'layout-footer-footermenu';
 
@@ -52,8 +52,8 @@ export const FooterMenu: FC = () => {
             data-testid={TEST_IDENTIFIER}
         >
             {items.map((item) => (
-                <div className="flex-1" key={item.key}>
-                    <FooterMenuItem title={item.title} items={item.items} />
+                <div key={item.key} className="flex-1">
+                    <FooterMenuItem items={item.items} title={item.title} />
                 </div>
             ))}
 

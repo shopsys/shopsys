@@ -1,14 +1,14 @@
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import useTranslation from 'next-translate/useTranslation';
-import { useQueryParams } from 'hooks/useQueryParams';
-import { useSessionStore } from 'store/useSessionStore';
-import { getHasDefaultFilters } from 'helpers/filterOptions/seoCategories';
-import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
-import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
 import { RemoveIcon, RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
+import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
+import { getHasDefaultFilters } from 'helpers/filterOptions/seoCategories';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
+import { useQueryParams } from 'hooks/useQueryParams';
+import useTranslation from 'next-translate/useTranslation';
+import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
+import { useSessionStore } from 'store/useSessionStore';
+import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
 
@@ -42,7 +42,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
 
     return (
         <div className="z-aboveOverlay rounded py-4 vl:z-[0]" data-testid={TEST_IDENTIFIER}>
-            <Heading type="h4" className="uppercase">
+            <Heading className="uppercase" type="h4">
                 {t('Selected filters')}
             </Heading>
 
@@ -131,10 +131,10 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                     >
                                         {selectedValue.text}
                                         <SelectedParametersIcon
+                                            dataTestId={TEST_IDENTIFIER + 'remove-' + index}
                                             onClick={() =>
                                                 updateFilterParameters(selectedParameter.parameter, selectedValue.uuid)
                                             }
-                                            dataTestId={TEST_IDENTIFIER + 'remove-' + index}
                                         />
                                     </SelectedParametersListItem>
                                 ))
@@ -188,7 +188,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
 };
 
 const SelectedParametersIcon: FC<{ onClick: () => void }> = ({ onClick, dataTestId }) => (
-    <RemoveThinIcon onClick={onClick} className="ml-3 w-3 cursor-pointer" data-testid={dataTestId} />
+    <RemoveThinIcon className="ml-3 w-3 cursor-pointer" data-testid={dataTestId} onClick={onClick} />
 );
 
 const getCheckedFlags = (

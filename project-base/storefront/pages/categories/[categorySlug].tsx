@@ -1,41 +1,41 @@
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
 import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { useCategoryDetailData } from 'components/Pages/CategoryDetail/helpers';
+import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     CategoryDetailQueryApi,
     CategoryDetailQueryVariablesApi,
     CategoryDetailQueryDocumentApi,
     CategoryProductsQueryDocumentApi,
 } from 'graphql/generated';
+import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
+import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { useHandleDefaultFiltersUpdate } from 'helpers/filterOptions/seoCategories';
-import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
-import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
-import {
-    PAGE_QUERY_PARAMETER_NAME,
-    SORT_QUERY_PARAMETER_NAME,
-    FILTER_QUERY_PARAMETER_NAME,
-    LOAD_MORE_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParamNames';
-import { createClient } from 'urql/createClient';
-import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
-import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
-import { useQueryParams } from 'hooks/useQueryParams';
-import { NextPage } from 'next';
-import { useSessionStore } from 'store/useSessionStore';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore';
 import {
     getNumberFromUrlQuery,
     getProductListSortFromUrlQuery,
     getSlugFromServerSideUrl,
 } from 'helpers/parsing/urlParsing';
-import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import {
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+    FILTER_QUERY_PARAMETER_NAME,
+    LOAD_MORE_QUERY_PARAMETER_NAME,
+} from 'helpers/queryParamNames';
+import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
+import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { useQueryParams } from 'hooks/useQueryParams';
+import { NextPage } from 'next';
+import { useSessionStore } from 'store/useSessionStore';
+import { createClient } from 'urql/createClient';
 
 const CategoryDetailPage: NextPage = () => {
     const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
@@ -60,10 +60,10 @@ const CategoryDetailPage: NextPage = () => {
             {!!filter && <MetaRobots content="noindex, follow" />}
 
             <CommonLayout
-                title={seoTitle}
-                description={categoryData?.seoMetaDescription}
                 breadcrumbs={categoryData?.breadcrumb}
                 breadcrumbsType="category"
+                description={categoryData?.seoMetaDescription}
+                title={seoTitle}
             >
                 {isSkeletonVisible ? (
                     <CategoryDetailPageSkeleton />

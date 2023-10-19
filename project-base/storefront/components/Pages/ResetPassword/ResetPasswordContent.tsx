@@ -3,21 +3,21 @@ import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { showSuccessMessage } from 'helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { usePasswordRecoveryMutationApi } from 'graphql/generated';
-import 'helpers/getInternationalizedStaticUrls';
+import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
+import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
+import 'helpers/getInternationalizedStaticUrls';
+import { showSuccessMessage } from 'helpers/toasts';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
-import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
@@ -56,9 +56,9 @@ export const ResetPasswordContent: FC = () => {
                     <Form onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)}>
                         <TextInputControlled
                             control={formProviderMethods.control}
+                            formName={formMeta.formName}
                             name={formMeta.fields.email.name}
                             render={(textInput) => <FormLine>{textInput}</FormLine>}
-                            formName={formMeta.formName}
                             textInputProps={{
                                 label: formMeta.fields.email.label,
                                 required: true,
@@ -76,9 +76,9 @@ export const ResetPasswordContent: FC = () => {
             </SimpleLayout>
             {isErrorPopupVisible && (
                 <ErrorPopup
-                    onCloseCallback={() => setErrorPopupVisibility(false)}
                     fields={formMeta.fields}
                     gtmMessageOrigin={GtmMessageOriginType.other}
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
                 />
             )}
         </>

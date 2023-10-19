@@ -2,9 +2,9 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getGtmShowMessageEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
+import { GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
 import useTranslation from 'next-translate/useTranslation';
 import { ReactElement, useEffect, useMemo } from 'react';
-import { GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
 
 type ErrorPopupProps = {
     onCloseCallback: () => void;
@@ -43,7 +43,7 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({
             }
 
             newMappedErrors.push(
-                <li className="mb-2 border-b border-greyLighter pb-2" key={fields[field].name}>
+                <li key={fields[field].name} className="mb-2 border-b border-greyLighter pb-2">
                     {fields[field].label}
                     <br />
                     <span className="text-red">{fields[field].errorMessage}</span>
@@ -55,7 +55,7 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({
     }, [fields]);
 
     return (
-        <Popup onCloseCallback={onCloseCallback} className="w-11/12 max-w-lg">
+        <Popup className="w-11/12 max-w-lg" onCloseCallback={onCloseCallback}>
             <Heading type="h2">{t('Please check inserted details')}</Heading>
             <ul className="max-h-[50vh] overflow-y-auto">{mappedErrors}</ul>
         </Popup>
