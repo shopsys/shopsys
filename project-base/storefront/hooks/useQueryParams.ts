@@ -1,4 +1,6 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { buildNewQueryAfterFilterChange } from 'helpers/filterOptions/buildNewQueryAfterFilterChange';
+import { getFilterWithoutEmpty } from 'helpers/filterOptions/getFilterWithoutEmpty';
 import {
     DEFAULT_SORT,
     getChangedDefaultFilters,
@@ -14,6 +16,7 @@ import {
 } from 'helpers/filterOptions/seoCategories';
 import {
     getQueryWithoutSlugTypeParameterFromParsedUrlQuery,
+    getUrlQueriesWithoutFalsyValues,
     getUrlQueriesWithoutDynamicPageQueries,
 } from 'helpers/parsing/urlParsing';
 import { getDynamicPageQueryKey } from 'helpers/parsing/urlParsing';
@@ -313,41 +316,14 @@ export const useQueryParams = () => {
         pathnameOverride?: string,
         sortOverride?: ProductOrderingModeEnumApi,
     ) => {
-        const isWithFilterParams =
-            !!newFilter &&
-            (!!newFilter.onlyInStock ||
-                !!(newFilter.minimalPrice ?? undefined) ||
-                !!(newFilter.maximalPrice ?? null) ||
-                !!newFilter.brands?.length ||
-                !!newFilter.flags?.length ||
-                !!newFilter.parameters?.length);
-
-        if (newFilter) {
-            (Object.keys(newFilter) as Array<keyof typeof newFilter>).forEach((key) => {
-                const newFilterValue = newFilter[key];
-                if (Array.isArray(newFilterValue) && newFilterValue.length === 0) {
-                    delete newFilter[key];
-                }
-            });
-        }
-
-        const newQuery: UrlQueries = {
-            ...query,
-            [PAGE_QUERY_PARAMETER_NAME]: undefined,
-            [LOAD_MORE_QUERY_PARAMETER_NAME]: undefined,
-            [FILTER_QUERY_PARAMETER_NAME]: isWithFilterParams ? JSON.stringify(newFilter) : undefined,
-        } as const;
-
-        if (sortOverride && sortOverride !== DEFAULT_SORT) {
-            newQuery[SORT_QUERY_PARAMETER_NAME] = sortOverride;
-        }
+        const newQuery = buildNewQueryAfterFilterChange(query, getFilterWithoutEmpty(newFilter), sortOverride);
 
         pushQueries(newQuery, true, pathnameOverride);
     };
 
     const pushQueries = (queries: UrlQueries, isPush?: boolean, pathnameOverride?: string) => {
         // remove queries which are not set or removed
-        const filteredQueries = getUrlQueriesWithoutDynamicPageQueries(queries);
+        const filteredQueries = getUrlQueriesWithoutDynamicPageQueries(getUrlQueriesWithoutFalsyValues(queries));
 
         const asPathname = router.asPath.split('?')[0];
         const dynamicPageQueryKey = getDynamicPageQueryKey(router.pathname);
