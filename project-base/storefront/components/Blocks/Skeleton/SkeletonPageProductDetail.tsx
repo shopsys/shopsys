@@ -1,9 +1,12 @@
+import { SkeletonBreadcrumbs } from './SkeletonBreadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageProductDetail: FC = () => (
     <Webline>
+        <SkeletonBreadcrumbs count={3} />
+
         <div className="flex flex-col lg:flex-row">
             <Skeleton
                 className="mb-2 block h-[335px] max-w-[600px] rounded-none lg:h-[600px] xl:w-[568px]"
@@ -23,8 +26,11 @@ export const SkeletonPageProductDetail: FC = () => (
                     <Skeleton className="h-7 w-5/6" />
                     <Skeleton className="h-4 w-2/6" />
                 </div>
+
                 <Skeleton className="h-8 w-20 rounded" />
+
                 <Skeleton className="h-10 w-2/4" />
+
                 <div className="flex flex-col gap-1">
                     <Skeleton className="h-10 w-20" />
                     <Skeleton className="h-5 w-2/6" />
@@ -35,6 +41,7 @@ export const SkeletonPageProductDetail: FC = () => (
                 </div>
             </div>
         </div>
+
         <div className="mb-14 mt-10 flex justify-between gap-5 pr-[15%] lg:mt-5 lg:justify-start lg:pr-0">
             {createEmptyArray(2).map((_, index) => (
                 <div key={index} className="flex items-center gap-4 lg:flex-col">
@@ -46,6 +53,7 @@ export const SkeletonPageProductDetail: FC = () => (
 
         <div className="border-grayLight mb-6 w-full border-t vl:border-0">
             <Skeleton className="hidden vl:block vl:h-8 vl:w-40 vl:rounded" />
+
             <div className="flex w-full flex-col vl:flex-row">
                 <div className="w-full">
                     <Skeleton className="mb-8 mt-3 h-4 w-16" />

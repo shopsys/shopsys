@@ -12,6 +12,9 @@ type BreadcrumbsProps = {
     type?: FriendlyPagesTypesKeys;
 };
 
+export const breadcrumbsTwClass =
+    'flex items-center gap-2 border-b-2 border-greyLighter py-3 lg:ml-4 lg:border-none lg:py-0';
+
 const TEST_IDENTIFIER = 'layout-breadcrumbs';
 
 export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className }) => {
@@ -26,13 +29,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
     const lastBreadcrumb = breadcrumbs[lastIndex];
 
     return (
-        <div
-            data-testid={TEST_IDENTIFIER}
-            className={twMergeCustom(
-                'flex items-center gap-2 border-b-2 border-greyLighter py-3 lg:ml-4 lg:border-none lg:py-0',
-                className,
-            )}
-        >
+        <div className={twMergeCustom(breadcrumbsTwClass, className)} data-testid={TEST_IDENTIFIER}>
             <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />
 
             <ArrowIcon className="mr-3 w-3 rotate-90 text-greyLight lg:hidden" />
@@ -61,7 +58,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
     );
 };
 
-const BreadcrumbsSpan: FC = ({ children, dataTestId }) => (
+export const BreadcrumbsSpan: FC = ({ children, dataTestId }) => (
     <span className="hidden text-greyLight lg:inline-block" data-testid={dataTestId}>
         {children}
     </span>
