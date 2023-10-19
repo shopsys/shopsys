@@ -918,8 +918,6 @@ type Mutation {
   ChangePersonalData(input: ChangePersonalDataInput!): CustomerUser!
   "Add a transport to the cart, or remove a transport from the cart"
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
-  "check payment status of order after callback from payment service"
-  CheckPaymentStatus(orderUuid: Uuid!): PaymentStatus!
   "Remove all products from Comparison and remove it."
   cleanComparison(comparisonUuid: Uuid): String!
   "Remove all products from wishlist and remove it."
@@ -963,6 +961,8 @@ type Mutation {
     "Set delivery address by Uuid"
     deliveryAddressUuid: Uuid!
   ): CustomerUser!
+  "check payment status of order after callback from payment service"
+  UpdatePaymentStatus(orderUuid: Uuid!): PaymentStatus!
 }
 
 "Represents a navigation structure item"

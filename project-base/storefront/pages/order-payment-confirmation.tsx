@@ -2,7 +2,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentConfirmationContent } from 'components/Pages/Order/PaymentConfirmation/PaymentConfirmationContent';
-import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
+import { OrderSentPageContentDocumentApi, useUpdatePaymentStatusMutationApi } from 'graphql/generated';
 import { onGtmCreateOrderEventHandler, onGtmPaymentFailEventHandler } from 'gtm/helpers/eventHandlers';
 import { getGtmCreateOrderEventFromLocalStorage } from 'gtm/helpers/helpers';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
@@ -19,24 +19,24 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const wasUpdatedPaymentStatusRef = useRef(false);
     const [{ data: paymentStatusData, fetching: isPaymentStatusFetching }, updatePaymentStatusMutation] =
-        useCheckPaymentStatusMutationApi();
+        useUpdatePaymentStatusMutationApi();
 
     const { orderIdentifier } = router.query;
     const orderUuidParam = getOrderUuid(orderIdentifier);
 
     const updatePaymentStatus = async () => {
-        const checkPaymentStatusActionResult = await updatePaymentStatusMutation({ orderUuid: orderUuidParam });
+        const updatePaymentStatusActionResult = await updatePaymentStatusMutation({ orderUuid: orderUuidParam });
 
         const { gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart } = getGtmCreateOrderEventFromLocalStorage();
         if (
-            !checkPaymentStatusActionResult.data?.CheckPaymentStatus ||
+            !updatePaymentStatusActionResult.data?.UpdatePaymentStatus ||
             !gtmCreateOrderEventOrderPart ||
             !gtmCreateOrderEventUserPart
         ) {
             return;
         }
 
-        if (checkPaymentStatusActionResult.data.CheckPaymentStatus.isPaid) {
+        if (updatePaymentStatusActionResult.data.UpdatePaymentStatus.isPaid) {
             onGtmCreateOrderEventHandler(gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart, true);
         } else {
             onGtmPaymentFailEventHandler(gtmCreateOrderEventOrderPart.id);

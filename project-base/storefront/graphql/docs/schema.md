@@ -1201,20 +1201,6 @@ Add a transport to the cart, or remove a transport from the cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CheckPaymentStatus</strong></td>
-<td valign="top"><a href="#paymentstatus">PaymentStatus</a>!</td>
-<td>
-
-check payment status of order after callback from payment service
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>cleanComparison</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -1502,6 +1488,20 @@ Set default delivery address by Uuid
 Set delivery address by Uuid
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>UpdatePaymentStatus</strong></td>
+<td valign="top"><a href="#paymentstatus">PaymentStatus</a>!</td>
+<td>
+
+check payment status of order after callback from payment service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>

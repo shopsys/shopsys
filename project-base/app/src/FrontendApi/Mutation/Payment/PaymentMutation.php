@@ -54,7 +54,7 @@ class PaymentMutation extends AbstractMutation
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return array{isPaid: bool, transactionCount: int}
      */
-    public function checkPaymentStatusMutation(Argument $argument): array
+    public function updatePaymentStatusMutation(Argument $argument): array
     {
         try {
             $uuid = $argument['orderUuid'];

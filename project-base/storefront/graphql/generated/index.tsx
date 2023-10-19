@@ -1112,8 +1112,6 @@ export type MutationApi = {
   ChangePersonalData: CustomerUserApi;
   /** Add a transport to the cart, or remove a transport from the cart */
   ChangeTransportInCart: CartApi;
-  /** check payment status of order after callback from payment service */
-  CheckPaymentStatus: PaymentStatusApi;
   /** Send message to the site owner */
   Contact: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
@@ -1146,6 +1144,8 @@ export type MutationApi = {
   RequestPersonalDataAccess: PersonalDataPageApi;
   /** Set default delivery address by Uuid */
   SetDefaultDeliveryAddress: CustomerUserApi;
+  /** check payment status of order after callback from payment service */
+  UpdatePaymentStatus: PaymentStatusApi;
   /** Add product to Comparison and create if not exists. */
   addProductToComparison: ComparisonApi;
   /** Add product to wishlist and create if not exists. */
@@ -1193,11 +1193,6 @@ export type MutationChangePersonalDataArgsApi = {
 
 export type MutationChangeTransportInCartArgsApi = {
   input: ChangeTransportInCartInputApi;
-};
-
-
-export type MutationCheckPaymentStatusArgsApi = {
-  orderUuid: Scalars['Uuid']['input'];
 };
 
 
@@ -1273,6 +1268,11 @@ export type MutationRequestPersonalDataAccessArgsApi = {
 
 export type MutationSetDefaultDeliveryAddressArgsApi = {
   deliveryAddressUuid: Scalars['Uuid']['input'];
+};
+
+
+export type MutationUpdatePaymentStatusArgsApi = {
+  orderUuid: Scalars['Uuid']['input'];
 };
 
 
@@ -3312,12 +3312,12 @@ export type OrderDetailItemFragmentApi = { __typename: 'OrderItem', name: string
 
 export type OrderListFragmentApi = { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: any, productItems: Array<{ __typename: 'OrderItem', quantity: number }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null }, payment: { __typename: 'Payment', name: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null };
 
-export type CheckPaymentStatusMutationVariablesApi = Exact<{
+export type UpdatePaymentStatusMutationVariablesApi = Exact<{
   orderUuid: Scalars['Uuid']['input'];
 }>;
 
 
-export type CheckPaymentStatusMutationApi = { __typename?: 'Mutation', CheckPaymentStatus: { __typename?: 'PaymentStatus', isPaid: boolean, transactionCount: number, paymentType: string } };
+export type UpdatePaymentStatusMutationApi = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'PaymentStatus', isPaid: boolean, transactionCount: number, paymentType: string } };
 
 export type CreateOrderMutationVariablesApi = Exact<{
   firstName: Scalars['String']['input'];
@@ -5649,9 +5649,9 @@ export const NotificationBarsDocumentApi = gql`
 export function useNotificationBarsApi(options?: Omit<Urql.UseQueryArgs<NotificationBarsVariablesApi>, 'query'>) {
   return Urql.useQuery<NotificationBarsApi, NotificationBarsVariablesApi>({ query: NotificationBarsDocumentApi, ...options });
 };
-export const CheckPaymentStatusMutationDocumentApi = gql`
-    mutation CheckPaymentStatusMutation($orderUuid: Uuid!) {
-  CheckPaymentStatus(orderUuid: $orderUuid) {
+export const UpdatePaymentStatusMutationDocumentApi = gql`
+    mutation UpdatePaymentStatusMutation($orderUuid: Uuid!) {
+  UpdatePaymentStatus(orderUuid: $orderUuid) {
     isPaid
     transactionCount
     paymentType
@@ -5659,8 +5659,8 @@ export const CheckPaymentStatusMutationDocumentApi = gql`
 }
     `;
 
-export function useCheckPaymentStatusMutationApi() {
-  return Urql.useMutation<CheckPaymentStatusMutationApi, CheckPaymentStatusMutationVariablesApi>(CheckPaymentStatusMutationDocumentApi);
+export function useUpdatePaymentStatusMutationApi() {
+  return Urql.useMutation<UpdatePaymentStatusMutationApi, UpdatePaymentStatusMutationVariablesApi>(UpdatePaymentStatusMutationDocumentApi);
 };
 export const CreateOrderMutationDocumentApi = gql`
     mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $deliveryAddressUuid: Uuid, $note: String, $cartUuid: Uuid, $newsletterSubscription: Boolean) {

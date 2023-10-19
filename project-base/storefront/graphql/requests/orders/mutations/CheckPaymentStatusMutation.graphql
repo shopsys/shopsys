@@ -1,7 +1,0 @@
-mutation CheckPaymentStatusMutation($orderUuid: Uuid!) {
-    CheckPaymentStatus(orderUuid: $orderUuid) {
-        isPaid
-        transactionCount
-        paymentType
-    }
-}

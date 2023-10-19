@@ -92,24 +92,24 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         return (
             <TransportAndPaymentListItem
                 key={paymentItem.uuid}
-                isActive={isActive}
                 dataTestId={TEST_IDENTIFIER + 'payment-item' + (isActive ? '-active' : '')}
+                isActive={isActive}
             >
                 <Radiobutton
-                    name="payment"
-                    id={paymentItem.uuid}
-                    value={paymentItem.uuid}
                     checked={isActive}
                     dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
-                    onChangeCallback={changePayment}
+                    id={paymentItem.uuid}
+                    name="payment"
+                    value={paymentItem.uuid}
                     label={
                         <TransportAndPaymentSelectItemLabel
-                            name={paymentItem.name}
-                            price={paymentItem.price}
                             description={paymentItem.description}
                             image={paymentItem.mainImage}
+                            name={paymentItem.name}
+                            price={paymentItem.price}
                         />
                     }
+                    onChangeCallback={changePayment}
                 />
                 {isGoPaySwiftPayment && goPaySwiftSelect}
             </TransportAndPaymentListItem>
@@ -122,12 +122,12 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
             {getGoPaySwiftsResult.data?.GoPaySwifts.map((goPaySwift) => (
                 <Radiobutton
                     key={goPaySwift.swift}
-                    name="goPaySwift"
+                    checked={paymentGoPayBankSwift === goPaySwift.swift}
                     id={goPaySwift.swift}
+                    label={goPaySwift.name}
+                    name="goPaySwift"
                     value={goPaySwift.swift}
                     onChangeCallback={changeGoPaySwift}
-                    checked={paymentGoPayBankSwift === goPaySwift.swift}
-                    label={goPaySwift.name}
                 />
             ))}
         </div>

@@ -1,0 +1,7 @@
+mutation UpdatePaymentStatus($orderUuid: Uuid!) {
+    UpdatePaymentStatus(orderUuid: $orderUuid) {
+        isPaid
+        transactionCount
+        paymentType
+    }
+}

@@ -42,7 +42,7 @@ class PaymentMutationTest extends GraphQlTestCase
         $this->assertSame('987654321', $content['goPayCreatePaymentSetup']['goPayId']);
     }
 
-    public function testCheckPaymentStatusWithGoPay(): void
+    public function testUpdatePaymentStatusWithGoPay(): void
     {
         /** @var \App\Model\Order\Order $order */
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
@@ -53,10 +53,10 @@ class PaymentMutationTest extends GraphQlTestCase
         );
 
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/graphql/CheckPaymentMutation.graphql',
+            __DIR__ . '/graphql/UpdatePaymentStatusMutation.graphql',
             ['orderUuid' => $order->getUuid()],
         );
-        $content = $this->getResponseDataForGraphQlType($response, 'CheckPaymentStatus');
+        $content = $this->getResponseDataForGraphQlType($response, 'UpdatePaymentStatus');
 
         $this->assertTrue($content['isPaid']);
         $this->assertSame(2, $content['transactionCount']);
