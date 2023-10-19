@@ -1,6 +1,7 @@
 import { onGtmShowMessageEventHandler } from 'gtm/helpers/eventHandlers';
 import { toast } from 'react-toastify';
 import { GtmMessageDetailType, GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
+import { isClient } from './isClient';
 
 const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
     if (type === 'error') {
@@ -21,20 +22,31 @@ const showMessage = (message: string, type: 'info' | 'error' | 'success'): void 
 };
 
 export const showErrorMessage = (message: string, gtmMessageOrigin?: GtmMessageOriginType): void => {
-    showMessage(message, 'error');
-    onGtmShowMessageEventHandler(GtmMessageType.error, message, GtmMessageDetailType.flash_message, gtmMessageOrigin);
+    if (isClient) {
+        showMessage(message, 'error');
+        onGtmShowMessageEventHandler(
+            GtmMessageType.error,
+            message,
+            GtmMessageDetailType.flash_message,
+            gtmMessageOrigin,
+        );
+    }
 };
 
 export const showInfoMessage = (message: string, gtmMessageOrigin?: GtmMessageOriginType): void => {
-    showMessage(message, 'info');
-    onGtmShowMessageEventHandler(
-        GtmMessageType.information,
-        message,
-        GtmMessageDetailType.flash_message,
-        gtmMessageOrigin,
-    );
+    if (isClient) {
+        showMessage(message, 'info');
+        onGtmShowMessageEventHandler(
+            GtmMessageType.information,
+            message,
+            GtmMessageDetailType.flash_message,
+            gtmMessageOrigin,
+        );
+    }
 };
 
 export const showSuccessMessage = (message: string): void => {
-    showMessage(message, 'success');
+    if (isClient) {
+        showMessage(message, 'success');
+    }
 };

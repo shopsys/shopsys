@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/nextjs';
 import md5 from 'crypto-js/md5';
-import { isServer } from 'helpers/isServer';
+import { isClient } from 'helpers/isClient';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 
 const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)`;
@@ -17,13 +17,13 @@ const createInit = (init?: RequestInit | undefined) => ({
 export const fetcher =
     (redisClient: RedisClientType<RedisModules, RedisScripts> | undefined) =>
     async (input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response> => {
-        if (isServer() && !redisClient) {
+        if (!isClient && !redisClient) {
             captureException(
                 'Redis client was missing on server. This will cause the Redis cache to not work properly.',
             );
         }
 
-        if (!isServer() || !init || process.env.GRAPHQL_REDIS_CACHE === '0' || !redisClient) {
+        if (isClient || !init || process.env.GRAPHQL_REDIS_CACHE === '0' || !redisClient) {
             return fetch(input, createInit(init));
         }
 

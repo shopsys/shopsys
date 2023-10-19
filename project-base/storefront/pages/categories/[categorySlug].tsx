@@ -16,7 +16,7 @@ import { useHandleDefaultFiltersUpdate } from 'helpers/filterOptions/seoCategori
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/isServer';
+import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import {
     PAGE_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,

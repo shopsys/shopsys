@@ -10,7 +10,7 @@ import {
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
-import { isRedirectedFromSsr } from 'helpers/isServer';
+import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { createClient } from 'urql/createClient';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';

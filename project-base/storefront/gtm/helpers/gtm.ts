@@ -40,6 +40,8 @@ import {
 } from 'gtm/types/objects';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
+import { logException } from 'helpers/errors/logException';
+import { isClient } from 'helpers/isClient';
 
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
     const { cart, promoCode, isFetching } = useCurrentCart();
@@ -190,8 +192,12 @@ export const getGtmReviewConsents = (): GtmReviewConsentsType => ({
 });
 
 export const gtmSafePushEvent = (event: GtmEventInterface<GtmEventType, unknown>): void => {
-    window.dataLayer = window.dataLayer ?? [];
-    window.dataLayer.push(event);
+    if (isClient) {
+        window.dataLayer = window.dataLayer ?? [];
+        window.dataLayer.push(event);
+    } else {
+        logException(new Error('Tried to use GTM safe push without available window. Please, fix this behavior.'));
+    }
 };
 
 export const getGtmConsentInfo = (userConsent: UserConsentFormType | null): GtmConsentInfoType => ({

@@ -1,6 +1,5 @@
 import { RedisClientType } from 'redis';
 import { Mock, afterEach, describe, expect, test, vi } from 'vitest';
-import { isServer } from 'helpers/isServer';
 import { cleanup, render, waitFor } from '@testing-library/react';
 import { createClient } from 'urql/createClient';
 import { Provider, ssrExchange, useQuery } from 'urql';
@@ -12,8 +11,11 @@ vi.mock('urql/fetcher', () => ({
     fetcher: vi.fn(() => mockRequestWithFetcher),
 }));
 
-vi.mock('helpers/isServer', () => ({
-    isServer: vi.fn(),
+const isClientGetter = vi.fn();
+vi.mock('helpers/isClient', () => ({
+    get isClient() {
+        return isClientGetter();
+    },
 }));
 
 vi.mock('next/config', () => ({
@@ -41,7 +43,7 @@ describe('createClient test', () => {
     afterEach(cleanup);
 
     test('created client (and URQL) do not filter out Redis cache directive on the client (in component)', async () => {
-        (isServer as Mock).mockImplementation(() => false);
+        (isClientGetter as Mock).mockImplementation(() => true);
 
         const UrqlWrapper: FC = ({ children }) => {
             const publicGraphqlEndpoint = TEST_URL;
@@ -80,7 +82,7 @@ describe('createClient test', () => {
     });
 
     test('created client (and URQL) do not filter out Redis cache directive on the server', async () => {
-        (isServer as Mock).mockImplementation(() => true);
+        (isClientGetter as Mock).mockImplementation(() => false);
 
         const client = createClient({
             t: () => 'foo' as any,
