@@ -1,7 +1,7 @@
 import { SortingBarItem } from './SortingBarItem';
 import { SortIcon } from 'components/Basic/Icon/IconsSvg';
+import { DEFAULT_SORT } from 'config/constants';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { DEFAULT_SORT } from 'helpers/filterOptions/seoCategories';
 import { getUrlQueriesWithoutDynamicPageQueries } from 'helpers/parsing/urlParsing';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useQueryParams } from 'hooks/useQueryParams';

@@ -1,3 +1,4 @@
+import { DEFAULT_SORT } from 'config/constants';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import {
     PAGE_QUERY_PARAMETER_NAME,
@@ -6,7 +7,6 @@ import {
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParamNames';
 import { UrlQueries, FilterQueries } from 'hooks/useQueryParams';
-import { DEFAULT_SORT } from './seoCategories';
 
 export const buildNewQueryAfterFilterChange = (
     currentQuery: UrlQueries,

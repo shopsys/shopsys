@@ -1,8 +1,8 @@
+import { DEFAULT_SORT, SEO_SENSITIVE_FILTERS } from 'config/constants';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { buildNewQueryAfterFilterChange } from 'helpers/filterOptions/buildNewQueryAfterFilterChange';
 import { getFilterWithoutEmpty } from 'helpers/filterOptions/getFilterWithoutEmpty';
 import {
-    DEFAULT_SORT,
     getChangedDefaultFilters,
     getChangedDefaultFiltersAfterAvailabilityChange,
     getChangedDefaultFiltersAfterBrandChange,
@@ -12,7 +12,6 @@ import {
     getChangedDefaultFiltersAfterParameterChange,
     getChangedDefaultFiltersAfterPriceChange,
     getChangedDefaultFiltersAfterSliderParameterChange,
-    SEO_SENSITIVE_FILTERS,
 } from 'helpers/filterOptions/seoCategories';
 import {
     getQueryWithoutSlugTypeParameterFromParsedUrlQuery,
