@@ -23,3 +23,5 @@ overblog_graphql:
         enable_introspection: '%kernel.debug%'
     services:
         promise_adapter: "webonyx_graphql.sync_promise_adapter"
+    errors_handler:
+        logger_service: Shopsys\FrontendApiBundle\Model\Logger\FrontendApiLogger

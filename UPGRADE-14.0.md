@@ -77,6 +77,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   add Symfony Messenger along with RabbitMQ ([#2898](https://github.com/shopsys/shopsys/pull/2898))
     -   install application to create new necessary containers (run again `./scripts/install.sh`) – this will overwrite your local `docker-compose.yml` file
     -   see #project-base-diff to update your project
+-   set the custom logger to the Frontend API ([#2882](https://github.com/shopsys/shopsys/pull/2882))
+    -   you can set `shopsys.frontend_api.validation_logged_as_error` parameter to `true` to log validation errors with log level ERROR instead of INFO
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
