@@ -23,8 +23,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   the typical upgrade sequence should be:
     -   run `docker-compose down --volumes` to turn off your containers
     -   _(macOS only)_ run `mutagen-compose down --volumes` instead
-    -   follow upgrade notes in the *Infrastructure* section (related to `docker-compose.yml`, `Dockerfile`, docker containers, `nginx.conf`, `php.ini`, etc.)
-    -   *(MacOS, Windows only)* run `docker-sync start` to create volumes
+    -   follow upgrade notes in the _Infrastructure_ section (related to `docker-compose.yml`, `Dockerfile`, docker containers, `nginx.conf`, `php.ini`, etc.)
+    -   _(MacOS, Windows only)_ run `docker-sync start` to create volumes
     -   run `docker-compose build --no-cache --pull` to build your images without cache and with the latest version
     -   run `docker-compose up -d --force-recreate --remove-orphans` to start the application again
     -   update the `shopsys/*` dependencies in `composer.json` to the version you are upgrading to
@@ -107,4 +107,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   add Related Products tab on product detail page ([#2885](https://github.com/shopsys/shopsys/pull/2885))
     -   see #project-base-diff to update your project
 -   improve product lists in GrapesJS ([#2879](https://github.com/shopsys/shopsys/pull/2879))
+    -   see #project-base-diff to update your project
+-   add instant page skeleton after link click ([#2863](https://github.com/shopsys/shopsys/pull/2863))
+    -   before page must first load and then skeleton was shown, now we pass page type to `ExtendedLink` component which allow us to display immediately after user click on the link proper skeleton for the required page
+    -   some reorganization and renaming was done to Skeletons, we basically have only two types of skeletons, for pages and modules, since it is sometimes difficult to recognise which one is which, we have added Page word, but this was not perfect in folder organization, that's why it's been added word Module as well, to organize skeletons better way
+    -   added missing skeletons for Homepage and Stores
+    -   adjustments to current skeletons to match the design of a page better
     -   see #project-base-diff to update your project
