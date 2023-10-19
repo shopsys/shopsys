@@ -25,7 +25,8 @@ The whole release process is divided into 3 stages that are run separately:
 ## Release command
 
 !!! caution
-    Before you start releasing, you need to mount your `.gitconfig` to `php-fpm` docker container to be able to perform automated commits within the container.  
+
+    Before you start releasing, you need to mount your `.gitconfig` to `php-fpm` docker container to be able to perform automated commits within the container.<br>  
     Add following line into your `docker-compose.yml` in `services -> php-fpm -> volumes` path:
 
     <!-- language: lang-yaml -->

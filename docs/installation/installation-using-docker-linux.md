@@ -23,6 +23,7 @@ cd project-base
 ```
 
 !!! note "Notes"
+
     - The `--no-install` option disables installation of the vendors - this will be done later in the Docker container
     - The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`
     - The `--ignore-platform-reqs` option ensures your local PHP setup is not verified (it is not needed, everything is installed in Docker later)
@@ -58,6 +59,7 @@ docker-compose up -d --build
 ```
 
 !!! note
+
     During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### 2.4 Set up the application

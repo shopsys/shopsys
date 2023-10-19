@@ -3,14 +3,17 @@ In the following example, we will add the `extId` (alias "external ID") field to
 It is a common modification when you need your e-commerce application and ERP system to co-work smoothly.
 
 !!! note
-    If you want to display your new attribute on the front-end product list, you need to extend the [read model layer](../model/introduction-to-read-model.md) as well.
+
+    If you want to display your new attribute on the front-end product list, you need to extend the [read model layer](../model/introduction-to-read-model.md) as well.<br>
     Instructions are in [Extending Product List](./extending-product-list.md).
 
 ## Extend framework `Product` entity
 
-!!! tip "How does the entity extension work?"
-    Find it out in the [separate article](../extensibility/entity-extension.md).
-    Most common entities (including `Product`) are already extended in `project-base` to ease your development.
+!!! tip
+
+    "How does the entity extension work?"<br>
+    Find it out in the [separate article](../extensibility/entity-extension.md).<br>
+    Most common entities (including `Product`) are already extended in `project-base` to ease your development.<br>
     However, when extending any other entity, there are [few more steps](../extensibility/entity-extension.md#how-can-i-extend-an-entity) that need to be done.
 
 Add new `extId` field with Doctrine ORM annotations and a getter for the field into `App\Model\Product\Product` class.
@@ -86,7 +89,8 @@ $this->sql('ALTER TABLE products ALTER ext_id DROP DEFAULT');
 ```
 
 !!! hint
-    In this step, you were using Phing target `db-migrations-generate`.  
+
+    In this step, you were using Phing target `db-migrations-generate`.<br>
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)_
 
 Run the migration to create the column in your database:
@@ -217,6 +221,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 ```
 
 !!! tip
+
     If you want to change the order for your newly created field, please look at the section [Changing order of groups and fields](../extensibility/form-extension.md#changing-order-of-groups-and-fields)
 
 Overwrite the `setData()` method in your' Product' class.

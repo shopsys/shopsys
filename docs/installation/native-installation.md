@@ -17,10 +17,12 @@ php -d memory_limit=-1 <PATH TO COMPOSER or COMPOSER.PHAR> create-project shopsy
 ```
 
 !!! note "Notes"
+
     - The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`
     - We have set memory limit to `-1` for composer because of the increased memory consumption during the dependencies calculation
 
 !!! note
+
     During the execution of `composer create-project`, there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ## Create databases
@@ -31,7 +33,8 @@ php phing test-db-create
 ```
 
 !!! hint
-    In this step you were using multiple Phing targets.  
+
+    In this step you were using multiple Phing targets.<br>
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 ## Build application
@@ -41,6 +44,7 @@ php phing build-demo-dev
 ```
 
 !!! note
+
     During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ## Run integrated HTTP server
@@ -61,11 +65,13 @@ symfony server:start --port 8001
 ```
 
 !!! tip
-    With Symfony Local Web Server you can easily setup TLS to detect problems with mixed content early, and to run libraries that only run in HTTPS.  
+
+    With Symfony Local Web Server you can easily setup TLS to detect problems with mixed content early, and to run libraries that only run in HTTPS.<br>  
     For more information and instructions please refer to the [official Symfony documentation](https://symfony.com/doc/current/setup/symfony_server.html#enabling-tls)
 
 !!! tip
-    You can also use local domain names (e.g., http://shopsys.wip) instead of 127.0.0.1:8000  
+
+    You can also use local domain names (e.g., http://shopsys.wip) instead of 127.0.0.1:8000<br>
     For more information and instructions please refer to the [official Symfony documentation](https://symfony.com/doc/current/setup/symfony_server.html#local-domain-names)
 
 ## See it in your browser!

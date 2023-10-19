@@ -290,6 +290,7 @@ With `f` parameter we set path to Dockerfile that builds image.
 With `t` parameter we set the name of built image.
 
 !!! note
+
     During the build of `production target`, there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/), [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 If we are building the image on different server than production server, we can push built image into docker registry of production server via ssh.
@@ -346,10 +347,12 @@ docker-compose -p production exec php-fpm ./phing db-create build-new
 ```
 
 !!! hint
-    In this step you were using multiple Phing targets.  
+
+    In this step you were using multiple Phing targets.<br>
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 !!! note
+
     During the execution of `build-new target` there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 
@@ -382,6 +385,7 @@ We need to follow some steps that will change old version of the shop for the ne
 To preserve created data we need to use phing target `build-deploy-part-2-db-dependent` for building application environment of `php-fpm` container, maintenance page is needed if there exist unapplied database migrations.
 
 !!! important
+
     With each update of master branch in our repository we need to rebuild image based on [Docker Image Building](./installation-using-docker-on-production-server.md#docker-image-building) section.
 
 We log into the server using ssh.  
@@ -421,10 +425,12 @@ docker rm -f build-php-fpm-container
 ```
 
 !!! warning
-    During `build-deploy-part-2-db-dependent` phing target `elasticsearch-index-migrate` is called and can cause error when you change the type of field to another (e.g., you change it from `bool` to `integer`).
+
+    During `build-deploy-part-2-db-dependent` phing target `elasticsearch-index-migrate` is called and can cause error when you change the type of field to another (e.g., you change it from `bool` to `integer`).<br>
     If you need to make this change, please add new field with the correct type and delete the old field instead
 
 !!! tip
+
     If you need to have freshly exported data in Elasticsearch after deploy, you can call phing target `elasticsearch-export` during `build-deploy-part-2-db-dependent`.
 
 ## Logging

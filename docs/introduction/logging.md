@@ -28,6 +28,7 @@ shopsys-framework-php-fpm | [2018-07-23 11:42:41] slow.NOTICE: 3.14159265359 App
 ```
 
 !!! tip
+
     If you're only interested in some specific messages you can use `grep`, e.g., `docker-compose logs | grep slow.NOTICE` for slow responses.
 
 ## Conclusion

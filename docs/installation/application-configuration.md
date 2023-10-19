@@ -7,9 +7,11 @@ The application is configurable by [Symfony configuration files](https://symfony
 For operating Shopsys Platform it is needed to have correctly set connections to external services via ENV variables.
 
 !!! note
+
     All default values use default ports for all external services like PostgreSQL database, elasticsearch, redis, ...
 
 !!! tip
+
     Host values can be modified or can be aliased for your Operating System via `/etc/hosts` or `C:\Windows\System32\drivers\etc\hosts`
 
 
@@ -18,6 +20,7 @@ You may want to set some settings in a different way (such as production, test, 
 [Setting environment variables](/introduction/setting-environment-variables) depends on environment of your application.
 
 !!! tip
+
     To improve performance you can optionally run `composer dump-env`. [See Symfony documentation for further information.](https://symfony.com/doc/4.4/configuration.html#configuring-environment-variables-in-production)
 
 ### Application

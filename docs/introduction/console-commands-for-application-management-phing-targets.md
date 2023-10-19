@@ -10,6 +10,7 @@ php phing
 ```
 
 !!! note
+
     Check out the [Autocompletion for Phing Targets](./autocompletion-for-phing-targets.md) article, where you can find useful info about autocompletion of target names.
 
 ## How Phing targets work
@@ -17,6 +18,7 @@ Phing targets are defined in `build.xml` file.
 Any Phing target can execute a subset of other targets or console commands.
 
 !!! tip
+
     You can use shorthand command `./phing <target-name>` on Unix system or `phing <target-name>` in Windows CMD instead of `php phing <target-name>`.
 
 Let us take `build` target for example.
@@ -41,6 +43,7 @@ Let us take look at the first one, that is located in the same file:
 Target `build-deploy-part-1-db-independent` also executes subset of Phing targets (`clean`,`composer-prod`,`npm`,`dirs-create`,`domains-urls-check`,`assets`).
 
 !!! note
+
     During the execution of `composer-prod`, `composer-dev` and `npm` targets, there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 Let us move a little deeper and take a look at the first one, `clean`:
@@ -68,6 +71,7 @@ Builds the application for production preserving your DB.
 Most important build command for production. Cleans cache, installs composer dependencies, installs npm, install assets, installs database migrations and much more.
 
 !!! tip
+
     More about how to install and deploy your application in production can be found in [Installation Using Docker on Production Server](../installation/installation-using-docker-on-production-server.md)
 
 #### build-demo-ci
@@ -142,6 +146,7 @@ Wipes Postgres DB, recreates structure, fills with demo data and then exports da
 Drops all data in the test database and creates a new one with demo data and exports products to elasticsearch test index.
 
 !!! tip
+
     All database related targets `db-*` have their `test-db-*` variant for the test database.
 
 #### elasticsearch-index-recreate
@@ -163,26 +168,31 @@ Especially useful when you need to change the structure and don't need to have f
 * creates alias for the new index
 
 !!! warning
-    If you add field/s to the structure and reindex, they won't be available until `elasticsearch-export` is called.
+
+    If you add field/s to the structure and reindex, they won't be available until `elasticsearch-export` is called.<br>
     Your application must handle the properties not being filled correctly until all products are exported.
 
 !!! danger
-    Using this phing target after changing the type of field to another in structure _(e.g., changing it from `bool` to `integer`)_ will cause an error.
+
+    Using this phing target after changing the type of field to another in structure _(e.g., changing it from `bool` to `integer`)_ will cause an error.<br>
     If you need to make this change, please add new field with the correct type and delete the old field instead.
 
 #### elasticsearch-export
 Exports all data for index to Elasticsearch.
 
 !!! note
+
     From v9.1.1 and higher the export command also run migration for Elasticsearch structure when necessary
 
 !!! note
+
     If you want to export only data of one domain e.g. when you are introducing new domain in production, you can use `php bin/console shopsys:elasticsearch:data-export --domain-id=<DOMAIN_ID>`
 
 #### elasticsearch-export-changed
 Exports only changed data for index to Elasticsearch.
 
 !!! note
+
     If you want to export only data of one domain e.g. when you are introducing new domain in production, you can use `php bin/console shopsys:elasticsearch:changed-data-export --domain-id=<DOMAIN_ID>`
 
 ### Coding standards
@@ -288,6 +298,7 @@ For more information about translations, see [the separate article](../introduct
 
 ### environment-change
 !!! important
+
     Do not use this target on your production server, because it could cause some security vulnerabilities.
 
 Change environment to production, development or test using this target.
@@ -332,4 +343,5 @@ Since the `build/build.local.properties` file is not versioned, the changes will
 ---
 
 !!! tip
+
     If you want to add new Phing targets into Shopsys Platform or modify existing ones, please read [our guidelines](../contributing/guidelines-for-phing-targets.md) before contributing.

@@ -69,6 +69,7 @@ FROM php:8.1-fpm-bullseye
 ```
 
 !!! note
+
     The `FROM` instruction specifies the base image, from which you are building
 
 The official list of Dockerfile commands can be found on [Dockerfile reference](https://docs.docker.com/engine/reference/builder/#from).

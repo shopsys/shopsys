@@ -117,6 +117,7 @@ A usage for example:
 ```
 
 !!! warning
+
     The message is not escaped, so if there is malicious code in `*.po` files, it will not be escaped.
 
 ### JavaScript

@@ -9,7 +9,8 @@ php phing standards
 ```
 
 !!! hint
-    In this step, you were using Phing target `standards`.  
+
+    In this step, you were using Phing target `standards`.<br>
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 A lot of the violations of the rules can be fixed automatically by calling

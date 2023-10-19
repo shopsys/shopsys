@@ -4,7 +4,8 @@ This article describes how to work with domains and languages during the develop
 For an explanation of the basic terms, please read [domain, multidomain and multilanguage](domain-multidomain-multilanguage.md) article first.
 
 !!! note
-    Demo data on Shopsys Platform are only translated to `en` and `cs` locales.
+
+    Demo data on Shopsys Platform are only translated to `en` and `cs` locales.<br>
     If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory and you can translate your demo data in `dataFixtures.xx.po` file.
 
 ## Settings and working with domains
@@ -27,10 +28,12 @@ Start the build, for example, using a phing target
 php phing build-demo-dev
 ```
 !!! hint
-    In this step you were using Phing target `build-demo-dev`.  
+
+    In this step you were using Phing target `build-demo-dev`.<br>
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](./console-commands-for-application-management-phing-targets.md)
 
 !!! note
+
     During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 After the build is completed, a singledomain application is created.
@@ -41,6 +44,7 @@ For example `Tests\App\Functional\Twig\PriceExtensionTest` is expecting the spec
 If you want to use already created tests for your specific configuration, you may need to modify these tests to be able to test your specific configuration of the domain.
 
 !!! note "Notes"
+
     - Some smoke and functional tests are only executed for a single domain or a multiple domain configuration. Search for `@group singledomain` or `@group multidomain` in your test methods' annotations respectively.
     - Some functional tests (e.g., the ones for searching a specific phrase) are also skipped when the first domain locale is other than `en`. Search for usages of `FunctionalTestCase::skipTestIfFirstDomainIsNotInEnglish()` method.
 
@@ -54,6 +58,7 @@ This configuration file contains pieces of information about the domain ID, the 
 Set the url address for the domain in `config/domains_urls.yaml`.
 
 !!! note
+
     When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#12-enable-second-domain-optional)
 
 #### 2.3 Locale settings
@@ -62,6 +67,7 @@ Set up the locale of the domain according to the instructions in the section [Lo
 #### 2.4 Create multidomains data
 
 !!! note
+
     When you want to set up new domain for new project you may run `php phing db-demo` instead of following steps (you should avoid doing so for running project).
 
 There need to be created some multidomain data for the newly added domain.
@@ -77,8 +83,9 @@ This command performs multiple actions:
 - the last step of this command is the start of automatic recalculations of prices, availabilities, and products visibilities.
 
 !!! note
-    After creating multidomain data you will need to do some extra steps to display products on new domain:
-    
+
+    After creating multidomain data you will need to do some extra steps to display products on new domain:<br>
+
     1. Enter category names for new locale to make them visible
     2. Enter product names and prices
     3. Recalculate product prices and visibilities
@@ -177,7 +184,8 @@ However, sometimes, there is no request (i.e. in CLI commands) so you need to te
 To change the default application locale, set `locale` parameter to you desired locale (e.g., `es` for Spanish) in your [`parameters_common.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yaml).
 The value is then used for setting [`default_locale` Symfony parameter](https://symfony.com/doc/3.4/translation/locale.html#setting-a-default-locale) (see your [`config/packages/translation.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/translation.yaml) config).
 
-!!!note
+!!! note
+
     Default application locale in test environment is set to first domain locale except administration where is respected [`admin_locale` setting](#36-locale-in-administration)
 
 ### 4. Change the url address for an existing domain
@@ -186,6 +194,7 @@ The value is then used for setting [`default_locale` Symfony parameter](https://
 Change the url address in the configuration of the domain in `config/domains_urls.yaml`.
 
 !!! note
+
     When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#12-enable-second-domain-optional)
 
 #### 4.2 Replace the old url address

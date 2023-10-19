@@ -4,6 +4,7 @@ Installation of Shopsys Platform is complete and now you can start building your
 Here are first steps you should start with.
 
 !!! note
+
     If you don't have a working application, [install it](../installation/installation-guide.md) first.
 
 ## Set up timezone to display dates
@@ -30,6 +31,7 @@ Read [settings and working with domain](./how-to-set-up-domains-and-locales.md#s
 We highly recommend to set up domains in the beginning of your project correctly. It will save you a lot of time.
 
 !!! note
+
     If you add a domain, please create and upload an icon for the new domain (Administration > Settings >  E-shop identification). You'll make shop administrators happy.
 
 ## Set up locales
@@ -52,6 +54,7 @@ We use Elasticsearch on the frontend for product searching, filtering and for fa
 You are likely to adjust the Elasticsearch configuration for example, if you have a technical shop where the inflection of product names doesn't make sense (we use inflection during searching by default).
 
 !!! note
+
     Find more in detailed article about [Elasticsearch](../model/elasticsearch.md) usage.
 
 Every domain has defined one [Elasticsearch index](../model/elasticsearch.md#elasticsearch-index-setting). Definition of this index can be found in `src/Resources/definition/<domain_id>.json` files.

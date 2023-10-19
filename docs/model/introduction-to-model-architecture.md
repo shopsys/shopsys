@@ -10,7 +10,8 @@ Domain is a sphere of knowledge or activity we build application logic around.
 The domain of Shopsys Platform is e-commerce.
 
 !!! note
-    In Shopsys Platform, we also use the term domain for another concept which is an instance of eshop data accessible through an individual url address.  
+
+    In Shopsys Platform, we also use the term domain for another concept which is an instance of eshop data accessible through an individual url address.<br>
     You can read more about this meaning of a domain in [Domain, Multidomain, Multilanguage](../introduction/domain-multidomain-multilanguage.md).
 
 Each domain has its logic which is the higher level rules for how objects of the domain model interact with one another.
@@ -166,7 +167,8 @@ class CartRepository
 ```
 
 !!! note
-    Repositories in Shopsys Platform wrap Doctrine repositories.  
+
+    Repositories in Shopsys Platform wrap Doctrine repositories.<br>
     This is done in order to provide only useful methods with understandable names instead of generic API of Doctrine repositories.
 
 ## Facade

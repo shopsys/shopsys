@@ -43,5 +43,6 @@ this way you will have always generated friendly URLs based on your entity name 
 - visit some of provided URLs and check if everything works fine
 
 !!! note
-    You can use [`UrlListType` in your forms](./using-form-types.md#urllisttype) to edit friendly URLs of existing entities.  
+
+    You can use [`UrlListType` in your forms](./using-form-types.md#urllisttype) to edit friendly URLs of existing entities.<br>
     If you're interested, you can take a look at the processing of `Article` entity (see `ArticleFacade`, `ArticleData::$urls`, `ArticleDataFactory` and `ArticleFormType`), which allows for this functionality.

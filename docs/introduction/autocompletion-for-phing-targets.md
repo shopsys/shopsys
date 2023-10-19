@@ -98,4 +98,5 @@ From now on, you can just type `dphing <tab><tab>` to see all possible completio
 It's also possible to let autocompletion expand the partially typed target name, so `dphing fri<tab>` became `dphing friendly-urls-generate`.
 
 !!! note
+
     Docker containers have to be running in order to `dphing` and autocompletion work properly.

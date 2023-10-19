@@ -19,7 +19,8 @@ Released versions will always be marked using git tags with the `v` prefix (e.g.
 Once created, a git tag marking a release will never be removed or edited.
 
 !!! note
-    Pre-release versions may introduce incompatible changes and can be used to try out the new functions and changes.  
+
+    Pre-release versions may introduce incompatible changes and can be used to try out the new functions and changes.<br>
     Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc><n>`, e.g., `7.0.0-beta5`.
 
 ## The BC Promise in Detail
@@ -39,6 +40,7 @@ You can follow the changes in the repository to see how working with Shopsys Pla
 During an upgrade to the next major version, you must make the changes yourself according to the advice in [UPGRADE.md](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md).
 
 !!! note
+
     The same holds true for the [demoshop repository](https://github.com/shopsys/demoshop), which is a complex example of an e-commerce project using a custom design and modifications.
 
 ### PHP Code

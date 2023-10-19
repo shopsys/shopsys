@@ -134,6 +134,7 @@ First, we add columns we want to see into `SalesmanGridFactory::create` method.
 ```
 
 !!! note
+
     In the example above, the column names are translated. Do not forget to [dump translations](../introduction/console-commands-for-application-management-phing-targets.md#translations-dump).
 
 ## 2. Display the grid
@@ -196,6 +197,7 @@ Now, you should be able to see the basic grid with salesmen data when accessing 
 ![Basic Grid](img/basic-grid.png)
 
 !!! note
+
     If you want to add a link to the page to the menu and proper breadcrumb navigation,
     please check the corresponding section in [Adding a New Administration Page](./adding-a-new-administration-page.md#side-menu-and-breadcrumbs) cookbook.
 
@@ -423,6 +425,7 @@ class SalesmanController extends AdminBaseController
 ```
 
 !!! tip
+
     It is a good practice to enable [CSRF protection](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) on this type of action.
 
 ### 6.3 Add action column to the grid

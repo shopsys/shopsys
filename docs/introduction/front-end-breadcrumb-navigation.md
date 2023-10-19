@@ -14,4 +14,5 @@ When adding a new page on the frontend, you need to implement new `BreadcrumbGen
 - visit some URL matching your route and check if everything works fine
 
 !!! note
+
     Administration breadcrumb navigations is generated from [Administration menu](../administration/administration-menu.md#routing-extension).

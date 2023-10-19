@@ -38,6 +38,7 @@ Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
     * add your extended entity into `$entityExtensionMap` in the `setUp()` method
 
 !!! tip
+
     To see how it works in practice, check out `\Tests\App\Functional\EntityExtension\EntityExtensionTest` that tests end-to-end extensibility of `Product`, `Category` and `OrderItem`.
 
 ## Limitations

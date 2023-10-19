@@ -19,7 +19,7 @@ For better understanding [visit the whole documentation here](https://symfony.co
 When `.env` files are not enough for your purpose you may override environment variables directly by webserver setting. These settings override any variables configured in `.env` files.
 
 !!! note
-    
+
     Bellow is described the easiest way. For better understanding, we recommend finding out the documentation of the specific platform.
 
 ### Docker

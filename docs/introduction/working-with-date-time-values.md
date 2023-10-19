@@ -22,6 +22,7 @@ All date values should be presented to the user from a Twig templates, where are
 All filters are aware of `DisplayTimeZoneProvider` and internally convert the values to the desired display timezone when rendering date-times.
 
 !!! note
+
     PHP does not have any `Date` object and even the dates are internally instance of `DateTime` class.
 
 ## Filling the dates

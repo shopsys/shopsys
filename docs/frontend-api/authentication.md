@@ -31,8 +31,9 @@ The query will return access and refresh tokens.
 { "query": "mutation {Login(input: {email: \"--EMAIL--\", password: \"--PASSWD--\"}) {accessToken, refreshToken}}"}
 ```
 
-!!!
-You should always send queries over a secure HTTPS protocol.
+!!! note
+
+    You should always send queries over a secure HTTPS protocol.
 
 The response looks like this:
 
@@ -80,7 +81,8 @@ If the resolver needs more detailed information, it has to obtain it himself.
 
 If the user is successfully logged in and the access token expires, the 401 error will be returned. In such a case, the user should use the refresh token to restore the access token.
 
-!!!
+!!! tip
+
     We do not recommend refreshing the access token before each request, because token renewal takes some time and the user will have to wait a long time for a response.
 
 To refresh the pair of tokens, use the `RefreshTokens` mutation query with the `refreshTokenInput` input parameter.

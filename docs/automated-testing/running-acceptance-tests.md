@@ -9,8 +9,9 @@ docker exec -it shopsys-framework-php-fpm bash
 ```
 
 !!! note
-    For `selenium-server` to be able to connect to your `webserver` container and access your application, all domains should have the URL set to `http://webserver:8000`.
-    This is done via ENV `OVERWRITE_DOMAIN_URL` defined in `.env.acc` or `.env.acc.local`.
+
+    For `selenium-server` to be able to connect to your `webserver` container and access your application, all domains should have the URL set to `http://webserver:8000`.<br>
+    This is done via ENV `OVERWRITE_DOMAIN_URL` defined in `.env.acc` or `.env.acc.local`.<br>
     Everything should be configured for you by default, but it is important to keep the domain URL overwriting in mind when dealing with acceptance tests.
 
 If you are logged into your `php-fpm` container and have the `OVERWRITE_DOMAIN_URL` ENV properly set,
@@ -20,7 +21,8 @@ php phing tests-acceptance
 ```
 
 !!! hint
-    In this step, you were using Phing target `tests-acceptance`.  
+
+    In this step, you were using Phing target `tests-acceptance`.<br>
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 ### How to watch what is going on in the Selenium browser
@@ -84,10 +86,12 @@ php phing tests-acceptance
 ```
 
 !!! note
-    `pg_dump` is executed internally to enable reverting the test DB to its previous state.
+
+    `pg_dump` is executed internally to enable reverting the test DB to its previous state.<br>
     You may have to add the path of your PostgreSQL installation to the system `PATH` directory for it to work.
 
 !!! note
+
     If you interrupt running acceptance tests, you may need to delete the root file named `ACCEPTANCE` that is temporarily created to switch the application to the `ACCEPTANCE` environment.
 
 ## Running individual tests

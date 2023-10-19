@@ -77,6 +77,7 @@ netstat -ltn
 This will output all listening TCP ports in numeric format. Now we can just pick one that isn't in this list and set it to our container.
 
 !!! warning
+
     Try not to use ports between 1000-1100. These are ports that root usually uses for its processes.
 
 So, we have configured our `docker-compose` files in a way they do not have any conflicts among them.
@@ -154,10 +155,12 @@ You can inspect what is wrong by using `docker logs <container-name>` command.
 When `composer install` or `composer update` fails on an error with exceeding the allowed memory size, you can increase the memory limit by setting `COMPOSER_MEMORY_LIMIT` environment variable in your `docker/php-fpm/Dockerfile` or `docker-compose.yml`.
 
 !!! note
-    Since `v7.0.0-beta4`, we have set the Composer memory limit to `-1` (which means unlimited) in the php-fpm's `Dockerfile`.  
+
+    Since `v7.0.0-beta4`, we have set the Composer memory limit to `-1` (which means unlimited) in the php-fpm's `Dockerfile`.<br>  
     If you still encounter memory issues while using Docker for Windows (or Mac), try increasing the limits in `Docker -> Preferences… -> Advanced`.
 
 !!! note
+
     Composer dependencies contain 3-rd party software with licenses that are described in the document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ## Starting up the Docker containers fails due to an invalid reference format

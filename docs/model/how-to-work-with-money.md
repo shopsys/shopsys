@@ -42,6 +42,7 @@ It uses a decimal representation of the money amount and it does not contain any
 You can get the decimal representation as a `string` via the `getAmount` method.
 
 !!! tip
+
     If in doubt about the results of any method, you can take a look at [its unit tests](https://github.com/shopsys/shopsys/blob/master/packages/framework/tests/Unit/Component/Money/MoneyTest.php) which contain many examples of the class' behavior.
 
 ### Construction
@@ -63,6 +64,7 @@ To compute with monetary values you have to use the object's methods instead of 
 - `Money::divide(int|string $divisor, int $scale) : Money`
 
 !!! note
+
     `Money` is immutable, which means that all these methods create a new object and the original is never modified.
 
 For addition and subtraction, the other parameter has to be also a `Money` instance.
@@ -76,6 +78,7 @@ Results of a division may be inexpressible with a finite decimal (e.g., 1 / 3 = 
 - scale of the result of `divide` must be *explicitly specified*, the last decimal place will be rounded to minimize the error
 
 !!! note
+
     The scale of the money amount is always preserved - `getAmount` will use all decimal places of its scale (e.g., zero money with scale 6 would return `0.000000`).
 
 ### Rounding
@@ -125,6 +128,7 @@ Thanks to this approach you can use `Money` in your [data objects](./entities.md
 In Shopsys Platform, the default value of the `currency` option is `false` instead of `EUR`, hiding the currency symbol by default.
 
 !!! tip
+
     For non-monetary numeric values use `NumberType` (see [Symfony docs](https://symfony.com/doc/3.4/reference/forms/types/number.html) for details).
 
 ### Form Constraints

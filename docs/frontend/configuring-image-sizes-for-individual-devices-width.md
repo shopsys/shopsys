@@ -5,6 +5,7 @@ In Shopsys Platform you can configure image sizes for individual devices width. 
 This document serves for introducing you with the process of managing images on Shopsys Platform.
 
 !!! tip
+
     In order to get correct image sizes of additional images then your original image must be larger than highest size in additional image size.
 
 ## Configuration file
@@ -45,6 +46,7 @@ For type `gallery` and size `detail` are set two additional sizes. First is imag
 In case you modified image sizes in file `images.yaml`, then would be needed to remove yet generated images. You approach that by removing images for modified size name of appropriate section. Folder path would look like `web/content/images/<section-name>/<type-name>`.
 
 !!! warning
+
     Be aware of not removing folder `original` in path `web/content/images/<section-name>`.
 
 ### Example

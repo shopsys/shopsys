@@ -89,6 +89,7 @@ $builder
 The output will be: A => B => C => D => E => F => G.
 
 !!! tip
+
     More examples can be found [here](https://github.com/shopsys/ordered-form/blob/master/doc/usage.md#position).
 
 ### Changing order of existing groups and fields
@@ -101,4 +102,5 @@ $builder->get('c')->setPosition(['after' => 'b']);
 ```
 
 !!! note
+
     Because `FormBuilderInterface` doesn't declare the method `setPosition`, your IDE will warn you that method doesn't exist.

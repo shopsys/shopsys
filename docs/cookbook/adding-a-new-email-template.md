@@ -95,7 +95,8 @@ Right now, they are treated as plain text.
 We will allow to replace them with real values in the next step.
 
 !!! note
-    In the example above, we translated the email subject and body.
+
+    In the example above, we translated the email subject and body.<br>
     Don't forget to [dump translations](../introduction/console-commands-for-application-management-phing-targets.md#translations-dump).
 
 ## Replacing variables with values
@@ -188,10 +189,12 @@ and corresponding methods can look like this
 ```
 
 !!! note
+
     In this example, we're intentionally replacing all defined variables in the email body, but in the subject, only the customer full name is replaced.
 
 !!! warning
-    Replacements (real values) for the variables are, most of the time, some user-entered values.
+
+    Replacements (real values) for the variables are, most of the time, some user-entered values.<br>
     It's crucial to escape these values properly!
 
 ## Sending email

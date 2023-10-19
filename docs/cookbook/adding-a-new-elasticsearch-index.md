@@ -223,13 +223,14 @@ So far, it is the most minimalistic implementation.
 Now, we are able to create an index in Elasticsearch by running `./phing elasticsearch-index-migrate -D elasticsearch.index=category`.
 
 !!! warning
-    If you are using version v9.1.0 or lower you have to use command `./phing elasticsearch-index-create -D elasticsearch.index=category` for creating index.
 
+    If you are using version v9.1.0 or lower you have to use command `./phing elasticsearch-index-create -D elasticsearch.index=category` for creating index.
 
 Also, we can use `./phing elasticsearch-index-recreate` or `./phing elasticsearch-index-delete`.
 
 !!! note
-    Command `./phing elasticsearch-index-migrate -D elasticsearch.index=category` (notice the parameter -D) create Elasticsearch index only for our CategoryIndex.
+
+    Command `./phing elasticsearch-index-migrate -D elasticsearch.index=category` (notice the parameter -D) create Elasticsearch index only for our CategoryIndex.<br>
     Using `./phing elasticsearch-index-migrate` (without `-D` flag) will create Elasticsearch indexes for all registered ones in your project (product, category, and so on).
 
 ## Export data into Elasticsearch
@@ -320,6 +321,7 @@ private function convertToElastic(Category $category, int $domainId, string $loc
 ```
 
 !!! note
+
     The `getExportDataForBatch()` must return a serialized array of rows indexed by its ID.
 
 Now we can export categories data (name, description, parentId, level, and uuid) into Elasticsearch with `./phing elasticsearch-export -D elasticsearch.index=category` (index has to be created first, see the step above).
@@ -476,7 +478,8 @@ Now, when we have a way to export partial data, we can extend the functionality 
 For this purpose, we need our index to implement `\Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInterface` interface and add two more methods: `CategoryIndex::getChangedCount()` and  `CategoryIndex::getChangedIdsForBatch()`.
 
 !!! note
-    You will need to implement some way to distinguish changed categories.
+
+    You will need to implement some way to distinguish changed categories.<br>
     For this purpose, you can, for example, [add a new attribute to an entity](./adding-new-attribute-to-an-entity.md) or implement some sort of queue.
 
 #### CategoryIndex::getChangedIdsForBatch()
@@ -524,10 +527,12 @@ class CategoryIndex extends AbstractIndex implements IndexSupportChangesOnlyInte
 ```
 
 !!! note
+
     In a real application, you should implement the logic with the database query to avoid fetching all data unnecessarily.
 
 !!! note
-    In this cookbook, we return all affected categories at once.
+
+    In this cookbook, we return all affected categories at once.<br>
     On larger data sets, you can offset and limit the results with the `$lastProcessedId` and `$batchSize`.
 
 #### CategoryIndex::getChangedCount()

@@ -68,7 +68,8 @@ You can enable the simple CORS handler in `config/packages/shopsys_frontend_api.
 You can read more in [OverblogGraphQLBundle documentation](https://github.com/overblog/GraphQLBundle/blob/v0.13.4/docs/security/handle-cors.md)
 
 !!! warning
-    The default CORS handler provides only basic configuration. For example, resources cannot be shared only with the specific domain.  
+
+    The default CORS handler provides only basic configuration. For example, resources cannot be shared only with the specific domain.<br>  
     You can gain more flexibility with [NelmioCorsBundle](https://github.com/nelmio/NelmioCorsBundle).
 
 ### Debug your queries
@@ -126,6 +127,7 @@ For example, adding a new field to the `Category` could be like:
 ```
 
 !!! note
+
     Fields in the definitions have to be named the same way as they are in the appropriate entity (in this case `\App\Model\Category\Category`)
 
 ### Query type

@@ -21,6 +21,7 @@ A new migration will be generated in the correct namespace.
 You should always check the generated migrations, sometimes a minor manual change is required.
 
 !!! note
+
     If you are developing more than one bundle you will be prompt to select one as a target.
 
 ## Running migrations

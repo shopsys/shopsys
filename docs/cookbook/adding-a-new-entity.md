@@ -76,6 +76,7 @@ php phing db-migrations-generate
 ```
 
 !!! note
+
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 The command will print a filename of the database migration with content like this.
@@ -112,7 +113,8 @@ class Version20190301122526 extends AbstractMigration
 ```
 
 !!! tip
-    We recommend you check this migration and verify that everything is set up as expected.
+
+    We recommend you check this migration and verify that everything is set up as expected.<br>
     If the system doesn't generate the migration, the entity is probably in an incorrect namespace or has the wrong Doctrine annotation mapping.
 
 ## 4. Add default salesmen

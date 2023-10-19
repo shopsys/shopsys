@@ -19,10 +19,12 @@ phing db-wipe-public-schema
 ```
 
 !!! danger
+
     **This command wipes everything in the `public` database schema (i.e. you will lose all application data)!**
 
 !!! hint
-    In this step, you were using Phing target `db-wipe-public-schema`.  
+
+    In this step, you were using Phing target `db-wipe-public-schema`.<br>
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 Then you can import the dump:
@@ -38,6 +40,7 @@ First, set a new database name in `./env.local` file.
 You can copy the environment variable name from `./env` file.
 
 !!! note
+
     If you are not in the DEVELOPMENT environment, you must clear the cache via `php phing clean` for the changes to take effect.
 
 After that, you can create the new database, including the required content of `pg_catalog` schema by executing:

@@ -40,4 +40,5 @@ When our package depends on `shopsys/framework`, we have to tell the composer it
 Unfortunately, this notation cannot be used for the `doctrine/orm` inline requires alias.
 
 !!! note
+
     During composer installation there will be installed 3-rd party software as dependencies of Shopsys Platform with licenses that are described in the document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)

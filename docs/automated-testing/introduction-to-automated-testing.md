@@ -147,6 +147,7 @@ You will no longer cause *500 Server Error* on some random page by a seemingly u
 See configuration of HTTP smoke (and [performance](#performance-tests)) tests in [`\Tests\App\Smoke\Http\RouteConfigCustomization`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Smoke/Http/RouteConfigCustomization.php).
 
 !!! tip
+
     You can read more about the customization of HTTP smoke tests in their [own documentation on GitHub](https://github.com/shopsys/http-smoke-testing).
 
 ### Acceptance tests (a.k.a. functional tests or Selenium tests)

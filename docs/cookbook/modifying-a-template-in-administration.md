@@ -30,7 +30,8 @@ Thanks to this exact location, your new copy of the template will be used instea
 At this point, you just need to modify your copy of the template so that the product transfer status will be displayed on the page.
 
 !!! note
-    If you want to change only some block, you can override the original template. For that, you need to use the `extends` macro with an exclamation mark to prevent template cycling. For example: `{% extends '@!ShopsysFramework/Admin/Content/Product/detail.html.twig' %}`.
+
+    If you want to change only some block, you can override the original template. For that, you need to use the `extends` macro with an exclamation mark to prevent template cycling. For example: `{% extends '@!ShopsysFramework/Admin/Content/Product/detail.html.twig' %}`.<br>
     More information can be found in [official Symfony documentation](https://symfony.com/doc/current/bundles/override.html#templates)
 
 #### The second step is the modification of the copy itself

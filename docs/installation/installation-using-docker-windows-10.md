@@ -15,6 +15,7 @@ Take a look at the article about [Monorepo](../introduction/monorepo.md) for mor
 
 ### Setup WSL 2 and download Debian
 !!! note
+
     This guide covers installation using `Debian` distribution. Rest of guide might not be suitable for you, if you decide to select different distribution.
 
 In [Windows Subsystem for Linux Installation Guide for Windows 10](https://docs.microsoft.com/en-us/windows/wsl/install-win10#manual-installation-steps) follow steps 1 to 5.
@@ -48,6 +49,7 @@ In `Debian` application run these commands:
 * To ensure everything is working alright, restart `Docker Desktop` and `Debian` applications.
 
 !!! note
+
     If you prefer to know more about what is happening during installation, open [install-docker-wsl-debian.sh](https://github.com/shopsys/shopsys/master/project-base/scripts/install-docker-wsl-debian.sh) script and run all commands manually.
 
 ## Installation of Shopsys Platform
@@ -69,9 +71,11 @@ cd project-base
 ```
 
 !!! note
+
     Now you can access your project files directly from Windows Explorer under this address `\\wsl$\Debian\home\<your-linux-user-name>\project-base\`
 
 !!! note "Notes"
+
     - The `--no-install` option disables installation of the vendors - this will be done later in the Docker container
     - The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`
     - The `--ignore-platform-reqs` option ensures your local PHP setup is not verified (it is not needed, everything is installed in Docker later)
@@ -113,6 +117,7 @@ docker-compose up -d
 ```
 
 !!! note
+
     During installation there will be installed 3-rd party software as dependencies of Shopsys Platform by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### 2.3 Setup the application
