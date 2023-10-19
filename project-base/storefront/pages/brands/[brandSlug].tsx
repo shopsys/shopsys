@@ -60,7 +60,6 @@ const BrandDetailPage: NextPage = () => {
     return (
         <CommonLayout
             breadcrumbs={brandDetailData?.brand?.breadcrumb}
-            breadcrumbsType="category"
             description={brandDetailData?.brand?.seoMetaDescription}
             isFetchingData={!filter && fetching && !brandDetailData}
             title={seoTitle}
