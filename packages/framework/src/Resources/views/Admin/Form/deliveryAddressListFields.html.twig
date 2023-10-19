@@ -28,7 +28,7 @@
                             <td>{{ deliveryAddress.street }}</td>
                             <td>{{ deliveryAddress.city }}</td>
                             <td>{{ deliveryAddress.postcode }}</td>
-                            <td>{{ deliveryAddress.country.name }}</td>
+                            <td>{{ deliveryAddress.country.name|default }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
