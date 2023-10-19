@@ -1,11 +1,11 @@
-import { SkeletonBreadcrumbs } from './SkeletonBreadcrumbs';
+import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageProductDetail: FC = () => (
     <Webline>
-        <SkeletonBreadcrumbs count={3} />
+        <SkeletonModuleBreadcrumbs count={3} />
 
         <div className="flex flex-col lg:flex-row">
             <Skeleton

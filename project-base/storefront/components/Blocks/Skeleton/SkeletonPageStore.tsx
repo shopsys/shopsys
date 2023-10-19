@@ -1,10 +1,10 @@
+import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import Skeleton from 'react-loading-skeleton';
-import { SkeletonBreadcrumbs } from './SkeletonBreadcrumbs';
 
 export const SkeletonPageStore: FC = () => (
     <Webline>
-        <SkeletonBreadcrumbs count={3} />
+        <SkeletonModuleBreadcrumbs count={3} />
 
         <div className="flex flex-row items-stretch gap-16">
             <Skeleton className="hidden h-[600px] w-[600px] vl:block" />

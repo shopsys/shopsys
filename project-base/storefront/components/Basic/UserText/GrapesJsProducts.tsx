@@ -1,5 +1,5 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
-import { SkeletonProductListItem } from 'components/Blocks/Skeleton/SkeletonProductListItem';
+import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { ProductsByCatnumsApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { createEmptyArray } from 'helpers/arrayUtils';
@@ -30,7 +30,7 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({ rawProductPart, allFetched
         return (
             <div className="flex">
                 {createEmptyArray(4).map((_, index) => (
-                    <SkeletonProductListItem key={index} />
+                    <SkeletonModuleProductListItem key={index} />
                 ))}
             </div>
         );

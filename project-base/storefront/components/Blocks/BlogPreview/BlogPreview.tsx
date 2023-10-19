@@ -1,4 +1,4 @@
-import { SkeletonMagazine } from 'components/Blocks/Skeleton/SkeletonMagazine';
+import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
 import { BlogPreviewMain } from './BlogPreviewMain';
 import { BlogPreviewSide } from './BlogPreviewSide';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
@@ -49,7 +49,7 @@ export const BlogPreview: FC = () => {
                 )}
             </div>
 
-            {(fetchingArticles || fetchingBlogUrl) && <SkeletonMagazine />}
+            {(fetchingArticles || fetchingBlogUrl) && <SkeletonModuleMagazine />}
 
             {!fetchingArticles && !fetchingBlogUrl && !!(blogMainItems || blogSideItems) && (
                 <div className="flex flex-col gap-16 vl:flex-row  vl:justify-between">

@@ -5,11 +5,11 @@ import { Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { twJoin } from 'tailwind-merge';
 
-type SkeletonBreadcrumbsProps = {
+type SkeletonModuleBreadcrumbsProps = {
     count: number;
 };
 
-export const SkeletonBreadcrumbs: FC<SkeletonBreadcrumbsProps> = ({ count }) => (
+export const SkeletonModuleBreadcrumbs: FC<SkeletonModuleBreadcrumbsProps> = ({ count }) => (
     <div className={twMergeCustom('mb-8', breadcrumbsTwClass)}>
         {createEmptyArray(count).map((_, index) => (
             <Fragment key={index}>

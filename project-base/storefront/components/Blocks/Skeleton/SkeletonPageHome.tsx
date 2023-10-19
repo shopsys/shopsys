@@ -1,17 +1,17 @@
-import { SkeletonBanners } from './SkeletonBanners';
-import { SkeletonMagazine } from './SkeletonMagazine';
-import { SkeletonPromotedCategories } from './SkeletonPromotedCategories';
-import { SkeletonPromotedProducts } from './SkeletonPromotedProducts';
+import { SkeletonModuleBanners } from './SkeletonModuleBanners';
+import { SkeletonModuleMagazine } from './SkeletonModuleMagazine';
+import { SkeletonModulePromotedCategories } from './SkeletonModulePromotedCategories';
+import { SkeletonModulePromotedProducts } from './SkeletonModulePromotedProducts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageHome: FC = () => (
     <Webline>
-        <SkeletonBanners className="mb-14" />
+        <SkeletonModuleBanners className="mb-14" />
         <Skeleton className="mb-3 h-8 w-72" />
-        <SkeletonPromotedCategories className="mb-6" />
+        <SkeletonModulePromotedCategories className="mb-6" />
         <Skeleton className="mb-3 h-8 w-72" />
-        <SkeletonPromotedProducts className="mb-6" />
-        <SkeletonMagazine />
+        <SkeletonModulePromotedProducts className="mb-6" />
+        <SkeletonModuleMagazine />
     </Webline>
 );

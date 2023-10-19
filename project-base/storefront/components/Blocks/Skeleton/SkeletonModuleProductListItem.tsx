@@ -1,6 +1,6 @@
 import Skeleton from 'react-loading-skeleton';
 
-export const SkeletonProductListItem: FC = () => (
+export const SkeletonModuleProductListItem: FC = () => (
     <div className="flex w-full flex-col border-b border-greyLighter pb-5 lg:py-4 lg:px-3">
         <Skeleton
             className="h-full rounded-none lg:mb-24"

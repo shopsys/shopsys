@@ -1,4 +1,4 @@
-import { SkeletonPromotedProducts } from 'components/Blocks/Skeleton/SkeletonPromotedProducts';
+import { SkeletonModulePromotedProducts } from 'components/Blocks/Skeleton/SkeletonModulePromotedProducts';
 import { ProductsSlider } from './ProductsSlider';
 import { usePromotedProductsQueryApi } from 'graphql/generated';
 import { GtmProductListNameType } from 'gtm/types/enums';
@@ -9,7 +9,7 @@ export const PromotedProducts: FC = () => {
     const [{ data: promotedProductsData, fetching }] = usePromotedProductsQueryApi();
 
     if (fetching) {
-        return <SkeletonPromotedProducts />;
+        return <SkeletonModulePromotedProducts />;
     }
 
     if (!promotedProductsData?.promotedProducts) {

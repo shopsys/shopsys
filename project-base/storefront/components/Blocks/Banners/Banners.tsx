@@ -1,4 +1,4 @@
-import { SkeletonBanners } from 'components/Blocks/Skeleton/SkeletonBanners';
+import { SkeletonModuleBanners } from 'components/Blocks/Skeleton/SkeletonModuleBanners';
 import { BannersSlider } from './BannersSlider';
 import { useSliderItemsQueryApi } from 'graphql/generated';
 
@@ -8,7 +8,7 @@ export const Banners: FC = () => {
     const [{ data: sliderItemsData, fetching }] = useSliderItemsQueryApi();
 
     if (fetching) {
-        return <SkeletonBanners />;
+        return <SkeletonModuleBanners />;
     }
 
     if (!sliderItemsData?.sliderItems.length) {

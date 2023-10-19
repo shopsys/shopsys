@@ -1,5 +1,5 @@
-import { SkeletonArticleBlog } from './SkeletonArticleBlog';
-import { SkeletonBreadcrumbs } from './SkeletonBreadcrumbs';
+import { SkeletonModuleArticleBlog } from './SkeletonModuleArticleBlog';
+import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { createEmptyArray } from 'helpers/arrayUtils';
@@ -7,14 +7,14 @@ import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageBlogCategory: FC = () => (
     <Webline>
-        <SkeletonBreadcrumbs count={2} />
+        <SkeletonModuleBreadcrumbs count={2} />
 
         <Skeleton className="mb-3 h-8 w-3/5" />
 
         <div className="mb-16 flex flex-col gap-8 vl:flex-row">
             <div className="order-2 flex w-full flex-col gap-14 vl:order-1">
                 {createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
-                    <SkeletonArticleBlog key={index} />
+                    <SkeletonModuleArticleBlog key={index} />
                 ))}
             </div>
 

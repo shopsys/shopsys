@@ -1,12 +1,12 @@
-import { SkeletonBreadcrumbs } from './SkeletonBreadcrumbs';
-import { SkeletonProductListItem } from './SkeletonProductListItem';
+import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
+import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageProductsList: FC = () => (
     <Webline>
-        <SkeletonBreadcrumbs count={2} />
+        <SkeletonModuleBreadcrumbs count={2} />
 
         <div className="flex flex-row items-stretch gap-5">
             <Skeleton className="h-[1000px] w-[300px]" containerClassName="hidden vl:block" />
@@ -46,7 +46,7 @@ export const SkeletonPageProductsList: FC = () => (
 
                         <div className="mb-7 grid w-full grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-y-4 xl:grid-cols-4">
                             {createEmptyArray(9).map((_, index) => (
-                                <SkeletonProductListItem key={index} />
+                                <SkeletonModuleProductListItem key={index} />
                             ))}
                         </div>
                     </div>
