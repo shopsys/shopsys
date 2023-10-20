@@ -208,4 +208,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   fix router server access error on PageGuard ([#2909](https://github.com/shopsys/shopsys/pull/2909))
     -   see #project-base-diff to update your project
 -   fix Cart list unit text ([#2910](https://github.com/shopsys/shopsys/pull/2910))
+-   remove `Heading` component ([#2894](https://github.com/shopsys/shopsys/pull/2894))
+    -   it was decided by FE team that this component is not beneficial
+    -   it was replaced with general H tags and styles were put into globals.css, styles were also included with new classes (`h1`, `h2`, `h3`, `h4`) which we can use to style text which suppose to look like heading but it is not important enough for mark with H tag
+    -   also from those headings and heading classes was remove margin bottom since spacing should be set in exact place where this component is used, not everywhere
     -   see #project-base-diff to update your project
