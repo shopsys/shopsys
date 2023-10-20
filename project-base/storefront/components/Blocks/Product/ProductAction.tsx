@@ -25,9 +25,10 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListN
         return (
             <div className={wrapperTwClass}>
                 <Button
-                    className="!w-full"
+                    className="!w-full py-2"
                     dataTestId={TEST_IDENTIFIER + '-choose-variant'}
                     name="choose-variant"
+                    size="small"
                     onClick={() =>
                         router.push(
                             {

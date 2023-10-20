@@ -68,7 +68,7 @@ export const AddToCart: FC<AddToCartProps> = ({
                 size="small"
                 onClick={onAddToCartHandler}
             >
-                {fetching ? <Loader className="w-4 text-white" /> : <CartIcon className="text-white" />}
+                {fetching ? <Loader className="w-4 text-white" /> : <CartIcon className="w-4 text-white" />}
                 <span>{t('Add to cart')}</span>
             </Button>
 
