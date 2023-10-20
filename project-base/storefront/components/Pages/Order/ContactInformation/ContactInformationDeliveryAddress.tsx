@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
@@ -108,7 +107,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
 
     return (
         <>
-            <Heading type="h3">{t('Delivery address')}</Heading>
+            <div className="h3 mb-3">{t('Delivery address')}</div>
 
             <CheckboxControlled
                 control={formProviderMethods.control}

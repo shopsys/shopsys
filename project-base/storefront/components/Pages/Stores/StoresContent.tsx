@@ -1,6 +1,5 @@
 import { StoreInfoBox } from './StoreInfoBox';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { MarkerIcon } from 'components/Basic/Icon/IconsSvg';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
@@ -71,9 +70,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
                                 />
                             </div>
 
-                            <Heading className="m-0 lg:mt-6" type="h3">
-                                {t('Stores')}
-                            </Heading>
+                            <div className="h3 lg:mt-6">{t('Stores')}</div>
 
                             {selectedStore && (
                                 <StoreInfoBox

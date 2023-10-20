@@ -1,5 +1,4 @@
 import { ProductsSearch } from './ProductsSearch';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SkeletonPageProductsList } from 'components/Blocks/Skeleton/SkeletonPageProductsList';
 import { SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
@@ -14,6 +13,8 @@ type SearchContentProps = {
     searchResults: SearchQueryApi | undefined;
     fetching: boolean;
 };
+
+const TEST_IDENTIFIER = 'search-results';
 
 export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching }) => {
     const router = useRouter();
@@ -30,7 +31,9 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
 
     return (
         <>
-            <Heading type="h1">{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
+            <h1 className="mb-3" data-testid={`${TEST_IDENTIFIER}-heading`}>{`${t(
+                'Search results for',
+            )} "${getStringFromUrlQuery(router.query.q)}"`}</h1>
             {isFetchingInitialData ? (
                 <SkeletonPageProductsList />
             ) : (
@@ -38,7 +41,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
                     <>
                         {!!searchResults.articlesSearch.length && (
                             <div className="mt-6">
-                                <Heading type="h3">{t('Found articles')}</Heading>
+                                <div className="h3 mb-3">{t('Found articles')}</div>
                                 <SimpleNavigation
                                     imageType="searchThumbnail"
                                     linkType="article"
@@ -49,20 +52,20 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
 
                         {!!searchResults.brandSearch.length && (
                             <div className="mt-6">
-                                <Heading type="h3">{t('Found brands')}</Heading>
+                                <div className="h3 mb-3">{t('Found brands')}</div>
                                 <SimpleNavigation linkType="brand" listedItems={searchResults.brandSearch} />
                             </div>
                         )}
 
                         {!!mappedCategoriesSearchResults?.length && (
                             <div className="mt-6">
-                                <Heading type="h3">{t('Found categories')}</Heading>
+                                <div className="h3 mb-3">{t('Found categories')}</div>
                                 <SimpleNavigation linkType="category" listedItems={mappedCategoriesSearchResults} />
                             </div>
                         )}
 
                         <div className="mt-6">
-                            <Heading type="h3">{title}</Heading>
+                            <div className="h3 mb-3">{title}</div>
                             <ProductsSearch productsSearch={searchResults.productsSearch} />
                         </div>
                     </>

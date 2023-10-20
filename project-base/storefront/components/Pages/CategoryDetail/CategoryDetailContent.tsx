@@ -1,7 +1,6 @@
 import { AdvancedSeoCategories } from './AdvancedSeoCategories';
 import { CategoryBestsellers } from './CategoryBestsellers/CategoryBestsellers';
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { FilterIcon } from 'components/Basic/Icon/IconsSvg';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
@@ -69,7 +68,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <div className="flex flex-1 flex-col">
                     <Adverts className="mt-6" positionName="productList" />
 
-                    <Heading type="h1">{title}</Heading>
+                    <h1 className="mb-3">{title}</h1>
 
                     {!!category.description && currentPage === 1 && (
                         <div dangerouslySetInnerHTML={{ __html: category.description }} />

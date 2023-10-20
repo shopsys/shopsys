@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
@@ -37,9 +36,8 @@ export const Wishlist: FC = () => {
 
     return (
         <>
-            <Heading className="!text-big lg:!text-h1" type="h1">
-                {t('Wishlist')}
-            </Heading>
+            <h1 className="mb-3">{t('Wishlist')}</h1>
+
             {!!wishlist?.products.length && (
                 <div className="flex w-full flex-col items-center justify-between border-b border-greyLighter pb-2 lg:flex-row">
                     <div

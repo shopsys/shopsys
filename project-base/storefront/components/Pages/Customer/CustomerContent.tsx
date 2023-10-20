@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
@@ -19,7 +18,7 @@ export const CustomerContent: FC = () => {
         <>
             <Webline>
                 <div className="text-center">
-                    <Heading type="h1">{t('Customer')}</Heading>
+                    <h1 className="mb-3">{t('Customer')}</h1>
                 </div>
             </Webline>
 

@@ -1,5 +1,4 @@
 import { StoreSelect } from './StoreSelect';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
@@ -40,7 +39,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
 
     return (
         <Popup className="w-11/12 max-w-4xl" onCloseCallback={onClosePickupPlacePopupHandler}>
-            <Heading type="h2">{t('Choose the store where you are going to pick up your order')}</Heading>
+            <div className="h2 mb-3">{t('Choose the store where you are going to pick up your order')}</div>
             <StoreSelect
                 selectedStoreUuid={selectedStoreUuid}
                 transport={transport}

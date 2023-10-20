@@ -1,5 +1,4 @@
 import { SearchMetadata } from 'components/Basic/Head/SearchMetadata';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Banners } from 'components/Blocks/Banners/Banners';
 import { BLOG_PREVIEW_VARIABLES, BlogPreview } from 'components/Blocks/BlogPreview/BlogPreview';
 import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategories';
@@ -34,11 +33,11 @@ const HomePage: FC<ServerSidePropsType> = () => {
                     <Banners />
                 </Webline>
                 <Webline className="mb-6">
-                    <Heading type="h2">{t('Promoted categories')}</Heading>
+                    <h2 className="mb-3">{t('Promoted categories')}</h2>
                     <PromotedCategories />
                 </Webline>
                 <Webline className="mb-6">
-                    <Heading type="h2">{t('Promoted products')}</Heading>
+                    <h2 className="mb-3">{t('Promoted products')}</h2>
                     <PromotedProducts />
                 </Webline>
                 <Webline type="blog">

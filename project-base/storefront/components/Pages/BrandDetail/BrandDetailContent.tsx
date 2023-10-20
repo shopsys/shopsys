@@ -1,5 +1,4 @@
 import { BrandDetailProductsWrapper } from './BrandDetailProductsWrapper';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
 import { UserText } from 'components/Basic/UserText/UserText';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
@@ -19,7 +18,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
     return (
         <>
             <Webline>
-                <Heading type="h1">{brand.seoH1 !== null ? brand.seoH1 : brand.name}</Heading>
+                <h1 className="mb-3">{brand.seoH1 !== null ? brand.seoH1 : brand.name}</h1>
                 <div className="mb-5 flex w-full flex-col justify-start md:flex-row">
                     <div className="mr-5 min-w-[13.75rem] self-start" data-testid={TEST_IDENTIFIER + 'image'}>
                         <Image alt={brand.mainImage?.name || brand.name} image={brand.mainImage} type="default" />

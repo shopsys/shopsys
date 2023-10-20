@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -18,32 +17,24 @@ export const SharedWishlist: FC<SharedWishlistProps> = ({ urlQueryParamId }) => 
         return <LoaderWithOverlay />;
     }
 
+    if (!products.length) {
+        return (
+            <Webline className="my-14">
+                <div className="h3">{t('There are no products in the shared wishlist.')}</div>
+            </Webline>
+        );
+    }
+
     return (
         <Webline>
-            {products.length > 0 ? (
-                <>
-                    <div className="mb-7 flex flex-wrap">
-                        <div className="mb-4 flex w-full items-end vl:mb-0 vl:flex-1">
-                            <div className="flex-1 vl:flex-none">
-                                <Heading className="!mb-0 !leading-7" type="h1">
-                                    {t('Shared wishlist')}
-                                </Heading>
-                            </div>
-                        </div>
-                    </div>
+            <h1 className="mb-7">{t('Shared wishlist')}</h1>
 
-                    <ProductsList
-                        fetching={fetching}
-                        gtmMessageOrigin={GtmMessageOriginType.other}
-                        gtmProductListName={GtmProductListNameType.sharedWishlist}
-                        products={products}
-                    />
-                </>
-            ) : (
-                <div className="my-[50px]">
-                    <Heading type="h3">{t('There are no products in the shared wishlist.')}</Heading>
-                </div>
-            )}
+            <ProductsList
+                fetching={fetching}
+                gtmMessageOrigin={GtmMessageOriginType.other}
+                gtmProductListName={GtmProductListNameType.sharedWishlist}
+                products={products}
+            />
         </Webline>
     );
 };

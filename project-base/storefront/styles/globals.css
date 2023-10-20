@@ -37,6 +37,37 @@ textarea {
     @apply font-default text-dark;
 }
 
+h1,
+h2,
+h3,
+h4,
+.h1,
+.h2,
+.h3,
+.h4 {
+    @apply font-bold;
+}
+
+h1,
+.h1 {
+    @apply text-2xl lg:text-3xl;
+}
+
+h2,
+.h2 {
+    @apply text-xl lg:text-2xl;
+}
+
+h3,
+.h3 {
+    @apply text-base lg:text-lg;
+}
+
+h4,
+.h4 {
+    @apply text-sm lg:text-base;
+}
+
 td,
 th {
     @apply text-left;

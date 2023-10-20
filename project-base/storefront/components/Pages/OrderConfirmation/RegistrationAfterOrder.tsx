@@ -1,5 +1,4 @@
 import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './registrationAfterOrderFormMeta';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
@@ -69,12 +68,12 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
             <Webline>
                 <div className="relative mb-20 flex flex-col rounded border-2 border-primary before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-1 before:-translate-x-1/2 before:bg-primary before:content-none lg:flex-row before:lg:block">
                     <div className="w-full p-5 lg:w-1/2 lg:py-8 lg:px-10">
-                        <Heading className="mb-5 text-4xl leading-10 [&>strong]:text-primary" type="h2">
+                        <div className="mb-5 text-4xl font-bold leading-10 [&>strong]:text-primary">
                             <Trans
                                 components={{ 0: <br />, 1: <strong /> }}
                                 i18nKey="Finish registration to loyalty program."
                             />
-                        </Heading>
+                        </div>
                         <ul>
                             {[
                                 t('You will have an overview of your orders and complaints'),

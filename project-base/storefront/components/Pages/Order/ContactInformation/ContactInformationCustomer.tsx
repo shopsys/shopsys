@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
@@ -15,7 +14,7 @@ export const ContactInformationCustomer: FC = () => {
 
     return (
         <>
-            <Heading type="h3">{formMeta.fields.customer.label}</Heading>
+            <div className="h3 mb-3">{formMeta.fields.customer.label}</div>
             <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                 <RadiobuttonGroup
                     control={formProviderMethods.control}

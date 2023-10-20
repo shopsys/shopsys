@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
 import { Cell, CellHead, CellMinor, Row, Table } from 'components/Basic/Table/Table';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -26,7 +25,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
     return (
         <>
             <div className="text-center">
-                <Heading type="h1">{t('Personal data')}</Heading>
+                <h1 className="mb-3">{t('Personal data')}</h1>
                 <Link isButton href={exportLink} size="small">
                     {t('Download as XML')}
                 </Link>
@@ -34,9 +33,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
 
             {!!userData && (
                 <Webline className="mt-6">
-                    <Heading className="mt-6" type="h2">
-                        {t('Billing address')}
-                    </Heading>
+                    <div className="h2 mt-6 mb-3">{t('Billing address')}</div>
                     <Table>
                         <Row className="flex flex-col md:flex-row">
                             <Cell className="flex-1">
@@ -113,9 +110,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
 
                     {userData.deliveryAddresses.length > 0 && (
                         <>
-                            <Heading className="mt-6" type="h2">
-                                {t('Delivery addresses')}
-                            </Heading>
+                            <div className="h2 mt-6 mb-3">{t('Delivery addresses')}</div>
                             <Table>
                                 {userData.deliveryAddresses.map((address) => (
                                     <Row key={address.uuid}>
@@ -134,7 +129,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
             )}
 
             <Webline className="mt-6">
-                <Heading type="h2">{t('My orders')}</Heading>
+                <h2 className="mb-3">{t('My orders')}</h2>
 
                 {orders.length ? (
                     <div className="flex flex-col gap-4">
@@ -252,9 +247,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
             <Webline className="mt-6">
                 {newsLetterSubscriber && (
                     <>
-                        <Heading className="mt-6" type="h2">
-                            {t('Newsletter')}
-                        </Heading>
+                        <div className="h2 mt-6 mb-3">{t('Newsletter')}</div>
                         <Table
                             head={
                                 <Row>

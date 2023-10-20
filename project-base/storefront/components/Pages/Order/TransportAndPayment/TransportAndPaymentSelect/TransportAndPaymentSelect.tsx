@@ -1,7 +1,6 @@
 import { PickupPlacePopup } from './PickupPlacePopup';
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
@@ -114,7 +113,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
             <PacketeryContainer />
             <div data-testid={TEST_IDENTIFIER + 'transport-and-payment'}>
                 <div data-testid={TEST_IDENTIFIER + 'transport'}>
-                    <Heading type="h3">{t('Choose transport')}</Heading>
+                    <div className="h3 mb-3">{t('Choose transport')}</div>
                     <ul>
                         {transport
                             ? renderTransportListItem(transport, true)
@@ -139,7 +138,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     <div className="relative mt-12" data-testid={TEST_IDENTIFIER + 'payment'}>
                         {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" />}
 
-                        <Heading type="h3">{t('Choose payment')}</Heading>
+                        <div className="h3 mb-3">{t('Choose payment')}</div>
 
                         <ul>
                             {payment
@@ -149,7 +148,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
                         {payment?.type === 'goPay' && payment.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT' && (
                             <>
-                                <Heading type="h3">{t('Choose your bank')}</Heading>
+                                <div className="h3 mb-3">{t('Choose your bank')}</div>
                                 {getGoPaySwiftsResult.data?.GoPaySwifts.map((goPaySwift) => (
                                     <Radiobutton
                                         key={goPaySwift.swift}

@@ -1,5 +1,4 @@
 import { useContactForm, useContactFormMeta } from './contactFormMeta';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form } from 'components/Forms/Form/Form';
@@ -51,7 +50,7 @@ export const ContactContent: FC = () => {
         <>
             <div className="mb-8">
                 <Webline>
-                    <Heading type="h1">{t('Write to us')}</Heading>
+                    <h1 className="mb-3">{t('Write to us')}</h1>
                     {data?.settings?.contactFormMainText !== undefined && (
                         <div className="mb-4" dangerouslySetInnerHTML={{ __html: data.settings.contactFormMainText }} />
                     )}

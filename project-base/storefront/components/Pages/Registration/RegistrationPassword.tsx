@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
@@ -14,7 +13,7 @@ export const RegistrationPassword: FC = () => {
 
     return (
         <>
-            <Heading type="h3">{t('Create a password')}</Heading>
+            <div className="h3 mb-3">{t('Create a password')}</div>
             <FormColumn>
                 <PasswordInputControlled
                     control={formProviderMethods.control}

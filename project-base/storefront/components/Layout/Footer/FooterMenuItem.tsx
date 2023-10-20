@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleNotBlogArticleFragmentApi } from 'graphql/generated';
 
 type FooterMenuItemProps = {
@@ -9,9 +8,7 @@ type FooterMenuItemProps = {
 
 export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
     <>
-        <Heading className="text-center font-bold uppercase text-white lg:text-left" type="h3">
-            {title}
-        </Heading>
+        <h3 className="mb-3 text-center uppercase text-white lg:text-left">{title}</h3>
 
         <ul className="flex flex-col gap-1 lg:gap-4">
             {items.map((item) => (

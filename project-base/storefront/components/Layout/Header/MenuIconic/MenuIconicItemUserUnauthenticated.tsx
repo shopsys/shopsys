@@ -1,5 +1,4 @@
 import { MenuIconicItemLink } from './MenuIconicElements';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { UserIcon } from 'components/Basic/Icon/IconsSvg';
 import { Login } from 'components/Blocks/Popup/Login/Login';
 import useTranslation from 'next-translate/useTranslation';
@@ -26,7 +25,7 @@ export const MenuIconicItemUserUnauthenticated: FC = ({ dataTestId }) => {
 
             {isLoginPopupOpened && (
                 <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
-                    <Heading type="h2">{t('Login')}</Heading>
+                    <div className="h2 mb-3">{t('Login')}</div>
                     <Login />
                 </Popup>
             )}

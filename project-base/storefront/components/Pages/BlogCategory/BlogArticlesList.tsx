@@ -1,6 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
 import { ListedBlogArticleFragmentApi } from 'graphql/generated';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -43,9 +42,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                             href={blogArticle.link}
                             type="blogArticle"
                         >
-                            <Heading className="group-hover:text-primary" type="h2">
-                                {blogArticle.name}
-                            </Heading>
+                            <h2 className="mb-3 group-hover:text-primary">{blogArticle.name}</h2>
                         </ExtendedNextLink>
 
                         {!!blogArticle.perex && <p className="mb-3 text-base">{blogArticle.perex}</p>}

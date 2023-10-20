@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { IconImage } from 'components/Basic/Icon/IconImage';
 import { InstagramIcon, YoutubeIcon } from 'components/Basic/Icon/IconsSvg';
 import useTranslation from 'next-translate/useTranslation';
@@ -8,9 +7,7 @@ export const FooterContact: FC = () => {
 
     return (
         <>
-            <Heading className="text-center uppercase text-white" type="h4">
-                {t('Follow Us')}
-            </Heading>
+            <div className="h3 mb-3 text-center uppercase text-white">{t('Follow Us')}</div>
 
             <div className="flex h-24 w-full max-w-xs overflow-hidden rounded border-2 border-greyLight">
                 <FooterContactSocialsItem href="#" title="Instagram">

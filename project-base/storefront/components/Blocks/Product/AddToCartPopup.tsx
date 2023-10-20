@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { CheckmarkIcon } from 'components/Basic/Icon/IconsSvg';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
@@ -31,9 +30,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, added
         <Popup hideCloseButton className="w-11/12 max-w-2xl" onCloseCallback={onCloseCallback}>
             <div className="mb-4 flex w-full items-center md:mb-6">
                 <CheckmarkIcon className="mr-4 w-7 text-greenDark" />
-                <Heading className="mb-0 text-xl normal-case text-primary" type="h2">
-                    {t('Great choice! We have added your item to the cart')}
-                </Heading>
+                <div className="h2 text-primary">{t('Great choice! We have added your item to the cart')}</div>
             </div>
 
             <div
