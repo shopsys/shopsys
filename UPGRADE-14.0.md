@@ -80,6 +80,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   set the custom logger to the Frontend API ([#2882](https://github.com/shopsys/shopsys/pull/2882))
     -   you can set `shopsys.frontend_api.validation_logged_as_error` parameter to `true` to log validation errors with log level ERROR instead of INFO
     -   see #project-base-diff to update your project
+-   start formatting markdown files with Prettier ([#2892](https://github.com/shopsys/shopsys/pull/2892))
+    -   see #project-base-diff to update your project
+    -   reformat your markdown files by running `php phing standards-fix` in php-fpm container
+    -   `standards(-fix)` targets runs newly added `markdown-check/markdown-fix` target, so if you have completely changed the `standards(-fix)` target, remember to add those into your `standards(-fix)` target
 
 ### Storefront
 
@@ -122,4 +126,3 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   for you to get the most out of this PR, you should check `error-handling.md` in SF docs, which is a direct result of this PR
     -   it contains explanations and tips on how to improve error handling in your SF code as well
     -   for not-discussed changes, see #project-base-diff to update your project
-
