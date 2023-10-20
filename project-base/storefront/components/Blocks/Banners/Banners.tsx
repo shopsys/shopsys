@@ -1,5 +1,5 @@
-import { SkeletonModuleBanners } from 'components/Blocks/Skeleton/SkeletonModuleBanners';
 import { BannersSlider } from './BannersSlider';
+import { SkeletonModuleBanners } from 'components/Blocks/Skeleton/SkeletonModuleBanners';
 import { useSliderItemsQueryApi } from 'graphql/generated';
 
 const TEST_IDENTIFIER = 'blocks-banners';

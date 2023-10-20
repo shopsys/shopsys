@@ -1,5 +1,5 @@
-import { SkeletonModulePromotedCategories } from 'components/Blocks/Skeleton/SkeletonModulePromotedCategories';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
+import { SkeletonModulePromotedCategories } from 'components/Blocks/Skeleton/SkeletonModulePromotedCategories';
 import { usePromotedCategoriesQueryApi } from 'graphql/generated';
 
 export const PromotedCategories: FC = () => {

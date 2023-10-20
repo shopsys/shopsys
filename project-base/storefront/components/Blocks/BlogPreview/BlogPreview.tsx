@@ -1,8 +1,8 @@
-import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
 import { BlogPreviewMain } from './BlogPreviewMain';
 import { BlogPreviewSide } from './BlogPreviewSide';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowRightIcon } from 'components/Basic/Icon/IconsSvg';
+import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
 import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';

@@ -1,5 +1,5 @@
-import { SkeletonModulePromotedProducts } from 'components/Blocks/Skeleton/SkeletonModulePromotedProducts';
 import { ProductsSlider } from './ProductsSlider';
+import { SkeletonModulePromotedProducts } from 'components/Blocks/Skeleton/SkeletonModulePromotedProducts';
 import { usePromotedProductsQueryApi } from 'graphql/generated';
 import { GtmProductListNameType } from 'gtm/types/enums';
 
