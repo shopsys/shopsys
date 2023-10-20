@@ -195,4 +195,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   fix Comparison for not logged in users ([#2905](https://github.com/shopsys/shopsys/pull/2905))
     -   unified code for Comparison and Wishlist
     -   refactored Zustand store to use only one store (User Store) for all cartUuid, wishlistUuid and comparisonUuid
+-   search on search page is now not called if search query is empty ([#2895](https://github.com/shopsys/shopsys/pull/2895))
     -   see #project-base-diff to update your project
