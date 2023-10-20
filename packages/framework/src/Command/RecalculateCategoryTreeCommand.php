@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use RuntimeException;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -36,6 +37,8 @@ class RecalculateCategoryTreeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        throw new RuntimeException('Testing...');
+        /** @phpstan-ignore-next-line */
         $style = new SymfonyStyle($input, $output);
 
         $style->title('Recalculating category nested set');
