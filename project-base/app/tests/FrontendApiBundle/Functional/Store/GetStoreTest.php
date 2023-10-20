@@ -93,6 +93,9 @@ class GetStoreTest extends GraphQlTestCase
         }
     }
 
+    /**
+     * @group multidomain
+     */
     public function testStoreOnSecondDomainIsNotAvailable(): void
     {
         /** @var \App\Model\Store\Store $storeOnSecondDomain */

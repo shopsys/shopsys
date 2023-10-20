@@ -158,8 +158,8 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2');
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $parameterValueRed = $this->getParameterValue($locale, t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#000000');
-            $this->addParameterValueToProduct($product2, $parameterColor, $parameterValueRed);
+            $parameterValueBlack = $this->getParameterValue($locale, t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#000000');
+            $this->addParameterValueToProduct($product2, $parameterColor, $parameterValueBlack);
             $parameterValueMetal = $this->getParameterValue($locale, t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
             $this->addParameterValueToProduct($product2, $parameterMaterial, $parameterValueMetal);
         }
@@ -170,8 +170,8 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterValueRed = $this->getParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
             $this->addParameterValueToProduct($product3, $parameterColor, $parameterValueRed);
-            $parameterValueMetal = $this->getParameterValue($locale, t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
-            $this->addParameterValueToProduct($product3, $parameterMaterial, $parameterValueMetal);
+            $parameterValuePlastic = $this->getParameterValue($locale, t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
+            $this->addParameterValueToProduct($product3, $parameterMaterial, $parameterValuePlastic);
         }
 
         /** @var \App\Model\Product\Product $product4 */
@@ -180,8 +180,8 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterValueRed = $this->getParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
             $this->addParameterValueToProduct($product4, $parameterColor, $parameterValueRed);
-            $parameterValueMetal = $this->getParameterValue($locale, t('wood', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
-            $this->addParameterValueToProduct($product4, $parameterMaterial, $parameterValueMetal);
+            $parameterValueWood = $this->getParameterValue($locale, t('wood', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
+            $this->addParameterValueToProduct($product4, $parameterMaterial, $parameterValueWood);
         }
 
         $this->createSliderParameterWithValuesAndAssignThemToProducts();

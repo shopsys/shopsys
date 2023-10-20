@@ -8,8 +8,6 @@ use App\Model\Mail\MailTemplate;
 use App\Model\Mail\MailTemplateData;
 use App\Model\Order\Mail\OrderMail;
 use App\Model\Order\Status\OrderStatus;
-use DateTimeZone;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -77,16 +75,12 @@ class OrderMailTest extends TransactionFunctionalTestCase
             OrderUrlGenerator::class,
         )->disableOriginalConstructor()->getMock();
 
-        $defaultTimeZone = new DateTimeZone('Europe/Prague');
-        $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs', $defaultTimeZone);
-        $domain = new Domain([$domainConfig], $settingMock);
-
         $orderMail = new OrderMail(
             $settingMock,
             $domainRouterFactoryMock,
             $twigMock,
             $orderItemPriceCalculationMock,
-            $domain,
+            $this->domain,
             $priceExtensionMock,
             $dateTimeFormatterExtensionMock,
             $orderUrlGeneratorMock,
