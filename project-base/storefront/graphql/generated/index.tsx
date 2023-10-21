@@ -3584,22 +3584,7 @@ export type SearchProductsQueryVariablesApi = Exact<{
 export type SearchProductsQueryApi = { __typename?: 'Query', products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: ProductOrderingModeEnumApi | null, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }> | null, parameters: Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: string | null, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: number | null, isSelectable: boolean, unit: { __typename: 'Unit', name: string } | null }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean }, edges: Array<{ __typename: 'ProductEdge', node: { __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | null } | null> | null } };
 
 export type RegistrationMutationVariablesApi = Exact<{
-  firstName: Scalars['String']['input'];
-  lastName: Scalars['String']['input'];
-  email: Scalars['String']['input'];
-  password: Scalars['Password']['input'];
-  telephone: Scalars['String']['input'];
-  street: Scalars['String']['input'];
-  city: Scalars['String']['input'];
-  postcode: Scalars['String']['input'];
-  country: Scalars['String']['input'];
-  companyCustomer: Scalars['Boolean']['input'];
-  companyName: InputMaybe<Scalars['String']['input']>;
-  companyNumber: InputMaybe<Scalars['String']['input']>;
-  companyTaxNumber: InputMaybe<Scalars['String']['input']>;
-  newsletterSubscription: Scalars['Boolean']['input'];
-  previousCartUuid: InputMaybe<Scalars['Uuid']['input']>;
-  lastOrderUuid: InputMaybe<Scalars['Uuid']['input']>;
+  input: RegistrationDataInputApi;
 }>;
 
 
@@ -6047,10 +6032,8 @@ export function useSearchProductsQueryApi(options: Omit<Urql.UseQueryArgs<Search
   return Urql.useQuery<SearchProductsQueryApi, SearchProductsQueryVariablesApi>({ query: SearchProductsQueryDocumentApi, ...options });
 };
 export const RegistrationMutationDocumentApi = gql`
-    mutation RegistrationMutation($firstName: String!, $lastName: String!, $email: String!, $password: Password!, $telephone: String!, $street: String!, $city: String!, $postcode: String!, $country: String!, $companyCustomer: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $newsletterSubscription: Boolean!, $previousCartUuid: Uuid, $lastOrderUuid: Uuid) {
-  Register(
-    input: {firstName: $firstName, lastName: $lastName, email: $email, password: $password, telephone: $telephone, street: $street, city: $city, postcode: $postcode, country: $country, companyCustomer: $companyCustomer, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, newsletterSubscription: $newsletterSubscription, cartUuid: $previousCartUuid, lastOrderUuid: $lastOrderUuid}
-  ) {
+    mutation RegistrationMutation($input: RegistrationDataInput!) {
+  Register(input: $input) {
     tokens {
       ...TokenFragments
     }
