@@ -152,3 +152,34 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   add equal spacing to the Category page ([#2900](https://github.com/shopsys/shopsys/pull/2900))
     -   see #project-base-diff to update your project
+-   auth (loading) improvements ([#2897](https://github.com/shopsys/shopsys/pull/2897))
+
+    -   `window.location.href` assignments were replaced with `router` operations because of unexpected behavior, where the current URL (thus also properties of the router) changed even before the transition, which caused useEffects and some other conditions to re-run and potentially fails
+    -   if you manipulate `window.location` in your code, you should remove it and use `router` instead
+    -   loading states for all auth operations (login, logout, registration) are now implemented, so if you have some custom states, you should also handle these
+    -   optimistic display of skeletons was implemented for `logout-loading` and both `registration-loading...`states
+
+        -   this was possible as we know that the user is going to be redirected to homepage
+        -   however, since we do not know the page type of the redirect destination after login, we do not display any skeleton there
+        -   if you always know the destination of redirect after login, chances are you can improve the UX by implementing the following changes:
+
+        ```tsx
+        // inside useAuth.tsx login
+        updateAuthLoadingState(
+            loginResult.data.Login.showCartMergeInfo
+                ? "login-loading-with-cart-modifications"
+                : "login-loading"
+        );
+
+        // add this line to start showing the skeleton before the redirect
+        updatePageLoadingState({
+            isPageLoading: true,
+            redirectPageType: "my-page-type",
+        });
+
+        if (rewriteUrl) {
+            router.replace(rewriteUrl).then(() => router.reload());
+        } else {
+            router.reload();
+        }
+        ```
