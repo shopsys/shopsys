@@ -254,7 +254,7 @@ export const useHandleTransportAndPaymentLoadingAndRedirect = (
     const router = useRouter();
     const currentCart = useCurrentCart();
     const isLoading = currentCart.isFetching || currentCart.isLoading;
-    const loginLoading = usePersistStore((s) => s.loginLoading);
+    const authLoading = usePersistStore((s) => s.authLoading);
 
     useEffect(() => {
         if (isLoading || currentCart.isCartEmpty) {
@@ -272,7 +272,7 @@ export const useHandleTransportAndPaymentLoadingAndRedirect = (
         }
     }, [initiatedLoading, isLoading, currentCart.isCartEmpty]);
 
-    return areTransportsLoading || isLoadingTransportAndPaymentFromLastOrder || isCartLoading || !!loginLoading;
+    return areTransportsLoading || isLoadingTransportAndPaymentFromLastOrder || isCartLoading || !!authLoading;
 };
 
 export const useLoadTransportAndPaymentFromLastOrder = (

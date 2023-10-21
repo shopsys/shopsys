@@ -12,13 +12,14 @@ import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
 import { setTokensToCookies } from 'helpers/auth/tokens';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import { showErrorMessage } from 'helpers/toasts';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationAfterOrderFormType } from 'types/form';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
@@ -36,6 +37,7 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
+    const updateAuthLoadingState = usePersistStore((s) => s.updateAuthLoadingState);
 
     const onRegistrationSubmitHandler: SubmitHandler<RegistrationAfterOrderFormType> = async (data) => {
         const registerResult = await register({
@@ -52,7 +54,13 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
             const refreshToken = registerResult.data.Register.tokens.refreshToken;
 
             setTokensToCookies(accessToken, refreshToken);
-            showSuccessMessage(t('Your account has been created and you are logged in now'));
+
+            updateAuthLoadingState(
+                registerResult.data.Register.showCartMergeInfo
+                    ? 'registration-loading-with-cart-modifications'
+                    : 'registration-loading',
+            );
+
             onGtmSendFormEventHandler(GtmFormType.registration);
 
             window.location.href = '/';

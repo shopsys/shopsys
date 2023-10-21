@@ -1,5 +1,5 @@
+import { AuthLoadingSlice, createAuthLoadingSlice } from './slices/createAuthLoadingSlice';
 import { ContactInformationSlice, createContactInformationSlice } from './slices/createContactInformationSlice';
-import { LoginLoadingSlice, createLoginLoadingSlice } from './slices/createLoginLoadingSlice';
 import { PacketerySlice, createPacketerySlice } from './slices/createPacketerySlice';
 import { UserConsentSlice, createUserConsentSlice } from './slices/createUserConsentSlice';
 import { createUserSlice, UserSlice } from './slices/createUserSlice';
@@ -7,7 +7,7 @@ import { WishlistSlice, createWishlistSlice } from './slices/createWishlistSlice
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type PersistStore = LoginLoadingSlice &
+type PersistStore = AuthLoadingSlice &
     UserSlice &
     ContactInformationSlice &
     PacketerySlice &
@@ -17,7 +17,7 @@ type PersistStore = LoginLoadingSlice &
 export const usePersistStore = create<PersistStore>()(
     persist(
         (...store) => ({
-            ...createLoginLoadingSlice(...store),
+            ...createAuthLoadingSlice(...store),
             ...createUserSlice(...store),
             ...createContactInformationSlice(...store),
             ...createPacketerySlice(...store),

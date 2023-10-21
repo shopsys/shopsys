@@ -365,6 +365,7 @@
     "There was an error while deleting your delivery address": "Při mazání dodací adresy došlo k chybě",
     "There was an error while removing the promo code from the order.": "Během odebírání slevového kupónu z objednávky se vyskytla chyba.",
     "There was an error while setting your delivery address as the default one": "Při nastavování výchozí dodací adresy došlo k chybě",
+    "There was an error with you registration. Please try again later.": "Během vaší registrace se vyskytla chyba. Zkuste to znovu později.",
     "This field is required": "Toto pole je povinné",
     "This item can no longer be purchased": "Tuto položku již nelze zakoupit",
     "This item is available immediately in {{ count }} stores_one": "Můžete mít ihned na {{ count }} prodejně",

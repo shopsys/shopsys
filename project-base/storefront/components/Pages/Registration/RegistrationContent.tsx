@@ -15,7 +15,6 @@ import { setTokensToCookies } from 'helpers/auth/tokens';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -33,6 +32,7 @@ export const RegistrationContent: FC = () => {
     const [formProviderMethods, defaultValues] = useRegistrationForm();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
+    const updateAuthLoadingState = usePersistStore((s) => s.updateAuthLoadingState);
 
     const onRegistrationHandler = useCallback<SubmitHandler<RegistrationFormType>>(
         async (data) => {
@@ -51,11 +51,13 @@ export const RegistrationContent: FC = () => {
                 const refreshToken = registerResult.data.Register.tokens.refreshToken;
 
                 setTokensToCookies(accessToken, refreshToken);
-                showSuccessMessage(formMeta.messages.successAndLogged);
 
-                if (registerResult.data.Register.showCartMergeInfo === true) {
-                    showInfoMessage(t('Your cart has been modified. Please check the changes.'));
-                }
+                updateAuthLoadingState(
+                    registerResult.data.Register.showCartMergeInfo
+                        ? 'registration-loading-with-cart-modifications'
+                        : 'registration-loading',
+                );
+
                 onGtmSendFormEventHandler(GtmFormType.registration);
 
                 window.location.href = '/';

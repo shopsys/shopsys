@@ -351,6 +351,7 @@
     "There was an error while deleting your delivery address": "There was an error while deleting your delivery address",
     "There was an error while removing the promo code from the order.": "There was an error while removing the promo code from the order.",
     "There was an error while setting your delivery address as the default one": "There was an error while setting your delivery address as the default one",
+    "There was an error with you registration. Please try again later.": "There was an error with you registration. Please try again later.",
     "This field is required": "This field is required",
     "This item can no longer be purchased": "This item can no longer be purchased",
     "This item is available immediately in {{ count }} stores_one": "This item is available immediately in {{ count }} store",
