@@ -41,7 +41,7 @@ Storing the dates in the database as a DateTime type prevents it.
 
 ## Filling the dates programmatically
 
-When storing dates in different way than using application forms (e.g. from 3rd party application), it is necessary to convert them into UTC timezone.
+When storing dates in different way than using application forms (e.g., from 3rd party application), it is necessary to convert them into UTC timezone.
 This can be done like this:
 ```php
 $dateFormOtherSource = '2020-08-24 18:30:02';

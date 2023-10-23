@@ -12,4 +12,4 @@ then you need your own, custom entities.
 
 ## Cookbook
 
-For step by step instructions on how to add a new entity to your project, follow ["Adding a new entity" cookbook](../cookbook/adding-a-new-entity.md).
+For step-by-step instructions on how to add a new entity to your project, follow ["Adding a new entity" cookbook](../cookbook/adding-a-new-entity.md).

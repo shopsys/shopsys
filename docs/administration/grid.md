@@ -2,53 +2,53 @@
 
 ## Basics
 Grid is a component that displays data in a customizable table view in the administration.
-It helps to present data to the user, can paginate the results, allows ordering by some column, allows setting row priority with row rearranging, supports actions on the row level and mass actions in general.
+It helps to present data to the user, can paginate the results, allows ordering by some columns, allows setting row priority with row rearranging, and supports actions on the row level and mass actions in general.
 
 ## Features
 * Pagination
 * Sorting by columns
 * Drag&Drop (Sortable)
 * Multiple Drag&Drop (Sortable across multiple grid instances)
-* Actions (e.g. deletion of an entity in a row)
+* Actions (e.g., deletion of an entity in a row)
 * Bulk Actions
 * Inline editing
 * Extendable template
 * Support for multiple data sources
 
 ## Philosophy
-Each grid should be created with its own factory in which a whole grid is configured.
+Each grid should be created with its own factory configuring a whole grid.
 This factory can use `GridFactory` class from `shopsys/framework` package to create a basic grid object, which will be adjusted.
 
-Grid uses object implementing `DataSourceInterface` to obtain data to be rendered.
+Grid uses an object implementing `DataSourceInterface` to obtain data to be rendered.
 Read more about various data sources in the [Grid data sources](../administration/grid-data-sources.md) article.
 
 ## Configurations
 - **Display only**
     - When you just need to display some data to the user.
-    - e.g. `Marketing > XML Feeds`
+    - e.g., `Marketing > XML Feeds`
 - **Display with action**
     - When you need to perform some actions on the grid entries, such as deletion.
-    - e.g. `Marketing > Email newsletter`
+    - e.g., `Marketing > Email newsletter`
 - **Inline editable**
     - When the entities in the grid are simple enough and do not need a separate page for editing, you can edit them directly in the grid via AJAX.
-    - e.g. `Pricing > Promo codes`
+    - e.g., `Pricing > Promo codes`
 - **Drag&Drop**
     - When you need to set some ordering of your entities manually.
-    - e.g.`Marketing > Slider pages`
+    - e.g., `Marketing > Slider pages`
 - **Multiple Drag&Drop**
     - When you need to set some ordering of your entities manually among multiple sections.
-    - e.g. `Marketing > Articles overview`
+    - e.g., `Marketing > Articles overview`
 - **Selectable**
     - when you need to select entries from the grid and apply some bulk actions on them.
-    - e.g. `Products > Products overview`
+    - e.g., `Products > Products overview`
 
 ## Customization of grid rendering
 It is really easy to customize the appearance of your grid by overriding suitable Twig blocks of the default Grid template.
-Read the [separate article](../administration/grid-rendering-customization.md) to get more information.
+Read the [separate article](../administration/grid-rendering-customization.md) for more information.
 
 ## Extending an existing grid
-Usually, the grids are created in their factories (e.g. `\Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory`)
-in `create()` method. If you need to add a new column, in most cases it should be sufficient to override the method:
+Usually, the grids are created in their factories (e.g., `\Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory`)
+in `create()` method. If you need to add a new column, in most cases, it should be sufficient to override the method:
 ```php
 namespace App\Grid\Payment;
 
@@ -70,9 +70,9 @@ and then set your class as an alias for the original one in `services.yaml` conf
 Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory: '@App\Grid\PaymentGridFactory'
 ```
 
-However, not all grids have their own factories, sometimes they are created in protected method of a controller, and sometimes you may need to perform some more advanced customizations (e.g. change the data source for the grid).
-In such a case, you need to fork the corresponding method and rewrite it to suit your needs.
-We are planning some refactorings to enable you easier and unified way of grid customizations.
+However, not all grids have their own factories. Sometimes, they are created in a protected controller method, and sometimes, you may need to perform more advanced customizations (e.g., change the data source for the grid).
+In such a case, you must fork the corresponding method and rewrite it to suit your needs.
+We are planning some refactorings to enable easier and unified grid customizations.
 
 ### Reordering columns
 If you need to reorder columns in the existing grid, you may use the `reorderColumns()` method.
@@ -99,7 +99,7 @@ class PaymentGridFactory extends BasePaymentGridFactory
 ```
 
 Grid columns will be rendered in the order they are defined in the `reorderColumns()` method.
-If any column is missing in the `reorderColumns` method call, it will be rendered after mentioned columns in the original order. 
+If any column is missing in the `reorderColumns` method call, it will be rendered after the mentioned columns in the original order.
 
 ## Further reading - cookbooks
 If you want to implement a new grid, you can follow the cookbooks:

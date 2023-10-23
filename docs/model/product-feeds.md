@@ -39,9 +39,9 @@ When in doubt, you can take a look at the [already implemented product feeds](ht
 * to use a different Twig template you can either [override the template](https://symfony.com/doc/3.3/templating/overriding.html)
 or you can extend the service tagged as `shopsys.product_feed` and override the `getTemplateFilepath` method in it
 * you can use a different `FeedItemInterface` implementation by extending its factory service
-(eg. [GoogleFeedItemFactory](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFactory.php))
+(e.g., [GoogleFeedItemFactory](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFactory.php))
 * you can even change the way the underlying Product entities are fetched from the database by extending the feed's product repository
-(eg. [GoogleProductRepository](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/Product/GoogleProductRepository.php))
+(e.g., [GoogleProductRepository](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/Product/GoogleProductRepository.php))
 * when a more complicated customization is needed, extending feed item facade service and overwriting the `getItems` is the way to go
-(eg. [GoogleFeedItemFacade](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFacade.php)),
+(e.g., [GoogleFeedItemFacade](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFacade.php)),
 it should allow you to provide your own way of getting the right items for your feed

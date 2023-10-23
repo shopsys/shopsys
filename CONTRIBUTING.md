@@ -23,8 +23,8 @@ php phing standards tests tests-acceptance
 
 Your code may not infringe the copyrights of any third party.
 If you are changing a composer's dependency in composer.json or you are changing the npm dependencies in package.json, you need to reflect this change into a list of [Open Source License Acknowledgements and Third Party Copyrights](./open-source-license-acknowledgements-and-third-party-copyrights.md).
-Apply the same procedure if you make the changes in Dockerfile or docker-compose.yml files.
+Apply the same procedure if you make the changes in the Dockerfile or docker-compose.yml files.
 
-These rules ensure that the code will remain consistent and the project is maintainable in the future.
+These rules ensure that the code will remain consistent and that the project is maintainable in the future.
 
 *Tip: Read more about automatic checks in [Console Commands for Application Management (Phing Targets)](https://docs.shopsys.com/en/latest/introduction/console-commands-for-application-management-phing-targets/) and [Running Acceptance Tests](https://docs.shopsys.com/en/latest/introduction/running-acceptance-tests/).*

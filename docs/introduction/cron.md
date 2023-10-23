@@ -45,7 +45,7 @@ parameters:
 
 That means, if the time needed to run all planned cron modules is higher than `240 seconds`, not all cron modules will be run in a current iteration.
 That's usually not a problem as long-running cron modules are not executed every iteration set in `run_every_min` with default to `5 minutes`,
-but in some cases, the overall time of the "every 5 minutes" cron modules can be higher (for example considerable amount of products to export to Elasticsearch).
+but in some cases, the overall time of the "every 5 minutes" cron modules can be higher (for example, considerable amount of products to export to Elasticsearch).
 Then it's possible, some cron modules will never be run.
 
 It's crucial to monitor your crons and, if necessary update their periodicity and timeout or split them into [multiple Cron Instances](#multiple-cron-instances).

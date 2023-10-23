@@ -58,7 +58,7 @@ Setting the properties of a domain entity is always done via the main entity its
 Basically, that means only the main entity knows about the existence of domain entities.
 The rest of the application uses the main entity as a proxy to the domain-specific properties.
 
-Sometimes you need to find all domain entities programmatically (eg. in [`CreateDomainsDataCommand`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Command/CreateDomainsDataCommand.php)).
+Sometimes you need to find all domain entities programmatically (e.g., in [`CreateDomainsDataCommand`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Command/CreateDomainsDataCommand.php)).
 You can use the [`MultidomainEntityClassFinderFacade`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Domain/Multidomain/MultidomainEntityClassFinderFacade.php) which searches for all registered entities that have a composite identifier including a `domainId` field.
 Exceptions (both for including and excluding particular class) can be provided via an implementation of [`MultidomainEntityClassProviderInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Domain/Multidomain/MultidomainEntityClassProviderInterface.php).
 You should provide your own implementation if you need to alter the list of domain entities (otherwise, [`MultidomainEntityClassProvider`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/MultidomainEntityClassProvider.php) will be used).
@@ -301,7 +301,7 @@ The entity data can be also created from an entity, and propagated to controller
 Entity data have all attributes public and is mutable.
 Entity data have a constructor without parameters and all parameters are initialized in the constructor.
 Entity data can contain methods for getting part of it's data
-(eg. [`OrderData`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Order/OrderData.php), method `getNewItemsWithoutTransportAndPayment`).
+(e.g., [`OrderData`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Order/OrderData.php), method `getNewItemsWithoutTransportAndPayment`).
 
 ### Example
 
@@ -376,7 +376,7 @@ If you need to transfer boolean data, we recommend using `bool` with a default v
 
 If you need to transfer arrays, use PHPDoc annotation `string[]`, `int[]`, `float[]`, `bool[]` and initialize an empty array in the constructor.
 
-If you care about array keys, use a name of the key in the property name in form `propertyByKey`. Eg. [`TransportData::$pricesByCurrencyId`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Transport/TransportData.php).
+If you care about array keys, use the name of the key in the property name in form `propertyByKey` e.g., [`TransportData::$pricesByCurrencyId`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Transport/TransportData.php).
 
 #### Unknown types
 
@@ -389,13 +389,13 @@ The PHPDoc annotation is an `array` in this case because plugins can contain any
 
 It is common that you need to transfer an entity to form or other parts of the system.
 
-If you need to transfer one entity, use PHPDoc annotation `entity|null`, eg. `\Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null` in [`TransportData::$vat`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Transport/TransportData.php).
-If you need to transfer a collection of entities, use PHPDoc annotation `entity[]` and initialize the array in the constructor, eg. `\Shopsys\FrameworkBundle\Model\Payment\Payment[]` in [`TransportData::$payments`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Transport/TransportData.php).
+If you need to transfer one entity, use PHPDoc annotation `entity|null`, e.g., `\Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null` in [`TransportData::$vat`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Transport/TransportData.php).
+If you need to transfer a collection of entities, use PHPDoc annotation `entity[]` and initialize the array in the constructor, e.g., `\Shopsys\FrameworkBundle\Model\Payment\Payment[]` in [`TransportData::$payments`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Transport/TransportData.php).
 
 #### Money
 
 To transfer monetary values (*prices, account balances, discount amounts, price limits etc.*) you should always use `\Shopsys\FrameworkBundle\Component\Money\Money` (optionally nullable or as an array).
-You may initialize a default value in the constructor or in the data factory (eg. with `Money::zero()`).
+You may initialize a default value in the constructor or in the data factory (e.g., with `Money::zero()`).
 
 You can read more about the `Money` class in [How to Work with Money](../model/how-to-work-with-money.md).
 
@@ -414,7 +414,7 @@ An example of such property is a `seoH1s` in the `BrandData` example above.
 Data factory has to create an item in this array for each domain ID, otherwise domain entities would not be created correctly (a domain entity should exist for each domain, even with null values).
 
 Therefore the multidomain field has PHPDoc annotation `string[]|null[]` or `int[]|null[]`.
-For boolean multidomain properties, we recommend using default value filled in the factory and PHPDoc annotation `bool[]` only, eg. property [`TransportData::$enabled`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Transport/TransportData.php).
+For boolean multidomain properties, we recommend using default value filled in the factory and PHPDoc annotation `bool[]` only, e.g., property [`TransportData::$enabled`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Transport/TransportData.php).
 
 #### Multilanguage
 
@@ -426,7 +426,7 @@ Therefore the multidomain field has PHPDoc annotation `string[]|null[]`.
 #### Data objects
 
 You can use even data object within your data object when you need composition.
-Eg. [`CustomerData`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Customer/CustomerData.php) or [`OrderData`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Order/OrderData.php) (contains `OrderItemData`).
+e.g., [`CustomerData`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Customer/CustomerData.php) or [`OrderData`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Order/OrderData.php) (contains `OrderItemData`).
 
 ## Entity data factory
 
@@ -435,7 +435,7 @@ The framework must allow using extended entity data and this problem is solved, 
 We enforce using factories by our coding standard sniff [`ObjectIsCreatedByFactorySniff`](https://github.com/shopsys/shopsys/blob/master/packages/coding-standards/src/Sniffs/ObjectIsCreatedByFactorySniff.php).
 
 Data factory can also fill default values
-(e.g. [`PaymentDataFactory`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Payment/PaymentDataFactory.php) fills default VAT for new payment objects).
+(e.g., [`PaymentDataFactory`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Payment/PaymentDataFactory.php) fills default VAT for new payment objects).
 
 ### Example
 

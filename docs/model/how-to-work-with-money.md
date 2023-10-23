@@ -1,13 +1,13 @@
 # How to Work with Money
 
-Money is a very important concept for every ecommerce project.
+Money is a very important concept for every e-commerce project.
 In Shopsys Platform, all monetary values (*prices, account balances, discount amounts, price limits etc.*) are represented by an instance of [the `Money` class](#money-class).
 
 This approach has several advantages:
 
 - it avoids problems with floating point number calculations and comparisons (see [official PHP documentation](http://php.net/manual/en/language.types.float.php) for details)
 - allows easy-to-use interfaces with consistent type-hinting so you can be sure what type of value you should be using
-- prevents accidental conversion to unexpected types (which may be problematic eg. when using the `===` operator)
+- prevents accidental conversion to unexpected types (which may be problematic e.g., when using the `===` operator)
 - makes the application design clearer and future changes easier
 
 **Table of Contents:**
@@ -29,7 +29,7 @@ So you can create a monetary value from `1/3` in the scale of 2 (`0.33`), or in 
 But it will never be exactly one third as it is inexpressible using a finite decimal.
 
 The money concept keeps the computation and comparisons precise up to the defined scale.
-Eg. if you have `1/3` with the scale of 4 (`0.3333`) and multiply it by `3` you'll get `0.9999`, not `1`.
+E.g., if you have `1/3` with the scale of 4 (`0.3333`) and multiply it by `3` you'll get `0.9999`, not `1`.
 You can get around it using [rounding](#rounding).
 
 The scale has to be specified during [rounding](#rounding), [creating from floats](#construction) and [division](#computation).
@@ -69,14 +69,14 @@ For addition and subtraction, the other parameter has to be also a `Money` insta
 For multiplication and division, the other parameter has to be an integer or a numeric string (as they are able to represent decimal numbers precisely), not a float.
 
 The scale (number of decimal places) of the result is assigned automatically to all operations except division, keeping the results as precise as possible.
-Results of a division may be inexpressible with a finite decimal (eg. 1 / 3 = 0.3333...), so it's up to the user to specify the requested scale.
+Results of a division may be inexpressible with a finite decimal (e.g., 1 / 3 = 0.3333...), so it's up to the user to specify the requested scale.
 
 - scale of the result of `add` and `subtract` is the *maximal scale* of both money values
 - scale of the result of `multiply` is the *sum of scales* of both money values
 - scale of the result of `divide` must be *explicitly specified*, the last decimal place will be rounded to minimize the error
 
 !!! note
-    The scale of the money amount is always preserved - `getAmount` will use all decimal places of its scale (eg. zero money with scale 6 would return `0.000000`).
+    The scale of the money amount is always preserved - `getAmount` will use all decimal places of its scale (e.g., zero money with scale 6 would return `0.000000`).
 
 ### Rounding
 
@@ -130,7 +130,7 @@ In Shopsys Platform, the default value of the `currency` option is `false` inste
 ### Form Constraints
 
 There are two form constraints to be used specifically with the `MoneyType` form fields.
-Because of model data transformation, you cannot use constraints that are validating scalar values (eg. `GreaterThan`).
+Because of model data transformation, you cannot use constraints that are validating scalar values (e.g., `GreaterThan`).
 
 #### NotNegativeMoneyAmount
 
@@ -370,7 +370,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 $result = $em->createQuery('SELECT AVG(o.totalPriceWithVat) AS averagePriceWithVat FROM ' . Order::class . ' o')
     ->getSingleResult();
 
-// The result of a function is a decimal string (eg. '19590.772727272727') and it must be converted manually
+// The result of a function is a decimal string (e.g., '19590.772727272727') and it must be converted manually
 $money = Money::create($result['averagePriceWithVat']);
 ```
 

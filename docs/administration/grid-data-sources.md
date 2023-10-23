@@ -5,7 +5,7 @@ As a data source, the [Grid Component](./grid.md) requires an implementation of 
 You can find 4 implementations of the interface in Shopsys Platform.
 
 ## [`QueryBuilderDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/QueryBuilderDataSource.php)
-Most commonly used data source that is created from Doctrine Query Builder.
+The most commonly used data source is created from Doctrine Query Builder.
 ### Example of usage
 ```php
 /** @var Doctrine\ORM\EntityManagerInterface $entityManager */
@@ -20,7 +20,7 @@ $dataSource = new QueryBuilderDataSource($queryBuilder, 'p.id');
 
 ## [`QueryBuilderWithRowManipulatorDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/QueryBuilderWithRowManipulatorDataSource.php)
 This data source is created from query builder as well, and on top of it, it allows to define a callback that is applied on each row so additional data can be set this way,
-e.g. you can add some calculated price into the data set.
+e.g., you can add some calculated price into the data set.
 ### Example of usage
 ```php
 /** @var Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository */
@@ -61,7 +61,7 @@ foreach ($domain->getAll() as $domainConfig) {
 $dataSource = new ArrayDataSource($domainData, 'id');
 ```
 ## [`MoneyConvertingDataSourceDecorator`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/MoneyConvertingDataSourceDecorator.php)
-A decorator that can be applied to any of the data sources described above. It provides conversion of monetary values in a data set to [`Money` value object](../model/how-to-work-with-money.md#money-class).
+A decorator that can be applied to any of the data sources described above. It converts monetary values in a data set to [`Money` value object](../model/how-to-work-with-money.md#money-class).
 
 ### Example of usage
 ```php

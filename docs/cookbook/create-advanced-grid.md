@@ -1,16 +1,16 @@
 # Create Advanced Grid
-This article provides step by step instructions for advanced grid configurations.
+This article provides step-by-step instructions for advanced grid configurations.
 After finishing this cookbook, you will know how to create a grid with inline editing, and drag&drop sorting.
 
 ## Prerequisites
-- you have created a grid for Salesman entity following [Create Basic Grid](./create-basic-grid.md) cookbook
-- you are aware of Shopsys Platform model concepts like entity data classes and their factories, facades etc.
+- you have created a grid for the Salesman entity following [Create Basic Grid](./create-basic-grid.md) cookbook
+- you are aware of Shopsys Platform model concepts like entity data classes and their factories, facades, etc.
     - we recommend you to read the [Basics about model architecture](../model/introduction-to-model-architecture.md) article.
 - a basic knowledge of [Symfony forms](https://symfony.com/doc/3.4/forms.html) might be helpful for you
 
 ## 1. Allow inline editing
-In this step, we will allow creating and editing of salesmen entities (that we worked with in the [previous cookbook](./create-basic-grid.md)) directly using the grid.
-As a preparation for that, we need to implement the creation and editing logic, first.
+In this step, we will allow the creation and editing of salesmen entities (that we worked with in the [previous cookbook](./create-basic-grid.md)) directly using the grid.
+To prepare for that, we must first implement the creation and editing logic.
 
 ### 1.1 Create `SalesmanData` class
 ```php
@@ -35,7 +35,7 @@ class SalesmanData
 }
 ```
 
-### 1.2 Add constructor, `edit` and `setData` method, and getters to `Salesman` entity
+### 1.2 Add constructor, `edit` and `setData` methods, and getters to `Salesman` entity
 ```diff
 // src/Model/Salesman/Salesman.php
 
@@ -171,7 +171,7 @@ class SalesmanFacade
 }
 ```
 
-### 1.5 Create new form defined by `SalesmanFormType` class
+### 1.5 Create a new form defined by `SalesmanFormType` class
 When using a grid for inline editing, a form is rendered in the grid row. We need to prepare that form now.
 ```php
 // src/Form/Admin/SalesmanFormType.php
@@ -224,9 +224,9 @@ class SalesmanFormType extends AbstractType
 ```
 
 ### 1.6 Create new `SalesmanGridInlineEdit` class
-Now, we have everything prepared and we are able to put it all together in new class (`SalesmanGridInlineEdit`) that will be responsible for the inline editing.
+We have everything prepared and can put it all together in the new class (`SalesmanGridInlineEdit`) responsible for inline editing.
 The class needs to extend `AbstractGridInlineEdit` and implement three methods -`getForm`, `editEntity`, and `createEntityAndGetId`.
-We also have to inject the original `SalesmanGridFactory` to the new class constructor.
+We must also inject the original `SalesmanGridFactory` into the new class constructor.
 ```php
 // src/Grid/Salesman/SalesmanGridInlineEdit.php
 
@@ -370,10 +370,10 @@ At this point, you should be able to edit and create new salesmen directly in th
 
 ![Advanced grid with inline edit](img/advanced-grid-inline-edit.png)
 
-## 2. Sort data manually (drag and drop)
-In this part, we will enable drag and drop sorting of our salesmen using the grid. To make the changes in the ordering persistent, we need add new attribute to `Salesman` entity, first.
+## 2. Sort data manually (drag&drop)
+In this part, we will enable drag&drop sorting of our salesmen using the grid. To make the changes in the ordering persistent, we first need to add a new attribute to the' Salesman' entity.
 
-### 2.1 Add `$position` to `Salesman` entity and mark it as DB column using Doctrine ORM annotation
+### 2.1 Add `$position` to the `Salesman` entity and mark it as a DB column using Doctrine ORM annotation
 ```diff
 // src/Model/Salesman/Salesman.php
 
@@ -447,7 +447,7 @@ php phing db-migrations
 }
 ```
 
-### 2.3 Enable drag and drop sorting in `SalesmanGridFactory`
+### 2.3 Enable drag&drop sorting in `SalesmanGridFactory`
 ```diff
 // src/Grid/Salesman/SalesmanGridFactory.php
 
@@ -462,9 +462,9 @@ class SalesmanGridFactory implements GridFactoryInterface
 }
 ```
 
-Now you should be able to sort your salesmen using the cross icon in the left part of each row as a handle for drag a drop.
+Now, you should be able to sort your salesmen using the cross icon in the left part of each row as a handle for drag&drop.
 
 ![Advanced grid with drag and drop](img/advanced-grid-drag-and-drop.png)
 
 ## Pitfalls
-Be aware of using all the combinations that grid provides, e.g. it is not possible to use sorting by column when drag and drop is enabled.
+Be aware of using all the combinations that the grid provides, e.g., it is not possible to use sorting by column when drag and drop is enabled.

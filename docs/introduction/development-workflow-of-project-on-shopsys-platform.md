@@ -5,7 +5,7 @@
 * [GIT repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository) created from Shopsys Platform [project-base](https://github.com/shopsys/project-base/)
 
 ## How to develop a new feature
-1. Create a new branch from `master` branch e.g. `my-new-feature`
+1. Create a new branch from `master` branch e.g., `my-new-feature`
 
 1. Develop your feature
 
@@ -42,6 +42,6 @@
     !!! note
         This leads to [clean GIT history](https://blog.shopsys.com/keep-your-git-history-clean-with-minimum-effort-4b86b5619b1).
 
-1. [Merge](https://git-scm.com/docs/git-merge) your branch (e.g. `my-new-feature`) into `master` branch.
+1. [Merge](https://git-scm.com/docs/git-merge) your branch (e.g., `my-new-feature`) into `master` branch.
 
 1. Push `master` branch

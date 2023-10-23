@@ -25,7 +25,7 @@ always run the same, regardless of the environment.
 
 #### 3.1 docker-compose.yml
 [Docker-compose.yml](/project-base/docker/conf/docker-compose.yml.dist) file contains the definitions of containers that will be created for the installation
-of the Shopsys Platform. Containers can communicate with each other. Data need to be saved
+of Shopsys Platform. Containers can communicate with each other. Data need to be saved
 into volumes, otherwise, these data will be lost after the container is closed.
 
 ##### Containers

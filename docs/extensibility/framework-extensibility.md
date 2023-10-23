@@ -7,33 +7,33 @@ as well as a list of customizations that are not (and will not be) possible at a
 ## What is achievable easily
 * [Extending an entity](entity-extension.md)
     * [Adding a new attribute](../cookbook/adding-new-attribute-to-an-entity.md)
-    * *Note: There are some limitations when extending OrderItem, for more see [the documentation](entity-extension.md#orderitem)*
+    * *Note: There are some limitations when extending OrderItem. For more see [the documentation](entity-extension.md#orderitem)*
 * The administration can be extended by:
     * [Adding a new administration page](../cookbook/adding-a-new-administration-page.md) along with the side menu and breadcrumbs
     * [Extending particular forms](form-extension.md) without the need of the template overriding
 * [Customizing database migrations](../introduction/database-migrations.md)
-    * adding a new migration as well as skipping and reordering the existing ones
+    * Adding a new migration as well as skipping and reordering the existing ones
 * Configuring the smoke tests (see [`RouteConfigCustomization`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Smoke/Http/RouteConfigCustomization.php) class)
     * *Note: This is now achievable as the configuration class is located in the open box project-base.
-    However, that makes the upgrading of the component harder so the configuration is planned to be re-worked.*
+    However, that makes upgrading the component harder, so the configuration is planned to be re-worked.*
 * [Implementing custom product feed or modifying an existing one](../model/product-feeds.md)
 * [Implementing a basic data import](../cookbook/basic-data-import.md) to import data to you e-shop from an external source
-    * adding a new cron module and configuring it
+     * Adding a new cron module and configuring it
 * [Extending the application using standard Symfony techniques](https://symfony.com/doc/current/bundles/override.html)
-    * e.g. overriding Twig templates, routes, services, ...
+  * E.g. overriding Twig templates, routes, services, ...
 * [Adding a new advert position](../cookbook/adding-a-new-advert-position.md) to be used in the administration section *Marketing > Advertising system*
-* open-box modifications in `project-base`
-    * e.g. adding new entities, changing the FE design, customization of FE javascripts, adding new FE pages (routes and controllers), ...
+* Open-box modifications in `project-base`
+    * E.g. adding new entities, changing the FE design, customization of FE javascripts, adding new FE pages (routes and controllers), ...
 * [Hiding the existing features and functionality](https://github.com/shopsys/demoshop/pull/13)
 * You can read [Npm and webpack]('../frontend/npm-and-webpack.md') to know how to extend javascript
 
 ## What is achievable with additional effort
 
-* Extending factories and controllers - [see commit in demoshop](https://github.com/shopsys/demoshop/commit/898d111879aef40196f79ac763373560f44aef59#diff-1b3bd68670cd376165cdc6cfc634f24f)
-* Adding form option into existing form - [see commit in demoshop](https://github.com/shopsys/demoshop/commit/898d111879aef40196f79ac763373560f44aef59#diff-3293b000b06ad6c0280341584c4d661d)
+* Extending factories and controllers - [see the commit in demoshop](https://github.com/shopsys/demoshop/commit/898d111879aef40196f79ac763373560f44aef59#diff-1b3bd68670cd376165cdc6cfc634f24f)
+* Adding form option into existing form - [see the commit in demoshop](https://github.com/shopsys/demoshop/commit/898d111879aef40196f79ac763373560f44aef59#diff-3293b000b06ad6c0280341584c4d661d)
 * Extending administration form theme - [see commit in demoshop](https://github.com/shopsys/demoshop/commit/d0e0eaaa2eeac5e1c90d8a29be5c827c4a067b9f)
 * Changing an entity association - [see commit in demoshop](https://github.com/shopsys/demoshop/commit/9931083ea37ad611568e32bc1a9c8cf203401809) [*and actual association change*](https://github.com/shopsys/demoshop/commit/f3884368289da4b7c5eb1cee3078c9ec69c933dc)
-    * this change is complicated and potentially dangerous
+    * This change is complicated and potentially dangerous
 
 ## Which issues are going to be addressed soon
 * Extending data fixtures (including performance data fixtures)
@@ -44,7 +44,7 @@ as well as a list of customizations that are not (and will not be) possible at a
 * Removing an attribute from a framework entity
 * Changing a data type of an entity attribute
 * Removing existing entities and features
-* Extending [the `Money` class](../model/how-to-work-with-money.md) and closely related classes (eg. `MoneyType`)
+* Extending [the `Money` class](../model/how-to-work-with-money.md) and closely related classes (e.g., `MoneyType`)
 
 ## Examples of implemented features on the [Demoshop repository](https://github.com/shopsys/demoshop)
 * [Shipping method with pickup places](https://github.com/shopsys/demoshop/pull/6)
@@ -70,7 +70,7 @@ as well as a list of customizations that are not (and will not be) possible at a
 * [Hidden the functionality of the flags](https://github.com/shopsys/demoshop/pull/13)
     * hidden functionality in administration
     * hidden functionality in frontend
-    * flags do not affect shop at all
+    * flags do not affect eshop at all
 * [Company account with multiple users](https://github.com/shopsys/demoshop/pull/15)
     * group user accounts under one company account
     * separate users login credentials
@@ -79,7 +79,7 @@ as well as a list of customizations that are not (and will not be) possible at a
 
 ## Making the static analysis understand the extended code
 ### Problem 1
-When extending framework classes, it may happen that tools for static analysis (e.g. PHPStan, PHPStorm) will not understand your code properly.
+When extending framework classes, it may happen that tools for static analysis (e.g., PHPStan, PHPStorm) will not understand your code properly.
 Imagine this situation:
 
 - You have a controller that is dependent on a framework service:
@@ -144,13 +144,13 @@ class ProductController
       }
 }
 ```
-**Luckily, you do need to fix the annotations manually, there is the [Phing target `annotations-fix`](../introduction/console-commands-for-application-management-phing-targets.md#annotations-fix), that handles everything for you.**
+**Luckily, you do need to fix the annotations manually. There is the [Phing target `annotations-fix`](../introduction/console-commands-for-application-management-phing-targets.md#annotations-fix), that handles everything for you.**
 
 ### Problem 2
 There might be yet another problem with static analysis when extending framework classes.
 Imagine the following situation:
 
-- In framework, there is `ProductFacade` that has `ProductRepository` property
+- In the framework, there is `ProductFacade` that has `ProductRepository` property
 ```php
 namespace Shopsys\FrameworkBundle\Model\Product;
 
@@ -188,7 +188,7 @@ class ProductFacade extends BaseProductFacade
 ```
 - **Once again, static analysis is not aware of the extension.**
 #### Solution
-To fix this, you don't need to override the method or property, you just need to add proper `@method` and `@property` annotations to your class:
+You don't need to override the method or property to fix this. You just need to add proper `@method` and `@property` annotations to your class:
 ```diff
 namespace App\Model\Product;
 
@@ -204,7 +204,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 **Even this scenario is covered by `annotations-fix` phing target.**
 
 ### Problem 3
-There is one kind of problem that is not fixed automatically and needs to be addressed manually.
+One kind of problem is not fixed automatically and needs to be addressed manually.
 Shopsys Platform uses a kind of magic for working with extended entities (see [`EntityNameResolver` class](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/EntityExtension/EntityNameResolver.php)),
 and static analysis tools are not aware of that fact.
 Imagine the following situation:
@@ -265,7 +265,7 @@ class ProductController
     }
 }
 ```
-**In such a case, static analysis does not understand that the extended `Product` entity is returned.**
+**In such a case, the static analysis does not understand that the extended `Product` entity is returned.**
 #### Solution
 This needs to be fixed manually using a local variable with an inline annotation:
 ```diff
@@ -280,12 +280,12 @@ private function myAwesomeMethod($id)
 }
 ```
 
-As a workaround for this, you can create an empty class extending the one from the framework, register the extension in your `services.yaml`, and then use `php phing annotations-fix` to fix appropriate annotations for you.
+As a workaround, you can create an empty class extending the one from the framework, register the extension in your `services.yaml`, and then use `php phing annotations-fix` to fix appropriate annotations for you.
 
 Which way to go really depends on your situation. If you are likely to extend the given framework class sooner or later, or the same problem with the class is reported in many places, it would be better to create the empty extended class right away.
 Otherwise, it might be better just extracting and annotating the variable manually (like in [this commit in monorepo](https://github.com/shopsys/shopsys/commit/efd008b8d))
-as it is quicker and you can avoid having an unused empty class in your project.
+as it is quicker, and you can avoid having an unused empty class in your project.
 
 ### Tip
-If you are a fan of an automation and PHPStorm user at the same time, you can simplify things even more and set your IDE to automatically run the phing target every time you e.g. change something in your project.
+If you are a fan of an automation and PHPStorm user at the same time, you can simplify things even more and set your IDE to automatically run the phing target every time you e.g., change something in your project.
 This can be achieved by setting up a custom "[File watcher](https://www.jetbrains.com/help/phpstorm/using-file-watchers.html)".

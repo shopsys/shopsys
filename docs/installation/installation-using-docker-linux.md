@@ -1,7 +1,7 @@
 # Installation Using Docker for Linux
 
 This guide covers building new projects based on Shopsys Platform.
-If you want to contribute to the Shopsys Platform itself, you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
+If you want to contribute to Shopsys Platform itself, you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
 Take a look at the article about [Monorepo](../introduction/monorepo.md) for more information.
 
 ## Requirements

@@ -1,18 +1,18 @@
 # Working with Multiple Cron Instances
 
 This cookbook will help you to set up independent processing of [cron jobs](../introduction/cron.md).
-We will learn, how to work with multiple cron instances, how to register a new instance for modules and how to run them.
+We will learn how to work with multiple cron instances, how to register a new instance for modules, and how to run them.
 
-Let's presume, we want to run import of products, created for [Basic Data Import](./basic-data-import.md).
-But this import might take some time and we do not want to block processing of the other cron modules.
+Let's presume we want to run an import of products created for [Basic Data Import](./basic-data-import.md).
+But this import might take some time, and we do not want to block processing of the other cron modules.
 
 ## Configuration
 
-When you register cron job in your configuration with tags mandatory for cron module, you can add the optional tag `instanceName`,
+When you register a cron job in your configuration with tags mandatory for the cron module, you can add the optional tag `instanceName`,
 effectively creating a new instance of cron just by tagging the service.  
 You do not have to register the instance anywhere else.
 
-We just edit earlier created configuration to place our `ImportProductsCronModule` to different cron instance.
+We just edited the earlier created configuration to place our `ImportProductsCronModule` to the different cron instance.
 
 ```diff
 # config/services/cron.yaml
@@ -34,8 +34,8 @@ services:
 
 ## Listing available modules
 
-Now by running `php phing cron-list` in a console, we can see a list of all available cron modules, grouped into cron instances.  
-`ImportProductsCronModule` is properly placed into cron instance named "products".
+Now, by running `php phing cron-list` in a console, we can see a list of all available cron modules grouped into cron instances.  
+`ImportProductsCronModule` is properly placed into the cron instance named "products".
 
 ```no-highlight
 products
@@ -65,11 +65,11 @@ default
 
 # Running cron jobs manually
 
-We now can run any cron jobs manually by running `php phing cron`.
-And because we have several cron instances registered, job asks what cron instance should be run.
+We can now run any cron jobs manually by running `php phing cron`.
+And because we have several cron instances registered, the job asks what cron instance should be run.
 
 !!! note
-    If only one instance is registered, no question is asked and this instance will run immediately.
+    If only one instance is registered, no question is asked, and this instance will run immediately.
 
 # Running cron jobs automatically
 
@@ -99,5 +99,5 @@ New targets would look like
 and these targets only have to be registered in system crontab.
 
 ## Pitfalls
-- If you tag cron module with another instance without changes in Phing targets, your jobs will not be executed automatically, because command will hold on instance choice question.
+- If you tag the cron module with another instance without changes in Phing targets, your jobs will not be executed automatically, because the command will hold on instance choice question.
 - You can easily set your system to run too much cron jobs at once, resulting in server response time slowdown.

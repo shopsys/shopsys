@@ -1,8 +1,8 @@
 # Changelog for 14.0.x
 
-All notable changes, that change in some way the behavior of any of our packages that are maintained by monorepo repository.
+All notable changes that change in some way the behavior of any of our packages are maintained by the monorepo repository.
 
-There is a list of all the repositories maintained by monorepo:
+There is a list of all the repositories maintained by the monorepo:
 
 * [shopsys/framework](https://github.com/shopsys/framework)
 * [shopsys/project-base](https://github.com/shopsys/project-base)
@@ -24,8 +24,8 @@ There is a list of all the repositories maintained by monorepo:
 * [shopsys/php-image](https://github.com/shopsys/php-image)
 
 
-Packages are formatted by release version.
-You can see all the changes done to package that you carry about with this tree.
+Packages are formatted by release version. 
+You can see all the changes done to the package that you carry about with this tree.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) as explained in the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/).
 

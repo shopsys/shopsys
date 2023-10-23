@@ -1,13 +1,13 @@
 # Adding a New Email Template
 
-In this cookbook, we will add a new email template that allows us to alert the customer when his password change.
+In this cookbook, we will add a new email template to alert the customer when his password is changed.
 
 We want to send an email to the user when his password is reset.
-This email should be configurable in administration and we should be able to personalize email – we want to be able to include customer email and full name into the email.
+This email should be configurable in administration, and we should be able to personalize email – we want to be able to include the customer email and full name into the email.
 
 ## New Mail class
 
-The first step to create a new email template is creating a class able to create a `MessageData` object that can be then sent with `Mailer`.
+The first step to creating a new email template is creating a class to create a `MessageData` object that can then be sent with `Mailer`.
 
 ```php
 declare(strict_types=1);
@@ -60,8 +60,8 @@ class PasswordChangedMail implements MessageFactoryInterface
 
 ## Add new email template into data fixtures
 
-To be able to test the email template, we need to populate the database with some data.  
-To do that we can just create a new record in `src/DataFixtures/Demo/MailTemplateDataFixture.php`
+We need to populate the database with some data to test the email template.  
+To do that, we can just create a new record in `src/DataFixtures/Demo/MailTemplateDataFixture.php`
 
 ```diff
 // class App\DataFixtures\Demo\MailTemplateDataFixture
@@ -91,17 +91,17 @@ To do that we can just create a new record in `src/DataFixtures/Demo/MailTemplat
 ```
 
 You can see we used several variable placeholders in this template (`{fullname}`, `{email}`, and `{password_reset_url}`).
-Right now they are treated as plain text.
+Right now, they are treated as plain text.
 We will allow to replace them with real values in the next step.
 
 !!! note
-    In the example above we translated email subject and body.
+    In the example above, we translated the email subject and body.
     Don't forget to [dump translations](../introduction/console-commands-for-application-management-phing-targets.md#translations-dump).
 
 ## Replacing variables with values
 
 We want to be able to use several variables and replace them with real values when the email should be sent.
-To do that, we update previously created `PasswordChangedMail` class.
+To do that, we update the previously created `PasswordChangedMail` class.
 
 First, we add constants representing each variable to be able to reference them in code.
 
@@ -116,13 +116,13 @@ First, we add constants representing each variable to be able to reference them 
 +    public const VARIABLE_PASSWORD_RESET_URL = '{password_reset_url}';
 ```
 
-Replacing variables is internally supported in `MessageData` class we have in our `PasswordChangedMail`.
-We just need to pass an array of replacements (in a format `{variable} => realValue`).
+Replacing variables is internally supported in the `MessageData` class in our `PasswordChangedMail`.
+We just need to pass an array of replacements (in the format `{variable} => realValue`).
 
 ```diff
 // class App\Component\Mail\PasswordChangedMail
 
-    // DomainRouterFactory is necessary to be able to generate url to reset password form
+    // DomainRouterFactory is necessary to be able to generate a URL to reset the password form
 +   /**
 +    * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
 +    */
@@ -188,18 +188,18 @@ and corresponding methods can look like this
 ```
 
 !!! note
-    In this example, we're intentionally replacing all defined variables in the email body, but in the subject, only customer full name is replaced.
+    In this example, we're intentionally replacing all defined variables in the email body, but in the subject, only the customer full name is replaced.
 
 !!! warning
-    Replacements (real values) for the variables are most of the time some user-entered values.
-    It's crucial to properly escape these values!
+    Replacements (real values) for the variables are, most of the time, some user-entered values.
+    It's crucial to escape these values properly!
 
 ## Sending email
 
-Now when the template is stored in the database and we are properly replacing variables, we are ready to send this email when the user enters a new password after reset password process.
+Now, when the template is stored in the database, and we are properly replacing variables, we are ready to send this email when the user enters a new password after the reset password process.
 
-To make things easy, we add sending email directly into `CustomerPasswordController::setNewPasswordAction()`.  
-In your application, you may want to consider a better place.
+To simplify things, we add sending an email directly into `CustomerPasswordController::setNewPasswordAction()`.  
+In your application, consider a better place.
 
 ```diff
 // class App\Controller\Front\CustomerPasswordController
@@ -237,7 +237,7 @@ In your application, you may want to consider a better place.
 
 ```
 
-And you need to register previously created class `PasswordChangedMail` into your `services.yaml` file as it should be autowired.
+And you need to register the previously created class `PasswordChangedMail` into your `services.yaml` file, as it should be autowired.
 
 
 ```diff
@@ -250,8 +250,8 @@ services:
 +   App\Component\Mail\PasswordChangedMail: ~
 ```
 
-Go ahead and try to reset a customer password.
-You will receive email notification about the changed password for the account.
+Go ahead and try to reset a customer's password.
+You will receive an email notification about the changed password for the account.
 
 ## Make the mail template configurable in administration
 
@@ -262,7 +262,7 @@ Shopsys Platform made this task really easy.
 You just need to define variables, their labels for the form, allowed usage, and whether they are required or not.
 
 This configuration is made in PHP to ease translating values.
-We create new provider class.
+We create a new provider class.
 
 ```php
 declare(strict_types=1);
@@ -304,19 +304,19 @@ class PasswordChangedMailTemplateVariablesProvider
 
 Each variable is added with the `addVariable(string $variable, string $label, $context, $required)` method.
 
-- `$variable` is variable placeholder
-- `$label` is readable name to describe the meaning of the variable to the user
+- `$variable` is a variable placeholder
+- `$label` is a readable name to describe the meaning of the variable to the user
 - `$context` defines where the variable is applicable and can have one of these values:
     - `MailTemplateVariables::CONTEXT_BOTH` – variable can take place in the subject and body (default)
     - `MailTemplateVariables::CONTEXT_BODY` - variable can take place in the body only
     - `MailTemplateVariables::CONTEXT_SUBJECT` - variable can take place in the subject only
 - `$required` defines where the variable is required and can have one of these values:
     - `MailTemplateVariables::REQUIRED_NOWHERE` - variable is optional (default)
-    - `MailTemplateVariables::REQUIRED_BOTH` - variable have to be present in the body and in the subject
-    - `MailTemplateVariables::REQUIRED_BODY` - variable have to be present in the body
-    - `MailTemplateVariables::REQUIRED_SUBJECT` - variable have to be present in the subject
+    - `MailTemplateVariables::REQUIRED_BOTH` - variable has to be present in the body and in the subject
+    - `MailTemplateVariables::REQUIRED_BODY` - variable has to be present in the body
+    - `MailTemplateVariables::REQUIRED_SUBJECT` - variable has to be present in the subject
 
-When we have the variables ready, the last step is to register variables with proper mail template.  
+When we have the variables ready, the last step is to register variables with the proper mail template.  
 This can be done in `config/services.yaml` file
 
 ```yaml
@@ -330,5 +330,5 @@ Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration:
 
 ## Conclusion
 
-Now in your database is a new email template and email from this template is sent to the user whenever he resets his password.
-This template can be easily changed from the administration
+Now, in your database is a new email template, and an email from this template is sent to the user whenever he resets his password.
+This template can be easily changed from the administration.

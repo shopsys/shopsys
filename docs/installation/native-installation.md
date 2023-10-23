@@ -8,7 +8,7 @@ First it is truly essential to read and understand the articles about requiremen
 1. [Application Configuration](application-configuration.md)
 1. [Native Installation Troubleshooting](native-installation-troubleshooting.md)
 
-After you read the articles you are ready to start with the creating and building the Shopsys Platform project.
+After you read the articles you are ready to start with the creating and building Shopsys Platform project.
 
 ## Create new project from Shopsys Platform sources
 
@@ -65,7 +65,7 @@ symfony server:start --port 8001
     For more information and instructions please refer to the [official Symfony documentation](https://symfony.com/doc/current/setup/symfony_server.html#enabling-tls)
 
 !!! tip
-    You can also use local domain names (eg. http://shopsys.wip) instead of 127.0.0.1:8000  
+    You can also use local domain names (e.g., http://shopsys.wip) instead of 127.0.0.1:8000  
     For more information and instructions please refer to the [official Symfony documentation](https://symfony.com/doc/current/setup/symfony_server.html#local-domain-names)
 
 ## See it in your browser!

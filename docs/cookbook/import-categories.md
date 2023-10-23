@@ -1,15 +1,15 @@
 # Import Categories
 
 Category import is one of the specific imports.
-Due to the tree structure it's really easy to create ineffective script.
-In this cookbook we highlight some concepts and how to improve category import performance.
+Due to the tree structure, creating an ineffective script is really easy.
+This cookbook highlights some concepts and how to improve category import performance.
 
 ## Task
 
-> _As an eshop owner I want to import categories from ERP system, so I don't need to edit categories in two places._
+> _As an eshop owner, I want to import categories from an ERP system, so I don't need to edit categories in two places._
 
-Let's presume we already have working information system, and we are able to obtain data we need.
-For the future references we can imagine it as a method with following description
+Let's presume we already have a working information system, and we are able to obtain the data we need.
+We can imagine it as a method with the following description for future reference.
 
 ```php
 public function getCategoryDataFromErp(): iterable {
@@ -26,17 +26,17 @@ public function getCategoryDataFromErp(): iterable {
 }
 ```
 
-Method returns data sorted exactly as they should be on the eshop, meaning category with the same parent will be first, if it comes first from the method.  
-And to make matters worse, ERP can only return all 10000 categories.
+The method returns data sorted exactly as they should be on the eshop, meaning a category with the same parent will be first if it comes first from the method.  
+And to make matters worse, ERP can only return all 10,000 categories.
 
 ## First import
 
-In this cookbook we first write the code that's obvious, but not ideal and as we progress, we improve the import to demonstrate the concepts and caveats of importing categories. 
+In this cookbook, we first write the code that's obvious but could be better, and as we progress, we improve the import to demonstrate the concepts and caveats of importing categories.
 
 !!! note
     If you're not familiar with the concepts of creating data imports, take a look at the [Basic data import cookbook](./basic-data-import.md)
 
-The main working loop is straightforward
+The main working loop is straightforward.
 
 ```php
 public function run(): void
@@ -92,18 +92,18 @@ private function mapImportDataToCategoryData(array $importData, CategoryData $ca
 }
 ```
 
-As you can see, we iterate over all categories obtained from the ERP and use UUID field to connect categories from the ERP with categories on the shop.
-(In your application it can be some kind of new field, for example `external_id`)
+As you can see, we iterate over all categories obtained from the ERP and use the UUID field to connect categories from the ERP with categories on the shop.
+(In your application, it can be some new field, for example, `external_id`)
 
-If a category is found on the shop, data are edited, otherwise the category is created.
+If a category is found on the shop, data are edited otherwise, the category is created.
 
 !!! note
     This is merely a trivial example.  
-    In a real project, you don't want to load all categories to memory, but rather load them in batch or consider a different approach, for example, creating some type of queue to process data from.
+    In a real project, you don't want to load all categories to memory but rather load them in batch or consider a different approach, for example, creating some queue to process data from.
 
-So far so good, so let's run this import.
+So far, so good, so let's run this import.
 
-It's more than likely that the import will take much longer than we would like.
+The import will likely take much longer than we would like.
 
 > _Import finished in 15 minutes and 30 seconds_
 
@@ -112,9 +112,9 @@ It's more than likely that the import will take much longer than we would like.
 Our import works, but not exactly the way we want.
 Categories should be sorted by position in the source data, but right now, when the position of the categories on the same level changes, this change is not propagated.
 It's actually logical.
-Position is not set anywhere, and the relation to the parent do not hold any positional information.
+The position is not set anywhere, and the relation to the parent holds no positional information.
 
-Fix is not that hard.
+Fix is pretty easy.
 All we need to do is to start sorting categories while importing.
 
 ```diff
@@ -133,13 +133,13 @@ Apart the increased import time, we also had to add two new dependencies, `Categ
 
 ## Better way
 
-One of the reasons, why the import takes so long, is the category tree structure.
-After each flush, the nested set is recalculated for the tree and this takes some time.
+One of the reasons why the import takes so long is the category tree structure.
+After each flush, the nested set is recalculated for the tree, which takes some time.
 
-But we can edit data first, and sort categories later.
+But we can edit data first and sort categories later.
 This should provide a noticeable performance improvement.
 
-At first, we remove setting parent_id in the mapping method, we will do it differently.
+At first, we remove setting parent_id in the mapping method. We will do it differently.
 
 ```diff
  private function mapImportDataToCategoryData(array $importData, CategoryData $categoryData): CategoryData
@@ -175,13 +175,13 @@ Also, we don't need the code for sorting siblings, but we need to build the arra
  }
 ```
 
-As we don't change the parent and we don't sort the siblings, it's no reason to recalculate the tree and the import is much faster.
+As we don't change the parent and we don't sort the siblings, there's no reason to recalculate the tree, and the import is much faster.
 
 > _Import finished in 7 minutes and 45 seconds_
 
 ## Bring back the sorting
 
-Now we have all categories created or edited, and we have built the sorted array of ids with related parent ids.
+Now we have all categories created or edited, and we have built the sorted array of IDs with related parent IDs.
 
 ```diff
 + use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculator;
@@ -200,4 +200,4 @@ Now we have all categories created or edited, and we have built the sorted array
 > _Import finished in 7 minutes and 50 seconds_
 
 !!! note
-    Sometimes it's better to create a specific DQL query to update the field you need instead of the whole load-edit routine
+    Sometimes, it's better to create a specific DQL query to update the field you need instead of the whole load-edit routine.

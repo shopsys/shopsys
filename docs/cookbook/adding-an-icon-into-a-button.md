@@ -1,8 +1,8 @@
 # Adding an Icon into a Button
 
-When designing your custom online store based on Shopsys Platform, you might want to add an icon to some submit buttons on front-end.
-This is achievable very easily by using special CSS classes.
-Let us demonstrate it on "Add to cart button".
+When designing your custom online store based on Shopsys Platform, you might want to add an icon to some submit buttons on the front-end.
+This is achievable very quickly by using special CSS classes.
+Let us demonstrate it on the "Add to cart button".
 
 ![Add to cart button without icon](img/add-to-cart-without-icon.png)
 

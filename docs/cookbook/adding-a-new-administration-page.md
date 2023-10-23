@@ -5,7 +5,7 @@ We will see how to create a new admin controller, what template to extend, and h
 
 ## New admin controller
 
-The first step to create a new page is creating a controller (for details, see [Symfony Controller documentation](https://symfony.com/doc/3.4/controller.html)).
+The first step to creating a new page is creating a controller (for details, see [Symfony Controller documentation](https://symfony.com/doc/3.4/controller.html)).
 Create a class extending `AdminBaseController` in `src/Controller/Admin` directory with a single method (action):
 
 ```php
@@ -30,7 +30,7 @@ The `Admin` directory is already configured to use [routing by annotations](http
 By adding the `@Route("/dashboard/twitter/")` annotation, you are creating a route named `admin_dashboard_twitter` (`admin_` + lowercase controller name + `_` + lowercase action name).
 
 This newly added route should be available under the URL [http://127.0.0.1:8000/admin/**dashboard/twitter/**](http://127.0.0.1:8000/admin/dashboard/twitter/) by default.
-If you try to access the page, it will fail on loading non-existing template, which we will fix in the next step.
+If you try to access the page, it will fail on loading a non-existing template, which we will fix in the next step.
 
 If you'd like to create something more complicated, you can require other services in the controller's constructor, which will be autowired.
 
@@ -44,7 +44,7 @@ The template should extend `@ShopsysFramework/Admin/Layout/layoutWithPanel.html.
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
 {% block title %}- {{ 'Tweets by @ShopsysFW'|trans }}{% endblock %}
-{% block h1 %}{{ 'Updates from the Shopsys Platform'|trans }}{% endblock %}
+{% block h1 %}{{ 'Updates from Shopsys Platform'|trans }}{% endblock %}
 
 {% block main_content %}
     <a class="twitter-timeline" data-lang="{{ app.request.locale }}" data-theme="light" href="https://twitter.com/ShopsysFW"></a>
@@ -52,18 +52,18 @@ The template should extend `@ShopsysFramework/Admin/Layout/layoutWithPanel.html.
 {% endblock %}
 ```
 
-The content of the page is just a simple [Twitter widget](https://publish.twitter.com/) but you can put any content in your page.
+The page's content is just a simple [Twitter widget](https://publish.twitter.com/), but you can put any content on your page.
 You can use the controller to pass some parameters to your template.
 Feel free to examine other controllers for inspiration.
 
 If you're new to Twig, you can take a look at [Symfony Templating documentation](http://symfony.com/doc/current/templating.html).
 
-Now the page should load correctly and display the newest tweets of [@ShopsysFW](https://twitter.com/ShopsysFW).
+Now, the page should load correctly and display the newest tweets of [@ShopsysFW](https://twitter.com/ShopsysFW).
 But to access it, you still need to open a specific URL...
 
 ## Side menu and breadcrumbs
 The admin side menu is implemented by [KnpMenuBundle](https://symfony.com/doc/master/bundles/KnpMenuBundle/index.html) and to extend it, you can use [events](https://symfony.com/doc/master/bundles/KnpMenuBundle/events.html).
-For the details about the customization of the menu, read the [Administration Menu](../administration/administration-menu.md) article.
+For details about the menu customization, read the [Administration Menu](../administration/administration-menu.md) article.
 
 Right now, the Dashboard menu looks like this:
 
@@ -120,6 +120,6 @@ We've seen how to add a new simple page into the administration with a route and
 A similar approach could be used to add more complicated parametrized pages using other services or forms.
 
 Also, we've not only added a new item to the menu, but we've modified some parameters of an already existing menu item, removing the link from it.
-This can be used for altering the menu in a more significant way.
+This can be used to alter the menu in a more significant way.
 
 To see how the side menu works, you can see the [`SideMenuBuilder`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php) class where it is created.

@@ -112,7 +112,7 @@ Useful in a development environment and during deploying to production.
 #### build-version-generate
 
 Generates a Symfony configuration `build-version` variable that is used to distinguish different application builds.
-The variable itself contains current datetime in PHP format `YmdHis` and application environment (eg. `20190311135223_dev`) so you can use it in any configuration file by `'%build-version%'`.
+The variable itself contains current datetime in PHP format `YmdHis` and application environment (e.g., `20190311135223_dev`) so you can use it in any configuration file by `'%build-version%'`.
 
 The variable is generated to file `config/parameters_version.yaml` and this file is excluded from git.
 
@@ -167,7 +167,7 @@ Especially useful when you need to change the structure and don't need to have f
     Your application must handle the properties not being filled correctly until all products are exported.
 
 !!! danger
-    Using this phing target after changing the type of field to another in structure _(eg. changing it from `bool` to `integer`)_ will cause an error.
+    Using this phing target after changing the type of field to another in structure _(e.g., changing it from `bool` to `integer`)_ will cause an error.
     If you need to make this change, please add new field with the correct type and delete the old field instead.
 
 #### elasticsearch-export

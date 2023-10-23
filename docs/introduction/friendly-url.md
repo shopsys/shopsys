@@ -3,7 +3,7 @@
 Shopsys Platform comes with the implementation to support custom URLs for entities or other use you might need.
 By default, there are custom URLs implemented for product detail, product list, article detail and brand detail pages.
 Thanks to this functionality you can set your own URL or set of URLs to these entities.
-This functionality is provided by `FriendlyUrlDataProviderInterface` implementations, e.g. `ProductDetailFriendlyUrlDataProvider`.
+This functionality is provided by `FriendlyUrlDataProviderInterface` implementations, e.g., `ProductDetailFriendlyUrlDataProvider`.
 Such classes are automatically registered in `FriendlyUrlDataProviderRegistry`.
 The rest of the work is done automatically and URLs provided by these providers are now accessible via browser.
 
@@ -31,7 +31,7 @@ this will route all URLs you have provided in `getFriendlyUrlData` method to `<e
     - in `create` and `edit` methods, after calling `$this->em->flush()`, add similar code like this:
 
 ```php
-// third parameter is an array of names indexed by locale that will be used for URL generation (e.g. 'cs' => 'Televize', 'en' => 'Television')
+// third parameter is an array of names indexed by locale that will be used for URL generation (e.g., 'cs' => 'Televize', 'en' => 'Television')
 $this->friendlyUrlFacade->createFriendlyUrls('front_<entity_name>_detail', $entity->getId(), $entity->getNames());
 
 ```

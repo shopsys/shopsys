@@ -1,7 +1,7 @@
 # FAQ and Common Issues
 
 This section provides only the basic answers to some of the most frequently asked questions.
-For more detailed information about the Shopsys Platform, please see [Shopsys Platform Knowledge Base](../index.md).
+For more detailed information about Shopsys Platform, please see [Shopsys Platform Knowledge Base](../index.md).
 
 ### Index
 - [What are the phing targets?](#what-are-the-phing-targets)
@@ -12,11 +12,11 @@ For more detailed information about the Shopsys Platform, please see [Shopsys Pl
 - [Is the application https ready or does it need some extra setting?](#is-the-application-https-ready-or-does-it-need-some-extra-setting)
 - [How can I easily translate and set up my new language constants?](#how-can-i-easily-translate-and-set-up-my-new-language-constants)
 - [How to set up deployment and production server?](#how-to-set-up-deployment-and-production-server)
-- [How to set up the administration with a different locale/language (e.g. Czech)?](#how-to-set-up-the-administration-with-a-different-localelanguage-eg-czech)
+- [How to set up the administration with a different locale/language (e.g., Czech)?](#how-to-set-up-the-administration-with-a-different-localelanguage-eg-czech)
 - [What are the differences between "listable", "sellable", "offered" and "visible" products?](#what-are-the-differences-between-listable-sellable-offered-and-visible-products)
 - [How calculated attributes work?](#how-calculated-attributes-work)
 - [How do I change the environment (PRODUCTION/DEVELOPMENT/TEST)?](#how-do-i-change-the-environment-productiondevelopmenttest)
-- [Are some periodic tasks part of the Shopsys Platform (cron)?](#are-some-periodic-tasks-part-of-the-shopsys-framework-cron)
+- [Are some periodic tasks part of Shopsys Platform (cron)?](#are-some-periodic-tasks-part-of-the-shopsys-framework-cron)
 - [Why are you using entity data instead of entities for Symfony forms?](#why-are-you-using-entity-data-instead-of-entities-for-symfony-forms)
 - [What is the configuration file `services_test.yaml` good for?](#what-is-the-configuration-file-services_testyaml-good-for)
 - [How to change the behavior of the product search on the front-end?](#how-to-change-the-behavior-of-the-product-search-on-the-front-end)
@@ -36,7 +36,7 @@ See more about phing targets in [Console Commands for Application Management (Ph
 ## What are the data fixtures good for?
 Data fixtures are actually demo data available in the Shopys Framework.
 For their installation, use the phing target `db-fixtures-demo`.
-This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (eg. with configured domains and an existing database structure), see [`build.xml`](https://github.com/shopsys/shopsys/blob/master/packages/framework/build.xml).
+This phing target is usually triggered as the part of other phing targets, because it requires the application in a certain state (e.g., with configured domains and an existing database structure), see [`build.xml`](https://github.com/shopsys/shopsys/blob/master/packages/framework/build.xml).
 Demo data are used for automatic tests and also for installation of demo shop with prepared data.
 
 ## How to change a domain URL?
@@ -74,7 +74,7 @@ For more information about translations, see [the separate article](./translatio
 We recommend installation using the Docker for production.
 See how to install Shopsys Platform in production and how to proceed when deploying in the tutorial [Installation Using Docker on Production Server](../installation/installation-using-docker-on-production-server.md).
 
-## How to set up the administration with a different locale/language (e.g. Czech)?
+## How to set up the administration with a different locale/language (e.g., Czech)?
 The administration uses `en` locale by default.
 If you want to switch it to the another locale, set a parameter `shopsys.admin_locale` in your `config/parameters_common.yaml` configuration.
 However, the selected locale has to be one of registered domains locale.
@@ -85,7 +85,7 @@ Products can be grouped into several groups according to their current status or
 These groups are described in more detail in the article [How to Work with Products](../model/how-to-work-with-products.md).
 
 ## How calculated attributes work?
-Some attributes that are used on the Shopsys Platform are not set directly, but their value is automatically calculated based on other attributes.
+Some attributes that are used on Shopsys Platform are not set directly, but their value is automatically calculated based on other attributes.
 For example, if a category of products does not have a name for a locale of the specific domain, this category will be automatically set as not visible on this domain.
 See more about calculated attributes in the article [How to Work with Products](../model/how-to-work-with-products.md).
 
@@ -97,7 +97,7 @@ If the command `composer install --no-dev` is executed, the file `PRODUCTION` is
 
 You can change the environment manually by using the command `php bin/console shopsys:environment:change`.
 
-## Are some periodic tasks part of the Shopsys Platform (cron)?
+## Are some periodic tasks part of Shopsys Platform (cron)?
 Yes, there is some prepared configuration for Shopsys Platform cron commands in a file `src/Resources/config/services/cron.yaml` in `FrameworkBundle`.
 Do not forget to set up a cron on your server to execute [`php phing cron`](./console-commands-for-application-management-phing-targets.md#cron) every 5 minutes.
 
@@ -113,11 +113,11 @@ E.g., by default, all our services are defined as private. However, in tests, we
 
 ## How to change the behavior of the product search on the front-end?
 Full-text product search on the front-end is handled via Elasticsearch.
-If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](../model/front-end-product-searching.md).
+If you want to change its behavior (e.g., make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](../model/front-end-product-searching.md).
 
 ## Where does the business logic belong?
 The business logic should be implemented directly in an entity every time when there is no need for external services.
-Otherwise, the logic is in facades (resp. the facades are used as delegates to other services, e.g. another *Facade*, *Repository*, *Calculation*, etc.). You can read more about the model architecture in [Introduction to model architecture](../model/introduction-to-model-architecture.md).
+Otherwise, the logic is in facades (resp. the facades are used as delegates to other services, e.g., another *Facade*, *Repository*, *Calculation*, etc.). You can read more about the model architecture in [Introduction to model architecture](../model/introduction-to-model-architecture.md).
 
 ## How can I create a friendly URL for my entity?
 See [Friendly URL](./friendly-url.md) article.

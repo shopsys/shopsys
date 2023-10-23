@@ -4,7 +4,7 @@ This article describes how to work with domains and languages during the develop
 For an explanation of the basic terms, please read [domain, multidomain and multilanguage](domain-multidomain-multilanguage.md) article first.
 
 !!! note
-    Demo data on the Shopsys Platform are only translated to `en` and `cs` locales.
+    Demo data on Shopsys Platform are only translated to `en` and `cs` locales.
     If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory and you can translate your demo data in `dataFixtures.xx.po` file.
 
 ## Settings and working with domains
@@ -22,7 +22,7 @@ Set the url address for the domain in `config/domains_urls.yaml`.
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
 
 #### 1.4 Build
-Start the build, for example using a phing target
+Start the build, for example, using a phing target
 ```sh
 php phing build-demo-dev
 ```
@@ -42,7 +42,7 @@ If you want to use already created tests for your specific configuration, you ma
 
 !!! note "Notes"
     - Some smoke and functional tests are only executed for a single domain or a multiple domain configuration. Search for `@group singledomain` or `@group multidomain` in your test methods' annotations respectively.
-    - Some functional tests (e.g. the ones for searching a specific phrase) are also skipped when the first domain locale is other than `en`. Search for usages of `FunctionalTestCase::skipTestIfFirstDomainIsNotInEnglish()` method.
+    - Some functional tests (e.g., the ones for searching a specific phrase) are also skipped when the first domain locale is other than `en`. Search for usages of `FunctionalTestCase::skipTestIfFirstDomainIsNotInEnglish()` method.
 
 ### 2. How to add a new domain
 
@@ -144,7 +144,7 @@ If you have set a different locale, you can use `translations-dump` that will cr
 
 #### 3.6 Locale in administration
 Administration is by default in `en` locale.
-This means that for example product list in administration tries to display translations of product names in `en` locale.
+This means that for example, product list in administration tries to display translations of product names in `en` locale.
 If you want to switch it to the another locale, set a parameter `shopsys.admin_locale` in your `config/parameters_common.yaml` configuration to desired locale.
 However, the selected locale has to be one of registered domains locale.
 When you change admin locale, you have to update acceptance tests, to have administration use cases tested properly.
@@ -171,10 +171,10 @@ An example for domain that uses English language:
 ```
 
 #### 3.8 Default application locale
-In most cases, when working with multilanguage attributes, you do not need to specify any locale as it is set automatically from the request so you can just use e.g. `Product::getName()` and you get the proper translation.
+In most cases, when working with multilanguage attributes, you do not need to specify any locale as it is set automatically from the request so you can just use e.g., `Product::getName()` and you get the proper translation.
 However, sometimes, there is no request (i.e. in CLI commands) so you need to tell your application, which locale should be used - either using a parameter in the method (`Product::getName('es')`) or by setting a default application locale.
 
-To change the default application locale, set `locale` parameter to you desired locale (e.g. `es` for Spanish) in your [`parameters_common.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yaml).
+To change the default application locale, set `locale` parameter to you desired locale (e.g., `es` for Spanish) in your [`parameters_common.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yaml).
 The value is then used for setting [`default_locale` Symfony parameter](https://symfony.com/doc/3.4/translation/locale.html#setting-a-default-locale) (see your [`config/packages/translation.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/translation.yaml) config).
 
 !!!note

@@ -1,16 +1,16 @@
 # Extending Product List
 
-If you want add more information to product lists, you need to do a little bit more than [extending an entity](./adding-new-attribute-to-an-entity.md).
+If you want to add more information to product lists, you need to do a little bit more than [extending an entity](./adding-new-attribute-to-an-entity.md).
 That is because the frontend product lists leverage [the read model concept](../model/introduction-to-read-model.md), i.e. special view objects are used instead of common Doctrine entities in the Twig templates.
 
-This cookbook describes how to extend the frontend product lists with step by step instructions.
+This cookbook describes how to extend the frontend product lists with step-by-step instructions.
 
 ## Display a brand name in a product view on the product list
 
 ### 1. Extend `ListedProductView` class and add a new attribute.
 
-The class encapsulates the data that are needed for displaying products on FE product lists.
-We want to display a brand name for each product so we need to add the attribute to the class.
+The class encapsulates the data needed for displaying products on FE product lists.
+We want to display a brand name for each product, so we must add the attribute to the class.
 
 ```php
 declare(strict_types=1);
@@ -68,7 +68,7 @@ class ListedProductView extends BaseListedProductView
 
 ### 2. Add new attribute to Elasticsearch
 
-In order to add new attribute to Elasticsearch you need to add it to the structure first.
+In order to add a new attribute to Elasticsearch, you need to add it to the structure first.
 You can do that by adding it to `mappings` in all `src/Resources/definition/product/*.json` files like this:
 ```diff
   "mappings": {
@@ -80,7 +80,7 @@ You can do that by adding it to `mappings` in all `src/Resources/definition/prod
 
 ### 3. Export new attribute to Elasticsearch
 
-The class responsible for exporting products to Elasticsearch is `ProductExportRepository` so we need to extend it and add the attribute to method `getProductsData`.
+The class responsible for exporting products to Elasticsearch is `ProductExportRepository`, so we need to extend it and add the attribute to the method `getProductsData`.
 ```php
 declare(strict_types=1);
 
@@ -114,7 +114,7 @@ You need to register your new class as an alias for the one from the FrameworkBu
 Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository: '@App\Model\Product\Search\Export\ProductExportRepository'
 ```
 
-Then you need to fix `ProductExportRepositoryTest::getExpectedStructureForRepository` (because this test check if your structure is correct) by adding new attribute:
+Then you need to fix `ProductExportRepositoryTest::getExpectedStructureForRepository` (because this test checks if your structure is correct) by adding a new attribute:
 ```diff
 $structure = \array_merge($structure, [
     'availability',
@@ -137,7 +137,7 @@ $structure = \array_merge($structure, [
 ### 4. Extend `ProductElasticsearchConverter` to fill empty fields
 
 There are old documents in the Elasticsearch, usually in the production environment.
-Before you reexport all products from the database, there are documents that don't have the new field `brand_name`.
+Before you reexport all products from the database, some documents don't have the new field `brand_name`.
 So you have to provide default values for the case of reading such old documents.
 
 ```php
@@ -163,7 +163,7 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
 }
 ```
 
-You need to register your new class in `services.yaml` and add it as an alias for the one from the bundle
+You need to register your new class in `services.yaml` and add it as an alias for the one from the bundle.
 
 ```yml
 App\Model\Product\Search\ProductElasticsearchConverter: ~
@@ -172,7 +172,7 @@ Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: '@Ap
 
 ### 5. Extend `ListedProductViewFactory` so it returns the new required data
 
-The class is responsible for creating the view object. We need to ensure that the objects is created with proper brand name. We are able to get the brand name from the product entity, so we just need to overwrite `createFromArray()` and `createFromProduct()` methods.  
+The class is responsible for creating the view object. We need to ensure that the objects are created with the proper brand name. We can get the brand name from the product entity, so we need to overwrite `createFromArray()` and `createFromProduct()` methods.
 
 ```php
 declare(strict_types=1);
@@ -241,7 +241,7 @@ You need to register your new class as an alias for the one from the bundle in `
 
 ### 6. Modify the frontend template for rendering product lists so it displays the new attribute
 
-All product lists are rendered using `productListMacro.html.twig`. You can modify this macro to display product brand name wherever it is suitable for you.
+All product lists are rendered using `productListMacro.html.twig`. You can modify this macro to display the product brand name wherever it is suitable for you.
 
 ```diff
 {# templates/Front/Content/Product/productListMacro.html.twig #}

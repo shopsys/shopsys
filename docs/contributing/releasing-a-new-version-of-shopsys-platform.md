@@ -2,10 +2,10 @@
 
 For releasing a new version of Shopsys Platform, we are leveraging `release` command from [symplify/monorepo-builder](https://github.com/Symplify/MonorepoBuilder) package.
 
-All the source codes and configuration of our release process can be found in `utils/releaser` folder that is located in the root of the monorepo.
+All the source codes and configuration of our release process can be found in the `utils/releaser` folder located in the monorepo's root.
 
 Each step of the release process is defined as an implementation of `Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface`,
-therefore we refer to the step definitions as to "release workers".
+therefore, we refer to the step definitions as to "release workers".
 
 ## Stages
 
@@ -32,7 +32,7 @@ The whole release process is divided into 3 stages that are run separately:
 
         - ~/.gitconfig:/home/www-data/.gitconfig
 
-To perform a desired stage, run the following command in the `php-fpm` docker container and follow instructions that you'll be asked in console.
+To perform a desired stage, run the following command in the `php-fpm` docker container and follow the instructions that you'll be asked in the console.
 ``` sh
 vendor/bin/monorepo-builder release <release-number> --stage <stage> -v
 ```
@@ -42,10 +42,10 @@ vendor/bin/monorepo-builder release <release-number> --dry-run --stage <stage> -
 ```
 
 ### Notes
-- The "release-number" argument is the desired tag you want to release, it should always follow [the semantic versioning](https://semver.org/)
-and start with the "v" prefix, e.g. `v7.0.0`.
+- The "release-number" argument is the desired tag you want to release. It should always follow [the semantic versioning](https://semver.org/)
+and start with the "v" prefix, e.g., `v7.0.0`.
 - The releaser needs `.git` folder available - this is a problem currently for our Docker on Mac and Windows configuration
 as the folder is currently ignored for performance reasons.
-There is [an issue](https://github.com/shopsys/shopsys/issues/536) on Github that mentions the problem.
-However, there is a workaround - you can add new `docker-sync` volume just for git.
-- Releasing a stage is a continuously running process so do not exit your CLI if it is not necessary.
+  There is [an issue](https://github.com/shopsys/shopsys/issues/536) on GitHub that mentions the problem.
+  However, there is a workaround - you can add a new `docker-sync` volume just for git.
+- Releasing a stage is a continuously running process, so do not exit your CLI if it is not necessary.

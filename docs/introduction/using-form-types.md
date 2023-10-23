@@ -48,7 +48,7 @@ It is not mapped onto any property and it inherits data into group so you can wo
 `GroupType` comes with a few options that you can use for even more comfortable work.
 
 #### label
-This option is used for displaying heading of section, for example in `CustomerFormType` all user data like name, last name or email address are all in section with label `Personal Data`.
+This option is used for displaying heading of section, for example, in `CustomerFormType` all user data like name, last name or email address are all in section with label `Personal Data`.
 
 ### [DisplayOnlyCustomerType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DisplayOnlyCustomerType.php)
 Displays name of a registered customer along with a link to his/her detail.

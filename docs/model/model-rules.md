@@ -3,17 +3,17 @@ In this article you will learn about model rules, what is and what is not model,
 
 ## Hierarchy nesting
 All classes related to the model are nested in the `Model` namespace inside the bundle namespace.
-In your ecommerce project based on Shopsys Platform, you should put your classes inside `App\Model\<MODEL>` (this namespace will be used below).
+In your e-commerce project based on Shopsys Platform, you should put your classes inside `App\Model\<MODEL>` (this namespace will be used below).
 Core model classes of Shopsys Platform can be found in `Shopsys\FrameworkBundle\Model\<MODEL>`.
 
-They can also be nested into deeper directory such as `App\Model\Product\Search` if it encapsulate group of classes representing some specific functionality, for example search functionality for a `Product` entity.
+They can also be nested into deeper directory such as `App\Model\Product\Search` if it encapsulate group of classes representing some specific functionality, for example, search functionality for a `Product` entity.
 
 ## Rules
 - Classes inside the model are grouped into model namespaces.  
   For example, if you want to add a new functionality that works with product, your class should be created in `App\Model\Product`.
 - Main parts of a model such as `Facade` or `Repository` are grouped by a model they are responsible for, not by their type.  
-  Eg. classes `Product`, `ProductRepository` and `ProductFacade` should all be inside the `App\Model\Product` namespace together.
-- All exceptions in a model should be in in a `App\<MODEL>\Exception` namespace and they should implement a common interface using the [Marker Interface Pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern), eg. [ProductException](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/Exception/ProductException.php).
+  E.g., classes `Product`, `ProductRepository`, and `ProductFacade` should all be inside the `App\Model\Product` namespace together.
+- All exceptions in a model should be in in a `App\<MODEL>\Exception` namespace and they should implement a common interface using the [Marker Interface Pattern](https://en.wikipedia.org/wiki/Marker_interface_pattern), e.g., [ProductException](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/Exception/ProductException.php).
 - All DQL and SQL operations related to a model should be in a model repository.
 - Integration code is not a part of the model.  
   For example, forms or controllers should be outside the `Model` namespace.
@@ -22,7 +22,7 @@ They can also be nested into deeper directory such as `App\Model\Product\Search`
 ## What is and what is not a model
 *Model is a system of abstractions that describes selected aspect of a domain.*
 
-That means that everything in a model should be related to some functionality of the domain, in our case, ecommerce.
+That means that everything in a model should be related to some functionality of the domain, in our case, e-commerce.
 An exception to this is integration code such as controllers or forms which are not a part of the model.
 
 If you are creating new functionality that could be used, for example, in a portfolio application, like a navigation panel, you should create it as a component.
@@ -51,7 +51,7 @@ Some concepts in our current model do not follow the rules listed above.
 
 ### Model without persisted entity representation
 Some models do not have a persisted entity that represents a model.
-For example one of them is `Feed`, even though it does not have a entity, it is related to the ecommerce domain and because of that we keep it in the model namespace.
+For example one of them is `Feed`, even though it does not have a entity, it is related to the e-commerce domain and because of that we keep it in the model namespace.
 
 Models without a persisted entity:
 

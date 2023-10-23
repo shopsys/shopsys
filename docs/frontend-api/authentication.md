@@ -1,7 +1,7 @@
 # Authentication
 
-In a modern web application (or native mobile application), it’s likely that you’ll need to make parts of your app private so they are not accessible by anybody.
-If you want some users to be able to access those restricted parts, you need to implement some sort of user authentication in your app, so that users can create an account, and later log into that account, to access protected content.
+In a modern web application (or native mobile application), you’ll likely need to make parts of your app private so they are not accessible by anybody.
+If you want some users to be able to access those restricted parts, you need to implement some sort of user authentication in your app, so that users can create an account, and later log into that account to access protected content.
 User authentication in Shopsys Platform Frontend API uses access tokens.
 
 Access Tokens are used in token-based authentication to allow an application to access an API. For example, a customer orders API methods can read orders for only one (authorized) customer.
@@ -20,7 +20,7 @@ You can generate them using the command `./phing frontend-api-generate-new-keys`
 If these keys leak, you can generate a new key pair with the same command.
 Note that when you regenerate the keys, you invalidate all issued access and refresh tokens.
 
-## How to get pair of tokens
+## How to get a pair of tokens
 
 To get a pair of tokens, you can use the mutation query `Login` using the user's email and password.
 The query will return access and refresh tokens.
@@ -49,7 +49,7 @@ The response looks like this:
 
 The access token carries basic user information such as its UUID, name, email and role list.
 
-If you're running an application in [Docker](../installation/installation-using-docker-application-setup.md) and you have [allowed frontend API on the first domain](./introduction-to-frontend-api.md) you can run curl command to get pair of tokens like this:
+If you're running an application in [Docker](../installation/installation-using-docker-application-setup.md) and you have [allowed frontend API on the first domain](./introduction-to-frontend-api.md), you can run a curl command to get pair of tokens like this:
 
 ```sh
   curl
@@ -78,12 +78,12 @@ If the resolver needs more detailed information, it has to obtain it himself.
 
 ## How to renew access and refresh token
 
-If the user is successfully logged in and access token expires, the 401 error will be returned. In such case, user should use the refresh token to restore the access token.
+If the user is successfully logged in and the access token expires, the 401 error will be returned. In such a case, the user should use the refresh token to restore the access token.
 
 !!!
-We do not recommend refreshing the access token before each request, because token renewal takes some time and the user will have to wait a long time for response.
+    We do not recommend refreshing the access token before each request, because token renewal takes some time and the user will have to wait a long time for a response.
 
-To refresh the pair of tokens use the `RefreshTokens` mutation query with the `refreshTokenInput` input parameter.
+To refresh the pair of tokens, use the `RefreshTokens` mutation query with the `refreshTokenInput` input parameter.
 
 `RefreshToken` query looks like this:
 

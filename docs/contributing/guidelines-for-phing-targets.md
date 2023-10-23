@@ -4,20 +4,20 @@ There are a few rules to help us maintain [Phing targets](../introduction/consol
 
 ## Naming conventions
 
-Names of targets should be in lower-case, using a dash (`-`) as a word separator.
+Names of targets should be in lowercase, using a dash (`-`) as a word separator.
 
-Names of properties should be also in lower-case, using a dot (`.`) to separate levels of hierarchy and a dash (`-`) as a word separator.
+Property names should also be in lowercase, using a dot (`.`) to separate levels of hierarchy and a dash (`-`) as a word separator.
 
 When naming targets, it's usually best to start with a general subject and then mention the action (typically a verb) so that related commands are next to each other.
 For example, a phing target used to generate DB migrations is named `db-migrations-generate`.
-It's similar to naming Symfony commands where you also start with a more general namespace (eg. `shopsys:migrations:generate`).
+It's similar to naming Symfony commands, where you also start with a more general namespace (e.g., `shopsys:migrations:generate`).
 
-When a target enforces some application environment, it should have the environment as a prefix (eg. `test-db-create` or `prod-warmup`).
+When a target enforces some application environment, it should have the environment as a prefix (e.g., `test-db-create` or `prod-warmup`).
 Targets without such prefix should use the current environment.
 
 ## Dependent phing targets vs. phingcall
 
-There are two ways how to combine phing targets together: using `depends="..."` attribute or the `<phingcall .../>` task.
+There are two ways to combine phing targets together: using `depends="..."` attribute or the `<phingcall .../>` task.
 
 You can set a dependency between targets using the `depends` property like this:
 
@@ -27,7 +27,7 @@ You can set a dependency between targets using the `depends` property like this:
 </target>
 ```
 
-This will mean that before the execution of `my-target`, the targets `first-target` and `second-target` will be executed as well.
+This will mean that before the execution of `my-target`, the targets `first-target` and `second-target` will also be executed.
 
 This is also useful when you want to implement a target that runs a sequence of subtargets.
 Typically, targets starting with a `build-` prefix are such sequences.
@@ -43,10 +43,10 @@ On the other hand, you can use a `<phingcall .../>` task inside your implementat
 ```
 
 This will execute the `sub-target` task during the execution of `my-target`.
-All dependencies of `my-target` will be called as well, even if they were already called during the execution.
-Because of this, `phingcall` is not suitable for implementation of sequences as the dependencies get called many times, making the build run longer.
+All dependencies of `my-target` will also be called, even if they were already called during the execution.
+Because of this, `phingcall` is unsuitable for the implementation of sequences, as the dependencies get called many times, making the build run longer.
 
-Still, it can be very useful when you need to control the exact time when it is called, or you want to run it with some properties overwritten.
+Still, it can be handy when you need to control the exact time when it is called or you want to run it with some overwritten properties.
 
 ## Dependency on DIC
 
@@ -63,18 +63,18 @@ Such properties can be overwritten in a project repository without the need for 
 
 For example, all paths to executables should be used via `path.*.executable` property.
 
-Sometimes, it can be even useful to include an argument such as `<arg line="${my-target.flags}"/>` in the `exec` task of your target along with an empty `my-target.flags` property (defined on the root level).
-This will allow the end users to provide their own flags, modifying the command's behavior without the need for overwriting the whole target.
+Sometimes, it can even be helpful to include an argument such as `<arg line="${my-target.flags}"/>` in the `exec` task of your target along with an empty `my-target.flags` property (defined on the root level).
+This will allow the end users to provide their own flags, modifying the command's behavior without overwriting the whole target.
 
-Removing [DRY violations](./code-quality-principles.md#dont-repeat-yourself) in the phing target definitions by extracting common tasks and sequences into their own (possibly hidden) targets also helps with extensibility.
-Instead if having to overwrite a few targets to change the definition, in such case users could overwrite just the extracted part.
+Removing [DRY violations](./code-quality-principles.md#dont-repeat-yourself) in the phing target definitions by extracting common tasks and sequences into their own (possibly hidden) targets also help with extensibility.
+Instead of having to overwrite a few targets to change the definition, in such a case, users could overwrite just the extracted part.
 
 ## Extending in monorepo
 
-Targets in the monorepo should have the same behavior as when called from the project repository, increasing the scope to the whole monorepo.
+Targets in the monorepo should have the same behavior as when called from the project repository, increasing the scope of the whole monorepo.
 For example, the `tests-unit` target is overwritten in the monorepo's `build.xml` to execute the original target via `<phingcall target="shopsys-framework.unit-tests"/>` and then execute the unit tests in all packages and utils repositories.
 
-When this is not possible, please overwrite the target and display a message instead, explaining the actual outcome to avoid misunderstandings.
+When this is impossible, please overwrite the target and display a message instead, explaining the actual outcome to avoid misunderstandings.
 
 ## Deprecations
 
@@ -88,7 +88,7 @@ When renaming, call the new target via `<phingcall target="..."/>`.
 </target>
 ```
 
-This will allow the users to gradually get used to the new targets.
+This will allow the users to get used to the new targets gradually.
 
 ## Sorting
 

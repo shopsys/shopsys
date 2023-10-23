@@ -1,19 +1,19 @@
 # How to write an upgradable application
 
-This article describes a list of useful tips on how to write your application to make the upgrade to the new version of the Shopsys Platform as smooth as possible.
+This article describes a list of useful tips on how to write your application to make the upgrade to the new version of Shopsys Platform as smooth as possible.
 
 [TOC]
 
 ## Constructor overrides
 
-From time to time you need to completely override functionality, so you don't call parent method at all.
+From time to time, you need to override functionality completely so you don't call the parent method at all.
 This is especially dangerous in constructors as constructors don't need to be the same in parent–child class.
 We leverage this to be able to introduce a new optional dependency of the class.
 
 If you don't call `parent:__construct()` in your code, and we add initialization of some property, that initialization will not be called in your code.
-It's really useful to add a comment for your future self that parent is not called intentionally and check for those comments while upgrading.
+It's really useful to add a comment for your future self that the parent is not called intentionally and check for those comments while upgrading.
 
-For example when we make this change in the new version
+For example, when we make this change in the new version
 
 ```diff
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
@@ -30,7 +30,7 @@ class ParameterData {
     }
 ```
 
-you may encounter problems with following code (notice the `promoted` property will not be set)
+You may encounter problems with the following code (notice the `promoted` property will not be set)
 
 ```php
 namespace App\Model\Product\Parameter;
@@ -49,14 +49,14 @@ class ParameterData extends BaseParameterData {
 ```
 
 Adding a simple comment like the one above helps you identify those places and quickly check them.
-Also, you may be sure this is intentional, and not a bug. 
+Also, you may be sure this is intentional and not a bug.
 
 ## Reported bug
 
-Sometimes you may find a bug or request a feature in Shopsys Platform, 
-but until the reported (thanks for that!) issue/request is processed, and a new version is released you need to fix it in your code.
+Sometimes, you may find a bug or request a feature in Shopsys Platform,
+but until the reported (thanks for that!) issue/request is processed and a new version is released, you need to fix it in your code.
 
-Then it's really useful to make a notice in your code, so you can quickly decide in the future whether some parts of your code can be safely deleted as the original issue is already resolved.
+Then, it's really useful to make a notice in your code so you can quickly decide in the future whether some parts of your code can be safely deleted as the original issue is already resolved.
 
 ```php
     /**
@@ -78,7 +78,7 @@ Then it's really useful to make a notice in your code, so you can quickly decide
 
 ## Deprecations
 
-After upgrade (or before upgrade to another version) you may want to check for deprecations (you can see them in Symfony debug toolbar) and resolve those reported from the Shopsys namespace.
+After the upgrade (or before upgrading to another version), you may want to check for deprecations (see them in the Symfony debug toolbar) and resolve those reported from the Shopsys namespace.
 It will make your future upgrades easier.
 
 ```text
@@ -88,9 +88,9 @@ User Deprecated: The Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig:
 
 ## Adding New Properties to Objects
 
-When you need to add a new typed properties to already existing object, you may find useful to initialize those properties with setters instead of overriding the constructor.
+When you need to add new typed properties to already existing objects, you may find it useful to initialize those properties with setters instead of overriding the constructor.
 
-For the future development is better to use getter/setter instead of public property, otherwise, when you try to read from uninitialized public property in Twig, you get misleading error notice:
+For future development, using getter/setter instead of public property is better otherwise, when you try to read from uninitialized public property in Twig, you get a misleading error notice:
 
 ```text
 Neither the property "nonSellingPrice" nor one of the methods "nonSellingPrice()", "getnonSellingPrice()"/"isnonSellingPrice()"/"hasnonSellingPrice()" or "__call()" exist

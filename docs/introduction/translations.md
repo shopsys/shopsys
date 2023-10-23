@@ -51,9 +51,9 @@ $translator->trans(
 );
 ```
 
-This results in message ID `Thanks to %name%` that can be translated even with different word order, for example `%name%, danke!`.
+This results in message ID `Thanks to %name%` that can be translated even with different word order, for example, `%name%, danke!`.
 
-From time to time we use word classes in message ID, for example `order [noun]`, `order [verb]` that are both translated as `order`.
+From time to time we use word classes in message ID, for example, `order [noun]`, `order [verb]` that are both translated as `order`.
 We do this because in Czech, the noun is translated as *"objednávka"* and the verb is translated as *"objednat"*.
 
 ## Translatable texts

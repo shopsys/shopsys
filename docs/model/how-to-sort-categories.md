@@ -38,7 +38,7 @@ you can call `CategoryFacade::reorderByNestedSetValues()` method which accepts a
     Categories with `parent_id` set to null will be at the main level, placed under hidden root category (see `CategoryFacade::getRootCategory()`).  
     This root category must not be present in the data passed to reordering method.
 
-Usually, you don't have a complete nested set model, but it's much easier to obtain a sorted [adjacency list](https://en.wikipedia.org/wiki/Adjacency_list) (for example from the information system).
+Usually, you don't have a complete nested set model, but it's much easier to obtain a sorted [adjacency list](https://en.wikipedia.org/wiki/Adjacency_list) (for example, from the information system).
 In that case, it's possible to use `Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculator::calculateNestedSetFromAdjacencyList()` helper method to calculate the complete nested set model.
 
 Usage is pretty straightforward. The desired category tree structure is following (each node already contain computed left and right attribute for better understanding)

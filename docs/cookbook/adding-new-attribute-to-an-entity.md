@@ -1,10 +1,10 @@
 # Adding New Attribute to an Entity
-In the following example, we will add `extId` (alias "external ID") field to the `Product` entity.
-It is a common modification when you need your ecommerce application and ERP system to co-work smoothly.
+In the following example, we will add the `extId` (alias "external ID") field to the `Product` entity.
+It is a common modification when you need your e-commerce application and ERP system to co-work smoothly.
 
 !!! note
-    If you want to display your new attribute on the frontend product list, you need to extend the [read model layer](../model/introduction-to-read-model.md) as well.
-    You can find instructions in [Extending Product List](./extending-product-list.md).
+    If you want to display your new attribute on the front-end product list, you need to extend the [read model layer](../model/introduction-to-read-model.md) as well.
+    Instructions are in [Extending Product List](./extending-product-list.md).
 
 ## Extend framework `Product` entity
 
@@ -15,7 +15,7 @@ It is a common modification when you need your ecommerce application and ERP sys
 
 Add new `extId` field with Doctrine ORM annotations and a getter for the field into `App\Model\Product\Product` class.
 
-Overwrite `setData` method for setting entity data from data object.
+Overwrite `setData` method for setting entity data from a data object.
 
 ```php
 namespace App\Model\Product;
@@ -59,7 +59,7 @@ class Product extends BaseProduct
 ```
 
 _Notice that type hints and annotations of the methods do not match.
-This is on purpose - extended class must respect interface of its parent while annotation ensures proper IDE autocomplete._
+This is on purpose - extended class must respect the interface of its parent while annotation ensures proper IDE autocomplete._
 
 ### Database migrations
 
@@ -77,7 +77,7 @@ Database schema is not satisfying ORM, a new migration was generated!
 Migration file ".../src/Migrations/Version20180503133713.php" was saved (525 B).
 ```
 
-As you are adding not nullable field, you need to manually modify the generated migration
+As you are adding a not nullable field, you need to modify the generated migration manually
 and add a default value for already existing entries:
 
 ```php
@@ -86,10 +86,10 @@ $this->sql('ALTER TABLE products ALTER ext_id DROP DEFAULT');
 ```
 
 !!! hint
-    In this step you were using Phing target `db-migrations-generate`.  
+    In this step, you were using Phing target `db-migrations-generate`.  
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)_
 
-Run the migration to actually create the column in your database:
+Run the migration to create the column in your database:
 
 ```
 php phing db-migrations
@@ -120,7 +120,7 @@ for `Product` and `ProductData` instantiation to make them take our new attribut
 
 Edit `App\Model\Product\ProductDataFactory` - overwrite `create()` and `createFromProduct()` methods.
 
-*Alternatively you can create an independent class by implementing
+*Alternatively, you can create an independent class by implementing
 [`Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductDataFactoryInterface.php).*
 
 ```php
@@ -174,10 +174,10 @@ as an alias for the original interface.
 Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface: '@App\Model\Product\ProductDataFactory'
 ```
 
-## Enable administrator to edit the `extId` field
+## Enable an administrator to edit the `extId` field
 
 Add your `extId` field into the form by editing `ProductFormTypeExtension` in `App\Form\Admin` namespace.
-The original `ProductFormType` is set as the extended type by implementation of `getExtendedType()` method.
+The original `ProductFormType` is set as the extended type by the implementation of `getExtendedType()` method.
 
 ```php
 namespace App\Form\Admin;
@@ -217,9 +217,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 ```
 
 !!! tip
-    If you want to change order for your newly created field, please look at section [Changing order of groups and fields](../extensibility/form-extension.md#changing-order-of-groups-and-fields)
+    If you want to change the order for your newly created field, please look at the section [Changing order of groups and fields](../extensibility/form-extension.md#changing-order-of-groups-and-fields)
 
-In your `Product` class, overwrite the `setData()` method.
+Overwrite the `setData()` method in your' Product' class.
 
 ```php
 namespace App\Model\Product;
@@ -268,8 +268,8 @@ class ProductDataFactory extends BaseProductDataFactory
 ```
 
 ## Front-end
-In order to display your new attribute on a front-end page, you can modify the corresponding template directly
-as it is a part of your open-box, eg. [`detail.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/detail.html.twig).
+To display your new attribute on a front-end page, you can modify the corresponding template directly
+as it is a part of your open-box, e.g., [`detail.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/detail.html.twig).
 
 ```twig
 {{ product.extId }}
@@ -277,11 +277,11 @@ as it is a part of your open-box, eg. [`detail.html.twig`](https://github.com/sh
 
 ## Data fixtures
 
-You can modify data fixtures in `src/DataFixtures/` of your project
+You can modify data fixtures in `src/DataFixtures/` of your project.
 
 ### Random `extId`
 
-If you want to add unique random `extId` for products from data fixtures you can add it in `createProduct` method of [`ProductDataFixture.php`](https://github.com/shopsys/shopsys/blob/master/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
+If you want to add a unique random `extId` for products from data fixtures, you can add it in the `createProduct` method of [`ProductDataFixture.php`](https://github.com/shopsys/shopsys/blob/master/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
 You can use [`Faker`](https://github.com/FakerPHP/Faker/) to generate random numbers like this:
 
 ```diff
@@ -354,7 +354,7 @@ You can use [`Faker`](https://github.com/FakerPHP/Faker/) to generate random num
 
 ### Specific `extId`
 
-If you need to add specific `extId` to products in data fixture you will have to update creation of products in [`ProductDataFixture::load`](https://github.com/shopsys/shopsys/blob/master/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
+If you need to add specific `extId` to products in the data fixture, you will have to update the creation of products in [`ProductDataFixture::load`](https://github.com/shopsys/shopsys/blob/master/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
 
 ```diff
 
