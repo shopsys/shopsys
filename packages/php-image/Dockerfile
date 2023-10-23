@@ -19,6 +19,7 @@ ARG DEBIAN_VERSION
 # libjpeg-dev needed by "gd" extension
 # libpng-dev needed by "gd" extension
 # libpg-dev for connection to postgres database
+# librabbitmq-dev for connection to rabbitmq
 # libzip-dev needed by "zip" extension
 # locales for locale-gen command
 # mc for quick file browsing
@@ -42,6 +43,7 @@ RUN apt-get update && \
         libjpeg-dev \
         libpng-dev \
         libpq-dev \
+        librabbitmq-dev \
         libzip-dev \
         locales \
         mc \
@@ -81,6 +83,10 @@ RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmo
 # install redis extension
 RUN pecl install redis-5.3.7 && \
     docker-php-ext-enable redis
+
+# install amqp extension
+RUN pecl install amqp \
+    && docker-php-ext-enable amqp
 
 # install locales and switch to en_US.utf8 in order to enable UTF-8 support
 # see http://jaredmarkell.com/docker-and-locales/ from where was this code taken

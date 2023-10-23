@@ -89,6 +89,36 @@ services:
             - chadburn.job-exec.BRANCH_NAME-cron-packetery.user=www-data
             - chadburn.job-exec.BRANCH_NAME-cron-packetery.tty=true
 
+    php-consumer:
+        restart: always
+        image: php-fpm-image
+        volumes:
+            - web-volume:/var/www/html/project-base/app/web
+        environment:
+            IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
+            DATABASE_NAME: BRANCH_NAME
+            ELASTIC_SEARCH_INDEX_PREFIX: BRANCH_NAME
+            REDIS_PREFIX: BRANCH_NAME
+            FORCE_ELASTIC_LIMITS: true
+            GOPAY_EN_GOID: GOPAY_GOID
+            GOPAY_EN_CLIENTID: GOPAY_CLIENTID
+            GOPAY_EN_CLIENTSECRET: GOPAY_CLIENTSECRET
+            GOPAY_CS_GOID: GOPAY_GOID
+            GOPAY_CS_CLIENTID: GOPAY_CLIENTID
+            GOPAY_CS_CLIENTSECRET: GOPAY_CLIENTSECRET
+            PACKETERY_API_KEY: PACKETERY_API_KEY_VALUE
+            PACKETERY_API_PASSWORD: PACKETERY_API_PASSWORD_VALUE
+            MESSENGER_TRANSPORT_VHOST: BRANCH_NAME
+        networks:
+            - default
+            - services-network
+        entrypoint:
+            - /bin/sh
+            - -c
+            - sleep 5 && project-base/app/docker/php-fpm/consumer-entrypoint.sh 600
+        labels:
+            - traefik.enable=false
+
     storefront:
         restart: always
         image: storefront-image

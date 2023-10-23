@@ -818,6 +818,18 @@
             "project-base/config/packages/mailer.yaml"
         ]
     },
+    "symfony/messenger": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.4",
+            "ref": "8bd5f27013fb1d7217191c548e340f0bdb11912c"
+        },
+        "files": [
+            "project-base/app/config/packages/messenger.yaml"
+        ]
+    },
     "symfony/mime": {
         "version": "v4.3.6"
     },

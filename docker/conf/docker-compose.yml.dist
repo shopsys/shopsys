@@ -72,6 +72,32 @@ services:
         ports:
             - "35729:35729"
 
+    php-consumer:
+        restart: always
+        build:
+            context: .
+            dockerfile: project-base/app/docker/php-fpm/Dockerfile
+            target: development
+            args:
+                www_data_uid: 1000
+                www_data_gid: 1000
+                project_root: project-base/app
+        depends_on:
+            - php-fpm
+            - rabbitmq
+        container_name: shopsys-framework-php-consumer
+        volumes:
+            - .:/var/www/html
+        entrypoint:
+            - /bin/sh
+            - project-base/app/docker/php-fpm/consumer-entrypoint.sh
+
+    rabbitmq:
+        image: rabbitmq:3.12-management-alpine
+        container_name: shopsys-framework-rabbitmq
+        ports:
+            - "15672:15672"
+
     redis:
         image: redis:7.0-alpine
         container_name: shopsys-framework-redis
