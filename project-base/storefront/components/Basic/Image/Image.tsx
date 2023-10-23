@@ -34,14 +34,16 @@ export const Image: FC<ImageProps> = ({
 
     if (!img) {
         return (
-            <img
-                alt={alt || ''}
-                className={twMergeCustom('h-auto w-full', imageTwClass)}
-                data-testid={getDataTestId(dataTestId) + '-empty'}
-                height={height || 160}
-                src="/images/optimized-noimage.webp"
-                width={width || 160}
-            />
+            <div className={wrapperClassName}>
+                <img
+                    alt={alt || ''}
+                    className={twMergeCustom('h-auto w-full', imageTwClass)}
+                    data-testid={getDataTestId(dataTestId) + '-empty'}
+                    height={height || 160}
+                    src="/images/optimized-noimage.webp"
+                    width={width || 160}
+                />
+            </div>
         );
     }
 
