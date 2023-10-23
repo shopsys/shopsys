@@ -124,6 +124,11 @@ jobs:
                 with:
                     name: set-urls-for-review
                     path: ./.github/set-urls-for-review.sh
+            -   name: Upload rabbitmq-vhost.sh to artifacts
+                uses: actions/upload-artifact@v3
+                with:
+                    name: rabbitmq-vhost-sh
+                    path: ./.github/rabbitmq-vhost.sh
     build-php-fpm-image:
         if: |
             github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' || 
@@ -675,9 +680,12 @@ jobs:
                 uses: actions/download-artifact@v3
                 with:
                     name: set-urls-for-review
-            -   name: Move set-urls-for-review.sh to branch folder
-                run: |
-                    mv set-urls-for-review.sh ${BRANCH_NAME}/set-urls-for-review.sh
+                    path: ${{ needs.variables.outputs.BRANCH_NAME }}
+            -   name: Download rabbitmq-vhost-sh from artifacts
+                uses: actions/download-artifact@v3
+                with:
+                    name: rabbitmq-vhost-sh
+                    path: ${{ needs.variables.outputs.BRANCH_NAME }}
             -   name: Move docker-compose.review.yml to branch folder
                 if: "contains(github.event.pull_request.labels.*.name, 'Use docker-compose defined services for review')"
                 run: |
@@ -686,6 +694,7 @@ jobs:
                 if: "!contains(github.event.pull_request.labels.*.name, 'Use docker-compose defined services for review')"
                 run: |
                     mv docker-compose.review.simplified.yml ${BRANCH_NAME}/docker-compose.yml
+                    bash ./${BRANCH_NAME}/rabbitmq-vhost.sh create ${BRANCH_NAME}
             -   name: Update docker-compose.yaml with secrets
                 run: |
                     sed -i "s#GOPAY_GOID#${{ secrets.GOPAY_GOID }}#" "${BRANCH_NAME}/docker-compose.yml"
