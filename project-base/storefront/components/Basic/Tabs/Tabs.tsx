@@ -71,7 +71,7 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
                 {headingTextMobile}
                 <ArrowIcon className={twJoin('w-4 rotate-0 transition', isActiveOnMobile && '-rotate-180 ')} />
             </h3>
-            <div className={twJoin('py-5 ', isActiveOnMobile ? 'block' : 'hidden lg:block')}>{children}</div>
+            <div className={twJoin('w-full py-5', isActiveOnMobile ? 'block' : 'hidden lg:block')}>{children}</div>
         </TabPanel>
     );
 };

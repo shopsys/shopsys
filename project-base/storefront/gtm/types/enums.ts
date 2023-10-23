@@ -37,6 +37,7 @@ export enum GtmProductListNameType {
     cart = 'cart',
     product_comparison_page = 'product comparison page',
     product_detail = 'product detail',
+    product_detail_related_products = 'product detail related products',
     autocomplete_search_results = 'autocomplete_search_results',
     wishlist = 'wishlist',
     sharedWishlist = 'sharedWishlist',
