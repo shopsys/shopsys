@@ -144,3 +144,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   for you to get the most out of this PR, you should check `error-handling.md` in SF docs, which is a direct result of this PR
     -   it contains explanations and tips on how to improve error handling in your SF code as well
     -   for not-discussed changes, see #project-base-diff to update your project
+    -   see #project-base-diff to update your project
+-   refactor `ProductVariantsTable` ([#2899](https://github.com/shopsys/shopsys/pull/2899))
+    -   `ProductVariantsTable` component was made with table element but on smaller screens it was styled more like list. This was causing styling difficulties. That's why it has been replaced with grid with combination of flexbox.
+    -   components `ProductVariantsTableRow` and `Variant` were removed
+    -   component `ProductVariantsTable` was renamed to `ProductDetailVariantsTable` so it matches parent folder where it's placed
+    -   see #project-base-diff to update your project
