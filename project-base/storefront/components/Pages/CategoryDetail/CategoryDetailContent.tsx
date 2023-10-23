@@ -67,18 +67,18 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
 
                 <div className="flex flex-1 flex-col">
-                    <Adverts className="mb-5" positionName="productList" />
+                    <Adverts className="mt-6" positionName="productList" />
 
                     <Heading type="h1">{title}</Heading>
 
                     {!!category.description && currentPage === 1 && (
-                        <div className="mb-4" dangerouslySetInnerHTML={{ __html: category.description }} />
+                        <div dangerouslySetInnerHTML={{ __html: category.description }} />
                     )}
 
-                    <Adverts className="mb-7" currentCategory={category} positionName="productListMiddle" />
+                    <Adverts className="mt-6" currentCategory={category} positionName="productListMiddle" />
 
                     <SimpleNavigation
-                        className="mb-6"
+                        className="mt-6"
                         linkType="category"
                         listedItems={[...category.children, ...category.linkedCategories]}
                     />
@@ -89,7 +89,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
-                    <div className="flex flex-col items-stretch gap-3 sm:flex-row">
+                    <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row">
                         <div
                             className="relative flex flex-1 cursor-pointer items-center justify-center rounded bg-primary p-3 font-bold uppercase text-white vl:mb-3 vl:hidden"
                             onClick={handlePanelOpenerClick}
