@@ -54,8 +54,8 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
             {!!relatedProducts.length && (
                 <TabsContent headingTextMobile={t('Related Products')}>
                     <ProductsSlider
-                        products={relatedProducts}
                         gtmProductListName={GtmProductListNameType.product_detail_related_products}
+                        products={relatedProducts}
                     />
                 </TabsContent>
             )}
