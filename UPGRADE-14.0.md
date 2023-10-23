@@ -117,3 +117,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   added missing skeletons for Homepage and Stores
     -   adjustments to current skeletons to match the design of a page better
     -   see #project-base-diff to update your project
+-   refactoring of various error-related matters on SF ([#2871](https://github.com/shopsys/shopsys/pull/2871))
+    -   the goal was to shine light on some of the not-well-understood places in regard of error handling on SF
+    -   for you to get the most out of this PR, you should check `error-handling.md` in SF docs, which is a direct result of this PR
+    -   it contains explanations and tips on how to improve error handling in your SF code as well
+    -   for not-discussed changes, see #project-base-diff to update your project
+
