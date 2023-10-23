@@ -48,7 +48,8 @@ class GenerateMigrationCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Generate a new migration if need it');
+            ->setDescription('Generate a new migration if need it')
+            ->addOption('empty', null, null, 'Generate an empty migration');
     }
 
     /**
@@ -60,7 +61,7 @@ class GenerateMigrationCommand extends Command
 
         $filteredSchemaDiffSqlCommands = $this->databaseSchemaFacade->getFilteredSchemaDiffSqlCommands();
 
-        if (count($filteredSchemaDiffSqlCommands) === 0) {
+        if (count($filteredSchemaDiffSqlCommands) === 0 && $input->getOption('empty') === false) {
             $output->writeln('<info>Database schema is satisfying ORM, no migrations were generated.</info>');
 
             return static::RETURN_CODE_OK;

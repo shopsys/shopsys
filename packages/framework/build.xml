@@ -377,6 +377,15 @@
         </exec>
     </target>
 
+    <target name="db-migrations-generate-empty" description="Generates new empty migration file.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:migrations:generate"/>
+            <arg value="--empty"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
+
     <target name="db-rebuild" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Drops all data in database and creates a new one with base data only."/>
 
     <target name="db-wipe-public-schema" depends="production-protection" description="Drops and creates public database schema." hidden="true">
