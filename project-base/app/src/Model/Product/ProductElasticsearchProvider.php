@@ -11,6 +11,9 @@ use App\Model\Product\Flag\Flag;
 use App\Model\Product\Search\FilterQuery;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider as BaseProductElasticsearchProvider;
+use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
+use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
+use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchRepository;
 
 /**
  * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
@@ -19,33 +22,16 @@ use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider as BasePr
 class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
 {
     /**
-     * @param int[][] $productsIds
-     * @return array
+     * @param \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
+     * @param \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchRepository $productElasticsearchBatchRepository
      */
-    public function getBatchedVisibleByProductIds(array $productsIds): array
-    {
-        $filterQueries = [];
-
-        foreach ($productsIds as $productIds) {
-            $filterQueries[] = $this->filterQueryFactory->createVisibleProductsByProductIdsFilter($productIds);
-        }
-
-        return $this->productElasticsearchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
-    }
-
-    /**
-     * @param int[][] $productsIds
-     * @return array
-     */
-    public function getBatchedSellableByProductIds(array $productsIds): array
-    {
-        $filterQueries = [];
-
-        foreach ($productsIds as $productIds) {
-            $filterQueries[] = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds);
-        }
-
-        return $this->productElasticsearchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
+    public function __construct(
+        ProductElasticsearchRepository $productElasticsearchRepository,
+        FilterQueryFactory $filterQueryFactory,
+        private readonly ProductElasticsearchBatchRepository $productElasticsearchBatchRepository,
+    ) {
+        parent::__construct($productElasticsearchRepository, $filterQueryFactory);
     }
 
     /**
@@ -60,7 +46,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
             $filterQueries[$productBatchLoadByEntityData->getId()] = $this->getFilterQuery($productBatchLoadByEntityData);
         }
 
-        return $this->productElasticsearchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
+        return $this->productElasticsearchBatchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
     }
 
     /**

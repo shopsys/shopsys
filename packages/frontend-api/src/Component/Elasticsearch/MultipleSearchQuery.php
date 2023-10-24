@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\Elasticsearch;
+namespace Shopsys\FrontendApiBundle\Component\Elasticsearch;
 
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html
@@ -12,13 +12,13 @@ class MultipleSearchQuery
     /**
      * @var array<int, mixed>
      */
-    private array $body;
+    protected array $body;
 
     /**
      * @param string $indexName
-     * @param \App\Model\Product\Search\FilterQuery[] $filterQueries
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery[] $filterQueries
      */
-    public function __construct(private string $indexName, array $filterQueries)
+    public function __construct(protected readonly string $indexName, array $filterQueries)
     {
         $this->body = $this->getBody($filterQueries);
     }
@@ -35,10 +35,10 @@ class MultipleSearchQuery
     }
 
     /**
-     * @param \App\Model\Product\Search\FilterQuery[] $filterQueries
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery[] $filterQueries
      * @return array
      */
-    private function getBody(array $filterQueries): array
+    protected function getBody(array $filterQueries): array
     {
         $body = [];
 

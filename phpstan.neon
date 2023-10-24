@@ -58,7 +58,7 @@ parameters:
         -
             # in fact, anything can be passed to the load function, it just has a bad annotation
             message: '#^Parameter \#1 \$key of method Overblog\\DataLoader\\DataLoaderInterface::load\(\) expects string#'
-            path: %currentWorkingDirectory%/project-base/app/src/FrontendApi/*
+            path: %currentWorkingDirectory%/*
     excludePaths:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*

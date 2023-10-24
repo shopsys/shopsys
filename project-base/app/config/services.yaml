@@ -930,3 +930,9 @@ services:
     Psr\Http\Message\ServerRequestInterface:
         factory: ['@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory', 'createRequest']
         arguments: ['@=service("request_stack").getMainRequest()']
+
+    Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductsBatchLoader:
+        alias: App\FrontendApi\Model\Product\ProductsBatchLoader
+
+    Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider:
+        alias: App\Model\Product\ProductElasticsearchProvider

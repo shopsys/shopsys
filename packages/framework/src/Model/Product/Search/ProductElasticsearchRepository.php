@@ -148,7 +148,7 @@ class ProductElasticsearchRepository implements ResetInterface
      * @param array $result
      * @return array
      */
-    protected function extractHits(array $result): array
+    public function extractHits(array $result): array
     {
         return array_map(function ($value) {
             $data = $value['_source'];
@@ -162,7 +162,7 @@ class ProductElasticsearchRepository implements ResetInterface
      * @param array $result
      * @return int
      */
-    protected function extractTotalCount(array $result): int
+    public function extractTotalCount(array $result): int
     {
         return (int)$result['hits']['total']['value'];
     }

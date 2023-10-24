@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\Elasticsearch;
+namespace Shopsys\FrontendApiBundle\Component\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
@@ -14,15 +14,15 @@ class MultipleSearchQueryFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private IndexDefinitionLoader $indexDefinitionLoader,
-        private Domain $domain,
+        protected readonly IndexDefinitionLoader $indexDefinitionLoader,
+        protected readonly Domain $domain,
     ) {
     }
 
     /**
      * @param string $indexName
-     * @param \App\Model\Product\Search\FilterQuery[] $filterQueries
-     * @return \App\Component\Elasticsearch\MultipleSearchQuery
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery[] $filterQueries
+     * @return \Shopsys\FrontendApiBundle\Component\Elasticsearch\MultipleSearchQuery
      */
     public function create(string $indexName, array $filterQueries): MultipleSearchQuery
     {
@@ -33,7 +33,7 @@ class MultipleSearchQueryFactory
      * @param string $indexName
      * @return string
      */
-    private function getIndexAlias(string $indexName): string
+    protected function getIndexAlias(string $indexName): string
     {
         return $this->indexDefinitionLoader->getIndexDefinition(
             $indexName,

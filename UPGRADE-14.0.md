@@ -217,6 +217,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   add Persoo Category feed and check your feeds ([#2926](https://github.com/shopsys/shopsys/pull/2926))
     -   we have renamed `shopsys.product_feed` tag to `shopsys.feed` to make it more generic so update it in your `services.yaml` if you have extended any of current feeds or implemented your own
     -   see #project-base-diff to update your project
+-   move part of data loading logic from project-base into packages ([#2901](https://github.com/shopsys/shopsys/pull/2901))
+    -   `Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository::extractHits` visibility has changed from `protected` to `public`
+    -   `Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository::extractTotalCount` visibility has changed from `protected` to `public`
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

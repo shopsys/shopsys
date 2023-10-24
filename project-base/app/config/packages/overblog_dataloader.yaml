@@ -4,16 +4,16 @@ overblog_dataloader:
     loaders:
         productsVisibleByIdsBatchLoader:
             alias: "products_visible_by_ids_batch_loader"
-            batch_load_fn: "@App\\FrontendApi\\Model\\Product\\ProductsBatchLoader:loadVisibleByIds"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadVisibleByIds"
         productsVisibleAndSortedByIdsBatchLoader:
             alias: "products_visible_and_sorted_by_ids_batch_loader"
-            batch_load_fn: "@App\\FrontendApi\\Model\\Product\\ProductsBatchLoader:loadVisibleAndSortedByIds"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadVisibleAndSortedByIds"
         productsByEntitiesBatchLoader:
             alias: "products_by_entities_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Product\\ProductsBatchLoader:loadByEntities"
         productsSellableByIdsBatchLoader:
             alias: "products_sellable_by_ids_batch_loader"
-            batch_load_fn: "@App\\FrontendApi\\Model\\Product\\ProductsBatchLoader:loadSellableByIds"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadSellableByIds"
         imagesBatchLoader:
             alias: "images_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Image\\ImagesBatchLoader:loadByBatchData"
