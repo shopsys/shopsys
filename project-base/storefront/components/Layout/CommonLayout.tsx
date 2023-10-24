@@ -7,8 +7,10 @@ import { NotificationBars } from './NotificationBars/NotificationBars';
 import { Webline } from './Webline/Webline';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
+import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { CanonicalQueryParameters } from 'helpers/seo/generateCanonicalUrl';
+import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 
 type CommonLayoutProps = {
@@ -17,6 +19,7 @@ type CommonLayoutProps = {
     breadcrumbs?: BreadcrumbFragmentApi[];
     breadcrumbsType?: FriendlyPagesTypesKeys;
     canonicalQueryParams?: CanonicalQueryParameters;
+    isFetchingData?: boolean;
 };
 
 export const CommonLayout: FC<CommonLayoutProps> = ({
@@ -26,35 +29,46 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     breadcrumbs,
     breadcrumbsType,
     canonicalQueryParams,
-}) => (
-    <>
-        <SeoMeta canonicalQueryParams={canonicalQueryParams} defaultDescription={description} defaultTitle={title} />
+    isFetchingData,
+}) => {
+    const isPageLoading = useSessionStore((s) => s.isPageLoading);
 
-        <NotificationBars />
+    return (
+        <>
+            <SeoMeta
+                canonicalQueryParams={canonicalQueryParams}
+                defaultDescription={description}
+                defaultTitle={title}
+            />
 
-        <Webline className="relative mb-8" type="colored">
-            <Header />
-            <Navigation />
-        </Webline>
+            <NotificationBars />
 
-        <Adverts withGapBottom withWebline positionName="header" />
-
-        {!!breadcrumbs && (
-            <Webline className="mb-8">
-                <Breadcrumbs breadcrumbs={breadcrumbs} type={breadcrumbsType} />
+            <Webline className="relative mb-8" type="colored">
+                <Header />
+                <Navigation />
             </Webline>
-        )}
 
-        {children}
+            <Adverts withGapBottom withWebline positionName="header" />
 
-        <Adverts withGapBottom withGapTop withWebline positionName="footer" />
+            {!!breadcrumbs && !isPageLoading && !isFetchingData && (
+                <Webline className="mb-8">
+                    <Breadcrumbs breadcrumbs={breadcrumbs} type={breadcrumbsType} />
+                </Webline>
+            )}
 
-        <Webline type="light">
-            <NewsletterForm />
-        </Webline>
+            <SkeletonManager isFetchingData={isFetchingData} isPageLoading={isPageLoading}>
+                {children}
+            </SkeletonManager>
 
-        <Webline type="dark">
-            <Footer />
-        </Webline>
-    </>
-);
+            <Adverts withGapBottom withGapTop withWebline positionName="footer" />
+
+            <Webline type="light">
+                <NewsletterForm />
+            </Webline>
+
+            <Webline type="dark">
+                <Footer />
+            </Webline>
+        </>
+    );
+};

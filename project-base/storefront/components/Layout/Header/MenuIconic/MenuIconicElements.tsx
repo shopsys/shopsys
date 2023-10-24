@@ -1,4 +1,4 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { ExtendedLinkPageType, ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
 
@@ -8,7 +8,7 @@ export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, da
     </li>
 );
 
-type MenuIconicItemLinkProps = { onClick?: () => void; href?: string; title?: string };
+type MenuIconicItemLinkProps = { onClick?: () => void; href?: string; title?: string; type?: ExtendedLinkPageType };
 
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, dataTestId }) => {
     if (href) {
@@ -37,7 +37,7 @@ const menuIconicItemLinkTwClass =
 
 export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({ children, className, dataTestId, href, title, onClick }, _) => {
+    ({ children, className, dataTestId, href, title, type, onClick }, _) => {
         if (href) {
             return (
                 <ExtendedNextLink
@@ -45,7 +45,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
                     data-testid={dataTestId}
                     href={href}
                     title={title}
-                    type="static"
+                    type={type || 'static'}
                     onClick={onClick}
                 >
                     {children}

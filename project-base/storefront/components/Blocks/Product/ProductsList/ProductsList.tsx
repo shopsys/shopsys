@@ -1,6 +1,6 @@
-import { ProductListItemSkeleton } from './ProductListItemSkeleton';
 import { ProductsListContent } from './ProductsListContent';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
+import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/CategoryDetailContentMessage';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { CategoryDetailFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
@@ -57,7 +57,9 @@ export const ProductsList: FC<ProductsListProps> = ({
                 </ProductsListContent>
 
                 {loadMoreFetching &&
-                    createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => <ProductListItemSkeleton key={index} />)}
+                    createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
+                        <SkeletonModuleProductListItem key={index} />
+                    ))}
             </>
         );
     }
@@ -65,7 +67,7 @@ export const ProductsList: FC<ProductsListProps> = ({
     return (
         <div className={productListTwClass} data-testid={TEST_IDENTIFIER}>
             {createEmptyArray(calculatePageSize(currentLoadMore)).map((_, index) => (
-                <ProductListItemSkeleton key={index} />
+                <SkeletonModuleProductListItem key={index} />
             ))}
         </div>
     );

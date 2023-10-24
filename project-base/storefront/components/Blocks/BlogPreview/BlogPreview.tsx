@@ -2,6 +2,7 @@ import { BlogPreviewMain } from './BlogPreviewMain';
 import { BlogPreviewSide } from './BlogPreviewSide';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowRightIcon } from 'components/Basic/Icon/IconsSvg';
+import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
 import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import useTranslation from 'next-translate/useTranslation';
@@ -12,8 +13,10 @@ const TEST_IDENTIFIER = 'blocks-blogpreview';
 
 export const BlogPreview: FC = () => {
     const { t } = useTranslation();
-    const [{ data: blogPreviewData }] = useBlogArticlesQueryApi({ variables: BLOG_PREVIEW_VARIABLES });
-    const [{ data: blogUrlData }] = useBlogUrlQueryApi();
+    const [{ data: blogPreviewData, fetching: fetchingArticles }] = useBlogArticlesQueryApi({
+        variables: BLOG_PREVIEW_VARIABLES,
+    });
+    const [{ data: blogUrlData, fetching: fetchingBlogUrl }] = useBlogUrlQueryApi();
     const blogUrl = blogUrlData?.blogCategories[0].link;
 
     const blogMainItems = useMemo(
@@ -46,15 +49,19 @@ export const BlogPreview: FC = () => {
                 )}
             </div>
 
-            <div className="flex flex-col gap-16 vl:flex-row  vl:justify-between">
-                {!!blogMainItems && (
-                    <div className="flex flex-1 gap-6 vl:gap-16">
-                        <BlogPreviewMain articles={blogMainItems} />
-                    </div>
-                )}
+            {(fetchingArticles || fetchingBlogUrl) && <SkeletonModuleMagazine />}
 
-                {!!blogSideItems && <BlogPreviewSide articles={blogSideItems} />}
-            </div>
+            {!fetchingArticles && !fetchingBlogUrl && !!(blogMainItems || blogSideItems) && (
+                <div className="flex flex-col gap-16 vl:flex-row  vl:justify-between">
+                    {!!blogMainItems && (
+                        <div className="flex flex-1 gap-6 vl:gap-16">
+                            <BlogPreviewMain articles={blogMainItems} />
+                        </div>
+                    )}
+
+                    {!!blogSideItems && <BlogPreviewSide articles={blogSideItems} />}
+                </div>
+            )}
         </div>
     );
 };

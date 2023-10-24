@@ -14,7 +14,7 @@ const TEST_IDENTIFIER = 'layout-header-navigation-navigationitem';
 export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem }) => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
     const hasChildren = !!navigationItem.categoriesByColumns.length;
-    const isWithoutCategoryLink = navigationItem.link === `/#`;
+    const isCatalogLink = navigationItem.link === `/#`;
 
     return (
         <li
@@ -25,7 +25,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem }) => {
         >
             <ExtendedNextLink
                 href={navigationItem.link}
-                type={isWithoutCategoryLink ? 'static' : 'category'}
+                type={isCatalogLink ? 'homepage' : 'category'}
                 className={twJoin(
                     'relative m-0 flex items-center px-2 py-4 text-sm font-bold uppercase text-white no-underline hover:text-orangeLight hover:no-underline group-hover:text-orangeLight group-hover:no-underline vl:text-base',
                 )}

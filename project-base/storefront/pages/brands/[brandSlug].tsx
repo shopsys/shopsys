@@ -1,7 +1,6 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailContent';
-import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     BrandDetailQueryApi,
@@ -61,15 +60,11 @@ const BrandDetailPage: NextPage = () => {
     return (
         <CommonLayout
             breadcrumbs={brandDetailData?.brand?.breadcrumb}
-            breadcrumbsType="category"
             description={brandDetailData?.brand?.seoMetaDescription}
+            isFetchingData={!filter && fetching && !brandDetailData}
             title={seoTitle}
         >
-            {!filter && fetching ? (
-                <CategoryDetailPageSkeleton />
-            ) : (
-                !!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />
-            )}
+            {!!brandDetailData?.brand && <BrandDetailContent brand={brandDetailData.brand} />}
         </CommonLayout>
     );
 };

@@ -1,8 +1,8 @@
 import { ProductsSearch } from './ProductsSearch';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
+import { SkeletonPageProductsList } from 'components/Blocks/Skeleton/SkeletonPageProductsList';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { CategoryDetailPageSkeleton } from 'components/Pages/CategoryDetail/CategoryDetailPageSkeleton';
 import { SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
@@ -33,7 +33,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
         <Webline>
             <Heading type="h1">{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
             {isFetchingInitialData ? (
-                <CategoryDetailPageSkeleton />
+                <SkeletonPageProductsList />
             ) : (
                 !!searchResults && (
                     <>
@@ -42,6 +42,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
                                 <Heading type="h3">{t('Found articles')}</Heading>
                                 <SimpleNavigation
                                     imageType="searchThumbnail"
+                                    linkType="article"
                                     listedItems={searchResults.articlesSearch}
                                 />
                             </div>
@@ -50,14 +51,14 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
                         {!!searchResults.brandSearch.length && (
                             <div className="mt-6">
                                 <Heading type="h3">{t('Found brands')}</Heading>
-                                <SimpleNavigation listedItems={searchResults.brandSearch} />
+                                <SimpleNavigation linkType="brand" listedItems={searchResults.brandSearch} />
                             </div>
                         )}
 
                         {!!mappedCategoriesSearchResults?.length && (
                             <div className="mt-6">
                                 <Heading type="h3">{t('Found categories')}</Heading>
-                                <SimpleNavigation listedItems={mappedCategoriesSearchResults} />
+                                <SimpleNavigation linkType="category" listedItems={mappedCategoriesSearchResults} />
                             </div>
                         )}
 

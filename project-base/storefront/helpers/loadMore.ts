@@ -1,11 +1,9 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { DocumentNode } from 'graphql';
 import {
-    BrandProductsQueryDocumentApi,
     BrandProductsQueryVariablesApi,
-    CategoryProductsQueryDocumentApi,
     CategoryProductsQueryVariablesApi,
-    FlagProductsQueryDocumentApi,
     FlagProductsQueryVariablesApi,
     ListedProductConnectionFragmentApi,
     Maybe,
@@ -30,10 +28,7 @@ export const mergeProductEdges = (
 ) => [...(previousProductEdges || []), ...(newProductEdges || [])];
 
 export const getPreviousProductsFromCache = (
-    queryDocument:
-        | typeof BrandProductsQueryDocumentApi
-        | typeof FlagProductsQueryDocumentApi
-        | typeof CategoryProductsQueryDocumentApi,
+    queryDocument: DocumentNode,
     client: Client,
     urlSlug: string,
     sort: ProductOrderingModeEnumApi | null,
@@ -192,10 +187,7 @@ export const calculatePageSize = (currentLoadMore: number, pageSize = DEFAULT_PA
 };
 
 export const useProductsData = (
-    queryDocument:
-        | typeof BrandProductsQueryDocumentApi
-        | typeof FlagProductsQueryDocumentApi
-        | typeof CategoryProductsQueryDocumentApi,
+    queryDocument: DocumentNode,
     totalProductCount: number,
     additionalParams?: {
         shouldAbortFetchingProducts: boolean;
@@ -316,10 +308,7 @@ export const useProductsData = (
 };
 
 const readProductsFromCache = (
-    queryDocument:
-        | typeof BrandProductsQueryDocumentApi
-        | typeof FlagProductsQueryDocumentApi
-        | typeof CategoryProductsQueryDocumentApi,
+    queryDocument: DocumentNode,
     client: Client,
     urlSlug: string,
     orderingMode: ProductOrderingModeEnumApi | null,

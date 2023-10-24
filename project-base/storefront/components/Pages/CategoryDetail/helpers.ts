@@ -7,29 +7,33 @@ import {
     CategoryDetailQueryDocumentApi,
     CategoryDetailQueryVariablesApi,
 } from 'graphql/generated';
+import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextRouter, useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
+import { FilterOptionsUrlQueryType } from 'types/productFilter';
 import { useClient, Client } from 'urql';
 
 export const useCategoryDetailData = (
-    filter: ProductFilterApi | null,
-): [undefined | CategoryDetailFragmentApi, boolean] => {
-    const client = useClient();
+    filter: FilterOptionsUrlQueryType | null,
+): [CategoryDetailFragmentApi | undefined, boolean] => {
+    const [fetching, setFetching] = useState(false);
     const router = useRouter();
     const urlSlug = getSlugFromUrl(router.asPath);
+    const [lastFetchedUrlSlug, setLastFetchedUrlSlug] = useState(urlSlug);
+    const client = useClient();
+    const mappedFilter = mapParametersFilter(filter);
     const { sort } = useQueryParams();
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
-    const [categoryDetailData, setCategoryDetailData] = useState<undefined | CategoryDetailFragmentApi>(
-        readCategoryDetailFromCache(client, urlSlug, sort, filter),
+    const [categoryDetailData, setCategoryDetailData] = useState(
+        readCategoryDetailFromCache(client, urlSlug, sort, mappedFilter),
     );
     const setOriginalCategorySlug = useSessionStore((s) => s.setOriginalCategorySlug);
     const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
-
-    const [fetching, setFetching] = useState<boolean>(false);
+    const hasFetchedForCurrentSlug = !fetching && lastFetchedUrlSlug === urlSlug;
 
     useEffect(() => {
         if (wasRedirectedToSeoCategory) {
@@ -41,7 +45,7 @@ export const useCategoryDetailData = (
             .query<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
                 urlSlug,
                 orderingMode: sort ?? null,
-                filter,
+                filter: mappedFilter,
             })
             .toPromise()
             .then((response) => {
@@ -55,10 +59,13 @@ export const useCategoryDetailData = (
                     setOriginalCategorySlug,
                 );
             })
-            .finally(() => setFetching(false));
+            .finally(() => {
+                setFetching(false);
+                setLastFetchedUrlSlug(urlSlug);
+            });
     }, [urlSlug, sort, JSON.stringify(filter)]);
 
-    return [categoryDetailData, fetching];
+    return [categoryDetailData, !hasFetchedForCurrentSlug];
 };
 
 const handleSeoCategorySlugUpdate = (

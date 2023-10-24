@@ -1,6 +1,5 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
-import { BlogArticlePageSkeleton } from 'components/Pages/BlogArticle/BlogArticlePageSkeleton';
 import {
     BlogArticleDetailQueryApi,
     BlogArticleDetailQueryDocumentApi,
@@ -35,13 +34,10 @@ const BlogArticleDetailPage: NextPage = () => {
             breadcrumbsType="blogCategory"
             canonicalQueryParams={[]}
             description={blogArticleData?.blogArticle?.seoMetaDescription}
+            isFetchingData={fetching}
             title={blogArticleData?.blogArticle?.seoTitle}
         >
-            {!!blogArticleData?.blogArticle && !fetching ? (
-                <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />
-            ) : (
-                <BlogArticlePageSkeleton />
-            )}
+            {!!blogArticleData?.blogArticle && <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />}
         </CommonLayout>
     );
 };

@@ -10,14 +10,14 @@ import useTranslation from 'next-translate/useTranslation';
 
 const StoresPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
-    const [{ data: storesData }] = useStoresQueryApi();
+    const [{ data: storesData, fetching }] = useStoresQueryApi();
     const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Department stores'), slug: '' }];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.stores, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} title={t('Stores')}>
+        <CommonLayout breadcrumbs={breadcrumbs} isFetchingData={fetching} title={t('Stores')}>
             {storesData?.stores && <StoresContent stores={storesData.stores} />}
         </CommonLayout>
     );

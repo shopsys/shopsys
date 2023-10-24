@@ -1,23 +1,27 @@
 import { useRouter } from 'next/router';
 import Nprogress from 'nprogress';
 import { useEffect } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 
 export const usePageLoader = () => {
     const router = useRouter();
+    const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+
+    const onRouteChangeStart = (_targetUrl: string, { shallow }: { shallow: boolean }) => {
+        if (!shallow) {
+            Nprogress.start();
+        }
+    };
+    const onRouteChangeStop = (_targetUrl: string, { shallow }: { shallow: boolean }) => {
+        updatePageLoadingState({ isPageLoading: false });
+
+        if (!shallow) {
+            Nprogress.done();
+        }
+    };
 
     useEffect(() => {
         Nprogress.configure({ showSpinner: false, minimum: 0.2 });
-
-        const onRouteChangeStart = (_targetUrl: string, { shallow }: { shallow: boolean }) => {
-            if (!shallow) {
-                Nprogress.start();
-            }
-        };
-        const onRouteChangeStop = (_targetUrl: string, { shallow }: { shallow: boolean }) => {
-            if (!shallow) {
-                Nprogress.done();
-            }
-        };
 
         router.events.on('routeChangeStart', onRouteChangeStart);
         router.events.on('routeChangeComplete', onRouteChangeStop);

@@ -1,12 +1,17 @@
 import { BannersSlider } from './BannersSlider';
+import { SkeletonModuleBanners } from 'components/Blocks/Skeleton/SkeletonModuleBanners';
 import { useSliderItemsQueryApi } from 'graphql/generated';
 
 const TEST_IDENTIFIER = 'blocks-banners';
 
 export const Banners: FC = () => {
-    const [{ data: sliderItemsData }] = useSliderItemsQueryApi();
+    const [{ data: sliderItemsData, fetching }] = useSliderItemsQueryApi();
 
-    if (sliderItemsData === undefined || sliderItemsData.sliderItems.length === 0) {
+    if (fetching) {
+        return <SkeletonModuleBanners />;
+    }
+
+    if (!sliderItemsData?.sliderItems.length) {
         return null;
     }
 

@@ -1,6 +1,5 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
-import { StorePageSkeleton } from 'components/Pages/StoreDetail/StorePageSkeleton';
 import {
     StoreDetailQueryApi,
     StoreDetailQueryDocumentApi,
@@ -31,13 +30,10 @@ const StoreDetailPage: NextPage = () => {
         <CommonLayout
             breadcrumbs={storeDetailData?.store?.breadcrumb}
             canonicalQueryParams={[]}
+            isFetchingData={fetching}
             title={storeDetailData?.store?.storeName}
         >
-            {!!storeDetailData?.store && !fetching ? (
-                <StoreDetailContent store={storeDetailData.store} />
-            ) : (
-                <StorePageSkeleton />
-            )}
+            {!!storeDetailData?.store && <StoreDetailContent store={storeDetailData.store} />}
         </CommonLayout>
     );
 };

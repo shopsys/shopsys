@@ -8,6 +8,7 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import {
     BlogArticlesQueryDocumentApi,
+    BlogUrlQueryDocumentApi,
     PromotedCategoriesQueryDocumentApi,
     PromotedProductsQueryDocumentApi,
     SliderItemsQueryDocumentApi,
@@ -60,6 +61,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     { query: SliderItemsQueryDocumentApi },
                     { query: PromotedProductsQueryDocumentApi },
                     { query: BlogArticlesQueryDocumentApi, variables: BLOG_PREVIEW_VARIABLES },
+                    { query: BlogUrlQueryDocumentApi },
                 ],
                 t,
             }),
