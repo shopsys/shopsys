@@ -110,7 +110,6 @@ class ProductStockFacade
     {
         $productStock = new ProductStock($stock, $product);
         $this->em->persist($productStock);
-        $this->em->flush();
 
         return $productStock;
     }

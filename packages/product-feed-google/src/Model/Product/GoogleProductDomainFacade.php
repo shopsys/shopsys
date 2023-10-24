@@ -43,6 +43,8 @@ class GoogleProductDomainFacade
         foreach ($googleProductDomainsData as $googleProductDomainData) {
             $this->saveGoogleProductDomain($productId, $googleProductDomainData);
         }
+
+        $this->em->flush();
     }
 
     /**
@@ -88,8 +90,6 @@ class GoogleProductDomainFacade
             $newGoogleProductDomain = new GoogleProductDomain($googleProductDomainData);
             $this->em->persist($newGoogleProductDomain);
         }
-
-        $this->em->flush();
     }
 
     /**

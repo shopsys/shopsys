@@ -78,6 +78,8 @@ class HeurekaProductDomainFacade
         foreach ($heurekaProductDomainsData as $heurekaProductDomainData) {
             $this->saveHeurekaProductDomain($productId, $heurekaProductDomainData);
         }
+
+        $this->em->flush();
     }
 
     /**
@@ -100,8 +102,6 @@ class HeurekaProductDomainFacade
             $newHeurekaProductDomain = new HeurekaProductDomain($heurekaProductDomainData);
             $this->em->persist($newHeurekaProductDomain);
         }
-
-        $this->em->flush();
     }
 
     /**

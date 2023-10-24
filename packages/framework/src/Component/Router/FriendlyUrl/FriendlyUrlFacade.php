@@ -51,6 +51,8 @@ class FriendlyUrlFacade
             $locale = $this->domain->getDomainConfigById($friendlyUrl->getDomainId())->getLocale();
             $this->resolveUniquenessOfFriendlyUrlAndFlush($friendlyUrl, $namesByLocale[$locale]);
         }
+
+        $this->em->flush();
     }
 
     /**
@@ -66,6 +68,8 @@ class FriendlyUrlFacade
         if ($friendlyUrl !== null) {
             $this->resolveUniquenessOfFriendlyUrlAndFlush($friendlyUrl, $entityName);
         }
+
+        $this->em->flush();
     }
 
     /**
@@ -108,7 +112,6 @@ class FriendlyUrlFacade
         }
 
         $this->em->persist($friendlyUrl);
-        $this->em->flush();
         $this->setFriendlyUrlAsMain($friendlyUrl);
     }
 

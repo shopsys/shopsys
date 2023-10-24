@@ -63,6 +63,8 @@ class ZboziProductDomainFacade
         foreach ($zboziProductDomainsData as $zboziProductDomainData) {
             $this->saveZboziProductDomain($productId, $zboziProductDomainData);
         }
+
+        $this->em->flush();
     }
 
     /**
@@ -106,8 +108,6 @@ class ZboziProductDomainFacade
             $newZboziProductDomain = new ZboziProductDomain($zboziProductDomainData);
             $this->em->persist($newZboziProductDomain);
         }
-
-        $this->em->flush();
     }
 
     /**
