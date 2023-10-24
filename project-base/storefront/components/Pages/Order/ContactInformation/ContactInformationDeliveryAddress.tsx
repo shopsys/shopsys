@@ -84,7 +84,11 @@ export const ContactInformationDeliveryAddress: FC = () => {
                     setValue(formMeta.fields.deliveryPostcode.name, deliveryAddress.postcode, { shouldValidate: true });
                 }
             }
-        } else if (deliveryAddressUuid === '') {
+        } else {
+            const selectedCountryOption = countriesAsSelectOptions.find(
+                (option) => option.value === user?.country.code,
+            );
+
             setValue(formMeta.fields.deliveryFirstName.name, '');
             setValue(formMeta.fields.deliveryLastName.name, '');
             setValue(formMeta.fields.deliveryCompanyName.name, '');
@@ -92,11 +96,13 @@ export const ContactInformationDeliveryAddress: FC = () => {
             setValue(formMeta.fields.deliveryStreet.name, '');
             setValue(formMeta.fields.deliveryCity.name, '');
             setValue(formMeta.fields.deliveryPostcode.name, '');
-            setValue(formMeta.fields.deliveryCountry.name, countriesAsSelectOptions[0], { shouldValidate: true });
+            setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption || countriesAsSelectOptions[0], {
+                shouldValidate: true,
+            });
         }
     }, [deliveryAddressUuid, countriesAsSelectOptions]);
 
-    if (countriesAsSelectOptions.length === 0) {
+    if (!countriesAsSelectOptions.length) {
         return null;
     }
 
