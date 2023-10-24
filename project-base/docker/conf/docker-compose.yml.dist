@@ -56,7 +56,7 @@ services:
             dockerfile: ./docker/Dockerfile
         container_name: shopsys-framework-cypress
         volumes:
-            - ./storefront:/app
+            - ./storefront/cypress:/app
         profiles:
             - storefront-acceptance-tests
         network_mode: "host"
