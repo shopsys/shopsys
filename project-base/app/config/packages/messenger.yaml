@@ -1,0 +1,16 @@
+framework:
+    messenger:
+        reset_on_message: true
+        transports:
+            example_transport:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    vhost: '%env(MESSENGER_TRANSPORT_VHOST)%'
+                    exchange:
+                        name: example_exchange
+                        type: direct
+                    queues:
+                        example_queue: ~
+
+        routing:
+            Shopsys\FrameworkBundle\Component\Messenger\ExampleMessage: example_transport

@@ -74,6 +74,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   improve product lists in GrapesJS ([#2879](https://github.com/shopsys/shopsys/pull/2879))
     -   see #project-base-diff to update your project
+-   add Symfony Messenger along with RabbitMQ ([#2898](https://github.com/shopsys/shopsys/pull/2898))
+    -   install application to create new necessary containers (run again `./scripts/install.sh`) – this will overwrite your local `docker-compose.yml` file
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
