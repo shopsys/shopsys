@@ -13,6 +13,22 @@ FROM base as development
 
 USER root
 
+# add blackfire packages
+RUN wget -q -O - https://packages.blackfire.io/gpg.key | apt-key add -
+RUN echo "deb http://packages.blackfire.io/debian any main" | tee /etc/apt/sources.list.d/blackfire.list
+
+### install blackfire
+RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
+   && architecture=$(case $(uname -m) in i386 | i686 | x86) echo "i386" ;; x86_64 | amd64) echo "amd64" ;; aarch64 | arm64 | armv8) echo "arm64" ;; *) echo "amd64" ;; esac) \
+   && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/linux/$architecture/$version \
+   && mkdir -p /tmp/blackfire \
+   && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp/blackfire \
+   && mv /tmp/blackfire/blackfire-*.so $(php -r "echo ini_get ('extension_dir');")/blackfire.so \
+   && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707\n" > $PHP_INI_DIR/conf.d/blackfire.ini \
+   && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
+
+RUN apt-get update && apt-get install -y blackfire-agent blackfire-php # remove/comment-out this line and rebuild docker for HTTP profiling
+
 # allow overwriting UID and GID o the user "www-data" to help solve issues with permissions in mounted volumes
 # if the GID is already in use, we will assign GID 33 instead (33 is the standard uid/gid for "www-data" in Debian)
 ARG www_data_uid
