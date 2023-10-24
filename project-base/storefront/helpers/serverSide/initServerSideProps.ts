@@ -6,7 +6,6 @@ import {
     CurrentCustomerUserQueryDocumentApi,
     NavigationQueryDocumentApi,
     NotificationBarsDocumentApi,
-    ProductsByCatnumsDocumentApi,
     SeoPageQueryDocumentApi,
     SettingsQueryDocumentApi,
 } from 'graphql/generated';
@@ -15,7 +14,6 @@ import { isUserLoggedInSSR } from 'helpers/auth/isUserLoggedInSSR';
 import { DomainConfigType } from 'helpers/domain/domainConfig';
 import { logException } from 'helpers/errors/logException';
 import { getServerSideInternationalizedStaticUrl } from 'helpers/getInternationalizedStaticUrls';
-import { parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
@@ -121,15 +119,6 @@ export const initServerSideProps = async ({
             context,
             domainConfig.url,
         );
-
-        const articleWithGrapesJsResult = resolvedQueries.find((query) =>
-            ['BlogArticle', 'Article'].includes(query.data?.slug?.__typename),
-        );
-
-        if (articleWithGrapesJsResult) {
-            const parsedCatnums = parseCatnums(articleWithGrapesJsResult.data.slug.text);
-            await currentClient.query(ProductsByCatnumsDocumentApi, { catnums: parsedCatnums }).toPromise();
-        }
 
         if (parsedSlug && parsedSlug !== trimmedUrlWithoutQueryParams) {
             return {

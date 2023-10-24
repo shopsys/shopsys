@@ -10,8 +10,8 @@ use Symfony\Component\HtmlSanitizer\Reference\W3CReference;
 
 class GrapesJsParser
 {
-    private const GJS_PRODUCTS_REGEX = '/<div[^<>]*class="gjs-products"[^<>]*data-products="[\d\w,.][^"]*"[^<>]*><\/div>|<div[^<>]*data-products="[\d\w,.]*[^"]"[^<>]*class="gjs-products"[^<>]*><\/div>/';
-    private const GJS_PRODUCT_REGEX = '/<section class=".+?">|<\/section>| id=".*?"|<div[^<>]*class="gjs-product"[^<>]*data-product="[\d\w,.]*[^"]"[^<>]*><\/div>|<div[^<>]*data-product="[\d\w,.]*[^"]"[^<>]*class="gjs-product"[^<>]*><\/div>/';
+    private const GJS_PRODUCTS_REGEX = '/<div[^<>]*class="gjs-products"[^<>]*data-products=".[^"]*"[^<>]*><\/div>|<div[^<>]*data-products=".*[^"]"[^<>]*class="gjs-products"[^<>]*><\/div>/';
+    private const GJS_PRODUCT_REGEX = '/<div[^<>]*class="gjs-product"[^<>]*data-product="[^"]*"[^<>]*><\/div>|<div[^<>]*data-product="[^"]*"[^<>]*class="gjs-product"[^<>]*><\/div>/';
     private const GJS_PRODUCTS_SEPARATOR = '|||';
 
     /**
@@ -26,8 +26,11 @@ class GrapesJsParser
 
         $newText = preg_replace_callback(self::GJS_PRODUCTS_REGEX, static function (array $matches): string {
             preg_match('/data-products="(.+?)"/', $matches[0], $productMatches);
+            $productArray = explode(',', $productMatches[1]);
+            $trimmedProductArray = array_map(static fn ($product) => trim($product), $productArray);
+            $productCatnumsString = implode(',', $trimmedProductArray);
 
-            return sprintf('%s[gjc-comp-ProductList=%s]%s', self::GJS_PRODUCTS_SEPARATOR, $productMatches[1], self::GJS_PRODUCTS_SEPARATOR);
+            return sprintf('%s[gjc-comp-ProductList=%s]%s', self::GJS_PRODUCTS_SEPARATOR, $productCatnumsString, self::GJS_PRODUCTS_SEPARATOR);
         }, preg_replace(self::GJS_PRODUCT_REGEX, '', $text));
 
         $sanitizer = $this->getConfiguredSanitizer();
@@ -46,8 +49,7 @@ class GrapesJsParser
             ->allowRelativeLinks()
             ->dropAttribute('style', 'div')
             ->allowElement('iframe', '*')
-            ->withMaxInputLength(25000)
-        ;
+            ->withMaxInputLength(25000);
 
         foreach (array_keys(W3CReference::HEAD_ELEMENTS) as $element) {
             $config->allowElement($element, '*');
