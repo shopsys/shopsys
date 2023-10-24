@@ -25,6 +25,7 @@ class Setting
     public const FEED_NAME_TO_CONTINUE = 'feedNameToContinue';
     public const FEED_DOMAIN_ID_TO_CONTINUE = 'feedDomainIdToContinue';
     public const FEED_ITEM_ID_TO_CONTINUE = 'feedItemIdToContinue';
+    public const PERFORMANCE_DATA_PRODUCTS_IMPORTED = 'performanceDataProductsImported';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\SettingValue[][]

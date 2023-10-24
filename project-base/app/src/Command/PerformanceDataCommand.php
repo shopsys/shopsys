@@ -8,6 +8,7 @@ use App\DataFixtures\Performance\CategoryDataFixture;
 use App\DataFixtures\Performance\CustomerUserDataFixture;
 use App\DataFixtures\Performance\OrderDataFixture;
 use App\DataFixtures\Performance\ProductDataFixture;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,6 +33,7 @@ class PerformanceDataCommand extends Command
         private readonly ProductDataFixture $productDataFixture,
         private readonly CustomerUserDataFixture $customerUserDataFixture,
         private readonly OrderDataFixture $orderDataFixture,
+        private readonly Setting $setting,
     ) {
         parent::__construct();
     }
@@ -49,14 +51,30 @@ class PerformanceDataCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('<fg=green>loading ' . CategoryDataFixture::class . '</fg=green>');
-        $this->categoryDataFixture->load($output);
-        $output->writeln('<fg=green>loading ' . ProductDataFixture::class . '</fg=green>');
-        $this->productDataFixture->load($output);
+        if ($this->setting->get(Setting::PERFORMANCE_DATA_PRODUCTS_IMPORTED) === 0) {
+            $output->writeln('<fg=green>loading ' . CategoryDataFixture::class . '</fg=green>');
+            $this->categoryDataFixture->load($output);
+        }
+
+        if ($this->setting->get(Setting::PERFORMANCE_DATA_PRODUCTS_IMPORTED) === $this->productDataFixture->getProductTotalCount()) {
+            $output->writeln('<fg=green>performance data already imported</fg=green>');
+        } else {
+            $output->writeln('<fg=green>loading ' . ProductDataFixture::class . '</fg=green>');
+            $imported = $this->productDataFixture->load($output, $this->setting->get(Setting::PERFORMANCE_DATA_PRODUCTS_IMPORTED));
+
+            echo "Setting imported to $imported\n";
+
+            $this->setting->set(Setting::PERFORMANCE_DATA_PRODUCTS_IMPORTED, $imported);
+
+            return Command::SUCCESS;
+        }
+
         $output->writeln('<fg=green>loading ' . CustomerUserDataFixture::class . '</fg=green>');
         $this->customerUserDataFixture->load($output);
         $output->writeln('<fg=green>loading ' . OrderDataFixture::class . '</fg=green>');
         $this->orderDataFixture->load($output);
+
+        $this->setting->set(Setting::PERFORMANCE_DATA_PRODUCTS_IMPORTED, 0);
 
         return Command::SUCCESS;
     }

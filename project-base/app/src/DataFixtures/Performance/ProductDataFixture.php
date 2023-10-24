@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProductDataFixture
 {
-    private const BATCH_SIZE = 1000;
+    private const BATCH_SIZE = 10;
 
     public const FIRST_PERFORMANCE_PRODUCT = 'first_performance_product';
 
@@ -81,8 +81,12 @@ class ProductDataFixture
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output, int $alreadyImportedProductsCount)
     {
+        echo "Loading performance data with $alreadyImportedProductsCount already imported products\n";
+        $startOfRun = microtime(true);
+        $this->countImported = $alreadyImportedProductsCount;
+        $this->demoDataIterationCounter = $alreadyImportedProductsCount;
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 
@@ -90,9 +94,9 @@ class ProductDataFixture
 
         $variantCatnumsByMainVariantCatnum = DemoProductDataFixture::getVariantCatnumsByMainVariantCatnum();
 
-        $progressBar = $this->progressBarFactory->create($output, $this->productTotalCount);
+        $progressBar = $this->progressBarFactory->create($output, self::BATCH_SIZE);
 
-        while ($this->countImported < $this->productTotalCount) {
+        while ($this->countImported < $alreadyImportedProductsCount + self::BATCH_SIZE) {
             $productTemplate = next($this->productTemplates);
 
             if ($productTemplate === false) {
@@ -115,20 +119,23 @@ class ProductDataFixture
                 $this->productsByCatnum[$product->getCatnum()] = $product;
             }
 
-            if ($this->countImported % self::BATCH_SIZE === 0) {
+//            if ($this->countImported % self::BATCH_SIZE === 0) {
                 $this->cleanAndLoadReferences();
-            }
 
             $this->countImported++;
 
             $progressBar->setProgress($this->countImported);
         }
+
         $this->createVariants($variantCatnumsByMainVariantCatnum);
 
         $progressBar->finish();
 
         $this->em->clear();
         $this->sqlLoggerFacade->reenableLogging();
+        echo "It took: " . microtime(true) - $startOfRun . " seconds\n";
+
+        return $this->countImported;
     }
 
     /**
@@ -196,6 +203,8 @@ class ProductDataFixture
      */
     private function getUniqueIndex()
     {
+        $this->demoDataIterationCounter++;
+
         return ' #' . $this->demoDataIterationCounter;
     }
 
@@ -297,5 +306,13 @@ class ProductDataFixture
         );
 
         return $category->getId() >= $firstPerformanceCategory->getId();
+    }
+
+    /**
+     * @return int
+     */
+    public function getProductTotalCount(): int
+    {
+        return $this->productTotalCount;
     }
 }
