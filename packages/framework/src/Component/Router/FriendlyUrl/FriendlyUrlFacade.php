@@ -217,8 +217,6 @@ class FriendlyUrlFacade
         }
         $mainFriendlyUrl->setMain(true);
         $this->renewMainFriendlyUrlSlugCache($mainFriendlyUrl);
-
-        $this->em->flush();
     }
 
     /**

@@ -307,6 +307,8 @@ class ProductFacade
                 $manualInputPrices[$pricingGroup->getId()],
             );
         }
+
+        $this->em->flush();
     }
 
     /**
