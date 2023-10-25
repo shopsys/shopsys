@@ -102,6 +102,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   method `Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade::saveHeurekaProductDomain()` changed its visibility to `protected`
     -   method `Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade::saveZboziProductDomain()` changed its visibility to `protected`
     -   see #project-base-diff to update your project
+-   add consumers and RabbitMQ to deployed application ([#2904](https://github.com/shopsys/shopsys/pull/2904))
+    -   set new environment variables `RABBITMQ_DEFAULT_USER`, `RABBITMQ_DEFAULT_PASS`, `RABBITMQ_IP_WHITELIST` in your deployment tool (with use of the default config it will be Gitlab CI)
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
@@ -166,15 +169,13 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         ```tsx
         // inside useAuth.tsx login
         updateAuthLoadingState(
-            loginResult.data.Login.showCartMergeInfo
-                ? "login-loading-with-cart-modifications"
-                : "login-loading"
+            loginResult.data.Login.showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading',
         );
 
         // add this line to start showing the skeleton before the redirect
         updatePageLoadingState({
             isPageLoading: true,
-            redirectPageType: "my-page-type",
+            redirectPageType: 'my-page-type',
         });
 
         if (rewriteUrl) {
