@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Product\ProductList;
 use App\DataFixtures\Demo\ProductListDataFixture;
 use Iterator;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
+use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\CustomerUserNotLoggedUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\InvalidFindCriteriaForProductListUserError;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -82,6 +83,22 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
         $this->assertSame($uuid, $data['uuid']);
         $this->assertSame($productListType->name, $data['type']);
         $this->assertSame($expectedProductIds, array_column($data['products'], 'id'));
+    }
+
+    /**
+     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     */
+    public function testUserErrorWhenAccessingListsByType(ProductListTypeEnum $productListType): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductListsByTypeQuery.graphql', [
+            'type' => $productListType->name,
+        ]);
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+        $this->assertCount(1, $errors);
+        $this->assertSame(CustomerUserNotLoggedUserError::CODE, $errors[0]['extensions']['userCode']);
     }
 
     /**

@@ -25,4 +25,18 @@ class ProductListNotExistsForLoggedCustomerTest extends GraphQlWithLoginTestCase
 
         $this->assertNull($response['data']['productList']);
     }
+
+    /**
+     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     */
+    public function testGetProductListsForCustomerUserWithoutProductListReturnsEmptyArray(
+        ProductListTypeEnum $productListType,
+    ): void {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductListsByTypeQuery.graphql', [
+            'type' => $productListType->name,
+        ]);
+
+        $this->assertEmpty($response['data']['productListsByType']);
+    }
 }

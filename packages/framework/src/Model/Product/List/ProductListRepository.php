@@ -62,6 +62,21 @@ class ProductListRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList[]
+     */
+    public function getProductListsByTypeAndCustomerUser(
+        ProductListTypeEnumInterface $productListType,
+        CustomerUser $customerUser,
+    ): array {
+        return $this->getRepository()->findBy([
+            'type' => $productListType,
+            'customerUser' => $customerUser,
+        ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
      * @param string $uuid
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
      */

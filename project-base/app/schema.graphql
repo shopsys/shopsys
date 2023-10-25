@@ -1764,8 +1764,9 @@ type Query {
   privacyPolicyArticle: ArticleSite
   "Returns product filtered using UUID or URL slug"
   product(urlSlug: String, uuid: Uuid): Product
-  "FInd product list by uuid and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list."
+  "Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list."
   productList(input: ProductListInput!): ProductList
+  productListsByType(productListType: ProductListTypeEnum!): [ProductList!]!
   "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
   products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
   "Returns list of products by catalog numbers"

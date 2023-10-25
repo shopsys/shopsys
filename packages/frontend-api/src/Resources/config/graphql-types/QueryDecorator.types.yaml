@@ -161,3 +161,9 @@ QueryDecorator:
                     input:
                         type: "ProductListInput!"
                 description: "Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list."
+            productListsByType:
+                type: '[ProductList!]!'
+                resolve: "@=query('productListsByTypeQuery', args['productListType'])"
+                args:
+                    productListType:
+                        type: "ProductListTypeEnum!"

@@ -9,7 +9,9 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\CustomerUserNotLoggedUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\InvalidFindCriteriaForProductListUserError;
 
 class ProductListQuery extends AbstractQuery
@@ -41,6 +43,21 @@ class ProductListQuery extends AbstractQuery
         }
 
         return $this->productListFacade->findAnonymousProductListByTypeAndUuid($productListType, $productListUuid);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListTypeEnum
+     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList[]
+     */
+    public function productListsByTypeQuery(ProductListTypeEnum $productListTypeEnum): array
+    {
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+        if ($customerUser === null) {
+            throw new CustomerUserNotLoggedUserError('You have to be logged in to get your product lists by type');
+        }
+
+        return $this->productListFacade->getProductListsByTypeAndCustomerUser($productListTypeEnum, $customerUser);
     }
 
     /**

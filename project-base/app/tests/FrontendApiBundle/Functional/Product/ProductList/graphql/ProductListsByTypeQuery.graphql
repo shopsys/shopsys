@@ -1,0 +1,9 @@
+query ProductListsByTypeQuery($type: ProductListTypeEnum!) {
+    productListsByType(productListType: $type) {
+        uuid
+        type
+        products {
+            id
+        }
+    }
+}

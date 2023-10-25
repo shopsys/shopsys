@@ -74,6 +74,30 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     }
 
     /**
+     * @dataProvider findProductListProvider
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $uuid
+     * @param int[] $expectedProductIds
+     */
+    public function testGetListsByType(
+        ProductListTypeEnum $productListType,
+        string $uuid,
+        array $expectedProductIds,
+    ): void {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductListsByTypeQuery.graphql', [
+            'type' => $productListType->name,
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'productListsByType');
+
+        $this->assertIsArray($data);
+        $this->assertCount(1, $data);
+        $productListData = $data[0];
+        $this->assertSame($uuid, $productListData['uuid']);
+        $this->assertSame($productListType->name, $productListData['type']);
+        $this->assertSame($expectedProductIds, array_column($productListData['products'], 'id'));
+    }
+
+    /**
      * @return \Iterator
      */
     public function findProductListProvider(): Iterator

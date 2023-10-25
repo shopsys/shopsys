@@ -78,6 +78,18 @@ class ProductListFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList[]
+     */
+    public function getProductListsByTypeAndCustomerUser(
+        ProductListTypeEnumInterface $productListType,
+        CustomerUser $customerUser,
+    ): array {
+        return $this->productListRepository->getProductListsByTypeAndCustomerUser($productListType, $customerUser);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
      * @param string $uuid
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
      */

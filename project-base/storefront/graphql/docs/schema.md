@@ -831,13 +831,23 @@ Returns product filtered using UUID or URL slug
 <td valign="top"><a href="#productlist">ProductList</a></td>
 <td>
 
-FInd product list by uuid and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list.
+Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list.
 
 </td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productListsByType</strong></td>
+<td valign="top">[<a href="#productlist">ProductList</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">productListType</td>
+<td valign="top"><a href="#productlisttypeenum">ProductListTypeEnum</a>!</td>
 <td></td>
 </tr>
 <tr>
