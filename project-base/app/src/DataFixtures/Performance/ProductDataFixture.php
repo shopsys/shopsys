@@ -25,8 +25,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProductDataFixture
 {
-    private const BATCH_SIZE = 1000;
-
     public const FIRST_PERFORMANCE_PRODUCT = 'first_performance_product';
 
     private int $productTotalCount;
@@ -98,7 +96,6 @@ class ProductDataFixture
             if ($productTemplate === false) {
                 $this->createVariants($variantCatnumsByMainVariantCatnum);
                 $productTemplate = reset($this->productTemplates);
-                $this->demoDataIterationCounter++;
             }
             $productData = $this->productDataFactory->createFromProduct($productTemplate);
             $this->makeProductDataUnique($productData);
@@ -115,9 +112,7 @@ class ProductDataFixture
                 $this->productsByCatnum[$product->getCatnum()] = $product;
             }
 
-            if ($this->countImported % self::BATCH_SIZE === 0) {
-                $this->cleanAndLoadReferences();
-            }
+            $this->cleanAndLoadReferences();
 
             $this->countImported++;
 
@@ -196,6 +191,8 @@ class ProductDataFixture
      */
     private function getUniqueIndex()
     {
+        $this->demoDataIterationCounter++;
+
         return ' #' . $this->demoDataIterationCounter;
     }
 
