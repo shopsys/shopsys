@@ -154,3 +154,10 @@ QueryDecorator:
                 type: 'Settings'
                 resolve: "@=query('settingsQuery')"
                 description: "Returns current settings"
+            productList:
+                type: 'ProductList'
+                resolve: "@=query('productListQuery', args)"
+                args:
+                    input:
+                        type: "ProductListInput!"
+                description: "Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list."

@@ -80,6 +80,7 @@
     * [ProductConnection](#productconnection)
     * [ProductEdge](#productedge)
     * [ProductFilterOptions](#productfilteroptions)
+    * [ProductList](#productlist)
     * [ProductPrice](#productprice)
     * [RegularCustomerUser](#regularcustomeruser)
     * [RegularProduct](#regularproduct)
@@ -118,6 +119,7 @@
     * [PersonalDataAccessRequestInput](#personaldataaccessrequestinput)
     * [PriceInput](#priceinput)
     * [ProductFilter](#productfilter)
+    * [ProductListInput](#productlistinput)
     * [RecoverPasswordInput](#recoverpasswordinput)
     * [RefreshTokenInput](#refreshtokeninput)
     * [RegistrationDataInput](#registrationdatainput)
@@ -128,6 +130,7 @@
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
+    * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
   * [Scalars](#scalars)
     * [Boolean](#boolean)
@@ -821,6 +824,20 @@ Returns product filtered using UUID or URL slug
 <tr>
 <td colspan="2" align="right" valign="top">uuid</td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productList</strong></td>
+<td valign="top"><a href="#productlist">ProductList</a></td>
+<td>
+
+FInd product list by uuid and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -6715,6 +6732,48 @@ Parameter filter options
 </tbody>
 </table>
 
+### ProductList
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>products</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+An array of the products in the list
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>type</strong></td>
+<td valign="top"><a href="#productlisttypeenum">ProductListTypeEnum</a>!</td>
+<td>
+
+Product list type
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Product list identifier
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### ProductPrice
 
 Represents the price of the product
@@ -9636,6 +9695,38 @@ Parameter filter
 </tbody>
 </table>
 
+### ProductListInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>type</strong></td>
+<td valign="top"><a href="#productlisttypeenum">ProductListTypeEnum</a>!</td>
+<td>
+
+Product list type
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Product list identifier
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### RecoverPasswordInput
 
 <table>
@@ -10067,6 +10158,27 @@ Display data
 Export data
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### ProductListTypeEnum
+
+One of possible types of the product list
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>WISHLIST</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>COMPARISON</strong></td>
+<td></td>
 </tr>
 </tbody>
 </table>

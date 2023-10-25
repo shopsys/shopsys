@@ -1610,10 +1610,32 @@ type ProductFilterOptions {
   parameters: [ParameterFilterOptionInterface!]
 }
 
+type ProductList {
+  "An array of the products in the list"
+  products: [Product!]!
+  "Product list type"
+  type: ProductListTypeEnum!
+  "Product list identifier"
+  uuid: Uuid!
+}
+
 "Paginated and ordered products"
 interface ProductListable {
   "Paginated and ordered products"
   products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+}
+
+input ProductListInput {
+  "Product list type"
+  type: ProductListTypeEnum!
+  "Product list identifier"
+  uuid: Uuid = null
+}
+
+"One of possible types of the product list"
+enum ProductListTypeEnum {
+  WISHLIST
+  COMPARISON
 }
 
 "One of possible ordering modes for product"
@@ -1742,6 +1764,8 @@ type Query {
   privacyPolicyArticle: ArticleSite
   "Returns product filtered using UUID or URL slug"
   product(urlSlug: String, uuid: Uuid): Product
+  "FInd product list by uuid and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list."
+  productList(input: ProductListInput!): ProductList
   "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
   products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
   "Returns list of products by catalog numbers"

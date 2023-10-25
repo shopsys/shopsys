@@ -1,0 +1,4 @@
+ProductListTypeEnum:
+    type: enum
+    inherits:
+        - 'ProductListTypeEnumDecorator'

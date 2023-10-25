@@ -1,0 +1,4 @@
+ProductListInput:
+    type: input-object
+    inherits:
+        - 'ProductListInputDecorator'

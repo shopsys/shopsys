@@ -90,4 +90,20 @@ class ProductList
         $this->setUpdatedAtToNow();
         $this->items->add($productListItem);
     }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum
+     */
+    public function getType(): ProductListTypeEnumInterface
+    {
+        return $this->type;
+    }
 }

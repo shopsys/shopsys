@@ -28,6 +28,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
@@ -50,33 +51,33 @@ class ProductsQuery extends BaseProductsQuery
      * @param \App\FrontendApi\Model\Product\ProductFacade $productFacade
      * @param \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
      * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
      * @param \App\Model\Product\Comparison\ComparisonRepository $comparisonRepository
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\FrontendApi\Resolver\Category\CategoryQuery $categoryQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
      * @param \App\FrontendApi\Resolver\Products\Flag\FlagQuery $flagQuery
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader
      * @param \App\Model\Wishlist\WishlistRepository $wishlistRepository
      */
     public function __construct(
         ProductFacade $productFacade,
         ProductFilterFacade $productFilterFacade,
         ProductConnectionFactory $productConnectionFactory,
+        ProductListFacade $productListFacade,
+        DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
         private readonly ProductFilterDataFactory $productFilterDataFactory,
         private readonly DataLoaderInterface $productsByEntitiesBatchLoader,
         private readonly ComparisonRepository $comparisonRepository,
-        private readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
         private readonly ProductRepository $productRepository,
         private readonly CategoryQuery $categoryQuery,
         private readonly BrandQuery $brandQuery,
         private readonly FlagQuery $flagQuery,
-        private readonly DataLoaderInterface $productsVisibleByIdsBatchLoader,
         private readonly WishlistRepository $wishlistRepository,
     ) {
-        parent::__construct($productFacade, $productFilterFacade, $productConnectionFactory);
+        parent::__construct($productFacade, $productFilterFacade, $productConnectionFactory, $productsVisibleAndSortedByIdsBatchLoader, $productListFacade);
     }
 
     /**
@@ -320,7 +321,7 @@ class ProductsQuery extends BaseProductsQuery
     {
         $productIds = $this->wishlistRepository->getProductIdsByWishlist($wishlist);
 
-        return $this->productsVisibleByIdsBatchLoader->load($productIds);
+        return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
     }
 
     /**

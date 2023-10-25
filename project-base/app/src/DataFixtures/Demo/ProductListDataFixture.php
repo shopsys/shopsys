@@ -15,10 +15,10 @@ use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnumInterface;
 
 class ProductListDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    private const PRODUCT_LIST_WISHLIST_LOGGED_CUSTOMER_UUID = 'd76f456d-5ec2-41aa-99eb-cbc5b4b2a130';
-    private const PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID = '63951da2-a886-4725-8ebb-1c12d3d3dd0c';
-    private const PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID = '85817487-6c9b-4528-93cb-22fa0de9274d';
-    private const PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID = 'dcc229ee-f93d-45bc-998b-63fb8e0ec3ec';
+    public const PRODUCT_LIST_WISHLIST_LOGGED_CUSTOMER_UUID = 'd76f456d-5ec2-41aa-99eb-cbc5b4b2a130';
+    public const PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID = '63951da2-a886-4725-8ebb-1c12d3d3dd0c';
+    public const PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID = '85817487-6c9b-4528-93cb-22fa0de9274d';
+    public const PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID = 'dcc229ee-f93d-45bc-998b-63fb8e0ec3ec';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory $productListDataFactory

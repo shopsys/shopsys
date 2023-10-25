@@ -1,0 +1,15 @@
+ProductListDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "Product list identifier"
+            type:
+                type: "ProductListTypeEnum!"
+                description: "Product list type"
+            products:
+                type: "[Product!]!"
+                description: "An array of the products in the list"
+                resolve: '@=query("productsByProductListQuery", value)'

@@ -2030,6 +2030,29 @@ export type ProductFilterOptionsApi = {
   parameters: Maybe<Array<ParameterFilterOptionInterfaceApi>>;
 };
 
+export type ProductListApi = {
+  __typename?: 'ProductList';
+  /** An array of the products in the list */
+  products: Array<ProductApi>;
+  /** Product list type */
+  type: ProductListTypeEnumApi;
+  /** Product list identifier */
+  uuid: Scalars['Uuid']['output'];
+};
+
+export type ProductListInputApi = {
+  /** Product list type */
+  type: ProductListTypeEnumApi;
+  /** Product list identifier */
+  uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+/** One of possible types of the product list */
+export enum ProductListTypeEnumApi {
+  ComparisonApi = 'COMPARISON',
+  WishlistApi = 'WISHLIST'
+}
+
 /** Paginated and ordered products */
 export type ProductListableApi = {
   /** Paginated and ordered products */
@@ -2172,6 +2195,8 @@ export type QueryApi = {
   privacyPolicyArticle: Maybe<ArticleSiteApi>;
   /** Returns product filtered using UUID or URL slug */
   product: Maybe<ProductApi>;
+  /** FInd product list by uuid and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list. */
+  productList: Maybe<ProductListApi>;
   /** Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords */
   products: ProductConnectionApi;
   /** Returns list of products by catalog numbers */
@@ -2347,6 +2372,11 @@ export type QueryPaymentArgsApi = {
 export type QueryProductArgsApi = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type QueryProductListArgsApi = {
+  input: ProductListInputApi;
 };
 
 
