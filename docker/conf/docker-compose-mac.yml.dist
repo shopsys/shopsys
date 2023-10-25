@@ -70,6 +70,22 @@ services:
             - ~/.gitconfig:/home/www-data/.gitconfig
         ports:
             - "35729:35729"
+        environment:
+            # Exposes BLACKFIRE_* environment variables from the host
+            BLACKFIRE_SERVER_ID:
+            BLACKFIRE_SERVER_TOKEN:
+            BLACKFIRE_CLIENT_ID:
+            BLACKFIRE_CLIENT_TOKEN:
+
+    blackfire:
+        image: blackfire/blackfire:2
+        ports: [ "8307" ]
+        environment:
+            # Exposes BLACKFIRE_* environment variables from the host
+            BLACKFIRE_SERVER_ID:
+            BLACKFIRE_SERVER_TOKEN:
+            BLACKFIRE_CLIENT_ID:
+            BLACKFIRE_CLIENT_TOKEN: 
 
     php-consumer:
         restart: always
