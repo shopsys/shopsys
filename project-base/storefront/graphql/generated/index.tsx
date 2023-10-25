@@ -3312,13 +3312,6 @@ export type OrderDetailItemFragmentApi = { __typename: 'OrderItem', name: string
 
 export type OrderListFragmentApi = { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: any, productItems: Array<{ __typename: 'OrderItem', quantity: number }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null }, payment: { __typename: 'Payment', name: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null };
 
-export type UpdatePaymentStatusMutationVariablesApi = Exact<{
-  orderUuid: Scalars['Uuid']['input'];
-}>;
-
-
-export type UpdatePaymentStatusMutationApi = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'PaymentStatus', isPaid: boolean, transactionCount: number, paymentType: string } };
-
 export type CreateOrderMutationVariablesApi = Exact<{
   firstName: Scalars['String']['input'];
   lastName: Scalars['String']['input'];
@@ -3356,6 +3349,13 @@ export type PayOrderMutationVariablesApi = Exact<{
 
 
 export type PayOrderMutationApi = { __typename?: 'Mutation', PayOrder: { __typename?: 'PaymentSetupCreationData', goPayCreatePaymentSetup: { __typename?: 'GoPayCreatePaymentSetup', gatewayUrl: string, goPayId: string, embedJs: string } | null } };
+
+export type UpdatePaymentStatusMutationVariablesApi = Exact<{
+  orderUuid: Scalars['Uuid']['input'];
+}>;
+
+
+export type UpdatePaymentStatusMutationApi = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'PaymentStatus', isPaid: boolean, transactionCount: number, paymentType: string } };
 
 export type LastOrderQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
@@ -5649,19 +5649,6 @@ export const NotificationBarsDocumentApi = gql`
 export function useNotificationBarsApi(options?: Omit<Urql.UseQueryArgs<NotificationBarsVariablesApi>, 'query'>) {
   return Urql.useQuery<NotificationBarsApi, NotificationBarsVariablesApi>({ query: NotificationBarsDocumentApi, ...options });
 };
-export const UpdatePaymentStatusMutationDocumentApi = gql`
-    mutation UpdatePaymentStatusMutation($orderUuid: Uuid!) {
-  UpdatePaymentStatus(orderUuid: $orderUuid) {
-    isPaid
-    transactionCount
-    paymentType
-  }
-}
-    `;
-
-export function useUpdatePaymentStatusMutationApi() {
-  return Urql.useMutation<UpdatePaymentStatusMutationApi, UpdatePaymentStatusMutationVariablesApi>(UpdatePaymentStatusMutationDocumentApi);
-};
 export const CreateOrderMutationDocumentApi = gql`
     mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $deliveryAddressUuid: Uuid, $note: String, $cartUuid: Uuid, $newsletterSubscription: Boolean) {
   CreateOrder(
@@ -5700,6 +5687,19 @@ export const PayOrderMutationDocumentApi = gql`
 
 export function usePayOrderMutationApi() {
   return Urql.useMutation<PayOrderMutationApi, PayOrderMutationVariablesApi>(PayOrderMutationDocumentApi);
+};
+export const UpdatePaymentStatusMutationDocumentApi = gql`
+    mutation UpdatePaymentStatusMutation($orderUuid: Uuid!) {
+  UpdatePaymentStatus(orderUuid: $orderUuid) {
+    isPaid
+    transactionCount
+    paymentType
+  }
+}
+    `;
+
+export function useUpdatePaymentStatusMutationApi() {
+  return Urql.useMutation<UpdatePaymentStatusMutationApi, UpdatePaymentStatusMutationVariablesApi>(UpdatePaymentStatusMutationDocumentApi);
 };
 export const LastOrderQueryDocumentApi = gql`
     query LastOrderQuery {
