@@ -43,3 +43,8 @@ services:
 
     Lcobucci\JWT\Configuration:
         factory: ['@Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory', create]
+
+    Shopsys\FrontendApiBundle\Model\Logger\FrontendApiLogger:
+        arguments:
+            $logger: '@monolog.logger'
+            $isValidationLoggedAsError: '%shopsys.frontend_api.validation_logged_as_error%'
