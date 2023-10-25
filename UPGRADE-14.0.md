@@ -189,3 +189,6 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   added USPs on product detail page ([#2887](https://github.com/shopsys/shopsys/pull/2887))
     -   see #project-base-diff to update your project
+-   fix sizes of product actions buttons ([#2896](https://github.com/shopsys/shopsys/pull/2896))
+    -   now we have unified sizes of add to cart buttons
+    -   see #project-base-diff to update your project
