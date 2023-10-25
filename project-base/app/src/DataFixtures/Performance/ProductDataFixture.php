@@ -25,7 +25,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProductDataFixture
 {
-    private const BATCH_SIZE = 10;
+    private const BATCH_SIZE = 100;
 
     public const FIRST_PERFORMANCE_PRODUCT = 'first_performance_product';
 
@@ -119,9 +119,9 @@ class ProductDataFixture
                 $this->productsByCatnum[$product->getCatnum()] = $product;
             }
 
-            if ($this->countImported % self::BATCH_SIZE === 0) {
+//            if ($this->countImported % self::BATCH_SIZE === 0) {
                 $this->cleanAndLoadReferences();
-            }
+//            }
 
             $this->countImported++;
 
@@ -213,7 +213,7 @@ class ProductDataFixture
     {
         $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
         $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
-//        $this->em->clear();
+        $this->em->clear();
         gc_collect_cycles();
     }
 
@@ -221,9 +221,7 @@ class ProductDataFixture
     {
         $this->clearResources();
         $this->productsByCatnum = [];
-        if (isset($this->productTemplates)) {
-            return;
-        }
+        $this->productTemplates = [];
 
         $i = 1;
 
