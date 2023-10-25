@@ -78,13 +78,15 @@ class HeurekaProductDomainFacade
         foreach ($heurekaProductDomainsData as $heurekaProductDomainData) {
             $this->saveHeurekaProductDomain($productId, $heurekaProductDomainData);
         }
+
+        $this->em->flush();
     }
 
     /**
      * @param int $productId
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData $heurekaProductDomainData
      */
-    public function saveHeurekaProductDomain($productId, HeurekaProductDomainData $heurekaProductDomainData)
+    protected function saveHeurekaProductDomain($productId, HeurekaProductDomainData $heurekaProductDomainData)
     {
         $product = $this->productRepository->getById($productId);
         $heurekaProductDomainData->product = $product;
@@ -100,8 +102,6 @@ class HeurekaProductDomainFacade
             $newHeurekaProductDomain = new HeurekaProductDomain($heurekaProductDomainData);
             $this->em->persist($newHeurekaProductDomain);
         }
-
-        $this->em->flush();
     }
 
     /**

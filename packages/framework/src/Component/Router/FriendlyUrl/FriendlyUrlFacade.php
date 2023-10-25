@@ -49,8 +49,10 @@ class FriendlyUrlFacade
 
         foreach ($friendlyUrls as $friendlyUrl) {
             $locale = $this->domain->getDomainConfigById($friendlyUrl->getDomainId())->getLocale();
-            $this->resolveUniquenessOfFriendlyUrlAndFlush($friendlyUrl, $namesByLocale[$locale]);
+            $this->resolveUniquenessOfFriendlyUrl($friendlyUrl, $namesByLocale[$locale]);
         }
+
+        $this->em->flush();
     }
 
     /**
@@ -64,15 +66,17 @@ class FriendlyUrlFacade
         $friendlyUrl = $this->friendlyUrlFactory->createIfValid($routeName, $entityId, (string)$entityName, $domainId);
 
         if ($friendlyUrl !== null) {
-            $this->resolveUniquenessOfFriendlyUrlAndFlush($friendlyUrl, $entityName);
+            $this->resolveUniquenessOfFriendlyUrl($friendlyUrl, $entityName);
         }
+
+        $this->em->flush();
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param string $entityName
      */
-    protected function resolveUniquenessOfFriendlyUrlAndFlush(FriendlyUrl $friendlyUrl, $entityName)
+    protected function resolveUniquenessOfFriendlyUrl(FriendlyUrl $friendlyUrl, $entityName)
     {
         $attempt = 0;
 
@@ -108,7 +112,6 @@ class FriendlyUrlFacade
         }
 
         $this->em->persist($friendlyUrl);
-        $this->em->flush();
         $this->setFriendlyUrlAsMain($friendlyUrl);
     }
 
@@ -214,8 +217,6 @@ class FriendlyUrlFacade
         }
         $mainFriendlyUrl->setMain(true);
         $this->renewMainFriendlyUrlSlugCache($mainFriendlyUrl);
-
-        $this->em->flush();
     }
 
     /**

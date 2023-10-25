@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -51,9 +52,15 @@ class CartWatcherTest extends TransactionFunctionalTestCase
      */
     private VatFacade $vatFacade;
 
+    /**
+     * @inject
+     */
+    private PricingGroupRepository $pricingGroupRepository;
+
     public function testGetModifiedPriceItemsAndUpdatePrices()
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
+        /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
 
         $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($product);
@@ -64,12 +71,13 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $modifiedItems1 = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
         $this->assertEmpty($modifiedItems1);
 
-        $pricingGroup = $this->getReferenceForDomain(
-            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID,
-        );
+        $pricesByPricingGroupId = [];
 
-        $this->manualInputPriceFacade->refresh($product, $pricingGroup, Money::create(10));
+        foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
+            $pricesByPricingGroupId[$pricingGroup->getId()] = Money::create(10);
+        }
+
+        $this->manualInputPriceFacade->refreshProductManualInputPrices($product, $pricesByPricingGroupId);
 
         $modifiedItems2 = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
         $this->assertNotEmpty($modifiedItems2);
