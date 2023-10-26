@@ -10,14 +10,14 @@ type AbandonedCartPageProps = { cartUuid?: string };
 const AbandonedCartPage: FC<AbandonedCartPageProps> = ({ cartUuid }) => {
     const router = useRouter();
     const { url } = useDomainConfig();
-    const updateUserState = usePersistStore((store) => store.updateUserState);
+    const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
 
     useEffect(() => {
         if (typeof cartUuid === 'string') {
-            updateUserState({ cartUuid });
+            updateCartUuid(cartUuid);
         }
         router.replace(getInternationalizedStaticUrls(['/cart'], url)[0] ?? '/');
-    }, [cartUuid, router, updateUserState, url]);
+    }, [cartUuid, router, updateCartUuid, url]);
 
     return null;
 };

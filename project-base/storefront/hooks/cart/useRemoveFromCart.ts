@@ -14,7 +14,7 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType): [
     const [{ fetching }, removeItemFromCart] = useRemoveFromCartMutationApi();
     const { url, currencyCode } = useDomainConfig();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const updateUserState = usePersistStore((store) => store.updateUserState);
+    const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
 
     const removeItemFromCartAction = async (cartItem: CartItemFragmentApi, listIndex: number) => {
         const removeItemFromCartActionResult = await removeItemFromCart({
@@ -22,7 +22,7 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType): [
         });
 
         if (removeItemFromCartActionResult.data?.RemoveFromCart.uuid !== undefined) {
-            updateUserState({ cartUuid: removeItemFromCartActionResult.data.RemoveFromCart.uuid });
+            updateCartUuid(removeItemFromCartActionResult.data.RemoveFromCart.uuid);
 
             const absoluteEventValueWithoutVat =
                 mapPriceForCalculations(cartItem.product.price.priceWithoutVat) * cartItem.quantity;

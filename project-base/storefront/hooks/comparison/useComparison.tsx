@@ -8,7 +8,7 @@ import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 
 export const useComparison = () => {
@@ -18,28 +18,23 @@ export const useComparison = () => {
     const [, removeProductFromComparison] = useRemoveProductFromComparisonMutationApi();
     const [, cleanComparison] = useCleanComparisonMutationApi();
     const comparisonUuid = usePersistStore((store) => store.comparisonUuid);
-    const updateUserState = usePersistStore((store) => store.updateUserState);
+    const updateComparisonUuid = usePersistStore((store) => store.updateComparisonUuid);
     const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
-    const initialLoadRef = useRef(false);
-    const [isLoadingVisible, setIsLoadingVisible] = useState(true);
+    const [isFetchingPaused, setIsFetchingPaused] = useState(true);
 
     const [{ data: comparisonData, fetching }] = useComparisonQueryApi({
         variables: { comparisonUuid },
-        pause: !comparisonUuid && !isUserLoggedIn,
+        pause: isFetchingPaused,
     });
 
     useEffect(() => {
-        if (initialLoadRef.current) {
-            initialLoadRef.current = true;
-        } else {
-            setIsLoadingVisible(fetching);
-        }
-    }, [fetching]);
+        setIsFetchingPaused(!comparisonUuid && !isUserLoggedIn);
+    }, [comparisonUuid]);
 
     useEffect(() => {
-        updateUserState({
-            comparisonUuid: comparisonData?.comparison?.uuid ?? null,
-        });
+        if (!isUserLoggedIn && comparisonData?.comparison && comparisonUuid !== comparisonData.comparison.uuid) {
+            updateComparisonUuid(comparisonData.comparison.uuid);
+        }
     }, [comparisonData?.comparison?.uuid]);
 
     const isProductInComparison = (productUuid: string) =>
@@ -58,9 +53,7 @@ export const useComparison = () => {
         } else {
             setIsPopupCompareOpen(true);
 
-            updateUserState({
-                comparisonUuid: addProductToComparisonResult.data?.addProductToComparison.uuid ?? null,
-            });
+            updateComparisonUuid(addProductToComparisonResult.data?.addProductToComparison.uuid ?? null);
         }
     };
 
@@ -79,7 +72,7 @@ export const useComparison = () => {
             }
         } else {
             if (!removeProductFromComparisonResult.data?.removeProductFromComparison) {
-                updateUserState({ comparisonUuid: null });
+                updateComparisonUuid(null);
             }
             showSuccessMessage(t('Product has been removed from your comparison.'));
         }
@@ -104,14 +97,14 @@ export const useComparison = () => {
                 showErrorMessage(t('Unable to clean product comparison.'));
             }
         } else {
-            updateUserState({ comparisonUuid: null });
+            updateComparisonUuid(null);
             showSuccessMessage(t('Comparison products have been cleaned.'));
         }
     };
 
     return {
         comparison: comparisonData?.comparison,
-        fetching: isLoadingVisible,
+        fetching,
         isPopupCompareOpen,
         isProductInComparison,
         toggleProductInComparison,

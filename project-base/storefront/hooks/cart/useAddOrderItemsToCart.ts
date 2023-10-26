@@ -24,7 +24,7 @@ export const useAddOrderItemsToCart = (): {
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const [, addOrderItemsToCart] = useAddOrderItemsToCartMutationApi();
     const { t } = useTranslation();
-    const updateUserState = usePersistStore((store) => store.updateUserState);
+    const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
 
     const handleAddingItemsToCart = async (input: AddOrderItemsToCartInputApi) => {
         const response = await addOrderItemsToCart({ input });
@@ -37,7 +37,7 @@ export const useAddOrderItemsToCart = (): {
         }
 
         const newCart = response.data?.AddOrderItemsToCart;
-        updateUserState({ cartUuid: newCart?.uuid ?? null });
+        updateCartUuid(newCart?.uuid ?? null);
 
         if (newCart) {
             const notAddedProducts = newCart.modifications.multipleAddedProductModifications.notAddedProducts;
