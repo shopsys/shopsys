@@ -5,9 +5,9 @@ e.g., from an information system.
 
 After completing this cookbook, you should know:
 
-- how to implement basic data import
-- what are the best practices for importing data
-- what are the pitfalls of importing data, and how can you deal with them
+-   how to implement basic data import
+-   what are the best practices for importing data
+-   what are the pitfalls of importing data, and how can you deal with them
 
 ## Example: Products import step by step
 
@@ -86,9 +86,11 @@ class ImportProductsCronModule implements SimpleCronModuleInterface
 ```
 
 !!! warning
+
     Cron modules are not suitable for data transfers initialized by an external source. It would be best if you implemented some Web Services for that purpose.
 
 #### 2.2 - Add cron configuration to [`cron.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services/cron.yaml)
+
 ```diff
 # config/services/cron.yaml
 
@@ -103,14 +105,17 @@ services:
 +           - { name: shopsys.cron, hours: '*', minutes: '*' }
 ```
 
-*Note: You can schedule cron modules to run whenever you want using [cron expression](https://en.wikipedia.org/wiki/Cron#CRON_expression). This example module will be run every 3 hours.*
+_Note: You can schedule cron modules to run whenever you want using [cron expression](https://en.wikipedia.org/wiki/Cron#CRON_expression). This example module will be run every 3 hours._
 
 ### Step 3 - Process incoming data in our new `ImportProductsCronModule`
+
 In this step, we will download data from the external source
 and then decide whether to create or update existing product based on `$extId`.
 
 #### 3.2 - Download external data and create or update product based on `$extId`
+
 If a product exists with a given `$extId` we modify it otherwise, we need to create a new one.
+
 ```php
 // src/Model/Product/ImportProductsCronModule.php
 
@@ -166,14 +171,17 @@ private function importExternalProductsData(array $externalProductsData)
 ```
 
 !!! note
-    We need to know whether the product with the given `$extId` exists.  
+
+    We need to know whether the product with the given `$extId` exists.<br>
     For that purpose, we will use a descendant of [`ProductFacade`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductFacade.php) ([more about facades](../model/introduction-to-model-architecture.md#facade))
     which will use a descendant of [`ProductRepository`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductRepository.php) ([more about repositories](../model/introduction-to-model-architecture.md#repository))
-    that can talk to the persistence layer.
+    that can talk to the persistence layer.<br>
     We will extend the framework classes and implement new methods in the next two steps.
 
 #### 3.2 - Extend [`ProductRepository`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductRepository.php) and implement method `findByExternalId()` to be able find a [`Product`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/Product.php) by an external ID
+
 Create new class `App/Model/Product/ProductRepository` that extends `ProductRepository` from the framework.
+
 ```php
 // src/Model/Product/ProductRepository.php
 namespace App\Model\Product;
@@ -229,6 +237,7 @@ class ProductFacade extends BaseProductFacade
 ```
 
 !!! tip
+
     You should overwrite the `protected $productRepository` annotation so IDE knows that you are using the extended `ProductRepository`.
 
 Add information about the class extension into the container configuration in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml).
@@ -356,17 +365,20 @@ private function fillProductData(ProductData $productData, array $externalProduc
 ```
 
 !!! note
+
     In order to be able to use stock quantity, we must enable it by setting the `$usingStock` attribute to `true`.
 
 !!! note
+
     Data from external sources contain only integer value for vat percent information, but we need [`Vat`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Pricing/Vat/Vat.php) object
-    in [`ProductData`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductData.php).
+    in [`ProductData`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductData.php).<br>
     So we will extend [`VatRepository`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Pricing/Vat/VatRepository.php)
     and [`VatFacade`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Pricing/Vat/VatFacade.php) and implement appropriate methods.
 
 !!! tip
-    `Money::create()` can be used only for integers and numeric strings.
-    If you use floats in your `$externalProductData` array, you should always use `Money::createFromFloat()` and specify scale explicitly.
+
+    `Money::create()` can be used only for integers and numeric strings.<br>
+    If you use floats in your `$externalProductData` array, you should always use `Money::createFromFloat()` and specify scale explicitly.<br>
     Read more about monetary values in [How to Work with Money](../model/how-to-work-with-money.md).
 
 #### 3.6 - Extend [`VatRepository`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Pricing/Vat/VatRepository.php) and implement method `getVatByPercent()` in order to load [`Vat`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Pricing/Vat/Vat.php) by percent
@@ -404,7 +416,8 @@ Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository: '@App\Model\Pricing\Vat
 ```
 
 !!! danger
-    The method throws an exception when [`Vat`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Pricing/Vat/Vat.php) object is not found by the given percent value.
+
+    The method throws an exception when [`Vat`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Pricing/Vat/Vat.php) object is not found by the given percent value.<br>
     Do not forget to handle it (e.g., skip the product data processing and log the exception).
 
 #### 3.7 - Extend [`VatFacade`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Pricing/Vat/VatFacade.php) and implement method `getVatByPercent()` in it
@@ -435,6 +448,7 @@ class VatFacade extends BaseVatFacade
 ```
 
 !!! tip
+
     You should overwrite the `protected $vatRepository` annotation so IDE knows that you are using the extended `VatRepository`
 
 Add information about the class extension into the container configuration in [`services.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/services.yaml).
@@ -473,50 +487,53 @@ php bin/console shopsys:cron --module="App\Model\Product\ImportProductsCronModul
 ```
 
 !!! hint
+
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md).
 
 ## Best practices
-- Validate all incoming data before putting them into data objects.
-    - You will avoid SQL errors (e.g., when incoming text is longer than the database column allows).
-- Transfer modifications only (if possible).
-    - Persist the last successful transfer start datetime so next time you can import changes done afterward.
-    - It means less data to process.
-- Transfer deleted entities too.
-    - It is often omitted, but it is necessary if you want to keep consistency between your application database and the external source.
-- Use database transactions.
-    - Use `EntityManager` methods `beginTransaction()`, `commit()` and `rollback()`.
-    - Do not forget to clear the identity map when doing a rollback (so even entity modifications are reverted).
-    - [`IteratedCronModuleInterface`](https://github.com/shopsys/shopsys/blob/master/packages/plugin-interface/src/Cron/IteratedCronModuleInterface.php) offers a way to implement longer processes that can span over many iterations.
-- Disable entity manager SQL logging (use [`SqlLoggerFacade::temporarilyDisableLogging()`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
-    - By default, every executed SQL query is logged, and that slows down the process and consumes much memory when there are many iterations.
-    - Do not forget to re-enable the logging after the processing is done (use [`SqlLoggerFacade::reenableLogging()`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
-- Logging of some key functions might be helpful for future debugging
-  , but it is not a good idea to log "everything". Too much information in logs might be counterproductive.
-- Clear entity manager identity map once in a while because `EntityManager::flush()` searches
-  for changes in all mapped entities, and after time, it consumes a huge amount of resources to persist a single entity.
-    - Call `EntityManager::flush()` with parameter (i.e. entity or array of entities you want to flush) anytime it is possible.  
-     **Warning: Flushing is not a cascade operation, i.e. when you flush an entity that contains any other entities (e.g., translations),
-    these are not flushed automatically. You should not forget to flush them as well.**
-    - You should load any entity again after clearing the identity map because any attempt to flush the old one will result in an exception.
-- Use streamed input for XML and JSON.
-    - So you do not load huge files at once (can lead to memory overflow).
-- Store external source credentials in [environment variables](../introduction/setting-environment-variables.md).
-    - Storing credentials in the local configuration instead of hard-coding them in source code prevents the accidental corrupting of production data.
-- Restrict editing of the transferred fields in administration.
-    - At least mark them as transferred to avoid confusion when an administrator changes the field value and then data import overrides the value.
-- Transfer overview in administration can be very useful for both the administrator and developer of an e-shop.
-    - It is handy to know which transfers are currently in progress, which are scheduled, which failed, etc.
-- Be careful with the order of your data transfers.
-    - For example, products have an association with their categories,
-      so first, you want to transfer products and then their relation to categories.
+
+-   Validate all incoming data before putting them into data objects.
+    -   You will avoid SQL errors (e.g., when incoming text is longer than the database column allows).
+-   Transfer modifications only (if possible).
+    -   Persist the last successful transfer start datetime so next time you can import changes done afterward.
+    -   It means less data to process.
+-   Transfer deleted entities too.
+    -   It is often omitted, but it is necessary if you want to keep consistency between your application database and the external source.
+-   Use database transactions.
+    -   Use `EntityManager` methods `beginTransaction()`, `commit()` and `rollback()`.
+    -   Do not forget to clear the identity map when doing a rollback (so even entity modifications are reverted).
+    -   [`IteratedCronModuleInterface`](https://github.com/shopsys/shopsys/blob/master/packages/plugin-interface/src/Cron/IteratedCronModuleInterface.php) offers a way to implement longer processes that can span over many iterations.
+-   Disable entity manager SQL logging (use [`SqlLoggerFacade::temporarilyDisableLogging()`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
+    -   By default, every executed SQL query is logged, and that slows down the process and consumes much memory when there are many iterations.
+    -   Do not forget to re-enable the logging after the processing is done (use [`SqlLoggerFacade::reenableLogging()`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
+-   Logging of some key functions might be helpful for future debugging
+    , but it is not a good idea to log "everything". Too much information in logs might be counterproductive.
+-   Clear entity manager identity map once in a while because `EntityManager::flush()` searches
+    for changes in all mapped entities, and after time, it consumes a huge amount of resources to persist a single entity.
+    -   Call `EntityManager::flush()` with parameter (i.e. entity or array of entities you want to flush) anytime it is possible.  
+         **Warning: Flushing is not a cascade operation, i.e. when you flush an entity that contains any other entities (e.g., translations),
+        these are not flushed automatically. You should not forget to flush them as well.**
+    -   You should load any entity again after clearing the identity map because any attempt to flush the old one will result in an exception.
+-   Use streamed input for XML and JSON.
+    -   So you do not load huge files at once (can lead to memory overflow).
+-   Store external source credentials in [environment variables](../introduction/setting-environment-variables.md).
+    -   Storing credentials in the local configuration instead of hard-coding them in source code prevents the accidental corrupting of production data.
+-   Restrict editing of the transferred fields in administration.
+    -   At least mark them as transferred to avoid confusion when an administrator changes the field value and then data import overrides the value.
+-   Transfer overview in administration can be very useful for both the administrator and developer of an e-shop.
+    -   It is handy to know which transfers are currently in progress, which are scheduled, which failed, etc.
+-   Be careful with the order of your data transfers.
+    -   For example, products have an association with their categories,
+        so first, you want to transfer products and then their relation to categories.
 
 ## Pitfalls
-- External data source often sends null values as empty strings, so be very careful with validating the incoming data. (`$value !== null` might not be sufficient in that case).
-- When processing a large amount of data, you can use native queries instead of using ORM, which might save you a certain amount of SQL queries.
-On the other hand, you have to handle all related logic manually then.
-- It is necessary to mark transferred products for recalculations (e.g., price, visibility, etc.).
-- In the current state, e-shop can not handle transferring huge amount (thousands) of categories.
-    - Categories use the "nested set" structure (`@Gedmo\Tree(type="nested")`) which produces many SQL queries.
+
+-   External data source often sends null values as empty strings, so be very careful with validating the incoming data. (`$value !== null` might not be sufficient in that case).
+-   When processing a large amount of data, you can use native queries instead of using ORM, which might save you a certain amount of SQL queries.
+    On the other hand, you have to handle all related logic manually then.
+-   It is necessary to mark transferred products for recalculations (e.g., price, visibility, etc.).
+-   In the current state, e-shop can not handle transferring huge amount (thousands) of categories.
+    -   Categories use the "nested set" structure (`@Gedmo\Tree(type="nested")`) which produces many SQL queries.
 
 ## Conclusion
 

@@ -1,4 +1,5 @@
 # Dump variables
+
 Shopsys Platform uses Symfony with its VarDumper.
 In addition to the standard function `dump()`, we implement the function `d()`, which you can pass any number of attributes where each one is dumped.
 
@@ -9,6 +10,7 @@ Since we do not want to dump variables into the JSON response when developing th
 You can find the debug settings in the file `config/packages/dev/debug.yaml`:
 
 Start the server with the `server:dump` command, and whenever you call the `d()`, the dumped data will not be displayed in the output but sent to that server, which outputs it to its own console or an HTML file.
+
 ```
 php bin/console server:dump
 ```

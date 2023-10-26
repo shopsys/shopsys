@@ -18,9 +18,11 @@ Edit `assets/styles/frontend/domain2/core/variables.less`:
 ```
 
 !!! hint
+
     If you are not familiar with LESS and how it deals with file imports, see [the separate article](../frontend/introduction-to-less.md).
 
 !!! hint
+
     If you are not familiar with `phing`, there is [a separate article](../introduction/console-commands-for-application-management-phing-targets.md) about it as well.
 
 ### Scenario 2 - I want to change the layout in the footer on my 2nd domain

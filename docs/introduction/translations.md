@@ -26,23 +26,28 @@ In this article, we describe tools and recommendations for translations.
 The message ID is the string you put into translation function. In the case of `{{ 'Cart'|trans }}`, the message ID is `Cart`.
 
 We use the original English form as the ID. So in the case of
+
 ```twig
 {% trans with {'%price%': remainingPriceWithVat|price} %}
     You still have to purchase products for <strong> %price% </strong> for <strong> free </strong> shipping and payment.
 {% endtrans %}
 ```
+
 the message ID is `You still have to purchase products for <strong> %price% </strong> for <strong> free </strong> shipping and payment.`.
 
 We replace multiple spaces in message ID to a single one. So in case of
+
 ```twig
 {% trans %}
     Shipping and payment
     <strong>for free!</strong>
 {% endtrans %}
 ```
+
 the message ID is `Shipping and payment <strong>for free!</strong>`.
 
 Never use variables in message IDs directly. Extractor is not able to guess what is in the variable. Use placeholders instead.
+
 ```diff
 $translator->trans(
 -    'Thanks to ' . $name
@@ -54,7 +59,7 @@ $translator->trans(
 This results in message ID `Thanks to %name%` that can be translated even with different word order, for example, `%name%, danke!`.
 
 From time to time we use word classes in message ID, for example, `order [noun]`, `order [verb]` that are both translated as `order`.
-We do this because in Czech, the noun is translated as *"objednávka"* and the verb is translated as *"objednat"*.
+We do this because in Czech, the noun is translated as _"objednávka"_ and the verb is translated as _"objednat"_.
 
 ## Translatable texts
 
@@ -112,11 +117,13 @@ The difference is that `transHtml` escape parameters to prevent XSS.
 They are safe to use in a place where you need HTML in texts together with parameters that are taken from user input.
 
 A usage for example:
+
 ```twig
 {{ 'You have to <a href="%url%">choose</a> products'|transHtml({ '%url%': url('front_homepage') }) }}
 ```
 
 !!! warning
+
     The message is not escaped, so if there is malicious code in `*.po` files, it will not be escaped.
 
 ### JavaScript
@@ -133,15 +140,16 @@ JavaScript translations are extracted and translated during compilation of JavaS
 
 ## Possible ways of changing translations
 
-* You want to keep the message ID same as the original English form
-    * change the text in the code
-    * run `php phing translations-dump`
-    * translate text again in `*.po` file(s) for the other languages because the message ID changed
-    * be careful, this is a [backward compatibility breaking change](../contributing/backward-compatibility-promise.md#translation-messages) because the original message ID does not exist anymore.
-* You do not care about the consistency between message ID and the original English form
-    * just change the translations in `*.po` file(s) for English and all the other languages
+-   You want to keep the message ID same as the original English form
+    -   change the text in the code
+    -   run `php phing translations-dump`
+    -   translate text again in `*.po` file(s) for the other languages because the message ID changed
+    -   be careful, this is a [backward compatibility breaking change](../contributing/backward-compatibility-promise.md#translation-messages) because the original message ID does not exist anymore.
+-   You do not care about the consistency between message ID and the original English form
+    -   just change the translations in `*.po` file(s) for English and all the other languages
 
 ## Localized routes
+
 On Shopsys Platform, you can translate URLs of your routes.
 See ["Frontend routes" section in "How to Set Up Domains and Locales" article](./how-to-set-up-domains-and-locales.md#32-frontend-routes) for more information.
 You can see the list of all translated URLs in administration page `admin/superadmin/urls/` (you must be logged in as a superadmin).

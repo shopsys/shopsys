@@ -21,6 +21,7 @@ A new migration will be generated in the correct namespace.
 You should always check the generated migrations, sometimes a minor manual change is required.
 
 !!! note
+
     If you are developing more than one bundle you will be prompt to select one as a target.
 
 ## Running migrations
@@ -55,7 +56,7 @@ The `migrations-lock.yml` file is updated automatically and it usually doesn't r
 But, because of the differences among different modules and the customizations of your project, you may encounter a migration that collides with an already installed one.
 In order to solve such a problem, you can change the order in which migrations will be installed by manually editing the file.
 
-It is in *YAML* format and it has a simple structure - it's just an array indexed by the version number and each item has keys `class` with the migration's FQCN and `skip` with a boolean value.
+It is in _YAML_ format and it has a simple structure - it's just an array indexed by the version number and each item has keys `class` with the migration's FQCN and `skip` with a boolean value.
 The migrations will always be executed in the same order as they are listed in the file.
 By setting the `skip value` to `true` you can even prevent the migration from being executed and you can implement your own migration with the wanted changes.
 

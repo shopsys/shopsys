@@ -34,6 +34,7 @@ And to make matters worse, ERP can only return all 10,000 categories.
 In this cookbook, we first write the code that's obvious but could be better, and as we progress, we improve the import to demonstrate the concepts and caveats of importing categories.
 
 !!! note
+
     If you're not familiar with the concepts of creating data imports, take a look at the [Basic data import cookbook](./basic-data-import.md)
 
 The main working loop is straightforward.
@@ -98,7 +99,8 @@ As you can see, we iterate over all categories obtained from the ERP and use the
 If a category is found on the shop, data are edited otherwise, the category is created.
 
 !!! note
-    This is merely a trivial example.  
+
+    This is merely a trivial example.<br>
     In a real project, you don't want to load all categories to memory but rather load them in batch or consider a different approach, for example, creating some queue to process data from.
 
 So far, so good, so let's run this import.
@@ -191,7 +193,7 @@ Now we have all categories created or edited, and we have built the sorted array
      foreach ($this->getCategoryDataFromIs() as $importData) {
          $this->importCategory($importData);
      }
-     
+
 +    $categoriesSortingData = CategoryNestedSetCalculator::calculateNestedSetFromAdjacencyList($this->parentIdByCategoryId);
 +    $this->categoryFacade->reorderByNestedSetValues($categoriesSortingData);
  }
@@ -200,4 +202,5 @@ Now we have all categories created or edited, and we have built the sorted array
 > _Import finished in 7 minutes and 50 seconds_
 
 !!! note
+
     Sometimes, it's better to create a specific DQL query to update the field you need instead of the whole load-edit routine.

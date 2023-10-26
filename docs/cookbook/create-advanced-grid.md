@@ -1,18 +1,22 @@
 # Create Advanced Grid
+
 This article provides step-by-step instructions for advanced grid configurations.
 After finishing this cookbook, you will know how to create a grid with inline editing, and drag&drop sorting.
 
 ## Prerequisites
-- you have created a grid for the Salesman entity following [Create Basic Grid](./create-basic-grid.md) cookbook
-- you are aware of Shopsys Platform model concepts like entity data classes and their factories, facades, etc.
-    - we recommend you to read the [Basics about model architecture](../model/introduction-to-model-architecture.md) article.
-- a basic knowledge of [Symfony forms](https://symfony.com/doc/3.4/forms.html) might be helpful for you
+
+-   you have created a grid for the Salesman entity following [Create Basic Grid](./create-basic-grid.md) cookbook
+-   you are aware of Shopsys Platform model concepts like entity data classes and their factories, facades, etc.
+    -   we recommend you to read the [Basics about model architecture](../model/introduction-to-model-architecture.md) article.
+-   a basic knowledge of [Symfony forms](https://symfony.com/doc/3.4/forms.html) might be helpful for you
 
 ## 1. Allow inline editing
+
 In this step, we will allow the creation and editing of salesmen entities (that we worked with in the [previous cookbook](./create-basic-grid.md)) directly using the grid.
 To prepare for that, we must first implement the creation and editing logic.
 
 ### 1.1 Create `SalesmanData` class
+
 ```php
 // src/Model/Salesman/SalesmanData.php
 
@@ -36,6 +40,7 @@ class SalesmanData
 ```
 
 ### 1.2 Add constructor, `edit` and `setData` methods, and getters to `Salesman` entity
+
 ```diff
 // src/Model/Salesman/Salesman.php
 
@@ -92,6 +97,7 @@ class Salesman
 ```
 
 ### 1.3 Create `SalesmanDataFactory` class with `create` and `createFromSalesman` methods
+
 ```php
 // src/Model/Salesman/SalesmanDataFactory.php
 
@@ -128,6 +134,7 @@ class SalesmanDataFactory
 ```
 
 ### 1.4 Add `create`, `edit`, and `getById` methods into `SalesmanFacade` class
+
 ```diff
 // src/Model/Salesman/SalesmanFacade.php
 
@@ -172,7 +179,9 @@ class SalesmanFacade
 ```
 
 ### 1.5 Create a new form defined by `SalesmanFormType` class
+
 When using a grid for inline editing, a form is rendered in the grid row. We need to prepare that form now.
+
 ```php
 // src/Form/Admin/SalesmanFormType.php
 
@@ -224,9 +233,11 @@ class SalesmanFormType extends AbstractType
 ```
 
 ### 1.6 Create new `SalesmanGridInlineEdit` class
+
 We have everything prepared and can put it all together in the new class (`SalesmanGridInlineEdit`) responsible for inline editing.
 The class needs to extend `AbstractGridInlineEdit` and implement three methods -`getForm`, `editEntity`, and `createEntityAndGetId`.
 We must also inject the original `SalesmanGridFactory` into the new class constructor.
+
 ```php
 // src/Grid/Salesman/SalesmanGridInlineEdit.php
 
@@ -310,13 +321,17 @@ class SalesmanGridInlineEdit extends AbstractGridInlineEdit
     }
 }
 ```
+
 The new class must be registered in `services.yaml`:
+
 ```yaml
-    App\Grid\Salesman\SalesmanGridInlineEdit: ~
+App\Grid\Salesman\SalesmanGridInlineEdit: ~
 ```
 
 ### 1.7 Use `SalesmanGridInlineEdit` in `SalesmanController`
+
 To make the salesman grid inline editable now, we need to use the `SalesmanGridInlineEdit::getGrid` method to get the grid instead of calling `SalesmanGridFactory::create` method directly:
+
 ```diff
 // src/Controller/Admin/SalesmanController.php
 
@@ -371,9 +386,11 @@ At this point, you should be able to edit and create new salesmen directly in th
 ![Advanced grid with inline edit](img/advanced-grid-inline-edit.png)
 
 ## 2. Sort data manually (drag&drop)
+
 In this part, we will enable drag&drop sorting of our salesmen using the grid. To make the changes in the ordering persistent, we first need to add a new attribute to the' Salesman' entity.
 
 ### 2.1 Add `$position` to the `Salesman` entity and mark it as a DB column using Doctrine ORM annotation
+
 ```diff
 // src/Model/Salesman/Salesman.php
 
@@ -389,13 +406,16 @@ class Salesman
 ```
 
 ### 2.2 Generate new database migration
+
 Run phing target
+
 ```sh
 php phing db-migrations-generate
 ```
 
 The command prints a file name the migration was generated into.
 The migration will look like this:
+
 ```php
 namespace App\Migrations;
 
@@ -423,12 +443,15 @@ class Version20190305140005 extends AbstractMigration
 ```
 
 ### 2.3 Execute migrations to propagate all the changes to the database
+
 Run phing target
+
 ```sh
 php phing db-migrations
 ```
 
 ### 2.2 Make the `Salesman` entity implement `OrderableEntityInterface`
+
 ```diff
 // src/Model/Salesman/Salesman.php
 
@@ -448,6 +471,7 @@ php phing db-migrations
 ```
 
 ### 2.3 Enable drag&drop sorting in `SalesmanGridFactory`
+
 ```diff
 // src/Grid/Salesman/SalesmanGridFactory.php
 
@@ -467,4 +491,5 @@ Now, you should be able to sort your salesmen using the cross icon in the left p
 ![Advanced grid with drag and drop](img/advanced-grid-drag-and-drop.png)
 
 ## Pitfalls
+
 Be aware of using all the combinations that the grid provides, e.g., it is not possible to use sorting by column when drag and drop is enabled.

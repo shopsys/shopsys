@@ -13,6 +13,7 @@ The value of this variable is used as a prefix for all static assets such as ima
 The variable can be configured in the `.env` file or better in the webserver settings.
 
 !!! note
+
     You have to ensure the data are properly propagated to the CDN servers.
 
 ## Content in the WYSIWYG editor

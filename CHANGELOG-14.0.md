@@ -4,25 +4,24 @@ All notable changes that change in some way the behavior of any of our packages 
 
 There is a list of all the repositories maintained by the monorepo:
 
-* [shopsys/framework](https://github.com/shopsys/framework)
-* [shopsys/project-base](https://github.com/shopsys/project-base)
-* [shopsys/shopsys](https://github.com/shopsys/shopsys)
-* [shopsys/coding-standards](https://github.com/shopsys/coding-standards)
-* [shopsys/form-types-bundle](https://github.com/shopsys/form-types-bundle)
-* [shopsys/http-smoke-testing](https://github.com/shopsys/http-smoke-testing)
-* [shopsys/migrations](https://github.com/shopsys/migrations)
-* [shopsys/monorepo-tools](https://github.com/shopsys/monorepo-tools)
-* [shopsys/plugin-interface](https://github.com/shopsys/plugin-interface)
-* [shopsys/product-feed-google](https://github.com/shopsys/product-feed-google)
-* [shopsys/product-feed-heureka](https://github.com/shopsys/product-feed-heureka)
-* [shopsys/product-feed-heureka-delivery](https://github.com/shopsys/product-feed-heureka-delivery)
-* [shopsys/product-feed-zbozi](https://github.com/shopsys/product-feed-zbozi)
-* [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)
-* [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
-* [shopsys/read-model](https://github.com/shopsys/read-model)
-* [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
-* [shopsys/php-image](https://github.com/shopsys/php-image)
-
+-   [shopsys/framework](https://github.com/shopsys/framework)
+-   [shopsys/project-base](https://github.com/shopsys/project-base)
+-   [shopsys/shopsys](https://github.com/shopsys/shopsys)
+-   [shopsys/coding-standards](https://github.com/shopsys/coding-standards)
+-   [shopsys/form-types-bundle](https://github.com/shopsys/form-types-bundle)
+-   [shopsys/http-smoke-testing](https://github.com/shopsys/http-smoke-testing)
+-   [shopsys/migrations](https://github.com/shopsys/migrations)
+-   [shopsys/monorepo-tools](https://github.com/shopsys/monorepo-tools)
+-   [shopsys/plugin-interface](https://github.com/shopsys/plugin-interface)
+-   [shopsys/product-feed-google](https://github.com/shopsys/product-feed-google)
+-   [shopsys/product-feed-heureka](https://github.com/shopsys/product-feed-heureka)
+-   [shopsys/product-feed-heureka-delivery](https://github.com/shopsys/product-feed-heureka-delivery)
+-   [shopsys/product-feed-zbozi](https://github.com/shopsys/product-feed-zbozi)
+-   [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)
+-   [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
+-   [shopsys/read-model](https://github.com/shopsys/read-model)
+-   [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
+-   [shopsys/php-image](https://github.com/shopsys/php-image)
 
 Packages are formatted by release version.
 You can see all the changes done to the package that you carry about with this tree.

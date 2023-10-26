@@ -14,18 +14,18 @@ Graphcache is an advanced, normalized caching utility that comes as an exchange 
 
 While URQL comes with basic caching out of the box, Graphcache offers:
 
-- **Normalized caching**: This means data is stored as a flat table of records, similar to how databases store data. This ensures no duplicate data and provides efficient updates and look-ups.
-- **Automatic updates**: With knowledge of your schema and types, Graphcache can automatically update your cache when you perform mutations or receive new data.
-- **Offline support**: Graphcache supports persisting your cache and resuming operations that were made while offline.
+-   **Normalized caching**: This means data is stored as a flat table of records, similar to how databases store data. This ensures no duplicate data and provides efficient updates and look-ups.
+-   **Automatic updates**: With knowledge of your schema and types, Graphcache can automatically update your cache when you perform mutations or receive new data.
+-   **Offline support**: Graphcache supports persisting your cache and resuming operations that were made while offline.
 
 #### How is it used in this code?
 
 This code defines how the cache should behave based on the application's requirements. Specifically, it:
 
-- Specifies the **schema** to help the cache understand the GraphQL schema and provide automatic updates.
-- Defines **keys** to uniquely identify each type in the cache.
-- Details how cache **updates** should occur after certain mutations.
-- Uses **optimistic updates** to immediately reflect changes in the UI before a server's response is received, providing a smoother user experience.
+-   Specifies the **schema** to help the cache understand the GraphQL schema and provide automatic updates.
+-   Defines **keys** to uniquely identify each type in the cache.
+-   Details how cache **updates** should occur after certain mutations.
+-   Uses **optimistic updates** to immediately reflect changes in the UI before a server's response is received, providing a smoother user experience.
 
 #### Official Documentation
 
@@ -33,9 +33,9 @@ For a comprehensive understanding and in-depth details on Graphcache, its benefi
 
 ### Keys
 
-- `keyNull`, `keyWishlist`, `keyUuid`, `keyName`, `keyCode`, `keyUrl`, `keyComparison`: These are keying functions used to generate keys for various GraphQL types in the cache. They are based on properties like `uuid`, `name`, `code`, `url`, etc.
+-   `keyNull`, `keyWishlist`, `keyUuid`, `keyName`, `keyCode`, `keyUrl`, `keyComparison`: These are keying functions used to generate keys for various GraphQL types in the cache. They are based on properties like `uuid`, `name`, `code`, `url`, etc.
 
-- Keys serve as unique identifiers for each type of data (or record) in the cache. Given that Graphcache utilizes a normalized cache structure, these are used to combine different fragments of the same entity type. You can read more about this in the [official docs](https://formidable.com/open-source/urql/docs/graphcache/normalized-caching/#custom-keys-and-non-keyable-entities).
+-   Keys serve as unique identifiers for each type of data (or record) in the cache. Given that Graphcache utilizes a normalized cache structure, these are used to combine different fragments of the same entity type. You can read more about this in the [official docs](https://formidable.com/open-source/urql/docs/graphcache/normalized-caching/#custom-keys-and-non-keyable-entities).
 
 ### Cache Configuration
 
@@ -48,11 +48,11 @@ The cache is configured with:
 
 ### Utility Functions
 
-- `invalidateFields`: Given a cache instance and a list of fields, this function invalidates these fields in the cache. This can be useful after certain operations, like a user login or logout, where you might want to invalidate cached data to fetch fresh data from the server.
-- `manuallyUpdateCartFragment`: Manually updates the cart fragment in the cache.
-- `clearComparisonQueryFragment` & `clearWishlistQueryFragment`: Clear the comparison or wishlist fragment from the cache.
-- `getOptimisticChangeTransportInCartResult` & `getOptimisticChangePaymentInCartResult`: These functions provide optimistic results for the respective mutations.
-- `getPaymentFromTransport`: Helper function to get a specific payment method from a transport based on its UUID.
+-   `invalidateFields`: Given a cache instance and a list of fields, this function invalidates these fields in the cache. This can be useful after certain operations, like a user login or logout, where you might want to invalidate cached data to fetch fresh data from the server.
+-   `manuallyUpdateCartFragment`: Manually updates the cart fragment in the cache.
+-   `clearComparisonQueryFragment` & `clearWishlistQueryFragment`: Clear the comparison or wishlist fragment from the cache.
+-   `getOptimisticChangeTransportInCartResult` & `getOptimisticChangePaymentInCartResult`: These functions provide optimistic results for the respective mutations.
+-   `getPaymentFromTransport`: Helper function to get a specific payment method from a transport based on its UUID.
 
 When using this module, ensure you're familiar with the URQL graph cache and its related concepts. It's also crucial to be aware of the GraphQL schema and the generated GraphQL types, as they play a vital role in how the cache is managed.
 
@@ -78,11 +78,11 @@ query is not cached
 
 ```graphql
 query NavigationQuery {
-  navigation {
-    name
-    link
-    ...CategoriesByColumnFragment
-  }
+    navigation {
+        name
+        link
+        ...CategoriesByColumnFragment
+    }
 }
 ```
 
@@ -90,10 +90,10 @@ query is cached for 1 hour
 
 ```graphql
 query NavigationQuery @redisCache(ttl: 3600) {
-  navigation {
-    name
-    link
-    ...CategoriesByColumnFragment
-  }
+    navigation {
+        name
+        link
+        ...CategoriesByColumnFragment
+    }
 }
 ```

@@ -62,6 +62,7 @@ Now, the page should load correctly and display the newest tweets of [@ShopsysFW
 But to access it, you still need to open a specific URL...
 
 ## Side menu and breadcrumbs
+
 The admin side menu is implemented by [KnpMenuBundle](https://symfony.com/doc/master/bundles/KnpMenuBundle/index.html) and to extend it, you can use [events](https://symfony.com/doc/master/bundles/KnpMenuBundle/events.html).
 For details about the menu customization, read the [Administration Menu](../administration/administration-menu.md) article.
 

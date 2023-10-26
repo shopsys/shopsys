@@ -6,30 +6,30 @@ This function will be your friend while logging exceptions anywhere in the app. 
 
 ## Run-time error on the server (`getServerSideProps` or `getInitialProps`)
 
-- **In production** - The error is propagated to the `_error.tsx` page with a status code **500**. We do not need to handle the error inside `getServerSideProps` or `getInitialProps`as it is handled inside the error page, where it is available inside `context.err`. The user is only shown `<Error500Content />`, the status code is **500**. A default error message (`500 - Internal Server Error`) is logged into the console, meaning the underlying error is unknown to the user.
+-   **In production** - The error is propagated to the `_error.tsx` page with a status code **500**. We do not need to handle the error inside `getServerSideProps` or `getInitialProps`as it is handled inside the error page, where it is available inside `context.err`. The user is only shown `<Error500Content />`, the status code is **500**. A default error message (`500 - Internal Server Error`) is logged into the console, meaning the underlying error is unknown to the user.
 
-- **In development** - The error is thrown and shown to the developer right away using the Next.js error popup. You can also see it in the container logs to make sure it is a SSR error.
+-   **In development** - The error is thrown and shown to the developer right away using the Next.js error popup. You can also see it in the container logs to make sure it is a SSR error.
 
 ## Run-time error on the client (iniside error boundary)
 
-- **In production** - Here you need to make sure what "on the client" means. This means that the error was not present during SSR and only happened on the client. If that was the case, the error is caught by the nearest error boundary (in our case there is only one in `_app.tsx`). This error boundary should have a fallback component that then tries to handle the error and reset it. In our case, the global error boundary displays `Error500ContentWithBoundary`which can be (at least visually) easily confused with `Error500Content`, but the difference is that it also handles resetting of the error.
+-   **In production** - Here you need to make sure what "on the client" means. This means that the error was not present during SSR and only happened on the client. If that was the case, the error is caught by the nearest error boundary (in our case there is only one in `_app.tsx`). This error boundary should have a fallback component that then tries to handle the error and reset it. In our case, the global error boundary displays `Error500ContentWithBoundary`which can be (at least visually) easily confused with `Error500Content`, but the difference is that it also handles resetting of the error.
 
-- **In development** - The error is thrown and shown to the developer right away using the Next.js error popup.
+-   **In development** - The error is thrown and shown to the developer right away using the Next.js error popup.
 
 ## Run-time error on the client (outside error boundary)
 
-- **In production** - The error is not handled, therefore the below code in  `_app.tsx` is triggered. The rendered result does not show our custom `<Error500Content />`, only a white page with a simple error message.
+-   **In production** - The error is not handled, therefore the below code in `_app.tsx` is triggered. The rendered result does not show our custom `<Error500Content />`, only a white page with a simple error message.
 
 ```typescript
 process.on('unhandledRejection', logException);
 process.on('uncaughtException', logException);
 ```
 
-- **In development** - The error is thrown and shown to the developer right away using the Next.js error popup.
+-   **In development** - The error is thrown and shown to the developer right away using the Next.js error popup.
 
 ## Run-time error in middleware
 
-- **In production** and  **in development** - Since the entire middleware is wrapped in a `try-catch` block, the error is propagated to the `_error.tsx` page, where the value under `MIDDLEWARE_STATUS_CODE_KEY` is used as the status code and the value under `MIDDLEWARE_STATUS_MESSAGE_KEY` as the message error
+-   **In production** and **in development** - Since the entire middleware is wrapped in a `try-catch` block, the error is propagated to the `_error.tsx` page, where the value under `MIDDLEWARE_STATUS_CODE_KEY` is used as the status code and the value under `MIDDLEWARE_STATUS_MESSAGE_KEY` as the message error
 
 ```typescript
     } catch (e) {
@@ -44,7 +44,7 @@ process.on('uncaughtException', logException);
 
 ## 503 Error (Maintenance)
 
-This is not an error per se, but we need to handle this as such. In this case, we handle it specifically, as Next does not allow us to handle it through the `_error.tsx` page. This means you can only achieve sending the **503** status and showing the maintenance component in the following way. Because of it, both on the **in production** and  **in development**, we handle it by rewriting the response status code in **initServerSideProps**:
+This is not an error per se, but we need to handle this as such. In this case, we handle it specifically, as Next does not allow us to handle it through the `_error.tsx` page. This means you can only achieve sending the **503** status and showing the maintenance component in the following way. Because of it, both on the **in production** and **in development**, we handle it by rewriting the response status code in **initServerSideProps**:
 
 ```tsx
 const isMaintenance = resolvedQueries.some((query) => query.error?.response?.status === 503);
@@ -59,8 +59,7 @@ and then by passing a special boolean pointer in the server-side props:
 ```tsx
 return {
     props: {
-        ...
-        isMaintenance // This is the previously defined variable,
+        ...isMaintenance, // This is the previously defined variable,
     },
 };
 ```

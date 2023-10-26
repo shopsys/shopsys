@@ -2,9 +2,9 @@
 
 By default, you can place an advert banner on these predefined positions:
 
-- under the page header
-- above the page footer
-- in a category detail (above the category name)
+-   under the page header
+-   above the page footer
+-   in a category detail (above the category name)
 
 All the positions are defined in `AdvertPositionRegistry` class that provides them for displaying on the adverts list in admin as well as for the options in the selectbox on the advert detail administration page:
 
@@ -53,19 +53,19 @@ So don't worry about calling the controller in the wrong way.
 Add a new entry into `noticer` section in `config/images.yaml` config if you want to provide additional information about the new position for the images overview admin page (`Settings > Image size > Image size` on URL `admin/image/overview/`)
 
 ```yaml
--   name: noticer
-    class: Shopsys\FrameworkBundle\Model\Advert\Advert
-    sizes:
-        -   name: productDetail
-            width: 1160
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Product detail'
+- name: noticer
+  class: Shopsys\FrameworkBundle\Model\Advert\Advert
+  sizes:
+      - name: productDetail
+        width: 1160
+        height: ~
+        crop: false
+        occurrence: 'Front-end: Product detail'
 ```
 
 ## Conclusion
 
-An administrator can now pick the newly created position when creating an ad in the *Marketing > Advertising system* section.
+An administrator can now pick the newly created position when creating an ad in the _Marketing > Advertising system_ section.
 The advert will then be displayed on the page we edited in the third step (e.g., the product detail page).
 This allows quick customization of the online store visuals via the administration.
 

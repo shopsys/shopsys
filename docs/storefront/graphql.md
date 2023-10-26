@@ -6,9 +6,9 @@ Under the hood of `graphql-code-generator` , the `urql` GraphQL client is used. 
 
 ## Structure
 
-- **docs** - generated (library `graphql-markdown`) markdown documentation from GraphQL schema
-- **generated** - generated hooks and types used on Storefront
-- **requests** - here you can find editable files, such as all `queries`, `mutations`, and `fragments`, based on which the hooks and types are generated
+-   **docs** - generated (library `graphql-markdown`) markdown documentation from GraphQL schema
+-   **generated** - generated hooks and types used on Storefront
+-   **requests** - here you can find editable files, such as all `queries`, `mutations`, and `fragments`, based on which the hooks and types are generated
 
 ## Generate hooks and types
 

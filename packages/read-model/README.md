@@ -8,33 +8,42 @@ The bundle is dedicated for projects based on Shopsys Platform (i.e. created fro
 This repository is maintained by [shopsys/shopsys] monorepo, information about changes is in [monorepo CHANGELOG.md](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md).
 
 ## Installation
+
 The plugin is a Symfony bundle and is installed in the same way:
 
 ### Download
+
 First, you download the package using [Composer](https://getcomposer.org/):
+
 ```
 composer require shopsys/read-model
 ```
 
 ### Register
+
 For the bundle to be loaded in your application you need to register it in `registerBundles()` method in the `app/AppKernel.php` file of your project:
+
 ```diff
 + new Shopsys\ReadModelBundle\ShopsysReadModelBundle(),
 ```
 
 ## Usage
+
 If you want to leverage the advantages of read model concept, you need to use the particular implementation of `ListedProductViewFacadeInterface` in your controllers (there is already prepared one implementation in the bundle).
 The facade provides you the view objects for product lists that can be then used in the templates.
 
 ### Available View Objects
-- [`ListedProductView`](src/Product/Listed/ListedProductView.php) - product representation for FE product lists
-- [`ActionView`](src/Product/Action/ProductActionView.php) - representation of product action area (i.e. form for adding a product to cart, or link to the product detail in the case of main variant)
-- [`ImageView`](src/Image/ImageView.php) - representation of image
+
+-   [`ListedProductView`](src/Product/Listed/ListedProductView.php) - product representation for FE product lists
+-   [`ActionView`](src/Product/Action/ProductActionView.php) - representation of product action area (i.e. form for adding a product to cart, or link to the product detail in the case of main variant)
+-   [`ImageView`](src/Image/ImageView.php) - representation of image
 
 ### Available Twig functions
-- `image` - renders image from given `ImageView`
+
+-   `image` - renders image from given `ImageView`
 
 ## Contributing
+
 Thank you for your contributions to Shopsys Read Model package.
 Together we are making Shopsys Platform better.
 
@@ -45,9 +54,10 @@ please use the main [Shopsys repository](https://github.com/shopsys/shopsys).
 Please, check our [Contribution Guide](https://github.com/shopsys/shopsys/blob/master/CONTRIBUTING.md) before contributing.
 
 ## Support
+
 What to do when you are in troubles or need some help?
 The best way is to join our [Slack](https://join.slack.com/t/shopsysframework/shared_invite/zt-11wx9au4g-e5pXei73UJydHRQ7nVApAQ).
 
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new), please use the main [Shopsys repository](https://github.com/shopsys/shopsys).
 
-[shopsys/shopsys]:(https://github.com/shopsys/shopsys)
+[shopsys/shopsys]: (https://github.com/shopsys/shopsys)

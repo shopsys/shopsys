@@ -17,6 +17,7 @@ Most of the time, you might think that a problem is in Docker, but the truth is 
 provides advice to help you develop Shopsys Platform on Docker without problems.
 
 ## How to Run Multiple Projects by Docker
+
 If you use Docker for more than one Shopsys Platform project, you might run into a problem with container names and their ports.
 Docker requires a unique container name and port for each container, and since our `docker-compose` is not dynamically initialized,
 it contains hard-coded container names and ports, and that makes running more projects in Docker on the same machine impossible without
@@ -25,6 +26,7 @@ modifying your configuration.
 With that being said, we have two options to solve this problem.
 
 ### Multiple Projects - Quick Solution - Only One Project Running at the Time
+
 This solution is simpler and is used if we only need one project running at the time.
 
 All we really need to do is to properly turn off `docker-compose`.
@@ -45,6 +47,7 @@ This will not only stop the containers but also delete them. This means that con
 Now, you can use the same configuration in other projects, and it will work.
 
 ### Multiple Projects - Long-Term Solution
+
 This solution is more viable for someone who really needs to have projects ready to run in a few seconds and often ends up having
 two or more projects running at the same time. So what if we don't always want to reinstall whole containers, and we want our data to persist in volumes?
 
@@ -77,6 +80,7 @@ netstat -ltn
 This will output all listening TCP ports in numeric format. Now we can just pick one that isn't in this list and set it to our container.
 
 !!! warning
+
     Try not to use ports between 1000-1100. These are ports that root usually uses for its processes.
 
 So, we have configured our `docker-compose` files in a way they do not have any conflicts among them.
@@ -84,15 +88,16 @@ That way, we can have as many projects running at the same time as many ports th
 
 Remember that after changing these, you need to do a few things differently.
 
-* You changed the `port` of the webserver container, which affects the domain URL, so you need to change ports in `domains_urls.yaml`.
-* You changed the `container_name` of php-fpm, which means that in order to get inside the php-fpm container, you must now use this name.
-  for instance, if your new container name is `my-new-project-name-php-fpm`, you need to execute
+-   You changed the `port` of the webserver container, which affects the domain URL, so you need to change ports in `domains_urls.yaml`.
+-   You changed the `container_name` of php-fpm, which means that in order to get inside the php-fpm container, you must now use this name.
+    for instance, if your new container name is `my-new-project-name-php-fpm`, you need to execute
 
 ```sh
 docker exec -it my-new-project-name-php-fpm bash
 ```
 
 ## Update of Dockerfile is not Reflected
+
 Sometimes, there is a need to change the dockerfile for one of our images.
 If we already had a project running once in Docker, there is probably a cached image for the container.
 
@@ -111,6 +116,7 @@ docker-compose build
 ```
 
 Docker has now updated our containers and we can continue as usual with:
+
 ```sh
 docker-compose up -d
 ```
@@ -125,21 +131,26 @@ docker-compose up -d --force-recreate
 ```
 
 ## Docker-sync stopped to sync files
+
 Docker-sync suggests ([in known issue](https://github.com/EugenMayer/docker-sync/issues/517)) to use Docker for Mac in version 17.09.1-ce-mac42 (21090).
 This version helped most people to solve their issues with syncing.
 
 You may sometimes encounter a sync problem even with the suggested version of Docker. In those cases, you need to recreate docker-sync containers. Here are two easy steps you have to follow:
 
 Delete your docker-sync containers and volumes (data on your host will not be removed):
+
 ```sh
 docker-sync clean
 ```
+
 Start docker-sync so your docker-sync containers and volumes will be recreated:
+
 ```sh
 docker-sync start
 ```
 
 ## Application is slow on Mac
+
 We focus on enhancing the performance of the application on all platforms.
 There are known some performance issues with Docker for Mac and Docker for Windows because all project files need to be synchronized from the host computer to the application running in a virtual machine.
 On Mac, we partially solved this by implementing docker-sync.
@@ -148,25 +159,32 @@ In some cases, performance can be more important than the persistence of the dat
 In this case, you can increase the performance by deleting these volumes in your `docker-compose.yml` file, but that will result in loss of persistence, which means that the data will be lost after the removal of the container, e.g., during `docker-compose down`.
 
 ## A Docker container is not running
+
 You can inspect what is wrong by using `docker logs <container-name>` command.
 
 ## Composer dependencies installation fails on memory limit
+
 When `composer install` or `composer update` fails on an error with exceeding the allowed memory size, you can increase the memory limit by setting `COMPOSER_MEMORY_LIMIT` environment variable in your `docker/php-fpm/Dockerfile` or `docker-compose.yml`.
 
 !!! note
-    Since `v7.0.0-beta4`, we have set the Composer memory limit to `-1` (which means unlimited) in the php-fpm's `Dockerfile`.  
+
+    Since `v7.0.0-beta4`, we have set the Composer memory limit to `-1` (which means unlimited) in the php-fpm's `Dockerfile`.<br>
     If you still encounter memory issues while using Docker for Windows (or Mac), try increasing the limits in `Docker -> Preferences… -> Advanced`.
 
 !!! note
+
     Composer dependencies contain 3-rd party software with licenses that are described in the document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 ## Starting up the Docker containers fails due to an invalid reference format
+
 Docker images may fail to build during `docker-compose up -d` due to invalid reference format, e.g.:
+
 ```no-highlight
 Building php-fpm
 Step 1/41 : FROM php:8.1-fpm-bullseye as base
 ERROR: Service 'php-fpm' failed to build: Error parsing reference: "php:8.1-fpm-bullseye as base" is not a valid repository/tag: invalid reference format
 ```
+
 This is because you have a version of Docker that does not support [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/).
 
 Upgrade your Docker to version **17.05 or higher** and try running the command again.

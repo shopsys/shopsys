@@ -30,6 +30,7 @@ services:
 ```
 
 !!! note
+
     If you do not set `instanceName`, a job will be placed into cron instance named `default`.
 
 ## Listing available modules
@@ -61,6 +62,7 @@ default
 ```
 
 !!! hint
+
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 # Running cron jobs manually
@@ -69,6 +71,7 @@ We can now run any cron jobs manually by running `php phing cron`.
 And because we have several cron instances registered, the job asks what cron instance should be run.
 
 !!! note
+
     If only one instance is registered, no question is asked, and this instance will run immediately.
 
 # Running cron jobs automatically
@@ -99,5 +102,6 @@ New targets would look like
 and these targets only have to be registered in system crontab.
 
 ## Pitfalls
-- If you tag the cron module with another instance without changes in Phing targets, your jobs will not be executed automatically, because the command will hold on instance choice question.
-- You can easily set your system to run too much cron jobs at once, resulting in server response time slowdown.
+
+-   If you tag the cron module with another instance without changes in Phing targets, your jobs will not be executed automatically, because the command will hold on instance choice question.
+-   You can easily set your system to run too much cron jobs at once, resulting in server response time slowdown.

@@ -10,8 +10,8 @@ If you need to extend the product with a new attribute, see the tutorial [Adding
 
 Modifying the bundle templates that are located in the vendor can be done by overriding these templates.
 
-*If you need to extend or modify the form itself, it is unnecessary to use the overriding and consequently lose upgradeability.
-For the extensions of the forms, see [Enable administrator to edit the `extId` field](./adding-new-attribute-to-an-entity.md#enable-administrator-to-edit-the-extId-field).*
+_If you need to extend or modify the form itself, it is unnecessary to use the overriding and consequently lose upgradeability.
+For the extensions of the forms, see [Enable administrator to edit the `extId` field](./adding-new-attribute-to-an-entity.md#enable-administrator-to-edit-the-extId-field)._
 
 #### The first step is to create a copy of the original twig template that you want to modify.
 
@@ -20,7 +20,9 @@ Because you are trying to override the template located in
 ```text
 vendor/shopsys/framework/src/Resources/views/Admin/Content/Product/detail.html.twig
 ```
+
 therefore, the copy must be located in
+
 ```text
 templates/bundles/ShopsysFrameworkBundle/Admin/Content/Product/detail.html.twig
 ```
@@ -30,7 +32,8 @@ Thanks to this exact location, your new copy of the template will be used instea
 At this point, you just need to modify your copy of the template so that the product transfer status will be displayed on the page.
 
 !!! note
-    If you want to change only some block, you can override the original template. For that, you need to use the `extends` macro with an exclamation mark to prevent template cycling. For example: `{% extends '@!ShopsysFramework/Admin/Content/Product/detail.html.twig' %}`.
+
+    If you want to change only some block, you can override the original template. For that, you need to use the `extends` macro with an exclamation mark to prevent template cycling. For example: `{% extends '@!ShopsysFramework/Admin/Content/Product/detail.html.twig' %}`.<br>
     More information can be found in [official Symfony documentation](https://symfony.com/doc/current/bundles/override.html#templates)
 
 #### The second step is the modification of the copy itself

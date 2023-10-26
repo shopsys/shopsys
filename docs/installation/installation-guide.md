@@ -11,9 +11,9 @@ Docker contains complete development environment necessary for running your appl
 All the services needed by Shopsys Platform like Nginx or PostgreSQL run in Docker and your source code is automatically synchronized between your local machine and Docker container in both ways.  
 That means that you can normally use your IDE to edit the code while it is running inside a Docker container.
 
-- [Linux](installation-using-docker-linux.md)
-- [macOS](installation-using-docker-macos.md)
-- [Windows 10](installation-using-docker-windows-10.md)
+-   [Linux](installation-using-docker-linux.md)
+-   [macOS](installation-using-docker-macos.md)
+-   [Windows 10](installation-using-docker-windows-10.md)
 
 ## Installation without Docker
 

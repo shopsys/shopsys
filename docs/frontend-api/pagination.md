@@ -1,4 +1,5 @@
 # Pagination
+
 Shopsys Platform Frontend API uses pagination inspired by [Relay cursor connection](https://facebook.github.io/relay/graphql/connections.htm)
 
 Every paginated entity uses a connection with information about the current page and paginated entities.
@@ -90,6 +91,7 @@ To order your result, add the `orderingMode` parameter, which is GraphQL enum ty
 You cannot use other values than supported values of the specified type.
 If you want to add more ordering modes, feel free to extend the type in `ProductOrderingModeEnum.types.yaml`.
 Default ordering is `relevance` for search and `priority` for other queries.
+
 ```text
 {
   products (orderingMode: NAME_ASC) {

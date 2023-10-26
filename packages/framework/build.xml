@@ -591,8 +591,6 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
-            <arg path="${path.root}/docs"/>
         </exec>
     </target>
 
@@ -604,8 +602,6 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
-            <arg path="${path.root}/docs"/>
         </exec>
     </target>
 
@@ -837,6 +833,24 @@
         </exec>
     </target>
 
+    <target name="markdown-check" description="Check format of all markdown files" hidden="true">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="prettier-check"/>
+            <arg path="${path.root}/*.md"/>
+            <arg path="${path.root}/docs/**/*.md"/>
+        </exec>
+    </target>
+
+    <target name="markdown-fix" description="Reformat all markdown files" hidden="true">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="prettier-fix"/>
+            <arg path="${path.root}/*.md"/>
+            <arg path="${path.root}/docs/**/*.md"/>
+        </exec>
+    </target>
+
     <target name="npm" description="Build node modules.">
         <phingcall target="npm-install-dependencies"/>
         <phingcall target="npm-export-translations"/>
@@ -1021,13 +1035,13 @@
         </if>
     </target>
 
-    <target name="standards" depends="phplint,ecs,annotations-check,phpstan,twig-lint,yaml-standards,eslint-check" description="Checks coding standards."/>
+    <target name="standards" depends="phplint,ecs,markdown-check,annotations-check,phpstan,twig-lint,yaml-standards,eslint-check" description="Checks coding standards."/>
 
-    <target name="standards-diff" depends="phplint-diff,ecs-diff,annotations-check,phpstan,twig-lint-diff,yaml-standards,eslint-check-diff" description="Checks coding standards in changed files."/>
+    <target name="standards-diff" depends="phplint-diff,ecs-diff,markdown-check,annotations-check,phpstan,twig-lint-diff,yaml-standards,eslint-check-diff" description="Checks coding standards in changed files."/>
 
-    <target name="standards-fix" depends="ecs-fix,annotations-fix,yaml-standards-fix,eslint-fix" description="Automatically fixes *some* coding standards violations in all files. Always run 'standards' to be sure there are no further violations."/>
+    <target name="standards-fix" depends="ecs-fix,markdown-fix,annotations-fix,yaml-standards-fix,eslint-fix" description="Automatically fixes *some* coding standards violations in all files. Always run 'standards' to be sure there are no further violations."/>
 
-    <target name="standards-fix-diff" depends="ecs-fix-diff,annotations-fix,yaml-standards-fix,eslint-fix-diff" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
+    <target name="standards-fix-diff" depends="ecs-fix-diff,markdown-fix,annotations-fix,yaml-standards-fix,eslint-fix-diff" description="Automatically fixes *some* coding standards violations in changed files. Always run 'standards' to be sure there are no further violations."/>
 
     <target name="stylelint" description="Checks conventions in styles">
         <exec executable="${path.stylelint.executable}" logoutput="true" passthru="true" checkreturn="true" dir="${path.root}" escape="true">

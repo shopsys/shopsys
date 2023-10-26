@@ -1,4 +1,5 @@
 # Extending Form From Plugin
+
 Sometimes, your plugin needs some extra information to be included in an entity. For example, you need to track the weight of products.
 This can be solved by extending the entity CRUD model with your custom sub-form.
 
@@ -10,9 +11,11 @@ Each form extension has its label, form type and methods for managing the form d
 For more information about working with plugins, you can see [shopsys/plugin-interface](https://github.com/shopsys/plugin-interface) repository.
 
 ## Example
+
 As an example usage, we will use `HeurekaProductCrudExtension`.
 
 First, you must add your form type you want to show in administration. (e.g., `product-feed-heureka/src/Form/HeurekaProductFormType.php`)
+
 ```php
 
 //...
@@ -58,7 +61,7 @@ Here, you need to add methods for handling data and methods `getFormTypeClass` t
 class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
 {
 
-    //...  
+    //...
 
     /**
      * @return string
@@ -124,10 +127,10 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
 ```
 
 Then you need to add configuration to `services.yaml` in our example `product-feed-heureka/src/Resources/services.yaml`.
+
 ```yaml
 services:
-
-  #...
+    #...
 
     Shopsys\ProductFeed\HeurekaBundle\Form\HeurekaProductCrudExtension:
         tags:

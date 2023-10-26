@@ -1,15 +1,19 @@
 # Create Basic Grid
+
 In this cookbook, we will create a new grid to display salesmen data in the administration.
 We will learn how to use the grid factory properly, configure the data displayed, and override the default data presentation.
 In the end, we will be able to even sort our grid by column, paginate large result sets and delete records.
 
 ## Prerequisites
-* As we are going to list the salesmen, you need to create the Salesman entity and add some entries to the database table following [the cookbook](./adding-a-new-entity.md), first.
-* You should know how to work with controllers, its actions and be familiar with concepts of administration pages in Shopsys Platform.
-    * We recommend you to read [Adding a New Administration Page](./adding-a-new-administration-page.md) cookbook.
+
+-   As we are going to list the salesmen, you need to create the Salesman entity and add some entries to the database table following [the cookbook](./adding-a-new-entity.md), first.
+-   You should know how to work with controllers, its actions and be familiar with concepts of administration pages in Shopsys Platform.
+    -   We recommend you to read [Adding a New Administration Page](./adding-a-new-administration-page.md) cookbook.
 
 ## 1. Define the grid
+
 ### 1.1 Create grid factory
+
 First, we need to create a factory responsible for the creation of our new grid.
 
 In `App\Grid\Salesman` namespace we create the new class that will implement `GridFactoryInterface`.
@@ -52,11 +56,13 @@ class SalesmanGridFactory implements GridFactoryInterface
 ```
 
 In `services.yaml`, we need to register this new class.
+
 ```yaml
-    App\Grid\Salesman\SalesmanGridFactory: ~
+App\Grid\Salesman\SalesmanGridFactory: ~
 ```
 
 ### 1.2 Configure grid data source
+
 `GridFactory::create()` requires an implementation of `DataSourceInterface` as its second argument.
 So we create one that returns all the salesmen we need.
 
@@ -91,6 +97,7 @@ And because we want to get data from the database, we use a data source created 
 ```
 
 Now, let's implement `createAndGetDataSource` method that should be in the same `SalesmanGridFactory` and will look like this.
+
 ```php
 use App\Model\Salesman\Salesman;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
@@ -115,6 +122,7 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 Do not forget to add import of `App\Model\Salesman\Salesman` to `SalesmanGridFactory`.
 
 ### 1.3 Add columns to the grid
+
 We prepared our grid, but for now, it is not rendered anywhere and does not contain any columns.
 We are going to change this now.
 
@@ -134,6 +142,7 @@ First, we add columns we want to see into `SalesmanGridFactory::create` method.
 ```
 
 !!! note
+
     In the example above, the column names are translated. Do not forget to [dump translations](../introduction/console-commands-for-application-management-phing-targets.md#translations-dump).
 
 ## 2. Display the grid
@@ -142,7 +151,9 @@ Grid is ready to show all the salesmen from the database.
 And we just need to render the grid itself using a controller.
 
 ### 2.1 Create a new controller & action
+
 We must inject (pass through the constructor) `SalesmanGridFactory` created earlier and pass the grid view to the template.
+
 ```php
 namespace App\Controller\Admin;
 
@@ -180,7 +191,9 @@ class SalesmanController extends AdminBaseController
 ```
 
 ### 2.2 Create a new template
+
 Finally, it is time to create a new twig template, `templates/Admin/Content/Salesman/list.html.twig` with the following content:
+
 ```twig
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 
@@ -196,14 +209,17 @@ Now, you should be able to see the basic grid with salesmen data when accessing 
 ![Basic Grid](img/basic-grid.png)
 
 !!! note
+
     If you want to add a link to the page to the menu and proper breadcrumb navigation,
     please check the corresponding section in [Adding a New Administration Page](./adding-a-new-administration-page.md#side-menu-and-breadcrumbs) cookbook.
 
 ## 3. Modify the basic grid appearance
+
 As you probably noticed, dates in the third column are not printed much friendly.
 To adjust appearance (e.g., let's say we are in Germany and want to format the dates appropriately), we just need to extend the default grid template and modify it accordingly.
 
 ### 3.1 Create a new template
+
 We create the new twig template `listGrid.html.twig` in `templates/Admin/Content/Salesman`.
 The template has to extend `@ShopsysFramework/Admin/Grid/Grid.html.twig` and override block `grid_value_cell_id_registeredAt` where we apply a Twig filter to the value.
 [You can read more about blocks here](../administration/grid-rendering-customization.md).
@@ -217,6 +233,7 @@ The template has to extend `@ShopsysFramework/Admin/Grid/Grid.html.twig` and ove
 ```
 
 ### 3.2 Set the grid theme
+
 Now that we have template ready, we just need to set it as the theme in the grid factory.
 
 ```diff
@@ -235,6 +252,7 @@ Now that we have template ready, we just need to set it as the theme in the grid
 ```
 
 ## 4. Sort rows
+
 Now, we see data as we want, but it would be nice to be able to adjust the view from the user's perspective.
 We may want to ease the finding of a certain salesman by allowing to sort rows by name or date of creation.
 
@@ -260,6 +278,7 @@ A default order will be by date with the newest salesmen at the top.
 ```
 
 ## 5. Paginate results
+
 As the number of salesmen grows, the clarity decreases rapidly.
 To keep work with grid enjoyable, we can split data across several pages with pagination.
 
@@ -280,14 +299,17 @@ In the grid, we just need to call one method.
 ```
 
 ## 6. Delete salesmen using the grid
+
 As the last, an admin may want to delete some salesmen.
 Grid eases the task with an already implemented action column.
 
 ### 6.1 Implement the deletion logic
+
 First, we need to get the salesman entity by its ID and remove it from persistence using the Doctrine entity manager.
 We will follow the basic concepts of Shopsys Platform (see ["Basics about model architecture"](../model/introduction-to-model-architecture.md) article) and create new classes - `SalesmanFacade` and `SalesmanRepository`.
 
 #### 6.1.1 Create `SalesmanRepository` and implement `getById` method
+
 ```php
 // src\Model\Salesman\SalesmanRepository.php
 declare(strict_types=1);
@@ -338,6 +360,7 @@ class SalesmanRepository
 ```
 
 #### 6.1.2 Create `SalesmanFacade` and implement `deleteById` method
+
 ```php
 // src\Model\Salesman\SalesmanFacade.php
 declare(strict_types=1);
@@ -382,7 +405,9 @@ class SalesmanFacade
 ```
 
 ### 6.2 Add delete action to the controller
+
 In our `SalesmanController`, we add the new action to delete the salesman using `SalesmanFacade`.
+
 ```diff
 // src/Controller/Admin/SalesmanController
 namespace App\Controller\Admin;
@@ -423,11 +448,14 @@ class SalesmanController extends AdminBaseController
 ```
 
 !!! tip
+
     It is a good practice to enable [CSRF protection](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)) on this type of action.
 
 ### 6.3 Add action column to the grid
+
 We just use `addDeleteActionColumn` in the existing `SalesmanGridFactory` with arguments `admin_salesman_delete` as a route and request parameters (the action needs to know the salesman's ID to delete).
 To prevent accidental deletion, we can also set a confirmation message.
+
 ```diff
 // src/Grid/Salesman/SalesmanGridFactory
 
@@ -445,6 +473,7 @@ To prevent accidental deletion, we can also set a confirmation message.
 ```
 
 ## Conclusion
+
 Now, you should be able to create a new grid and use the strengths of the grid component to display, sort and delete salesmen.
 A similar approach could be used to create a grid that precisely presents any data in a way you need.
 

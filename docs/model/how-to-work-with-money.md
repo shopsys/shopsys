@@ -1,24 +1,26 @@
 # How to Work with Money
 
 Money is a very important concept for every e-commerce project.
-In Shopsys Platform, all monetary values (*prices, account balances, discount amounts, price limits etc.*) are represented by an instance of [the `Money` class](#money-class).
+In Shopsys Platform, all monetary values (_prices, account balances, discount amounts, price limits etc._) are represented by an instance of [the `Money` class](#money-class).
 
 This approach has several advantages:
 
-- it avoids problems with floating point number calculations and comparisons (see [official PHP documentation](http://php.net/manual/en/language.types.float.php) for details)
-- allows easy-to-use interfaces with consistent type-hinting so you can be sure what type of value you should be using
-- prevents accidental conversion to unexpected types (which may be problematic e.g., when using the `===` operator)
-- makes the application design clearer and future changes easier
+-   it avoids problems with floating point number calculations and comparisons (see [official PHP documentation](http://php.net/manual/en/language.types.float.php) for details)
+-   allows easy-to-use interfaces with consistent type-hinting so you can be sure what type of value you should be using
+-   prevents accidental conversion to unexpected types (which may be problematic e.g., when using the `===` operator)
+-   makes the application design clearer and future changes easier
 
 **Table of Contents:**
 
 [TOC]
 
 ## General Concept
+
 The money concept in Shopsys Platform represents and encapsulates monetary values with a decimal part, like `100`, `0.50`, `10.99`, `0.0005`, ...  
 Money is represented without currency.
 
 ### Scale
+
 Scale defines the precision of the decimal part and it can be a bit tricky.
 
 Imagine you want to represent `1/3` (one third) in your application.
@@ -42,6 +44,7 @@ It uses a decimal representation of the money amount and it does not contain any
 You can get the decimal representation as a `string` via the `getAmount` method.
 
 !!! tip
+
     If in doubt about the results of any method, you can take a look at [its unit tests](https://github.com/shopsys/shopsys/blob/master/packages/framework/tests/Unit/Component/Money/MoneyTest.php) which contain many examples of the class' behavior.
 
 ### Construction
@@ -57,12 +60,13 @@ Zero amount of money can be constructed by calling `Money::zero()`.
 
 To compute with monetary values you have to use the object's methods instead of arithmetic operators (`+`, `-`, `*`, `/`):
 
-- `Money::add(Money $addend) : Money`
-- `Money::subtract(Money $subtrahend) : Money`
-- `Money::multiply(int|string $multiplier) : Money`
-- `Money::divide(int|string $divisor, int $scale) : Money`
+-   `Money::add(Money $addend) : Money`
+-   `Money::subtract(Money $subtrahend) : Money`
+-   `Money::multiply(int|string $multiplier) : Money`
+-   `Money::divide(int|string $divisor, int $scale) : Money`
 
 !!! note
+
     `Money` is immutable, which means that all these methods create a new object and the original is never modified.
 
 For addition and subtraction, the other parameter has to be also a `Money` instance.
@@ -71,11 +75,12 @@ For multiplication and division, the other parameter has to be an integer or a n
 The scale (number of decimal places) of the result is assigned automatically to all operations except division, keeping the results as precise as possible.
 Results of a division may be inexpressible with a finite decimal (e.g., 1 / 3 = 0.3333...), so it's up to the user to specify the requested scale.
 
-- scale of the result of `add` and `subtract` is the *maximal scale* of both money values
-- scale of the result of `multiply` is the *sum of scales* of both money values
-- scale of the result of `divide` must be *explicitly specified*, the last decimal place will be rounded to minimize the error
+-   scale of the result of `add` and `subtract` is the _maximal scale_ of both money values
+-   scale of the result of `multiply` is the _sum of scales_ of both money values
+-   scale of the result of `divide` must be _explicitly specified_, the last decimal place will be rounded to minimize the error
 
 !!! note
+
     The scale of the money amount is always preserved - `getAmount` will use all decimal places of its scale (e.g., zero money with scale 6 would return `0.000000`).
 
 ### Rounding
@@ -89,12 +94,12 @@ The scale of the result will always be equal to the provided `$scale`.
 
 To compare two monetary values you have to use the object's methods instead of [comparison operators](http://php.net/manual/en/language.operators.comparison.php):
 
-- `Money::equals(Money $other) : bool` instead of `===` and `==`
-- `Money::isLessThan(Money $other) : bool` instead of `<`
-- `Money::isGreaterThan(Money $other) : bool` instead of `>`
-- `Money::isLessThanOrEqualTo(Money $other) : bool` instead of `<=`
-- `Money::isGreaterThanOrEqualTo(Money $other) : bool` instead of `>=`
-- `Money::compare(Money $other) : int` instead of the Spaceship operator `<=>`
+-   `Money::equals(Money $other) : bool` instead of `===` and `==`
+-   `Money::isLessThan(Money $other) : bool` instead of `<`
+-   `Money::isGreaterThan(Money $other) : bool` instead of `>`
+-   `Money::isLessThanOrEqualTo(Money $other) : bool` instead of `<=`
+-   `Money::isGreaterThanOrEqualTo(Money $other) : bool` instead of `>=`
+-   `Money::compare(Money $other) : int` instead of the Spaceship operator `<=>`
 
 To compare a value with zero you may use the short-hand methods`isPositive`, `isNegative` or `isZero`.
 A zero is considered neither positive nor negative.
@@ -125,6 +130,7 @@ Thanks to this approach you can use `Money` in your [data objects](./entities.md
 In Shopsys Platform, the default value of the `currency` option is `false` instead of `EUR`, hiding the currency symbol by default.
 
 !!! tip
+
     For non-monetary numeric values use `NumberType` (see [Symfony docs](https://symfony.com/doc/3.4/reference/forms/types/number.html) for details).
 
 ### Form Constraints
@@ -163,10 +169,10 @@ Similarly to [the Symfony `Range` constraint](https://symfony.com/doc/3.4/refere
 
 It has four options:
 
-- `min` specifies the minimum value, has to be an instance of `Money` or `null`
-- `max` specifies the maximum value, has to be an instance of `Money` or `null`
-- `minMessage` specifies the validation error message in case the entered value is less than the `min` value
-- `maxMessage` specifies the validation error message in case the entered value is greater than the `max` value
+-   `min` specifies the minimum value, has to be an instance of `Money` or `null`
+-   `max` specifies the maximum value, has to be an instance of `Money` or `null`
+-   `minMessage` specifies the validation error message in case the entered value is less than the `min` value
+-   `maxMessage` specifies the validation error message in case the entered value is greater than the `max` value
 
 At least one of the `min` and `max` options has to be provided for the constraint to make sense.
 Specifying the validation messages is optional, there are default values.
@@ -207,7 +213,7 @@ These filters can be used only with an instance of `Money`.
 Filter `price` formats the amount of money in a localized manner, including the currency symbol.
 It uses basic frontend currency on the current domain and the current locale (language) to format it.
 
-For example, one thousand Czech crowns would be rendered as *"CZK1,000.00"* on an English domain and as *"1 000,00 Kč"* on a Czech one.
+For example, one thousand Czech crowns would be rendered as _"CZK1,000.00"_ on an English domain and as _"1 000,00 Kč"_ on a Czech one.
 
 The filter expects the value to be already rounded.
 If not, it will render the extra decimal places.
@@ -218,21 +224,21 @@ They usually differ only in the currency and locale they use.
 ### priceText
 
 Filter `priceText` formats the amount of money in a localized manner, similarly to the `price` filter.
-The only difference is that it outputs the text *"Free"* (or the corresponding [translation](../introduction/translations.md)) when zero amount of money is provided.
+The only difference is that it outputs the text _"Free"_ (or the corresponding [translation](../introduction/translations.md)) when zero amount of money is provided.
 
 ### priceTextWithCurrencyByCurrencyIdAndLocale
 
 Filter `priceTextWithCurrencyByCurrencyIdAndLocale` can be used to format the amount of money in any currency and locale.
-It outputs the text *"Free"* when zero amount of money is provided.
+It outputs the text _"Free"_ when zero amount of money is provided.
 
-The *currency ID* (`int`) and the *locale* (`string`) must be provided as parameters.
+The _currency ID_ (`int`) and the _locale_ (`string`) must be provided as parameters.
 
 ### priceWithCurrency
 
 Filter `priceWithCurrency` can be used to format the amount of money in any currency.
 It uses the current locale (the locale of current domain or administration) to format it.
 
-The *currency* (`Currency` entity) must be provided as a parameter.
+The _currency_ (`Currency` entity) must be provided as a parameter.
 
 ### priceWithCurrencyAdmin
 
@@ -244,13 +250,13 @@ It has no parameters.
 
 It works similarly to `priceWithCurrency`, but it uses currency ID instead of the `Currency` entity.
 
-The *currency ID* (`int`) must be provided as a parameter.
+The _currency ID_ (`int`) must be provided as a parameter.
 
 ### priceWithCurrencyByDomainId
 
 It works similarly to `priceWithCurrency`, but it uses the basic frontend currency of the provided domain.
 
-The *domain ID* (`int`) must be provided as a parameter.
+The _domain ID_ (`int`) must be provided as a parameter.
 
 ### moneyFormat
 
@@ -258,9 +264,9 @@ Formats the amount of money as a decimal number without any currency symbol.
 
 Three optional parameters can be provided:
 
-- *number of decimal places* - `null` by default (meaning all), it will [round](#rounding) the value if necessary
-- *decimal point character* - `"."` by default
-- *separator of thousands* - `""` by default
+-   _number of decimal places_ - `null` by default (meaning all), it will [round](#rounding) the value if necessary
+-   _decimal point character_ - `"."` by default
+-   _separator of thousands_ - `""` by default
 
 ```twig
 {# the "money" variable contains Money::create('1234.5670') #}
@@ -277,7 +283,7 @@ Three optional parameters can be provided:
 
 ```json
 {
-  "amount": "1234.5670"
+    "amount": "1234.5670"
 }
 ```
 
@@ -291,14 +297,12 @@ This format can be readily used in Javascript when JSON is rendered in Twig:
 
 ```js
 (function ($) {
-
     $(document).ready(function () {
         var money = $('#my-money').data('money');
 
         // Displays "1234.5670"
         alert(money.amount);
     });
-
 })(jQuery);
 ```
 
@@ -432,12 +436,12 @@ For a zero price, you can use a short-hand method `Price::zero()`.
 
 The class has three getters you can use to retrieve the prices or the VAT amount:
 
-- `Price::getPriceWithoutVat() : Money`
-- `Price::getPriceWithVat() : Money`
-- `Price::getVatAmount() : Money`
+-   `Price::getPriceWithoutVat() : Money`
+-   `Price::getPriceWithVat() : Money`
+-   `Price::getVatAmount() : Money`
 
 And you can calculate with prices using its methods:
 
-- `Price::add(Price $addend) : Price`
-- `Price::subtract(Price $subtrahend) : Price`
-- `Price::inverse() : Price`
+-   `Price::add(Price $addend) : Price`
+-   `Price::subtract(Price $subtrahend) : Price`
+-   `Price::inverse() : Price`

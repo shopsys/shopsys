@@ -1,4 +1,5 @@
 # Graphic Checkboxes and Radiobuttons
+
 For replacing native checkboxes and radiobuttons we use image background, which has six positions:
 
     - normal (top, left)
@@ -9,9 +10,11 @@ For replacing native checkboxes and radiobuttons we use image background, which 
     - checked + disabled (bottom, right)
 
 ## Html structure
+
 Html structure is easy and has only few rules. Native input is hidden by class `css-checkbox` and directly after this input we need to add label with class `css-checkbox__image`, which represents image. Between this tags can't be any other tags. It is because input gives to span statuses like `checked` and according this it shows background on current position.
 
 Graphic checkboxes
+
 ```Html
     <input type="checkbox" id="[input_id]" name="[input_name]" class="css-checkbox" value="1">
     <label class="css-checkbox__image" for="[input_id]">
@@ -20,6 +23,7 @@ Graphic checkboxes
 ```
 
 Graphic radiobuttons
+
 ```Html
     <input type="radio" id="[input_id]" name="[input_name]" class="css-radio" value="1">
     <label class="css-radio__image" for="[input_id]">
@@ -28,6 +32,7 @@ Graphic radiobuttons
 ```
 
 ## Background image template
+
 We prepared PSD file for create custom background image. You can [download it](./custom_checkbox.psd). For editing all colors, borders and radiuses you can upload it to [Photopea](https://www.photopea.com/).
 
 As you can see at layer structure, there are radiobuttons and checkboxes separately. Just make visible part that you want, make your changes and export as png file and save as original file:

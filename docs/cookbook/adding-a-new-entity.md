@@ -1,4 +1,5 @@
 # Adding a New Entity
+
 This article provides step-by-step instructions on how to add a new entity to your project.
 Basic information about custom entities can be found in the [separate article](../model/custom-entities.md).
 
@@ -27,9 +28,9 @@ class Salesman
 
 Each salesman entity will have the following properties.
 
-- `id` - unique sequenced value for salesman identification
-- `name` - name of the salesman limited to 100 characters
-- `registeredAt` - registration date of the salesman
+-   `id` - unique sequenced value for salesman identification
+-   `name` - name of the salesman limited to 100 characters
+-   `registeredAt` - registration date of the salesman
 
 ```diff
 namespace App\Model\Salesman;
@@ -76,6 +77,7 @@ php phing db-migrations-generate
 ```
 
 !!! note
+
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 The command will print a filename of the database migration with content like this.
@@ -112,7 +114,8 @@ class Version20190301122526 extends AbstractMigration
 ```
 
 !!! tip
-    We recommend you check this migration and verify that everything is set up as expected.
+
+    We recommend you check this migration and verify that everything is set up as expected.<br>
     If the system doesn't generate the migration, the entity is probably in an incorrect namespace or has the wrong Doctrine annotation mapping.
 
 ## 4. Add default salesmen

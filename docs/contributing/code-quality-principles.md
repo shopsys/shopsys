@@ -19,10 +19,10 @@ The reason has to be discussed with the reviewer and may be written in the commi
 
 ## Principles
 
-* [Dependency injection](#dependency-injection)
-* [Strict types](#strict-types)
-* [Don't repeat yourself](#dont-repeat-yourself)
-* [Dependency inversion](#dependency-inversion)
+-   [Dependency injection](#dependency-injection)
+-   [Strict types](#strict-types)
+-   [Don't repeat yourself](#dont-repeat-yourself)
+-   [Dependency inversion](#dependency-inversion)
 
 ## Dependency injection
 
@@ -69,6 +69,7 @@ It is essential to provide code extensibility in the framework, which is achieve
 
 We don't respect this principle in tests as it is impossible to pass dependencies to PHPUnit tests via the constructor.  
 In tests we use
+
 ```php
 $this->getContainer()->get(...)
 ```

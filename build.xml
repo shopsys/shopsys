@@ -49,15 +49,10 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
-            <arg path="${path.root}/../*.md"/>
-            <arg path="${path.root}/docs"/>
             <arg path="${path.packages}/*/src"/>
             <arg path="${path.packages}/*/tests"/>
-            <arg path="${path.packages}/*/*.md"/>
             <arg path="${path.utils}/*/src"/>
             <arg path="${path.utils}/*/tests"/>
-            <arg path="${project.basedir}/*.md"/>
-            <arg path="${project.basedir}/docs"/>
         </exec>
     </target>
 
@@ -157,6 +152,30 @@
         <echo level="info" message="Generating apiary blueprint"/>
         <exec command="npx hercule ${path.frontend-api}/apiary/index.md -o ${path.frontend-api}/apiary.apib" passthru="true" checkreturn="true"/>
         <echo message="Apiary blueprint was generated, commit changes when needed"/>
+    </target>
+
+    <target name="markdown-check" description="Check format of all markdown files" hidden="true">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="prettier-check"/>
+            <arg path="${path.root}/../*.md"/>
+            <arg path="${path.root}/docs/**/*.md"/>
+            <arg path="${path.packages}/**/*.md"/>
+            <arg path="${project.basedir}/docs/**/*.md"/>
+            <arg path="${project.basedir}/*.md"/>
+        </exec>
+    </target>
+
+    <target name="markdown-fix" description="Reformat all markdown files" hidden="true">
+        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="prettier-fix"/>
+            <arg path="${path.root}/../*.md"/>
+            <arg path="${path.root}/docs/**/*.md"/>
+            <arg path="${path.packages}/**/*.md"/>
+            <arg path="${project.basedir}/docs/**/*.md"/>
+            <arg path="${project.basedir}/*.md"/>
+        </exec>
     </target>
 
     <target name="npm-install-dependencies" description="Installs node modules dependencies." hidden="true">

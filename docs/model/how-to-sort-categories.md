@@ -4,7 +4,7 @@ Sorting of categories may become challenging with an increasing number of catego
 
 ## Sorting in administration
 
-In administration is leveraged the use of [nestedSortable jQuery plugin](https://github.com/ilikenwf/nestedSortable) which provides a complete calculated [nested set model](https://en.wikipedia.org/wiki/Nested_set_model) 
+In administration is leveraged the use of [nestedSortable jQuery plugin](https://github.com/ilikenwf/nestedSortable) which provides a complete calculated [nested set model](https://en.wikipedia.org/wiki/Nested_set_model)
 and this model is updated entirely after category sorting is saved.
 This approach proved to be the best for many categories while does not impact the performance of the small data set.
 You can take a look at the `Shopsys\FrameworkBundle\Model\Category\CategoryFacade::reorderByNestedSetValues()` method for details.
@@ -35,7 +35,8 @@ you can call `CategoryFacade::reorderByNestedSetValues()` method which accepts a
 ```
 
 !!! note
-    Categories with `parent_id` set to null will be at the main level, placed under hidden root category (see `CategoryFacade::getRootCategory()`).  
+
+    Categories with `parent_id` set to null will be at the main level, placed under hidden root category (see `CategoryFacade::getRootCategory()`).<br>
     This root category must not be present in the data passed to reordering method.
 
 Usually, you don't have a complete nested set model, but it's much easier to obtain a sorted [adjacency list](https://en.wikipedia.org/wiki/Adjacency_list) (for example, from the information system).
@@ -97,7 +98,8 @@ php bin/console shopsys:categories:recalculate
 ```
 
 !!! important
-    As it's not possible to obtain the correct order from the adjacency list, it's possible that siblings (categories on the same level) may not be sorted the way you want.  
+
+    As it's not possible to obtain the correct order from the adjacency list, it's possible that siblings (categories on the same level) may not be sorted the way you want.<br>
     You can re-sort them later in administration.
 
 The tree is recalculated only when corrupted, so you don't need to worry about your data.
