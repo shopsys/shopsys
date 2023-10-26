@@ -178,7 +178,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
         yield [
             'productListType' => ProductListTypeEnum::COMPARISON,
             'expectedUuid' => ProductListDataFixture::PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID,
-            'expectedProductIds' => [5, 49],
+            'expectedProductIds' => [49, 5],
         ];
 
         yield [

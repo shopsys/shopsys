@@ -30,6 +30,7 @@ class ProductListRepository
             ->join('pli.product', 'p')
             ->where('pli.productList = :productList')
             ->orderBy('pli.createdAt', 'DESC')
+            ->addOrderBy('pli.id', 'DESC')
             ->setParameter('productList', $productList)
             ->getQuery()
             ->getArrayResult();

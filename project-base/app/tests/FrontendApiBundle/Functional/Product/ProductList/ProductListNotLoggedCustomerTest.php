@@ -202,7 +202,7 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
         yield [
             'productListType' => ProductListTypeEnum::COMPARISON,
             'uuid' => ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
-            'expectedProductIds' => [2, 3],
+            'expectedProductIds' => [3, 2],
         ];
 
         yield [

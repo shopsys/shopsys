@@ -43,7 +43,7 @@ class ProductList
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Product\List\ProductListItem", mappedBy="productList", cascade={"remove"}
      * )
-     * @ORM\OrderBy({"createdAt" = "DESC"})
+     * @ORM\OrderBy({"createdAt" = "DESC", "id" = "DESC"})
      */
     protected $items;
 
