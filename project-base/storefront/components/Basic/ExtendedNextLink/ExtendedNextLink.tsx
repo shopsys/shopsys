@@ -5,7 +5,7 @@ import { ComponentPropsWithoutRef, MouseEventHandler } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesDestinations, FriendlyPagesTypes, FriendlyPagesTypesKeys } from 'types/friendlyUrl';
 
-const STATIC_PAGES = ['static', 'homepage', 'stores', 'wishlist', 'comparison'] as const;
+const STATIC_PAGES = ['static', 'homepage', 'stores', 'wishlist', 'comparison', 'orders', 'order'] as const;
 
 type StaticPageType = (typeof STATIC_PAGES)[number];
 
@@ -27,7 +27,13 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     ...props
 }) => {
     const isStatic =
-        type === 'static' || type === 'homepage' || type === 'stores' || type === 'wishlist' || type === 'comparison';
+        type === 'static' ||
+        type === 'homepage' ||
+        type === 'stores' ||
+        type === 'wishlist' ||
+        type === 'comparison' ||
+        type === 'orders' ||
+        type === 'order';
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
 
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {

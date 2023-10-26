@@ -2,6 +2,8 @@ import { SkeletonPageArticle } from './SkeletonPageArticle';
 import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';
 import { SkeletonPageComparison } from './SkeletonPageComparison';
 import { SkeletonPageHome } from './SkeletonPageHome';
+import { SkeletonPageOrder } from './SkeletonPageOrder';
+import { SkeletonPageOrders } from './SkeletonPageOrders';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductsList } from './SkeletonPageProductsList';
 import { SkeletonPageProductsListSimple } from './SkeletonPageProductsListSimple';
@@ -52,6 +54,10 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({ isFetchingData, isPa
             return <SkeletonPageWishlist />;
         case 'comparison':
             return <SkeletonPageComparison />;
+        case 'orders':
+            return <SkeletonPageOrders />;
+        case 'order':
+            return <SkeletonPageOrder />;
         default:
             return null;
     }

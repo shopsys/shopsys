@@ -1,8 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { Loader } from 'components/Basic/Loader/Loader';
 import { Cell, CellHead, Row, Table } from 'components/Basic/Table/Table';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
+import { SkeletonModuleCustomerOrders } from 'components/Blocks/Skeleton/SkeletonModuleCustomerOrders';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ListedOrderFragmentApi } from 'graphql/generated';
@@ -51,15 +51,12 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                     <h1 className="mb-3">{t('My orders')}</h1>
                 </div>
             </Webline>
+
             <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
                 <Webline>
                     {(() => {
                         if (isLoading) {
-                            return (
-                                <div className="flex justify-center">
-                                    <Loader className="w-10" />
-                                </div>
-                            );
+                            return <SkeletonModuleCustomerOrders />;
                         }
 
                         if (!orders?.length) {
@@ -92,7 +89,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                     <Row key={order.uuid} data-testid={TEST_IDENTIFIER + index}>
                                         <Cell data-testid={TEST_IDENTIFIER + 'number'}>
                                             <ExtendedNextLink
-                                                type="static"
+                                                type="order"
                                                 href={{
                                                     pathname: customerOrderDetailUrl,
                                                     query: { orderNumber: order.number },
@@ -135,7 +132,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                         </Cell>
                                         <Cell data-testid={TEST_IDENTIFIER + 'detail-link'}>
                                             <ExtendedNextLink
-                                                type="static"
+                                                type="order"
                                                 href={{
                                                     pathname: customerOrderDetailUrl,
                                                     query: { orderNumber: order.number },

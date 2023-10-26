@@ -20,7 +20,7 @@ const OrderDetailPage: FC = () => {
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
     const router = useRouter();
     const orderNumber = getStringFromUrlQuery(router.query.orderNumber);
-    const [{ data: orderData, error }] = useOrderDetailQueryApi({
+    const [{ data: orderData, fetching, error }] = useOrderDetailQueryApi({
         variables: { orderNumber },
     });
     const breadcrumbs: BreadcrumbFragmentApi[] = [
@@ -33,7 +33,11 @@ const OrderDetailPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
             <PageGuard errorRedirectUrl={customerOrdersUrl} isWithAccess={!error}>
-                <CommonLayout breadcrumbs={breadcrumbs} title={`${t('Order number')} ${orderNumber}`}>
+                <CommonLayout
+                    breadcrumbs={breadcrumbs}
+                    isFetchingData={fetching}
+                    title={`${t('Order number')} ${orderNumber}`}
+                >
                     {orderData?.order && <OrderDetailContent order={orderData.order} />}
                 </CommonLayout>
             </PageGuard>
