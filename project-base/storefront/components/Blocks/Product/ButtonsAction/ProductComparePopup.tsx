@@ -1,5 +1,6 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/IconsSvg';
-import { Link } from 'components/Basic/Link/Link';
+import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -20,12 +21,12 @@ export const ProductComparePopup: FC<ProductComparePopupProps> = ({ onCloseCallb
 
             <div className="flex flex-col">
                 <p className="text-bigger font-semiBold mt-[15px] mb-5">{t('Product added to comparison.')}</p>
-                <Link isButton href={productComparisonUrl}>
-                    <>
+                <ExtendedNextLink href={productComparisonUrl} type="comparison">
+                    <Button>
                         <span>{t('Show products comparison')}</span>
                         <ArrowSecondaryIcon className="rotate-90" />
-                    </>
-                </Link>
+                    </Button>
+                </ExtendedNextLink>
             </div>
         </Popup>
     );

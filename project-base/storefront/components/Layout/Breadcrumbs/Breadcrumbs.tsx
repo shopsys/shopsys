@@ -29,32 +29,34 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
     const lastBreadcrumb = breadcrumbs[lastIndex];
 
     return (
-        <div className={twMergeCustom(breadcrumbsTwClass, className)} data-testid={TEST_IDENTIFIER}>
+        <>
             <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />
 
-            <ArrowIcon className="mr-3 w-3 rotate-90 text-greyLight lg:hidden" />
+            <div className={twMergeCustom(breadcrumbsTwClass, className)} data-testid={TEST_IDENTIFIER}>
+                <ArrowIcon className="mr-3 w-3 rotate-90 text-greyLight lg:hidden" />
 
-            <BreadcrumbsLink dataTestId={TEST_IDENTIFIER + '-item-root'} href="/">
-                {t('Home page')}
-            </BreadcrumbsLink>
+                <BreadcrumbsLink dataTestId={TEST_IDENTIFIER + '-item-root'} href="/">
+                    {t('Home page')}
+                </BreadcrumbsLink>
 
-            <BreadcrumbsSpan>/</BreadcrumbsSpan>
+                <BreadcrumbsSpan>/</BreadcrumbsSpan>
 
-            {linkedBreadcrumbs.map((linkedBreadcrumb, index) => (
-                <Fragment key={index}>
-                    <BreadcrumbsLink
-                        dataTestId={TEST_IDENTIFIER + '-item-' + index}
-                        href={linkedBreadcrumb.slug}
-                        type={type}
-                    >
-                        {linkedBreadcrumb.name}
-                    </BreadcrumbsLink>
-                    <BreadcrumbsSpan>/</BreadcrumbsSpan>
-                </Fragment>
-            ))}
+                {linkedBreadcrumbs.map((linkedBreadcrumb, index) => (
+                    <Fragment key={index}>
+                        <BreadcrumbsLink
+                            dataTestId={TEST_IDENTIFIER + '-item-' + index}
+                            href={linkedBreadcrumb.slug}
+                            type={type}
+                        >
+                            {linkedBreadcrumb.name}
+                        </BreadcrumbsLink>
+                        <BreadcrumbsSpan>/</BreadcrumbsSpan>
+                    </Fragment>
+                ))}
 
-            <BreadcrumbsSpan dataTestId={TEST_IDENTIFIER + '-item-last'}>{lastBreadcrumb.name}</BreadcrumbsSpan>
-        </div>
+                <BreadcrumbsSpan dataTestId={TEST_IDENTIFIER + '-item-last'}>{lastBreadcrumb.name}</BreadcrumbsSpan>
+            </div>
+        </>
     );
 };
 

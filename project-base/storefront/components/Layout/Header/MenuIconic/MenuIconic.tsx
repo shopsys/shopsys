@@ -51,14 +51,14 @@ export const MenuIconic: FC = () => {
             </MenuIconicItem>
 
             <MenuIconicItem className="max-lg:hidden" dataTestId={TEST_IDENTIFIER + '-comparison'}>
-                <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison')}>
+                <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison')} type="comparison">
                     <CompareIcon className="w-4 text-white" />
                     {!!comparison?.products.length && <span>{comparison.products.length}</span>}
                 </MenuIconicItemLink>
             </MenuIconicItem>
 
             <MenuIconicItem className="max-lg:hidden" dataTestId={TEST_IDENTIFIER + '-wishlist'}>
-                <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')}>
+                <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')} type="wishlist">
                     <HeartIcon className="w-4 text-white" isFull={!!wishlist?.products.length} />
                     {!!wishlist?.products.length && <span>{wishlist.products.length}</span>}
                 </MenuIconicItemLink>

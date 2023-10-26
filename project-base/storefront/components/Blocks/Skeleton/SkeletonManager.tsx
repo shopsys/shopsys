@@ -1,11 +1,13 @@
 import { SkeletonPageArticle } from './SkeletonPageArticle';
 import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';
+import { SkeletonPageComparison } from './SkeletonPageComparison';
 import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductsList } from './SkeletonPageProductsList';
 import { SkeletonPageProductsListSimple } from './SkeletonPageProductsListSimple';
 import { SkeletonPageStore } from './SkeletonPageStore';
 import { SkeletonPageStores } from './SkeletonPageStores';
+import { SkeletonPageWishlist } from './SkeletonPageWishlist';
 import { useEffect } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 
@@ -46,6 +48,10 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({ isFetchingData, isPa
             return <SkeletonPageStores />;
         case 'store':
             return <SkeletonPageStore />;
+        case 'wishlist':
+            return <SkeletonPageWishlist />;
+        case 'comparison':
+            return <SkeletonPageComparison />;
         default:
             return null;
     }

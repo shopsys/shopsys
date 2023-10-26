@@ -24,7 +24,7 @@ export const useWishlist = () => {
     const [, addProductToWishlist] = useAddProductToWishlistMutationApi();
     const [, removeProductFromWishlist] = useRemoveProductFromWishlistMutationApi();
     const [, cleanWishlist] = useCleanWishlistMutationApi();
-    const [{ data, fetching }] = useWishlistQueryApi({
+    const [{ data: wishlistData, fetching }] = useWishlistQueryApi({
         variables: { wishlistUuid },
         pause: isFetchingPaused,
     });
@@ -34,10 +34,10 @@ export const useWishlist = () => {
     }, [wishlistUuid]);
 
     useEffect(() => {
-        if (!isUserLoggedIn && data?.wishlist && wishlistUuid !== data.wishlist.uuid) {
-            updateWishlistUuid(data.wishlist.uuid);
+        if (!isUserLoggedIn && wishlistData?.wishlist && wishlistUuid !== wishlistData.wishlist.uuid) {
+            updateWishlistUuid(wishlistData.wishlist.uuid);
         }
-    }, [data?.wishlist?.uuid]);
+    }, [wishlistData?.wishlist?.uuid]);
 
     const handleCleanWishlist = async () => {
         const cleanWishlistResult = await cleanWishlist({ wishlistUuid });
@@ -78,7 +78,7 @@ export const useWishlist = () => {
     };
 
     const isProductInWishlist = (productUuid: string) =>
-        !!data?.wishlist?.products.find((product) => product.uuid === productUuid);
+        !!wishlistData?.wishlist?.products.find((product) => product.uuid === productUuid);
 
     const toggleProductInWishlist = (productUuid: string) => {
         if (isProductInWishlist(productUuid)) {
@@ -89,7 +89,7 @@ export const useWishlist = () => {
     };
 
     return {
-        wishlist: data?.wishlist || undefined,
+        wishlist: wishlistData?.wishlist,
         fetching,
         isProductInWishlist,
         handleCleanWishlist,

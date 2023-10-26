@@ -6,7 +6,6 @@ import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { ComparedProductFragmentApi } from 'graphql/generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
-import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -15,7 +14,6 @@ type ProductComparisonContentProps = {
 };
 
 export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ productsCompare }) => {
-    const { t } = useTranslation();
     const {
         isArrowLeftActive,
         isArrowRightActive,
@@ -63,12 +61,8 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ pr
 
     return (
         <>
-            <div className="mb-8 flex items-end">
-                <h1 className="w-full lg:w-auto lg:flex-1">
-                    {t('Product comparison')}&nbsp;({productsCompare.length})
-                </h1>
-            </div>
             <ProductComparisonButtonRemoveAll displayMobile />
+
             <div className="relative mb-24 overflow-hidden" id="js-table-compare-wrap">
                 <div className="mb-1 flex justify-end gap-3">
                     <ContentArrow
@@ -83,7 +77,9 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ pr
                         onClick={() => handleSlideRight()}
                     />
                 </div>
+
                 <ProductComparisonHeadSticky productsCompare={productsCompare} tableMarginLeft={tableMarginLeft} />
+
                 <div>
                     <table
                         className="table-fixed border-collapse transition-all"

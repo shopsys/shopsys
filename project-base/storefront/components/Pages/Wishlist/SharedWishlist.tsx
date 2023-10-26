@@ -1,5 +1,5 @@
-import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
+import { SkeletonModuleWishlist } from 'components/Blocks/Skeleton/SkeletonModuleWishlist';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { useSharedWishlist } from 'hooks/useWishlist';
@@ -14,7 +14,7 @@ export const SharedWishlist: FC<SharedWishlistProps> = ({ urlQueryParamId }) => 
     const { products, fetching } = useSharedWishlist(urlQueryParamId.split(','));
 
     if (fetching) {
-        return <LoaderWithOverlay />;
+        return <SkeletonModuleWishlist />;
     }
 
     if (!products.length) {
