@@ -192,3 +192,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   fix sizes of product actions buttons ([#2896](https://github.com/shopsys/shopsys/pull/2896))
     -   now we have unified sizes of add to cart buttons
     -   see #project-base-diff to update your project
+-   fix Comparison for not logged in users ([#2905](https://github.com/shopsys/shopsys/pull/2905))
+    -   unified code for Comparison and Wishlist
+    -   refactored Zustand store to use only one store (User Store) for all cartUuid, wishlistUuid and comparisonUuid
+    -   see #project-base-diff to update your project
