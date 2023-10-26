@@ -52,6 +52,7 @@ php phing build-demo-dev
 First follow [installation instructions](https://symfony.com/doc/current/setup/symfony_server.html#installation) for the `symfony` binary which provides its own web server.
 
 Then you can run integrated webserver for the first domain:
+
 ```bash
 symfony server:start
 ```
@@ -60,13 +61,14 @@ If you need to run second domain, you can use a different port for that.
 First update your `config/domains_urls.yaml` file and set url of second domain to `http://127.0.0.1:8001`
 
 Then you can run integrated webserver for the second domain:
+
 ```bash
 symfony server:start --port 8001
 ```
 
 !!! tip
 
-    With Symfony Local Web Server you can easily setup TLS to detect problems with mixed content early, and to run libraries that only run in HTTPS.<br>  
+    With Symfony Local Web Server you can easily setup TLS to detect problems with mixed content early, and to run libraries that only run in HTTPS.<br>
     For more information and instructions please refer to the [official Symfony documentation](https://symfony.com/doc/current/setup/symfony_server.html#enabling-tls)
 
 !!! tip
@@ -80,7 +82,7 @@ Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see running application
 
 You can also login into the administration section on [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) with default credentials:
 
-* Username: `admin` or `superadmin` (the latter has access to advanced options)
-* Password: `admin123`
+-   Username: `admin` or `superadmin` (the latter has access to advanced options)
+-   Password: `admin123`
 
-*And now you can [start building your application](../introduction/start-building-your-application.md).*
+_And now you can [start building your application](../introduction/start-building-your-application.md)._

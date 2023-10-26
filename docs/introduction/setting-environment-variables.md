@@ -46,7 +46,6 @@ When using docker containers, add the environment variable to the `docker-compos
 +           - REDIS_PREFIX='my_awesome_app'
 ```
 
-
 ### Native installation
 
 Without containers, you must set environment variable on the host machine, typically in unix like OS by executing

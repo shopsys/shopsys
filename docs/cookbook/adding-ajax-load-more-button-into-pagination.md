@@ -77,9 +77,9 @@ After we have extended `BrandRepository` and `BrandFacade`, we need to set them 
 This is done via configuration in `services.yaml`.
 
 ```yaml
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository: '@App\Model\Product\Brand\BrandRepository'
+Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository: '@App\Model\Product\Brand\BrandRepository'
 
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade: '@App\Model\Product\Brand\BrandFacade'
+Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade: '@App\Model\Product\Brand\BrandFacade'
 ```
 
 Next, we will modify the brand list twig template, replacing the whole content and creating a twig template for rendering paging controls and paginated items via ajax, where we move the original content from the brand list template.
@@ -104,8 +104,8 @@ We will also define `pageQueryParameter` variable so it will have a unique name 
 
 There are two important CSS classes that must be used.
 
-- `js-list-with-paginator` - element with this class encapsulates paging component
-- `js-list` - fragment from which new items are pulled during an asynchronous call
+-   `js-list-with-paginator` - element with this class encapsulates paging component
+-   `js-list` - fragment from which new items are pulled during an asynchronous call
 
 ```twig
 {# templates/Front/Content/Brand/ajaxList.html.twig #}

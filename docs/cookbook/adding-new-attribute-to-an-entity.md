@@ -1,4 +1,5 @@
 # Adding New Attribute to an Entity
+
 In the following example, we will add the `extId` (alias "external ID") field to the `Product` entity.
 It is a common modification when you need your e-commerce application and ERP system to co-work smoothly.
 
@@ -46,7 +47,7 @@ class Product extends BaseProduct
     protected function setData(BaseProductData $productData): void
     {
         parent::setData($productData);
-        
+
         $this->extId = $productData->extId ?? 0;
 
     }
@@ -124,8 +125,8 @@ for `Product` and `ProductData` instantiation to make them take our new attribut
 
 Edit `App\Model\Product\ProductDataFactory` - overwrite `create()` and `createFromProduct()` methods.
 
-*Alternatively, you can create an independent class by implementing
-[`Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductDataFactoryInterface.php).*
+_Alternatively, you can create an independent class by implementing
+[`Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Product/ProductDataFactoryInterface.php)._
 
 ```php
 namespace App\Model\Product;
@@ -273,6 +274,7 @@ class ProductDataFactory extends BaseProductDataFactory
 ```
 
 ## Front-end
+
 To display your new attribute on a front-end page, you can modify the corresponding template directly
 as it is a part of your open-box, e.g., [`detail.html.twig`](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Content/Product/detail.html.twig).
 
@@ -310,7 +312,7 @@ You can use [`Faker`](https://github.com/FakerPHP/Faker/) to generate random num
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
-+    * @param \Faker\Generator $faker  
++    * @param \Faker\Generator $faker
      */
     public function __construct(
         ProductFacade $productFacade,

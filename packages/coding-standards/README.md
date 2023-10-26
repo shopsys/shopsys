@@ -11,8 +11,8 @@ This repository is maintained by [shopsys/shopsys] monorepo, information about c
 
 Provided tools:
 
-* [PHP-Parallel-Lint](https://github.com/JakubOnderka/PHP-Parallel-Lint)
-* [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard) that combines [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) and [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+-   [PHP-Parallel-Lint](https://github.com/JakubOnderka/PHP-Parallel-Lint)
+-   [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard) that combines [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) and [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 
 For further information see official documentation of those tools.
 
@@ -31,8 +31,7 @@ and even add your own sniffs and fixers in the config.
 ```yaml
 #easy-coding-standard.yml
 imports:
-   - { resource: '%vendor_dir%/shopsys/coding-standards/easy-coding-standard.yml' }
-
+    - { resource: '%vendor_dir%/shopsys/coding-standards/easy-coding-standard.yml' }
 ```
 
 In terminal, run following commands:
@@ -52,7 +51,7 @@ All `<button>` HTML tags in `.html` and `.html.twig` files must have explicit `t
 
 If the `type` is not specified it will be fixed to `type="button""` because the implicit value is `submit` which makes it behave differently based on the context (`<button>` inside `<form>` element submits the form).
 
-#### `Shopsys/orm_join_column_require_nullable`  
+#### `Shopsys/orm_join_column_require_nullable`
 
 Doctrine annotations `@ORM\ManyToOne` and `@ORM\OneToOne` must have `nullable` option defined explicitly in `@ORM\JoinColumn`.
 
@@ -82,6 +81,7 @@ It also skips checking of private members when `PrivateNoUnderscore` property is
 This sniff provides the missing functionality and is intended to be used as an addition to the default `ValidVariableNameSniff`.
 
 ## Contributing
+
 Thank you for your contributions to Shopsys Coding Standards package.
 Together we are making Shopsys Platform better.
 
@@ -92,9 +92,10 @@ please use the main [Shopsys repository](https://github.com/shopsys/shopsys).
 Please, check our [Contribution Guide](https://github.com/shopsys/shopsys/blob/master/CONTRIBUTING.md) before contributing.
 
 ## Support
+
 What to do when you are in troubles or need some help?
 The best way is to join our [Slack](https://join.slack.com/t/shopsysframework/shared_invite/zt-11wx9au4g-e5pXei73UJydHRQ7nVApAQ).
 
 If you want to [report issues](https://github.com/shopsys/shopsys/issues/new), please use the main [Shopsys repository](https://github.com/shopsys/shopsys).
 
-[shopsys/shopsys]:(https://github.com/shopsys/shopsys)
+[shopsys/shopsys]: (https://github.com/shopsys/shopsys)

@@ -7,13 +7,13 @@ In order to allow easy installation and removal of product feeds, they are imple
 ## Where are the feeds?
 
 The exported files contain a random token generated during the application build, so their URL address is not easily guessed.
-You can see all installed product feeds along with the URLs of their export in the administration section *Marketing >  XML Feeds*.
+You can see all installed product feeds along with the URLs of their export in the administration section _Marketing > XML Feeds_.
 
 ## When are they exported?
 
 Product feeds are usually exported using Cron modules.
 The Cron modules are already implemented and registered, all that's needed is to run the [`cron` phing target](../introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes on your server and Shopsys Platform takes care of the rest.
-They can be also generated manually in the administration section *Marketing >  XML Feeds*, if you're logged in as *superadministrator*.
+They can be also generated manually in the administration section _Marketing > XML Feeds_, if you're logged in as _superadministrator_.
 
 There are two types of product feeds: `daily` and `hourly`.
 
@@ -36,12 +36,12 @@ When in doubt, you can take a look at the [already implemented product feeds](ht
 
 [Already existing product feed modules](https://github.com/search?q=topic%3Aproduct-feed+org%3Ashopsys) can be customized in several ways:
 
-* to use a different Twig template you can either [override the template](https://symfony.com/doc/3.3/templating/overriding.html)
-or you can extend the service tagged as `shopsys.product_feed` and override the `getTemplateFilepath` method in it
-* you can use a different `FeedItemInterface` implementation by extending its factory service
-(e.g., [GoogleFeedItemFactory](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFactory.php))
-* you can even change the way the underlying Product entities are fetched from the database by extending the feed's product repository
-(e.g., [GoogleProductRepository](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/Product/GoogleProductRepository.php))
-* when a more complicated customization is needed, extending feed item facade service and overwriting the `getItems` is the way to go
-(e.g., [GoogleFeedItemFacade](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFacade.php)),
-it should allow you to provide your own way of getting the right items for your feed
+-   to use a different Twig template you can either [override the template](https://symfony.com/doc/3.3/templating/overriding.html)
+    or you can extend the service tagged as `shopsys.product_feed` and override the `getTemplateFilepath` method in it
+-   you can use a different `FeedItemInterface` implementation by extending its factory service
+    (e.g., [GoogleFeedItemFactory](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFactory.php))
+-   you can even change the way the underlying Product entities are fetched from the database by extending the feed's product repository
+    (e.g., [GoogleProductRepository](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/Product/GoogleProductRepository.php))
+-   when a more complicated customization is needed, extending feed item facade service and overwriting the `getItems` is the way to go
+    (e.g., [GoogleFeedItemFacade](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFacade.php)),
+    it should allow you to provide your own way of getting the right items for your feed

@@ -102,5 +102,6 @@ New targets would look like
 and these targets only have to be registered in system crontab.
 
 ## Pitfalls
-- If you tag the cron module with another instance without changes in Phing targets, your jobs will not be executed automatically, because the command will hold on instance choice question.
-- You can easily set your system to run too much cron jobs at once, resulting in server response time slowdown.
+
+-   If you tag the cron module with another instance without changes in Phing targets, your jobs will not be executed automatically, because the command will hold on instance choice question.
+-   You can easily set your system to run too much cron jobs at once, resulting in server response time slowdown.

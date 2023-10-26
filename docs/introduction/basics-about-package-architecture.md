@@ -1,6 +1,7 @@
 # Basics About Package Architecture
 
 ## Introduction
+
 This article describes the architecture of Shopsys Platform from the viewpoint of packages
 (in a contrast to application layers, about which you can read in the [separate article](../model/introduction-to-model-architecture.md)).
 After you finish reading the article, you will know
@@ -8,9 +9,11 @@ how to start an implementation, how to perform upgrades of your own project base
 and you will understand what modules are.
 
 ## Basic terms
+
 In order to make the architecture description understandable, it is necessary to define a few basic terms first.
 
 ### Open-box extensibility
+
 The [open-box concept](https://en.wikipedia.org/wiki/Extensibility#Open-Box) enables you to directly change the source code and as a result, permits unrestricted customizability.
 We believe that lean codebase that is easily modifiable is a better place to start building your project than a feature-rich platform
 with a lot of configurable options.
@@ -20,6 +23,7 @@ only contains frontend part of the framework, ie. controllers and views, excludi
 The package is open-box so you will create your own copy of the package and then you will directly modify source codes for your concrete project.
 
 ### Glass-box extensibility
+
 [Glass-box extensibility](https://en.wikipedia.org/wiki/Extensibility#Glass-Box) does not allow any modifications to the original package code and therefore creates
 a clear separation between your code and the code maintained by somebody else (Composer places this code in the vendor directory).
 
@@ -28,6 +32,7 @@ contains business logic of a basic online store, including web admin, and is des
 Shopsys Platform modules are glass-box too and are described below.
 
 ### Modules
+
 In every project, there is a lot of code dedicated to features which are not related to the core of your business,
 but you still need it there. And although these features are necessary, it can be a long wearisome job building them from the ground up.
 That is why Shopsys Platform provides a module system that satisfies the need for an installable functionality.
@@ -40,27 +45,35 @@ Other candidates for extraction into modules are for example, payment methods ga
 
 ![Shopsys Platform package architecture schema](../img/package-architecture.png 'Shopsys Platform Package Architecture')
 
-*Note: The specific modules in this diagram are just examples.*
+_Note: The specific modules in this diagram are just examples._
 
 ## How to develop your project on Shopsys Platform
+
 ### Create new project from Shopsys Platform sources
+
 Install [`shopsys/project-base`](https://github.com/shopsys/project-base) using composer to get your own private copy.
+
 ```sh
 composer create-project shopsys/project-base --no-install --keep-vcs --ignore-platform-reqs
 ```
+
 For more detailed instructions, follow [Installation Using Docker](../installation/installation-guide.md#installation-using-docker).
+
 #### Why not clone or fork?
+
 `composer create-project` ensures that new project will be created from the latest release of `shopsys/project-base`  
 `git clone` creates a new project from current repository master branch  
 We do not recommend forking for the same reason.
 Forking also copies the `shopsys/project-base` under your GitHub account and the copy is public by default, and you probably do not need that.
 
 ### Upgrading
+
 We know that upgrading should be as easy as possible, ideally without requiring any modification of your code.
 This goal is very hard to achieve while both providing unlimited customizability and innovating Shopsys Platform itself,
 as the project’s every customization has to work well with every new release.
 
 #### Framework and modules
+
 The framework and modules provide glass-box extensibility,
 ie. you can upgrade them independently via `composer update`.
 
@@ -69,6 +82,7 @@ ie. you can upgrade them independently via `composer update`.
     During composer update there will be installed or updated 3-rd party software as dependencies of Shopsys Platform with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
 #### Project base
+
 There is no automated way of upgrading the project base.
 If you wanted to upgrade your project base, you would need to [cherry-pick](https://git-scm.com/docs/git-cherry-pick) or [merge](https://git-scm.com/docs/git-merge) modifications from the original repository manually.
 We try to ease you the process as much as possible by maintaining clear GIT history,
@@ -76,8 +90,9 @@ keeping up-to-date [changelog](https://github.com/shopsys/shopsys/blob/master/CH
 and writing [understandable commit messages](../contributing/guidelines-for-creating-commits.md).
 
 ## Conclusion
-* You learned it is necessary to use composer to initialize development of your own project based on the framework.
-* You understand the open-box concept - you can modify the project base as you wish without any restrictions.
-* You know that the business logic is placed in the [`shopsys/framework`](https://github.com/shopsys/framework).
-* You are familiar with modules that can ease you a development of your project.
-* You know you are able to upgrade the framework and modules using composer thanks to their glass-box design.
+
+-   You learned it is necessary to use composer to initialize development of your own project based on the framework.
+-   You understand the open-box concept - you can modify the project base as you wish without any restrictions.
+-   You know that the business logic is placed in the [`shopsys/framework`](https://github.com/shopsys/framework).
+-   You are familiar with modules that can ease you a development of your project.
+-   You know you are able to upgrade the framework and modules using composer thanks to their glass-box design.

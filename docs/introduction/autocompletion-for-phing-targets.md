@@ -72,11 +72,11 @@ Store this file in `/etc/bash_completion.d/dphing` on Linux, or in `/usr/local/e
 ```bash
 _dphing () {
     local cur prev
- 
+
     COMPREPLY=()
     buildfile=build.xml
     _get_comp_words_by_ref cur prev
- 
+
     [ ! -f $buildfile ] && return 0
 
     COMPREPLY=( $( compgen -W "$( dphing -l | tr -s '\-' | sed s/^-/\|/ | tr -d '\|' \
@@ -87,7 +87,7 @@ _dphing () {
         | sed 's/[^[:print:]]//g' | sed s/\\[.*// | tr '\n' ' ' | tr -s '\n' 2>/dev/null )" \
         -- "$cur" ) )
 }
- 
+
 complete -F _dphing dphing
 ```
 

@@ -2,21 +2,22 @@
 
 You can take part in making Shopsys Platform better.
 
-* [Create a pull request](https://github.com/shopsys/shopsys/compare)
-* [Report an issue](https://github.com/shopsys/shopsys/issues/new)
-* [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/)
-* [Guidelines for Working with Monorepo](https://docs.shopsys.com/en/latest/introduction/monorepo/)
-* [Guidelines for Creating Commits](https://docs.shopsys.com/en/latest/contributing/guidelines-for-creating-commits/)
-* [Guidelines for Writing Documentation](https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-documentation/)
-* [Guidelines for Pull Request](https://docs.shopsys.com/en/latest/contributing/guidelines-for-pull-request/)
-* [Guidelines for Dependencies](https://docs.shopsys.com/en/latest/contributing/guidelines-for-dependencies/)
-* [Guidelines for writing UPGRADE.md](https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-upgrade/)
-* [Merging on Github](https://docs.shopsys.com/en/latest/contributing/merging-on-github/)
-* [Releasing a new version of Shopsys Platform monorepo](https://docs.shopsys.com/en/latest/contributing/releasing-a-new-version-of-shopsys-framework/)
-* [Code Quality Principles](https://docs.shopsys.com/en/latest/contributing/code-quality-principles/)
+-   [Create a pull request](https://github.com/shopsys/shopsys/compare)
+-   [Report an issue](https://github.com/shopsys/shopsys/issues/new)
+-   [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/)
+-   [Guidelines for Working with Monorepo](https://docs.shopsys.com/en/latest/introduction/monorepo/)
+-   [Guidelines for Creating Commits](https://docs.shopsys.com/en/latest/contributing/guidelines-for-creating-commits/)
+-   [Guidelines for Writing Documentation](https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-documentation/)
+-   [Guidelines for Pull Request](https://docs.shopsys.com/en/latest/contributing/guidelines-for-pull-request/)
+-   [Guidelines for Dependencies](https://docs.shopsys.com/en/latest/contributing/guidelines-for-dependencies/)
+-   [Guidelines for writing UPGRADE.md](https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-upgrade/)
+-   [Merging on Github](https://docs.shopsys.com/en/latest/contributing/merging-on-github/)
+-   [Releasing a new version of Shopsys Platform monorepo](https://docs.shopsys.com/en/latest/contributing/releasing-a-new-version-of-shopsys-framework/)
+-   [Code Quality Principles](https://docs.shopsys.com/en/latest/contributing/code-quality-principles/)
 
 For your code to be accepted, you should follow our guidelines mentioned above,
 and the code must pass [coding standards](https://docs.shopsys.com/en/latest/contributing/coding-standards/) checks and tests:
+
 ```
 php phing standards tests tests-acceptance
 ```
@@ -27,4 +28,4 @@ Apply the same procedure if you make the changes in the Dockerfile or docker-com
 
 These rules ensure that the code will remain consistent and that the project is maintainable in the future.
 
-*Tip: Read more about automatic checks in [Console Commands for Application Management (Phing Targets)](https://docs.shopsys.com/en/latest/introduction/console-commands-for-application-management-phing-targets/) and [Running Acceptance Tests](https://docs.shopsys.com/en/latest/introduction/running-acceptance-tests/).*
+_Tip: Read more about automatic checks in [Console Commands for Application Management (Phing Targets)](https://docs.shopsys.com/en/latest/introduction/console-commands-for-application-management-phing-targets/) and [Running Acceptance Tests](https://docs.shopsys.com/en/latest/introduction/running-acceptance-tests/)._

@@ -21,12 +21,11 @@ The whole release process is divided into 3 stages that are run separately:
     - steps that are done after the release
     - the release workers are defined in `src/ReleaseWorker/AfterRelease` folder
 
-
 ## Release command
 
 !!! caution
 
-    Before you start releasing, you need to mount your `.gitconfig` to `php-fpm` docker container to be able to perform automated commits within the container.<br>  
+    Before you start releasing, you need to mount your `.gitconfig` to `php-fpm` docker container to be able to perform automated commits within the container.<br>
     Add following line into your `docker-compose.yml` in `services -> php-fpm -> volumes` path:
 
     <!-- language: lang-yaml -->
@@ -34,19 +33,23 @@ The whole release process is divided into 3 stages that are run separately:
         - ~/.gitconfig:/home/www-data/.gitconfig
 
 To perform a desired stage, run the following command in the `php-fpm` docker container and follow the instructions that you'll be asked in the console.
-``` sh
+
+```sh
 vendor/bin/monorepo-builder release <release-number> --stage <stage> -v
 ```
+
 If you want only to display a particular stage, along with the release worker class names, add the `--dry-run` argument:
-``` sh
+
+```sh
 vendor/bin/monorepo-builder release <release-number> --dry-run --stage <stage> -v
 ```
 
 ### Notes
-- The "release-number" argument is the desired tag you want to release. It should always follow [the semantic versioning](https://semver.org/)
-and start with the "v" prefix, e.g., `v7.0.0`.
-- The releaser needs `.git` folder available - this is a problem currently for our Docker on Mac and Windows configuration
-as the folder is currently ignored for performance reasons.
-  There is [an issue](https://github.com/shopsys/shopsys/issues/536) on GitHub that mentions the problem.
-  However, there is a workaround - you can add a new `docker-sync` volume just for git.
-- Releasing a stage is a continuously running process, so do not exit your CLI if it is not necessary.
+
+-   The "release-number" argument is the desired tag you want to release. It should always follow [the semantic versioning](https://semver.org/)
+    and start with the "v" prefix, e.g., `v7.0.0`.
+-   The releaser needs `.git` folder available - this is a problem currently for our Docker on Mac and Windows configuration
+    as the folder is currently ignored for performance reasons.
+    There is [an issue](https://github.com/shopsys/shopsys/issues/536) on GitHub that mentions the problem.
+    However, there is a workaround - you can add a new `docker-sync` volume just for git.
+-   Releasing a stage is a continuously running process, so do not exit your CLI if it is not necessary.

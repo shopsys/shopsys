@@ -4,7 +4,7 @@ Sorting of categories may become challenging with an increasing number of catego
 
 ## Sorting in administration
 
-In administration is leveraged the use of [nestedSortable jQuery plugin](https://github.com/ilikenwf/nestedSortable) which provides a complete calculated [nested set model](https://en.wikipedia.org/wiki/Nested_set_model) 
+In administration is leveraged the use of [nestedSortable jQuery plugin](https://github.com/ilikenwf/nestedSortable) which provides a complete calculated [nested set model](https://en.wikipedia.org/wiki/Nested_set_model)
 and this model is updated entirely after category sorting is saved.
 This approach proved to be the best for many categories while does not impact the performance of the small data set.
 You can take a look at the `Shopsys\FrameworkBundle\Model\Category\CategoryFacade::reorderByNestedSetValues()` method for details.

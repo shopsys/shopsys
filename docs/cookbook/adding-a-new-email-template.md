@@ -242,7 +242,6 @@ In your application, consider a better place.
 
 And you need to register the previously created class `PasswordChangedMail` into your `services.yaml` file, as it should be autowired.
 
-
 ```diff
 # config/services.yaml
 
@@ -307,17 +306,17 @@ class PasswordChangedMailTemplateVariablesProvider
 
 Each variable is added with the `addVariable(string $variable, string $label, $context, $required)` method.
 
-- `$variable` is a variable placeholder
-- `$label` is a readable name to describe the meaning of the variable to the user
-- `$context` defines where the variable is applicable and can have one of these values:
-    - `MailTemplateVariables::CONTEXT_BOTH` – variable can take place in the subject and body (default)
-    - `MailTemplateVariables::CONTEXT_BODY` - variable can take place in the body only
-    - `MailTemplateVariables::CONTEXT_SUBJECT` - variable can take place in the subject only
-- `$required` defines where the variable is required and can have one of these values:
-    - `MailTemplateVariables::REQUIRED_NOWHERE` - variable is optional (default)
-    - `MailTemplateVariables::REQUIRED_BOTH` - variable has to be present in the body and in the subject
-    - `MailTemplateVariables::REQUIRED_BODY` - variable has to be present in the body
-    - `MailTemplateVariables::REQUIRED_SUBJECT` - variable has to be present in the subject
+-   `$variable` is a variable placeholder
+-   `$label` is a readable name to describe the meaning of the variable to the user
+-   `$context` defines where the variable is applicable and can have one of these values:
+    -   `MailTemplateVariables::CONTEXT_BOTH` – variable can take place in the subject and body (default)
+    -   `MailTemplateVariables::CONTEXT_BODY` - variable can take place in the body only
+    -   `MailTemplateVariables::CONTEXT_SUBJECT` - variable can take place in the subject only
+-   `$required` defines where the variable is required and can have one of these values:
+    -   `MailTemplateVariables::REQUIRED_NOWHERE` - variable is optional (default)
+    -   `MailTemplateVariables::REQUIRED_BOTH` - variable has to be present in the body and in the subject
+    -   `MailTemplateVariables::REQUIRED_BODY` - variable has to be present in the body
+    -   `MailTemplateVariables::REQUIRED_SUBJECT` - variable has to be present in the subject
 
 When we have the variables ready, the last step is to register variables with the proper mail template.  
 This can be done in `config/services.yaml` file

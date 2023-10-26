@@ -28,7 +28,7 @@ The query will return access and refresh tokens.
 `Login` query looks like this:
 
 ```json
-{ "query": "mutation {Login(input: {email: \"--EMAIL--\", password: \"--PASSWD--\"}) {accessToken, refreshToken}}"}
+{ "query": "mutation {Login(input: {email: \"--EMAIL--\", password: \"--PASSWD--\"}) {accessToken, refreshToken}}" }
 ```
 
 !!! note
@@ -39,12 +39,12 @@ The response looks like this:
 
 ```json
 {
-  "data":{
-    "Login":{
-      "accessToken":"X.X.X",
-      "refreshToken":"X.X.X"
+    "data": {
+        "Login": {
+            "accessToken": "X.X.X",
+            "refreshToken": "X.X.X"
+        }
     }
-  }
 }
 ```
 
@@ -89,21 +89,20 @@ To refresh the pair of tokens, use the `RefreshTokens` mutation query with the `
 
 `RefreshToken` query looks like this:
 
-
 ```json
-{ "query": "mutation {RefreshTokens(input: {refreshToken: \"X.X.X\"}) {accessToken, refreshToken}}"}
+{ "query": "mutation {RefreshTokens(input: {refreshToken: \"X.X.X\"}) {accessToken, refreshToken}}" }
 ```
 
 The response is the same as Login query:
 
 ```json
 {
-  "data":{
-    "Login":{
-      "accessToken":"X.X.X",
-      "refreshToken":"X.X.X"
+    "data": {
+        "Login": {
+            "accessToken": "X.X.X",
+            "refreshToken": "X.X.X"
+        }
     }
-  }
 }
 ```
 

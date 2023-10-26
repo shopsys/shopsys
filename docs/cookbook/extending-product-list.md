@@ -70,6 +70,7 @@ class ListedProductView extends BaseListedProductView
 
 In order to add a new attribute to Elasticsearch, you need to add it to the structure first.
 You can do that by adding it to `mappings` in all `src/Resources/definition/product/*.json` files like this:
+
 ```diff
   "mappings": {
     "properties": {
@@ -81,6 +82,7 @@ You can do that by adding it to `mappings` in all `src/Resources/definition/prod
 ### 3. Export new attribute to Elasticsearch
 
 The class responsible for exporting products to Elasticsearch is `ProductExportRepository`, so we need to extend it and add the attribute to the method `getProductsData`.
+
 ```php
 declare(strict_types=1);
 
@@ -115,6 +117,7 @@ Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository: '@A
 ```
 
 Then you need to fix `ProductExportRepositoryTest::getExpectedStructureForRepository` (because this test checks if your structure is correct) by adding a new attribute:
+
 ```diff
 $structure = \array_merge($structure, [
     'availability',
@@ -236,7 +239,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
 You need to register your new class as an alias for the one from the bundle in `services.yaml`:
 
 ```yaml
-    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@App\Model\Product\View\ListedProductViewFactory'
+Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory: '@App\Model\Product\View\ListedProductViewFactory'
 ```
 
 ### 6. Modify the frontend template for rendering product lists so it displays the new attribute

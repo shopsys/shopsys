@@ -4,7 +4,7 @@ This guide shows you how to install and configure production server applications
 We do not want to setup each application manually and we want to have separate runtime for each one.
 We use docker containers, built from docker images and php source code from git repository to have everything setup correctly and fast.
 As we do not want to lose data after deploying a new version of the project, we install all the data storages (postgres, elasticsearch, redis) natively.
-This guide also shows you how to setup first built image of the project on production server and how to deploy new versions of the project.  
+This guide also shows you how to setup first built image of the project on production server and how to deploy new versions of the project.
 
 **Before deploying, don't forget to adjust your configuration to your expected workload and hardware.
 All values in configuration files are set to run on very limited hardware by default.**
@@ -246,7 +246,7 @@ First we need to build image of the project and then deploy it as `php-fpm` dock
 ### Docker Image Building
 
 We can do the whole process manually of write the commands into some deployment application that can help with the automation.
-We need to clone project repository with the specific tag or commit hash into some workspace.  
+We need to clone project repository with the specific tag or commit hash into some workspace.
 
 ```sh
 git clone <YOUR_PROJECT_REPOSITORY> (e.g., https://github.com/shopsys/project-base.git)
@@ -264,7 +264,6 @@ echo $'domains:
         locale: en
 ' > config/domains.yaml
 ```
-
 
 For each domain we need to create config with domain url.
 
@@ -313,7 +312,7 @@ docker save production-php-fpm | gzip | ssh -oStrictHostKeyChecking=no -i <PRIVA
 We have setup server and also built image from project git repository in the server docker registry so we are now able to deploy application and setup it with base data.
 
 We log into the server using ssh.  
-Now we need to copy [`docker-compose-prod-deploy.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-compose.prod.yml.dist) into folder on the production server as `docker-compose.yml`.  
+Now we need to copy [`docker-compose-prod-deploy.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-compose.prod.yml.dist) into folder on the production server as `docker-compose.yml`.
 
 If the application is ready for the real world customers, we should set `MAILER_FORCE_WHITELIST` environment variable to `0` by standard way of setting environment variables in `docker-compose.yml` file.
 
@@ -355,7 +354,6 @@ docker-compose -p production exec php-fpm ./phing db-create build-new
 
     During the execution of `build-new target` there will be installed 3-rd party software as dependencies of Shopsys Platform by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
-
 Now the application should be running.
 We want to setup scheduler for execution of cron jobs by adding one line into `/etc/crontab` file.
 Cron job is executed every 5 minutes in `php-fpm` container under `root` user privileges.
@@ -367,8 +365,8 @@ Cron job is executed every 5 minutes in `php-fpm` container under `root` user pr
 Since web application is running we can go to administration and change passwords for default administrators.
 With login `superadmin` and password `admin123` we can do it via these urls:
 
-* `/admin/administrator/edit/1`
-* `/admin/administrator/edit/2`
+-   `/admin/administrator/edit/1`
+-   `/admin/administrator/edit/2`
 
 Now we go to `/admin/dashboard/` and fulfill all requests that are demanding for us by red colored links.
 

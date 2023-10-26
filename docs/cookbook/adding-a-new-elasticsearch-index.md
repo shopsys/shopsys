@@ -10,133 +10,110 @@ Example of mapping part for English domain with ID 1 (`category/1.json`)
 
 ```json
 {
-  "settings": {
-    "index": {
-      "number_of_shards": 1,
-      "number_of_replicas": 0
+    "settings": {
+        "index": {
+            "number_of_shards": 1,
+            "number_of_replicas": 0
+        },
+        "analysis": {
+            "filter": {
+                "english_stop": {
+                    "type": "stop",
+                    "stopwords": "_english_"
+                },
+                "english_stemmer": {
+                    "type": "stemmer",
+                    "language": "english"
+                },
+                "edge_ngram": {
+                    "type": "edgeNGram",
+                    "min_gram": 2,
+                    "max_gram": 20
+                }
+            },
+            "tokenizer": {
+                "keep_special_chars": {
+                    "type": "pattern",
+                    "pattern": "[^\\p{L}\\d-/]+"
+                }
+            },
+            "analyzer": {
+                "full_with_diacritic": {
+                    "tokenizer": "keep_special_chars",
+                    "filter": ["lowercase"]
+                },
+                "full_without_diacritic": {
+                    "tokenizer": "keep_special_chars",
+                    "filter": ["lowercase", "asciifolding"]
+                },
+                "stemming": {
+                    "tokenizer": "standard",
+                    "filter": ["lowercase", "english_stemmer", "english_stop", "asciifolding"]
+                },
+                "edge_ngram_with_diacritic": {
+                    "tokenizer": "keep_special_chars",
+                    "filter": ["edge_ngram", "lowercase"]
+                },
+                "edge_ngram_without_diacritic": {
+                    "tokenizer": "keep_special_chars",
+                    "filter": ["edge_ngram", "lowercase", "asciifolding"]
+                },
+                "edge_ngram_without_diacritic_html": {
+                    "char_filter": "html_strip",
+                    "tokenizer": "keep_special_chars",
+                    "filter": ["edge_ngram", "lowercase", "asciifolding"]
+                },
+                "edge_ngram_unanalyzed": {
+                    "tokenizer": "keyword",
+                    "filter": ["edge_ngram"]
+                }
+            }
+        }
     },
-    "analysis": {
-      "filter": {
-        "english_stop": {
-          "type": "stop",
-          "stopwords": "_english_"
-        },
-        "english_stemmer": {
-          "type": "stemmer",
-          "language": "english"
-        },
-        "edge_ngram": {
-          "type": "edgeNGram",
-          "min_gram": 2,
-          "max_gram": 20
+    "mappings": {
+        "properties": {
+            "name": {
+                "type": "text",
+                "analyzer": "stemming",
+                "fields": {
+                    "full_with_diacritic": {
+                        "type": "text",
+                        "analyzer": "full_with_diacritic"
+                    },
+                    "full_without_diacritic": {
+                        "type": "text",
+                        "analyzer": "full_without_diacritic"
+                    },
+                    "edge_ngram_with_diacritic": {
+                        "type": "text",
+                        "analyzer": "edge_ngram_with_diacritic"
+                    },
+                    "edge_ngram_without_diacritic": {
+                        "type": "text",
+                        "analyzer": "edge_ngram_without_diacritic"
+                    },
+                    "keyword": {
+                        "type": "icu_collation_keyword",
+                        "language": "en",
+                        "index": false
+                    }
+                }
+            },
+            "description": {
+                "type": "text",
+                "analyzer": "edge_ngram_without_diacritic_html"
+            },
+            "parrent_id": {
+                "type": "integer"
+            },
+            "level": {
+                "type": "integer"
+            },
+            "uuid": {
+                "type": "text"
+            }
         }
-      },
-      "tokenizer": {
-        "keep_special_chars": {
-          "type": "pattern",
-          "pattern": "[^\\p{L}\\d-/]+"
-        }
-      },
-      "analyzer": {
-        "full_with_diacritic": {
-          "tokenizer": "keep_special_chars",
-          "filter": [
-            "lowercase"
-          ]
-        },
-        "full_without_diacritic": {
-          "tokenizer": "keep_special_chars",
-          "filter": [
-            "lowercase",
-            "asciifolding"
-          ]
-        },
-        "stemming": {
-          "tokenizer": "standard",
-          "filter": [
-            "lowercase",
-            "english_stemmer",
-            "english_stop",
-            "asciifolding"
-          ]
-        },
-        "edge_ngram_with_diacritic": {
-          "tokenizer": "keep_special_chars",
-          "filter": [
-            "edge_ngram",
-            "lowercase"
-          ]
-        },
-        "edge_ngram_without_diacritic": {
-          "tokenizer": "keep_special_chars",
-          "filter": [
-            "edge_ngram",
-            "lowercase",
-            "asciifolding"
-          ]
-        },
-        "edge_ngram_without_diacritic_html": {
-          "char_filter": "html_strip",
-          "tokenizer": "keep_special_chars",
-          "filter": [
-            "edge_ngram",
-            "lowercase",
-            "asciifolding"
-          ]
-        },
-        "edge_ngram_unanalyzed": {
-          "tokenizer": "keyword",
-          "filter": [
-            "edge_ngram"
-          ]
-        }
-      }
     }
-  },
-  "mappings": {
-    "properties": {
-    "name": {
-      "type": "text",
-      "analyzer": "stemming",
-      "fields": {
-        "full_with_diacritic": {
-          "type": "text",
-          "analyzer": "full_with_diacritic"
-        },
-        "full_without_diacritic": {
-          "type": "text",
-          "analyzer": "full_without_diacritic"
-        },
-        "edge_ngram_with_diacritic": {
-          "type": "text",
-          "analyzer": "edge_ngram_with_diacritic"
-        },
-        "edge_ngram_without_diacritic": {
-          "type": "text",
-          "analyzer": "edge_ngram_without_diacritic"
-        },
-        "keyword": {
-          "type": "icu_collation_keyword",
-          "language": "en",
-          "index": false
-        }
-      }
-    },
-    "description": {
-      "type": "text",
-      "analyzer": "edge_ngram_without_diacritic_html"
-    },
-    "parrent_id": {
-      "type": "integer"
-    },
-    "level": {
-      "type": "integer"
-    },
-    "uuid": {
-      "type": "text"
-    }
-    }
-  }
 }
 ```
 
@@ -200,7 +177,7 @@ class CategoryIndex extends AbstractIndex
 Register new index into `config/services.yaml`
 
 ```yaml
-    App\Model\Category\Elasticsearch\CategoryIndex: ~
+App\Model\Category\Elasticsearch\CategoryIndex: ~
 ```
 
 ## Create a new index in Elasticsearch
@@ -475,7 +452,7 @@ public function getExportDataForIds(int $domainId, array $restrictToIds): array
 ### Export only changed categories
 
 Now, when we have a way to export partial data, we can extend the functionality even more and allow to export only changed categories.
-For this purpose, we need our index to implement `\Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInterface` interface and add two more methods: `CategoryIndex::getChangedCount()` and  `CategoryIndex::getChangedIdsForBatch()`.
+For this purpose, we need our index to implement `\Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInterface` interface and add two more methods: `CategoryIndex::getChangedCount()` and `CategoryIndex::getChangedIdsForBatch()`.
 
 !!! note
 

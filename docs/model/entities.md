@@ -19,6 +19,7 @@ The only entities that are not created by a factory are `*Translation` and `*Dom
 These entities are created by their main entity.
 
 ### Example
+
 ```php
 // FrameworkBundle/Model/Cart/Item/CartItemFactoryInterface.php
 
@@ -48,8 +49,8 @@ interface CartItemFactoryInterface
 The factory has an implementation in the framework and can be overwritten in your project when you need to work with an extended entity.
 You can read about entity extension in a [separate article](../extensibility/entity-extension.md).
 
-
 ## Domain entity
+
 It is an entity which encapsulates data that are domain-specific (similarly to an Entity Translation encapsulating locale-specific data).
 Domain entity has a bidirectional many-to-one association to its main entity.
 That means that you can access domain entity through entity itself and vice versa.
@@ -64,6 +65,7 @@ Exceptions (both for including and excluding particular class) can be provided v
 You should provide your own implementation if you need to alter the list of domain entities (otherwise, [`MultidomainEntityClassProvider`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/MultidomainEntityClassProvider.php) will be used).
 
 ### Example
+
 ```php
 // FrameworkBundle/Model/Product/Brand/BrandDomain.php
 
@@ -194,9 +196,10 @@ Setting the properties of a domain entity is always done via the main entity its
 Basically, that means only the main entity knows about the existence of translation entities.
 The rest of the application uses the main entity as a proxy to the translation-specific properties.
 The extension creates instances of translated entities on-demand and this creation is transparent for user of domain entity.
-*The concept is similar to [domain entities](#domain-entity)* but uses Doctrine extension.
+_The concept is similar to [domain entities](#domain-entity)_ but uses Doctrine extension.
 
 ### Example
+
 ```php
 // FrameworkBundle/Model/Product/Brand/BrandTranslation.php
 
@@ -394,7 +397,7 @@ If you need to transfer a collection of entities, use PHPDoc annotation `entity[
 
 #### Money
 
-To transfer monetary values (*prices, account balances, discount amounts, price limits etc.*) you should always use `\Shopsys\FrameworkBundle\Component\Money\Money` (optionally nullable or as an array).
+To transfer monetary values (_prices, account balances, discount amounts, price limits etc._) you should always use `\Shopsys\FrameworkBundle\Component\Money\Money` (optionally nullable or as an array).
 You may initialize a default value in the constructor or in the data factory (e.g., with `Money::zero()`).
 
 You can read more about the `Money` class in [How to Work with Money](../model/how-to-work-with-money.md).

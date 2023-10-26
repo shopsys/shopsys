@@ -16,9 +16,9 @@ then you are able to use it in a component/hook
 
 ```tsx
 const TranslatedStringComponent: FC = () => {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
-  return <div>{t('translated')}</div>;
+    return <div>{t('translated')}</div>;
 };
 ```
 

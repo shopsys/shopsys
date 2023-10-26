@@ -1,4 +1,5 @@
 # Webpack configuration
+
 Webpack configuration for CSS, Images, Svg font is devided by JS Comment `// Frontend Config`
 
 ## Config file content description
@@ -24,13 +25,16 @@ domains.domains.forEach((domain) => {
         .addEntry('frontend-print-style-' + domain.styles_directory, './assets/styles/frontend/' + domain.styles_directory + '/print/main.less');
 });
 ```
+
 We can specify different design for each domain. This is specified by `styles_directory` value in `./config/domains.yaml` file. By default we have `common` and `domain2`. For all these folders we need to create `.addEntry` for style and for print style. These entries are loaded in `base.html.twig` by:
+
 ```
 {% set entryDirectory = 'frontend-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
 {{ encore_entry_link_tags( entryDirectory ) }}
 ```
 
 ## Encore configuration description
+
 ```
     .addPlugin(new EventHooksPlugin({
         beforeRun: () => {
@@ -110,6 +114,7 @@ function optimizeSvg (svgSourceFolder) {
     });
 }
 ```
+
 This part loads all svg files from `svgSourceFolder` and aplies `svgo.optimize` function and saves new file.
 
 ```
@@ -122,6 +127,7 @@ Encore
         })
     )
 ```
+
 This part creates entry for admin file - generates admin css file from specified `main.less` and aplies stylelint rules for all frontend less files.
 
 ```
@@ -133,6 +139,7 @@ This part creates entry for admin file - generates admin css file from specified
     .enablePostCssLoader()
     ;
 ```
+
 This part adds loader for font files - it is necessary for font files. `.enableLessLoader()` init for convert less files to css files.
 
 `.enablePostCssLoader()` - this will apply all rules from `postcss.config.js` file in root of project-base. By default there is set autoprefixer for `last 3 versions` browsers.

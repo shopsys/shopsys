@@ -12,19 +12,19 @@ Here are first steps you should start with.
 Dates are internally stored in UTC. That supports portability and eases integration with other systems.
 To see dates properly in the desired timezone, you can change `shopsys.display_timezone` parameter (default value is `Europe/Prague`).
 
-*Note: Read more about [working with date-time values](./working-with-date-time-values.md)*
+_Note: Read more about [working with date-time values](./working-with-date-time-values.md)_
 
 ## Set up domains
 
 A domain can be understood as one instance of the shop.
 For example, just furniture can be bough on the domain shopsys-furniture.com while only electronics can be found on the domain shopsys-electro.com.
 
-*Note: Learn more about domain concept fully in [Domain, Multidomain, Multilanguage](./domain-multidomain-multilanguage.md#domain) article.*
+_Note: Learn more about domain concept fully in [Domain, Multidomain, Multilanguage](./domain-multidomain-multilanguage.md#domain) article._
 
 When you install new project, domains are set like this
 
-* `shopsys` on the URL `http://127.0.0.1:8000`
-* `2.shopsys` on the URL `http://127.0.0.2:8000`
+-   `shopsys` on the URL `http://127.0.0.1:8000`
+-   `2.shopsys` on the URL `http://127.0.0.2:8000`
 
 Read [settings and working with domain](./how-to-set-up-domains-and-locales.md#settings-and-working-with-domains) to learn how to set your domains correctly. If you have project with only one domain, read [how to create a single domain application](./how-to-set-up-domains-and-locales.md#1-how-to-create-a-single-domain-application). If you have project with more than two domains, read [how to add a new domain](./how-to-set-up-domains-and-locales.md#2-how-to-add-a-new-domain).
 
@@ -37,14 +37,14 @@ We highly recommend to set up domains in the beginning of your project correctly
 ## Set up locales
 
 A locale is a combination of language and national settings like a collation of language-specific characters.
-We use [ISO 639-1 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) to specify locale *(e.g., `cs`, `de`, `en`, `sk`)*.
+We use [ISO 639-1 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) to specify locale _(e.g., `cs`, `de`, `en`, `sk`)_.
 Every domain has defined one locale and also administration has defined its locale.
 
 When you install new project, locales are set like this
 
-* `shopsys` *(1st domain)*: `en`
-* `2.shopsys` *(2nd domain)*: `cs`
-* administration: `en`
+-   `shopsys` _(1st domain)_: `en`
+-   `2.shopsys` _(2nd domain)_: `cs`
+-   administration: `en`
 
 In case you want to change domain locale read [locale settings](./how-to-set-up-domains-and-locales.md#3-locale-settings) or in case you want to change default administration locale read [locale in administration](./how-to-set-up-domains-and-locales.md#36-locale-in-administration).
 
@@ -65,7 +65,7 @@ The most often change is adding [fields](https://www.elastic.co/guide/en/elastic
 Routing is a mechanism that maps URL path to controllers and methods.
 You are likely to adjust routing when you need translated routes for a new locale (e.g., when you have a domain with German localization, and want to have a list of orders under URL `/befehle`).
 
-*We use Symfony routing, so please find more in the [official documentation](https://symfony.com/doc/3.4/routing.html)*
+_We use Symfony routing, so please find more in the [official documentation](https://symfony.com/doc/3.4/routing.html)_
 
 You can adjust the routing in `config/shopsys-routing/routing_friendly_url.yaml` file and [locale specific](./how-to-set-up-domains-and-locales.md#32-frontend-routes) in `config/shopsys-routing/routing_front_xx.yaml` files.
 
@@ -77,13 +77,13 @@ The default currency is different for administration and for each of domains and
 The administration default currency is used in twig templates e.g., as `{{ value|priceWithCurrencyAdmin }}`.
 The default currency for domain is used e.g., as `{{ cartItemDiscount.priceWithVat|price }}`.
 
-*Note: Read more in a dedicated article about [price filters](../model/how-to-work-with-money.md#price) and [administration price filter](../model/how-to-work-with-money.md#pricewithcurrencyadmin).*
+_Note: Read more in a dedicated article about [price filters](../model/how-to-work-with-money.md#price) and [administration price filter](../model/how-to-work-with-money.md#pricewithcurrencyadmin)._
 
 When you install new project, default currencies are set like this
 
-* `shopsys` *(1st domain)*: `CZK`
-* `2.shopsys` *(2nd domain)*: `EUR`
-* administration: `CZK`
+-   `shopsys` _(1st domain)_: `CZK`
+-   `2.shopsys` _(2nd domain)_: `EUR`
+-   administration: `CZK`
 
 You can change default currencies in administration `Pricing > Currencies`, but this change will not last after application rebuild (operation that you do often during development).
 
@@ -93,26 +93,34 @@ You can adjust the demo data to match your project.
 This takes a bit more effort but once you adjust demo data, the change will be applied every time application is rebuilded.
 
 #### How to set administration default currency
+
 Class `SettingValueDataFixture`, method `load()`
+
 ```diff
 + $eurCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_EUR);
 + $this->setting->set(PricingSetting::DEFAULT_CURRENCY, $eurCurrency->getId());
 ```
 
 #### How to set first domain default currency
+
 Class `SettingValueDataFixture`, method `load()`
+
 ```diff
 + $eurCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_EUR);
 + $this->setting->setForDomain(PricingSetting::DEFAULT_DOMAIN_CURRENCY, $eurCurrency->getId(), Domain::FIRST_DOMAIN_ID);
 ```
 
 #### How to set next domains default currency
+
 Class `SettingValueDataFixture`, method `setDomainDefaultCurrency()`
+
 ```diff
 - $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_EUR);
 + $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 ```
+
 or you can even use switch logic to provide different default currencies for different domains like
+
 ```php
 switch ($domainId) {
     case 2: $defaultCurrency = $this->getReference(CurrencyDataFixture::CURRENCY_EUR); break;
@@ -121,8 +129,10 @@ switch ($domainId) {
 ```
 
 ## Fine-tune your configuration
+
 If all developers working on your project use the same version of PHP (e.g., because all use Shopsys Platform via Docker), you can use higher versions of the libraries and tools installed via Composer.
 To do so, remove the `config.platform.php` option from your `composer.json`:
+
 ```diff
      "config": {
          "preferred-install": "dist",
@@ -133,6 +143,7 @@ To do so, remove the `config.platform.php` option from your `composer.json`:
 +        "component-dir": "project-base/web/components"
      },
 ```
+
 Run `composer update` to install updated versions of your dependencies (versions that don't support the lowest PHP version supported by Shopsys Platform).
 Then commit the changed `composer.json` and `composer.lock` so all the devs can share the same configuration.
 
@@ -145,24 +156,30 @@ We recommend using the same version in your `php-fpm`'s `Dockerfile`, so that de
 After all, your production server is the one that matters the most.
 
 First, run `php -v` on your server to find our the exact version, for example:
-``` no-highlight
+
+```no-highlight
 PHP 8.1.3 (cli) (built: Mar  1 2022 09:21:02) ( NTS )
 Copyright (c) The PHP Group
 Zend Engine v4.1.3, Copyright (c) Zend Technologies
     with Zend OPcache v8.1.3, Copyright (c), by Zend Technologies
 ```
+
 Then change the version in your `docker/php-fpm/Dockerfile`:
+
 ```diff
 - FROM php:8.1-fpm-bullseye as base
 + FROM php:8.1.3-fpm-bullseye as base
 ```
+
 After running `docker-compose up -d --build` you'll have the application running on the same PHP.
 
 Now you can modify the version in your `composer.json` as well so all packages will always be installed in a compatible version.
+
 ```diff
          "platform": {
 -            "php": "8.1"
 +            "php": "8.1.3"
          }
 ```
+
 To apply the new setting, execute `composer update` and commit the changes.

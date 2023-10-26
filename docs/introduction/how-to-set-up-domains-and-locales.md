@@ -13,20 +13,26 @@ For an explanation of the basic terms, please read [domain, multidomain and mult
 ### 1. How to create a single domain application
 
 #### 1.1 Domain configuration
+
 Modify the configuration of the domain in `config/domains.yaml`.
 This configuration file contains information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
 
 #### 1.2 Set up the url address
+
 Set the url address for the domain in `config/domains_urls.yaml`.
 
 #### 1.3 Locale settings
+
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
 
 #### 1.4 Build
+
 Start the build, for example, using a phing target
+
 ```sh
 php phing build-demo-dev
 ```
+
 !!! hint
 
     In this step you were using Phing target `build-demo-dev`.<br>
@@ -39,6 +45,7 @@ php phing build-demo-dev
 After the build is completed, a singledomain application is created.
 
 #### 1.5 Tests
+
 Some tests are prepared for the specific configuration and test only the behavior for the default locales (`en` and/or `cs`).
 For example `Tests\App\Functional\Twig\PriceExtensionTest` is expecting the specific format of displayed currency.
 If you want to use already created tests for your specific configuration, you may need to modify these tests to be able to test your specific configuration of the domain.
@@ -51,10 +58,12 @@ If you want to use already created tests for your specific configuration, you ma
 ### 2. How to add a new domain
 
 #### 2.1 Domain configuration
+
 Modify the configuration of the domain in `config/domains.yaml`.
 This configuration file contains pieces of information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
 
 #### 2.2 Set up the url address
+
 Set the url address for the domain in `config/domains_urls.yaml`.
 
 !!! note
@@ -62,6 +71,7 @@ Set the url address for the domain in `config/domains_urls.yaml`.
     When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#12-enable-second-domain-optional)
 
 #### 2.3 Locale settings
+
 Set up the locale of the domain according to the instructions in the section [Locale settings](#3-locale-settings)
 
 #### 2.4 Create multidomains data
@@ -72,15 +82,17 @@ Set up the locale of the domain according to the instructions in the section [Lo
 
 There need to be created some multidomain data for the newly added domain.
 Run the phing target
+
 ```sh
 php phing domains-data-create
 ```
+
 This command performs multiple actions:
 
-- multidomain attributes from the first domain are copied for this new domain, see `FrameworkBundle/Component/Domain/DomainDataCreator.php`, where the `TEMPLATE_DOMAIN_ID` constant is defined.
-- if a new locale is set for the newly added domain, the empty rows with this new locale will be created for multilang attributes
-- pricing group with the name Default is created for every new domain
-- the last step of this command is the start of automatic recalculations of prices, availabilities, and products visibilities.
+-   multidomain attributes from the first domain are copied for this new domain, see `FrameworkBundle/Component/Domain/DomainDataCreator.php`, where the `TEMPLATE_DOMAIN_ID` constant is defined.
+-   if a new locale is set for the newly added domain, the empty rows with this new locale will be created for multilang attributes
+-   pricing group with the name Default is created for every new domain
+-   the last step of this command is the start of automatic recalculations of prices, availabilities, and products visibilities.
 
 !!! note
 
@@ -91,65 +103,80 @@ This command performs multiple actions:
     3. Recalculate product prices and visibilities
 
 #### 2.5 Multilang attributes
+
 Demo data of Shopsys Platform are translated only for `en` and `cs` locales.
-If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory  and you can translate your demo data in `dataFixtures.xx.po` file.
+If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory and you can translate your demo data in `dataFixtures.xx.po` file.
 
 #### 2.6 Generate assets for the new domain
+
 In order to properly display the new domain, assets need to be generated
+
 ```sh
 php phing npm
 ```
 
 #### 2.7. Create elasticsearch definition for the new domain
+
 The configuration for elasticsearch must be created for each domain in a separate json file.
 By default, the configurations for the domain 1 and 2 are already parts of a project-base.
 Configuration for elasticsearch can be found in `src/Resources/definition/`.
 If you add a new domain, you need to create an elasticsearch configuration for this new domain.
 
 After you create the configuration, you have to create the index in elasticsearch and fill it by data
+
 ```sh
 php phing elasticsearch-index-recreate
 php phing elasticsearch-export
 ```
 
 ### 3. Locale settings
+
 Some parts of these instructions are already prepared for the locales `en` and `cs`.
 
 #### 3.1 Set up the locale for domain
+
 Set up the locale of the domain in `config/domains.yaml`.
 This configuration file contains pieces of information about the domain ID, the domain identifier for the domain tabs in the administration, and the domain locale.
 
 #### 3.2 Frontend routes
+
 Create a file with the frontend routes for the added locale if this file is not already created for this locale.
 Create this file in the directory `config/shopsys-routing` with the name `routing_front_xx.yaml` where `xx` replace for the code of added locale.
 
 #### 3.3 Translations and messages
-In order to correctly display the labels like *Registration*, *Cart*, ..., create a file with translations of messages in `translations` directory.
+
+In order to correctly display the labels like _Registration_, _Cart_, ..., create a file with translations of messages in `translations` directory.
 
 Then run
+
 ```sh
 php phing translations-dump
 ```
+
 There will be created files for translations of messages for the new locale in `translations` directory, which you'll need to translate:
 
-* `messages.xx.po` for translations of common strings
-* `validators.xx.po` for translations of validation messages
-* `dataFixtures.xx.po` for translations of demo data
+-   `messages.xx.po` for translations of common strings
+-   `validators.xx.po` for translations of validation messages
+-   `dataFixtures.xx.po` for translations of demo data
 
 For more information about translations, see [the separate article](./translations.md).
 
 #### 3.4 Generate database functions for the locale use
+
 Within the database functions, it is necessary to regenerate the default database functions for the locale use that are already created for the `en` locale as default.
 Regenerate database functions by running a phing target
+
 ```sh
 php phing domains-db-functions-create
 ```
 
 #### 3.5 Multilang attributes
+
 Demo data of Shopsys Platform are prepared only for `en` and `cs` locales.
 If you have set a different locale, you can use `translations-dump` that will create new translation files in `translations` directory and you can translate your demo data in `dataFixtures.xx.po` file.
 
 #### 3.6 Locale in administration
+
 Administration is by default in `en` locale.
 This means that for example, product list in administration tries to display translations of product names in `en` locale.
 If you want to switch it to the another locale, set a parameter `shopsys.admin_locale` in your `config/parameters_common.yaml` configuration to desired locale.
@@ -159,10 +186,12 @@ When you change admin locale, you have to update acceptance tests, to have admin
 You can change administration translations by adding messages into your `translations/messages.xx.po`.
 
 #### 3.7 Sorting in different locales
+
 Alphabetical sorting on frontend uses Elasticsearch and its [ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/analysis-icu.html).  
 Every domain needs to have `language` parameter for field `name.keyword` in `src/Resources/definition/product/*.json` set in order to sort correctly for given locale.
 
 An example for domain that uses English language:
+
 ```json
 "name": {
     "type": "text",
@@ -178,6 +207,7 @@ An example for domain that uses English language:
 ```
 
 #### 3.8 Default application locale
+
 In most cases, when working with multilanguage attributes, you do not need to specify any locale as it is set automatically from the request so you can just use e.g., `Product::getName()` and you get the proper translation.
 However, sometimes, there is no request (i.e. in CLI commands) so you need to tell your application, which locale should be used - either using a parameter in the method (`Product::getName('es')`) or by setting a default application locale.
 
@@ -191,6 +221,7 @@ The value is then used for setting [`default_locale` Symfony parameter](https://
 ### 4. Change the url address for an existing domain
 
 #### 4.1 Change the url address
+
 Change the url address in the configuration of the domain in `config/domains_urls.yaml`.
 
 !!! note
@@ -198,22 +229,29 @@ Change the url address in the configuration of the domain in `config/domains_url
     When you add a domain with the new url address on the MacOS platform, you need to enable this url address also in the network interface, see [Installation Using Docker for MacOS](../installation/installation-using-docker-macos.md#12-enable-second-domain-optional)
 
 #### 4.2 Replace the old url address
+
 Run the phing target
+
 ```sh
 php phing domains-urls-replace
 ```
+
 Running this command will ensure replacing all occurrences of the old url address in the text attributes in the database with the new url address.
 
 ### 5. Change the locale for an existing domain
+
 This scenario is not supported by default because of the fact, that change of the locale within an already running eshop almost never happens.
 However, there is workaround even for this scenario.
 
 #### 5.1 Change the locale to the locale that is already used by another domain
+
 If you need to change the locale of a specific domain to another locale that is already used by another domain, just set the required locale for this domain in the `config/domains.yaml`.
 
 #### 5.2 Change the locale to the locale that is not yet used by another domain
+
 If you need to change the locale of a specific domain to another locale that is not yet already used by another domain, add new temporary domain with this new locale and follow the instructions of [How to add a new domain](#2-how-to-add-a-new-domain).
 The following procedure is the same as in the case with [Change the locale to the locale that is already used by another domain](#change-the-locale-to-the-locale-that-is-already-used-by-another-domain).
 
 ### 6. Change domains appearance
+
 If you need to distinguish your domains visually, see [Creating a Multidomain Design cookbook](../cookbook/creating-a-multidomain-design.md).

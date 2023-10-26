@@ -3,6 +3,7 @@
 In this article you will learn about the model, its dependencies, [entities](#entity), [facades](#facade), [repositories](#repository) and their mutual relations.
 
 ## Definition of a model
+
 The definition of a model is adopted from [Domain Driven Design (DDD)](https://stackoverflow.com/questions/1222392/can-someone-explain-domain-driven-design-ddd-in-plain-english-please/1222488#1222488).
 Model is a system of abstractions that describes selected aspect of a domain.
 
@@ -28,6 +29,7 @@ Model is mostly divided into three parts: Entity, Repository and Facade.
 ![model architecture schema](./img/model-architecture.png 'model architecture schema')
 
 ## Entity
+
 Entity is a class encapsulating data.
 All entities are persisted by Doctrine ORM.
 One entity class usually represents one table in the database and one instance of the entity represents one row in the table.
@@ -44,6 +46,7 @@ Entities can be used by all layers of the model and even outside of model (e.g.,
 You'll find more about our entities specialities in a [detailed article](entities.md).
 
 ### Example
+
 ```php
 // FrameworkBundle/Model/Product/Product.php
 
@@ -87,6 +90,7 @@ class Product
 ```
 
 ## Repository
+
 Is a class used to provide access to all entities of its scope.
 Repository enables code reuse of retrieving logic.
 Thanks to repositories, there is no need to use DQL/SQL in controllers or facades.
@@ -98,6 +102,7 @@ In Shopsys Platform repository is mostly used to retrieve entities from the data
 Repositories should be used only by facade so you should avoid using them in any other part of the application.
 
 ### Example
+
 ```php
 // FrameworkBundle/Model/Cart/CartRepository.php
 
@@ -172,6 +177,7 @@ class CartRepository
     This is done in order to provide only useful methods with understandable names instead of generic API of Doctrine repositories.
 
 ## Facade
+
 Facades are a single entry-point into the model.
 That means you can use the same method in your controller, CLI command, REST API, etc. with the same results.
 All methods in facade should have single responsibility without any complex logic.
@@ -182,6 +188,7 @@ Facades as entry-point of the model can be used anywhere outside of the model.
 Facades represent all available use-cases for specific model.
 
 ### Example
+
 ```php
 // FrameworkBundle/Model/Cart/CartFacade.php
 
@@ -242,28 +249,34 @@ class CartFacade
 ```
 
 ## Cooperation of layers
+
 The controller handles the request (e.g., [saved data](./entities.md#entity-data) from form) and passes data to the facade.
 The facade receives data from the controller and requests appropriate entities from the repository.
 Entities and supporting classes (like recalculators, schedulers) processes data and returns output to the facade, that persist it by entity manager.
 
 ## Model extension
+
 Entity extension is described in [Entity Extension article](../extensibility/entity-extension.md).
 
 Other parts of a model can be extended by class inheritance and adding an alias to your `services.yaml`, e.g.:
+
 ```yaml
 services:
     Shopsys\FrameworkBundle\Model\Article\ArticleFacade: '@App\Model\Article\ArticleFacade'
 ```
 
 ### Extending from a bundle
+
 You can extend some entities from other bundles using [CRUD extension](https://github.com/shopsys/plugin-interface#crud-extension).
 Other parts cannot be extended because PHP does not support multiple class inheritance.
 
 ## Model Rules
+
 There are some model-specific rules that help up maintain easier usage of the model.
 They also help which classes should be a part of the `Model` namespace and which shouldn't.
 You can read more about them in [Model Rules](./model-rules.md).
 
 ## Read Model
+
 Next to the standard model described in this article, there is also an extra layer called "read model" that separates templates and the model itself in particular reading use-cases.
 You can read more in [Introduction to Read Model](./introduction-to-read-model.md).

@@ -4,38 +4,40 @@ This article describes a quick way to extend your entity and the internals of th
 
 ## How can I extend an entity?
 
-* Create a new entity in your `src/Model` directory that extends the already existing framework entity
-    * some entities are already prepared out of the box
-        * `Administrator`
-        * `Article`
-        * `Brand`
-        * `Category`
-        * `Order`
-        * `OrderItem`
-        * `Payment`
-        * `Product`
-        * `Transport`
-        * `User`
-    * keep entity and table annotations
-    * you can add new properties and use annotations to configure ORM
-* Entities from namespace `App\` extending entities from namespace `Shopsys\` are automatically extended. If you want to extend from or to a different namespace, you need to add information about the entity extension into the container configuration
-    * add it to the configuration parameter `shopsys.entity_extension.map` placed in `config/parameters_common.yaml` file
-    * use the parent entity name as a key and the extended entity name as a value
-    * e.g., `MyVendor\MyLibrary\Model\Entity: App\Model\ExtendedEntity`
-* Create a new data object in your `src/Model` directory that extends already existing framework entity data
-* Create a factory for this entity data that extends the existing framework factory or implements the factory interface from the framework
-    * Rewrite Symfony configuration for the interface to alias your factory
-        * e.g.
+-   Create a new entity in your `src/Model` directory that extends the already existing framework entity
+    -   some entities are already prepared out of the box
+        -   `Administrator`
+        -   `Article`
+        -   `Brand`
+        -   `Category`
+        -   `Order`
+        -   `OrderItem`
+        -   `Payment`
+        -   `Product`
+        -   `Transport`
+        -   `User`
+    -   keep entity and table annotations
+    -   you can add new properties and use annotations to configure ORM
+-   Entities from namespace `App\` extending entities from namespace `Shopsys\` are automatically extended. If you want to extend from or to a different namespace, you need to add information about the entity extension into the container configuration
+    -   add it to the configuration parameter `shopsys.entity_extension.map` placed in `config/parameters_common.yaml` file
+    -   use the parent entity name as a key and the extended entity name as a value
+    -   e.g., `MyVendor\MyLibrary\Model\Entity: App\Model\ExtendedEntity`
+-   Create a new data object in your `src/Model` directory that extends already existing framework entity data
+-   Create a factory for this entity data that extends the existing framework factory or implements the factory interface from the framework
+    -   Rewrite Symfony configuration for the interface to alias your factory
+        -   e.g.
+
 ```yaml
 Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
-  alias: App\Model\Product\ProductDataFactory
+    alias: App\Model\Product\ProductDataFactory
 ```
-* Now your extended entity is automatically used instead of the parent entity:
-    * in hydrated Doctrine references
-    * in the EntityManager, Repositories and QueryBuilders
-    * in newly created entities
-* If you are running tests, update also `\Tests\App\Functional\EntityExtension\EntityExtensionTest`
-    * add your extended entity into `$entityExtensionMap` in the `setUp()` method
+
+-   Now your extended entity is automatically used instead of the parent entity:
+    -   in hydrated Doctrine references
+    -   in the EntityManager, Repositories and QueryBuilders
+    -   in newly created entities
+-   If you are running tests, update also `\Tests\App\Functional\EntityExtension\EntityExtensionTest`
+    -   add your extended entity into `$entityExtensionMap` in the `setUp()` method
 
 !!! tip
 
@@ -59,6 +61,7 @@ Creating a new type of `OrderItem` is possible and does not cause problems becau
 You can read about alternative solutions we considered and the reasons behind this approach in [Entity Extension vs. Entity Generation](entity-extension-vs-entity-generation.md).
 
 ## Introduction into entity extensibility
+
 Let's suppose that we are implementing the Dream project as a clone of the [project-base repository](https://github.com/shopsys/project-base).
 Dream project depends on the glass-box [framework repository](https://github.com/shopsys/framework).
 The framework is, of course, independent of our Dream project.
@@ -84,10 +87,10 @@ Otherwise, a conflict with other subscribers modifying the metadata would occur.
 
 The correct order of relevant Doctrine event subscribers:
 
-* EntityExtensionParentMetadataCleanerEventSubscriber
-* Gedmo subscribers (*from [gedmo/doctrine-extensions](https://github.com/gedmo/doctrine-extensions)*)
-* TranslatableListener (*from [prezent/doctrine-translatable](https://github.com/prezent/doctrine-translatable)*)
-* EntityExtensionSubscriber
+-   EntityExtensionParentMetadataCleanerEventSubscriber
+-   Gedmo subscribers (_from [gedmo/doctrine-extensions](https://github.com/gedmo/doctrine-extensions)_)
+-   TranslatableListener (_from [prezent/doctrine-translatable](https://github.com/prezent/doctrine-translatable)_)
+-   EntityExtensionSubscriber
 
 `EntityManagerDecorator` is then responsible for using the extended entities instead of their parents in EntityManager, Repositories and QueryBuilders.
 

@@ -43,7 +43,7 @@ class ParameterData extends BaseParameterData {
 
     public function __construct()
     {
-        // parent::__construct() not called intentionally to avoid setting parameter visibility 
+        // parent::__construct() not called intentionally to avoid setting parameter visibility
         $this->name = [];
     }
 ```
@@ -98,6 +98,7 @@ and have public access in class "App\Model\Product\Detail\ProductDetailView"
 ```
 
 Thanks to the usage of a getter, you see the actual error, so you are immediately aware of the problem:
+
 ```text
 Typed property App\Model\Product\Detail\ProductDetailView::$nonSellingPrice must not be accessed before initialization
 ```

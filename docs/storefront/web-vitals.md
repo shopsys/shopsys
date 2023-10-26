@@ -12,23 +12,19 @@ On projects, they come most often in a closed state by default. Because of that,
 
 ```tsx
 <FilterGroupWrapper dataTestId={TEST_IDENTIFIER}>
-  <FilterGroupTitle
-    title={title}
-    isOpen={isGroupOpen}
-    onClick={() => setIsGroupOpen(!isGroupOpen)}
-  />
-  {isGroupOpen && (
-    <FilterGroupContent>
-      <RangeSlider
-        min={minPriceOption}
-        max={maxPriceOption}
-        minValue={minimalPrice || minPriceOption}
-        maxValue={maximalPrice || maxPriceOption}
-        setMinValueCallback={setMinimalPrice}
-        setMaxValueCallback={setMaximalPrice}
-      />
-    </FilterGroupContent>
-  )}
+    <FilterGroupTitle title={title} isOpen={isGroupOpen} onClick={() => setIsGroupOpen(!isGroupOpen)} />
+    {isGroupOpen && (
+        <FilterGroupContent>
+            <RangeSlider
+                min={minPriceOption}
+                max={maxPriceOption}
+                minValue={minimalPrice || minPriceOption}
+                maxValue={maximalPrice || maxPriceOption}
+                setMinValueCallback={setMinimalPrice}
+                setMaxValueCallback={setMaximalPrice}
+            />
+        </FilterGroupContent>
+    )}
 </FilterGroupWrapper>
 ```
 
@@ -40,13 +36,9 @@ This is also a pretty usual case. When we want to attach some styling to the use
 
 ```tsx
 const CellHead: FC<CellProps> = ({ className, children, ...props }) => (
-  <Cell
-    className={twMergeCustom('font-bold text-greyLight', className)}
-    isHead
-    {...props}
-  >
-    {children}
-  </Cell>
+    <Cell className={twMergeCustom('font-bold text-greyLight', className)} isHead {...props}>
+        {children}
+    </Cell>
 );
 ```
 
@@ -62,9 +54,9 @@ We were still using the mindset from a WYSIWYG approach where users used heading
 
 This can be split into several parts:
 
-- **Inputs** - If the input doesn’t have any associated label element, it’s still necessary to explain this input to the screen readers. Either add a label element for this input or put an aria-label prop to the input element with the proper description
-- **Links** and **Buttons** - In case there is no text inside the Link or Button component (usually clickable icons for which is the description icon itself), screen readers need to know about the purpose of the action. Add title prop to those elements.
-- **Images** - add alt description to every img element
+-   **Inputs** - If the input doesn’t have any associated label element, it’s still necessary to explain this input to the screen readers. Either add a label element for this input or put an aria-label prop to the input element with the proper description
+-   **Links** and **Buttons** - In case there is no text inside the Link or Button component (usually clickable icons for which is the description icon itself), screen readers need to know about the purpose of the action. Add title prop to those elements.
+-   **Images** - add alt description to every img element
 
 ## 3. Dynamic imports
 
@@ -72,9 +64,7 @@ Components which are not immediately displayed but rather they are shown after a
 
 ```tsx
 const AddToCartPopup = dynamic(() =>
-  import('components/Blocks/Product/AddToCartPopup').then(
-    (component) => component.AddToCartPopup
-  )
+    import('components/Blocks/Product/AddToCartPopup').then((component) => component.AddToCartPopup),
 );
 ```
 
@@ -82,16 +72,11 @@ Then you can use the lazy loaded component as a regular component - most probabl
 
 ```tsx
 return (
-  <div>
-    {componentContent}
+    <div>
+        {componentContent}
 
-    {!!popupData && (
-      <AddToCartPopup
-        onCloseCallback={() => setPopupData(undefined)}
-        addedCartItem={popupData}
-      />
-    )}
-  </div>
+        {!!popupData && <AddToCartPopup onCloseCallback={() => setPopupData(undefined)} addedCartItem={popupData} />}
+    </div>
 );
 ```
 
@@ -106,20 +91,15 @@ From CDN, we should already get images in the format webP, but for static images
 Since the browser doesn’t know the dimensions of the image it can cause layout shifts (affects CLS - which is one of the most important metrics). Always specify width and height of the image. You can still adjust the size of the image by CSS.
 
 ```tsx
-export const IconImage: FC<IconImageProps> = ({
-  icon,
-  height,
-  width,
-  ...props
-}) => {
-  return (
-    <img
-      src={`/icons/${icon}.png`}
-      height={height !== undefined ? height : '24'}
-      width={width !== undefined ? width : '24'}
-      {...props}
-    />
-  );
+export const IconImage: FC<IconImageProps> = ({ icon, height, width, ...props }) => {
+    return (
+        <img
+            src={`/icons/${icon}.png`}
+            height={height !== undefined ? height : '24'}
+            width={width !== undefined ? width : '24'}
+            {...props}
+        />
+    );
 };
 ```
 

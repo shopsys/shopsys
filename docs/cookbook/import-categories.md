@@ -193,7 +193,7 @@ Now we have all categories created or edited, and we have built the sorted array
      foreach ($this->getCategoryDataFromIs() as $importData) {
          $this->importCategory($importData);
      }
-     
+
 +    $categoriesSortingData = CategoryNestedSetCalculator::calculateNestedSetFromAdjacencyList($this->parentIdByCategoryId);
 +    $this->categoryFacade->reorderByNestedSetValues($categoriesSortingData);
  }

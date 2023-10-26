@@ -11,6 +11,7 @@ There are a few customizations on top of the standard [KnpMenu](https://symfony.
 ## Template
 
 The template is not configured globally (via `config/packages/twig.yaml`) but instead, the template is provided during the rendering in a Twig template:
+
 ```twig
 {{ knp_menu_render('admin_side_menu', {template: 'ShopsysFrameworkBundle:Admin/Menu:side_menu.html.twig'}) }}`.
 ```
@@ -27,6 +28,7 @@ There is an extra attribute `icon` supported to allow icons in the menu.
 Currently, it's used only for the first level of menu items, but it will also work when set to nested items.
 
 It can be assigned to a menu item in an event subscriber by calling, e.g.
+
 ```php
 $menuItem->setExtra('icon', 'cart');
 ```
@@ -38,6 +40,7 @@ A list of all supported icons can be found in `docs/generated/webfont-admin-svg.
 There is an extra boolean attribute `superadmin` supported to allow highlighting of restricted access of the menu.
 
 It's only used for the visual effect. The restriction itself has to be done manually using the method
+
 ```php
 AuthorizationCheckerInterface::isGranted(Roles::ROLE_SUPER_ADMIN);
 ```

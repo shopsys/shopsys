@@ -1,16 +1,19 @@
 # Basic Design Styleguide
 
 ## Documentation
+
 Styleguide - tool to make creating and maintaining styleguides easy for Shopsys Platform designs.
 Contains all html elements necessary to create new design.
 
 ## Installation for already running project based on Shopsys Platform
+
 You need to have Shopsys Platform installed in developer mode according to our [Installation Guide](../installation/installation-guide.md)
 
-1) run `npm run dev` so you have all your styles compiled
-2) open http://127.0.0.1:8000/_styleguide file in browser to see your styleguide
+1. run `npm run dev` so you have all your styles compiled
+2. open http://127.0.0.1:8000/_styleguide file in browser to see your styleguide
 
 ### How to add new section to styleguide
+
 If you need to add your information to styleguide - edit `templates/Styleguide/styleguide.html.twig` which is simple twig file.
 
 ```twig
@@ -42,4 +45,5 @@ If you need to add your information to styleguide - edit `templates/Styleguide/s
 ```
 
 ### Inspired by
+
 <a href="https://hugeinc.github.io/styleguide/">https://hugeinc.github.io/styleguide/</a>

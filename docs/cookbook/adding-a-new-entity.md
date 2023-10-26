@@ -1,4 +1,5 @@
 # Adding a New Entity
+
 This article provides step-by-step instructions on how to add a new entity to your project.
 Basic information about custom entities can be found in the [separate article](../model/custom-entities.md).
 
@@ -27,9 +28,9 @@ class Salesman
 
 Each salesman entity will have the following properties.
 
-- `id` - unique sequenced value for salesman identification
-- `name` - name of the salesman limited to 100 characters
-- `registeredAt` - registration date of the salesman
+-   `id` - unique sequenced value for salesman identification
+-   `name` - name of the salesman limited to 100 characters
+-   `registeredAt` - registration date of the salesman
 
 ```diff
 namespace App\Model\Salesman;

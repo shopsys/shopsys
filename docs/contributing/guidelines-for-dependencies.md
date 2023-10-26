@@ -27,18 +27,6 @@ If you add or change any dependency in a package or project-base, reapply the ch
 If the package or project-base depends on a shopsys package, we declare `dev-master` dependency.
 We will change `dev-master` dependency to a released tag like `v7.0.0-alpha1` during the release.
 
-## Exceptions
-
-* `shopsys/coding-standards` is required in `^3.x.x` version because the current development version is still too unstable
-* We use `doctrine/orm` branch `dev-doctrine-260-with-ddc1960-hotfix-and-ddc4005-hotfix` because it contains fixes for
-[#DDC-1960](https://github.com/doctrine/doctrine2/issues/2633)
-and [#DCC-4005](https://github.com/doctrine/doctrine2/issues/4869)
-and until these fixes are in the doctrine tagged version, we have to rely on this branch
-* We still rely on a couple of packages that are not tagged yet, so we use `dev-master`, `dev-branch` or `dev-master#hash` version
-* We declare `@dev` stability for a couple of packages.
-When our package depends on `shopsys/framework`, we have to tell the composer it can use the `dev-*` transitive dependency.
-Unfortunately, this notation cannot be used for the `doctrine/orm` inline requires alias.
-
 !!! note
 
     During composer installation there will be installed 3-rd party software as dependencies of Shopsys Platform with licenses that are described in the document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)

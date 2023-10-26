@@ -39,16 +39,14 @@ import counterUp from 'counterup2';
 // ...
 
 export default class CounterUp {
-
-    static init () {
-        document.querySelectorAll('.js-counter').forEach(counterItem => {
+    static init() {
+        document.querySelectorAll('.js-counter').forEach((counterItem) => {
             counterUp(counterItem, {
                 duration: 1000,
-                delay: 10
+                delay: 10,
             });
         });
     }
-
 }
 
 // ...
@@ -62,9 +60,9 @@ For frontend, this is the `assets/js/frontend/frontend.js` file, for the adminis
 The addition works just like a component installed over npm except that relative paths are used.
 
 ```js
-    // assets/js/frontend/frontend.js
-    import './components/CounterUp';
-    // ...
+// assets/js/frontend/frontend.js
+import './components/CounterUp';
+// ...
 ```
 
 When we are editing a javascript and friends files, the change must go through the bundler (webpack).
@@ -77,7 +75,7 @@ The `npm run watch` command launches the webpack in development mode, which mean
 ### Livereload
 
 The watch command is linked to the [livereload plugin](https://github.com/statianzo/webpack-livereload-plugin).
-The [livereload plugin](https://github.com/statianzo/webpack-livereload-plugin) plugin will refresh your page the moment you change any asset. 
+The [livereload plugin](https://github.com/statianzo/webpack-livereload-plugin) plugin will refresh your page the moment you change any asset.
 
 ## Constants and translations
 
@@ -95,62 +93,69 @@ How to work with translation you can read [translation](../introduction/translat
 
 ### I want to edit existing javascripts
 
-- you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
-- you can edit files
-- (you may notice changes in the console)
-- you can test changes (after page reload)
+-   you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
+-   you can edit files
+-   (you may notice changes in the console)
+-   you can test changes (after page reload)
 
 ### I want to add new javascript file to frontend
 
-- you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
-- you can create new javascript file (path of new file is `assets/js/frontend/myNewFile.js`)
-- you can use this new file in some other file (`import ./frontend/myNewFile.js`)
-- or, when file contains global event listener, import new file in `assets/js/frontend/frontend.js` (`import ./myNewFile.js`)
+-   you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
+-   you can create new javascript file (path of new file is `assets/js/frontend/myNewFile.js`)
+-   you can use this new file in some other file (`import ./frontend/myNewFile.js`)
+-   or, when file contains global event listener, import new file in `assets/js/frontend/frontend.js` (`import ./myNewFile.js`)
 
 ### I want to add new javascript file to admin
 
-- you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
-- you can create new javascript file (path of new file is `assets/js/admin/myNewFile.js`)
-- you can use this new file in some other file (`import ./admin/myNewFile.js`)
-- or, when file contains global event listener, import new file in `assets/js/admin/admin.js` (`import ./myNewFile.js`)
+-   you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
+-   you can create new javascript file (path of new file is `assets/js/admin/myNewFile.js`)
+-   you can use this new file in some other file (`import ./admin/myNewFile.js`)
+-   or, when file contains global event listener, import new file in `assets/js/admin/admin.js` (`import ./myNewFile.js`)
 
 ### I want to add new package from npm repository
 
-- you have to stop `npm run watch` (if it is running)
-- you can add package via npm `npm install <package-name>`
-- you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
-- you can use new package (`import <package-name>`) in some file
-- you can test changes (after page reload)
+-   you have to stop `npm run watch` (if it is running)
+-   you can add package via npm `npm install <package-name>`
+-   you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
+-   you can use new package (`import <package-name>`) in some file
+-   you can test changes (after page reload)
 
 ### I want to override function from @shopsys/framework common package
 
 For example, we can override method `showFormErrorsWindowOnFrontend` from `@shopsys/framework/common/validation/customizeBundle.js` on frontend.
 
-- you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
-- you have to import `CustomizeBundle` in `assets/js/frontend/frontend.js`
+-   you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
+-   you have to import `CustomizeBundle` in `assets/js/frontend/frontend.js`
+
 ```js
 import CustomizeBundle from 'framework/common/validation/customizeBundle';
 // ...
 ```
-- you can prepare new function
+
+-   you can prepare new function
+
 ```js
 const myOverridedShowFormErrorsWindow = (container) => {
     console.log('Hello my overrided showFormErrorsWindow method.');
-}
+};
 ```
-- you have to replace the original method with the new one
+
+-   you have to replace the original method with the new one
+
 ```js
 CustomizeBundle.showFormErrorsWindow = myOverridedShowFormErrorsWindow;
 ```
-- you can test changes (after page reload)
+
+-   you can test changes (after page reload)
 
 Full example might look like this:
+
 ```js
 import CustomizeBundle from 'framework/common/validation/customizeBundle';
 
 const myOverridedShowFormErrorsWindow = (container) => {
     console.log('Hello my overrided showFormErrorsWindow method.');
-}
+};
 
 CustomizeBundle.showFormErrorsWindow = myOverridedShowFormErrorsWindow;
 ```
@@ -168,15 +173,15 @@ import CategoryTreeSorting from 'framework/admin/components/CategoryTreeSorting'
 import Register from 'framework/common/utils/Register';
 
 class MyCategoryTreeSorting extends CategoryTreeSorting {
-    constructor ($rootTree, $saveButton) {
+    constructor($rootTree, $saveButton) {
         super($rootTree, $saveButton);
         console.log('override constructor');
     }
-    onChange () {
+    onChange() {
         super.onChange();
         console.log('on change');
     }
-    static init ($container) {
+    static init($container) {
         const $rootTree = $container.filterAllNodes('#js-category-tree-sorting > .js-category-tree-items');
         const $saveButton = $container.filterAllNodes('#js-category-tree-sorting-save-button');
         if ($rootTree.length > 0 && $saveButton.length > 0) {
@@ -193,11 +198,11 @@ This is because js doesn't have global container that known that we overridden t
 Register new callback may look like this:
 
 ```js
-(new Register()).replaceCallback('CategoryTreeSorting.init', MyCategoryTreeSorting.init);
+new Register().replaceCallback('CategoryTreeSorting.init', MyCategoryTreeSorting.init);
 ```
 
 You can remove registered callback using `removeCallback` method.
 
 ```js
-(new Register()).removeCallback('CategoryTreeSorting.init');
+new Register().removeCallback('CategoryTreeSorting.init');
 ```
