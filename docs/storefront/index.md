@@ -21,3 +21,4 @@ The Storefront is a client for consuming and displaying data from [Frontend API]
 - [Cypress](./cypress.md)
 - [Bundle Anylyzer](./bundle-analyzer.md)
 - [Improving Web Vitals](./web-vitals.md)
+= [Error Handling On Storefront](./error-handling.md)
