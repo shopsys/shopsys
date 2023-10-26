@@ -84,6 +84,24 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
     -   reformat your markdown files by running `php phing standards-fix` in php-fpm container
     -   `standards(-fix)` targets runs newly added `markdown-check/markdown-fix` target, so if you have completely changed the `standards(-fix)` target, remember to add those into your `standards(-fix)` target
+-   speed up Product creation in your project ([#2903](https://github.com/shopsys/shopsys/pull/2903))
+    -   method `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade::resolveUniquenessOfFriendlyUrlAndFlush()` has been renamed to `resolveUniquenessOfFriendlyUrl` as it no longer flushes
+    -   method `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade::refresh()` has changed its visibility to `protected`
+    -   method `Shopsys\FrameworkBundle\Model\Product\ProductFacade::refreshProductManualInputPrices()` has been moved to `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade::refreshProductManualInputPrices()` and changed its visibility to `public`
+    -   method `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly EntityManagerInterface $em,
+            protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
+            protected readonly ProductManualInputPriceFactoryInterface $productManualInputPriceFactory,
+    +       protected readonly PricingGroupRepository $pricingGroupRepository,
+        )
+    ```
+    -   method `Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainFacade::saveGoogleProductDomain()` changed its visibility to `protected`
+    -   method `Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade::saveHeurekaProductDomain()` changed its visibility to `protected`
+    -   method `Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade::saveHeurekaProductDomain()` changed its visibility to `protected`
+    -   method `Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade::saveZboziProductDomain()` changed its visibility to `protected`
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

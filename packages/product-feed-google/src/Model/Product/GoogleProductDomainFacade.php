@@ -43,6 +43,8 @@ class GoogleProductDomainFacade
         foreach ($googleProductDomainsData as $googleProductDomainData) {
             $this->saveGoogleProductDomain($productId, $googleProductDomainData);
         }
+
+        $this->em->flush();
     }
 
     /**
@@ -72,7 +74,7 @@ class GoogleProductDomainFacade
      * @param int $productId
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
      */
-    public function saveGoogleProductDomain($productId, GoogleProductDomainData $googleProductDomainData)
+    protected function saveGoogleProductDomain($productId, GoogleProductDomainData $googleProductDomainData)
     {
         $product = $this->productRepository->getById($productId);
         $googleProductDomainData->product = $product;
@@ -88,8 +90,6 @@ class GoogleProductDomainFacade
             $newGoogleProductDomain = new GoogleProductDomain($googleProductDomainData);
             $this->em->persist($newGoogleProductDomain);
         }
-
-        $this->em->flush();
     }
 
     /**

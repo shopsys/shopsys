@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFactory $friendlyUrlFactory
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory, \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Router\FriendlyUrl\FriendlyUrlFactory $friendlyUrlFactory, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider, \Symfony\Contracts\Cache\CacheInterface $mainFriendlyUrlSlugCache)
- * @method resolveUniquenessOfFriendlyUrlAndFlush(\App\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl, string $entityName)
+ * @method resolveUniquenessOfFriendlyUrl(\App\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl, string $entityName)
  * @method \App\Component\Router\FriendlyUrl\FriendlyUrl[] getAllByRouteNameAndEntityId(string $routeName, int $entityId)
  * @method \App\Component\Router\FriendlyUrl\FriendlyUrl|null findMainFriendlyUrl(int $domainId, string $routeName, int $entityId)
  * @method setFriendlyUrlAsMain(\App\Component\Router\FriendlyUrl\FriendlyUrl $mainFriendlyUrl)

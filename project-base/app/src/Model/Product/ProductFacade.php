@@ -197,7 +197,7 @@ class ProductFacade extends BaseProductFacade
         $this->saveParameters($product, $productData->parameters);
 
         if (!$product->isMainVariant()) {
-            $this->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
+            $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
         }
 
         if ($product->isMainVariant()) {
@@ -263,7 +263,7 @@ class ProductFacade extends BaseProductFacade
 
         $this->saveParameters($product, $productData->parameters);
         $this->createProductVisibilities($product);
-        $this->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
+        $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->imageFacade->manageImages($product, $productData->images);
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);

@@ -63,6 +63,8 @@ class ZboziProductDomainFacade
         foreach ($zboziProductDomainsData as $zboziProductDomainData) {
             $this->saveZboziProductDomain($productId, $zboziProductDomainData);
         }
+
+        $this->em->flush();
     }
 
     /**
@@ -90,7 +92,7 @@ class ZboziProductDomainFacade
      * @param int $productId
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
      */
-    public function saveZboziProductDomain($productId, ZboziProductDomainData $zboziProductDomainData)
+    protected function saveZboziProductDomain($productId, ZboziProductDomainData $zboziProductDomainData)
     {
         $product = $this->productRepository->getById($productId);
         $zboziProductDomainData->product = $product;
@@ -106,8 +108,6 @@ class ZboziProductDomainFacade
             $newZboziProductDomain = new ZboziProductDomain($zboziProductDomainData);
             $this->em->persist($newZboziProductDomain);
         }
-
-        $this->em->flush();
     }
 
     /**

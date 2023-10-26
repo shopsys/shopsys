@@ -136,7 +136,7 @@ class ProductFacade
 
         $this->saveParameters($product, $productData->parameters);
         $this->createProductVisibilities($product);
-        $this->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
+        $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
@@ -169,7 +169,7 @@ class ProductFacade
         $this->saveParameters($product, $productData->parameters);
 
         if (!$product->isMainVariant()) {
-            $this->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
+            $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
         } else {
             $product->refreshVariants($productData->variants);
         }
@@ -292,21 +292,6 @@ class ProductFacade
         }
 
         return $productSellingPrices;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money[]|null[] $manualInputPrices
-     */
-    protected function refreshProductManualInputPrices(Product $product, array $manualInputPrices)
-    {
-        foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
-            $this->productManualInputPriceFacade->refresh(
-                $product,
-                $pricingGroup,
-                $manualInputPrices[$pricingGroup->getId()],
-            );
-        }
     }
 
     /**
