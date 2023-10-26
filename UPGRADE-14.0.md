@@ -236,3 +236,35 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   there were certain bugs with double loads, skeleton glitches, etc. but they were mostly caused by the added complexity of SEO categories, so if you do not have those and your fetching logic is thus much simpler, you probably do not need most of these changes
     -   the category detail fetching was also rewritten to the generated URQL hook, which can be beneficial for you if your logic allows you to do so
     -   one thing that you should definitely consider is removal of `onRouteChangeError` from the page loading logic, as the previous implementation was rather invalid. See commit message for more details
+-   added additional skeletons, sync store across browser tabs, use Broadcast Channel to fetch cart in other tabs after Add/Remove to/from cart, ExtendedNextLink was refactored ([#2906](https://github.com/shopsys/shopsys/pull/2906))
+
+    -   added skeletons for Wishlist, Comparison and My orders, Order detail and Product Variants page
+    -   added skeletons for Wishlist, Comparison and My orders, Order detail and Product Main Variant page
+    -   fix Add to cart/wishlist/comparison feature when using multiple tabs
+
+        -   Before this change if I open multiple tabs as fresh unlogged user without `cartUuid`, then in each tab I add product to cart, I am experiencing that each tab contains different products in cart, even after refresh. Same applies to `Wishlist` and `Comparison`. This is solved now by adding `BroadcastChannel` middleware to Zustand store, so now it uses always only first returned `uuid`.
+        -   removed redirect to homepage after logout, this was not good approach
+        -   `removeItemFromCartAction ` in `useRemoveProductFromCart` is now `void` type (doesn't return `CartFragmentApi`) and in case of error is returned from API it refect cart so user gets latest cart updates
+        -   Zustand package is upgraded to latest version
+        -   We are now manually hydrating the Zustand store during the initial page load. This means that we no longer need to resolve mismatches between the UI rendered by the server and the UI managed on the client side. Code from this example may look familiar to you, this is no longer needed:
+
+        ```tsx
+        const [isFetchingPaused, setIsFetchingPaused] = useState(true);
+
+        const [{ data: comparisonData, fetching }] = useComparisonQueryApi({
+            variables: { comparisonUuid },
+            pause: isFetchingPaused,
+            pause: !comparisonUuid && !isUserLoggedIn,
+        });
+
+        useEffect(() => {
+            setIsFetchingPaused(!comparisonUuid && !isUserLoggedIn);
+        }, [comparisonUuid]);
+        ```
+
+    -   fix Add to cart/wishlist/comparison feature when using multiple tabs
+        -   As fresh unlogged user without `cartUuid` I open multiple tabs, then in each tab I add product to cart, I am experiencing that each tab contains different products in cart, even after refresh. Same applies to `Wishlist` and `Comparison`. This was solved by adding `BroadcastChannel` middleware to Zustand store, so now it uses always only first returned `uuid`.
+        -   Added useBroadcastChannel hook, this allow us to use Broadcast Channel for better handling multitab behavior. Together with the first type Auth for handling Authentication. Now when user log in/out, other tabs are reloaded.
+    -   ExtendedNextLink was refactored
+        -   remove static type from your links
+        -   if you have custom types, we moved it from STATIC_PAGES to CUSTOM_PAGES
