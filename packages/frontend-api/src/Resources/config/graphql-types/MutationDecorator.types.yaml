@@ -61,3 +61,10 @@ MutationDecorator:
                         type: NewsletterSubscriptionDataInput!
                         validation: cascade
                 resolve: "@=mutation('newsletterSubscribeMutation', args, validator)"
+            AddProductToList:
+                type: ProductList!
+                description: "Adds a product to a product list"
+                args:
+                    input:
+                        type: ProductListUpdateInput!
+                resolve: "@=mutation('addProductToListMutation', args)"

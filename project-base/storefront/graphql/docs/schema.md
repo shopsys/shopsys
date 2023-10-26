@@ -120,6 +120,7 @@
     * [PriceInput](#priceinput)
     * [ProductFilter](#productfilter)
     * [ProductListInput](#productlistinput)
+    * [ProductListUpdateInput](#productlistupdateinput)
     * [RecoverPasswordInput](#recoverpasswordinput)
     * [RefreshTokenInput](#refreshtokeninput)
     * [RegistrationDataInput](#registrationdatainput)
@@ -1150,6 +1151,20 @@ Add product to Comparison and create if not exists.
 <tr>
 <td colspan="2" align="right" valign="top">productUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>AddProductToList</strong></td>
+<td valign="top"><a href="#productlist">ProductList</a>!</td>
+<td>
+
+Adds a product to a product list
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productlistupdateinput">ProductListUpdateInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -9731,6 +9746,34 @@ Product list type
 <td>
 
 Product list identifier
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductListUpdateInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>productListInput</strong></td>
+<td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Product identifier
 
 </td>
 </tr>

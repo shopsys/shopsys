@@ -60,4 +60,12 @@ class ProductListItem
         $this->product = $product;
         $this->createdAt = new DateTimeImmutable();
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product
+     */
+    public function getProduct(): Product
+    {
+        return $this->product;
+    }
 }

@@ -1100,6 +1100,8 @@ export type MutationApi = {
   __typename?: 'Mutation';
   /** Fills cart based on a given order, possibly merging it with the current cart */
   AddOrderItemsToCart: CartApi;
+  /** Adds a product to a product list */
+  AddProductToList: ProductListApi;
   /** Add product to cart for future checkout */
   AddToCart: AddToCartResultApi;
   /** Apply new promo code for the future checkout */
@@ -1163,6 +1165,11 @@ export type MutationApi = {
 
 export type MutationAddOrderItemsToCartArgsApi = {
   input: AddOrderItemsToCartInputApi;
+};
+
+
+export type MutationAddProductToListArgsApi = {
+  input: ProductListUpdateInputApi;
 };
 
 
@@ -2052,6 +2059,12 @@ export enum ProductListTypeEnumApi {
   ComparisonApi = 'COMPARISON',
   WishlistApi = 'WISHLIST'
 }
+
+export type ProductListUpdateInputApi = {
+  productListInput: ProductListInputApi;
+  /** Product identifier */
+  productUuid: Scalars['Uuid']['input'];
+};
 
 /** Paginated and ordered products */
 export type ProductListableApi = {

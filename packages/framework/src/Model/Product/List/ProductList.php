@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 /**
  * @ORM\Table(name="product_lists")
@@ -105,5 +106,20 @@ class ProductList
     public function getType(): ProductListTypeEnumInterface
     {
         return $this->type;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return bool
+     */
+    public function isProductInList(Product $product): bool
+    {
+        foreach ($this->items as $productListItem) {
+            if ($productListItem->getProduct()->getId() === $product->getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

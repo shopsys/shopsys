@@ -1,0 +1,9 @@
+mutation AddProductToListMutation($productUuid: Uuid!, $productListUuid: Uuid, $type: ProductListTypeEnum!) {
+    AddProductToList(input:{productUuid: $productUuid, productListInput: {type: $type, uuid:$productListUuid}}) {
+        uuid
+        type
+        products {
+            id
+        }
+    }
+}

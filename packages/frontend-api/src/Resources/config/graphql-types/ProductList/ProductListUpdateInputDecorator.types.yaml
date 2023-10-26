@@ -1,0 +1,9 @@
+ProductListUpdateInputDecorator:
+    type: input-object
+    config:
+        fields:
+            productListInput:
+                type: "ProductListInput!"
+            productUuid:
+                type: "Uuid!"
+                description: "Product identifier"

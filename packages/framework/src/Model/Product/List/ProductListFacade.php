@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\List;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductAlreadyInListException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductListFacade
@@ -44,6 +45,9 @@ class ProductListFacade
      */
     public function addProductToList(ProductList $productList, Product $product): ProductList
     {
+        if ($productList->isProductInList($product)) {
+            throw new ProductAlreadyInListException(sprintf('Product with UUID %s already exists in the list.', $product->getUuid()));
+        }
         $newProductListItem = new ProductListItem($productList, $product);
         $this->entityManager->persist($newProductListItem);
 

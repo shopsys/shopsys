@@ -904,6 +904,8 @@ type Mutation {
   AddOrderItemsToCart(input: AddOrderItemsToCartInput!): Cart!
   "Add product to Comparison and create if not exists."
   addProductToComparison(comparisonUuid: Uuid, productUuid: Uuid!): Comparison!
+  "Adds a product to a product list"
+  AddProductToList(input: ProductListUpdateInput!): ProductList!
   "Add product to wishlist and create if not exists."
   addProductToWishlist(productUuid: Uuid!, wishlistUuid: Uuid): Wishlist!
   "Add product to cart for future checkout"
@@ -1636,6 +1638,12 @@ input ProductListInput {
 enum ProductListTypeEnum {
   WISHLIST
   COMPARISON
+}
+
+input ProductListUpdateInput {
+  productListInput: ProductListInput!
+  "Product identifier"
+  productUuid: Uuid!
 }
 
 "One of possible ordering modes for product"
