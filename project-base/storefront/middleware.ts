@@ -1,5 +1,4 @@
 import { getDomainIdFromHostname } from 'helpers/domain/getDomainIdFromHostname';
-import { logException } from 'helpers/errors/logException';
 import { NextMiddleware, NextRequest, NextResponse } from 'next/server';
 import {
     FriendlyPageTypesValue,
@@ -11,6 +10,8 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const STATIC_REWRITE_PATHS = require('config/staticRewritePaths') as Record<string, Record<string, string>>;
 const ERROR_PAGE_ROUTE = '/404';
+const MIDDLEWARE_STATUS_CODE_KEY = 'middleware-status-code';
+const MIDDLEWARE_STATUS_MESSAGE_KEY = 'middleware-status-message';
 
 export const middleware: NextMiddleware = async (request) => {
     try {
@@ -43,7 +44,22 @@ export const middleware: NextMiddleware = async (request) => {
         });
 
         if (!pageTypeResponse.ok) {
-            return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), { status: 404 });
+            const is400Error = isInRange(pageTypeResponse.status, 400, 499);
+            const is500Error = isInRange(pageTypeResponse.status, 500, 599);
+
+            let statusMessage = 'Unknown middleware error for ' + request.url;
+            if (is400Error) {
+                statusMessage = 'Friendly URL page not found for ' + request.url;
+            } else if (is500Error) {
+                statusMessage = 'Middleware runtime error for ' + request.url;
+            }
+
+            return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), {
+                headers: [
+                    [MIDDLEWARE_STATUS_CODE_KEY, pageTypeResponse.status.toString()],
+                    [MIDDLEWARE_STATUS_MESSAGE_KEY, statusMessage],
+                ],
+            });
         }
 
         const pageTypeParsedResponse: { route: FriendlyPageTypesValue; redirectTo: string } =
@@ -58,11 +74,11 @@ export const middleware: NextMiddleware = async (request) => {
 
         return rewriteDynamicPages(pageTypeParsedResponse.route, request.url, search);
     } catch (e) {
-        logException(e);
-
         return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), {
-            status: 500,
-            statusText: 'Middleware runtime error',
+            headers: [
+                [MIDDLEWARE_STATUS_CODE_KEY, '500'],
+                [MIDDLEWARE_STATUS_MESSAGE_KEY, 'Middleware runtime error for ' + request.url],
+            ],
         });
     }
 };
@@ -73,18 +89,24 @@ export const config = {
     ],
 };
 
+const isInRange = (number: number, start: number, end: number) => number >= start && start <= end;
+
 const rewriteDynamicPages = (pageType: FriendlyPageTypesValue, rewriteUrl: string, queryParams: string) => {
     const pageTypeKey = (Object.keys(FriendlyPagesTypes) as FriendlyPagesTypesKeys[]).find(
         (key) => FriendlyPagesTypes[key] === pageType,
     );
 
     const host = new URL(rewriteUrl).origin;
-    const newUrl = new URL(
-        pageTypeKey ? `${FriendlyPagesDestinations[pageTypeKey]}${queryParams}` : ERROR_PAGE_ROUTE,
-        host,
-    );
+    if (pageTypeKey) {
+        return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`, host));
+    }
 
-    return NextResponse.rewrite(newUrl, pageTypeKey ? undefined : { status: 404 });
+    return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, host), {
+        headers: [
+            [MIDDLEWARE_STATUS_CODE_KEY, '404'],
+            [MIDDLEWARE_STATUS_MESSAGE_KEY, 'Friendly URL page not found for ' + rewriteUrl],
+        ],
+    });
 };
 
 const getHostFromRequest = (request: NextRequest): string => {

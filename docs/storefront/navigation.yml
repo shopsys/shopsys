@@ -20,3 +20,4 @@ arrange:
     - cypress.md
     - bundle-analyzer.md
     - web-vitals.md
+    - error-handling.md
