@@ -999,6 +999,8 @@ export type LoginInputApi = {
   email: Scalars['String']['input'];
   /** The user password. */
   password: Scalars['Password']['input'];
+  /** Uuids of product lists that should be merged to the product lists of the user */
+  productListsUuids: Array<Scalars['Uuid']['input']>;
 };
 
 export type LoginResultApi = {
@@ -2514,6 +2516,8 @@ export type RegistrationDataInputApi = {
   password: Scalars['Password']['input'];
   /** Billing address zip code (will be on the tax invoice) */
   postcode: Scalars['String']['input'];
+  /** Uuids of product lists that should be merged to the product lists of the user after registration */
+  productListsUuids: Array<Scalars['Uuid']['input']>;
   /** Billing address street name (will be on the tax invoice) */
   street: Scalars['String']['input'];
   /** The customer's telephone number */

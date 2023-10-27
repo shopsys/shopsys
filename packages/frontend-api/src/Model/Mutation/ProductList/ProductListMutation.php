@@ -56,7 +56,7 @@ class ProductListMutation extends AbstractMutation
         if ($customerUser !== null) {
             $productList = $this->productListFacade->findProductListByTypeAndCustomerUser($productListType, $customerUser, $productListUuid);
         } elseif ($productListUuid !== null) {
-            $productList = $this->productListFacade->findAnonymousProductListByTypeAndUuid($productListType, $productListUuid);
+            $productList = $this->productListFacade->findAnonymousProductList($productListUuid, $productListType);
         }
 
         if ($productList === null) {

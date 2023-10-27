@@ -95,15 +95,15 @@ class ProductListFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
      * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum|null $productListType
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
      */
-    public function findAnonymousProductListByTypeAndUuid(
-        ProductListTypeEnumInterface $productListType,
+    public function findAnonymousProductList(
         string $uuid,
+        ?ProductListTypeEnumInterface $productListType = null,
     ): ?ProductList {
-        return $this->productListRepository->findAnonymousProductListByTypeAndUuid($productListType, $uuid);
+        return $this->productListRepository->findAnonymousProductList($uuid, $productListType);
     }
 
     /**
@@ -147,5 +147,65 @@ class ProductListFacade
     public function removeOldAnonymousProductLists(DateTimeImmutable $olderThan): void
     {
         $this->productListRepository->removeOldAnonymousProductLists($olderThan);
+    }
+
+    /**
+     * @param string[] $productListsUuids
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     */
+    public function mergeProductListsToCustomerUser(array $productListsUuids, CustomerUser $customerUser): void
+    {
+        foreach ($productListsUuids as $productListUuid) {
+            $anonymousProductList = $this->findAnonymousProductList($productListUuid);
+
+            if ($anonymousProductList !== null) {
+                $this->mergeProductListToCustomerUser($anonymousProductList, $customerUser);
+            }
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $anonymousProductList
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     */
+    protected function mergeProductListToCustomerUser(
+        ProductList $anonymousProductList,
+        CustomerUser $customerUser,
+    ): void {
+        $customerUserProductList = $this->findProductListByTypeAndCustomerUser($anonymousProductList->getType(), $customerUser);
+
+        if ($customerUserProductList !== null) {
+            $this->mergeProductLists($anonymousProductList, $customerUserProductList);
+        } else {
+            $this->setCustomerUserToProductList($customerUser, $anonymousProductList);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
+     */
+    protected function setCustomerUserToProductList(CustomerUser $customerUser, ProductList $productList): void
+    {
+        $productList->setCustomerUser($customerUser);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productListToMergeFrom
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productListToMergeTo
+     */
+    protected function mergeProductLists(ProductList $productListToMergeFrom, ProductList $productListToMergeTo): void
+    {
+        foreach (array_reverse($productListToMergeFrom->getItems()) as $productListItem) {
+            try {
+                $this->addProductToList($productListToMergeTo, $productListItem->getProduct());
+            } catch (ProductAlreadyInListException $e) {
+                // Product is already in the list, so we can skip it
+                continue;
+            }
+        }
+
+        $this->cleanProductList($productListToMergeFrom);
     }
 }

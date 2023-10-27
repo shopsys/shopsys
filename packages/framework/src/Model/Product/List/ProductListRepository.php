@@ -78,19 +78,24 @@ class ProductListRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
      * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum|null $productListType
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
      */
-    public function findAnonymousProductListByTypeAndUuid(
-        ProductListTypeEnumInterface $productListType,
+    public function findAnonymousProductList(
         string $uuid,
+        ?ProductListTypeEnumInterface $productListType = null,
     ): ?ProductList {
-        return $this->getRepository()->findOneBy([
-            'type' => $productListType,
+        $criteria = [
             'uuid' => $uuid,
             'customerUser' => null,
-        ]);
+        ];
+
+        if ($productListType !== null) {
+            $criteria['type'] = $productListType;
+        }
+
+        return $this->getRepository()->findOneBy($criteria);
     }
 
     /**

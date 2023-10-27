@@ -9,3 +9,7 @@ LoginInputDecorator:
             password:
                 type: "Password!"
                 description: "The user password."
+            productListsUuids:
+                type: "[Uuid!]!"
+                description: "Uuids of product lists that should be merged to the product lists of the user"
+                defaultValue: []

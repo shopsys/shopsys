@@ -93,6 +93,15 @@ class ProductList
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     */
+    public function setCustomerUser(CustomerUser $customerUser): void
+    {
+        $this->setUpdatedAtToNow();
+        $this->customerUser = $customerUser;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem $productListItem
      */
     public function removeItem(ProductListItem $productListItem): void
@@ -138,5 +147,13 @@ class ProductList
     public function getItemsCount(): int
     {
         return $this->items->count();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem[]
+     */
+    public function getItems(): array
+    {
+        return $this->items->getValues();
     }
 }

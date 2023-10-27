@@ -18,7 +18,7 @@ class RegisterTest extends GraphQlTestCase
     public function testRegister(): void
     {
         $graphQlType = 'Register';
-        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $this->getRegisterQueryVariables());
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', self::getRegisterQueryVariables());
 
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
@@ -32,7 +32,7 @@ class RegisterTest extends GraphQlTestCase
 
     public function testRegisterAlreadyRegisteredCustomerUser(): void
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $this->getRegisterQueryVariables('no-reply@shopsys.com'));
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', self::getRegisterQueryVariables('no-reply@shopsys.com'));
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedViolationMessage = t(
@@ -57,7 +57,7 @@ class RegisterTest extends GraphQlTestCase
     {
         $response = $this->getResponseContentForGql(
             __DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql',
-            $this->getRegisterQueryVariables(
+            self::getRegisterQueryVariables(
                 'no-replyshopsys.com',
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s',
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s',
@@ -112,7 +112,7 @@ class RegisterTest extends GraphQlTestCase
         /** @var \App\Model\Order\Order $order */
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 19);
         $graphQlType = 'Register';
-        $mutationVariables = $this->getRegisterQueryVariables(
+        $mutationVariables = self::getRegisterQueryVariables(
             'not-registered-user@shopsys.com',
             'NotRegistered',
             'User',
@@ -133,7 +133,7 @@ class RegisterTest extends GraphQlTestCase
     {
         /** @var \App\Model\Order\Order $order */
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1);
-        $mutationVariables = $this->getRegisterQueryVariables(
+        $mutationVariables = self::getRegisterQueryVariables(
             'new-one-no-reply@shopsys.com',
             'Adam',
             'Bořič',
@@ -150,7 +150,7 @@ class RegisterTest extends GraphQlTestCase
      * @param string $password
      * @return array
      */
-    private function getRegisterQueryVariables(
+    public static function getRegisterQueryVariables(
         string $email = self::DEFAULT_USER_EMAIL,
         string $firstName = self::DEFAULT_USER_FIRST_NAME,
         string $lastName = self::DEFAULT_USER_LAST_NAME,

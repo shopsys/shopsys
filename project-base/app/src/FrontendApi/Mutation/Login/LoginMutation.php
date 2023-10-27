@@ -10,6 +10,7 @@ use App\FrontendApi\Mutation\Login\Exception\InvalidCredentialsUserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation as BaseLoginMutation;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -28,6 +29,7 @@ class LoginMutation extends BaseLoginMutation
      * @param \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
      * @param \Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter $loginRateLimiter
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      * @param \App\FrontendApi\Model\Cart\MergeCartFacade $mergeCartFacade
      */
     public function __construct(
@@ -36,9 +38,10 @@ class LoginMutation extends BaseLoginMutation
         TokenFacade $tokenFacade,
         DefaultLoginRateLimiter $loginRateLimiter,
         RequestStack $requestStack,
+        ProductListFacade $productListFacade,
         private readonly MergeCartFacade $mergeCartFacade,
     ) {
-        parent::__construct($frontendCustomerUserProvider, $userPasswordHasher, $tokenFacade, $loginRateLimiter, $requestStack);
+        parent::__construct($frontendCustomerUserProvider, $userPasswordHasher, $tokenFacade, $loginRateLimiter, $requestStack, $productListFacade);
     }
 
     /**
@@ -72,6 +75,10 @@ class LoginMutation extends BaseLoginMutation
 
         if (array_key_exists('cartUuid', $input) && $input['cartUuid'] !== null) {
             $this->mergeCartFacade->mergeCartByUuidToCustomerCart($input['cartUuid'], $user);
+        }
+
+        if (array_key_exists('productListsUuids', $input)) {
+            $this->productListFacade->mergeProductListsToCustomerUser($input['productListsUuids'], $user);
         }
 
         $deviceId = Uuid::uuid4()->toString();

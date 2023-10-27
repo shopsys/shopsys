@@ -816,6 +816,8 @@ input LoginInput {
   email: String!
   "The user password."
   password: Password!
+  "Uuids of product lists that should be merged to the product lists of the user"
+  productListsUuids: [Uuid!]! = []
 }
 
 type LoginResult {
@@ -1859,6 +1861,8 @@ input RegistrationDataInput {
   password: Password!
   "Billing address zip code (will be on the tax invoice)"
   postcode: String!
+  "Uuids of product lists that should be merged to the product lists of the user after registration"
+  productListsUuids: [Uuid!]! = []
   "Billing address street name (will be on the tax invoice)"
   street: String!
   "The customer's telephone number"

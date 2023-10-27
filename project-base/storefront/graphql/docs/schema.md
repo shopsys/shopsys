@@ -9182,6 +9182,15 @@ The user password.
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>productListsUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+Uuids of product lists that should be merged to the product lists of the user
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -10008,6 +10017,15 @@ Customer user password
 <td>
 
 Billing address zip code (will be on the tax invoice)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productListsUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+Uuids of product lists that should be merged to the product lists of the user after registration
 
 </td>
 </tr>

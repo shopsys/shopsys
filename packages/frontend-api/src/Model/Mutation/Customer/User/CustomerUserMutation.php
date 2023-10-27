@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
@@ -31,6 +32,7 @@ class CustomerUserMutation extends BaseTokenMutation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
@@ -41,6 +43,7 @@ class CustomerUserMutation extends BaseTokenMutation
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly CustomerUserDataFactory $customerUserDataFactory,
         protected readonly TokenFacade $tokenFacade,
+        protected readonly ProductListFacade $productListFacade,
     ) {
         parent::__construct($tokenStorage);
     }
@@ -106,6 +109,8 @@ class CustomerUserMutation extends BaseTokenMutation
         $customerUser = $this->customerUserFacade->register($customerUserData);
 
         $deviceId = Uuid::uuid4()->toString();
+
+        $this->productListFacade->mergeProductListsToCustomerUser($argument['input']['productListsUuids'], $customerUser);
 
         return [
             'accessToken' => $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),

@@ -14,7 +14,8 @@ mutation RegistrationMutation(
     $companyTaxNumber: String
     $newsletterSubscription: Boolean!
     $previousCartUuid: Uuid
-    $lastOrderUuid: Uuid
+    $lastOrderUuid: Uuid,
+    $productListsUuids: [Uuid!]! = []
 ) {
     Register(
         input: {
@@ -33,7 +34,8 @@ mutation RegistrationMutation(
             companyTaxNumber: $companyTaxNumber
             newsletterSubscription: $newsletterSubscription
             cartUuid: $previousCartUuid
-            lastOrderUuid: $lastOrderUuid
+            lastOrderUuid: $lastOrderUuid,
+            productListsUuids: $productListsUuids
         }
     ) {
         tokens {

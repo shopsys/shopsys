@@ -37,7 +37,7 @@ class ProductListApiFacade
             return $this->productListFacade->findProductListByTypeAndCustomerUser($productListType, $customerUser, $productListUuid);
         }
 
-        return $this->productListFacade->findAnonymousProductListByTypeAndUuid($productListType, $productListUuid);
+        return $this->productListFacade->findAnonymousProductList($productListUuid, $productListType);
     }
 
     /**

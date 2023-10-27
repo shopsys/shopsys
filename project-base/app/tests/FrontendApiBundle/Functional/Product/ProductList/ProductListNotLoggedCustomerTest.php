@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product\ProductList;
 
+use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\ProductListDataFixture;
+use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\CustomerUserFacade;
 use Iterator;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductAlreadyInListUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductListNotFoundUserError;
@@ -15,10 +19,21 @@ use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductNotInL
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\CustomerUserNotLoggedUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\InvalidFindCriteriaForProductListUserError;
+use Tests\FrontendApiBundle\Functional\Customer\User\RegisterTest;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductListNotLoggedCustomerTest extends GraphQlTestCase
 {
+    /**
+     * @inject
+     */
+    private ProductListFacade $productListFacade;
+
+    /**
+     * @inject
+     */
+    private CustomerUserFacade $customerUserFacade;
+
     /**
      * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
@@ -331,6 +346,107 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
         $this->assertNull($response['data']['CleanProductList']);
     }
 
+    public function testMergeListsAfterLoginAsCustomerUserWithExistingProductLists(): void
+    {
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        $customerUser = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . 1);
+        $this->getResponseContentForGql(__DIR__ . '/graphql/LoginMutation.graphql', [
+            'email' => $customerUser->getEmail(),
+            'password' => 'user123',
+            'productListsUuids' => [
+                ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
+                ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
+            ],
+        ]);
+
+        $this->assertOriginalAnonymousListsDoNotExist();
+
+        $this->assertMergedListsOfCustomerUser(
+            $customerUser,
+            [33, 1],
+            [3, 2, 49, 5],
+            ProductListDataFixture::PRODUCT_LIST_WISHLIST_LOGGED_CUSTOMER_UUID,
+            ProductListDataFixture::PRODUCT_LIST_COMPARISON_LOGGED_CUSTOMER_UUID,
+        );
+    }
+
+    public function testMergeListsAfterLoginAsCustomerUserWithoutProductLists(): void
+    {
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        $customerUser = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . 2);
+        $this->getResponseContentForGql(__DIR__ . '/graphql/LoginMutation.graphql', [
+            'email' => $customerUser->getEmail(),
+            'password' => 'no-reply.3',
+            'productListsUuids' => [
+                ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
+                ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
+            ],
+        ]);
+
+        $this->assertMergedListsOfCustomerUser(
+            $customerUser,
+            [33],
+            [3, 2],
+            ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
+            ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
+        );
+    }
+
+    public function testMergeListsAfterRegistration(): void
+    {
+        $registerQueryVariables = RegisterTest::getRegisterQueryVariables();
+        $registerQueryVariables['productListsUuids'] = [
+            ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
+            ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
+        ];
+        $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $registerQueryVariables);
+        $newRegisteredUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
+            $registerQueryVariables['email'],
+            $this->domain->getId(),
+        );
+
+        $this->assertOriginalAnonymousListsDoNotExist();
+
+        $this->assertMergedListsOfCustomerUser(
+            $newRegisteredUser,
+            [33],
+            [3, 2],
+            ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
+            ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
+        );
+    }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param int[] $expectedMergedWishlistProductIds
+     * @param int[] $expectedMergedComparisonProductIds
+     * @param string $expectedMergedWishlistUuid
+     * @param string $expectedMergedComparisonUuid
+     */
+    private function assertMergedListsOfCustomerUser(
+        CustomerUser $customerUser,
+        array $expectedMergedWishlistProductIds,
+        array $expectedMergedComparisonProductIds,
+        string $expectedMergedWishlistUuid,
+        string $expectedMergedComparisonUuid,
+    ): void {
+        $currentLoggedCustomerWishlist = $this->productListFacade->findProductListByTypeAndCustomerUser(
+            ProductListTypeEnum::WISHLIST,
+            $customerUser,
+        );
+        $currentLoggedCustomerComparison = $this->productListFacade->findProductListByTypeAndCustomerUser(
+            ProductListTypeEnum::COMPARISON,
+            $customerUser,
+        );
+        $currentLoggedCustomerWishlistProductIds = $this->productListFacade->getProductIdsByProductList($currentLoggedCustomerWishlist);
+        $currentLoggedCustomerComparisonProductIds = $this->productListFacade->getProductIdsByProductList($currentLoggedCustomerComparison);
+
+        $this->assertSame($expectedMergedWishlistProductIds, $currentLoggedCustomerWishlistProductIds);
+        $this->assertSame($expectedMergedWishlistUuid, $currentLoggedCustomerWishlist->getUuid());
+        $this->assertSame($expectedMergedComparisonProductIds, $currentLoggedCustomerComparisonProductIds);
+        $this->assertSame($expectedMergedComparisonUuid, $currentLoggedCustomerComparison->getUuid());
+    }
+
     /**
      * @return \Iterator
      */
@@ -347,5 +463,14 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             'uuid' => ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
             'expectedProductIds' => [33],
         ];
+    }
+
+    private function assertOriginalAnonymousListsDoNotExist(): void
+    {
+        $originalAnonymousWishlist = $this->productListFacade->findAnonymousProductList(ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID, ProductListTypeEnum::WISHLIST);
+        $originalAnonymousComparison = $this->productListFacade->findAnonymousProductList(ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID, ProductListTypeEnum::COMPARISON);
+
+        $this->assertTrue($originalAnonymousWishlist === null, 'Original anonymous wishlist should not exist anymore');
+        $this->assertTrue($originalAnonymousComparison === null, 'Original anonymous comparison should not exist anymore');
     }
 }
