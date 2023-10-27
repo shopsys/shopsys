@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\List;
 
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductAlreadyInListException;
@@ -138,5 +139,13 @@ class ProductListFacade
     {
         $this->entityManager->remove($productList);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param \DateTimeImmutable $olderThan
+     */
+    public function removeOldAnonymousProductLists(DateTimeImmutable $olderThan): void
+    {
+        $this->productListRepository->removeOldAnonymousProductLists($olderThan);
     }
 }

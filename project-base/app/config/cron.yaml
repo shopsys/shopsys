@@ -48,6 +48,10 @@ services:
         tags:
             - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Delete old wishlists' }
 
+    Shopsys\FrameworkBundle\Model\Product\List\RemoveOldProductListsCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Delete old product lists' }
+
     # This module should run as last because it creates multiple kernels and fake requests.
     Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule:
         tags:

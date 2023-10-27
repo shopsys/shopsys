@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\List;
 
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -90,6 +91,20 @@ class ProductListRepository
             'uuid' => $uuid,
             'customerUser' => null,
         ]);
+    }
+
+    /**
+     * @param \DateTimeImmutable $olderThan
+     */
+    public function removeOldAnonymousProductLists(DateTimeImmutable $olderThan): void
+    {
+        $this->entityManager->createQueryBuilder()
+            ->delete(ProductList::class, 'pl')
+            ->where('pl.customerUser IS NULL')
+            ->andWhere('pl.updatedAt < :olderThan')
+            ->setParameter('olderThan', $olderThan)
+            ->getQuery()
+            ->execute();
     }
 
     /**
