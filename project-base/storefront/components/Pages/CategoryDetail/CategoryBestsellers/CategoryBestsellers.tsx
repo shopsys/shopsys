@@ -20,7 +20,7 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
     useGtmSliderProductListViewEvent(shownProducts, GtmProductListNameType.bestsellers);
 
     return (
-        <div className="mb-8">
+        <div className="mt-6">
             <div className="mb-3 break-words font-bold text-dark lg:text-lg">
                 {t('Do not want to choose? Choose certainty')}
             </div>

@@ -150,3 +150,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   components `ProductVariantsTableRow` and `Variant` were removed
     -   component `ProductVariantsTable` was renamed to `ProductDetailVariantsTable` so it matches parent folder where it's placed
     -   see #project-base-diff to update your project
+-   add equal spacing to the Category page ([#2900](https://github.com/shopsys/shopsys/pull/2900))
+    -   see #project-base-diff to update your project
