@@ -16,7 +16,8 @@ services:
         public: false
 
     Shopsys\FrameworkBundle\:
-        resource: '../../**/*{Calculation,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer}.php'
+        resource: '../../**/*{Calculation,Collector,Dispatcher,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer}.php'
+
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\:
@@ -1035,3 +1036,7 @@ services:
         arguments:
             $environment: '%kernel.environment%'
             $forceElasticLimit: '%env(FORCE_ELASTIC_LIMITS)%'
+
+    Shopsys\FrameworkBundle\Component\Messenger\MessageDispatcherDependency:
+        arguments:
+            $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
