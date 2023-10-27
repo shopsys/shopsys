@@ -105,4 +105,22 @@ class ProductListMutation extends AbstractMutation
             throw new ProductNotInListUserError($exception->getMessage());
         }
     }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
+     */
+    public function cleanProductListMutation(Argument $argument): ?ProductList
+    {
+        $input = $argument['input'];
+        $productList = $this->productListApiFacade->findProductListByInputData($input);
+
+        if ($productList === null) {
+            throw new ProductListNotFoundUserError('Product list not found');
+        }
+
+        $this->productListFacade->cleanProductList($productList);
+
+        return null;
+    }
 }

@@ -1,0 +1,5 @@
+mutation CleanProductListMutation($productListUuid: Uuid, $type: ProductListTypeEnum!) {
+    CleanProductList(input:{type: $type, uuid: $productListUuid}) {
+        uuid
+    }
+}

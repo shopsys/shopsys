@@ -210,6 +210,19 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
     }
 
     /**
+     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     */
+    public function testCleanProductList(ProductListTypeEnum $productListType): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CleanProductListMutation.graphql', [
+            'type' => $productListType->name,
+        ]);
+
+        $this->assertNull($response['data']['CleanProductList']);
+    }
+
+    /**
      * @return \Iterator
      */
     public function productListDataProvider(): Iterator

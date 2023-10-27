@@ -130,4 +130,13 @@ class ProductListFacade
 
         return $productList;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
+     */
+    public function cleanProductList(ProductList $productList): void
+    {
+        $this->entityManager->remove($productList);
+        $this->entityManager->flush();
+    }
 }

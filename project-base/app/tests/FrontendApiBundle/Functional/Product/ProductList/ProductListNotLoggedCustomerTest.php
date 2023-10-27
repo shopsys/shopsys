@@ -317,6 +317,21 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
     }
 
     /**
+     * @dataProvider productListByTypeAndUuidProvider
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     * @param string $uuid
+     */
+    public function testCleanProductList(ProductListTypeEnum $productListType, string $uuid): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CleanProductListMutation.graphql', [
+            'productListUuid' => $uuid,
+            'type' => $productListType->name,
+        ]);
+
+        $this->assertNull($response['data']['CleanProductList']);
+    }
+
+    /**
      * @return \Iterator
      */
     public function productListByTypeAndUuidProvider(): Iterator

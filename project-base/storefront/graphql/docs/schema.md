@@ -1285,6 +1285,20 @@ Remove all products from Comparison and remove it.
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>CleanProductList</strong></td>
+<td valign="top"><a href="#productlist">ProductList</a></td>
+<td>
+
+Removes the product list
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>cleanWishlist</strong></td>
 <td valign="top"><a href="#wishlist">Wishlist</a></td>
 <td>

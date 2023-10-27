@@ -922,6 +922,8 @@ type Mutation {
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
   "Remove all products from Comparison and remove it."
   cleanComparison(comparisonUuid: Uuid): String!
+  "Removes the product list"
+  CleanProductList(input: ProductListInput!): ProductList
   "Remove all products from wishlist and remove it."
   cleanWishlist(wishlistUuid: Uuid): Wishlist
   "Send message to the site owner"

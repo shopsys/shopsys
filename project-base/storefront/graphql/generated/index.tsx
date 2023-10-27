@@ -1114,6 +1114,8 @@ export type MutationApi = {
   ChangePersonalData: CustomerUserApi;
   /** Add a transport to the cart, or remove a transport from the cart */
   ChangeTransportInCart: CartApi;
+  /** Removes the product list */
+  CleanProductList: Maybe<ProductListApi>;
   /** Send message to the site owner */
   Contact: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
@@ -1202,6 +1204,11 @@ export type MutationChangePersonalDataArgsApi = {
 
 export type MutationChangeTransportInCartArgsApi = {
   input: ChangeTransportInCartInputApi;
+};
+
+
+export type MutationCleanProductListArgsApi = {
+  input: ProductListInputApi;
 };
 
 
