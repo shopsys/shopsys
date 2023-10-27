@@ -2,7 +2,7 @@ import { ProductDetailCode, ProductDetailHeading, ProductDetailPrefix } from './
 import { ProductDetailAccessories } from './ProductDetailAccessories';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
-import { ProductVariantsTable } from './ProductVariantsTable/ProductVariantsTable';
+import { ProductVariantsTable } from './ProductDetailVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ImageSizesFragmentApi, MainVariantDetailFragmentApi } from 'graphql/generated';
