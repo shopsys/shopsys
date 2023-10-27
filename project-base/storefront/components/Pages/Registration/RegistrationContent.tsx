@@ -8,19 +8,15 @@ import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { useRegistrationMutationApi } from 'graphql/generated';
-import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
-import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
-import { setTokensToCookies } from 'helpers/auth/tokens';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
-import { showInfoMessage, showSuccessMessage } from 'helpers/toasts';
+import { useRegistration } from 'hooks/auth/useRegistration';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
-import { useCallback } from 'react';
-import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
+import { FormProvider, useWatch } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
 
@@ -28,44 +24,26 @@ const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then(
 
 export const RegistrationContent: FC = () => {
     const { t } = useTranslation();
-    const [, register] = useRegistrationMutationApi();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const [formProviderMethods, defaultValues] = useRegistrationForm();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
+    const register = useRegistration();
 
-    const onRegistrationHandler = useCallback<SubmitHandler<RegistrationFormType>>(
-        async (data) => {
-            blurInput();
-            const registerResult = await register({
-                ...data,
-                password: data.passwordFirst,
-                previousCartUuid: cartUuid,
-                country: data.country.value,
-                companyCustomer: data.customer === 'companyCustomer',
-                lastOrderUuid: null,
-            });
+    const onRegistrationHandler = async (data: RegistrationFormType) => {
+        blurInput();
+        const registrationError = await register({
+            ...data,
+            password: data.passwordFirst,
+            cartUuid,
+            country: data.country.value,
+            companyCustomer: data.customer === 'companyCustomer',
+            lastOrderUuid: null,
+        });
 
-            if (registerResult.data?.Register !== undefined) {
-                const accessToken = registerResult.data.Register.tokens.accessToken;
-                const refreshToken = registerResult.data.Register.tokens.refreshToken;
-
-                setTokensToCookies(accessToken, refreshToken);
-                showSuccessMessage(formMeta.messages.successAndLogged);
-
-                if (registerResult.data.Register.showCartMergeInfo === true) {
-                    showInfoMessage(t('Your cart has been modified. Please check the changes.'));
-                }
-                onGtmSendFormEventHandler(GtmFormType.registration);
-
-                window.location.href = '/';
-            }
-
-            handleFormErrors(registerResult.error, formProviderMethods, t, formMeta.messages.error);
-            clearForm(registerResult.error, formProviderMethods, defaultValues);
-        },
-        [cartUuid, formMeta.messages, formProviderMethods, register, t, defaultValues],
-    );
+        handleFormErrors(registrationError, formProviderMethods, t, formMeta.messages.error);
+        clearForm(registrationError, formProviderMethods, defaultValues);
+    };
 
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
 

@@ -7,17 +7,17 @@ import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useRegistrationMutationApi } from 'graphql/generated';
-import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
-import { GtmFormType, GtmMessageOriginType } from 'gtm/types/enums';
-import { setTokensToCookies } from 'helpers/auth/tokens';
+import { GtmMessageOriginType } from 'gtm/types/enums';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
+import { blurInput } from 'helpers/forms/blurInput';
+import { showErrorMessage } from 'helpers/toasts';
+import { useRegistration } from 'hooks/auth/useRegistration';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
-import { FormProvider, SubmitHandler } from 'react-hook-form';
+import { useRef } from 'react';
+import { FormProvider } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { RegistrationAfterOrderFormType } from 'types/form';
 
@@ -31,35 +31,35 @@ type RegistrationAfterOrderProps = {
 };
 
 export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOrderUuid, registrationData }) => {
-    const [, register] = useRegistrationMutationApi();
     const { t } = useTranslation();
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
+    const register = useRegistration();
+    const isInvalidRegistrationRef = useRef(false);
 
-    const onRegistrationSubmitHandler: SubmitHandler<RegistrationAfterOrderFormType> = async (data) => {
-        const registerResult = await register({
+    const onRegistrationHandler = async (data: RegistrationAfterOrderFormType) => {
+        blurInput();
+        const registrationError = await register({
             ...data,
             ...registrationData,
             country: registrationData.country.value,
             companyCustomer: registrationData.customer === 'companyCustomer',
-            previousCartUuid: null,
+            cartUuid: null,
             lastOrderUuid,
         });
 
-        if (registerResult.data !== undefined && registerResult.error === undefined) {
-            const accessToken = registerResult.data.Register.tokens.accessToken;
-            const refreshToken = registerResult.data.Register.tokens.refreshToken;
-
-            setTokensToCookies(accessToken, refreshToken);
-            showSuccessMessage(t('Your account has been created and you are logged in now'));
-            onGtmSendFormEventHandler(GtmFormType.registration);
-
-            window.location.href = '/';
-        } else if (registerResult.error !== undefined) {
-            const validationErrors = getUserFriendlyErrors(registerResult.error, t).userError?.validation;
+        if (registrationError) {
+            const validationErrors = getUserFriendlyErrors(registrationError, t).userError?.validation;
             for (const fieldName in validationErrors) {
-                showErrorMessage(validationErrors[fieldName].message, GtmMessageOriginType.order_confirmation_page);
+                if (fieldName === 'password') {
+                    showErrorMessage(validationErrors[fieldName].message, GtmMessageOriginType.order_confirmation_page);
+                } else {
+                    isInvalidRegistrationRef.current = true;
+                    showErrorMessage(t('There was an error with you registration. Please try again later.'));
+
+                    break;
+                }
             }
         }
     };
@@ -93,7 +93,7 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
                     </div>
                     <div className="flex w-full flex-col items-center justify-center p-5 lg:w-1/2 lg:px-10 lg:py-8">
                         <div className="w-full lg:max-w-sm">
-                            <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationSubmitHandler)}>
+                            <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}>
                                 <FormProvider {...formProviderMethods}>
                                     <PasswordInputControlled
                                         control={formProviderMethods.control}
@@ -123,6 +123,7 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
                                     />
                                     <SubmitButton
                                         dataTestId={TEST_IDENTIFIER}
+                                        isDisabled={isInvalidRegistrationRef.current}
                                         isWithDisabledLook={!formProviderMethods.formState.isValid}
                                         style={{ width: '100%' }}
                                         variant="primary"

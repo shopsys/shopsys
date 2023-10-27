@@ -3,7 +3,7 @@ import { Error503Content } from 'components/Pages/ErrorPage/Error503Content';
 import { GtmHeadScript } from 'gtm/GtmHeadScript';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
-import { useLoginLoader } from 'hooks/app/useLoginLoader';
+import { useAuthLoader } from 'hooks/app/useAuthLoader';
 import { usePageLoader } from 'hooks/app/usePageLoader';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
 import { useSetDomainConfig } from 'hooks/useDomainConfig';
@@ -34,7 +34,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
     const userConsent = usePersistStore((store) => store.userConsent);
 
     useSetDomainConfig(pageProps.domainConfig);
-    useLoginLoader();
+    useAuthLoader();
     usePageLoader();
     useReloadCart();
 

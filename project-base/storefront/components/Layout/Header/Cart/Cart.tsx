@@ -26,7 +26,7 @@ export const Cart: FC = ({ className }) => {
     const { cart, isCartEmpty, isFetching } = useCurrentCart();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
-    const loginLoading = usePersistStore((store) => store.loginLoading);
+    const authLoading = usePersistStore((store) => store.authLoading);
     const [removeItemFromCart, isRemovingItem] = useRemoveFromCart(GtmProductListNameType.cart);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -35,8 +35,8 @@ export const Cart: FC = ({ className }) => {
      * does. For this we need both server and client start with the same values and then
      * set it on client. */
     useEffect(() => {
-        setIsLoading(isFetching || !!loginLoading);
-    }, [isFetching, loginLoading]);
+        setIsLoading(isFetching || !!authLoading);
+    }, [isFetching, authLoading]);
 
     return (
         <div className={twMergeCustom('group relative lg:flex', className)}>
