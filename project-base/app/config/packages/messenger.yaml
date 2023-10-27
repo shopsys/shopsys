@@ -1,6 +1,10 @@
 framework:
     messenger:
         reset_on_message: true
+        buses:
+            messenger.bus.default:
+                middleware:
+                    - 'Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayEnvelopeMiddleware'
         transports:
             example_transport:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'

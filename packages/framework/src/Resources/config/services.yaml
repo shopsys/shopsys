@@ -17,7 +17,6 @@ services:
 
     Shopsys\FrameworkBundle\:
         resource: '../../**/*{Calculation,Collector,Dispatcher,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer}.php'
-
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\:
