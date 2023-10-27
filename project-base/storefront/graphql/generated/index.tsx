@@ -1138,6 +1138,8 @@ export type MutationApi = {
   Register: LoginResultApi;
   /** Remove product from cart */
   RemoveFromCart: CartApi;
+  /** Removes a product from a product list */
+  RemoveProductFromList: Maybe<ProductListApi>;
   /** Remove already used promo code from cart */
   RemovePromoCodeFromCart: CartApi;
   /** Request password recovery - email with hash will be sent */
@@ -1255,6 +1257,11 @@ export type MutationRegisterArgsApi = {
 
 export type MutationRemoveFromCartArgsApi = {
   input: RemoveFromCartInputApi;
+};
+
+
+export type MutationRemoveProductFromListArgsApi = {
+  input: ProductListUpdateInputApi;
 };
 
 

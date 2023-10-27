@@ -8,12 +8,16 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductAlreadyInListException;
+use Shopsys\FrameworkBundle\Model\Product\List\Exception\ProductNotInListException;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductAlreadyInListUserError;
+use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductListNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductNotInListUserError;
+use Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundUserError;
 
 class ProductListMutation extends AbstractMutation
@@ -23,12 +27,14 @@ class ProductListMutation extends AbstractMutation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory $productListDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListApiFacade $productListApiFacade
      */
     public function __construct(
         protected readonly ProductListFacade $productListFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly ProductListDataFactory $productListDataFactory,
         protected readonly ProductFacade $productFacade,
+        protected readonly ProductListApiFacade $productListApiFacade,
     ) {
     }
 
@@ -46,6 +52,7 @@ class ProductListMutation extends AbstractMutation
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         $productList = null;
+
         if ($customerUser !== null) {
             $productList = $this->productListFacade->findProductListByTypeAndCustomerUser($productListType, $customerUser, $productListUuid);
         } elseif ($productListUuid !== null) {
@@ -67,6 +74,35 @@ class ProductListMutation extends AbstractMutation
             return $this->productListFacade->addProductToList($productList, $product);
         } catch (ProductAlreadyInListException $exception) {
             throw new ProductAlreadyInListUserError($exception->getMessage());
+        }
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
+     */
+    public function removeProductFromListMutation(Argument $argument): ?ProductList
+    {
+        $input = $argument['input'];
+        $productListInput = $input['productListInput'];
+        $productList = $this->productListApiFacade->findProductListByInputData($productListInput);
+
+        if ($productList === null) {
+            throw new ProductListNotFoundUserError('Product list not found');
+        }
+
+        $productUuid = $input['productUuid'];
+
+        try {
+            $product = $this->productFacade->getByUuid($productUuid);
+        } catch (ProductNotFoundException $exception) {
+            throw new ProductNotFoundUserError(sprintf('Product with UUID "%s" not found', $productUuid));
+        }
+
+        try {
+            return $this->productListFacade->removeProductFromList($productList, $product);
+        } catch (ProductNotInListException $exception) {
+            throw new ProductNotInListUserError($exception->getMessage());
         }
     }
 }

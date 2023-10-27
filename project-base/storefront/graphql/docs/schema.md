@@ -1481,6 +1481,20 @@ Remove product from Comparison and if is Comparison empty remove it.
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>RemoveProductFromList</strong></td>
+<td valign="top"><a href="#productlist">ProductList</a></td>
+<td>
+
+Removes a product from a product list
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productlistupdateinput">ProductListUpdateInput</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>removeProductFromWishlist</strong></td>
 <td valign="top"><a href="#wishlist">Wishlist</a></td>
 <td>

@@ -10,6 +10,8 @@ use Iterator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductAlreadyInListUserError;
+use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductNotInListUserError;
+use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundUserError;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
@@ -168,6 +170,43 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
         $errors = $this->getErrorsFromResponse($response);
         $this->assertCount(1, $errors);
         $this->assertSame(ProductAlreadyInListUserError::CODE, $errors[0]['extensions']['userCode']);
+    }
+
+    /**
+     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     */
+    public function testRemoveProductFromListProductNotFoundUserError(ProductListTypeEnum $productListType): void
+    {
+        $notExistingProductUuid = Uuid::uuid4()->toString();
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductFromListMutation.graphql', [
+            'productUuid' => $notExistingProductUuid,
+            'type' => $productListType->name,
+        ]);
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+        $this->assertCount(1, $errors);
+        $this->assertSame(ProductNotFoundUserError::CODE, $errors[0]['extensions']['userCode']);
+    }
+
+    /**
+     * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
+     */
+    public function testRemoveProductFromListProductNotInListUserError(ProductListTypeEnum $productListType): void
+    {
+        /** @var \App\Model\Product\Product $productThatIsNotInList */
+        $productThatIsNotInList = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 69);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductFromListMutation.graphql', [
+            'productUuid' => $productThatIsNotInList->getUuid(),
+            'type' => $productListType->name,
+        ]);
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+        $this->assertCount(1, $errors);
+        $this->assertSame(ProductNotInListUserError::CODE, $errors[0]['extensions']['userCode']);
     }
 
     /**

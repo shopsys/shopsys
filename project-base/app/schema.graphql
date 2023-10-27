@@ -950,6 +950,8 @@ type Mutation {
   RemoveFromCart(input: RemoveFromCartInput!): Cart!
   "Remove product from Comparison and if is Comparison empty remove it."
   removeProductFromComparison(comparisonUuid: Uuid, productUuid: Uuid!): Comparison
+  "Removes a product from a product list"
+  RemoveProductFromList(input: ProductListUpdateInput!): ProductList
   "Remove product from wishlist and if is wishlist empty remove it."
   removeProductFromWishlist(productUuid: Uuid!, wishlistUuid: Uuid): Wishlist
   "Remove already used promo code from cart"

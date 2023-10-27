@@ -6,23 +6,24 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
+use Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\CustomerUserNotLoggedUserError;
-use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductList\Exception\InvalidFindCriteriaForProductListUserError;
 
 class ProductListQuery extends AbstractQuery
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductList\ProductListApiFacade $productListApiFacade
      */
     public function __construct(
         protected readonly ProductListFacade $productListFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly ProductListApiFacade $productListApiFacade,
     ) {
     }
 
@@ -33,16 +34,8 @@ class ProductListQuery extends AbstractQuery
     public function productListQuery(Argument $argument): ?ProductList
     {
         $input = $argument['input'];
-        $productListUuid = $input['uuid'];
-        $productListType = $input['type'];
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $this->assertFilledCustomerUserOrUuid($customerUser, $productListUuid);
 
-        if ($customerUser !== null) {
-            return $this->productListFacade->findProductListByTypeAndCustomerUser($productListType, $customerUser, $productListUuid);
-        }
-
-        return $this->productListFacade->findAnonymousProductListByTypeAndUuid($productListType, $productListUuid);
+        return $this->productListApiFacade->findProductListByInputData($input);
     }
 
     /**
@@ -58,16 +51,5 @@ class ProductListQuery extends AbstractQuery
         }
 
         return $this->productListFacade->getProductListsByTypeAndCustomerUser($productListTypeEnum, $customerUser);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @param string|null $productListUuid
-     */
-    protected function assertFilledCustomerUserOrUuid(?CustomerUser $customerUser, ?string $productListUuid): void
-    {
-        if ($customerUser === null && $productListUuid === null) {
-            throw new InvalidFindCriteriaForProductListUserError('Either a product list UUID has to be provided, or the user has to be logged in to find a product list');
-        }
     }
 }

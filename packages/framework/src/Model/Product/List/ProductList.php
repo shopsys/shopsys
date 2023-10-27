@@ -93,6 +93,15 @@ class ProductList
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem $productListItem
+     */
+    public function removeItem(ProductListItem $productListItem): void
+    {
+        $this->setUpdatedAtToNow();
+        $this->items->removeElement($productListItem);
+    }
+
+    /**
      * @return string
      */
     public function getUuid(): string
@@ -110,16 +119,24 @@ class ProductList
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return bool
+     * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem|null
      */
-    public function isProductInList(Product $product): bool
+    public function findProductListItemByProduct(Product $product): ?ProductListItem
     {
         foreach ($this->items as $productListItem) {
             if ($productListItem->getProduct()->getId() === $product->getId()) {
-                return true;
+                return $productListItem;
             }
         }
 
-        return false;
+        return null;
+    }
+
+    /**
+     * @return int
+     */
+    public function getItemsCount(): int
+    {
+        return $this->items->count();
     }
 }
