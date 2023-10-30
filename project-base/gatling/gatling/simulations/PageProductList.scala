@@ -23,7 +23,7 @@ class PageProductList extends Simulation {
 
     val scn = scenario("ProductList")
         .exec(http(f"page__$users%s__product_list")
-        .get("/tv-foto-audio"))
+        .get("/tv-audio"))
 
     setUp(
       scn.inject(
