@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
-abstract class AbstractExportScheduler
+use Symfony\Contracts\Service\ResetInterface;
+
+abstract class AbstractExportScheduler implements ResetInterface
 {
     /**
      * @var int[]
@@ -33,5 +35,10 @@ abstract class AbstractExportScheduler
     public function getRowIdsForImmediateExport(): array
     {
         return array_unique($this->rowIds);
+    }
+
+    public function reset(): void
+    {
+        $this->rowIds = [];
     }
 }

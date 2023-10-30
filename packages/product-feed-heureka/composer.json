@@ -39,6 +39,7 @@
         "symfony/dependency-injection": "^5.4",
         "symfony/form": "^5.4",
         "symfony/http-kernel": "^5.4",
+        "symfony/service-contracts": "^2.5.2",
         "symfony/translation": "^5.4"
     },
     "require-dev": {

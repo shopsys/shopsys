@@ -15,8 +15,9 @@ use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload as BaseFileUpload;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile as ShopsysUploadedFile;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
-class FileUpload extends BaseFileUpload
+class FileUpload extends BaseFileUpload implements ResetInterface
 {
     /**
      * @var array<string, array<int, array<string, array<string|null, int>>>>
@@ -123,5 +124,10 @@ class FileUpload extends BaseFileUpload
         }
 
         return $uploadEntityType;
+    }
+
+    public function reset(): void
+    {
+        $this->positionByEntityAndType = [];
     }
 }

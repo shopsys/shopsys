@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Symfony\Contracts\Service\ResetInterface;
 
-class BrandCachedFacade
+class BrandCachedFacade implements ResetInterface
 {
     /**
      * @var array<int, array<int, string>>
@@ -39,5 +40,10 @@ class BrandCachedFacade
         }
 
         return $this->brandUrlsIndexedByBrandIdAndDomainId[$brandId][$domainId];
+    }
+
+    public function reset(): void
+    {
+        $this->brandUrlsIndexedByBrandIdAndDomainId = [];
     }
 }

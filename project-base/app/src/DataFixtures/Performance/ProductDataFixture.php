@@ -199,7 +199,7 @@ class ProductDataFixture
     private function clearResources()
     {
         $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
-        $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
+        $this->productPriceRecalculationScheduler->reset();
         $this->em->clear();
         gc_collect_cycles();
     }

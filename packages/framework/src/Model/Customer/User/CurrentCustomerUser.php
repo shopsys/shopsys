@@ -7,8 +7,9 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
-class CurrentCustomerUser
+class CurrentCustomerUser implements ResetInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser[]
@@ -75,5 +76,10 @@ class CurrentCustomerUser
         }
 
         return null;
+    }
+
+    public function reset(): void
+    {
+        $this->customerUserCache = [];
     }
 }

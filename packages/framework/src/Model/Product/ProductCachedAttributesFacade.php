@@ -8,8 +8,9 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use Symfony\Contracts\Service\ResetInterface;
 
-class ProductCachedAttributesFacade
+class ProductCachedAttributesFacade implements ResetInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[]
@@ -81,5 +82,11 @@ class ProductCachedAttributesFacade
         $this->parameterValuesByProductId[$product->getId()] = $productParameterValues;
 
         return $productParameterValues;
+    }
+
+    public function reset(): void
+    {
+        $this->sellingPricesByProductId = [];
+        $this->parameterValuesByProductId = [];
     }
 }

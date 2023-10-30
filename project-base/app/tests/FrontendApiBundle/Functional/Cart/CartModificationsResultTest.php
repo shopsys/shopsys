@@ -581,7 +581,7 @@ class CartModificationsResultTest extends GraphQlTestCase
             $stockProductData->productQuantity = 0;
         }
         $this->productFacade->editProductStockRelation($productData, $this->testingProduct);
-        $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
+        $this->productPriceRecalculationScheduler->reset();
         $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
         $this->em->clear();
         gc_collect_cycles();

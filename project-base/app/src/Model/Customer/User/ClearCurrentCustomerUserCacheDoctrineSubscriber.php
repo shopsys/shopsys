@@ -23,7 +23,7 @@ class ClearCurrentCustomerUserCacheDoctrineSubscriber implements EventSubscriber
      */
     public function onClear(OnClearEventArgs $args): void
     {
-        $this->currentCustomerUser->invalidateCache();
+        $this->currentCustomerUser->reset();
     }
 
     /**

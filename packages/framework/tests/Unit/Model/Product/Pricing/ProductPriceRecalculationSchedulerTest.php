@@ -43,7 +43,7 @@ class ProductPriceRecalculationSchedulerTest extends TestCase
 
         $productPriceRecalculationScheduler = new ProductPriceRecalculationScheduler($productRepositoryMock);
         $productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($productMock);
-        $productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
+        $productPriceRecalculationScheduler->reset();
         $products = $productPriceRecalculationScheduler->getProductsForImmediateRecalculation();
 
         $this->assertCount(0, $products);

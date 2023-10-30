@@ -47,6 +47,8 @@ class HeurekaProductDataBatchLoader
             $domainConfig,
         );
 
+        $this->loadedProductCpcs = [];
+
         foreach ($products as $product) {
             $key = $this->getKey($product, $domainConfig);
             $productId = $product->getId();

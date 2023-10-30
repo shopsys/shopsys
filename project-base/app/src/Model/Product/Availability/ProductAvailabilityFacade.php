@@ -12,15 +12,16 @@ use App\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
+use Symfony\Contracts\Service\ResetInterface;
 
-class ProductAvailabilityFacade
+class ProductAvailabilityFacade implements ResetInterface
 {
     private const DAYS_IN_WEEK = 7;
 
     /**
      * @var array<string, bool>
      */
-    private array $productAvailabilityDomainCache;
+    private array $productAvailabilityDomainCache = [];
 
     /**
      * @param \App\Component\Setting\Setting $setting
@@ -34,7 +35,6 @@ class ProductAvailabilityFacade
         private readonly StoreFacade $storeFacade,
         private readonly Domain $domain,
     ) {
-        $this->productAvailabilityDomainCache = [];
     }
 
     /**
@@ -548,5 +548,10 @@ class ProductAvailabilityFacade
         }
 
         return $this->getDeliveryDaysByDomainId($product, $domainId);
+    }
+
+    public function reset(): void
+    {
+        $this->productAvailabilityDomainCache = [];
     }
 }

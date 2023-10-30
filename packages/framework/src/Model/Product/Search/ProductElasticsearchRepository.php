@@ -8,8 +8,9 @@ use Doctrine\ORM\QueryBuilder;
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
+use Symfony\Contracts\Service\ResetInterface;
 
-class ProductElasticsearchRepository
+class ProductElasticsearchRepository implements ResetInterface
 {
     /**
      * @var int[][][]
@@ -186,5 +187,10 @@ class ProductElasticsearchRepository
         $result = $this->client->search($filterQuery->getQuery());
 
         return $this->extractHits($result);
+    }
+
+    public function reset(): void
+    {
+        $this->foundProductIdsCache = [];
     }
 }

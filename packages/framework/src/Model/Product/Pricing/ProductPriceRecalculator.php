@@ -84,7 +84,7 @@ class ProductPriceRecalculator
         foreach ($products as $product) {
             $this->recalculateProductPrices($product);
         }
-        $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
+        $this->productPriceRecalculationScheduler->reset();
         $this->clearCache();
     }
 

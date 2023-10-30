@@ -93,6 +93,7 @@
         "symfony/proxy-manager-bridge": "^5.4",
         "symfony/rate-limiter": "^5.4",
         "symfony/security-bundle": "^5.4",
+        "symfony/service-contracts": "^2.5.2",
         "symfony-cmf/routing": "^2.0.3",
         "symfony-cmf/routing-bundle": "^2.0.3",
         "symfony/polyfill-php80": "^1.24.0",

@@ -160,6 +160,7 @@
         "symfony/proxy-manager-bridge": "^5.4",
         "symfony/rate-limiter": "^5.4",
         "symfony/security-bundle": "^5.4",
+        "symfony/service-contracts": "^2.5.2",
         "symfony/stopwatch": "^5.4",
         "symfony/translation": "^5.4",
         "symfony/twig-bundle": "^5.4",

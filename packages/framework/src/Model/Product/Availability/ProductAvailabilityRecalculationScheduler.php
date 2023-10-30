@@ -6,8 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Product\Availability;
 
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Symfony\Contracts\Service\ResetInterface;
 
-class ProductAvailabilityRecalculationScheduler
+class ProductAvailabilityRecalculationScheduler implements ResetInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product[]
@@ -51,6 +52,11 @@ class ProductAvailabilityRecalculationScheduler
     }
 
     public function cleanScheduleForImmediateRecalculation()
+    {
+        $this->products = [];
+    }
+
+    public function reset(): void
     {
         $this->products = [];
     }
