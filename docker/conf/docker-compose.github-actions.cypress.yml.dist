@@ -46,6 +46,24 @@ services:
         volumes:
             - web-volume:/var/www/html/project-base/app/web
 
+    php-consumer:
+        restart: always
+        image: php-fpm-image
+        container_name: shopsys-framework-php-consumer
+        volumes:
+            - web-volume:/var/www/html/project-base/app/web
+        depends_on:
+            - php-fpm
+            - rabbitmq
+        entrypoint:
+            - /bin/sh
+            - -c
+            - sleep 5 && project-base/app/docker/php-fpm/consumer-entrypoint.sh 600
+
+    rabbitmq:
+        image: rabbitmq:3.12-management-alpine
+        container_name: shopsys-framework-rabbitmq
+
     redis:
         image: redis:5.0-alpine
         container_name: shopsys-framework-redis
