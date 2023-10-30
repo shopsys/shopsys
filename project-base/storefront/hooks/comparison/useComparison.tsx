@@ -8,7 +8,7 @@ import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 
 export const useComparison = () => {
@@ -20,22 +20,11 @@ export const useComparison = () => {
     const comparisonUuid = usePersistStore((store) => store.comparisonUuid);
     const updateComparisonUuid = usePersistStore((store) => store.updateComparisonUuid);
     const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
-    const [isFetchingPaused, setIsFetchingPaused] = useState(true);
 
     const [{ data: comparisonData, fetching }] = useComparisonQueryApi({
         variables: { comparisonUuid },
-        pause: isFetchingPaused,
+        pause: !comparisonUuid && !isUserLoggedIn,
     });
-
-    useEffect(() => {
-        setIsFetchingPaused(!comparisonUuid && !isUserLoggedIn);
-    }, [comparisonUuid]);
-
-    useEffect(() => {
-        if (!isUserLoggedIn && comparisonData?.comparison && comparisonUuid !== comparisonData.comparison.uuid) {
-            updateComparisonUuid(comparisonData.comparison.uuid);
-        }
-    }, [comparisonData?.comparison?.uuid]);
 
     const isProductInComparison = (productUuid: string) =>
         !!comparisonData?.comparison?.products.find((product) => product.uuid === productUuid);
@@ -65,15 +54,13 @@ export const useComparison = () => {
 
         if (removeProductFromComparisonResult.error) {
             const { applicationError } = getUserFriendlyErrors(removeProductFromComparisonResult.error, t);
-            if (applicationError?.message) {
-                showErrorMessage(applicationError.message);
-            } else {
-                showErrorMessage(t('Unable to remove product from comparison.'));
-            }
+
+            showErrorMessage(applicationError?.message || t('Unable to remove product from comparison.'));
         } else {
             if (!removeProductFromComparisonResult.data?.removeProductFromComparison) {
                 updateComparisonUuid(null);
             }
+
             showSuccessMessage(t('Product has been removed from your comparison.'));
         }
     };

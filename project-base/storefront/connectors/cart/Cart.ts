@@ -22,13 +22,14 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
-    const [{ data: cartData, stale, fetching }] = useCartQueryApi({
+    const [{ data: cartData, stale, fetching }, refetchCart] = useCartQueryApi({
         variables: { cartUuid },
         pause: !cartUuid && !isUserLoggedIn,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 
     return {
+        refetchCart,
         cart: cartData?.cart ?? null,
         isCartEmpty: !cartData?.cart?.items.length,
         transport: cartData?.cart?.transport ?? null,

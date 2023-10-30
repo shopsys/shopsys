@@ -7,6 +7,7 @@ import {
     SimplePaymentFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
+import { UseQueryExecute } from 'urql';
 
 export type CurrentCartType = {
     cart: Maybe<CartFragmentApi>;
@@ -20,4 +21,5 @@ export type CurrentCartType = {
     isFetching: boolean;
     modifications: Maybe<CartModificationsFragmentApi>;
     roundingPrice: Maybe<PriceFragmentApi>;
+    refetchCart: UseQueryExecute;
 };

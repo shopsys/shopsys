@@ -13,7 +13,6 @@ import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 
@@ -28,15 +27,7 @@ export const Cart: FC = ({ className }) => {
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const authLoading = usePersistStore((store) => store.authLoading);
     const [removeItemFromCart, isRemovingItem] = useRemoveFromCart(GtmProductListNameType.cart);
-    const [isLoading, setIsLoading] = useState(false);
-
-    /** We have to match server HTML and client HTML. Since we store cardUuid in browser,
-     * server doesn't know that user do have cartUuid and it won't start fetching, but browser
-     * does. For this we need both server and client start with the same values and then
-     * set it on client. */
-    useEffect(() => {
-        setIsLoading(isFetching || !!authLoading);
-    }, [isFetching, authLoading]);
+    const isLoading = isFetching || !!authLoading;
 
     return (
         <div className={twMergeCustom('group relative lg:flex', className)}>

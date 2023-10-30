@@ -9,14 +9,11 @@ import {
 } from 'graphql/generated';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 
 export const useWishlist = () => {
     const { t } = useTranslation();
-
     const isUserLoggedIn = useIsUserLoggedIn();
-    const [isFetchingPaused, setIsFetchingPaused] = useState(true);
 
     const updateWishlistUuid = usePersistStore((s) => s.updateWishlistUuid);
     const wishlistUuid = usePersistStore((s) => s.wishlistUuid);
@@ -24,20 +21,11 @@ export const useWishlist = () => {
     const [, addProductToWishlist] = useAddProductToWishlistMutationApi();
     const [, removeProductFromWishlist] = useRemoveProductFromWishlistMutationApi();
     const [, cleanWishlist] = useCleanWishlistMutationApi();
+
     const [{ data: wishlistData, fetching }] = useWishlistQueryApi({
         variables: { wishlistUuid },
-        pause: isFetchingPaused,
+        pause: !wishlistUuid && !isUserLoggedIn,
     });
-
-    useEffect(() => {
-        setIsFetchingPaused(!wishlistUuid && !isUserLoggedIn);
-    }, [wishlistUuid]);
-
-    useEffect(() => {
-        if (!isUserLoggedIn && wishlistData?.wishlist && wishlistUuid !== wishlistData.wishlist.uuid) {
-            updateWishlistUuid(wishlistData.wishlist.uuid);
-        }
-    }, [wishlistData?.wishlist?.uuid]);
 
     const handleCleanWishlist = async () => {
         const cleanWishlistResult = await cleanWishlist({ wishlistUuid });
