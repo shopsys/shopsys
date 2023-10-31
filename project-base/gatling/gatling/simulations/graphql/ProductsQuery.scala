@@ -24,14 +24,15 @@ class ProductsQuery extends Simulation {
     val scn = scenario("ProductsQuery")
         .exec(
             http(f"page__$users%s__products_query")
-                .post("graphql/")
+                .post("/graphql/")
                 .header("Content-Type","application/graphql")
                 .body(RawFileBody("productsQuery.graphql"))
-            )
+                .check(status.is(200))
+        )
 
     setUp(
-      scn.inject(
-        constantConcurrentUsers(users.toInt) during (duration.toInt.seconds),
-      ).protocols(httpProtocol)
+        scn.inject(
+            constantConcurrentUsers(users.toInt) during (duration.toInt.seconds),
+        ).protocols(httpProtocol)
     )
 }
