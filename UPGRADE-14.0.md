@@ -201,3 +201,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   fix router server access error on PageGuard ([#2909](https://github.com/shopsys/shopsys/pull/2909))
     -   see #project-base-diff to update your project
+-   fix Cart list unit text ([#2910](https://github.com/shopsys/shopsys/pull/2910))
+    -   see #project-base-diff to update your project
