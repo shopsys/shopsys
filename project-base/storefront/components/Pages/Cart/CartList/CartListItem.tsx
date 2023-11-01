@@ -106,7 +106,7 @@ export const CartListItem: FC<CartListItemProps> = ({
             </div>
 
             <div className="flex items-center justify-end text-sm vl:w-32" data-testid={TEST_IDENTIFIER + 'itemprice'}>
-                {formatPrice(product.price.priceWithVat) + '\u00A0/\u00A0' + t('pc')}
+                {formatPrice(product.price.priceWithVat) + '\u00A0/\u00A0' + product.unit.name}
             </div>
 
             <div
