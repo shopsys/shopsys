@@ -199,3 +199,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   fix set default delivery address country ([#2902](https://github.com/shopsys/shopsys/pull/2902))
     -   see #project-base-diff to update your project
+-   fix router server access error on PageGuard ([#2909](https://github.com/shopsys/shopsys/pull/2909))
+    -   see #project-base-diff to update your project
