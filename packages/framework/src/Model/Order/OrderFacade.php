@@ -288,6 +288,15 @@ class OrderFacade
     }
 
     /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByUuid(string $uuid): Order
+    {
+        return $this->orderRepository->getByUuid($uuid);
+    }
+
+    /**
      * @param string $urlHash
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order

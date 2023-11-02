@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Mutation\Customer\User;
 
 use App\FrontendApi\Model\Cart\MergeCartFacade;
-use App\FrontendApi\Model\Order\OrderFacade;
+use App\FrontendApi\Model\Order\OrderApiFacade;
 use App\Model\Customer\User\RegistrationDataFactoryInterface;
 use App\Model\Customer\User\RegistrationFacadeInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -47,7 +47,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \App\Model\Customer\User\RegistrationFacadeInterface $registrationFacade
      * @param \App\Model\Customer\User\RegistrationDataFactoryInterface $registrationDataFactory
      * @param \App\FrontendApi\Model\Cart\MergeCartFacade $mergeCartFacade
-     * @param \App\FrontendApi\Model\Order\OrderFacade $orderFacade
+     * @param \App\FrontendApi\Model\Order\OrderApiFacade $orderFacade
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
@@ -61,7 +61,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
         private readonly RegistrationFacadeInterface $registrationFacade,
         private readonly RegistrationDataFactoryInterface $registrationDataFactory,
         private readonly MergeCartFacade $mergeCartFacade,
-        private readonly OrderFacade $orderFacade,
+        private readonly OrderApiFacade $orderFacade,
     ) {
         parent::__construct(
             $tokenStorage,

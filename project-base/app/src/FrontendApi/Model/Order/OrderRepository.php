@@ -52,26 +52,6 @@ class OrderRepository extends BaseOrderRepository
 
     /**
      * @param string $uuid
-     * @return \App\Model\Order\Order
-     */
-    public function getByUuid(string $uuid): Order
-    {
-        $order = $this->createOrderQueryBuilder()
-            ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)
-            ->getQuery()->getOneOrNullResult();
-
-        if ($order === null) {
-            throw new OrderNotFoundUserError(sprintf(
-                'Order with UUID \'%s\' not found.',
-                $uuid,
-            ));
-        }
-
-        return $order;
-    }
-
-    /**
-     * @param string $uuid
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @return \App\Model\Order\Order
      */

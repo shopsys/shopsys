@@ -98,6 +98,21 @@ class OrderRepository
     }
 
     /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByUuid(string $uuid): Order
+    {
+        $order = $this->getOrderRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($order === null) {
+            throw new OrderNotFoundException('Order with UUID "' . $uuid . '" not found.');
+        }
+
+        return $order;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @return bool
      */

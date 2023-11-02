@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\Payment;
 
-use App\FrontendApi\Model\Order\OrderFacade;
+use App\FrontendApi\Model\Order\OrderApiFacade;
 use App\FrontendApi\Model\Payment\PaymentSetupCreationData;
 use App\FrontendApi\Mutation\Payment\Exception\MaxTransactionCountReachedUserError;
 use App\FrontendApi\Mutation\Payment\Exception\OrderAlreadyPaidUserError;
@@ -17,11 +17,11 @@ use Throwable;
 class PaymentMutation extends AbstractMutation
 {
     /**
-     * @param \App\FrontendApi\Model\Order\OrderFacade $orderFacade
+     * @param \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade
      * @param \App\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
      */
     public function __construct(
-        private readonly OrderFacade $orderFacade,
+        private readonly OrderApiFacade $orderApiFacade,
         private readonly PaymentServiceFacade $paymentServiceFacade,
     ) {
     }
@@ -33,7 +33,7 @@ class PaymentMutation extends AbstractMutation
     public function payOrderMutation(Argument $argument): PaymentSetupCreationData
     {
         $uuid = $argument['orderUuid'];
-        $order = $this->orderFacade->getByUuid($uuid);
+        $order = $this->orderApiFacade->getByUuid($uuid);
 
         if ($order->isPaid()) {
             throw new OrderAlreadyPaidUserError('Order is already paid');
@@ -58,7 +58,7 @@ class PaymentMutation extends AbstractMutation
     {
         try {
             $uuid = $argument['orderUuid'];
-            $order = $this->orderFacade->getByUuid($uuid);
+            $order = $this->orderApiFacade->getByUuid($uuid);
 
             $this->paymentServiceFacade->updatePaymentTransactionsByOrder($order);
 

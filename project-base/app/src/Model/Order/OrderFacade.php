@@ -72,6 +72,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method int getCustomerUserOrderCount(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order[] getOrderListForEmailByDomainId(string $email, int $domainId)
  * @method \App\Model\Order\Order getById(int $orderId)
+ * @method \App\Model\Order\Order getByUuid(string $uuid)
  * @method \App\Model\Order\Order getByUuidAndCustomerUser(string $uuid, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order getByUuidAndUrlHash(string $uuid, string $urlHash)
  * @method \App\Model\Order\Order getByUrlHashAndDomain(string $urlHash, int $domainId)

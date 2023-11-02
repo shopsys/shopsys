@@ -5,15 +5,34 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 
-class OrderFacade
+class OrderApiFacade
 {
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderRepository $orderRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      */
-    public function __construct(protected readonly OrderRepository $orderRepository)
+    public function __construct(
+        protected readonly OrderRepository $orderRepository,
+        protected readonly OrderFacade $orderFacade,
+    ) {
+    }
+
+    /**
+     * @param string $orderUuid
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function getByUuid(string $orderUuid): Order
     {
+        try {
+            return $this->orderFacade->getByUuid($orderUuid);
+        } catch (OrderNotFoundException) {
+            throw new OrderNotFoundUserError('Order with UUID \'' . $orderUuid . '\' not found.');
+        }
     }
 
     /**
