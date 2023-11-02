@@ -52,7 +52,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
 
                         <div className="lg:w-40 lg:text-right">{formatPrice(variant.price.priceWithVat)}</div>
 
-                        <div className="text-right max-lg:clear-both max-lg:pl-0 lg:w-60">
+                        <div className="text-right max-lg:clear-both">
                             {isSellingDenied ? (
                                 t('This item can no longer be purchased')
                             ) : (
