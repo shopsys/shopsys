@@ -1721,6 +1721,10 @@ type Query {
   notificationBars: [NotificationBar!]
   "Returns order filtered using UUID, orderNumber, or urlHash"
   order(orderNumber: String, urlHash: String, uuid: Uuid): Order
+  "Returns HTML content for order with failed payment."
+  orderPaymentFailedContent(orderUuid: Uuid!): String!
+  "Returns HTML content for order with successful payment."
+  orderPaymentSuccessfulContent(orderUuid: Uuid!): String!
   "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
   orders(after: String, before: String, first: Int, last: Int): OrderConnection
   "Returns HTML content for order sent page."

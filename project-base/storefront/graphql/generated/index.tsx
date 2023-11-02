@@ -2153,6 +2153,10 @@ export type QueryApi = {
   notificationBars: Maybe<Array<NotificationBarApi>>;
   /** Returns order filtered using UUID, orderNumber, or urlHash */
   order: Maybe<OrderApi>;
+  /** Returns HTML content for order with failed payment. */
+  orderPaymentFailedContent: Scalars['String']['output'];
+  /** Returns HTML content for order with successful payment. */
+  orderPaymentSuccessfulContent: Scalars['String']['output'];
   /** Returns HTML content for order sent page. */
   orderSentPageContent: Scalars['String']['output'];
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
@@ -2308,6 +2312,16 @@ export type QueryOrderArgsApi = {
   orderNumber: InputMaybe<Scalars['String']['input']>;
   urlHash: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type QueryOrderPaymentFailedContentArgsApi = {
+  orderUuid: Scalars['Uuid']['input'];
+};
+
+
+export type QueryOrderPaymentSuccessfulContentArgsApi = {
+  orderUuid: Scalars['Uuid']['input'];
 };
 
 

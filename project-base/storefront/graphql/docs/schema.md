@@ -678,6 +678,34 @@ Returns order filtered using UUID, orderNumber, or urlHash
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>orderPaymentFailedContent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Returns HTML content for order with failed payment.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderPaymentSuccessfulContent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Returns HTML content for order with successful payment.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>orders</strong></td>
 <td valign="top"><a href="#orderconnection">OrderConnection</a></td>
 <td>
