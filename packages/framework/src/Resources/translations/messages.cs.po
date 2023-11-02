@@ -1687,6 +1687,9 @@ msgstr "Pořadí bylo uloženo"
 msgid "Order saving failed"
 msgstr "Pořadí se nepodařilo uložit"
 
+msgid "Order sent page content"
+msgstr "Obsah stránky po odeslání objednávky"
+
 msgid "Order statuses overview"
 msgstr "Přehled stavů objednávek"
 
@@ -1747,8 +1750,14 @@ msgstr "Byla upravena platba <strong><a href=\"{{ url }}\">{{ name }}</a></stron
 msgid "Payment <strong>{{ name }}</strong> deleted"
 msgstr "Platba <strong>{{ name }}</strong> byla smazána"
 
+msgid "Payment failed page content"
+msgstr "Obsah stránky po neúspěšné platbě"
+
 msgid "Payment instructions"
 msgstr "Pokyny k platbě"
+
+msgid "Payment successful page content"
+msgstr "Obsah stránky po dokončené platbě"
 
 msgid "Payments"
 msgstr "Platby"

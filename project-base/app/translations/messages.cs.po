@@ -2275,9 +2275,6 @@ msgstr "Můžete nahrát následující formáty: PNG, JPG"
 msgid "You can upload following formats: PNG, JPG, GIF"
 msgstr "Můžete nahrát následující formáty: PNG, JPG, GIF"
 
-msgid "You have successfully paid order."
-msgstr "Úspěšně jste zaplatili objednávku."
-
 msgid "You have to set redirect code for redirect."
 msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
 

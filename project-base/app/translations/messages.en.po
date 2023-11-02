@@ -2275,9 +2275,6 @@ msgstr ""
 msgid "You can upload following formats: PNG, JPG, GIF"
 msgstr ""
 
-msgid "You have successfully paid order."
-msgstr ""
-
 msgid "You have to set redirect code for redirect."
 msgstr ""
 
