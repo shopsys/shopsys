@@ -37,6 +37,32 @@ final class OrderSentPageContentQuery extends AbstractQuery
     }
 
     /**
+     * @param string $orderUuid
+     * @return string
+     */
+    public function orderPaymentSuccessfulContentQuery(string $orderUuid): string
+    {
+        $order = $this->orderApiFacade->getByUuid($orderUuid);
+
+        $this->assertOrderWasCreatedRecently($order);
+
+        return $this->orderContentPageFacade->getPaymentSuccessfulPageContent($order);
+    }
+
+    /**
+     * @param string $orderUuid
+     * @return string
+     */
+    public function orderPaymentFailedContentQuery(string $orderUuid): string
+    {
+        $order = $this->orderApiFacade->getByUuid($orderUuid);
+
+        $this->assertOrderWasCreatedRecently($order);
+
+        return $this->orderContentPageFacade->getPaymentFailedPageContent($order);
+    }
+
+    /**
      * @param \App\Model\Order\Order $order
      */
     public function assertOrderWasCreatedRecently(Order $order): void

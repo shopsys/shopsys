@@ -40,6 +40,28 @@ class OrderContentPageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return string
+     */
+    public function getPaymentSuccessfulPageContent(Order $order): string
+    {
+        $orderSentPageContent = $this->orderContentPageSettingFacade->getPaymentSuccessfulPageContent($order->getDomainId());
+
+        return $this->replaceVariables($order, $orderSentPageContent);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return string
+     */
+    public function getPaymentFailedPageContent(Order $order): string
+    {
+        $orderSentPageContent = $this->orderContentPageSettingFacade->getPaymentFailedPageContent($order->getDomainId());
+
+        return $this->replaceVariables($order, $orderSentPageContent);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param string $orderSentPageContent
      * @return string
      */

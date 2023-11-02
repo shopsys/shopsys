@@ -37,6 +37,8 @@ class CustomerCommunicationController extends AdminBaseController
             CustomerUserCommunicationFormType::class,
             [
                 CustomerUserCommunicationFormType::ORDER_SENT_CONTENT_FIELD_NAME => $this->orderContentPageSettingFacade->getOrderSentPageContent($domainId),
+                CustomerUserCommunicationFormType::PAYMENT_SUCCESSFUL_CONTENT_FIELD_NAME => $this->orderContentPageSettingFacade->getPaymentSuccessfulPageContent($domainId),
+                CustomerUserCommunicationFormType::PAYMENT_FAILED_CONTENT_FIELD_NAME => $this->orderContentPageSettingFacade->getPaymentFailedPageContent($domainId),
             ],
         );
         $form->handleRequest($request);
@@ -45,6 +47,8 @@ class CustomerCommunicationController extends AdminBaseController
             $formData = $form->getData();
 
             $this->orderContentPageSettingFacade->setOrderSentPageContent($formData[CustomerUserCommunicationFormType::ORDER_SENT_CONTENT_FIELD_NAME], $domainId);
+            $this->orderContentPageSettingFacade->setPaymentSuccessfulPageContent($formData[CustomerUserCommunicationFormType::PAYMENT_SUCCESSFUL_CONTENT_FIELD_NAME], $domainId);
+            $this->orderContentPageSettingFacade->setPaymentFailedPageContent($formData[CustomerUserCommunicationFormType::PAYMENT_FAILED_CONTENT_FIELD_NAME], $domainId);
 
             $this->addSuccessFlash(t('Order confirmation page content modified'));
 
