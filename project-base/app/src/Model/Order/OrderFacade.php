@@ -62,7 +62,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Cart\CartFacade $cartFacade
  * @property \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
- * @property \App\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
  * @property \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
  * @property \App\Model\Order\Item\OrderItemFactory $orderItemFactory
  * @method sendHeurekaOrderInfo(\App\Model\Order\Order $order, bool $disallowHeurekaVerifiedByCustomers)
@@ -148,12 +147,12 @@ class OrderFacade extends BaseOrderFacade
         PaymentPriceCalculation $paymentPriceCalculation,
         TransportPriceCalculation $transportPriceCalculation,
         OrderItemFactoryInterface $orderItemFactory,
-        private OrderItemDataFactory $orderItemDataFactory,
-        private OrderDataFactory $orderDataFactory,
-        private PaymentTransactionFacade $paymentTransactionFacade,
-        private PaymentServiceFacade $paymentServiceFacade,
-        private PaymentTransactionDataFactory $paymentTransactionDataFactory,
-        private LoginAsUserFacade $loginAsUserFacade,
+        private readonly OrderItemDataFactory $orderItemDataFactory,
+        private readonly OrderDataFactory $orderDataFactory,
+        private readonly PaymentTransactionFacade $paymentTransactionFacade,
+        private readonly PaymentServiceFacade $paymentServiceFacade,
+        private readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        private readonly LoginAsUserFacade $loginAsUserFacade,
     ) {
         parent::__construct(
             $em,
@@ -370,30 +369,6 @@ class OrderFacade extends BaseOrderFacade
             $orderItem->getOrder(),
             null,
         );
-    }
-
-    /**
-     * @param int $orderId
-     * @return string
-     */
-    public function getOrderSentPageContent($orderId): string
-    {
-        $order = $this->getById($orderId);
-        $orderDetailUrl = $this->orderUrlGenerator->getOrderDetailUrl($order);
-        $orderSentPageContent = $this->setting->getForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $order->getDomainId());
-
-        $variables = [
-            self::VARIABLE_TRANSPORT_INSTRUCTIONS => $order->getTransport()->getInstructions(),
-            self::VARIABLE_PAYMENT_INSTRUCTIONS => $order->getPayment()->getInstructions(),
-            self::VARIABLE_ORDER_DETAIL_URL => $orderDetailUrl,
-            self::VARIABLE_NUMBER => $order->getNumber(),
-        ];
-
-        if ($order->isPaid()) {
-            $variables[self::VARIABLE_PAYMENT_INSTRUCTIONS] = t('You have successfully paid order.');
-        }
-
-        return strtr($orderSentPageContent, $variables);
     }
 
     /**

@@ -4,16 +4,22 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Order;
 
-use App\FrontendApi\Model\Order\OrderFacade;
+use App\FrontendApi\Model\Order\Exception\OrderSentPageNotAvailableUserError;
+use App\FrontendApi\Model\Order\OrderApiFacade;
+use App\Model\Order\Order;
+use DateTimeImmutable;
+use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 final class OrderSentPageContentQuery extends AbstractQuery
 {
     /**
-     * @param \App\FrontendApi\Model\Order\OrderFacade $orderFacade
+     * @param \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade $orderContentPageFacade
      */
     public function __construct(
-        private readonly OrderFacade $orderFacade,
+        private readonly OrderApiFacade $orderApiFacade,
+        private readonly OrderContentPageFacade $orderContentPageFacade,
     ) {
     }
 
@@ -23,6 +29,22 @@ final class OrderSentPageContentQuery extends AbstractQuery
      */
     public function orderSentPageContentQuery(string $orderUuid): string
     {
-        return $this->orderFacade->getOrderSentPageContent($orderUuid);
+        $order = $this->orderApiFacade->getByUuid($orderUuid);
+
+        $this->assertOrderWasCreatedRecently($order);
+
+        return $this->orderContentPageFacade->getOrderSentPageContent($order);
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     */
+    public function assertOrderWasCreatedRecently(Order $order): void
+    {
+        $fiveMinutesAgo = new DateTimeImmutable('-5 minutes');
+
+        if ($order->getCreatedAt() < $fiveMinutesAgo) {
+            throw new OrderSentPageNotAvailableUserError('You cannot request page content for order older than 5 minutes.');
+        }
     }
 }

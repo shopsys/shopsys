@@ -12,19 +12,21 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CustomerUserCommunicationFormType extends AbstractType
 {
+    public const ORDER_SENT_CONTENT_FIELD_NAME = 'order-sent-content';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
             'label' => t('Settings'),
         ]);
 
         $builderSettingsGroup
-            ->add('content', CKEditorType::class, [
-                'label' => t('Content'),
+            ->add(self::ORDER_SENT_CONTENT_FIELD_NAME, CKEditorType::class, [
+                'label' => t('Order sent page content'),
                 'required' => false,
             ]);
 

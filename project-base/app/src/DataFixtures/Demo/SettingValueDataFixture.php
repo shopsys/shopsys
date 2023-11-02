@@ -95,17 +95,6 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 $domainId,
             );
 
-            $orderSentText = t('
-                <p>
-                    Order number {number} has been sent, thank you for your purchase.
-                    We will contact you about next order status. <br /><br />
-                    <a href="{order_detail_url}">Track</a> the status of your order. <br />
-                    {transport_instructions} <br />
-                    {payment_instructions} <br />
-                </p>
-            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $this->setting->setForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $orderSentText, $domainId);
-
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
             $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, $domainId);
             $this->setting->setForDomain(Setting::DEFAULT_PRICING_GROUP, $pricingGroup->getId(), $domainId);

@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundExce
 
 class Setting
 {
-    public const ORDER_SENT_PAGE_CONTENT = 'orderSubmittedText';
     public const PERSONAL_DATA_DISPLAY_SITE_CONTENT = 'personalDataDisplaySiteContent';
     public const PERSONAL_DATA_EXPORT_SITE_CONTENT = 'personalDataExportSiteContent';
     public const DEFAULT_PRICING_GROUP = 'defaultPricingGroupId';

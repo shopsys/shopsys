@@ -6,12 +6,18 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
-use App\FrontendApi\Model\Order\OrderFacade;
+use App\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetOrderSentPageContentTest extends GraphQlTestCase
 {
     use OrderTestTrait;
+
+    /**
+     * @inject
+     */
+    private OrderContentPageFacade $orderContentPageFacade;
 
     /**
      * @inject
@@ -58,12 +64,13 @@ class GetOrderSentPageContentTest extends GraphQlTestCase
         ]);
 
         $orderUuid = $this->getResponseDataForGraphQlType($response, 'CreateOrder')['order']['uuid'];
+        $order = $this->orderFacade->getByUuid($orderUuid);
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/OrderSentPageContentQuery.graphql', [
             'orderUuid' => $orderUuid,
         ]);
 
         $this->assertEquals(
-            $this->orderFacade->getOrderSentPageContent($orderUuid),
+            $this->orderContentPageFacade->getOrderSentPageContent($order),
             $response['data']['orderSentPageContent'],
         );
     }

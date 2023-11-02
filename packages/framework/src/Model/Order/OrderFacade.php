@@ -37,11 +37,6 @@ use Webmozart\Assert\Assert;
 
 class OrderFacade
 {
-    public const VARIABLE_NUMBER = '{number}';
-    public const VARIABLE_ORDER_DETAIL_URL = '{order_detail_url}';
-    public const VARIABLE_PAYMENT_INSTRUCTIONS = '{payment_instructions}';
-    public const VARIABLE_TRANSPORT_INSTRUCTIONS = '{transport_instructions}';
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
@@ -213,26 +208,6 @@ class OrderFacade
         }
 
         return $order;
-    }
-
-    /**
-     * @param int $orderId
-     * @return string
-     */
-    public function getOrderSentPageContent($orderId)
-    {
-        $order = $this->getById($orderId);
-        $orderDetailUrl = $this->orderUrlGenerator->getOrderDetailUrl($order);
-        $orderSentPageContent = $this->setting->getForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $order->getDomainId());
-
-        $variables = [
-            self::VARIABLE_TRANSPORT_INSTRUCTIONS => $order->getTransport()->getInstructions(),
-            self::VARIABLE_PAYMENT_INSTRUCTIONS => $order->getPayment()->getInstructions(),
-            self::VARIABLE_ORDER_DETAIL_URL => $orderDetailUrl,
-            self::VARIABLE_NUMBER => $order->getNumber(),
-        ];
-
-        return strtr($orderSentPageContent, $variables);
     }
 
     /**
