@@ -17,7 +17,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { forwardRef, useMemo } from 'react';
-import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
+import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
 export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;
@@ -256,7 +256,7 @@ const SearchResultSectionGroup: FC = ({ children, dataTestId }) => (
     </ul>
 );
 
-const SearchResultLink: FC<{ onClick: () => void; href: string; type: FriendlyPagesTypesKeys }> = forwardRef(
+const SearchResultLink: FC<{ onClick: () => void; href: string; type: FriendlyPagesTypesKey }> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, onClick, href, type }, _) => (
         <ExtendedNextLink

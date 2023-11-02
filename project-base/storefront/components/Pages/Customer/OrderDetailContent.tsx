@@ -73,11 +73,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                         <CellMinor>{t('Package number')}</CellMinor>
                                         <Cell align="right" dataTestId={TEST_IDENTIFIER + 'trackingUrl'}>
                                             {order.trackingUrl ? (
-                                                <ExtendedNextLink
-                                                    href={order.trackingUrl}
-                                                    target="_blank"
-                                                    type="static"
-                                                >
+                                                <ExtendedNextLink href={order.trackingUrl} target="_blank">
                                                     {order.trackingNumber}
                                                 </ExtendedNextLink>
                                             ) : (

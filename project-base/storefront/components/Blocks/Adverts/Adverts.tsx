@@ -66,7 +66,7 @@ export const Adverts: FC<AdvertsProps> = ({
                     return (
                         <Fragment key={index}>
                             {advert.link ? (
-                                <ExtendedNextLink href={advert.link} target="_blank" type="static">
+                                <ExtendedNextLink href={advert.link} target="_blank">
                                     {ImageComponent}
                                 </ExtendedNextLink>
                             ) : (

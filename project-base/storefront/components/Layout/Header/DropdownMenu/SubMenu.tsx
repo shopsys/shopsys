@@ -1,5 +1,5 @@
 import { DropdownMenuContext } from './DropdownMenuContext';
-import { ExtendedLinkPageType, ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
@@ -8,6 +8,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useWishlist } from 'hooks/useWishlist';
 import useTranslation from 'next-translate/useTranslation';
 import { useContext } from 'react';
+import { PageType } from 'store/slices/createPageLoadingStateSlice';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-submenu';
 
@@ -51,7 +52,7 @@ export const SubMenu: FC = () => {
 type SubMenuItemProps = {
     onClick?: () => void;
     href?: string;
-    type?: ExtendedLinkPageType;
+    type?: PageType;
 };
 
 const SubMenuItem: FC<SubMenuItemProps> = ({ children, dataTestId, onClick, href, type }) => {
@@ -63,7 +64,7 @@ const SubMenuItem: FC<SubMenuItemProps> = ({ children, dataTestId, onClick, href
                 passHref
                 className="mb-5 px-8 text-sm text-dark no-underline"
                 href={href}
-                type={type || 'static'}
+                type={type}
                 onClick={onMenuToggleHandler}
             >
                 {children}

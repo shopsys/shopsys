@@ -42,7 +42,7 @@ export const FooterBoxInfo: FC = () => {
                     </a>
                     <p className="m-0 text-sm text-white">{dummyData.opening}</p>
                 </div>
-                <ExtendedNextLink href={contactUrl} type="static">
+                <ExtendedNextLink href={contactUrl}>
                     <Button className="z-above" variant="secondary">
                         {t('Write to us')}
                     </Button>

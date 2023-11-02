@@ -40,7 +40,7 @@ export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel,
     }
 
     return (
-        <ExtendedNextLink {...props} passHref href={href} type="static">
+        <ExtendedNextLink {...props} passHref href={href}>
             {content}
         </ExtendedNextLink>
     );

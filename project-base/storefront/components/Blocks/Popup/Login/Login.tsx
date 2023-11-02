@@ -96,7 +96,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                             </div>
                             <div className="flex items-center gap-1 whitespace-nowrap rounded border-primary py-2 px-2 text-sm text-primary lg:mt-5 lg:border-2 lg:px-3 lg:py-3">
                                 <WarningIcon className=" h-5 w-9 text-red" />
-                                <ExtendedNextLink href={resetPasswordUrl} type="static">
+                                <ExtendedNextLink href={resetPasswordUrl}>
                                     <div className="block text-sm text-primary underline hover:no-underline">
                                         {t('Lost your password?')}
                                     </div>

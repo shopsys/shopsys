@@ -20,7 +20,7 @@ export const ErrorPageTextHeading: FC = ({ children }) => <div className="text-2
 export const ErrorPageTextMain: FC = ({ children }) => <div className="mt-4 text-greyDark">{children}</div>;
 
 export const ErrorPageButtonLink: FC<{ href: string }> = ({ href, children }) => (
-    <ExtendedNextLink href={href} type="static">
+    <ExtendedNextLink href={href}>
         <Button className="mt-5">{children}</Button>
     </ExtendedNextLink>
 );

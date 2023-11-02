@@ -31,9 +31,7 @@ export const CustomerContent: FC = () => {
                     </CustomerListItem>
 
                     <CustomerListItem>
-                        <ExtendedNextLink href={customerEditProfileUrl} type="static">
-                            {t('Edit profile')}
-                        </ExtendedNextLink>
+                        <ExtendedNextLink href={customerEditProfileUrl}>{t('Edit profile')}</ExtendedNextLink>
                     </CustomerListItem>
 
                     <CustomerListItem>

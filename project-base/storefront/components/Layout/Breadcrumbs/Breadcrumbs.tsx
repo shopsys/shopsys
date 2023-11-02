@@ -5,11 +5,11 @@ import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
-import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
+import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 
 type BreadcrumbsProps = {
     breadcrumbs: BreadcrumbFragmentApi[];
-    type?: FriendlyPagesTypesKeys;
+    type?: FriendlyPagesTypesKey;
 };
 
 export const breadcrumbsTwClass =
@@ -66,12 +66,12 @@ export const BreadcrumbsSpan: FC = ({ children, dataTestId }) => (
     </span>
 );
 
-const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKeys }> = ({ href, type, children, dataTestId }) => (
+const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKey }> = ({ href, type, children, dataTestId }) => (
     <ExtendedNextLink
         className="hidden text-greyLight no-underline last-of-type:inline lg:inline lg:text-primary lg:underline"
         data-testid={dataTestId}
         href={href}
-        type={type || 'static'}
+        type={type}
     >
         {children}
     </ExtendedNextLink>

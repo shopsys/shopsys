@@ -33,7 +33,7 @@ export const FriendlyPagesTypes = {
     seo_category: 'front_category_seo',
 } as const;
 
-export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKeys, string> = {
+export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKey, string> = {
     article: '/articles/[articleSlug]',
     blogArticle: '/blogArticles/[blogArticleSlug]',
     blogCategory: '/blogCategories/[blogCategorySlug]',
@@ -45,6 +45,8 @@ export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKeys, string> =
     seo_category: '/categories/[categorySlug]',
 } as const;
 
-export type FriendlyPagesTypesKeys = keyof typeof FriendlyPagesTypes;
+export type FriendlyPagesTypesKey = keyof typeof FriendlyPagesTypes;
 
-export type FriendlyPageTypesValue = (typeof FriendlyPagesTypes)[FriendlyPagesTypesKeys];
+export type FriendlyPageTypesValue = (typeof FriendlyPagesTypes)[FriendlyPagesTypesKey];
+
+export const FriendlyPagesTypesKeys = Object.keys(FriendlyPagesTypes) as FriendlyPagesTypesKey[];

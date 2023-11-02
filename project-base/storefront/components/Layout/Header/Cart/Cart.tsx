@@ -38,22 +38,19 @@ export const Cart: FC = ({ className }) => {
             <ExtendedNextLink
                 data-testid={TEST_IDENTIFIER + 'block'}
                 href={cartUrl}
-                type="static"
                 className={twJoin(
                     'hidden items-center gap-x-4 rounded bg-orangeLight py-4 pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
                 )}
             >
-                <>
-                    <span className="relative flex text-lg">
-                        <CartIcon className="w-6 lg:w-5" />
-                        <CartCount>{cart?.items.length ?? 0}</CartCount>
-                    </span>
-                    <span className="hidden text-sm font-bold lg:block" data-testid={TEST_IDENTIFIER + 'totalprice'}>
-                        {formatPrice(cart?.totalItemsPrice.priceWithVat ?? 0, {
-                            explicitZero: true,
-                        })}
-                    </span>
-                </>
+                <span className="relative flex text-lg">
+                    <CartIcon className="w-6 lg:w-5" />
+                    <CartCount>{cart?.items.length ?? 0}</CartCount>
+                </span>
+                <span className="hidden text-sm font-bold lg:block" data-testid={TEST_IDENTIFIER + 'totalprice'}>
+                    {formatPrice(cart?.totalItemsPrice.priceWithVat ?? 0, {
+                        explicitZero: true,
+                    })}
+                </span>
             </ExtendedNextLink>
 
             <div
@@ -97,12 +94,9 @@ export const Cart: FC = ({ className }) => {
                 <ExtendedNextLink
                     className="relative flex h-full w-full items-center justify-center p-3 text-white no-underline transition-colors hover:text-white hover:no-underline"
                     href={cartUrl}
-                    type="static"
                 >
-                    <>
-                        <CartIcon className="w-6 text-white" />
-                        <CartCount>{cart?.items.length ?? 0}</CartCount>
-                    </>
+                    <CartIcon className="w-6 text-white" />
+                    <CartCount>{cart?.items.length ?? 0}</CartCount>
                 </ExtendedNextLink>
             </div>
         </div>

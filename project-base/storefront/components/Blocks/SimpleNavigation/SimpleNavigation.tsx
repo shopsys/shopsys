@@ -1,6 +1,6 @@
 import { SimpleNavigationListItem } from './SimpleNavigationListItem';
-import { ExtendedLinkPageType } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twMergeCustom } from 'helpers/twMerge';
+import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropType } from 'types/simpleNavigation';
 
 type SimpleNavigationProps = {
@@ -8,7 +8,7 @@ type SimpleNavigationProps = {
     imageType?: string;
     isWithoutSlider?: true;
     itemClassName?: string;
-    linkType: ExtendedLinkPageType;
+    linkType: PageType;
 };
 
 const TEST_IDENTIFIER = 'blocks-simplenavigation';

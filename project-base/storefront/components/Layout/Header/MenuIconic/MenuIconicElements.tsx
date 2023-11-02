@@ -1,6 +1,7 @@
-import { ExtendedLinkPageType, ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
+import { PageType } from 'store/slices/createPageLoadingStateSlice';
 
 export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, dataTestId, title }) => (
     <li className={className} data-testid={dataTestId} title={title}>
@@ -8,7 +9,7 @@ export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, da
     </li>
 );
 
-type MenuIconicItemLinkProps = { onClick?: () => void; href?: string; title?: string; type?: ExtendedLinkPageType };
+type MenuIconicItemLinkProps = { onClick?: () => void; href?: string; title?: string; type?: PageType };
 
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, type, dataTestId }) => {
     if (href) {
@@ -17,7 +18,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, h
                 className="block py-3 px-5 text-sm text-dark no-underline"
                 data-testid={dataTestId}
                 href={href}
-                type={type || 'static'}
+                type={type}
                 onClick={onClick}
             >
                 {children}
@@ -45,7 +46,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
                     data-testid={dataTestId}
                     href={href}
                     title={title}
-                    type={type || 'static'}
+                    type={type}
                     onClick={onClick}
                 >
                     {children}

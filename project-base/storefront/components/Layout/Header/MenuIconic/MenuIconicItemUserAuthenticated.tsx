@@ -47,7 +47,7 @@ export const MenuIconicItemUserAuthenticated: FC = ({ dataTestId }) => {
             </div>
 
             <div className="order-2 ml-1 flex h-9 w-9 cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
-                <ExtendedNextLink href={customerUrl} type="static">
+                <ExtendedNextLink href={customerUrl}>
                     <div className="relative flex h-full w-full items-center justify-center text-white transition-colors">
                         <UserIcon className="w-4 text-white" />
                     </div>
