@@ -11,6 +11,7 @@ use App\FrontendApi\Mutation\Payment\Exception\OrderAlreadyPaidUserError;
 use App\Model\Payment\Service\PaymentServiceFacade;
 use GraphQL\Error\Error;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Throwable;
 
@@ -19,10 +20,12 @@ class PaymentMutation extends AbstractMutation
     /**
      * @param \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade
      * @param \App\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
+     * @param \App\Model\Order\OrderFacade $orderFacade
      */
     public function __construct(
         private readonly OrderApiFacade $orderApiFacade,
         private readonly PaymentServiceFacade $paymentServiceFacade,
+        private readonly OrderFacade $orderFacade,
     ) {
     }
 
@@ -52,15 +55,20 @@ class PaymentMutation extends AbstractMutation
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return array{isPaid: bool, transactionCount: int}
+     * @return array{isPaid: bool, transactionCount: int, paymentType: string}
      */
     public function updatePaymentStatusMutation(Argument $argument): array
     {
         try {
             $uuid = $argument['orderUuid'];
+            $orderPaymentStatusPageValidityHash = $argument['orderPaymentStatusPageValidityHash'] ?? null;
             $order = $this->orderApiFacade->getByUuid($uuid);
 
             $this->paymentServiceFacade->updatePaymentTransactionsByOrder($order);
+
+            if ($orderPaymentStatusPageValidityHash !== null && $order->getOrderPaymentStatusPageValidityHash() === $orderPaymentStatusPageValidityHash) {
+                $this->orderFacade->setOrderPaymentStatusPageValidFromNow($order);
+            }
 
             return [
                 'isPaid' => $order->isPaid(),

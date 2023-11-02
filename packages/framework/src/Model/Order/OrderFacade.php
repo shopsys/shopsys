@@ -592,4 +592,14 @@ class OrderFacade
             $orderPaymentData->name = $orderPaymentData->payment->getName($orderLocale);
         }
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     */
+    public function setOrderPaymentStatusPageValidFromNow(Order $order): void
+    {
+        $order->setOrderPaymentStatusPageValidFromNow();
+        $order->setOrderPaymentStatusPageValidityHashToNull();
+        $this->em->flush();
+    }
 }

@@ -49,7 +49,10 @@ class GoPayOrderMapper
             'callback' => [
                 'return_url' => $router->generate(
                     'front_order_paid',
-                    ['orderIdentifier' => $order->getUuid()],
+                    [
+                        'orderIdentifier' => $order->getUuid(),
+                        'orderPaymentStatusPageValidityHash' => $order->getOrderPaymentStatusPageValidityHash(),
+                    ],
                     UrlGeneratorInterface::ABSOLUTE_URL,
                 ),
                 'notification_url' => $router->generate(

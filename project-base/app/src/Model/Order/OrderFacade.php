@@ -83,6 +83,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method updateTransportAndPaymentNamesInOrderData(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order)
  * @method fillOrderItems(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview)
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+ * @method setOrderPaymentStatusPageValidFromNow(\App\Model\Order\Order $order)
  */
 class OrderFacade extends BaseOrderFacade
 {

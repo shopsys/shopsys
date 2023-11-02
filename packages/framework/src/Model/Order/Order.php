@@ -55,6 +55,12 @@ class Order
     protected $createdAt;
 
     /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $orderPaymentStatusPageValidFrom;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]|\Doctrine\Common\Collections\Collection
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Order\Item\OrderItem",
@@ -278,6 +284,12 @@ class Order
     protected $origin;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="guid", nullable=true)
+     */
+    protected $orderPaymentStatusPageValidityHash;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -314,6 +326,7 @@ class Order
         $this->origin = $orderData->origin;
         $this->uuid = $orderData->uuid ?: Uuid::uuid4()->toString();
         $this->setTotalPrice(new OrderTotalPrice(Money::zero(), Money::zero(), Money::zero()));
+        $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();
     }
 
     /**
@@ -623,6 +636,19 @@ class Order
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getOrderPaymentStatusPageValidFrom(): ?DateTime
+    {
+        return $this->orderPaymentStatusPageValidFrom;
+    }
+
+    public function setOrderPaymentStatusPageValidFromNow(): void
+    {
+        $this->orderPaymentStatusPageValidFrom = new DateTime();
     }
 
     /**
@@ -949,5 +975,18 @@ class Order
         $this->editData($orderData);
 
         return new OrderEditResult($statusChanged);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOrderPaymentStatusPageValidityHash(): ?string
+    {
+        return $this->orderPaymentStatusPageValidityHash;
+    }
+
+    public function setOrderPaymentStatusPageValidityHashToNull(): void
+    {
+        $this->orderPaymentStatusPageValidityHash = null;
     }
 }
