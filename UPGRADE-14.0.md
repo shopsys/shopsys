@@ -186,3 +186,6 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
             router.reload();
         }
         ```
+
+-   added USPs on product detail page ([#2887](https://github.com/shopsys/shopsys/pull/2887))
+    -   see #project-base-diff to update your project
