@@ -1,10 +1,8 @@
 import { useIsUserLoggedIn } from './auth/useIsUserLoggedIn';
 import {
-    ListedProductFragmentApi,
     useAddProductToWishlistMutationApi,
     useCleanWishlistMutationApi,
     useRemoveProductFromWishlistMutationApi,
-    useSharedWishlistQueryApi,
     useWishlistQueryApi,
 } from 'graphql/generated';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
@@ -82,20 +80,5 @@ export const useWishlist = () => {
         isProductInWishlist,
         handleCleanWishlist,
         toggleProductInWishlist,
-    };
-};
-
-export const useSharedWishlist = (catnums: string[]): { products: ListedProductFragmentApi[]; fetching: boolean } => {
-    const [{ data, fetching }] = useSharedWishlistQueryApi({
-        variables: { catnums },
-    });
-
-    if (!data?.productsByCatnums) {
-        return { products: [], fetching };
-    }
-
-    return {
-        products: data.productsByCatnums,
-        fetching,
     };
 };

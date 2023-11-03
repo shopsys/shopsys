@@ -1,4 +1,4 @@
-query SharedWishlistQuery($catnums: [String!]!) {
+query ProductsByCatnums($catnums: [String!]!) {
     productsByCatnums(catnums: $catnums) {
         name
     }
