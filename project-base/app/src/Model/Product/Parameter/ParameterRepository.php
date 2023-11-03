@@ -243,7 +243,6 @@ class ParameterRepository extends BaseParameterRepository
         $parameterValue = $this->getParameterValueRepository()->findOneBy([
             'text' => $parameterValueData->text,
             'locale' => $parameterValueData->locale,
-            'rgbHex' => $parameterValueData->rgbHex,
         ]);
 
         if ($parameterValue === null) {
@@ -252,6 +251,11 @@ class ParameterRepository extends BaseParameterRepository
             $this->em->persist($parameterValue);
             // Doctrine's identity map is not cache.
             // We have to flush now, so that next findOneBy() finds new ParameterValue.
+            $this->em->flush();
+        }
+
+        if ($parameterValue->getRgbHex() !== $parameterValueData->rgbHex) {
+            $parameterValue->edit($parameterValueData);
             $this->em->flush();
         }
 
