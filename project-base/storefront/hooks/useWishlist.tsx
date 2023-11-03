@@ -34,7 +34,7 @@ export const useWishlist = () => {
     }, [wishlistUuid]);
 
     useEffect(() => {
-        if (data?.wishlist?.uuid) {
+        if (!isUserLoggedIn && data?.wishlist && wishlistUuid !== data.wishlist.uuid) {
             updateWishlistUuid(data.wishlist.uuid);
         }
     }, [data?.wishlist?.uuid]);
@@ -87,12 +87,6 @@ export const useWishlist = () => {
             handleAddToWishlist(productUuid);
         }
     };
-
-    useEffect(() => {
-        if (!isUserLoggedIn && data?.wishlist && wishlistUuid !== data.wishlist.uuid) {
-            updateWishlistUuid(data.wishlist.uuid);
-        }
-    }, [data?.wishlist?.uuid]);
 
     return {
         wishlist: data?.wishlist || undefined,

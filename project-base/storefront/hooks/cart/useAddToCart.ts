@@ -27,7 +27,7 @@ export const useAddToCart = (
     const { cart } = useCurrentCart();
     const domainConfig = useDomainConfig();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const updateUserState = usePersistStore((store) => store.updateUserState);
+    const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
 
     const addToCartAction: AddToCartAction = async (productUuid, quantity, listIndex, isAbsoluteQuantity = false) => {
         const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
@@ -37,7 +37,7 @@ export const useAddToCart = (
         });
 
         if (!cartUuid) {
-            updateUserState({ cartUuid: addToCartActionResult.data?.AddToCart.cart.uuid ?? null });
+            updateCartUuid(addToCartActionResult.data?.AddToCart.cart.uuid ?? null);
         }
 
         // EXTEND ADDING TO CART HERE

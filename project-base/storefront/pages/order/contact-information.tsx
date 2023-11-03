@@ -50,7 +50,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const domainConfig = useDomainConfig();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const updateUserState = usePersistStore((store) => store.updateUserState);
+    const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
     const customer = usePersistStore((store) => store.contactInformation.customer);
     const [transportAndPaymentUrl, orderConfirmationUrl] = getInternationalizedStaticUrls(
@@ -180,9 +180,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                 isPaymentSuccessful,
             );
 
-            updateUserState({
-                cartUuid: null,
-            });
+            updateCartUuid(null);
 
             if (!user) {
                 query.registrationData = JSON.stringify(formValues);

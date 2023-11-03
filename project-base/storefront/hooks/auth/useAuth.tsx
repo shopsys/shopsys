@@ -31,10 +31,12 @@ export type LogoutHandler = () => Promise<
 export const useAuth = () => {
     const [, loginMutation] = useLoginApi();
     const [, logoutMutation] = useLogoutApi();
-    const updateUserState = usePersistStore((store) => store.updateUserState);
-    const updateWishlistUuid = usePersistStore((store) => store.updateWishlistUuid);
+
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+    const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
+    const updateWishlistUuid = usePersistStore((store) => store.updateWishlistUuid);
+    const updateComparisonUuid = usePersistStore((store) => store.updateComparisonUuid);
 
     const router = useRouter();
 
@@ -47,9 +49,7 @@ export const useAuth = () => {
 
             setTokensToCookies(accessToken, refreshToken);
 
-            updateUserState({
-                cartUuid: null,
-            });
+            updateCartUuid(null);
 
             updateAuthLoadingState(
                 loginResult.data.Login.showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading',
@@ -70,6 +70,7 @@ export const useAuth = () => {
 
         if (logoutResult.data?.Logout) {
             updateWishlistUuid(null);
+            updateComparisonUuid(null);
             removeTokensFromCookies();
             updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
             updateAuthLoadingState('logout-loading');
