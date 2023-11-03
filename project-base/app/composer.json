@@ -107,6 +107,7 @@
         "symfony/monolog-bundle": "^3.5.0",
         "symfony/property-info": "^5.4",
         "symfony/proxy-manager-bridge": "^5.4",
+        "symfony/runtime": "^5.4",
         "symfony/security-bundle": "^5.4",
         "symfony/service-contracts": "^2.5.2",
         "symfony/stopwatch": "^5.4",
@@ -182,7 +183,8 @@
             "ocramius/package-versions": true,
             "symfony/flex": true,
             "cweagans/composer-patches": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "symfony/runtime": true
         }
     },
     "extra": {

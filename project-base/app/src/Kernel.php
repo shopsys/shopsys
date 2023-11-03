@@ -8,40 +8,16 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use function dirname;
 
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
+
     private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
-
-    /**
-     * @return string
-     */
-    public function getCacheDir(): string
-    {
-        return $this->getProjectDir() . '/var/cache/' . $this->environment;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLogDir(): string
-    {
-        return $this->getProjectDir() . '/var/log';
-    }
-
-    /**
-     * @return string
-     */
-    public function getProjectDir(): string
-    {
-        return dirname(__DIR__);
-    }
 
     public function boot(): void
     {
@@ -55,43 +31,32 @@ class Kernel extends BaseKernel
     }
 
     /**
-     * @return iterable
-     */
-    public function registerBundles(): iterable
-    {
-        $contents = require $this->getProjectDir() . '/config/bundles.php';
-
-        foreach ($contents as $class => $envs) {
-            if ($envs[$this->environment] ?? $envs['all'] ?? false) {
-                yield new $class();
-            }
-        }
-    }
-
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param \Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $container
      * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $builder
      */
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
-    {
-        $container->addResource(new FileResource($this->getProjectDir() . '/config/bundles.php'));
-        $confDir = $this->getProjectDir() . '/config';
+    protected function configureContainer(
+        ContainerConfigurator $container,
+        LoaderInterface $loader,
+        ContainerBuilder $builder,
+    ): void {
+        $configDir = $this->getConfigDir();
 
-        $loader->load($confDir . '/{packages}/*' . self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir . '/{packages}/' . $this->environment . '/**/*' . self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir . '/{services}' . self::CONFIG_EXTS, 'glob');
-        $loader->load($confDir . '/{services}_' . $this->environment . self::CONFIG_EXTS, 'glob');
+        $container->import($configDir . '/{packages}/*' . self::CONFIG_EXTS);
+        $container->import($configDir . '/{packages}/' . $this->environment . '/**/*' . self::CONFIG_EXTS);
+        $container->import($configDir . '/{services}' . self::CONFIG_EXTS);
+        $container->import($configDir . '/{services}_' . $this->environment . self::CONFIG_EXTS);
 
         if (file_exists(__DIR__ . '/../../../parameters_monorepo.yaml')) {
-            $loader->load(__DIR__ . '/../../../parameters_monorepo.yaml');
+            $container->import(__DIR__ . '/../../../parameters_monorepo.yaml');
         }
 
-        if (file_exists($confDir . '/parameters_version.yaml')) {
-            $loader->load($confDir . '/parameters_version.yaml');
+        if (file_exists($configDir . '/parameters_version.yaml')) {
+            $container->import($configDir . '/parameters_version.yaml');
         }
 
-        if (file_exists($confDir . '/parameters.yaml')) {
-            $loader->load($confDir . '/parameters.yaml');
+        if (file_exists($configDir . '/parameters.yaml')) {
+            $container->import($configDir . '/parameters.yaml');
         }
     }
 
@@ -100,10 +65,10 @@ class Kernel extends BaseKernel
      */
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
-        $confDir = $this->getProjectDir() . '/config';
+        $configDir = $this->getConfigDir();
 
-        $routes->import($confDir . '/{routes}/*' . self::CONFIG_EXTS);
-        $routes->import($confDir . '/{routes}/' . $this->environment . '/**/*' . self::CONFIG_EXTS);
-        $routes->import($confDir . '/{routes}' . self::CONFIG_EXTS);
+        $routes->import($configDir . '/{routes}/*' . self::CONFIG_EXTS);
+        $routes->import($configDir . '/{routes}/' . $this->environment . '/**/*' . self::CONFIG_EXTS);
+        $routes->import($configDir . '/{routes}' . self::CONFIG_EXTS);
     }
 }

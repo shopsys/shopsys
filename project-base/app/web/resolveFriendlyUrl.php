@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Symfony\Component\Dotenv\Dotenv;
+
 $projectRootDirectory = __DIR__ . '/..';
 
 // change autoloading source for monorepo
@@ -10,7 +12,7 @@ if (file_exists(__DIR__ . '/../../../parameters_monorepo.yaml')) {
 }
 
 require $projectRootDirectory . '/vendor/symfony/dotenv/Dotenv.php';
-require __DIR__ . '/../config/bootstrap.php';
+(new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 
 const ROUTE = 'route';
 const REDIRECT_TO = 'redirectTo';

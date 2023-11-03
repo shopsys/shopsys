@@ -15,6 +15,4 @@ if (file_exists(__DIR__ . $projectRootDirectory . '/' . $symfonyDumpFunctionPath
     require_once __DIR__ . $projectRootDirectory . '/' . $symfonyDumpFunctionPath;
 }
 
-$loader = require $projectRootDirectory . '/vendor/autoload.php';
-
-return $loader;
+require $projectRootDirectory . '/vendor/autoload_runtime.php';
