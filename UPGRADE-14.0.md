@@ -1489,6 +1489,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   enable product filters provided by Luigi's Box when using Luigi's Box ([#3074](https://github.com/shopsys/shopsys/pull/3074))
     -   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory::createProductFilterOptions()` has changed its visibility to `public`
     -   see #project-base-diff to update your project
+-   prevent duplicate color parameters in data fixtures ([#2911](https://github.com/shopsys/shopsys/pull/2911))
+    - see #project-base-diff to update your project
 
 ### Storefront
 
