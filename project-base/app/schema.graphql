@@ -591,13 +591,6 @@ type CompanyCustomerUser implements CustomerUser {
   uuid: Uuid!
 }
 
-type Comparison {
-  "List of compared products"
-  products: [Product!]!
-  "Comparison identifier"
-  uuid: Uuid!
-}
-
 input ContactInput {
   "Email address of the sender"
   email: String!
@@ -904,12 +897,8 @@ scalar Money
 type Mutation {
   "Fills cart based on a given order, possibly merging it with the current cart"
   AddOrderItemsToCart(input: AddOrderItemsToCartInput!): Cart!
-  "Add product to Comparison and create if not exists."
-  addProductToComparison(comparisonUuid: Uuid, productUuid: Uuid!): Comparison!
   "Adds a product to a product list"
   AddProductToList(input: ProductListUpdateInput!): ProductList!
-  "Add product to wishlist and create if not exists."
-  addProductToWishlist(productUuid: Uuid!, wishlistUuid: Uuid): Wishlist!
   "Add product to cart for future checkout"
   AddToCart(input: AddToCartInput!): AddToCartResult!
   "Apply new promo code for the future checkout"
@@ -922,12 +911,8 @@ type Mutation {
   ChangePersonalData(input: ChangePersonalDataInput!): CustomerUser!
   "Add a transport to the cart, or remove a transport from the cart"
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
-  "Remove all products from Comparison and remove it."
-  cleanComparison(comparisonUuid: Uuid): String!
   "Removes the product list"
   CleanProductList(input: ProductListInput!): ProductList
-  "Remove all products from wishlist and remove it."
-  cleanWishlist(wishlistUuid: Uuid): Wishlist
   "Send message to the site owner"
   Contact(input: ContactInput!): Boolean!
   "Creates complete order with products and addresses"
@@ -952,12 +937,8 @@ type Mutation {
   Register(input: RegistrationDataInput!): LoginResult!
   "Remove product from cart"
   RemoveFromCart(input: RemoveFromCartInput!): Cart!
-  "Remove product from Comparison and if is Comparison empty remove it."
-  removeProductFromComparison(comparisonUuid: Uuid, productUuid: Uuid!): Comparison
   "Removes a product from a product list"
   RemoveProductFromList(input: ProductListUpdateInput!): ProductList
-  "Remove product from wishlist and if is wishlist empty remove it."
-  removeProductFromWishlist(productUuid: Uuid!, wishlistUuid: Uuid): Wishlist
   "Remove already used promo code from cart"
   RemovePromoCodeFromCart(input: RemovePromoCodeFromCartInput!): Cart!
   "Request password recovery - email with hash will be sent"
@@ -1730,8 +1711,6 @@ type Query {
   "Returns category filtered using UUID or URL slug"
   category(filter: ProductFilter, orderingMode: ProductOrderingModeEnum, urlSlug: String, uuid: Uuid): Category
   CompanyCustomerUser: CompanyCustomerUser
-  "Get comparison by UUID or comparison of logged customer user."
-  comparison(uuid: Uuid): Comparison
   "Returns information about cookies article"
   cookiesArticle: ArticleSite
   "Returns available countries"
@@ -1813,8 +1792,6 @@ type Query {
   "Returns available transport methods based on the current cart state"
   transports(cartUuid: Uuid): [Transport!]!
   Variant: Variant
-  "Get wishlist by uuid or if customer is logged, try find for logged customer."
-  wishlist(wishlistUuid: Uuid): Wishlist
 }
 
 input RecoverPasswordInput {
@@ -2253,11 +2230,4 @@ type Variant implements Product & Breadcrumb & Slug {
 type VideoToken {
   description: String!
   token: String!
-}
-
-type Wishlist {
-  "List of wishlist products"
-  products: [Product!]!
-  "Wishlist identifier"
-  uuid: Uuid!
 }

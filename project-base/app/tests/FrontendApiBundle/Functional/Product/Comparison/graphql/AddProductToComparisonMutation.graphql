@@ -1,8 +1,0 @@
-mutation addProductToComparison($productUuid: Uuid!, $comparisonUuid: Uuid){
-    addProductToComparison(productUuid:$productUuid, comparisonUuid: $comparisonUuid){
-        uuid
-        products{
-            name
-        }
-    }
-}

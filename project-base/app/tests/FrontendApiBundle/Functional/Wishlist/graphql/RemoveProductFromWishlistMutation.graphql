@@ -1,8 +1,0 @@
-mutation removeProductFromWishlist($productUuid: Uuid!, $wishlistUuid: Uuid){
-    removeProductFromWishlist(productUuid:$productUuid, wishlistUuid: $wishlistUuid){
-        uuid
-        products{
-            name
-        }
-    }
-}

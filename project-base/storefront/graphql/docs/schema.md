@@ -36,7 +36,6 @@
     * [CategoryEdge](#categoryedge)
     * [CategoryHierarchyItem](#categoryhierarchyitem)
     * [CompanyCustomerUser](#companycustomeruser)
-    * [Comparison](#comparison)
     * [Country](#country)
     * [CreateOrderResult](#createorderresult)
     * [DeliveryAddress](#deliveryaddress)
@@ -98,7 +97,6 @@
     * [Unit](#unit)
     * [Variant](#variant)
     * [VideoToken](#videotoken)
-    * [Wishlist](#wishlist)
   * [Inputs](#inputs)
     * [AddOrderItemsToCartInput](#addorderitemstocartinput)
     * [AddToCartInput](#addtocartinput)
@@ -517,20 +515,6 @@ Returns category filtered using UUID or URL slug
 <tr>
 <td colspan="2" valign="top"><strong>CompanyCustomerUser</strong></td>
 <td valign="top"><a href="#companycustomeruser">CompanyCustomerUser</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>comparison</strong></td>
-<td valign="top"><a href="#comparison">Comparison</a></td>
-<td>
-
-Get comparison by UUID or comparison of logged customer user.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
 <tr>
@@ -1092,20 +1076,6 @@ Returns available transport methods based on the current cart state
 <td valign="top"><a href="#variant">Variant</a></td>
 <td></td>
 </tr>
-<tr>
-<td colspan="2" valign="top"><strong>wishlist</strong></td>
-<td valign="top"><a href="#wishlist">Wishlist</a></td>
-<td>
-
-Get wishlist by uuid or if customer is logged, try find for logged customer.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">wishlistUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
 </tbody>
 </table>
 
@@ -1135,25 +1105,6 @@ Fills cart based on a given order, possibly merging it with the current cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>addProductToComparison</strong></td>
-<td valign="top"><a href="#comparison">Comparison</a>!</td>
-<td>
-
-Add product to Comparison and create if not exists.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">comparisonUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">productUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>AddProductToList</strong></td>
 <td valign="top"><a href="#productlist">ProductList</a>!</td>
 <td>
@@ -1165,25 +1116,6 @@ Adds a product to a product list
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#productlistupdateinput">ProductListUpdateInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>addProductToWishlist</strong></td>
-<td valign="top"><a href="#wishlist">Wishlist</a>!</td>
-<td>
-
-Add product to wishlist and create if not exists.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">productUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">wishlistUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
 <tr>
@@ -1271,20 +1203,6 @@ Add a transport to the cart, or remove a transport from the cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>cleanComparison</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Remove all products from Comparison and remove it.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">comparisonUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>CleanProductList</strong></td>
 <td valign="top"><a href="#productlist">ProductList</a></td>
 <td>
@@ -1296,20 +1214,6 @@ Removes the product list
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>cleanWishlist</strong></td>
-<td valign="top"><a href="#wishlist">Wishlist</a></td>
-<td>
-
-Remove all products from wishlist and remove it.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">wishlistUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
 <tr>
@@ -1476,25 +1380,6 @@ Remove product from cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>removeProductFromComparison</strong></td>
-<td valign="top"><a href="#comparison">Comparison</a></td>
-<td>
-
-Remove product from Comparison and if is Comparison empty remove it.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">comparisonUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">productUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>RemoveProductFromList</strong></td>
 <td valign="top"><a href="#productlist">ProductList</a></td>
 <td>
@@ -1506,25 +1391,6 @@ Removes a product from a product list
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#productlistupdateinput">ProductListUpdateInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>removeProductFromWishlist</strong></td>
-<td valign="top"><a href="#wishlist">Wishlist</a></td>
-<td>
-
-Remove product from wishlist and if is wishlist empty remove it.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">productUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">wishlistUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
 <tr>
@@ -3808,39 +3674,6 @@ Phone number
 <td>
 
 UUID
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### Comparison
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td>
-
-List of compared products
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-Comparison identifier
 
 </td>
 </tr>
@@ -8578,39 +8411,6 @@ UUID
 <td colspan="2" valign="top"><strong>token</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
-</tr>
-</tbody>
-</table>
-
-### Wishlist
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td>
-
-List of wishlist products
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-Wishlist identifier
-
-</td>
 </tr>
 </tbody>
 </table>

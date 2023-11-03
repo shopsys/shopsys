@@ -742,14 +742,6 @@ export type CompanyCustomerUserApi = CustomerUserApi & {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type ComparisonApi = {
-  __typename?: 'Comparison';
-  /** List of compared products */
-  products: Array<ProductApi>;
-  /** Comparison identifier */
-  uuid: Scalars['Uuid']['output'];
-};
-
 export type ContactInputApi = {
   /** Email address of the sender */
   email: Scalars['String']['input'];
@@ -1152,6 +1144,7 @@ export type MutationApi = {
   RequestPersonalDataAccess: PersonalDataPageApi;
   /** Set default delivery address by Uuid */
   SetDefaultDeliveryAddress: CustomerUserApi;
+<<<<<<< HEAD
   /** check payment status of order after callback from payment service */
   UpdatePaymentStatus: PaymentStatusApi;
   /** Add product to Comparison and create if not exists. */
@@ -1166,6 +1159,21 @@ export type MutationApi = {
   removeProductFromComparison: Maybe<ComparisonApi>;
   /** Remove product from wishlist and if is wishlist empty remove it. */
   removeProductFromWishlist: Maybe<WishlistApi>;
+||||||| parent of 4c96bd52e (remove old Wishlist and Comparison implementations)
+  /** Add product to Comparison and create if not exists. */
+  addProductToComparison: ComparisonApi;
+  /** Add product to wishlist and create if not exists. */
+  addProductToWishlist: WishlistApi;
+  /** Remove all products from Comparison and remove it. */
+  cleanComparison: Scalars['String']['output'];
+  /** Remove all products from wishlist and remove it. */
+  cleanWishlist: Maybe<WishlistApi>;
+  /** Remove product from Comparison and if is Comparison empty remove it. */
+  removeProductFromComparison: Maybe<ComparisonApi>;
+  /** Remove product from wishlist and if is wishlist empty remove it. */
+  removeProductFromWishlist: Maybe<WishlistApi>;
+=======
+>>>>>>> 4c96bd52e (remove old Wishlist and Comparison implementations)
 };
 
 
@@ -1293,6 +1301,7 @@ export type MutationSetDefaultDeliveryAddressArgsApi = {
   deliveryAddressUuid: Scalars['Uuid']['input'];
 };
 
+<<<<<<< HEAD
 
 export type MutationUpdatePaymentStatusArgsApi = {
   orderPaymentStatusPageValidityHash: InputMaybe<Scalars['String']['input']>;
@@ -1333,6 +1342,43 @@ export type MutationRemoveProductFromWishlistArgsApi = {
   wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
+||||||| parent of 4c96bd52e (remove old Wishlist and Comparison implementations)
+
+export type MutationAddProductToComparisonArgsApi = {
+  comparisonUuid: InputMaybe<Scalars['Uuid']['input']>;
+  productUuid: Scalars['Uuid']['input'];
+};
+
+
+export type MutationAddProductToWishlistArgsApi = {
+  productUuid: Scalars['Uuid']['input'];
+  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type MutationCleanComparisonArgsApi = {
+  comparisonUuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type MutationCleanWishlistArgsApi = {
+  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type MutationRemoveProductFromComparisonArgsApi = {
+  comparisonUuid: InputMaybe<Scalars['Uuid']['input']>;
+  productUuid: Scalars['Uuid']['input'];
+};
+
+
+export type MutationRemoveProductFromWishlistArgsApi = {
+  productUuid: Scalars['Uuid']['input'];
+  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+=======
+>>>>>>> 4c96bd52e (remove old Wishlist and Comparison implementations)
 /** Represents a navigation structure item */
 export type NavigationItemApi = {
   __typename?: 'NavigationItem';
@@ -2182,8 +2228,6 @@ export type QueryApi = {
   categoriesSearch: CategoryConnectionApi;
   /** Returns category filtered using UUID or URL slug */
   category: Maybe<CategoryApi>;
-  /** Get comparison by UUID or comparison of logged customer user. */
-  comparison: Maybe<ComparisonApi>;
   /** Returns information about cookies article */
   cookiesArticle: Maybe<ArticleSiteApi>;
   /** Returns available countries */
@@ -2253,8 +2297,6 @@ export type QueryApi = {
   transport: Maybe<TransportApi>;
   /** Returns available transport methods based on the current cart state */
   transports: Array<TransportApi>;
-  /** Get wishlist by uuid or if customer is logged, try find for logged customer. */
-  wishlist: Maybe<WishlistApi>;
 };
 
 
@@ -2344,11 +2386,6 @@ export type QueryCategoryArgsApi = {
   filter: InputMaybe<ProductFilterApi>;
   orderingMode: InputMaybe<ProductOrderingModeEnumApi>;
   urlSlug: InputMaybe<Scalars['String']['input']>;
-  uuid: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-
-export type QueryComparisonArgsApi = {
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
@@ -2465,11 +2502,6 @@ export type QueryTransportArgsApi = {
 
 export type QueryTransportsArgsApi = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-
-export type QueryWishlistArgsApi = {
-  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 export type RecoverPasswordInputApi = {
@@ -2994,14 +3026,6 @@ export type VideoTokenApi = {
   __typename?: 'VideoToken';
   description: Scalars['String']['output'];
   token: Scalars['String']['output'];
-};
-
-export type WishlistApi = {
-  __typename?: 'Wishlist';
-  /** List of wishlist products */
-  products: Array<ProductApi>;
-  /** Wishlist identifier */
-  uuid: Scalars['Uuid']['output'];
 };
 
 type AdvertsFragment_AdvertCode_Api = { __typename: 'AdvertCode', code: string, uuid: string, name: string, positionName: string, type: string, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string }> };

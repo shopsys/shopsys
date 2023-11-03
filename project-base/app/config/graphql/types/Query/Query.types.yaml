@@ -22,6 +22,4 @@ Query:
         - 'GoPayQuery'
         - 'LanguageConstantQuery'
         - 'SettingsQuery'
-        - 'ComparisonQuery'
         - 'SeoPageQuery'
-        - 'WishlistQuery'

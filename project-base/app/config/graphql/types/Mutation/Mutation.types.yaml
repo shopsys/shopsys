@@ -14,5 +14,3 @@ Mutation:
         - 'RegisterMutation'
         - 'LoginMutation'
         - 'OrderMutation'
-        - 'ComparisonMutation'
-        - 'WishlistMutation'

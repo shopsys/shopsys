@@ -12,14 +12,10 @@ use App\FrontendApi\Resolver\Products\Flag\FlagQuery;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
-use App\Model\Product\Comparison\Comparison;
-use App\Model\Product\Comparison\ComparisonRepository;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\ProductRepository;
-use App\Model\Wishlist\Wishlist;
-use App\Model\Wishlist\WishlistRepository;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Type\Definition\ResolveInfo;
 use InvalidArgumentException;
@@ -55,12 +51,10 @@ class ProductsQuery extends BaseProductsQuery
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
      * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
-     * @param \App\Model\Product\Comparison\ComparisonRepository $comparisonRepository
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\FrontendApi\Resolver\Category\CategoryQuery $categoryQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
      * @param \App\FrontendApi\Resolver\Products\Flag\FlagQuery $flagQuery
-     * @param \App\Model\Wishlist\WishlistRepository $wishlistRepository
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -70,12 +64,10 @@ class ProductsQuery extends BaseProductsQuery
         DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
         private readonly ProductFilterDataFactory $productFilterDataFactory,
         private readonly DataLoaderInterface $productsByEntitiesBatchLoader,
-        private readonly ComparisonRepository $comparisonRepository,
         private readonly ProductRepository $productRepository,
         private readonly CategoryQuery $categoryQuery,
         private readonly BrandQuery $brandQuery,
         private readonly FlagQuery $flagQuery,
-        private readonly WishlistRepository $wishlistRepository,
     ) {
         parent::__construct($productFacade, $productFilterFacade, $productConnectionFactory, $productsVisibleAndSortedByIdsBatchLoader, $productListFacade);
     }
@@ -298,28 +290,6 @@ class ProductsQuery extends BaseProductsQuery
     public function productsByCatnumsQuery(array $catnums): Promise
     {
         $productIds = $this->productRepository->getProductIdsByCatnums($catnums);
-
-        return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
-    }
-
-    /**
-     * @param \App\Model\Product\Comparison\Comparison $comparison
-     * @return \GraphQL\Executor\Promise\Promise
-     */
-    public function productsByComparisonQuery(Comparison $comparison): Promise
-    {
-        $productIds = $this->comparisonRepository->getProductIdsByComparison($comparison);
-
-        return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
-    }
-
-    /**
-     * @param \App\Model\Wishlist\Wishlist $wishlist
-     * @return \GraphQL\Executor\Promise\Promise
-     */
-    public function productsByWishlistQuery(Wishlist $wishlist): Promise
-    {
-        $productIds = $this->wishlistRepository->getProductIdsByWishlist($wishlist);
 
         return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
     }
