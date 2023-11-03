@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductListNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductListUserErrorCodeHelper;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
@@ -75,7 +76,7 @@ class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
         $this->assertCount(1, $errors);
-        $this->assertSame(ProductListNotFoundUserError::CODE, $errors[0]['extensions']['userCode']);
+        $this->assertSame(ProductListUserErrorCodeHelper::getUserErrorCode($productListType, ProductListNotFoundUserError::CODE), $errors[0]['extensions']['userCode']);
     }
 
     /**

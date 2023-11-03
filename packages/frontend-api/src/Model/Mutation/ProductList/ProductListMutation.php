@@ -73,7 +73,7 @@ class ProductListMutation extends AbstractMutation
         try {
             return $this->productListFacade->addProductToList($productList, $product);
         } catch (ProductAlreadyInListException $exception) {
-            throw new ProductAlreadyInListUserError($exception->getMessage());
+            throw new ProductAlreadyInListUserError($exception->getMessage(), $productListType);
         }
     }
 
@@ -85,10 +85,11 @@ class ProductListMutation extends AbstractMutation
     {
         $input = $argument['input'];
         $productListInput = $input['productListInput'];
+        $productListType = $productListInput['type'];
         $productList = $this->productListApiFacade->findProductListByInputData($productListInput);
 
         if ($productList === null) {
-            throw new ProductListNotFoundUserError('Product list not found');
+            throw new ProductListNotFoundUserError('Product list not found', $productListType);
         }
 
         $productUuid = $input['productUuid'];
@@ -102,7 +103,7 @@ class ProductListMutation extends AbstractMutation
         try {
             return $this->productListFacade->removeProductFromList($productList, $product);
         } catch (ProductNotInListException $exception) {
-            throw new ProductNotInListUserError($exception->getMessage());
+            throw new ProductNotInListUserError($exception->getMessage(), $productListType);
         }
     }
 
@@ -113,10 +114,11 @@ class ProductListMutation extends AbstractMutation
     public function cleanProductListMutation(Argument $argument): ?ProductList
     {
         $input = $argument['input'];
+        $productListType = $input['type'];
         $productList = $this->productListApiFacade->findProductListByInputData($input);
 
         if ($productList === null) {
-            throw new ProductListNotFoundUserError('Product list not found');
+            throw new ProductListNotFoundUserError('Product list not found', $productListType);
         }
 
         $this->productListFacade->cleanProductList($productList);

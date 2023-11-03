@@ -21,14 +21,14 @@ const ApplicationErrors = {
     'invalid-token': 'no-flash-message',
     'product-not-found': 'flash-message',
     'handling-with-logged-customer-comparison': 'flash-message',
-    'comparison-not-found': 'flash-message',
-    'compared-item-not-found': 'flash-message',
-    'compared-item-already-exists': 'flash-message',
+    'comparison-product-list-not-found': 'flash-message',
+    'comparison-product-not-in-list': 'flash-message',
+    'comparison-product-already-in-list': 'flash-message',
     'seo-page-not-found': 'no-log',
-    'wishlist-not-found': 'flash-message',
-    'wishlist-item-already-exists': 'flash-message',
-    'wishlist-item-not-found': 'flash-message',
     'order-sent-page-not-available': 'no-log',
+    'wishlist-product-list-not-found': 'flash-message',
+    'wishlist-product-already-in-list': 'flash-message',
+    'wishlist-product-not-in-list': 'flash-message',
 } as const;
 
 type KeysMatching<T, V extends ApplicationErrorVerbosityLevel> = {
