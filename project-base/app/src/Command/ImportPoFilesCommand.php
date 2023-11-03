@@ -10,12 +10,14 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\PoDumper;
 use Shopsys\FrameworkBundle\Component\Translation\PoFileLoader;
 use Symfony\Component\Config\Resource\FileResource;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
+#[AsCommand(name: 'translation:import')]
 class ImportPoFilesCommand extends Command
 {
     public const SOURCE_TRANSLATION_DIR = 'sourceTranslationDir';
@@ -24,12 +26,6 @@ class ImportPoFilesCommand extends Command
     public const TYPE = 'po';
 
     private SymfonyLoaderAdapter $fileLoader;
-
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @var string
-     */
-    protected static $defaultName = 'translation:import';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Translation\PoFileLoader $fileLoader

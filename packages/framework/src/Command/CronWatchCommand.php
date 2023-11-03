@@ -6,18 +6,14 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'deploy:cron:watch')]
 class CronWatchCommand extends Command
 {
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'deploy:cron:watch';
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory

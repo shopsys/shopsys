@@ -6,18 +6,14 @@ namespace App\Command;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'shopsys:cdn-domain-url:replace')]
 class ReplaceCdnDomainUrlCommand extends Command
 {
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @var string
-     */
-    protected static $defaultName = 'shopsys:cdn-domain-url:replace';
-
     /**
      * @param string $cdnDomainUrl
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

@@ -7,21 +7,17 @@ namespace Shopsys\FrameworkBundle\Command;
 use Exception;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'shopsys:environment:change')]
 class ChangeEnvironmentCommand extends Command
 {
     private const ARG_ENVIRONMENT = 'environment';
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:environment:change';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting $environmentFileSetting

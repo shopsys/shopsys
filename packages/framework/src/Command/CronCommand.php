@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -19,18 +20,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
+#[AsCommand(name: 'shopsys:cron')]
 class CronCommand extends Command
 {
     private const OPTION_MODULE = 'module';
     private const OPTION_LIST = 'list';
     private const OPTION_INSTANCE_NAME = 'instance-name';
     private const OPTION_RUN_ALL_SERIALLY = 'run-all-serially';
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:cron';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade

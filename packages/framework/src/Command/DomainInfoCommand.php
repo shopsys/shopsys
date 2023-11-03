@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Command;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,6 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
+#[AsCommand(name: 'shopsys:domains:info')]
 class DomainInfoCommand extends Command
 {
     protected const ARG_PROPERTY_NAME = 'propertyName';
@@ -23,12 +25,6 @@ class DomainInfoCommand extends Command
 
     protected const OPTION_DEDUPLICATE = 'deduplicate';
     protected const OPTION_ONELINE = 'oneline';
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:domains:info';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

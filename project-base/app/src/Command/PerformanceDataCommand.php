@@ -8,19 +8,14 @@ use App\DataFixtures\Performance\CategoryDataFixture;
 use App\DataFixtures\Performance\CustomerUserDataFixture;
 use App\DataFixtures\Performance\OrderDataFixture;
 use App\DataFixtures\Performance\ProductDataFixture;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'shopsys:performance-data')]
 class PerformanceDataCommand extends Command
 {
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
-     */
-    protected static $defaultName = 'shopsys:performance-data';
-
     /**
      * @param \App\DataFixtures\Performance\CategoryDataFixture $categoryDataFixture
      * @param \App\DataFixtures\Performance\ProductDataFixture $productDataFixture

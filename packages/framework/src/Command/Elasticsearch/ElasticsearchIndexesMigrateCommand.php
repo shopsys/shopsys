@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'shopsys:elasticsearch:indexes-migrate')]
 class ElasticsearchIndexesMigrateCommand extends AbstractElasticsearchIndexCommand
 {
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:elasticsearch:indexes-migrate';
-
     /**
      * {@inheritdoc}
      */
