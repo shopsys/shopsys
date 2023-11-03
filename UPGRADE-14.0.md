@@ -113,6 +113,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   replace custom application bootstrapping with symfony/runtime ([#2914](https://github.com/shopsys/shopsys/pull/2914))
     -   see #project-base-diff to update your project
+-   prevent duplicate color parameters in data fixtures ([#2911](https://github.com/shopsys/shopsys/pull/2911))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
