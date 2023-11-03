@@ -23,6 +23,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     public const READY_CATEGORY_SEO_TV_IN_SALE = 'ready_category_seo_tv_in_sale';
     public const READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI = 'ready_category_seo_tv_plasma_with_hdmi';
     public const READY_CATEGORY_SEO_PC_NEW_WITH_USB = 'ready_category_seo_pc_new_with_usb';
+    public const READY_CATEGORY_SEO_BLACK_ELECTRONICS = 'ready_category_seo_black_electronics';
 
     /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory
@@ -164,7 +165,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['elektro-barva-cerna'],
             $firstDomainId,
-            null,
+            self::READY_CATEGORY_SEO_BLACK_ELECTRONICS,
             t('description of Electronics in black seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             t('short description of Electronics in black seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             t('title of Electronics in black seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

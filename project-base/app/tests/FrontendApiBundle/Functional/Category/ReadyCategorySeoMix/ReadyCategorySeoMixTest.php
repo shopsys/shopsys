@@ -405,4 +405,34 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
 
         return  $this->getResponseDataForGraphQlType($responseForCategory, 'slug');
     }
+
+    public function testCategoryFilterIsCorrectlySetAsSelected(): void
+    {
+        /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $blackElectronicsSeoCategory */
+        $blackElectronicsSeoCategory = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_BLACK_ELECTRONICS, 1);
+        $seoMixUrlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $blackElectronicsSeoCategory->getId()]);
+        $variables = array_merge(['slug' => $seoMixUrlSlug]);
+        $responseForSeoMix = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/ReadyCategorySeoMixQuery.graphql', $variables);
+
+        $data = $this->getResponseDataForGraphQlType($responseForSeoMix, 'slug');
+
+        $colorFilter = array_filter(
+            $data['products']['productFilterOptions']['parameters'],
+            static function ($item) {
+                return $item['__typename'] === 'ParameterColorFilterOption';
+            },
+        );
+
+        $colorFilterValues = reset($colorFilter)['values'];
+        $black = t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
+
+        $blackColorFilter = array_filter(
+            $colorFilterValues,
+            static function ($item) use ($black) {
+                return $item['text'] === $black;
+            },
+        );
+
+        $this->assertTrue(reset($blackColorFilter)['isSelected']);
+    }
 }
