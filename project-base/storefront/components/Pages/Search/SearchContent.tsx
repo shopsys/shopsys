@@ -2,7 +2,6 @@ import { ProductsSearch } from './ProductsSearch';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SkeletonPageProductsList } from 'components/Blocks/Skeleton/SkeletonPageProductsList';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
@@ -30,7 +29,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
     const isFetchingInitialData = !searchResults && fetching;
 
     return (
-        <Webline>
+        <>
             <Heading type="h1">{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
             {isFetchingInitialData ? (
                 <SkeletonPageProductsList />
@@ -69,6 +68,6 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
                     </>
                 )
             )}
-        </Webline>
+        </>
     );
 };

@@ -1,6 +1,7 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { CommonLayout } from 'components/Layout/CommonLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
@@ -43,11 +44,12 @@ const SearchPage: FC<ServerSidePropsType> = () => {
 
     const [{ data: searchData, fetching }] = useSearchQueryApi({
         variables: {
-            search: searchString ?? '',
+            search: searchString!,
             orderingMode: sort,
             filter: mapParametersFilter(filter),
             pageSize: DEFAULT_PAGE_SIZE * (currentLoadMore + 1),
         },
+        pause: !searchString,
     });
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
@@ -62,7 +64,15 @@ const SearchPage: FC<ServerSidePropsType> = () => {
         <>
             <MetaRobots content="noindex, nofollow" />
             <CommonLayout breadcrumbs={breadcrumbs} title={title}>
-                <SearchContent fetching={fetching} searchResults={searchData} />
+                <Webline>
+                    {searchString ? (
+                        <SearchContent fetching={fetching} searchResults={searchData} />
+                    ) : (
+                        <div className="mb-5 p-12 text-center">
+                            <strong>{t('There are no results as you have searched with an empty query...')}</strong>
+                        </div>
+                    )}
+                </Webline>
             </CommonLayout>
         </>
     );
@@ -84,27 +94,29 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
 
     return initServerSideProps({
         context,
-        prefetchedQueries: [
-            {
-                query: SearchQueryDocumentApi,
-                variables: {
-                    search,
-                    orderingMode,
-                    filter,
-                    pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
-                },
-            },
-            {
-                query: SearchProductsQueryDocumentApi,
-                variables: {
-                    search,
-                    orderingMode,
-                    filter,
-                    endCursor: getEndCursor(page),
-                    pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
-                },
-            },
-        ],
+        prefetchedQueries: !search
+            ? []
+            : [
+                  {
+                      query: SearchQueryDocumentApi,
+                      variables: {
+                          search,
+                          orderingMode,
+                          filter,
+                          pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
+                      },
+                  },
+                  {
+                      query: SearchProductsQueryDocumentApi,
+                      variables: {
+                          search,
+                          orderingMode,
+                          filter,
+                          endCursor: getEndCursor(page),
+                          pageSize: DEFAULT_PAGE_SIZE * (loadMore + 1),
+                      },
+                  },
+              ],
         redisClient,
         domainConfig,
         t,
