@@ -6,19 +6,15 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use ReflectionClass;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'shopsys:entities:dump')]
 class EntitiesDumpCommand extends Command
 {
     private const OUTPUT_FILE = 'entities-dump.json';
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:entities:dump';
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

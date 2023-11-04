@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -16,6 +17,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * copy of \FM\ElfinderBundle\Command\ElFinderInstallerCommand and updated to work properly in monorepo
  * replaces default `elfinder:install` command
  */
+#[AsCommand(name: 'elfinder:install')]
 final class ElFinderInstallerCommand extends Command
 {
     private const ELFINDER_CSS_DIR = 'studio-42/elfinder/css';
@@ -25,12 +27,6 @@ final class ElFinderInstallerCommand extends Command
     private const ELFINDER_SOUNDS_DIR = 'studio-42/elfinder/sounds';
 
     private const ELFINDER_IMG_DIR = 'studio-42/elfinder/img';
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'elfinder:install';
 
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem

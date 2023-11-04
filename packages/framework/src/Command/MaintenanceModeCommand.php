@@ -6,20 +6,16 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use Shopsys\FrameworkBundle\Component\Maintenance\MaintenanceModeSubscriber;
 use Shopsys\FrameworkBundle\Component\Redis\RedisClientFacade;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'deploy:maintenance')]
 class MaintenanceModeCommand extends Command
 {
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'deploy:maintenance';
-
     /**
      * @var string
      */

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
 use Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry;
 use Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory;
 use Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,15 +19,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
 
+#[AsCommand(name: 'shopsys:extended-classes:annotations')]
 class ExtendedClassesAnnotationsCommand extends Command
 {
     protected const DRY_RUN = 'dry-run';
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:extended-classes:annotations';
 
     /**
      * {@inheritdoc}

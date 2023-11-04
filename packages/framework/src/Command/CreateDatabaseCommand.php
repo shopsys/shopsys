@@ -7,20 +7,16 @@ namespace Shopsys\FrameworkBundle\Command;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'shopsys:database:create')]
 class CreateDatabaseCommand extends Command
 {
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:database:create';
-
     private ?Connection $connection = null;
 
     private ManagerRegistry $doctrineRegistry;

@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Shopsys\FrameworkBundle\Component\Redis\RedisFacade;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'shopsys:redis:clean-cache')]
 class RedisCleanCacheCommand extends Command
 {
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:redis:clean-cache';
-
     /**
      * RedisCleanCacheCommand constructor.
      *

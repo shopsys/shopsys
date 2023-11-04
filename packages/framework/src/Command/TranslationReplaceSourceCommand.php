@@ -10,11 +10,13 @@ use RecursiveIteratorIterator;
 use Shopsys\FrameworkBundle\Command\Exception\TranslationReplaceSourceCommandException;
 use Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement;
 use SplFileInfo;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'shopsys:translation:replace-source')]
 class TranslationReplaceSourceCommand extends Command
 {
     private const ARG_TRANSLATIONS_DIR = 'translationsDir';
@@ -22,12 +24,6 @@ class TranslationReplaceSourceCommand extends Command
     private const ARG_TARGET_LOCALE = 'targetLocale';
 
     private const FILE_NAME_REPLACEMENT_ERRORS = 'replacement_errors.log';
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:translation:replace-source';
 
     protected function configure(): void
     {

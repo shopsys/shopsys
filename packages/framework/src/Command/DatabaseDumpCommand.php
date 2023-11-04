@@ -5,22 +5,18 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'shopsys:database:dump')]
 class DatabaseDumpCommand extends Command
 {
     private const ARG_OUTPUT_FILE = 'outputFile';
     private const OPT_PGDUMP_BIN = 'pgdump-bin';
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:database:dump';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider

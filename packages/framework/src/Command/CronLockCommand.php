@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use NinjaMutex\Lock\LockInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'deploy:cron:lock')]
 class CronLockCommand extends Command
 {
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'deploy:cron:lock';
-
     public const CRON_MUTEX_LOCK_NAME = 'cronLocker';
 
     protected const SLEEP_TIME = 600;

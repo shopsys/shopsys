@@ -7,18 +7,14 @@ namespace Shopsys\FrameworkBundle\Command;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'shopsys:domains-urls:replace')]
 class ReplaceDomainsUrlsCommand extends Command
 {
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:domains-urls:replace';
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer $domainUrlReplacer

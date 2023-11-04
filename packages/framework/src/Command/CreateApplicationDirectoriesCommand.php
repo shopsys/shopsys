@@ -9,11 +9,13 @@ use League\Flysystem\FilesystemOperator;
 use League\Flysystem\Visibility;
 use Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator as ImageDirectoryStructureCreator;
 use Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator as UploadedFileDirectoryStructureCreator;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
+#[AsCommand(name: 'shopsys:create-directories')]
 class CreateApplicationDirectoriesCommand extends Command
 {
     /**
@@ -35,12 +37,6 @@ class CreateApplicationDirectoriesCommand extends Command
      * @var string[]|null
      */
     private ?array $publicDirectories = null;
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:create-directories';
 
     /**
      * @param array $defaultInternalDirectories

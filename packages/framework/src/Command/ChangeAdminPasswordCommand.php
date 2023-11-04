@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use Exception;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,15 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'shopsys:administrator:change-password')]
 class ChangeAdminPasswordCommand extends Command
 {
     private const ARG_USERNAME = 'username';
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:administrator:change-password';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade

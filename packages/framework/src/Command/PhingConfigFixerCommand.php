@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use RuntimeException;
 use SimpleXMLElement;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,16 +14,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'shopsys:phing-config:fix')]
 class PhingConfigFixerCommand extends Command
 {
     protected const ARG_XML_PATH = 'xml';
     protected const OPTION_ONLY_CHECK = 'check';
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:phing-config:fix';
 
     protected function configure(): void
     {

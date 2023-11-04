@@ -6,20 +6,16 @@ namespace Shopsys\MigrationBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaValidator;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'shopsys:migrations:check-mapping')]
 class CheckOrmMappingCommand extends Command
 {
     protected const RETURN_CODE_OK = 0;
     protected const RETURN_CODE_ERROR = 1;
-
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'shopsys:migrations:check-mapping';
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

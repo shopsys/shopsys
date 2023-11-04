@@ -6,19 +6,15 @@ namespace App\Command;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Component\Router\FriendlyUrl\FriendlyUrlRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(name: 'shopsys:friendly-urls:check-entity-mapping')]
 class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
 {
-    /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @var string
-     */
-    protected static $defaultName = 'shopsys:friendly-urls:check-entity-mapping';
-
     /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */

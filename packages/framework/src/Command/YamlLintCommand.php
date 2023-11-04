@@ -8,6 +8,7 @@ use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\RuntimeException;
@@ -22,24 +23,14 @@ use Traversable;
 use function count;
 use function in_array;
 
+#[AsCommand(name: 'lint:yaml')]
 class YamlLintCommand extends Command
 {
-    /**
-     * @var string
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     */
-    protected static $defaultName = 'lint:yaml';
-
     private ?Parser $parser = null;
 
     private string $format;
 
     private bool $displayCorrectFiles;
-
-    public function __construct()
-    {
-        parent::__construct(self::$defaultName);
-    }
 
     protected function configure(): void
     {
