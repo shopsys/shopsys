@@ -5,6 +5,7 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCountriesQueryApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import useTranslation from 'next-translate/useTranslation';
@@ -20,6 +21,7 @@ export const ContactInformationAddress: FC = () => {
     const { setValue } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [{ data: countriesData }] = useCountriesQueryApi();
+    const user = useCurrentCustomerData();
     const countriesAsSelectOptions = useMemo(
         () => mapCountriesToSelectOptions(countriesData?.countries),
         [countriesData?.countries],
@@ -30,8 +32,14 @@ export const ContactInformationAddress: FC = () => {
     });
 
     useEffect(() => {
-        if (countriesAsSelectOptions.length > 0 && countryValue.value === '') {
-            setValue(formMeta.fields.country.name, countriesAsSelectOptions[0], { shouldValidate: true });
+        if (countriesAsSelectOptions.length && !countryValue.value) {
+            const selectedCountryOption = countriesAsSelectOptions.find(
+                (option) => option.value === user?.country.code,
+            );
+
+            setValue(formMeta.fields.country.name, selectedCountryOption || countriesAsSelectOptions[0], {
+                shouldValidate: true,
+            });
         }
     }, [countriesAsSelectOptions, countryValue, formMeta.fields.country.name]);
 
