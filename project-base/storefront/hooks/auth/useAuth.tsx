@@ -1,5 +1,6 @@
 import { Exact, LoginApi, LoginVariablesApi, Maybe, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
+import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
@@ -55,6 +56,8 @@ export const useAuth = () => {
             }
         }
 
+        dispatchBroadcastChannel('reloadPage');
+
         return loginResult;
     };
 
@@ -70,6 +73,8 @@ export const useAuth = () => {
 
             router.reload();
         }
+
+        dispatchBroadcastChannel('reloadPage');
     };
 
     return { login, logout };
