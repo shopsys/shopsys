@@ -1,3 +1,4 @@
+import { isClient } from 'helpers/isClient';
 import { useRouter } from 'next/router';
 
 type PageGuardProps = {
@@ -9,7 +10,10 @@ export const PageGuard: FC<PageGuardProps> = ({ isWithAccess, errorRedirectUrl, 
     const router = useRouter();
 
     if (!isWithAccess) {
-        router.replace(errorRedirectUrl);
+        if (isClient) {
+            router.replace(errorRedirectUrl);
+        }
+
         return null;
     }
 
