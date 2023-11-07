@@ -11,9 +11,10 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ObjectRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use Symfony\Contracts\Service\ResetInterface;
 use function GuzzleHttp\json_encode;
 
-class ReadyCategorySeoMixRepository
+class ReadyCategorySeoMixRepository implements ResetInterface
 {
     /**
      * @var string[][][]
@@ -215,5 +216,10 @@ class ReadyCategorySeoMixRepository
             ->getArrayResult();
 
         return array_column($result, 'categoryId');
+    }
+
+    public function reset(): void
+    {
+        $this->readySeoCategorySetup = [];
     }
 }

@@ -13,8 +13,4 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser as BaseCurre
  */
 class CurrentCustomerUser extends BaseCurrentCustomerUser
 {
-    public function invalidateCache(): void
-    {
-        $this->customerUserCache = [];
-    }
 }

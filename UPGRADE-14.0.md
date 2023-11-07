@@ -107,6 +107,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   re-enable phing target cron ([#2875](https://github.com/shopsys/shopsys/pull/2875))
     -   see #project-base-diff to update your project
+-   prepare core for dispatch/consume system ([#2907](https://github.com/shopsys/shopsys/pull/2907))
+    -   your custom classes that utilize internal array caching or need to be reset between message consumption should now implement the `\Symfony\Contracts\Service\ResetInterface` interface
+    -   method `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler::cleanScheduleForImmediateRecalculation()` has been renamed to `reset()`
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

@@ -10,8 +10,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade;
+use Symfony\Contracts\Service\ResetInterface;
 
-class HeurekaFeedItemFactory
+class HeurekaFeedItemFactory implements ResetInterface
 {
     protected HeurekaProductDataBatchLoader $productDataBatchLoader;
 
@@ -126,5 +127,10 @@ class HeurekaFeedItemFactory
         $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryId($categoryId);
 
         return $heurekaCategory !== null ? $heurekaCategory->getFullName() : null;
+    }
+
+    public function reset(): void
+    {
+        $this->heurekaCategoryFullNamesCache = [];
     }
 }

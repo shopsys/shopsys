@@ -8,8 +8,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductImageUrlNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductUrlNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Symfony\Contracts\Service\ResetInterface;
 
-class ProductUrlsBatchLoader
+class ProductUrlsBatchLoader implements ResetInterface
 {
     /**
      * @var string[]
@@ -89,5 +90,11 @@ class ProductUrlsBatchLoader
     protected function getKey(Product $product, DomainConfig $domainConfig): string
     {
         return $domainConfig->getId() . '-' . $product->getId();
+    }
+
+    public function reset(): void
+    {
+        $this->loadedProductUrls = [];
+        $this->loadedProductImageUrls = [];
     }
 }

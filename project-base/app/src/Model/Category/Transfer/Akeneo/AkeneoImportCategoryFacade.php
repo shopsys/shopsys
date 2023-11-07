@@ -13,8 +13,9 @@ use Generator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Symfony\Contracts\Service\ResetInterface;
 
-class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
+class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer implements ResetInterface
 {
     public const ROOT_CATEGORY_CODE = 'eshop__ecommere';
     public const ROOT_CATEGORY_CODE_PROD = 'eshop__ecommerce';
@@ -202,5 +203,12 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
     public function getTransferName(): string
     {
         return t('Categories transfer');
+    }
+
+    public function reset(): void
+    {
+        $this->akeneoCategoriesDataForOrdering = [];
+        $this->notTransferredCategoriesIds = [];
+        $this->categoriesFromAkeneoCountBeforeTransfer = 0;
     }
 }

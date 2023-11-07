@@ -6,8 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Symfony\Contracts\Service\ResetInterface;
 
-class ProductPriceRecalculationScheduler
+class ProductPriceRecalculationScheduler implements ResetInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product[]
@@ -50,7 +51,7 @@ class ProductPriceRecalculationScheduler
         return $this->productRepository->getProductsForPriceRecalculationIterator();
     }
 
-    public function cleanScheduleForImmediateRecalculation()
+    public function reset(): void
     {
         $this->products = [];
     }

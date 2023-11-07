@@ -7,8 +7,9 @@ namespace Shopsys\FrameworkBundle\Model\Product\Collection;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductParametersNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Symfony\Contracts\Service\ResetInterface;
 
-class ProductParametersBatchLoader
+class ProductParametersBatchLoader implements ResetInterface
 {
     /**
      * @var string[][]|null[][]
@@ -65,5 +66,10 @@ class ProductParametersBatchLoader
     protected function getKey(Product $product, DomainConfig $domainConfig): string
     {
         return $domainConfig->getId() . '-' . $product->getId();
+    }
+
+    public function reset(): void
+    {
+        $this->loadedProductParametersByName = [];
     }
 }
