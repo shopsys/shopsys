@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Redis;
 
 use Redis;
+use Shopsys\FrameworkBundle\Component\Redis\Exception\RedisMultiModeNotSupportedException;
 
 class RedisClientFacade
 {
@@ -32,6 +33,10 @@ class RedisClientFacade
     public function contains(string $key): bool
     {
         $exists = $this->redisClient->exists($key);
+
+        if ($exists instanceof Redis) {
+            throw new RedisMultiModeNotSupportedException();
+        }
 
         if (is_bool($exists)) {
             return $exists;
