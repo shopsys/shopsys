@@ -3,6 +3,7 @@ import { CartFragmentApi, CartItemFragmentApi, useRemoveFromCartMutationApi } fr
 import { onGtmRemoveFromCartEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmProductListNameType } from 'gtm/types/enums';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { usePersistStore } from 'store/usePersistStore';
 
@@ -45,6 +46,8 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType): [
                 gtmProductListName,
                 url,
             );
+
+            dispatchBroadcastChannel('refetchCart');
         }
 
         return removeItemFromCartActionResult.data?.RemoveFromCart ?? null;

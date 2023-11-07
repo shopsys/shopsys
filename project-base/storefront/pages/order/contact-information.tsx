@@ -30,6 +30,7 @@ import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSideProps
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
+import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import useTranslation from 'next-translate/useTranslation';
@@ -173,29 +174,33 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                 orderPaymentType: createOrderResult.data.CreateOrder.order.payment.type,
             };
 
+            if (!user) {
+                query.registrationData = JSON.stringify(formValues);
+            }
+
+            router
+                .replace(
+                    {
+                        pathname: orderConfirmationUrl,
+                        query,
+                    },
+                    orderConfirmationUrl,
+                )
+                .then(() => {
+                    updateCartUuid(null);
+                    dispatchBroadcastChannel('refetchCart');
+                    resetContactInformation();
+                });
+
             onGtmCreateOrderEventHandler(
                 gtmCreateOrderEventOrderPart,
                 gtmCreateOrderEventUserPart,
                 isPaymentSuccessful,
             );
 
-            updateCartUuid(null);
-
-            if (!user) {
-                query.registrationData = JSON.stringify(formValues);
-            }
-            resetContactInformation();
-
-            router.replace(
-                {
-                    pathname: orderConfirmationUrl,
-                    query,
-                },
-                orderConfirmationUrl,
-            );
-
             return;
         }
+
         setOrderCreating(false);
 
         if (

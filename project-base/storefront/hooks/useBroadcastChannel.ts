@@ -1,7 +1,7 @@
 import { isClient } from 'helpers/isClient';
 import { useEffect } from 'react';
 
-type BroadcastChannelsType = 'reloadPage';
+type BroadcastChannelsType = 'reloadPage' | 'refetchCart';
 
 export const dispatchBroadcastChannel = (name: BroadcastChannelsType, data?: any) => {
     const channel = isClient ? new BroadcastChannel(name) : undefined;

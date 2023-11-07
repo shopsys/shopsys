@@ -236,9 +236,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   there were certain bugs with double loads, skeleton glitches, etc. but they were mostly caused by the added complexity of SEO categories, so if you do not have those and your fetching logic is thus much simpler, you probably do not need most of these changes
     -   the category detail fetching was also rewritten to the generated URQL hook, which can be beneficial for you if your logic allows you to do so
     -   one thing that you should definitely consider is removal of `onRouteChangeError` from the page loading logic, as the previous implementation was rather invalid. See commit message for more details
--   added additional skeletons, sync store across browser tabs, use Broadcast Channel to fetch cart in other tabs after Add/Remove to/from cart, ExtendedNextLink was refactored ([#2906](https://github.com/shopsys/shopsys/pull/2906))
+-   added additional skeletons, sync store across browser tabs, use BroadcastChannel to refresh cart after Add/Remove to/from cart, ExtendedNextLink was refactored, remove EmptyCartWrapper ([#2906](https://github.com/shopsys/shopsys/pull/2906))
 
-    -   added skeletons for Wishlist, Comparison and My orders, Order detail and Product Variants page
     -   added skeletons for Wishlist, Comparison and My orders, Order detail and Product Main Variant page
     -   fix Add to cart/wishlist/comparison feature when using multiple tabs
 
@@ -268,3 +267,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   ExtendedNextLink was refactored
         -   remove static type from your links
         -   if you have custom types, we moved it from STATIC_PAGES to CUSTOM_PAGES
+    -   use BroadcastChannel to refresh cart
+        -   whereever you use modifications for cart there should be also implemented the same behavior
+        -   Removed isCartEmpty value from useCurrentCart. This was causing unnecessary checks for cart value after check if isCartEmpty, because Typescript was not able to recognise that cart value is already checked. For the same reason some handling cases were more difficult to write and understand. Also check for cart exist (!cartUuid && !isUserLoggedIn) was needed basically everywhere where cart values were using, this was added to this hook and now cart value is consistent
+    -   remove EmptyCartWrapper
+        -   this component was making whole order process very difficult to predict behavior, now we have the logic from this component splitted into each page of the order process which makes it much more predictable
+        -   also this fixes bug with infinite cart page loading
