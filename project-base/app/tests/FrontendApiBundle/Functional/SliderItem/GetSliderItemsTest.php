@@ -72,7 +72,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'images' => [
                     [
                         'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/59.jpg',
-                        'name' => 'Product 1 image',
+                        'name' => 'Slider item 1 image',
                     ],
                 ],
             ],
@@ -81,7 +81,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'images' => [
                     [
                         'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/60.jpg',
-                        'name' => 'Product 2 image',
+                        'name' => 'Slider item 2 image',
                     ],
                 ],
             ],
@@ -90,7 +90,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'images' => [
                     [
                         'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/61.jpg',
-                        'name' => 'Product 3 image',
+                        'name' => 'Slider item 3 image',
                     ],
                 ],
             ],
@@ -127,7 +127,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'images' => [
                     [
                         'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/103.jpg',
-                        'name' => 'Product 1 image',
+                        'name' => 'Slider item 1 image',
                     ],
                 ],
             ],
@@ -136,7 +136,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'images' => [
                     [
                         'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/104.jpg',
-                        'name' => 'Product 2 image',
+                        'name' => 'Slider item 2 image',
                     ],
                 ],
             ],
@@ -145,7 +145,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'images' => [
                     [
                         'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/105.jpg',
-                        'name' => 'Product 3 image',
+                        'name' => 'Slider item 3 image',
                     ],
                 ],
             ],

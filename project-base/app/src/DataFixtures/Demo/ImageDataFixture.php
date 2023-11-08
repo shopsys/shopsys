@@ -255,7 +255,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             $names = [];
 
             foreach ($this->domain->getAllLocales() as $locale) {
-                $names[$locale] = 'Product ' . $sliderItemId . ' image';
+                $names[$locale] = 'Slider item ' . $sliderItemId . ' image';
             }
 
             $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, $names, SliderItemFacade::IMAGE_TYPE_WEB);
@@ -275,7 +275,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             $names = [];
 
             foreach ($this->domain->getAllLocales() as $locale) {
-                $names[$locale] = 'Product ' . $sliderItemId . ' image';
+                $names[$locale] = 'Slider item ' . $sliderItemId . ' image';
             }
 
             $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, $names, SliderItemFacade::IMAGE_TYPE_MOBILE);
