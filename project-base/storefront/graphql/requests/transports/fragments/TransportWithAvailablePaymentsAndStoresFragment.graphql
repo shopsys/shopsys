@@ -8,7 +8,7 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
         ...PriceFragment
     }
     mainImage {
-        ...ImageSizesFragment
+        ...ImageFragment
     }
     payments {
         ...SimplePaymentFragment

@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
-use Shopsys\FrameworkBundle\Component\Image\Image as BaseImage;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
@@ -94,14 +93,12 @@ class ImageFacade extends BaseImageFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param object $imageOrEntity
-     * @param string|null $sizeName
      * @param string|null $type
      * @return string
      */
     public function getImageUrl(
         DomainConfig $domainConfig,
         object $imageOrEntity,
-        ?string $sizeName = null,
         ?string $type = null,
     ): string {
         $image = $this->getImageByObject($imageOrEntity, $type);
@@ -122,7 +119,7 @@ class ImageFacade extends BaseImageFacade
 
         return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
             . $this->imageUrlPrefix
-            . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $sizeName, $friendlyUrlSeoEntityName);
+            . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $friendlyUrlSeoEntityName);
     }
 
     /**
@@ -169,7 +166,6 @@ class ImageFacade extends BaseImageFacade
      * @param string $extension
      * @param string $entityName
      * @param string|null $type
-     * @param string|null $sizeName
      * @return string
      */
     public function getImageUrlFromAttributes(
@@ -178,117 +174,10 @@ class ImageFacade extends BaseImageFacade
         string $extension,
         string $entityName,
         ?string $type,
-        ?string $sizeName = null,
     ): string {
         $image = $this->imageRepository->getById($id);
 
-        return $this->getImageUrl($domainConfig, $image, $sizeName, $type);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \App\Component\Image\Image $imageOrEntity
-     * @param string|null $sizeName
-     * @param string|null $type
-     * @return \App\Component\Image\AdditionalImageData[]
-     */
-    public function getAdditionalImagesData(
-        DomainConfig $domainConfig,
-        $imageOrEntity,
-        ?string $sizeName,
-        ?string $type,
-    ): array {
-        $image = $this->getImageByObject($imageOrEntity, $type);
-
-        $entityConfig = $this->imageConfig->getEntityConfigByEntityName($image->getEntityName());
-        $sizeConfig = $entityConfig->getSizeConfigByType($type, $sizeName);
-
-        $result = [];
-
-        foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
-            $url = $this->getAdditionalImageUrl($domainConfig, $additionalSizeIndex, $image, $sizeName);
-            $result[] = new AdditionalImageData(
-                $additionalSizeConfig->getMedia(),
-                $url,
-                $additionalSizeConfig->getWidth(),
-                $additionalSizeConfig->getHeight(),
-            );
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int $id
-     * @param string $extension
-     * @param string $entityName
-     * @param string|null $type
-     * @param string|null $sizeName
-     * @return \App\Component\Image\AdditionalImageData[]
-     */
-    public function getAdditionalImagesDataFromAttributes(
-        DomainConfig $domainConfig,
-        int $id,
-        string $extension,
-        string $entityName,
-        ?string $type,
-        ?string $sizeName = null,
-    ): array {
-        $entityConfig = $this->imageConfig->getEntityConfigByEntityName($entityName);
-        $sizeConfig = $entityConfig->getSizeConfigByType($type, $sizeName);
-
-        $result = [];
-
-        foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
-            $image = $this->imageRepository->getById($id);
-            $imageUrl = $this->getAdditionalImageUrl($domainConfig, $additionalSizeIndex, $image, $sizeName);
-
-            $result[] = new AdditionalImageData(
-                $additionalSizeConfig->getMedia(),
-                $imageUrl,
-                $additionalSizeConfig->getWidth(),
-                $additionalSizeConfig->getHeight(),
-            );
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int $additionalSizeIndex
-     * @param \App\Component\Image\Image $image
-     * @param string|null $sizeName
-     * @return string
-     */
-    protected function getAdditionalImageUrl(
-        DomainConfig $domainConfig,
-        int $additionalSizeIndex,
-        BaseImage $image,
-        ?string $sizeName,
-    ): string {
-        $cacheId = $this->getCacheIdForImageUrl(
-            $image->getId(),
-            $domainConfig->getId(),
-        );
-
-        $friendlyUrlSeoEntityName = $this->cache->get(
-            $cacheId,
-            function () use ($image, $domainConfig) {
-                if (!$this->imageLocator->imageExists($image)) {
-                    throw new ImageNotFoundException();
-                }
-
-                $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
-
-                return $this->getFriendlyUrlSlug($seoEntityName);
-            },
-        );
-
-        return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
-            . $this->imageUrlPrefix
-            . $this->imageLocator->getRelativeAdditionalImageFilepathWithSlug($image, $additionalSizeIndex, $sizeName, $friendlyUrlSeoEntityName);
+        return $this->getImageUrl($domainConfig, $image, $type);
     }
 
     /**

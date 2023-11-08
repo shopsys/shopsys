@@ -1,0 +1,21 @@
+query GetAdvertsQuery($positionName: String, $categoryUuid: Uuid) {
+    adverts (positionName: $positionName, categoryUuid: $categoryUuid) {
+        uuid
+        name
+        type
+        positionName
+        categories {
+            name
+        }
+        ... on AdvertCode {
+            code
+        }
+        ... on AdvertImage {
+            images(type: "web") {
+                url
+                name
+            }
+            link
+        }
+    }
+}

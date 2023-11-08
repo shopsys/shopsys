@@ -23,12 +23,7 @@ export const ListItem: FC<ListItemProps> = ({ cartItem: { product, uuid, quantit
             className="flex w-full items-center gap-x-3 border-b border-greyLighter py-3"
             data-testid={TEST_IDENTIFIER}
         >
-            <Image
-                alt={product.mainImage?.name || product.fullName}
-                className="h-11 w-11"
-                image={product.mainImage}
-                type="thumbnail"
-            />
+            <Image alt={product.mainImage?.name || product.fullName} className="h-11 w-11" image={product.mainImage} />
 
             <ExtendedNextLink
                 className="flex-1 cursor-pointer text-sm font-bold text-greyDark no-underline outline-none"

@@ -14,7 +14,7 @@ fragment ProductDetailInterfaceFragment on Product {
     ean
     description
     images {
-        ...ImageSizesFragment
+        ...ImageFragment
     }
     price {
         ...ProductPriceFragment

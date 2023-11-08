@@ -18,13 +18,11 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery implements Al
     /**
      * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @param string|null $type
-     * @param array|null $sizes
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function imagesByCategoryOrReadyCategorySeoMixPromiseQuery(
         $categoryOrReadyCategorySeoMix,
         ?string $type,
-        ?array $sizes,
     ): Promise {
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $categoryId = $categoryOrReadyCategorySeoMix->getId();
@@ -40,19 +38,17 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery implements Al
             );
         }
 
-        return $this->resolveByEntityIdPromise($categoryId, self::CATEGORY_ENTITY_NAME, $type, $sizes);
+        return $this->resolveByEntityIdPromise($categoryId, self::CATEGORY_ENTITY_NAME, $type);
     }
 
     /**
      * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @param string|null $type
-     * @param string|null $size
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function mainImageByCategoryOrReadyCategorySeoMixPromiseQuery(
         $categoryOrReadyCategorySeoMix,
         ?string $type,
-        ?string $size,
     ): Promise {
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $categoryId = $categoryOrReadyCategorySeoMix->getId();
@@ -68,14 +64,10 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery implements Al
             );
         }
 
-        $sizes = $size === null ? [] : [$size];
-        $sizeConfigs = $this->getSizesConfigs($type, $sizes, self::CATEGORY_ENTITY_NAME);
-
         return $this->firstImageBatchLoader->load(
             new ImageBatchLoadData(
                 $categoryId,
                 self::CATEGORY_ENTITY_NAME,
-                $sizeConfigs,
                 $type,
             ),
         );

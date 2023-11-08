@@ -11,7 +11,7 @@ fragment ListedOrderFragment on Order {
         __typename
         name
         mainImage {
-            ...ImageSizesFragment
+            ...ImageFragment
         }
     }
     payment {

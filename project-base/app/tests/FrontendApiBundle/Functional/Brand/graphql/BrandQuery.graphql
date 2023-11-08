@@ -1,0 +1,27 @@
+query BrandQuery($uuid: Uuid!) {
+    brand(uuid: $uuid) {
+        name
+        slug
+        description
+        link
+        seoTitle
+        seoMetaDescription
+        seoH1
+        products (first: 5) {
+            orderingMode
+            edges {
+                node {
+                    name
+                }
+            }
+        }
+        images {
+            url
+            name
+        }
+        breadcrumb {
+            name
+            slug
+        }
+    }
+}

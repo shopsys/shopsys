@@ -14,7 +14,6 @@ type SimpleNavigationListItemProps = {
 
 export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
     listedItem,
-    imageType,
     linkType,
     dataTestId,
     className,
@@ -37,7 +36,6 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
                         alt={itemImage.name || listedItem.name}
                         className="h-12 min-w-[64px] mix-blend-multiply"
                         image={itemImage}
-                        type={imageType ?? 'default'}
                         width={64}
                     />
                 )}

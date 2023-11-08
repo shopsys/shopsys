@@ -111,7 +111,6 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                                     className="h-9 w-9"
                                                     height={20}
                                                     image={order.transport.mainImage}
-                                                    type="default"
                                                     width={36}
                                                 />
                                                 <span className="flex-1">{order.transport.name}</span>

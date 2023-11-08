@@ -20,7 +20,7 @@ fragment StoreDetailFragment on Store {
     breadcrumb {
         ...BreadcrumbFragment
     }
-    storeImages: images (sizes: ["default", "thumbnail"]) {
-        ...ImageSizesFragment
+    storeImages: images {
+        ...ImageFragment
     }
 }

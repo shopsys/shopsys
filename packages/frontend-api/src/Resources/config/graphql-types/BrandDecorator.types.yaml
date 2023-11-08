@@ -28,13 +28,11 @@ BrandDecorator:
             images:
                 type: "[Image!]!"
                 description: "Brand images"
-                resolve: '@=query("imagesByEntityQuery", value, args["type"], args["size"])'
+                resolve: '@=query("imagesByEntityQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
-                    size:
-                        type: "String"
             products:
                 type: "ProductConnection"
                 description: "Paginated and ordered products of brand"

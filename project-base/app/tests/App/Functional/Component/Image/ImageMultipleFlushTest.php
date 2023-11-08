@@ -8,7 +8,6 @@ use App\Component\FileUpload\FileUpload;
 use App\Component\Image\Image;
 use App\Component\Image\ImageLocator;
 use League\Flysystem\MountManager;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -60,7 +59,7 @@ class ImageMultipleFlushTest extends TransactionFunctionalTestCase
 
         $this->assertFileExists(
             $this->parameterBag->get('kernel.project_dir') .
-            $this->imageLocator->getAbsoluteImageFilepath($image, ImageConfig::ORIGINAL_SIZE_NAME),
+            $this->imageLocator->getAbsoluteImageFilepath($image),
         );
     }
 }

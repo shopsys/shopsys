@@ -5,7 +5,7 @@ import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { ImageSizesFragmentApi, MainVariantDetailFragmentApi } from 'graphql/generated';
+import { ImageFragmentApi, MainVariantDetailFragmentApi } from 'graphql/generated';
 import { useGtmProductDetailViewEvent } from 'gtm/hooks/useGtmProductDetailViewEvent';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import useTranslation from 'next-translate/useTranslation';
@@ -27,7 +27,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             }
 
             return mappedVariantImages;
-        }, [] as ImageSizesFragmentApi[]);
+        }, [] as ImageFragmentApi[]);
 
         return [...product.images, ...variantImages];
     }, [product]);

@@ -6,13 +6,9 @@ namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateEntityNameException;
-use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateMediaException;
-use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateSizeNameException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateTypeNameException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\EntityParseException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageConfigException;
-use Shopsys\FrameworkBundle\Component\Image\Config\Exception\WidthAndHeightMissingException;
-use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -44,7 +40,7 @@ class ImageConfigLoader
      * @param string $filename
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      */
-    public function loadFromYaml($filename)
+    public function loadFromYaml(string $filename): ImageConfig
     {
         $yamlParser = new Parser();
 
@@ -69,7 +65,7 @@ class ImageConfigLoader
      * @param array $outputConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */
-    public function loadFromArray($outputConfig)
+    public function loadFromArray(array $outputConfig): array
     {
         $this->foundEntityConfigs = [];
         $this->foundEntityNames = [];
@@ -91,7 +87,7 @@ class ImageConfigLoader
     /**
      * @param array $entityConfig
      */
-    protected function processEntityConfig($entityConfig)
+    protected function processEntityConfig(array $entityConfig): void
     {
         $entityClass = $entityConfig[ImageConfigDefinition::CONFIG_CLASS];
         $entityName = $entityConfig[ImageConfigDefinition::CONFIG_ENTITY_NAME];
@@ -103,97 +99,18 @@ class ImageConfigLoader
         }
 
         $types = $this->prepareTypes($entityConfig[ImageConfigDefinition::CONFIG_TYPES]);
-        $sizes = $this->prepareSizes($entityConfig[ImageConfigDefinition::CONFIG_SIZES]);
         $multipleByType = $this->getMultipleByType($entityConfig);
 
-        $imageEntityConfig = new ImageEntityConfig($entityName, $entityClass, $types, $sizes, $multipleByType);
+        $imageEntityConfig = new ImageEntityConfig($entityName, $entityClass, $types, $multipleByType);
         $this->foundEntityNames[$entityName] = $entityName;
         $this->foundEntityConfigs[$entityClass] = $imageEntityConfig;
     }
 
     /**
-     * @param array $sizesConfig
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
-     */
-    protected function prepareSizes($sizesConfig)
-    {
-        $result = [];
-
-        foreach ($sizesConfig as $sizeConfig) {
-            $sizeName = $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_NAME];
-            $key = Utils::ifNull($sizeName, ImageEntityConfig::WITHOUT_NAME_KEY);
-            $additionalSizes = $this->prepareAdditionalSizes(
-                $sizeName ?: '~',
-                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_ADDITIONAL_SIZES],
-            );
-
-            if (array_key_exists($key, $result)) {
-                throw new DuplicateSizeNameException($sizeName);
-            }
-
-            $result[$key] = new ImageSizeConfig(
-                $sizeName,
-                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_WIDTH],
-                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_HEIGHT],
-                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_CROP],
-                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_OCCURRENCE],
-                $additionalSizes,
-            );
-        }
-
-        if (!array_key_exists(ImageConfig::ORIGINAL_SIZE_NAME, $result)) {
-            $result[ImageConfig::ORIGINAL_SIZE_NAME] = new ImageSizeConfig(
-                ImageConfig::ORIGINAL_SIZE_NAME,
-                null,
-                null,
-                false,
-                null,
-                [],
-            );
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param string $sizeName
-     * @param array $additionalSizesConfig
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig[]
-     */
-    protected function prepareAdditionalSizes(string $sizeName, array $additionalSizesConfig): array
-    {
-        $usedMedia = [];
-        $result = [];
-
-        foreach ($additionalSizesConfig as $index => $additionalSizeConfig) {
-            $media = $additionalSizeConfig[ImageConfigDefinition::CONFIG_SIZE_ADDITIONAL_SIZE_MEDIA];
-            $height = $additionalSizeConfig[ImageConfigDefinition::CONFIG_SIZE_HEIGHT];
-            $width = $additionalSizeConfig[ImageConfigDefinition::CONFIG_SIZE_WIDTH];
-
-            if ($width === null && $height === null) {
-                throw new WidthAndHeightMissingException(sprintf('%s.additionalSizes[%s]', $sizeName, $index));
-            }
-
-            if (in_array($media, $usedMedia, true)) {
-                throw new DuplicateMediaException($media);
-            }
-            $usedMedia[] = $media;
-
-            $result[] = new ImageAdditionalSizeConfig(
-                $media,
-                $width,
-                $height,
-            );
-        }
-
-        return $result;
-    }
-
-    /**
      * @param array $typesConfig
-     * @return array
+     * @return string[]
      */
-    protected function prepareTypes($typesConfig)
+    protected function prepareTypes(array $typesConfig): array
     {
         $result = [];
 
@@ -204,7 +121,7 @@ class ImageConfigLoader
                 throw new DuplicateTypeNameException($typeName);
             }
 
-            $result[$typeName] = $this->prepareSizes($typeConfig[ImageConfigDefinition::CONFIG_SIZES]);
+            $result[$typeName] = $typeName;
         }
 
         return $result;
@@ -212,9 +129,9 @@ class ImageConfigLoader
 
     /**
      * @param array $entityConfig
-     * @return array
+     * @return array<string, bool>
      */
-    protected function getMultipleByType(array $entityConfig)
+    protected function getMultipleByType(array $entityConfig): array
     {
         $multipleByType = [];
         $multipleByType[ImageEntityConfig::WITHOUT_NAME_KEY] = $entityConfig[ImageConfigDefinition::CONFIG_MULTIPLE];

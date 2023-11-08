@@ -46,8 +46,8 @@ export const Adverts: FC<AdvertsProps> = ({
                         return null;
                     }
 
-                    const mainImage = advert.mainImage?.sizes.find(({ size }) => size === positionName);
-                    const mainImageMobile = advert.mainImageMobile?.sizes.find(({ size }) => size === positionName);
+                    const mainImage = advert.mainImage;
+                    const mainImageMobile = advert.mainImageMobile;
 
                     const ImageComponent = (
                         <picture>
@@ -56,9 +56,7 @@ export const Adverts: FC<AdvertsProps> = ({
                             <img
                                 alt={advert.mainImage?.name || advert.mainImageMobile?.name || advert.name}
                                 className="w-full"
-                                height={mainImageMobile?.height || undefined}
                                 src={mainImageMobile?.url}
-                                width={mainImageMobile?.width || undefined}
                             />
                         </picture>
                     );

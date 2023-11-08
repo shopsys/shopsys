@@ -1,0 +1,26 @@
+query PromotedCategoriesQuery($firstProducts: Int!) {
+    promotedCategories {
+        uuid
+        name
+        children {
+            name
+        }
+        parent {
+            name
+        }
+        products(first: $firstProducts) {
+            edges {
+                node {
+                    name
+                }
+            }
+        }
+        images {
+            url
+            name
+        }
+        seoH1
+        seoTitle
+        seoMetaDescription
+    }
+}

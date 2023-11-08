@@ -23,7 +23,6 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({ columnCate
                                 alt={columnCategory.mainImage?.name || columnCategory.name}
                                 className="h-16 mix-blend-multiply"
                                 image={columnCategory.mainImage}
-                                type="default"
                             />
                         </ExtendedNextLink>
 

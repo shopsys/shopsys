@@ -6,7 +6,6 @@ namespace Tests\FrontendApiBundle\Functional\Advert;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Advert\AdvertDataFactory;
-use App\Model\Category\Category;
 use League\Flysystem\MountManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
@@ -116,49 +115,52 @@ class GetAdvertsTest extends GraphQlTestCase
 
     public function testGetAdverts(): void
     {
-        $query = $this->getAllAdvertsQuery();
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetAdvertsQuery.graphql');
         $expectedAdvertsData = $this->getExpectedAdverts();
 
-        $this->assetAdvertsAreAsExpected($query, $expectedAdvertsData);
+        $this->assetAdvertsAreAsExpected($response, $expectedAdvertsData);
     }
 
     public function testGetFooterAdverts(): void
     {
-        $query = $this->getAllAdvertsQuery('footer');
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetAdvertsQuery.graphql', [
+            'positionName' => 'footer',
+        ]);
         $expectedAdvertsData = array_merge(
             array_slice($this->getExpectedAdverts(), 0, 1),
             array_slice($this->getExpectedAdverts(), 2, 1),
         );
 
-        $this->assetAdvertsAreAsExpected($query, $expectedAdvertsData);
+        $this->assetAdvertsAreAsExpected($response, $expectedAdvertsData);
     }
 
     public function testGetElectronicsAdverts(): void
     {
-        $query = $this->getAllAdvertsQuery(
-            'productListMiddle',
-            $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
-        );
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetAdvertsQuery.graphql', [
+            'positionName' => 'productListMiddle',
+            'categoryUuid' => $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS)->getUuid(),
+        ]);
 
-        $this->assetAdvertsAreAsExpected($query, array_slice($this->getExpectedAdverts(), 1, 1));
+        $this->assetAdvertsAreAsExpected($response, array_slice($this->getExpectedAdverts(), 1, 1));
     }
 
     public function testGetNotExistingAdverts(): void
     {
-        $query = $this->getAllAdvertsQuery('non-existing-position-name');
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetAdvertsQuery.graphql', [
+            'positionName' => 'non-existing-position-name',
+        ]);
         $expectedAdvertsData = [];
 
-        $this->assetAdvertsAreAsExpected($query, $expectedAdvertsData);
+        $this->assetAdvertsAreAsExpected($response, $expectedAdvertsData);
     }
 
     /**
-     * @param string $query
+     * @param array $response
      * @param array $expectedData
      */
-    private function assetAdvertsAreAsExpected(string $query, array $expectedData): void
+    private function assetAdvertsAreAsExpected(array $response, array $expectedData): void
     {
         $graphQlType = 'adverts';
-        $response = $this->getResponseContentForQuery($query);
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -171,53 +173,6 @@ class GetAdvertsTest extends GraphQlTestCase
 
             self::assertSame(array_shift($expectedData), $advertData);
         }
-    }
-
-    /**
-     * @param string|null $positionName
-     * @param \App\Model\Category\Category|null $category
-     * @return string
-     */
-    private function getAllAdvertsQuery(?string $positionName = null, ?Category $category = null): string
-    {
-        if ($positionName !== null) {
-            if ($category !== null) {
-                $graphQlTypeWithFilters = 'adverts (positionName:"' . $positionName . '", categoryUuid: "' . $category->getUuid() . '")';
-            } else {
-                $graphQlTypeWithFilters = 'adverts (positionName:"' . $positionName . '")';
-            }
-        } else {
-            $graphQlTypeWithFilters = 'adverts';
-        }
-
-        return '
-            {
-                ' . $graphQlTypeWithFilters . ' {
-                    uuid
-                    name
-                    type
-                    positionName
-                    categories {
-                        name
-                    }
-                    ... on AdvertCode {
-                        code
-                    }
-                    ... on AdvertImage {
-                        images(type: "web") {
-                            type
-                            sizes {
-                                url
-                                size
-                                width
-                                height
-                            }
-                        }
-                        link
-                    }
-                }
-            }
-        ';
     }
 
     /**
@@ -268,30 +223,12 @@ class GetAdvertsTest extends GraphQlTestCase
                 'categories' => [],
                 'images' => [
                     [
-                        'type' => 'web',
-                        'sizes' => [
-                            [
-                                'url' => sprintf(
-                                    '%s/content-test/images/noticer/web/header/%s.png',
-                                    $this->firstDomainUrl,
-                                    $testImage->getId(),
-                                ),
-                                'size' => 'header',
-                                'width' => 1160,
-                                'height' => 300,
-                            ],
-                            [
-
-                                'url' => sprintf(
-                                    '%s/content-test/images/noticer/web/original/%s.png',
-                                    $this->firstDomainUrl,
-                                    $testImage->getId(),
-                                ),
-                                'size' => 'original',
-                                'width' => null,
-                                'height' => null,
-                            ],
-                        ],
+                        'url' => sprintf(
+                            '%s/content-test/images/noticer/web/original/%s.png',
+                            $this->firstDomainUrl,
+                            $testImage->getId(),
+                        ),
+                        'name' => 'Test image',
                     ],
                 ],
                 'link' => 'https://shopsys.com',

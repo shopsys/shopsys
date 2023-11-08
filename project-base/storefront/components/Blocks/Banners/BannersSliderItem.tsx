@@ -10,18 +10,14 @@ export const BannersSliderItem: FC<BannersSliderItemProps> = ({
     isDesktop,
 }) => {
     const image = isDesktop ? webMainImage : mobileMainImage;
-    const imageSize = image?.sizes.find((i) => i.size === 'default');
 
     return (
         <a className="keen-slider__slide w-full" href={link}>
-            {!imageSize ? (
+            {!image ? (
                 <BannerImage alt="no image" src="images/optimized-noimage.webp" />
             ) : (
                 <picture>
-                    {imageSize.additionalSizes.map((additionalSize) => (
-                        <source key={additionalSize.url} media={additionalSize.media} srcSet={additionalSize.url} />
-                    ))}
-                    <BannerImage alt={image?.name || name} src={imageSize.url} />
+                    <BannerImage alt={image.name || name} src={image.url} />
                 </picture>
             )}
         </a>

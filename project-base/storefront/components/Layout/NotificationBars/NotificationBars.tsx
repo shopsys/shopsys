@@ -47,7 +47,6 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                                         alt={item.mainImage.name || item.text}
                                         className="mr-3"
                                         image={item.mainImage}
-                                        type="default"
                                     />
                                 </div>
                             )}

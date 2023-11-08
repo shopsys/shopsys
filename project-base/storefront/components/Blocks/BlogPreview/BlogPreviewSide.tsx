@@ -17,7 +17,6 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles }) => (
                         alt={article.mainImage?.name || article.name}
                         className="rounded"
                         image={article.mainImage}
-                        type="list"
                     />
                 </ArticleLink>
 

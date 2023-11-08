@@ -12,5 +12,32 @@ query GetCart(
                 name
             }
         }
+        transport {
+            name
+            description
+            instruction
+            position
+            daysUntilDelivery
+            transportType {
+                name
+                code
+            }
+            price {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            },
+            images {
+                url
+                name
+            }
+            stores {
+                edges {
+                    node {
+                        name
+                    }
+                }
+            }
+        }
     }
 }

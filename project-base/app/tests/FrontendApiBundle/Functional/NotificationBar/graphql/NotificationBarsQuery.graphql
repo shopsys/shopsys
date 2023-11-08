@@ -1,0 +1,10 @@
+query NotificationBars {
+    notificationBars {
+        text
+        rgbColor
+        images {
+            url
+            name
+        }
+    }
+}

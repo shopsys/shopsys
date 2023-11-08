@@ -13,7 +13,7 @@ class GetSliderItemsTest extends GraphQlTestCase
     public function testGetSliderItems(): void
     {
         $graphQlType = 'sliderItems';
-        $response = $this->getResponseContentForQuery($this->getSliderItemsQuery());
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderItemsQuery.graphql');
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -59,7 +59,9 @@ class GetSliderItemsTest extends GraphQlTestCase
     public function testGetSliderItemsWebImages(): void
     {
         $graphQlType = 'sliderItems';
-        $response = $this->getResponseContentForQuery($this->getSliderItemsImageQuery('web'));
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderItemsQuery.graphql', [
+            'imageType' => 'web',
+        ]);
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -69,11 +71,8 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Shopsys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'sizes' => [
-                            [
-                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/59.jpg',
-                            ],
-                        ],
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/59.jpg',
+                        'name' => 'Product 1 image',
                     ],
                 ],
             ],
@@ -81,11 +80,8 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'sizes' => [
-                            [
-                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/60.jpg',
-                            ],
-                        ],
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/60.jpg',
+                        'name' => 'Product 2 image',
                     ],
                 ],
             ],
@@ -93,11 +89,8 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Become one of us', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'sizes' => [
-                            [
-                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/61.jpg',
-                            ],
-                        ],
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/61.jpg',
+                        'name' => 'Product 3 image',
                     ],
                 ],
             ],
@@ -121,7 +114,9 @@ class GetSliderItemsTest extends GraphQlTestCase
     public function testGetSliderItemsMobileImages(): void
     {
         $graphQlType = 'sliderItems';
-        $response = $this->getResponseContentForQuery($this->getSliderItemsImageQuery('mobile'));
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderItemsQuery.graphql', [
+            'imageType' => 'mobile',
+        ]);
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -131,11 +126,8 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Shopsys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'sizes' => [
-                            [
-                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/103.jpg',
-                            ],
-                        ],
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/103.jpg',
+                        'name' => 'Product 1 image',
                     ],
                 ],
             ],
@@ -143,11 +135,8 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'sizes' => [
-                            [
-                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/104.jpg',
-                            ],
-                        ],
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/104.jpg',
+                        'name' => 'Product 2 image',
                     ],
                 ],
             ],
@@ -155,11 +144,8 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Become one of us', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'sizes' => [
-                            [
-                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/105.jpg',
-                            ],
-                        ],
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/105.jpg',
+                        'name' => 'Product 3 image',
                     ],
                 ],
             ],
@@ -178,45 +164,6 @@ class GetSliderItemsTest extends GraphQlTestCase
                 array_shift($expectedSliderItemsWebImagesData),
             );
         }
-    }
-
-    /**
-     * @return string
-     */
-    private function getSliderItemsQuery(): string
-    {
-        return '
-            {
-                sliderItems {
-                    uuid
-                    name
-                    link
-                    extendedText
-                    extendedTextLink
-                }
-            }
-        ';
-    }
-
-    /**
-     * @param string $device
-     * @return string
-     */
-    private function getSliderItemsImageQuery(string $device): string
-    {
-        return '
-            {
-                sliderItems {
-                    uuid
-                    name
-                    images (type: "' . $device . '", sizes: ["original"]) {
-                        sizes {
-                            url
-                        }
-                    }
-                }
-            }
-        ';
     }
 
     /**

@@ -9,7 +9,7 @@ fragment SimpleProductFragment on Product {
         ...ProductPriceFragment
     }
     mainImage {
-        ...ImageSizesFragment
+        ...ImageFragment
     }
     unit {
         name

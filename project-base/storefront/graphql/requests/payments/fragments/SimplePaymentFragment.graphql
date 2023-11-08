@@ -8,7 +8,7 @@ fragment SimplePaymentFragment on Payment {
         ...PriceFragment
     }
     mainImage {
-        ...ImageSizesFragment
+        ...ImageFragment
     }
     type
     goPayPaymentMethod {

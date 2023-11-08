@@ -41,7 +41,7 @@ import { Image } from 'components/Basic/Image/Image';
 ...
 
 <div>
-    <Image image={data.image} type="default" alt={data.name} />
+    <Image image={data.image} alt={data.name} />
 </div>
 
 ...

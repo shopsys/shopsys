@@ -155,7 +155,7 @@ class MergadoFeedItemFactory
 
         foreach ($images as $image) {
             try {
-                $imageUrls[] = $this->imageFacade->getImageUrl($domainConfig, $image, 'original');
+                $imageUrls[] = $this->imageFacade->getImageUrl($domainConfig, $image);
             } catch (ImageNotFoundException $exception) {
                 $this->logger->error(sprintf('Image with id "%s" not found on filesystem', $image->getId()));
             }

@@ -9,8 +9,6 @@ use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 use League\Flysystem\FilesystemOperator;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
 
@@ -121,40 +119,5 @@ class ImageProcessor
         }
 
         return $image;
-    }
-
-    /**
-     * @param \Intervention\Image\Image $image
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
-     */
-    public function resizeBySizeConfig(Image $image, ImageSizeConfig $sizeConfig)
-    {
-        $this->resize($image, $sizeConfig->getWidth(), $sizeConfig->getHeight(), $sizeConfig->getCrop());
-    }
-
-    /**
-     * @param \Intervention\Image\Image $image
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig $additionalSizeConfig
-     */
-    public function resizeByAdditionalSizeConfig(
-        Image $image,
-        ImageSizeConfig $sizeConfig,
-        ImageAdditionalSizeConfig $additionalSizeConfig,
-    ) {
-        $this->resize(
-            $image,
-            $additionalSizeConfig->getWidth(),
-            $additionalSizeConfig->getHeight(),
-            $sizeConfig->getCrop(),
-        );
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getSupportedImageExtensions()
-    {
-        return $this->supportedImageExtensions;
     }
 }

@@ -39,7 +39,6 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                             className="max-h-[80px] max-w-[80px]"
                             dataTestId={TEST_IDENTIFIER + 'image'}
                             image={product.mainImage}
-                            type="list"
                         />
                         <span>{product.fullName}</span>
                     </ExtendedNextLink>

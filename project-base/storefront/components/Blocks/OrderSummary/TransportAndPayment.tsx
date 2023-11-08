@@ -33,12 +33,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                         <OrderSummaryTextAndImage dataTestId={TEST_IDENTIFIER + '-transport-name'}>
                             {transport.name}
                             <span className="inline-block align-bottom">
-                                <Image
-                                    alt={transport.name}
-                                    className="h-8 w-8"
-                                    image={transport.mainImage}
-                                    type="default"
-                                />
+                                <Image alt={transport.name} className="h-8 w-8" image={transport.mainImage} />
                             </span>
                         </OrderSummaryTextAndImage>
                         <OrderSummaryPrice dataTestId={TEST_IDENTIFIER + '-transport-price'}>
@@ -51,12 +46,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                         <OrderSummaryTextAndImage dataTestId={TEST_IDENTIFIER + '-payment-name'}>
                             {payment.name}
                             <span className="inline-block align-bottom">
-                                <Image
-                                    alt={payment.name}
-                                    className="h-8 w-8"
-                                    image={payment.mainImage}
-                                    type="default"
-                                />
+                                <Image alt={payment.name} className="h-8 w-8" image={payment.mainImage} />
                             </span>
                         </OrderSummaryTextAndImage>
                         <OrderSummaryPrice dataTestId={TEST_IDENTIFIER + '-payment-price'}>

@@ -229,18 +229,10 @@ class ImageFacade
      */
     public function deleteImageFiles(Image $image): void
     {
-        $entityName = $image->getEntityName();
-        $imageConfig = $this->imageConfig->getEntityConfigByEntityName($entityName);
-        $sizeConfigs = $image->getType() === null ? $imageConfig->getSizeConfigs() : $imageConfig->getSizeConfigsByType(
-            $image->getType(),
-        );
+        $filepath = $this->imageLocator->getAbsoluteImageFilepath($image);
 
-        foreach ($sizeConfigs as $sizeConfig) {
-            $filepath = $this->imageLocator->getAbsoluteImageFilepath($image, $sizeConfig->getName());
-
-            if ($this->filesystem->has($filepath)) {
-                $this->filesystem->delete($filepath);
-            }
+        if ($this->filesystem->has($filepath)) {
+            $this->filesystem->delete($filepath);
         }
     }
 
@@ -263,24 +255,14 @@ class ImageFacade
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
-     */
-    public function getAllImageEntityConfigsByClass(): array
-    {
-        return $this->imageConfig->getAllImageEntityConfigsByClass();
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param object $imageOrEntity
-     * @param string|null $sizeName
      * @param string|null $type
      * @return string
      */
     public function getImageUrl(
         DomainConfig $domainConfig,
         object $imageOrEntity,
-        ?string $sizeName = null,
         ?string $type = null,
     ): string {
         $image = $this->getImageByObject($imageOrEntity, $type);
@@ -291,7 +273,7 @@ class ImageFacade
 
         return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
             . $this->imageUrlPrefix
-            . $this->imageLocator->getRelativeImageFilepath($image, $sizeName);
+            . $this->imageLocator->getRelativeImageFilepath($image);
     }
 
     /**
@@ -300,7 +282,6 @@ class ImageFacade
      * @param string $extension
      * @param string $entityName
      * @param string|null $type
-     * @param string|null $sizeName
      * @return string
      */
     public function getImageUrlFromAttributes(
@@ -309,108 +290,15 @@ class ImageFacade
         string $extension,
         string $entityName,
         ?string $type,
-        ?string $sizeName = null,
     ): string {
         $imageFilepath = $this->imageLocator->getRelativeImageFilepathFromAttributes(
             $id,
             $extension,
             $entityName,
             $type,
-            $sizeName,
         );
 
         return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig) . $this->imageUrlPrefix . $imageFilepath;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param object $imageOrEntity
-     * @param string|null $sizeName
-     * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[]
-     */
-    public function getAdditionalImagesData(
-        DomainConfig $domainConfig,
-        object $imageOrEntity,
-        ?string $sizeName,
-        ?string $type,
-    ) {
-        $image = $this->getImageByObject($imageOrEntity, $type);
-
-        $entityConfig = $this->imageConfig->getEntityConfigByEntityName($image->getEntityName());
-        $sizeConfig = $entityConfig->getSizeConfigByType($type, $sizeName);
-
-        $result = [];
-
-        foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
-            $url = $this->getAdditionalImageUrl($domainConfig, $additionalSizeIndex, $image, $sizeName);
-            $result[] = new AdditionalImageData($additionalSizeConfig->getMedia(), $url);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int $id
-     * @param string $extension
-     * @param string $entityName
-     * @param string|null $type
-     * @param string|null $sizeName
-     * @return \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[]
-     */
-    public function getAdditionalImagesDataFromAttributes(
-        DomainConfig $domainConfig,
-        int $id,
-        string $extension,
-        string $entityName,
-        ?string $type,
-        ?string $sizeName = null,
-    ): array {
-        $entityConfig = $this->imageConfig->getEntityConfigByEntityName($entityName);
-        $sizeConfig = $entityConfig->getSizeConfigByType($type, $sizeName);
-
-        $resolvedImageUrl = $this->cdnFacade->resolveDomainUrlForAssets($domainConfig);
-
-        $result = [];
-
-        foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
-            $imageFilepath = $this->imageLocator->getRelativeImageFilepathFromAttributes(
-                $id,
-                $extension,
-                $entityName,
-                $type,
-                $sizeName,
-                $additionalSizeIndex,
-            );
-            $url = $resolvedImageUrl . $this->imageUrlPrefix . $imageFilepath;
-
-            $result[] = new AdditionalImageData($additionalSizeConfig->getMedia(), $url);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int $additionalSizeIndex
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     * @param string|null $sizeName
-     * @return string
-     */
-    protected function getAdditionalImageUrl(
-        DomainConfig $domainConfig,
-        int $additionalSizeIndex,
-        Image $image,
-        ?string $sizeName,
-    ): string {
-        if (!$this->imageLocator->imageExists($image)) {
-            throw new ImageNotFoundException();
-        }
-
-        return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
-            . $this->imageUrlPrefix
-            . $this->imageLocator->getRelativeAdditionalImageFilepath($image, $additionalSizeIndex, $sizeName);
     }
 
     /**
@@ -449,7 +337,6 @@ class ImageFacade
                 $this->mountManager->copy(
                     'main://' . $this->imageLocator->getAbsoluteImageFilepath(
                         $sourceImage,
-                        ImageConfig::ORIGINAL_SIZE_NAME,
                     ),
                     'main://' . TransformString::removeDriveLetterFromPath(
                         $this->fileUpload->getTemporaryFilepath($sourceImage->getFilename()),

@@ -42,7 +42,7 @@ const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseS
     const preferredCanonicalUrl = seoPageData?.seoPage?.canonicalUrl;
     const preferredOgTitle = seoPageData?.seoPage?.ogTitle;
     const preferredOgDescription = seoPageData?.seoPage?.ogDescription;
-    const preferredOgImageUrl = seoPageData?.seoPage?.ogImage?.sizes[0]?.url;
+    const preferredOgImageUrl = seoPageData?.seoPage?.ogImage?.url;
 
     const fallbackTitle = settingsData?.settings?.seo.title;
     const fallbackDescription = settingsData?.settings?.seo.metaDescription;

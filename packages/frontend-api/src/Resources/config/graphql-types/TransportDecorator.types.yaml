@@ -24,15 +24,13 @@ TransportDecorator:
                 description: "Transport price"
                 resolve: '@=query("priceByTransportQuery", value)'
             images:
-                type: "[Image]!"
+                type: "[Image!]!"
                 description: "Transport images"
-                resolve: '@=query("imagesByEntityQuery", value, args["type"], args["size"])'
+                resolve: '@=query("imagesByEntityQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
-                    size:
-                        type: "String"
             payments:
                 type: "[Payment!]!"
                 description: "List of assigned payments"

@@ -3,7 +3,9 @@ fragment ListedCategoryFragment on Category {
     uuid
     name
     slug
-    ...CategoryImagesDefaultFragment
+    mainImage {
+        ...ImageFragment
+    }
     products {
         __typename
         totalCount

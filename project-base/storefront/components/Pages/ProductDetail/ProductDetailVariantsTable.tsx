@@ -33,7 +33,6 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                         <Image
                             alt={variant.mainImage?.name || variant.fullName}
                             image={variant.mainImage}
-                            type="default"
                             wrapperClassName="flex h-48 lg:h-16 lg:w-16"
                         />
 

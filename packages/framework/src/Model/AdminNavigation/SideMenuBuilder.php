@@ -405,9 +405,6 @@ class SideMenuBuilder
             ['route' => 'admin_country_edit', 'label' => t('Editing country'), 'display' => false],
         );
 
-        $imagesMenu = $menu->addChild('images', ['label' => t('Image size')]);
-        $imagesMenu->addChild('sizes', ['route' => 'admin_image_overview', 'label' => t('Image size')]);
-
         $seoMenu = $menu->addChild('seo', ['label' => t('SEO')]);
         $seoMenu->addChild('seo', ['route' => 'admin_seo_index', 'label' => t('SEO')]);
         $seoMenu->addChild('robots', ['route' => 'admin_seo_robots', 'label' => t('Robots.txt')]);

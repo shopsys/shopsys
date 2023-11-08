@@ -122,7 +122,6 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                                                 alt={product.mainImage?.name || product.fullName}
                                                 className="flex h-16 w-20 items-center justify-center"
                                                 image={product.mainImage}
-                                                type="thumbnailMedium"
                                                 wrapperClassName={imageTwClass}
                                             />
 

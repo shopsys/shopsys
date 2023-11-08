@@ -12,7 +12,7 @@
                         <li class="list-files__item js-file-upload-file" data-id="{{ image.id }}" data-delete-input="#{{ form.imagesToDelete.vars.id }}">
                             <div class="list-files__item__in">
                                 <div class="list-files__item__file js-file-upload-preview {% if isRemoved %}list-files__item__in--removed{% endif %}">
-                                    {{ image(image, {size: 'original', height: '100', type: image_type, lazy: false}) }}
+                                    {{ image(image, { height: '100', type: image_type, lazy: false}) }}
                                 </div>
                                 {% if multiple %}
                                     <span class="list-files__item__main">
@@ -49,7 +49,7 @@
                 </label>
                 <div class="form-line__side">
                     <div class="form-line__item">
-                        {{ image(entity, { size: 'original', height: 100, type: image_type, lazy: false }) }}
+                        {{ image(entity, { height: 100, type: image_type, lazy: false }) }}
                     </div>
                 </div>
             </div>

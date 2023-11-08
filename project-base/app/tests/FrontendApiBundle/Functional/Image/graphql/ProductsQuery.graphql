@@ -1,0 +1,18 @@
+query ProductsQuery($first: Int) {
+    products(first: $first) {
+        edges {
+            node {
+                images {
+                    url
+                    name
+                }
+                categories {
+                    images {
+                        url
+                        name
+                    }
+                }
+            }
+        }
+    }
+}

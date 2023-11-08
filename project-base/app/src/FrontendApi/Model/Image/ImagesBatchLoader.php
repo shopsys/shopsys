@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Image;
 
+use App\Component\Image\Image;
 use App\Component\Image\ImageFacade;
 use App\FrontendApi\Model\Image\ImageFacade as FrontendApiImageFacade;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
-use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 
 class ImagesBatchLoader
@@ -76,7 +74,7 @@ class ImagesBatchLoader
 
                 continue;
             }
-            $entityResolvedImages = $this->getResolvedImages($imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()], $imageBatchLoadData->getSizeConfigs());
+            $entityResolvedImages = $this->getResolvedImages($imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()]);
             $images[$imageBatchLoadData->getId()] = $entityResolvedImages;
         }
 
@@ -125,34 +123,18 @@ class ImagesBatchLoader
 
     /**
      * @param \App\Component\Image\Image[] $images
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
-     * @return array
+     * @return array<int, array{url: string, name: string|null}>
      */
-    private function getResolvedImages(array $images, array $sizeConfigs): array
+    private function getResolvedImages(array $images): array
     {
         $resolvedImages = [];
 
         foreach ($images as $image) {
-            $imageSizes = [];
-
-            foreach ($sizeConfigs as $sizeConfig) {
-                try {
-                    $imageSizes[] = $this->getResolvedImage($image, $sizeConfig);
-                } catch (ImageNotFoundException $exception) {
-                    continue;
-                }
-            }
-
-            if ($imageSizes === []) {
+            try {
+                $resolvedImages[] = $this->getResolvedImage($image);
+            } catch (ImageNotFoundException $exception) {
                 continue;
             }
-
-            $resolvedImages[] = [
-                'name' => $image->getName(),
-                'position' => $image->getPosition(),
-                'type' => $image->getType(),
-                'sizes' => $imageSizes,
-            ];
         }
 
         return $resolvedImages;
@@ -160,27 +142,17 @@ class ImagesBatchLoader
 
     /**
      * @param \App\Component\Image\Image $image
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
-     * @return array
+     * @return array{url: string, name: string|null}
      */
-    private function getResolvedImage(Image $image, ImageSizeConfig $sizeConfig): array
+    private function getResolvedImage(Image $image): array
     {
         return [
-            'width' => $sizeConfig->getWidth(),
-            'height' => $sizeConfig->getHeight(),
-            'size' => $sizeConfig->getName() ?? ImageConfig::DEFAULT_SIZE_NAME,
             'url' => $this->imageFacade->getImageUrl(
                 $this->domain->getCurrentDomainConfig(),
                 $image,
-                $sizeConfig->getName(),
                 $image->getType(),
             ),
-            'additionalSizes' => $this->imageFacade->getAdditionalImagesData(
-                $this->domain->getCurrentDomainConfig(),
-                $image,
-                $sizeConfig->getName(),
-                $image->getType(),
-            ),
+            'name' => $image->getName(),
         ];
     }
 }

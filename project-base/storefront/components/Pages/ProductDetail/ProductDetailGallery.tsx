@@ -2,11 +2,11 @@ import { Gallery } from 'components/Basic/Gallery/Gallery';
 import { PlayIcon } from 'components/Basic/Icon/IconsSvg';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
-import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
+import { ImageFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
 import { twJoin } from 'tailwind-merge';
 
 type ProductDetailGalleryProps = {
-    images: ImageSizesFragmentApi[];
+    images: ImageFragmentApi[];
     productName: string;
     flags: SimpleFlagFragmentApi[];
     videoIds?: VideoTokenFragmentApi[];
@@ -17,7 +17,7 @@ const GALLERY_SHOWN_ITEMS_COUNT = 5;
 export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, images, productName, videoIds = [] }) => {
     const [firstImage, ...additionalImages] = images;
     const mainImage = images.length ? firstImage : undefined;
-    const mainImageUrl = mainImage?.sizes.find((size) => size.size === 'default')?.url;
+    const mainImageUrl = mainImage?.url;
 
     const galleryItems = [...videoIds, ...additionalImages];
     const galleryLastShownItemIndex = GALLERY_SHOWN_ITEMS_COUNT - 1;
@@ -37,7 +37,6 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                     className="max-h-[460px] w-auto"
                     height={400}
                     image={mainImage}
-                    type="default"
                     wrapperClassName="block h-full"
                 />
 
@@ -54,12 +53,10 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                         const isImage = galleryItem.__typename === 'Image';
                         const isVideo = galleryItem.__typename === 'VideoToken';
 
-                        const galleryItemThumbnail = isImage
-                            ? galleryItem.sizes.find((size) => size.size === 'list')
-                            : undefined;
+                        const galleryItemThumbnail = isImage ? galleryItem : undefined;
 
                         const dataSrc = isImage
-                            ? galleryItem.sizes.find((size) => size.size === 'default')?.url
+                            ? galleryItem.url
                             : `https://www.youtube.com/embed/${galleryItem.token}`;
                         const dataPoster = isImage
                             ? undefined
@@ -79,10 +76,9 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                     <img
                                         alt={galleryItem.name || `${productName}-${index}`}
                                         className="max-h-16 w-auto sm:max-h-20"
-                                        height={galleryItemThumbnail?.height || 90}
+                                        height={90}
                                         src={galleryItemThumbnail?.url}
-                                        srcSet={`${galleryItemThumbnail?.additionalSizes[0].url} 1.5x`}
-                                        width={galleryItemThumbnail?.width || 90}
+                                        width={90}
                                     />
                                 )}
 

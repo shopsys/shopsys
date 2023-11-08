@@ -1,0 +1,32 @@
+query TransportsQuery($cartUuid: Uuid) {
+    transports(cartUuid: $cartUuid) {
+        name,
+        description,
+        instruction,
+        position,
+        daysUntilDelivery
+        transportType {
+            name
+            code
+        }
+        price {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        },
+        images {
+            url
+            name
+        }
+        payments {
+            name
+        }
+        stores {
+            edges {
+                node {
+                    name
+                }
+            }
+        }
+    }
+}

@@ -25,7 +25,6 @@ class ImageExtension extends AbstractExtension
     ];
     protected const NON_HTML_ATTRIBUTES = [
         'type',
-        'size',
         'lazy',
     ];
 
@@ -84,17 +83,15 @@ class ImageExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
-     * @param string|null $sizeName
      * @param string|null $type
      * @return string
      */
-    public function getImageUrl($imageOrEntity, $sizeName = null, $type = null)
+    public function getImageUrl($imageOrEntity, ?string $type = null): string
     {
         try {
             return $this->imageFacade->getImageUrl(
                 $this->domain->getCurrentDomainConfig(),
                 $imageOrEntity,
-                $sizeName,
                 $type,
             );
         } catch (ImageNotFoundException $e) {
@@ -124,16 +121,10 @@ class ImageExtension extends AbstractExtension
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $attributes['type']);
             $entityName = $image->getEntityName();
-            $attributes['src'] = $this->getImageUrl($image, $attributes['size'], $attributes['type']);
+            $attributes['src'] = $this->getImageUrl($image, $attributes['type']);
             $attributes['alt'] = $image->getName();
-            $additionalImagesData = $this->imageFacade->getAdditionalImagesData(
-                $this->domain->getCurrentDomainConfig(),
-                $image,
-                $attributes['size'],
-                $attributes['type'],
-            );
 
-            return $this->getImageHtmlByEntityName($attributes, $entityName, $additionalImagesData);
+            return $this->getImageHtmlByEntityName($attributes, $entityName);
         } catch (ImageNotFoundException $e) {
             return $this->getNoimageHtml($attributes);
         }
@@ -143,15 +134,14 @@ class ImageExtension extends AbstractExtension
      * @param array $attributes
      * @return string
      */
-    public function getNoimageHtml(array $attributes = [])
+    public function getNoimageHtml(array $attributes = []): string
     {
         $this->preventDefault($attributes);
 
         $entityName = 'noimage';
         $attributes['src'] = $this->getEmptyImageUrl();
-        $additionalImagesData = [];
 
-        return $this->getImageHtmlByEntityName($attributes, $entityName, $additionalImagesData);
+        return $this->getImageHtmlByEntityName($attributes, $entityName);
     }
 
     /**
@@ -173,16 +163,14 @@ class ImageExtension extends AbstractExtension
     /**
      * @param string $entityName
      * @param string|null $type
-     * @param string|null $sizeName
      * @return string
      */
-    protected function getImageCssClass($entityName, $type, $sizeName)
+    protected function getImageCssClass(string $entityName, ?string $type): string
     {
         $allClassParts = [
             'image',
             $entityName,
             $type,
-            $sizeName,
         ];
         $classParts = array_filter($allClassParts);
 
@@ -203,7 +191,6 @@ class ImageExtension extends AbstractExtension
     protected function preventDefault(array &$attributes): void
     {
         Utils::setArrayDefaultValue($attributes, 'type');
-        Utils::setArrayDefaultValue($attributes, 'size');
         Utils::setArrayDefaultValue($attributes, 'alt', '');
         Utils::setArrayDefaultValue($attributes, 'title', $attributes['alt']);
     }
@@ -211,10 +198,9 @@ class ImageExtension extends AbstractExtension
     /**
      * @param array $attributes
      * @param string $entityName
-     * @param \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] $additionalImagesData
      * @return string
      */
-    protected function getImageHtmlByEntityName(array $attributes, $entityName, $additionalImagesData = []): string
+    protected function getImageHtmlByEntityName(array $attributes, string $entityName): string
     {
         $htmlAttributes = $this->extractHtmlAttributesFromAttributes($attributes);
 
@@ -224,8 +210,7 @@ class ImageExtension extends AbstractExtension
 
         return $this->twigEnvironment->render('@ShopsysFramework/Common/image.html.twig', [
             'attr' => $htmlAttributes,
-            'additionalImagesData' => $additionalImagesData,
-            'imageCssClass' => $this->getImageCssClass($entityName, $attributes['type'], $attributes['size']),
+            'imageCssClass' => $this->getImageCssClass($entityName, $attributes['type']),
         ]);
     }
 

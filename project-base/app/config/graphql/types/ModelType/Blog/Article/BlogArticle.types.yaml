@@ -54,22 +54,16 @@ BlogArticle:
             images:
                 type: "[Image!]!"
                 description: "Blog article images"
-                resolve: '@=query("imagesByBlogArticlePromiseQuery", value, args["type"], args["sizes"])'
+                resolve: '@=query("imagesByBlogArticlePromiseQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"
-                        defaultValue: null
-                    sizes:
-                        type: "[String!]"
                         defaultValue: null
             mainImage:
                 type: "Image"
                 description: "Blog article image by params"
-                resolve: '@=query("mainImageByBlogArticlePromiseQuery", value, args["type"], args["size"])'
+                resolve: '@=query("mainImageByBlogArticlePromiseQuery", value, args["type"])'
                 args:
                     type:
-                        type: "String"
-                        defaultValue: null
-                    size:
                         type: "String"
                         defaultValue: null

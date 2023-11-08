@@ -27,11 +27,7 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
                         style={index === 0 ? { marginLeft: -props.tableMarginLeft } : undefined}
                     >
                         <a className="w-16" href={product.slug}>
-                            <Image
-                                alt={product.mainImage?.name || product.fullName}
-                                image={product.mainImage}
-                                type="listVerySmall"
-                            />
+                            <Image alt={product.mainImage?.name || product.fullName} image={product.mainImage} />
                         </a>
                         <div className="ml-2 flex flex-1 flex-col">
                             <a className="text-xs no-underline hover:no-underline" href={product.slug}>

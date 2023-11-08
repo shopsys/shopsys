@@ -37,10 +37,9 @@ class ProductCollectionFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string|null $sizeName
      * @return string[]
      */
-    public function getImagesUrlsIndexedByProductId(array $products, DomainConfig $domainConfig, $sizeName = null)
+    public function getImagesUrlsIndexedByProductId(array $products, DomainConfig $domainConfig): array
     {
         $imagesUrlsByProductId = [];
 
@@ -52,7 +51,6 @@ class ProductCollectionFacade
                     $imagesUrlsByProductId[$productId] = $this->imageFacade->getImageUrl(
                         $domainConfig,
                         $image,
-                        $sizeName,
                     );
                 } catch (ImageNotFoundException $e) {
                     $imagesUrlsByProductId[$productId] = null;

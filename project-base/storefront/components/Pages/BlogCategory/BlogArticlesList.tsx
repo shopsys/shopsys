@@ -21,7 +21,6 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                             <Image
                                 alt={blogArticle.mainImage?.name || blogArticle.name}
                                 image={blogArticle.mainImage}
-                                type="list"
                             />
                         </ExtendedNextLink>
                     </div>

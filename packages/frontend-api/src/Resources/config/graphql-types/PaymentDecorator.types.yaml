@@ -26,13 +26,11 @@ PaymentDecorator:
             images:
                 type: "[Image!]!"
                 description: "Payment images"
-                resolve: '@=query("imagesByEntityQuery", value, args["type"], args["size"])'
+                resolve: '@=query("imagesByEntityQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
-                    size:
-                        type: "String"
             transports:
                 type: "[Transport!]!"
                 description: "List of assigned transports"

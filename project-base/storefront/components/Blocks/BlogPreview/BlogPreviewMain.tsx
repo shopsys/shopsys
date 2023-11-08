@@ -23,7 +23,6 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles }) => (
                         alt={article.mainImage?.name || article.name}
                         className="rounded"
                         image={article.mainImage}
-                        type="list"
                     />
                 </ArticleLink>
 

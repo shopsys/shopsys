@@ -1,0 +1,13 @@
+query SliderItemsQuery ($imageType: String) {
+    sliderItems {
+        uuid
+        name
+        link
+        extendedText
+        extendedTextLink
+        images (type: $imageType) {
+            url
+            name
+        }
+    }
+}
