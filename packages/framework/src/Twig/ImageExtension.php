@@ -57,11 +57,7 @@ class ImageExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('imageExists', [$this, 'imageExists']),
-            new TwigFunction('imageUrl', [$this, 'getImageUrl']),
             new TwigFunction('image', [$this, 'getImageHtml'], ['is_safe' => ['html']]),
-            new TwigFunction('noimage', [$this, 'getNoimageHtml'], ['is_safe' => ['html']]),
-            new TwigFunction('getImages', [$this, 'getImages']),
         ];
     }
 
@@ -70,7 +66,7 @@ class ImageExtension extends AbstractExtension
      * @param string|null $type
      * @return bool
      */
-    public function imageExists($imageOrEntity, $type = null)
+    public function imageExists($imageOrEntity, ?string $type = null): bool
     {
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $type);
@@ -86,7 +82,7 @@ class ImageExtension extends AbstractExtension
      * @param string|null $type
      * @return string
      */
-    public function getImageUrl($imageOrEntity, ?string $type = null): string
+    protected function getImageUrl($imageOrEntity, ?string $type = null): string
     {
         try {
             return $this->imageFacade->getImageUrl(
@@ -97,16 +93,6 @@ class ImageExtension extends AbstractExtension
         } catch (ImageNotFoundException $e) {
             return $this->getEmptyImageUrl();
         }
-    }
-
-    /**
-     * @param object $entity
-     * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
-     */
-    public function getImages($entity, $type = null)
-    {
-        return $this->imageFacade->getImagesByEntityIndexedById($entity, $type);
     }
 
     /**
@@ -134,7 +120,7 @@ class ImageExtension extends AbstractExtension
      * @param array $attributes
      * @return string
      */
-    public function getNoimageHtml(array $attributes = []): string
+    protected function getNoimageHtml(array $attributes = []): string
     {
         $this->preventDefault($attributes);
 

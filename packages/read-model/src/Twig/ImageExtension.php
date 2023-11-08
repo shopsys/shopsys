@@ -46,7 +46,7 @@ class ImageExtension extends BaseImageExtension
      * @param string|null $type
      * @return string
      */
-    public function getImageUrl($imageView, ?string $type = null): string
+    protected function getImageUrl($imageView, ?string $type = null): string
     {
         if ($imageView instanceof ImageView) {
             $entityName = $imageView->getEntityName();
