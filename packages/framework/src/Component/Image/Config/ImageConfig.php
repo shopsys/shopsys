@@ -10,8 +10,6 @@ use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundEx
 
 class ImageConfig
 {
-    public const ORIGINAL_SIZE_NAME = 'original';
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */

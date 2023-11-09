@@ -91,8 +91,6 @@ class ImageLocator
             $pathParts[] = $type;
         }
 
-        $pathParts[] = ImageConfig::ORIGINAL_SIZE_NAME;
-
         return implode('/', $pathParts) . '/';
     }
 }

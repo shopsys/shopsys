@@ -35,7 +35,7 @@ class PaymentsTest extends GraphQlTestCase
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero),
                 'images' => [
                     [
-                        'url' => $this->getFullUrlPath('/content-test/images/payment/original/53.jpg'),
+                        'url' => $this->getFullUrlPath('/content-test/images/payment/53.jpg'),
                         'name' => PaymentDataFixture::PAYMENT_CARD,
                     ],
                 ],
@@ -54,7 +54,7 @@ class PaymentsTest extends GraphQlTestCase
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.9', $vatZero),
                 'images' => [
                     [
-                        'url' => $this->getFullUrlPath('/content-test/images/payment/original/55.jpg'),
+                        'url' => $this->getFullUrlPath('/content-test/images/payment/55.jpg'),
                         'name' => PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
                     ],
                 ],
@@ -72,7 +72,7 @@ class PaymentsTest extends GraphQlTestCase
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                 'images' => [
                     [
-                        'url' => $this->getFullUrlPath('/content-test/images/payment/original/54.jpg'),
+                        'url' => $this->getFullUrlPath('/content-test/images/payment/54.jpg'),
                         'name' => PaymentDataFixture::PAYMENT_CASH,
                     ],
                 ],

@@ -71,7 +71,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Shopsys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/59.jpg',
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/59.jpg',
                         'name' => 'Slider item 1 image',
                     ],
                 ],
@@ -80,7 +80,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/60.jpg',
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/60.jpg',
                         'name' => 'Slider item 2 image',
                     ],
                 ],
@@ -89,7 +89,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Become one of us', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/61.jpg',
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/61.jpg',
                         'name' => 'Slider item 3 image',
                     ],
                 ],
@@ -126,7 +126,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Shopsys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/103.jpg',
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/103.jpg',
                         'name' => 'Slider item 1 image',
                     ],
                 ],
@@ -135,7 +135,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Documentation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/104.jpg',
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/104.jpg',
                         'name' => 'Slider item 2 image',
                     ],
                 ],
@@ -144,7 +144,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'name' => t('Become one of us', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
-                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/105.jpg',
+                        'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/105.jpg',
                         'name' => 'Slider item 3 image',
                     ],
                 ],

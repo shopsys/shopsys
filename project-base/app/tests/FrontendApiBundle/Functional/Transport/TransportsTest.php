@@ -56,7 +56,7 @@ class TransportsTest extends GraphQlTestCase
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'images' => [
                     [
-                        'url' => $this->getFullUrlPath('/content-test/images/transport/original/56.jpg'),
+                        'url' => $this->getFullUrlPath('/content-test/images/transport/56.jpg'),
                         'name' => TransportDataFixture::TRANSPORT_CZECH_POST,
                     ],
                 ],
@@ -79,7 +79,7 @@ class TransportsTest extends GraphQlTestCase
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh),
                 'images' => [
                     [
-                        'url' => $this->getFullUrlPath('/content-test/images/transport/original/57.jpg'),
+                        'url' => $this->getFullUrlPath('/content-test/images/transport/57.jpg'),
                         'name' => TransportDataFixture::TRANSPORT_PPL,
                     ],
                 ],
@@ -108,7 +108,7 @@ class TransportsTest extends GraphQlTestCase
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                 'images' => [
                     [
-                        'url' => $this->getFullUrlPath('/content-test/images/transport/original/58.jpg'),
+                        'url' => $this->getFullUrlPath('/content-test/images/transport/58.jpg'),
                         'name' => TransportDataFixture::TRANSPORT_PERSONAL,
                     ],
                 ],

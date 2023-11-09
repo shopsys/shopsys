@@ -58,12 +58,12 @@ class ImageLocatorTest extends TestCase
             [
                 'Name_1',
                 'TypeName_1',
-                'Name_1/TypeName_1/' . ImageConfig::ORIGINAL_SIZE_NAME . '/',
+                'Name_1/TypeName_1/',
             ],
             [
                 'Name_1',
                 null,
-                'Name_1/' . ImageConfig::ORIGINAL_SIZE_NAME . '/',
+                'Name_1/',
             ],
         ];
     }

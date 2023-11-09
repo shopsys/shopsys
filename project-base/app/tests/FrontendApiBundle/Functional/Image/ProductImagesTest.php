@@ -40,11 +40,11 @@ class ProductImagesTest extends GraphQlTestCase
         $expectedData = [
             'images' => [
                 [
-                    'url' => $this->getFullUrlPath('/content-test/images/product/original/' . $helloKittySlug . '_1.jpg'),
+                    'url' => $this->getFullUrlPath('/content-test/images/product/' . $helloKittySlug . '_1.jpg'),
                     'name' => 'Product 1 image',
                 ],
                 [
-                    'url' => $this->getFullUrlPath('/content-test/images/product/original/' . $helloKittySlug . '_64.jpg'),
+                    'url' => $this->getFullUrlPath('/content-test/images/product/' . $helloKittySlug . '_64.jpg'),
                     'name' => 'Product 1 image',
                 ],
             ],
@@ -84,7 +84,7 @@ class ProductImagesTest extends GraphQlTestCase
                             [
                                 'images' => [
                                     [
-                                        'url' => $this->getFullUrlPath('/content-test/images/category/original/' . $booksSlug . '_75.jpg'),
+                                        'url' => $this->getFullUrlPath('/content-test/images/category/' . $booksSlug . '_75.jpg'),
                                         'name' => CategoryDataFixture::CATEGORY_BOOKS,
                                     ],
                                 ],
@@ -92,7 +92,7 @@ class ProductImagesTest extends GraphQlTestCase
                             [
                                 'images' => [
                                     [
-                                        'url' => $this->getFullUrlPath('/content-test/images/category/original/' . $personalComputersAndAccessoriesSlug . '_72.jpg'),
+                                        'url' => $this->getFullUrlPath('/content-test/images/category/' . $personalComputersAndAccessoriesSlug . '_72.jpg'),
                                         'name' => CategoryDataFixture::CATEGORY_PC,
                                     ],
                                 ],
@@ -104,11 +104,11 @@ class ProductImagesTest extends GraphQlTestCase
                     'node' => [
                         'images' => [
                             [
-                                'url' => $this->getFullUrlPath('/content-test/images/product/original/' . $helloKittySlug . '_1.jpg'),
+                                'url' => $this->getFullUrlPath('/content-test/images/product/' . $helloKittySlug . '_1.jpg'),
                                 'name' => 'Product 1 image',
                             ],
                             [
-                                'url' => $this->getFullUrlPath('/content-test/images/product/original/' . $helloKittySlug . '_64.jpg'),
+                                'url' => $this->getFullUrlPath('/content-test/images/product/' . $helloKittySlug . '_64.jpg'),
                                 'name' => 'Product 1 image',
                             ],
                         ],
@@ -116,7 +116,7 @@ class ProductImagesTest extends GraphQlTestCase
                             [
                                 'images' => [
                                     [
-                                        'url' => $this->getFullUrlPath('/content-test/images/category/original/' . $electronicsSlug . '_68.jpg'),
+                                        'url' => $this->getFullUrlPath('/content-test/images/category/' . $electronicsSlug . '_68.jpg'),
                                         'name' => CategoryDataFixture::CATEGORY_ELECTRONICS,
                                     ],
                                 ],
@@ -124,7 +124,7 @@ class ProductImagesTest extends GraphQlTestCase
                             [
                                 'images' => [
                                     [
-                                        'url' => $this->getFullUrlPath('/content-test/images/category/original/' . $tvAudioSlug . '_69.jpg'),
+                                        'url' => $this->getFullUrlPath('/content-test/images/category/' . $tvAudioSlug . '_69.jpg'),
                                         'name' => CategoryDataFixture::CATEGORY_TV,
                                     ],
                                 ],
@@ -132,7 +132,7 @@ class ProductImagesTest extends GraphQlTestCase
                             [
                                 'images' => [
                                     [
-                                        'url' => $this->getFullUrlPath('/content-test/images/category/original/' . $personalComputersAndAccessoriesSlug . '_72.jpg'),
+                                        'url' => $this->getFullUrlPath('/content-test/images/category/' . $personalComputersAndAccessoriesSlug . '_72.jpg'),
                                         'name' => CategoryDataFixture::CATEGORY_PC,
                                     ],
                                 ],
