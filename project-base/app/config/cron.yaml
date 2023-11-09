@@ -85,9 +85,9 @@ services:
         tags:
             - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: products, readableName: 'Recalculate midnight product visibilities' }
 
-    App\Model\Product\Elasticsearch\ProductExportCronModule:
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductRecalculationCronModule:
         tags:
-            - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: products, readableName: "Export products to Elasticsearch" }
+            - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: products, readableName: "Dispatches all products to be recalculated and exported" }
 
     # Akeneo import products
 
