@@ -24,9 +24,6 @@ services:
             $administrationFacade: '@Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade'
             $adminLocale: '%shopsys.admin_locale%'
 
-    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportSubscriber:
-        autoconfigure: false
-
     Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader:
         arguments:
             $indexDefinitionsDirectory: '%shopsys.elasticsearch.structure_dir%'

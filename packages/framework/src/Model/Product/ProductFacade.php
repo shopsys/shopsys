@@ -13,12 +13,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
@@ -27,7 +22,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice;
-use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class ProductFacade
 {
@@ -374,51 +368,6 @@ class ProductFacade
     public function markAllProductsAsExported(): void
     {
         $this->productRepository->markAllProductsAsExported();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithAvailability(Availability $availability): array
-    {
-        return $this->productRepository->getProductsWithAvailability($availability);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithParameter(Parameter $parameter): array
-    {
-        return $this->productRepository->getProductsWithParameter($parameter);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithBrand(Brand $brand): array
-    {
-        return $this->productRepository->getProductsWithBrand($brand);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithFlag(Flag $flag): array
-    {
-        return $this->productRepository->getProductsWithFlag($flag);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithUnit(Unit $unit): array
-    {
-        return $this->productRepository->getProductsWithUnit($unit);
     }
 
     /**

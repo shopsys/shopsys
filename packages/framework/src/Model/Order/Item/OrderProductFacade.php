@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class OrderProductFacade
 {
@@ -23,6 +24,7 @@ class OrderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -32,6 +34,7 @@ class OrderProductFacade
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly ModuleFacade $moduleFacade,
         protected readonly ProductRepository $productRepository,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
 
@@ -92,7 +95,7 @@ class OrderProductFacade
         $this->em->flush();
 
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
-        $this->productRepository->markProductsForExport($relevantProducts);
+        $this->productRecalculationDispatcher->dispatchProducts($relevantProducts);
     }
 
     /**

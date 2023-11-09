@@ -701,9 +701,6 @@ services:
 
     App\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\MarkProductForExportSubscriber:
-        alias: App\Model\Product\Elasticsearch\MarkProductForExportSubscriber
-
     Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter:
         class: App\Component\Domain\DomainAwareSecurityHeadersSetter
         tags:

@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class StoreFacade
 {
@@ -18,7 +18,7 @@ class StoreFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
         protected readonly StoreRepository $storeRepository,
@@ -26,7 +26,7 @@ class StoreFacade
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ImageFacade $imageFacade,
         protected readonly EntityManagerInterface $em,
-        protected readonly ProductRepository $productRepository,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
 
@@ -51,7 +51,7 @@ class StoreFacade
         $this->createFriendlyUrl($store);
 
         $this->imageFacade->manageImages($store, $storeData->image);
-        $this->productRepository->markAllProductsForExport();
+        $this->productRecalculationDispatcher->dispatchAllProducts();
 
         return $store;
     }
@@ -71,7 +71,7 @@ class StoreFacade
         $this->imageFacade->manageImages($store, $storeData->image);
 
         $this->createFriendlyUrl($store);
-        $this->productRepository->markAllProductsForExport();
+        $this->productRecalculationDispatcher->dispatchAllProducts();
 
         return $store;
     }

@@ -6,7 +6,6 @@ namespace App\Model\Category;
 
 use App\Model\Category\LinkedCategory\LinkedCategoryFacade;
 use App\Model\Product\Filter\ProductFilterData;
-use App\Model\Product\ProductFacade;
 use App\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -22,6 +21,8 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @property \App\Model\Category\CategoryRepository $categoryRepository
@@ -50,6 +51,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory;
  * @method \App\Model\Category\Category getVisibleOnDomainByUuid(int $domainId, string $categoryUuid)
  * @method \App\Model\Category\Category getProductMainCategoryOnCurrentDomain(\App\Model\Product\Product $product)
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+ * @method dispatchCategoryEvent(\App\Model\Category\Category $category, string $eventType)
  */
 class CategoryFacade extends BaseCategoryFacade
 {
@@ -64,10 +66,11 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactory $categoryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
      * @param \App\Model\Category\LinkedCategory\LinkedCategoryFacade $linkedCategoryFacade
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
-     * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -80,10 +83,11 @@ class CategoryFacade extends BaseCategoryFacade
         CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
         CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
         CategoryFactoryInterface $categoryFactory,
-        private CategoryParameterFacade $categoryParameterFacade,
-        private LinkedCategoryFacade $linkedCategoryFacade,
-        private ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
-        private ProductFacade $productFacade,
+        ProductRecalculationDispatcher $productRecalculationDispatcher,
+        EventDispatcherInterface $eventDispatcher,
+        private readonly CategoryParameterFacade $categoryParameterFacade,
+        private readonly LinkedCategoryFacade $linkedCategoryFacade,
+        private readonly ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
     ) {
         parent::__construct(
             $em,
@@ -96,6 +100,8 @@ class CategoryFacade extends BaseCategoryFacade
             $categoryWithPreloadedChildrenFactory,
             $categoryWithLazyLoadedVisibleChildrenFactory,
             $categoryFactory,
+            $productRecalculationDispatcher,
+            $eventDispatcher,
         );
     }
 
@@ -125,33 +131,7 @@ class CategoryFacade extends BaseCategoryFacade
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
         $this->linkedCategoryFacade->updateLinkedCategories($category, $categoryData->linkedCategories);
 
-        $this->scheduleProductsToExportByCategory($category);
-
         return $category;
-    }
-
-    /**
-     * @param array<int, array{id: string|int, parent_id: string|int|null, depth: int, left: int, right: int}> $categoriesOrderingData
-     */
-    public function reorderByNestedSetValues(array $categoriesOrderingData): void
-    {
-        parent::reorderByNestedSetValues($categoriesOrderingData);
-
-        $this->productFacade->markAllProductsForExport();
-    }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     */
-    private function scheduleProductsToExportByCategory(Category $category): void
-    {
-        $products = $this->productFacade->getProductsByCategory($category);
-
-        foreach ($products as $product) {
-            $product->markForExport();
-        }
-
-        $this->em->flush();
     }
 
     /**
@@ -209,17 +189,6 @@ class CategoryFacade extends BaseCategoryFacade
         }
 
         return implode($delimiter, $categoriesNamesInPath);
-    }
-
-    /**
-     * @param int $categoryId
-     */
-    public function deleteById($categoryId)
-    {
-        $category = $this->categoryRepository->getById($categoryId);
-        $this->scheduleProductsToExportByCategory($category);
-
-        parent::deleteById($categoryId);
     }
 
     /**

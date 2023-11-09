@@ -9,14 +9,9 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
-use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class ProductRepository
 {
@@ -563,72 +558,5 @@ class ProductRepository
     {
         $this->em->createQuery('UPDATE ' . Product::class . ' p SET p.exportProduct = FALSE')
             ->execute();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @return array
-     */
-    public function getProductsWithParameter(Parameter $parameter): array
-    {
-        return $this->getProductRepository()->createQueryBuilder('p')
-            ->innerJoin(ProductParameterValue::class, 'ppv', 'WITH', 'ppv.product = p')
-            ->where('ppv.parameter = :parameter')
-            ->setParameter('parameter', $parameter)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithAvailability(Availability $availability): array
-    {
-        return $this->getProductRepository()->createQueryBuilder('p')
-            ->where('p.calculatedAvailability = :availability')
-            ->setParameter('availability', $availability)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithBrand(Brand $brand): array
-    {
-        return $this->getProductRepository()->createQueryBuilder('p')
-            ->where('p.brand = :brand')
-            ->setParameter('brand', $brand)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithFlag(Flag $flag): array
-    {
-        return $this->getProductRepository()->createQueryBuilder('p')
-            ->leftJoin('p.flags', 'f')
-            ->where('f.id = :flag')
-            ->setParameter('flag', $flag)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithUnit(Unit $unit): array
-    {
-        return $this->getProductRepository()->createQueryBuilder('p')
-            ->where('p.unit = :unit')
-            ->setParameter('unit', $unit)
-            ->getQuery()
-            ->getResult();
     }
 }

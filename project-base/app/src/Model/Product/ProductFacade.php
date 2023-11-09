@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\Category\Category as AppCategory;
 use App\Model\ProductVideo\ProductVideoFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -53,11 +52,6 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getByUuid(string $uuid)
  * @method markProductsForExport(\App\Model\Product\Product[] $products)
- * @method \App\Model\Product\Product[] getProductsWithAvailability(\Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability)
- * @method \App\Model\Product\Product[] getProductsWithParameter(\App\Model\Product\Parameter\Parameter $parameter)
- * @method \App\Model\Product\Product[] getProductsWithBrand(\App\Model\Product\Brand\Brand $brand)
- * @method \App\Model\Product\Product[] getProductsWithFlag(\App\Model\Product\Flag\Flag $flag)
- * @method \App\Model\Product\Product[] getProductsWithUnit(\App\Model\Product\Unit\Unit $unit)
  * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
  * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
  * @property \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
@@ -329,15 +323,6 @@ class ProductFacade extends BaseProductFacade
     public function refreshProductAccessories(BaseProduct $product, array $accessories): void
     {
         parent::refreshProductAccessories($product, $accessories);
-    }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     * @return \App\Model\Product\Product[]
-     */
-    public function getProductsByCategory(AppCategory $category): array
-    {
-        return $this->productRepository->getProductsByCategory($category);
     }
 
     /**

@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CategoryFacade
 {
@@ -31,6 +33,8 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -43,6 +47,8 @@ class CategoryFacade
         protected readonly CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
         protected readonly CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
         protected readonly CategoryFactoryInterface $categoryFactory,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -108,6 +114,8 @@ class CategoryFacade
 
         $this->categoryVisibilityRecalculationScheduler->scheduleRecalculationWithoutDependencies();
 
+        $this->dispatchCategoryEvent($category, CategoryEvent::CREATE);
+
         return $category;
     }
 
@@ -137,6 +145,8 @@ class CategoryFacade
 
         $this->categoryVisibilityRecalculationScheduler->scheduleRecalculation($category);
 
+        $this->dispatchCategoryEvent($category, CategoryEvent::UPDATE);
+
         return $category;
     }
 
@@ -146,6 +156,8 @@ class CategoryFacade
     public function deleteById($categoryId)
     {
         $category = $this->categoryRepository->getById($categoryId);
+
+        $this->dispatchCategoryEvent($category, CategoryEvent::DELETE);
 
         $this->categoryVisibilityRecalculationScheduler->scheduleRecalculation($category);
 
@@ -186,6 +198,8 @@ class CategoryFacade
             ]);
             $query->execute($parameters);
         }
+
+        $this->productRecalculationDispatcher->dispatchAllProducts();
     }
 
     /**
@@ -477,5 +491,15 @@ class CategoryFacade
     public function getProductMainCategoryOnCurrentDomain(Product $product): Category
     {
         return $this->getProductMainCategoryByDomainId($product, $this->domain->getId());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param string $eventType
+     * @see \Shopsys\FrameworkBundle\Model\Category\CategoryEvent class
+     */
+    protected function dispatchCategoryEvent(Category $category, string $eventType): void
+    {
+        $this->eventDispatcher->dispatch(new CategoryEvent($category), $eventType);
     }
 }
