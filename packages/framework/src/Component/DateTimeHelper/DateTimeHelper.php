@@ -10,17 +10,6 @@ use Shopsys\FrameworkBundle\Component\DateTimeHelper\Exception\CannotParseDateTi
 class DateTimeHelper
 {
     /**
-     * @return \DateTime
-     */
-    public static function createTodayMidnightDateTime()
-    {
-        $todayMidnight = new DateTime();
-        $todayMidnight->setTime(0, 0, 0);
-
-        return $todayMidnight;
-    }
-
-    /**
      * @param string $format
      * @param string $time
      * @return \DateTime
