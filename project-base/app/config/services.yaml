@@ -808,13 +808,6 @@ services:
     App\FrontendApi\Component\ExpressionLanguage\DynamicPaginationComplexityExpressionFunction:
         tags: ['overblog_graphql.expression_function']
 
-    App\Model\ImageSitemap\ImageSitemapFacade:
-        arguments:
-            - '%shopsys.sitemaps_dir%'
-            - '%shopsys.sitemaps_url_prefix%'
-
-    App\Model\ImageSitemap\ImageSitemapFilePrefixer: ~
-
     App\FrontendApi\Model\Token\TokenAuthenticator: ~
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:
