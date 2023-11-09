@@ -106,42 +106,6 @@ class ProductExportRepository
     }
 
     /**
-     * @param int $lastProcessedId
-     * @param int $batchSize
-     * @return int[]
-     */
-    public function getProductIdsForChanged(int $lastProcessedId, int $batchSize): array
-    {
-        $result = $this->em->createQueryBuilder()
-            ->select('p.id')
-            ->from(Product::class, 'p')
-            ->where('p.exportProduct = TRUE')
-            ->andWhere('p.id > :lastProcessedId')
-            ->orderBy('p.id')
-            ->setParameter('lastProcessedId', $lastProcessedId)
-            ->setMaxResults($batchSize)
-            ->getQuery()
-            ->getArrayResult();
-
-        return array_column($result, 'id');
-    }
-
-    /**
-     * @return int
-     */
-    public function getProductChangedCount(): int
-    {
-        $queryBuilder = $this->em->createQueryBuilder()
-            ->select('p.id')
-            ->from(Product::class, 'p')
-            ->where('p.exportProduct = TRUE');
-
-        $result = new QueryPaginator($queryBuilder);
-
-        return $result->getTotalCount();
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @param string $locale

@@ -89,10 +89,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: products, readableName: "Export products to Elasticsearch" }
 
-    App\Model\Product\Elasticsearch\ProductExportChangedCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: products, readableName: "Export changed products to Elasticsearch" }
-
     # Akeneo import products
 
     App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryCronModule:
