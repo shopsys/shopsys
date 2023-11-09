@@ -537,26 +537,4 @@ class ProductRepository
     {
         return $this->getAllOfferedQueryBuilder($domainId, $pricingGroup)->getQuery()->execute();
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     */
-    public function markProductsForExport(array $products): void
-    {
-        $this->em->createQuery('UPDATE ' . Product::class . ' p SET p.exportProduct = TRUE WHERE p IN (:products)')
-            ->setParameter('products', $products)
-            ->execute();
-    }
-
-    public function markAllProductsForExport(): void
-    {
-        $this->em->createQuery('UPDATE ' . Product::class . ' p SET p.exportProduct = TRUE')
-            ->execute();
-    }
-
-    public function markAllProductsAsExported(): void
-    {
-        $this->em->createQuery('UPDATE ' . Product::class . ' p SET p.exportProduct = FALSE')
-            ->execute();
-    }
 }

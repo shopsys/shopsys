@@ -8,8 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class ProductVariantFacade
 {
@@ -21,7 +21,7 @@ class ProductVariantFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -31,7 +31,7 @@ class ProductVariantFacade
         protected readonly ProductFactoryInterface $productFactory,
         protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        protected readonly ProductExportScheduler $productExportScheduler,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
 
@@ -59,10 +59,11 @@ class ProductVariantFacade
             throw $exception;
         }
 
-        $this->productExportScheduler->scheduleRowIdForImmediateExport($mainVariant->getId());
+        // @todo after handling variants this may be simplified
+        $this->productRecalculationDispatcher->dispatchSingleProductId($mainVariant->getId());
 
         foreach ($mainVariant->getVariants() as $variant) {
-            $this->productExportScheduler->scheduleRowIdForImmediateExport($variant->getId());
+            $this->productRecalculationDispatcher->dispatchSingleProductId($variant->getId());
         }
 
         return $mainVariant;

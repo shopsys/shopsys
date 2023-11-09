@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class ProductFacade
 {
@@ -47,7 +48,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -71,7 +72,7 @@ class ProductFacade
         protected readonly ProductParameterValueFactoryInterface $productParameterValueFactory,
         protected readonly ProductVisibilityFactoryInterface $productVisibilityFactory,
         protected readonly ProductPriceCalculation $productPriceCalculation,
-        protected readonly ProductExportScheduler $productExportScheduler,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
 
@@ -98,7 +99,7 @@ class ProductFacade
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
-        $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getId());
+        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
 
         return $product;
     }
@@ -171,8 +172,9 @@ class ProductFacade
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
+        // @todo after variants are handled, this may be simplified
         $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
-        $this->productExportScheduler->scheduleRowIdForImmediateExport($productToExport->getId());
+        $this->productRecalculationDispatcher->dispatchSingleProductId($productToExport->getId());
 
         return $product;
     }
@@ -194,10 +196,11 @@ class ProductFacade
             $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation(
                 $productForRecalculations,
             );
-            $this->productExportScheduler->scheduleRowIdForImmediateExport($productForRecalculations->getId());
+
+            $this->productRecalculationDispatcher->dispatchSingleProductId($productForRecalculations->getId());
         }
 
-        $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getId());
+        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
 
         $this->em->remove($product);
         $this->em->flush();
@@ -350,24 +353,6 @@ class ProductFacade
     public function getByUuid(string $uuid): Product
     {
         return $this->productRepository->getOneByUuid($uuid);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     */
-    public function markProductsForExport(array $products): void
-    {
-        $this->productRepository->markProductsForExport($products);
-    }
-
-    public function markAllProductsForExport(): void
-    {
-        $this->productRepository->markAllProductsForExport();
-    }
-
-    public function markAllProductsAsExported(): void
-    {
-        $this->productRepository->markAllProductsAsExported();
     }
 
     /**

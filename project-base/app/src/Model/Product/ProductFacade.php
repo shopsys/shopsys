@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
@@ -31,6 +30,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockData;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -51,7 +51,6 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method createProductVisibilities(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getByUuid(string $uuid)
- * @method markProductsForExport(\App\Model\Product\Product[] $products)
  * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
  * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
  * @property \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
@@ -81,7 +80,7 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\ProductVideo\ProductVideoFacade $productVideoFacade
@@ -108,7 +107,7 @@ class ProductFacade extends BaseProductFacade
         ProductParameterValueFactoryInterface $productParameterValueFactory,
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
-        ProductExportScheduler $productExportScheduler,
+        ProductRecalculationDispatcher $productRecalculationDispatcher,
         private readonly ProductStockFacade $productStockFacade,
         private readonly StockFacade $stockFacade,
         private readonly ProductVideoFacade $productVideoFacade,
@@ -135,7 +134,7 @@ class ProductFacade extends BaseProductFacade
             $productParameterValueFactory,
             $productVisibilityFactory,
             $productPriceCalculation,
-            $productExportScheduler,
+            $productRecalculationDispatcher,
         );
     }
 
@@ -162,10 +161,7 @@ class ProductFacade extends BaseProductFacade
     public function findOneByCatnumExcludeMainVariants($productCatnum): ?BaseProduct
     {
         try {
-            /** @var \App\Model\Product\Product $product */
-            $product = $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
-
-            return $product;
+            return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
         } catch (ProductNotFoundException $exception) {
             return null;
         }
@@ -178,7 +174,6 @@ class ProductFacade extends BaseProductFacade
      */
     public function edit($productId, ProductData $productData)
     {
-        /** @var \App\Model\Product\Product $product */
         $product = $this->productRepository->getById($productId);
 
         $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple($product, $productData->categoriesByDomainId);
@@ -195,9 +190,6 @@ class ProductFacade extends BaseProductFacade
             $product->refreshVariants($productData->variants);
         }
 
-        if ($product->isVariant() === true) {
-            $product->getMainVariant()->markForExport();
-        }
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->em->flush();
         $this->imageFacade->manageImages($product, $productData->images);
@@ -211,14 +203,15 @@ class ProductFacade extends BaseProductFacade
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
-        $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getId());
+        // @todo after handling variants this may be simplified or edit may be moved to framework
+        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
 
         if ($product->isMainVariant()) {
             foreach ($product->getVariants() as $variant) {
-                $this->productExportScheduler->scheduleRowIdForImmediateExport($variant->getId());
+                $this->productRecalculationDispatcher->dispatchSingleProductId($variant->getId());
             }
         } elseif ($product->isVariant()) {
-            $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getMainVariant()->getId());
+            $this->productRecalculationDispatcher->dispatchSingleProductId($product->getMainVariant()->getId());
         }
 
         $this->editProductStockRelation($productData, $product);

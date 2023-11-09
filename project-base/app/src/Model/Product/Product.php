@@ -153,8 +153,6 @@ class Product extends BaseProduct
         $this->editRelatedProducts($productData->relatedProducts);
 
         parent::edit($productCategoryDomains, $productData);
-
-        $this->markForExport();
     }
 
     /**
