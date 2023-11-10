@@ -5,7 +5,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CartList } from 'components/Pages/Cart/CartList/CartList';
 import { CartSummary } from 'components/Pages/Cart/CartSummary';
-import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmCartViewEvent } from 'gtm/hooks/useGtmCartViewEvent';
@@ -30,27 +29,31 @@ const CartPage: FC<ServerSidePropsType> = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <EmptyCartWrapper isCartPage currentCart={currentCart} title={t('Cart')}>
-                <CommonLayout title={t('Cart')}>
-                    <Webline>
-                        <OrderSteps activeStep={1} domainUrl={url} />
+            <CommonLayout title={t('Cart')}>
+                <Webline>
+                    {!currentCart.isCartEmpty ? (
+                        <>
+                            <OrderSteps activeStep={1} domainUrl={url} />
 
-                        {currentCart.cart?.items && <CartList items={currentCart.cart.items} />}
+                            {currentCart.cart?.items && <CartList items={currentCart.cart.items} />}
 
-                        <CartSummary />
+                            <CartSummary />
 
-                        <OrderAction
-                            withGapBottom
-                            buttonBack={t('Back')}
-                            buttonBackLink="/"
-                            buttonNext={t('Transport and payment')}
-                            buttonNextLink={transportAndPaymentUrl}
-                            hasDisabledLook={false}
-                            withGapTop={false}
-                        />
-                    </Webline>
-                </CommonLayout>
-            </EmptyCartWrapper>
+                            <OrderAction
+                                withGapBottom
+                                buttonBack={t('Back')}
+                                buttonBackLink="/"
+                                buttonNext={t('Transport and payment')}
+                                buttonNextLink={transportAndPaymentUrl}
+                                hasDisabledLook={false}
+                                withGapTop={false}
+                            />
+                        </>
+                    ) : (
+                        <p className="my-28 text-center text-2xl">{t('Your cart is currently empty.')}</p>
+                    )}
+                </Webline>
+            </CommonLayout>
         </>
     );
 };

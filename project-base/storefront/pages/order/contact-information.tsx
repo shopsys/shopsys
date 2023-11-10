@@ -3,7 +3,7 @@ import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { Login } from 'components/Blocks/Popup/Login/Login';
 import { Form } from 'components/Forms/Form/Form';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
-import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
+import { CartLoading } from 'components/Pages/Cart/CartLoading';
 import { ContactInformationContent } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
 import {
     useContactInformationForm,
@@ -53,8 +53,8 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
     const customer = usePersistStore((store) => store.contactInformation.customer);
-    const [transportAndPaymentUrl, orderConfirmationUrl] = getInternationalizedStaticUrls(
-        ['/order/transport-and-payment', '/order-confirmation'],
+    const [transportAndPaymentUrl, orderConfirmationUrl, cartUrl] = getInternationalizedStaticUrls(
+        ['/order/transport-and-payment', '/order-confirmation', '/cart'],
         domainConfig.url,
     );
     const [orderCreating, setOrderCreating] = useState(false);
@@ -74,7 +74,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     useGtmContactInformationPageViewEvent(gtmStaticPageViewEvent);
 
     useEffect(() => {
-        if (customer === undefined) {
+        if (!customer) {
             if (user?.companyCustomer) {
                 formProviderMethods.setValue(formMeta.fields.customer.name, CustomerTypeEnum.CompanyCustomer, {
                     shouldValidate: true,
@@ -86,6 +86,18 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
             }
         }
     }, []);
+
+    useEffect(() => {
+        if (!currentCart.cart?.items.length) {
+            router.replace(cartUrl);
+        }
+    }, [currentCart.cart]);
+
+    useEffect(() => {
+        if (!currentCart.transport || !currentCart.payment) {
+            router.replace(transportAndPaymentUrl);
+        }
+    }, [currentCart.transport, currentCart.payment]);
 
     const onCreateOrderHandler: SubmitHandler<typeof defaultValues> = async (formValues) => {
         setOrderCreating(true);
@@ -225,38 +237,43 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
         <>
             <MetaRobots content="noindex" />
 
-            <EmptyCartWrapper currentCart={currentCart} enableHandling={!orderCreating} title={t('Order')}>
-                <OrderLayout activeStep={3}>
-                    <FormProvider {...formProviderMethods}>
-                        <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
-                            <ContactInformationContent setIsLoginPopupOpened={setIsLoginPopupOpened} />
-                            <OrderAction
-                                withGapBottom
-                                buttonBack={t('Back')}
-                                buttonBackLink={transportAndPaymentUrl}
-                                buttonNext={t('Submit order')}
-                                hasDisabledLook={!formProviderMethods.formState.isValid}
-                                isLoading={fetching}
-                                withGapTop={false}
-                            />
-                        </Form>
-                    </FormProvider>
-                </OrderLayout>
+            <OrderLayout activeStep={3}>
+                {!orderCreating ? (
+                    <>
+                        <FormProvider {...formProviderMethods}>
+                            <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
+                                <ContactInformationContent setIsLoginPopupOpened={setIsLoginPopupOpened} />
+                                <OrderAction
+                                    withGapBottom
+                                    buttonBack={t('Back')}
+                                    buttonBackLink={transportAndPaymentUrl}
+                                    buttonNext={t('Submit order')}
+                                    hasDisabledLook={!formProviderMethods.formState.isValid}
+                                    isLoading={fetching}
+                                    withGapTop={false}
+                                />
+                            </Form>
+                        </FormProvider>
 
-                {isErrorPopupVisible && (
-                    <ErrorPopup
-                        fields={formMeta.fields}
-                        gtmMessageOrigin={GtmMessageOriginType.contact_information_page}
-                        onCloseCallback={() => setErrorPopupVisibility(false)}
-                    />
+                        {isErrorPopupVisible && (
+                            <ErrorPopup
+                                fields={formMeta.fields}
+                                gtmMessageOrigin={GtmMessageOriginType.contact_information_page}
+                                onCloseCallback={() => setErrorPopupVisibility(false)}
+                            />
+                        )}
+
+                        {isLoginPopupOpened && (
+                            <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
+                                <div className="h2 mb-3">{t('Login')}</div>
+                                <Login defaultEmail={emailValue} />
+                            </Popup>
+                        )}
+                    </>
+                ) : (
+                    <CartLoading />
                 )}
-                {isLoginPopupOpened && (
-                    <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
-                        <div className="h2 mb-3">{t('Login')}</div>
-                        <Login defaultEmail={emailValue} />
-                    </Popup>
-                )}
-            </EmptyCartWrapper>
+            </OrderLayout>
         </>
     );
 };
