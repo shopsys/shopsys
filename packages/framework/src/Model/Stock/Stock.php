@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace Shopsys\FrameworkBundle\Model\Stock;
 
-use App\Model\Stock\Exception\StockDomainNotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Model\Stock\Exception\StockDomainNotFoundException;
 
 /**
  * @ORM\Table(name="stocks")
@@ -17,7 +16,7 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
  */
 class Stock implements OrderableEntityInterface
 {
-    private const GEDMO_SORTABLE_LAST_POSITION = 1;
+    protected const GEDMO_SORTABLE_LAST_POSITION = 1;
 
     /**
      * @var int
@@ -25,64 +24,64 @@ class Stock implements OrderableEntityInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected int $id;
+    protected $id;
 
     /**
-     * @var \App\Model\Stock\StockDomain[]|\Doctrine\Common\Collections\Collection
-     * @ORM\OneToMany(targetEntity="App\Model\Stock\StockDomain", mappedBy="stock", cascade={"persist"})
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Stock\StockDomain>
+     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Stock\StockDomain", mappedBy="stock", cascade={"persist"})
      */
     protected $domains;
 
     /**
-     * @var \App\Model\Store\Store[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\Store\Store>
      * @ORM\OneToMany(targetEntity="App\Model\Store\Store", mappedBy="stock", cascade={"persist"})
      */
-    protected Collection $stores;
+    protected $stores;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
      */
-    protected string $name;
+    protected $name;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=255, unique=true, nullable=true)
      */
-    protected ?string $externalId;
+    protected $externalId;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    protected bool $isDefault;
+    protected $isDefault;
 
     /**
      * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
-    protected ?string $note;
+    protected $note;
 
     /**
      * @var int
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
-    protected int $position;
+    protected $position;
 
     /**
-     * @param \App\Model\Stock\StockData $stockData
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
      */
     public function __construct(StockData $stockData)
     {
         $this->domains = new ArrayCollection();
-        $this->position = self::GEDMO_SORTABLE_LAST_POSITION;
+        $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->createDomains($stockData);
         $this->setData($stockData);
     }
 
     /**
-     * @param \App\Model\Stock\StockData $stockData
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
      */
     public function edit(StockData $stockData): void
     {
@@ -91,7 +90,7 @@ class Stock implements OrderableEntityInterface
     }
 
     /**
-     * @param \App\Model\Stock\StockData $stockData
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
      */
     public function setData(StockData $stockData): void
     {
@@ -178,7 +177,7 @@ class Stock implements OrderableEntityInterface
     }
 
     /**
-     * @param \App\Model\Stock\StockData $stockData
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
      */
     protected function createDomains(StockData $stockData): void
     {
@@ -193,7 +192,7 @@ class Stock implements OrderableEntityInterface
     }
 
     /**
-     * @param \App\Model\Stock\StockData $stockData
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
      */
     protected function setDomains(StockData $stockData): void
     {
@@ -205,7 +204,7 @@ class Stock implements OrderableEntityInterface
 
     /**
      * @param int $domainId
-     * @return \App\Model\Stock\StockDomain
+     * @return \Shopsys\FrameworkBundle\Model\Stock\StockDomain
      */
     public function getStockDomain(int $domainId): StockDomain
     {

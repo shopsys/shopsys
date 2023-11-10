@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace Shopsys\FrameworkBundle\Model\Stock;
 
 class ProductStockDataFactory
 {
     /**
-     * @return \App\Model\Stock\ProductStockData
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStockData
      */
-    private function create()
+    protected function create(): ProductStockData
     {
         return new ProductStockData();
     }
 
     /**
-     * @param \App\Model\Stock\Stock $stock
-     * @return \App\Model\Stock\ProductStockData
+     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStockData
      */
     public function createFromStock(Stock $stock): ProductStockData
     {
@@ -28,8 +28,8 @@ class ProductStockDataFactory
     }
 
     /**
-     * @param \App\Model\Stock\ProductStock $productStock
-     * @return \App\Model\Stock\ProductStockData
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStock $productStock
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStockData
      */
     public function createFromProductStock(ProductStock $productStock): ProductStockData
     {

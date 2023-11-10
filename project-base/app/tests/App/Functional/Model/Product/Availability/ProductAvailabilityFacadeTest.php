@@ -8,12 +8,12 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductFacade;
-use App\Model\Stock\ProductStockDataFactory;
-use App\Model\Stock\StockFacade;
-use App\Model\Stock\StockSettingsData;
-use App\Model\Stock\StockSettingsDataFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
+use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
+use Shopsys\FrameworkBundle\Model\Stock\StockSettingsData;
+use Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase

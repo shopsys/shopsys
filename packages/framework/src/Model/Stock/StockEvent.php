@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace Shopsys\FrameworkBundle\Model\Stock;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -28,7 +28,7 @@ class StockEvent extends Event
     public const DELETE = 'stock.delete';
 
     /**
-     * @param \App\Model\Stock\Stock $stock
+     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
      * @param bool $hasChangedDomains
      */
     public function __construct(protected Stock $stock, protected bool $hasChangedDomains = false)
@@ -36,7 +36,7 @@ class StockEvent extends Event
     }
 
     /**
-     * @return \App\Model\Stock\Stock
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock
      */
     public function getStock(): Stock
     {

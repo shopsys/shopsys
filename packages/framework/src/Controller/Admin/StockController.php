@@ -2,23 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use App\Form\Admin\StockFormType;
-use App\Form\Admin\StockSettingsFormType;
-use App\Model\Stock\Exception\StockNotFoundException;
-use App\Model\Stock\Stock;
-use App\Model\Stock\StockDataFactory;
-use App\Model\Stock\StockFacade;
-use App\Model\Stock\StockSettingsDataFacade;
-use App\Model\Stock\StockSettingsDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Form\Admin\Stock\StockFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Stock\StockSettingsFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Stock\Exception\StockNotFoundException;
+use Shopsys\FrameworkBundle\Model\Stock\Stock;
+use Shopsys\FrameworkBundle\Model\Stock\StockDataFactory;
+use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
+use Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFacade;
+use Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,32 +30,31 @@ class StockController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \App\Model\Stock\StockFacade $stockFacade
-     * @param \App\Model\Stock\StockDataFactory $stockDataFactory
-     * @param \App\Model\Stock\StockSettingsDataFacade $stockSettingsDataFacade
-     * @param \App\Model\Stock\StockSettingsDataFactory $stockSettingsDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockDataFactory $stockDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFacade $stockSettingsDataFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockSettingsDataFactory $stockSettingsDataFactory
      */
     public function __construct(
-        private GridFactory $gridFactory,
-        private BreadcrumbOverrider $breadcrumbOverrider,
-        private AdminDomainTabsFacade $adminDomainTabsFacade,
-        private StockFacade $stockFacade,
-        private StockDataFactory $stockDataFactory,
-        private StockSettingsDataFacade $stockSettingsDataFacade,
-        private StockSettingsDataFactory $stockSettingsDataFactory,
+        protected readonly GridFactory $gridFactory,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly StockFacade $stockFacade,
+        protected readonly StockDataFactory $stockDataFactory,
+        protected readonly StockSettingsDataFacade $stockSettingsDataFacade,
+        protected readonly StockSettingsDataFactory $stockSettingsDataFactory,
     ) {
     }
 
     /**
      * @Route("/stock/list/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request): Response
+    public function listAction(): Response
     {
         $grid = $this->getGrid();
 
-        return $this->render('Admin/Content/Stock/list.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/Stock/list.html.twig', [
             'gridView' => $grid->createView(),
             'settingsForm' => $this->getStockSettingsForm()->createView(),
         ]);
@@ -64,12 +62,11 @@ class StockController extends AdminBaseController
 
     /**
      * @Route("/stock/setting/")
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingsAction(Request $request): Response
+    public function settingsAction(): Response
     {
-        return $this->render('Admin/Content/Stock/settings.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/Stock/settings.html.twig', [
             'form' => $this->getStockSettingsForm()->createView(),
         ]);
     }
@@ -77,7 +74,7 @@ class StockController extends AdminBaseController
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    private function getStockSettingsForm(): FormInterface
+    protected function getStockSettingsForm(): FormInterface
     {
         $stockSettingsData = $this->stockSettingsDataFactory->getForDomainId(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
@@ -156,7 +153,7 @@ class StockController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('Admin/Content/Stock/new.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/Stock/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -198,7 +195,7 @@ class StockController extends AdminBaseController
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing warehouse - %name%', ['%name%' => $stock->getName()]));
 
-        return $this->render('Admin/Content/Stock/edit.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/Stock/edit.html.twig', [
             'form' => $form->createView(),
             'stock' => $stock,
         ]);
@@ -223,7 +220,7 @@ class StockController extends AdminBaseController
                     'name' => $stock->getName(),
                 ],
             );
-        } catch (StockNotFoundException $ex) {
+        } catch (StockNotFoundException) {
             $this->addErrorFlash(t('Selected warehouse does not exist.'));
         }
 
@@ -255,7 +252,7 @@ class StockController extends AdminBaseController
                     'name' => $stock->getName(),
                 ],
             );
-        } catch (StockNotFoundException $ex) {
+        } catch (StockNotFoundException) {
             $this->addErrorFlash(t('Selected warehouse does not exist.'));
         }
 
@@ -265,7 +262,7 @@ class StockController extends AdminBaseController
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    private function getGrid(): Grid
+    protected function getGrid(): Grid
     {
         $queryBuilder = $this->stockFacade->getAllStockQueryBuilder();
 
@@ -283,7 +280,7 @@ class StockController extends AdminBaseController
                 . 'remove all stock quantities from products and association to stores. This step is irreversible!'));
         $grid->enableDragAndDrop(Stock::class);
 
-        $grid->setTheme('Admin/Content/Stock/listGrid.html.twig');
+        $grid->setTheme('@ShopsysFramework/Admin/Content/Stock/listGrid.html.twig');
 
         return $grid;
     }

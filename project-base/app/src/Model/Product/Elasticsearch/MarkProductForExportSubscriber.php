@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Elasticsearch;
 
-use App\Model\Stock\StockEvent;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\MarkProductForExportSubscriber as BaseMarkProductForExportSubscriber;
+use Shopsys\FrameworkBundle\Model\Stock\StockEvent;
 
 /**
  * @property \App\Model\Product\ProductFacade $productFacade
@@ -27,7 +27,7 @@ class MarkProductForExportSubscriber extends BaseMarkProductForExportSubscriber
     }
 
     /**
-     * @param \App\Model\Stock\StockEvent $stockEvent
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockEvent $stockEvent
      */
     public function markAllIfStockDomainsChanged(StockEvent $stockEvent): void
     {

@@ -11,6 +11,7 @@ use App\Model\Product\Product;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Stock\StockProductFormType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
@@ -35,9 +36,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
-        private FormBuilderHelper $formBuilderHelper,
-        private FlagFacade $flagFacade,
-        private UrlGeneratorInterface $urlGenerator,
+        private readonly FormBuilderHelper $formBuilderHelper,
+        private readonly FlagFacade $flagFacade,
+        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 

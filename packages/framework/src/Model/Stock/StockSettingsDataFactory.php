@@ -2,22 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace Shopsys\FrameworkBundle\Model\Stock;
 
-use App\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class StockSettingsDataFactory
 {
     /**
-     * @param \App\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(private Setting $setting)
-    {
+    public function __construct(
+        protected readonly Setting $setting,
+    ) {
     }
 
     /**
      * @param int $domainId
-     * @return \App\Model\Stock\StockSettingsData
+     * @return \Shopsys\FrameworkBundle\Model\Stock\StockSettingsData
      */
     public function getForDomainId(int $domainId): StockSettingsData
     {

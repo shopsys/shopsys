@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin;
+namespace Shopsys\FrameworkBundle\Form\Admin\Stock;
 
-use App\Model\Stock\Stock;
-use App\Model\Stock\StockData;
-use App\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Model\Stock\Stock;
+use Shopsys\FrameworkBundle\Model\Stock\StockData;
+use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,17 +23,17 @@ class StockFormType extends AbstractType
     private ?Stock $stock;
 
     /**
-     * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      */
-    public function __construct(private StockFacade $stockFacade)
-    {
+    public function __construct(
+        private readonly StockFacade $stockFacade,
+    ) {
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->stock = $options['stock'];
 
@@ -85,9 +85,9 @@ class StockFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['stock'])
@@ -114,7 +114,7 @@ class StockFormType extends AbstractType
         $stock = $this->stockFacade->findStockByExternalId($externalId);
 
         if ($stock !== null) {
-            $context->addViolation('Warehouse with this exteral code already exists');
+            $context->addViolation('Warehouse with this external code already exists');
         }
     }
 }

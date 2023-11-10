@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Form\Admin\Store;
 
 use App\Form\Admin\Store\OpeningHours\OpeningHoursFormType;
-use App\Model\Stock\StockFacade;
 use App\Model\Store\Store;
 use App\Model\Store\StoreData;
 use App\Model\Store\StoreFacade;
@@ -17,6 +16,7 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
+use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -33,7 +33,7 @@ class StoreFormType extends AbstractType
     private ?Store $store = null;
 
     /**
-     * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */

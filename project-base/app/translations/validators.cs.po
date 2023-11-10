@@ -385,9 +385,8 @@ msgstr "Proměnná {{ needle }} je povinná"
 msgid "Warehouse name cannot be longer than {{ limit }} characters"
 msgstr "Název skladu nesmí být delší než {{ limit }} znaků"
 
-msgid "Warehouse with this exteral code already exists"
+msgid "Warehouse with this external code already exists"
 msgstr "Sklad s tímto externím kódem již existuje"
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nesmí být delší než {{ limit }} znaků"
-

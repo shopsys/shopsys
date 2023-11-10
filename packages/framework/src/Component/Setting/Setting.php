@@ -24,6 +24,8 @@ class Setting
     public const FEED_NAME_TO_CONTINUE = 'feedNameToContinue';
     public const FEED_DOMAIN_ID_TO_CONTINUE = 'feedDomainIdToContinue';
     public const FEED_ITEM_ID_TO_CONTINUE = 'feedItemIdToContinue';
+    public const DELIVERY_DAYS_ON_STOCK = 'deliveryDayOnStock';
+    public const TRANSFER_DAYS_BETWEEN_STOCKS = 'transferDaysBetweenStocks';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\SettingValue[][]

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Store;
 
-use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Country\Country;
+use Shopsys\FrameworkBundle\Model\Stock\Stock;
 
 class StoreData
 {

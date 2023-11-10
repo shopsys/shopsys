@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace Shopsys\FrameworkBundle\Model\Stock;
 
-use App\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class StockSettingsDataFacade
 {
     /**
-     * @param \App\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        private Setting $setting,
-        private AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly Setting $setting,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
     /**
-     * @param \App\Model\Stock\StockSettingsData $stockSettingsData
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockSettingsData $stockSettingsData
      */
     public function edit(StockSettingsData $stockSettingsData): void
     {

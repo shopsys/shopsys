@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace Shopsys\FrameworkBundle\Model\Stock;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,29 +23,29 @@ class StockDomain
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected int $id;
+    protected $id;
 
     /**
-     * @var \App\Model\Stock\Stock
-     * @ORM\ManyToOne(targetEntity="App\Model\Stock\Stock", inversedBy="domains")
+     * @var \Shopsys\FrameworkBundle\Model\Stock\Stock
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Stock\Stock", inversedBy="domains")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    protected Stock $stock;
+    protected $stock;
 
     /**
      * @var int
      * @ORM\Column(type="integer")
      */
-    protected int $domainId;
+    protected $domainId;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    protected bool $isEnabled = false;
+    protected $isEnabled = false;
 
     /**
-     * @param \App\Model\Stock\Stock $stock
+     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
      * @param int $domainId
      */
     public function __construct(Stock $stock, int $domainId)

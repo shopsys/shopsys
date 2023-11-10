@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Stock\StockData;
-use App\Model\Stock\StockDataFactory;
-use App\Model\Stock\StockFacade;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Stock\StockData;
+use Shopsys\FrameworkBundle\Model\Stock\StockDataFactory;
+use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
 class StocksDataFixture extends AbstractReferenceFixture
 {
@@ -29,8 +29,8 @@ class StocksDataFixture extends AbstractReferenceFixture
     public const STOCK_PREFIX = 'stock_';
 
     /**
-     * @param \App\Model\Stock\StockFacade $stockFacade
-     * @param \App\Model\Stock\StockDataFactory $stockDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockDataFactory $stockDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -53,7 +53,7 @@ class StocksDataFixture extends AbstractReferenceFixture
 
     /**
      * @param mixed $demoRow
-     * @return \App\Model\Stock\StockData
+     * @return \Shopsys\FrameworkBundle\Model\Stock\StockData
      */
     protected function initStockData($demoRow): StockData
     {

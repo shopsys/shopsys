@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock\Exception;
+namespace Shopsys\FrameworkBundle\Model\Stock\Exception;
 
 use Exception;
 

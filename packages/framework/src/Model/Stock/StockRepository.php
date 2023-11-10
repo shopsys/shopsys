@@ -2,34 +2,35 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace Shopsys\FrameworkBundle\Model\Stock;
 
-use App\Model\Stock\Exception\StockNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Stock\Exception\StockNotFoundException;
 
 class StockRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(protected EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
     }
 
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    private function getStockRepository(): EntityRepository
+    protected function getStockRepository(): EntityRepository
     {
         return $this->em->getRepository(Stock::class);
     }
 
     /**
      * @param int $stockId
-     * @return \App\Model\Stock\Stock
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock
      */
     public function getById(int $stockId): Stock
     {
@@ -44,7 +45,7 @@ class StockRepository
 
     /**
      * @param int[] $stockIds
-     * @return \App\Model\Stock\Stock[]
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock[]
      */
     public function getStocksByIdsIndexedById(array $stockIds): array
     {
@@ -59,7 +60,7 @@ class StockRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getQueryBuilder(): QueryBuilder
+    protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('s')
@@ -68,7 +69,7 @@ class StockRepository
 
     /**
      * @param int $domainId
-     * @return \App\Model\Stock\Stock[]
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock[]
      */
     public function getStocksEnabledOnDomain(int $domainId): array
     {
@@ -80,7 +81,7 @@ class StockRepository
     }
 
     /**
-     * @return \App\Model\Stock\Stock[]
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock[]
      */
     public function getAllStocks(): array
     {
@@ -98,7 +99,7 @@ class StockRepository
 
     /**
      * @param string $externalId
-     * @return \App\Model\Stock\Stock|null
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock|null
      */
     public function findStockByExternalId(string $externalId): ?Stock
     {
@@ -106,7 +107,7 @@ class StockRepository
     }
 
     /**
-     * @param \App\Model\Stock\Stock $stock
+     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
      */
     public function changeDefaultStock(Stock $stock): void
     {

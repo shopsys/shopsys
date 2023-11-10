@@ -385,9 +385,8 @@ msgstr ""
 msgid "Warehouse name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Warehouse with this exteral code already exists"
+msgid "Warehouse with this external code already exists"
 msgstr ""
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr ""
-

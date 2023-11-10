@@ -2,21 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace Shopsys\FrameworkBundle\Model\Stock;
 
-use App\Model\Product\Product;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductStockRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(private EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
     }
 
     /**
@@ -30,7 +31,7 @@ class ProductStockRepository
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Doctrine\ORM\QueryBuilder
      */
     protected function getProductStockQueryBuilderByProduct(Product $product): QueryBuilder
@@ -41,10 +42,10 @@ class ProductStockRepository
     }
 
     /**
-     * @param \App\Model\Stock\Stock $stock
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @throws \Doctrine\ORM\NonUniqueResultException
-     * @return \App\Model\Stock\ProductStock|null
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock|null
      */
     public function findProductStockByStockAndProduct(Stock $stock, Product $product): ?ProductStock
     {
@@ -57,12 +58,12 @@ class ProductStockRepository
 
     /**
      * @param int[] $stockIds
-     * @param \App\Model\Product\Product $product
-     * @return \App\Model\Stock\ProductStock[]
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByStocksAndProductIndexedByStockId(array $stockIds, Product $product): array
     {
-        /** @var array{productStock: \App\Model\Stock\ProductStock, stockId: int} $productStocks */
+        /** @var array{productStock: \Shopsys\FrameworkBundle\Model\Stock\ProductStock, stockId: int} $productStocks */
         $productStocks = $this->em->createQueryBuilder()
             ->select('ps productStock, IDENTITY(ps.stock) stockId')
             ->from(ProductStock::class, 'ps')
@@ -83,8 +84,8 @@ class ProductStockRepository
     }
 
     /**
-     * @param \App\Model\Product\Product $product
-     * @return \App\Model\Stock\ProductStock[]
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProduct(Product $product): array
     {
@@ -96,7 +97,7 @@ class ProductStockRepository
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return bool
      */
@@ -119,9 +120,9 @@ class ProductStockRepository
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @return \App\Model\Stock\ProductStock[]
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProductAndDomainId(Product $product, int $domainId): array
     {

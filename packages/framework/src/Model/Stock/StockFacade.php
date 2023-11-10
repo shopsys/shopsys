@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace Shopsys\FrameworkBundle\Model\Stock;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
@@ -12,21 +12,21 @@ class StockFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Stock\StockRepository $stockRepository
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockRepository $stockRepository
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \App\Model\Stock\ProductStockFacade $productStockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      */
     public function __construct(
-        private EntityManagerInterface $em,
-        private StockRepository $stockRepository,
-        protected EventDispatcherInterface $eventDispatcher,
-        private ProductStockFacade $productStockFacade,
+        protected readonly EntityManagerInterface $em,
+        protected readonly StockRepository $stockRepository,
+        protected readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly ProductStockFacade $productStockFacade,
     ) {
     }
 
     /**
-     * @param \App\Model\Stock\StockData $stockData
-     * @return \App\Model\Stock\Stock
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock
      */
     public function create(StockData $stockData): Stock
     {
@@ -41,8 +41,8 @@ class StockFacade
 
     /**
      * @param int $stockId
-     * @param \App\Model\Stock\StockData $stockData
-     * @return \App\Model\Stock\Stock
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock
      */
     public function edit(int $stockId, StockData $stockData): Stock
     {
@@ -72,7 +72,7 @@ class StockFacade
     }
 
     /**
-     * @param \App\Model\Stock\Stock $stock
+     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
      */
     public function changeDefaultStock(Stock $stock): void
     {
@@ -81,7 +81,7 @@ class StockFacade
 
     /**
      * @param int $stockId
-     * @return \App\Model\Stock\Stock
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock
      */
     public function getById(int $stockId): Stock
     {
@@ -97,7 +97,7 @@ class StockFacade
     }
 
     /**
-     * @return \App\Model\Stock\Stock[]
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock[]
      */
     public function getAllStocks(): array
     {
@@ -106,7 +106,7 @@ class StockFacade
 
     /**
      * @param string $externalId
-     * @return \App\Model\Stock\Stock|null
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock|null
      */
     public function findStockByExternalId(string $externalId): ?Stock
     {
@@ -115,7 +115,7 @@ class StockFacade
 
     /**
      * @param int[] $stockIds
-     * @return \App\Model\Stock\Stock[]
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock[]
      */
     public function getStocksByIdsIndexedById(array $stockIds): array
     {
@@ -124,7 +124,7 @@ class StockFacade
 
     /**
      * @param int $domainId
-     * @return \App\Model\Stock\Stock[]
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock[]
      */
     public function getStocksEnabledOnDomainIndexedByStockId(int $domainId): array
     {

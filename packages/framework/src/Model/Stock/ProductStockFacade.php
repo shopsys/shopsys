@@ -2,29 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace Shopsys\FrameworkBundle\Model\Stock;
 
-use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductStockFacade
 {
-    private ProductStockRepository $productStockRepository;
-
     /**
-     * @param \App\Model\Stock\ProductStockRepository $stockProductRepository
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockRepository $productStockRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        ProductStockRepository $stockProductRepository,
-        private EntityManagerInterface $em,
+        protected readonly ProductStockRepository $productStockRepository,
+        protected readonly EntityManagerInterface $em,
     ) {
-        $this->productStockRepository = $stockProductRepository;
     }
 
     /**
-     * @param \App\Model\Product\Product $product
-     * @return \App\Model\Stock\ProductStock[]
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProduct(Product $product): array
     {
@@ -32,9 +29,9 @@ class ProductStockFacade
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @return \App\Model\Stock\ProductStock[]
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProductAndDomainId(Product $product, int $domainId): array
     {
@@ -42,8 +39,8 @@ class ProductStockFacade
     }
 
     /**
-     * @param \App\Model\Product\Product $product
-     * @return \App\Model\Stock\ProductStock[]
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProductIndexedByStockId(Product $product): array
     {
@@ -58,9 +55,9 @@ class ProductStockFacade
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @return \App\Model\Stock\ProductStock[]
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProductAndDomainIdIndexedByStockId(Product $product, int $domainId): array
     {
@@ -76,9 +73,9 @@ class ProductStockFacade
     }
 
     /**
-     * @param \App\Model\Product\Product $product
-     * @param \App\Model\Stock\Stock[] $stocksIndexedById
-     * @param \App\Model\Stock\ProductStockData[] $productStockDataItems
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock[] $stocksIndexedById
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockData[] $productStockDataItems
      */
     public function editProductStockRelations(
         Product $product,
@@ -102,11 +99,11 @@ class ProductStockFacade
     }
 
     /**
-     * @param \App\Model\Product\Product $product
-     * @param \App\Model\Stock\Stock $stock
-     * @return \App\Model\Stock\ProductStock
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
+     * @return \Shopsys\FrameworkBundle\Model\Stock\ProductStock
      */
-    private function createProductStock(Product $product, Stock $stock): ProductStock
+    protected function createProductStock(Product $product, Stock $stock): ProductStock
     {
         $productStock = new ProductStock($stock, $product);
         $this->em->persist($productStock);
@@ -115,7 +112,7 @@ class ProductStockFacade
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return bool
      */

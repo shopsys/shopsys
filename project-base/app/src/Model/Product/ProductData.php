@@ -51,7 +51,7 @@ class ProductData extends BaseProductData
     public $nameSufix;
 
     /**
-     * @var \App\Model\Stock\ProductStockData[]
+     * @var \Shopsys\FrameworkBundle\Model\Stock\ProductStockData[]
      */
     public $stockProductData;
 

@@ -6,8 +6,6 @@ namespace App\Model\Sitemap;
 
 use App\Model\Blog\Article\BlogArticleRepository;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
-use App\Model\Stock\ProductStock;
-use App\Model\Stock\StockDomain;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
@@ -17,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository as BaseSitemapRepository;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
+use Shopsys\FrameworkBundle\Model\Stock\StockDomain;
 
 /**
  * @property \App\Model\Product\ProductRepository $productRepository

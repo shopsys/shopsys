@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Category\Category as AppCategory;
-use App\Model\Stock\ProductStock;
 use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -20,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
 
 /**
  * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository

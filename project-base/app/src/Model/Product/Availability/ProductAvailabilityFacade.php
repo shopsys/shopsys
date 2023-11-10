@@ -6,12 +6,12 @@ namespace App\Model\Product\Availability;
 
 use App\Component\Setting\Setting;
 use App\Model\Product\Product;
-use App\Model\Stock\ProductStock;
-use App\Model\Stock\ProductStockFacade;
 use App\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Symfony\Contracts\Service\ResetInterface;
 
 class ProductAvailabilityFacade implements ResetInterface
@@ -25,7 +25,7 @@ class ProductAvailabilityFacade implements ResetInterface
 
     /**
      * @param \App\Component\Setting\Setting $setting
-     * @param \App\Model\Stock\ProductStockFacade $productStockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
@@ -491,7 +491,7 @@ class ProductAvailabilityFacade implements ResetInterface
     }
 
     /**
-     * @param \App\Model\Stock\ProductStock[] $productStocksByDomainIdIndexedByStockId
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStock[] $productStocksByDomainIdIndexedByStockId
      * @return int
      */
     private function sumProductStockQuantities(array $productStocksByDomainIdIndexedByStockId): int
@@ -507,7 +507,7 @@ class ProductAvailabilityFacade implements ResetInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param \App\Model\Stock\ProductStock|null $productStock
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStock|null $productStock
      * @param int $quantityOnAllStocks
      * @param int $domainId
      * @return int

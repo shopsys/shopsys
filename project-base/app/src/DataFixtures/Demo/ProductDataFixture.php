@@ -13,8 +13,6 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
-use App\Model\Stock\ProductStockDataFactory;
-use App\Model\Stock\StockRepository;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,6 +26,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
+use Shopsys\FrameworkBundle\Model\Stock\StockRepository;
 
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -110,8 +110,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
      * @param \Faker\Generator $generator
      * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
-     * @param \App\Model\Stock\StockRepository $stockRepository
-     * @param \App\Model\Stock\ProductStockDataFactory $productStockDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockRepository $stockRepository
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(

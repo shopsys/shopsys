@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Store;
 
-use App\Model\Stock\Stock;
 use App\Model\Store\Exception\StoreDomainNotFoundException;
 use App\Model\Store\OpeningHours\Exception\OpeningHoursNotFoundException;
 use App\Model\Store\OpeningHours\OpeningHours;
@@ -18,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Country\Country;
+use Shopsys\FrameworkBundle\Model\Stock\Stock;
 
 /**
  * @ORM\Table(name="stores")
@@ -48,8 +48,8 @@ class Store implements OrderableEntityInterface
     protected Collection $domains;
 
     /**
-     * @var \App\Model\Stock\Stock|null
-     * @ORM\ManyToOne(targetEntity="App\Model\Stock\Stock", inversedBy="stores", cascade={"persist"})
+     * @var \Shopsys\FrameworkBundle\Model\Stock\Stock|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Stock\Stock", inversedBy="stores", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     protected ?Stock $stock;
@@ -235,7 +235,7 @@ class Store implements OrderableEntityInterface
     }
 
     /**
-     * @return \App\Model\Stock\Stock|null
+     * @return \Shopsys\FrameworkBundle\Model\Stock\Stock|null
      */
     public function getStock(): ?Stock
     {

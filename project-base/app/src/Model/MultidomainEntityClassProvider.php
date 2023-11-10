@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Model;
 
 use App\Model\SeoPage\SeoPageDomain;
-use App\Model\Stock\StockDomain;
 use App\Model\Store\StoreDomain;
 use Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider as BaseMultidomainEntityClassProviderAlias;
+use Shopsys\FrameworkBundle\Model\Stock\StockDomain;
 
 class MultidomainEntityClassProvider extends BaseMultidomainEntityClassProviderAlias
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace Shopsys\FrameworkBundle\Model\Stock;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
@@ -12,12 +12,12 @@ class StockDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private Domain $domain,
+        protected readonly Domain $domain,
     ) {
     }
 
     /**
-     * @return \App\Model\Stock\StockData
+     * @return \Shopsys\FrameworkBundle\Model\Stock\StockData
      */
     public function create(): StockData
     {
@@ -25,8 +25,8 @@ class StockDataFactory
     }
 
     /**
-     * @param \App\Model\Stock\Stock $stock
-     * @return \App\Model\Stock\StockData
+     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
+     * @return \Shopsys\FrameworkBundle\Model\Stock\StockData
      */
     public function createFromStock(Stock $stock): StockData
     {
@@ -37,8 +37,8 @@ class StockDataFactory
     }
 
     /**
-     * @param \App\Model\Stock\StockData $stockData
-     * @param \App\Model\Stock\Stock $stock
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockData $stockData
+     * @param \Shopsys\FrameworkBundle\Model\Stock\Stock $stock
      */
     public function fillFromStock(StockData $stockData, Stock $stock): void
     {
