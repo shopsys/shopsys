@@ -211,6 +211,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   upgrade Storefront docker image ([#2931](https://github.com/shopsys/shopsys/pull/2931))
     -   now we use Node.js version 20-alpine3.17 and PNPM version 8.10.5
     -   see #project-base-diff to update your project
+-   remove custom stores and stocks implementation as it's now a part of shopsys/framework ([#2918](https://github.com/shopsys/shopsys/pull/2918))
+    -   if necessary, extend classes and implement your custom logic
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
