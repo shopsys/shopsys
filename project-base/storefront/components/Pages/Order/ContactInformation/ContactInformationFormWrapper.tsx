@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { ContactInformationAddress } from 'components/Pages/Order/ContactInformation/ContactInformationAddress';
@@ -46,7 +45,7 @@ export const ContactInformationFormWrapper: FC = () => {
 
                 <ContactInformationDeliveryAddress />
 
-                <Heading type="h3">{t('Note')}</Heading>
+                <div className="h3 mb-3">{t('Note')}</div>
                 <TextareaControlled
                     control={formProviderMethods.control}
                     formName={formMeta.formName}

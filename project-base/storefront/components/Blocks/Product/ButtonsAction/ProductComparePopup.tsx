@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/IconsSvg';
 import { Link } from 'components/Basic/Link/Link';
 import { Popup } from 'components/Layout/Popup/Popup';
@@ -17,7 +16,7 @@ export const ProductComparePopup: FC<ProductComparePopupProps> = ({ onCloseCallb
 
     return (
         <Popup onCloseCallback={onCloseCallback}>
-            <Heading type="h3">{t('Comparison')}</Heading>
+            <div className="text-base lg:text-lg">{t('Comparison')}</div>
 
             <div className="flex flex-col">
                 <p className="text-bigger font-semiBold mt-[15px] mb-5">{t('Product added to comparison.')}</p>

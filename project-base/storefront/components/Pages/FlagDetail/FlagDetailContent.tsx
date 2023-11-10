@@ -1,5 +1,4 @@
 import { FlagDetailProductsWrapper } from './FlagDetailProductsWrapper';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { FlagDetailFragmentApi } from 'graphql/generated';
@@ -15,7 +14,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
     return (
         <>
             <Webline>
-                <Heading type="h1">{flag.name}</Heading>
+                <h1 className="mb-3">{flag.name}</h1>
             </Webline>
             <Webline>
                 <div className="scroll-mt-5" ref={paginationScrollTargetRef}>

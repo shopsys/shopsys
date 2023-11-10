@@ -13,8 +13,8 @@ export function searchProductByNameTypeEnterAndCheckResult(productName, productC
     cy.get('[data-testid="layout-header-search-autocomplete-popup-products"]').contains(productName);
     cy.get('[data-testid="layout-header-search-autocomplete-input"]').type('{enter}');
     cy.url().should('contain', url.search);
-    cy.get('[data-testid="basic-heading-h1"]').contains(productName);
-    cy.get(productListSelector).contains(productName);
+    cy.get('[data-testid="search-results-heading"]').contains(productName);
+    cy.get(productListSelector + '-name').contains(productName);
 }
 
 export function typeToSearchInput(searchText) {

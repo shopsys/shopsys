@@ -2,7 +2,6 @@ import { ProductComparisonBody } from './ProductComparisonBody';
 import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
 import { ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { ComparedProductFragmentApi } from 'graphql/generated';
 import { twMergeCustom } from 'helpers/twMerge';
@@ -65,9 +64,9 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ pr
     return (
         <>
             <div className="mb-8 flex items-end">
-                <Heading className="mb-0 w-full lg:w-auto lg:flex-1" type="h1">
+                <h1 className="w-full lg:w-auto lg:flex-1">
                     {t('Product comparison')}&nbsp;({productsCompare.length})
-                </Heading>
+                </h1>
             </div>
             <ProductComparisonButtonRemoveAll displayMobile />
             <div className="relative mb-24 overflow-hidden" id="js-table-compare-wrap">

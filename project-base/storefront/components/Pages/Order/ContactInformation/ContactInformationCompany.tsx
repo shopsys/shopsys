@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
@@ -23,7 +22,7 @@ export const ContactInformationCompany: FC = () => {
 
     return (
         <>
-            <Heading type="h3">{t('Company data')}</Heading>
+            <div className="h3 mb-3">{t('Company data')}</div>
             <TextInputControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}

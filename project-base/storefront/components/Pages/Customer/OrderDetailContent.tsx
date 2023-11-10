@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Row, Cell, CellHead, Table, CellMinor } from 'components/Basic/Table/Table';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -40,9 +39,9 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
             <Webline className="mb-2">
                 <div className="flex flex-col items-center justify-between lg:mb-4 lg:flex-row">
                     <div className="w-1/5" />
-                    <Heading className="lg:mb-0" type="h1">
+                    <h1 className="mb-3 lg:mb-0">
                         {t('Order number')} {order.number}
-                    </Heading>
+                    </h1>
                     <div className="flex items-center justify-end lg:w-1/5">
                         <Button className="lg:px-2 lg:py-1" onClick={() => addOrderItemsToEmptyCart(order.uuid)}>
                             {t('Repeat order')}
@@ -246,9 +245,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
 
                 {!!order.items.length && (
                     <div className="mt-10">
-                        <Heading className="text-center" type="h2">
-                            {t('Your purchase')}
-                        </Heading>
+                        <div className="h2 mb-3 text-center">{t('Your purchase')}</div>
 
                         <Table
                             className="overflow-x-auto"

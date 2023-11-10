@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { ChatIcon } from 'components/Basic/Icon/IconsSvg';
 import { Image } from 'components/Basic/Image/Image';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
@@ -32,7 +31,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
         <Webline className="mb-10" dataTestId={TEST_IDENTIFIER}>
             <div className="flex flex-col vl:flex-row vl:gap-5">
                 <div className="text-center vl:order-2 vl:flex-1">
-                    <Heading type="h1">{store.storeName}</Heading>
+                    <h1 className="mb-3">{store.storeName}</h1>
 
                     <OpeningStatus isOpen={store.openingHours.isOpen} />
 
@@ -135,9 +134,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
 };
 
 const StoreHeading: FC<{ text: string }> = ({ text }) => (
-    <Heading className="mb-1 block font-normal text-primary" type="h3">
-        {text}
-    </Heading>
+    <div className="h3 mb-1 block font-normal text-primary">{text}</div>
 );
 
 const InfoItem: FC = ({ children, className }) => <div className={twJoin('mb-4 md:mb-6', className)}>{children}</div>;

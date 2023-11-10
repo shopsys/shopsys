@@ -1,5 +1,4 @@
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { RemoveIcon, RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
 import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
 import { getHasDefaultFilters } from 'helpers/filterOptions/seoCategories';
@@ -42,9 +41,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
 
     return (
         <div className="z-aboveOverlay rounded py-4 vl:z-[0]" data-testid={TEST_IDENTIFIER}>
-            <Heading className="uppercase" type="h4">
-                {t('Selected filters')}
-            </Heading>
+            <div className="h4 mb-3 uppercase">{t('Selected filters')}</div>
 
             <div className="mb-4 flex flex-col gap-3">
                 {!!checkedBrands?.length && (

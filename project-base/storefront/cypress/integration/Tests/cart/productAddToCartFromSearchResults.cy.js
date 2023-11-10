@@ -7,6 +7,7 @@ import { addProductToCartFromProductList } from '../../Functions/productList';
 it('Search results - Adding product to cart from search results list and check product in cart', () => {
     cy.visit('/');
     searchProductByNameTypeEnterAndCheckResult(products.helloKitty.name, products.helloKitty.catnum);
+    cy.wait(5000);
     addProductToCartFromProductList(products.helloKitty.catnum);
     checkProductAndGoToCartFromCartPopupWindow(products.helloKitty.namePrefixSuffix);
     checkProductInCart(products.helloKitty.catnum, products.helloKitty.namePrefixSuffix);

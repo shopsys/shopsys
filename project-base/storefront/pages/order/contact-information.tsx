@@ -1,5 +1,4 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { Login } from 'components/Blocks/Popup/Login/Login';
 import { Form } from 'components/Forms/Form/Form';
@@ -248,7 +247,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                 )}
                 {isLoginPopupOpened && (
                     <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
-                        <Heading type="h2">{t('Login')}</Heading>
+                        <div className="h2 mb-3">{t('Login')}</div>
                         <Login defaultEmail={emailValue} />
                     </Popup>
                 )}

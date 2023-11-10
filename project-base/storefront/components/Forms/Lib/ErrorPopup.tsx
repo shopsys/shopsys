@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getGtmShowMessageEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
@@ -56,7 +55,7 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({
 
     return (
         <Popup className="w-11/12 max-w-lg" onCloseCallback={onCloseCallback}>
-            <Heading type="h2">{t('Please check inserted details')}</Heading>
+            <div className="h2 mb-3">{t('Please check inserted details')}</div>
             <ul className="max-h-[50vh] overflow-y-auto">{mappedErrors}</ul>
         </Popup>
     );

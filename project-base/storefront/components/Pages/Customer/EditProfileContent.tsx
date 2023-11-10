@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
@@ -166,7 +165,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
         <>
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerChangeProfileFormHandler)}>
-                    <Heading type="h2">{t('Personal data')}</Heading>
+                    <div className="h2 mb-3">{t('Personal data')}</div>
                     <TextInputControlled
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
@@ -251,7 +250,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             </FormLine>
                         )}
                     />
-                    <Heading type="h2">{t('Change password')}</Heading>
+                    <div className="h2 mb-3">{t('Change password')}</div>
                     <PasswordInputControlled
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
@@ -300,7 +299,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                     </FormColumn>
                     {currentCustomerUser.companyCustomer && (
                         <>
-                            <Heading type="h2">{t('Company information')}</Heading>
+                            <div className="h2 mb-3">{t('Company information')}</div>
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
@@ -340,7 +339,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             />
                         </>
                     )}
-                    <Heading type="h2">{t('Billing address')}</Heading>
+                    <div className="h2 mb-3">{t('Billing address')}</div>
                     <TextInputControlled
                         control={formProviderMethods.control}
                         formName={formMeta.formName}
@@ -408,7 +407,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                     </FormLine>
                     {currentCustomerUser.deliveryAddresses.length > 0 && (
                         <>
-                            <Heading type="h2">{t('Delivery addresses')}</Heading>
+                            <div className="h2 mb-3">{t('Delivery addresses')}</div>
                             <FormLine bottomGap>
                                 <AddressList
                                     defaultDeliveryAddress={currentCustomerUser.defaultDeliveryAddress}

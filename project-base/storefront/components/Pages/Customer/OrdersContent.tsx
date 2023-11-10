@@ -1,5 +1,4 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Cell, CellHead, Row, Table } from 'components/Basic/Table/Table';
@@ -49,7 +48,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
         <>
             <Webline>
                 <div className="text-center">
-                    <Heading type="h1">{t('My orders')}</Heading>
+                    <h1 className="mb-3">{t('My orders')}</h1>
                 </div>
             </Webline>
             <div className="scroll-mt-5" ref={paginationScrollTargetRef}>

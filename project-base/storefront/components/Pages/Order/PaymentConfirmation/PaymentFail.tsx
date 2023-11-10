@@ -1,5 +1,4 @@
 import { ImageWrapper, Message, MessageWrapper, PaymentWrapper } from './PaymentConfirmationElements';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
@@ -19,7 +18,7 @@ export const PaymentFail: FC = () => {
                 </ImageWrapper>
                 <PaymentWrapper>
                     <Message>
-                        <Heading type="h1">{t('Your payment was unsuccessful')}</Heading>
+                        <div className="h1 mb-3">{t('Your payment was unsuccessful')}</div>
                         <p>{t('We are sorry, but your payment was not successful. Please contact us.')}</p>
                     </Message>
                 </PaymentWrapper>

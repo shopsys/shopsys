@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { Link } from 'components/Basic/Link/Link';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
@@ -21,9 +20,7 @@ export const StoreInfoBox: FC<StoreInfoBoxProps> = ({ store, closeInfoBoxCallbac
                 onClick={closeInfoBoxCallback}
             />
 
-            <Heading className="" type="h2">
-                {store.name}
-            </Heading>
+            <h2 className="mb-3">{store.name}</h2>
 
             <OpeningStatus className="mb-3" isOpen={store.openingHours.isOpen} />
 
@@ -33,9 +30,7 @@ export const StoreInfoBox: FC<StoreInfoBoxProps> = ({ store, closeInfoBoxCallbac
                 {store.postcode} {store.city}
             </div>
 
-            <Heading className="m-0 mt-3" type="h3">
-                {t('Opening hours')}
-            </Heading>
+            <div className="h3 mt-3">{t('Opening hours')}</div>
 
             <OpeningHours openingHours={store.openingHours} />
 

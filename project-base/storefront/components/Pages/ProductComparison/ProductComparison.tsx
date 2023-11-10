@@ -1,5 +1,4 @@
 import { ProductComparisonContent } from './ProductComparisonContent';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { InfoIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -19,9 +18,7 @@ export const ProductComparison: FC = () => {
         <div className="my-[75px] flex items-center">
             <InfoIcon className="mr-4 w-8" />
 
-            <Heading className="!mb-0" type="h3">
-                {t('Comparison does not contain any products yet.')}
-            </Heading>
+            <div className="h3">{t('Comparison does not contain any products yet.')}</div>
         </div>
     );
 

@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
@@ -13,7 +12,7 @@ export const RegistrationCompany: FC = () => {
 
     return (
         <>
-            <Heading type="h3">{t('Company data')}</Heading>
+            <div className="h3 mb-3">{t('Company data')}</div>
             <TextInputControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}

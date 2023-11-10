@@ -1,5 +1,4 @@
 import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMeta';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
 import { useCookiesArticleUrlQueryApi } from 'graphql/generated';
@@ -53,7 +52,8 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
 
     return (
         <FormProvider {...formProviderMethods}>
-            <Heading type="h2">{t('Cookie consent')}</Heading>
+            <div className="h2 mb-3">{t('Cookie consent')}</div>
+
             <p>
                 <Trans
                     defaultTrans="To learn more, you can read our <link>cookie policy</link>"
@@ -68,31 +68,37 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     }}
                 />
             </p>
+
             <ToggleSwitchControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.marketing.name}
                 render={(toggleSwitch) => <ToggleContent name={t('Marketing')} toggleSwitch={toggleSwitch} />}
             />
+
             <ToggleSwitchControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.statistics.name}
                 render={(toggleSwitch) => <ToggleContent name={t('Statistics')} toggleSwitch={toggleSwitch} />}
             />
+
             <ToggleSwitchControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.preferences.name}
                 render={(toggleSwitch) => <ToggleContent name={t('Preferences')} toggleSwitch={toggleSwitch} />}
             />
+
             <div className="mt-10 mb-5 flex flex-wrap justify-end gap-3">
                 <Button dataTestId="blocks-userconsent-save" size="small" variant="primary" onClick={saveCookieChoices}>
                     {t('Save choices')}
                 </Button>
+
                 <Button dataTestId="blocks-userconsent-accept" size="small" onClick={acceptAllCookieChoices}>
                     {t('Accept all')}
                 </Button>
+
                 <Button
                     dataTestId="blocks-userconsent-reject"
                     size="small"

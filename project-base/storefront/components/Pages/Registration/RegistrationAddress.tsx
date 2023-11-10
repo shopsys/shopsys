@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -35,7 +34,7 @@ export const RegistrationAddress: FC = () => {
 
     return (
         <>
-            <Heading type="h3">{t('Billing address')}</Heading>
+            <div className="h3 mb-3">{t('Billing address')}</div>
             <TextInputControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}

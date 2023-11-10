@@ -1,5 +1,4 @@
 import { BlogCategoryArticlesWrapper } from './BlogCategoryArticlesWrapper';
-import { Heading } from 'components/Basic/Heading/Heading';
 import { BlogSignpost } from 'components/Blocks/BlogSignpost/BlogSignpost';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BlogCategoryDetailFragmentApi } from 'graphql/generated';
@@ -18,7 +17,7 @@ export const BlogCategoryContent: FC<BlogCategoryContentProps> = ({ blogCategory
     return (
         <Webline>
             <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
-                <Heading type="h1">{title}</Heading>
+                <h1 className="mb-3">{title}</h1>
                 <div className="mb-16 flex flex-col vl:flex-row">
                     <div className="order-2 mb-16 flex w-full flex-col vl:order-1 vl:flex-1">
                         <BlogCategoryArticlesWrapper
