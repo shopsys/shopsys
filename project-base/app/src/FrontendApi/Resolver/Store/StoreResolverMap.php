@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Store;
 
-use App\Model\Store\Store;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class StoreResolverMap extends ResolverMap
 {
@@ -34,7 +34,7 @@ class StoreResolverMap extends ResolverMap
     }
 
     /**
-     * @param \App\Model\Store\Store $store
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return string
      */
     private function getSlug(Store $store): string

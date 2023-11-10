@@ -15,7 +15,7 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
 
     public function testCreateOrderWithPersonalPickupStore()
     {
-        /** @var \App\Model\Store\Store $store */
+        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
 
         $expected = [

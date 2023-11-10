@@ -19,9 +19,9 @@ use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
-use App\Model\Store\Store;
 use GraphQL\Type\Definition\ResolveInfo;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrontendApiBundle\Model\Error\EntityNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery;
@@ -59,7 +59,7 @@ class SlugQuery extends AbstractQuery
     /**
      * @param string $slug
      * @param \GraphQL\Type\Definition\ResolveInfo $info
-     * @return \App\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\App\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|\App\Model\Product\Flag\Flag|array
+     * @return \App\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\Shopsys\FrameworkBundle\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|\App\Model\Product\Flag\Flag|array
      */
     public function slugQuery(string $slug, ResolveInfo $info)
     {

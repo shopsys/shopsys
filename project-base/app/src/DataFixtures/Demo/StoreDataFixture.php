@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Store\OpeningHours\OpeningHoursDataFactory;
-use App\Model\Store\StoreData;
-use App\Model\Store\StoreDataFactory;
-use App\Model\Store\StoreFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -15,6 +11,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\StoreData;
+use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 
 class StoreDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -55,11 +55,11 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     ];
 
     /**
-     * @param \App\Model\Store\StoreFacade $storeFacade
-     * @param \App\Model\Store\StoreDataFactory $storeDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreDataFactory $storeDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     * @param \App\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHourDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHourDataFactory
      */
     public function __construct(
         private readonly StoreFacade $storeFacade,
@@ -156,7 +156,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     /**
      * @param array $demoRow
-     * @return \App\Model\Store\StoreData
+     * @return \Shopsys\FrameworkBundle\Model\Store\StoreData
      */
     private function initStoreData(array $demoRow): StoreData
     {
@@ -197,7 +197,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     }
 
     /**
-     * @return \App\Model\Store\OpeningHours\OpeningHoursData[]
+     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[]
      */
     private function createOpeningHoursData(): array
     {

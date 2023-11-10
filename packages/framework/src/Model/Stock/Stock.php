@@ -33,8 +33,8 @@ class Stock implements OrderableEntityInterface
     protected $domains;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\Store\Store>
-     * @ORM\OneToMany(targetEntity="App\Model\Store\Store", mappedBy="stock", cascade={"persist"})
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Store\Store>
+     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Store\Store", mappedBy="stock", cascade={"persist"})
      */
     protected $stores;
 
@@ -218,7 +218,7 @@ class Stock implements OrderableEntityInterface
     }
 
     /**
-     * @return \App\Model\Store\Store[]
+     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
      */
     public function getStores(): array
     {

@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Store;
 
 use App\FrontendApi\Component\Validation\PageSizeValidator;
-use App\Model\Store\StoreFacade;
 use App\Model\Transport\Transport;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class StoresQuery extends AbstractQuery
 {
     /**
-     * @param \App\Model\Store\StoreFacade $storeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(

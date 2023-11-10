@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Store;
 
-use App\Model\Store\StoreFacade;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 
 class StoresBatchLoader
 {
     /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \App\Model\Store\StoreFacade $storeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      */
     public function __construct(
         private readonly PromiseAdapter $promiseAdapter,

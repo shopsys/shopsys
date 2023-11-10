@@ -9,11 +9,11 @@ use App\FrontendApi\Model\Transport\Exception\InvalidTransportPaymentCombination
 use App\FrontendApi\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
 use App\FrontendApi\Model\Transport\Exception\TransportWeightLimitExceededException;
 use App\FrontendApi\Model\Transport\TransportValidationFacade;
-use App\Model\Store\Exception\StoreByUuidNotFoundException;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

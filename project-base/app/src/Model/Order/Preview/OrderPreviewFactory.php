@@ -6,11 +6,11 @@ namespace App\Model\Order\Preview;
 
 use App\Component\Deprecation\DeprecatedMethodException;
 use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory as BaseOrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
@@ -27,7 +27,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
      * @deprecated use create() method instead
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
-     * @param \App\Model\Store\Store|null $personalPickupStore
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store|null $personalPickupStore
      * @return \App\Model\Order\Preview\OrderPreview
      */
     public function createForCurrentUser(
@@ -46,7 +46,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
-     * @param \App\Model\Store\Store|null $personalPickupStore
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store|null $personalPickupStore
      * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return \App\Model\Order\Preview\OrderPreview
      */

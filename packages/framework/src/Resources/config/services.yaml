@@ -1041,3 +1041,5 @@ services:
 
     Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactory
+
+    Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper: ~

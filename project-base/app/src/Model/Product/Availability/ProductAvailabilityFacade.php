@@ -6,12 +6,12 @@ namespace App\Model\Product\Availability;
 
 use App\Component\Setting\Setting;
 use App\Model\Product\Product;
-use App\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Symfony\Contracts\Service\ResetInterface;
 
 class ProductAvailabilityFacade implements ResetInterface
@@ -26,7 +26,7 @@ class ProductAvailabilityFacade implements ResetInterface
     /**
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
-     * @param \App\Model\Store\StoreFacade $storeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -386,7 +386,7 @@ class ProductAvailabilityFacade implements ResetInterface
 
     /**
      * @param int $domainId
-     * @param \App\Model\Store\Store[] $stores
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store[] $stores
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @return int[]
      */
@@ -415,7 +415,7 @@ class ProductAvailabilityFacade implements ResetInterface
 
     /**
      * @param int $domainId
-     * @param \App\Model\Store\Store[] $stores
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store[] $stores
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Transport\Transport[] $transports
      * @return int[]
@@ -444,7 +444,7 @@ class ProductAvailabilityFacade implements ResetInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      * @param int[] $maximumDayAvailabilityByStoreId
      * @param int $domainId
-     * @param \App\Model\Store\Store[] $stores
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store[] $stores
      * @return int[]
      */
     private function getMaximumDayAvailabilityForProductIndexedByStockId(

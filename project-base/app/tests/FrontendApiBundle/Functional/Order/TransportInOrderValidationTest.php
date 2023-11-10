@@ -10,11 +10,11 @@ use App\DataFixtures\Demo\TransportDataFixture;
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Component\Constraints\TransportInOrder;
 use App\Model\Cart\Transport\CartTransportFacade;
-use App\Model\Store\StoreDataFactory;
-use App\Model\Store\StoreFacade;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -112,7 +112,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     {
         $this->addCardPaymentToDemoCart();
         $storeReferenceName = StoreDataFixture::STORE_PREFIX . 1;
-        /** @var \App\Model\Store\Store $store */
+        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
         $store = $this->getReference($storeReferenceName);
         /** @var \App\Model\Transport\Transport $transportPersonal */
         $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
@@ -133,7 +133,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     public function testDeletedPickupPlaceUnavailable(): void
     {
         $this->addCardPaymentToDemoCart();
-        /** @var \App\Model\Store\Store $store */
+        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
         /** @var \App\Model\Transport\Transport $transportPersonal */
         $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
@@ -154,7 +154,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     public function testRequiredPickupPlaceIdentifier(): void
     {
         $this->addCardPaymentToDemoCart();
-        /** @var \App\Model\Store\Store $store */
+        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
         /** @var \App\Model\Transport\Transport $transportPersonal */
         $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
@@ -221,7 +221,7 @@ class TransportInOrderValidationTest extends GraphQlTestCase
     private function disableStoreOnFirstDomain(string $storeReferenceName): void
     {
         // refresh store, so we're able to work with it as with an entity
-        /** @var \App\Model\Store\Store $store */
+        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
         $store = $this->getReference($storeReferenceName);
         $storeData = $this->storeDataFactory->createFromStore($store);
         $storeData->isEnabledOnDomains[1] = false;

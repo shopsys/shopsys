@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Model\Order\Preview;
 
 use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class OrderPreview extends BaseOrderPreview
@@ -28,7 +28,7 @@ class OrderPreview extends BaseOrderPreview
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
      * @param null $promoCodeDiscountPercent
-     * @param \App\Model\Store\Store|null $personalPickupStore
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store|null $personalPickupStore
      * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      */
     public function __construct(
@@ -65,7 +65,7 @@ class OrderPreview extends BaseOrderPreview
     }
 
     /**
-     * @return \App\Model\Store\Store|null
+     * @return \Shopsys\FrameworkBundle\Model\Store\Store|null
      */
     public function getPersonalPickupStore(): ?Store
     {

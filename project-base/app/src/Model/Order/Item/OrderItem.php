@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Model\Order\Item;
 
 use App\Model\Order\Item\Exception\OrderItemRelatedException;
-use App\Model\Store\Store;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 
 /**
  * @ORM\Table(name="order_items")
@@ -30,8 +30,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 class OrderItem extends BaseOrderItem
 {
     /**
-     * @var \App\Model\Store\Store|null
-     * @ORM\ManyToOne(targetEntity="App\Model\Store\Store")
+     * @var \Shopsys\FrameworkBundle\Model\Store\Store|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Store\Store")
      * @ORM\JoinColumn(name="personal_pickup_store_id", referencedColumnName="id", nullable=true)
      */
     private $personalPickupStore;
@@ -82,7 +82,7 @@ class OrderItem extends BaseOrderItem
     }
 
     /**
-     * @param \App\Model\Store\Store|null $personalPickupStore
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store|null $personalPickupStore
      */
     public function setPersonalPickupStore(?Store $personalPickupStore): void
     {

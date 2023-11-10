@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Store;
 
 use App\DataFixtures\Demo\StoreDataFixture;
-use App\Model\Store\ClosedDay\ClosedDay;
-use App\Model\Store\ClosedDay\ClosedDayDataFactory;
-use App\Model\Store\ClosedDay\ClosedDayFacade;
-use App\Model\Store\OpeningHours\OpeningHoursDataFactory;
-use App\Model\Store\Store;
-use App\Model\Store\StoreDataFactory;
-use App\Model\Store\StoreFacade;
-use App\Model\Store\StoreFriendlyUrlProvider;
 use DateTimeImmutable;
 use DateTimeZone;
 use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
+use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\Store;
+use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
+use Shopsys\FrameworkBundle\Model\Store\StoreFriendlyUrlProvider;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -98,7 +98,7 @@ class GetStoreTest extends GraphQlTestCase
      */
     public function testStoreOnSecondDomainIsNotAvailable(): void
     {
-        /** @var \App\Model\Store\Store $storeOnSecondDomain */
+        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $storeOnSecondDomain */
         $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 3);
 
         $response = $this->getResponseContentForQuery($this->getStoreQueryByUuid($storeOnSecondDomain->getUuid()));
@@ -484,7 +484,7 @@ class GetStoreTest extends GraphQlTestCase
      * @param string|null $firstClosingTime
      * @param string|null $secondOpeningTime
      * @param string|null $secondClosingTime
-     * @return \App\Model\Store\Store
+     * @return \Shopsys\FrameworkBundle\Model\Store\Store
      */
     private function updateStoreOpeningHours(
         ?string $firstOpeningTime,
@@ -557,7 +557,7 @@ class GetStoreTest extends GraphQlTestCase
     /**
      * @param \DateTimeImmutable $date
      * @param string[] $storesIds
-     * @return \App\Model\Store\ClosedDay\ClosedDay
+     * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay
      */
     private function createClosedDay(DateTimeImmutable $date, array $storesIds = []): ClosedDay
     {
@@ -567,7 +567,7 @@ class GetStoreTest extends GraphQlTestCase
         $closedDayData->name = '';
         $closedDayData->date = $date->setTime(0, 0);
         $closedDayData->excludedStores = array_map(function (string $storeId): Store {
-            /** @var \App\Model\Store\Store $store */
+            /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
             $store = $this->getReference(sprintf('%s%s', StoreDataFixture::STORE_PREFIX, $storeId));
 
             return $store;
