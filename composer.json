@@ -159,6 +159,7 @@
         "symfony/property-info": "^5.4",
         "symfony/proxy-manager-bridge": "^5.4",
         "symfony/rate-limiter": "^5.4",
+        "symfony/runtime": "^5.4",
         "symfony/security-bundle": "^5.4",
         "symfony/service-contracts": "^2.5.2",
         "symfony/stopwatch": "^5.4",
@@ -231,7 +232,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "ocramius/package-versions": true,
             "symfony/flex": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "symfony/runtime": true
         }
     },
     "extra": {
@@ -244,6 +246,9 @@
             "allow-contrib": true,
             "require": "^5.4",
             "docker": false
+        },
+        "runtime": {
+            "dotenv_path": "project-base/app/.env"
         }
     },
     "replace": {
