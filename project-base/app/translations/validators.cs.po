@@ -25,12 +25,6 @@ msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 msgid "Entered RGB Hex is in invalid format. Valid formats are #336699 or #ABC."
 msgstr "Zadaný RGB Hex je v neplatném formátu. Platné formáty jsou #336699 nebo #ABC."
 
-msgid "External ID cannot be longer than {{ limit }} characters"
-msgstr "Externí ID nesmí být delší než {{ limit }} znaků"
-
-msgid "External bridge ID cannot be longer than {{ limit }} characters"
-msgstr "Externí ID můstku nesmí být delší než {{ limit }} znaků"
-
 msgid "First name cannot be longer than {{ limit }} characters"
 msgstr "Jméno nesmí být delší než {{ limit }} znaků"
 
@@ -130,9 +124,6 @@ msgstr "Vyplňte prosím kód"
 msgid "Please enter company name"
 msgstr "Vyplňte prosím název společnosti"
 
-msgid "Please enter date"
-msgstr "Vyplňte prosím datum"
-
 msgid "Please enter date of creation"
 msgstr "Vyplňte prosím datum vytvoření"
 
@@ -213,9 +204,6 @@ msgstr "Vyplňte prosím platný e-mail"
 
 msgid "Please enter video ID"
 msgstr "Prosím vyplňte ID videa"
-
-msgid "Please enter warehouse name"
-msgstr "Vyplňte prosím název skladu"
 
 msgid "Please enter your city"
 msgstr "Prosím vyplňte vaše město"
@@ -382,11 +370,6 @@ msgstr "Uživatel s uvedenou e-mailovou adresou neexistuje."
 msgid "Variable {{ needle }} is required"
 msgstr "Proměnná {{ needle }} je povinná"
 
-msgid "Warehouse name cannot be longer than {{ limit }} characters"
-msgstr "Název skladu nesmí být delší než {{ limit }} znaků"
-
-msgid "Warehouse with this external code already exists"
-msgstr "Sklad s tímto externím kódem již existuje"
-
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nesmí být delší než {{ limit }} znaků"
+

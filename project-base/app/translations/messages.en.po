@@ -16,9 +16,6 @@ msgstr ""
 msgid "-- Select name of the transfer --"
 msgstr ""
 
-msgid "0"
-msgstr ""
-
 msgid "301 (Permanent redirect)"
 msgstr ""
 
@@ -454,19 +451,10 @@ msgstr ""
 msgid "Create new blog category"
 msgstr ""
 
-msgid "Create new holiday or internal day"
-msgstr ""
-
 msgid "Create new item"
 msgstr ""
 
 msgid "Create new order status"
-msgstr ""
-
-msgid "Create new store"
-msgstr ""
-
-msgid "Create new warehouse"
 msgstr ""
 
 msgid "Create notification bar"
@@ -493,9 +481,6 @@ msgstr ""
 msgid "Customers overview"
 msgstr ""
 
-msgid "Date"
-msgstr ""
-
 msgid "Date and time"
 msgstr ""
 
@@ -511,25 +496,7 @@ msgstr ""
 msgid "Day"
 msgstr ""
 
-msgid "Days for transfer between warehouses"
-msgstr ""
-
 msgid "Days until delivery"
-msgstr ""
-
-msgid "Days until stocking"
-msgstr ""
-
-msgid "Default store"
-msgstr ""
-
-msgid "Default store cannot be removed"
-msgstr ""
-
-msgid "Default warehouse"
-msgstr ""
-
-msgid "Default warehouse cannot be removed"
 msgstr ""
 
 msgid "Delete"
@@ -539,9 +506,6 @@ msgid "Delete category with SEO mix"
 msgstr ""
 
 msgid "Delivery address"
-msgstr ""
-
-msgid "Department stores"
 msgstr ""
 
 msgid "Description"
@@ -592,9 +556,6 @@ msgstr ""
 msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
 msgstr ""
 
-msgid "Do you really want to remove this holiday / internal day?"
-msgstr ""
-
 msgid "Do you really want to remove this language constant translation?"
 msgstr ""
 
@@ -617,12 +578,6 @@ msgid "Do you really want to remove this promo code?"
 msgstr ""
 
 msgid "Do you really want to remove this shipping?"
-msgstr ""
-
-msgid "Do you really want to remove this store? This step is irreversible!"
-msgstr ""
-
-msgid "Do you really want to remove this warehouse? By deleting this warehouse you will remove all stock quantities from products and association to stores. This step is irreversible!"
 msgstr ""
 
 msgid "Domain"
@@ -694,9 +649,6 @@ msgstr ""
 msgid "Editing flag - {{ name }}"
 msgstr ""
 
-msgid "Editing holiday / internal day - {{ name }}"
-msgstr ""
-
 msgid "Editing item"
 msgstr ""
 
@@ -734,12 +686,6 @@ msgid "Editing transport type"
 msgstr ""
 
 msgid "Editing transport type - %code%"
-msgstr ""
-
-msgid "Editing warehouse"
-msgstr ""
-
-msgid "Editing warehouse - %name%"
 msgstr ""
 
 msgid "Email"
@@ -784,9 +730,6 @@ msgstr ""
 msgid "Exclude from sale on whole eshop"
 msgstr ""
 
-msgid "Excluded stores"
-msgstr ""
-
 msgid "Expand"
 msgstr ""
 
@@ -812,12 +755,6 @@ msgid "Extended SEO category - filters"
 msgstr ""
 
 msgid "Extended SEO category - set combinations with SEO values"
-msgstr ""
-
-msgid "External ID"
-msgstr ""
-
-msgid "External bridge ID"
 msgstr ""
 
 msgid "External scripts"
@@ -955,25 +892,10 @@ msgstr ""
 msgid "Hide on domain"
 msgstr ""
 
-msgid "Holiday / internal day"
-msgstr ""
-
-msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr ""
-
-msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "Holiday / internal day <strong>{{ name }}</strong> deleted"
-msgstr ""
-
 msgid "Holiday / internal day detail"
 msgstr ""
 
 msgid "Holidays and internal days"
-msgstr ""
-
-msgid "Holidays and internal days overview"
 msgstr ""
 
 msgid "Home page"
@@ -1000,9 +922,6 @@ msgstr ""
 msgid "Image will be deleted after saving."
 msgstr ""
 
-msgid "Images"
-msgstr ""
-
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr ""
 
@@ -1019,9 +938,6 @@ msgid "Installation manual"
 msgstr ""
 
 msgid "Integrations"
-msgstr ""
-
-msgid "Internal note"
 msgstr ""
 
 msgid "Invalid two-factor authentication code."
@@ -1297,13 +1213,7 @@ msgstr ""
 msgid "No products are set. Please add some in the component settings."
 msgstr ""
 
-msgid "No store is created. You have to create one first."
-msgstr ""
-
 msgid "No transport types found."
-msgstr ""
-
-msgid "No warehouse associated"
 msgstr ""
 
 msgid "Nominal"
@@ -1346,9 +1256,6 @@ msgid "Open Graph title"
 msgstr ""
 
 msgid "Open in new window"
-msgstr ""
-
-msgid "Opening hours"
 msgstr ""
 
 msgid "Operator information - full"
@@ -1765,9 +1672,6 @@ msgstr ""
 msgid "Save changes in order"
 msgstr ""
 
-msgid "Save warehouse settings"
-msgstr ""
-
 msgid "Scaled promo code"
 msgstr ""
 
@@ -1816,9 +1720,6 @@ msgstr ""
 msgid "Selected flag doesn't exist."
 msgstr ""
 
-msgid "Selected holiday / internal day doesn't exist."
-msgstr ""
-
 msgid "Selected navigation item does not exist."
 msgstr ""
 
@@ -1828,9 +1729,6 @@ msgstr ""
 msgid "Selected transfer issue was not found"
 msgstr ""
 
-msgid "Selected warehouse does not exist."
-msgstr ""
-
 msgid "Send me authentication code"
 msgstr ""
 
@@ -1838,9 +1736,6 @@ msgid "Send refund and save order"
 msgstr ""
 
 msgid "Seo"
-msgstr ""
-
-msgid "Set as default"
 msgstr ""
 
 msgid "Settings"
@@ -1900,24 +1795,6 @@ msgstr ""
 msgid "Store"
 msgstr ""
 
-msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr ""
-
-msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
-msgstr ""
-
-msgid "Store <strong>{{ name }}</strong> was deleted"
-msgstr ""
-
-msgid "Store <strong>{{ name }}</strong> was set as default."
-msgstr ""
-
-msgid "Store does not exist"
-msgstr ""
-
-msgid "Store list"
-msgstr ""
-
 msgid "Storefront queries cache has been cleaned."
 msgstr ""
 
@@ -1970,9 +1847,6 @@ msgid "The selected flag cannot be deleted."
 msgstr ""
 
 msgid "There are no parameter values of type color yet."
-msgstr ""
-
-msgid "There is no warehouse on this domain yet."
 msgstr ""
 
 msgid "This SEO page cannot be deleted."
@@ -2116,9 +1990,6 @@ msgstr ""
 msgid "URL addresses"
 msgstr ""
 
-msgid "URL settings"
-msgstr ""
-
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
 msgstr ""
 
@@ -2212,25 +2083,7 @@ msgstr ""
 msgid "Warehouse"
 msgstr ""
 
-msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr ""
-
-msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "Warehouse <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Warehouse <strong>{{ name }}</strong> was set as default."
-msgstr ""
-
 msgid "Warehouse detail"
-msgstr ""
-
-msgid "Warehouse overview"
-msgstr ""
-
-msgid "Warehouse setting %domainName% saved."
 msgstr ""
 
 msgid "Warehouse settings"

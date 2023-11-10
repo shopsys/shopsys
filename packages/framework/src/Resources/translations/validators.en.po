@@ -52,6 +52,12 @@ msgstr ""
 msgid "Enter date in DD.MM.YYYY format"
 msgstr ""
 
+msgid "External ID cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "External bridge ID cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Field must contain {{ needle }}."
 msgstr ""
 
@@ -229,6 +235,9 @@ msgstr ""
 msgid "Please enter currency minimum fraction digits"
 msgstr ""
 
+msgid "Please enter date"
+msgstr ""
+
 msgid "Please enter date of creation"
 msgstr ""
 
@@ -361,6 +370,9 @@ msgstr ""
 msgid "Please enter valid email"
 msgstr ""
 
+msgid "Please enter warehouse name"
+msgstr ""
+
 msgid "Please enter whitelist pattern."
 msgstr ""
 
@@ -401,6 +413,9 @@ msgid "Selected delivery address no longer exists"
 msgstr ""
 
 msgid "Status name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Store with this external ID already exists"
 msgstr ""
 
 msgid "Street name cannot be longer than {{ limit }} characters"
@@ -452,6 +467,12 @@ msgid "Variable {{ needle }} is required"
 msgstr ""
 
 msgid "Variant alias cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Warehouse name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Warehouse with this external code already exists"
 msgstr ""
 
 msgid "You entered same product twice. In list of bestsellers can be product only once. Please correct it and then save form again."
