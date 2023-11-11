@@ -81,14 +81,6 @@ class Product extends BaseProduct
     protected $usingStock;
 
     /**
-     * @var null
-     * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
-     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
-     * @phpstan-ignore-next-line Removed property
-     */
-    protected $calculatedAvailability;
-
-    /**
      * @var int|null
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -438,11 +430,6 @@ class Product extends BaseProduct
     {
         //this getter isn't possible remove. Because is used in not-extendable code, just return default value.
         return null;
-    }
-
-    public function getCalculatedAvailability()
-    {
-        throw new DeprecatedAvailabilityPropertyFromProductException('calculatedAvailability', $this->calculatedAvailability);
     }
 
     /**

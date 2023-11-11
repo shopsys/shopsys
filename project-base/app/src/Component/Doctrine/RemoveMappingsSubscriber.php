@@ -40,7 +40,6 @@ class RemoveMappingsSubscriber implements EventSubscriber
                 'outOfStockAction',
                 'stockQuantity',
                 'usingStock',
-                'calculatedAvailability',
             ],
             $classMetadata,
         );

@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
-use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
@@ -36,7 +35,6 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
@@ -60,7 +58,6 @@ class ProductFacade
         protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         protected readonly PricingGroupRepository $pricingGroupRepository,
         protected readonly ProductManualInputPriceFacade $productManualInputPriceFacade,
-        protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ProductHiddenRecalculator $productHiddenRecalculator,
         protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
@@ -129,7 +126,6 @@ class ProductFacade
         $this->imageFacade->manageImages($product, $productData->images);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
 
-        $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
@@ -168,7 +164,6 @@ class ProductFacade
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
-        $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
@@ -193,9 +188,6 @@ class ProductFacade
                 $productForRecalculations,
             );
             $productForRecalculations->markForVisibilityRecalculation();
-            $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation(
-                $productForRecalculations,
-            );
 
             $this->productRecalculationDispatcher->dispatchSingleProductId($productForRecalculations->getId());
         }

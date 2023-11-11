@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 use Shopsys\FrameworkBundle\Model\Category\CategoryEvent;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupEvent;
 use Shopsys\FrameworkBundle\Model\Product\AffectedProductsFacade;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityEvent;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandEvent;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagEvent;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterEvent;
@@ -25,16 +24,6 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
         protected readonly AffectedProductsFacade $affectedProductsFacade,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityEvent $availabilityEvent
-     */
-    public function dispatchAffectedByAvailability(AvailabilityEvent $availabilityEvent): void
-    {
-        $productIds = $this->affectedProductsFacade->getProductIdsWithAvailability($availabilityEvent->getAvailability());
-
-        $this->productRecalculationDispatcher->dispatchProductIds($productIds);
     }
 
     /**
@@ -108,8 +97,6 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            AvailabilityEvent::UPDATE => 'dispatchAffectedByAvailability',
-            AvailabilityEvent::DELETE => 'dispatchAffectedByAvailability',
             BrandEvent::DELETE => 'dispatchAffectedByBrand',
             CategoryEvent::UPDATE => 'dispatchAffectedByCategory',
             CategoryEvent::DELETE => 'dispatchAffectedByCategory',

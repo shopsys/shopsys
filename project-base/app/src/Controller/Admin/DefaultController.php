@@ -25,7 +25,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @property \App\Component\Setting\Setting $setting
- * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
  * @property \App\Model\Mail\MailTemplateFacade $mailTemplateFacade
  * @property \App\Model\Product\Unit\UnitFacade $unitFacade
  */
@@ -37,7 +36,7 @@ class DefaultController extends BaseDefaultController
      * @param \App\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \App\Model\Product\Unit\UnitFacade $unitFacade
      * @param \App\Component\Setting\Setting $setting
-     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig

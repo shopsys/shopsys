@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
@@ -20,7 +19,6 @@ class ProductVariantFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
@@ -30,7 +28,6 @@ class ProductVariantFacade
         protected readonly ImageFacade $imageFacade,
         protected readonly ProductFactoryInterface $productFactory,
         protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
@@ -53,7 +50,6 @@ class ProductVariantFacade
             $this->productFacade->setAdditionalDataAfterCreate($mainVariant, $mainVariantData);
             $this->imageFacade->copyImages($mainProduct, $mainVariant);
         } catch (Exception $exception) {
-            $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
             $this->productPriceRecalculationScheduler->reset();
 
             throw $exception;

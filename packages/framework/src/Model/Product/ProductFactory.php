@@ -28,7 +28,6 @@ class ProductFactory implements ProductFactoryInterface
         $classData = $this->entityNameResolver->resolve(Product::class);
 
         $product = $classData::create($data);
-        $this->setCalculatedAvailabilityIfMissing($product);
 
         return $product;
     }
@@ -46,28 +45,7 @@ class ProductFactory implements ProductFactoryInterface
         $classData = $this->entityNameResolver->resolve(Product::class);
 
         $mainVariant = $classData::createMainVariant($data, $variants);
-        $this->setCalculatedAvailabilityIfMissing($mainVariant);
 
         return $mainVariant;
-    }
-
-    /**
-     * When creating new product, ProductData::$availability is set to Product::$calculatedAvailability property as well.
-     * This is a problem when ProductData::$availability === null as $calculatedAvailability is not nullable (unlike $availability).
-     *
-     * @see \Shopsys\FrameworkBundle\Model\Product\Product::__construct()
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     */
-    protected function setCalculatedAvailabilityIfMissing(Product $product)
-    {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null $calculatedAvailability */
-        $calculatedAvailability = $product->getCalculatedAvailability();
-
-        if ($calculatedAvailability !== null) {
-            return;
-        }
-
-        $availability = $this->productAvailabilityCalculation->calculateAvailability($product);
-        $product->setCalculatedAvailability($availability);
     }
 }

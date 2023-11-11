@@ -9,14 +9,11 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductFilterRepository
 {
-    protected const DAYS_FOR_STOCK_FILTER = 0;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterRepository $parameterFilterRepository
@@ -42,10 +39,6 @@ class ProductFilterRepository
             $productFilterData->minimalPrice,
             $productFilterData->maximalPrice,
             $pricingGroup,
-        );
-        $this->filterByStock(
-            $productsQueryBuilder,
-            $productFilterData->inStock,
         );
         $this->filterByFlags(
             $productsQueryBuilder,
@@ -92,24 +85,6 @@ class ProductFilterRepository
                 $priceLimits,
             );
             $productsQueryBuilder->setParameter('pricingGroup', $pricingGroup);
-        }
-    }
-
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
-     * @param bool $filterByStock
-     */
-    public function filterByStock(QueryBuilder $productsQueryBuilder, $filterByStock)
-    {
-        if ($filterByStock) {
-            $this->queryBuilderExtender->addOrExtendJoin(
-                $productsQueryBuilder,
-                Availability::class,
-                'a',
-                'p.calculatedAvailability = a',
-            );
-            $productsQueryBuilder->andWhere('a.dispatchTime = :dispatchTime');
-            $productsQueryBuilder->setParameter('dispatchTime', static::DAYS_FOR_STOCK_FILTER);
         }
     }
 

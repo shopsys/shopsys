@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
-use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
@@ -52,7 +51,6 @@ class ProductDataFixture
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \Faker\Generator $faker
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
@@ -66,7 +64,6 @@ class ProductDataFixture
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
         private readonly CategoryRepository $categoryRepository,
         private readonly Faker $faker,
-        private readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         private readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         private readonly ProgressBarFactory $progressBarFactory,
         private readonly ProductDataFactory $productDataFactory,
@@ -198,7 +195,6 @@ class ProductDataFixture
 
     private function clearResources()
     {
-        $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
         $this->productPriceRecalculationScheduler->reset();
         $this->em->clear();
         gc_collect_cycles();

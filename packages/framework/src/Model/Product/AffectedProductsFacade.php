@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
@@ -19,15 +18,6 @@ class AffectedProductsFacade
     public function __construct(
         protected readonly AffectedProductsRepository $affectedProductsRepository,
     ) {
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
-     * @return int[]
-     */
-    public function getProductIdsWithAvailability(Availability $availability): array
-    {
-        return $this->affectedProductsRepository->getProductIdsWithAvailability($availability);
     }
 
     /**

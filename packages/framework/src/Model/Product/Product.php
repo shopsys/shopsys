@@ -161,19 +161,6 @@ class Product extends AbstractTranslatableEntity
     protected $outOfStockAvailability;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Availability\Availability")
-     * @ORM\JoinColumn(name="calculated_availability_id", referencedColumnName="id", nullable=false)
-     */
-    protected $calculatedAvailability;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $recalculateAvailability;
-
-    /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
@@ -253,7 +240,6 @@ class Product extends AbstractTranslatableEntity
         $this->partno = $productData->partno;
         $this->ean = $productData->ean;
         $this->setAvailabilityAndStock($productData);
-        $this->calculatedAvailability = $this->availability;
         $this->calculatedVisibility = false;
         $this->createDomains($productData);
         $this->productCategoryDomains = new ArrayCollection();
@@ -311,7 +297,6 @@ class Product extends AbstractTranslatableEntity
         $this->hidden = $productData->hidden;
         $this->brand = $productData->brand;
         $this->unit = $productData->unit;
-        $this->recalculateAvailability = true;
         $this->setTranslations($productData);
     }
 
@@ -533,14 +518,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
-     */
-    public function getCalculatedAvailability()
-    {
-        return $this->calculatedAvailability;
-    }
-
-    /**
      * @param int $domainId
      * @return int
      */
@@ -555,7 +532,6 @@ class Product extends AbstractTranslatableEntity
     public function setAvailability(Availability $availability)
     {
         $this->availability = $availability;
-        $this->recalculateAvailability = true;
     }
 
     /**
@@ -564,16 +540,6 @@ class Product extends AbstractTranslatableEntity
     public function setOutOfStockAvailability(?Availability $outOfStockAvailability = null)
     {
         $this->outOfStockAvailability = $outOfStockAvailability;
-        $this->recalculateAvailability = true;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $calculatedAvailability
-     */
-    public function setCalculatedAvailability(Availability $calculatedAvailability)
-    {
-        $this->calculatedAvailability = $calculatedAvailability;
-        $this->recalculateAvailability = false;
     }
 
     /**
@@ -709,11 +675,6 @@ class Product extends AbstractTranslatableEntity
             $mainVariant->isMarkedForVisibilityRecalculation();
             $mainVariant->setRecalculateVisibility(true);
         }
-    }
-
-    public function markForAvailabilityRecalculation()
-    {
-        $this->recalculateAvailability = true;
     }
 
     /**

@@ -19,7 +19,6 @@ use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
-use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -67,11 +66,6 @@ class CartModificationsResultTest extends GraphQlTestCase
      * @inject
      */
     private ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
-
-    /**
-     * @inject
-     */
-    private ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
 
     protected function setUp(): void
     {
@@ -582,7 +576,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         }
         $this->productFacade->editProductStockRelation($productData, $this->testingProduct);
         $this->productPriceRecalculationScheduler->reset();
-        $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
         $this->em->clear();
         gc_collect_cycles();
     }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product\Filter;
 
 use Doctrine\ORM\QueryBuilder;
-use Exception;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository as BaseProductFilterRepository;
@@ -20,15 +19,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository as Base
  */
 class ProductFilterRepository extends BaseProductFilterRepository
 {
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
-     * @param bool $filterByStock
-     */
-    public function filterByStock(QueryBuilder $productsQueryBuilder, $filterByStock)
-    {
-        throw new Exception('Filter by Stock is deprecated');
-    }
-
     /**
      * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData

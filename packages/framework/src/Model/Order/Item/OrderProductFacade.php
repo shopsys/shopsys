@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Order\Item;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
-use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
@@ -20,7 +19,6 @@ class OrderProductFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
@@ -30,7 +28,6 @@ class OrderProductFacade
         protected readonly EntityManagerInterface $em,
         protected readonly ProductHiddenRecalculator $productHiddenRecalculator,
         protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
-        protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly ModuleFacade $moduleFacade,
         protected readonly ProductRepository $productRepository,
@@ -87,9 +84,6 @@ class OrderProductFacade
         foreach ($relevantProducts as $relevantProduct) {
             $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($relevantProduct);
             $this->productHiddenRecalculator->calculateHiddenForProduct($relevantProduct);
-            $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation(
-                $relevantProduct,
-            );
             $relevantProduct->markForVisibilityRecalculation();
         }
         $this->em->flush();

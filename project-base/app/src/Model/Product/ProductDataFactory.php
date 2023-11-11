@@ -34,7 +34,6 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @property \App\Model\Product\Unit\UnitFacade $unitFacade
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
- * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
  */
 class ProductDataFactory extends BaseProductDataFactory
 {
@@ -49,7 +48,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $stockProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade

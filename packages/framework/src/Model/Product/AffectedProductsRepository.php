@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
@@ -31,19 +30,6 @@ class AffectedProductsRepository
     protected function getProductRepository(): EntityRepository
     {
         return $this->em->getRepository(Product::class);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
-     * @return int[]
-     */
-    public function getProductIdsWithAvailability(Availability $availability): array
-    {
-        $queryBuilder = $this->createQueryBuilder()
-            ->where('p.calculatedAvailability = :availability')
-            ->setParameter('availability', $availability);
-
-        return $this->getSingleColumnResultFromQueryBuilder($queryBuilder);
     }
 
     /**

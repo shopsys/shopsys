@@ -79,7 +79,7 @@ class ProductExportRepository extends BaseProductExportRepository
         CategoryFacade $categoryFacade,
         ProductAccessoryFacade $productAccessoryFacade,
         BrandCachedFacade $brandCachedFacade,
-        private readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        ProductAvailabilityFacade $productAvailabilityFacade,
         private readonly ProductRepository $productRepository,
         private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         private readonly ProductPriceCalculation $productPriceCalculation,
@@ -96,6 +96,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $categoryFacade,
             $productAccessoryFacade,
             $brandCachedFacade,
+            $productAvailabilityFacade,
         );
     }
 

@@ -308,9 +308,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository:
         alias: App\Model\Product\Availability\AvailabilityRepository
 
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade:
-        alias: App\Model\Product\Availability\AvailabilityFacade
-
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade:
         alias: App\Model\Product\Brand\BrandFacade
 
@@ -530,11 +527,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository:
         alias: App\Model\Product\ProductVisibilityRepository
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation:
-        alias: App\Model\Product\Availability\ProductAvailabilityCalculation
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: ~
 
     App\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
 

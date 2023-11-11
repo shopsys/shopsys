@@ -351,14 +351,6 @@ class ProductRepository
         return $query->iterate();
     }
 
-    public function markAllProductsForAvailabilityRecalculation()
-    {
-        $this->em
-            ->createQuery('UPDATE ' . Product::class . ' p SET p.recalculateAvailability = TRUE
-                WHERE p.recalculateAvailability = FALSE')
-            ->execute();
-    }
-
     public function markAllProductsForPriceRecalculation()
     {
         // Performance optimization:
@@ -367,7 +359,7 @@ class ProductRepository
         // Therefore main variant price recalculation is useless here.
         $this->em
             ->createQuery('UPDATE ' . Product::class . ' p SET p.recalculatePrice = TRUE
-                WHERE p.variantType != :variantTypeMain AND p.recalculateAvailability = FALSE')
+                WHERE p.variantType != :variantTypeMain')
             ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
             ->execute();
     }
@@ -380,18 +372,6 @@ class ProductRepository
         return $this->getProductRepository()
             ->createQueryBuilder('p')
             ->where('p.recalculatePrice = TRUE')
-            ->getQuery()
-            ->iterate();
-    }
-
-    /**
-     * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]
-     */
-    public function getProductsForAvailabilityRecalculationIterator()
-    {
-        return $this->getProductRepository()
-            ->createQueryBuilder('p')
-            ->where('p.recalculateAvailability = TRUE')
             ->getQuery()
             ->iterate();
     }

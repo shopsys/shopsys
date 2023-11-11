@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
@@ -32,6 +33,7 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -43,6 +45,7 @@ class ProductExportRepository
         protected readonly CategoryFacade $categoryFacade,
         protected readonly ProductAccessoryFacade $productAccessoryFacade,
         protected readonly BrandCachedFacade $brandCachedFacade,
+        protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
     }
 
@@ -138,14 +141,14 @@ class ProductExportRepository
                 $product,
                 $domainId,
             )->getId(),
-            'in_stock' => $product->getCalculatedAvailability()->getDispatchTime() === 0,
+            'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
             'prices' => $prices,
             'parameters' => $parameters,
             'ordering_priority' => $product->getOrderingPriority($domainId),
             'calculated_selling_denied' => $product->getCalculatedSellingDenied(),
             'selling_denied' => $product->isSellingDenied(),
-            'availability' => $product->getCalculatedAvailability()->getName($locale),
-            'availability_dispatch_time' => $product->getCalculatedAvailability()->getDispatchTime(),
+            'availability' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
+            'availability_dispatch_time' => $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId),
             'is_main_variant' => $product->isMainVariant(),
             'is_variant' => $product->isVariant(),
             'detail_url' => $detailUrl,
@@ -153,7 +156,7 @@ class ProductExportRepository
             'uuid' => $product->getUuid(),
             'unit' => $product->getUnit()->getName($locale),
             'is_using_stock' => $product->isUsingStock(),
-            'stock_quantity' => $product->getStockQuantity(),
+            'stock_quantity' => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $domainId),
             'variants' => $variantIds,
             'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
             'seo_h1' => $product->getSeoH1($domainId),

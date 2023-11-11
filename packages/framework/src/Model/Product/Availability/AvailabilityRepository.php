@@ -120,11 +120,5 @@ class AvailabilityRepository
             ->set('p.outOfStockAvailability', ':newAvailability')->setParameter('newAvailability', $newAvailability)
             ->where('p.outOfStockAvailability = :oldAvailability')->setParameter('oldAvailability', $oldAvailability)
             ->getQuery()->execute();
-
-        $this->em->createQueryBuilder()
-            ->update(Product::class, 'p')
-            ->set('p.calculatedAvailability', ':newAvailability')->setParameter('newAvailability', $newAvailability)
-            ->where('p.calculatedAvailability = :oldAvailability')->setParameter('oldAvailability', $oldAvailability)
-            ->getQuery()->execute();
     }
 }
