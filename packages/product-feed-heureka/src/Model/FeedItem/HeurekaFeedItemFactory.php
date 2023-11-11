@@ -7,6 +7,7 @@ namespace Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade;
@@ -14,8 +15,6 @@ use Symfony\Contracts\Service\ResetInterface;
 
 class HeurekaFeedItemFactory implements ResetInterface
 {
-    protected HeurekaProductDataBatchLoader $productDataBatchLoader;
-
     /**
      * @var string[]|null[]
      */
@@ -23,17 +22,18 @@ class HeurekaFeedItemFactory implements ResetInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader $heurekaProductDataBatchLoader
+     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader $productDataBatchLoader
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        HeurekaProductDataBatchLoader $heurekaProductDataBatchLoader,
+        protected readonly HeurekaProductDataBatchLoader $productDataBatchLoader,
         protected readonly HeurekaCategoryFacade $heurekaCategoryFacade,
         protected readonly CategoryFacade $categoryFacade,
+        protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
-        $this->productDataBatchLoader = $heurekaProductDataBatchLoader;
     }
 
     /**
@@ -56,7 +56,7 @@ class HeurekaFeedItemFactory implements ResetInterface
             $this->productDataBatchLoader->getProductImageUrl($product, $domainConfig),
             $this->getBrandName($product),
             $product->getEan(),
-            $product->getCalculatedAvailability()->getDispatchTime(),
+            $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainConfig->getId()),
             $this->getHeurekaCategoryFullName($product, $domainConfig),
             $this->productDataBatchLoader->getProductCpc($product, $domainConfig),
         );

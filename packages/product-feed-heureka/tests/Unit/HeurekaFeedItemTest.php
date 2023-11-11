@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -48,12 +48,15 @@ class HeurekaFeedItemTest extends TestCase
         $this->heurekaProductDataBatchLoaderMock = $this->createMock(HeurekaProductDataBatchLoader::class);
         $this->heurekaCategoryFacadeMock = $this->createMock(HeurekaCategoryFacade::class);
         $this->categoryFacadeMock = $this->createMock(CategoryFacade::class);
+        $productAvailabilityFacadeMock = $this->createMock(ProductAvailabilityFacade::class);
+        $productAvailabilityFacadeMock->method('getProductAvailabilityDaysByDomainId')->willReturn(0);
 
         $this->heurekaFeedItemFactory = new HeurekaFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
             $this->heurekaProductDataBatchLoaderMock,
             $this->heurekaCategoryFacadeMock,
             $this->categoryFacadeMock,
+            $productAvailabilityFacadeMock,
         );
 
         $this->defaultDomain = $this->createDomainConfigMock(Domain::FIRST_DOMAIN_ID, 'https://example.cz', 'cs');
@@ -61,11 +64,6 @@ class HeurekaFeedItemTest extends TestCase
         $this->defaultProduct = $this->createMock(Product::class);
         $this->defaultProduct->method('getId')->willReturn(1);
         $this->defaultProduct->method('getName')->with('cs')->willReturn('product name');
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|\PHPUnit\Framework\MockObject\MockObject $availabilityMock */
-        $availabilityMock = $this->createMock(Availability::class);
-        $availabilityMock->method('getDispatchTime')->willReturn(0);
-        $this->defaultProduct->method('getCalculatedAvailability')->willReturn($availabilityMock);
 
         $productPrice = new ProductPrice(Price::zero(), false);
         $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForCustomerUserAndDomainId')

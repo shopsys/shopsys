@@ -4,46 +4,20 @@ declare(strict_types=1);
 
 namespace App\ProductFeed\Heureka\Model\FeedItem;
 
-use App\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItem;
 use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory as BaseHeurekaFeedItemFactory;
-use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader;
-use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade;
 
 /**
  * @method string|null getBrandName(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Price getPrice(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @method string|null getHeurekaCategoryFullName(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @property \App\Model\Category\CategoryFacade $categoryFacade
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser, \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader $productDataBatchLoader, \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade, \App\Model\Category\CategoryFacade $categoryFacade, \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade)
  */
 class HeurekaFeedItemFactory extends BaseHeurekaFeedItemFactory
 {
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader $heurekaProductDataBatchLoader
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
-     * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     */
-    public function __construct(
-        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        HeurekaProductDataBatchLoader $heurekaProductDataBatchLoader,
-        HeurekaCategoryFacade $heurekaCategoryFacade,
-        CategoryFacade $categoryFacade,
-        private readonly ProductAvailabilityFacade $productAvailabilityFacade,
-    ) {
-        parent::__construct(
-            $productPriceCalculationForCustomerUser,
-            $heurekaProductDataBatchLoader,
-            $heurekaCategoryFacade,
-            $categoryFacade,
-        );
-    }
-
     /**
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig

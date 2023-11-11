@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Availability;
+namespace Shopsys\FrameworkBundle\Model\Product\Availability;
 
 class ProductStoreAvailabilityInformation
 {
@@ -10,13 +10,13 @@ class ProductStoreAvailabilityInformation
      * @param string $storeName
      * @param int $storeId
      * @param string $availabilityInformation
-     * @param \App\Model\Product\Availability\AvailabilityStatusEnum $availabilityStatus
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum $availabilityStatus
      */
     public function __construct(
-        private readonly string $storeName,
-        private readonly int $storeId,
-        private readonly string $availabilityInformation,
-        private readonly AvailabilityStatusEnum $availabilityStatus,
+        protected readonly string $storeName,
+        protected readonly int $storeId,
+        protected readonly string $availabilityInformation,
+        protected readonly AvailabilityStatusEnumInterface $availabilityStatus,
     ) {
     }
 
@@ -45,9 +45,9 @@ class ProductStoreAvailabilityInformation
     }
 
     /**
-     * @return \App\Model\Product\Availability\AvailabilityStatusEnum
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum
      */
-    public function getAvailabilityStatus(): AvailabilityStatusEnum
+    public function getAvailabilityStatus(): AvailabilityStatusEnumInterface
     {
         return $this->availabilityStatus;
     }

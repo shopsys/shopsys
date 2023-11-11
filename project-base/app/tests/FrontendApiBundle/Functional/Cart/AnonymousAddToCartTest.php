@@ -6,8 +6,8 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Cart\CartFacade;
-use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 

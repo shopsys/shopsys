@@ -2,41 +2,41 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Availability;
+namespace Shopsys\FrameworkBundle\Model\Product\Availability;
 
-use App\Component\Setting\Setting;
-use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Symfony\Contracts\Service\ResetInterface;
 
 class ProductAvailabilityFacade implements ResetInterface
 {
-    private const DAYS_IN_WEEK = 7;
+    protected const DAYS_IN_WEEK = 7;
 
     /**
      * @var array<string, bool>
      */
-    private array $productAvailabilityDomainCache = [];
+    protected array $productAvailabilityDomainCache = [];
 
     /**
-     * @param \App\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly Setting $setting,
-        private readonly ProductStockFacade $productStockFacade,
-        private readonly StoreFacade $storeFacade,
-        private readonly Domain $domain,
+        protected readonly Setting $setting,
+        protected readonly ProductStockFacade $productStockFacade,
+        protected readonly StoreFacade $storeFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return string
      */
@@ -52,7 +52,7 @@ class ProductAvailabilityFacade implements ResetInterface
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return int|null
      */
@@ -66,12 +66,14 @@ class ProductAvailabilityFacade implements ResetInterface
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @return \App\Model\Product\Availability\AvailabilityStatusEnum
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum
      */
-    public function getProductAvailabilityStatusByDomainId(Product $product, int $domainId): AvailabilityStatusEnum
-    {
+    public function getProductAvailabilityStatusByDomainId(
+        Product $product,
+        int $domainId,
+    ): AvailabilityStatusEnumInterface {
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             return AvailabilityStatusEnum::InStock;
         }
@@ -80,7 +82,7 @@ class ProductAvailabilityFacade implements ResetInterface
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return string
      */
@@ -95,7 +97,7 @@ class ProductAvailabilityFacade implements ResetInterface
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return int
      */
@@ -115,7 +117,7 @@ class ProductAvailabilityFacade implements ResetInterface
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return bool
      */
@@ -133,9 +135,9 @@ class ProductAvailabilityFacade implements ResetInterface
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @return \App\Model\Product\Availability\ProductStoreAvailabilityInformation[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\ProductStoreAvailabilityInformation[]
      */
     public function getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId(
         Product $product,
@@ -189,7 +191,7 @@ class ProductAvailabilityFacade implements ResetInterface
      * @param int $domainId
      * @return string
      */
-    private function getWeeksAvailabilityMessageByWeeks(int $weeks, int $domainId): string
+    protected function getWeeksAvailabilityMessageByWeeks(int $weeks, int $domainId): string
     {
         $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
@@ -207,14 +209,14 @@ class ProductAvailabilityFacade implements ResetInterface
      */
     public static function calculateDaysToWeeks(int $days): int
     {
-        return (int)ceil($days / self::DAYS_IN_WEEK);
+        return (int)ceil($days / static::DAYS_IN_WEEK);
     }
 
     /**
      * @param int $domainId
      * @return int
      */
-    private function getTransferWeeksByDomainId(int $domainId): int
+    protected function getTransferWeeksByDomainId(int $domainId): int
     {
         return self::calculateDaysToWeeks($this->getTransferDaysByDomainId($domainId));
     }
@@ -229,7 +231,7 @@ class ProductAvailabilityFacade implements ResetInterface
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @return int
      */
@@ -244,7 +246,7 @@ class ProductAvailabilityFacade implements ResetInterface
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStock[] $productStocksByDomainIdIndexedByStockId
      * @return int
      */
-    private function sumProductStockQuantities(array $productStocksByDomainIdIndexedByStockId): int
+    protected function sumProductStockQuantities(array $productStocksByDomainIdIndexedByStockId): int
     {
         $totalProductStocksQuantity = 0;
 

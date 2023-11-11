@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Products\DataMapper;
 
 use App\Component\Deprecation\DeprecatedMethodException;
-use App\Model\Product\Availability\AvailabilityStatusEnum;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
