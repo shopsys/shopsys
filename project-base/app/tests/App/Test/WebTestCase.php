@@ -10,8 +10,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Tests\FrameworkBundle\Test\ProductIndexBackupFacade;
 use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
 
 abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTestCase
@@ -30,6 +32,16 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
      * @inject
      */
     protected CurrencyFacade $currencyFacade;
+
+    /**
+     * @inject
+     */
+    protected ProductRecalculationMessageHandler $productRecalculationMessageHandler;
+
+    /**
+     * @inject
+     */
+    protected ProductIndexBackupFacade $productIndexBackupFacade;
 
     protected function setUp(): void
     {
@@ -115,5 +127,32 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
     protected function getFirstDomainCurrency(): Currency
     {
         return $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
+    }
+
+    protected function tearDown(): void
+    {
+        $this->productIndexBackupFacade->restoreSnapshotIfPreviouslyCreated();
+
+        parent::tearDown();
+    }
+
+    /**
+     * Consumes messages dispatched by ProductRecalculationDispatcher class and run recalculations for dispatched messages
+     */
+    public function handleDispatchedRecalculationMessages(): void
+    {
+        $this->productIndexBackupFacade->createSnapshot();
+
+        /** @var \Symfony\Component\Messenger\Transport\InMemoryTransport $transport */
+        $transport = self::getContainer()->get('messenger.transport.product_recalculation');
+        $handler = $this->productRecalculationMessageHandler;
+
+        $envelopes = $transport->getSent();
+
+        foreach ($envelopes as $envelope) {
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessage $message */
+            $message = $envelope->getMessage();
+            $handler($message);
+        }
     }
 }
