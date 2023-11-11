@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\AdvancedSearch;
 
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductAvailabilityFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductBrandFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCalculatedSellingDeniedFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCategoryFilter;
@@ -25,7 +24,6 @@ class ProductAdvancedSearchConfig extends BaseProductAdvancedSearchConfig
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductStockFilter $productStockFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductFlagFilter $productFlagFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCalculatedSellingDeniedFilter $productCalculatedSellingDeniedFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductAvailabilityFilter $productAvailabilityFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductBrandFilter $productBrandFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCategoryFilter $productCategoryFilter
      */
@@ -36,7 +34,6 @@ class ProductAdvancedSearchConfig extends BaseProductAdvancedSearchConfig
         ProductStockFilter $productStockFilter,
         ProductFlagFilter $productFlagFilter,
         ProductCalculatedSellingDeniedFilter $productCalculatedSellingDeniedFilter,
-        ProductAvailabilityFilter $productAvailabilityFilter,
         ProductBrandFilter $productBrandFilter,
         ProductCategoryFilter $productCategoryFilter,
     ) {
@@ -47,12 +44,10 @@ class ProductAdvancedSearchConfig extends BaseProductAdvancedSearchConfig
             $productStockFilter,
             $productFlagFilter,
             $productCalculatedSellingDeniedFilter,
-            $productAvailabilityFilter,
             $productBrandFilter,
             $productCategoryFilter,
         );
 
-        $this->unregisterFilter($productAvailabilityFilter);
         $this->unregisterFilter($productStockFilter);
     }
 
