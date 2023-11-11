@@ -2,20 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Migrations;
+namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20200909112133 extends AbstractMigration
+class Version20231213165330 extends AbstractMigration
 {
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE transports ADD days_until_delivery INT NOT NULL DEFAULT 0');
-        $this->sql('ALTER TABLE transports ALTER days_until_delivery DROP DEFAULT');
+        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20200909112133')) {
+            $this->sql('ALTER TABLE transports ADD days_until_delivery INT NOT NULL DEFAULT 0');
+            $this->sql('ALTER TABLE transports ALTER days_until_delivery DROP DEFAULT');
+        }
     }
 
     /**

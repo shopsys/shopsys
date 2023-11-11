@@ -50,6 +50,8 @@ class TransportDataFactory implements TransportDataFactoryInterface
      */
     protected function fillNew(TransportData $transportData): void
     {
+        $transportData->daysUntilDelivery = 0;
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $transportData->enabled[$domainId] = true;
             $transportData->pricesIndexedByDomainId[$domainId] = Money::zero();
@@ -105,6 +107,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
             $transportData->vatsIndexedByDomainId[$domainId] = $transport->getTransportDomain($domainId)->getVat();
         }
 
+        $transportData->daysUntilDelivery = $transport->getDaysUntilDelivery();
         $transportData->payments = $transport->getPayments();
         $transportData->image = $this->imageUploadDataFactory->createFromEntityAndType($transport);
     }

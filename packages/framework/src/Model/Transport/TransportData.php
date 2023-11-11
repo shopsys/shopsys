@@ -56,6 +56,11 @@ class TransportData
      */
     public ?string $uuid = null;
 
+    /**
+     * @var int|null
+     */
+    public $daysUntilDelivery;
+
     public function __construct()
     {
         $this->name = [];
