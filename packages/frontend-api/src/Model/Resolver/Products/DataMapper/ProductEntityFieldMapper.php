@@ -6,7 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
@@ -20,6 +20,7 @@ class ProductEntityFieldMapper
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -27,6 +28,7 @@ class ProductEntityFieldMapper
         protected readonly ProductAccessoryFacade $productAccessoryFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
+        protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
     }
 
@@ -64,11 +66,20 @@ class ProductEntityFieldMapper
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+     * @return array{name: string, status: string}
      */
-    public function getAvailability(Product $product): Availability
+    public function getAvailability(Product $product): array
     {
-        return $product->getCalculatedAvailability();
+        return [
+            'name' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId(
+                $product,
+                $this->domain->getId(),
+            ),
+            'status' => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId(
+                $product,
+                $this->domain->getId(),
+            )->value,
+        ];
     }
 
     /**
