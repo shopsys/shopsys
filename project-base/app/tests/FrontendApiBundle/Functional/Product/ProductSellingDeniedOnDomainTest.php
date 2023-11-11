@@ -8,7 +8,6 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use App\Model\Product\ProductSellingDeniedRecalculator;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportSubscriber;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 use function sleep;
 
@@ -29,11 +28,6 @@ class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
      */
     private ProductDataFactory $productDataFactory;
 
-    /**
-     * @inject
-     */
-    private ProductExportSubscriber $productExportSubscriber;
-
     public function testSellingDeniedOnDomain(): void
     {
         /** @var \App\Model\Product\Product $product */
@@ -46,7 +40,7 @@ class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
 
         $this->dispatchFakeKernelResponseEventToTriggerImmediateRecalculations();
 
-        $this->productExportSubscriber->exportScheduledRows();
+        $this->handleDispatchedRecalculationMessages();
 
         // wait for elastic to reindex
         sleep(1);
