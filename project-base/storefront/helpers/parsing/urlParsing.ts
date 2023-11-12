@@ -9,7 +9,7 @@ export const getStringFromUrlQuery = (urlQuery: string | string[] | undefined): 
         return '';
     }
 
-    return urlQuery;
+    return urlQuery.trim();
 };
 
 export const getNumberFromUrlQuery = (query: string | string[] | undefined, defaultNumber: number): number => {

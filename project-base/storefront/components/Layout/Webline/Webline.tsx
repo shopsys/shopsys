@@ -12,7 +12,9 @@ const getDataTestId = (dataTestId?: string, type?: WeblineType) =>
 
 export const Webline: FC<WeblineProps> = ({ children, dataTestId, type, className }) => {
     const content = (
-        <div className={twMergeCustom('px-4 xl:mx-auto xl:w-full xl:max-w-7xl', className)}>{children}</div>
+        <div className={twMergeCustom('px-4 xl:mx-auto xl:w-full xl:max-w-7xl', className)} data-testid={dataTestId}>
+            {children}
+        </div>
     );
 
     if (type) {

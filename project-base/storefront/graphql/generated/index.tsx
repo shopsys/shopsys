@@ -1272,6 +1272,7 @@ export type MutationSetDefaultDeliveryAddressArgsApi = {
 
 
 export type MutationUpdatePaymentStatusArgsApi = {
+  orderPaymentStatusPageValidityHash: InputMaybe<Scalars['String']['input']>;
   orderUuid: Scalars['Uuid']['input'];
 };
 
@@ -3366,6 +3367,7 @@ export type PayOrderMutationApi = { __typename?: 'Mutation', PayOrder: { __typen
 
 export type UpdatePaymentStatusMutationVariablesApi = Exact<{
   orderUuid: Scalars['Uuid']['input'];
+  orderPaymentStatusPageValidityHash?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -3390,12 +3392,26 @@ export type OrderDetailQueryVariablesApi = Exact<{
 
 export type OrderDetailQueryApi = { __typename?: 'Query', order: { __typename: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, items: Array<{ __typename: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename: 'Transport', name: string }, payment: { __typename: 'Payment', name: string }, country: { __typename: 'Country', name: string }, deliveryCountry: { __typename: 'Country', name: string } | null, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null };
 
-export type OrderSentPageContentVariablesApi = Exact<{
+export type OrderPaymentFailedContentQueryVariablesApi = Exact<{
   orderUuid: Scalars['Uuid']['input'];
 }>;
 
 
-export type OrderSentPageContentApi = { __typename?: 'Query', orderSentPageContent: string };
+export type OrderPaymentFailedContentQueryApi = { __typename?: 'Query', orderPaymentFailedContent: string };
+
+export type OrderPaymentSuccessfulContentQueryVariablesApi = Exact<{
+  orderUuid: Scalars['Uuid']['input'];
+}>;
+
+
+export type OrderPaymentSuccessfulContentQueryApi = { __typename?: 'Query', orderPaymentSuccessfulContent: string };
+
+export type OrderSentPageContentQueryVariablesApi = Exact<{
+  orderUuid: Scalars['Uuid']['input'];
+}>;
+
+
+export type OrderSentPageContentQueryApi = { __typename?: 'Query', orderSentPageContent: string };
 
 export type OrdersQueryVariablesApi = Exact<{
   after: InputMaybe<Scalars['String']['input']>;
@@ -5703,8 +5719,11 @@ export function usePayOrderMutationApi() {
   return Urql.useMutation<PayOrderMutationApi, PayOrderMutationVariablesApi>(PayOrderMutationDocumentApi);
 };
 export const UpdatePaymentStatusMutationDocumentApi = gql`
-    mutation UpdatePaymentStatusMutation($orderUuid: Uuid!) {
-  UpdatePaymentStatus(orderUuid: $orderUuid) {
+    mutation UpdatePaymentStatusMutation($orderUuid: Uuid!, $orderPaymentStatusPageValidityHash: String = null) {
+  UpdatePaymentStatus(
+    orderUuid: $orderUuid
+    orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash
+  ) {
     isPaid
     transactionCount
     paymentType
@@ -5748,14 +5767,32 @@ export const OrderDetailQueryDocumentApi = gql`
 export function useOrderDetailQueryApi(options?: Omit<Urql.UseQueryArgs<OrderDetailQueryVariablesApi>, 'query'>) {
   return Urql.useQuery<OrderDetailQueryApi, OrderDetailQueryVariablesApi>({ query: OrderDetailQueryDocumentApi, ...options });
 };
-export const OrderSentPageContentDocumentApi = gql`
-    query OrderSentPageContent($orderUuid: Uuid!) {
+export const OrderPaymentFailedContentQueryDocumentApi = gql`
+    query OrderPaymentFailedContentQuery($orderUuid: Uuid!) {
+  orderPaymentFailedContent(orderUuid: $orderUuid)
+}
+    `;
+
+export function useOrderPaymentFailedContentQueryApi(options: Omit<Urql.UseQueryArgs<OrderPaymentFailedContentQueryVariablesApi>, 'query'>) {
+  return Urql.useQuery<OrderPaymentFailedContentQueryApi, OrderPaymentFailedContentQueryVariablesApi>({ query: OrderPaymentFailedContentQueryDocumentApi, ...options });
+};
+export const OrderPaymentSuccessfulContentQueryDocumentApi = gql`
+    query OrderPaymentSuccessfulContentQuery($orderUuid: Uuid!) {
+  orderPaymentSuccessfulContent(orderUuid: $orderUuid)
+}
+    `;
+
+export function useOrderPaymentSuccessfulContentQueryApi(options: Omit<Urql.UseQueryArgs<OrderPaymentSuccessfulContentQueryVariablesApi>, 'query'>) {
+  return Urql.useQuery<OrderPaymentSuccessfulContentQueryApi, OrderPaymentSuccessfulContentQueryVariablesApi>({ query: OrderPaymentSuccessfulContentQueryDocumentApi, ...options });
+};
+export const OrderSentPageContentQueryDocumentApi = gql`
+    query OrderSentPageContentQuery($orderUuid: Uuid!) {
   orderSentPageContent(orderUuid: $orderUuid)
 }
     `;
 
-export function useOrderSentPageContentApi(options: Omit<Urql.UseQueryArgs<OrderSentPageContentVariablesApi>, 'query'>) {
-  return Urql.useQuery<OrderSentPageContentApi, OrderSentPageContentVariablesApi>({ query: OrderSentPageContentDocumentApi, ...options });
+export function useOrderSentPageContentQueryApi(options: Omit<Urql.UseQueryArgs<OrderSentPageContentQueryVariablesApi>, 'query'>) {
+  return Urql.useQuery<OrderSentPageContentQueryApi, OrderSentPageContentQueryVariablesApi>({ query: OrderSentPageContentQueryDocumentApi, ...options });
 };
 export const OrdersQueryDocumentApi = gql`
     query OrdersQuery($after: String, $first: Int) {

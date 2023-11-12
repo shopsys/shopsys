@@ -962,7 +962,7 @@ type Mutation {
     deliveryAddressUuid: Uuid!
   ): CustomerUser!
   "check payment status of order after callback from payment service"
-  UpdatePaymentStatus(orderUuid: Uuid!): PaymentStatus!
+  UpdatePaymentStatus(orderPaymentStatusPageValidityHash: String, orderUuid: Uuid!): PaymentStatus!
 }
 
 "Represents a navigation structure item"

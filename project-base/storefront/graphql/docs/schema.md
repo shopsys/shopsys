@@ -1527,6 +1527,11 @@ check payment status of order after callback from payment service
 </td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">orderPaymentStatusPageValidityHash</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">orderUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td></td>
