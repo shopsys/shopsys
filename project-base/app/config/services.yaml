@@ -492,12 +492,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator:
         alias: App\Model\Product\ProductBreadcrumbGenerator
 
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade:
-        class: App\Model\Product\ProductVisibilityFacade
-        tags:
-            # must be ran after CategoryVisibilityRepository and ProductPriceRecalculator
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 10 }
-
     Shopsys\FrameworkBundle\Model\Product\ProductFacade:
         alias: App\Model\Product\ProductFacade
 

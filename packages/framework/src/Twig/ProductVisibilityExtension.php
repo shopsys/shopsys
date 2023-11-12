@@ -7,19 +7,19 @@ namespace Shopsys\FrameworkBundle\Twig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class ProductVisibilityExtension extends AbstractExtension
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        protected readonly ProductVisibilityRepository $productVisibilityRepository,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly Domain $domain,
     ) {
@@ -35,6 +35,10 @@ class ProductVisibilityExtension extends AbstractExtension
             new TwigFunction(
                 'isVisibleForDefaultPricingGroupOnEachDomain',
                 [$this, 'isVisibleForDefaultPricingGroupOnEachDomain'],
+            ),
+            new TwigFunction(
+                'isVisibleForDefaultPricingGroupOnSomeDomain',
+                [$this, 'isVisibleForDefaultPricingGroupOnSomeDomain'],
             ),
         ];
     }
@@ -55,7 +59,7 @@ class ProductVisibilityExtension extends AbstractExtension
     public function isVisibleForDefaultPricingGroupOnDomain(Product $product, $domainId)
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
-        $productVisibility = $this->productVisibilityRepository->getProductVisibility(
+        $productVisibility = $this->productVisibilityFacade->getProductVisibility(
             $product,
             $pricingGroup,
             $domainId,
@@ -77,5 +81,20 @@ class ProductVisibilityExtension extends AbstractExtension
         }
 
         return true;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return bool
+     */
+    public function isVisibleForDefaultPricingGroupOnSomeDomain(Product $product): bool
+    {
+        foreach ($this->domain->getAll() as $domainConfig) {
+            if ($this->isVisibleForDefaultPricingGroupOnDomain($product, $domainConfig->getId())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

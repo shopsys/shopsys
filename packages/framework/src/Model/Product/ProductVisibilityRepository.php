@@ -5,94 +5,40 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use DateTime;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductVisibilityNotFoundException;
 
 class ProductVisibilityRepository
 {
-    protected EntityManagerDecorator $em;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
+        protected readonly EntityManagerDecorator $em,
         protected readonly Domain $domain,
         protected readonly PricingGroupRepository $pricingGroupRepository,
     ) {
-        $this->em = $em;
     }
 
     /**
-     * @param bool $onlyMarkedProducts
+     * @param int[]|null $productIds
      */
-    public function refreshProductsVisibility($onlyMarkedProducts = false)
+    public function refreshProductsVisibility(?array $productIds = null): void
     {
-        $this->calculateIndependentVisibility($onlyMarkedProducts);
-        $this->hideVariantsWithInvisibleMainVariant($onlyMarkedProducts);
-        $this->hideMainVariantsWithoutVisibleVariants($onlyMarkedProducts);
-        $this->refreshGlobalProductVisibility($onlyMarkedProducts);
-        $this->markAllProductsVisibilityAsRecalculated();
+        $this->calculateIndependentVisibility($productIds);
+        $this->hideVariantsWithInvisibleMainVariant($productIds);
+        $this->hideMainVariantsWithoutVisibleVariants($productIds);
 
         // refresh entities after native query calls
         $this->em->refreshLoadedEntitiesByClassName(Product::class);
         $this->em->refreshLoadedEntitiesByClassName(ProductVisibility::class);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
-    public function markProductsForRecalculationAffectedByCategory(Category $category)
-    {
-        $affectedProductsDql = $this->em->createQueryBuilder()
-            ->select('IDENTITY(pcd.product)')
-            ->from(ProductCategoryDomain::class, 'pcd')
-            ->join(Category::class, 'c', Join::WITH, 'c = pcd.category AND c.lft >= :lft AND c.rgt <= :rgt')
-            ->getDQL();
-
-        $this->em->createQueryBuilder()
-            ->update(Product::class, 'p')
-            ->set('p.recalculateVisibility', 'TRUE')
-            ->where('p.recalculateVisibility = FALSE')
-            ->andWhere('p IN (' . $affectedProductsDql . ')')
-            ->setParameters([
-                'lft' => $category->getLft(),
-                'rgt' => $category->getRgt(),
-            ])
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
-     * @param bool $onlyMarkedProducts
-     */
-    protected function refreshGlobalProductVisibility($onlyMarkedProducts)
-    {
-        if ($onlyMarkedProducts) {
-            $onlyMarkedProductsWhereClause = ' WHERE p.recalculate_visibility = TRUE';
-        } else {
-            $onlyMarkedProductsWhereClause = '';
-        }
-
-        $this->em->getConnection()->executeStatement(
-            'UPDATE products AS p
-            SET calculated_visibility = (p.calculated_hidden = FALSE) AND EXISTS(
-                    SELECT 1
-                    FROM product_visibilities AS pv
-                    WHERE pv.product_id = p.id
-                        AND pv.visible = TRUE
-                )
-            ' . $onlyMarkedProductsWhereClause,
-        );
     }
 
     /**
@@ -161,24 +107,33 @@ class ProductVisibilityRepository
         ]);
     }
 
-    protected function markAllProductsVisibilityAsRecalculated()
-    {
-        $this->em->getConnection()->executeStatement(
-            'UPDATE products SET recalculate_visibility = FALSE WHERE recalculate_visibility = TRUE',
-        );
-    }
-
     /**
-     * @param bool $onlyMarkedProducts
+     * @param int[]|null $productIds
      */
-    protected function calculateIndependentVisibility($onlyMarkedProducts)
+    protected function calculateIndependentVisibility(?array $productIds)
     {
-        $now = new DateTime();
+        $variables = [
+            'now' => new DateTime(),
+            'locale' => null,
+            'domainId' => null,
+            'pricingGroupId' => null,
+            'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+        ];
 
-        if ($onlyMarkedProducts) {
-            $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';
+        $variableTypes = [
+            'now' => Types::DATETIME_MUTABLE,
+            'locale' => Types::STRING,
+            'domainId' => Types::INTEGER,
+            'pricingGroupId' => Types::INTEGER,
+            'variantTypeMain' => Types::STRING,
+        ];
+
+        if ($productIds !== null) {
+            $productIdsCondition = 'p.id IN (:productIds) AND';
+            $variables['productIds'] = $productIds;
+            $variableTypes['productIds'] = ArrayParameterType::INTEGER;
         } else {
-            $onlyMarkedProductsCondition = '';
+            $productIdsCondition = '';
         }
 
         $query = 'UPDATE product_visibilities AS pv
@@ -223,50 +178,53 @@ class ProductVisibilityRepository
                 END
             FROM products AS p
             JOIN product_domains AS pd ON pd.product_id = p.id
-            WHERE p.id = pv.product_id
+            WHERE ' . $productIdsCondition . '
+                p.id = pv.product_id
                 AND pv.domain_id = :domainId
                 AND pv.domain_id = pd.domain_id
                 AND pv.pricing_group_id = :pricingGroupId
-            ' . $onlyMarkedProductsCondition;
+            ';
 
         foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
             $domain = $this->domain->getDomainConfigById($pricingGroup->getDomainId());
+            $variables['locale'] = $domain->getLocale();
+            $variables['domainId'] = $domain->getId();
+            $variables['pricingGroupId'] = $pricingGroup->getId();
+
             $this->em->getConnection()->executeStatement(
                 $query,
-                [
-                    'now' => $now,
-                    'locale' => $domain->getLocale(),
-                    'domainId' => $domain->getId(),
-                    'pricingGroupId' => $pricingGroup->getId(),
-                    'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-                ],
-                [
-                    'now' => Types::DATETIME_MUTABLE,
-                    'locale' => Types::STRING,
-                    'domainId' => Types::INTEGER,
-                    'pricingGroupId' => Types::INTEGER,
-                    'variantTypeMain' => Types::STRING,
-                ],
+                $variables,
+                $variableTypes,
             );
         }
     }
 
     /**
-     * @param bool $onlyMarkedProducts
+     * @param int[]|null $productIds
      */
-    protected function hideVariantsWithInvisibleMainVariant($onlyMarkedProducts)
+    protected function hideVariantsWithInvisibleMainVariant(?array $productIds)
     {
-        if ($onlyMarkedProducts) {
-            $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';
+        $variables = [
+            'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
+        ];
+        $variableTypes = [
+            'variantTypeVariant' => Types::STRING,
+        ];
+
+        if ($productIds !== null) {
+            $productIdsCondition = 'p.id IN (:productIds) AND';
+            $variables['productIds'] = $productIds;
+            $variableTypes['productIds'] = ArrayParameterType::INTEGER;
         } else {
-            $onlyMarkedProductsCondition = '';
+            $productIdsCondition = '';
         }
 
         $this->em->getConnection()->executeStatement(
             'UPDATE product_visibilities AS pv
             SET visible = FALSE
             FROM products AS p
-            WHERE p.id = pv.product_id
+            WHERE ' . $productIdsCondition . ' 
+                p.id = pv.product_id
                 AND p.variant_type = :variantTypeVariant
                 AND pv.visible = TRUE
                 AND EXISTS (
@@ -277,32 +235,38 @@ class ProductVisibilityRepository
                         AND mpv.pricing_group_id = pv.pricing_group_id
                         AND mpv.visible = FALSE
                 )
-            ' . $onlyMarkedProductsCondition,
-            [
-                'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
-            ],
-            [
-                'variantTypeVariant' => Types::STRING,
-            ],
+            ',
+            $variables,
+            $variableTypes,
         );
     }
 
     /**
-     * @param bool $onlyMarkedProducts
+     * @param int[]|null $productIds
      */
-    protected function hideMainVariantsWithoutVisibleVariants($onlyMarkedProducts)
+    protected function hideMainVariantsWithoutVisibleVariants(?array $productIds)
     {
-        if ($onlyMarkedProducts) {
-            $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';
+        $variables = [
+            'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+        ];
+        $variableTypes = [
+            'variantTypeMain' => Types::STRING,
+        ];
+
+        if ($productIds !== null) {
+            $productIdsCondition = 'p.id IN (:productIds) AND';
+            $variables['productIds'] = $productIds;
+            $variableTypes['productIds'] = ArrayParameterType::INTEGER;
         } else {
-            $onlyMarkedProductsCondition = '';
+            $productIdsCondition = '';
         }
 
         $this->em->getConnection()->executeStatement(
             'UPDATE product_visibilities AS pv
             SET visible = FALSE
             FROM products AS p
-            WHERE p.id = pv.product_id
+            WHERE ' . $productIdsCondition . '
+                p.id = pv.product_id
                 AND p.variant_type = :variantTypeMain
                 AND pv.visible = TRUE
                 AND NOT EXISTS (
@@ -315,13 +279,9 @@ class ProductVisibilityRepository
                     WHERE vp.main_variant_id = p.id
                         AND vpv.visible = TRUE
                 )
-            ' . $onlyMarkedProductsCondition,
-            [
-                'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-            ],
-            [
-                'variantTypeMain' => Types::STRING,
-            ],
+            ',
+            $variables,
+            $variableTypes,
         );
     }
 }

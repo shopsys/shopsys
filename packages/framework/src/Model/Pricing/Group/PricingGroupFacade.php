@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PricingGroupFacade
@@ -20,7 +20,7 @@ class PricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository $productCalculatedPriceRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactoryInterface $pricingGroupFactory
@@ -32,7 +32,7 @@ class PricingGroupFacade
         protected readonly Domain $domain,
         protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
-        protected readonly ProductVisibilityRepository $productVisibilityRepository,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly ProductCalculatedPriceRepository $productCalculatedPriceRepository,
         protected readonly CustomerUserRepository $customerUserRepository,
         protected readonly PricingGroupFactoryInterface $pricingGroupFactory,
@@ -62,7 +62,7 @@ class PricingGroupFacade
         $this->em->flush();
 
         $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
-        $this->productVisibilityRepository->createAndRefreshProductVisibilitiesForPricingGroup(
+        $this->productVisibilityFacade->createAndRefreshProductVisibilitiesForPricingGroup(
             $pricingGroup,
             $pricingGroup->getDomainId(),
         );

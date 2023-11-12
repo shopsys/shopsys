@@ -26,7 +26,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 /**
  * @property \App\Model\Product\ProductFacade $productFacade
@@ -36,7 +36,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
  * @method int[] extractCategories(int $domainId, \App\Model\Product\Product $product)
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
- * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+ * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityFacade
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
  * @property \App\Model\Category\CategoryFacade $categoryFacade
@@ -57,7 +57,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
@@ -74,7 +74,7 @@ class ProductExportRepository extends BaseProductExportRepository
         ParameterRepository $parameterRepository,
         ProductFacade $productFacade,
         FriendlyUrlRepository $friendlyUrlRepository,
-        ProductVisibilityRepository $productVisibilityRepository,
+        ProductVisibilityFacade $productVisibilityFacade,
         FriendlyUrlFacade $friendlyUrlFacade,
         CategoryFacade $categoryFacade,
         ProductAccessoryFacade $productAccessoryFacade,
@@ -91,7 +91,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $parameterRepository,
             $productFacade,
             $friendlyUrlRepository,
-            $productVisibilityRepository,
+            $productVisibilityFacade,
             $friendlyUrlFacade,
             $categoryFacade,
             $productAccessoryFacade,

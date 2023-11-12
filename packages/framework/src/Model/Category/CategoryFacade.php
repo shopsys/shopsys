@@ -112,7 +112,7 @@ class CategoryFacade
 
         $this->pluginCrudExtensionFacade->saveAllData('category', $category->getId(), $categoryData->pluginData);
 
-        $this->categoryVisibilityRecalculationScheduler->scheduleRecalculationWithoutDependencies();
+        $this->categoryVisibilityRecalculationScheduler->scheduleRecalculation();
 
         $this->dispatchCategoryEvent($category, CategoryEvent::CREATE);
 
@@ -143,7 +143,7 @@ class CategoryFacade
 
         $this->pluginCrudExtensionFacade->saveAllData('category', $category->getId(), $categoryData->pluginData);
 
-        $this->categoryVisibilityRecalculationScheduler->scheduleRecalculation($category);
+        $this->categoryVisibilityRecalculationScheduler->scheduleRecalculation();
 
         $this->dispatchCategoryEvent($category, CategoryEvent::UPDATE);
 
@@ -159,7 +159,7 @@ class CategoryFacade
 
         $this->dispatchCategoryEvent($category, CategoryEvent::DELETE);
 
-        $this->categoryVisibilityRecalculationScheduler->scheduleRecalculation($category);
+        $this->categoryVisibilityRecalculationScheduler->scheduleRecalculation();
 
         foreach ($category->getChildren() as $child) {
             $child->setParent($category->getParent());

@@ -408,26 +408,6 @@ class ProductRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getAtLeastSomewhereSellableVariantsByMainVariant(Product $mainVariant)
-    {
-        $queryBuilder = $this->em->createQueryBuilder()
-            ->select('p')
-            ->from(Product::class, 'p')
-            ->andWhere('p.calculatedVisibility = TRUE')
-            ->andWhere('p.calculatedSellingDenied = FALSE')
-            ->andWhere('p.variantType = :variantTypeVariant')->setParameter(
-                'variantTypeVariant',
-                Product::VARIANT_TYPE_VARIANT,
-            )
-            ->andWhere('p.mainVariant = :mainVariant')->setParameter('mainVariant', $mainVariant);
-
-        return $queryBuilder->getQuery()->execute();
-    }
-
-    /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int[] $sortedProductIds

@@ -8,10 +8,8 @@ use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\StocksDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
-use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
-use ReflectionClass;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -112,21 +110,6 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
                 'calculatedSellingDenied' => true,
             ],
         ];
-    }
-
-    public function testEditMarkProductForVisibilityRecalculation()
-    {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-
-        $reflectionClass = new ReflectionClass(Product::class);
-        $reflectionPropertyRecalculateVisibility = $reflectionClass->getProperty('recalculateVisibility');
-        $reflectionPropertyRecalculateVisibility->setAccessible(true);
-        $reflectionPropertyRecalculateVisibility->setValue($product, false);
-
-        $this->productFacade->edit($product->getId(), $this->productDataFactory->createFromProduct($product));
-
-        $this->assertSame(true, $reflectionPropertyRecalculateVisibility->getValue($product));
     }
 
     public function testEditSchedulesPriceRecalculation()

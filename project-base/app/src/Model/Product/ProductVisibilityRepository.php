@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use DateTimeImmutable;
+use DateTime;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Types\Types;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository as BaseProductVisibilityRepository;
@@ -19,16 +20,32 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository as BasePro
 class ProductVisibilityRepository extends BaseProductVisibilityRepository
 {
     /**
-     * @param bool $onlyMarkedProducts
+     * @param array|null $productIds
      */
-    protected function calculateIndependentVisibility($onlyMarkedProducts)
+    protected function calculateIndependentVisibility(?array $productIds): void
     {
-        $now = new DateTimeImmutable();
+        $variables = [
+            'now' => new DateTime(),
+            'locale' => null,
+            'domainId' => null,
+            'pricingGroupId' => null,
+            'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+        ];
 
-        if ($onlyMarkedProducts) {
-            $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';
+        $variableTypes = [
+            'now' => Types::DATETIME_MUTABLE,
+            'locale' => Types::STRING,
+            'domainId' => Types::INTEGER,
+            'pricingGroupId' => Types::INTEGER,
+            'variantTypeMain' => Types::STRING,
+        ];
+
+        if ($productIds !== null) {
+            $productIdsCondition = 'p.id IN (:productIds) AND';
+            $variables['productIds'] = $productIds;
+            $variableTypes['productIds'] = ArrayParameterType::INTEGER;
         } else {
-            $onlyMarkedProductsCondition = '';
+            $productIdsCondition = '';
         }
 
         $query = 'UPDATE product_visibilities AS pv
@@ -75,30 +92,23 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                 END
             FROM products AS p
             JOIN product_domains AS pd ON pd.product_id = p.id
-            WHERE p.id = pv.product_id
+            WHERE ' . $productIdsCondition . '
+                p.id = pv.product_id
                 AND pv.domain_id = :domainId
                 AND pv.domain_id = pd.domain_id
                 AND pv.pricing_group_id = :pricingGroupId
-            ' . $onlyMarkedProductsCondition;
+            ';
 
         foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
             $domain = $this->domain->getDomainConfigById($pricingGroup->getDomainId());
+            $variables['locale'] = $domain->getLocale();
+            $variables['domainId'] = $domain->getId();
+            $variables['pricingGroupId'] = $pricingGroup->getId();
+
             $this->em->getConnection()->executeStatement(
                 $query,
-                [
-                    'now' => $now,
-                    'locale' => $domain->getLocale(),
-                    'domainId' => $domain->getId(),
-                    'pricingGroupId' => $pricingGroup->getId(),
-                    'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-                ],
-                [
-                    'now' => Types::DATETIME_IMMUTABLE,
-                    'locale' => Types::STRING,
-                    'domainId' => Types::INTEGER,
-                    'pricingGroupId' => Types::INTEGER,
-                    'variantTypeMain' => Types::STRING,
-                ],
+                $variables,
+                $variableTypes,
             );
         }
     }

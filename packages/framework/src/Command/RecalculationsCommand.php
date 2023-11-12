@@ -45,6 +45,8 @@ class RecalculationsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        // @todo how to unify the recalculations?
+
         $output->writeln('Running recalculations:');
         $output->writeln('<fg=green>Categories visibility.</fg=green>');
         $this->categoryVisibilityRepository->refreshCategoriesVisibility();
@@ -56,7 +58,7 @@ class RecalculationsCommand extends Command
         $this->productHiddenRecalculator->calculateHiddenForAll();
 
         $output->writeln('<fg=green>Products visibility.</fg=green>');
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
+        $this->productVisibilityFacade->calculateProductVisibilityForAll();
 
         $output->writeln('<fg=green>Products price again (because of variants).</fg=green>');
         // Main variant is set for recalculations after change of variants visibility.

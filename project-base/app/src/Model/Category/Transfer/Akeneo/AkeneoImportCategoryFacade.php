@@ -40,18 +40,18 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer implements
      * @param \App\Model\Category\Transfer\Akeneo\CategoryTransferAkeneoMapper $categoryTransferAkeneoMapper
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository $categoryVisibilityRepository
-     * @param \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
-        private CategoryTransferAkeneoFacade $categoryTransferAkeneoFacade,
-        private CategoryTransferAkeneoValidator $categoryTransferAkeneoValidator,
-        private CategoryTransferAkeneoMapper $categoryTransferAkeneoMapper,
-        private CategoryFacade $categoryFacade,
-        private CategoryVisibilityRepository $categoryVisibilityRepository,
-        private ProductVisibilityFacade $productVisibilityFacade,
-        private CategoryDataFactory $categoryDataFactory,
+        private readonly CategoryTransferAkeneoFacade $categoryTransferAkeneoFacade,
+        private readonly CategoryTransferAkeneoValidator $categoryTransferAkeneoValidator,
+        private readonly CategoryTransferAkeneoMapper $categoryTransferAkeneoMapper,
+        private readonly CategoryFacade $categoryFacade,
+        private readonly CategoryVisibilityRepository $categoryVisibilityRepository,
+        private readonly ProductVisibilityFacade $productVisibilityFacade,
+        private readonly CategoryDataFactory $categoryDataFactory,
     ) {
         parent::__construct($akeneoImportTransferDependency);
     }
@@ -110,7 +110,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer implements
 
         $this->logger->info('Refreshing categories and products visibility...');
         $this->categoryVisibilityRepository->refreshCategoriesVisibility();
-        $this->productVisibilityFacade->refreshProductsVisibility();
+        $this->productVisibilityFacade->calculateProductVisibilityForAll();
 
         $this->logger->info('Transfer is done.');
     }

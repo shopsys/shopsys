@@ -124,7 +124,6 @@ class ProductPriceRecalculator
             $this->productCalculatedPriceRepository->saveCalculatedPrice($product, $pricingGroup, $priceWithVat);
         }
         $product->markPriceAsRecalculated();
-        $product->markForVisibilityRecalculation();
         $this->em->flush();
     }
 

@@ -132,10 +132,12 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->manualInputPricesByPricingGroupId = $manualInputPrices;
     }
 
-    public function testIsVisibleOnAnyDomainWhenHidden()
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
+     */
+    private function createProductAndGetVisibility(ProductData $productData): ProductVisibility
     {
-        $productData = $this->getDefaultProductData();
-        $productData->hidden = true;
         $product = $this->productFacade->create($productData);
         $this->productPriceRecalculator->runImmediateRecalculations();
 
@@ -149,132 +151,82 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\Product $productAgain */
         $productAgain = $this->em->getRepository(Product::class)->find($id);
 
+        return $this->getVisibilityForProduct($productAgain);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $productAgain
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
+     */
+    private function getVisibilityForProduct(Product $productAgain): ProductVisibility
+    {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
             Domain::FIRST_DOMAIN_ID,
         );
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility1 */
-        $productVisibility1 = $this->em->getRepository(ProductVisibility::class)->findOneBy([
+        return $this->em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $productAgain,
             'pricingGroup' => $pricingGroup->getId(),
             'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
-
-        $this->assertFalse($productAgain->isVisible());
-        $this->assertFalse($productVisibility1->isVisible());
     }
 
-    public function testIsVisibleOnFirstDomainWhenHidden()
+    public function testIsVisibleOnAnyDomainWhenHidden(): void
+    {
+        $productData = $this->getDefaultProductData();
+        $productData->hidden = true;
+
+        $productVisibility = $this->createProductAndGetVisibility($productData);
+
+        $this->assertFalse($productVisibility->isVisible());
+    }
+
+    public function testIsVisibleOnFirstDomainWhenHidden(): void
     {
         $productData = $this->getDefaultProductData();
         $productData->hidden = false;
         $productData->domainHidden[Domain::FIRST_DOMAIN_ID] = true;
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
 
-        $this->em->flush();
-        $id = $product->getId();
-        $this->createImage('product', $id);
-        $this->em->clear();
+        $productVisibility = $this->createProductAndGetVisibility($productData);
 
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \App\Model\Product\Product $productAgain */
-        $productAgain = $this->em->getRepository(Product::class)->find($id);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility1 */
-        $productVisibility1 = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-            'product' => $productAgain,
-            'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => Domain::FIRST_DOMAIN_ID,
-        ]);
-
-        $this->assertFalse($productAgain->isVisible());
-        $this->assertFalse($productVisibility1->isVisible());
+        $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testIsVisibleOnAnyDomainWhenNotHidden()
+    public function testIsVisibleOnAnyDomainWhenNotHidden(): void
     {
         $productData = $this->getDefaultProductData();
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
 
-        $this->em->flush();
-        $id = $product->getId();
-        $this->createImage('product', $id);
-        $this->em->clear();
+        $productVisibility = $this->createProductAndGetVisibility($productData);
 
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \App\Model\Product\Product $productAgain */
-        $productAgain = $this->em->getRepository(Product::class)->find($id);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(
-            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID,
-        );
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility1 */
-        $productVisibility1 = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-            'product' => $productAgain->getId(),
-            'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => Domain::FIRST_DOMAIN_ID,
-        ]);
-
-        $this->assertTrue($productAgain->isVisible());
-        $this->assertTrue($productVisibility1->isVisible());
+        $this->assertTrue($productVisibility->isVisible());
     }
 
-    public function testIsVisibleOnAnyDomainWhenSellingInFuture()
+    public function testIsVisibleOnAnyDomainWhenSellingInFuture(): void
     {
         $sellingFrom = new DateTime('now');
         $sellingFrom->modify('+1 day');
 
         $productData = $this->getDefaultProductData();
         $productData->sellingFrom = $sellingFrom;
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
 
-        $this->em->flush();
-        $id = $product->getId();
-        $this->createImage('product', $id);
-        $this->em->clear();
+        $productVisibility = $this->createProductAndGetVisibility($productData);
 
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \App\Model\Product\Product $productAgain */
-        $productAgain = $this->em->getRepository(Product::class)->find($id);
-
-        $this->assertFalse($productAgain->isVisible());
+        $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testIsVisibleOnAnyDomainWhenSellingInPast()
+    public function testIsVisibleOnAnyDomainWhenSellingInPast(): void
     {
         $sellingTo = new DateTime('now');
         $sellingTo->modify('-1 day');
 
         $productData = $this->getDefaultProductData();
         $productData->sellingTo = $sellingTo;
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
 
-        $this->em->flush();
-        $id = $product->getId();
-        $this->createImage('product', $id);
-        $this->em->clear();
+        $productVisibility = $this->createProductAndGetVisibility($productData);
 
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \App\Model\Product\Product $productAgain */
-        $productAgain = $this->em->getRepository(Product::class)->find($id);
-
-        $this->assertFalse($productAgain->isVisible());
+        $this->assertFalse($productVisibility->isVisible());
     }
 
     /**
@@ -296,7 +248,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->em->flush();
     }
 
-    public function testIsVisibleOnAnyDomainWhenSellingNow()
+    public function testIsVisibleOnAnyDomainWhenSellingNow(): void
     {
         $sellingFrom = new DateTime('now');
         $sellingFrom->modify('-1 day');
@@ -306,152 +258,65 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData = $this->getDefaultProductData();
         $productData->sellingFrom = $sellingFrom;
         $productData->sellingTo = $sellingTo;
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
 
-        $this->em->flush();
-        $id = $product->getId();
-        $this->createImage('product', $id);
-        $this->em->clear();
-
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \App\Model\Product\Product $productAgain */
-        $productAgain = $this->em->getRepository(Product::class)->find($id);
-
-        $this->assertTrue($productAgain->isVisible());
-    }
-
-    public function testIsNotVisibleWhenZeroPrice()
-    {
-        $productData = $this->getDefaultProductData();
-        $this->setPriceForAllDomains($productData, Money::zero());
-        $product1 = $this->productFacade->create($productData);
-
-        $this->productPriceRecalculator->runImmediateRecalculations();
-
-        $product1Id = $product1->getId();
-        $this->createImage('product', $product1Id);
-        $this->em->clear();
-
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \App\Model\Product\Product $product1Again */
-        $product1Again = $this->em->getRepository(Product::class)->find($product1Id);
-
-        $this->assertFalse($product1Again->isVisible());
-    }
-
-    public function testIsVisibleWithFilledName()
-    {
-        $productData = $this->getDefaultProductData();
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
-        $this->createImage('product', $product->getId());
-        $this->em->clear();
-
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(
-            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID,
-        );
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
-        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-            'product' => $product,
-            'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => Domain::FIRST_DOMAIN_ID,
-        ]);
+        $productVisibility = $this->createProductAndGetVisibility($productData);
 
         $this->assertTrue($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleWithEmptyName()
+    public function testIsNotVisibleWhenZeroPrice(): void
     {
         $productData = $this->getDefaultProductData();
-        $productData->name = ['cs' => null, 'en' => null];
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
-        $this->createImage('product', $product->getId());
-        $this->em->clear();
+        $this->setPriceForAllDomains($productData, Money::zero());
 
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(
-            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID,
-        );
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
-        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-            'product' => $product,
-            'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => Domain::FIRST_DOMAIN_ID,
-        ]);
+        $productVisibility = $this->createProductAndGetVisibility($productData);
 
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testIsVisibleInVisibileCategory()
+    public function testIsVisibleWithFilledName(): void
+    {
+        $productData = $this->getDefaultProductData();
+
+        $productVisibility = $this->createProductAndGetVisibility($productData);
+
+        $this->assertTrue($productVisibility->isVisible());
+    }
+
+    public function testIsNotVisibleWithEmptyName(): void
+    {
+        $productData = $this->getDefaultProductData();
+        $productData->name = ['cs' => null, 'en' => null];
+
+        $productVisibility = $this->createProductAndGetVisibility($productData);
+
+        $this->assertFalse($productVisibility->isVisible());
+    }
+
+    public function testIsVisibleInVisibileCategory(): void
     {
         /** @var \App\Model\Category\Category $category */
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TOYS);
 
         $productData = $this->getDefaultProductData();
         $productData->categoriesByDomainId = [Domain::FIRST_DOMAIN_ID => [$category]];
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
-        $this->createImage('product', $product->getId());
-        $this->em->clear();
 
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(
-            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID,
-        );
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
-        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-            'product' => $product,
-            'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => Domain::FIRST_DOMAIN_ID,
-        ]);
+        $productVisibility = $this->createProductAndGetVisibility($productData);
 
         $this->assertTrue($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleInHiddenCategory()
+    public function testIsNotVisibleInHiddenCategory(): void
     {
         $productData = $this->getDefaultProductData();
         $productData->categoriesByDomainId = [];
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
-        $this->createImage('product', $product->getId());
-        $this->em->clear();
 
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(
-            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID,
-        );
-
-        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-            'product' => $product,
-            'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => Domain::FIRST_DOMAIN_ID,
-        ]);
+        $productVisibility = $this->createProductAndGetVisibility($productData);
 
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testRefreshProductsVisibilityVisibleVariants()
+    public function testRefreshProductsVisibilityVisibleVariants(): void
     {
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
@@ -464,18 +329,14 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $variant1productData->hidden = true;
         $this->productFacade->edit($variant1->getId(), $variant1productData);
 
-        $this->productVisibilityRepository->refreshProductsVisibility(true);
+        $this->productVisibilityRepository->refreshProductsVisibility([53, 54, 69]);
 
-        $this->em->refresh($variant1);
-        $this->em->refresh($variant2);
-        $this->em->refresh($mainVariant);
-
-        $this->assertFalse($variant1->isVisible());
-        $this->assertTrue($variant2->isVisible());
-        $this->assertTrue($mainVariant->isVisible());
+        $this->assertFalse($this->getVisibilityForProduct($variant1)->isVisible());
+        $this->assertTrue($this->getVisibilityForProduct($variant2)->isVisible());
+        $this->assertTrue($this->getVisibilityForProduct($mainVariant)->isVisible());
     }
 
-    public function testRefreshProductsVisibilityNotVisibleVariants()
+    public function testRefreshProductsVisibilityNotVisibleVariants(): void
     {
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
@@ -516,26 +377,18 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $variant6productData->hidden = true;
         $this->productFacade->edit($variant6->getId(), $variant6productData);
 
-        $this->productVisibilityRepository->refreshProductsVisibility(true);
+        $this->productVisibilityRepository->refreshProductsVisibility([53, 54, 148, 149, 150, 151, 69]);
 
-        $this->em->refresh($variant1);
-        $this->em->refresh($variant2);
-        $this->em->refresh($variant3);
-        $this->em->refresh($variant4);
-        $this->em->refresh($variant5);
-        $this->em->refresh($variant6);
-        $this->em->refresh($mainVariant);
-
-        $this->assertFalse($variant1->isVisible());
-        $this->assertFalse($variant2->isVisible());
-        $this->assertFalse($variant3->isVisible());
-        $this->assertFalse($variant4->isVisible());
-        $this->assertFalse($variant5->isVisible());
-        $this->assertFalse($variant6->isVisible());
-        $this->assertFalse($mainVariant->isVisible());
+        $this->assertFalse($this->getVisibilityForProduct($variant1)->isVisible());
+        $this->assertFalse($this->getVisibilityForProduct($variant2)->isVisible());
+        $this->assertFalse($this->getVisibilityForProduct($variant3)->isVisible());
+        $this->assertFalse($this->getVisibilityForProduct($variant4)->isVisible());
+        $this->assertFalse($this->getVisibilityForProduct($variant5)->isVisible());
+        $this->assertFalse($this->getVisibilityForProduct($variant6)->isVisible());
+        $this->assertFalse($this->getVisibilityForProduct($mainVariant)->isVisible());
     }
 
-    public function testRefreshProductsVisibilityNotVisibleMainVariant()
+    public function testRefreshProductsVisibilityNotVisibleMainVariant(): void
     {
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
@@ -544,18 +397,14 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\Product $mainVariant */
         $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
 
-        $mainVariantproductData = $this->productDataFactory->createFromProduct($mainVariant);
-        $mainVariantproductData->hidden = true;
-        $this->productFacade->edit($mainVariant->getId(), $mainVariantproductData);
+        $mainVariantProductData = $this->productDataFactory->createFromProduct($mainVariant);
+        $mainVariantProductData->hidden = true;
+        $this->productFacade->edit($mainVariant->getId(), $mainVariantProductData);
 
-        $this->productVisibilityRepository->refreshProductsVisibility(true);
+        $this->productVisibilityRepository->refreshProductsVisibility([53, 54, 69]);
 
-        $this->em->refresh($variant1);
-        $this->em->refresh($variant2);
-        $this->em->refresh($mainVariant);
-
-        $this->assertFalse($variant1->isVisible());
-        $this->assertFalse($variant2->isVisible());
-        $this->assertFalse($mainVariant->isVisible());
+        $this->assertFalse($this->getVisibilityForProduct($variant1)->isVisible());
+        $this->assertFalse($this->getVisibilityForProduct($variant2)->isVisible());
+        $this->assertFalse($this->getVisibilityForProduct($mainVariant)->isVisible());
     }
 }

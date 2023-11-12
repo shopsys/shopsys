@@ -164,7 +164,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository:
         tags:
-            # must be ran before ProductVisibilityFacade
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
 
     Shopsys\FrameworkBundle\Component\Cron\CronFacade:
@@ -445,13 +444,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator:
         tags:
-            # must be run before ProductVisibilityFacade
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
-
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade:
-        tags:
-            # must be ran after CategoryVisibilityRepository and ProductPriceRecalculator
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 10 }
 
     # Define RedirectController explicitly to prevent creating it on-the-fly
     # when redirecting (it causes unnecessary container rebuild).

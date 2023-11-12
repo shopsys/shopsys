@@ -161,12 +161,6 @@ class Product extends AbstractTranslatableEntity
     protected $outOfStockAvailability;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $calculatedVisibility;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[]|\Doctrine\Common\Collections\Collection
      * @ORM\OneToMany(
      *   targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain",
@@ -182,12 +176,6 @@ class Product extends AbstractTranslatableEntity
      * @ORM\Column(type="boolean")
      */
     protected $recalculatePrice;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $recalculateVisibility;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
@@ -240,11 +228,9 @@ class Product extends AbstractTranslatableEntity
         $this->partno = $productData->partno;
         $this->ean = $productData->ean;
         $this->setAvailabilityAndStock($productData);
-        $this->calculatedVisibility = false;
         $this->createDomains($productData);
         $this->productCategoryDomains = new ArrayCollection();
         $this->recalculatePrice = true;
-        $this->recalculateVisibility = true;
         $this->calculatedHidden = true;
         $this->calculatedSellingDenied = true;
 
@@ -282,8 +268,6 @@ class Product extends AbstractTranslatableEntity
             $this->ean = $productData->ean;
         }
         $this->setData($productData);
-
-        $this->markForVisibilityRecalculation();
     }
 
     /**
@@ -622,59 +606,9 @@ class Product extends AbstractTranslatableEntity
         return $this->brand;
     }
 
-    /**
-     * @return bool
-     */
-    protected function getCalculatedVisibility()
-    {
-        return $this->calculatedVisibility;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isVisible()
-    {
-        return $this->getCalculatedVisibility();
-    }
-
     public function markPriceAsRecalculated()
     {
         $this->recalculatePrice = false;
-    }
-
-    /**
-     * @param bool $recalculateVisibility
-     */
-    protected function setRecalculateVisibility($recalculateVisibility)
-    {
-        $this->recalculateVisibility = $recalculateVisibility;
-    }
-
-    public function markForVisibilityRecalculation()
-    {
-        $this->setRecalculateVisibility(true);
-
-        if ($this->isMainVariant()) {
-            foreach ($this->getVariants() as $variant) {
-                $variant->setRecalculateVisibility(true);
-            }
-        } elseif ($this->isVariant()) {
-            $mainVariant = $this->getMainVariant();
-            /**
-             * When the product is fetched from persistence, the mainVariant is only a proxy object,
-             * when we call something on this proxy object, Doctrine fetches it from persistence too.
-             *
-             * The problem is the Doctrine seems to not fetch the main variant when we only write something into it,
-             * but when we read something first, Doctrine fetches the object, and the use-case works correctly.
-             *
-             * If you think this is strange and it shouldn't work even before the code was moved to Product, you are right, this is strange.
-             * When the code is outside of Product, Doctrine does the job correctly, but once the code is inside of Product,
-             * Doctrine seems to not fetching the main variant.
-             */
-            $mainVariant->isMarkedForVisibilityRecalculation();
-            $mainVariant->setRecalculateVisibility(true);
-        }
     }
 
     /**
@@ -898,14 +832,6 @@ class Product extends AbstractTranslatableEntity
     public function getSeoMetaDescription(int $domainId)
     {
         return $this->getProductDomain($domainId)->getSeoMetaDescription();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMarkedForVisibilityRecalculation()
-    {
-        return $this->recalculateVisibility;
     }
 
     /**

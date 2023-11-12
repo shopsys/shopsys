@@ -126,7 +126,6 @@ class ProductFacade
         $this->imageFacade->manageImages($product, $productData->images);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
 
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
@@ -164,7 +163,6 @@ class ProductFacade
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         // @todo after variants are handled, this may be simplified
@@ -187,8 +185,6 @@ class ProductFacade
             $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation(
                 $productForRecalculations,
             );
-            $productForRecalculations->markForVisibilityRecalculation();
-
             $this->productRecalculationDispatcher->dispatchSingleProductId($productForRecalculations->getId());
         }
 

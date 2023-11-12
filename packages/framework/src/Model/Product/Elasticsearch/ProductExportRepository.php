@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class ProductExportRepository
 {
@@ -28,7 +28,7 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
@@ -40,7 +40,7 @@ class ProductExportRepository
         protected readonly ParameterRepository $parameterRepository,
         protected readonly ProductFacade $productFacade,
         protected readonly FriendlyUrlRepository $friendlyUrlRepository,
-        protected readonly ProductVisibilityRepository $productVisibilityRepository,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly CategoryFacade $categoryFacade,
         protected readonly ProductAccessoryFacade $productAccessoryFacade,
@@ -325,7 +325,7 @@ class ProductExportRepository
     {
         $visibility = [];
 
-        foreach ($this->productVisibilityRepository->findProductVisibilitiesByDomainIdAndProduct(
+        foreach ($this->productVisibilityFacade->findProductVisibilitiesByDomainIdAndProduct(
             $domainId,
             $product,
         ) as $productVisibility) {

@@ -51,7 +51,6 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method \App\Model\Product\Product getByUuid(string $uuid)
  * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
  * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
- * @property \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
  * @property \App\Model\Product\ProductFactory $productFactory
  */
 class ProductFacade extends BaseProductFacade
@@ -59,7 +58,7 @@ class ProductFacade extends BaseProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade
@@ -194,7 +193,6 @@ class ProductFacade extends BaseProductFacade
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         // @todo after handling variants this may be simplified or edit may be moved to framework
@@ -239,7 +237,6 @@ class ProductFacade extends BaseProductFacade
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
 
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
