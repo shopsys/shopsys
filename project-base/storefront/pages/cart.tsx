@@ -20,7 +20,7 @@ const CartPage: FC<ServerSidePropsType> = () => {
     const { url } = useDomainConfig();
     const { t } = useTranslation();
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], url);
-    const currentCart = useCurrentCart();
+    const { cart } = useCurrentCart();
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.cart);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -31,11 +31,11 @@ const CartPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Cart')}>
                 <Webline>
-                    {!currentCart.isCartEmpty ? (
+                    {cart?.items.length ? (
                         <>
                             <OrderSteps activeStep={1} domainUrl={url} />
 
-                            {currentCart.cart?.items && <CartList items={currentCart.cart.items} />}
+                            <CartList items={cart.items} />
 
                             <CartSummary />
 

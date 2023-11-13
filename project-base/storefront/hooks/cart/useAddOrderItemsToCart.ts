@@ -18,7 +18,7 @@ export const useAddOrderItemsToCart = (): {
 } => {
     const [orderForPrefillingUuid, setOrderForPrefillingUuid] = useState<string>();
     const [notAddedProductNames, setNotAddedProductNames] = useState<string[]>();
-    const { cart, isCartEmpty } = useCurrentCart();
+    const { cart } = useCurrentCart();
     const router = useRouter();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
@@ -51,7 +51,7 @@ export const useAddOrderItemsToCart = (): {
     };
 
     const addOrderItemsToEmptyCart = async (orderUuid: string) => {
-        if (!isCartEmpty) {
+        if (cart?.items.length) {
             setOrderForPrefillingUuid(orderUuid);
 
             return;

@@ -22,7 +22,7 @@ export const Cart: FC = ({ className }) => {
     const router = useRouter();
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const { cart, isCartEmpty, isFetching } = useCurrentCart();
+    const { cart, isFetching } = useCurrentCart();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const authLoading = usePersistStore((store) => store.authLoading);
@@ -57,14 +57,16 @@ export const Cart: FC = ({ className }) => {
                 data-testid={TEST_IDENTIFIER + 'detail'}
                 className={twJoin(
                     'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 p-5 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded lg:rounded-tr-none lg:bg-white lg:opacity-0 lg:shadow-md',
-                    isCartEmpty ? 'lg:flex lg:w-96 lg:flex-nowrap lg:items-center lg:justify-between' : 'lg:w-[510px]',
+                    !cart?.items.length
+                        ? 'lg:flex lg:w-96 lg:flex-nowrap lg:items-center lg:justify-between'
+                        : 'lg:w-[510px]',
                 )}
             >
-                {!isCartEmpty ? (
+                {cart?.items.length ? (
                     <>
                         <ul className="relative m-0 flex max-h-96 w-full list-none flex-col overflow-y-auto p-0">
                             {isRemovingItem && <LoaderWithOverlay className="w-16" />}
-                            {cart?.items.map((cartItem, listIndex) => (
+                            {cart.items.map((cartItem, listIndex) => (
                                 <ListItem
                                     key={cartItem.uuid}
                                     cartItem={cartItem}

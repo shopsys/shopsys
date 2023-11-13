@@ -6,12 +6,12 @@ import useTranslation from 'next-translate/useTranslation';
 const TEST_IDENTIFIER = 'blocks-freetransport';
 
 export const FreeTransport: FC = () => {
-    const { cart, isCartEmpty } = useCurrentCart();
+    const { cart } = useCurrentCart();
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const amount = cart?.remainingAmountWithVatForFreeTransport;
 
-    if (isCartEmpty || amount === null || amount === undefined) {
+    if (!cart?.items.length || amount === null || amount === undefined) {
         return null;
     }
 

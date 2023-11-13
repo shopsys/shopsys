@@ -28,10 +28,11 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 
+    const isWithCart = !(!cartUuid && !isUserLoggedIn);
+
     return {
         refetchCart,
-        cart: cartData?.cart ?? null,
-        isCartEmpty: !cartData?.cart?.items.length,
+        cart: isWithCart && cartData?.cart ? cartData.cart : null,
         transport: cartData?.cart?.transport ?? null,
         pickupPlace: getSelectedPickupPlace(
             cartData?.cart?.transport,

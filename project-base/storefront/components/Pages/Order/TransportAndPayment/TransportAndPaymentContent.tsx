@@ -24,7 +24,7 @@ export const TransportAndPaymentContent: FC = () => {
     const { url } = useDomainConfig();
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const { transport, pickupPlace, payment, paymentGoPayBankSwift, isCartEmpty } = useCurrentCart();
+    const { transport, pickupPlace, payment, paymentGoPayBankSwift, cart } = useCurrentCart();
     const [isErrorPopupVisible, setErrorPopupVisibility] = useState(false);
     const [cartUrl, contactInformationUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/contact-information'],
@@ -64,10 +64,10 @@ export const TransportAndPaymentContent: FC = () => {
     };
 
     useEffect(() => {
-        if (isCartEmpty) {
+        if (!cart?.items.length) {
             router.replace(cartUrl);
         }
-    }, [isCartEmpty]);
+    }, [cart?.items]);
 
     return (
         <OrderLayout

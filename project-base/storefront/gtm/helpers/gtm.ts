@@ -49,7 +49,7 @@ export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartL
     const domainConfig = useDomainConfig();
 
     return useMemo(() => {
-        if ((!cartUuid && !isUserLoggedIn) || !cart) {
+        if (!cart) {
             return { gtmCartInfo: null, isCartLoaded: !isFetching };
         }
 
