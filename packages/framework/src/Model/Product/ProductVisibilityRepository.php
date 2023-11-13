@@ -139,7 +139,7 @@ class ProductVisibilityRepository
         $query = 'UPDATE product_visibilities AS pv
             SET visible = CASE
                     WHEN (
-                        p.calculated_hidden = FALSE
+                        p.hidden = FALSE
                         AND
                         (p.selling_from IS NULL OR p.selling_from <= :now)
                         AND

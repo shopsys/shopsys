@@ -395,7 +395,6 @@ class Product extends BaseProduct
     public function isUsingStock()
     {
         //is always false and is by default set in migration to false.
-        //removing old stock functionality means product.calculatedHidden is always setup by product.hidden
         return false;
     }
 

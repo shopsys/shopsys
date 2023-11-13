@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Order\Item;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
-use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
@@ -16,7 +15,6 @@ class OrderProductFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
@@ -24,7 +22,6 @@ class OrderProductFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly ProductHiddenRecalculator $productHiddenRecalculator,
         protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         protected readonly ModuleFacade $moduleFacade,
         protected readonly ProductRepository $productRepository,
@@ -80,7 +77,6 @@ class OrderProductFacade
 
         foreach ($relevantProducts as $relevantProduct) {
             $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($relevantProduct);
-            $this->productHiddenRecalculator->calculateHiddenForProduct($relevantProduct);
         }
         $this->em->flush();
 

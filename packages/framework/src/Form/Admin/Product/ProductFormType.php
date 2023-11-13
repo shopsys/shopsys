@@ -387,18 +387,6 @@ class ProductFormType extends AbstractType
                 'label' => t('Hide product'),
             ]);
 
-        if (
-            $product !== null
-            && $product->isUsingStock()
-            && $product->getCalculatedHidden()
-            && $product->getStockQuantity() <= 0
-        ) {
-            $builderDisplayAvailabilityGroup
-                ->add('productCalculatedHiddenInfo', WarningMessageType::class, [
-                    'data' => t('Product is hidden due to sellout'),
-                ]);
-        }
-
         $builderDisplayAvailabilityGroup
             ->add('sellingFrom', DatePickerType::class, [
                 'required' => false,

@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator;
-use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -19,14 +18,12 @@ class RecalculationsCommand extends Command
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository $categoryVisibilityRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator $productPriceRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      */
     public function __construct(
         private readonly CategoryVisibilityRepository $categoryVisibilityRepository,
-        private readonly ProductHiddenRecalculator $productHiddenRecalculator,
         private readonly ProductPriceRecalculator $productPriceRecalculator,
         private readonly ProductVisibilityFacade $productVisibilityFacade,
         private readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
@@ -53,9 +50,6 @@ class RecalculationsCommand extends Command
 
         $output->writeln('<fg=green>Products price.</fg=green>');
         $this->productPriceRecalculator->runAllScheduledRecalculations();
-
-        $output->writeln('<fg=green>Products hiding.</fg=green>');
-        $this->productHiddenRecalculator->calculateHiddenForAll();
 
         $output->writeln('<fg=green>Products visibility.</fg=green>');
         $this->productVisibilityFacade->calculateProductVisibilityForAll();

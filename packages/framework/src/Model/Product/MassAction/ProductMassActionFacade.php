@@ -6,19 +6,16 @@ namespace Shopsys\FrameworkBundle\Model\Product\MassAction;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Product\MassAction\Exception\UnsupportedSelectionType;
-use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class ProductMassActionFacade
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionRepository $productMassActionRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
         protected readonly ProductMassActionRepository $productMassActionRepository,
-        protected readonly ProductHiddenRecalculator $productHiddenRecalculator,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
@@ -51,7 +48,6 @@ class ProductMassActionFacade
             $selectedProductIds,
             $productMassActionData->value === ProductMassActionData::VALUE_PRODUCT_HIDE,
         );
-        $this->productHiddenRecalculator->calculateHiddenForAll();
         $this->productRecalculationDispatcher->dispatchProductIds($selectedProductIds);
     }
 

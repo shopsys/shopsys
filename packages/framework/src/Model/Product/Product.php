@@ -119,12 +119,6 @@ class Product extends AbstractTranslatableEntity
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    protected $calculatedHidden;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
     protected $usingStock;
 
     /**
@@ -231,7 +225,6 @@ class Product extends AbstractTranslatableEntity
         $this->createDomains($productData);
         $this->productCategoryDomains = new ArrayCollection();
         $this->recalculatePrice = true;
-        $this->calculatedHidden = true;
         $this->calculatedSellingDenied = true;
 
         $this->variants = new ArrayCollection();
@@ -427,14 +420,6 @@ class Product extends AbstractTranslatableEntity
     public function isHidden()
     {
         return $this->hidden;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getCalculatedHidden()
-    {
-        return $this->calculatedHidden;
     }
 
     /**

@@ -24,7 +24,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
@@ -39,7 +38,6 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
- * @property \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
  * @property \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
  * @property \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
  * @method \App\Model\Product\Product getById(int $productId)
@@ -66,7 +64,6 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      * @param \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
@@ -92,7 +89,6 @@ class ProductFacade extends BaseProductFacade
         PricingGroupRepository $pricingGroupRepository,
         ProductManualInputPriceFacade $productManualInputPriceFacade,
         FriendlyUrlFacade $friendlyUrlFacade,
-        ProductHiddenRecalculator $productHiddenRecalculator,
         ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         ProductAccessoryRepository $productAccessoryRepository,
         PluginCrudExtensionFacade $pluginCrudExtensionFacade,
@@ -118,7 +114,6 @@ class ProductFacade extends BaseProductFacade
             $pricingGroupRepository,
             $productManualInputPriceFacade,
             $friendlyUrlFacade,
-            $productHiddenRecalculator,
             $productSellingDeniedRecalculator,
             $productAccessoryRepository,
             $pluginCrudExtensionFacade,
@@ -187,7 +182,6 @@ class ProductFacade extends BaseProductFacade
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->em->flush();
         $this->imageFacade->manageImages($product, $productData->images);
-        $this->productHiddenRecalculator->calculateHiddenForProduct($product);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullnames());
 
@@ -232,7 +226,6 @@ class ProductFacade extends BaseProductFacade
         $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->imageFacade->manageImages($product, $productData->images);
-        $this->productHiddenRecalculator->calculateHiddenForProduct($product);
 
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());

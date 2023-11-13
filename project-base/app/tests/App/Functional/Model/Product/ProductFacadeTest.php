@@ -44,16 +44,14 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
     private ProductStockDataFactory $productStockDataFactory;
 
     /**
-     * @dataProvider getTestCalculationHiddenAndSellingDeniedDataProvider
+     * @dataProvider getTestSellingDeniedDataProvider
      * @param mixed $hidden
      * @param mixed $sellingDenied
-     * @param mixed $calculatedHidden
      * @param mixed $calculatedSellingDenied
      */
-    public function testCalculationHiddenAndSellingDenied(
+    public function testSellingDenied(
         $hidden,
         $sellingDenied,
-        $calculatedHidden,
         $calculatedSellingDenied,
     ) {
         $productData = $this->productDataFactory->create();
@@ -78,35 +76,30 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
 
         $productFromDb = $this->productFacade->getById($product->getId());
 
-        $this->assertSame($calculatedHidden, $productFromDb->getCalculatedHidden(), 'Calculated hidden:');
         $this->assertSame($calculatedSellingDenied, $productFromDb->getCalculatedSellingDenied(), 'Calculated selling denied:');
     }
 
-    public function getTestCalculationHiddenAndSellingDeniedDataProvider()
+    public function getTestSellingDeniedDataProvider()
     {
         return [
             [
                 'hidden' => true,
                 'sellingDenied' => true,
-                'calculatedHidden' => true,
                 'calculatedSellingDenied' => true,
             ],
             [
                 'hidden' => false,
                 'sellingDenied' => false,
-                'calculatedHidden' => false,
                 'calculatedSellingDenied' => false,
             ],
             [
                 'hidden' => true,
                 'sellingDenied' => false,
-                'calculatedHidden' => true,
                 'calculatedSellingDenied' => false,
             ],
             [
                 'hidden' => false,
                 'sellingDenied' => true,
-                'calculatedHidden' => false,
                 'calculatedSellingDenied' => true,
             ],
         ];
