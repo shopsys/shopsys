@@ -5,7 +5,6 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { blurInput } from 'helpers/forms/blurInput';
@@ -65,76 +64,77 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
 
     return (
         <>
-            <Webline>
-                <div className="relative mb-20 flex flex-col rounded border-2 border-primary before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-1 before:-translate-x-1/2 before:bg-primary before:content-none lg:flex-row before:lg:block">
-                    <div className="w-full p-5 lg:w-1/2 lg:py-8 lg:px-10">
-                        <div className="mb-5 text-4xl font-bold leading-10 [&>strong]:text-primary">
-                            <Trans
-                                components={{ 0: <br />, 1: <strong /> }}
-                                i18nKey="Finish registration to loyalty program."
-                            />
-                        </div>
-                        <ul>
-                            {[
-                                t('You will have an overview of your orders and complaints'),
-                                t('Collecting points with every order'),
-                                t('Possibility of purchases for better prices'),
-                                t('Exclusive products as a part of the loyalty program'),
-                            ].map((text) => (
-                                <li
-                                    key={text}
-                                    className="relative mb-3 pl-4 leading-5 before:absolute before:left-0 before:top-2 before:h-1 before:w-1 before:rounded-full before:bg-primary before:content-none"
-                                >
-                                    {text}
-                                </li>
-                            ))}
-                        </ul>
+            <div className="relative mb-20 flex flex-col rounded border-2 border-primary before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-1 before:-translate-x-1/2 before:bg-primary before:content-none lg:flex-row before:lg:block">
+                <div className="w-full p-5 lg:w-1/2 lg:py-8 lg:px-10">
+                    <div className="mb-5 text-4xl font-bold leading-10 [&>strong]:text-primary">
+                        <Trans
+                            components={{ 0: <br />, 1: <strong /> }}
+                            i18nKey="Finish registration to loyalty program."
+                        />
                     </div>
-                    <div className="flex w-full flex-col items-center justify-center p-5 lg:w-1/2 lg:px-10 lg:py-8">
-                        <div className="w-full lg:max-w-sm">
-                            <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}>
-                                <FormProvider {...formProviderMethods}>
-                                    <PasswordInputControlled
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.password.name}
-                                        passwordInputProps={{
-                                            label: formMeta.fields.password.label,
-                                        }}
-                                        render={(passwordInput) => (
-                                            <div className="mb-7">
-                                                <FormLine>{passwordInput}</FormLine>
-                                            </div>
-                                        )}
-                                    />
-                                    <CheckboxControlled
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.privacyPolicy.name}
-                                        checkboxProps={{
-                                            label: formMeta.fields.privacyPolicy.label,
-                                        }}
-                                        render={(checkbox) => (
-                                            <div className="mb-7">
-                                                <ChoiceFormLine>{checkbox}</ChoiceFormLine>
-                                            </div>
-                                        )}
-                                    />
-                                    <SubmitButton
-                                        dataTestId={TEST_IDENTIFIER}
-                                        isDisabled={isInvalidRegistrationRef.current}
-                                        isWithDisabledLook={!formProviderMethods.formState.isValid}
-                                        style={{ width: '100%' }}
-                                        variant="primary"
-                                    >
-                                        {t('Create account')}
-                                    </SubmitButton>
-                                </FormProvider>
-                            </Form>
-                        </div>
+
+                    <ul>
+                        {[
+                            t('You will have an overview of your orders and complaints'),
+                            t('Collecting points with every order'),
+                            t('Possibility of purchases for better prices'),
+                            t('Exclusive products as a part of the loyalty program'),
+                        ].map((text) => (
+                            <li
+                                key={text}
+                                className="relative mb-3 pl-4 leading-5 before:absolute before:left-0 before:top-2 before:h-1 before:w-1 before:rounded-full before:bg-primary before:content-none"
+                            >
+                                {text}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div className="flex w-full flex-col items-center justify-center p-5 lg:w-1/2 lg:px-10 lg:py-8">
+                    <div className="w-full lg:max-w-sm">
+                        <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}>
+                            <FormProvider {...formProviderMethods}>
+                                <PasswordInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.password.name}
+                                    passwordInputProps={{
+                                        label: formMeta.fields.password.label,
+                                    }}
+                                    render={(passwordInput) => (
+                                        <div className="mb-7">
+                                            <FormLine>{passwordInput}</FormLine>
+                                        </div>
+                                    )}
+                                />
+                                <CheckboxControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.privacyPolicy.name}
+                                    checkboxProps={{
+                                        label: formMeta.fields.privacyPolicy.label,
+                                    }}
+                                    render={(checkbox) => (
+                                        <div className="mb-7">
+                                            <ChoiceFormLine>{checkbox}</ChoiceFormLine>
+                                        </div>
+                                    )}
+                                />
+                                <SubmitButton
+                                    dataTestId={TEST_IDENTIFIER}
+                                    isDisabled={isInvalidRegistrationRef.current}
+                                    isWithDisabledLook={!formProviderMethods.formState.isValid}
+                                    style={{ width: '100%' }}
+                                    variant="primary"
+                                >
+                                    {t('Create account')}
+                                </SubmitButton>
+                            </FormProvider>
+                        </Form>
                     </div>
                 </div>
-            </Webline>
+            </div>
+
             {isErrorPopupVisible && (
                 <ErrorPopup
                     fields={formMeta.fields}
