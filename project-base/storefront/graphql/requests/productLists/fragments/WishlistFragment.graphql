@@ -1,4 +1,4 @@
-fragment WishlistFragment on Wishlist {
+fragment WishlistFragment on ProductList {
     __typename
     uuid
     products {

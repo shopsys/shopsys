@@ -14,6 +14,7 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import { useGetAllProductListUuids } from 'hooks/useGetAllProductListUuids';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
@@ -36,6 +37,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
     );
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: defaultEmail ?? '', password: '' });
     const { login } = useAuth();
+    const getProductListUuids = useGetAllProductListUuids();
 
     const onLoginHandler: SubmitHandler<{ email: string; password: string }> = async (data) => {
         blurInput();
@@ -44,6 +46,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
             email: data.email,
             password: data.password,
             previousCartUuid: cartUuid,
+            productListsUuids: getProductListUuids(),
         });
 
         handleFormErrors(

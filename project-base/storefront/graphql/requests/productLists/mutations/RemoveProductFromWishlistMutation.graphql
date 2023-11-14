@@ -1,0 +1,5 @@
+mutation RemoveProductFromWishlistMutation($input: ProductListUpdateInput!) {
+    RemoveProductFromList(input: $input) {
+        ...WishlistFragment
+    }
+}

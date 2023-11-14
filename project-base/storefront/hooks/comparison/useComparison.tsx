@@ -1,6 +1,7 @@
 import {
+    ProductListTypeEnumApi,
     useAddProductToComparisonMutationApi,
-    useCleanComparisonMutationApi,
+    useCleanProductListMutationApi,
     useComparisonQueryApi,
     useRemoveProductFromComparisonMutationApi,
 } from 'graphql/generated';
@@ -14,25 +15,30 @@ import { usePersistStore } from 'store/usePersistStore';
 export const useComparison = () => {
     const { t } = useTranslation();
     const isUserLoggedIn = useIsUserLoggedIn();
-    const [, addProductToComparison] = useAddProductToComparisonMutationApi();
-    const [, removeProductFromComparison] = useRemoveProductFromComparisonMutationApi();
-    const [, cleanComparison] = useCleanComparisonMutationApi();
+    const [, addProductToList] = useAddProductToComparisonMutationApi();
+    const [, removeProductFromList] = useRemoveProductFromComparisonMutationApi();
+    const [, cleanList] = useCleanProductListMutationApi();
     const comparisonUuid = usePersistStore((store) => store.comparisonUuid);
     const updateComparisonUuid = usePersistStore((store) => store.updateComparisonUuid);
     const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
 
     const [{ data: comparisonData, fetching }] = useComparisonQueryApi({
-        variables: { comparisonUuid },
+        variables: { input: { uuid: comparisonUuid, type: ProductListTypeEnumApi.ComparisonApi } },
         pause: !comparisonUuid && !isUserLoggedIn,
     });
 
     const isProductInComparison = (productUuid: string) =>
-        !!comparisonData?.comparison?.products.find((product) => product.uuid === productUuid);
+        !!comparisonData?.productList?.products.find((product) => product.uuid === productUuid);
 
     const handleAddToComparison = async (productUuid: string) => {
-        const addProductToComparisonResult = await addProductToComparison({
-            productUuid,
-            comparisonUuid,
+        const addProductToComparisonResult = await addProductToList({
+            input: {
+                productUuid,
+                productListInput: {
+                    uuid: comparisonUuid,
+                    type: ProductListTypeEnumApi.ComparisonApi,
+                },
+            },
         });
 
         if (addProductToComparisonResult.error) {
@@ -41,15 +47,19 @@ export const useComparison = () => {
             showErrorMessage(applicationError?.message ?? t('Unable to add product to comparison.'));
         } else {
             setIsPopupCompareOpen(true);
-
-            updateComparisonUuid(addProductToComparisonResult.data?.addProductToComparison.uuid ?? null);
+            updateComparisonUuid(addProductToComparisonResult.data?.AddProductToList.uuid ?? null);
         }
     };
 
     const handleRemoveFromComparison = async (productUuid: string) => {
-        const removeProductFromComparisonResult = await removeProductFromComparison({
-            productUuid,
-            comparisonUuid,
+        const removeProductFromComparisonResult = await removeProductFromList({
+            input: {
+                productUuid,
+                productListInput: {
+                    uuid: comparisonUuid,
+                    type: ProductListTypeEnumApi.ComparisonApi,
+                },
+            },
         });
 
         if (removeProductFromComparisonResult.error) {
@@ -57,7 +67,7 @@ export const useComparison = () => {
 
             showErrorMessage(applicationError?.message || t('Unable to remove product from comparison.'));
         } else {
-            if (!removeProductFromComparisonResult.data?.removeProductFromComparison) {
+            if (!removeProductFromComparisonResult.data?.RemoveProductFromList) {
                 updateComparisonUuid(null);
             }
 
@@ -74,7 +84,12 @@ export const useComparison = () => {
     };
 
     const handleCleanComparison = async () => {
-        const cleanComparisonResult = await cleanComparison({ comparisonUuid });
+        const cleanComparisonResult = await cleanList({
+            input: {
+                uuid: comparisonUuid,
+                type: ProductListTypeEnumApi.ComparisonApi,
+            },
+        });
 
         if (cleanComparisonResult.error) {
             const { applicationError } = getUserFriendlyErrors(cleanComparisonResult.error, t);
@@ -90,7 +105,7 @@ export const useComparison = () => {
     };
 
     return {
-        comparison: comparisonData?.comparison,
+        comparison: comparisonData?.productList,
         fetching,
         isPopupCompareOpen,
         isProductInComparison,

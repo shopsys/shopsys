@@ -1,0 +1,5 @@
+mutation AddProductToComparisonMutation($input: ProductListUpdateInput!) {
+    AddProductToList(input: $input) {
+        ...ProductComparisonFragment
+    }
+}

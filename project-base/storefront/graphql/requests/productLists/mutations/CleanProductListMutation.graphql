@@ -1,0 +1,5 @@
+mutation CleanProductListMutation($input: ProductListInput!) {
+    CleanProductList(input: $input) {
+        uuid
+    }
+}

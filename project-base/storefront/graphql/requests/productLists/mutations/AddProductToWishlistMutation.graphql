@@ -1,0 +1,5 @@
+mutation AddProductToWishlistMutation($input: ProductListUpdateInput!) {
+    AddProductToList(input: $input) {
+        ...WishlistFragment
+    }
+}

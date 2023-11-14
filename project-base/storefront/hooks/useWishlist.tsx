@@ -1,7 +1,8 @@
 import { useIsUserLoggedIn } from './auth/useIsUserLoggedIn';
 import {
+    ProductListTypeEnumApi,
     useAddProductToWishlistMutationApi,
-    useCleanWishlistMutationApi,
+    useCleanProductListMutationApi,
     useRemoveProductFromWishlistMutationApi,
     useWishlistQueryApi,
 } from 'graphql/generated';
@@ -16,17 +17,27 @@ export const useWishlist = () => {
     const updateWishlistUuid = usePersistStore((s) => s.updateWishlistUuid);
     const wishlistUuid = usePersistStore((s) => s.wishlistUuid);
 
-    const [, addProductToWishlist] = useAddProductToWishlistMutationApi();
-    const [, removeProductFromWishlist] = useRemoveProductFromWishlistMutationApi();
-    const [, cleanWishlist] = useCleanWishlistMutationApi();
+    const [, addProductToList] = useAddProductToWishlistMutationApi();
+    const [, removeProductFromList] = useRemoveProductFromWishlistMutationApi();
+    const [, cleanList] = useCleanProductListMutationApi();
 
     const [{ data: wishlistData, fetching }] = useWishlistQueryApi({
-        variables: { wishlistUuid },
+        variables: {
+            input: {
+                type: ProductListTypeEnumApi.WishlistApi,
+                uuid: wishlistUuid,
+            },
+        },
         pause: !wishlistUuid && !isUserLoggedIn,
     });
 
     const handleCleanWishlist = async () => {
-        const cleanWishlistResult = await cleanWishlist({ wishlistUuid });
+        const cleanWishlistResult = await cleanList({
+            input: {
+                type: ProductListTypeEnumApi.WishlistApi,
+                uuid: wishlistUuid,
+            },
+        });
 
         if (cleanWishlistResult.error) {
             showErrorMessage(t('Unable to clean wishlist.'));
@@ -37,26 +48,39 @@ export const useWishlist = () => {
     };
 
     const handleAddToWishlist = async (productUuid: string) => {
-        const addProductToWishlistResult = await addProductToWishlist({
-            productUuid,
-            wishlistUuid: isUserLoggedIn ? null : wishlistUuid,
+        const addProductToWishlistResult = await addProductToList({
+            input: {
+                productUuid,
+                productListInput: {
+                    uuid: wishlistUuid,
+                    type: ProductListTypeEnumApi.WishlistApi,
+                },
+            },
         });
 
         if (addProductToWishlistResult.error) {
             showErrorMessage(t('Unable to add product to wishlist.'));
         } else {
             showSuccessMessage(t('The item has been added to your wishlist.'));
-            updateWishlistUuid(addProductToWishlistResult.data?.addProductToWishlist.uuid ?? null);
+            updateWishlistUuid(addProductToWishlistResult.data?.AddProductToList.uuid ?? null);
         }
     };
 
     const handleRemoveFromWishlist = async (productUuid: string) => {
-        const removeProductFromWishlistResult = await removeProductFromWishlist({ productUuid, wishlistUuid });
+        const removeProductFromWishlistResult = await removeProductFromList({
+            input: {
+                productUuid,
+                productListInput: {
+                    uuid: wishlistUuid,
+                    type: ProductListTypeEnumApi.WishlistApi,
+                },
+            },
+        });
 
         if (removeProductFromWishlistResult.error) {
             showErrorMessage(t('Unable to remove product from wishlist.'));
         } else {
-            if (!removeProductFromWishlistResult.data?.removeProductFromWishlist) {
+            if (!removeProductFromWishlistResult.data?.RemoveProductFromList) {
                 updateWishlistUuid(null);
             }
             showSuccessMessage(t('The item has been removed from your wishlist.'));
@@ -64,7 +88,7 @@ export const useWishlist = () => {
     };
 
     const isProductInWishlist = (productUuid: string) =>
-        !!wishlistData?.wishlist?.products.find((product) => product.uuid === productUuid);
+        !!wishlistData?.productList?.products.find((product) => product.uuid === productUuid);
 
     const toggleProductInWishlist = (productUuid: string) => {
         if (isProductInWishlist(productUuid)) {
@@ -75,7 +99,7 @@ export const useWishlist = () => {
     };
 
     return {
-        wishlist: wishlistData?.wishlist,
+        wishlist: wishlistData?.productList,
         fetching,
         isProductInWishlist,
         handleCleanWishlist,

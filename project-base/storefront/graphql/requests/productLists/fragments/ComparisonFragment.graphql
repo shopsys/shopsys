@@ -1,4 +1,4 @@
-fragment ProductComparisonFragment on Comparison{
+fragment ProductComparisonFragment on ProductList {
     __typename
     uuid
     products {

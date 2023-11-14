@@ -13,6 +13,7 @@ import { showErrorMessage } from 'helpers/toasts';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useRegistration } from 'hooks/auth/useRegistration';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
+import { useGetAllProductListUuids } from 'hooks/useGetAllProductListUuids';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -48,6 +49,7 @@ export const RegistrationAfterOrder: FC = () => {
             },
             pause: !orderEmail,
         });
+    const getProductListUuids = useGetAllProductListUuids();
 
     const onRegistrationHandler = async (data: RegistrationAfterOrderFormType) => {
         if (!parsedRegistrationData.current || !orderUuid) {
@@ -62,6 +64,7 @@ export const RegistrationAfterOrder: FC = () => {
             companyCustomer: parsedRegistrationData.current.customer === 'companyCustomer',
             cartUuid: null,
             lastOrderUuid: orderUuid,
+            productListsUuids: getProductListUuids(),
         });
 
         if (registrationError) {

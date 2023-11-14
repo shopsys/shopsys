@@ -13,13 +13,6 @@ import {
     ChangePaymentInCartMutationVariablesApi,
     ChangeTransportInCartInputApi,
     ChangeTransportInCartMutationApi,
-    CleanComparisonMutationVariablesApi,
-    CleanWishlistMutationVariablesApi,
-    ComparisonQueryApi,
-    ComparisonQueryDocumentApi,
-    ComparisonQueryVariablesApi,
-    RemoveProductFromComparisonMutationVariablesApi,
-    RemoveProductFromWishlistMutationVariablesApi,
     ChangeTransportInCartMutationVariablesApi,
     RemoveFromCartMutationVariablesApi,
     RemovePromoCodeFromCartMutationVariablesApi,
@@ -27,21 +20,21 @@ import {
     TransportsQueryDocumentApi,
     TransportsQueryVariablesApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
-    WishlistQueryApi,
     WishlistQueryDocumentApi,
-    WishlistQueryVariablesApi,
-    InputMaybe,
     AddOrderItemsToCartMutationVariablesApi,
+    CleanProductListMutationVariablesApi,
+    ProductListInputApi,
+    ProductListUpdateInputApi,
+    ProductListTypeEnumApi,
+    ComparisonQueryDocumentApi,
 } from 'graphql/generated';
 import schema from 'schema.graphql.json';
 
 const keyNull = () => null;
-const keyWishlist = () => 'wishlist';
 const keyUuid = (data: Data) => data.uuid as string | null;
 const keyName = (data: Data) => data.name as string | null;
 const keyCode = (data: Data) => data.code as string | null;
 const keyUrl = (data: Data) => data.url as string | null;
-const keyComparison = () => 'comparison';
 
 export const cache = cacheExchange({
     schema: schema as unknown as IntrospectionQuery,
@@ -101,7 +94,6 @@ export const cache = cacheExchange({
         Product: keyUuid,
         ProductFilterOptions: keyNull,
         ProductPrice: keyNull,
-        Comparison: keyComparison,
         RegularCustomerUser: keyUuid,
         RegularProduct: keyUuid,
         SeoSetting: keyNull,
@@ -114,15 +106,15 @@ export const cache = cacheExchange({
         TransportType: keyCode,
         Unit: keyName,
         Variant: keyUuid,
-        Wishlist: keyWishlist,
+        ProductList: keyUuid,
     },
     updates: {
         Mutation: {
             Login(_result, _args, cache) {
-                invalidateFields(cache, ['cart']);
+                invalidateFields(cache, ['cart']); // TODO productList
             },
             Logout(_result, _args, cache) {
-                invalidateFields(cache, ['cart']);
+                invalidateFields(cache, ['cart']); // TODO productList
             },
             DeleteDeliveryAddress(_result, _args, cache) {
                 invalidateFields(cache, ['currentCustomerUser']);
@@ -175,21 +167,13 @@ export const cache = cacheExchange({
                         : undefined;
                 manuallyUpdateCartFragment(cache, newCart, args.input.cartUuid);
             },
-            removeProductFromComparison(result, args: RemoveProductFromComparisonMutationVariablesApi, cache) {
-                if (result.removeProductFromComparison === null) {
-                    clearComparisonQueryFragment(cache, args.comparisonUuid);
+            RemoveProductFromList(result, args: { input: ProductListUpdateInputApi }, cache) {
+                if (result.RemoveProductFromList === null) {
+                    manuallyRemoveProductList(cache, args.input.productListInput);
                 }
             },
-            cleanComparison(result, args: CleanComparisonMutationVariablesApi, cache) {
-                clearComparisonQueryFragment(cache, args.comparisonUuid);
-            },
-            removeProductFromWishlist(result, args: RemoveProductFromWishlistMutationVariablesApi, cache) {
-                if (result.removeProductFromWishlist === null) {
-                    clearWishlistQueryFragment(cache, args.wishlistUuid);
-                }
-            },
-            cleanWishlist(result, args: CleanWishlistMutationVariablesApi, cache) {
-                clearWishlistQueryFragment(cache, args.wishlistUuid);
+            CleanProductList(_result, args: CleanProductListMutationVariablesApi, cache) {
+                manuallyRemoveProductList(cache, args.input);
             },
         },
     },
@@ -229,6 +213,12 @@ export const cache = cacheExchange({
 
             return getOptimisticChangePaymentInCartResult(cartQueryResult, input);
         },
+        CleanProductList: () => {
+            return {
+                __typename: 'ProductList',
+                productList: null,
+            };
+        },
     },
 });
 
@@ -252,28 +242,15 @@ const manuallyUpdateCartFragment = (cache: Cache, newCart: CartApi | undefined, 
     }
 };
 
-const clearComparisonQueryFragment = (cache: Cache, comparisonUuid: InputMaybe<string>) => {
-    cache.updateQuery<ComparisonQueryApi, ComparisonQueryVariablesApi>(
-        { query: ComparisonQueryDocumentApi, variables: { comparisonUuid } },
-        () => {
-            return {
-                __typename: 'Query',
-                comparison: null,
-            };
-        },
-    );
-};
+const manuallyRemoveProductList = (cache: Cache, args: ProductListInputApi) => {
+    const query =
+        args.type === ProductListTypeEnumApi.WishlistApi ? WishlistQueryDocumentApi : ComparisonQueryDocumentApi;
 
-const clearWishlistQueryFragment = (cache: Cache, wishlistUuid: InputMaybe<string>) => {
-    cache.updateQuery<WishlistQueryApi, WishlistQueryVariablesApi>(
-        { query: WishlistQueryDocumentApi, variables: { wishlistUuid } },
-        () => {
-            return {
-                __typename: 'Query',
-                wishlist: null,
-            };
-        },
-    );
+    cache.updateQuery({ query: query, variables: { input: args } }, (data) => ({
+        ...data,
+        __typename: 'ProductList',
+        productList: null,
+    }));
 };
 
 const getOptimisticChangeTransportInCartResult = (

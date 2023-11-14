@@ -14,6 +14,7 @@ import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useRegistration } from 'hooks/auth/useRegistration';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
+import { useGetAllProductListUuids } from 'hooks/useGetAllProductListUuids';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { FormProvider, useWatch } from 'react-hook-form';
@@ -29,6 +30,7 @@ export const RegistrationContent: FC = () => {
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const register = useRegistration();
+    const getProductListUuids = useGetAllProductListUuids();
 
     const onRegistrationHandler = async (data: RegistrationFormType) => {
         blurInput();
@@ -39,6 +41,7 @@ export const RegistrationContent: FC = () => {
             country: data.country.value,
             companyCustomer: data.customer === 'companyCustomer',
             lastOrderUuid: null,
+            productListsUuids: getProductListUuids(),
         });
 
         handleFormErrors(registrationError, formProviderMethods, t, formMeta.messages.error);

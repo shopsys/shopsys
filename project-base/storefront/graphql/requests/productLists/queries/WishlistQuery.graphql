@@ -1,0 +1,5 @@
+query WishlistQuery($input: ProductListInput!) {
+    productList(input: $input) {
+        ...WishlistFragment
+    }
+}
