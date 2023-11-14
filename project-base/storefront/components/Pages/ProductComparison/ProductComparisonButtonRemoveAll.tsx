@@ -1,5 +1,5 @@
 import { RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
-import { useComparison } from 'hooks/comparison/useComparison';
+import { useComparison } from 'hooks/productLists/comparison/useComparison';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
@@ -9,7 +9,7 @@ type ProductComparisonButtonRemoveAllProps = {
 
 export const ProductComparisonButtonRemoveAll: FC<ProductComparisonButtonRemoveAllProps> = ({ displayMobile }) => {
     const { t } = useTranslation();
-    const { handleCleanComparison } = useComparison();
+    const { cleanComparison: handleCleanComparison } = useComparison();
 
     return (
         <div

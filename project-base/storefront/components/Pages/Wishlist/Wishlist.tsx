@@ -2,12 +2,12 @@ import { InfoIcon, RemoveThinIcon } from 'components/Basic/Icon/IconsSvg';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SkeletonModuleWishlist } from 'components/Blocks/Skeleton/SkeletonModuleWishlist';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { useWishlist } from 'hooks/useWishlist';
+import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
 import useTranslation from 'next-translate/useTranslation';
 
 export const Wishlist: FC = () => {
     const { t } = useTranslation();
-    const { wishlist, fetching, handleCleanWishlist } = useWishlist();
+    const { wishlist, fetching, cleanWishlist: handleCleanWishlist } = useWishlist();
     const title = `${t('Wishlist')}${wishlist?.products.length ? ` (${wishlist.products.length})` : ''}`;
 
     return (

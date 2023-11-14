@@ -5,7 +5,7 @@ import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
 import { ComparedProductFragmentApi } from 'graphql/generated';
 import { twMergeCustom } from 'helpers/twMerge';
-import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
+import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 

@@ -6,7 +6,7 @@ import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ComparedProductFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
+import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';

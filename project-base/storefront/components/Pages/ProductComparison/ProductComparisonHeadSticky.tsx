@@ -1,6 +1,6 @@
 import { Image } from 'components/Basic/Image/Image';
 import { ComparedProductFragmentApi } from 'graphql/generated';
-import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
+import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';
 import { twJoin } from 'tailwind-merge';
 
 type ProductComparisonHeadStickyProps = {
