@@ -1,4 +1,5 @@
 import { ListedProductFragmentApi } from 'graphql/generated';
+import { useGtmContext } from 'gtm/context/useGtmContext';
 import { getGtmProductListViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { GtmProductListNameType } from 'gtm/types/enums';
@@ -11,11 +12,12 @@ export const useGtmSliderProductListViewEvent = (
 ): void => {
     const wasViewedRef = useRef(false);
     const { url } = useDomainConfig();
+    const { didPageViewRun } = useGtmContext();
 
     useEffect(() => {
-        if (products?.length && !wasViewedRef.current) {
+        if (didPageViewRun && products?.length && !wasViewedRef.current) {
             wasViewedRef.current = true;
             gtmSafePushEvent(getGtmProductListViewEvent(products, gtmProuctListName, 1, 0, url));
         }
-    }, [gtmProuctListName, products, url]);
+    }, [gtmProuctListName, products, url, didPageViewRun]);
 };

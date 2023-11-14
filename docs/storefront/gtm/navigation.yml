@@ -7,3 +7,4 @@ arrange:
     - hooks.md
     - eventFactories.md
     - eventHandlers.md
+    - context.md

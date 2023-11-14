@@ -1,6 +1,7 @@
 import { Fonts } from './Fonts';
 import { Error503Content } from 'components/Pages/ErrorPage/Error503Content';
 import { GtmHeadScript } from 'gtm/GtmHeadScript';
+import { GtmProvider } from 'gtm/context/GtmProvider';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useAuthLoader } from 'hooks/app/useAuthLoader';
@@ -47,8 +48,10 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <Fonts />
             <div className="absolute left-0 top-0 z-overlay h-[1px] w-[1px]" id="portal" />
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-            {!userConsent && !isConsentUpdatePage && <UserConsentContainer />}
-            {pageProps.isMaintenance ? <Error503Content /> : <Component {...pageProps} />}
+            <GtmProvider>
+                {!userConsent && !isConsentUpdatePage && <UserConsentContainer />}
+                {pageProps.isMaintenance ? <Error503Content /> : <Component {...pageProps} />}
+            </GtmProvider>
         </>
     );
 };

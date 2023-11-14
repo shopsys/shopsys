@@ -1,5 +1,6 @@
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { ListedProductFragmentApi } from 'graphql/generated';
+import { useGtmContext } from 'gtm/context/useGtmContext';
 import { getGtmProductListViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { GtmProductListNameType } from 'gtm/types/enums';
@@ -16,9 +17,10 @@ export const useGtmPaginatedProductListViewEvent = (
     const previousLoadMoreRef = useRef(currentLoadMore);
     const { url } = useDomainConfig();
     const stringifiedProducts = JSON.stringify(paginatedProducts);
+    const { didPageViewRun } = useGtmContext();
 
     useEffect(() => {
-        if (paginatedProducts && lastViewedStringifiedProducts.current !== stringifiedProducts) {
+        if (didPageViewRun && paginatedProducts && lastViewedStringifiedProducts.current !== stringifiedProducts) {
             lastViewedStringifiedProducts.current = stringifiedProducts;
 
             let paginatedProductsSlice = paginatedProducts;
@@ -37,5 +39,5 @@ export const useGtmPaginatedProductListViewEvent = (
                 ),
             );
         }
-    }, [gtmProductListName, currentPage, url, currentLoadMore, stringifiedProducts]);
+    }, [gtmProductListName, currentPage, url, currentLoadMore, stringifiedProducts, didPageViewRun]);
 };

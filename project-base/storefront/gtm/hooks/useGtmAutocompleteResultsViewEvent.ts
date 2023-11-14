@@ -1,4 +1,5 @@
 import { AutocompleteSearchQueryApi } from 'graphql/generated';
+import { useGtmContext } from 'gtm/context/useGtmContext';
 import { getGtmAutocompleteResultsViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { useEffect, useRef } from 'react';
@@ -8,11 +9,12 @@ export const useGtmAutocompleteResultsViewEvent = (
     searchQuery: string,
 ): void => {
     const lastViewedAutocompleteResults = useRef<AutocompleteSearchQueryApi>();
+    const { didPageViewRun } = useGtmContext();
 
     useEffect(() => {
-        if (searchResults !== undefined && lastViewedAutocompleteResults.current !== searchResults) {
+        if (didPageViewRun && searchResults !== undefined && lastViewedAutocompleteResults.current !== searchResults) {
             lastViewedAutocompleteResults.current = searchResults;
             gtmSafePushEvent(getGtmAutocompleteResultsViewEvent(searchResults, searchQuery));
         }
-    }, [searchResults, searchQuery]);
+    }, [searchResults, searchQuery, didPageViewRun]);
 };

@@ -1,4 +1,5 @@
 import { MainVariantDetailFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
+import { useGtmContext } from 'gtm/context/useGtmContext';
 import { getGtmProductDetailViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -11,11 +12,12 @@ export const useGtmProductDetailViewEvent = (
 ): void => {
     const lastViewedProductDetailSlug = useRef<string | undefined>(undefined);
     const { url, currencyCode } = useDomainConfig();
+    const { didPageViewRun } = useGtmContext();
 
     useEffect(() => {
-        if (lastViewedProductDetailSlug.current !== slug && !fetching) {
+        if (didPageViewRun && lastViewedProductDetailSlug.current !== slug && !fetching) {
             lastViewedProductDetailSlug.current = slug;
             gtmSafePushEvent(getGtmProductDetailViewEvent(productDetailData, currencyCode, url));
         }
-    }, [productDetailData, currencyCode, slug, url, fetching]);
+    }, [productDetailData, currencyCode, slug, url, fetching, didPageViewRun]);
 };

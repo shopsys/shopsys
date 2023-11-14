@@ -1,3 +1,4 @@
+import { useGtmContext } from 'gtm/context/useGtmContext';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { GtmPageViewEventType } from 'gtm/types/events';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
@@ -8,11 +9,13 @@ export const useGtmPageViewEvent = (gtmPageViewEvent: GtmPageViewEventType, fetc
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
     const lastViewedSlug = useRef<string>();
+    const { setDidPageViewRun } = useGtmContext();
 
     useEffect(() => {
         if (gtmPageViewEvent._isLoaded && lastViewedSlug.current !== slug && !fetching) {
             lastViewedSlug.current = slug;
             gtmSafePushEvent(gtmPageViewEvent);
+            setDidPageViewRun(true);
         }
     }, [gtmPageViewEvent, fetching, slug]);
 };

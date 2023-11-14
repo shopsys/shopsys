@@ -1,3 +1,4 @@
+import { useGtmContext } from 'gtm/context/useGtmContext';
 import { getGtmCartViewEvent } from 'gtm/helpers/eventFactories';
 import { gtmSafePushEvent } from 'gtm/helpers/gtm';
 import { GtmPageViewEventType } from 'gtm/types/events';
@@ -6,9 +7,11 @@ import { useEffect, useRef } from 'react';
 export const useGtmCartViewEvent = (gtmPageViewEvent: GtmPageViewEventType): void => {
     const wasViewedRef = useRef(false);
     const previousPromoCodes = useRef(JSON.stringify(gtmPageViewEvent.cart?.promoCodes));
+    const { didPageViewRun } = useGtmContext();
 
     useEffect(() => {
         if (
+            didPageViewRun &&
             gtmPageViewEvent._isLoaded &&
             gtmPageViewEvent.cart !== undefined &&
             gtmPageViewEvent.cart !== null &&
@@ -25,5 +28,5 @@ export const useGtmCartViewEvent = (gtmPageViewEvent: GtmPageViewEventType): voi
                 ),
             );
         }
-    }, [gtmPageViewEvent._isLoaded, gtmPageViewEvent.cart, gtmPageViewEvent.currencyCode]);
+    }, [gtmPageViewEvent._isLoaded, gtmPageViewEvent.cart, gtmPageViewEvent.currencyCode, didPageViewRun]);
 };
