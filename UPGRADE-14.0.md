@@ -224,3 +224,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   if you have any logic for syncing your events, you can move it to this provider
     -   docs were added, so you can base your changes on those
     -   see #project-base-diff to update your project
+-   improve SEO categories logic in regards to non-SEO-sensitive filters ([#2891](https://github.com/shopsys/shopsys/pull/2891))
+    -   we moved some config from various files to `config/constants` and warmly suggest you do the same, as it improves the app and testing
+    -   we also moved some hooks from `helpers` to `hooks` and suggest you do the same with all hooks, as it again improves the app and testing
+    -   the implemented functionality for dynamic switching between SEO-sensitivity for various filters is only implemented on SF, so applying these changes won't make it work on BE
+    -   if you do not need SEO categories, these changes might be irrelevant altogether
+    -   flag and brand values are now merged after change of default parameters (leaving SEO category) instead of overwritting. This is a bug fix and you should apply it to your changes as well.
+    -   see #project-base-diff to update your project
