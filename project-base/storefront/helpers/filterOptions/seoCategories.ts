@@ -1,5 +1,6 @@
 import { DEFAULT_SORT, SEO_SENSITIVE_FILTERS } from 'config/constants';
 import { ProductFilterOptionsFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
+import { mergeNullableArrays } from 'helpers/arrayUtils';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
 
@@ -153,16 +154,18 @@ export const getChangedDefaultFiltersAfterAvailabilityChange = (
 };
 
 export const getChangedDefaultFilters = (
-    updatedProductFiltersMap: DefaultProductFiltersMapType,
-    filter: FilterOptionsUrlQueryType | null,
-) => ({
-    ...filter,
-    brands: Array.from(updatedProductFiltersMap.brands),
-    flags: Array.from(updatedProductFiltersMap.flags),
-    parameters: Array.from(updatedProductFiltersMap.parameters)
-        .map(([updatedParameterUuid, updatedParameterValues]) => ({
-            parameter: updatedParameterUuid,
-            values: Array.from(updatedParameterValues),
+    defaultFilter: DefaultProductFiltersMapType,
+    updatedFilter: FilterOptionsUrlQueryType | null,
+): FilterOptionsUrlQueryType => ({
+    onlyInStock: updatedFilter?.onlyInStock,
+    minimalPrice: updatedFilter?.minimalPrice,
+    maximalPrice: updatedFilter?.maximalPrice,
+    brands: mergeNullableArrays(Array.from(defaultFilter.brands), updatedFilter?.brands),
+    flags: mergeNullableArrays(Array.from(defaultFilter.flags), updatedFilter?.flags),
+    parameters: Array.from(defaultFilter.parameters)
+        .map(([defaultParameterUuid, defaultParameterValues]) => ({
+            parameter: defaultParameterUuid,
+            values: Array.from(defaultParameterValues),
         }))
         .filter(({ values }) => values.length !== 0),
 });
