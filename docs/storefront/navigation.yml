@@ -10,7 +10,7 @@ arrange:
     - best-practises.md
     - translations.md
     - graphql.md
-    - caching.md
+    - caching
     - store-management.md
     - authentication.md
     - image-component.md
