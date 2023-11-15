@@ -4,90 +4,104 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
-use Shopsys\FrameworkBundle\Component\Utils\Utils;
+use DateTimeZone;
+use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
+use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNameNotUniqueException;
 use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
-use Shopsys\FrameworkBundle\Model\Feed\Exception\UnknownFeedTypeException;
 
 class FeedRegistry
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedInterface[][]
+     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedConfig[]
      */
-    protected array $feedsByType = [];
+    protected array $feedConfigsByName = [];
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedInterface[]
+     * @param string|null $cronTimeZone
+     * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver $cronTimeResolver
+     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    protected array $feedsByName = [];
-
-    /**
-     * @param string[] $knownTypes
-     * @param string $defaultType
-     */
-    public function __construct(protected readonly array $knownTypes, protected readonly string $defaultType)
-    {
-        foreach ($knownTypes as $type) {
-            $this->feedsByType[$type] = [];
-        }
+    public function __construct(
+        protected readonly ?string $cronTimeZone,
+        protected readonly CronTimeResolver $cronTimeResolver,
+        protected readonly CronConfig $cronConfig,
+        protected readonly Domain $domain,
+    ) {
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInterface $feed
-     * @param string|null $type
+     * @param string $timeHours
+     * @param string $timeMinutes
+     * @param array $domainIds
      */
-    public function registerFeed(FeedInterface $feed, ?string $type = null): void
+    public function registerFeed(FeedInterface $feed, string $timeHours, string $timeMinutes, array $domainIds): void
     {
-        $type = Utils::ifNull($type, $this->defaultType);
-        $this->assertTypeIsKnown($type);
+        $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);
+        $this->cronTimeResolver->validateTimeString($timeMinutes, 55, 1);
 
         $name = $feed->getInfo()->getName();
         $this->assertNameIsUnique($name);
 
-        $this->feedsByType[$type][$name] = $feed;
-        $this->feedsByName[$name] = $feed;
+        $domainIds = $domainIds === [] ? $this->domain->getAllIds() : $domainIds;
+
+        $this->feedConfigsByName[$name] = new FeedConfig($feed, $timeHours, $timeMinutes, $domainIds);
     }
 
     /**
-     * @param string $type
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInterface[]
+     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedConfig[]
      */
-    public function getFeeds(string $type): array
+    public function getFeedConfigsForCurrentTime(): array
     {
-        $this->assertTypeIsKnown($type);
+        $timeZone = new DateTimeZone($this->cronTimeZone ?? date_default_timezone_get());
+        $matchedFeedConfig = [];
 
-        return $this->feedsByType[$type];
+        foreach ($this->feedConfigsByName as $feedConfig) {
+            if ($this->cronTimeResolver->isValidAtTime(
+                $feedConfig,
+                DateTimeHelper::getCurrentRoundedTimeForIntervalAndTimezone(
+                    $this->getFeedCronModuleRunEveryMinuteValue(),
+                    $timeZone,
+                ),
+            )) {
+                $matchedFeedConfig[] = $feedConfig;
+            }
+        }
+
+        return $matchedFeedConfig;
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInterface[]
      */
-    public function getAllFeeds(): array
+    public function getFeedsForCurrentTime(): array
     {
-        return $this->feedsByName;
+        return array_map(fn (FeedConfig $feedConfig) => $feedConfig->getFeed(), $this->getFeedConfigsForCurrentTime());
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedConfig[]
+     */
+    public function getAllFeedConfigs(): array
+    {
+        return $this->feedConfigsByName;
     }
 
     /**
      * @param string $name
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInterface
+     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedConfig
      */
-    public function getFeedByName(string $name): FeedInterface
+    public function getFeedConfigByName(string $name): FeedConfig
     {
-        if (!array_key_exists($name, $this->feedsByName)) {
+        if (!array_key_exists($name, $this->feedConfigsByName)) {
             throw new FeedNotFoundException($name);
         }
 
-        return $this->feedsByName[$name];
-    }
-
-    /**
-     * @param string $type
-     */
-    protected function assertTypeIsKnown(string $type): void
-    {
-        if (!in_array($type, $this->knownTypes, true)) {
-            throw new UnknownFeedTypeException($type, $this->knownTypes);
-        }
+        return $this->feedConfigsByName[$name];
     }
 
     /**
@@ -95,8 +109,18 @@ class FeedRegistry
      */
     protected function assertNameIsUnique(string $name): void
     {
-        if (array_key_exists($name, $this->feedsByName)) {
+        if (array_key_exists($name, $this->feedConfigsByName)) {
             throw new FeedNameNotUniqueException($name);
         }
+    }
+
+    /**
+     * @return int
+     */
+    protected function getFeedCronModuleRunEveryMinuteValue(): int
+    {
+        $feedCronModule = $this->cronConfig->getCronModuleConfigByServiceId(FeedCronModule::class);
+
+        return $feedCronModule->getRunEveryMin();
     }
 }

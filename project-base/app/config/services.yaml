@@ -4,6 +4,7 @@ imports:
     - { resource: directories.yaml }
     - { resource: cron.yaml }
     - { resource: services_frontend_api.yaml}
+    - { resource: feed.yaml }
 
 services:
     _defaults:
@@ -693,7 +694,7 @@ services:
 
     App\ProductFeed\MergadoFeed\MergadoFeed:
         tags:
-            - { name: shopsys.product_feed }
+            - { name: shopsys.product_feed, hours: 5, minutes: 0 }
 
     FOS\CKEditorBundle\Config\CKEditorConfigurationInterface:
         alias: fos_ck_editor.configuration

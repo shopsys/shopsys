@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
+use Shopsys\FrameworkBundle\Model\Feed\FeedRegistry;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,11 +20,13 @@ class FeedController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedFacade $feedFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry
      */
     public function __construct(
         protected readonly FeedFacade $feedFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly Domain $domain,
+        protected readonly FeedRegistry $feedRegistry,
     ) {
     }
 
@@ -63,11 +66,13 @@ class FeedController extends AdminBaseController
     public function listAction()
     {
         $feedsData = [];
+        $feedConfigs = $this->feedRegistry->getAllFeedConfigs();
 
-        $feedsInfo = $this->feedFacade->getFeedsInfo();
+        foreach ($feedConfigs as $feedConfig) {
+            foreach ($feedConfig->getDomainIds() as $domainId) {
+                $domainConfig = $this->domain->getDomainConfigById($domainId);
+                $feedInfo = $feedConfig->getFeed()->getInfo();
 
-        foreach ($feedsInfo as $feedInfo) {
-            foreach ($this->domain->getAll() as $domainConfig) {
                 $feedTimestamp = $this->feedFacade->getFeedTimestamp($feedInfo, $domainConfig);
                 $feedsData[] = [
                     'feedLabel' => $feedInfo->getLabel(),
