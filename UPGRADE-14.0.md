@@ -141,6 +141,65 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   prevent duplicate color parameters in data fixtures ([#2911](https://github.com/shopsys/shopsys/pull/2911))
     -   see #project-base-diff to update your project
+-   enable crons to be run at specified times the same as crons ()
+    -   replace `HourlyFeedCronModule` and `DailyFeedCronModule` with `FeedCronModule` in `config/services/cron.yaml` and set it to be run every time crons are run to ensure that all feeds are generated
+    -   `FeedExportCreationDataQueue` has changed, first parameter is now an array of `Shopsys\FrameworkBundle\Model\Feed\FeedModule` instances instead of module names
+    -   method `Shopsys\FrameworkBundle\Model\Feed\FeedFacade::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly FeedRegistry $feedRegistry,
+            protected readonly ProductVisibilityFacade $productVisibilityFacade,
+            protected readonly FeedExportFactory $feedExportFactory,
+            protected readonly FeedPathProvider $feedPathProvider,
+            protected readonly FilesystemOperator $filesystem,
+    +       protected readonly FeedModuleRepository $feedModuleRepository,
+    +       protected readonly EntityManagerInterface $em,
+        )
+    ```
+    -   method `Shopsys\FrameworkBundle\Model\Feed\FeedFacade::getFeedsInfo()` changed its interface:
+    ```diff
+    -    public function getFeedsInfo(?string $feedType = null): array
+    +    public function getFeedsInfo(bool $onlyForCurrentTime = false): array
+    ```
+    -   method `Shopsys\FrameworkBundle\Model\Feed\FeedFacade::getFeedsNames()` changed its interface:
+    ```diff
+    -    public function getFeedNames(?string $feedType = null): array
+    +    public function getFeedNames(bool $onlyForCurrentTime = false): array
+    ```
+    -   method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+    -       protected readonly array $knownTypes,
+    -       protected readonly string $defaultType,
+    +       protected readonly FeedRegistry $feedRegistry,
+    +       protected readonly ProductVisibilityFacade $productVisibilityFacade,
+    +       protected readonly FeedExportFactory $feedExportFactory,
+    +       protected readonly FeedPathProvider $feedPathProvider,
+    +       protected readonly FilesystemOperator $filesystem,
+    +       protected readonly FeedModuleRepository $feedModuleRepository,
+    +       protected readonly EntityManagerInterface $em,
+        )
+    ```
+    -   method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::registerFeed()` changed its interface:
+    ```diff
+    -    public function registerFeed(FeedInterface $feed, ?string $type = null): void
+    +    public function registerFeed(FeedInterface $feed, string $timeHours, string $timeMinutes, array $domainIds): void
+    ```
+    -   property `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::$feedsByType` has been replaced with new `$feedConfigsByName` property instead
+    -   method `Shopsys\FrameworkBundle\Controller\Admin\FeedController::__construct` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly FeedFacade $feedFacade,
+            protected readonly GridFactory $gridFactory,
+            protected readonly Domain $domain,
+    +       protected readonly FeedRegistry $feedRegistry,
+        )
+    ```
+    -   method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getFeeds()` has been replaced with method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getFeedsForCurrentTime()`
+    -   method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getAllFeeds()` has been replaced with method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getAllFeedConfigs()`
+    -   method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getFeedByName()` has been replaced with method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getFeedConfigByName()`
+    -   method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::assertTypeIsKnown()` has been removed without a replacement
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
