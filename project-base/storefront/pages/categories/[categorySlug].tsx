@@ -32,13 +32,11 @@ import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useHandleDefaultFiltersUpdate } from 'hooks/seoCategories/useHandleDefaultFiltersUpdate';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
-import { useSessionStore } from 'store/useSessionStore';
 import { createClient } from 'urql/createClient';
 
 const CategoryDetailPage: NextPage = () => {
-    const originalCategorySlug = useSessionStore((s) => s.originalCategorySlug);
-    const { sort, filter } = useQueryParams();
-    const [categoryData, fetching] = useCategoryDetailData(filter);
+    const { filter } = useQueryParams();
+    const { categoryData, isFetchingVisible } = useCategoryDetailData(filter);
 
     useHandleDefaultFiltersUpdate(categoryData?.products);
 
@@ -48,10 +46,8 @@ const CategoryDetailPage: NextPage = () => {
         categoryData?.seoTitle,
     );
 
-    const isFetchingData = (!filter && !originalCategorySlug && !sort && fetching) || !categoryData;
-
     const pageViewEvent = useGtmFriendlyPageViewEvent(categoryData);
-    useGtmPageViewEvent(pageViewEvent, fetching);
+    useGtmPageViewEvent(pageViewEvent, isFetchingVisible);
 
     return (
         <>
@@ -61,7 +57,7 @@ const CategoryDetailPage: NextPage = () => {
                 breadcrumbs={categoryData?.breadcrumb}
                 breadcrumbsType="category"
                 description={categoryData?.seoMetaDescription}
-                isFetchingData={isFetchingData}
+                isFetchingData={isFetchingVisible}
                 title={seoTitle}
             >
                 {!!categoryData && <CategoryDetailContent category={categoryData} />}

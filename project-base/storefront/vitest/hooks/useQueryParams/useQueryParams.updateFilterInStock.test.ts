@@ -42,7 +42,7 @@ vi.mock('config/constants', async (importOriginal) => {
         },
     };
 });
-
+const setWasRedirectedFromSeoCategoryMock = vi.fn();
 const mockPush = vi.fn();
 vi.mock('next/router', () => ({
     useRouter: vi.fn(() => ({
@@ -128,6 +128,7 @@ describe('useQueryParams().updateFilterInStock tests', () => {
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
                 },
                 originalCategorySlug: ORIGINAL_CATEGORY_URL,
+                setWasRedirectedFromSeoCategory: setWasRedirectedFromSeoCategoryMock,
             });
         });
 
@@ -181,6 +182,8 @@ describe('useQueryParams().updateFilterInStock tests', () => {
                 shallow: true,
             },
         );
+        expect(setWasRedirectedFromSeoCategoryMock).toBeCalledTimes(1);
+        expect(setWasRedirectedFromSeoCategoryMock).toBeCalledWith(true);
     });
 
     test('onlyInStock should not redirect from SEO category if it is not SEO-sensitive', () => {

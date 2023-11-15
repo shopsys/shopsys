@@ -27,6 +27,8 @@ vi.mock('config/constants', async (importOriginal) => {
     };
 });
 
+vi.mock('store/useSessionStore', () => ({ useSessionStore: vi.fn() }));
+
 const getFilterTestValue = (override = {} as FilterOptionsUrlQueryType): FilterOptionsUrlQueryType => ({
     brands: override.brands || ['foo', 'bar'],
     flags: override.flags || ['bar', 'foo'],
