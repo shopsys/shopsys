@@ -13,7 +13,6 @@ import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useGetAllProductListUuids } from 'hooks/useGetAllProductListUuids';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -43,7 +42,6 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
         fieldState: { invalid: isNewPasswordInvalid },
         field: { value: newPasswordValue },
     } = useController({ name: formMeta.fields.newPasswordAgain.name, control: formProviderMethods.control });
-    const getProductListUuids = useGetAllProductListUuids();
 
     const onNewPasswordHandler = useCallback<SubmitHandler<NewPasswordFormType>>(
         async (data) => {
@@ -61,7 +59,6 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
                         email: email,
                         password: formProviderMethods.getValues('newPassword'),
                         previousCartUuid: cartUuid,
-                        productListsUuids: getProductListUuids(),
                     },
                     '/',
                 );

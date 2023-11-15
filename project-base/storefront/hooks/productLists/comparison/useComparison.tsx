@@ -9,7 +9,7 @@ import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useProductList } from 'hooks/productLists/useProductList';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 
 export const useComparison = () => {
@@ -28,6 +28,12 @@ export const useComparison = () => {
         variables: { input: { uuid: comparisonUuid, type: ProductListTypeEnumApi.ComparisonApi } },
         pause: !comparisonUuid && !isUserLoggedIn,
     });
+
+    useEffect(() => {
+        if (comparisonData?.productList?.uuid) {
+            updateComparisonUuid(comparisonData.productList.uuid);
+        }
+    }, [comparisonData?.productList?.uuid]);
 
     const { cleanList, isProductInList, toggleProductInList } = useProductList(
         ProductListTypeEnumApi.ComparisonApi,

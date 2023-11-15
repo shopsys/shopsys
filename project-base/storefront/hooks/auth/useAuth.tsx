@@ -1,5 +1,6 @@
-import { Exact, LoginApi, LoginVariablesApi, Maybe, useLoginApi, useLogoutApi } from 'graphql/generated';
+import { LoginApi, LoginVariablesApi, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
+import { useProductListUuids } from 'hooks/productLists/useProductListUuids';
 import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
@@ -7,18 +8,9 @@ import { useSessionStore } from 'store/useSessionStore';
 import { OperationResult } from 'urql';
 
 type LoginHandler = (
-    variables: LoginVariablesApi,
+    variables: Omit<LoginVariablesApi, 'productListsUuids'>,
     rewriteUrl?: string,
-) => Promise<
-    OperationResult<
-        LoginApi,
-        Exact<{
-            email: string;
-            password: any;
-            previousCartUuid: Maybe<string>;
-        }>
-    >
->;
+) => Promise<OperationResult<LoginApi, LoginVariablesApi>>;
 
 type LogoutHandler = () => Promise<void>;
 
@@ -29,13 +21,12 @@ export const useAuth = () => {
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
-    const updateWishlistUuid = usePersistStore((store) => store.updateWishlistUuid);
-    const updateComparisonUuid = usePersistStore((store) => store.updateComparisonUuid);
+    const { getAllProductListUuids, removeAllProductListUuids } = useProductListUuids();
 
     const router = useRouter();
 
     const login: LoginHandler = async (variables, rewriteUrl) => {
-        const loginResult = await loginMutation(variables);
+        const loginResult = await loginMutation({ ...variables, productListsUuids: getAllProductListUuids() });
 
         if (loginResult.data) {
             const accessToken = loginResult.data.Login.tokens.accessToken;
@@ -44,6 +35,7 @@ export const useAuth = () => {
             setTokensToCookies(accessToken, refreshToken);
 
             updateCartUuid(null);
+            removeAllProductListUuids();
 
             updateAuthLoadingState(
                 loginResult.data.Login.showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading',
@@ -65,8 +57,7 @@ export const useAuth = () => {
         const logoutResult = await logoutMutation({});
 
         if (logoutResult.data?.Logout) {
-            updateWishlistUuid(null);
-            updateComparisonUuid(null);
+            removeAllProductListUuids();
             removeTokensFromCookies();
             updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
             updateAuthLoadingState('logout-loading');

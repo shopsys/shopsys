@@ -9,6 +9,7 @@ import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useProductList } from 'hooks/productLists/useProductList';
 import useTranslation from 'next-translate/useTranslation';
+import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 
 export const useWishlist = () => {
@@ -31,6 +32,12 @@ export const useWishlist = () => {
         },
         pause: !wishlistUuid && !isUserLoggedIn,
     });
+
+    useEffect(() => {
+        if (wishlistData?.productList?.uuid) {
+            updateWishlistUuid(wishlistData.productList.uuid);
+        }
+    }, [wishlistData?.productList?.uuid]);
 
     const { cleanList, isProductInList, toggleProductInList } = useProductList(
         ProductListTypeEnumApi.WishlistApi,

@@ -9,7 +9,6 @@ import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useGetAllProductListUuids } from 'hooks/useGetAllProductListUuids';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -26,7 +25,6 @@ export const LoginContent: FC = () => {
     const router = useRouter();
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
     const { login } = useAuth();
-    const getProductListUuids = useGetAllProductListUuids();
 
     const onLoginHandler = async (data: { email: string; password: string }) => {
         let redirectUrl = url;
@@ -40,7 +38,6 @@ export const LoginContent: FC = () => {
                 email: data.email,
                 password: data.password,
                 previousCartUuid: cartUuid,
-                productListsUuids: getProductListUuids(),
             },
             redirectUrl,
         );
