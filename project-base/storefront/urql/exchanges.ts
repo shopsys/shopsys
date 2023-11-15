@@ -6,7 +6,7 @@ import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { Translate } from 'next-translate';
 import { ClientOptions, fetchExchange, SSRExchange } from 'urql';
 import { getAuthExchangeOptions } from 'urql/authExchange';
-import { cache } from 'urql/cacheExchange';
+import { cache } from 'urql/cache/cacheExchange';
 
 export const getUrqlExchanges = (
     ssrExchange: SSRExchange,
