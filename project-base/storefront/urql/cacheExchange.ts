@@ -1,4 +1,4 @@
-import { Cache, cacheExchange, Data } from '@urql/exchange-graphcache';
+import { Cache, cacheExchange, Data, DataField } from '@urql/exchange-graphcache';
 import { IntrospectionQuery } from 'graphql';
 import {
     AddToCartMutationVariablesApi,
@@ -167,9 +167,14 @@ export const cache = cacheExchange({
                         : undefined;
                 manuallyUpdateCartFragment(cache, newCart, args.input.cartUuid);
             },
+            AddProductToList(result, args: { input: ProductListUpdateInputApi }, cache) {
+                manuallyUpdateProductListQuery(args.input.productListInput, result.AddProductToList, cache);
+            },
             RemoveProductFromList(result, args: { input: ProductListUpdateInputApi }, cache) {
                 if (result.RemoveProductFromList === null) {
                     manuallyRemoveProductList(cache, args.input.productListInput);
+                } else {
+                    manuallyUpdateProductListQuery(args.input.productListInput, result.AddProductToList, cache);
                 }
             },
             CleanProductList(_result, args: CleanProductListMutationVariablesApi, cache) {
@@ -251,6 +256,27 @@ const manuallyRemoveProductList = (cache: Cache, args: ProductListInputApi) => {
         __typename: 'ProductList',
         productList: null,
     }));
+};
+
+const manuallyUpdateProductListQuery = (input: ProductListInputApi, result: DataField, cache: Cache) => {
+    const query =
+        input.type === ProductListTypeEnumApi.WishlistApi ? WishlistQueryDocumentApi : ComparisonQueryDocumentApi;
+
+    if (typeof result === 'object' && result && 'uuid' in result) {
+        const uuid = input.uuid ?? result.uuid;
+        cache.updateQuery(
+            {
+                query: query,
+                variables: {
+                    input: { type: input.type, uuid },
+                },
+            },
+            () => ({
+                __typename: 'ProductList',
+                productList: result,
+            }),
+        );
+    }
 };
 
 const getOptimisticChangeTransportInCartResult = (
