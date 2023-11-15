@@ -49,7 +49,6 @@ default
 
  php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule" --instance-name=default
  php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Cart\Item\DeleteOldCartsCronModule" --instance-name=default
- php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Feed\DailyFeedCronModule" --instance-name=default
  php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Feed\HourlyFeedCronModule" --instance-name=default
  php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule" --instance-name=default
  php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCronModule" --instance-name=default
