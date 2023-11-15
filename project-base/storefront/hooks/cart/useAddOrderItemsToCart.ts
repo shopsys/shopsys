@@ -1,7 +1,7 @@
-import { useCurrentCart } from 'connectors/cart/Cart';
 import { AddOrderItemsToCartInputApi, useAddOrderItemsToCartMutationApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'helpers/toasts';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';

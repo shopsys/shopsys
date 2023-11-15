@@ -4,7 +4,8 @@ import { TotalPrice } from './TotalPrice';
 import { TransportAndPayment } from './TransportAndPayment';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
-import { useCurrentCart } from 'connectors/cart/Cart';
+import { CartLoading } from 'components/Pages/Cart/CartLoading';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
 
 type OrderSummaryProps = {
@@ -15,9 +16,13 @@ const TEST_IDENTIFIER = 'blocks-ordersummary';
 
 export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoading }) => {
     const { t } = useTranslation();
-    const { cart, transport, payment, promoCode, roundingPrice } = useCurrentCart();
+    const { cart, transport, payment, promoCode, roundingPrice, isFetching } = useCurrentCart();
 
-    if (cart === null) {
+    if (isFetching) {
+        return <CartLoading />;
+    }
+
+    if (!cart) {
         return null;
     }
 

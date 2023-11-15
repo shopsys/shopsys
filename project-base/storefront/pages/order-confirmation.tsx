@@ -1,5 +1,4 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
@@ -17,10 +16,10 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
-import { useDomainConfig } from 'hooks/useDomainConfig';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { PaymentTypeEnum } from 'types/payment';
 
@@ -37,12 +36,11 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { query } = useRouter();
     const { orderUuid, orderEmail, orderPaymentType, registrationData } = query as OrderConfirmationQuery;
-    const { url } = useDomainConfig();
-    const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const isUserLoggedIn = useIsUserLoggedIn();
     const parsedRegistrationData = useRef<ContactInformation | undefined>(
         registrationData ? (JSON.parse(registrationData) as ContactInformation) : undefined,
     );
+    const { fetchCart, isWithCart } = useCurrentCart(false);
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -55,11 +53,17 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
             variables: {
                 email: orderEmail!,
             },
-            pause: orderEmail === undefined,
+            pause: !orderEmail,
         });
 
+    useEffect(() => {
+        if (isWithCart) {
+            fetchCart();
+        }
+    }, []);
+
     return (
-        <PageGuard errorRedirectUrl={cartUrl} isWithAccess={!!orderUuid}>
+        <>
             <MetaRobots content="noindex" />
 
             <CommonLayout title={t('Thank you for your order')}>
@@ -101,7 +105,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                         )}
                 </Webline>
             </CommonLayout>
-        </PageGuard>
+        </>
     );
 };
 

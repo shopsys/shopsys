@@ -4,8 +4,8 @@ import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CartList } from 'components/Pages/Cart/CartList/CartList';
+import { CartLoading } from 'components/Pages/Cart/CartLoading';
 import { CartSummary } from 'components/Pages/Cart/CartSummary';
-import { useCurrentCart } from 'connectors/cart/Cart';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmCartViewEvent } from 'gtm/hooks/useGtmCartViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
@@ -13,6 +13,7 @@ import { GtmPageType } from 'gtm/types/enums';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 
@@ -20,7 +21,9 @@ const CartPage: FC<ServerSidePropsType> = () => {
     const { url } = useDomainConfig();
     const { t } = useTranslation();
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], url);
-    const { cart } = useCurrentCart();
+    const { cart, isFetching } = useCurrentCart();
+
+    const isWithFetchedCart = cart !== undefined && !isFetching;
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.cart);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -31,7 +34,9 @@ const CartPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Cart')}>
                 <Webline>
-                    {cart?.items.length ? (
+                    {!isWithFetchedCart && <CartLoading />}
+
+                    {isWithFetchedCart && !!cart?.items.length && (
                         <>
                             <OrderSteps activeStep={1} domainUrl={url} />
 
@@ -49,7 +54,9 @@ const CartPage: FC<ServerSidePropsType> = () => {
                                 withGapTop={false}
                             />
                         </>
-                    ) : (
+                    )}
+
+                    {isWithFetchedCart && !cart?.items.length && (
                         <p className="my-28 text-center text-2xl">{t('Your cart is currently empty.')}</p>
                     )}
                 </Webline>

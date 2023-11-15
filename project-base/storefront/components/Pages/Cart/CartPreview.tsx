@@ -1,5 +1,5 @@
-import { useCurrentCart } from 'connectors/cart/Cart';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';

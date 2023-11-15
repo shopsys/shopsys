@@ -1,4 +1,4 @@
-import { useCurrentCart } from 'connectors/cart/Cart';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';

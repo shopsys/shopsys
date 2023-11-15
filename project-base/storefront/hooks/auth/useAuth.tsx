@@ -54,9 +54,9 @@ export const useAuth = () => {
             } else {
                 router.reload();
             }
-        }
 
-        dispatchBroadcastChannel('reloadPage');
+            dispatchBroadcastChannel('reloadPage');
+        }
 
         return loginResult;
     };

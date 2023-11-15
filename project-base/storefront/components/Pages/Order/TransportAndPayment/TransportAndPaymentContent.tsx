@@ -3,13 +3,13 @@ import { getTransportAndPaymentValidationMessages, useLoadTransportAndPaymentFro
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
-import { useCurrentCart } from 'connectors/cart/Cart';
 import { useTransportsQueryApi } from 'graphql/generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
@@ -64,7 +64,7 @@ export const TransportAndPaymentContent: FC = () => {
     };
 
     useEffect(() => {
-        if (!cart?.items.length) {
+        if (cart !== undefined && !cart?.items.length) {
             router.replace(cartUrl);
         }
     }, [cart?.items]);

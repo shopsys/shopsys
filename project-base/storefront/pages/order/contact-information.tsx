@@ -9,7 +9,7 @@ import {
     useContactInformationForm,
     useContactInformationFormMeta,
 } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
-import { handleCartModifications, useCurrentCart } from 'connectors/cart/Cart';
+import { handleCartModifications } from 'connectors/cart/Cart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateOrderMutationApi } from 'graphql/generated';
 import {
@@ -25,12 +25,13 @@ import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmMessageOriginType, GtmPageType } from 'gtm/types/enums';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { isStoreHydrated } from 'helpers/isStoreHydrated';
 import { getIsPaymentWithPaymentGate } from 'helpers/mappers/payment';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import useTranslation from 'next-translate/useTranslation';
@@ -58,7 +59,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
         domainConfig.url,
     );
     const [orderCreating, setOrderCreating] = useState(false);
-    const currentCart = useCurrentCart();
+    const currentCart = useCurrentCart(false);
     const [changePaymentInCart] = useChangePaymentInCart();
     const { t } = useTranslation();
     const [{ fetching }, createOrder] = useCreateOrderMutationApi();
@@ -88,16 +89,14 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     }, []);
 
     useEffect(() => {
-        if (!currentCart.cart?.items.length) {
-            router.replace(cartUrl);
+        if (currentCart.cart !== undefined) {
+            if (!currentCart.cart?.items.length) {
+                router.replace(cartUrl);
+            } else if (!(currentCart.transport && currentCart.payment)) {
+                router.replace(transportAndPaymentUrl);
+            }
         }
-    }, [currentCart.cart]);
-
-    useEffect(() => {
-        if (!currentCart.transport || !currentCart.payment) {
-            router.replace(transportAndPaymentUrl);
-        }
-    }, [currentCart.transport, currentCart.payment]);
+    }, [currentCart.cart, currentCart.cart?.items, currentCart.transport, currentCart.payment, isStoreHydrated()]);
 
     const onCreateOrderHandler: SubmitHandler<typeof defaultValues> = async (formValues) => {
         setOrderCreating(true);
@@ -199,8 +198,10 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                     orderConfirmationUrl,
                 )
                 .then(() => {
-                    updateCartUuid(null);
-                    dispatchBroadcastChannel('refetchCart');
+                    if (cartUuid) {
+                        updateCartUuid(null);
+                    }
+
                     resetContactInformation();
                 });
 

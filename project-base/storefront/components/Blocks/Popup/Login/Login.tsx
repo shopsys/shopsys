@@ -16,7 +16,6 @@ import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
-import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import * as Yup from 'yup';
@@ -38,26 +37,24 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: defaultEmail ?? '', password: '' });
     const { login } = useAuth();
 
-    const onLoginHandler = useCallback<SubmitHandler<{ email: string; password: string }>>(
-        async (data) => {
-            blurInput();
-            const loginResponse = await login({
-                email: data.email,
-                password: data.password,
-                previousCartUuid: cartUuid,
-            });
+    const onLoginHandler: SubmitHandler<{ email: string; password: string }> = async (data) => {
+        blurInput();
 
-            handleFormErrors(
-                loginResponse.error,
-                formProviderMethods,
-                t,
-                undefined,
-                undefined,
-                GtmMessageOriginType.login_popup,
-            );
-        },
-        [login, cartUuid, formProviderMethods, t],
-    );
+        const loginResponse = await login({
+            email: data.email,
+            password: data.password,
+            previousCartUuid: cartUuid,
+        });
+
+        handleFormErrors(
+            loginResponse.error,
+            formProviderMethods,
+            t,
+            undefined,
+            undefined,
+            GtmMessageOriginType.login_popup,
+        );
+    };
 
     return (
         <div
@@ -79,6 +76,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                                 autoComplete: 'email',
                             }}
                         />
+
                         <PasswordInputControlled
                             control={formProviderMethods.control}
                             formName="login-form"
@@ -88,12 +86,14 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                                 label: t('Password'),
                             }}
                         />
+
                         <div className="mt-5 mb-5 flex items-center justify-between gap-2 lg:mb-0 lg:block lg:border-none lg:p-0">
                             <div className="order-1 flex w-full justify-end">
                                 <SubmitButton className="max-lg:!px-3" dataTestId="blocks-popup-login-submit">
                                     {t('Log-in')}
                                 </SubmitButton>
                             </div>
+
                             <div className="flex items-center gap-1 whitespace-nowrap rounded border-primary py-2 px-2 text-sm text-primary lg:mt-5 lg:border-2 lg:px-3 lg:py-3">
                                 <WarningIcon className=" h-5 w-9 text-red" />
                                 <ExtendedNextLink href={resetPasswordUrl}>
@@ -106,13 +106,16 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                     </Form>
                 </FormProvider>
             </div>
+
             <div className="mt-7 w-full lg:mt-0 lg:w-1/2 lg:pl-5">
                 <div className="mb-6 -mr-4 flex w-full justify-between rounded-l bg-blueLight p-4">
                     <p className="text-lg text-primary lg:text-xl">{t("Don't have an account yet? Register.")}</p>
                 </div>
+
                 <p className="mb-8 hidden lg:block">
                     {t('Your addresses prefilled and you can check your order history.')}
                 </p>
+
                 <Link isButton href={registrationUrl}>
                     {t('Register')}
                 </Link>
