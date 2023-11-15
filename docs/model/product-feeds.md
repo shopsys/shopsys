@@ -2,7 +2,7 @@
 
 Product feeds are a way to periodically export information about your products for product search engines such as [Google Shopping](https://www.google.com/shopping).
 
-In order to allow easy installation and removal of product feeds, they are implemented in form of plugins ([see list of current implementations](https://github.com/search?q=topic%3Aproduct-feed+org%3Ashopsys)).
+To allow easy installation and removal of product feeds, they are implemented in form of plugins ([see list of current implementations](https://github.com/search?q=topic%3Aproduct-feed+org%3Ashopsys)).
 
 ## Where are the feeds?
 
@@ -12,22 +12,51 @@ You can see all installed product feeds along with the URLs of their export in t
 ## When are they exported?
 
 Product feeds are usually exported using Cron modules.
-The Cron modules are already implemented and registered, all that's needed is to run the [`cron` phing target](../introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes on your server and Shopsys Platform takes care of the rest.
+The Cron modules are already implemented and registered, all that's needed is to run the [`cron` phing target](../introduction/console-commands-for-application-management-phing-targets.md#cron) every 5 minutes (can be changed in parameters) on your server and Shopsys Platform takes care of the rest.
 They can be also generated manually in the administration section _Marketing > XML Feeds_, if you're logged in as _superadministrator_.
 
-There are two types of product feeds: `daily` and `hourly`.
+Each feed definition in `services.yaml` includes hours and minutes in cron format, when it should be generated.
 
-Daily feed usually contain a lot of information about the products are can take a while to export if you have a lot of products.
-For this exact reason, the [`DailyFeedCronModule`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/DailyFeedCronModule.php) is implemented iteratively and can export the feeds in batches as needed.
+For example:
 
-Hourly feeds contain much less information and their priority is to be as current as possible.
-Typical examples are exports of current availability and stock quantities of the products.
-By default, they are exported every hour and the export cannot be broken into multiple Cron executions.
+```yaml
+Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
+    tags:
+        - { name: shopsys.product_feed, hours: '1', minutes: '0' }
+```
+
+Google feed will be generated every day at 1:00 AM.
+
+You can also set it like this:
+
+```yaml
+Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
+    tags:
+        - { name: shopsys.product_feed, hours: '*/4', minutes: '0' }
+```
+
+In such a case, this feed will be generated every four hours.
+
+Feeds have their default times set in their own `services.yaml` files, but can be easily changed in your project's `feed.yaml` file.
+You only need to copy service definition from feed `services.yaml` file and change the hours and minutes to expected ones.
+
+## How to limit a product feed to a specific domain?
+
+If you want to limit a product feed to a specific domain, you can use the `domain_ids` parameter in the feed's service definition.
+Copy the service definition from the feed's `services.yaml` file and add the `domain_ids` parameter with the IDs of the domains you want to limit the feed to in your projects `feed.yaml` file.
+
+For example, if you want to limit Google Feed to first and third domain, you will add this to your `feed.yaml` file.
+
+```yaml
+Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
+    tags:
+        - { name: shopsys.product_feed, hours: '1', minutes: '0', domain_ids: '1,3' }
+```
 
 ## How to implement a custom product feed?
 
 The heart of a product feed plugin is a service implementing the [`FeedInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedInterface.php) that is tagged in a DI container with `shopsys.product_feed` tag.
-Optionally, the tag can have a type attribute (default is `daily`).
+Tags `hours` and `minutes` are mandatory and define when the feed should be generated.
 
 The annotations in the feed interfaces ([`FeedInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedInterface.php), [`FeedInfoInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedInfoInterface.php) and [`FeedItemInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedItemInterface.php)) should explain a lot.
 When in doubt, you can take a look at the [already implemented product feeds](https://github.com/search?q=topic%3Aproduct-feed+org%3Ashopsys) for inspiration.
