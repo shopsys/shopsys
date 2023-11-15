@@ -25,12 +25,10 @@ export const usePageLoader = () => {
 
         router.events.on('routeChangeStart', onRouteChangeStart);
         router.events.on('routeChangeComplete', onRouteChangeStop);
-        router.events.on('routeChangeError', onRouteChangeStop);
 
         return () => {
             router.events.off('routeChangeStart', onRouteChangeStart);
             router.events.off('routeChangeComplete', onRouteChangeStop);
-            router.events.off('routeChangeError', onRouteChangeStop);
         };
     }, [router.events]);
 };
