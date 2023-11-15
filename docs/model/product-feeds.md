@@ -40,6 +40,10 @@ In such a case, this feed will be generated every four hours.
 Feeds have their default times set in their own `services.yaml` files, but can be easily changed in your project's `feed.yaml` file.
 You only need to copy service definition from feed `services.yaml` file and change the hours and minutes to expected ones.
 
+## How to run feed outside scheduled time?
+
+If you want to run feed outside scheduled time, you can use the `php bin/console shopsys:feed-schedule` command with `--feed-name` argument to schedule one feed or `--all` argument to schedule all feeds and then run `php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Feed\FeedCronModule" --instance-name=export` to generate the feeds.
+
 ## How to limit a product feed to a specific domain?
 
 If you want to limit a product feed to a specific domain, you can use the `domain_ids` parameter in the feed's service definition.

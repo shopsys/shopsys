@@ -137,15 +137,24 @@ class FeedFacade
     {
         $feedConfigsToSchedule = $this->feedRegistry->getFeedConfigsForCurrentTime();
 
-        foreach ($feedConfigsToSchedule as $feedConfig) {
-            $feedModules = $this->feedModuleRepository->getFeedModulesByConfig($feedConfig);
+        $this->markFeedConfigsForScheduling($feedConfigsToSchedule);
+    }
 
-            foreach ($feedModules as $feedModule) {
-                $feedModule->schedule();
-            }
-        }
+    public function scheduleAllFeeds(): void
+    {
+        $feedConfigsToSchedule = $this->feedRegistry->getAllFeedConfigs();
 
-        $this->em->flush();
+        $this->markFeedConfigsForScheduling($feedConfigsToSchedule);
+    }
+
+    /**
+     * @param string $name
+     */
+    public function scheduleFeedByName(string $name): void
+    {
+        $feedConfigsToSchedule = [$this->feedRegistry->getFeedConfigByName($name)];
+
+        $this->markFeedConfigsForScheduling($feedConfigsToSchedule);
     }
 
     /**
