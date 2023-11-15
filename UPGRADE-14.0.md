@@ -221,6 +221,35 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository::extractHits` visibility has changed from `protected` to `public`
     -   `Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository::extractTotalCount` visibility has changed from `protected` to `public`
     -   see #project-base-diff to update your project
+-   implemented generic product lists ([#2901](https://github.com/shopsys/shopsys/pull/2901))
+    -   the functionality replaces the original implementations of wishlists a product comparisons
+    -   check `Shopsys\FrameworkBundle\Migrations\Version20231102161313`
+        -   the migration handles data transfer from `wishlists`, `wishlist_items`, `comparisons`, and `compared_items` tables to the new `product_lists` and `product_list_items` tables
+        -   if you had any custom changes in your wishlist/comparison implementations, you might want to skip the migration in `migrations_lock.yaml` file and handle the data transfer yourself
+    -   `Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            // ...
+            protected readonly TokenFacade $tokenFacade,
+    +       protected readonly ProductListFacade $productListFacade,
+    ```
+    -   `Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            // ...
+            protected readonly RequestStack $requestStack,
+    +       protected readonly ProductListFacade $productListFacade,
+    ```
+    -   `Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundUserError::CODE` changed its visibility from `protected` to `public`
+    -   `Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            // ...
+            protected readonly ProductConnectionFactory $productConnectionFactory,
+    +       protected readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
+    +       protected readonly ProductListFacade $productListFacade,
+    ```
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
@@ -371,3 +400,14 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   expiration of confirmation content is now taken into account on SF by ignoring the API error and not rendering the content. This was a bug (missing feature) in previous versions. If you have not fixed it yourself before, you definitely want to implement these changes, because otherwise, the user can see errors when displaying the order confirmation page after a certain timeout.
     -   query parameters parsed using getStringFromUrlQuery are now also trimmed, which makes sure the API can understand the string. For example, the API does not understand " 440ecde4-b992-4290-8636-4f454c9cf475 " as a valid UUID.
 -   display Transport and Payment description on desktop ([#2930](https://github.com/shopsys/shopsys/pull/2930))
+-   implemented generic product lists ([#2901](https://github.com/shopsys/shopsys/pull/2901))
+
+    -   previous implementation for wishlist and comparison was removed, so if you want to keep them, you have to re-implement it according to the new requirements (use of generic API queries and mutations)
+    -   this opens door for multiple lists of any kind, so if you want multiple wishlists or other types of lists, you can do that, just don't forget to
+
+        -   use the generic queries, mutations, and fragments (`AddProductToListMutation`, `RemoveProductFromListMutation`, `CleanProductListMutation`, `ProductListQuery`, `ProductListFragment`, and `ProductInProductListFragment`)
+
+        -   create a wrapper hook (such as `useWishlist`) which uses `useProductList` and provides the product list type and necessary callbacks
+
+    -   keep in mind that the implementation heavily depends on the graphcache in `cacheExchange.ts`. This cache is responsible for manually updating queries, which decreases the number of requests, but also makes the entire functionality to behave as expected. If you use the generic mutations, queries, and fragments, you do not need to touch it, as it should work out of the box. However, there is a chance that your implementation will be more customized and not directly follow the provided one, for example by having a custom query for your list. In such case, if implementing any other list in a more custom manner, follow the guidelines in the docs (`graphcache.md`).
+    -   we also renamed `productsCompare` to `comparedProducts` across the files as it is a more suitable and better name.
