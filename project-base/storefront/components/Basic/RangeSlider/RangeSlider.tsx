@@ -267,10 +267,10 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ dataTestId, isActive, dis
                 mozTwClass,
                 msTwClass,
                 isActive
-                    ? '[&::-webkit-slider-thumb]:bg-orange [&::-moz-range-thumb]:bg-orange [&::-ms-thumb]:bg-orange'
-                    : '[&::-webkit-slider-thumb]:bg-greyLight [&::-moz-range-thumb]:bg-greyLight [&::-ms-thumb]:bg-greyLight',
+                    ? '[&::-moz-range-thumb]:bg-orange [&::-ms-thumb]:bg-orange [&::-webkit-slider-thumb]:bg-orange'
+                    : '[&::-moz-range-thumb]:bg-greyLight [&::-ms-thumb]:bg-greyLight [&::-webkit-slider-thumb]:bg-greyLight',
                 disabled &&
-                    '[&::-webkit-slider-thumb]:cursor-not-allowed [&::-moz-range-thumb]:cursor-not-allowed [&::-ms-thumb]:cursor-not-allowed',
+                    '[&::-moz-range-thumb]:cursor-not-allowed [&::-ms-thumb]:cursor-not-allowed [&::-webkit-slider-thumb]:cursor-not-allowed',
             )}
             {...props}
         />
