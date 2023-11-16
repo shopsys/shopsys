@@ -160,8 +160,6 @@ export const gtmSafePushEvent = (event: GtmEventInterface<GtmEventType, unknown>
     if (isClient) {
         window.dataLayer = window.dataLayer ?? [];
         window.dataLayer.push(event);
-    } else {
-        logException(new Error('Tried to use GTM safe push without available window. Please, fix this behavior.'));
     }
 };
 ```

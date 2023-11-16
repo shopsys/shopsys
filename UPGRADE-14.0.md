@@ -213,3 +213,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   it was replaced with general H tags and styles were put into globals.css, styles were also included with new classes (`h1`, `h2`, `h3`, `h4`) which we can use to style text which suppose to look like heading but it is not important enough for mark with H tag
     -   also from those headings and heading classes was remove margin bottom since spacing should be set in exact place where this component is used, not everywhere
     -   see #project-base-diff to update your project
+-   remove error logging for when gtmSafePush is called outside of the client ([#2920](https://github.com/shopsys/shopsys/pull/2920))
+    -   logging this type of error brought no business value, thus it was removed
+    -   if you want to treat this ignorable event in a more strict way, you might want to keep the logging, but then you have to improve its behavior yourself
+    -   see #project-base-diff to update your project
