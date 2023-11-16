@@ -7,7 +7,7 @@ type FormatPriceFunctionType = (price: string | number, options?: { explicitZero
 
 export const useFormatPrice = (): FormatPriceFunctionType => {
     const { t } = useTranslation();
-    const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-first' });
+    const [{ data }] = useSettingsQueryApi();
     const { defaultLocale = 'en' } = useDomainConfig();
 
     const { minimumFractionDigits = 0, defaultCurrencyCode = 'CZK' } = data?.settings?.pricing ?? {};
