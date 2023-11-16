@@ -1,27 +1,26 @@
+import { ProductListTypeEnumApi } from 'graphql/generated';
 import { StateCreator } from 'zustand';
+
+type ProductListStoreValue = Partial<{
+    [key in ProductListTypeEnumApi]: string;
+}>;
 
 export type UserSlice = {
     cartUuid: string | null;
-    wishlistUuid: string | null;
-    comparisonUuid: string | null;
+    productListUuids: ProductListStoreValue;
 
     updateCartUuid: (value: string | null) => void;
-    updateWishlistUuid: (value: string | null) => void;
-    updateComparisonUuid: (value: string | null) => void;
+    updateProductListUuids: (value: ProductListStoreValue) => void;
 };
 
 export const createUserSlice: StateCreator<UserSlice> = (set) => ({
     cartUuid: null,
-    wishlistUuid: null,
-    comparisonUuid: null,
+    productListUuids: {},
 
     updateCartUuid: (cartUuid) => {
         set({ cartUuid });
     },
-    updateWishlistUuid: (wishlistUuid) => {
-        set({ wishlistUuid });
-    },
-    updateComparisonUuid: (comparisonUuid) => {
-        set({ comparisonUuid });
+    updateProductListUuids: (productListUuids) => {
+        set({ productListUuids });
     },
 });

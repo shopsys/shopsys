@@ -20,7 +20,7 @@ export const ProductComparison: FC = () => {
 
             {fetching && <SkeletonModuleComparison />}
 
-            {comparison?.products && !fetching && <ProductComparisonContent productsCompare={comparison.products} />}
+            {comparison?.products && !fetching && <ProductComparisonContent comparedProducts={comparison.products} />}
 
             {!comparison?.products && !fetching && (
                 <div className="flex items-center">

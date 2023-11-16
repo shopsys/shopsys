@@ -1,53 +1,16 @@
-import {
-    ProductListTypeEnumApi,
-    useAddProductToWishlistMutationApi,
-    useCleanProductListMutationApi,
-    useRemoveProductFromWishlistMutationApi,
-    useWishlistQueryApi,
-} from 'graphql/generated';
+import { ProductListTypeEnumApi } from 'graphql/generated';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useProductList } from 'hooks/productLists/useProductList';
+import { useUpdateProductListUuid } from 'hooks/productLists/useUpdateProductListUuid';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect } from 'react';
-import { usePersistStore } from 'store/usePersistStore';
 
 export const useWishlist = () => {
     const { t } = useTranslation();
-    const isUserLoggedIn = useIsUserLoggedIn();
+    const updateWishlistUuid = useUpdateProductListUuid(ProductListTypeEnumApi.WishlistApi);
 
-    const updateWishlistUuid = usePersistStore((s) => s.updateWishlistUuid);
-    const wishlistUuid = usePersistStore((s) => s.wishlistUuid);
-
-    const [, addProductToListMutation] = useAddProductToWishlistMutationApi();
-    const [, removeProductFromListMutation] = useRemoveProductFromWishlistMutationApi();
-    const [, cleanListMutation] = useCleanProductListMutationApi();
-
-    const [{ data: wishlistData, fetching }] = useWishlistQueryApi({
-        variables: {
-            input: {
-                type: ProductListTypeEnumApi.WishlistApi,
-                uuid: wishlistUuid,
-            },
-        },
-        pause: !wishlistUuid && !isUserLoggedIn,
-    });
-
-    useEffect(() => {
-        if (wishlistData?.productList?.uuid) {
-            updateWishlistUuid(wishlistData.productList.uuid);
-        }
-    }, [wishlistData?.productList?.uuid]);
-
-    const { cleanList, isProductInList, toggleProductInList } = useProductList(
+    const { productListData, cleanList, isProductInList, toggleProductInList, fetching } = useProductList(
         ProductListTypeEnumApi.WishlistApi,
-        wishlistUuid,
-        wishlistData,
-        {
-            cleanList: cleanListMutation,
-            removeProductFromList: removeProductFromListMutation,
-            addProductToList: addProductToListMutation,
-        },
+
         {
             addError: () => showErrorMessage(t('Unable to add product to wishlist.')),
             addSuccess: (result) => {
@@ -70,7 +33,7 @@ export const useWishlist = () => {
     );
 
     return {
-        wishlist: wishlistData?.productList,
+        wishlist: productListData?.productList,
         fetching,
         isProductInWishlist: isProductInList,
         cleanWishlist: cleanList,

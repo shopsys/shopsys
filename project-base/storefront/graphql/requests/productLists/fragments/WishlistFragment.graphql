@@ -1,7 +1,0 @@
-fragment WishlistFragment on ProductList {
-    __typename
-    uuid
-    products {
-        ...ListedProductFragment
-    }
-}

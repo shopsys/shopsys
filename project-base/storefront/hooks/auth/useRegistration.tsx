@@ -3,7 +3,6 @@ import { onGtmSendFormEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmFormType } from 'gtm/types/enums';
 import { setTokensToCookies } from 'helpers/auth/tokens';
 import { blurInput } from 'helpers/forms/blurInput';
-import { useProductListUuids } from 'hooks/productLists/useProductListUuids';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
@@ -13,7 +12,8 @@ export const useRegistration = () => {
     const router = useRouter();
     const updateAuthLoadingState = usePersistStore((s) => s.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
-    const { getAllProductListUuids, removeAllProductListUuids } = useProductListUuids();
+    const productListUuids = usePersistStore((s) => s.productListUuids);
+    const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
 
     const register = async (registrationInput: Omit<RegistrationDataInputApi, 'productListsUuids'>) => {
         blurInput();
@@ -35,7 +35,7 @@ export const useRegistration = () => {
                 postcode: registrationInput.postcode,
                 street: registrationInput.street,
                 telephone: registrationInput.telephone,
-                productListsUuids: getAllProductListUuids(),
+                productListsUuids: Object.values(productListUuids),
             },
         });
 
@@ -44,7 +44,7 @@ export const useRegistration = () => {
             const refreshToken = registerResult.data.Register.tokens.refreshToken;
 
             setTokensToCookies(accessToken, refreshToken);
-            removeAllProductListUuids();
+            updateProductListUuids({});
 
             updateAuthLoadingState(
                 registerResult.data.Register.showCartMergeInfo

@@ -1,6 +1,5 @@
 import { LoginApi, LoginVariablesApi, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
-import { useProductListUuids } from 'hooks/productLists/useProductListUuids';
 import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
@@ -21,12 +20,13 @@ export const useAuth = () => {
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
-    const { getAllProductListUuids, removeAllProductListUuids } = useProductListUuids();
+    const productListUuids = usePersistStore((s) => s.productListUuids);
+    const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
 
     const router = useRouter();
 
     const login: LoginHandler = async (variables, rewriteUrl) => {
-        const loginResult = await loginMutation({ ...variables, productListsUuids: getAllProductListUuids() });
+        const loginResult = await loginMutation({ ...variables, productListsUuids: Object.values(productListUuids) });
 
         if (loginResult.data) {
             const accessToken = loginResult.data.Login.tokens.accessToken;
@@ -35,7 +35,7 @@ export const useAuth = () => {
             setTokensToCookies(accessToken, refreshToken);
 
             updateCartUuid(null);
-            removeAllProductListUuids();
+            updateProductListUuids({});
 
             updateAuthLoadingState(
                 loginResult.data.Login.showCartMergeInfo ? 'login-loading-with-cart-modifications' : 'login-loading',
@@ -57,7 +57,7 @@ export const useAuth = () => {
         const logoutResult = await logoutMutation({});
 
         if (logoutResult.data?.Logout) {
-            removeAllProductListUuids();
+            updateProductListUuids({});
             removeTokensFromCookies();
             updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
             updateAuthLoadingState('logout-loading');

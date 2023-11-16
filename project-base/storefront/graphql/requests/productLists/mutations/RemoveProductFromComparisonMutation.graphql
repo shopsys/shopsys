@@ -1,5 +1,0 @@
-mutation RemoveProductFromComparisonMutation($input: ProductListUpdateInput!) {
-    RemoveProductFromList(input: $input) {
-        ...ProductComparisonFragment
-    }
-}

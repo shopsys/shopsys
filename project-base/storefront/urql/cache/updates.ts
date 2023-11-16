@@ -1,5 +1,5 @@
 import { invalidateFields } from './helpers';
-import { Cache, DataField, UpdatesConfig } from '@urql/exchange-graphcache';
+import { Cache, UpdatesConfig } from '@urql/exchange-graphcache';
 import {
     AddToCartMutationVariablesApi,
     AddToCartResultApi,
@@ -10,13 +10,15 @@ import {
     ChangeTransportInCartMutationVariablesApi,
     RemoveFromCartMutationVariablesApi,
     RemovePromoCodeFromCartMutationVariablesApi,
-    WishlistQueryDocumentApi,
     AddOrderItemsToCartMutationVariablesApi,
     CleanProductListMutationVariablesApi,
     ProductListInputApi,
-    ProductListUpdateInputApi,
-    ProductListTypeEnumApi,
-    ComparisonQueryDocumentApi,
+    RemoveProductFromListMutationVariablesApi,
+    AddProductToListMutationVariablesApi,
+    ProductListQueryDocumentApi,
+    AddProductToListMutationApi,
+    RemoveProductFromListMutationApi,
+    ProductListFragmentApi,
 } from 'graphql/generated';
 
 export const cacheUpdates: UpdatesConfig = {
@@ -74,14 +76,18 @@ export const cacheUpdates: UpdatesConfig = {
                     : undefined;
             manuallyUpdateCartQuery(cache, newCart, args.input.cartUuid);
         },
-        AddProductToList(result, args: { input: ProductListUpdateInputApi }, cache) {
+        AddProductToList(result: AddProductToListMutationApi, args: AddProductToListMutationVariablesApi, cache) {
             manuallyUpdateProductListQuery(args.input.productListInput, result.AddProductToList, cache);
         },
-        RemoveProductFromList(result, args: { input: ProductListUpdateInputApi }, cache) {
+        RemoveProductFromList(
+            result: RemoveProductFromListMutationApi,
+            args: RemoveProductFromListMutationVariablesApi,
+            cache,
+        ) {
             if (result.RemoveProductFromList === null) {
                 manuallyRemoveProductListQuery(cache, args.input.productListInput);
             } else {
-                manuallyUpdateProductListQuery(args.input.productListInput, result.AddProductToList, cache);
+                manuallyUpdateProductListQuery(args.input.productListInput, result.RemoveProductFromList, cache);
             }
         },
         CleanProductList(_result, args: CleanProductListMutationVariablesApi, cache) {
@@ -102,33 +108,24 @@ const manuallyUpdateCartQuery = (cache: Cache, newCart: CartApi | undefined, car
 };
 
 const manuallyRemoveProductListQuery = (cache: Cache, args: ProductListInputApi) => {
-    const query =
-        args.type === ProductListTypeEnumApi.WishlistApi ? WishlistQueryDocumentApi : ComparisonQueryDocumentApi;
-
-    cache.updateQuery({ query: query, variables: { input: args } }, (data) => ({
-        ...data,
+    cache.updateQuery({ query: ProductListQueryDocumentApi, variables: { input: args } }, () => ({
         __typename: 'ProductList',
         productList: null,
     }));
 };
 
-const manuallyUpdateProductListQuery = (input: ProductListInputApi, result: DataField, cache: Cache) => {
-    const query =
-        input.type === ProductListTypeEnumApi.WishlistApi ? WishlistQueryDocumentApi : ComparisonQueryDocumentApi;
-
-    if (typeof result === 'object' && result && 'uuid' in result) {
-        const uuid = input.uuid ?? result.uuid;
-        cache.updateQuery(
-            {
-                query: query,
-                variables: {
-                    input: { type: input.type, uuid },
-                },
+const manuallyUpdateProductListQuery = (input: ProductListInputApi, result: ProductListFragmentApi, cache: Cache) => {
+    const uuid = input.uuid ?? result.uuid;
+    cache.updateQuery(
+        {
+            query: ProductListQueryDocumentApi,
+            variables: {
+                input: { type: input.type, uuid },
             },
-            () => ({
-                __typename: 'ProductList',
-                productList: result,
-            }),
-        );
-    }
+        },
+        () => ({
+            __typename: 'ProductList',
+            productList: result,
+        }),
+    );
 };

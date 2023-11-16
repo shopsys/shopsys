@@ -1,39 +1,54 @@
+import { useUpdateProductListUuid } from './useUpdateProductListUuid';
 import {
-    CleanProductListMutationApi,
-    CleanProductListMutationVariablesApi,
+    ProductListFragmentApi,
     ProductListTypeEnumApi,
-    ProductListUpdateInputApi,
+    useAddProductToListMutationApi,
+    useCleanProductListMutationApi,
+    useProductListQueryApi,
+    useRemoveProductFromListMutationApi,
 } from 'graphql/generated';
-import { UseMutationExecute } from 'urql';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
+import { useEffect } from 'react';
+import { usePersistStore } from 'store/usePersistStore';
 
-type GenericProductList<T> = { uuid: string; products: ({ uuid: string } & T)[] } | null;
-
-export const useProductList = <T>(
+export const useProductList = (
     productListType: ProductListTypeEnumApi,
-    productListUuid: string | null,
-    productListData: { productList: GenericProductList<T> } | undefined,
-    mutations: {
-        cleanList: UseMutationExecute<CleanProductListMutationApi, CleanProductListMutationVariablesApi>;
-        addProductToList: UseMutationExecute<
-            { AddProductToList: GenericProductList<T> },
-            { input: ProductListUpdateInputApi }
-        >;
-        removeProductFromList: UseMutationExecute<
-            { RemoveProductFromList: GenericProductList<T> },
-            { input: ProductListUpdateInputApi }
-        >;
-    },
     callbacks: {
         cleanSuccess: () => void;
         cleanError: () => void;
-        addSuccess: (result: GenericProductList<T> | undefined) => void;
+        addSuccess: (result: ProductListFragmentApi | null | undefined) => void;
         addError: () => void;
-        removeSuccess: (result: GenericProductList<T> | undefined) => void;
+        removeSuccess: (result: ProductListFragmentApi | null | undefined) => void;
         removeError: () => void;
     },
 ) => {
+    const productListUuids = usePersistStore((s) => s.productListUuids);
+    const updateProductListUuid = useUpdateProductListUuid(productListType);
+    const productListUuid = productListUuids[productListType] ?? null;
+    const isUserLoggedIn = useIsUserLoggedIn();
+
+    const [, addProductToListMutation] = useAddProductToListMutationApi();
+    const [, removeProductFromListMutation] = useRemoveProductFromListMutationApi();
+    const [, cleanListMutation] = useCleanProductListMutationApi();
+
+    const [{ data: productListData, fetching }] = useProductListQueryApi({
+        variables: {
+            input: {
+                type: productListType,
+                uuid: productListUuid,
+            },
+        },
+        pause: !productListUuid && !isUserLoggedIn,
+    });
+
+    useEffect(() => {
+        if (productListData?.productList?.uuid) {
+            updateProductListUuid(productListData.productList.uuid);
+        }
+    }, [productListData?.productList?.uuid]);
+
     const cleanList = async () => {
-        const cleanListResult = await mutations.cleanList({
+        const cleanListResult = await cleanListMutation({
             input: {
                 type: productListType,
                 uuid: productListUuid,
@@ -48,7 +63,7 @@ export const useProductList = <T>(
     };
 
     const addToList = async (productUuid: string) => {
-        const addProductToListResult = await mutations.addProductToList({
+        const addProductToListResult = await addProductToListMutation({
             input: {
                 productUuid,
                 productListInput: {
@@ -66,7 +81,7 @@ export const useProductList = <T>(
     };
 
     const removeFromList = async (productUuid: string) => {
-        const removeProductFromListResult = await mutations.removeProductFromList({
+        const removeProductFromListResult = await removeProductFromListMutation({
             input: {
                 productUuid,
                 productListInput: {
@@ -94,9 +109,5 @@ export const useProductList = <T>(
         }
     };
 
-    return {
-        isProductInList,
-        cleanList,
-        toggleProductInList,
-    };
+    return { productListData, isProductInList, cleanList, toggleProductInList, fetching };
 };

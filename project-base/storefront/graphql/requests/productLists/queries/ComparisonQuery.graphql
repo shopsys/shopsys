@@ -1,5 +1,0 @@
-query ComparisonQuery($input: ProductListInput!) {
-    productList(input: $input) {
-        ...ProductComparisonFragment
-    }
-}

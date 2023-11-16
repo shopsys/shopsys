@@ -1,49 +1,18 @@
-import {
-    ProductListTypeEnumApi,
-    useAddProductToComparisonMutationApi,
-    useCleanProductListMutationApi,
-    useComparisonQueryApi,
-    useRemoveProductFromComparisonMutationApi,
-} from 'graphql/generated';
+import { ProductListTypeEnumApi } from 'graphql/generated';
 import { showErrorMessage, showSuccessMessage } from 'helpers/toasts';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useProductList } from 'hooks/productLists/useProductList';
+import { useUpdateProductListUuid } from 'hooks/productLists/useUpdateProductListUuid';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useState } from 'react';
-import { usePersistStore } from 'store/usePersistStore';
+import { useState } from 'react';
 
 export const useComparison = () => {
     const { t } = useTranslation();
-    const isUserLoggedIn = useIsUserLoggedIn();
-
-    const [, addProductToListMutation] = useAddProductToComparisonMutationApi();
-    const [, removeProductFromListMutation] = useRemoveProductFromComparisonMutationApi();
-    const [, cleanListMutation] = useCleanProductListMutationApi();
-
-    const comparisonUuid = usePersistStore((store) => store.comparisonUuid);
-    const updateComparisonUuid = usePersistStore((store) => store.updateComparisonUuid);
+    const updateComparisonUuid = useUpdateProductListUuid(ProductListTypeEnumApi.ComparisonApi);
     const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
 
-    const [{ data: comparisonData, fetching }] = useComparisonQueryApi({
-        variables: { input: { uuid: comparisonUuid, type: ProductListTypeEnumApi.ComparisonApi } },
-        pause: !comparisonUuid && !isUserLoggedIn,
-    });
-
-    useEffect(() => {
-        if (comparisonData?.productList?.uuid) {
-            updateComparisonUuid(comparisonData.productList.uuid);
-        }
-    }, [comparisonData?.productList?.uuid]);
-
-    const { cleanList, isProductInList, toggleProductInList } = useProductList(
+    const { productListData, cleanList, isProductInList, toggleProductInList, fetching } = useProductList(
         ProductListTypeEnumApi.ComparisonApi,
-        comparisonUuid,
-        comparisonData,
-        {
-            cleanList: cleanListMutation,
-            removeProductFromList: removeProductFromListMutation,
-            addProductToList: addProductToListMutation,
-        },
+
         {
             addError: () => showErrorMessage(t('Unable to add product to comparison.')),
             addSuccess: (result) => {
@@ -67,7 +36,7 @@ export const useComparison = () => {
     );
 
     return {
-        comparison: comparisonData?.productList,
+        comparison: productListData?.productList,
         fetching,
         isProductInComparison: isProductInList,
         toggleProductInComparison: toggleProductInList,

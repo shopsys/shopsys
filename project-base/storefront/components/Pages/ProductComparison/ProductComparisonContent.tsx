@@ -3,17 +3,17 @@ import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemov
 import { ProductComparisonHead } from './ProductComparisonHead';
 import { ProductComparisonHeadSticky } from './ProductComparisonHeadSticky';
 import { ArrowIcon } from 'components/Basic/Icon/IconsSvg';
-import { ComparedProductFragmentApi } from 'graphql/generated';
+import { ProductInProductListFragmentApi } from 'graphql/generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';
 import { useEffect, useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ProductComparisonContentProps = {
-    productsCompare: ComparedProductFragmentApi[];
+    comparedProducts: ProductInProductListFragmentApi[];
 };
 
-export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ productsCompare }) => {
+export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ comparedProducts }) => {
     const {
         isArrowLeftActive,
         isArrowRightActive,
@@ -23,11 +23,11 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ pr
         handleSlideRight,
         calcMaxMarginLeft,
         tableMarginLeft,
-    } = useComparisonTable(productsCompare.length);
+    } = useComparisonTable(comparedProducts.length);
 
     const getParametersDataState = useMemo(() => {
         const parametersData: { name: string; values: string[] }[] = [];
-        productsCompare.forEach((product) => {
+        comparedProducts.forEach((product) => {
             product.parameters.forEach((parameter) => {
                 const indexOfParameter = parametersData.findIndex((item) => item.name === parameter.name);
 
@@ -37,7 +37,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ pr
             });
         });
 
-        productsCompare.forEach((product, productIndex) => {
+        comparedProducts.forEach((product, productIndex) => {
             product.parameters.forEach((parameter) => {
                 const indexOfParameter = parametersData.findIndex((item) => item.name === parameter.name);
 
@@ -53,7 +53,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ pr
         });
 
         return parametersData;
-    }, [productsCompare]);
+    }, [comparedProducts]);
 
     useEffect(() => {
         calcMaxMarginLeft();
@@ -78,7 +78,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ pr
                     />
                 </div>
 
-                <ProductComparisonHeadSticky productsCompare={productsCompare} tableMarginLeft={tableMarginLeft} />
+                <ProductComparisonHeadSticky comparedProducts={comparedProducts} tableMarginLeft={tableMarginLeft} />
 
                 <div>
                     <table
@@ -86,10 +86,10 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ pr
                         id="js-table-compare"
                         style={{ marginLeft: -tableMarginLeft }}
                     >
-                        <ProductComparisonHead productsCompare={productsCompare} />
+                        <ProductComparisonHead comparedProducts={comparedProducts} />
                         <ProductComparisonBody
+                            comparedProducts={comparedProducts}
                             parametersDataState={getParametersDataState}
-                            productsCompare={productsCompare}
                         />
                     </table>
                 </div>
