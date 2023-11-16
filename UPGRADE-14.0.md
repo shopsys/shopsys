@@ -217,3 +217,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   logging this type of error brought no business value, thus it was removed
     -   if you want to treat this ignorable event in a more strict way, you might want to keep the logging, but then you have to improve its behavior yourself
     -   see #project-base-diff to update your project
+-   added logic for ordering GTM events ([#2921](https://github.com/shopsys/shopsys/pull/2921))
+    -   added a GTM context provider for synchronizing events
+    -   if you have any logic for syncing your events, you can move it to this provider
+    -   docs were added, so you can base your changes on those
+    -   see #project-base-diff to update your project
