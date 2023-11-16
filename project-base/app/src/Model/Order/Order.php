@@ -45,8 +45,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  */
 class Order extends BaseOrder
 {
-    public const MAX_TRANSACTION_COUNT = 2;
-
     /**
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)

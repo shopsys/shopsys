@@ -2631,6 +2631,8 @@ export type SettingsApi = {
   __typename?: 'Settings';
   /** Main text for contact form */
   contactFormMainText: Scalars['String']['output'];
+  /** Max allowed payment transactions (how many times is user allowed to try the same payment) */
+  maxAllowedPaymentTransactions: Scalars['Int']['output'];
   /** Settings related to pricing */
   pricing: PricingSettingApi;
   /** Settings related to SEO */
@@ -3670,7 +3672,7 @@ export type SeoSettingFragmentApi = { __typename: 'SeoSetting', title: string, t
 export type SettingsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
+export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
 
 export type SliderItemFragmentApi = { __typename: 'SliderItem', uuid: string, name: string, link: string, extendedText: string | null, extendedTextLink: string | null, webMainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, mobileMainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null };
 
@@ -6203,6 +6205,7 @@ export const SettingsQueryDocumentApi = gql`
       ...SeoSettingFragment
     }
     contactFormMainText
+    maxAllowedPaymentTransactions
   }
 }
     ${PricingSettingFragmentApi}

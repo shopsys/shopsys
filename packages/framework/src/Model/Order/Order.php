@@ -21,6 +21,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
  */
 class Order
 {
+    public const MAX_TRANSACTION_COUNT = 2;
+
     /**
      * @var int
      * @ORM\Column(type="integer")

@@ -1976,6 +1976,8 @@ type SeoSetting {
 type Settings {
   "Main text for contact form"
   contactFormMainText: String!
+  "Max allowed payment transactions (how many times is user allowed to try the same payment)"
+  maxAllowedPaymentTransactions: Int!
   "Settings related to pricing"
   pricing: PricingSetting!
   "Settings related to SEO"

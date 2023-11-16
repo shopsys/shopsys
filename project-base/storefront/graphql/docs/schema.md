@@ -7408,6 +7408,15 @@ Main text for contact form
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>maxAllowedPaymentTransactions</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Max allowed payment transactions (how many times is user allowed to try the same payment)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>pricing</strong></td>
 <td valign="top"><a href="#pricingsetting">PricingSetting</a>!</td>
 <td>

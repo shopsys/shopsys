@@ -5,13 +5,12 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentFail } from 'components/Pages/Order/PaymentConfirmation/PaymentFail';
 import { PaymentSuccess } from 'components/Pages/Order/PaymentConfirmation/PaymentSuccess';
 import { useUpdatePaymentStatus } from 'components/Pages/Order/PaymentConfirmation/helpers';
+import { useSettingsQueryApi } from 'graphql/generated';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-
-const MAX_ALLOWED_PAYMENT_TRANSACTIONS = 2;
 
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
@@ -20,6 +19,9 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const orderUuid = getStringFromUrlQuery(orderIdentifier);
     const orderPaymentStatusPageValidityHashParam = getStringFromUrlQuery(orderPaymentStatusPageValidityHash);
     const paymentStatusData = useUpdatePaymentStatus(orderUuid, orderPaymentStatusPageValidityHashParam);
+
+    const [{ data }] = useSettingsQueryApi();
+    const maxAllowedPaymentTransactions = data?.settings?.maxAllowedPaymentTransactions ?? Number.MAX_SAFE_INTEGER;
 
     return (
         <>
@@ -38,7 +40,7 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                                     orderUuid={orderUuid}
                                     canPaymentBeRepeated={
                                         paymentStatusData.UpdatePaymentStatus.transactionCount <
-                                        MAX_ALLOWED_PAYMENT_TRANSACTIONS
+                                        maxAllowedPaymentTransactions
                                     }
                                 />
                             )}
