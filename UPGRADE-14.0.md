@@ -417,3 +417,6 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
     -   keep in mind that the implementation heavily depends on the graphcache in `cacheExchange.ts`. This cache is responsible for manually updating queries, which decreases the number of requests, but also makes the entire functionality to behave as expected. If you use the generic mutations, queries, and fragments, you do not need to touch it, as it should work out of the box. However, there is a chance that your implementation will be more customized and not directly follow the provided one, for example by having a custom query for your list. In such case, if implementing any other list in a more custom manner, follow the guidelines in the docs (`graphcache.md`).
     -   we also renamed `productsCompare` to `comparedProducts` across the files as it is a more suitable and better name.
+
+-   package.json fix to minors ([#2923](https://github.com/shopsys/shopsys/pull/2923))
+    -   all SF packages were updated to the highest possible patch within the current minor version
