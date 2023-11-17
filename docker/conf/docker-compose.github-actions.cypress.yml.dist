@@ -94,6 +94,12 @@ services:
             - ./screenshots:/app/screenshots
         network_mode: "host"
 
+    img-proxy:
+        image: darthsim/imgproxy:latest
+        container_name: shopsys-framework-img-proxy
+        ports:
+            - "8060:8080"
+
 volumes:
     web-volume:
     postgres-data:
