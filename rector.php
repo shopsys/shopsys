@@ -24,5 +24,7 @@ return static function (RectorConfig $rectorConfig): void {
         //\Rector\TypeDeclaration\Rector\ClassMethod\AddArrayReturnDocTypeRector::class,
         \Rector\TypeDeclaration\Rector\ClassMethod\AddMethodCallBasedStrictParamTypeRector::class,
         \Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationBasedOnParentClassMethodRector::class,
+        \Rector\TypeDeclaration\Rector\ClassMethod\ParamTypeByMethodCallTypeRector::class,
+        \Shopsys\FrameworkBundle\Component\Rector\ConstructorParamTypeByPropertyType::class,
     ]);
 };
