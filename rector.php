@@ -11,21 +11,21 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/packages/framework/tests',
         __DIR__ . '/project-base/app/src',
         __DIR__ . '/project-base/app/tests',
-        //__DIR__ . '/project-base/app/src/Component/Router/FriendlyUrl/FriendlyUrlGridFactory.php',
+        //__DIR__ . '/packages/framework/src/Model/Product/Parameter/ParameterDataFactory.php',
     ]);
 
     $rectorConfig->rules([
-        //\Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector::class,
+        \Shopsys\FrameworkBundle\Component\Rector\AddVoidReturnTypeWhereNoReturnRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromReturnNewRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictBoolReturnExprRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNativeCallRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNewArrayRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedPropertyRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\AddMethodCallBasedStrictParamTypeRector::class,
-        //\Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationBasedOnParentClassMethodRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\ParamTypeByMethodCallTypeRector::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ConstructorParamTypeByPropertyType::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByAnnotation::class,
-        \Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByParent::class,
+        \Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationBasedOnParentClassMethodRector::class,
+        //\Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByParent::class, // same as AddReturnTypeDeclarationBasedOnParentClassMethodRector? :(
     ]);
 };
