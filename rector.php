@@ -11,7 +11,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/packages/framework/tests',
         __DIR__ . '/project-base/app/src',
         __DIR__ . '/project-base/app/tests',//*/
-        __DIR__ . '/project-base/app/tests/App/Functional/Component/Doctrine/QueryBuilderExtenderTest.php',
+        __DIR__ . '/project-base/app/src/Model/Product/Search/FilterQuery.php',
     ]);
 
     $rectorConfig->rules([
@@ -21,13 +21,18 @@ return static function (RectorConfig $rectorConfig): void {
         //\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNativeCallRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNewArrayRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedPropertyRector::class,
-        //\Rector\TypeDeclaration\Rector\ClassMethod\AddMethodCallBasedStrictParamTypeRector::class,
-        //\Rector\TypeDeclaration\Rector\ClassMethod\ParamTypeByMethodCallTypeRector::class,
+        \Rector\TypeDeclaration\Rector\ClassMethod\AddMethodCallBasedStrictParamTypeRector::class,
+        \Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeBasedOnPHPUnitDataProviderRector::class,
+        \Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeDeclarationRector::class,
+        \Rector\TypeDeclaration\Rector\ClassMethod\AddParamTypeFromPropertyTypeRector::class,
+        \Rector\TypeDeclaration\Rector\ClassMethod\ParamTypeByMethodCallTypeRector::class,
+        \Rector\TypeDeclaration\Rector\ClassMethod\ParamTypeByParentCallTypeRector::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ConstructorParamTypeByPropertyType::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByAnnotation::class,
-        //\Shopsys\FrameworkBundle\Component\Rector\AnnotationArrayToArrayOfMixedRector::class,
-        \Shopsys\FrameworkBundle\Component\Rector\GuessReturnTypeByImplementationRector::class,
+        //\Shopsys\FrameworkBundle\Component\Rector\GuessReturnTypeByImplementationRector::class,
+        \Rector\Php80\Rector\ClassMethod\AddParamBasedOnParentClassMethodRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationBasedOnParentClassMethodRector::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByParent::class, // same as AddReturnTypeDeclarationBasedOnParentClassMethodRector? :(
+        //\Shopsys\FrameworkBundle\Component\Rector\AnnotationArrayToArrayOfMixedRector::class,
     ]);
 };
