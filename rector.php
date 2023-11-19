@@ -11,11 +11,11 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/packages/framework/tests',
         __DIR__ . '/project-base/app/src',
         __DIR__ . '/project-base/app/tests',
-        //__DIR__ . '/packages/framework/src/Model/Product/Parameter/ParameterDataFactory.php',
+        __DIR__ . '/packages/framework/src/Command/CreateApplicationDirectoriesCommand.php',
     ]);
 
     $rectorConfig->rules([
-        \Shopsys\FrameworkBundle\Component\Rector\AddVoidReturnTypeWhereNoReturnRector::class,
+        //\Shopsys\FrameworkBundle\Component\Rector\AddVoidReturnTypeWhereNoReturnRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromReturnNewRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictBoolReturnExprRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNativeCallRector::class,
@@ -25,7 +25,8 @@ return static function (RectorConfig $rectorConfig): void {
         //\Rector\TypeDeclaration\Rector\ClassMethod\ParamTypeByMethodCallTypeRector::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ConstructorParamTypeByPropertyType::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByAnnotation::class,
-        \Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationBasedOnParentClassMethodRector::class,
+        \Shopsys\FrameworkBundle\Component\Rector\AnnotationArrayToArrayOfMixedRector::class,
+        //\Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationBasedOnParentClassMethodRector::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByParent::class, // same as AddReturnTypeDeclarationBasedOnParentClassMethodRector? :(
     ]);
 };
