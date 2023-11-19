@@ -103,7 +103,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
      * @param int $lineIndex
      * @return mixed[]
      */
-    private function getCsvLine($filename, int $lineIndex): array|bool
+    private function getCsvLine(string|bool $filename, int $lineIndex): array|bool
     {
         $handle = fopen($filename, 'r');
 
