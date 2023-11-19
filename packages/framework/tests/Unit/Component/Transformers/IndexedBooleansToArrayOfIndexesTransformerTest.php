@@ -25,8 +25,8 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
 
     /**
      * @dataProvider transformValuesProvider
-     * @param mixed $value
-     * @param mixed $expected
+     * @param string|mixed[]|null $value
+     * @param mixed[]|null $expected
      */
     public function testTransform(string|array|null $value, ?array $expected): void
     {
@@ -52,8 +52,8 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
 
     /**
      * @dataProvider reverseTransformValuesProvider
-     * @param mixed $value
-     * @param mixed $expected
+     * @param string|mixed[]|null $value
+     * @param mixed[]|null $expected
      */
     public function testReverseTransform(string|array|null $value, ?array $expected): void
     {

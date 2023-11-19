@@ -90,7 +90,7 @@ class PerformanceTestSummaryPrinter
      * @param float $duration
      * @return string
      */
-    private function getFormatterTagForDuration($duration): string
+    private function getFormatterTagForDuration(float $duration): string
     {
         $status = $this->performanceTestSampleQualifier->getStatusForDuration($duration);
 
@@ -101,7 +101,7 @@ class PerformanceTestSummaryPrinter
      * @param int $queryCount
      * @return string
      */
-    private function getFormatterTagForQueryCount($queryCount): string
+    private function getFormatterTagForQueryCount(int $queryCount): string
     {
         $status = $this->performanceTestSampleQualifier->getStatusForQueryCount($queryCount);
 
@@ -120,7 +120,7 @@ class PerformanceTestSummaryPrinter
      * @param int $status
      * @return string
      */
-    private function getStatusConsoleTextColor($status): string
+    private function getStatusConsoleTextColor(int $status): string
     {
         switch ($status) {
             case PerformanceTestSampleQualifier::STATUS_OK:

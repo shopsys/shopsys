@@ -15,8 +15,8 @@ class SitemapFacade
     protected string $sitemapsUrlPrefix;
 
     /**
-     * @param mixed $sitemapsDir
-     * @param mixed $sitemapsUrlPrefix
+     * @param string $sitemapsDir
+     * @param string $sitemapsUrlPrefix
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory $domainSitemapDumperFactory
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository $sitemapRepository

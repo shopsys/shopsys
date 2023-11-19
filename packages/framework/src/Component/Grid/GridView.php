@@ -41,7 +41,7 @@ class GridView
         protected readonly RequestStack $requestStack,
         protected readonly RouterInterface $router,
         protected readonly Environment $twig,
-        $theme,
+        string|array|null $theme,
         array $templateParameters = [],
     ) {
         $this->setTheme($theme, $templateParameters);

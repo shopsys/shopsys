@@ -15,7 +15,7 @@ class DomainExtension extends AbstractExtension
     protected string $domainImagesUrlPrefix;
 
     /**
-     * @param mixed $domainImagesUrlPrefix
+     * @param string $domainImagesUrlPrefix
      * @param \Symfony\Component\Asset\Packages $assetPackages
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Domain\DomainFacade $domainFacade

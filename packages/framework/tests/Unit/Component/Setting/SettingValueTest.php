@@ -40,7 +40,7 @@ class SettingValueTest extends TestCase
 
     /**
      * @dataProvider editProvider
-     * @param mixed $value
+     * @param string|int|float|bool|null $value
      */
     public function testEdit(string|int|float|bool|null $value): void
     {
@@ -50,7 +50,7 @@ class SettingValueTest extends TestCase
 
     /**
      * @dataProvider editExceptionProvider
-     * @param mixed $value
+     * @param mixed[]|\stdClass $value
      */
     public function testEditException(\stdClass|array $value): void
     {

@@ -30,9 +30,9 @@ class DateTimeFormatterExtensionTest extends TestCase
 
     /**
      * @dataProvider formatDateDataProvider
-     * @param mixed $input
-     * @param mixed $locale
-     * @param mixed $result
+     * @param \DateTime|string $input
+     * @param string $locale
+     * @param string $result
      */
     public function testFormatDate(\DateTime|string $input, string $locale, string $result): void
     {

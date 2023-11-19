@@ -25,8 +25,8 @@ class ImageController extends AbstractController
     }
 
     /**
-     * @param mixed $entityName
-     * @param mixed $type
+     * @param string $entityName
+     * @param string|null $type
      * @param mixed $sizeName
      * @param mixed $imageId
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
@@ -60,8 +60,8 @@ class ImageController extends AbstractController
     }
 
     /**
-     * @param mixed $entityName
-     * @param mixed $type
+     * @param string $entityName
+     * @param string|null $type
      * @param mixed $sizeName
      * @param int $imageId
      * @param int $additionalIndex

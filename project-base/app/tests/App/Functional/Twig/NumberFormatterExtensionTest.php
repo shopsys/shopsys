@@ -45,9 +45,9 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
 
     /**
      * @dataProvider formatNumberDataProvider
-     * @param mixed $input
-     * @param mixed $locale
-     * @param mixed $result
+     * @param string|float $input
+     * @param string $locale
+     * @param string $result
      */
     public function testFormatNumber(string|float $input, string $locale, string $result): void
     {

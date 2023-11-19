@@ -25,7 +25,7 @@ class DomainRouterFactory
     protected array $routersByDomainId = [];
 
     /**
-     * @param mixed $routerConfiguration
+     * @param string $routerConfiguration
      * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory $friendlyUrlRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

@@ -14,7 +14,7 @@ class DomainFacade
     protected string $domainImagesDirectory;
 
     /**
-     * @param mixed $domainImagesDirectory
+     * @param string $domainImagesDirectory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Domain\DomainIconResizer $domainIconResizer
      * @param \League\Flysystem\FilesystemOperator $fileSystem

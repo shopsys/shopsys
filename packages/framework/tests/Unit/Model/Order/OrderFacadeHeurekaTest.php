@@ -86,7 +86,7 @@ class OrderFacadeHeurekaTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
      * @return \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      */
-    private function createOrderFacade(HeurekaFacade $heurekaFacade): OrderFacade
+    private function createOrderFacade(\PHPUnit\Framework\MockObject\MockObject $heurekaFacade): OrderFacade
     {
         return new OrderFacade(
             $this->createMock(EntityManagerInterface::class),

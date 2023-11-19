@@ -339,7 +339,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[]
      */
-    private function filterNonEqualReplacements($replacements, \Symfony\Component\Console\Output\OutputInterface $output): array
+    private function filterNonEqualReplacements(array $replacements, \Symfony\Component\Console\Output\OutputInterface $output): array
     {
         foreach ($replacements as $index => $replacement) {
             if ($replacement->getOldSource() === $replacement->getNewSource()) {
@@ -359,7 +359,7 @@ class TranslationReplaceSourceCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
      * @return \Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement[] $replacements
      */
-    private function sortBySourceLengthDesc($replacements): array
+    private function sortBySourceLengthDesc(array $replacements): array
     {
         usort(
             $replacements,
@@ -573,7 +573,7 @@ class TranslationReplaceSourceCommand extends Command
     private function logReplacementError(
         $filePath,
         TranslationSourceReplacement $replacement,
-        $realCount,
+        ?int $realCount,
         $expectedCount,
         $isExpectedCountExact,
         OutputInterface $output,

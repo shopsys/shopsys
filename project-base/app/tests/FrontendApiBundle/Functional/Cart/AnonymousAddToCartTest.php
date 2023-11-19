@@ -120,7 +120,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
 
     /**
      * @dataProvider getInvalidQuantityProvider
-     * @param mixed $invalidQuantity
+     * @param int $invalidQuantity
      */
     public function testInvalidQuantityProvided(int $invalidQuantity): void
     {

@@ -21,7 +21,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
 {
     /**
-     * @param mixed $friendlyUrlRouterResourceFilepath
+     * @param string $friendlyUrlRouterResourceFilepath
      * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider

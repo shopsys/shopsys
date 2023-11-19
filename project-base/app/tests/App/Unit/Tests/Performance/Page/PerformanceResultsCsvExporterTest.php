@@ -91,7 +91,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
      * @param string $filename
      * @param int $lineIndex
      */
-    private function assertCsvRowEquals(array $expectedLine, $filename, int $lineIndex): void
+    private function assertCsvRowEquals(array $expectedLine, string|bool $filename, int $lineIndex): void
     {
         $actualLine = $this->getCsvLine($filename, $lineIndex);
 
@@ -103,7 +103,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
      * @param int $lineIndex
      * @return mixed[]
      */
-    private function getCsvLine($filename, $lineIndex): array|bool
+    private function getCsvLine($filename, int $lineIndex): array|bool
     {
         $handle = fopen($filename, 'r');
 

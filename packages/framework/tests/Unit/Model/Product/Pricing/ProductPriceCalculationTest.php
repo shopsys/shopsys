@@ -104,7 +104,7 @@ class ProductPriceCalculationTest extends TestCase
     /**
      * @dataProvider getMinimumPriceProvider
      * @param mixed[] $prices
-     * @param mixed $minimumPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $minimumPrice
      */
     public function testGetMinimumPrice(array $prices, \Shopsys\FrameworkBundle\Model\Pricing\Price $minimumPrice): void
     {
@@ -149,7 +149,7 @@ class ProductPriceCalculationTest extends TestCase
     /**
      * @dataProvider getArePricesDifferentProvider
      * @param mixed[] $prices
-     * @param mixed $arePricesDifferent
+     * @param bool $arePricesDifferent
      */
     public function testArePricesDifferent(array $prices, bool $arePricesDifferent): void
     {

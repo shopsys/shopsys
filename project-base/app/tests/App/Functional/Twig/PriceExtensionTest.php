@@ -119,9 +119,9 @@ class PriceExtensionTest extends FunctionalTestCase
 
     /**
      * @dataProvider priceFilterDataProvider
-     * @param mixed $input
-     * @param mixed $domainId
-     * @param mixed $result
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $input
+     * @param int $domainId
+     * @param string $result
      */
     public function testPriceFilter(\Shopsys\FrameworkBundle\Component\Money\Money $input, int $domainId, string $result): void
     {

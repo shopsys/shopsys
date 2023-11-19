@@ -14,7 +14,7 @@ class ImageLocator
     protected string $imageDir;
 
     /**
-     * @param mixed $imageDir
+     * @param string $imageDir
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */

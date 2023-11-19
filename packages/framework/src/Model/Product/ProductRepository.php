@@ -281,7 +281,7 @@ class ProductRepository
     public function getPaginationResultForListableInCategory(
         Category $category,
         $domainId,
-        $locale,
+        string $locale,
         ProductFilterData $productFilterData,
         $orderingModeId,
         PricingGroup $pricingGroup,
@@ -367,7 +367,7 @@ class ProductRepository
     public function getPaginationResultForListableForBrand(
         Brand $brand,
         $domainId,
-        $locale,
+        string $locale,
         $orderingModeId,
         PricingGroup $pricingGroup,
         $page,
@@ -434,7 +434,7 @@ class ProductRepository
     public function getPaginationResultForSearchListable(
         $searchText,
         $domainId,
-        $locale,
+        string $locale,
         ProductFilterData $productFilterData,
         $orderingModeId,
         PricingGroup $pricingGroup,

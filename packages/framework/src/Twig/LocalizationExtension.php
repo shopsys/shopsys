@@ -38,7 +38,7 @@ class LocalizationExtension extends AbstractExtension
      * @param bool $showTitle
      * @return string
      */
-    public function getLocaleFlagHtml($locale, $showTitle = true): string
+    public function getLocaleFlagHtml(string $locale, $showTitle = true): string
     {
         $filepath = 'public/admin/images/flags/' . $locale . '.png';
         $src = $this->assetPackages->getUrl($filepath);

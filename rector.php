@@ -32,7 +32,7 @@ return static function (RectorConfig $rectorConfig): void {
         \Rector\TypeDeclaration\Rector\ClassMethod\ParamTypeByParentCallTypeRector::class,
         \Shopsys\FrameworkBundle\Component\Rector\ConstructorParamTypeByPropertyType::class,
         \Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByAnnotation::class,
-        \Shopsys\FrameworkBundle\Component\Rector\GuessReturnTypeByImplementationRector::class,
+        //\Shopsys\FrameworkBundle\Component\Rector\GuessReturnTypeByImplementationRector::class,
         \Shopsys\FrameworkBundle\Component\Rector\ParameterAnnotationTypeByTypeHintRector::class,
         \Shopsys\FrameworkBundle\Component\Rector\MissingMixedAnnotationToArrayPropertiesRector::class,
         \Rector\Php80\Rector\ClassMethod\AddParamBasedOnParentClassMethodRector::class,

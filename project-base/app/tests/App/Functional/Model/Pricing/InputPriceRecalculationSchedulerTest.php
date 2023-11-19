@@ -108,7 +108,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
      * @dataProvider inputPricesTestDataProvider
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPriceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPriceWithVat
-     * @param mixed $vatPercent
+     * @param string $vatPercent
      */
     public function testOnKernelResponseRecalculateInputPricesWithoutVat(
         Money $inputPriceWithoutVat,
@@ -129,7 +129,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
      * @dataProvider inputPricesTestDataProvider
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPriceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPriceWithVat
-     * @param mixed $vatPercent
+     * @param string $vatPercent
      */
     public function testOnKernelResponseRecalculateInputPricesWithVat(
         Money $inputPriceWithoutVat,
@@ -149,7 +149,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedPrice
-     * @param mixed $vatPercent
+     * @param string $vatPercent
      * @param string $scheduleSetInputPricesMethod
      */
     private function doTestOnKernelResponseRecalculateInputPrices(

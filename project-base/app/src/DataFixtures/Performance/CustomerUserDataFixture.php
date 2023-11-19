@@ -87,7 +87,7 @@ class CustomerUserDataFixture
      * @param int $userNumber
      * @return \App\Model\Customer\User\CustomerUser
      */
-    private function createCustomerUserOnDomain($domainId, int $userNumber): \App\Model\Customer\User\CustomerUser
+    private function createCustomerUserOnDomain(int $domainId, int $userNumber): \App\Model\Customer\User\CustomerUser
     {
         $customerUserUpdateData = $this->getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber);
 

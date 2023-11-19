@@ -26,8 +26,8 @@ class OrderStatusTest extends TestCase
 
     /**
      * @dataProvider checkForDeleteProvider
-     * @param mixed $statusType
-     * @param mixed $expectedException
+     * @param int $statusType
+     * @param string|null $expectedException
      */
     public function testCheckForDelete(int $statusType, ?string $expectedException = null): void
     {

@@ -66,7 +66,7 @@ class ArticleFacade
      * @param string $placement
      * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
-    public function getVisibleArticlesForPlacementOnCurrentDomain($placement): array
+    public function getVisibleArticlesForPlacementOnCurrentDomain(string $placement): array
     {
         return $this->articleRepository->getVisibleArticlesForPlacement($this->domain->getId(), $placement);
     }

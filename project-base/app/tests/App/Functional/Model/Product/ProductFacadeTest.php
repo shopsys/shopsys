@@ -40,10 +40,10 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
 
     /**
      * @dataProvider getTestCalculationHiddenAndSellingDeniedDataProvider
-     * @param mixed $hidden
-     * @param mixed $sellingDenied
-     * @param mixed $calculatedHidden
-     * @param mixed $calculatedSellingDenied
+     * @param bool $hidden
+     * @param bool $sellingDenied
+     * @param bool $calculatedHidden
+     * @param bool $calculatedSellingDenied
      */
     public function testCalculationHiddenAndSellingDenied(
         bool $hidden,

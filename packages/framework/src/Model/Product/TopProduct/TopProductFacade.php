@@ -34,7 +34,7 @@ class TopProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllOfferedProducts($domainId, $pricingGroup): array
+    public function getAllOfferedProducts($domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup): array
     {
         return $this->topProductRepository->getOfferedProductsForTopProductsOnDomain($domainId, $pricingGroup);
     }

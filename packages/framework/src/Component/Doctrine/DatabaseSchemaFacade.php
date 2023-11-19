@@ -12,7 +12,7 @@ class DatabaseSchemaFacade
     protected string $defaultSchemaFilepath;
 
     /**
-     * @param mixed $defaultSchemaFilepath
+     * @param string $defaultSchemaFilepath
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(

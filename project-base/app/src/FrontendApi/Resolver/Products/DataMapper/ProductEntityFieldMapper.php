@@ -372,7 +372,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \App\Model\Product\Product $product
      * @return array<int|string, array<\App\Model\ProductVideo\ProductVideoTranslations|string|null>>|array<'description'|'token', mixed>
      */
-    public function getProductVideos(Product $product)
+    public function getProductVideos(Product $product): array
     {
         $locale = $this->domain->getLocale();
 

@@ -55,8 +55,8 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param mixed $productReferenceId
-     * @param mixed $isExpectedInResult
+     * @param int $productReferenceId
+     * @param bool $isExpectedInResult
      */
     private function getAllListableQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {
@@ -99,8 +99,8 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param mixed $productReferenceId
-     * @param mixed $isExpectedInResult
+     * @param int $productReferenceId
+     * @param bool $isExpectedInResult
      */
     private function getAllSellableQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {
@@ -143,8 +143,8 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param mixed $productReferenceId
-     * @param mixed $isExpectedInResult
+     * @param int $productReferenceId
+     * @param bool $isExpectedInResult
      */
     private function getAllOfferedQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {

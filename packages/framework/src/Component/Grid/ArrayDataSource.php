@@ -32,7 +32,7 @@ class ArrayDataSource implements DataSourceInterface
      * @param int $rowId
      * @return mixed
      */
-    public function getOneRow($rowId)
+    public function getOneRow($rowId): array
     {
         if ($this->rowIdSourceColumnName === null) {
             return $this->data[$rowId];

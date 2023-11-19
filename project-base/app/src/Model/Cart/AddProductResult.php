@@ -17,9 +17,9 @@ class AddProductResult extends BaseAddProductResult
 
     /**
      * @param \App\Model\Cart\Item\CartItem $cartItem
-     * @param mixed $isNew
-     * @param mixed $addedQuantity
-     * @param mixed $notOnStockQuantity
+     * @param bool $isNew
+     * @param int $addedQuantity
+     * @param int $notOnStockQuantity
      */
     public function __construct(
         CartItem $cartItem,

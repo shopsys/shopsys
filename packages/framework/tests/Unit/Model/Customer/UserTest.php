@@ -66,10 +66,10 @@ class UserTest extends TestCase
 
     /**
      * @dataProvider isResetPasswordHashValidProvider
-     * @param mixed $resetPasswordHash
-     * @param mixed $resetPasswordHashValidThrough
-     * @param mixed $sentHash
-     * @param mixed $isExpectedValid
+     * @param string|null $resetPasswordHash
+     * @param \DateTime|null $resetPasswordHashValidThrough
+     * @param string $sentHash
+     * @param bool $isExpectedValid
      */
     public function testIsResetPasswordHashValid(
         ?string $resetPasswordHash,

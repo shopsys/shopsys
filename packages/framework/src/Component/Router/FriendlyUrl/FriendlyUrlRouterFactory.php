@@ -14,7 +14,7 @@ class FriendlyUrlRouterFactory
     protected string $friendlyUrlRouterResourceFilepath;
 
     /**
-     * @param mixed $friendlyUrlRouterResourceFilepath
+     * @param string $friendlyUrlRouterResourceFilepath
      * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider

@@ -60,10 +60,10 @@ class RoundingTest extends TestCase
 
     /**
      * @dataProvider roundingProvider
-     * @param mixed $unroundedPrice
-     * @param mixed $expectedAsPriceWithVat
-     * @param mixed $expectedAsPriceWithoutVat
-     * @param mixed $expectedAsVatAmount
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $unroundedPrice
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsPriceWithVat
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsPriceWithoutVat
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsVatAmount
      */
     public function testRoundingByCurrency(
         \Shopsys\FrameworkBundle\Component\Money\Money $unroundedPrice,

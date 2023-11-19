@@ -46,7 +46,7 @@ class InputPriceRecalculator
     /**
      * @param int $newInputPriceType
      */
-    protected function recalculateInputPriceForNewType($newInputPriceType): void
+    protected function recalculateInputPriceForNewType(int $newInputPriceType): void
     {
         $this->recalculateTransportsInputPriceForNewType($newInputPriceType);
         $this->recalculatePaymentsInputPriceForNewType($newInputPriceType);

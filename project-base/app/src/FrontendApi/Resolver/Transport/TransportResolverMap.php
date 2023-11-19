@@ -21,7 +21,7 @@ class TransportResolverMap extends ResolverMap
      * @see https://github.com/shopsys/shopsys/issues/2381
      * @return array<'Transport', array<'payments', \Closure(App\Model\Transport\Transport $transport): array<App\Model\Payment\Payment>>>|\App\Model\Payment\Payment[]
      */
-    protected function map()
+    protected function map(): array
     {
         return [
             'Transport' => [

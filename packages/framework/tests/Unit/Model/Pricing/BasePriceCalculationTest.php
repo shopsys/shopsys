@@ -48,7 +48,7 @@ class BasePriceCalculationTest extends TestCase
      * @dataProvider calculateBasePriceProvider
      * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
-     * @param mixed $vatPercent
+     * @param string $vatPercent
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceWithVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $basePriceVatAmount
