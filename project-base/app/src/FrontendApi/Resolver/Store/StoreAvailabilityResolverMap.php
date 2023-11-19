@@ -17,7 +17,7 @@ class StoreAvailabilityResolverMap extends ResolverMap
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function map(): array
     {

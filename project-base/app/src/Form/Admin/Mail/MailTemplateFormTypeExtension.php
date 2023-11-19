@@ -30,9 +30,9 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \App\Model\Mail\MailTemplate|null $mailTemplate */
         $mailTemplate = $options['entity'];
@@ -81,7 +81,7 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @param array $options
+     * @param mixed[] $options
      * @return \Symfony\Component\Validator\Constraint[]
      */
     private function getBodyConstraints(array $options): array

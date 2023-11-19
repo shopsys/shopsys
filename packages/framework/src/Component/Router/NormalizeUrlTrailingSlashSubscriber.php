@@ -34,7 +34,7 @@ class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
     /**
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      */
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         if ($event->getThrowable() instanceof NotFoundHttpException) {
             $pathInfo = $event->getRequest()->getPathInfo();

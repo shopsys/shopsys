@@ -20,7 +20,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @return array
+     * @return array<'shopsys.admin_side_menu.configure_administrators'|'shopsys.admin_side_menu.configure_customers'|'shopsys.admin_side_menu.configure_dashboard'|'shopsys.admin_side_menu.configure_marketing'|'shopsys.admin_side_menu.configure_pricing'|'shopsys.admin_side_menu.configure_root'|'shopsys.admin_side_menu.configure_settings', string>
      */
     public static function getSubscribedEvents(): array
     {
@@ -38,7 +38,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
      */
-    public function configureRootMenu(ConfigureMenuEvent $event)
+    public function configureRootMenu(ConfigureMenuEvent $event): void
     {
         $rootMenu = $event->getMenu();
         $rootMenu->addChild($this->createIntegrationsMenu($event));
@@ -48,7 +48,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
      */
-    public function configureDashboardMenu(ConfigureMenuEvent $event)
+    public function configureDashboardMenu(ConfigureMenuEvent $event): void
     {
         $dashboardMenu = $event->getMenu();
         $dashboardMenu->addChild('transferList', [

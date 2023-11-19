@@ -24,7 +24,7 @@ class ParameterFilterChoice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
-    public function getParameter()
+    public function getParameter(): \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
     {
         return $this->parameter;
     }
@@ -32,7 +32,7 @@ class ParameterFilterChoice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    public function getValues()
+    public function getValues(): array
     {
         return $this->values;
     }

@@ -24,7 +24,7 @@ class PromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
-    public function create(PromoCodeData $promoCodeData)
+    public function create(PromoCodeData $promoCodeData): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         $promoCode = $this->promoCodeFactory->create($promoCodeData);
         $this->em->persist($promoCode);
@@ -38,7 +38,7 @@ class PromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
-    public function edit($promoCodeId, PromoCodeData $promoCodeData)
+    public function edit($promoCodeId, PromoCodeData $promoCodeData): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         $promoCode = $this->getById($promoCodeId);
         $promoCode->edit($promoCodeData);
@@ -51,7 +51,7 @@ class PromoCodeFacade
      * @param int $promoCodeId
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
-    public function getById($promoCodeId)
+    public function getById($promoCodeId): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         return $this->promoCodeRepository->getById($promoCodeId);
     }
@@ -59,7 +59,7 @@ class PromoCodeFacade
     /**
      * @param int $promoCodeId
      */
-    public function deleteById($promoCodeId)
+    public function deleteById($promoCodeId): void
     {
         $promoCode = $this->getById($promoCodeId);
         $this->em->remove($promoCode);
@@ -70,7 +70,7 @@ class PromoCodeFacade
      * @param string $code
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
      */
-    public function findPromoCodeByCode($code)
+    public function findPromoCodeByCode($code): ?\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
     {
         return $this->promoCodeRepository->findByCode($code);
     }
@@ -78,7 +78,7 @@ class PromoCodeFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->promoCodeRepository->getAll();
     }

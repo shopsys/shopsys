@@ -13,7 +13,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 class DateTimeTypeTest extends TypeTestCase
 {
     /**
-     * @return array
+     * @return array<int, array<'expected'|'input', string>>
      */
     public function getConvertDateTimeToUtcData(): array
     {
@@ -44,7 +44,7 @@ class DateTimeTypeTest extends TypeTestCase
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Form\PreloadedExtension[]
      */
     protected function getExtensions(): array
     {

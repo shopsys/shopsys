@@ -38,7 +38,7 @@ class PromoCodeDataFactory implements PromoCodeDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      */
-    protected function fillFromPromoCode(PromoCodeData $promoCodeData, PromoCode $promoCode)
+    protected function fillFromPromoCode(PromoCodeData $promoCodeData, PromoCode $promoCode): void
     {
         $promoCodeData->code = $promoCode->getCode();
         $promoCodeData->percent = (float)$promoCode->getPercent();

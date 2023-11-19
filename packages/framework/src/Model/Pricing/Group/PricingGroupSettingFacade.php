@@ -28,7 +28,7 @@ class PricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return bool
      */
-    public function isPricingGroupUsedOnSelectedDomain(PricingGroup $pricingGroup)
+    public function isPricingGroupUsedOnSelectedDomain(PricingGroup $pricingGroup): bool
     {
         return $this->pricingGroupRepository->existsCustomerUserWithPricingGroup($pricingGroup)
             || $this->isPricingGroupDefaultOnSelectedDomain($pricingGroup);
@@ -38,7 +38,7 @@ class PricingGroupSettingFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getDefaultPricingGroupByDomainId($domainId)
+    public function getDefaultPricingGroupByDomainId($domainId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         $defaultPricingGroupId = $this->setting->getForDomain(Setting::DEFAULT_PRICING_GROUP, $domainId);
 
@@ -48,7 +48,7 @@ class PricingGroupSettingFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getDefaultPricingGroupByCurrentDomain()
+    public function getDefaultPricingGroupByCurrentDomain(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->getDefaultPricingGroupByDomainId($this->domain->getId());
     }
@@ -56,7 +56,7 @@ class PricingGroupSettingFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getDefaultPricingGroupBySelectedDomain()
+    public function getDefaultPricingGroupBySelectedDomain(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->getDefaultPricingGroupByDomainId($this->adminDomainTabsFacade->getSelectedDomainId());
     }
@@ -64,7 +64,7 @@ class PricingGroupSettingFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      */
-    public function setDefaultPricingGroupForSelectedDomain(PricingGroup $pricingGroup)
+    public function setDefaultPricingGroupForSelectedDomain(PricingGroup $pricingGroup): void
     {
         $this->setting->setForDomain(
             Setting::DEFAULT_PRICING_GROUP,
@@ -77,7 +77,7 @@ class PricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return bool
      */
-    public function isPricingGroupDefaultOnSelectedDomain(PricingGroup $pricingGroup)
+    public function isPricingGroupDefaultOnSelectedDomain(PricingGroup $pricingGroup): bool
     {
         return $pricingGroup === $this->getDefaultPricingGroupBySelectedDomain();
     }

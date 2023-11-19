@@ -13,10 +13,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueCollectionValidator extends ConstraintValidator
 {
     /**
-     * @param array $values
+     * @param mixed[] $values
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
-    public function validate($values, Constraint $constraint)
+    public function validate($values, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueCollection) {
             throw new UnexpectedTypeException($constraint, UniqueCollection::class);
@@ -55,7 +55,7 @@ class UniqueCollectionValidator extends ConstraintValidator
      * @param mixed $value2
      * @return bool
      */
-    protected function areValuesEqual(UniqueCollection $constraint, $value1, $value2)
+    protected function areValuesEqual(UniqueCollection $constraint, $value1, $value2): bool
     {
         if ($constraint->allowEmpty) {
             if ($value1 === null || $value2 === null) {
@@ -71,12 +71,12 @@ class UniqueCollectionValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $fields
+     * @param mixed[] $fields
      * @param mixed $value1
      * @param mixed $value2
      * @return bool
      */
-    protected function areValuesEqualInFields(array $fields, $value1, $value2)
+    protected function areValuesEqualInFields(array $fields, $value1, $value2): bool
     {
         foreach ($fields as $field) {
             $fieldValue1 = $this->getFieldValue($value1, $field);

@@ -21,7 +21,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class OrderPriceCalculationTest extends TestCase
 {
-    public function testGetOrderTotalPrice()
+    public function testGetOrderTotalPrice(): void
     {
         $orderItems = [
             $this->createOrderProductMock(),
@@ -63,7 +63,7 @@ class OrderPriceCalculationTest extends TestCase
         $this->assertThat($orderTotalPrice->getProductPriceWithVat(), new IsMoneyEqual(Money::create(3200)));
     }
 
-    public function testCalculateOrderRoundingPriceForOtherCurrency()
+    public function testCalculateOrderRoundingPriceForOtherCurrency(): void
     {
         $paymentData = new PaymentData();
         $paymentData->czkRounding = true;
@@ -85,7 +85,7 @@ class OrderPriceCalculationTest extends TestCase
         $this->assertNull($roundingPrice);
     }
 
-    public function testCalculateOrderRoundingPriceForCzkWithoutRounding()
+    public function testCalculateOrderRoundingPriceForCzkWithoutRounding(): void
     {
         $paymentData = new PaymentData();
         $paymentData->czkRounding = false;
@@ -107,7 +107,7 @@ class OrderPriceCalculationTest extends TestCase
         $this->assertNull($roundingPrice);
     }
 
-    public function testCalculateOrderRoundingPriceDown()
+    public function testCalculateOrderRoundingPriceDown(): void
     {
         $paymentData = new PaymentData();
         $paymentData->czkRounding = true;
@@ -144,7 +144,7 @@ class OrderPriceCalculationTest extends TestCase
         $this->assertThat($roundingPrice, new IsMoneyEqual(Money::create('-0.3')));
     }
 
-    public function testCalculateOrderRoundingPriceUp()
+    public function testCalculateOrderRoundingPriceUp(): void
     {
         $paymentData = new PaymentData();
         $paymentData->czkRounding = true;

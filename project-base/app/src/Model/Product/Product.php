@@ -174,7 +174,7 @@ class Product extends BaseProduct
     public function edit(
         array $productCategoryDomains,
         BaseProductData $productData,
-    ) {
+    ): void {
         $this->editRelatedProducts($productData->relatedProducts);
 
         parent::edit($productCategoryDomains, $productData);
@@ -200,7 +200,7 @@ class Product extends BaseProduct
     /**
      * @param \App\Model\Product\ProductData $productData
      */
-    protected function setTranslations(BaseProductData $productData)
+    protected function setTranslations(BaseProductData $productData): void
     {
         parent::setTranslations($productData);
 
@@ -216,7 +216,7 @@ class Product extends BaseProduct
     /**
      * @return \App\Model\Product\ProductTranslation
      */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\ProductTranslation
     {
         return new ProductTranslation();
     }
@@ -377,7 +377,7 @@ class Product extends BaseProduct
 
         return array_values(array_filter(
             $usps,
-            static function ($value) {
+            static function ($value): bool {
                 return $value !== null && $value !== '';
             },
         ));
@@ -387,7 +387,7 @@ class Product extends BaseProduct
      * @param int $domainId
      * @return \App\Model\Product\Flag\Flag[]
      */
-    public function getFlagsForDomain(int $domainId)
+    public function getFlagsForDomain(int $domainId): array
     {
         return $this->getProductDomain($domainId)->getFlags();
     }
@@ -443,7 +443,7 @@ class Product extends BaseProduct
     /**
      * @return string[]
      */
-    public function getFullnames()
+    public function getFullnames(): array
     {
         $fullnamesByLocale = [];
 
@@ -607,15 +607,15 @@ class Product extends BaseProduct
     /**
      * @param \App\Model\Product\Flag\Flag[] $flags
      */
-    protected function editFlags(array $flags)
+    protected function editFlags(array $flags): void
     {
         // Keep this function empty - flags were moved to Domain
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getFlags()
+    public function getFlags(): array
     {
         // Return empty array to override default functionality.
         // Flags were moved to Domain.
@@ -625,7 +625,7 @@ class Product extends BaseProduct
     /**
      * @return bool
      */
-    public function isUsingStock()
+    public function isUsingStock(): bool
     {
         //is always false and is by default set in migration to false.
         //removing old stock functionality means product.calculatedHidden is always setup by product.hidden
@@ -635,7 +635,7 @@ class Product extends BaseProduct
     /**
      * @return string
      */
-    public function getOutOfStockAction()
+    public function getOutOfStockAction(): string
     {
         throw new Exception('deprecated - outOfStockAction');
     }
@@ -643,7 +643,7 @@ class Product extends BaseProduct
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
      */
-    public function getOutOfStockAvailability()
+    public function getOutOfStockAvailability(): ?\Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         throw new DeprecatedAvailabilityPropertyFromProductException('outOfStockAvailability', $this->outOfStockAvailability);
     }
@@ -651,7 +651,7 @@ class Product extends BaseProduct
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
      */
-    public function getAvailability()
+    public function getAvailability(): ?\Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         throw new DeprecatedAvailabilityPropertyFromProductException('availability', $this->availability);
     }
@@ -659,13 +659,13 @@ class Product extends BaseProduct
     /**
      * @return int|null
      */
-    public function getStockQuantity()
+    public function getStockQuantity(): ?int
     {
         //this getter isn't possible remove. Because is used in not-extendable code, just return default value.
         return null;
     }
 
-    public function getCalculatedAvailability()
+    public function getCalculatedAvailability(): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
     {
         throw new DeprecatedAvailabilityPropertyFromProductException('calculatedAvailability', $this->calculatedAvailability);
     }
@@ -673,7 +673,7 @@ class Product extends BaseProduct
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      */
-    public function setProductCategoryDomains(array $productCategoryDomains)
+    public function setProductCategoryDomains(array $productCategoryDomains): void
     {
         foreach ($this->productCategoryDomains as $productCategoryDomain) {
             if ($this->isProductCategoryDomainInArray($productCategoryDomain, $productCategoryDomains) === false) {
@@ -748,7 +748,7 @@ class Product extends BaseProduct
     /**
      * @param \App\Model\Product\Product[] $relatedProducts
      */
-    protected function editRelatedProducts(array $relatedProducts)
+    protected function editRelatedProducts(array $relatedProducts): void
     {
         $this->relatedProducts->clear();
 

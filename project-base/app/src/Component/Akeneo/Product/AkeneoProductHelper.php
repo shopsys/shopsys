@@ -34,9 +34,9 @@ class AkeneoProductHelper
     }
 
     /**
-     * @param array $productData
+     * @param mixed[] $productData
      * @param array|null $akeneoData
-     * @return array
+     * @return mixed[]
      */
     public static function mapLocalizedDataString(array $productData, ?array $akeneoData): array
     {
@@ -60,9 +60,9 @@ class AkeneoProductHelper
     }
 
     /**
-     * @param array $productData
+     * @param mixed[] $productData
      * @param array|null $akeneoData
-     * @return array
+     * @return mixed[]
      */
     public static function mapDomainDataString(array $productData, ?array $akeneoData): array
     {
@@ -114,7 +114,7 @@ class AkeneoProductHelper
 
     /**
      * @param int[]|null[] $productData
-     * @param array $akeneoData
+     * @param mixed[] $akeneoData
      * @return int[]|null[]
      */
     public static function mapDomainDataInt(array $productData, array $akeneoData): array
@@ -135,7 +135,7 @@ class AkeneoProductHelper
     }
 
     /**
-     * @param array $productData
+     * @param mixed[] $productData
      * @param array|null $akeneoData
      * @return \Shopsys\FrameworkBundle\Component\Money\Money[]
      */
@@ -163,9 +163,9 @@ class AkeneoProductHelper
     }
 
     /**
-     * @param array $productData
+     * @param mixed[] $productData
      * @param array|null $akeneoData
-     * @return array
+     * @return mixed[]
      */
     public static function mapDomainDataArray(array $productData, ?array $akeneoData): array
     {
@@ -189,9 +189,9 @@ class AkeneoProductHelper
     }
 
     /**
-     * @param array $productData
-     * @param mixed|null $akeneoData
-     * @return array
+     * @param mixed[] $productData
+     * @param mixed $akeneoData
+     * @return mixed[]
      */
     public static function mapDataToAllDomains(array $productData, $akeneoData): array
     {

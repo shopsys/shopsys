@@ -31,7 +31,7 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      * @required
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      */
-    public function autowirePersistentReferenceFacade(PersistentReferenceFacade $persistentReferenceFacade)
+    public function autowirePersistentReferenceFacade(PersistentReferenceFacade $persistentReferenceFacade): void
     {
         $this->persistentReferenceFacade = $persistentReferenceFacade;
     }
@@ -40,7 +40,7 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      * @param string $name
      * @param object $object
      */
-    public function addReference($name, $object)
+    public function addReference(string $name, $object): void
     {
         $this->persistentReferenceFacade->persistReference($name, $object);
     }
@@ -49,7 +49,7 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      * @param string $name
      * @return object
      */
-    public function getReference($name)
+    public function getReference($name): object
     {
         return $this->persistentReferenceFacade->getReference($name);
     }
@@ -69,7 +69,7 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      * @param int $domainId
      * @return object
      */
-    public function getReferenceForDomain(string $name, int $domainId)
+    public function getReferenceForDomain(string $name, int $domainId): object
     {
         return $this->persistentReferenceFacade->getReferenceForDomain($name, $domainId);
     }

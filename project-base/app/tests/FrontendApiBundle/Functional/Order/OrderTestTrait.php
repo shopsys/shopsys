@@ -18,7 +18,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 trait OrderTestTrait
 {
     /**
-     * @return array
+     * @return array<int, array<'name'|'quantity'|'totalPrice'|'unit'|'unitPrice'|'vatRate', mixed>>
      */
     protected function getExpectedOrderItems(): array
     {
@@ -79,7 +79,7 @@ trait OrderTestTrait
     }
 
     /**
-     * @param array $expectedOrderItems
+     * @param mixed[] $expectedOrderItems
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     public static function getOrderTotalPriceByExpectedOrderItems(array $expectedOrderItems): Price
@@ -130,8 +130,8 @@ trait OrderTestTrait
     }
 
     /**
-     * @param array $expectedOrderItems
-     * @return array
+     * @param mixed[] $expectedOrderItems
+     * @return array<'priceWithoutVat'|'priceWithVat'|'vatAmount', mixed>
      */
     public static function getSerializedOrderTotalPriceByExpectedOrderItems(array $expectedOrderItems): array
     {

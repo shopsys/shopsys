@@ -41,7 +41,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     /**
      * @group multidomain
      */
-    public function testCreateProductDomainWithData()
+    public function testCreateProductDomainWithData(): void
     {
         $productData = $this->productDataFactory->create();
 
@@ -86,7 +86,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     /**
      * @group singledomain
      */
-    public function testCreateProductDomainWithDataForSingleDomain()
+    public function testCreateProductDomainWithDataForSingleDomain(): void
     {
         $productData = $this->productDataFactory->create();
 
@@ -122,7 +122,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Product\Product
      */
-    private function getRefreshedProductFromDatabase(Product $product)
+    private function getRefreshedProductFromDatabase(Product $product): \App\Model\Product\Product
     {
         $this->em->persist($product);
         $this->em->flush();

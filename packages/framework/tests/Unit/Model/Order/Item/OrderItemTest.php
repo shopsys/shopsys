@@ -113,7 +113,7 @@ class OrderItemTest extends TestCase
         $orderItem->hasProduct();
     }
 
-    public function testEditProductTypeWithProduct()
+    public function testEditProductTypeWithProduct(): void
     {
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'newName';
@@ -132,7 +132,7 @@ class OrderItemTest extends TestCase
         $this->assertSame('10', $orderItem->getvatPercent());
     }
 
-    public function testEditProductTypeWithoutProduct()
+    public function testEditProductTypeWithoutProduct(): void
     {
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'newName';
@@ -151,7 +151,7 @@ class OrderItemTest extends TestCase
         $this->assertSame('10', $orderItem->getvatPercent());
     }
 
-    public function testConstructWithMainVariantThrowsException()
+    public function testConstructWithMainVariantThrowsException(): void
     {
         $variant = Product::create(TestProductProvider::getTestProductData());
         $mainVariant = Product::createMainVariant(TestProductProvider::getTestProductData(), [$variant]);

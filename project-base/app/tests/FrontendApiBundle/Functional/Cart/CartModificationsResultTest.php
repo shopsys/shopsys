@@ -524,7 +524,7 @@ class CartModificationsResultTest extends GraphQlTestCase
 
     /**
      * @param int $productQuantity
-     * @return array
+     * @return mixed[]
      */
     private function addTestingProductToNewCart(int $productQuantity): array
     {
@@ -590,7 +590,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     /**
      * @param int $productQuantity
      * @param string $cartUuid
-     * @return array
+     * @return mixed[]
      */
     private function addTestingProductToExistingCartAndGetTransportModifications(
         int $productQuantity,
@@ -609,7 +609,7 @@ class CartModificationsResultTest extends GraphQlTestCase
 
     /**
      * @param string $cartQuery
-     * @return array
+     * @return mixed[]
      */
     private function getTransportModificationsForCartQuery(string $cartQuery): array
     {
@@ -621,7 +621,7 @@ class CartModificationsResultTest extends GraphQlTestCase
 
     /**
      * @param string $getCartQuery
-     * @return array
+     * @return mixed[]
      */
     private function getPaymentModifications(string $getCartQuery): array
     {

@@ -16,7 +16,7 @@ class RequestToOrderingModeIdConverter
     public function getOrderingModeIdFromRequest(
         Request $request,
         ProductListOrderingConfig $productListOrderingConfig,
-    ) {
+    ): string {
         $orderingModeId = $request->cookies->get($productListOrderingConfig->getCookieName());
 
         if (!in_array($orderingModeId, $productListOrderingConfig->getSupportedOrderingModeIds(), true)) {

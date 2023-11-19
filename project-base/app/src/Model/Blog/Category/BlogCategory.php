@@ -119,7 +119,7 @@ class BlogCategory extends AbstractTranslatableEntity
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -176,7 +176,7 @@ class BlogCategory extends AbstractTranslatableEntity
     /**
      * @return \App\Model\Blog\Category\BlogCategory[]
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->children->getValues();
     }

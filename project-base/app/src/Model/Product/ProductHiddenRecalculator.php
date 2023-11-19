@@ -15,7 +15,7 @@ class ProductHiddenRecalculator extends BaseProductHiddenRecalculator
     /**
      * @param \App\Model\Product\Product|null $product
      */
-    protected function executeQuery(?Product $product = null)
+    protected function executeQuery(?Product $product = null): void
     {
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')

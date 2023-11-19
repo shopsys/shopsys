@@ -21,8 +21,8 @@ abstract class AbstractIndex
 
     /**
      * @param int $domainId
-     * @param array $restrictToIds
-     * @return array
+     * @param mixed[] $restrictToIds
+     * @return mixed[]
      */
     abstract public function getExportDataForIds(int $domainId, array $restrictToIds): array;
 
@@ -30,7 +30,7 @@ abstract class AbstractIndex
      * @param int $domainId
      * @param int $lastProcessedId
      * @param int $batchSize
-     * @return array
+     * @return mixed[]
      */
     abstract public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array;
 

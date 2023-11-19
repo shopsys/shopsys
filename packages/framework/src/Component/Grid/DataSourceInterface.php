@@ -21,21 +21,21 @@ interface DataSourceInterface
         $page = 1,
         $orderSourceColumnName = null,
         $orderDirection = self::ORDER_ASC,
-    );
+    ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
     /**
      * @param int $rowId
-     * @return array
+     * @return mixed[]
      */
-    public function getOneRow($rowId);
+    public function getOneRow($rowId): array;
 
     /**
      * @return int
      */
-    public function getTotalRowsCount();
+    public function getTotalRowsCount(): int;
 
     /**
      * @return string
      */
-    public function getRowIdSourceColumnName();
+    public function getRowIdSourceColumnName(): string;
 }

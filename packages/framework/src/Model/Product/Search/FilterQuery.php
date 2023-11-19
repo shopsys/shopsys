@@ -175,7 +175,7 @@ class FilterQuery
     }
 
     /**
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function filterByParameters(array $parameters): self
@@ -504,7 +504,7 @@ class FilterQuery
     }
 
     /**
-     * @return array
+     * @return array<'body'|'index', string|array<'from'|'query'|'size'|'sort', array<string, mixed>|int>>
      */
     public function getQuery(): array
     {
@@ -525,7 +525,7 @@ class FilterQuery
     }
 
     /**
-     * @return array
+     * @return array<'match_all', \stdClass>
      */
     protected function matchAll(): array
     {
@@ -548,7 +548,7 @@ class FilterQuery
      * Applies all filters and calculate standard (non pluses) numbers
      * For flags, brands and stock
      *
-     * @return array
+     * @return array<'body'|'index', string|array<'aggs'|'query'|'size', int|array<'bool', array<'filter'|'must', array<string, mixed>>>|array<'brands'|'flags'|'stock', array<'terms', array<'field'|'size', mixed>>|array<'filter', array<'term', array<'in_stock', 'true'>>>>>>
      */
     public function getAbsoluteNumbersAggregationQuery(): array
     {
@@ -592,7 +592,7 @@ class FilterQuery
      * For flags, brands, stock, parameters
      * Parameters aggregation have nested structure in result [parameter_id][parameter_value_id]
      *
-     * @return array
+     * @return mixed[]
      */
     public function getAbsoluteNumbersWithParametersQuery(): array
     {
@@ -627,7 +627,7 @@ class FilterQuery
      * We are looking for count of products that meet all filters and don't have any of already selected flags
      *
      * @param int[] $selectedFlags
-     * @return array
+     * @return array<'body'|'index', string|array<'aggs'|'query'|'size', int|array<'bool', array<'filter'|'must'|'must_not', array<string, mixed>>>|array<'flags', array<'terms', array<'field'|'size', mixed>>>>>
      */
     public function getFlagsPlusNumbersQuery(array $selectedFlags): array
     {
@@ -663,7 +663,7 @@ class FilterQuery
      * We are looking for count of products that meet all filters and don't have any of already selected brand
      *
      * @param int[] $selectedBrandsIds
-     * @return array
+     * @return array<'body'|'index', string|array<'aggs'|'query'|'size', int|array<'bool', array<'filter'|'must'|'must_not', array<string, mixed>>>|array<'brands', array<'terms', array<'field'|'size', mixed>>>>>
      */
     public function getBrandsPlusNumbersQuery(array $selectedBrandsIds): array
     {
@@ -702,8 +702,8 @@ class FilterQuery
      * (that have selected value and can have plus numbers)
      *
      * @param int $selectedParameterId
-     * @param array $selectedValuesIds
-     * @return array
+     * @param mixed[] $selectedValuesIds
+     * @return array<'body'|'index', string|array<'aggs'|'query'|'size', int|array<'bool', array<'filter'|'must', array<int|string, mixed>>>|array<'parameters', array<'aggs'|'nested', array<'path', 'parameters'>|array<'filtered_for_parameter', array<'aggs'|'filter', array<'term', array<'parameters.parameter_id', mixed>>|array<'by_parameters', array<'aggs'|'terms', array<'field'|'size', mixed>|array<'by_value', array<'terms', array<'field'|'size', mixed>>>>>>>>>>>
      */
     public function getParametersPlusNumbersQuery(int $selectedParameterId, array $selectedValuesIds): array
     {

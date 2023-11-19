@@ -35,8 +35,8 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
 
     /**
      * @param string $id
-     * @param array $config
-     * @param array $options
+     * @param mixed[] $config
+     * @param mixed[] $options
      * @return string
      */
     public function renderWidget(string $id, array $config, array $options = []): string
@@ -77,7 +77,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
 
     /**
      * @param string $name
-     * @param array $plugin
+     * @param mixed[] $plugin
      * @return string
      */
     public function renderPlugin(string $name, array $plugin): string
@@ -87,7 +87,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
 
     /**
      * @param string $name
-     * @param array $stylesSet
+     * @param mixed[] $stylesSet
      * @return string
      */
     public function renderStylesSet(string $name, array $stylesSet): string
@@ -97,7 +97,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
 
     /**
      * @param string $name
-     * @param array $template
+     * @param mixed[] $template
      * @return string
      */
     public function renderTemplate(string $name, array $template): string

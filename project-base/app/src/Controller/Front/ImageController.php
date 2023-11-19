@@ -29,8 +29,9 @@ class ImageController extends AbstractController
      * @param mixed $type
      * @param mixed $sizeName
      * @param mixed $imageId
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function getImageAction($entityName, $type, $sizeName, $imageId)
+    public function getImageAction(string $entityName, ?string $type, $sizeName, $imageId): \Symfony\Component\HttpFoundation\StreamedResponse
     {
         if ($sizeName === ImageConfig::DEFAULT_SIZE_NAME) {
             $sizeName = null;
@@ -64,8 +65,9 @@ class ImageController extends AbstractController
      * @param mixed $sizeName
      * @param int $imageId
      * @param int $additionalIndex
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function getAdditionalImageAction($entityName, $type, $sizeName, int $imageId, int $additionalIndex)
+    public function getAdditionalImageAction(string $entityName, ?string $type, $sizeName, int $imageId, int $additionalIndex): \Symfony\Component\HttpFoundation\StreamedResponse
     {
         if ($sizeName === ImageConfig::DEFAULT_SIZE_NAME) {
             $sizeName = null;
@@ -109,7 +111,7 @@ class ImageController extends AbstractController
                 'Access-Control-Allow-Origin' => '*',
             ];
 
-            $callback = function () use ($fileStream) {
+            $callback = function () use ($fileStream): void {
                 $out = fopen('php://output', 'wb');
                 stream_copy_to_stream($fileStream, $out);
             };

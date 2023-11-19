@@ -236,7 +236,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getAllOfferedProducts(): array
     {

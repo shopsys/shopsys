@@ -154,7 +154,7 @@ class FirstImageBatchLoader
     /**
      * @param \App\Component\Image\Image $image
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
-     * @return array
+     * @return array<'additionalSizes'|'height'|'size'|'url'|'width', mixed>
      */
     private function getResolvedImageSize(Image $image, ImageSizeConfig $sizeConfig): array
     {

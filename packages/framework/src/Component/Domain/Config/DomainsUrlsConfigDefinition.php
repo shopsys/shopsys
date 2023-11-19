@@ -16,7 +16,7 @@ class DomainsUrlsConfigDefinition implements ConfigurationInterface
     /**
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): \Symfony\Component\Config\Definition\Builder\TreeBuilder
     {
         $treeBuilder = new TreeBuilder(self::CONFIG_DOMAINS_URLS);
         $rootNode = $treeBuilder->getRootNode();

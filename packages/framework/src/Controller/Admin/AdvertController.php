@@ -51,8 +51,9 @@ class AdvertController extends AdminBaseController
      * @Route("/advert/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $advert = $this->advertFacade->getById($id);
 
@@ -146,8 +147,9 @@ class AdvertController extends AdminBaseController
     /**
      * @Route("/advert/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $advertData = $this->advertDataFactory->create();
         $advertData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -188,8 +190,9 @@ class AdvertController extends AdminBaseController
      * @Route("/advert/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $fullName = $this->advertFacade->getById($id)->getName();

@@ -16,7 +16,7 @@ class ImageConfigTest extends FunctionalTestCase
      */
     private ImageConfig $imageConfig;
 
-    public function testGetImageConfigForExtendedEntity()
+    public function testGetImageConfigForExtendedEntity(): void
     {
         $baseProductImageConfig = $this->imageConfig->getImageEntityConfigByClass(BaseProduct::class);
         $projectProductImageConfig = $this->imageConfig->getImageEntityConfigByClass(Product::class);

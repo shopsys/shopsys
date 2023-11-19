@@ -61,7 +61,7 @@ class ParameterValueDataFactory extends BaseParameterValueDataFactory
     protected function fillFromParameterValue(
         BaseParameterValueData $parameterValueData,
         BaseParameterValue $parameterValue,
-    ) {
+    ): void {
         parent::fillFromParameterValue($parameterValueData, $parameterValue);
 
         $parameterValueData->rgbHex = $parameterValue->getRgbHex();

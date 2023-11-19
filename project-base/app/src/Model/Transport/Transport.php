@@ -61,7 +61,7 @@ class Transport extends BaseTransport
     /**
      * @param \App\Model\Transport\TransportData $transportData
      */
-    public function edit(BaseTransportData $transportData)
+    public function edit(BaseTransportData $transportData): void
     {
         parent::edit($transportData);
     }
@@ -82,7 +82,7 @@ class Transport extends BaseTransport
     /**
      * @param \App\Model\Transport\TransportData $transportData
      */
-    protected function setTranslations(BaseTransportData $transportData)
+    protected function setTranslations(BaseTransportData $transportData): void
     {
         parent::setTranslations($transportData);
 

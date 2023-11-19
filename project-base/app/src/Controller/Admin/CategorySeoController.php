@@ -263,7 +263,7 @@ class CategorySeoController extends AdminBaseController
 
     /**
      * @param int $categoryId
-     * @param array $categorySeoFilterFormTypeAllQueries
+     * @param mixed[] $categorySeoFilterFormTypeAllQueries
      * @param \App\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -327,7 +327,7 @@ class CategorySeoController extends AdminBaseController
     /**
      * @param string $routeName
      * @param int $categoryId
-     * @param array $categorySeoFilterFormTypeAllQueries
+     * @param mixed[] $categorySeoFilterFormTypeAllQueries
      * @param bool $isForBackLink
      * @return string
      */

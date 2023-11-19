@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 class FlashMessageController extends AdminBaseController
 {
-    public function indexAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@ShopsysFramework/Admin/Inline/FlashMessage/index.html.twig', [
             'errorMessages' => $this->getErrorMessages(),

@@ -18,8 +18,9 @@ class LegalConditionsController extends BaseLegalConditionsController
     /**
      * @Route("/legal-conditions/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function termsAndConditionsAction(Request $request)
+    public function termsAndConditionsAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $settingData = [
@@ -56,8 +57,9 @@ class LegalConditionsController extends BaseLegalConditionsController
     /**
      * @Route("/legal-conditions/privacy-policy/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function privacyPolicy(Request $request)
+    public function privacyPolicy(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $settingData = [

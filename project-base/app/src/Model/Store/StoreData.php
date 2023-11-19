@@ -11,6 +11,9 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
 
 class StoreData
 {
+    /**
+     * @var mixed[]
+     */
     public array $isEnabledOnDomains;
 
     public bool $isDefault = false;

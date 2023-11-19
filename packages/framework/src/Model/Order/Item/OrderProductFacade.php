@@ -38,7 +38,7 @@ class OrderProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderProducts
      */
-    public function subtractOrderProductsFromStock(array $orderProducts)
+    public function subtractOrderProductsFromStock(array $orderProducts): void
     {
         if ($this->moduleFacade->isEnabled(ModuleList::PRODUCT_STOCK_CALCULATIONS)) {
             $orderProductsUsingStock = $this->getOrderProductsUsingStockFromOrderProducts($orderProducts);
@@ -55,7 +55,7 @@ class OrderProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderProducts
      */
-    public function addOrderProductsToStock(array $orderProducts)
+    public function addOrderProductsToStock(array $orderProducts): void
     {
         if ($this->moduleFacade->isEnabled(ModuleList::PRODUCT_STOCK_CALCULATIONS)) {
             $orderProductsUsingStock = $this->getOrderProductsUsingStockFromOrderProducts($orderProducts);
@@ -72,7 +72,7 @@ class OrderProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderProducts
      */
-    protected function runRecalculationsAfterStockQuantityChange(array $orderProducts)
+    protected function runRecalculationsAfterStockQuantityChange(array $orderProducts): void
     {
         $orderProductsUsingStock = $this->getOrderProductsUsingStockFromOrderProducts($orderProducts);
         $relevantProducts = [];
@@ -99,7 +99,7 @@ class OrderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderProducts
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
-    protected function getOrderProductsUsingStockFromOrderProducts(array $orderProducts)
+    protected function getOrderProductsUsingStockFromOrderProducts(array $orderProducts): array
     {
         $orderProductsUsingStock = [];
 

@@ -41,7 +41,7 @@ class TransportInCartValidator extends ConstraintValidator
      * @param mixed $value
      * @param \App\FrontendApi\Model\Component\Constraints\TransportInCart $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof TransportInCart) {
             throw new UnexpectedTypeException($constraint, TransportInCart::class);

@@ -91,7 +91,7 @@ CODE_SAMPLE
         }
 
         $detectedReturnTypes = [];
-        $this->traverseNodesWithCallable($node->stmts, function (Node $methodContentNode) use ($scope, $node, &$detectedReturnTypes) {
+        $this->traverseNodesWithCallable($node->stmts, function (Node $methodContentNode) use ($scope, $node, &$detectedReturnTypes): void {
             if ($methodContentNode instanceof Node\Stmt\Return_ && $methodContentNode->expr instanceof Node\Expr) {
                 $detectedType = $scope->getType($methodContentNode->expr);
                 // prevent type 'never[]'

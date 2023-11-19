@@ -49,7 +49,7 @@ class ArticleDataFactory extends BaseArticleDataFactory
      * @param \App\Model\Article\ArticleData $articleData
      * @param \App\Model\Article\Article $article
      */
-    protected function fillFromArticle(BaseArticleData $articleData, BaseArticle $article)
+    protected function fillFromArticle(BaseArticleData $articleData, BaseArticle $article): void
     {
         parent::fillFromArticle($articleData, $article);
 

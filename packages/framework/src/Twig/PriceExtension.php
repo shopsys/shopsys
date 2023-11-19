@@ -35,7 +35,7 @@ class PriceExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters(): array
     {
@@ -78,7 +78,7 @@ class PriceExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(): array
     {

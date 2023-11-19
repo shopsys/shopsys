@@ -33,11 +33,11 @@ class Version20180603135341 extends AbstractMigration
      * @param string $orderStatusCzechName
      */
     private function createOrderStatusWithEnglishAndCzechTranslations(
-        $orderStatusId,
-        $orderStatusType,
-        $orderStatusEnglishName,
-        $orderStatusCzechName,
-    ) {
+        int $orderStatusId,
+        int $orderStatusType,
+        string $orderStatusEnglishName,
+        string $orderStatusCzechName,
+    ): void {
         $this->sql('INSERT INTO order_statuses (id, type) VALUES (:id, :type)', [
             'id' => $orderStatusId,
             'type' => $orderStatusType,

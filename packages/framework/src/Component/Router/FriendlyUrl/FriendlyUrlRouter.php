@@ -80,7 +80,7 @@ class FriendlyUrlRouter implements RouterInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param int $referenceType
      * @return string
      */

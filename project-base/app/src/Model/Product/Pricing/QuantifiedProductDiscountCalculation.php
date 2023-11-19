@@ -206,7 +206,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @return array
+     * @return array<int|string, null>
      */
     private function prefillNullDiscounts(array $quantifiedProducts): array
     {

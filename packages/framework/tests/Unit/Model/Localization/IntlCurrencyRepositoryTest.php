@@ -13,7 +13,7 @@ class IntlCurrencyRepositoryTest extends TestCase
      * @dataProvider getSupportedCurrencyCodes
      * @param mixed $currencyCode
      */
-    public function testGetSupportedCurrencies($currencyCode)
+    public function testGetSupportedCurrencies($currencyCode): void
     {
         $intlCurrencyRepository = new IntlCurrencyRepository();
         $intlCurrencyRepository->get($currencyCode);
@@ -22,7 +22,7 @@ class IntlCurrencyRepositoryTest extends TestCase
     /**
      * @return string[][]
      */
-    public function getSupportedCurrencyCodes()
+    public function getSupportedCurrencyCodes(): array
     {
         $data = [];
 

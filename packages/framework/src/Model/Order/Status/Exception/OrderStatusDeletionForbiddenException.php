@@ -21,7 +21,7 @@ class OrderStatusDeletionForbiddenException extends Exception implements OrderSt
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function getOrderStatus()
+    public function getOrderStatus(): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         return $this->orderStatus;
     }

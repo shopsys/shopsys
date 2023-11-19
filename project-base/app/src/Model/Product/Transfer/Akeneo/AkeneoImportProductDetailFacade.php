@@ -58,7 +58,7 @@ class AkeneoImportProductDetailFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @param array $akeneoProductDetailData
+     * @param mixed[] $akeneoProductDetailData
      */
     protected function processItem($akeneoProductDetailData): void
     {

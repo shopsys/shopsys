@@ -9,9 +9,9 @@ use App\Component\Akeneo\AkeneoHelper;
 class AkeneoAttributeHelper
 {
     /**
-     * @param array $attributeData
+     * @param mixed[] $attributeData
      * @param array|null $akeneoData
-     * @return array
+     * @return mixed[]
      */
     public static function mapLocalizedDataString(array $attributeData, ?array $akeneoData): array
     {

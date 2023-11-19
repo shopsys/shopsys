@@ -96,7 +96,7 @@ class Version20230207100358 extends AbstractMigration implements ContainerAwareI
 
     /**
      * @param int|string $seoPageId
-     * @param array $pageSlugsIndexedByLocale
+     * @param mixed[] $pageSlugsIndexedByLocale
      */
     private function createSeoPageDomainsForSeoPage(int|string $seoPageId, array $pageSlugsIndexedByLocale): void
     {

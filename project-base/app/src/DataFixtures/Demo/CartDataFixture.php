@@ -31,7 +31,7 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCartIdentifier(self::CART_UUID);
         $cart = $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);

@@ -27,7 +27,7 @@ class UnitDataFactory extends BaseUnitDataFactory
      * @param \App\Model\Product\Unit\UnitData $unitData
      * @param \App\Model\Product\Unit\Unit $unit
      */
-    protected function fillFromUnit(BaseUnitData $unitData, BaseUnit $unit)
+    protected function fillFromUnit(BaseUnitData $unitData, BaseUnit $unit): void
     {
         parent::fillFromUnit($unitData, $unit);
 

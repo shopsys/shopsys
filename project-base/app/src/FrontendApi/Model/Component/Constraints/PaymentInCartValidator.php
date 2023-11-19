@@ -32,7 +32,7 @@ class PaymentInCartValidator extends ConstraintValidator
      * @param mixed $value
      * @param \App\FrontendApi\Model\Component\Constraints\PaymentInCart $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof PaymentInCart) {
             throw new UnexpectedTypeException($constraint, PaymentInCart::class);

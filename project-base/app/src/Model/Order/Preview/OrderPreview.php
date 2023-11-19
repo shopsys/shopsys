@@ -45,7 +45,7 @@ class OrderPreview extends BaseOrderPreview
         ?Payment $payment = null,
         ?Price $paymentPrice = null,
         ?Price $roundingPrice = null,
-        $promoCodeDiscountPercent = null,
+        ?string $promoCodeDiscountPercent = null,
         private ?Store $personalPickupStore = null,
         private ?PromoCode $promoCode = null,
     ) {

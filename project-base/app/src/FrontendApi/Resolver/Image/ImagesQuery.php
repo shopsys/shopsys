@@ -190,7 +190,7 @@ class ImagesQuery extends BaseImagesQuery
      * @param \App\Model\Advert\Advert $advert
      * @param string|null $type
      * @param string|null $size
-     * @return array
+     * @return mixed[]
      */
     public function imagesByAdvertQuery(Advert $advert, ?string $type, ?string $size): array
     {
@@ -202,7 +202,7 @@ class ImagesQuery extends BaseImagesQuery
      * @param $data
      * @param string|null $type
      * @param string|null $size
-     * @return array
+     * @return mixed[]
      */
     public function imagesByProductQuery($data, ?string $type, ?string $size): array
     {
@@ -215,7 +215,7 @@ class ImagesQuery extends BaseImagesQuery
      * @param string|null $type
      * @param string|null $size
      * @throws \App\Component\Deprecation\DeprecatedMethodException
-     * @return array
+     * @return mixed[]
      */
     public function imagesByEntityQuery(object $entity, ?string $type, ?string $size): array
     {
@@ -228,7 +228,7 @@ class ImagesQuery extends BaseImagesQuery
      * @param string $entityName
      * @param string|null $type
      * @param string|null $size
-     * @return array
+     * @return mixed[]
      */
     protected function resolveByEntityId(int $entityId, string $entityName, ?string $type, ?string $size): array
     {
@@ -237,10 +237,10 @@ class ImagesQuery extends BaseImagesQuery
 
     /**
      * @deprecated Method is deprecated. With Promises will be unused.
-     * @param array $images
-     * @param array $sizeConfigs
+     * @param mixed[] $images
+     * @param mixed[] $sizeConfigs
      * @throws \App\Component\Deprecation\DeprecatedMethodException
-     * @return array
+     * @return mixed[]
      */
     protected function getResolvedImages(array $images, array $sizeConfigs): array
     {
@@ -252,7 +252,7 @@ class ImagesQuery extends BaseImagesQuery
      * @param \App\Component\Image\Image $image
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
      * @throws \App\Component\Deprecation\DeprecatedMethodException
-     * @return array
+     * @return mixed[]
      */
     protected function getResolvedImage(Image $image, ImageSizeConfig $sizeConfig): array
     {

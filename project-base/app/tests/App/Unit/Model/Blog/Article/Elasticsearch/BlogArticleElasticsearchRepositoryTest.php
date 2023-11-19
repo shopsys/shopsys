@@ -32,12 +32,12 @@ class BlogArticleElasticsearchRepositoryTest extends TestCase
         $this->expectException(BlogArticleNotFoundException::class);
     }
 
-    public function testGetByWrongUuidThrowsException()
+    public function testGetByWrongUuidThrowsException(): void
     {
         $this->blogArticleElasticsearchRepository->getByUuid('123e4567-e89b-12d3-a456-426614174000');
     }
 
-    public function testGetByWrongSlugThrowsException()
+    public function testGetByWrongSlugThrowsException(): void
     {
         $this->blogArticleElasticsearchRepository->getBySlug('wrong-slug');
     }

@@ -24,7 +24,7 @@ class CustomerUserFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $options['customerUser'];

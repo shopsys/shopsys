@@ -64,7 +64,10 @@ class PriceExtensionTest extends FunctionalTestCase
         parent::setUp();
     }
 
-    public function priceFilterDataProvider()
+    /**
+     * @return array<int, array<\Shopsys\FrameworkBundle\Component\Money\Money|int|string>>
+     */
+    public function priceFilterDataProvider(): array
     {
         return [
             ['input' => Money::create(12), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.00'],
@@ -120,7 +123,7 @@ class PriceExtensionTest extends FunctionalTestCase
      * @param mixed $domainId
      * @param mixed $result
      */
-    public function testPriceFilter($input, $domainId, $result)
+    public function testPriceFilter(\Shopsys\FrameworkBundle\Component\Money\Money $input, int $domainId, string $result): void
     {
         $this->domain->switchDomainById($domainId);
 

@@ -22,7 +22,7 @@ class InlineEditFacade
      * @param mixed $rowId
      * @return string
      */
-    public function getRenderedFormRow($serviceName, $rowId)
+    public function getRenderedFormRow($serviceName, $rowId): string
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
         /** @var \Symfony\Component\Form\Form $form */
@@ -49,7 +49,7 @@ class InlineEditFacade
      * @param mixed $rowId
      * @return string|null
      */
-    public function getRenderedRowHtml($serviceName, $rowId)
+    public function getRenderedRowHtml($serviceName, $rowId): ?string
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
 
@@ -72,7 +72,7 @@ class InlineEditFacade
      * @param \Symfony\Component\Form\Form $form
      * @return string
      */
-    protected function renderFormAsRow(GridInlineEditInterface $gridInlineEditService, $rowId, Form $form)
+    protected function renderFormAsRow(GridInlineEditInterface $gridInlineEditService, $rowId, Form $form): string
     {
         $grid = $gridInlineEditService->getGrid();
 
@@ -88,9 +88,9 @@ class InlineEditFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
      * @param \Symfony\Component\Form\Form $form
-     * @return array
+     * @return array<'form'|'lastRow'|'loopIndex'|'row', mixed>
      */
-    protected function getFormRowTemplateParameters(Grid $grid, Form $form)
+    protected function getFormRowTemplateParameters(Grid $grid, Form $form): array
     {
         $formView = $form->createView();
         $rows = $grid->getRows();

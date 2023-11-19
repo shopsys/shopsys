@@ -9,7 +9,7 @@ interface UniqueLoginInterface
     /**
      * @return string
      */
-    public function getLoginToken();
+    public function getLoginToken(): string;
 
     /**
      * @param string $loginToken
@@ -19,7 +19,7 @@ interface UniqueLoginInterface
     /**
      * @return bool
      */
-    public function isMultidomainLogin();
+    public function isMultidomainLogin(): bool;
 
     /**
      * @param bool $multidomainLogin

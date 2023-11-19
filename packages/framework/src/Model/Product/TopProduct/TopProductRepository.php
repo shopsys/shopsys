@@ -26,7 +26,7 @@ class TopProductRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getTopProductRepository()
+    protected function getTopProductRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(TopProduct::class);
     }
@@ -35,7 +35,7 @@ class TopProductRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProduct[]
      */
-    public function getAll($domainId)
+    public function getAll($domainId): array
     {
         return $this->getTopProductRepository()->findBy(['domainId' => $domainId], ['position' => 'ASC']);
     }
@@ -45,7 +45,7 @@ class TopProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getOfferedProductsForTopProductsOnDomain($domainId, $pricingGroup)
+    public function getOfferedProductsForTopProductsOnDomain($domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup): array
     {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainId, $pricingGroup);
 

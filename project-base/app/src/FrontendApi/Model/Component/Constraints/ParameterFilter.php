@@ -27,7 +27,7 @@ class ParameterFilter extends Constraint
     /**
      * @return string
      */
-    public function getTargets()
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }

@@ -13,11 +13,14 @@ use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 
 class CronModuleExecutorTest extends TestCase
 {
-    public function testRunModuleSuspendAfterTimeout()
+    /**
+     * @return true
+     */
+    public function testRunModuleSuspendAfterTimeout(): bool
     {
         $cronModuleServiceMock = $this->getMockForAbstractClass(IteratedCronModuleInterface::class);
         $cronModuleServiceMock->expects($this->once())->method('sleep');
-        $cronModuleServiceMock->method('iterate')->willReturnCallback(function () {
+        $cronModuleServiceMock->method('iterate')->willReturnCallback(function (): bool {
             usleep(1000);
 
             return true;
@@ -33,7 +36,7 @@ class CronModuleExecutorTest extends TestCase
         );
     }
 
-    public function testRunModuleAfterTimeout()
+    public function testRunModuleAfterTimeout(): void
     {
         $cronModuleServiceMock = $this->getMockForAbstractClass(IteratedCronModuleInterface::class);
         $cronModuleServiceMock->expects($this->never())->method('iterate');
@@ -49,7 +52,7 @@ class CronModuleExecutorTest extends TestCase
         );
     }
 
-    public function testRunModule()
+    public function testRunModule(): void
     {
         $cronModuleServiceMock = $this->getMockForAbstractClass(IteratedCronModuleInterface::class);
         $cronModuleServiceMock->expects($this->never())->method('wakeUp');
@@ -65,7 +68,7 @@ class CronModuleExecutorTest extends TestCase
         );
     }
 
-    public function testRunSuspendedModule()
+    public function testRunSuspendedModule(): void
     {
         $cronModuleServiceMock = $this->getMockForAbstractClass(IteratedCronModuleInterface::class);
         $cronModuleServiceMock->expects($this->once())->method('wakeUp');
@@ -79,7 +82,7 @@ class CronModuleExecutorTest extends TestCase
     }
 
     /**
-     * @param array $servicesIndexedById
+     * @param mixed[] $servicesIndexedById
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor
      */
     private function getCronModuleExecutor(array $servicesIndexedById): CronModuleExecutor

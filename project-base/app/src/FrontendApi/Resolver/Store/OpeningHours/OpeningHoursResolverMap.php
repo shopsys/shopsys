@@ -32,7 +32,7 @@ class OpeningHoursResolverMap extends ResolverMap
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function map(): array
     {
@@ -100,7 +100,7 @@ class OpeningHoursResolverMap extends ResolverMap
 
     /**
      * @param \App\Model\Store\OpeningHours\OpeningHours $openingHours
-     * @return array
+     * @return array<'dayOfWeek'|'firstClosingTime'|'firstOpeningTime'|'secondClosingTime'|'secondOpeningTime', mixed>
      */
     protected function mapOpeningHoursToArray(OpeningHours $openingHours): array
     {

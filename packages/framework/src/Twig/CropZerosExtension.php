@@ -12,7 +12,7 @@ class CropZerosExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('cropZeros', [$this, 'cropZeros']),
@@ -23,7 +23,7 @@ class CropZerosExtension extends AbstractExtension
      * @param string $value
      * @return string
      */
-    public function cropZeros($value)
+    public function cropZeros($value): ?string
     {
         return preg_replace('/(?:[,.]0+|([,.]\d*?)0+)$/', '$1', $value);
     }
@@ -31,7 +31,7 @@ class CropZerosExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'cropZeros';
     }

@@ -92,7 +92,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
     private function buildBaseFormGroup(FormBuilderInterface $builder, array $options): void
     {
@@ -321,7 +321,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
                     new Constraints\Callback([$this, 'validateDateTimeFrom']),
                     new Constraints\Callback([$this, 'validateDateTimeTo']),
                 ],
-                'validation_groups' => static function (FormInterface $form) {
+                'validation_groups' => static function (FormInterface $form): array {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
                     /** @var \App\Model\Order\PromoCode\PromoCodeData $promoCodeData */
                     $promoCodeData = $form->getData();

@@ -27,7 +27,7 @@ class ProductAccessoryRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    public function getProductAccessoryRepository()
+    public function getProductAccessoryRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(ProductAccessory::class);
     }
@@ -39,7 +39,7 @@ class ProductAccessoryRepository
      * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getTopOfferedAccessories(Product $product, $domainId, PricingGroup $pricingGroup, $limit)
+    public function getTopOfferedAccessories(Product $product, $domainId, PricingGroup $pricingGroup, $limit): array
     {
         $queryBuilder = $this->getAllOfferedAccessoriesByProductQueryBuilder($product, $domainId, $pricingGroup);
         $queryBuilder->setMaxResults($limit);
@@ -51,7 +51,7 @@ class ProductAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessory[]
      */
-    public function getAllByProduct(Product $product)
+    public function getAllByProduct(Product $product): array
     {
         return $this->getProductAccessoryRepository()->findBy(['product' => $product], ['position' => 'asc']);
     }
@@ -62,7 +62,7 @@ class ProductAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllOfferedAccessoriesByProduct(Product $product, $domainId, PricingGroup $pricingGroup)
+    public function getAllOfferedAccessoriesByProduct(Product $product, $domainId, PricingGroup $pricingGroup): array
     {
         return $this->getAllOfferedAccessoriesByProductQueryBuilder($product, $domainId, $pricingGroup)
             ->getQuery()
@@ -79,7 +79,7 @@ class ProductAccessoryRepository
         Product $product,
         $domainId,
         PricingGroup $pricingGroup,
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainId, $pricingGroup);
         $this->queryBuilderExtender->addOrExtendJoin(
             $queryBuilder,
@@ -99,7 +99,7 @@ class ProductAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $accessory
      * @return \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessory|null
      */
-    public function findByProductAndAccessory(Product $product, Product $accessory)
+    public function findByProductAndAccessory(Product $product, Product $accessory): ?\Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessory
     {
         return $this->getProductAccessoryRepository()->findOneBy([
             'product' => $product,

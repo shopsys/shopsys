@@ -40,8 +40,8 @@ class ProductElasticsearchConverterTest extends TestCase
     }
 
     /**
-     * @param array $mappingFields
-     * @param array $converterFields
+     * @param mixed[] $mappingFields
+     * @param mixed[] $converterFields
      * @param string $methodName
      * @param string $mappingFile
      */

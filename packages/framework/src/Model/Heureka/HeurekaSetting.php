@@ -22,7 +22,7 @@ class HeurekaSetting
      * @param int $domainId
      * @return string
      */
-    public function getApiKeyByDomainId($domainId)
+    public function getApiKeyByDomainId($domainId): string
     {
         return $this->setting->getForDomain(static::HEUREKA_API_KEY, $domainId);
     }
@@ -31,7 +31,7 @@ class HeurekaSetting
      * @param int $domainId
      * @return string
      */
-    public function getHeurekaShopCertificationWidgetByDomainId($domainId)
+    public function getHeurekaShopCertificationWidgetByDomainId($domainId): string
     {
         return $this->setting->getForDomain(static::HEUREKA_WIDGET_CODE, $domainId);
     }
@@ -40,7 +40,7 @@ class HeurekaSetting
      * @param string $apiKey
      * @param int $domainId
      */
-    public function setApiKeyForDomain($apiKey, $domainId)
+    public function setApiKeyForDomain($apiKey, $domainId): void
     {
         $this->setting->setForDomain(static::HEUREKA_API_KEY, $apiKey, $domainId);
     }
@@ -49,7 +49,7 @@ class HeurekaSetting
      * @param string $heurekaWidgetCode
      * @param int $domainId
      */
-    public function setHeurekaShopCertificationWidgetForDomain($heurekaWidgetCode, $domainId)
+    public function setHeurekaShopCertificationWidgetForDomain($heurekaWidgetCode, $domainId): void
     {
         $this->setting->setForDomain(static::HEUREKA_WIDGET_CODE, $heurekaWidgetCode, $domainId);
     }
@@ -58,7 +58,7 @@ class HeurekaSetting
      * @param int $domainId
      * @return bool
      */
-    public function isHeurekaShopCertificationActivated($domainId)
+    public function isHeurekaShopCertificationActivated($domainId): bool
     {
         return $this->setting->getForDomain(static::HEUREKA_API_KEY, $domainId) !== null;
     }
@@ -67,7 +67,7 @@ class HeurekaSetting
      * @param int $domainId
      * @return bool
      */
-    public function isHeurekaWidgetActivated($domainId)
+    public function isHeurekaWidgetActivated($domainId): bool
     {
         return $this->setting->getForDomain(static::HEUREKA_WIDGET_CODE, $domainId) !== null;
     }

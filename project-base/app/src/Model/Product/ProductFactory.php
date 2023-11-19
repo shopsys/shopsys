@@ -18,7 +18,7 @@ class ProductFactory extends BaseProductFactory
     /**
      * @param \App\Model\Product\Product $product
      */
-    protected function setCalculatedAvailabilityIfMissing(Product $product)
+    protected function setCalculatedAvailabilityIfMissing(Product $product): void
     {
         //remove dependency on CalculatedAvailability
     }

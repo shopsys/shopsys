@@ -23,7 +23,7 @@ class FileForUpload
      * @param string|null $targetDirectory
      * @param int $nameConventionType
      */
-    public function __construct($temporaryFilename, $isImage, $category, $targetDirectory, $nameConventionType)
+    public function __construct(string $temporaryFilename, bool $isImage, string $category, ?string $targetDirectory, int $nameConventionType)
     {
         $this->temporaryFilename = $temporaryFilename;
         $this->isImage = $isImage;
@@ -35,7 +35,7 @@ class FileForUpload
     /**
      * @return string
      */
-    public function getTemporaryFilename()
+    public function getTemporaryFilename(): string
     {
         return $this->temporaryFilename;
     }
@@ -43,7 +43,7 @@ class FileForUpload
     /**
      * @return bool
      */
-    public function isImage()
+    public function isImage(): bool
     {
         return $this->isImage;
     }
@@ -51,7 +51,7 @@ class FileForUpload
     /**
      * @return string
      */
-    public function getCategory()
+    public function getCategory(): string
     {
         return $this->category;
     }
@@ -59,7 +59,7 @@ class FileForUpload
     /**
      * @return string|null
      */
-    public function getTargetDirectory()
+    public function getTargetDirectory(): ?string
     {
         return $this->targetDirectory;
     }
@@ -67,7 +67,7 @@ class FileForUpload
     /**
      * @return int
      */
-    public function getNameConventionType()
+    public function getNameConventionType(): int
     {
         return $this->nameConventionType;
     }

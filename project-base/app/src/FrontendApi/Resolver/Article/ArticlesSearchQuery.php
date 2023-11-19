@@ -22,7 +22,7 @@ class ArticlesSearchQuery extends AbstractQuery
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return array
+     * @return mixed[]
      */
     public function articlesSearchQuery(Argument $argument): array
     {

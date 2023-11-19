@@ -19,8 +19,8 @@ class IndexDefinitionModifier
     }
 
     /**
-     * @param array $decodedDefinition
-     * @return array
+     * @param mixed[] $decodedDefinition
+     * @return mixed[]
      */
     public function modifyDefinition(array $decodedDefinition): array
     {

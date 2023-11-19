@@ -38,7 +38,7 @@ class VatDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
 
         /**
@@ -79,7 +79,7 @@ class VatDataFixture extends AbstractReferenceFixture
      * @param int $domainId
      * @param string|null $referenceName
      */
-    private function createVat(VatData $vatData, int $domainId, $referenceName = null)
+    private function createVat(VatData $vatData, int $domainId, $referenceName = null): void
     {
         $vat = $this->vatFacade->create($vatData, $domainId);
 

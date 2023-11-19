@@ -107,7 +107,7 @@ class RegisterTest extends GraphQlTestCase
         }
     }
 
-    public function testRegisterWithOrderPairing()
+    public function testRegisterWithOrderPairing(): void
     {
         /** @var \App\Model\Order\Order $order */
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 19);
@@ -148,7 +148,7 @@ class RegisterTest extends GraphQlTestCase
      * @param string $firstName
      * @param string $lastName
      * @param string $password
-     * @return array
+     * @return array<'city'|'companyCustomer'|'country'|'email'|'firstName'|'lastName'|'newsletterSubscription'|'password'|'postcode'|'street'|'telephone', mixed>
      */
     private function getRegisterQueryVariables(
         string $email = self::DEFAULT_USER_EMAIL,

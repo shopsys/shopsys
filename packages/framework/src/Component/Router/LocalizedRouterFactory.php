@@ -25,7 +25,7 @@ class LocalizedRouterFactory
      * @param string $cacheDir
      */
     public function __construct(
-        $localeRoutersResourcesFilepathMask,
+        string $localeRoutersResourcesFilepathMask,
         protected readonly ContainerInterface $container,
         protected readonly string $cacheDir,
     ) {
@@ -38,7 +38,7 @@ class LocalizedRouterFactory
      * @param \Symfony\Component\Routing\RequestContext $context
      * @return \Symfony\Component\Routing\Router
      */
-    public function getRouter($locale, RequestContext $context)
+    public function getRouter($locale, RequestContext $context): \Symfony\Component\Routing\Router
     {
         if (file_exists($this->getLocaleRouterResourceByLocale($locale)) === false) {
             $message = 'File with localized routes for locale `' . $locale . '` was not found. '
@@ -81,7 +81,7 @@ class LocalizedRouterFactory
 
     /**
      * @param string $locale
-     * @return array
+     * @return mixed[]
      */
     protected function getRouterOptions(string $locale): array
     {

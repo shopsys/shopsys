@@ -22,7 +22,7 @@ class FlagTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoFlagData
+     * @param mixed[] $akeneoFlagData
      * @param \App\Model\Product\Flag\Flag|null $flag
      * @return \App\Model\Product\Flag\FlagData
      */

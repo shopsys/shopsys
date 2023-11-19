@@ -310,7 +310,7 @@ class ExtendedCategory extends Category
     /**
      * @return string|null
      */
-    public function getStringField()
+    public function getStringField(): ?string
     {
         return $this->stringField;
     }
@@ -318,7 +318,7 @@ class ExtendedCategory extends Category
     /**
      * @param string|null $stringField
      */
-    public function setStringField($stringField): void
+    public function setStringField(?string $stringField): void
     {
         $this->stringField = $stringField;
     }

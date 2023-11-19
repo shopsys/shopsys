@@ -41,7 +41,7 @@ class CheckTimezonesCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function checkUniformityOfTimezones(OutputInterface $output)
+    private function checkUniformityOfTimezones(OutputInterface $output): void
     {
         $output->writeln('Checks uniformity of PHP and Postgres timezones...');
 

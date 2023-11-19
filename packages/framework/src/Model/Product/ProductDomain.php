@@ -92,7 +92,7 @@ class ProductDomain
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      */
-    public function __construct(Product $product, $domainId)
+    public function __construct(Product $product, int $domainId)
     {
         $this->product = $product;
         $this->domainId = $domainId;
@@ -101,7 +101,7 @@ class ProductDomain
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -109,7 +109,7 @@ class ProductDomain
     /**
      * @return string|null
      */
-    public function getSeoTitle()
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
@@ -117,7 +117,7 @@ class ProductDomain
     /**
      * @return string|null
      */
-    public function getSeoMetaDescription()
+    public function getSeoMetaDescription(): ?string
     {
         return $this->seoMetaDescription;
     }
@@ -125,7 +125,7 @@ class ProductDomain
     /**
      * @return string|null
      */
-    public function getSeoH1()
+    public function getSeoH1(): ?string
     {
         return $this->seoH1;
     }
@@ -133,7 +133,7 @@ class ProductDomain
     /**
      * @param string|null $seoTitle
      */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle($seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
@@ -141,7 +141,7 @@ class ProductDomain
     /**
      * @param string|null $seoMetaDescription
      */
-    public function setSeoMetaDescription($seoMetaDescription)
+    public function setSeoMetaDescription($seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
@@ -149,7 +149,7 @@ class ProductDomain
     /**
      * @param string $seoH1
      */
-    public function setSeoH1($seoH1)
+    public function setSeoH1($seoH1): void
     {
         $this->seoH1 = $seoH1;
     }
@@ -157,7 +157,7 @@ class ProductDomain
     /**
      * @return string|null
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -165,7 +165,7 @@ class ProductDomain
     /**
      * @return string|null
      */
-    public function getShortDescription()
+    public function getShortDescription(): ?string
     {
         return $this->shortDescription;
     }
@@ -173,7 +173,7 @@ class ProductDomain
     /**
      * @param string|null $description
      */
-    public function setDescription($description)
+    public function setDescription($description): void
     {
         $this->description = $description;
     }
@@ -181,7 +181,7 @@ class ProductDomain
     /**
      * @param string|null $shortDescription
      */
-    public function setShortDescription($shortDescription)
+    public function setShortDescription($shortDescription): void
     {
         $this->shortDescription = $shortDescription;
     }

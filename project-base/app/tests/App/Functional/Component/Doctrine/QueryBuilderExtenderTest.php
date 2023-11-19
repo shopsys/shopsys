@@ -44,7 +44,7 @@ class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @return array
+     * @return array<'extend base entity join with extended entity'|'extend extended entity join with base entity', array<'expectedJoinedEntity'|'firstJoinedEntity'|'secondJoinedEntity', string>>
      */
     public function extendJoinWithExtendedEntityProvider(): array
     {

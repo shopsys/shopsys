@@ -99,7 +99,7 @@ CODE_SAMPLE
     /**
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Expr\Closure $functionLike
      */
-    private function shouldSkipClassMethod($functionLike) : bool
+    private function shouldSkipClassMethod(\PhpParser\Node $functionLike) : bool
     {
         if (!$functionLike instanceof ClassMethod) {
             return \false;

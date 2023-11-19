@@ -14,7 +14,7 @@ class ImageEntityConfigNotFoundException extends Exception implements ImageConfi
      * @param string $entityClassOrName
      * @param \Exception|null $previous
      */
-    public function __construct($entityClassOrName, ?Exception $previous = null)
+    public function __construct(string $entityClassOrName, ?Exception $previous = null)
     {
         $this->entityClassOrName = $entityClassOrName;
 
@@ -24,7 +24,7 @@ class ImageEntityConfigNotFoundException extends Exception implements ImageConfi
     /**
      * @return string
      */
-    public function getEntityClassOrName()
+    public function getEntityClassOrName(): string
     {
         return $this->entityClassOrName;
     }

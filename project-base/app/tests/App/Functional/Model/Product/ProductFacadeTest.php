@@ -46,11 +46,11 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
      * @param mixed $calculatedSellingDenied
      */
     public function testCalculationHiddenAndSellingDenied(
-        $hidden,
-        $sellingDenied,
-        $calculatedHidden,
-        $calculatedSellingDenied,
-    ) {
+        bool $hidden,
+        bool $sellingDenied,
+        bool $calculatedHidden,
+        bool $calculatedSellingDenied,
+    ): void {
         $productData = $this->productDataFactory->create();
         $productData->hidden = $hidden;
         $productData->sellingDenied = $sellingDenied;
@@ -70,7 +70,10 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($calculatedSellingDenied, $productFromDb->getCalculatedSellingDenied());
     }
 
-    public function getTestCalculationHiddenAndSellingDeniedDataProvider()
+    /**
+     * @return array<int, array<'calculatedHidden'|'calculatedSellingDenied'|'hidden'|'sellingDenied', bool>>
+     */
+    public function getTestCalculationHiddenAndSellingDeniedDataProvider(): array
     {
         return [
             [
@@ -100,7 +103,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         ];
     }
 
-    public function testEditMarkProductForVisibilityRecalculation()
+    public function testEditMarkProductForVisibilityRecalculation(): void
     {
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
@@ -115,7 +118,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame(true, $reflectionPropertyRecalculateVisibility->getValue($product));
     }
 
-    public function testEditSchedulesPriceRecalculation()
+    public function testEditSchedulesPriceRecalculation(): void
     {
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);

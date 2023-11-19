@@ -21,7 +21,7 @@ class FriendlyUrlRouterFactory
      * @param \Symfony\Contracts\Cache\CacheInterface $mainFriendlyUrlSlugCache
      */
     public function __construct(
-        $friendlyUrlRouterResourceFilepath,
+        string $friendlyUrlRouterResourceFilepath,
         protected readonly LoaderInterface $configLoader,
         protected readonly FriendlyUrlRepository $friendlyUrlRepository,
         protected readonly FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
@@ -35,7 +35,7 @@ class FriendlyUrlRouterFactory
      * @param \Symfony\Component\Routing\RequestContext $context
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
      */
-    public function createRouter(DomainConfig $domainConfig, RequestContext $context)
+    public function createRouter(DomainConfig $domainConfig, RequestContext $context): \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
     {
         return new FriendlyUrlRouter(
             $context,

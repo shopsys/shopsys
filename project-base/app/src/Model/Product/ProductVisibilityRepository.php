@@ -21,7 +21,7 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
     /**
      * @param bool $onlyMarkedProducts
      */
-    protected function calculateIndependentVisibility($onlyMarkedProducts)
+    protected function calculateIndependentVisibility($onlyMarkedProducts): void
     {
         $now = new DateTimeImmutable();
 

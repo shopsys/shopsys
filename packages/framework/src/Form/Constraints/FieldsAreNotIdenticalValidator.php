@@ -12,10 +12,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class FieldsAreNotIdenticalValidator extends ConstraintValidator
 {
     /**
-     * @param array $values
+     * @param mixed[] $values
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
-    public function validate($values, Constraint $constraint)
+    public function validate($values, Constraint $constraint): void
     {
         if (!$constraint instanceof FieldsAreNotIdentical) {
             throw new UnexpectedTypeException($constraint, FieldsAreNotIdentical::class);

@@ -16,7 +16,7 @@ class TokenMock implements TokenInterface
     {
     }
 
-    public function serialize()
+    public function serialize(): ?string
     {
         return null;
     }
@@ -24,28 +24,28 @@ class TokenMock implements TokenInterface
     /**
      * @param string $data
      */
-    public function unserialize(string $data)
+    public function unserialize(string $data): void
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return '';
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getRoleNames(): array
     {
         return [];
     }
 
-    public function getCredentials()
+    public function getCredentials(): void
     {
     }
 
-    public function getUser()
+    public function getUser(): ?\Symfony\Component\Security\Core\User\UserInterface
     {
         return $this->customerUser;
     }
@@ -53,11 +53,11 @@ class TokenMock implements TokenInterface
     /**
      * @param mixed $user
      */
-    public function setUser($user)
+    public function setUser($user): void
     {
     }
 
-    public function isAuthenticated()
+    public function isAuthenticated(): bool
     {
         return true;
     }
@@ -65,30 +65,33 @@ class TokenMock implements TokenInterface
     /**
      * @param bool $isAuthenticated
      */
-    public function setAuthenticated(bool $isAuthenticated)
+    public function setAuthenticated(bool $isAuthenticated): void
     {
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
-    public function getAttributes()
+    /**
+     * @return mixed[]
+     */
+    public function getAttributes(): array
     {
         return [];
     }
 
     /**
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
-    public function setAttributes(array $attributes)
+    public function setAttributes(array $attributes): void
     {
     }
 
     /**
      * @param string $name
      */
-    public function hasAttribute(string $name)
+    public function hasAttribute(string $name): bool
     {
         return true;
     }
@@ -96,7 +99,7 @@ class TokenMock implements TokenInterface
     /**
      * @param string $name
      */
-    public function getAttribute(string $name)
+    public function getAttribute(string $name): void
     {
     }
 
@@ -104,12 +107,12 @@ class TokenMock implements TokenInterface
      * @param string $name
      * @param mixed $value
      */
-    public function setAttribute(string $name, $value)
+    public function setAttribute(string $name, $value): void
     {
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function __serialize(): array
     {
@@ -117,13 +120,13 @@ class TokenMock implements TokenInterface
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      */
     public function __unserialize(array $data): void
     {
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return '';
     }

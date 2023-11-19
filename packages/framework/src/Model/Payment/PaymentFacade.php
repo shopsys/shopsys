@@ -44,7 +44,7 @@ class PaymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function create(PaymentData $paymentData)
+    public function create(PaymentData $paymentData): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         $payment = $this->paymentFactory->create($paymentData);
         $this->em->persist($payment);
@@ -63,7 +63,7 @@ class PaymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
      */
-    public function edit(Payment $payment, PaymentData $paymentData)
+    public function edit(Payment $payment, PaymentData $paymentData): void
     {
         $payment->edit($paymentData);
         $this->updatePaymentPrices(
@@ -78,7 +78,7 @@ class PaymentFacade
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function getById($id)
+    public function getById($id): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->paymentRepository->getById($id);
     }
@@ -86,7 +86,7 @@ class PaymentFacade
     /**
      * @param int $id
      */
-    public function deleteById($id)
+    public function deleteById($id): void
     {
         $payment = $this->getById($id);
         $payment->markAsDeleted();
@@ -97,7 +97,7 @@ class PaymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
      */
-    protected function setAdditionalDataAndFlush(Payment $payment, PaymentData $paymentData)
+    protected function setAdditionalDataAndFlush(Payment $payment, PaymentData $paymentData): void
     {
         $transports = $this->transportRepository->getAllByIds($paymentData->transports);
         $payment->setTransports($transports);
@@ -108,7 +108,7 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getVisibleOnCurrentDomain()
+    public function getVisibleOnCurrentDomain(): array
     {
         return $this->getVisibleByDomainId($this->domain->getId());
     }
@@ -117,7 +117,7 @@ class PaymentFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getVisibleByDomainId($domainId)
+    public function getVisibleByDomainId($domainId): array
     {
         $allPayments = $this->paymentRepository->getAll();
 
@@ -151,7 +151,7 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getAllIncludingDeleted()
+    public function getAllIncludingDeleted(): array
     {
         return $this->paymentRepository->getAllIncludingDeleted();
     }
@@ -197,7 +197,7 @@ class PaymentFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->paymentRepository->getAll();
     }

@@ -55,7 +55,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
      * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      */
-    public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText)
+    public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText): void
     {
         $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
 
@@ -82,7 +82,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
     }
 
     /**
-     * @param array $productCountAggregation
+     * @param mixed[] $productCountAggregation
      * @return int[]
      */
     private function extractCategoryIdsAggregation(array $productCountAggregation): array
@@ -98,7 +98,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
 
     /**
      * @param \App\Model\Product\Search\FilterQuery[] $filterQueries
-     * @return array
+     * @return array<'products'|'totals', mixed>
      */
     public function getBatchedProductsAndTotalsByFilterQueries(array $filterQueries): array
     {

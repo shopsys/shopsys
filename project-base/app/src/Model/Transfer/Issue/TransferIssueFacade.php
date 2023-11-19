@@ -26,7 +26,7 @@ class TransferIssueFacade
     }
 
     /**
-     * @param array $transferIssuesData
+     * @param mixed[] $transferIssuesData
      * @param string $serviceTransferIdentifier
      */
     public function saveTransferIssues(array $transferIssuesData, string $serviceTransferIdentifier): void

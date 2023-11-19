@@ -25,7 +25,7 @@ class CategoriesQuery extends BaseCategoriesQuery
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function categoriesQuery(): array
     {

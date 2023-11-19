@@ -15,7 +15,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -23,7 +23,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_IS,
@@ -34,15 +34,16 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): string|\Symfony\Component\Form\FormTypeInterface
     {
         return HiddenType::class;
     }
 
     /**
      * {@inheritdoc}
+     * @return mixed[]
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [];
     }
@@ -50,7 +51,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             $sellingDenied = $ruleData->operator === self::OPERATOR_IS;

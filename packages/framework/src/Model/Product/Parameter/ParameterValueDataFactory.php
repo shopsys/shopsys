@@ -38,7 +38,7 @@ class ParameterValueDataFactory implements ParameterValueDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterValueData
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
      */
-    protected function fillFromParameterValue(ParameterValueData $parameterValueData, ParameterValue $parameterValue)
+    protected function fillFromParameterValue(ParameterValueData $parameterValueData, ParameterValue $parameterValue): void
     {
         $parameterValueData->text = $parameterValue->getText();
         $parameterValueData->locale = $parameterValue->getLocale();

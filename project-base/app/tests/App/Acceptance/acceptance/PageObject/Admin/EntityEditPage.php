@@ -13,7 +13,7 @@ class EntityEditPage extends AbstractPage
      * @param string $imageUploadFieldId
      * @param string $testImageName
      */
-    public function uploadTestImage($imageUploadFieldId, $testImageName)
+    public function uploadTestImage($imageUploadFieldId, string $testImageName): void
     {
         $imageUploadInput = $this->webDriver->findElement(WebDriverBy::id($imageUploadFieldId));
 

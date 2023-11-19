@@ -50,7 +50,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
      */
     private StockFacade $stockFacade;
 
-    public function testShippingDaysByDomainIdForEmptyStock()
+    public function testShippingDaysByDomainIdForEmptyStock(): void
     {
         $stockQuantity = 0;
 
@@ -74,7 +74,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->assertEquals($stockSettingsData->delivery, $this->productAvailabilityFacade->getShippingDaysByDomainId($product, self::FIRST_DOMAIN_ID));
     }
 
-    public function testShippingDaysByDomainIdForFullStock()
+    public function testShippingDaysByDomainIdForFullStock(): void
     {
         $stockQuantity = 5;
         $stockSettingsData = new StockSettingsData();
@@ -117,7 +117,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
      * @param int $stockQuantity
      * @param bool $expectedIsProductAvailableOnDomain
      */
-    public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain)
+    public function testIsProductAvailableOnDomain(int $stockQuantity, bool $expectedIsProductAvailableOnDomain): void
     {
 
         /** @var \App\Model\Product\Product $product */
@@ -143,7 +143,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @return array
+     * @return array<'expectedIsProductAvailableOnDomain'|'stockQuantity', int|true>[]|array<'expectedIsProductAvailableOnDomain'|'stockQuantity', int|false>[]
      */
     public function getTestIsProductAvailableOnDomainProvider(): array
     {
@@ -165,7 +165,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
      * @param bool $preorder
      * @param bool $expected
      */
-    public function testIsProductAvailableOnDomainOrHasPreorder(int $stockQuantity, bool $preorder, bool $expected)
+    public function testIsProductAvailableOnDomainOrHasPreorder(int $stockQuantity, bool $preorder, bool $expected): void
     {
 
         /** @var \App\Model\Product\Product $product */
@@ -192,7 +192,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @return array
+     * @return array<int, array<'expected'|'preorder'|'stockQuantity', int|bool>>
      */
     public function getTestIsProductAvailableOnDomainOrHasPreorder(): array
     {
@@ -220,7 +220,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         ];
     }
 
-    public function testGroupedStockQuantity()
+    public function testGroupedStockQuantity(): void
     {
         $stockQuantity = 5;
         $expected = count($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID)) * $stockQuantity;
@@ -262,7 +262,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         int $transfer,
         int $delivery,
         ?int $vendorDeliveryDate,
-    ) {
+    ): void {
         $stockSettingsData = new StockSettingsData();
         $stockSettingsData->transfer = $transfer;
         $stockSettingsData->delivery = $delivery;
@@ -298,7 +298,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @return array
+     * @return array<int, array<bool|int|null>>
      */
     public function getTestProductAvailabilityInformationByDomainIdProvider(): array
     {

@@ -11,10 +11,10 @@ class GoPayPaymentDownloadException extends Exception implements GoPayException
     /**
      * @param mixed $url
      * @param mixed $method
-     * @param mixed|null $requestData
-     * @param mixed|null $responseData
-     * @param mixed|null $expectedCode
-     * @param mixed|null $actualCode
+     * @param mixed $requestData
+     * @param mixed $responseData
+     * @param mixed $expectedCode
+     * @param mixed $actualCode
      */
     public function __construct(
         $url,

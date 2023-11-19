@@ -191,7 +191,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach (self::DEMO_DATA as $data) {
             $goPayPaymentMethodData = $this->goPayPaymentMethodDataFactory->create();
@@ -240,7 +240,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             CurrencyDataFixture::class,

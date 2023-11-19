@@ -26,7 +26,7 @@ class CustomTransFiltersVisitor extends AbstractNodeVisitor
     /**
      * {@inheritdoc}
      */
-    protected function doEnterNode(Node $node, Environment $env)
+    protected function doEnterNode(Node $node, Environment $env): \Twig\Node\Node
     {
         if ($node instanceof FilterExpression) {
             $filterNameConstantNode = $node->getNode('filter');
@@ -45,7 +45,7 @@ class CustomTransFiltersVisitor extends AbstractNodeVisitor
      * @param \Twig\Node\Expression\FilterExpression $filterExpressionNode
      * @param string $newFilterName
      */
-    protected function replaceCustomFilterName(FilterExpression $filterExpressionNode, $newFilterName)
+    protected function replaceCustomFilterName(FilterExpression $filterExpressionNode, $newFilterName): void
     {
         $filterNameConstantNode = $filterExpressionNode->getNode('filter');
         $filterNameConstantNode->setAttribute('value', $newFilterName);
@@ -59,7 +59,7 @@ class CustomTransFiltersVisitor extends AbstractNodeVisitor
     /**
      * {@inheritdoc}
      */
-    protected function doLeaveNode(Node $node, Environment $env)
+    protected function doLeaveNode(Node $node, Environment $env): ?\Twig\Node\Node
     {
         return $node;
     }
@@ -67,7 +67,7 @@ class CustomTransFiltersVisitor extends AbstractNodeVisitor
     /**
      * {@inheritdoc}
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return static::PRIORITY;
     }

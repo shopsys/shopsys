@@ -26,7 +26,7 @@ class PluginCrudExtensionRegistry
      * @param string $type
      * @param string $serviceId
      */
-    public function registerCrudExtension(PluginCrudExtensionInterface $crudExtension, $type, $serviceId)
+    public function registerCrudExtension(PluginCrudExtensionInterface $crudExtension, $type, $serviceId): void
     {
         self::assertTypeIsKnown($type);
         $key = TransformString::stringToCamelCase($serviceId);
@@ -42,7 +42,7 @@ class PluginCrudExtensionRegistry
      * @param string $type
      * @return \Shopsys\Plugin\PluginCrudExtensionInterface[]
      */
-    public function getCrudExtensions($type)
+    public function getCrudExtensions($type): array
     {
         return $this->crudExtensionsByTypeAndServiceId[$type] ?? [];
     }
@@ -50,7 +50,7 @@ class PluginCrudExtensionRegistry
     /**
      * @param string $type
      */
-    public static function assertTypeIsKnown($type)
+    public static function assertTypeIsKnown($type): void
     {
         if (!in_array($type, static::KNOWN_TYPES, true)) {
             throw new UnknownPluginCrudExtensionTypeException($type, static::KNOWN_TYPES);

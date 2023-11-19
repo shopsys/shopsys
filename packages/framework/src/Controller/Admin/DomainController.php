@@ -35,7 +35,10 @@ class DomainController extends AdminBaseController
     ) {
     }
 
-    public function domainTabsAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function domainTabsAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@ShopsysFramework/Admin/Inline/Domain/tabs.html.twig', [
             'domainConfigs' => $this->domain->getAll(),
@@ -47,8 +50,9 @@ class DomainController extends AdminBaseController
      * @Route("/multidomain/select-domain/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param mixed $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function selectDomainAction(Request $request, $id)
+    public function selectDomainAction(Request $request, $id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $id = (int)$id;
 
@@ -65,8 +69,9 @@ class DomainController extends AdminBaseController
 
     /**
      * @Route("/domain/list")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $dataSource = new ArrayDataSource($this->loadData(), 'id');
 
@@ -87,8 +92,9 @@ class DomainController extends AdminBaseController
      * @Route("/domain/edit/{id}", requirements={"id" = "\d+"}, condition="request.isXmlHttpRequest()")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $id = (int)$id;
         $domain = $this->domain->getDomainConfigById($id);
@@ -136,7 +142,10 @@ class DomainController extends AdminBaseController
         ]);
     }
 
-    protected function loadData()
+    /**
+     * @return array<mixed, array<'icon'|'id'|'locale'|'name', mixed>>
+     */
+    protected function loadData(): array
     {
         $data = [];
 

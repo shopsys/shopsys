@@ -208,7 +208,7 @@ class CartFacade extends BaseCartFacade
      * @param int $cartItemId
      * @param \App\Model\Cart\Cart|null $cart
      */
-    public function deleteCartItem($cartItemId, ?BaseCart $cart = null)
+    public function deleteCartItem($cartItemId, ?BaseCart $cart = null): void
     {
         if (!$cart) {
             $cart = $this->findCartOfCurrentCustomerUser();
@@ -231,7 +231,7 @@ class CartFacade extends BaseCartFacade
     /**
      * @param \App\Model\Cart\Cart $cart
      */
-    public function deleteCart(BaseCart $cart)
+    public function deleteCart(BaseCart $cart): void
     {
         foreach ($cart->getItems() as $item) {
             $this->em->remove($item);

@@ -27,7 +27,7 @@ class IndexDefinition
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getDefinition(): array
     {

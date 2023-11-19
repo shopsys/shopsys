@@ -46,7 +46,7 @@ class ParameterValue extends BaseParameterValue
     /**
      * @param \App\Model\Product\Parameter\ParameterValueData $parameterData
      */
-    public function edit(ParameterValueData $parameterData)
+    public function edit(ParameterValueData $parameterData): void
     {
         parent::edit($parameterData);
 

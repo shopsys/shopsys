@@ -65,7 +65,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
      */
     private OrderDataFactory $orderDataFactory;
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $product = $this->productRepository->getById(1);
 
@@ -139,7 +139,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $this->assertCount(3, $orderFromDb->getItems());
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $this->markTestSkipped('Adding new items into Order is denied. It is caused by unknown ProductType for new order items.'
             . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');

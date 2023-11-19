@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CurrentPromoCodeFacadeTest extends TestCase
 {
-    public function testGetEnteredPromoCode()
+    public function testGetEnteredPromoCode(): void
     {
         $validPromoCodeData = new PromoCodeData();
         $validPromoCodeData->code = 'validCode';
@@ -52,7 +52,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
         $this->assertSame($validPromoCode, $currentPromoCodeFacade->getValidEnteredPromoCodeOrNull());
     }
 
-    public function testGetEnteredPromoCodeInvalid()
+    public function testGetEnteredPromoCodeInvalid(): void
     {
         $validPromoCodeData = new PromoCodeData();
         $validPromoCodeData->code = 'validCode';
@@ -85,7 +85,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
         $this->assertNull($currentPromoCodeFacade->getValidEnteredPromoCodeOrNull());
     }
 
-    public function testSetEnteredPromoCode()
+    public function testSetEnteredPromoCode(): void
     {
         $enteredCode = 'validCode';
         $validPromoCodeData = new PromoCodeData();
@@ -121,7 +121,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
         $currentPromoCodeFacade->setEnteredPromoCode($enteredCode);
     }
 
-    public function testSetEnteredPromoCodeInvalid()
+    public function testSetEnteredPromoCodeInvalid(): void
     {
         $enteredCode = 'invalidCode';
 

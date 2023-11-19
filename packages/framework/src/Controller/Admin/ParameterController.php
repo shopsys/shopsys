@@ -24,8 +24,9 @@ class ParameterController extends AdminBaseController
 
     /**
      * @Route("/product/parameter/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $grid = $this->parameterInlineEdit->getGrid();
 
@@ -38,8 +39,9 @@ class ParameterController extends AdminBaseController
      * @Route("/product/parameter/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $fullName = $this->parameterFacade->getById($id)->getName();

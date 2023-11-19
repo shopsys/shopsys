@@ -43,7 +43,7 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
 
             if ($yamlContent !== null) {
                 $validationArrays = $this->getAllValuesOfArrayKeysByPattern($yamlContent, '/^validation$/');
-                $validationArraysWithoutCascade = array_filter($validationArrays, static function ($value) {
+                $validationArraysWithoutCascade = array_filter($validationArrays, static function ($value): bool {
                     return $value !== 'cascade';
                 });
                 $messages = $this->getAllValuesOfArrayKeysByPattern($validationArraysWithoutCascade, '/.*message.*/i');
@@ -59,9 +59,9 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
     }
 
     /**
-     * @param array $yamlContent
+     * @param mixed[] $yamlContent
      * @param string $pattern
-     * @return array
+     * @return mixed[]
      */
     protected function getAllValuesOfArrayKeysByPattern(array $yamlContent, string $pattern): array
     {

@@ -64,7 +64,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
      */
-    public function edit(SliderItemData $sliderItemData)
+    public function edit(SliderItemData $sliderItemData): void
     {
         $this->setData($sliderItemData);
     }
@@ -83,7 +83,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -91,7 +91,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -99,7 +99,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -107,7 +107,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -115,7 +115,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @return int|null
      */
-    public function getPosition()
+    public function getPosition(): ?int
     {
         return $this->position;
     }
@@ -123,7 +123,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @param int $position
      */
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
@@ -131,7 +131,7 @@ class SliderItem implements OrderableEntityInterface
     /**
      * @return bool
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }

@@ -105,7 +105,7 @@ class Advert
     /**
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
      */
-    public function edit(AdvertData $advertData)
+    public function edit(AdvertData $advertData): void
     {
         $this->setData($advertData);
     }
@@ -141,7 +141,7 @@ class Advert
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -157,7 +157,7 @@ class Advert
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -165,7 +165,7 @@ class Advert
     /**
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -173,7 +173,7 @@ class Advert
     /**
      * @return string|null
      */
-    public function getLink()
+    public function getLink(): ?string
     {
         return $this->link;
     }
@@ -181,7 +181,7 @@ class Advert
     /**
      * @return string|null
      */
-    public function getCode()
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -189,7 +189,7 @@ class Advert
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -197,7 +197,7 @@ class Advert
     /**
      * @return bool
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }
@@ -205,7 +205,7 @@ class Advert
     /**
      * @return string|null
      */
-    public function getPositionName()
+    public function getPositionName(): ?string
     {
         return $this->positionName;
     }

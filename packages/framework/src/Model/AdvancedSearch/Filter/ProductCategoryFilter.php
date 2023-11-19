@@ -40,7 +40,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_IS,
@@ -51,15 +51,16 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): string|\Symfony\Component\Form\FormTypeInterface
     {
         return ChoiceType::class;
     }
 
     /**
      * {@inheritdoc}
+     * @return string|bool[]|\Closure(Shopsys\FrameworkBundle\Model\Category\Category $category): string[]|string[]|\Shopsys\FrameworkBundle\Model\Category\Category[]|string[][]
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): string|array
     {
         return [
             'expanded' => false,
@@ -78,7 +79,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {
         $isCategory = [];
         $isNotCategory = [];

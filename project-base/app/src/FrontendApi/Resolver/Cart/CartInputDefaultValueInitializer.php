@@ -13,7 +13,7 @@ class CartInputDefaultValueInitializer
      * This should be fixed after update to overblog/graphql-bundle 0.14
      *
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return array
+     * @return mixed[]
      */
     public static function initializeDefaultValues(Argument $argument): array
     {

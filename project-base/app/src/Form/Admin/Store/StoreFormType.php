@@ -46,9 +46,9 @@ class StoreFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['store'] instanceof Store) {
             $this->store = $options['store'];
@@ -175,7 +175,7 @@ class StoreFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['store'])
@@ -209,7 +209,7 @@ class StoreFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createImagesGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface

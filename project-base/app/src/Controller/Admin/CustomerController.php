@@ -31,7 +31,7 @@ class CustomerController extends BaseCustomerController
      * @Route("/customer/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();

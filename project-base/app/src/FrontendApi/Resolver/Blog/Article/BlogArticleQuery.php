@@ -22,7 +22,7 @@ class BlogArticleQuery extends AbstractQuery
     /**
      * @param string|null $uuid
      * @param string|null $urlSlug
-     * @return array
+     * @return mixed[]
      */
     public function blogArticleByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): array
     {

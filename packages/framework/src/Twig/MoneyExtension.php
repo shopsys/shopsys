@@ -11,9 +11,9 @@ use Twig\TwigFilter;
 class MoneyExtension extends AbstractExtension
 {
     /**
-     * @return array
+     * @return \Twig\TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter(
@@ -35,7 +35,7 @@ class MoneyExtension extends AbstractExtension
         ?int $decimal = null,
         string $decimalPoint = '.',
         string $thousandsSeparator = '',
-    ) {
+    ): string {
         $moneyString = $money->getAmount();
 
         if ($decimal === null) {

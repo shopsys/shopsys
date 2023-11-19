@@ -26,7 +26,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      * @param string|null $locale
      * @return string|bool
      */
-    public function format(DateTime $value, $dateType, $timeType, $locale)
+    public function format(DateTime $value, $dateType, $timeType, $locale): string|bool
     {
         $intlDateFormatter = new IntlDateFormatter(
             $locale,
@@ -46,7 +46,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      * @param int|null $timeType
      * @return string|null
      */
-    protected function getCustomPattern($locale, $dateType, $timeType)
+    protected function getCustomPattern($locale, $dateType, $timeType): ?string
     {
         $dateTimePattern = $this->customDateTimeFormatPatternRepository->findDateTimePattern(
             $locale,

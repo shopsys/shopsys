@@ -293,7 +293,7 @@ class ImageFacade extends BaseImageFacade
 
     /**
      * @param object $entity
-     * @param array $temporaryFilenames
+     * @param mixed[] $temporaryFilenames
      * @param string|null $type
      * @param bool $deleteOldImage
      * @return \App\Component\Image\Image|null
@@ -339,7 +339,7 @@ class ImageFacade extends BaseImageFacade
 
     /**
      * @param mixed $entity
-     * @param array $images
+     * @param mixed[] $images
      */
     public function deleteImages($entity, array $images): void
     {

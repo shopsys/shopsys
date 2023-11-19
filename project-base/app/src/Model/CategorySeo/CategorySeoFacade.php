@@ -95,7 +95,7 @@ class CategorySeoFacade
         CategorySeoFiltersData $categorySeoFiltersData,
         int $domainId,
         string $locale,
-    ) {
+    ): array {
         foreach ($categorySeoFiltersData->parameters as $parameter) {
             $parameterValues = $this->parameterRepository->getParameterValuesUsedByProductsInCategoryByParameter(
                 $category,
@@ -107,7 +107,7 @@ class CategorySeoFacade
             $categorySeoMixes = $this->getNewSeoCategoryMixes(
                 $categorySeoMixes,
                 $parameterValues,
-                function (CategorySeoMix $categorySeoMix, ParameterValue $parameterValue) {
+                function (CategorySeoMix $categorySeoMix, ParameterValue $parameterValue): void {
                     $categorySeoMix->addParameterValue($parameterValue);
                 },
             );
@@ -124,12 +124,12 @@ class CategorySeoFacade
     private function getSeoCategoryMixesFromFlags(
         array $categorySeoMixes,
         CategorySeoFiltersData $categorySeoFiltersData,
-    ) {
+    ): array {
         if ($categorySeoFiltersData->useFlags === true) {
             $categorySeoMixes = $this->getNewSeoCategoryMixes(
                 $categorySeoMixes,
                 $this->flagFacade->getAll(),
-                function (CategorySeoMix $categorySeoMix, Flag $flag) {
+                function (CategorySeoMix $categorySeoMix, Flag $flag): void {
                     $categorySeoMix->setFlag($flag);
                 },
             );
@@ -146,7 +146,7 @@ class CategorySeoFacade
     private function getSeoCategoryMixesFromOrderings(
         array $categorySeoMixes,
         CategorySeoFiltersData $categorySeoFiltersData,
-    ) {
+    ): array {
         if ($categorySeoFiltersData->useOrdering === true) {
             $orderings = array_keys($this->productListOrderingModeForListFacade
                 ->getProductListOrderingConfig()
@@ -155,7 +155,7 @@ class CategorySeoFacade
             $categorySeoMixes = $this->getNewSeoCategoryMixes(
                 $categorySeoMixes,
                 $orderings,
-                function (CategorySeoMix $categorySeoMix, string $ordering) {
+                function (CategorySeoMix $categorySeoMix, string $ordering): void {
                     $categorySeoMix->setOrdering($ordering);
                 },
             );
@@ -174,7 +174,7 @@ class CategorySeoFacade
         array $categorySeoMixes,
         array $newValues,
         callable $categorySeoMixCallback,
-    ) {
+    ): array {
         $newCategorySeoMixes = [];
 
         foreach ($newValues as $newValue) {

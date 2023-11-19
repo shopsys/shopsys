@@ -11,7 +11,7 @@ use Tests\App\Performance\Page\PerformanceTestSample;
 
 class PerformanceResultsCsvExporterTest extends TestCase
 {
-    public function testExportJmeterCsvReportWritesExpectedHeader()
+    public function testExportJmeterCsvReportWritesExpectedHeader(): void
     {
         $outputFilename = $this->getTemporaryFilename();
 
@@ -35,7 +35,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
         $this->assertCsvRowEquals($expectedLine, $outputFilename, 0);
     }
 
-    public function testExportJmeterCsvReportRoundsDuration()
+    public function testExportJmeterCsvReportRoundsDuration(): void
     {
         $outputFilename = $this->getTemporaryFilename();
 
@@ -54,7 +54,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
     /**
      * @return string
      */
-    private function getTemporaryFilename()
+    private function getTemporaryFilename(): string|bool
     {
         return tempnam(sys_get_temp_dir(), 'test');
     }
@@ -62,7 +62,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
     /**
      * @return \Tests\App\Performance\Page\PerformanceTestSample[]
      */
-    private function getPerformanceTestSamples()
+    private function getPerformanceTestSamples(): array
     {
         $performanceTestSamples = [];
 
@@ -87,11 +87,11 @@ class PerformanceResultsCsvExporterTest extends TestCase
     }
 
     /**
-     * @param array $expectedLine
+     * @param mixed[] $expectedLine
      * @param string $filename
      * @param int $lineIndex
      */
-    private function assertCsvRowEquals(array $expectedLine, $filename, $lineIndex)
+    private function assertCsvRowEquals(array $expectedLine, $filename, int $lineIndex): void
     {
         $actualLine = $this->getCsvLine($filename, $lineIndex);
 
@@ -101,9 +101,9 @@ class PerformanceResultsCsvExporterTest extends TestCase
     /**
      * @param string $filename
      * @param int $lineIndex
-     * @return array
+     * @return mixed[]
      */
-    private function getCsvLine($filename, $lineIndex)
+    private function getCsvLine($filename, $lineIndex): array|bool
     {
         $handle = fopen($filename, 'r');
 
@@ -118,7 +118,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
     /**
      * @return \Tests\App\Performance\Page\PerformanceResultsCsvExporter
      */
-    private function createPerformanceResultsCsvExporter()
+    private function createPerformanceResultsCsvExporter(): \Tests\App\Performance\Page\PerformanceResultsCsvExporter
     {
         return new PerformanceResultsCsvExporter(new JmeterCsvReporter());
     }

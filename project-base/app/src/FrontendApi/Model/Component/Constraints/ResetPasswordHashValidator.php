@@ -25,7 +25,7 @@ class ResetPasswordHashValidator extends ConstraintValidator
      * @param mixed $value
      * @param \App\FrontendApi\Model\Component\Constraints\ResetPasswordHash $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ResetPasswordHash) {
             throw new UnexpectedTypeException($constraint, ResetPasswordHash::class);

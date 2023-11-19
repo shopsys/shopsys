@@ -51,7 +51,7 @@ class PromoCode extends Constraint
         self::LIMIT_NOT_REACHED_ERROR => 'LIMIT_NOT_REACHED_ERROR',
     ];
 
-    public function getTargets()
+    public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;
     }

@@ -157,7 +157,7 @@ class Store implements OrderableEntityInterface
     /**
      * @param \App\Model\Store\StoreData $storeData
      */
-    public function edit(StoreData $storeData)
+    public function edit(StoreData $storeData): void
     {
         $this->setDomains($storeData);
         $this->setData($storeData);

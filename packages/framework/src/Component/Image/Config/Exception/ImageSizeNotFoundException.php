@@ -17,7 +17,7 @@ class ImageSizeNotFoundException extends Exception implements ImageConfigExcepti
      * @param string $sizeName
      * @param \Exception|null $previous
      */
-    public function __construct($entityClass, $sizeName, ?Exception $previous = null)
+    public function __construct(string $entityClass, string $sizeName, ?Exception $previous = null)
     {
         $this->entityClass = $entityClass;
         $this->sizeName = $sizeName;
@@ -32,7 +32,7 @@ class ImageSizeNotFoundException extends Exception implements ImageConfigExcepti
     /**
      * @return string
      */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }
@@ -40,7 +40,7 @@ class ImageSizeNotFoundException extends Exception implements ImageConfigExcepti
     /**
      * @return string
      */
-    public function getSizeName()
+    public function getSizeName(): string
     {
         return $this->sizeName;
     }

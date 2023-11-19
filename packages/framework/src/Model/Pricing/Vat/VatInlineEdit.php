@@ -32,7 +32,7 @@ class VatInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @return int
      */
-    protected function createEntityAndGetId($vatData)
+    protected function createEntityAndGetId($vatData): int|string
     {
         $vat = $this->vatFacade->create($vatData, $this->adminDomainTabsFacade->getSelectedDomainId());
 
@@ -43,7 +43,7 @@ class VatInlineEdit extends AbstractGridInlineEdit
      * @param int $vatId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      */
-    protected function editEntity($vatId, $vatData)
+    protected function editEntity($vatId, $vatData): void
     {
         $this->vatFacade->edit($vatId, $vatData);
     }
@@ -52,7 +52,7 @@ class VatInlineEdit extends AbstractGridInlineEdit
      * @param int|null $vatId
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($vatId)
+    public function getForm($vatId): \Symfony\Component\Form\FormInterface
     {
         if ($vatId !== null) {
             $vat = $this->vatFacade->getById((int)$vatId);

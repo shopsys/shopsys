@@ -16,7 +16,7 @@ class PluginDataFixtureRegistry
     /**
      * @param \Shopsys\Plugin\PluginDataFixtureInterface $pluginDataFixture
      */
-    public function registerDataFixture(PluginDataFixtureInterface $pluginDataFixture)
+    public function registerDataFixture(PluginDataFixtureInterface $pluginDataFixture): void
     {
         $this->pluginDataFixtures[] = $pluginDataFixture;
     }
@@ -24,7 +24,7 @@ class PluginDataFixtureRegistry
     /**
      * @return \Shopsys\Plugin\PluginDataFixtureInterface[]
      */
-    public function getDataFixtures()
+    public function getDataFixtures(): array
     {
         return $this->pluginDataFixtures;
     }

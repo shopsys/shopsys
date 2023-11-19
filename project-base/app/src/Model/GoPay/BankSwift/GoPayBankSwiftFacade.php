@@ -36,7 +36,7 @@ class GoPayBankSwiftFacade
 
     /**
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwift $goPayBankSwift
-     * @param array $swiftRawData
+     * @param mixed[] $swiftRawData
      */
     public function edit(GoPayBankSwift $goPayBankSwift, array $swiftRawData): void
     {
@@ -49,7 +49,7 @@ class GoPayBankSwiftFacade
 
     /**
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftData $goPayBankSwiftData
-     * @param array $swiftRawData
+     * @param mixed[] $swiftRawData
      */
     public function setGoPayBankSwiftDataFromSwiftRawData(
         GoPayBankSwiftData $goPayBankSwiftData,

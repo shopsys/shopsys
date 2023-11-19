@@ -27,7 +27,7 @@ class ImageFactory implements ImageFactoryInterface
     /**
      * @param string $entityName
      * @param int $entityId
-     * @param array $namesIndexedByLocale
+     * @param mixed[] $namesIndexedByLocale
      * @param string $temporaryFilename
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image
@@ -50,8 +50,8 @@ class ImageFactory implements ImageFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig $imageEntityConfig
      * @param int $entityId
-     * @param array $names
-     * @param array $temporaryFilenames
+     * @param mixed[] $names
+     * @param mixed[] $temporaryFilenames
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */

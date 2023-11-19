@@ -63,8 +63,8 @@ class EntityNameResolver
     }
 
     /**
-     * @param array $array
-     * @return array
+     * @param mixed[] $array
+     * @return mixed[]
      */
     protected function resolveInArray(array $array): array
     {

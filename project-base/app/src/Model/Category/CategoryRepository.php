@@ -103,7 +103,7 @@ class CategoryRepository extends BaseCategoryRepository
         array $categories,
         PricingGroup $pricingGroup,
         $domainId,
-    ) {
+    ): array {
         if (count($categories) === 0) {
             return [];
         }
@@ -230,7 +230,7 @@ class CategoryRepository extends BaseCategoryRepository
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllVisibleByDomainIdQueryBuilder($domainId)
+    public function getAllVisibleByDomainIdQueryBuilder($domainId): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->getAllQueryBuilder()
             ->join('c.domains', 'cd', Join::WITH, 'cd.domainId = :domainId AND cd.visible = TRUE');

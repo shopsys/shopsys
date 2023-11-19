@@ -35,7 +35,7 @@ class PersonalDataExportMail extends BasePersonalDataExportMail
      * @param string $hash
      * @return string
      */
-    protected function getVariablePersonalDataAccessUrl($hash)
+    protected function getVariablePersonalDataAccessUrl($hash): string
     {
         return $this->personalDataExportFacade->getPersonalDataExportLink($hash);
     }

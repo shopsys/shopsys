@@ -37,7 +37,7 @@ class ProductFilterDataMapper extends BaseProductFilterDataMapper
     }
 
     /**
-     * @param array $parameterAndValueUuids
+     * @param mixed[] $parameterAndValueUuids
      * @return \App\Model\Product\Filter\ParameterFilterData[]
      */
     protected function getParametersAndValuesByUuids(array $parameterAndValueUuids): array
@@ -82,7 +82,7 @@ class ProductFilterDataMapper extends BaseProductFilterDataMapper
     /**
      * Method is extended because of https://github.com/shopsys/shopsys/pull/2380
      *
-     * @param array $frontendApiFilter
+     * @param mixed[] $frontendApiFilter
      * @return \App\Model\Product\Filter\ProductFilterData
      */
     public function mapFrontendApiFilterToProductFilterData(array $frontendApiFilter): ProductFilterData

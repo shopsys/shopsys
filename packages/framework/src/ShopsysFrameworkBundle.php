@@ -28,7 +28,7 @@ class ShopsysFrameworkBundle extends Bundle
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 

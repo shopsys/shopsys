@@ -9,7 +9,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class InverseMultipleChoiceTransformer implements DataTransformerInterface
 {
     /**
-     * @param array $allChoices Choices from ChoiceType options
+     * @param mixed[] $allChoices Choices from ChoiceType options
      */
     public function __construct(protected readonly array $allChoices)
     {
@@ -40,10 +40,10 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array $inputValues
-     * @return array
+     * @param mixed[] $inputValues
+     * @return mixed[]
      */
-    protected function getInvertedValues(array $inputValues)
+    protected function getInvertedValues(array $inputValues): array
     {
         $outputValues = [];
 

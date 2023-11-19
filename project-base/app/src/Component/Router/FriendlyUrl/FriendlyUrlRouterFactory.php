@@ -29,7 +29,7 @@ class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      */
     public function __construct(
-        $friendlyUrlRouterResourceFilepath,
+        string $friendlyUrlRouterResourceFilepath,
         LoaderInterface $configLoader,
         FriendlyUrlRepository $friendlyUrlRepository,
         FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,

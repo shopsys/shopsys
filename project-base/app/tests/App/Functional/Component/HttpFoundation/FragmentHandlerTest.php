@@ -24,7 +24,7 @@ class FragmentHandlerTest extends TransactionFunctionalTestCase
      */
     private RequestStack $requestStack;
 
-    public function testRenderingFragmentDoesNotIgnoreException()
+    public function testRenderingFragmentDoesNotIgnoreException(): void
     {
         // Rendering a fragment can only be done when handling a Request.
         $this->putFakeRequestToRequestStack();
@@ -35,7 +35,7 @@ class FragmentHandlerTest extends TransactionFunctionalTestCase
         $this->httpKernelRuntime->renderFragment('/test/error-handler/exception');
     }
 
-    private function putFakeRequestToRequestStack()
+    private function putFakeRequestToRequestStack(): void
     {
         $request = new Request();
         $session = new Session(new MockArraySessionStorage());

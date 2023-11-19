@@ -11,7 +11,7 @@ interface DomainBreadcrumbGeneratorInterface extends BreadcrumbGeneratorInterfac
     /**
      * @param int $domainId
      * @param string $routeName
-     * @param array $routeParameters
+     * @param mixed[] $routeParameters
      * @param string|null $locale
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */

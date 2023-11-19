@@ -15,7 +15,10 @@ class BreadcrumbController extends AdminBaseController
     {
     }
 
-    public function indexAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@ShopsysFramework/Admin/Inline/Breadcrumb/breadcrumb.html.twig', [
             'breadcrumbOverrider' => $this->breadcrumbOverrider,

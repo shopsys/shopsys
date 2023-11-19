@@ -28,9 +28,9 @@ class FriendlyUrlFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlData $friendlyUrlData */
         $friendlyUrlData = $options['data'];
@@ -103,7 +103,7 @@ class FriendlyUrlFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => FriendlyUrlData::class,

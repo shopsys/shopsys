@@ -22,7 +22,7 @@ interface ActorInterface
 
     /**
      * @param string $routeName
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function amOnLocalizedRoute(string $routeName, array $parameters = []): void;
 
@@ -55,7 +55,7 @@ interface ActorInterface
 
     /**
      * @param mixed $text
-     * @param mixed|null $selector
+     * @param mixed $selector
      */
     public function canSee($text, $selector = null): void;
 
@@ -76,7 +76,7 @@ interface ActorInterface
 
     /**
      * @param mixed $cookie
-     * @param array $params
+     * @param mixed[] $params
      * @param bool $showDebug
      */
     public function canSeeCookie($cookie, array $params = [], bool $showDebug = true): void;
@@ -98,13 +98,13 @@ interface ActorInterface
 
     /**
      * @param mixed $selector
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     public function canSeeElement($selector, array $attributes = []): void;
 
     /**
      * @param mixed $selector
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     public function canSeeElementInDOM($selector, array $attributes = []): void;
 
@@ -121,7 +121,7 @@ interface ActorInterface
 
     /**
      * @param string $table
-     * @param array $criteria
+     * @param mixed[] $criteria
      */
     public function canSeeInDatabase(string $table, array $criteria = []): void;
 
@@ -151,7 +151,7 @@ interface ActorInterface
 
     /**
      * @param mixed $formSelector
-     * @param array $params
+     * @param mixed[] $params
      */
     public function canSeeInFormFields($formSelector, array $params): void;
 
@@ -184,7 +184,7 @@ interface ActorInterface
     /**
      * @param int $expectedNumber
      * @param string $table
-     * @param array $criteria
+     * @param mixed[] $criteria
      */
     public function canSeeNumRecords(int $expectedNumber, string $table, array $criteria = []): void;
 
@@ -214,7 +214,7 @@ interface ActorInterface
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function canSeeTranslationAdmin(
         string $id,
@@ -226,7 +226,7 @@ interface ActorInterface
      * @param string $id
      * @param string $css
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function canSeeTranslationAdminInCss(
         string $id,
@@ -238,7 +238,7 @@ interface ActorInterface
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function canSeeTranslationFrontend(
         string $id,
@@ -250,7 +250,7 @@ interface ActorInterface
 
     /**
      * @param mixed $text
-     * @param mixed|null $selector
+     * @param mixed $selector
      */
     public function cantSee($text, $selector = null): void;
 
@@ -271,7 +271,7 @@ interface ActorInterface
 
     /**
      * @param mixed $cookie
-     * @param array $params
+     * @param mixed[] $params
      * @param bool $showDebug
      */
     public function cantSeeCookie($cookie, array $params = [], bool $showDebug = true): void;
@@ -288,13 +288,13 @@ interface ActorInterface
 
     /**
      * @param mixed $selector
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     public function cantSeeElement($selector, array $attributes = []): void;
 
     /**
      * @param mixed $selector
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     public function cantSeeElementInDOM($selector, array $attributes = []): void;
 
@@ -305,7 +305,7 @@ interface ActorInterface
 
     /**
      * @param string $table
-     * @param array $criteria
+     * @param mixed[] $criteria
      */
     public function cantSeeInDatabase(string $table, array $criteria = []): void;
 
@@ -317,7 +317,7 @@ interface ActorInterface
 
     /**
      * @param mixed $formSelector
-     * @param array $params
+     * @param mixed[] $params
      */
     public function cantSeeInFormFields($formSelector, array $params): void;
 
@@ -356,7 +356,7 @@ interface ActorInterface
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function cantSeeTranslationFrontend(
         string $id,
@@ -387,7 +387,7 @@ interface ActorInterface
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function checkOptionByLabelTranslationFrontend(
         string $id,
@@ -404,13 +404,13 @@ interface ActorInterface
 
     /**
      * @param mixed $link
-     * @param mixed|null $context
+     * @param mixed $context
      */
     public function click($link, $context = null): void;
 
     /**
      * @param string $css
-     * @param mixed|null $contextSelector
+     * @param mixed $contextSelector
      */
     public function clickByCss(string $css, $contextSelector = null): void;
 
@@ -422,20 +422,20 @@ interface ActorInterface
 
     /**
      * @param string $name
-     * @param mixed|null $contextSelector
+     * @param mixed $contextSelector
      */
     public function clickByName(string $name, $contextSelector = null): void;
 
     /**
      * @param string $text
-     * @param mixed|null $contextSelector
+     * @param mixed $contextSelector
      */
     public function clickByText(string $text, $contextSelector = null): void;
 
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null|null $contextSelector
      */
     public function clickByTranslationAdmin(
@@ -448,7 +448,7 @@ interface ActorInterface
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null|null $contextSelector
      */
     public function clickByTranslationFrontend(
@@ -459,14 +459,14 @@ interface ActorInterface
     );
 
     /**
-     * @param mixed|null $cssOrXPath
+     * @param mixed $cssOrXPath
      * @param int|null $offsetX
      * @param int|null $offsetY
      */
     public function clickWithLeftButton($cssOrXPath = null, ?int $offsetX = null, ?int $offsetY = null): void;
 
     /**
-     * @param mixed|null $cssOrXPath
+     * @param mixed $cssOrXPath
      * @param int|null $offsetX
      * @param int|null $offsetY
      */
@@ -492,7 +492,7 @@ interface ActorInterface
 
     /**
      * @param mixed $text
-     * @param mixed|null $selector
+     * @param mixed $selector
      */
     public function dontSee($text, $selector = null): void;
 
@@ -513,7 +513,7 @@ interface ActorInterface
 
     /**
      * @param mixed $cookie
-     * @param array $params
+     * @param mixed[] $params
      * @param bool $showDebug
      */
     public function dontSeeCookie($cookie, array $params = [], bool $showDebug = true): void;
@@ -530,13 +530,13 @@ interface ActorInterface
 
     /**
      * @param mixed $selector
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     public function dontSeeElement($selector, array $attributes = []): void;
 
     /**
      * @param mixed $selector
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     public function dontSeeElementInDOM($selector, array $attributes = []): void;
 
@@ -547,7 +547,7 @@ interface ActorInterface
 
     /**
      * @param string $table
-     * @param array $criteria
+     * @param mixed[] $criteria
      */
     public function dontSeeInDatabase(string $table, array $criteria = []): void;
 
@@ -559,7 +559,7 @@ interface ActorInterface
 
     /**
      * @param mixed $formSelector
-     * @param array $params
+     * @param mixed[] $params
      */
     public function dontSeeInFormFields($formSelector, array $params): void;
 
@@ -598,7 +598,7 @@ interface ActorInterface
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function dontSeeTranslationFrontend(
         string $id,
@@ -619,7 +619,7 @@ interface ActorInterface
 
     /**
      * @param string $script
-     * @param array $arguments
+     * @param mixed[] $arguments
      */
     public function executeAsyncJS(string $script, array $arguments = []);
 
@@ -630,7 +630,7 @@ interface ActorInterface
 
     /**
      * @param string $script
-     * @param array $arguments
+     * @param mixed[] $arguments
      */
     public function executeJS(string $script, array $arguments = []);
 
@@ -720,53 +720,53 @@ interface ActorInterface
     /**
      * @param string $table
      * @param string $column
-     * @param array $criteria
-     * @return array
+     * @param mixed[] $criteria
+     * @return mixed[]
      */
     public function grabColumnFromDatabase(string $table, string $column, array $criteria = []): array;
 
     /**
      * @param mixed $cookie
-     * @param array $params
+     * @param mixed[] $params
      */
     public function grabCookie($cookie, array $params = []): mixed;
 
     /**
      * @param string $table
-     * @param array $criteria
-     * @return array
+     * @param mixed[] $criteria
+     * @return mixed[]
      */
     public function grabEntriesFromDatabase(string $table, array $criteria = []): array;
 
     /**
      * @param string $table
-     * @param array $criteria
-     * @return array
+     * @param mixed[] $criteria
+     * @return mixed[]
      */
     public function grabEntryFromDatabase(string $table, array $criteria = []): array;
 
     /**
-     * @param mixed|null $uri
+     * @param mixed $uri
      */
     public function grabFromCurrentUrl($uri = null): mixed;
 
     /**
      * @param string $table
      * @param string $column
-     * @param array $criteria
+     * @param mixed[] $criteria
      */
     public function grabFromDatabase(string $table, string $column, array $criteria = []);
 
     /**
      * @param mixed $cssOrXpath
-     * @param mixed|null $attribute
-     * @return array
+     * @param mixed $attribute
+     * @return mixed[]
      */
     public function grabMultiple($cssOrXpath, $attribute = null): array;
 
     /**
      * @param string $table
-     * @param array $criteria
+     * @param mixed[] $criteria
      * @return int
      */
     public function grabNumRecords(string $table, array $criteria = []): int;
@@ -794,7 +794,7 @@ interface ActorInterface
 
     /**
      * @param string $table
-     * @param array $data
+     * @param mixed[] $data
      * @return int
      */
     public function haveInDatabase(string $table, array $data): int;
@@ -829,7 +829,7 @@ interface ActorInterface
     public function moveForward(): void;
 
     /**
-     * @param mixed|null $cssOrXPath
+     * @param mixed $cssOrXPath
      * @param int|null $offsetX
      * @param int|null $offsetY
      */
@@ -852,7 +852,7 @@ interface ActorInterface
 
     /**
      * @param mixed $element
-     * @param mixed|null $chars
+     * @param mixed $chars
      */
     public function pressKey($element, $chars = null): void;
 
@@ -866,7 +866,7 @@ interface ActorInterface
 
     /**
      * @param mixed $cookie
-     * @param array $params
+     * @param mixed[] $params
      * @param bool $showDebug
      */
     public function resetCookie($cookie, array $params = [], bool $showDebug = true): void;
@@ -896,7 +896,7 @@ interface ActorInterface
 
     /**
      * @param mixed $text
-     * @param mixed|null $selector
+     * @param mixed $selector
      */
     public function see($text, $selector = null): void;
 
@@ -917,7 +917,7 @@ interface ActorInterface
 
     /**
      * @param mixed $cookie
-     * @param array $params
+     * @param mixed[] $params
      * @param bool $showDebug
      */
     public function seeCookie($cookie, array $params = [], bool $showDebug = true): void;
@@ -939,13 +939,13 @@ interface ActorInterface
 
     /**
      * @param mixed $selector
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     public function seeElement($selector, array $attributes = []): void;
 
     /**
      * @param mixed $selector
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     public function seeElementInDOM($selector, array $attributes = []): void;
 
@@ -962,7 +962,7 @@ interface ActorInterface
 
     /**
      * @param string $table
-     * @param array $criteria
+     * @param mixed[] $criteria
      */
     public function seeInDatabase(string $table, array $criteria = []): void;
 
@@ -992,7 +992,7 @@ interface ActorInterface
 
     /**
      * @param mixed $formSelector
-     * @param array $params
+     * @param mixed[] $params
      */
     public function seeInFormFields($formSelector, array $params): void;
 
@@ -1025,7 +1025,7 @@ interface ActorInterface
     /**
      * @param int $expectedNumber
      * @param string $table
-     * @param array $criteria
+     * @param mixed[] $criteria
      */
     public function seeNumRecords(int $expectedNumber, string $table, array $criteria = []): void;
 
@@ -1055,7 +1055,7 @@ interface ActorInterface
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function seeTranslationAdmin(
         string $id,
@@ -1067,7 +1067,7 @@ interface ActorInterface
      * @param string $id
      * @param string $css
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function seeTranslationAdminInCss(
         string $id,
@@ -1079,7 +1079,7 @@ interface ActorInterface
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function seeTranslationFrontend(
         string $id,
@@ -1102,15 +1102,15 @@ interface ActorInterface
     /**
      * @param mixed $name
      * @param mixed $value
-     * @param array $params
+     * @param mixed[] $params
      * @param mixed $showDebug
      */
     public function setCookie($name, $value, array $params = [], $showDebug = true): void;
 
     /**
      * @param mixed $selector
-     * @param array $params
-     * @param mixed|null $button
+     * @param mixed[] $params
+     * @param mixed $button
      */
     public function submitForm($selector, array $params, $button = null): void;
 
@@ -1163,8 +1163,8 @@ interface ActorInterface
 
     /**
      * @param string $table
-     * @param array $data
-     * @param array $criteria
+     * @param mixed[] $data
+     * @param mixed[] $criteria
      */
     public function updateInDatabase(string $table, array $data, array $criteria = []): void;
 
@@ -1213,7 +1213,7 @@ interface ActorInterface
     /**
      * @param string $text
      * @param int $timeout
-     * @param mixed|null $selector
+     * @param mixed $selector
      */
     public function waitForText(string $text, int $timeout = 10, $selector = null): void;
 }

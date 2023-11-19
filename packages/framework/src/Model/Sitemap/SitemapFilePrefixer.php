@@ -10,7 +10,7 @@ class SitemapFilePrefixer
      * @param int $domainId
      * @return string
      */
-    public function getSitemapFilePrefixForDomain($domainId)
+    public function getSitemapFilePrefixForDomain($domainId): string
     {
         return 'domain_' . $domainId . '_sitemap';
     }

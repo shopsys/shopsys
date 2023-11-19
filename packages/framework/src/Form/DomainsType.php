@@ -20,9 +20,9 @@ class DomainsType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $builder->add((string)$domainConfig->getId(), CheckboxType::class, [

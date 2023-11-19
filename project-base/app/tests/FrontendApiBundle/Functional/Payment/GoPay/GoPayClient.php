@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 class GoPayClient extends BaseGoPayClient
 {
     /**
-     * @param array $rawPayment
+     * @param mixed[] $rawPayment
      * @return \GoPay\Http\Response
      */
     public function sendPaymentToGoPay(array $rawPayment): Response
@@ -62,7 +62,7 @@ class GoPayClient extends BaseGoPayClient
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return array
+     * @return mixed[]
      */
     public function downloadGoPayPaymentMethodsByCurrency(Currency $currency): array
     {

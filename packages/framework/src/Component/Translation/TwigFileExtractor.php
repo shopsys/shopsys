@@ -26,7 +26,7 @@ class TwigFileExtractor implements FileVisitorInterface
      * but original \JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor is not open for that type of extension
      * so we need to inject our \Shopsys\FrameworkBundle\Component\Translation\CustomTransFiltersVisitor using ReflectionObject
      */
-    protected function injectCustomVisitor()
+    protected function injectCustomVisitor(): void
     {
         $reflectionObject = new ReflectionObject($this->originalTwigFileExtractor);
         $traverserReflectionProperty = $reflectionObject->getProperty('traverser');
@@ -39,7 +39,7 @@ class TwigFileExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
+    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue): void
     {
         $this->originalTwigFileExtractor->visitFile($file, $catalogue);
     }
@@ -47,7 +47,7 @@ class TwigFileExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
         $this->originalTwigFileExtractor->visitPhpFile($file, $catalogue, $ast);
     }
@@ -55,7 +55,7 @@ class TwigFileExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast)
+    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast): void
     {
         $this->originalTwigFileExtractor->visitTwigFile($file, $catalogue, $ast);
     }

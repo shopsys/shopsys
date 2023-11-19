@@ -13,7 +13,7 @@ use stdClass;
 
 class FilterQueryTest extends TestCase
 {
-    public function testFilterByUuid()
+    public function testFilterByUuid(): void
     {
         $filterQuery = new FilterQuery('blog_article');
         $uuid = '123e4567-e89b-12d3-a456-426614174000';
@@ -49,7 +49,7 @@ class FilterQueryTest extends TestCase
         $this->assertEquals($expectedQuery, $actualQuery);
     }
 
-    public function testFilterBySlug()
+    public function testFilterBySlug(): void
     {
         $filterQuery = new FilterQuery('blog_article');
         $slug = 'blog-article-slug';
@@ -85,7 +85,7 @@ class FilterQueryTest extends TestCase
         $this->assertEquals($expectedQuery, $actualQuery);
     }
 
-    public function testFilterByCategory()
+    public function testFilterByCategory(): void
     {
         $filterQuery = new FilterQuery('blog_article');
         $blogCategory = $this->getBlogCategoryWithId1();
@@ -128,7 +128,7 @@ class FilterQueryTest extends TestCase
      * @param int $expectedSize
      * @param int $expectedFrom
      */
-    public function testFilterWithOffsetAndLimit(?int $limit, ?int $offset, int $expectedSize, int $expectedFrom)
+    public function testFilterWithOffsetAndLimit(?int $limit, ?int $offset, int $expectedSize, int $expectedFrom): void
     {
         $filterQuery = new FilterQuery('blog_article');
         $filterQueryWithOffsetAndLimit = $filterQuery->setLimit($limit)->setFrom($offset);

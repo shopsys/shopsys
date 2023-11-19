@@ -15,7 +15,7 @@ class UploadedFileConfigurationParseException extends Exception implements Uploa
      * @param string $entityClass
      * @param \Throwable|null $previous
      */
-    public function __construct($entityClass, ?Throwable $previous = null)
+    public function __construct(string $entityClass, ?Throwable $previous = null)
     {
         $this->entityClass = $entityClass;
 
@@ -27,7 +27,7 @@ class UploadedFileConfigurationParseException extends Exception implements Uploa
     /**
      * @return string
      */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }

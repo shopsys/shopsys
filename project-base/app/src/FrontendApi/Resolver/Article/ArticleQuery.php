@@ -36,7 +36,7 @@ class ArticleQuery extends AbstractQuery
     /**
      * @param string|null $uuid
      * @param string|null $urlSlug
-     * @return array
+     * @return mixed[]
      */
     public function articleQuery(?string $uuid = null, ?string $urlSlug = null): array
     {
@@ -56,7 +56,7 @@ class ArticleQuery extends AbstractQuery
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function termsAndConditionsArticleQuery(): array
     {
@@ -64,7 +64,7 @@ class ArticleQuery extends AbstractQuery
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function privacyPolicyArticleQuery(): array
     {
@@ -72,7 +72,7 @@ class ArticleQuery extends AbstractQuery
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function cookiesArticleQuery(): array
     {
@@ -81,7 +81,7 @@ class ArticleQuery extends AbstractQuery
 
     /**
      * @param string $settingName
-     * @return array
+     * @return mixed[]
      */
     private function getSpecialArticle(string $settingName): array
     {

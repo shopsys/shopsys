@@ -9,5 +9,5 @@ interface OrderFlowFactoryInterface
     /**
      * @return \Craue\FormFlowBundle\Form\FormFlow
      */
-    public function create();
+    public function create(): \Craue\FormFlowBundle\Form\FormFlow;
 }

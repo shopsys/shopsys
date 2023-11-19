@@ -111,7 +111,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
      * @param string $className
      * @return \Doctrine\Persistence\ObjectRepository
      */
-    public function getRepository($className)
+    public function getRepository($className): \Doctrine\Persistence\ObjectRepository
     {
         $resolvedClassName = $this->entityNameResolver->resolve($className);
 

@@ -28,12 +28,12 @@ class AdministratorFrontSecurityFacadeTest extends TransactionFunctionalTestCase
      */
     protected RequestStack $requestStack;
 
-    public function testIsAdministratorLoggedNot()
+    public function testIsAdministratorLoggedNot(): void
     {
         $this->assertFalse($this->administratorFrontSecurityFacade->isAdministratorLogged());
     }
 
-    public function testIsAdministratorLogged()
+    public function testIsAdministratorLogged(): void
     {
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);

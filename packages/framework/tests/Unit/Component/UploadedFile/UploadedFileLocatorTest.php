@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator;
 
 class UploadedFileLocatorTest extends TestCase
 {
-    public function testFileExists()
+    public function testFileExists(): void
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
             ->setMethods(['getFilename', 'getEntityName'])
@@ -25,7 +25,7 @@ class UploadedFileLocatorTest extends TestCase
         $this->assertTrue($uploadedFileLocator->fileExists($uploadedFileMock));
     }
 
-    public function testFileNotExists()
+    public function testFileNotExists(): void
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
             ->setMethods(['getFilename', 'getEntityName'])
@@ -38,7 +38,7 @@ class UploadedFileLocatorTest extends TestCase
         $this->assertFalse($uploadedFileLocator->fileExists($uploadedFileMock));
     }
 
-    public function testGetAbsoluteFilePath()
+    public function testGetAbsoluteFilePath(): void
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
 
@@ -49,7 +49,7 @@ class UploadedFileLocatorTest extends TestCase
         );
     }
 
-    public function testGetAbsoluteUploadedFileFilepath()
+    public function testGetAbsoluteUploadedFileFilepath(): void
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
@@ -66,7 +66,7 @@ class UploadedFileLocatorTest extends TestCase
         );
     }
 
-    public function testGetRelativeUploadedFileFilepath()
+    public function testGetRelativeUploadedFileFilepath(): void
     {
         $uploadedFileMock = $this->getMockBuilder(UploadedFile::class)
             ->setMethods(['getFilename', 'getEntityName'])
@@ -86,7 +86,7 @@ class UploadedFileLocatorTest extends TestCase
      * @param bool $has
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
      */
-    private function createUploadedFileLocator($has = true)
+    private function createUploadedFileLocator(bool $has = true): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
 

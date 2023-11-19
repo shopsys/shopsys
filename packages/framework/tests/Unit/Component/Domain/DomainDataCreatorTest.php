@@ -27,7 +27,7 @@ class DomainDataCreatorTest extends TestCase
 {
     use PHPMock;
 
-    public function testCreateNewDomainsDataNoNewDomain()
+    public function testCreateNewDomainsDataNoNewDomain(): void
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
@@ -67,7 +67,10 @@ class DomainDataCreatorTest extends TestCase
         $this->assertEquals(0, $newDomainsDataCreated);
     }
 
-    public function testCreateNewDomainsDataOneNewDomain()
+    /**
+     * @return 'Default VAT group'|true
+     */
+    public function testCreateNewDomainsDataOneNewDomain(): string|bool
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
 
@@ -152,7 +155,10 @@ class DomainDataCreatorTest extends TestCase
         $this->assertEquals(1, $newDomainsDataCreated);
     }
 
-    public function testCreateNewDomainsDataNewLocale()
+    /**
+     * @return true
+     */
+    public function testCreateNewDomainsDataNewLocale(): bool
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigWithDataCreated = new DomainConfig(

@@ -22,7 +22,7 @@ class PerformanceResultsCsvExporter
     public function exportJmeterCsvReport(
         array $performanceTestSamples,
         $outputFilename,
-    ) {
+    ): void {
         $handle = fopen($outputFilename, 'w');
 
         $this->jmeterCsvReporter->writeHeader($handle);

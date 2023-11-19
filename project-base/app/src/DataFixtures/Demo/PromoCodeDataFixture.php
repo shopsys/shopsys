@@ -54,7 +54,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test';

@@ -67,7 +67,7 @@ class NewsletterSubscriber
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }

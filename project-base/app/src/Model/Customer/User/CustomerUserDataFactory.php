@@ -79,7 +79,7 @@ class CustomerUserDataFactory extends BaseUserDataFactory
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      */
-    protected function fillFromUser(BaseUserData $customerUserData, BaseUser $customerUser)
+    protected function fillFromUser(BaseUserData $customerUserData, BaseUser $customerUser): void
     {
         $customerUserData->newsletterSubscription = $customerUser->isNewsletterSubscription();
 

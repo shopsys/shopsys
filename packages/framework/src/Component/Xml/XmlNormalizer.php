@@ -12,7 +12,7 @@ class XmlNormalizer
      * @param string $content
      * @return string
      */
-    public static function normalizeXml($content)
+    public static function normalizeXml($content): string|bool
     {
         $document = new DOMDocument('1.0');
         $document->preserveWhiteSpace = false;

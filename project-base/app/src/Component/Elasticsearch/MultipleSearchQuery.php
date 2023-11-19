@@ -24,7 +24,7 @@ class MultipleSearchQuery
     }
 
     /**
-     * @return array
+     * @return array<'body'|'index', string|mixed[]>
      */
     public function getQuery(): array
     {
@@ -36,7 +36,7 @@ class MultipleSearchQuery
 
     /**
      * @param \App\Model\Product\Search\FilterQuery[] $filterQueries
-     * @return array
+     * @return mixed[]
      */
     private function getBody(array $filterQueries): array
     {

@@ -23,7 +23,7 @@ class BlogArticleElasticsearchRepository
 
     /**
      * @param string $uuid
-     * @return array
+     * @return mixed[]
      */
     public function getByUuid(string $uuid): array
     {
@@ -53,7 +53,7 @@ class BlogArticleElasticsearchRepository
      * @param int $offset
      * @param int $limit
      * @param bool $onlyVisibleOnHomepage
-     * @return array
+     * @return mixed[]
      */
     public function getAllBlogArticles(int $offset, int $limit, bool $onlyVisibleOnHomepage = false): array
     {
@@ -66,7 +66,7 @@ class BlogArticleElasticsearchRepository
 
     /**
      * @param string $slug
-     * @return array
+     * @return mixed[]
      */
     public function getBySlug(string $slug): array
     {
@@ -103,7 +103,7 @@ class BlogArticleElasticsearchRepository
      * @param int $offset
      * @param int $limit
      * @param bool $onlyVisibleOnHomepage
-     * @return array
+     * @return mixed[]
      */
     public function getByBlogCategory(
         BlogCategory $blogCategory,

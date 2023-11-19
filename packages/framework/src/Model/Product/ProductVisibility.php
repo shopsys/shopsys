@@ -50,7 +50,7 @@ class ProductVisibility
     public function __construct(
         Product $product,
         PricingGroup $pricingGroup,
-        $domainId,
+        int $domainId,
     ) {
         $this->product = $product;
         $this->pricingGroup = $pricingGroup;
@@ -58,7 +58,10 @@ class ProductVisibility
         $this->visible = false;
     }
 
-    public function isVisible()
+    /**
+     * @return bool
+     */
+    public function isVisible(): bool
     {
         return $this->visible;
     }

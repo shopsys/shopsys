@@ -11,8 +11,8 @@ class PaginatorArgumentsBuilder extends BasePaginatorArgumentsBuilder
     /**
      * Extended in order to add "cascade" validation to ProductFilter
      *
-     * @param array $config
-     * @return array
+     * @param mixed[] $config
+     * @return mixed[]
      */
     public function toMappingDefinition(array $config): array
     {

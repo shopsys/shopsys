@@ -18,9 +18,9 @@ class ModuleExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('isModuleEnabled', [$this, 'isModuleEnabled']),
@@ -31,7 +31,7 @@ class ModuleExtension extends AbstractExtension
      * @param string $moduleName
      * @return bool
      */
-    public function isModuleEnabled($moduleName)
+    public function isModuleEnabled($moduleName): bool
     {
         return $this->moduleFacade->isEnabled($moduleName);
     }
@@ -39,7 +39,7 @@ class ModuleExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'module';
     }

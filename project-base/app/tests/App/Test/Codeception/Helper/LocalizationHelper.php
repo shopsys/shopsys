@@ -46,7 +46,7 @@ class LocalizationHelper extends Module
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function seeTranslationFrontend(
         string $id,
@@ -60,7 +60,7 @@ class LocalizationHelper extends Module
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function dontSeeTranslationFrontend(
         string $id,
@@ -74,7 +74,7 @@ class LocalizationHelper extends Module
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function seeTranslationAdmin(
         string $id,
@@ -89,7 +89,7 @@ class LocalizationHelper extends Module
      * @param string $id
      * @param string $css
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function seeTranslationAdminInCss(
         string $id,
@@ -104,7 +104,7 @@ class LocalizationHelper extends Module
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
     public function clickByTranslationAdmin(
@@ -120,7 +120,7 @@ class LocalizationHelper extends Module
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
     public function clickByTranslationFrontend(
@@ -128,7 +128,7 @@ class LocalizationHelper extends Module
         string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
         array $parameters = [],
         WebDriverBy|WebDriverElement|null $contextSelector = null,
-    ) {
+    ): void {
         $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
         $this->webDriver->clickByText(strip_tags($translatedMessage), $contextSelector);
     }
@@ -136,7 +136,7 @@ class LocalizationHelper extends Module
     /**
      * @param string $id
      * @param string $translationDomain
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function checkOptionByLabelTranslationFrontend(
         string $id,
@@ -165,7 +165,7 @@ class LocalizationHelper extends Module
 
     /**
      * @param string $routeName
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @return string
      */
     private function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = []): string
@@ -177,7 +177,7 @@ class LocalizationHelper extends Module
 
     /**
      * @param string $routeName
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function amOnLocalizedRoute(string $routeName, array $parameters = []): void
     {

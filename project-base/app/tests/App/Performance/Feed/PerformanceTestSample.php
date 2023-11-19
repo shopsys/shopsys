@@ -32,9 +32,9 @@ class PerformanceTestSample
     public function __construct(
         private readonly FeedInfoInterface $feedInfo,
         private readonly DomainConfig $domainConfig,
-        $generationUri,
-        $duration,
-        $statusCode,
+        string $generationUri,
+        float $duration,
+        int $statusCode,
     ) {
         $this->generationUri = $generationUri;
         $this->duration = $duration;
@@ -44,7 +44,7 @@ class PerformanceTestSample
     /**
      * @param string $message
      */
-    public function setMessage($message)
+    public function setMessage(?string $message): void
     {
         $this->message = $message;
     }
@@ -52,7 +52,7 @@ class PerformanceTestSample
     /**
      * @param string $failMessage
      */
-    public function addFailMessage($failMessage)
+    public function addFailMessage($failMessage): void
     {
         $this->failMessages[] = $failMessage;
     }
@@ -60,7 +60,7 @@ class PerformanceTestSample
     /**
      * @return string
      */
-    public function getFeedName()
+    public function getFeedName(): string
     {
         return $this->feedInfo->getName();
     }
@@ -68,7 +68,7 @@ class PerformanceTestSample
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
-    public function getDomainConfig()
+    public function getDomainConfig(): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
     {
         return $this->domainConfig;
     }
@@ -76,7 +76,7 @@ class PerformanceTestSample
     /**
      * @return string
      */
-    public function getGenerationUri()
+    public function getGenerationUri(): string
     {
         return $this->generationUri;
     }
@@ -84,7 +84,7 @@ class PerformanceTestSample
     /**
      * @return float
      */
-    public function getDuration()
+    public function getDuration(): float
     {
         return $this->duration;
     }
@@ -92,7 +92,7 @@ class PerformanceTestSample
     /**
      * @return int
      */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
@@ -100,7 +100,7 @@ class PerformanceTestSample
     /**
      * @return string|null
      */
-    public function getMessage()
+    public function getMessage(): ?string
     {
         return $this->message;
     }
@@ -108,7 +108,7 @@ class PerformanceTestSample
     /**
      * @return string[]
      */
-    public function getFailMessages()
+    public function getFailMessages(): array
     {
         return $this->failMessages;
     }
@@ -116,7 +116,7 @@ class PerformanceTestSample
     /**
      * @return bool
      */
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         return count($this->failMessages) === 0;
     }

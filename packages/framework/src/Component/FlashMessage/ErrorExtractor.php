@@ -10,7 +10,7 @@ class ErrorExtractor
 {
     /**
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $errorFlashMessages
+     * @param mixed[] $errorFlashMessages
      * @return string[]
      */
     public function getAllErrorsAsArray(FormInterface $form, array $errorFlashMessages): array

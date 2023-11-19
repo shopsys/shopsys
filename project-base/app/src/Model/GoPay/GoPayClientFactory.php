@@ -9,7 +9,7 @@ use App\Model\GoPay\Exception\GoPayNotConfiguredException;
 class GoPayClientFactory
 {
     /**
-     * @param array $config
+     * @param mixed[] $config
      */
     public function __construct(private array $config)
     {
@@ -26,7 +26,7 @@ class GoPayClientFactory
 
     /**
      * @param string $locale
-     * @return array
+     * @return mixed[]
      */
     protected function getConfigByLocale(string $locale): array
     {

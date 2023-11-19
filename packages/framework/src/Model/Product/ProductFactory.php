@@ -58,7 +58,7 @@ class ProductFactory implements ProductFactoryInterface
      * @see \Shopsys\FrameworkBundle\Model\Product\Product::__construct()
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      */
-    protected function setCalculatedAvailabilityIfMissing(Product $product)
+    protected function setCalculatedAvailabilityIfMissing(Product $product): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null $calculatedAvailability */
         $calculatedAvailability = $product->getCalculatedAvailability();

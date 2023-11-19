@@ -6089,7 +6089,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @return array
+     * @return array<'32PFL4400'|'7700769XCX'|'9176544M', string[]>
      */
     public static function getVariantCatnumsByMainVariantCatnum(): array
     {
@@ -6175,7 +6175,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param array $parametersTranslations
+     * @param mixed[] $parametersTranslations
      */
     private function setParametersByTranslations(ProductData $productData, array $parametersTranslations): void
     {
@@ -6219,7 +6219,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param array $parameterTranslations
+     * @param mixed[] $parameterTranslations
      * @param string $parameterName
      * @param string $parameterValue
      * @param string $locale
@@ -6341,7 +6341,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @param \App\Model\Product\Product $product
      */
-    public function addProductReference(Product $product)
+    public function addProductReference(Product $product): void
     {
         $this->addReference(self::PRODUCT_PREFIX . $this->productNo, $product);
         $this->productNo++;
@@ -6390,7 +6390,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param array $productCatnumsByMainVariantCatnum
+     * @param mixed[] $productCatnumsByMainVariantCatnum
      * @return string[]
      */
     private function getAllVariantCatnumsFromAssociativeArray(array $productCatnumsByMainVariantCatnum): array
@@ -6427,7 +6427,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\ProductData $productData
      * @param int $quantity
      */
-    public function setStocksQuantity(ProductData $productData, int $quantity)
+    public function setStocksQuantity(ProductData $productData, int $quantity): void
     {
         $stocks = $this->stockRepository->getAllStocks();
 

@@ -88,7 +88,7 @@ class MarkProductForExportSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @return array
+     * @return array<'availability.delete'|'availability.update'|'brand.delete'|'elasticsearch.index.exported'|'flag.delete'|'parameter.delete'|'parameter.update'|'pricingGroup.create'|'pricingGroup.delete'|'unit.delete'|'unit.update', string>
      */
     public static function getSubscribedEvents(): array
     {

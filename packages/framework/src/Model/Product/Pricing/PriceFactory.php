@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 class PriceFactory
 {
     /**
-     * @param array $pricesArray
+     * @param mixed[] $pricesArray
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */

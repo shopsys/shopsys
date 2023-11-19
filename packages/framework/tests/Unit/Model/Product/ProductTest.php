@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductTest extends TestCase
 {
-    public function testNoVariant()
+    public function testNoVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $product = Product::create($productData);
@@ -23,7 +23,7 @@ class ProductTest extends TestCase
         $this->assertFalse($product->isMainVariant());
     }
 
-    public function testIsVariant()
+    public function testIsVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -33,7 +33,7 @@ class ProductTest extends TestCase
         $this->assertFalse($variant->isMainVariant());
     }
 
-    public function testIsMainVariant()
+    public function testIsMainVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -43,7 +43,7 @@ class ProductTest extends TestCase
         $this->assertTrue($mainVariant->isMainVariant());
     }
 
-    public function testGetMainVariant()
+    public function testGetMainVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -52,7 +52,7 @@ class ProductTest extends TestCase
         $this->assertSame($mainVariant, $variant->getMainVariant());
     }
 
-    public function testGetMainVariantException()
+    public function testGetMainVariantException(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $product = Product::create($productData);
@@ -61,7 +61,7 @@ class ProductTest extends TestCase
         $product->getMainVariant();
     }
 
-    public function testCreateVariantFromVariantException()
+    public function testCreateVariantFromVariantException(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -73,7 +73,7 @@ class ProductTest extends TestCase
         $mainVariant->addVariant($variant2);
     }
 
-    public function testCreateVariantFromMainVariantException()
+    public function testCreateVariantFromMainVariantException(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -85,7 +85,7 @@ class ProductTest extends TestCase
         $mainVariant->addVariant($mainVariant2);
     }
 
-    public function testCreateMainVariantFromVariantException()
+    public function testCreateMainVariantFromVariantException(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -98,7 +98,7 @@ class ProductTest extends TestCase
         $variant2->addVariant($variant3);
     }
 
-    public function testAddSelfAsVariantException()
+    public function testAddSelfAsVariantException(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -108,7 +108,7 @@ class ProductTest extends TestCase
         $mainVariant->addVariant($mainVariant);
     }
 
-    public function testMarkForVisibilityRecalculation()
+    public function testMarkForVisibilityRecalculation(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $product = Product::create($productData);
@@ -116,7 +116,7 @@ class ProductTest extends TestCase
         $this->assertTrue($product->isMarkedForVisibilityRecalculation());
     }
 
-    public function testMarkForVisibilityRecalculationMainVariant()
+    public function testMarkForVisibilityRecalculationMainVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -126,7 +126,7 @@ class ProductTest extends TestCase
         $this->assertTrue($variant->isMarkedForVisibilityRecalculation());
     }
 
-    public function testMarkForVisibilityRecalculationVariant()
+    public function testMarkForVisibilityRecalculationVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -136,7 +136,7 @@ class ProductTest extends TestCase
         $this->assertTrue($mainVariant->isMarkedForVisibilityRecalculation());
     }
 
-    public function testDeleteResultNotVariant()
+    public function testDeleteResultNotVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $product = Product::create($productData);
@@ -144,7 +144,7 @@ class ProductTest extends TestCase
         $this->assertEmpty($product->getProductDeleteResult()->getProductsForRecalculations());
     }
 
-    public function testDeleteResultVariant()
+    public function testDeleteResultVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -153,7 +153,7 @@ class ProductTest extends TestCase
         $this->assertSame([$mainVariant], $variant->getProductDeleteResult()->getProductsForRecalculations());
     }
 
-    public function testDeleteResultMainVariant()
+    public function testDeleteResultMainVariant(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -163,7 +163,7 @@ class ProductTest extends TestCase
         $this->assertFalse($variant->isVariant());
     }
 
-    public function testCheckIsNotMainVariantException()
+    public function testCheckIsNotMainVariantException(): void
     {
         $productData = TestProductProvider::getTestProductData();
         $variant = Product::create($productData);
@@ -173,7 +173,7 @@ class ProductTest extends TestCase
         $mainVariant->checkIsNotMainVariant();
     }
 
-    public function testRefreshVariants()
+    public function testRefreshVariants(): void
     {
         $productData = TestProductProvider::getTestProductData();
 

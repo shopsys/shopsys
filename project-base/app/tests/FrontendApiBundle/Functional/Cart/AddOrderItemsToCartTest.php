@@ -36,7 +36,7 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
     /**
      * @dataProvider getAddOrderItemsToCartDataProvider
      * @param bool $shouldMerge
-     * @param array $expectedProducts
+     * @param mixed[] $expectedProducts
      */
     public function testOrderItemsAreCorrectlyAddedToCart(bool $shouldMerge, array $expectedProducts): void
     {

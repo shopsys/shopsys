@@ -61,7 +61,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     /**
      * @return \App\Model\Product\ProductData
      */
-    private function getDefaultProductData()
+    private function getDefaultProductData(): \App\Model\Product\ProductData
     {
         /** @var \App\Model\Category\Category $category */
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
@@ -121,7 +121,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
      * @param \App\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $price
      */
-    private function setPriceForAllDomains(ProductData $productData, ?Money $price)
+    private function setPriceForAllDomains(ProductData $productData, ?Money $price): void
     {
         $manualInputPrices = [];
 
@@ -132,7 +132,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->manualInputPricesByPricingGroupId = $manualInputPrices;
     }
 
-    public function testIsVisibleOnAnyDomainWhenHidden()
+    public function testIsVisibleOnAnyDomainWhenHidden(): void
     {
         $productData = $this->getDefaultProductData();
         $productData->hidden = true;
@@ -166,7 +166,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($productVisibility1->isVisible());
     }
 
-    public function testIsVisibleOnFirstDomainWhenHidden()
+    public function testIsVisibleOnFirstDomainWhenHidden(): void
     {
         $productData = $this->getDefaultProductData();
         $productData->hidden = false;
@@ -198,7 +198,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($productVisibility1->isVisible());
     }
 
-    public function testIsVisibleOnAnyDomainWhenNotHidden()
+    public function testIsVisibleOnAnyDomainWhenNotHidden(): void
     {
         $productData = $this->getDefaultProductData();
         $product = $this->productFacade->create($productData);
@@ -231,7 +231,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertTrue($productVisibility1->isVisible());
     }
 
-    public function testIsVisibleOnAnyDomainWhenSellingInFuture()
+    public function testIsVisibleOnAnyDomainWhenSellingInFuture(): void
     {
         $sellingFrom = new DateTime('now');
         $sellingFrom->modify('+1 day');
@@ -254,7 +254,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($productAgain->isVisible());
     }
 
-    public function testIsVisibleOnAnyDomainWhenSellingInPast()
+    public function testIsVisibleOnAnyDomainWhenSellingInPast(): void
     {
         $sellingTo = new DateTime('now');
         $sellingTo->modify('-1 day');
@@ -296,7 +296,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->em->flush();
     }
 
-    public function testIsVisibleOnAnyDomainWhenSellingNow()
+    public function testIsVisibleOnAnyDomainWhenSellingNow(): void
     {
         $sellingFrom = new DateTime('now');
         $sellingFrom->modify('-1 day');
@@ -322,7 +322,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertTrue($productAgain->isVisible());
     }
 
-    public function testIsNotVisibleWhenZeroPrice()
+    public function testIsNotVisibleWhenZeroPrice(): void
     {
         $productData = $this->getDefaultProductData();
         $this->setPriceForAllDomains($productData, Money::zero());
@@ -342,7 +342,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($product1Again->isVisible());
     }
 
-    public function testIsVisibleWithFilledName()
+    public function testIsVisibleWithFilledName(): void
     {
         $productData = $this->getDefaultProductData();
         $product = $this->productFacade->create($productData);
@@ -368,7 +368,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertTrue($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleWithEmptyName()
+    public function testIsNotVisibleWithEmptyName(): void
     {
         $productData = $this->getDefaultProductData();
         $productData->name = ['cs' => null, 'en' => null];
@@ -395,7 +395,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testIsVisibleInVisibileCategory()
+    public function testIsVisibleInVisibileCategory(): void
     {
         /** @var \App\Model\Category\Category $category */
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TOYS);
@@ -425,7 +425,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertTrue($productVisibility->isVisible());
     }
 
-    public function testIsNotVisibleInHiddenCategory()
+    public function testIsNotVisibleInHiddenCategory(): void
     {
         $productData = $this->getDefaultProductData();
         $productData->categoriesByDomainId = [];
@@ -451,7 +451,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($productVisibility->isVisible());
     }
 
-    public function testRefreshProductsVisibilityVisibleVariants()
+    public function testRefreshProductsVisibilityVisibleVariants(): void
     {
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
@@ -475,7 +475,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertTrue($mainVariant->isVisible());
     }
 
-    public function testRefreshProductsVisibilityNotVisibleVariants()
+    public function testRefreshProductsVisibilityNotVisibleVariants(): void
     {
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
@@ -535,7 +535,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $this->assertFalse($mainVariant->isVisible());
     }
 
-    public function testRefreshProductsVisibilityNotVisibleMainVariant()
+    public function testRefreshProductsVisibilityNotVisibleMainVariant(): void
     {
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');

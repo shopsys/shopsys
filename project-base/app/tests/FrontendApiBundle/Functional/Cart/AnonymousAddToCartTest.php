@@ -122,7 +122,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
      * @dataProvider getInvalidQuantityProvider
      * @param mixed $invalidQuantity
      */
-    public function testInvalidQuantityProvided($invalidQuantity): void
+    public function testInvalidQuantityProvided(int $invalidQuantity): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $this->testingProduct->getUuid(),
@@ -196,7 +196,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
 
     /**
      * @param int $productQuantity
-     * @return array
+     * @return mixed[]
      */
     private function addTestingProductToNewCart(int $productQuantity): array
     {

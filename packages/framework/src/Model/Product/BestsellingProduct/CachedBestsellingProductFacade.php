@@ -33,13 +33,13 @@ class CachedBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getAllOfferedBestsellingProducts($domainId, Category $category, PricingGroup $pricingGroup)
+    public function getAllOfferedBestsellingProducts($domainId, Category $category, PricingGroup $pricingGroup): array
     {
         $cacheId = $this->getCacheId($domainId, $category, $pricingGroup);
 
         $bestsellingProductIds = $this->cache->get(
             $cacheId,
-            function () use ($domainId, $category, $pricingGroup) {
+            function () use ($domainId, $category, $pricingGroup): array {
                 $bestsellingProducts = $this->bestsellingProductFacade->getAllOfferedBestsellingProducts(
                     $domainId,
                     $category,
@@ -62,7 +62,7 @@ class CachedBestsellingProductFacade
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
-    public function invalidateCacheByDomainIdAndCategory($domainId, Category $category)
+    public function invalidateCacheByDomainIdAndCategory($domainId, Category $category): void
     {
         $pricingGroups = $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);
 
@@ -78,7 +78,7 @@ class CachedBestsellingProductFacade
      * @param int[] $sortedProductIds
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    protected function getSortedProducts($domainId, PricingGroup $pricingGroup, array $sortedProductIds)
+    protected function getSortedProducts($domainId, PricingGroup $pricingGroup, array $sortedProductIds): array
     {
         return $this->productRepository->getOfferedByIds($domainId, $pricingGroup, $sortedProductIds);
     }
@@ -89,7 +89,7 @@ class CachedBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return string
      */
-    protected function getCacheId($domainId, Category $category, PricingGroup $pricingGroup)
+    protected function getCacheId($domainId, Category $category, PricingGroup $pricingGroup): string
     {
         return $domainId . '_' . $category->getId() . '_' . $pricingGroup->getId();
     }

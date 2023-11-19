@@ -17,7 +17,7 @@ class BridgeConfig
     private string $password;
 
     /**
-     * @param array $bridgeConfig
+     * @param mixed[] $bridgeConfig
      */
     public function __construct(array $bridgeConfig)
     {

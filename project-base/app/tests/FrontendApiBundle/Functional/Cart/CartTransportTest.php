@@ -115,7 +115,7 @@ class CartTransportTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return string[]|int[]|mixed[][]|null[]
      */
     private function getExpectedTransport(): array
     {
@@ -251,7 +251,7 @@ class CartTransportTest extends GraphQlTestCase
 
     /**
      * @param string $transportReferenceName
-     * @return array
+     * @return mixed[]
      */
     private function addDemoTransportToDemoCart(string $transportReferenceName): array
     {
@@ -271,7 +271,7 @@ class CartTransportTest extends GraphQlTestCase
     /**
      * @param string $transportUuid
      * @param string|null $pickupPlaceIdentifier
-     * @return array
+     * @return mixed[]
      */
     private function addTransportToDemoCart(string $transportUuid, ?string $pickupPlaceIdentifier = null): array
     {

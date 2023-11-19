@@ -47,9 +47,10 @@ class CustomerUserFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
+     * @return array<'class', non-falsy-string>
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): array
     {
         $this->customerUser = $options['customerUser'];
 
@@ -214,7 +215,7 @@ class CustomerUserFormType extends AbstractType
      * @param bool $isCreatingNewUser
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getFirstPasswordConstraints($isCreatingNewUser)
+    private function getFirstPasswordConstraints(bool $isCreatingNewUser): array
     {
         $constraints = [
             new Constraints\Length(
@@ -234,7 +235,7 @@ class CustomerUserFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['customerUser', 'domain_id'])

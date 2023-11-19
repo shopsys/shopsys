@@ -133,7 +133,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function categoryNoFilterTestCase(): array
     {
@@ -197,7 +197,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function categoryOneFlagTestCase(): array
     {
@@ -257,7 +257,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function categoryPriceTestCase(): array
     {
@@ -336,7 +336,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function categoryFlagBrandAndParametersTestCase(): array
     {
@@ -382,7 +382,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function categoryParametersTestCase(): array
     {
@@ -459,11 +459,11 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @param array $namesByLocale
-     * @param array $valuesTextsByLocales
+     * @param mixed[] $namesByLocale
+     * @param mixed[] $valuesTextsByLocales
      * @return \App\Model\Product\Filter\ParameterFilterData
      */
-    private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales)
+    private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales): \App\Model\Product\Filter\ParameterFilterData
     {
         $parameter = $this->parameterRepository->findParameterByNames($namesByLocale);
         $parameterValues = $this->getParameterValuesByLocalesAndTexts($valuesTextsByLocales);
@@ -479,7 +479,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      * @param array[] $valuesTextsByLocales
      * @return \App\Model\Product\Parameter\ParameterValue[]
      */
-    private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales)
+    private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales): array
     {
         $parameterValues = [];
 
@@ -497,7 +497,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function searchNoFilterTestCase(): array
     {
@@ -521,7 +521,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function searchOneFlagTestCase(): array
     {
@@ -542,7 +542,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function searchOneBrandTestCase(): array
     {
@@ -567,7 +567,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function searchPriceTestCase(): array
     {
@@ -599,7 +599,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function searchStockTestCase(): array
     {
@@ -624,7 +624,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function searchPriceStockFlagBrandsTestCase(): array
     {

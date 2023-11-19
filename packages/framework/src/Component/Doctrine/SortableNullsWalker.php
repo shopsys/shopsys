@@ -19,7 +19,7 @@ class SortableNullsWalker extends SqlWalker
      * @param \Doctrine\ORM\Query\AST\OrderByItem $orderByItem
      * @return string
      */
-    public function walkOrderByItem($orderByItem)
+    public function walkOrderByItem($orderByItem): string
     {
         $sql = parent::walkOrderByItem($orderByItem);
 

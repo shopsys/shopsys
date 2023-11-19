@@ -116,8 +116,9 @@ class MailController extends AdminBaseController
     /**
      * @Route("/mail/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingAction(Request $request)
+    public function settingAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 

@@ -55,7 +55,7 @@ class ImageExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('imageExists', [$this, 'imageExists']),
@@ -71,7 +71,7 @@ class ImageExtension extends AbstractExtension
      * @param string|null $type
      * @return bool
      */
-    public function imageExists($imageOrEntity, $type = null)
+    public function imageExists(object $imageOrEntity, ?string $type = null): bool
     {
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $type);
@@ -88,7 +88,7 @@ class ImageExtension extends AbstractExtension
      * @param string|null $type
      * @return string
      */
-    public function getImageUrl($imageOrEntity, $sizeName = null, $type = null)
+    public function getImageUrl(object $imageOrEntity, ?string $sizeName = null, ?string $type = null): string
     {
         try {
             return $this->imageFacade->getImageUrl(
@@ -107,17 +107,17 @@ class ImageExtension extends AbstractExtension
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function getImages($entity, $type = null)
+    public function getImages(object $entity, ?string $type = null): array
     {
         return $this->imageFacade->getImagesByEntityIndexedById($entity, $type);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
-     * @param array $attributes
+     * @param mixed[] $attributes
      * @return string
      */
-    public function getImageHtml($imageOrEntity, array $attributes = [])
+    public function getImageHtml(object $imageOrEntity, array $attributes = []): string
     {
         $this->preventDefault($attributes);
 
@@ -140,10 +140,10 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param array $attributes
+     * @param mixed[] $attributes
      * @return string
      */
-    public function getNoimageHtml(array $attributes = [])
+    public function getNoimageHtml(array $attributes = []): string
     {
         $this->preventDefault($attributes);
 
@@ -176,7 +176,7 @@ class ImageExtension extends AbstractExtension
      * @param string|null $sizeName
      * @return string
      */
-    protected function getImageCssClass($entityName, $type, $sizeName)
+    protected function getImageCssClass($entityName, $type, $sizeName): string
     {
         $allClassParts = [
             'image',
@@ -192,13 +192,13 @@ class ImageExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'image_extension';
     }
 
     /**
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     protected function preventDefault(array &$attributes): void
     {
@@ -209,7 +209,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param array $attributes
+     * @param mixed[] $attributes
      * @param string $entityName
      * @param \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] $additionalImagesData
      * @return string
@@ -230,7 +230,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param array $attributes
+     * @param mixed[] $attributes
      * @return bool
      */
     protected function isLazyLoadEnabled(array $attributes): bool
@@ -243,8 +243,8 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param array $attributes
-     * @return array
+     * @param mixed[] $attributes
+     * @return mixed[]
      */
     protected function extractHtmlAttributesFromAttributes(array $attributes): array
     {
@@ -258,8 +258,8 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param array $htmlAttributes
-     * @return array
+     * @param mixed[] $htmlAttributes
+     * @return mixed[]
      */
     protected function makeHtmlAttributesLazyLoaded(array $htmlAttributes): array
     {

@@ -132,7 +132,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer implements
 
                     $categoryData = $this->categoryDataFactory->createFromCategory($category);
 
-                    $categoryData->enabled = array_map(static function () {
+                    $categoryData->enabled = array_map(static function (): bool {
                         return false;
                     }, $categoryData->enabled);
 

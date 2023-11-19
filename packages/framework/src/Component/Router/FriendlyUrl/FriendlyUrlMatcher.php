@@ -21,9 +21,9 @@ class FriendlyUrlMatcher
      * @param string $pathinfo
      * @param \Symfony\Component\Routing\RouteCollection $routeCollection
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return array
+     * @return mixed[]
      */
-    public function match($pathinfo, RouteCollection $routeCollection, DomainConfig $domainConfig)
+    public function match($pathinfo, RouteCollection $routeCollection, DomainConfig $domainConfig): array
     {
         $pathWithoutSlash = substr($pathinfo, 1);
         $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($domainConfig->getId(), $pathWithoutSlash);

@@ -205,7 +205,7 @@ class Cart extends BaseCart
     public function isPromoCodeApplied(string $promoCodeCode): bool
     {
         return $this->promoCodes->exists(
-            static function ($key, PromoCode $promoCode) use ($promoCodeCode) {
+            static function ($key, PromoCode $promoCode) use ($promoCodeCode): bool {
                 return $promoCode->getCode() === $promoCodeCode;
             },
         );

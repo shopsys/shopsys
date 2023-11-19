@@ -11,10 +11,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueProductParametersValidator extends ConstraintValidator
 {
     /**
-     * @param array $values
+     * @param mixed[] $values
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
-    public function validate($values, Constraint $constraint)
+    public function validate($values, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueProductParameters) {
             throw new UnexpectedTypeException($constraint, UniqueCollection::class);

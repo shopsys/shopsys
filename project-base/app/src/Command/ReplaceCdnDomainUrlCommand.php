@@ -27,7 +27,7 @@ class ReplaceCdnDomainUrlCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Replace "content" and "public" folders url in all database text columns by corresponding CDN url');

@@ -24,7 +24,7 @@ class TopCategoryFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getAllCategoriesByDomainId($domainId)
+    public function getAllCategoriesByDomainId($domainId): array
     {
         $topCategories = $this->topCategoryRepository->getAllByDomainId($domainId);
 
@@ -35,7 +35,7 @@ class TopCategoryFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getVisibleCategoriesByDomainId($domainId)
+    public function getVisibleCategoriesByDomainId($domainId): array
     {
         $topCategories = $this->topCategoryRepository->getVisibleByDomainId($domainId);
 
@@ -46,7 +46,7 @@ class TopCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategory[] $topCategories
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    protected function getCategoriesFromTopCategories($topCategories)
+    protected function getCategoriesFromTopCategories($topCategories): array
     {
         $categories = [];
 
@@ -61,7 +61,7 @@ class TopCategoryFacade
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      */
-    public function saveTopCategoriesForDomain($domainId, array $categories)
+    public function saveTopCategoriesForDomain(int $domainId, array $categories): void
     {
         $oldTopCategories = $this->topCategoryRepository->getAllByDomainId($domainId);
 

@@ -17,7 +17,7 @@ class CustomerUserNotFoundByEmailAndDomainException extends CustomerUserNotFound
      * @param int $domainId
      * @param \Exception|null $previous
      */
-    public function __construct($email, $domainId, ?Exception $previous = null)
+    public function __construct(string $email, int $domainId, ?Exception $previous = null)
     {
         parent::__construct('User with email "' . $email . '" on domain "' . $domainId . '" not found.', $previous);
 
@@ -28,7 +28,7 @@ class CustomerUserNotFoundByEmailAndDomainException extends CustomerUserNotFound
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -36,7 +36,7 @@ class CustomerUserNotFoundByEmailAndDomainException extends CustomerUserNotFound
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }

@@ -37,17 +37,17 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param \Symfony\Component\Routing\RouteCollection $routeCollection
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $routeName
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param int $referenceType
      * @return string
      */
     public function generateFromRouteCollection(
         RouteCollection $routeCollection,
         DomainConfig $domainConfig,
-        $routeName,
+        string $routeName,
         array $parameters = [],
-        $referenceType = self::ABSOLUTE_PATH,
-    ) {
+        int $referenceType = self::ABSOLUTE_PATH,
+    ): string {
         $route = $routeCollection->get($routeName);
 
         if ($route === null) {
@@ -84,17 +84,17 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param string $routeName
      * @param \Symfony\Component\Routing\Route $route
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param int $referenceType
      * @return string
      */
     public function getGeneratedUrl(
-        $routeName,
+        string $routeName,
         Route $route,
         FriendlyUrl $friendlyUrl,
         array $parameters,
-        $referenceType,
-    ) {
+        int $referenceType,
+    ): string {
         $compiledRoute = RouteCompiler::compile($route);
 
         $tokens = [
@@ -121,7 +121,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param string $routeName
      * @param \Symfony\Component\Routing\Route $route
      * @param string $slug
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param int $referenceType
      * @return string
      */

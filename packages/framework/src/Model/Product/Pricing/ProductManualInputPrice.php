@@ -52,7 +52,7 @@ class ProductManualInputPrice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProduct()
+    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->product;
     }
@@ -60,7 +60,7 @@ class ProductManualInputPrice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getPricingGroup()
+    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->pricingGroup;
     }
@@ -76,7 +76,7 @@ class ProductManualInputPrice
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $inputPrice
      */
-    public function setInputPrice(?Money $inputPrice)
+    public function setInputPrice(?Money $inputPrice): void
     {
         $this->inputPrice = $inputPrice;
     }

@@ -26,7 +26,7 @@ class HeurekaShopCertificationFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Heureka\ShopCertification
      */
-    public function create(Order $order)
+    public function create(Order $order): \Heureka\ShopCertification
     {
         $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());
 

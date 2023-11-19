@@ -29,7 +29,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     /**
      * @group multidomain
      */
-    public function testCreateBrandDomain()
+    public function testCreateBrandDomain(): void
     {
         $brandData = $this->brandDataFactory->create();
 
@@ -50,7 +50,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     /**
      * @group singledomain
      */
-    public function testCreateBrandDomainForSingleDomain()
+    public function testCreateBrandDomainForSingleDomain(): void
     {
         $brandData = $this->brandDataFactory->create();
 
@@ -70,7 +70,7 @@ class BrandDomainTest extends TransactionFunctionalTestCase
      * @param \App\Model\Product\Brand\Brand $brand
      * @return \App\Model\Product\Brand\Brand
      */
-    private function getRefreshedBrandFromDatabase(Brand $brand)
+    private function getRefreshedBrandFromDatabase(Brand $brand): \App\Model\Product\Brand\Brand
     {
         $this->em->persist($brand);
         $this->em->flush();

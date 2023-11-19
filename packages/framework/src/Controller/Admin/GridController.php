@@ -26,8 +26,9 @@ class GridController extends AdminBaseController
     /**
      * @Route("/_grid/get-form/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getFormAction(Request $request)
+    public function getFormAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $rowId = $request->get('rowId') !== null ? json_decode($request->get('rowId')) : null;
 
@@ -42,8 +43,9 @@ class GridController extends AdminBaseController
     /**
      * @Route("/_grid/save-form/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function saveFormAction(Request $request)
+    public function saveFormAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $responseData = [];
         $rowId = $request->get('rowId') !== null ? json_decode($request->get('rowId')) : null;
@@ -68,8 +70,9 @@ class GridController extends AdminBaseController
     /**
      * @Route("/_grid/save-ordering/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function saveOrderingAction(Request $request)
+    public function saveOrderingAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $this->gridOrderingFacade->saveOrdering(
             $request->get('entityClass'),

@@ -62,7 +62,7 @@ class PersonalDataQuery extends AbstractQuery
     /**
      * @param string $hash
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return array
+     * @return array<'customerUser'|'exportLink'|'newsletterSubscriber'|'orders', mixed>
      */
     public function personalDataAccessQuery(string $hash, InputValidator $validator): array
     {

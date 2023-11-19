@@ -309,7 +309,7 @@ class ParameterRepository extends BaseParameterRepository
      * @param \App\Model\Product\Product $product
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getProductParameterValuesByProductQueryBuilder(BaseProduct $product)
+    protected function getProductParameterValuesByProductQueryBuilder(BaseProduct $product): \Doctrine\ORM\QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('ppv')
@@ -326,7 +326,7 @@ class ParameterRepository extends BaseParameterRepository
     /**
      * @param \App\Model\Product\Product[] $products
      * @param string $locale
-     * @return array
+     * @return mixed[]
      */
     public function getProductParameterValuesDataByProducts(array $products, string $locale): array
     {
@@ -370,12 +370,12 @@ class ParameterRepository extends BaseParameterRepository
     }
 
     /**
-     * @param array $productIdsAndParameterNamesAndValues
+     * @param mixed[] $productIdsAndParameterNamesAndValues
      * @return string[][]
      */
     protected function getParameterValuesIndexedByProductIdAndParameterName(
         array $productIdsAndParameterNamesAndValues,
-    ) {
+    ): array {
         $productParameterValuesIndexedByProductIdAndParameterName = [];
 
         foreach ($productIdsAndParameterNamesAndValues as $productIdAndParameterNameAndValue) {

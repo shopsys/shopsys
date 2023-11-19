@@ -31,7 +31,7 @@ class TransportTranslation extends BaseTransportTranslation
     /**
      * @param string|null $trackingInstruction
      */
-    public function setTrackingInstruction(?string $trackingInstruction)
+    public function setTrackingInstruction(?string $trackingInstruction): void
     {
         $this->trackingInstruction = $trackingInstruction;
     }

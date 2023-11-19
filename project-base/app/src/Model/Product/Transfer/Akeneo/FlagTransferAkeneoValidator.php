@@ -18,7 +18,7 @@ class FlagTransferAkeneoValidator
     }
 
     /**
-     * @param array $akeneoFlagData
+     * @param mixed[] $akeneoFlagData
      */
     public function validate(array $akeneoFlagData): void
     {

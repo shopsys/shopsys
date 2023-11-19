@@ -21,7 +21,7 @@ class ExtendedOrderItem extends OrderItem
     /**
      * @return string|null
      */
-    public function getStringField()
+    public function getStringField(): ?string
     {
         return $this->stringField;
     }
@@ -29,7 +29,7 @@ class ExtendedOrderItem extends OrderItem
     /**
      * @param string|null $stringField
      */
-    public function setStringField($stringField)
+    public function setStringField(?string $stringField): void
     {
         $this->stringField = $stringField;
     }

@@ -33,7 +33,7 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->get('settings');
         $builderSettingsGroup->remove('password');
@@ -114,7 +114,7 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
      * @param string $scenario
      * @return \Symfony\Component\Validator\Constraint[]
      */
-    private function getFirstPasswordConstraints($scenario)
+    private function getFirstPasswordConstraints($scenario): array
     {
         $constraints = [
             new Constraints\Regex(['pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{10,}$/', 'message' => 'Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters.']),

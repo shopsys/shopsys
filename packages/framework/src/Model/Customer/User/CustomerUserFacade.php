@@ -54,7 +54,7 @@ class CustomerUserFacade
      * @param int $customerUserId
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function getCustomerUserById($customerUserId)
+    public function getCustomerUserById($customerUserId): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
     {
         return $this->customerUserRepository->getCustomerUserById($customerUserId);
     }
@@ -64,7 +64,7 @@ class CustomerUserFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function findCustomerUserByEmailAndDomain($email, $domainId)
+    public function findCustomerUserByEmailAndDomain($email, $domainId): ?\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
     {
         return $this->customerUserRepository->findCustomerUserByEmailAndDomain($email, $domainId);
     }
@@ -73,7 +73,7 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function register(CustomerUserData $customerUserData)
+    public function register(CustomerUserData $customerUserData): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
     {
         $customer = $this->createCustomerWithBillingAddress(
             $customerUserData->domainId,
@@ -91,7 +91,7 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function create(CustomerUserUpdateData $customerUserUpdateData)
+    public function create(CustomerUserUpdateData $customerUserUpdateData): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
     {
         $customer = $this->createCustomerWithBillingAddress(
             $customerUserUpdateData->customerUserData->domainId,
@@ -150,7 +150,7 @@ class CustomerUserFacade
         int $customerUserId,
         CustomerUserUpdateData $customerUserUpdateData,
         ?DeliveryAddress $deliveryAddress = null,
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser {
         $customerUser = $this->getCustomerUserById($customerUserId);
 
         if (
@@ -188,7 +188,7 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function editByAdmin(int $customerUserId, CustomerUserUpdateData $customerUserUpdateData)
+    public function editByAdmin(int $customerUserId, CustomerUserUpdateData $customerUserUpdateData): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
     {
         $customerUser = $this->edit($customerUserId, $customerUserUpdateData);
 
@@ -204,7 +204,7 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function editByCustomerUser(int $customerUserId, CustomerUserUpdateData $customerUserUpdateData)
+    public function editByCustomerUser(int $customerUserId, CustomerUserUpdateData $customerUserUpdateData): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
     {
         $customerUser = $this->edit($customerUserId, $customerUserUpdateData);
 
@@ -216,7 +216,7 @@ class CustomerUserFacade
     /**
      * @param int $customerUserId
      */
-    public function delete($customerUserId)
+    public function delete($customerUserId): void
     {
         $customerUser = $this->getCustomerUserById($customerUserId);
 
@@ -235,7 +235,7 @@ class CustomerUserFacade
         CustomerUser $customerUser,
         Order $order,
         ?DeliveryAddress $deliveryAddress,
-    ) {
+    ): void {
         $this->edit(
             $customerUser->getId(),
             $this->customerUserUpdateDataFactory->createAmendedByOrder($customerUser, $order, $deliveryAddress),

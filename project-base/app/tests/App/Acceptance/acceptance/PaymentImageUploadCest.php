@@ -25,7 +25,7 @@ class PaymentImageUploadCest
         AcceptanceTester $me,
         EntityEditPage $entityEditPage,
         LoginPage $loginPage,
-    ) {
+    ): void {
         $me->wantTo('Upload an image in admin payment edit page');
         $loginPage->loginAsAdmin();
         $me->amOnPage('/admin/payment/edit/1');

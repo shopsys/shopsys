@@ -31,7 +31,7 @@ class ProductExportCronModule extends BaseProductExportCronModule
         parent::__construct($index, $indexFacade, $indexDefinitionLoader, $domain);
     }
 
-    public function run()
+    public function run(): void
     {
         parent::run();
 

@@ -29,7 +29,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
     /**
      * @param \App\Model\Product\Product[] $products
      */
-    protected function calculate(array $products = [])
+    protected function calculate(array $products = []): void
     {
         $this->calculateIndependent($products);
         $this->propagateCalculatedSaleExclusionToCalculatedSellingDenied($products);
@@ -40,7 +40,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
     /**
      * @param \App\Model\Product\Product[] $products
      */
-    protected function calculateIndependent(array $products)
+    protected function calculateIndependent(array $products): void
     {
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')
@@ -57,7 +57,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
     /**
      * @param \App\Model\Product\Product[] $products
      */
-    private function calculatePerDomain(array $products)
+    private function calculatePerDomain(array $products): void
     {
         $query = 'UPDATE product_domains AS pd
             SET calculated_sale_exclusion = CASE
@@ -157,7 +157,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
     /**
      * @param \App\Model\Product\Product[] $products
      */
-    protected function propagateMainVariantSellingDeniedToVariants(array $products)
+    protected function propagateMainVariantSellingDeniedToVariants(array $products): void
     {
         parent::propagateMainVariantSellingDeniedToVariants($products);
 
@@ -238,7 +238,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
     /**
      * @param \App\Model\Product\Product[] $products
      */
-    protected function propagateVariantsSellingDeniedToMainVariant(array $products)
+    protected function propagateVariantsSellingDeniedToMainVariant(array $products): void
     {
         parent::propagateVariantsSellingDeniedToMainVariant($products);
 

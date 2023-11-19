@@ -20,7 +20,7 @@ class TransportRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getTransportRepository()
+    protected function getTransportRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Transport::class);
     }
@@ -28,7 +28,7 @@ class TransportRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderForAll()
+    public function getQueryBuilderForAll(): \Doctrine\ORM\QueryBuilder
     {
         return $this->getTransportRepository()->createQueryBuilder('t')
             ->where('t.deleted = :deleted')->setParameter('deleted', false)
@@ -39,16 +39,16 @@ class TransportRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getQueryBuilderForAll()->getQuery()->getResult();
     }
 
     /**
-     * @param array $transportIds
+     * @param mixed[] $transportIds
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getAllByIds(array $transportIds)
+    public function getAllByIds(array $transportIds): array
     {
         if (count($transportIds) === 0) {
             return [];
@@ -64,7 +64,7 @@ class TransportRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getAllByDomainId($domainId)
+    public function getAllByDomainId($domainId): array
     {
         return $this->getQueryBuilderForAll()
             ->join(TransportDomain::class, 'td', Join::WITH, 't.id = td.transport AND td.domainId = :domainId')
@@ -76,7 +76,7 @@ class TransportRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getAllIncludingDeleted()
+    public function getAllIncludingDeleted(): array
     {
         return $this->getTransportRepository()->findAll();
     }
@@ -85,7 +85,7 @@ class TransportRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport|null
      */
-    public function findById($id)
+    public function findById($id): ?\Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->getQueryBuilderForAll()
             ->andWhere('t.id = :transportId')->setParameter('transportId', $id)
@@ -97,7 +97,7 @@ class TransportRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function getById($id)
+    public function getById($id): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $transport = $this->findById($id);
 

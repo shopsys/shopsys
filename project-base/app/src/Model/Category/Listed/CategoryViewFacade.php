@@ -19,7 +19,7 @@ class CategoryViewFacade
     }
 
     /**
-     * @param array $categoryIds
+     * @param mixed[] $categoryIds
      * @return \App\Model\Category\Listed\CategoryView[]
      */
     public function getByCategoryIds(array $categoryIds): array

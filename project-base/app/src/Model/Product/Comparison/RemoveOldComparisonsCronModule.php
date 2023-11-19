@@ -20,14 +20,14 @@ class RemoveOldComparisonsCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function run()
+    public function run(): void
     {
         $this->comparisonRepository->removeOldComparison(Comparison::DEFAULT_COMPARISON_LIFETIME_DAYS);
     }

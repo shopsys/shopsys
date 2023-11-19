@@ -28,7 +28,7 @@ class CombinedArticleElasticsearchRepository
     /**
      * @param string $searchText
      * @param int|null $limit
-     * @return array
+     * @return mixed[]
      */
     public function getArticlesBySearchText(string $searchText, ?int $limit = null): array
     {
@@ -38,8 +38,8 @@ class CombinedArticleElasticsearchRepository
     }
 
     /**
-     * @param array $result
-     * @return array
+     * @param mixed[] $result
+     * @return mixed[]
      */
     protected function extractHits(array $result): array
     {
@@ -74,8 +74,8 @@ class CombinedArticleElasticsearchRepository
     }
 
     /**
-     * @param array $article
-     * @return array
+     * @param mixed[] $article
+     * @return mixed[]
      */
     public function fillEmptyFields(array $article): array
     {
@@ -109,7 +109,7 @@ class CombinedArticleElasticsearchRepository
     /**
      * @param string $searchText
      * @param int|null $limit
-     * @return array
+     * @return mixed[]
      */
     private function getSearchQuery(string $searchText, ?int $limit = null): array
     {

@@ -40,7 +40,7 @@ class ProductVariantFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function createVariant(Product $mainProduct, array $variants)
+    public function createVariant(Product $mainProduct, array $variants): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         $mainProduct->checkIsNotMainVariant();
 

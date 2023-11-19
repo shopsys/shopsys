@@ -21,7 +21,7 @@ class ProductFilterCountDataElasticsearchRepository extends BaseProductFilterCou
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $countData
-     * @param array $plusParameterNumbers
+     * @param mixed[] $plusParameterNumbers
      * @param int $parameterId
      */
     protected function mergeParameterCountData(

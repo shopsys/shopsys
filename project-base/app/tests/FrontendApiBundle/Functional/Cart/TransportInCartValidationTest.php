@@ -115,7 +115,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function addNonExistingTransportToDemoCart(): array
     {
@@ -125,7 +125,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
     /**
      * @param string $transportUuid
      * @param string|null $pickupPlaceIdentifier
-     * @return array
+     * @return mixed[]
      */
     private function addTransportToDemoCart(string $transportUuid, ?string $pickupPlaceIdentifier = null): array
     {
@@ -150,7 +150,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function addTransportWithNonExistingPickupPlaceToDemoCart(): array
     {
@@ -161,7 +161,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function addTransportWithExceededWeightLimitToDemoCart(): array
     {

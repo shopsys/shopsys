@@ -9,7 +9,10 @@ use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 
 class DatabaseSearchingTest extends TestCase
 {
-    public function searchTextProvider()
+    /**
+     * @return array<int, array<'querySearchStringQuery'|'searchText', string>>
+     */
+    public function searchTextProvider(): array
     {
         return [
             ['searchText' => 'foo bar', 'querySearchStringQuery' => 'foo bar'],
@@ -26,7 +29,7 @@ class DatabaseSearchingTest extends TestCase
      * @param mixed $searchText
      * @param mixed $querySearchStringQuery
      */
-    public function testSafeFilename($searchText, $querySearchStringQuery)
+    public function testSafeFilename(string $searchText, string $querySearchStringQuery): void
     {
         $this->assertSame($querySearchStringQuery, DatabaseSearching::getLikeSearchString($searchText));
     }

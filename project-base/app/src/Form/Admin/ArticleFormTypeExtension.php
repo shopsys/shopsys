@@ -25,7 +25,7 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderArticleDataGroup = $builder->get('articleData');
 
@@ -92,13 +92,13 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults([
                 'data_class' => ArticleData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'validation_groups' => function (FormInterface $form) {
+                'validation_groups' => function (FormInterface $form): array {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
                     /** @var \App\Model\Article\ArticleData $articleData */
@@ -118,7 +118,7 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
     /**
      * @param mixed $builderArticleDataGroup
      */
-    private function changeOptionsOfPlacementField($builderArticleDataGroup)
+    private function changeOptionsOfPlacementField($builderArticleDataGroup): void
     {
         $builderArticleDataGroup->add('placement', ChoiceType::class, [
             'required' => true,

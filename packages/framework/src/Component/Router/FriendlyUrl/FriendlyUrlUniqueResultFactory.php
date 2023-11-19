@@ -25,7 +25,7 @@ class FriendlyUrlUniqueResultFactory
         FriendlyUrl $friendlyUrl,
         string $entityName,
         ?array $matchedRouteData = null,
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult {
         if ($matchedRouteData === null) {
             return new FriendlyUrlUniqueResult(true, $friendlyUrl);
         }

@@ -33,7 +33,7 @@ class DomainConfig
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -41,7 +41,7 @@ class DomainConfig
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -49,7 +49,7 @@ class DomainConfig
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -57,7 +57,7 @@ class DomainConfig
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -65,7 +65,7 @@ class DomainConfig
     /**
      * @return string
      */
-    public function getStylesDirectory()
+    public function getStylesDirectory(): string
     {
         return $this->stylesDirectory;
     }
@@ -73,7 +73,7 @@ class DomainConfig
     /**
      * @return string|null
      */
-    public function getDesignId()
+    public function getDesignId(): ?string
     {
         return $this->designId;
     }
@@ -81,7 +81,7 @@ class DomainConfig
     /**
      * @return bool
      */
-    public function isHttps()
+    public function isHttps(): bool
     {
         return strpos($this->url, 'https://') === 0;
     }

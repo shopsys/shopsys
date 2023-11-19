@@ -46,7 +46,7 @@ class Setting
      * @param string $key
      * @return \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null
      */
-    public function get($key)
+    public function get($key): \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null
     {
         $this->loadDomainValues(SettingValue::DOMAIN_ID_COMMON);
 
@@ -66,7 +66,7 @@ class Setting
      * @param int $domainId
      * @return \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null
      */
-    public function getForDomain($key, $domainId)
+    public function getForDomain($key, $domainId): bool|\DateTime|float|int|\Shopsys\FrameworkBundle\Component\Money\Money|string|null
     {
         $this->loadDomainValues($domainId);
 
@@ -85,7 +85,7 @@ class Setting
      * @param string $key
      * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
      */
-    public function set($key, $value)
+    public function set($key, $value): void
     {
         $this->loadDomainValues(SettingValue::DOMAIN_ID_COMMON);
 
@@ -106,7 +106,7 @@ class Setting
      * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
      * @param int $domainId
      */
-    public function setForDomain($key, $value, $domainId)
+    public function setForDomain($key, $value, $domainId): void
     {
         $this->loadDomainValues($domainId);
 
@@ -125,7 +125,7 @@ class Setting
     /**
      * @param int|null $domainId
      */
-    protected function loadDomainValues($domainId)
+    protected function loadDomainValues($domainId): void
     {
         if ($domainId === null) {
             $message = 'Cannot load setting value for null domain ID';
@@ -144,7 +144,7 @@ class Setting
         }
     }
 
-    public function clearCache()
+    public function clearCache(): void
     {
         $this->values = [];
     }

@@ -645,7 +645,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ';
     }
 
-    public function testGetProductFilterOptionsForSencorSearch()
+    public function testGetProductFilterOptionsForSencorSearch(): void
     {
         $query = 'query {
           products (search:"sencor") {
@@ -995,7 +995,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     /**
      * @dataProvider isSliderSelectable
      * @param bool $isSliderSelectable
-     * @param array $filter
+     * @param mixed[] $filter
      */
     public function testIsSliderSelectable(bool $isSliderSelectable, array $filter): void
     {

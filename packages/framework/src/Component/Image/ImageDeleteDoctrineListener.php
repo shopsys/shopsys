@@ -25,7 +25,7 @@ class ImageDeleteDoctrineListener
      *
      * @return \Shopsys\FrameworkBundle\Component\Image\ImageFacade
      */
-    protected function getImageFacade()
+    protected function getImageFacade(): \Shopsys\FrameworkBundle\Component\Image\ImageFacade
     {
         return $this->imageFacade;
     }
@@ -33,7 +33,7 @@ class ImageDeleteDoctrineListener
     /**
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(LifecycleEventArgs $args): void
     {
         $entity = $args->getEntity();
 
@@ -48,7 +48,7 @@ class ImageDeleteDoctrineListener
      * @param object $entity
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    protected function deleteEntityImages($entity, EntityManagerInterface $em)
+    protected function deleteEntityImages(object $entity, EntityManagerInterface $em): void
     {
         $images = $this->getImageFacade()->getAllImagesByEntity($entity);
 

@@ -12,7 +12,10 @@ use Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder;
 
 class NotNullableColumnsFinderTest extends TestCase
 {
-    public function testGetAllNotNullableColumnNamesIndexedByTableName()
+    /**
+     * @return bool|'not_nullable_field'
+     */
+    public function testGetAllNotNullableColumnNamesIndexedByTableName(): bool|string
     {
         $classMetadataInfoMock = $this->createMock(ClassMetadataInfo::class);
         $classMetadataInfoMock
@@ -23,7 +26,7 @@ class NotNullableColumnsFinderTest extends TestCase
             ->willReturn(['notNullableField', 'nullableField']);
         $classMetadataInfoMock
             ->method('isNullable')
-            ->willReturnCallback(function ($fieldName) {
+            ->willReturnCallback(function ($fieldName): bool {
                 return $fieldName === 'nullableField';
             });
         $classMetadataInfoMock
@@ -54,7 +57,7 @@ class NotNullableColumnsFinderTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getAssociationMappings(): array
     {
@@ -77,7 +80,7 @@ class NotNullableColumnsFinderTest extends TestCase
         return [$associationMapping1, $associationMapping2, $associationMapping3];
     }
 
-    public function testGetAllNotNullableColumnNamesIndexedByTableNameException()
+    public function testGetAllNotNullableColumnNamesIndexedByTableNameException(): void
     {
         $classMetadataMock = $this->createMock(ClassMetadata::class);
         $this->expectException(UnexpectedTypeException::class);

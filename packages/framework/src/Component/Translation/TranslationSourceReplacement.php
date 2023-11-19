@@ -18,7 +18,7 @@ class TranslationSourceReplacement
      * @param string $domain
      * @param string[] $sourceFileReferences
      */
-    public function __construct($oldSource, $newSource, $domain, protected readonly array $sourceFileReferences)
+    public function __construct(string $oldSource, string $newSource, string $domain, protected readonly array $sourceFileReferences)
     {
         $this->oldSource = $oldSource;
         $this->newSource = $newSource;
@@ -28,7 +28,7 @@ class TranslationSourceReplacement
     /**
      * @return string
      */
-    public function getOldSource()
+    public function getOldSource(): string
     {
         return $this->oldSource;
     }
@@ -36,7 +36,7 @@ class TranslationSourceReplacement
     /**
      * @return string
      */
-    public function getNewSource()
+    public function getNewSource(): string
     {
         return $this->newSource;
     }
@@ -44,7 +44,7 @@ class TranslationSourceReplacement
     /**
      * @return string
      */
-    public function getDomain()
+    public function getDomain(): string
     {
         return $this->domain;
     }
@@ -54,7 +54,7 @@ class TranslationSourceReplacement
      *
      * @return string[]
      */
-    public function getSourceFilePaths()
+    public function getSourceFilePaths(): array
     {
         $sourceFilePaths = [];
 
@@ -69,7 +69,7 @@ class TranslationSourceReplacement
      * @param string $sourceFilePath
      * @return int
      */
-    public function getExpectedReplacementsCountForSourceFilePath($sourceFilePath)
+    public function getExpectedReplacementsCountForSourceFilePath($sourceFilePath): int
     {
         $expectedReplacementsCount = 0;
 
@@ -86,7 +86,7 @@ class TranslationSourceReplacement
      * @param string $sourceFilePath
      * @return bool
      */
-    public function isExpectedReplacementsCountExact($sourceFilePath)
+    public function isExpectedReplacementsCountExact($sourceFilePath): bool
     {
         foreach ($this->sourceFileReferences as $sourceFileReference) {
             if ($this->extractSourceFilePathFromReference($sourceFileReference) === $sourceFilePath) {
@@ -103,7 +103,7 @@ class TranslationSourceReplacement
      * @param string $sourceFileReference
      * @return string
      */
-    protected function extractSourceFilePathFromReference($sourceFileReference)
+    protected function extractSourceFilePathFromReference($sourceFileReference): string
     {
         return explode(':', $sourceFileReference)[0];
     }
@@ -112,7 +112,7 @@ class TranslationSourceReplacement
      * @param string $sourceFileReference
      * @return int|null
      */
-    protected function extractSourceFileLineFromReference($sourceFileReference)
+    protected function extractSourceFileLineFromReference($sourceFileReference): ?int
     {
         $parts = explode(':', $sourceFileReference);
 

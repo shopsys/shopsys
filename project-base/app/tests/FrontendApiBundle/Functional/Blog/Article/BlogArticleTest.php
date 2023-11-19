@@ -150,7 +150,7 @@ class BlogArticleTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<'data', array<'blogArticle', array<'blogCategories'|'breadcrumb'|'createdAt'|'link'|'name'|'perex'|'publishDate'|'seoH1'|'seoMetaDescription'|'seoTitle'|'slug'|'text'|'uuid'|'visibleOnHomepage', mixed>>>
      */
     private function getExpectedBlogArticleArray(): array
     {

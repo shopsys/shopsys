@@ -44,7 +44,7 @@ class FlagFacade extends BaseFlagFacade
      * @param \App\Model\Product\Flag\FlagData $flagData
      * @return \App\Model\Product\Flag\Flag
      */
-    public function create(FlagData $flagData)
+    public function create(FlagData $flagData): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         /** @var \App\Model\Product\Flag\Flag $flag */
         $flag = parent::create($flagData);
@@ -59,7 +59,7 @@ class FlagFacade extends BaseFlagFacade
      * @param \App\Model\Product\Flag\FlagData $flagData
      * @return \App\Model\Product\Flag\Flag
      */
-    public function edit($flagId, FlagData $flagData)
+    public function edit($flagId, FlagData $flagData): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         /** @var \App\Model\Product\Flag\Flag $flag */
         $flag = parent::edit($flagId, $flagData);
@@ -82,7 +82,7 @@ class FlagFacade extends BaseFlagFacade
     /**
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @return array
+     * @return mixed[]
      */
     public function getAllFlagAkeneoCodes(): array
     {

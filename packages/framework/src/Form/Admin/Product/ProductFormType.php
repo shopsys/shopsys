@@ -91,9 +91,9 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product|null $product */
         $product = $options['product'];
@@ -140,7 +140,7 @@ class ProductFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('product')
@@ -149,7 +149,7 @@ class ProductFormType extends AbstractType
                 'data_class' => ProductData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'csrf_token_id' => self::CSRF_TOKEN_ID,
-                'validation_groups' => function (FormInterface $form) {
+                'validation_groups' => function (FormInterface $form): array {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
                     /** @var \Shopsys\FrameworkBundle\Model\Product\ProductData $productData */
                     $productData = $form->getData();
@@ -172,14 +172,14 @@ class ProductFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @param array $disabledItemInMainVariantAttr
+     * @param mixed[] $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createBasicInformationGroup(
         FormBuilderInterface $builder,
         ?Product $product,
         $disabledItemInMainVariantAttr = [],
-    ) {
+    ): \Symfony\Component\Form\FormBuilderInterface {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => t('Basic information'),
         ]);
@@ -252,7 +252,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createShortDescriptionsGroup(FormBuilderInterface $builder, ?Product $product)
+    private function createShortDescriptionsGroup(FormBuilderInterface $builder, ?Product $product): \Symfony\Component\Form\FormBuilderInterface
     {
         $builderShortDescriptionGroup = $builder->create('shortDescriptionsGroup', GroupType::class, [
             'label' => t('Short description'),
@@ -290,7 +290,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createDescriptionsGroup(FormBuilderInterface $builder, ?Product $product)
+    private function createDescriptionsGroup(FormBuilderInterface $builder, ?Product $product): \Symfony\Component\Form\FormBuilderInterface
     {
         $builderDescriptionGroup = $builder->create('descriptionsGroup', GroupType::class, [
             'label' => t('Description'),
@@ -321,14 +321,14 @@ class ProductFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @param array $disabledItemInMainVariantAttr
+     * @param mixed[] $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createDisplayAvailabilityGroup(
         FormBuilderInterface $builder,
         ?Product $product,
         $disabledItemInMainVariantAttr = [],
-    ) {
+    ): \Symfony\Component\Form\FormBuilderInterface {
         $productMainCategoriesIndexedByDomainId = [];
 
         if ($product !== null) {
@@ -574,7 +574,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createPricesGroup(FormBuilderInterface $builder, ?Product $product)
+    private function createPricesGroup(FormBuilderInterface $builder, ?Product $product): \Symfony\Component\Form\FormBuilderInterface
     {
         $builderPricesGroup = $builder->create('pricesGroup', GroupType::class, [
             'label' => t('Prices'),
@@ -653,7 +653,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createSeoGroup(FormBuilderInterface $builder, ?Product $product)
+    private function createSeoGroup(FormBuilderInterface $builder, ?Product $product): \Symfony\Component\Form\FormBuilderInterface
     {
         $seoTitlesOptionsByDomainId = [];
         $seoMetaDescriptionsOptionsByDomainId = [];
@@ -725,7 +725,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createVariantGroup(FormBuilderInterface $builder, ?Product $product)
+    private function createVariantGroup(FormBuilderInterface $builder, ?Product $product): \Symfony\Component\Form\FormBuilderInterface
     {
         $variantGroup = $builder->create('variantGroup', FormType::class, [
             'inherit_data' => true,
@@ -779,7 +779,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return string
      */
-    private function getTitlePlaceholder($locale, ?Product $product = null)
+    private function getTitlePlaceholder($locale, ?Product $product = null): string
     {
         return $product !== null ? $product->getName($locale) : '';
     }
@@ -788,7 +788,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return bool
      */
-    private function isProductMainVariant(?Product $product)
+    private function isProductMainVariant(?Product $product): bool
     {
         return $product !== null && $product->isMainVariant();
     }
@@ -797,7 +797,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return bool
      */
-    private function isProductVariant(?Product $product)
+    private function isProductVariant(?Product $product): bool
     {
         return $product !== null && $product->isVariant();
     }
@@ -833,7 +833,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createImagesGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface

@@ -11,7 +11,7 @@ use Tests\FrameworkBundle\Unit\Model\Product\TestProductProvider;
 
 class BestsellingProductCombinatorTest extends TestCase
 {
-    public function testCombineManualAndAutomaticBestsellingProducts()
+    public function testCombineManualAndAutomaticBestsellingProducts(): void
     {
         $bestsellingProductCombinator = new BestsellingProductCombinator();
 

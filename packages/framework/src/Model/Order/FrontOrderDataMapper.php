@@ -13,7 +13,7 @@ class FrontOrderDataMapper
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    public function prefillFrontFormData(FrontOrderData $frontOrderData, CustomerUser $customerUser, ?Order $order)
+    public function prefillFrontFormData(FrontOrderData $frontOrderData, CustomerUser $customerUser, ?Order $order): void
     {
         if ($order instanceof Order) {
             $this->prefillTransportAndPaymentFromOrder($frontOrderData, $order);
@@ -25,7 +25,7 @@ class FrontOrderDataMapper
      * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    protected function prefillTransportAndPaymentFromOrder(FrontOrderData $frontOrderData, Order $order)
+    protected function prefillTransportAndPaymentFromOrder(FrontOrderData $frontOrderData, Order $order): void
     {
         $frontOrderData->transport = $order->getTransport()->isDeleted() ? null : $order->getTransport();
         $frontOrderData->payment = $order->getPayment()->isDeleted() ? null : $order->getPayment();
@@ -35,7 +35,7 @@ class FrontOrderDataMapper
      * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
-    protected function prefillFrontFormDataFromCustomer(FrontOrderData $frontOrderData, CustomerUser $customerUser)
+    protected function prefillFrontFormDataFromCustomer(FrontOrderData $frontOrderData, CustomerUser $customerUser): void
     {
         $frontOrderData->firstName = $customerUser->getFirstName();
         $frontOrderData->lastName = $customerUser->getLastName();

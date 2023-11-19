@@ -13,7 +13,7 @@ class PluginDataFixtureFacade
     {
     }
 
-    public function loadAll()
+    public function loadAll(): void
     {
         $pluginDataFixtures = $this->pluginDataFixtureRegistry->getDataFixtures();
 

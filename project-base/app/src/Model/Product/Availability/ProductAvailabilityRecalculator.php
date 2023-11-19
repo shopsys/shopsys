@@ -26,7 +26,7 @@ class ProductAvailabilityRecalculator extends BaseProductAvailabilityRecalculato
     /**
      * @return bool
      */
-    public function runBatchOfScheduledDelayedRecalculations()
+    public function runBatchOfScheduledDelayedRecalculations(): bool
     {
         return false;
     }

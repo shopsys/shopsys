@@ -20,7 +20,7 @@ class DbIndexesRepository
      * @param string $locale
      * @param string $collation
      */
-    public function updateProductTranslationNameIndexForLocaleAndCollation(string $locale, string $collation)
+    public function updateProductTranslationNameIndexForLocaleAndCollation(string $locale, string $collation): void
     {
         $this->em->getConnection()->executeStatement(
             'CREATE INDEX IF NOT EXISTS product_translations_name_' . $locale . '_idx

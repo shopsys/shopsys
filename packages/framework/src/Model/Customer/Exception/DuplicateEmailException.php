@@ -14,7 +14,7 @@ class DuplicateEmailException extends Exception implements CustomerUserException
      * @param string $email
      * @param \Exception|null $previous
      */
-    public function __construct($email, $previous = null)
+    public function __construct(string $email, $previous = null)
     {
         $this->email = $email;
 
@@ -24,7 +24,7 @@ class DuplicateEmailException extends Exception implements CustomerUserException
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }

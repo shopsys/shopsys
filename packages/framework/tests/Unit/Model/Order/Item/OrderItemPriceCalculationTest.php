@@ -18,7 +18,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class OrderItemPriceCalculationTest extends TestCase
 {
-    public function testCalculatePriceWithoutVat()
+    public function testCalculatePriceWithoutVat(): void
     {
         $priceCalculationMock = $this->getMockBuilder(PriceCalculation::class)
             ->setMethods(['getVatAmountByPriceWithVat'])
@@ -45,7 +45,7 @@ class OrderItemPriceCalculationTest extends TestCase
         $this->assertThat($priceWithoutVat, new IsMoneyEqual(Money::create(900)));
     }
 
-    public function testCalculateTotalPrice()
+    public function testCalculateTotalPrice(): void
     {
         $priceCalculationMock = $this->getMockBuilder(PriceCalculation::class)
             ->setMethods(['getVatAmountByPriceWithVat'])

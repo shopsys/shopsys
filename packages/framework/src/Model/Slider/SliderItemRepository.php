@@ -21,7 +21,7 @@ class SliderItemRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getSliderItemRepository()
+    protected function getSliderItemRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(SliderItem::class);
     }
@@ -30,7 +30,7 @@ class SliderItemRepository
      * @param int $sliderItemId
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
      */
-    public function getById($sliderItemId)
+    public function getById($sliderItemId): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         /** @var \Shopsys\FrameworkBundle\Model\Slider\SliderItem|null $sliderItem */
         $sliderItem = $this->getSliderItemRepository()->find($sliderItemId);
@@ -48,7 +48,7 @@ class SliderItemRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem|null
      */
-    public function findById($id)
+    public function findById($id): ?\Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         /** @var \Shopsys\FrameworkBundle\Model\Slider\SliderItem $sliderItem */
         $sliderItem = $this->getSliderItemRepository()->find($id);
@@ -59,7 +59,7 @@ class SliderItemRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getSliderItemRepository()->findAll();
     }
@@ -68,7 +68,7 @@ class SliderItemRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
-    public function getAllVisibleByDomainId($domainId)
+    public function getAllVisibleByDomainId($domainId): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('si')

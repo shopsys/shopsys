@@ -36,7 +36,7 @@ class ImageSitemapListener implements EventSubscriberInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapPopulateEvent $event
      */
-    public function populateImageSitemap(ImageSitemapPopulateEvent $event)
+    public function populateImageSitemap(ImageSitemapPopulateEvent $event): void
     {
         $section = $event->getSection();
         $domainId = (int)$section;

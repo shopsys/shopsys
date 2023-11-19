@@ -40,7 +40,7 @@ class DeliveryAddressDataFactory extends BaseDeliveryAddressDataFactory
     protected function fillFromDeliveryAddress(
         BaseDeliveryAddressData $deliveryAddressData,
         BaseDeliveryAddress $deliveryAddress,
-    ) {
+    ): void {
         parent::fillFromDeliveryAddress($deliveryAddressData, $deliveryAddress);
 
         $deliveryAddressData->uuid = $deliveryAddress->getUuid();

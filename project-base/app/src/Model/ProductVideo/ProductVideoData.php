@@ -10,5 +10,8 @@ class ProductVideoData
 
     public string $videoToken;
 
+    /**
+     * @var mixed[]
+     */
     public array $videoTokenDescriptions = [];
 }

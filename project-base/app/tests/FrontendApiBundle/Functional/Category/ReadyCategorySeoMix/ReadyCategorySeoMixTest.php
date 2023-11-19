@@ -26,7 +26,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
      */
     private ParameterFacade $parameterFacade;
 
-    public function testGetReadyCategorySeoMixDataBySlug()
+    public function testGetReadyCategorySeoMixDataBySlug(): void
     {
         /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix */
         $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION, 1);
@@ -119,7 +119,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
     }
 
-    public function testReadyCategorySeoMixProductsOrdering()
+    public function testReadyCategorySeoMixProductsOrdering(): void
     {
         /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix */
         $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_FROM_CHEAPEST, 1);
@@ -159,7 +159,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
     }
 
-    public function testReadyCategorySeoMixProductsWithFlag()
+    public function testReadyCategorySeoMixProductsWithFlag(): void
     {
         /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix */
         $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_IN_SALE, 1);
@@ -183,7 +183,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
     }
 
-    public function testReadyCategorySeoMixProductsWithParameters()
+    public function testReadyCategorySeoMixProductsWithParameters(): void
     {
         /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix */
         $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI, 1);
@@ -309,7 +309,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
     }
 
     /**
-     * @param array $flags
+     * @param mixed[] $flags
      */
     private function assertSelectedFlags(array $flags): void
     {
@@ -326,7 +326,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
     }
 
     /**
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     private function assertSelectedParameterCheckboxFilterOptions(array $parameters): void
     {
@@ -354,8 +354,8 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
 
     /**
      * @param string $graphQlFilePath
-     * @param array $additionalVariables
-     * @return array
+     * @param mixed[] $additionalVariables
+     * @return mixed[]
      */
     private function getDataForCategorySeoMixPcNewWithUsb(
         string $graphQlFilePath,
@@ -371,7 +371,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getDataForCategoryWithFiltersMatchingSeoMix(): array
     {

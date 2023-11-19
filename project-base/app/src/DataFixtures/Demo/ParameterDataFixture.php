@@ -116,7 +116,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $parameterColorNamesByLocale = [];
         $parameterMaterialNamesByLocale = [];

@@ -87,7 +87,7 @@ class PaymentInCartValidationTest extends GraphQlTestCase
 
     /**
      * @param string $paymentUuid
-     * @return array
+     * @return mixed[]
      */
     private function addPaymentToDemoCart(string $paymentUuid): array
     {
@@ -106,7 +106,7 @@ class PaymentInCartValidationTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function addNonExistingPaymentToDemoCart(): array
     {

@@ -24,7 +24,7 @@ class CategoryVisibilityRepository
     ) {
     }
 
-    public function refreshCategoriesVisibility()
+    public function refreshCategoriesVisibility(): void
     {
         $domains = $this->domain->getAll();
 
@@ -36,7 +36,7 @@ class CategoryVisibilityRepository
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
-    protected function refreshCategoriesVisibilityOnDomain(DomainConfig $domainConfig)
+    protected function refreshCategoriesVisibilityOnDomain(DomainConfig $domainConfig): void
     {
         $this->setRootCategoryVisibleOnDomain($domainConfig);
 
@@ -50,7 +50,7 @@ class CategoryVisibilityRepository
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      */
-    protected function setRootCategoryVisibleOnDomain(DomainConfig $domainConfig)
+    protected function setRootCategoryVisibleOnDomain(DomainConfig $domainConfig): void
     {
         $this->em->getConnection()->executeStatement(
             'UPDATE category_domains AS cd
@@ -71,7 +71,7 @@ class CategoryVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return int
      */
-    protected function getMaxLevelOnDomain(DomainConfig $domainConfig)
+    protected function getMaxLevelOnDomain(DomainConfig $domainConfig): int
     {
         return $this->em->getConnection()->fetchOne(
             'SELECT MAX(c.level)
@@ -88,7 +88,7 @@ class CategoryVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int $level
      */
-    protected function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, $level)
+    protected function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, $level): void
     {
         $this->em->getConnection()->executeStatement(
             'UPDATE category_domains AS cd

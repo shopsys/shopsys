@@ -107,7 +107,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param string $locale
      * @param int $lastProcessedId
      * @param int $batchSize
-     * @return array
+     * @return mixed[]
      */
     public function getProductsData(int $domainId, string $locale, int $lastProcessedId, int $batchSize): array
     {
@@ -132,7 +132,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param int $domainId
      * @param string $locale
      * @param int[] $productIds
-     * @return array
+     * @return mixed[]
      */
     public function getProductsDataForIds(int $domainId, string $locale, array $productIds): array
     {
@@ -156,7 +156,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      * @param string $locale
-     * @return array
+     * @return array<'accessories'|'availability'|'availability_dispatch_time'|'availability_status'|'available_stores_count'|'brand'|'brand_name'|'brand_url'|'breadcrumb'|'calculated_selling_denied'|'categories'|'catnum'|'description'|'detail_url'|'ean'|'files'|'flags'|'has_preorder'|'id'|'in_stock'|'is_available'|'is_main_variant'|'is_sale_exclusion'|'is_variant'|'main_category_id'|'main_category_path'|'main_variant_id'|'name'|'name_prefix'|'name_sufix'|'ordering_priority'|'parameters'|'partno'|'prices'|'product_available_stores_count_information'|'product_videos'|'related_products'|'searching_catnums'|'searching_descriptions'|'searching_eans'|'searching_names'|'searching_partnos'|'searching_short_descriptions'|'selling_denied'|'seo_h1'|'seo_meta_description'|'seo_title'|'short_description'|'slug'|'stock_quantity'|'store_availabilities_information'|'unit'|'usps'|'uuid'|'variants'|'visibility', mixed>|array<'description'|'token', mixed>
      */
     protected function extractResult(BaseProduct $product, int $domainId, string $locale): array
     {
@@ -249,7 +249,7 @@ class ProductExportRepository extends BaseProductExportRepository
     /**
      * @param int $domainId
      * @param \App\Model\Product\Product $product
-     * @return array
+     * @return mixed[]
      */
     protected function extractPrices(int $domainId, BaseProduct $product): array
     {
@@ -534,7 +534,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Product $product
      * @param string $locale
      * @param int $domainId
-     * @return array
+     * @return mixed[]
      */
     private function extractParametersIncludedVariants(Product $product, string $locale, int $domainId): array
     {
@@ -559,7 +559,7 @@ class ProductExportRepository extends BaseProductExportRepository
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
-     * @return array
+     * @return mixed[]
      */
     private function extractStoreAvailabilitiesInformation(Product $product, int $domainId): array
     {

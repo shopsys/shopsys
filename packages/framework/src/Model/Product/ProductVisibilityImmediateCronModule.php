@@ -19,11 +19,11 @@ class ProductVisibilityImmediateCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
     }
 
-    public function run()
+    public function run(): void
     {
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
     }

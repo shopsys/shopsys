@@ -322,7 +322,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
 
     /**
      * @param string $cartUuid
-     * @param array $expectedItems
+     * @param mixed[] $expectedItems
      */
     private function assertActualCartContent(string $cartUuid, array $expectedItems): void
     {
@@ -339,8 +339,8 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
     /**
      * Compare expected items while ignoring the order of the items
      *
-     * @param array $expectedItems
-     * @param array $items
+     * @param mixed[] $expectedItems
+     * @param mixed[] $items
      */
     private function assertCartItems(array $expectedItems, array $items): void
     {

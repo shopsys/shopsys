@@ -12,7 +12,7 @@ class ElasticsearchRequestCollection
     protected array $collectedData = [];
 
     /**
-     * @return array
+     * @return array<int, array<'duration'|'method'|'requestCurl'|'requestData'|'requestJson'|'response'|'statusCode'|'uri', mixed>>
      */
     public function getCollectedData(): array
     {

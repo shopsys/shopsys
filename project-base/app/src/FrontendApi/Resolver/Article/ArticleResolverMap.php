@@ -10,7 +10,7 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 class ArticleResolverMap extends ResolverMap
 {
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function map(): array
     {
@@ -18,7 +18,7 @@ class ArticleResolverMap extends ResolverMap
             'slug' => function (array $articleData) {
                 return '/' . $articleData['mainSlug'];
             },
-            'createdAt' => static function (array $blogArticleData) {
+            'createdAt' => static function (array $blogArticleData): \DateTime {
                 return new DateTime($blogArticleData['createdAt']);
             },
         ];

@@ -22,7 +22,7 @@ class ProductFilterConfigIdsDataFactory
     }
 
     /**
-     * @param array $aggregationElasticsearchResult
+     * @param mixed[] $aggregationElasticsearchResult
      * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
      */
     public function createFromElasticsearchAggregationResult(
@@ -37,7 +37,7 @@ class ProductFilterConfigIdsDataFactory
     }
 
     /**
-     * @param array $aggregationResult
+     * @param mixed[] $aggregationResult
      * @return int[]
      */
     private function extractBrandIds(array $aggregationResult): array
@@ -54,7 +54,7 @@ class ProductFilterConfigIdsDataFactory
     }
 
     /**
-     * @param array $aggregationResult
+     * @param mixed[] $aggregationResult
      * @return int[]
      */
     private function extractFlagIds(array $aggregationResult): array
@@ -71,7 +71,7 @@ class ProductFilterConfigIdsDataFactory
     }
 
     /**
-     * @param array $aggregationResult
+     * @param mixed[] $aggregationResult
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
     private function extractPriceRange(array $aggregationResult): PriceRange
@@ -88,8 +88,8 @@ class ProductFilterConfigIdsDataFactory
     }
 
     /**
-     * @param array $aggregationResult
-     * @return array
+     * @param mixed[] $aggregationResult
+     * @return mixed[]
      */
     private function extractParameterValueIdsByParameterId(array $aggregationResult): array
     {

@@ -22,7 +22,7 @@ class HttpSmokeTest extends HttpSmokeTestCase
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
+    protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomization = new RouteConfigCustomization(static::$container);
         $routeConfigCustomization->customizeRouteConfigs($routeConfigCustomizer);
@@ -32,7 +32,7 @@ class HttpSmokeTest extends HttpSmokeTestCase
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function handleRequest(Request $request)
+    protected function handleRequest(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = static::$container->get('doctrine.orm.entity_manager');

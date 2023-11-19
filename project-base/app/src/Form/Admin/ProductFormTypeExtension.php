@@ -326,7 +326,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
-    private function setVideoGroup(FormBuilderInterface $builder)
+    private function setVideoGroup(FormBuilderInterface $builder): void
     {
         $videosGroup = $builder->create('videosGroup', GroupType::class, [
             'label' => t('Videos'),

@@ -97,7 +97,7 @@ final class DeprecationHelper
      * @param string $methodName
      * @param string $argumentName
      * @param string $argumentType
-     * @param array $functionArguments
+     * @param mixed[] $functionArguments
      * @param int $positionOfArgument
      * @param mixed $defaultValue
      * @param bool $required

@@ -232,7 +232,7 @@ class MailTemplateVariables
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getLabeledVariables(): array
     {

@@ -35,7 +35,7 @@ class VatFacade
      * @param int $vatId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function getById($vatId)
+    public function getById($vatId): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         return $this->vatRepository->getById($vatId);
     }
@@ -78,7 +78,7 @@ class VatFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function edit($vatId, VatData $vatData)
+    public function edit($vatId, VatData $vatData): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         $vat = $this->vatRepository->getById($vatId);
         $vat->edit($vatData);
@@ -93,7 +93,7 @@ class VatFacade
      * @param int $vatId
      * @param int|null $newVatId
      */
-    public function deleteById($vatId, $newVatId = null)
+    public function deleteById($vatId, $newVatId = null): void
     {
         $oldVat = $this->vatRepository->getById($vatId);
         $newVat = $newVatId ? $this->vatRepository->getById($newVatId) : null;
@@ -127,7 +127,7 @@ class VatFacade
     /**
      * @return int
      */
-    public function deleteAllReplacedVats()
+    public function deleteAllReplacedVats(): int
     {
         $vatsForDelete = $this->vatRepository->getVatsWithoutProductsMarkedForDeletion();
 
@@ -163,7 +163,7 @@ class VatFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @return bool
      */
-    public function isVatUsed(Vat $vat)
+    public function isVatUsed(Vat $vat): bool
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $defaultVatForDomain = $this->getDefaultVatForDomain($domainId);

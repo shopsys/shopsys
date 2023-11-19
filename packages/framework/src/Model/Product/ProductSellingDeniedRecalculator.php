@@ -22,13 +22,13 @@ class ProductSellingDeniedRecalculator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      */
-    public function calculateSellingDeniedForProduct(Product $product)
+    public function calculateSellingDeniedForProduct(Product $product): void
     {
         $products = $this->getProductsForCalculations($product);
         $this->calculate($products);
     }
 
-    public function calculateSellingDeniedForAll()
+    public function calculateSellingDeniedForAll(): void
     {
         $this->calculate();
     }
@@ -36,7 +36,7 @@ class ProductSellingDeniedRecalculator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      */
-    protected function calculate(array $products = [])
+    protected function calculate(array $products = []): void
     {
         $this->calculateIndependent($products);
         $this->propagateMainVariantSellingDeniedToVariants($products);
@@ -47,7 +47,7 @@ class ProductSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    protected function getProductsForCalculations(Product $product)
+    protected function getProductsForCalculations(Product $product): array
     {
         $products = [$product];
 
@@ -63,7 +63,7 @@ class ProductSellingDeniedRecalculator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      */
-    protected function calculateIndependent(array $products)
+    protected function calculateIndependent(array $products): void
     {
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')
@@ -87,7 +87,7 @@ class ProductSellingDeniedRecalculator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      */
-    protected function propagateMainVariantSellingDeniedToVariants(array $products)
+    protected function propagateMainVariantSellingDeniedToVariants(array $products): void
     {
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')
@@ -113,7 +113,7 @@ class ProductSellingDeniedRecalculator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      */
-    protected function propagateVariantsSellingDeniedToMainVariant(array $products)
+    protected function propagateVariantsSellingDeniedToMainVariant(array $products): void
     {
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')

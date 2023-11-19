@@ -13,7 +13,7 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
 {
     use OrderTestTrait;
 
-    public function testCreateOrderWithPersonalPickupStore()
+    public function testCreateOrderWithPersonalPickupStore(): void
     {
         /** @var \App\Model\Store\Store $store */
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);

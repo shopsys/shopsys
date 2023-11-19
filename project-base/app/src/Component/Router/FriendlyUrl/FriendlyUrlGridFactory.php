@@ -85,7 +85,7 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
         return $routeName;
     }
 
-    public function create()
+    public function create(): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $queryBuilder = $this->friendlyUrlFacade->getNonUsedFriendlyUrlQueryBuilderByDomainIdAndQuickSearch(
             $this->adminDomainTabsFacade->getSelectedDomainId(),

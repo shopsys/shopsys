@@ -23,8 +23,8 @@ class DirectoryStructureCreator
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        $imageDir,
-        $domainImageDir,
+        string $imageDir,
+        string $domainImageDir,
         protected readonly ImageConfig $imageConfig,
         protected readonly ImageLocator $imageLocator,
         protected readonly FilesystemOperator $filesystem,
@@ -33,7 +33,7 @@ class DirectoryStructureCreator
         $this->domainImageDir = $domainImageDir;
     }
 
-    public function makeImageDirectories()
+    public function makeImageDirectories(): void
     {
         $imageEntityConfigs = $this->imageConfig->getAllImageEntityConfigsByClass();
         $directories = [];
@@ -71,7 +71,7 @@ class DirectoryStructureCreator
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
      * @return string[]
      */
-    protected function getTargetDirectoriesFromSizeConfigs($entityName, $type, array $sizeConfigs)
+    protected function getTargetDirectoriesFromSizeConfigs($entityName, $type, array $sizeConfigs): array
     {
         $directories = [];
 

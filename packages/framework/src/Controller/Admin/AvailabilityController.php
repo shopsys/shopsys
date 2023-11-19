@@ -30,8 +30,9 @@ class AvailabilityController extends AdminBaseController
 
     /**
      * @Route("/product/availability/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $grid = $this->availabilityInlineEdit->getGrid();
 
@@ -45,8 +46,9 @@ class AvailabilityController extends AdminBaseController
      * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $newId = $request->get('newId');
 
@@ -82,8 +84,9 @@ class AvailabilityController extends AdminBaseController
     /**
      * @Route("/product/availability/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction($id): \Symfony\Component\HttpFoundation\Response
     {
         try {
             $availability = $this->availabilityFacade->getById($id);
@@ -129,8 +132,9 @@ class AvailabilityController extends AdminBaseController
     /**
      * @Route("/product/availability/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function settingAction(Request $request)
+    public function settingAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         try {
             $defaultInStockAvailability = $this->availabilityFacade->getDefaultInStockAvailability();

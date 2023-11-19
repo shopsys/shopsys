@@ -22,7 +22,7 @@ class BlogArticlesTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<'case 1'|'case 2'|'case 3'|'case 4'|'case 5', mixed[]>
      */
     private function getBlogArticlesDataProvider(): array
     {

@@ -33,7 +33,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token): \Symfony\Component\HttpFoundation\Response
     {
         $referer = $request->headers->get('referer');
 
@@ -54,7 +54,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
      * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): \Symfony\Component\HttpFoundation\Response
     {
         if ($request->isXmlHttpRequest()) {
             $responseData = [

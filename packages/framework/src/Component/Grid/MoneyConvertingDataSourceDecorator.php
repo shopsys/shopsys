@@ -55,7 +55,7 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
 
     /**
      * @param int $rowId
-     * @return array
+     * @return mixed[]
      */
     public function getOneRow($rowId): array
     {
@@ -81,8 +81,8 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
     }
 
     /**
-     * @param array $row
-     * @return array
+     * @param mixed[] $row
+     * @return mixed[]
      */
     protected function convertRow(array $row): array
     {

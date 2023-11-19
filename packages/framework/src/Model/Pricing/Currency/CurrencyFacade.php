@@ -38,7 +38,7 @@ class CurrencyFacade
      * @param int $currencyId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function getById($currencyId)
+    public function getById($currencyId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->currencyRepository->getById($currencyId);
     }
@@ -56,7 +56,7 @@ class CurrencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function create(CurrencyData $currencyData)
+    public function create(CurrencyData $currencyData): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         $currency = $this->currencyFactory->create($currencyData);
         $this->em->persist($currency);
@@ -70,7 +70,7 @@ class CurrencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function edit($currencyId, CurrencyData $currencyData)
+    public function edit($currencyId, CurrencyData $currencyData): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         $currency = $this->currencyRepository->getById($currencyId);
         $currency->edit($currencyData);
@@ -89,7 +89,7 @@ class CurrencyFacade
     /**
      * @param int $currencyId
      */
-    public function deleteById($currencyId)
+    public function deleteById($currencyId): void
     {
         $currency = $this->currencyRepository->getById($currencyId);
 
@@ -103,7 +103,7 @@ class CurrencyFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->currencyRepository->getAll();
     }
@@ -111,7 +111,7 @@ class CurrencyFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function getDefaultCurrency()
+    public function getDefaultCurrency(): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->getById($this->pricingSetting->getDefaultCurrencyId());
     }
@@ -120,7 +120,7 @@ class CurrencyFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function getDomainDefaultCurrencyByDomainId($domainId)
+    public function getDomainDefaultCurrencyByDomainId($domainId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->getById($this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId));
     }
@@ -128,7 +128,7 @@ class CurrencyFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      */
-    public function setDefaultCurrency(Currency $currency)
+    public function setDefaultCurrency(Currency $currency): void
     {
         $originalDefaultCurrency = $this->getDefaultCurrency();
         $this->pricingSetting->setDefaultCurrency($currency);
@@ -140,7 +140,7 @@ class CurrencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
      */
-    public function setDomainDefaultCurrency(Currency $currency, $domainId)
+    public function setDomainDefaultCurrency(Currency $currency, $domainId): void
     {
         $this->pricingSetting->setDomainDefaultCurrency($currency, $domainId);
         $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
@@ -169,7 +169,7 @@ class CurrencyFacade
     /**
      * @return int[]
      */
-    public function getNotAllowedToDeleteCurrencyIds()
+    public function getNotAllowedToDeleteCurrencyIds(): array
     {
         $notAllowedToDeleteCurrencyIds = [$this->getDefaultCurrency()->getId()];
 
@@ -190,7 +190,7 @@ class CurrencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return bool
      */
-    public function isDefaultCurrency(Currency $currency)
+    public function isDefaultCurrency(Currency $currency): bool
     {
         return $currency === $this->getDefaultCurrency();
     }
@@ -198,7 +198,7 @@ class CurrencyFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[]
      */
-    public function getCurrenciesUsedInOrders()
+    public function getCurrenciesUsedInOrders(): array
     {
         return $this->orderRepository->getCurrenciesUsedInOrders();
     }
@@ -206,7 +206,7 @@ class CurrencyFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency[]
      */
-    public function getAllIndexedById()
+    public function getAllIndexedById(): array
     {
         $currenciesIndexedById = [];
 

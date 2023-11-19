@@ -16,7 +16,7 @@ class DatabaseSchemaFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        $defaultSchemaFilepath,
+        string $defaultSchemaFilepath,
         protected readonly EntityManagerInterface $em,
     ) {
         $this->defaultSchemaFilepath = $defaultSchemaFilepath;
@@ -25,7 +25,7 @@ class DatabaseSchemaFacade
     /**
      * @param string $schemaName
      */
-    public function createSchema($schemaName)
+    public function createSchema($schemaName): void
     {
         $this->em->getConnection()->executeQuery('CREATE SCHEMA ' . $schemaName);
     }
@@ -33,12 +33,12 @@ class DatabaseSchemaFacade
     /**
      * @param string $schemaName
      */
-    public function dropSchemaIfExists($schemaName)
+    public function dropSchemaIfExists($schemaName): void
     {
         $this->em->getConnection()->executeQuery('DROP SCHEMA IF EXISTS ' . $schemaName . ' CASCADE');
     }
 
-    public function importDefaultSchema()
+    public function importDefaultSchema(): void
     {
         $connection = $this->em->getConnection();
         $handle = fopen($this->defaultSchemaFilepath, 'r');

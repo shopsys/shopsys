@@ -44,7 +44,7 @@ class ProductPriceRecalculator
     /**
      * @return bool
      */
-    public function runBatchOfScheduledDelayedRecalculations()
+    public function runBatchOfScheduledDelayedRecalculations(): bool
     {
         if ($this->productRowsIterator === null) {
             $this->productRowsIterator = $this->productPriceRecalculationScheduler->getProductsIteratorForDelayedRecalculation();
@@ -67,7 +67,7 @@ class ProductPriceRecalculator
         return true;
     }
 
-    public function runAllScheduledRecalculations()
+    public function runAllScheduledRecalculations(): void
     {
         $this->runImmediateRecalculations();
 
@@ -77,7 +77,7 @@ class ProductPriceRecalculator
         }
     }
 
-    public function runImmediateRecalculations()
+    public function runImmediateRecalculations(): void
     {
         $products = $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation();
 
@@ -88,7 +88,7 @@ class ProductPriceRecalculator
         $this->clearCache();
     }
 
-    protected function clearCache()
+    protected function clearCache(): void
     {
         $this->allPricingGroups = null;
     }
@@ -96,7 +96,7 @@ class ProductPriceRecalculator
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    protected function getAllPricingGroups()
+    protected function getAllPricingGroups(): ?array
     {
         if ($this->allPricingGroups === null) {
             $this->allPricingGroups = $this->pricingGroupFacade->getAll();
@@ -108,7 +108,7 @@ class ProductPriceRecalculator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      */
-    protected function recalculateProductPrices(Product $product)
+    protected function recalculateProductPrices(Product $product): void
     {
         foreach ($this->getAllPricingGroups() as $pricingGroup) {
             try {

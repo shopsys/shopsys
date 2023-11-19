@@ -27,7 +27,7 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritdoc}
      */
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         $product = $this->productRepository->getById($routeParameters['id']);
 
@@ -49,7 +49,7 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
-    protected function getCategoryBreadcrumbItems(Category $category)
+    protected function getCategoryBreadcrumbItems(Category $category): array
     {
         $categoriesInPath = $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain(
             $category,
@@ -72,7 +72,7 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritdoc}
      */
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return ['front_product_detail'];
     }

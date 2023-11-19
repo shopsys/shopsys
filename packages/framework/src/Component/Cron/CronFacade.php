@@ -29,7 +29,7 @@ class CronFacade
     /**
      * @param \DateTimeInterface $roundedTime
      */
-    public function scheduleModulesByTime(DateTimeInterface $roundedTime)
+    public function scheduleModulesByTime(DateTimeInterface $roundedTime): void
     {
         $cronModuleConfigsToSchedule = $this->cronConfig->getCronModuleConfigsByTime($roundedTime);
         $this->cronModuleFacade->scheduleModules($cronModuleConfigsToSchedule);
@@ -68,7 +68,7 @@ class CronFacade
     /**
      * @param string $serviceId
      */
-    public function runModuleByServiceId($serviceId)
+    public function runModuleByServiceId($serviceId): void
     {
         $cronModuleConfig = $this->cronConfig->getCronModuleConfigByServiceId($serviceId);
 
@@ -78,7 +78,7 @@ class CronFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronModuleConfig
      */
-    protected function runSingleModule(CronModuleConfig $cronModuleConfig)
+    protected function runSingleModule(CronModuleConfig $cronModuleConfig): void
     {
         if ($this->cronModuleFacade->isModuleDisabled($cronModuleConfig) === true) {
             return;
@@ -119,7 +119,7 @@ class CronFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->cronConfig->getAllCronModuleConfigs();
     }

@@ -13,7 +13,7 @@ class SettingsQuery extends AbstractQuery
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function settingsQuery(): array
     {

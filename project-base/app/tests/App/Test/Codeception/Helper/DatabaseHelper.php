@@ -13,7 +13,7 @@ class DatabaseHelper extends Module
     /**
      * {@inheritdoc}
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         /** @var \Tests\App\Test\Codeception\Module\Db $dbModule */
         $dbModule = $this->getModule(Db::class);

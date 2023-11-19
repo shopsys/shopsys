@@ -32,7 +32,7 @@ class CountryFormTypeTest extends TypeTestCase
     private CountryFacade $countryFacade;
 
     /**
-     * @return array
+     * @return string[]|string[][]
      */
     private function getFullCountryFormData(): array
     {
@@ -154,7 +154,7 @@ class CountryFormTypeTest extends TypeTestCase
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Form\FormExtensionInterface[]
      */
     protected function getExtensions(): array
     {

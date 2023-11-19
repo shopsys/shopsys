@@ -26,7 +26,7 @@ class CountryRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getCountryRepository()
+    protected function getCountryRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Country::class);
     }

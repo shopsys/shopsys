@@ -11,10 +11,10 @@ abstract class ErrorPageBreadcrumbGenerator implements BreadcrumbGeneratorInterf
 {
     /**
      * @param string $routeName
-     * @param array $routeParameters
+     * @param mixed[] $routeParameters
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         $isPageNotFound = $routeParameters['code'] === '404';
         $breadcrumbName = $isPageNotFound ? $this->getTranslatedBreadcrumbForNotFoundPage() : $this->getTranslatedBreadcrumbForErrorPage();
@@ -27,7 +27,7 @@ abstract class ErrorPageBreadcrumbGenerator implements BreadcrumbGeneratorInterf
     /**
      * @return string[]
      */
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return [
             'front_error_page',

@@ -57,8 +57,9 @@ class OrderController extends AdminBaseController
      * @Route("/order/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $order = $this->orderFacade->getById($id);
 
@@ -105,8 +106,9 @@ class OrderController extends AdminBaseController
      * @Route("/order/add-product/{orderId}", requirements={"orderId" = "\d+"}, condition="request.isXmlHttpRequest()")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $orderId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addProductAction(Request $request, $orderId)
+    public function addProductAction(Request $request, $orderId): \Symfony\Component\HttpFoundation\Response
     {
         $productId = $request->get('productId');
         $orderItem = $this->orderItemFacade->addProductToOrder($orderId, $productId);
@@ -132,8 +134,9 @@ class OrderController extends AdminBaseController
     /**
      * @Route("/order/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return mixed[]|\Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): array|\Symfony\Component\HttpFoundation\Response
     {
         $domainFilterNamespace = 'orders';
 
@@ -210,10 +213,10 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * @param array $row
-     * @return array
+     * @param mixed[] $row
+     * @return mixed[]
      */
-    protected function addOrderEntityToDataSource(array $row)
+    protected function addOrderEntityToDataSource(array $row): array
     {
         $row['order'] = $this->orderFacade->getById($row['id']);
 
@@ -224,8 +227,9 @@ class OrderController extends AdminBaseController
      * @Route("/order/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $orderNumber = $this->orderFacade->getById($id)->getNumber();
@@ -250,7 +254,7 @@ class OrderController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getRuleFormAction(Request $request)
+    public function getRuleFormAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $ruleForm = $this->advancedSearchOrderFacade->createRuleForm(
             $request->get('filterName'),
@@ -265,8 +269,9 @@ class OrderController extends AdminBaseController
     /**
      * @Route("/order/preview/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function previewAction($id)
+    public function previewAction($id): \Symfony\Component\HttpFoundation\Response
     {
         $order = $this->orderFacade->getById($id);
 

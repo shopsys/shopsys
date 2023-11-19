@@ -59,7 +59,7 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      */
-    public function edit(OrderStatusData $orderStatusData)
+    public function edit(OrderStatusData $orderStatusData): void
     {
         $this->setData($orderStatusData);
     }
@@ -75,7 +75,7 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -84,7 +84,7 @@ class OrderStatus extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string
      */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -92,7 +92,7 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      */
-    protected function setTranslations(OrderStatusData $orderStatusData)
+    protected function setTranslations(OrderStatusData $orderStatusData): void
     {
         foreach ($orderStatusData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -102,7 +102,7 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation
      */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation
     {
         return new OrderStatusTranslation();
     }
@@ -110,7 +110,7 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @return int
      */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
@@ -118,7 +118,7 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @param int $type
      */
-    protected function setType($type)
+    protected function setType($type): void
     {
         if (!in_array($type, [
             self::TYPE_NEW,
@@ -132,7 +132,7 @@ class OrderStatus extends AbstractTranslatableEntity
         $this->type = $type;
     }
 
-    public function checkForDelete()
+    public function checkForDelete(): void
     {
         if ($this->type !== self::TYPE_IN_PROGRESS) {
             throw new OrderStatusDeletionForbiddenException($this);

@@ -26,18 +26,18 @@ class ResizeFormListener implements EventSubscriberInterface
     protected bool $deleteEmpty;
 
     /**
-     * @param string|null $type
-     * @param array $options
+     * @param string $type
+     * @param mixed[] $options
      * @param bool $allowAdd
      * @param bool $allowDelete
      * @param bool $deleteEmpty
      */
     public function __construct(
-        $type,
+        string $type,
         protected readonly array $options = [],
-        $allowAdd = false,
-        $allowDelete = false,
-        $deleteEmpty = false,
+        bool $allowAdd = false,
+        bool $allowDelete = false,
+        bool $deleteEmpty = false,
     ) {
         $this->type = $type;
         $this->allowAdd = $allowAdd;
@@ -65,7 +65,7 @@ class ResizeFormListener implements EventSubscriberInterface
      *
      * @param \Symfony\Component\Form\FormEvent $event
      */
-    public function preSetData(FormEvent $event)
+    public function preSetData(FormEvent $event): void
     {
         $data = $event->getData();
 
@@ -87,7 +87,7 @@ class ResizeFormListener implements EventSubscriberInterface
      *
      * @param \Symfony\Component\Form\FormEvent $event
      */
-    public function postSetData(FormEvent $event)
+    public function postSetData(FormEvent $event): void
     {
         $form = $event->getForm();
         $viewData = $form->getViewData();
@@ -122,7 +122,7 @@ class ResizeFormListener implements EventSubscriberInterface
      *
      * @param \Symfony\Component\Form\FormEvent $event
      */
-    public function preSubmit(FormEvent $event)
+    public function preSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
         $data = $event->getData();
@@ -177,7 +177,7 @@ class ResizeFormListener implements EventSubscriberInterface
      *
      * @param \Symfony\Component\Form\FormEvent $event
      */
-    public function onSubmit(FormEvent $event)
+    public function onSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
         $normData = $event->getData();

@@ -43,7 +43,7 @@ class StocksDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->getDemoData() as $demoRow) {
             $stock = $this->stockFacade->create($this->initStockData($demoRow));
@@ -73,7 +73,7 @@ class StocksDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @return array
+     * @return array<int, array<bool|string|bool[]|null>>
      */
     private function getDemoData(): array
     {

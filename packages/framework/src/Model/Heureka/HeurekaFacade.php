@@ -29,7 +29,7 @@ class HeurekaFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    public function sendOrderInfo(Order $order)
+    public function sendOrderInfo(Order $order): void
     {
         try {
             $heurekaShopCertification = $this->heurekaShopCertificationFactory->create($order);
@@ -45,7 +45,7 @@ class HeurekaFacade
      * @param int $domainId
      * @return bool
      */
-    public function isHeurekaShopCertificationActivated($domainId)
+    public function isHeurekaShopCertificationActivated($domainId): bool
     {
         return $this->heurekaSetting->isHeurekaShopCertificationActivated($domainId);
     }
@@ -54,7 +54,7 @@ class HeurekaFacade
      * @param int $domainId
      * @return bool
      */
-    public function isHeurekaWidgetActivated($domainId)
+    public function isHeurekaWidgetActivated($domainId): bool
     {
         return $this->heurekaSetting->isHeurekaWidgetActivated($domainId);
     }
@@ -63,7 +63,7 @@ class HeurekaFacade
      * @param string $locale
      * @return bool
      */
-    public function isDomainLocaleSupported($locale)
+    public function isDomainLocaleSupported($locale): bool
     {
         return $this->heurekaShopCertificationLocaleHelper->isDomainLocaleSupported($locale);
     }
@@ -72,7 +72,7 @@ class HeurekaFacade
      * @param string $locale
      * @return string|null
      */
-    public function getServerNameByLocale($locale)
+    public function getServerNameByLocale($locale): ?string
     {
         return $this->heurekaShopCertificationLocaleHelper->getServerNameByLocale($locale);
     }
@@ -81,7 +81,7 @@ class HeurekaFacade
      * @param \Exception $ex
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    protected function logError(Exception $ex, Order $order)
+    protected function logError(Exception $ex, Order $order): void
     {
         $message = 'Sending order (ID = "' . $order->getId() . '") to Heureka failed - ' . get_class(
             $ex,

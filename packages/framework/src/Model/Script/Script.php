@@ -54,7 +54,7 @@ class Script
     /**
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
      */
-    public function edit(ScriptData $scriptData)
+    public function edit(ScriptData $scriptData): void
     {
         $this->setData($scriptData);
     }
@@ -72,7 +72,7 @@ class Script
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -80,7 +80,7 @@ class Script
     /**
      * @return string
      */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
@@ -88,7 +88,7 @@ class Script
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -96,7 +96,7 @@ class Script
     /**
      * @return string
      */
-    public function getPlacement()
+    public function getPlacement(): string
     {
         return $this->placement;
     }

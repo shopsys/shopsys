@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory;
 
 class FlagFacadeTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $flagFactory = new FlagFactory(new EntityNameResolver([]));
 
@@ -31,7 +31,7 @@ class FlagFacadeTest extends TestCase
         $this->assertEquals($flagDataOriginal, $flagDataNew);
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $flagDataOld = new FlagData();
         $flagDataOld->name = ['cs' => 'flagNameCs', 'en' => 'flagNameEn'];

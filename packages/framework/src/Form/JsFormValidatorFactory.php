@@ -18,10 +18,10 @@ use Symfony\Component\Validator\Constraints;
 class JsFormValidatorFactory extends BaseJsFormValidatorFactory
 {
     /**
-     * @param array $constraints
-     * @return array
+     * @param mixed[] $constraints
+     * @return mixed[]
      */
-    protected function parseConstraints(array $constraints)
+    protected function parseConstraints(array $constraints): array
     {
         $result = parent::parseConstraints($constraints);
 
@@ -38,8 +38,8 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $viewTransformers
-     * @return array
+     * @param mixed[] $viewTransformers
+     * @return mixed[]
      */
     protected function normalizeViewTransformers(FormInterface $form, array $viewTransformers): array
     {
@@ -95,7 +95,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
      * @param string $route
      * @return string
      */
-    protected function generateUrl($route): string
+    protected function generateUrl(string $route): string
     {
         if ($route === 'fp_js_form_validator.check_unique_entity') {
             $message = 'Unable to generate a URL for the named route "' . $route . '" as such route was removed as unsafe.';

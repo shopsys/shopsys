@@ -43,7 +43,7 @@ class ProductTransferAkeneoFacade
 
     /**
      * @param string $identifier
-     * @return array
+     * @return mixed[]
      */
     public function getProductByIdentifier(string $identifier): array
     {

@@ -38,7 +38,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
@@ -72,7 +72,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             CategoryDataFixture::class,

@@ -11,7 +11,7 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 
 class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
 {
-    public function testGetOneRow()
+    public function testGetOneRow(): void
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')
@@ -26,7 +26,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
         $this->assertArrayHasKey('p', $row);
     }
 
-    public function testGetTotalRowsCount()
+    public function testGetTotalRowsCount(): void
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')
@@ -42,7 +42,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
         $this->assertSame(10, $count);
     }
 
-    public function testGetRows()
+    public function testGetRows(): void
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')
@@ -61,7 +61,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
         }
     }
 
-    public function testGetRowsInAscOrder()
+    public function testGetRowsInAscOrder(): void
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')
@@ -89,7 +89,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
         }
     }
 
-    public function testGetRowsInDescOrder()
+    public function testGetRowsInDescOrder(): void
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')

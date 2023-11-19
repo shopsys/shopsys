@@ -22,7 +22,7 @@ class StoreResolverMap extends ResolverMap
     }
 
     /**
-     * @return array
+     * @return array<'Store', array<'slug', \Closure(App\Model\Store\Store $store): string>>
      */
     protected function map(): array
     {

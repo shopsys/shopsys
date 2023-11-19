@@ -36,7 +36,7 @@ class CsrfExtension extends AbstractExtension
 
     /**
      * @param string $name
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param bool $schemeRelative
      * @return string
      */

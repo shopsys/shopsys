@@ -9,7 +9,7 @@ use Generator;
 class DummyImportTransferFacade extends AbstractBridgeImportTransfer
 {
     /**
-     * @param array $bridgeData
+     * @param mixed[] $bridgeData
      */
     protected function processItem(array $bridgeData): void
     {

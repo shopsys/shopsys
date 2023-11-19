@@ -10,7 +10,7 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 class CustomerUserResolverMap extends ResolverMap
 {
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function map(): array
     {

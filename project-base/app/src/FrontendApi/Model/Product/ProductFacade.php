@@ -21,8 +21,8 @@ use Shopsys\FrontendApiBundle\Model\Product\ProductFacade as BaseProductFacade;
 class ProductFacade extends BaseProductFacade
 {
     /**
-     * @param array $productIds
-     * @return array
+     * @param mixed[] $productIds
+     * @return mixed[]
      */
     public function getSellableProductsByIds(array $productIds): array
     {

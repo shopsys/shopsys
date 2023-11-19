@@ -8,7 +8,7 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GoPayQueryTest extends GraphQlTestCase
 {
-    public function testGoPaySwiftsQuery()
+    public function testGoPaySwiftsQuery(): void
     {
         $query = '
 query {

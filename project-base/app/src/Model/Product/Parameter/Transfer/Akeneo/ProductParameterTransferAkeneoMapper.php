@@ -22,7 +22,7 @@ class ProductParameterTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoParameterData
+     * @param mixed[] $akeneoParameterData
      * @param \App\Model\Product\Parameter\Parameter|null $parameter
      * @return \App\Model\Product\Parameter\ParameterData
      */

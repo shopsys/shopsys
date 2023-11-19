@@ -78,7 +78,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return array
+     * @return bool[]|array<'accessToken'|'refreshToken', string>[]
      */
     public function registerMutation(Argument $argument, InputValidator $validator): array
     {

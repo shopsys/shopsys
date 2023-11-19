@@ -36,7 +36,7 @@ class AutomaticBestsellingProductRepository
         PricingGroup $pricingGroup,
         DateTime $ordersCreatedAtLimit,
         $maxResults,
-    ) {
+    ): array {
         $queryBuilder = $this->productRepository->getOfferedInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,

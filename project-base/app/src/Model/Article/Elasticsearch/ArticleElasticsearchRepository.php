@@ -22,7 +22,7 @@ class ArticleElasticsearchRepository
 
     /**
      * @param string $uuid
-     * @return array
+     * @return mixed[]
      */
     public function getByUuid(string $uuid): array
     {
@@ -37,7 +37,7 @@ class ArticleElasticsearchRepository
 
     /**
      * @param int $articleId
-     * @return array
+     * @return mixed[]
      */
     public function getById(int $articleId): array
     {
@@ -69,7 +69,7 @@ class ArticleElasticsearchRepository
      * @param int $offset
      * @param int $limit
      * @param string[] $placements
-     * @return array
+     * @return mixed[]
      */
     public function getAllArticles(int $offset, int $limit, array $placements): array
     {
@@ -84,7 +84,7 @@ class ArticleElasticsearchRepository
 
     /**
      * @param string $slug
-     * @return array
+     * @return mixed[]
      */
     public function getBySlug(string $slug): array
     {

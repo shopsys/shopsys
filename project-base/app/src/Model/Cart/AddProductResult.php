@@ -23,9 +23,9 @@ class AddProductResult extends BaseAddProductResult
      */
     public function __construct(
         CartItem $cartItem,
-        $isNew,
-        $addedQuantity,
-        $notOnStockQuantity,
+        bool $isNew,
+        int $addedQuantity,
+        int $notOnStockQuantity,
     ) {
         parent::__construct($cartItem, $isNew, $addedQuantity);
 

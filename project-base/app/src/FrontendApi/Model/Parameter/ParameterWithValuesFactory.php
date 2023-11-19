@@ -13,8 +13,8 @@ use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory as Base
 class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
 {
     /**
-     * @param array $productData
-     * @return array
+     * @param mixed[] $productData
+     * @return mixed[]
      */
     public function createParametersArrayFromProductArray(array $productData): array
     {
@@ -37,8 +37,8 @@ class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
     }
 
     /**
-     * @param array $product
-     * @return array
+     * @param mixed[] $product
+     * @return array<'group'|'name'|'unit'|'uuid'|'values'|'visible', mixed>
      */
     protected function mapParameterArray(array $product): array
     {

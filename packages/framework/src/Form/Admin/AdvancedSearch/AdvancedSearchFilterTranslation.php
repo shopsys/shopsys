@@ -22,7 +22,7 @@ class AdvancedSearchFilterTranslation
      * @param string $filterName
      * @param string $filterTranslation
      */
-    public function addFilterTranslation($filterName, $filterTranslation)
+    public function addFilterTranslation($filterName, $filterTranslation): void
     {
         $this->filtersTranslationsByFilterName[$filterName] = $filterTranslation;
     }
@@ -31,7 +31,7 @@ class AdvancedSearchFilterTranslation
      * @param string $filterName
      * @return string
      */
-    public function translateFilterName($filterName)
+    public function translateFilterName($filterName): string
     {
         if (array_key_exists($filterName, $this->filtersTranslationsByFilterName)) {
             return $this->filtersTranslationsByFilterName[$filterName];

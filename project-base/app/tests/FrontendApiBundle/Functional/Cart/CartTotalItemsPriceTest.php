@@ -86,7 +86,7 @@ class CartTotalItemsPriceTest extends GraphQlTestCase
 
     /**
      * @param string $cartUuid
-     * @return array
+     * @return mixed[]
      */
     private function getCartResponse(string $cartUuid): array
     {

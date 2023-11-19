@@ -54,7 +54,7 @@ class GoPayFacade implements PaymentServiceInterface
     /**
      * @param \App\Model\Order\Order $order
      * @param string|null $goPayBankSwift
-     * @return array
+     * @return array<'embedJs'|'gatewayUrl'|'goPayId'|'state', mixed>
      */
     public function sendPaymentToGoPay(Order $order, ?string $goPayBankSwift): array
     {

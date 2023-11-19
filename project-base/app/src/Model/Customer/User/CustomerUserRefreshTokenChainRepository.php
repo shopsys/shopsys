@@ -18,7 +18,7 @@ class CustomerUserRefreshTokenChainRepository extends BaseCustomerUserRefreshTok
     /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param string $deviceId
-     * @return array
+     * @return mixed[]
      */
     public function findCustomersTokenChainsByDeviceId(CustomerUser $customerUser, string $deviceId): array
     {

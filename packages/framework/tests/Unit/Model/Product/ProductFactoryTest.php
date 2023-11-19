@@ -29,7 +29,7 @@ class ProductFactoryTest extends TestCase
         parent::setUp();
     }
 
-    public function testCreateVariant()
+    public function testCreateVariant(): void
     {
         $mainProduct = Product::create(TestProductProvider::getTestProductData());
         $variants = [];
@@ -43,7 +43,7 @@ class ProductFactoryTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getProductAvailabilityCalculationMock()
+    private function getProductAvailabilityCalculationMock(): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation
     {
         $dummyAvailability = new Availability(new AvailabilityData());
         $productAvailabilityCalculationMock = $this->getMockBuilder(ProductAvailabilityCalculation::class)

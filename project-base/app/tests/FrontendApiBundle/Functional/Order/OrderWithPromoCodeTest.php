@@ -32,7 +32,7 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
      */
     private PromoCodeDataFactory $promoCodeDataFactory;
 
-    public function testCreateOrderWithPromoCode()
+    public function testCreateOrderWithPromoCode(): void
     {
         $expectedOrderItems = $this->getExpectedOrderItems();
         $expected = [
@@ -93,7 +93,7 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<int, array<'name'|'quantity'|'totalPrice'|'unit'|'unitPrice'|'vatRate', mixed>>
      */
     protected function getExpectedOrderItems(): array
     {

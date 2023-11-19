@@ -38,7 +38,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
      * @param int $domainId
      * @param int $lastProcessedId
      * @param int $batchSize
-     * @return array
+     * @return mixed[]
      */
     public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
     {
@@ -55,8 +55,8 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
 
     /**
      * @param int $domainId
-     * @param array $restrictToIds
-     * @return array
+     * @param mixed[] $restrictToIds
+     * @return mixed[]
      */
     public function getExportDataForIds(int $domainId, array $restrictToIds): array
     {

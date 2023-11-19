@@ -17,7 +17,7 @@ class AvailabilityFacade extends BaseAvailabilityFacade
      * @param int $availabilityId
      * @param int|null $newAvailabilityId
      */
-    public function deleteById($availabilityId, $newAvailabilityId = null)
+    public function deleteById($availabilityId, $newAvailabilityId = null): void
     {
         $availability = $this->availabilityRepository->getById($availabilityId);
 

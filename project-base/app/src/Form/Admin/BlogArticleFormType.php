@@ -42,7 +42,7 @@ class BlogArticleFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -263,7 +263,7 @@ class BlogArticleFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createImageGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
@@ -296,7 +296,7 @@ class BlogArticleFormType extends AbstractType
 
     /**
      * @param \App\Model\Blog\Article\BlogArticle|null $blogArticle
-     * @return array
+     * @return mixed[]
      */
     private function prepareSeoData(?BlogArticle $blogArticle): array
     {

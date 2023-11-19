@@ -19,19 +19,19 @@ class BlogArticleResolverMap extends ResolverMap
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    protected function map()
+    protected function map(): array
     {
         return [
             'BlogArticle' => [
                 'blogCategories' => function (array $blogArticleData) {
                     return $this->blogCategoryFacade->getByIds($blogArticleData['categories']);
                 },
-                'publishDate' => static function (array $blogArticleData) {
+                'publishDate' => static function (array $blogArticleData): \DateTime {
                     return new DateTime($blogArticleData['publishedAt']);
                 },
-                'createdAt' => static function (array $blogArticleData) {
+                'createdAt' => static function (array $blogArticleData): \DateTime {
                     return new DateTime($blogArticleData['createdAt']);
                 },
                 'slug' => static function (array $blogArticleData) {

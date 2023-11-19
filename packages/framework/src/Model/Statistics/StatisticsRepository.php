@@ -47,7 +47,7 @@ class StatisticsRepository
         $query->setParameter('end_date', $end);
 
         return array_map(
-            function (array $item) {
+            function (array $item): \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint {
                 return new ValueByDateTimeDataPoint($item['count'], $item['date']);
             },
             $query->getResult(),
@@ -79,7 +79,7 @@ class StatisticsRepository
         $query->setParameter('canceled', OrderStatus::TYPE_CANCELED);
 
         return array_map(
-            function (array $item) {
+            function (array $item): \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPoint {
                 return new ValueByDateTimeDataPoint($item['count'], $item['date']);
             },
             $query->getResult(),

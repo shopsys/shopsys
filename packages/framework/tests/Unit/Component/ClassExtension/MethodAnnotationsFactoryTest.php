@@ -47,7 +47,7 @@ class MethodAnnotationsFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<'method not included in the extension map'|'method redeclared in the child using annotation'|'method redeclared in the child\'s source code', \Roave\BetterReflection\Reflection\ReflectionClass[]>
      */
     public function getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider(): array
     {

@@ -17,7 +17,7 @@ class BlogArticleElasticsearchFacade
 
     /**
      * @param string $uuid
-     * @return array
+     * @return mixed[]
      */
     public function getByUuid(string $uuid): array
     {
@@ -26,7 +26,7 @@ class BlogArticleElasticsearchFacade
 
     /**
      * @param string $slug
-     * @return array
+     * @return mixed[]
      */
     public function getBySlug(string $slug): array
     {
@@ -37,7 +37,7 @@ class BlogArticleElasticsearchFacade
      * @param int $offset
      * @param int $limit
      * @param bool $onlyVisibleOnHomepage
-     * @return array
+     * @return mixed[]
      */
     public function getAllBlogArticles(int $offset, int $limit, bool $onlyVisibleOnHomepage = false): array
     {
@@ -58,7 +58,7 @@ class BlogArticleElasticsearchFacade
      * @param int $offset
      * @param int $limit
      * @param bool $onlyVisibleOnHomepage
-     * @return array
+     * @return mixed[]
      */
     public function getByBlogCategory(
         BlogCategory $blogCategory,

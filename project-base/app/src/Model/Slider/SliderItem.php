@@ -63,7 +63,7 @@ class SliderItem extends BaseSliderItem
     /**
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      */
-    public function __construct($sliderItemData)
+    public function __construct(\Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData)
     {
         parent::__construct($sliderItemData);
 
@@ -79,7 +79,7 @@ class SliderItem extends BaseSliderItem
     /**
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      */
-    public function edit($sliderItemData)
+    public function edit(\Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData): void
     {
         parent::edit($sliderItemData);
 

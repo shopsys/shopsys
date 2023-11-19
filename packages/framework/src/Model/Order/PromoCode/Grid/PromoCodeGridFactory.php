@@ -26,7 +26,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
      * @param bool $withEditButton
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create($withEditButton = false)
+    public function create($withEditButton = false): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder

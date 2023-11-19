@@ -26,8 +26,9 @@ class WysiwygCdnDataTransformer implements DataTransformerInterface
 
     /**
      * {@inheritdoc}
+     * @return string|null
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?string
     {
         return $this->cdnFacade->replaceUrlsByCdnForAssets($value);
     }

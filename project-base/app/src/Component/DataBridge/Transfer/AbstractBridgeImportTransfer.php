@@ -150,7 +150,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
     }
 
     /**
-     * @param array $bridgeData
+     * @param mixed[] $bridgeData
      */
     abstract protected function processItem(array $bridgeData): void;
 

@@ -23,8 +23,8 @@ class SitemapFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      */
     public function __construct(
-        $sitemapsDir,
-        $sitemapsUrlPrefix,
+        string $sitemapsDir,
+        string $sitemapsUrlPrefix,
         protected readonly Domain $domain,
         protected readonly SitemapDumperFactory $domainSitemapDumperFactory,
         protected readonly SitemapRepository $sitemapRepository,
@@ -34,7 +34,7 @@ class SitemapFacade
         $this->sitemapsUrlPrefix = $sitemapsUrlPrefix;
     }
 
-    public function generateForAllDomains()
+    public function generateForAllDomains(): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $section = (string)$domainConfig->getId();
@@ -52,7 +52,7 @@ class SitemapFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
-    public function getSitemapItemsForListableProducts(DomainConfig $domainConfig)
+    public function getSitemapItemsForListableProducts(DomainConfig $domainConfig): array
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId());
 
@@ -63,7 +63,7 @@ class SitemapFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
-    public function getSitemapItemsForVisibleCategories(DomainConfig $domainConfig)
+    public function getSitemapItemsForVisibleCategories(DomainConfig $domainConfig): array
     {
         return $this->sitemapRepository->getSitemapItemsForVisibleCategories($domainConfig);
     }
@@ -72,7 +72,7 @@ class SitemapFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
-    public function getSitemapItemsForArticlesOnDomain(DomainConfig $domainConfig)
+    public function getSitemapItemsForArticlesOnDomain(DomainConfig $domainConfig): array
     {
         return $this->sitemapRepository->getSitemapItemsForArticlesOnDomain($domainConfig);
     }

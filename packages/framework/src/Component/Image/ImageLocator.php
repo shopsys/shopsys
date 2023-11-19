@@ -19,7 +19,7 @@ class ImageLocator
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        $imageDir,
+        string $imageDir,
         protected readonly ImageConfig $imageConfig,
         protected readonly FilesystemOperator $filesystem,
     ) {
@@ -31,7 +31,7 @@ class ImageLocator
      * @param string|null $sizeName
      * @return string
      */
-    public function getRelativeImageFilepath(Image $image, $sizeName)
+    public function getRelativeImageFilepath(Image $image, $sizeName): string
     {
         $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType(), $sizeName);
 
@@ -44,7 +44,7 @@ class ImageLocator
      * @param string|null $sizeName
      * @return string
      */
-    public function getRelativeAdditionalImageFilepath(Image $image, int $additionalIndex, ?string $sizeName)
+    public function getRelativeAdditionalImageFilepath(Image $image, int $additionalIndex, ?string $sizeName): string
     {
         $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType(), $sizeName);
 
@@ -86,7 +86,7 @@ class ImageLocator
      * @param string|null $sizeName
      * @return string
      */
-    public function getAbsoluteImageFilepath(Image $image, $sizeName)
+    public function getAbsoluteImageFilepath(Image $image, $sizeName): string
     {
         $relativePath = $this->getRelativeImageFilepath($image, $sizeName);
 
@@ -99,7 +99,7 @@ class ImageLocator
      * @param string|null $sizeName
      * @return string
      */
-    public function getAbsoluteAdditionalImageFilepath(Image $image, int $additionalIndex, ?string $sizeName)
+    public function getAbsoluteAdditionalImageFilepath(Image $image, int $additionalIndex, ?string $sizeName): string
     {
         $relativePath = $this->getRelativeAdditionalImageFilepath($image, $additionalIndex, $sizeName);
 
@@ -110,7 +110,7 @@ class ImageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
      * @return bool
      */
-    public function imageExists(Image $image)
+    public function imageExists(Image $image): bool
     {
         $imageFilepath = $this->getAbsoluteImageFilepath($image, ImageConfig::ORIGINAL_SIZE_NAME);
 
@@ -123,7 +123,7 @@ class ImageLocator
      * @param string|null $sizeName
      * @return string
      */
-    public function getRelativeImagePath($entityName, $type, $sizeName)
+    public function getRelativeImagePath($entityName, $type, $sizeName): string
     {
         $this->imageConfig->assertImageSizeConfigByEntityNameExists($entityName, $type, $sizeName);
         $pathParts = [$entityName];

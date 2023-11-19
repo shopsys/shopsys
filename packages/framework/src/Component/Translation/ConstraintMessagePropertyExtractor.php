@@ -52,7 +52,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * {@inheritdoc}
      */
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
         $this->file = $file;
         $this->catalogue = $catalogue;
@@ -91,7 +91,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
      * @param \PhpParser\Node\Stmt\Class_ $node
      * @return bool
      */
-    protected function isConstraintClass(Class_ $node)
+    protected function isConstraintClass(Class_ $node): bool
     {
         return is_subclass_of((string)$node->namespacedName, Constraint::class);
     }
@@ -99,7 +99,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @param \PhpParser\Node\Stmt\Property $node
      */
-    protected function extractMessagesFromProperty(Property $node)
+    protected function extractMessagesFromProperty(Property $node): void
     {
         foreach ($node->props as $propertyProperty) {
             if ($this->isMessagePropertyProperty($propertyProperty)) {
@@ -117,7 +117,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
      * @param \PhpParser\Node\Stmt\PropertyProperty $node
      * @return bool
      */
-    protected function isMessagePropertyProperty(PropertyProperty $node)
+    protected function isMessagePropertyProperty(PropertyProperty $node): bool
     {
         return strtolower(substr($node->name->toString(), -7)) === 'message';
     }
@@ -140,6 +140,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
 
     /**
      * {@inheritdoc}
+     * @return null
      */
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
@@ -148,6 +149,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
 
     /**
      * {@inheritdoc}
+     * @return null
      */
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast)
     {

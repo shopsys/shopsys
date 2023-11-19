@@ -84,7 +84,7 @@ class SlugTest extends GraphQlTestCase
      * @dataProvider getDataForSlugTest
      * @param string $typename
      * @param string $name
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param string|null $slug
      * @param bool|null $useLocale
      * @param string|null $translationDomain

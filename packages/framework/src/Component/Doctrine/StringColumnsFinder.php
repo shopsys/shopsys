@@ -13,7 +13,7 @@ class StringColumnsFinder
      * @param \Doctrine\Persistence\Mapping\ClassMetadata[] $classesMetadata
      * @return string[][]
      */
-    public function getAllStringColumnNamesIndexedByTableName(array $classesMetadata)
+    public function getAllStringColumnNamesIndexedByTableName(array $classesMetadata): array
     {
         $stringColumnNamesIndexedByTableName = [];
 
@@ -37,7 +37,7 @@ class StringColumnsFinder
      * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadataInfo
      * @return string[]
      */
-    protected function getStringColumnNames(ClassMetadataInfo $classMetadataInfo)
+    protected function getStringColumnNames(ClassMetadataInfo $classMetadataInfo): array
     {
         $stringColumnNames = [];
 
@@ -53,7 +53,7 @@ class StringColumnsFinder
     /**
      * @return string[]
      */
-    protected function getDoctrineStringTypes()
+    protected function getDoctrineStringTypes(): array
     {
         return [
             'text',

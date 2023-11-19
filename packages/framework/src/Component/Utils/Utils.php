@@ -17,11 +17,11 @@ class Utils
     }
 
     /**
-     * @param array $array
+     * @param mixed[] $array
      * @param string|int $key
      * @param mixed $defaultValue
      */
-    public static function setArrayDefaultValue(&$array, $key, $defaultValue = null)
+    public static function setArrayDefaultValue(&$array, $key, $defaultValue = null): void
     {
         if (!array_key_exists($key, $array)) {
             $array[$key] = $defaultValue;
@@ -29,7 +29,7 @@ class Utils
     }
 
     /**
-     * @param array $array
+     * @param mixed[] $array
      * @param string|int $key
      * @param mixed $defaultValue
      * @return mixed
@@ -41,9 +41,9 @@ class Utils
 
     /**
      * @param mixed $value
-     * @return array
+     * @return mixed[]
      */
-    public static function mixedToArray($value)
+    public static function mixedToArray($value): array
     {
         if ($value === null) {
             $value = [];

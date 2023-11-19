@@ -18,7 +18,7 @@ class FlagFacade
     /**
      * @param int[][] $flagsIds
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return array
+     * @return \App\Model\Product\Flag\Flag[][]
      */
     public function getFlagsByIds(array $flagsIds, DomainConfig $domainConfig): array
     {

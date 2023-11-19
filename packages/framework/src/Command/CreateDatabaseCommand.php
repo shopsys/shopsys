@@ -56,7 +56,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
      */
-    private function createDatabaseIfNotExists(SymfonyStyle $symfonyStyleIo)
+    private function createDatabaseIfNotExists(SymfonyStyle $symfonyStyleIo): void
     {
         $defaultConnection = $this->getDefaultConnection();
 
@@ -87,7 +87,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
      */
-    private function createExtensionsIfNotExist(SymfonyStyle $symfonyStyleIo)
+    private function createExtensionsIfNotExist(SymfonyStyle $symfonyStyleIo): void
     {
         // Extensions are created in schema "pg_catalog" in order to be able to DROP
         // schema "public" without dropping the extension.
@@ -103,7 +103,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyleIo
      */
-    private function switchConnectionToSuperuser(SymfonyStyle $symfonyStyleIo)
+    private function switchConnectionToSuperuser(SymfonyStyle $symfonyStyleIo): void
     {
         if (!$this->isConnectedAsSuperuser()) {
             $symfonyStyleIo->note('Current database user does not have a superuser permission');
@@ -130,7 +130,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @return bool
      */
-    private function isConnectedAsSuperuser()
+    private function isConnectedAsSuperuser(): bool
     {
         $stmt = $this->createDatabaselessConnection()
             ->executeQuery('SELECT rolsuper FROM pg_roles WHERE rolname = current_user');
@@ -141,7 +141,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @return \Doctrine\DBAL\Connection
      */
-    private function getDefaultConnection()
+    private function getDefaultConnection(): \Doctrine\DBAL\Connection
     {
         $defaultConnectionName = $this->doctrineRegistry->getDefaultConnectionName();
 
@@ -154,7 +154,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @return \Doctrine\DBAL\Connection
      */
-    private function getConnection()
+    private function getConnection(): ?\Doctrine\DBAL\Connection
     {
         if ($this->connection === null) {
             $this->connection = $this->getDefaultConnection();
@@ -166,7 +166,7 @@ class CreateDatabaseCommand extends Command
     /**
      * @return \Doctrine\DBAL\Connection
      */
-    private function createDatabaselessConnection()
+    private function createDatabaselessConnection(): \Doctrine\DBAL\Connection
     {
         $connection = $this->getConnection();
 

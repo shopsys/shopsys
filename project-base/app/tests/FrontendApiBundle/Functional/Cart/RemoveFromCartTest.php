@@ -82,7 +82,7 @@ class RemoveFromCartTest extends GraphQlTestCase
 
     /**
      * @param int $productQuantity
-     * @return array
+     * @return mixed[]
      */
     private function addTestingProductToNewCart(int $productQuantity): array
     {

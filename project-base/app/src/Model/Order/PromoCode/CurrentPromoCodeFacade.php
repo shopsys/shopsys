@@ -124,7 +124,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      * @param \App\Model\Cart\Cart $cart
      */
-    private function validatePromoCodeByProductsInCart(PromoCode $promoCode, Cart $cart)
+    private function validatePromoCodeByProductsInCart(PromoCode $promoCode, Cart $cart): void
     {
         $domainId = $this->domain->getId();
         $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
@@ -172,7 +172,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      * @param \App\Model\Cart\Cart $cart
      */
-    private function validatePromoCodeByFlags(PromoCode $promoCode, Cart $cart)
+    private function validatePromoCodeByFlags(PromoCode $promoCode, Cart $cart): void
     {
         $isValidPromoCode = false;
 

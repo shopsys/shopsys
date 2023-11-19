@@ -25,7 +25,7 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
      */
     private CartItemFactoryInterface $cartItemFactory;
 
-    public function testMergeWithCartReturnsCartWithSummedProducts()
+    public function testMergeWithCartReturnsCartWithSummedProducts(): void
     {
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2);

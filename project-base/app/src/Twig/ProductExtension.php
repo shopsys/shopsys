@@ -36,7 +36,7 @@ class ProductExtension extends BaseProductExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         $functions = parent::getFunctions();
         $functions[] = new TwigFunction(

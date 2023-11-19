@@ -32,7 +32,7 @@ class PromotedProductsQuery extends BasePromotedProductsQuery
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function promotedProductsQuery(): array
     {

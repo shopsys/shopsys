@@ -11,7 +11,7 @@ class BaseClass2
      *
      * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData
      */
-    public function getArticleData()
+    public function getArticleData(): void
     {
     }
 }

@@ -152,7 +152,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\ProductData $productData
      * @return \App\Model\Product\Product
      */
-    public function create(ProductData $productData)
+    public function create(ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         /** @var \App\Model\Product\Product $product */
         $product = parent::create($productData);
@@ -185,7 +185,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\ProductData $productData
      * @return \App\Model\Product\Product
      */
-    public function edit($productId, ProductData $productData)
+    public function edit($productId, ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         /** @var \App\Model\Product\Product $product */
         $product = $this->productRepository->getById($productId);
@@ -253,7 +253,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Product\ProductData $productData
      */
-    public function setAdditionalDataAfterCreate(BaseProduct $product, ProductData $productData)
+    public function setAdditionalDataAfterCreate(BaseProduct $product, ProductData $productData): void
     {
         // Persist of ProductCategoryDomain requires known primary key of Product
         // @see https://github.com/doctrine/doctrine2/issues/4869
@@ -293,7 +293,7 @@ class ProductFacade extends BaseProductFacade
     /**
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return array
+     * @return mixed[]
      */
     public function getDownloadFilesForProductByDomainConfig(BaseProduct $product, DomainConfig $domainConfig): array
     {
@@ -336,7 +336,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
      */
-    protected function saveParameters(BaseProduct $product, array $productParameterValuesData)
+    protected function saveParameters(BaseProduct $product, array $productParameterValuesData): void
     {
 
         // Doctrine runs INSERTs before DELETEs in UnitOfWork. In case of UNIQUE constraint
@@ -383,7 +383,7 @@ class ProductFacade extends BaseProductFacade
     }
 
     /**
-     * @param array $catnums
+     * @param mixed[] $catnums
      * @return \App\Model\Product\Product[]
      */
     public function findAllByCatnums(array $catnums): array

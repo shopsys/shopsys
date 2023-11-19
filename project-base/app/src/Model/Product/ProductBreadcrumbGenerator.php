@@ -21,7 +21,7 @@ class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implemen
     /**
      * {@inheritdoc}
      */
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         return $this->getBreadcrumbItemsOnDomain($this->domain->getId(), $routeName, $routeParameters, $this->domain->getLocale());
     }

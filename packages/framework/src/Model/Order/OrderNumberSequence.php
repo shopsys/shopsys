@@ -29,7 +29,7 @@ class OrderNumberSequence
      * @param int $id
      * @param string $number
      */
-    public function __construct($id, $number = '0')
+    public function __construct(int $id, string $number = '0')
     {
         $this->id = $id;
         $this->number = $number;
@@ -38,7 +38,7 @@ class OrderNumberSequence
     /**
      * @return string
      */
-    public function getNumber()
+    public function getNumber(): string
     {
         return $this->number;
     }
@@ -46,7 +46,7 @@ class OrderNumberSequence
     /**
      * @param string $number
      */
-    public function setNumber($number)
+    public function setNumber($number): void
     {
         $this->number = $number;
     }

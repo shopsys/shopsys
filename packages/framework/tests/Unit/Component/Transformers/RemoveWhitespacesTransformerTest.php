@@ -9,7 +9,10 @@ use Shopsys\FrameworkBundle\Form\Transformers\RemoveWhitespacesTransformer;
 
 class RemoveWhitespacesTransformerTest extends TestCase
 {
-    public function transformValuesProvider()
+    /**
+     * @return array<'expected'|'value', string>[]|array<'expected'|'value', null>[]
+     */
+    public function transformValuesProvider(): array
     {
         return [
             ['value' => 'foo bar', 'expected' => 'foobar'],
@@ -26,7 +29,7 @@ class RemoveWhitespacesTransformerTest extends TestCase
      * @param mixed $value
      * @param mixed $expected
      */
-    public function testReverseTransform($value, $expected)
+    public function testReverseTransform(?string $value, ?string $expected): void
     {
         $transformer = new RemoveWhitespacesTransformer();
         $this->assertSame($expected, $transformer->reverseTransform($value));

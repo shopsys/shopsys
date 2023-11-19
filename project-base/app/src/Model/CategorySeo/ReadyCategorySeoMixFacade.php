@@ -282,7 +282,7 @@ class ReadyCategorySeoMixFacade
     }
 
     /**
-     * @param array $categoryIds
+     * @param mixed[] $categoryIds
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\CategorySeo\ReadyCategorySeoMix[][]
      */

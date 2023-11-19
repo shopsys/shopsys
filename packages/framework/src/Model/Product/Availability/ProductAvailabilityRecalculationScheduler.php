@@ -25,12 +25,12 @@ class ProductAvailabilityRecalculationScheduler implements ResetInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      */
-    public function scheduleProductForImmediateRecalculation(Product $product)
+    public function scheduleProductForImmediateRecalculation(Product $product): void
     {
         $this->products[$product->getId()] = $product;
     }
 
-    public function scheduleAllProductsForDelayedRecalculation()
+    public function scheduleAllProductsForDelayedRecalculation(): void
     {
         $this->productRepository->markAllProductsForAvailabilityRecalculation();
     }
@@ -38,7 +38,7 @@ class ProductAvailabilityRecalculationScheduler implements ResetInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getProductsForImmediateRecalculation()
+    public function getProductsForImmediateRecalculation(): array
     {
         return $this->products;
     }
@@ -51,7 +51,7 @@ class ProductAvailabilityRecalculationScheduler implements ResetInterface
         return $this->productRepository->getProductsForAvailabilityRecalculationIterator();
     }
 
-    public function cleanScheduleForImmediateRecalculation()
+    public function cleanScheduleForImmediateRecalculation(): void
     {
         $this->products = [];
     }

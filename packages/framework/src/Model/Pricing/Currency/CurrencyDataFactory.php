@@ -38,7 +38,7 @@ class CurrencyDataFactory implements CurrencyDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      */
-    protected function fillFromCurrency(CurrencyData $currencyData, Currency $currency)
+    protected function fillFromCurrency(CurrencyData $currencyData, Currency $currency): void
     {
         $currencyData->name = $currency->getName();
         $currencyData->code = $currency->getCode();

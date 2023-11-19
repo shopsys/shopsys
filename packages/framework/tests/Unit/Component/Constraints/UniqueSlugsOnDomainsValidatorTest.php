@@ -20,8 +20,9 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
 {
     /**
      * {@inheritdoc}
+     * @return \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator
      */
-    protected function createValidator()
+    protected function createValidator(): \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [
@@ -35,7 +36,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
             ->setMethods(['match'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-        $routerMock->method('match')->willReturnCallback(function ($path) {
+        $routerMock->method('match')->willReturnCallback(function ($path): void {
             if ($path !== '/existing-url/') {
                 throw new ResourceNotFoundException();
             }
@@ -50,7 +51,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
         return new UniqueSlugsOnDomainsValidator($domain, $domainRouterFactoryMock);
     }
 
-    public function testValidateSameSlugsOnDifferentDomains()
+    public function testValidateSameSlugsOnDifferentDomains(): void
     {
         $values = [
             [
@@ -68,7 +69,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testValidateDuplicateSlugsOnSameDomain()
+    public function testValidateDuplicateSlugsOnSameDomain(): void
     {
         $values = [
             [
@@ -90,7 +91,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testValidateExistingSlug()
+    public function testValidateExistingSlug(): void
     {
         $values = [
             [

@@ -189,7 +189,7 @@ class OrderFacade extends BaseOrderFacade
      *
      * @deprecated use App\FrontendApi\Model\Order\PlaceOrderFacade::placeOrder() instead
      */
-    public function createOrderFromFront(BaseOrderData $orderData, ?DeliveryAddress $deliveryAddress)
+    public function createOrderFromFront(BaseOrderData $orderData, ?DeliveryAddress $deliveryAddress): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         throw new DeprecatedMethodException();
     }
@@ -197,7 +197,7 @@ class OrderFacade extends BaseOrderFacade
     /**
      * @param \App\Model\Order\OrderData $orderData
      */
-    protected function setOrderDataAdministrator(OrderData $orderData)
+    protected function setOrderDataAdministrator(OrderData $orderData): void
     {
         $currentAdministratorLoggedAsCustomer = $this->loginAsUserFacade->getCurrentAdministratorLoggedAsCustomer();
 
@@ -243,7 +243,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\OrderData $orderData
      * @return \App\Model\Order\Order
      */
-    public function edit($orderId, BaseOrderData $orderData)
+    public function edit($orderId, BaseOrderData $orderData): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         $order = $this->orderRepository->getById($orderId);
         $oldOrderStatus = $order->getStatus();
@@ -452,7 +452,7 @@ class OrderFacade extends BaseOrderFacade
         FrontOrderData $frontOrderFormData,
         array $payments,
         array $transports,
-    ) {
+    ): \App\Model\Order\FrontOrderData {
         if ($frontOrderFormData->payment !== null) {
             $isPaymentValid = false;
             $paymentId = $frontOrderFormData->payment->getId();

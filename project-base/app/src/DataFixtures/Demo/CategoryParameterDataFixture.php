@@ -30,7 +30,7 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /** @var \App\Model\Category\Category $categoryElectronics */
         $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);

@@ -42,7 +42,7 @@ class IndexRegistryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return 'category'[]|'product'[]|true[][]|'price'[]|false[][]
      */
     public function registeredIndexProvider(): array
     {

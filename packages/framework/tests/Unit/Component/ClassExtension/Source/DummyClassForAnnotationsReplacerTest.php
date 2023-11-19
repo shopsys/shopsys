@@ -24,42 +24,42 @@ class DummyClassForAnnotationsReplacerTest
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
      */
-    public function returnsFrameworkCategoryFacade()
+    public function returnsFrameworkCategoryFacade(): void
     {
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|null
      */
-    public function returnsFrameworkCategoryFacadeOrNull()
+    public function returnsFrameworkCategoryFacadeOrNull(): void
     {
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData[]
      */
-    public function returnsFrameworkArticleDataArray()
+    public function returnsFrameworkArticleDataArray(): void
     {
     }
 
     /**
      * @return int
      */
-    public function returnsInt()
+    public function returnsInt(): void
     {
     }
 
     /**
      * @return array<string, int>
      */
-    public function returnsAssocArray()
+    public function returnsAssocArray(): void
     {
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function returnsNotTypedArray()
+    public function returnsNotTypedArray(): void
     {
     }
 
@@ -69,7 +69,7 @@ class DummyClassForAnnotationsReplacerTest
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData[] $array
      * @param int $integer
      */
-    public function acceptsVariousParameters($categoryFacade, $categoryFacadeOrNull, $array, $integer)
+    public function acceptsVariousParameters($categoryFacade, $categoryFacadeOrNull, $array, $integer): void
     {
     }
 }

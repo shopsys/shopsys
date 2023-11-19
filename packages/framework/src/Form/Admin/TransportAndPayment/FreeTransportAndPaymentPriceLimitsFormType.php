@@ -32,9 +32,9 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add($this->getPriceLimitsBuilder($builder))
@@ -45,14 +45,14 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function getPriceLimitsBuilder(FormBuilderInterface $builder)
+    private function getPriceLimitsBuilder(FormBuilderInterface $builder): \Symfony\Component\Form\FormBuilderInterface
     {
         $formBuilderForDomains = $builder->create(self::DOMAINS_SUBFORM_NAME, null, ['compound' => true]);
 
         foreach ($this->domain->getAll() as $domainConfig) {
             $formBuilderForDomain = $builder->create((string)$domainConfig->getId(), null, [
                 'compound' => true,
-                'validation_groups' => function (FormInterface $form) {
+                'validation_groups' => function (FormInterface $form): array {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
                     $formData = $form->getData();
 
@@ -89,7 +89,7 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'attr' => ['novalidate' => 'novalidate'],

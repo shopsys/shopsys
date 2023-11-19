@@ -13,7 +13,7 @@ class DomainExtension extends BaseDomainExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array_merge(parent::getFunctions(), [
             new TwigFunction('getDomainUrlByLocale', [$this, 'getDomainUrlByLocale']),

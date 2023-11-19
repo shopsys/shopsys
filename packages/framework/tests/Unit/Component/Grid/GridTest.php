@@ -18,7 +18,7 @@ use Twig\Environment;
 
 class GridTest extends TestCase
 {
-    public function testGetParametersFromRequest()
+    public function testGetParametersFromRequest(): void
     {
         $getParameters = [
             Grid::GET_PARAMETER => [
@@ -55,7 +55,7 @@ class GridTest extends TestCase
         $this->assertSame('desc', $grid->getOrderDirection());
     }
 
-    public function testAddColumn()
+    public function testAddColumn(): void
     {
         $request = new Request();
         $requestStack = new RequestStack();
@@ -96,7 +96,7 @@ class GridTest extends TestCase
         $this->assertSame('', $column2->getClassAttribute());
     }
 
-    public function testAddColumnDuplicateId()
+    public function testAddColumnDuplicateId(): void
     {
         $request = new Request();
         $requestStack = new RequestStack();
@@ -121,7 +121,7 @@ class GridTest extends TestCase
         $grid->addColumn('columnId1', 'sourceColumnName2', 'title2');
     }
 
-    public function testEnablePaging()
+    public function testEnablePaging(): void
     {
         $request = new Request();
         $requestStack = new RequestStack();
@@ -144,7 +144,7 @@ class GridTest extends TestCase
         $this->assertTrue($grid->isEnabledPaging());
     }
 
-    public function testEnablePagingDefaultDisable()
+    public function testEnablePagingDefaultDisable(): void
     {
         $request = new Request();
         $requestStack = new RequestStack();
@@ -166,7 +166,7 @@ class GridTest extends TestCase
         $this->assertFalse($grid->isEnabledPaging());
     }
 
-    public function testSetDefaultOrder()
+    public function testSetDefaultOrder(): void
     {
         $request = new Request();
         $requestStack = new RequestStack();
@@ -193,7 +193,7 @@ class GridTest extends TestCase
         $this->assertSame('columnId2', $grid->getOrderSourceColumnNameWithDirection());
     }
 
-    public function testSetDefaultOrderWithRequest()
+    public function testSetDefaultOrderWithRequest(): void
     {
         $getParameters = [
             Grid::GET_PARAMETER => [
@@ -225,7 +225,7 @@ class GridTest extends TestCase
         $this->assertSame('-request', $grid->getOrderSourceColumnNameWithDirection());
     }
 
-    public function testCreateView()
+    public function testCreateView(): void
     {
         $request = new Request();
         $requestStack = new RequestStack();
@@ -254,7 +254,7 @@ class GridTest extends TestCase
         $this->assertInstanceOf(GridView::class, $gridView);
     }
 
-    public function testCreateViewWithPaging()
+    public function testCreateViewWithPaging(): void
     {
         $request = new Request();
         $requestStack = new RequestStack();
@@ -284,7 +284,7 @@ class GridTest extends TestCase
         $this->assertInstanceOf(GridView::class, $gridView);
     }
 
-    public function testEnableDragAndDrop()
+    public function testEnableDragAndDrop(): void
     {
         $entityClass = 'Path\To\Entity\Class';
 

@@ -43,8 +43,9 @@ class LoginController extends AdminBaseController
      * @Route("/login-check/", name="admin_login_check")
      * @Route("/logout/", name="admin_logout")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function loginAction(Request $request)
+    public function loginAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $currentDomainId = $this->domain->getId();
 
@@ -98,8 +99,9 @@ class LoginController extends AdminBaseController
      * @Route("/sso/{originalDomainId}", requirements={"originalDomainId" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $originalDomainId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function ssoAction(Request $request, $originalDomainId)
+    public function ssoAction(Request $request, $originalDomainId): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
@@ -122,8 +124,9 @@ class LoginController extends AdminBaseController
     /**
      * @Route("/authorization/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function authorizationAction(Request $request)
+    public function authorizationAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $multidomainLoginToken = $request->get(static::MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME);
         $originalReferer = $request->get(self::ORIGINAL_REFERER_PARAMETER_NAME);

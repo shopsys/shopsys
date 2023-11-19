@@ -38,7 +38,7 @@ class PersistentReference
      * @param string $entityName
      * @param int $entityId
      */
-    public function __construct($referenceName, $entityName, $entityId)
+    public function __construct(string $referenceName, string $entityName, int $entityId)
     {
         $this->referenceName = $referenceName;
         $this->entityName = $entityName;
@@ -49,7 +49,7 @@ class PersistentReference
      * @param string $entityName
      * @param int $entityId
      */
-    public function replace($entityName, $entityId)
+    public function replace($entityName, $entityId): void
     {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
@@ -58,7 +58,7 @@ class PersistentReference
     /**
      * @return string
      */
-    public function getReferenceName()
+    public function getReferenceName(): string
     {
         return $this->referenceName;
     }
@@ -66,7 +66,7 @@ class PersistentReference
     /**
      * @return string
      */
-    public function getEntityName()
+    public function getEntityName(): string
     {
         return $this->entityName;
     }
@@ -74,7 +74,7 @@ class PersistentReference
     /**
      * @return int
      */
-    public function getEntityId()
+    public function getEntityId(): int
     {
         return $this->entityId;
     }

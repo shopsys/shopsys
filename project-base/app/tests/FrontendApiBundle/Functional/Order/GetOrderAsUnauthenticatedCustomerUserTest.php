@@ -65,7 +65,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getOrderDataProvider(): array
     {
@@ -95,7 +95,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return null[]|'You need to be logged in or provide argument \'urlHash\'.'[][]|'foo'[]|'Order not found'[][]
      */
     public function getIncorrectOrderDataProvider(): array
     {

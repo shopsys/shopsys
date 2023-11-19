@@ -60,7 +60,7 @@ class ParameterDataFactory implements ParameterDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      */
-    protected function fillFromParameter(ParameterData $parameterData, Parameter $parameter)
+    protected function fillFromParameter(ParameterData $parameterData, Parameter $parameter): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation[] $translations */
         $translations = $parameter->getTranslations();

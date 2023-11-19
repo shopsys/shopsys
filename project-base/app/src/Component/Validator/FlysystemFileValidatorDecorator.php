@@ -37,7 +37,7 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if ($value === null || $value === '') {
             return;
@@ -76,7 +76,7 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
     /**
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function initialize(ExecutionContextInterface $context)
+    public function initialize(ExecutionContextInterface $context): void
     {
         $this->fileValidator->initialize($context);
     }

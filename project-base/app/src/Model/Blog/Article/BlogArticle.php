@@ -230,7 +230,7 @@ class BlogArticle extends AbstractTranslatableEntity
     /**
      * @return \App\Model\Blog\Category\BlogCategory[][]
      */
-    public function getBlogCategoriesIndexedByDomainId()
+    public function getBlogCategoriesIndexedByDomainId(): array
     {
         $blogCategoriesByDomainId = [];
 
@@ -357,7 +357,7 @@ class BlogArticle extends AbstractTranslatableEntity
     /**
      * @return bool
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }

@@ -12,7 +12,7 @@ class CountryDataModifierVersion20190121094400
     private array $tmpIds;
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      */
     public function __construct(private readonly array $data)
     {
@@ -20,7 +20,7 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getGroupedByCode(): array
     {
@@ -34,7 +34,7 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getNewIdCodePair(): array
     {
@@ -54,7 +54,7 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @return array
+     * @return int[]|string[]
      */
     public function getAllCodes(): array
     {
@@ -62,7 +62,7 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getAllIds(): array
     {
@@ -102,7 +102,7 @@ class CountryDataModifierVersion20190121094400
      * @param string $countryCode
      * @return bool
      */
-    private function codeExistsForDomain($domainId, $countryCode): bool
+    private function codeExistsForDomain(int $domainId, string $countryCode): bool
     {
         foreach ($this->data as $row) {
             if ($row['code'] === $countryCode && $row['domain_id'] === $domainId) {
@@ -116,7 +116,7 @@ class CountryDataModifierVersion20190121094400
     /**
      * @param int $domainId
      * @param string $countryCode
-     * @return array
+     * @return array<'country_id'|'domain_id'|'enabled'|'priority', mixed>
      */
     public function getDomainDataForCountry(int $domainId, string $countryCode): array
     {
@@ -133,7 +133,7 @@ class CountryDataModifierVersion20190121094400
     /**
      * @param int $domainId
      * @param string $countryCode
-     * @return array
+     * @return array<'name'|'translatable_id', mixed>
      */
     public function getTranslatableDataForCountry(int $domainId, string $countryCode): array
     {
@@ -162,7 +162,7 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getObsoleteCountryIds(): array
     {
@@ -178,8 +178,8 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param mixed[] $data
+     * @return mixed[]
      */
     private function groupDataIntoDomains(array $data): array
     {

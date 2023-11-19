@@ -51,9 +51,9 @@ class OrderFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $domainId = $options['order']->getDomainId();
         $countries = $this->countryFacade->getAllOnDomain($domainId);
@@ -74,7 +74,7 @@ class OrderFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('order')
@@ -82,7 +82,7 @@ class OrderFormType extends AbstractType
             ->setDefaults([
                 'data_class' => OrderData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'validation_groups' => function (FormInterface $form) {
+                'validation_groups' => function (FormInterface $form): array {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
                     /** @var \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData */
@@ -102,7 +102,7 @@ class OrderFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createBasicInformationGroup(FormBuilderInterface $builder, Order $order)
+    private function createBasicInformationGroup(FormBuilderInterface $builder, Order $order): \Symfony\Component\Form\FormBuilderInterface
     {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => t('Basic information'),
@@ -181,7 +181,7 @@ class OrderFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createPersonalDataGroup(FormBuilderInterface $builder)
+    private function createPersonalDataGroup(FormBuilderInterface $builder): \Symfony\Component\Form\FormBuilderInterface
     {
         $builderPersonalDataGroup = $builder->create('personalDataGroup', GroupType::class, [
             'label' => t('Personal data'),
@@ -237,7 +237,7 @@ class OrderFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createCompanyDataGroup(FormBuilderInterface $builder)
+    private function createCompanyDataGroup(FormBuilderInterface $builder): \Symfony\Component\Form\FormBuilderInterface
     {
         $builderCompanyDataGroup = $builder->create('companyDataGroup', GroupType::class, [
             'label' => t('Company data'),
@@ -283,7 +283,7 @@ class OrderFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Country\Country[] $countries
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createBillingDataGroup(FormBuilderInterface $builder, array $countries)
+    private function createBillingDataGroup(FormBuilderInterface $builder, array $countries): \Symfony\Component\Form\FormBuilderInterface
     {
         $builderBillingDataGroup = $builder->create('billingDataGroup', GroupType::class, [
             'label' => t('Billing data'),
@@ -338,7 +338,7 @@ class OrderFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Country\Country[] $countries
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createShippingAddressGroup(FormBuilderInterface $builder, array $countries)
+    private function createShippingAddressGroup(FormBuilderInterface $builder, array $countries): \Symfony\Component\Form\FormBuilderInterface
     {
         $builderShippingAddressGroup = $builder->create('shippingAddressGroup', GroupType::class, [
             'label' => t('Delivery address'),
@@ -477,7 +477,7 @@ class OrderFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createNoteGroup(FormBuilderInterface $builder)
+    private function createNoteGroup(FormBuilderInterface $builder): \Symfony\Component\Form\FormBuilderInterface
     {
         $builderNoteGroup = $builder->create('noteGroup', GroupType::class, [
             'label' => t('Note'),

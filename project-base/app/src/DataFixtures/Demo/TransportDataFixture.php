@@ -53,7 +53,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 5;
@@ -123,7 +123,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param string $referenceName
      * @param \App\Model\Transport\TransportData $transportData
      */
-    private function createTransport($referenceName, TransportData $transportData)
+    private function createTransport(string $referenceName, TransportData $transportData): void
     {
         $transportData->uuid = array_pop($this->uuidPool);
         $transport = $this->transportFacade->create($transportData);
@@ -158,7 +158,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             VatDataFixture::class,

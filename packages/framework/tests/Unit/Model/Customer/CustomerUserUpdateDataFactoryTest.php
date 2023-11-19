@@ -19,7 +19,7 @@ use Tests\FrameworkBundle\Test\Provider\TestOrderProvider;
 
 class CustomerUserUpdateDataFactoryTest extends TestCase
 {
-    public function testGetAmendedCustomerUserUpdateDataByOrderWithoutChanges()
+    public function testGetAmendedCustomerUserUpdateDataByOrderWithoutChanges(): void
     {
         $customerUserUpdateUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
 
@@ -55,7 +55,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $this->assertEquals(TestCustomerProvider::getDeliveryAddressData($customer), $customerUserUpdateData->deliveryAddressData);
     }
 
-    public function testGetAmendedCustomerUserUpdateDataByOrder()
+    public function testGetAmendedCustomerUserUpdateDataByOrder(): void
     {
         $customerUserUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
 

@@ -39,7 +39,7 @@ class TranslatableListener extends PrezentTranslatableListener
     /**
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
-    public function postPersist(LifecycleEventArgs $args)
+    public function postPersist(LifecycleEventArgs $args): void
     {
         $this->postLoad($args);
     }

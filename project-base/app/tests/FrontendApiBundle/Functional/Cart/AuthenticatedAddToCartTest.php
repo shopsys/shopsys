@@ -124,7 +124,7 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
     /**
      * @param int $productQuantity
-     * @return array
+     * @return mixed[]
      */
     private function addTestingProductToCustomerCart(int $productQuantity): array
     {

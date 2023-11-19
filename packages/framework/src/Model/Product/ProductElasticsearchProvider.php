@@ -22,7 +22,7 @@ class ProductElasticsearchProvider
 
     /**
      * @param int $productId
-     * @return array
+     * @return mixed[]
      */
     public function getVisibleProductArrayById(int $productId): array
     {
@@ -40,7 +40,7 @@ class ProductElasticsearchProvider
     /**
      * @param int[] $productIds
      * @param int|null $limit
-     * @return array
+     * @return mixed[]
      */
     public function getSellableProductArrayByIds(array $productIds, ?int $limit = null): array
     {
@@ -51,7 +51,7 @@ class ProductElasticsearchProvider
 
     /**
      * @param string $productUuid
-     * @return array
+     * @return mixed[]
      */
     public function getVisibleProductArrayByUuid(string $productUuid): array
     {
@@ -68,7 +68,7 @@ class ProductElasticsearchProvider
 
     /**
      * @param string[] $productUuids
-     * @return array
+     * @return mixed[]
      */
     public function getSellableProductArrayByUuids(array $productUuids): array
     {
