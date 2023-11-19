@@ -10,8 +10,8 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/packages/framework/src',
         __DIR__ . '/packages/framework/tests',
         __DIR__ . '/project-base/app/src',
-        __DIR__ . '/project-base/app/tests',
-        __DIR__ . '/packages/framework/src/Command/CreateApplicationDirectoriesCommand.php',
+        __DIR__ . '/project-base/app/tests',//*/
+        __DIR__ . '/project-base/app/tests/App/Functional/Component/Doctrine/QueryBuilderExtenderTest.php',
     ]);
 
     $rectorConfig->rules([
@@ -25,7 +25,8 @@ return static function (RectorConfig $rectorConfig): void {
         //\Rector\TypeDeclaration\Rector\ClassMethod\ParamTypeByMethodCallTypeRector::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ConstructorParamTypeByPropertyType::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByAnnotation::class,
-        \Shopsys\FrameworkBundle\Component\Rector\AnnotationArrayToArrayOfMixedRector::class,
+        //\Shopsys\FrameworkBundle\Component\Rector\AnnotationArrayToArrayOfMixedRector::class,
+        \Shopsys\FrameworkBundle\Component\Rector\GuessReturnTypeByImplementationRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationBasedOnParentClassMethodRector::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByParent::class, // same as AddReturnTypeDeclarationBasedOnParentClassMethodRector? :(
     ]);

@@ -102,7 +102,7 @@ CODE_SAMPLE
                         $propertyPhpDocInfo = $this->phpDocInfoFactory->createFromNodeOrEmpty($propertyNode);
                         $propertyPhpDocType = $propertyPhpDocInfo->getVarType();
 
-                        if ((!$propertyPhpDocType instanceof MixedType || $propertyPhpDocType->isExplicitMixed()) && $parameterPhpStanType->isSuperTypeOf($propertyPhpDocType)) {
+                        if ((!$propertyPhpDocType instanceof MixedType || $propertyPhpDocType->isExplicitMixed()) && $parameterPhpStanType->isSuperTypeOf($propertyPhpDocType)->yes()) {
                             $parameterPhpStanType = $propertyPhpDocType;
                         }
                         $param->type = $this->staticTypeMapper->mapPHPStanTypeToPhpParserNode($parameterPhpStanType, TypeKind::PARAM);

@@ -4,6 +4,7 @@ parameters:
     parallel:
         maximumNumberOfProcesses: 5
     treatPhpDocTypesAsCertain: false
+    checkGenericClassInNonGenericObjectType: false
     symfony:
         containerXmlPath: '%currentWorkingDirectory%/project-base/app/var/cache/dev/App_KernelDevDebugContainer.xml'
         constantHassers: false

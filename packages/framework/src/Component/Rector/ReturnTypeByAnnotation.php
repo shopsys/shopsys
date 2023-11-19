@@ -78,7 +78,7 @@ CODE_SAMPLE
             $scope = $node->getAttribute('scope');
             /** @var \PHPStan\Reflection\ClassReflection $classReflection */
             $classReflection = $scope->getClassReflection();
-            /** @var PHPStan\Reflection\Php\PhpMethodReflection $methodReflection */
+            /** @var \PHPStan\Reflection\Php\PhpMethodReflection $methodReflection */
             $methodReflection = $classReflection->getMethod($methodName, $scope);
 
             $returnType = $methodReflection->getVariants()[0]->getReturnType();
