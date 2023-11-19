@@ -11,7 +11,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/packages/framework/tests',
         __DIR__ . '/project-base/app/src',
         __DIR__ . '/project-base/app/tests',//*/
-        __DIR__ . '/project-base/app/src/Model/Product/Search/FilterQuery.php',
+        __DIR__ . '/project-base/app/src/Model/ProductVideo/ProductVideoData.php',
     ]);
     $rectorConfig->skip([
         __DIR__ . '/*/_generated/*',
@@ -33,7 +33,8 @@ return static function (RectorConfig $rectorConfig): void {
         //\Shopsys\FrameworkBundle\Component\Rector\ConstructorParamTypeByPropertyType::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByAnnotation::class,
         //\Shopsys\FrameworkBundle\Component\Rector\GuessReturnTypeByImplementationRector::class,
-        \Shopsys\FrameworkBundle\Component\Rector\ParameterAnnotationTypeByTypeHintRector::class,
+        //\Shopsys\FrameworkBundle\Component\Rector\ParameterAnnotationTypeByTypeHintRector::class,
+        \Shopsys\FrameworkBundle\Component\Rector\MissingMixedAnnotationToArrayPropertiesRector::class,
         //\Rector\Php80\Rector\ClassMethod\AddParamBasedOnParentClassMethodRector::class,
         //\Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationBasedOnParentClassMethodRector::class,
         //\Shopsys\FrameworkBundle\Component\Rector\ReturnTypeByParent::class, // same as AddReturnTypeDeclarationBasedOnParentClassMethodRector? :(
