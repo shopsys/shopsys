@@ -231,3 +231,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   if you do not need SEO categories, these changes might be irrelevant altogether
     -   flag and brand values are now merged after change of default parameters (leaving SEO category) instead of overwritting. This is a bug fix and you should apply it to your changes as well.
     -   see #project-base-diff to update your project
+-   category data fetching logic improvements ([#2893](https://github.com/shopsys/shopsys/pull/2893))
+    -   these changes primarily focus on fixing loading and fetching logic on the category page
+    -   there were certain bugs with double loads, skeleton glitches, etc. but they were mostly caused by the added complexity of SEO categories, so if you do not have those and your fetching logic is thus much simpler, you probably do not need most of these changes
+    -   the category detail fetching was also rewritten to the generated URQL hook, which can be beneficial for you if your logic allows you to do so
+    -   one thing that you should definitely consider is removal of `onRouteChangeError` from the page loading logic, as the previous implementation was rather invalid. See commit message for more details

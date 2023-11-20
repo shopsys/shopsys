@@ -42,7 +42,7 @@ vi.mock('config/constants', async (importOriginal) => {
         },
     };
 });
-
+const setWasRedirectedFromSeoCategoryMock = vi.fn();
 const mockPush = vi.fn();
 vi.mock('next/router', () => ({
     useRouter: vi.fn(() => ({
@@ -240,6 +240,7 @@ describe('useQueryParams().updateFilterPrices tests', () => {
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
                 },
                 originalCategorySlug: ORIGINAL_CATEGORY_URL,
+                setWasRedirectedFromSeoCategory: setWasRedirectedFromSeoCategoryMock,
             });
         });
 
@@ -295,6 +296,8 @@ describe('useQueryParams().updateFilterPrices tests', () => {
                 shallow: true,
             },
         );
+        expect(setWasRedirectedFromSeoCategoryMock).toBeCalledTimes(1);
+        expect(setWasRedirectedFromSeoCategoryMock).toBeCalledWith(true);
     });
 
     test('changing prices resets page and load more', () => {

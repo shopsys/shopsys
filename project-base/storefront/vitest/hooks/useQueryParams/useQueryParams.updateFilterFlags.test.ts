@@ -54,7 +54,7 @@ const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
         SLIDER: false,
     },
 }));
-
+const setWasRedirectedFromSeoCategoryMock = vi.fn();
 vi.mock('config/constants', async (importOriginal) => {
     const actualConstantsModule = await importOriginal<any>();
 
@@ -208,6 +208,7 @@ describe('useQueryParams().updateFilterFlags tests', () => {
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
                 },
                 originalCategorySlug: ORIGINAL_CATEGORY_URL,
+                setWasRedirectedFromSeoCategory: setWasRedirectedFromSeoCategoryMock,
             });
         });
 
@@ -259,5 +260,7 @@ describe('useQueryParams().updateFilterFlags tests', () => {
                 shallow: true,
             },
         );
+        expect(setWasRedirectedFromSeoCategoryMock).toBeCalledTimes(1);
+        expect(setWasRedirectedFromSeoCategoryMock).toBeCalledWith(true);
     });
 });

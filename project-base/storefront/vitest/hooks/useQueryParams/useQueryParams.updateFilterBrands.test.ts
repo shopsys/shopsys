@@ -30,7 +30,7 @@ vi.mock('next/router', () => ({
         query: {},
     })),
 }));
-
+const setWasRedirectedFromSeoCategoryMock = vi.fn();
 vi.mock('store/useSessionStore', () => ({
     useSessionStore: vi.fn((selector) => {
         return selector({
@@ -208,6 +208,7 @@ describe('useQueryParams().updateFilterBrands tests', () => {
                     parameters: GET_DEFAULT_SEO_CATEGORY_PARAMETERS(),
                 },
                 originalCategorySlug: ORIGINAL_CATEGORY_URL,
+                setWasRedirectedFromSeoCategory: setWasRedirectedFromSeoCategoryMock,
             });
         });
 
@@ -259,5 +260,7 @@ describe('useQueryParams().updateFilterBrands tests', () => {
                 shallow: true,
             },
         );
+        expect(setWasRedirectedFromSeoCategoryMock).toBeCalledTimes(1);
+        expect(setWasRedirectedFromSeoCategoryMock).toBeCalledWith(true);
     });
 });

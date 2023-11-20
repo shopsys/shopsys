@@ -2,6 +2,7 @@ import { DEFAULT_SORT, SEO_SENSITIVE_FILTERS } from 'config/constants';
 import { ProductFilterOptionsFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
 import { mergeNullableArrays } from 'helpers/arrayUtils';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
+import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
 
 export const getEmptyDefaultProductFiltersMap = (): DefaultProductFiltersMapType => ({
@@ -208,4 +209,15 @@ export const getFilterWithoutSeoSensitiveFilters = (
     }
 
     return { filteredFilter, filteredSort };
+};
+
+export const useRedirectFromSeoCategory = () => {
+    const setWasRedirectedFromSeoCategory = useSessionStore((s) => s.setWasRedirectedFromSeoCategory);
+
+    const redirectFromSeoCategory = (pushQueryFilter: () => void) => {
+        setWasRedirectedFromSeoCategory(true);
+        pushQueryFilter();
+    };
+
+    return redirectFromSeoCategory;
 };

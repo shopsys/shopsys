@@ -16,12 +16,15 @@ export type SeoCategorySlice = {
     setDefaultProductFiltersMap: (value: DefaultProductFiltersMapType) => void;
     wasRedirectedToSeoCategory: boolean;
     setWasRedirectedToSeoCategory: (value: boolean) => void;
+    wasRedirectedFromSeoCategory: boolean;
+    setWasRedirectedFromSeoCategory: (value: boolean) => void;
 };
 
 export const createSeoCategorySlice: StateCreator<SeoCategorySlice> = (set) => ({
     defaultProductFiltersMap: getEmptyDefaultProductFiltersMap(),
     originalCategorySlug: undefined,
     wasRedirectedToSeoCategory: false,
+    wasRedirectedFromSeoCategory: false,
 
     setOriginalCategorySlug: (value: string | undefined) => {
         set({ originalCategorySlug: value });
@@ -31,5 +34,8 @@ export const createSeoCategorySlice: StateCreator<SeoCategorySlice> = (set) => (
     },
     setWasRedirectedToSeoCategory: (value: boolean) => {
         set({ wasRedirectedToSeoCategory: value });
+    },
+    setWasRedirectedFromSeoCategory: (value: boolean) => {
+        set({ wasRedirectedFromSeoCategory: value });
     },
 });
