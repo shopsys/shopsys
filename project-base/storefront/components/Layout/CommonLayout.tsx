@@ -11,13 +11,13 @@ import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { CanonicalQueryParameters } from 'helpers/seo/generateCanonicalUrl';
 import { useSessionStore } from 'store/useSessionStore';
-import { FriendlyPagesTypesKeys } from 'types/friendlyUrl';
+import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 
 type CommonLayoutProps = {
     title?: string | null;
     description?: string | null;
     breadcrumbs?: BreadcrumbFragmentApi[];
-    breadcrumbsType?: FriendlyPagesTypesKeys;
+    breadcrumbsType?: FriendlyPagesTypesKey;
     canonicalQueryParams?: CanonicalQueryParameters;
     isFetchingData?: boolean;
 };

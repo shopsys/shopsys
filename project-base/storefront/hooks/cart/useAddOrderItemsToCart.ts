@@ -1,7 +1,7 @@
-import { useCurrentCart } from 'connectors/cart/Cart';
 import { AddOrderItemsToCartInputApi, useAddOrderItemsToCartMutationApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'helpers/toasts';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -18,7 +18,7 @@ export const useAddOrderItemsToCart = (): {
 } => {
     const [orderForPrefillingUuid, setOrderForPrefillingUuid] = useState<string>();
     const [notAddedProductNames, setNotAddedProductNames] = useState<string[]>();
-    const { cart, isCartEmpty } = useCurrentCart();
+    const { cart } = useCurrentCart();
     const router = useRouter();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
@@ -51,7 +51,7 @@ export const useAddOrderItemsToCart = (): {
     };
 
     const addOrderItemsToEmptyCart = async (orderUuid: string) => {
-        if (!isCartEmpty) {
+        if (cart?.items.length) {
             setOrderForPrefillingUuid(orderUuid);
 
             return;

@@ -1,14 +1,15 @@
-import { ExtendedLinkPageType, ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { getStringWithoutTrailingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'helpers/twMerge';
+import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 import { ListedItemPropType } from 'types/simpleNavigation';
 
 type SimpleNavigationListItemProps = {
     listedItem: ListedItemPropType;
     imageType?: string;
-    linkType: ExtendedLinkPageType;
+    linkType: PageType;
 };
 
 export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({

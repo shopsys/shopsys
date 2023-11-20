@@ -1,5 +1,5 @@
-import { useCurrentCart } from 'connectors/cart/Cart';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
@@ -9,9 +9,9 @@ const TEST_IDENTIFIER = 'pages-cart-cartpreview';
 export const CartPreview: FC = () => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const { cart, isCartEmpty } = useCurrentCart();
+    const { cart } = useCurrentCart();
 
-    if (cart === null || isCartEmpty) {
+    if (!cart?.items.length) {
         return null;
     }
 

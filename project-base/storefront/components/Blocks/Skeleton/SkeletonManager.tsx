@@ -1,11 +1,16 @@
 import { SkeletonPageArticle } from './SkeletonPageArticle';
 import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';
+import { SkeletonPageComparison } from './SkeletonPageComparison';
 import { SkeletonPageHome } from './SkeletonPageHome';
+import { SkeletonPageOrder } from './SkeletonPageOrder';
+import { SkeletonPageOrders } from './SkeletonPageOrders';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
+import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
 import { SkeletonPageProductsList } from './SkeletonPageProductsList';
 import { SkeletonPageProductsListSimple } from './SkeletonPageProductsListSimple';
 import { SkeletonPageStore } from './SkeletonPageStore';
 import { SkeletonPageStores } from './SkeletonPageStores';
+import { SkeletonPageWishlist } from './SkeletonPageWishlist';
 import { useEffect } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 
@@ -32,6 +37,8 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({ isFetchingData, isPa
             return <SkeletonPageHome />;
         case 'product':
             return <SkeletonPageProductDetail />;
+        case 'productMainVariant':
+            return <SkeletonPageProductDetailMainVariant />;
         case 'category':
             return <SkeletonPageProductsList />;
         case 'brand':
@@ -46,6 +53,14 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({ isFetchingData, isPa
             return <SkeletonPageStores />;
         case 'store':
             return <SkeletonPageStore />;
+        case 'wishlist':
+            return <SkeletonPageWishlist />;
+        case 'comparison':
+            return <SkeletonPageComparison />;
+        case 'orders':
+            return <SkeletonPageOrders />;
+        case 'order':
+            return <SkeletonPageOrder />;
         default:
             return null;
     }

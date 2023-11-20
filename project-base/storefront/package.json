@@ -63,7 +63,7 @@
         "uuid": "8.3.2",
         "wonka": "6.3.2",
         "yup": "0.32.9",
-        "zustand": "4.3.6"
+        "zustand": "4.4.4"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "4.0.1",

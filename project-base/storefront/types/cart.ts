@@ -7,17 +7,18 @@ import {
     SimplePaymentFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
+import { UseQueryExecute } from 'urql';
 
 export type CurrentCartType = {
-    cart: Maybe<CartFragmentApi>;
-    isCartEmpty: boolean;
+    cart: Maybe<CartFragmentApi> | undefined;
+    isWithCart: boolean;
     transport: Maybe<TransportWithAvailablePaymentsAndStoresFragmentApi>;
     pickupPlace: Maybe<ListedStoreFragmentApi>;
     payment: Maybe<SimplePaymentFragmentApi>;
     paymentGoPayBankSwift: Maybe<string>;
     promoCode: Maybe<string>;
-    isLoading: boolean;
     isFetching: boolean;
     modifications: Maybe<CartModificationsFragmentApi>;
     roundingPrice: Maybe<PriceFragmentApi>;
+    fetchCart: UseQueryExecute;
 };

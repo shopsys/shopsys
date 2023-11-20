@@ -1,9 +1,21 @@
-import { ExtendedLinkPageType } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { StateCreator } from 'zustand';
+
+const CUSTOM_PAGE_TYPES = [
+    'homepage',
+    'stores',
+    'wishlist',
+    'comparison',
+    'orders',
+    'order',
+    'productMainVariant',
+] as const;
+
+export type PageType = FriendlyPagesTypesKey | (typeof CUSTOM_PAGE_TYPES)[number];
 
 export type PageLoadingStateSlice = {
     isPageLoading: boolean;
-    redirectPageType: ExtendedLinkPageType | undefined;
+    redirectPageType: PageType | undefined;
 
     updatePageLoadingState: (value: Partial<PageLoadingStateSlice>) => void;
 };

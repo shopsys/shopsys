@@ -2,32 +2,33 @@ import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 // eslint-disable-next-line no-restricted-imports
 import NextLink, { LinkProps } from 'next/link';
 import { ComponentPropsWithoutRef, MouseEventHandler } from 'react';
+import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
-import { FriendlyPagesDestinations, FriendlyPagesTypes, FriendlyPagesTypesKeys } from 'types/friendlyUrl';
+import {
+    FriendlyPagesDestinations,
+    FriendlyPagesTypes,
+    FriendlyPagesTypesKey,
+    FriendlyPagesTypesKeys,
+} from 'types/friendlyUrl';
 
-const STATIC_PAGES = ['static', 'homepage', 'stores'] as const;
-
-type StaticPageType = (typeof STATIC_PAGES)[number];
-
-export type ExtendedLinkPageType = FriendlyPagesTypesKeys | StaticPageType;
-
-type ExtendedNextLinkProps = {
-    type: ExtendedLinkPageType;
-    queryParams?: Record<string, string>;
-} & Omit<ComponentPropsWithoutRef<'a'>, keyof LinkProps> &
-    Omit<LinkProps, 'prefetch'>;
+type ExtendedNextLinkProps = Omit<ComponentPropsWithoutRef<'a'>, keyof LinkProps> &
+    Omit<LinkProps, 'prefetch'> & {
+        queryParams?: Record<string, string>;
+        type?: PageType;
+    };
 
 export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     children,
     href,
-    type,
     queryParams,
     as,
     onClick,
+    type,
     ...props
 }) => {
-    const isStatic = type === 'static' || type === 'homepage' || type === 'stores';
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+
+    const isDynamic = type && FriendlyPagesTypesKeys.includes(type as any);
 
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
         const isWithoutOpeningInNewTab = !e.ctrlKey && !e.metaKey;
@@ -35,23 +36,28 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
         if (isWithoutOpeningInNewTab) {
             onClick?.(e);
 
-            if (type !== 'static') {
+            if (type) {
                 updatePageLoadingState({ isPageLoading: true, redirectPageType: type });
+            } else {
+                updatePageLoadingState({ redirectPageType: undefined });
             }
         }
     };
 
     return (
         <NextLink
-            as={isStatic ? as : href}
+            as={isDynamic ? href : as}
             prefetch={false}
             href={
-                isStatic
-                    ? href
-                    : {
-                          pathname: FriendlyPagesDestinations[type],
-                          query: { [SLUG_TYPE_QUERY_PARAMETER_NAME]: FriendlyPagesTypes[type], ...queryParams },
+                isDynamic
+                    ? {
+                          pathname: FriendlyPagesDestinations[type as FriendlyPagesTypesKey],
+                          query: {
+                              [SLUG_TYPE_QUERY_PARAMETER_NAME]: FriendlyPagesTypes[type as FriendlyPagesTypesKey],
+                              ...queryParams,
+                          },
                       }
+                    : href
             }
             onClick={handleOnClick}
             {...props}

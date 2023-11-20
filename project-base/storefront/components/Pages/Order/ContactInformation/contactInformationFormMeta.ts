@@ -14,7 +14,7 @@ import {
     validateTelephone,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
-import { useCurrentCart } from 'connectors/cart/Cart';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import useTranslation from 'next-translate/useTranslation';

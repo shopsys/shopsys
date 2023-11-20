@@ -4,48 +4,11 @@ import {
     CartPaymentModificationsFragmentApi,
     CartPromoCodeModificationsFragmentApi,
     CartTransportModificationsFragmentApi,
-    ListedStoreFragmentApi,
-    Maybe,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-    useCartQueryApi,
 } from 'graphql/generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { showInfoMessage } from 'helpers/toasts';
-import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { Translate } from 'next-translate';
-import { usePersistStore } from 'store/usePersistStore';
-import { CurrentCartType } from 'types/cart';
-
-export const useCurrentCart = (fromCache = true): CurrentCartType => {
-    const isUserLoggedIn = useIsUserLoggedIn();
-    const cartUuid = usePersistStore((store) => store.cartUuid);
-    const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
-
-    const [{ data: cartData, stale, fetching }] = useCartQueryApi({
-        variables: { cartUuid },
-        pause: !cartUuid && !isUserLoggedIn,
-        requestPolicy: fromCache ? 'cache-first' : 'network-only',
-    });
-
-    return {
-        cart: cartData?.cart ?? null,
-        isCartEmpty: !cartData?.cart?.items.length,
-        transport: cartData?.cart?.transport ?? null,
-        pickupPlace: getSelectedPickupPlace(
-            cartData?.cart?.transport,
-            cartData?.cart?.selectedPickupPlaceIdentifier,
-            packeteryPickupPoint,
-        ),
-        payment: cartData?.cart?.payment ?? null,
-        paymentGoPayBankSwift: cartData?.cart?.paymentGoPayBankSwift ?? null,
-        promoCode: cartData?.cart?.promoCode ?? null,
-        isLoading: stale,
-        isFetching: fetching,
-        modifications: cartData?.cart?.modifications ?? null,
-        roundingPrice: cartData?.cart?.roundingPrice ?? null,
-    };
-};
 
 export const handleCartModifications = (
     cartModifications: CartModificationsFragmentApi,
@@ -141,24 +104,4 @@ const handleCartPromoCodeModifications = (
             GtmMessageOriginType.cart,
         );
     }
-};
-
-const getSelectedPickupPlace = (
-    transport: Maybe<TransportWithAvailablePaymentsAndStoresFragmentApi> | undefined,
-    pickupPlaceIdentifier: string | null | undefined,
-    packeteryPickupPoint: ListedStoreFragmentApi | null,
-): ListedStoreFragmentApi | null => {
-    if (!transport || !pickupPlaceIdentifier) {
-        return null;
-    }
-
-    if (transport.transportType.code === 'packetery') {
-        return packeteryPickupPoint;
-    }
-
-    const pickupPlace = transport.stores?.edges?.find(
-        (pickupPlaceNode) => pickupPlaceNode?.node?.identifier === pickupPlaceIdentifier,
-    );
-
-    return pickupPlace?.node === undefined ? null : pickupPlace.node;
 };

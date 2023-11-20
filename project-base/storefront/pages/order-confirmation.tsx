@@ -1,7 +1,7 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { CartLoading } from 'components/Pages/Cart/CartLoading';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
 import {
@@ -16,10 +16,10 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
-import { useDomainConfig } from 'hooks/useDomainConfig';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { PaymentTypeEnum } from 'types/payment';
 
@@ -36,60 +36,76 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { query } = useRouter();
     const { orderUuid, orderEmail, orderPaymentType, registrationData } = query as OrderConfirmationQuery;
-    const { url } = useDomainConfig();
-    const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const isUserLoggedIn = useIsUserLoggedIn();
     const parsedRegistrationData = useRef<ContactInformation | undefined>(
         registrationData ? (JSON.parse(registrationData) as ContactInformation) : undefined,
     );
+    const { fetchCart, isWithCart } = useCurrentCart(false);
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data: orderSentPageContentData }] = useOrderSentPageContentApi({ variables: { orderUuid: orderUuid! } });
+    const [{ data: orderSentPageContentData, fetching: isOrderPageContentFetching }] = useOrderSentPageContentApi({
+        variables: { orderUuid: orderUuid! },
+    });
     const [{ data: isCustomerUserRegisteredData, fetching: isInformationAboutUserRegistrationFetching }] =
         useIsCustomerUserRegisteredQueryApi({
             variables: {
                 email: orderEmail!,
             },
-            pause: orderEmail === undefined,
+            pause: !orderEmail,
         });
 
+    useEffect(() => {
+        if (isWithCart) {
+            fetchCart();
+        }
+    }, []);
+
     return (
-        <PageGuard errorRedirectUrl={cartUrl} isWithAccess={!!orderUuid}>
+        <>
             <MetaRobots content="noindex" />
+
             <CommonLayout title={t('Thank you for your order')}>
                 <Webline>
-                    <div
-                        className="mt-16 mb-10 flex flex-col items-center justify-center lg:mb-20 lg:flex-row"
-                        data-testid={TEST_IDENTIFIER}
-                    >
-                        <div className="w-40 lg:mr-32">
-                            <img alt="Objednávka odeslána" src="/public/frontend/images/sent-cart.svg" />
-                        </div>
-                        <div className="text-center lg:text-left">
-                            {!!orderSentPageContentData && (
+                    {orderSentPageContentData && !isOrderPageContentFetching && (
+                        <div
+                            className="my-16 flex flex-col items-center justify-center gap-9 lg:mb-20 lg:flex-row"
+                            data-testid={TEST_IDENTIFIER}
+                        >
+                            <img
+                                alt="Objednávka odeslána"
+                                className="w-40"
+                                src="/public/frontend/images/sent-cart.svg"
+                            />
+
+                            <div className="flex flex-col gap-8 text-center lg:text-left">
                                 <div
-                                    className="mb-8"
-                                    dangerouslySetInnerHTML={{ __html: orderSentPageContentData.orderSentPageContent }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: orderSentPageContentData.orderSentPageContent,
+                                    }}
                                 />
-                            )}
-                            {orderPaymentType === PaymentTypeEnum.GoPay && <GoPayGateway orderUuid={orderUuid!} />}
+
+                                {orderPaymentType === PaymentTypeEnum.GoPay && <GoPayGateway orderUuid={orderUuid!} />}
+                            </div>
                         </div>
-                    </div>
-                </Webline>
-                {!!parsedRegistrationData.current &&
-                    !isUserLoggedIn &&
-                    orderUuid &&
-                    !isInformationAboutUserRegistrationFetching &&
-                    isCustomerUserRegisteredData?.isCustomerUserRegistered === false && (
-                        <RegistrationAfterOrder
-                            lastOrderUuid={orderUuid}
-                            registrationData={parsedRegistrationData.current}
-                        />
                     )}
+
+                    {isOrderPageContentFetching && <CartLoading />}
+
+                    {!!parsedRegistrationData.current &&
+                        !isUserLoggedIn &&
+                        orderUuid &&
+                        !isInformationAboutUserRegistrationFetching &&
+                        isCustomerUserRegisteredData?.isCustomerUserRegistered === false && (
+                            <RegistrationAfterOrder
+                                lastOrderUuid={orderUuid}
+                                registrationData={parsedRegistrationData.current}
+                            />
+                        )}
+                </Webline>
             </CommonLayout>
-        </PageGuard>
+        </>
     );
 };
 

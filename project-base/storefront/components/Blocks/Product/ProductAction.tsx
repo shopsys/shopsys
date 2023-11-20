@@ -1,9 +1,9 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { Button } from 'components/Forms/Button/Button';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/dist/client/router';
 import { twJoin } from 'tailwind-merge';
 
 type ProductActionProps = {
@@ -18,30 +18,21 @@ const TEST_IDENTIFIER = 'blocks-product-action';
 const wrapperTwClass = 'rounded bg-greyVeryLight p-2';
 
 export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListName, gtmMessageOrigin, listIndex }) => {
-    const router = useRouter();
     const { t } = useTranslation();
 
     if (product.isMainVariant) {
         return (
             <div className={wrapperTwClass}>
-                <Button
-                    className="!w-full py-2"
-                    dataTestId={TEST_IDENTIFIER + '-choose-variant'}
-                    name="choose-variant"
-                    size="small"
-                    onClick={() =>
-                        router.push(
-                            {
-                                pathname: '/products/[productSlug]',
-                            },
-                            {
-                                pathname: product.slug,
-                            },
-                        )
-                    }
-                >
-                    {t('Choose variant')}
-                </Button>
+                <ExtendedNextLink href={product.slug} type="productMainVariant">
+                    <Button
+                        className="w-full py-2"
+                        dataTestId={TEST_IDENTIFIER + '-choose-variant'}
+                        name="choose-variant"
+                        size="small"
+                    >
+                        {t('Choose variant')}
+                    </Button>
+                </ExtendedNextLink>
             </div>
         );
     }

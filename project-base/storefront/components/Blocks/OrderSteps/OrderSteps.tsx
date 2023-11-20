@@ -70,11 +70,5 @@ const OrderStepsListItemLink: FC<OrderStepsListItemLinkProps> = ({ children, isA
         </span>
     );
 
-    return href ? (
-        <ExtendedNextLink href={href} type="static">
-            {Component}
-        </ExtendedNextLink>
-    ) : (
-        Component
-    );
+    return href ? <ExtendedNextLink href={href}>{Component}</ExtendedNextLink> : Component;
 };

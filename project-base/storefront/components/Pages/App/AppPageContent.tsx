@@ -6,7 +6,9 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useAuthLoader } from 'hooks/app/useAuthLoader';
 import { usePageLoader } from 'hooks/app/usePageLoader';
+import { useStoreHydration } from 'hooks/app/useStoreHydration';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
+import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useSetDomainConfig } from 'hooks/useDomainConfig';
 import { NextComponentType, NextPageContext } from 'next';
 import dynamic from 'next/dynamic';
@@ -34,6 +36,11 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
     const { url } = pageProps.domainConfig;
     const userConsent = usePersistStore((store) => store.userConsent);
 
+    useBroadcastChannel('reloadPage', () => {
+        router.reload();
+    });
+
+    useStoreHydration();
     useSetDomainConfig(pageProps.domainConfig);
     useAuthLoader();
     usePageLoader();

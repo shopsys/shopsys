@@ -1,4 +1,3 @@
-import { useCurrentCart } from 'connectors/cart/Cart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import {
     LastOrderFragmentApi,
@@ -15,14 +14,13 @@ import {
 } from 'graphql/generated';
 import { getGtmPickupPlaceFromStore, getGtmPickupPlaceFromLastOrder } from 'gtm/helpers/mappers';
 import { logException } from 'helpers/errors/logException';
-import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { Translate } from 'next-translate';
 import getConfig from 'next/config';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useClient } from 'urql';
@@ -242,38 +240,6 @@ export const getPickupPlaceDetail = (
     transportItem.stores?.edges?.some((storeEdge) => storeEdge?.node?.identifier === selectedPickupPlace?.identifier)
         ? selectedPickupPlace!
         : undefined;
-
-export const useHandleTransportAndPaymentLoadingAndRedirect = (
-    areTransportsLoading: boolean,
-    isLoadingTransportAndPaymentFromLastOrder: boolean,
-) => {
-    const [initiatedLoading, setInitiatedLoading] = useState(false);
-    const [isCartLoading, setIsCartLoading] = useState(true);
-    const { url } = useDomainConfig();
-    const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
-    const router = useRouter();
-    const currentCart = useCurrentCart();
-    const isLoading = currentCart.isFetching || currentCart.isLoading;
-    const authLoading = usePersistStore((s) => s.authLoading);
-
-    useEffect(() => {
-        if (isLoading || currentCart.isCartEmpty) {
-            setInitiatedLoading(true);
-        }
-
-        if (!initiatedLoading || isLoading) {
-            return;
-        }
-
-        if (currentCart.isCartEmpty) {
-            router.replace(cartUrl);
-        } else {
-            setIsCartLoading(false);
-        }
-    }, [initiatedLoading, isLoading, currentCart.isCartEmpty]);
-
-    return areTransportsLoading || isLoadingTransportAndPaymentFromLastOrder || isCartLoading || !!authLoading;
-};
 
 export const useLoadTransportAndPaymentFromLastOrder = (
     changeTransportInCart: ChangeTransportHandler,

@@ -1,11 +1,12 @@
-import { Exact, LoginApi, LoginVariablesApi, LogoutApi, Maybe, useLoginApi, useLogoutApi } from 'graphql/generated';
+import { Exact, LoginApi, LoginVariablesApi, Maybe, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
+import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { OperationResult } from 'urql';
 
-export type LoginHandler = (
+type LoginHandler = (
     variables: LoginVariablesApi,
     rewriteUrl?: string,
 ) => Promise<
@@ -19,14 +20,7 @@ export type LoginHandler = (
     >
 >;
 
-export type LogoutHandler = () => Promise<
-    OperationResult<
-        LogoutApi,
-        Exact<{
-            [key: string]: never;
-        }>
-    >
->;
+type LogoutHandler = () => Promise<void>;
 
 export const useAuth = () => {
     const [, loginMutation] = useLoginApi();
@@ -60,6 +54,8 @@ export const useAuth = () => {
             } else {
                 router.reload();
             }
+
+            dispatchBroadcastChannel('reloadPage');
         }
 
         return loginResult;
@@ -75,10 +71,10 @@ export const useAuth = () => {
             updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
             updateAuthLoadingState('logout-loading');
 
-            router.replace('/').then(() => router.reload());
+            router.reload();
         }
 
-        return logoutResult;
+        dispatchBroadcastChannel('reloadPage');
     };
 
     return { login, logout };

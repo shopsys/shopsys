@@ -25,15 +25,13 @@ export const CustomerContent: FC = () => {
             <Webline>
                 <ul className="mb-8 flex flex-col flex-wrap gap-4 md:flex-row">
                     <CustomerListItem>
-                        <ExtendedNextLink href={customerOrdersUrl} type="static">
+                        <ExtendedNextLink href={customerOrdersUrl} type="orders">
                             {t('My orders')}
                         </ExtendedNextLink>
                     </CustomerListItem>
 
                     <CustomerListItem>
-                        <ExtendedNextLink href={customerEditProfileUrl} type="static">
-                            {t('Edit profile')}
-                        </ExtendedNextLink>
+                        <ExtendedNextLink href={customerEditProfileUrl}>{t('Edit profile')}</ExtendedNextLink>
                     </CustomerListItem>
 
                     <CustomerListItem>

@@ -85,7 +85,6 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                 passHref
                                 className="relative flex-grow text-primary md:text-lg"
                                 href={contactUrl}
-                                type="static"
                             >
                                 {t('Do you have any questions?')}
                             </ExtendedNextLink>

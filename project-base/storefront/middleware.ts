@@ -4,7 +4,7 @@ import {
     FriendlyPageTypesValue,
     FriendlyPagesDestinations,
     FriendlyPagesTypes,
-    FriendlyPagesTypesKeys,
+    FriendlyPagesTypesKey,
 } from 'types/friendlyUrl';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -92,7 +92,7 @@ export const config = {
 const isInRange = (number: number, start: number, end: number) => number >= start && start <= end;
 
 const rewriteDynamicPages = (pageType: FriendlyPageTypesValue, rewriteUrl: string, queryParams: string) => {
-    const pageTypeKey = (Object.keys(FriendlyPagesTypes) as FriendlyPagesTypesKeys[]).find(
+    const pageTypeKey = (Object.keys(FriendlyPagesTypes) as FriendlyPagesTypesKey[]).find(
         (key) => FriendlyPagesTypes[key] === pageType,
     );
 

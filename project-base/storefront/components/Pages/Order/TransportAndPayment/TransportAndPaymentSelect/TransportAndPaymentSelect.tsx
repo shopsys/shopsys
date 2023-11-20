@@ -10,7 +10,6 @@ import {
     usePaymentChangeInSelect,
     useTransportChangeInSelect,
 } from 'components/Pages/Order/TransportAndPayment/helpers';
-import { useCurrentCart } from 'connectors/cart/Cart';
 import {
     ListedStoreFragmentApi,
     SimplePaymentFragmentApi,
@@ -19,6 +18,7 @@ import {
 } from 'graphql/generated';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 

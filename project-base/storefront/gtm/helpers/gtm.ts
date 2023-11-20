@@ -1,6 +1,5 @@
 import { getRandomPageId } from './helpers';
 import { mapGtmCartItemType } from './mappers';
-import { useCurrentCart } from 'connectors/cart/Cart';
 import { SHA256 } from 'crypto-js';
 import {
     BlogArticleDetailFragmentApi,
@@ -34,6 +33,7 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { isClient } from 'helpers/isClient';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
+import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useMemo } from 'react';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
@@ -49,7 +49,7 @@ export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartL
     const domainConfig = useDomainConfig();
 
     return useMemo(() => {
-        if ((!cartUuid && !isUserLoggedIn) || !cart) {
+        if (!cart) {
             return { gtmCartInfo: null, isCartLoaded: !isFetching };
         }
 
