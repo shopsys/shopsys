@@ -55,12 +55,11 @@ const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
     },
 }));
 
-vi.mock('helpers/filterOptions/seoCategories', async (importOriginal) => {
-    const actualSeoCategoriesModule = await importOriginal<any>();
+vi.mock('config/constants', async (importOriginal) => {
+    const actualConstantsModule = await importOriginal<any>();
 
     return {
-        ...actualSeoCategoriesModule,
-
+        ...actualConstantsModule,
         get SEO_SENSITIVE_FILTERS() {
             return mockSeoSensitiveFiltersGetter();
         },

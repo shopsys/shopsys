@@ -7,9 +7,16 @@ import {
     CategoryDetailQueryDocumentApi,
     CategoryDetailQueryVariablesApi,
 } from 'graphql/generated';
+import { buildNewQueryAfterFilterChange } from 'helpers/filterOptions/buildNewQueryAfterFilterChange';
+import { getFilterWithoutEmpty } from 'helpers/filterOptions/getFilterWithoutEmpty';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
+import { getFilterWithoutSeoSensitiveFilters } from 'helpers/filterOptions/seoCategories';
 import { getStringWithoutLeadingSlash } from 'helpers/parsing/stringWIthoutSlash';
-import { getSlugFromUrl } from 'helpers/parsing/urlParsing';
+import {
+    getSlugFromUrl,
+    getUrlQueriesWithoutFalsyValues,
+    getUrlQueriesWithoutDynamicPageQueries,
+} from 'helpers/parsing/urlParsing';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextRouter, useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
@@ -25,11 +32,11 @@ export const useCategoryDetailData = (
     const urlSlug = getSlugFromUrl(router.asPath);
     const [lastFetchedUrlSlug, setLastFetchedUrlSlug] = useState(urlSlug);
     const client = useClient();
-    const mappedFilter = mapParametersFilter(filter);
+    const mappedProductFilter = mapParametersFilter(filter);
     const { sort } = useQueryParams();
     const wasRedirectedToSeoCategory = useSessionStore((s) => s.wasRedirectedToSeoCategory);
     const [categoryDetailData, setCategoryDetailData] = useState(
-        readCategoryDetailFromCache(client, urlSlug, sort, mappedFilter),
+        readCategoryDetailFromCache(client, urlSlug, sort, mappedProductFilter),
     );
     const setOriginalCategorySlug = useSessionStore((s) => s.setOriginalCategorySlug);
     const setWasRedirectedToSeoCategory = useSessionStore((s) => s.setWasRedirectedToSeoCategory);
@@ -44,8 +51,8 @@ export const useCategoryDetailData = (
         client
             .query<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi>(CategoryDetailQueryDocumentApi, {
                 urlSlug,
-                orderingMode: sort ?? null,
-                filter: mappedFilter,
+                orderingMode: sort,
+                filter: mappedProductFilter,
             })
             .toPromise()
             .then((response) => {
@@ -55,6 +62,8 @@ export const useCategoryDetailData = (
                     urlSlug,
                     response.data?.category?.originalCategorySlug,
                     response.data?.category?.slug,
+                    filter,
+                    sort,
                     setWasRedirectedToSeoCategory,
                     setOriginalCategorySlug,
                 );
@@ -73,19 +82,24 @@ const handleSeoCategorySlugUpdate = (
     urlSlug: string,
     originalCategorySlug: string | undefined | null,
     categorySlug: string | undefined,
+    currentFilter: FilterOptionsUrlQueryType | null,
+    currentSort: ProductOrderingModeEnumApi | null,
     setWasRedirectedToSeoCategory: (value: boolean) => void,
     setOriginalCategorySlug: (value: string | undefined) => void,
 ) => {
     const isCurrentAndRedirectSlugDifferent = getStringWithoutLeadingSlash(categorySlug ?? '') !== urlSlug;
 
     if (originalCategorySlug && isCurrentAndRedirectSlugDifferent && categorySlug) {
+        const { filteredFilter, filteredSort } = getFilterWithoutSeoSensitiveFilters(currentFilter, currentSort);
+        const filterWithoutEmpty = getFilterWithoutEmpty(filteredFilter);
+        const newQuery = buildNewQueryAfterFilterChange({}, filterWithoutEmpty, filteredSort);
+        const filteredQueries = getUrlQueriesWithoutDynamicPageQueries(getUrlQueriesWithoutFalsyValues(newQuery));
+
         setWasRedirectedToSeoCategory(true);
         router.replace(
-            { pathname: '/categories/[categorySlug]', query: { categorySlug } },
-            { pathname: categorySlug },
-            {
-                shallow: true,
-            },
+            { pathname: '/categories/[categorySlug]', query: { categorySlug, ...filteredQueries } },
+            { pathname: categorySlug, query: filteredQueries },
+            { shallow: true },
         );
     }
 

@@ -1,39 +1,8 @@
-import {
-    ListedProductConnectionPreviewFragmentApi,
-    ProductFilterOptionsFragmentApi,
-    ProductOrderingModeEnumApi,
-} from 'graphql/generated';
-import { useEffect } from 'react';
+import { DEFAULT_SORT, SEO_SENSITIVE_FILTERS } from 'config/constants';
+import { ProductFilterOptionsFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
+import { mergeNullableArrays } from 'helpers/arrayUtils';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
-import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
-
-export const DEFAULT_SORT = ProductOrderingModeEnumApi.PriorityApi as const;
-
-/**
- * For those that are set to "true", we optimistically navigate out from a SEO category when a value of that type is changed
- * This setting needs to mirror the API functionality in the following way
- * - if a filter type "blocks" SEO category on API, it needs to be set as SEO sensitive
- * - if a filter type "allows" SEO category on API, it needs to be set as SEO insensitive
- *
- * @example
- * if the current URL is a SEO category "/my-seo-category" and sorting (which is SEO sensitive)
- * is changed, we navigate right away to "/my-normal-category?sort=NEW_SORTING"
- *
- * if the current URL is a SEO category "/my-seo-category" and availability (which is SEO insensitive)
- * is changed, we stay in the SEO category and navigate to "/my-seo-category?onlyInStock=true"
- */
-export const SEO_SENSITIVE_FILTERS = {
-    SORT: true,
-    AVAILABILITY: false,
-    PRICE: false,
-    FLAGS: true,
-    BRANDS: false,
-    PARAMETERS: {
-        CHECKBOX: true,
-        SLIDER: false,
-    },
-};
 
 export const getEmptyDefaultProductFiltersMap = (): DefaultProductFiltersMapType => ({
     flags: new Set(),
@@ -185,31 +154,58 @@ export const getChangedDefaultFiltersAfterAvailabilityChange = (
 };
 
 export const getChangedDefaultFilters = (
-    updatedProductFiltersMap: DefaultProductFiltersMapType,
-    filter: FilterOptionsUrlQueryType | null,
-) => ({
-    ...filter,
-    brands: Array.from(updatedProductFiltersMap.brands),
-    flags: Array.from(updatedProductFiltersMap.flags),
-    parameters: Array.from(updatedProductFiltersMap.parameters)
-        .map(([updatedParameterUuid, updatedParameterValues]) => ({
-            parameter: updatedParameterUuid,
-            values: Array.from(updatedParameterValues),
+    defaultFilter: DefaultProductFiltersMapType,
+    updatedFilter: FilterOptionsUrlQueryType | null,
+): FilterOptionsUrlQueryType => ({
+    onlyInStock: updatedFilter?.onlyInStock,
+    minimalPrice: updatedFilter?.minimalPrice,
+    maximalPrice: updatedFilter?.maximalPrice,
+    brands: mergeNullableArrays(Array.from(defaultFilter.brands), updatedFilter?.brands),
+    flags: mergeNullableArrays(Array.from(defaultFilter.flags), updatedFilter?.flags),
+    parameters: Array.from(defaultFilter.parameters)
+        .map(([defaultParameterUuid, defaultParameterValues]) => ({
+            parameter: defaultParameterUuid,
+            values: Array.from(defaultParameterValues),
         }))
         .filter(({ values }) => values.length !== 0),
 });
 
-export const useHandleDefaultFiltersUpdate = (
-    productsPreview: ListedProductConnectionPreviewFragmentApi | undefined,
+export const getFilterWithoutSeoSensitiveFilters = (
+    currentFilter: FilterOptionsUrlQueryType | undefined | null,
+    currentSort: ProductOrderingModeEnumApi | null,
 ) => {
-    const setDefaultProductFiltersMap = useSessionStore((s) => s.setDefaultProductFiltersMap);
+    const filteredSort = SEO_SENSITIVE_FILTERS.SORT || !currentSort ? undefined : currentSort;
+    if (!currentFilter) {
+        return { filteredFilter: undefined, filteredSort };
+    }
 
-    useEffect(() => {
-        setDefaultProductFiltersMap(
-            getDefaultFilterFromFilterOptions(
-                productsPreview?.productFilterOptions,
-                productsPreview?.defaultOrderingMode,
-            ),
+    const filteredFilter: Partial<FilterOptionsUrlQueryType> = { ...currentFilter };
+    if (SEO_SENSITIVE_FILTERS.AVAILABILITY) {
+        delete filteredFilter.onlyInStock;
+    }
+    if (SEO_SENSITIVE_FILTERS.BRANDS) {
+        delete filteredFilter.brands;
+    }
+    if (SEO_SENSITIVE_FILTERS.FLAGS) {
+        delete filteredFilter.flags;
+    }
+    if (SEO_SENSITIVE_FILTERS.PARAMETERS.CHECKBOX) {
+        filteredFilter.parameters = filteredFilter.parameters?.filter(
+            (parameter) => typeof parameter.minimalValue === 'number' && typeof parameter.maximalValue === 'number',
         );
-    }, [productsPreview?.productFilterOptions, productsPreview?.defaultOrderingMode]);
+    }
+    if (SEO_SENSITIVE_FILTERS.PARAMETERS.SLIDER) {
+        filteredFilter.parameters = filteredFilter.parameters?.filter((parameter) => !!parameter.values?.length);
+    }
+    if (!filteredFilter.parameters?.length) {
+        delete filteredFilter.parameters;
+    }
+    if (SEO_SENSITIVE_FILTERS.PRICE) {
+        delete filteredFilter.minimalPrice;
+    }
+    if (SEO_SENSITIVE_FILTERS.PRICE) {
+        delete filteredFilter.maximalPrice;
+    }
+
+    return { filteredFilter, filteredSort };
 };

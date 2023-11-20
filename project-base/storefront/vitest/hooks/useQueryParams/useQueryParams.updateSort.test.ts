@@ -10,17 +10,6 @@ import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { describe, expect, Mock, test, vi } from 'vitest';
 
-const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
-    SORT: true,
-    AVAILABILITY: false,
-    PRICE: false,
-    FLAGS: true,
-    PARAMETERS: {
-        CHECKBOX: true,
-        SLIDER: false,
-    },
-}));
-
 const CATEGORY_URL = '/category-url';
 const CATEGORY_PATHNAME = '/categories/[categorySlug]';
 const ORIGINAL_CATEGORY_URL = '/original-category-slug';
@@ -32,12 +21,23 @@ const GET_DEFAULT_SEO_CATEGORY_PARAMETERS = () =>
 const GET_DEFAULT_SEO_CATEGORY_FLAGS = () => new Set(['default-flag-1', 'default-flag-2']);
 const GET_DEFAULT_SEO_CATEGORY_BRANDS = () => new Set(['default-brands-1', 'default-brands-2']);
 
+const mockSeoSensitiveFiltersGetter = vi.fn(() => ({
+    SORT: true,
+    AVAILABILITY: false,
+    PRICE: false,
+    FLAGS: true,
+    PARAMETERS: {
+        CHECKBOX: true,
+        SLIDER: false,
+    },
+}));
+
 const mockDefaultSort = vi.fn(() => ProductOrderingModeEnumApi.PriorityApi);
-vi.mock('helpers/filterOptions/seoCategories', async (importOriginal) => {
-    const actualSeoCategoriesModule = await importOriginal<any>();
+vi.mock('config/constants', async (importOriginal) => {
+    const actualConstantsModule = await importOriginal<any>();
 
     return {
-        ...actualSeoCategoriesModule,
+        ...actualConstantsModule,
         get DEFAULT_SORT() {
             return mockDefaultSort();
         },

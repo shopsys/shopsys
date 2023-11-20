@@ -18,6 +18,13 @@ query ReadyCategorySeoMix($slug: String!, $orderingMode: ProductOrderingModeEnum
                         ...on ParameterSliderFilterOption {
                             selectedValue
                         }
+                        ... on ParameterColorFilterOption {
+                            name
+                            values {
+                                text
+                                isSelected
+                            }
+                        }
                     }
                     flags {
                         flag {

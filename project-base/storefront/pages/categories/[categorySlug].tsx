@@ -13,7 +13,6 @@ import {
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
-import { useHandleDefaultFiltersUpdate } from 'helpers/filterOptions/seoCategories';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore';
 import {
@@ -30,6 +29,7 @@ import {
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
+import { useHandleDefaultFiltersUpdate } from 'hooks/seoCategories/useHandleDefaultFiltersUpdate';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { useSessionStore } from 'store/useSessionStore';

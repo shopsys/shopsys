@@ -4,10 +4,6 @@ import { UrlQueries } from 'hooks/useQueryParams';
 import { ParsedUrlQuery } from 'querystring';
 import { FriendlyPagesDestinations } from 'types/friendlyUrl';
 
-const ignoredUrlQueries: (string | undefined)[] = Object.values(FriendlyPagesDestinations).map(
-    (pagePath) => pagePath.match(/\[(\w+)\]/)?.[1],
-);
-
 export const getStringFromUrlQuery = (urlQuery: string | string[] | undefined): string => {
     if (urlQuery === undefined || Array.isArray(urlQuery)) {
         return '';
@@ -65,8 +61,24 @@ export const getDynamicPageQueryKey = (pathname: string) => {
 export const getUrlQueriesWithoutDynamicPageQueries = (queries: UrlQueries) => {
     const filteredQueries = { ...queries };
 
+    const friendlyPageDynamicSegments = Object.values(FriendlyPagesDestinations).map(
+        (pagePath) => pagePath.match(/\[(\w+)\]/)?.[1],
+    );
+
     (Object.keys(filteredQueries) as Array<keyof typeof filteredQueries>).forEach((key) => {
-        if (!filteredQueries[key] || ignoredUrlQueries.includes(key)) {
+        if (friendlyPageDynamicSegments.includes(key)) {
+            delete filteredQueries[key];
+        }
+    });
+
+    return filteredQueries;
+};
+
+export const getUrlQueriesWithoutFalsyValues = (queries: UrlQueries) => {
+    const filteredQueries = { ...queries };
+
+    (Object.keys(filteredQueries) as Array<keyof typeof filteredQueries>).forEach((key) => {
+        if (!filteredQueries[key]) {
             delete filteredQueries[key];
         }
     });
