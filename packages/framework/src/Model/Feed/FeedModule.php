@@ -68,4 +68,12 @@ class FeedModule
     {
         $this->scheduled = false;
     }
+
+    /**
+     * @return bool
+     */
+    public function isScheduled(): bool
+    {
+        return $this->scheduled;
+    }
 }

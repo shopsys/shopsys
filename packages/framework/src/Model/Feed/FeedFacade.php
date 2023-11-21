@@ -158,6 +158,17 @@ class FeedFacade
     }
 
     /**
+     * @param string $name
+     * @param int $domainId
+     */
+    public function scheduleFeedByNameAndDomainId(string $name, int $domainId): void
+    {
+        $feedModule = $this->feedModuleRepository->getFeedModuleByNameAndDomainId($name, $domainId);
+        $feedModule->schedule();
+        $this->em->flush();
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModule $feedModule
      */
     public function markFeedModuleAsUnscheduled(FeedModule $feedModule): void

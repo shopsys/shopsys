@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 
 class FeedModuleRepository
 {
@@ -66,10 +67,16 @@ class FeedModuleRepository
      */
     public function getFeedModuleByNameAndDomainId(string $name, int $domainId): FeedModule
     {
-        return $this->getFeedModuleRepository()->findOneBy([
+        $feedModule = $this->getFeedModuleRepository()->findOneBy([
             'name' => $name,
             'domainId' => $domainId,
         ]);
+
+        if ($feedModule === null) {
+            throw new FeedNotFoundException($name, $domainId);
+        }
+
+        return $feedModule;
     }
 
     /**

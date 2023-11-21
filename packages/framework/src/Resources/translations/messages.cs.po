@@ -64,9 +64,6 @@ msgstr "Příslušenství v mezikošíku"
 msgid "Account"
 msgstr "Účet"
 
-msgid "Action"
-msgstr "Akce"
-
 msgid "Action after sellout"
 msgstr "Akce při vyprodání"
 
@@ -1075,6 +1072,12 @@ msgstr "Feed"
 msgid "Feed \"{{ feedName }}\" not found."
 msgstr "Feed s názvem \"{{ feedName }}\" nebyl nalezen."
 
+msgid "Feed \"{{ feedName }}\" on domain ID {{ domainId }} not found."
+msgstr "Feed \"{{ feedName }}\" na doméně s ID {{ domainId }} nebyl nalezen."
+
+msgid "Feed \"{{ feedName }}\" on domain ID {{ domainId }} successfully scheduled."
+msgstr "Feed \"{{ feedName }}\" na doméně s ID {{ domainId }} byl úspěšně naplánován."
+
 msgid "Feed \"{{ feedName }}\" successfully generated."
 msgstr "Feed \"{{ feedName }}\" byl úspěšně vygenerován."
 
@@ -1995,6 +1998,9 @@ msgstr "Uložit změny v pořadí"
 
 msgid "Schedule"
 msgstr "Naplánovat"
+
+msgid "Scheduled"
+msgstr "Naplánován"
 
 msgid "Script <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"
 msgstr "Byl vytvořen skript <a href=\"{{ url }}\"><strong>{{ name }}</strong></a>"

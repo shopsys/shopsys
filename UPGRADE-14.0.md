@@ -193,6 +193,15 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
             protected readonly GridFactory $gridFactory,
             protected readonly Domain $domain,
     +       protected readonly FeedRegistry $feedRegistry,
+    +       protected readonly FeedModuleRepository $feedModuleRepository,
+        )
+    ```
+    -   method `Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException__construct` changed its interface:
+    ```diff
+        public function __construct(
+            string $name,
+    +       ?int $domainId = null,
+            ?Exception $previous = null
         )
     ```
     -   method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getFeeds()` has been replaced with method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getFeedsForCurrentTime()`
