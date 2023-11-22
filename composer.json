@@ -14,6 +14,7 @@
             "Shopsys\\HttpSmokeTesting\\": "packages/http-smoke-testing/src/",
             "Shopsys\\MigrationBundle\\": "packages/migrations/src/",
             "Shopsys\\Plugin\\": "packages/plugin-interface/src/",
+            "Shopsys\\CategoryFeed\\PersooBundle\\": "packages/category-feed-persoo/src/",
             "Shopsys\\ProductFeed\\ZboziBundle\\": "packages/product-feed-zbozi/src/",
             "Shopsys\\ProductFeed\\GoogleBundle\\": "packages/product-feed-google/src/",
             "Shopsys\\ProductFeed\\HeurekaBundle\\": "packages/product-feed-heureka/src/",
@@ -40,6 +41,7 @@
             "Tests\\FrontendApiBundle\\": "packages/frontend-api/tests/",
             "Tests\\HttpSmokeTesting\\": "packages/http-smoke-testing/tests/",
             "Tests\\MigrationBundle\\": "packages/migrations/tests/",
+            "Tests\\CategoryFeed\\PersooBundle\\": "packages/category-feed-persoo/tests/",
             "Tests\\ProductFeed\\ZboziBundle\\": "packages/product-feed-zbozi/tests/",
             "Tests\\ProductFeed\\GoogleBundle\\": "packages/product-feed-google/tests/",
             "Tests\\ProductFeed\\HeurekaBundle\\": "packages/product-feed-heureka/tests/",
@@ -252,6 +254,7 @@
         }
     },
     "replace": {
+        "shopsys/category-feed-persoo": "self.version",
         "shopsys/form-types-bundle": "self.version",
         "shopsys/frontend-api": "self.version",
         "shopsys/google-cloud-bundle": "self.version",

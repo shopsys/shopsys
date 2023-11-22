@@ -42,6 +42,7 @@ Each upgrade file must have a link to the main UPGRADE.md file with general info
 -   shopsys/migrations
 -   shopsys/monorepo-tools
 -   shopsys/plugin-interface
+-   shopsys/category-feed-persoo
 -   shopsys/product-feed-google
 -   shopsys/product-feed-heureka
 -   shopsys/product-feed-heureka-delivery

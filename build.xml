@@ -288,6 +288,12 @@
         <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--configuration"/>
+            <arg value="${path.packages}/category-feed-persoo/phpunit.xml"/>
+            <arg value="${path.packages}/category-feed-persoo/tests"/>
+        </exec>
+        <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="--colors=always"/>
+            <arg value="--configuration"/>
             <arg value="${path.packages}/product-feed-google/phpunit.xml"/>
             <arg value="${path.packages}/product-feed-google/tests"/>
         </exec>
@@ -395,6 +401,15 @@
             <arg value="--dir=${path.packages}/frontend-api/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/frontend-api/src/Resources/translations"/>
+            <arg line="${domains-info.locales}"/>
+        </exec>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="translation:extract"/>
+            <arg value="--bundle=ShopsysCategoryFeedPersooBundle"/>
+            <arg value="--dir=${path.packages}/category-feed-persoo/src"/>
+            <arg value="--output-format=po"/>
+            <arg value="--output-dir=${path.packages}/category-feed-persoo/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
