@@ -9,7 +9,7 @@ type ProductComparisonButtonRemoveAllProps = {
 
 export const ProductComparisonButtonRemoveAll: FC<ProductComparisonButtonRemoveAllProps> = ({ displayMobile }) => {
     const { t } = useTranslation();
-    const { cleanComparison: handleCleanComparison } = useComparison();
+    const { removeComparison: handleRemoveComparison } = useComparison();
 
     return (
         <div
@@ -17,7 +17,7 @@ export const ProductComparisonButtonRemoveAll: FC<ProductComparisonButtonRemoveA
                 'hidden cursor-pointer items-center rounded bg-greyVeryLight py-2 px-4 transition-colors hover:bg-greyLighter sm:inline-flex',
                 displayMobile && 'mb-5 inline-flex sm:hidden',
             )}
-            onClick={handleCleanComparison}
+            onClick={handleRemoveComparison}
         >
             <span className="mr-3 text-sm">{t('Delete all')}</span>
             <RemoveThinIcon className="w-3" />

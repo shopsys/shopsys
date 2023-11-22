@@ -111,7 +111,7 @@ class ProductListMutation extends AbstractMutation
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductList|null
      */
-    public function cleanProductListMutation(Argument $argument): ?ProductList
+    public function removeProductListMutation(Argument $argument): ?ProductList
     {
         $input = $argument['input'];
         $productListType = $input['type'];
@@ -121,7 +121,7 @@ class ProductListMutation extends AbstractMutation
             throw new ProductListNotFoundUserError('Product list not found', $productListType);
         }
 
-        $this->productListFacade->cleanProductList($productList);
+        $this->productListFacade->removeProductList($productList);
 
         return null;
     }

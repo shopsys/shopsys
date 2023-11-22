@@ -11,7 +11,7 @@ import {
     RemoveFromCartMutationVariablesApi,
     RemovePromoCodeFromCartMutationVariablesApi,
     AddOrderItemsToCartMutationVariablesApi,
-    CleanProductListMutationVariablesApi,
+    RemoveProductListMutationVariablesApi,
     ProductListInputApi,
     RemoveProductFromListMutationVariablesApi,
     AddProductToListMutationVariablesApi,
@@ -90,7 +90,7 @@ export const cacheUpdates: UpdatesConfig = {
                 manuallyUpdateProductListQuery(args.input.productListInput, result.RemoveProductFromList, cache);
             }
         },
-        CleanProductList(_result, args: CleanProductListMutationVariablesApi, cache) {
+        RemoveProductList(_result, args: RemoveProductListMutationVariablesApi, cache) {
             manuallyRemoveProductListQuery(cache, args.input);
         },
     },

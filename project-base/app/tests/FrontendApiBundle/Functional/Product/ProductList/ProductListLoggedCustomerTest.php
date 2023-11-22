@@ -214,13 +214,13 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
      * @dataProvider \Tests\FrontendApiBundle\Functional\Product\ProductList\ProductListTypesDataProvider::getProductListTypes
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
      */
-    public function testCleanProductList(ProductListTypeEnum $productListType): void
+    public function testRemoveProductList(ProductListTypeEnum $productListType): void
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CleanProductListMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductListMutation.graphql', [
             'type' => $productListType->name,
         ]);
 
-        $this->assertNull($response['data']['CleanProductList']);
+        $this->assertNull($response['data']['RemoveProductList']);
     }
 
     /**

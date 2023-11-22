@@ -8,22 +8,22 @@ export const useWishlist = () => {
     const { t } = useTranslation();
     const updateWishlistUuid = useUpdateProductListUuid(ProductListTypeEnumApi.WishlistApi);
 
-    const { productListData, cleanList, isProductInList, toggleProductInList, fetching } = useProductList(
+    const { productListData, removeList, isProductInList, toggleProductInList, fetching } = useProductList(
         ProductListTypeEnumApi.WishlistApi,
 
         {
-            addError: () => showErrorMessage(t('Unable to add product to wishlist.')),
-            addSuccess: (result) => {
+            addProductError: () => showErrorMessage(t('Unable to add product to wishlist.')),
+            addProductSuccess: (result) => {
                 showSuccessMessage(t('The item has been added to your wishlist.'));
                 updateWishlistUuid(result?.uuid ?? null);
             },
-            cleanError: () => showErrorMessage(t('Unable to clean wishlist.')),
-            cleanSuccess: () => {
+            removeError: () => showErrorMessage(t('Unable to clean wishlist.')),
+            removeSuccess: () => {
                 showSuccessMessage(t('Wishlist was cleaned.'));
                 updateWishlistUuid(null);
             },
-            removeError: () => showErrorMessage(t('Unable to remove product from wishlist.')),
-            removeSuccess: (result) => {
+            removeProductError: () => showErrorMessage(t('Unable to remove product from wishlist.')),
+            removeProductSuccess: (result) => {
                 if (!result) {
                     updateWishlistUuid(null);
                 }
@@ -36,7 +36,7 @@ export const useWishlist = () => {
         wishlist: productListData?.productList,
         fetching,
         isProductInWishlist: isProductInList,
-        cleanWishlist: cleanList,
+        removeWishlist: removeList,
         toggleProductInWishlist: toggleProductInList,
     };
 };

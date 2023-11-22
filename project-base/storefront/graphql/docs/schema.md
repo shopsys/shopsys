@@ -1203,20 +1203,6 @@ Add a transport to the cart, or remove a transport from the cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CleanProductList</strong></td>
-<td valign="top"><a href="#productlist">ProductList</a></td>
-<td>
-
-Removes the product list
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>Contact</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -1391,6 +1377,20 @@ Removes a product from a product list
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#productlistupdateinput">ProductListUpdateInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>RemoveProductList</strong></td>
+<td valign="top"><a href="#productlist">ProductList</a></td>
+<td>
+
+Removes the product list
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
 <td></td>
 </tr>
 <tr>

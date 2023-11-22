@@ -337,14 +337,14 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum $productListType
      * @param string $uuid
      */
-    public function testCleanProductList(ProductListTypeEnum $productListType, string $uuid): void
+    public function testRemoveProductList(ProductListTypeEnum $productListType, string $uuid): void
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CleanProductListMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveProductListMutation.graphql', [
             'productListUuid' => $uuid,
             'type' => $productListType->name,
         ]);
 
-        $this->assertNull($response['data']['CleanProductList']);
+        $this->assertNull($response['data']['RemoveProductList']);
     }
 
     public function testMergeListsAfterLoginAsCustomerUserWithExistingProductLists(): void

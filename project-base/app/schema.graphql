@@ -911,8 +911,6 @@ type Mutation {
   ChangePersonalData(input: ChangePersonalDataInput!): CustomerUser!
   "Add a transport to the cart, or remove a transport from the cart"
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
-  "Removes the product list"
-  CleanProductList(input: ProductListInput!): ProductList
   "Send message to the site owner"
   Contact(input: ContactInput!): Boolean!
   "Creates complete order with products and addresses"
@@ -939,6 +937,8 @@ type Mutation {
   RemoveFromCart(input: RemoveFromCartInput!): Cart!
   "Removes a product from a product list"
   RemoveProductFromList(input: ProductListUpdateInput!): ProductList
+  "Removes the product list"
+  RemoveProductList(input: ProductListInput!): ProductList
   "Remove already used promo code from cart"
   RemovePromoCodeFromCart(input: RemovePromoCodeFromCartInput!): Cart!
   "Request password recovery - email with hash will be sent"

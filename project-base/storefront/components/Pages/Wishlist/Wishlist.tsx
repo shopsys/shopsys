@@ -7,7 +7,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 export const Wishlist: FC = () => {
     const { t } = useTranslation();
-    const { wishlist, fetching, cleanWishlist: handleCleanWishlist } = useWishlist();
+    const { wishlist, fetching, removeWishlist: handleRemoveWishlist } = useWishlist();
     const title = `${t('Wishlist')}${wishlist?.products.length ? ` (${wishlist.products.length})` : ''}`;
 
     return (
@@ -22,7 +22,7 @@ export const Wishlist: FC = () => {
                         <div
                             className="mb-2 cursor-pointer items-center rounded bg-greyVeryLight py-2 px-4 transition-colors hover:bg-greyLighter sm:inline-flex lg:mb-0"
                             onClick={() => {
-                                handleCleanWishlist();
+                                handleRemoveWishlist();
                             }}
                         >
                             <span className="mr-3 text-sm">{t('Delete all from wishlist')}</span>

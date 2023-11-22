@@ -135,7 +135,7 @@ class ProductListFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
      */
-    public function cleanProductList(ProductList $productList): void
+    public function removeProductList(ProductList $productList): void
     {
         $this->entityManager->remove($productList);
         $this->entityManager->flush();
@@ -206,6 +206,6 @@ class ProductListFacade
             }
         }
 
-        $this->cleanProductList($productListToMergeFrom);
+        $this->removeProductList($productListToMergeFrom);
     }
 }

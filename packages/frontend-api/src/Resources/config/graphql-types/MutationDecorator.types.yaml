@@ -75,10 +75,10 @@ MutationDecorator:
                     input:
                         type: ProductListUpdateInput!
                 resolve: "@=mutation('removeProductFromListMutation', args)"
-            CleanProductList:
+            RemoveProductList:
                 type: ProductList
                 description: "Removes the product list"
                 args:
                     input:
                         type: ProductListInput!
-                resolve: "@=mutation('cleanProductListMutation', args)"
+                resolve: "@=mutation('removeProductListMutation', args)"

@@ -405,7 +405,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   previous implementation for wishlist and comparison was removed, so if you want to keep them, you have to re-implement it according to the new requirements (use of generic API queries and mutations)
     -   this opens door for multiple lists of any kind, so if you want multiple wishlists or other types of lists, you can do that, just don't forget to
 
-        -   use the generic queries, mutations, and fragments (`AddProductToListMutation`, `RemoveProductFromListMutation`, `CleanProductListMutation`, `ProductListQuery`, `ProductListFragment`, and `ProductInProductListFragment`)
+        -   use the generic queries, mutations, and fragments (`AddProductToListMutation`, `RemoveProductFromListMutation`, `RemoveProductListMutation`, `ProductListQuery`, `ProductListFragment`, and `ProductInProductListFragment`)
 
         -   create a wrapper hook (such as `useWishlist`) which uses `useProductList` and provides the product list type and necessary callbacks
 

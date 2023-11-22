@@ -3,7 +3,7 @@ import {
     ProductListFragmentApi,
     ProductListTypeEnumApi,
     useAddProductToListMutationApi,
-    useCleanProductListMutationApi,
+    useRemoveProductListMutationApi,
     useProductListQueryApi,
     useRemoveProductFromListMutationApi,
 } from 'graphql/generated';
@@ -14,12 +14,12 @@ import { usePersistStore } from 'store/usePersistStore';
 export const useProductList = (
     productListType: ProductListTypeEnumApi,
     callbacks: {
-        cleanSuccess: () => void;
-        cleanError: () => void;
-        addSuccess: (result: ProductListFragmentApi | null | undefined) => void;
-        addError: () => void;
-        removeSuccess: (result: ProductListFragmentApi | null | undefined) => void;
+        removeSuccess: () => void;
         removeError: () => void;
+        addProductSuccess: (result: ProductListFragmentApi | null | undefined) => void;
+        addProductError: () => void;
+        removeProductSuccess: (result: ProductListFragmentApi | null | undefined) => void;
+        removeProductError: () => void;
     },
 ) => {
     const productListUuids = usePersistStore((s) => s.productListUuids);
@@ -29,7 +29,7 @@ export const useProductList = (
 
     const [, addProductToListMutation] = useAddProductToListMutationApi();
     const [, removeProductFromListMutation] = useRemoveProductFromListMutationApi();
-    const [, cleanListMutation] = useCleanProductListMutationApi();
+    const [, removeListMutation] = useRemoveProductListMutationApi();
 
     const [{ data: productListData, fetching }] = useProductListQueryApi({
         variables: {
@@ -47,18 +47,18 @@ export const useProductList = (
         }
     }, [productListData?.productList?.uuid]);
 
-    const cleanList = async () => {
-        const cleanListResult = await cleanListMutation({
+    const removeList = async () => {
+        const removeListResult = await removeListMutation({
             input: {
                 type: productListType,
                 uuid: productListUuid,
             },
         });
 
-        if (cleanListResult.error) {
-            callbacks.cleanError();
+        if (removeListResult.error) {
+            callbacks.removeError();
         } else {
-            callbacks.cleanSuccess();
+            callbacks.removeSuccess();
         }
     };
 
@@ -74,9 +74,9 @@ export const useProductList = (
         });
 
         if (addProductToListResult.error) {
-            callbacks.addError();
+            callbacks.addProductError();
         } else {
-            callbacks.addSuccess(addProductToListResult.data?.AddProductToList);
+            callbacks.addProductSuccess(addProductToListResult.data?.AddProductToList);
         }
     };
 
@@ -92,9 +92,9 @@ export const useProductList = (
         });
 
         if (removeProductFromListResult.error) {
-            callbacks.removeError();
+            callbacks.removeProductError();
         } else {
-            callbacks.removeSuccess(removeProductFromListResult.data?.RemoveProductFromList);
+            callbacks.removeProductSuccess(removeProductFromListResult.data?.RemoveProductFromList);
         }
     };
 
@@ -109,5 +109,5 @@ export const useProductList = (
         }
     };
 
-    return { productListData, isProductInList, cleanList, toggleProductInList, fetching };
+    return { productListData, isProductInList, removeList, toggleProductInList, fetching };
 };

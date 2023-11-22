@@ -10,22 +10,22 @@ export const useComparison = () => {
     const updateComparisonUuid = useUpdateProductListUuid(ProductListTypeEnumApi.ComparisonApi);
     const [isPopupCompareOpen, setIsPopupCompareOpen] = useState(false);
 
-    const { productListData, cleanList, isProductInList, toggleProductInList, fetching } = useProductList(
+    const { productListData, removeList, isProductInList, toggleProductInList, fetching } = useProductList(
         ProductListTypeEnumApi.ComparisonApi,
 
         {
-            addError: () => showErrorMessage(t('Unable to add product to comparison.')),
-            addSuccess: (result) => {
+            addProductError: () => showErrorMessage(t('Unable to add product to comparison.')),
+            addProductSuccess: (result) => {
                 setIsPopupCompareOpen(true);
                 updateComparisonUuid(result?.uuid ?? null);
             },
-            cleanError: () => showErrorMessage(t('Unable to clean product comparison.')),
-            cleanSuccess: () => {
+            removeError: () => showErrorMessage(t('Unable to clean product comparison.')),
+            removeSuccess: () => {
                 showSuccessMessage(t('Comparison products have been cleaned.'));
                 updateComparisonUuid(null);
             },
-            removeError: () => showErrorMessage(t('Unable to remove product from comparison.')),
-            removeSuccess: (result) => {
+            removeProductError: () => showErrorMessage(t('Unable to remove product from comparison.')),
+            removeProductSuccess: (result) => {
                 if (!result) {
                     updateComparisonUuid(null);
                 }
@@ -40,7 +40,7 @@ export const useComparison = () => {
         fetching,
         isProductInComparison: isProductInList,
         toggleProductInComparison: toggleProductInList,
-        cleanComparison: cleanList,
+        removeComparison: removeList,
         isPopupCompareOpen,
         setIsPopupCompareOpen,
     };

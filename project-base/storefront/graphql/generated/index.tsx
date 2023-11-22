@@ -1108,8 +1108,6 @@ export type MutationApi = {
   ChangePersonalData: CustomerUserApi;
   /** Add a transport to the cart, or remove a transport from the cart */
   ChangeTransportInCart: CartApi;
-  /** Removes the product list */
-  CleanProductList: Maybe<ProductListApi>;
   /** Send message to the site owner */
   Contact: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
@@ -1136,6 +1134,8 @@ export type MutationApi = {
   RemoveFromCart: CartApi;
   /** Removes a product from a product list */
   RemoveProductFromList: Maybe<ProductListApi>;
+  /** Removes the product list */
+  RemoveProductList: Maybe<ProductListApi>;
   /** Remove already used promo code from cart */
   RemovePromoCodeFromCart: CartApi;
   /** Request password recovery - email with hash will be sent */
@@ -1186,11 +1186,6 @@ export type MutationChangePersonalDataArgsApi = {
 
 export type MutationChangeTransportInCartArgsApi = {
   input: ChangeTransportInCartInputApi;
-};
-
-
-export type MutationCleanProductListArgsApi = {
-  input: ProductListInputApi;
 };
 
 
@@ -1251,6 +1246,11 @@ export type MutationRemoveFromCartArgsApi = {
 
 export type MutationRemoveProductFromListArgsApi = {
   input: ProductListUpdateInputApi;
+};
+
+
+export type MutationRemoveProductListArgsApi = {
+  input: ProductListInputApi;
 };
 
 
@@ -3495,19 +3495,19 @@ export type AddProductToListMutationVariablesApi = Exact<{
 
 export type AddProductToListMutationApi = { __typename?: 'Mutation', AddProductToList: { __typename: 'ProductList', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } };
 
-export type CleanProductListMutationVariablesApi = Exact<{
-  input: ProductListInputApi;
-}>;
-
-
-export type CleanProductListMutationApi = { __typename?: 'Mutation', CleanProductList: { __typename?: 'ProductList', uuid: string } | null };
-
 export type RemoveProductFromListMutationVariablesApi = Exact<{
   input: ProductListUpdateInputApi;
 }>;
 
 
 export type RemoveProductFromListMutationApi = { __typename?: 'Mutation', RemoveProductFromList: { __typename: 'ProductList', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } | null };
+
+export type RemoveProductListMutationVariablesApi = Exact<{
+  input: ProductListInputApi;
+}>;
+
+
+export type RemoveProductListMutationApi = { __typename?: 'Mutation', RemoveProductList: { __typename?: 'ProductList', uuid: string } | null };
 
 export type ProductListQueryVariablesApi = Exact<{
   input: ProductListInputApi;
@@ -5886,17 +5886,6 @@ export const AddProductToListMutationDocumentApi = gql`
 export function useAddProductToListMutationApi() {
   return Urql.useMutation<AddProductToListMutationApi, AddProductToListMutationVariablesApi>(AddProductToListMutationDocumentApi);
 };
-export const CleanProductListMutationDocumentApi = gql`
-    mutation CleanProductListMutation($input: ProductListInput!) {
-  CleanProductList(input: $input) {
-    uuid
-  }
-}
-    `;
-
-export function useCleanProductListMutationApi() {
-  return Urql.useMutation<CleanProductListMutationApi, CleanProductListMutationVariablesApi>(CleanProductListMutationDocumentApi);
-};
 export const RemoveProductFromListMutationDocumentApi = gql`
     mutation RemoveProductFromListMutation($input: ProductListUpdateInput!) {
   RemoveProductFromList(input: $input) {
@@ -5907,6 +5896,17 @@ export const RemoveProductFromListMutationDocumentApi = gql`
 
 export function useRemoveProductFromListMutationApi() {
   return Urql.useMutation<RemoveProductFromListMutationApi, RemoveProductFromListMutationVariablesApi>(RemoveProductFromListMutationDocumentApi);
+};
+export const RemoveProductListMutationDocumentApi = gql`
+    mutation RemoveProductListMutation($input: ProductListInput!) {
+  RemoveProductList(input: $input) {
+    uuid
+  }
+}
+    `;
+
+export function useRemoveProductListMutationApi() {
+  return Urql.useMutation<RemoveProductListMutationApi, RemoveProductListMutationVariablesApi>(RemoveProductListMutationDocumentApi);
 };
 export const ProductListQueryDocumentApi = gql`
     query ProductListQuery($input: ProductListInput!) {

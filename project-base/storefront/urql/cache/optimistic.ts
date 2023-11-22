@@ -49,7 +49,7 @@ export const optimisticUpdates: OptimisticMutationConfig = {
 
         return getOptimisticChangePaymentInCartResult(cartQueryResult, input);
     },
-    CleanProductList: () => {
+    RemoveProductList: () => {
         return {
             __typename: 'ProductList',
             productList: null,
