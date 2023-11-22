@@ -15,7 +15,10 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class PriceCalculationTest extends TestCase
 {
-    public function applyVatPercentProvider()
+    /**
+     * @return array<int, array<'expectedPriceWithVat'|'priceWithoutVat'|'vatPercent', \Shopsys\FrameworkBundle\Component\Money\Money|string>>
+     */
+    public function applyVatPercentProvider(): array
     {
         return [
             [
@@ -51,7 +54,7 @@ class PriceCalculationTest extends TestCase
         Money $priceWithoutVat,
         string $vatPercent,
         Money $expectedPriceWithVat,
-    ) {
+    ): void {
         $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
         $vatData = new VatData();
@@ -64,7 +67,10 @@ class PriceCalculationTest extends TestCase
         $this->assertThat($actualPriceWithVat, new IsMoneyEqual($expectedPriceWithVat));
     }
 
-    public function getVatAmountByPriceWithVatProvider()
+    /**
+     * @return array<'expectedVatAmount'|'priceWithVat'|'vatPercent', \Shopsys\FrameworkBundle\Component\Money\Money|'10'>[]|array<'expectedPriceWithVat'|'priceWithoutVat'|'vatPercent', \Shopsys\FrameworkBundle\Component\Money\Money|'21'|'0'>[]
+     */
+    public function getVatAmountByPriceWithVatProvider(): array
     {
         return [
             [
@@ -95,7 +101,7 @@ class PriceCalculationTest extends TestCase
         Money $priceWithVat,
         string $vatPercent,
         Money $expectedVatAmount,
-    ) {
+    ): void {
         $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
         $vatData = new VatData();

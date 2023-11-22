@@ -18,3 +18,5 @@
 /.env.*.local
 /utils/releaser/.phpunit.result.cache
 /packages/frontend-api/.phpunit.result.cache
+/var/phpstan/cache
+/var/phpstan/resultCache.php

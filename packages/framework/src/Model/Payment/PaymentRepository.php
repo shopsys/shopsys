@@ -21,7 +21,7 @@ class PaymentRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getPaymentRepository()
+    protected function getPaymentRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Payment::class);
     }
@@ -29,7 +29,7 @@ class PaymentRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderForAll()
+    public function getQueryBuilderForAll(): \Doctrine\ORM\QueryBuilder
     {
         return $this->getPaymentRepository()->createQueryBuilder('p')
             ->where('p.deleted = :deleted')->setParameter('deleted', false)
@@ -40,7 +40,7 @@ class PaymentRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getQueryBuilderForAll()->getQuery()->getResult();
     }
@@ -48,7 +48,7 @@ class PaymentRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getAllIncludingDeleted()
+    public function getAllIncludingDeleted(): array
     {
         return $this->getPaymentRepository()->findAll();
     }
@@ -57,7 +57,7 @@ class PaymentRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
-    public function findById($id)
+    public function findById($id): ?\Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->getQueryBuilderForAll()
             ->andWhere('p.id = :paymentId')->setParameter('paymentId', $id)
@@ -69,7 +69,7 @@ class PaymentRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function getById($id)
+    public function getById($id): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         $payment = $this->findById($id);
 
@@ -86,7 +86,7 @@ class PaymentRepository
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getAllByTransport(Transport $transport)
+    public function getAllByTransport(Transport $transport): array
     {
         return $this->getQueryBuilderForAll()
             ->join('p.transports', 't')

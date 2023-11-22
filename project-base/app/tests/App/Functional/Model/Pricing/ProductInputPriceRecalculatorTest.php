@@ -46,7 +46,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
      */
     private ProductDataFactory $productDataFactory;
 
-    public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithoutVat()
+    public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithoutVat(): void
     {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
@@ -75,7 +75,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         $this->assertThat($productManualInputPrice->getInputPrice(), new IsMoneyEqual(Money::create('1052.173913')));
     }
 
-    public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithVat()
+    public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithVat(): void
     {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
 

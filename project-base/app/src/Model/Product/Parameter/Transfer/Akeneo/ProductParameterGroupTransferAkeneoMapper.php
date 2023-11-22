@@ -18,7 +18,7 @@ class ProductParameterGroupTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoParameterGroupData
+     * @param mixed[] $akeneoParameterGroupData
      * @param \App\Model\Product\Parameter\ParameterGroup|null $parameterGroup
      * @return \App\Model\Product\Parameter\ParameterGroupData
      */

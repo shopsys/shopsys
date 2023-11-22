@@ -15,7 +15,7 @@ class OrderFlowFacade extends BaseOrderFlowFacade
     /**
      * @deprecated - Twig storefront is not used anymore
      */
-    public function resetOrderForm()
+    public function resetOrderForm(): void
     {
     }
 }

@@ -50,7 +50,7 @@ class SuperadminController extends AdminBaseController
      * @Route("/superadmin/errors/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function errorsAction()
+    public function errorsAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/errors.html.twig');
     }
@@ -60,7 +60,7 @@ class SuperadminController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function pricingAction(Request $request)
+    public function pricingAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $pricingSettingData = [
             'type' => $this->pricingSetting->getInputPriceType(),
@@ -88,7 +88,7 @@ class SuperadminController extends AdminBaseController
      * @Route("/superadmin/urls/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function urlsAction()
+    public function urlsAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/urlsListGrid.html.twig');
     }
@@ -98,7 +98,7 @@ class SuperadminController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function modulesAction(Request $request)
+    public function modulesAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $formData = [];
 
@@ -130,7 +130,7 @@ class SuperadminController extends AdminBaseController
      * @Route("/superadmin/css-documentation/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function cssDocumentationAction()
+    public function cssDocumentationAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/cssDocumentation.html.twig');
     }

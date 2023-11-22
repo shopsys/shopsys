@@ -96,9 +96,9 @@ class DatabaseDumpCommand extends Command
     }
 
     /**
-     * @return array
+     * @return 'pipe'[][]|'w'[][]|'r'[][] [][]|'w'[][]|'r'[][]
      */
-    private function getDescriptorSpec()
+    private function getDescriptorSpec(): array
     {
         return [
             0 => ['pipe', 'r'], // stdin

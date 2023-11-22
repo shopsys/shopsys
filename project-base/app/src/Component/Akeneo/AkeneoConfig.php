@@ -21,7 +21,7 @@ class AkeneoConfig
     private string $password;
 
     /**
-     * @param array $akeneoConfig
+     * @param mixed[] $akeneoConfig
      */
     public function __construct(array $akeneoConfig)
     {

@@ -25,7 +25,7 @@ class EnvelopeListenerTest extends TestCase
      * @param \Symfony\Component\Mime\Address[] $mailsTo
      * @param \Symfony\Component\Mime\Address|null $mailCc
      * @param \Symfony\Component\Mime\Address|null $mailBcc
-     * @param array $expectedRecipients
+     * @param mixed[] $expectedRecipients
      */
     public function testOnMessage(
         ?string $deliveryWhitelist,

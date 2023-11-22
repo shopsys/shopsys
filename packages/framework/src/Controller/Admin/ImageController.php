@@ -18,8 +18,9 @@ class ImageController extends AdminBaseController
 
     /**
      * @Route("/image/overview/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function overviewAction()
+    public function overviewAction(): \Symfony\Component\HttpFoundation\Response
     {
         $imageEntityConfigs = $this->imageFacade->getAllImageEntityConfigsByClass();
 

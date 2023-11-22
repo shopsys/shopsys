@@ -69,7 +69,7 @@ class OpeningHours
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -77,7 +77,7 @@ class OpeningHours
     /**
      * @return \App\Model\Store\Store
      */
-    public function getStore()
+    public function getStore(): \App\Model\Store\Store
     {
         return $this->store;
     }
@@ -85,7 +85,7 @@ class OpeningHours
     /**
      * @return int
      */
-    public function getDayOfWeek()
+    public function getDayOfWeek(): int
     {
         return $this->dayOfWeek;
     }
@@ -101,7 +101,7 @@ class OpeningHours
     /**
      * @return string|null
      */
-    public function getFirstOpeningTime()
+    public function getFirstOpeningTime(): ?string
     {
         return $this->firstOpeningTime;
     }
@@ -109,7 +109,7 @@ class OpeningHours
     /**
      * @return string|null
      */
-    public function getFirstClosingTime()
+    public function getFirstClosingTime(): ?string
     {
         return $this->firstClosingTime;
     }
@@ -117,7 +117,7 @@ class OpeningHours
     /**
      * @return string|null
      */
-    public function getSecondOpeningTime()
+    public function getSecondOpeningTime(): ?string
     {
         return $this->secondOpeningTime;
     }
@@ -125,7 +125,7 @@ class OpeningHours
     /**
      * @return string|null
      */
-    public function getSecondClosingTime()
+    public function getSecondClosingTime(): ?string
     {
         return $this->secondClosingTime;
     }

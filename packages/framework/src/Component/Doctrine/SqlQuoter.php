@@ -19,7 +19,7 @@ class SqlQuoter
      * @param string[] $identifiers
      * @return string[]
      */
-    public function quoteIdentifiers(array $identifiers)
+    public function quoteIdentifiers(array $identifiers): array
     {
         return array_map(
             function ($identifier) {
@@ -33,7 +33,7 @@ class SqlQuoter
      * @param string $identifier
      * @return string
      */
-    public function quoteIdentifier($identifier)
+    public function quoteIdentifier($identifier): string
     {
         return $this->em->getConnection()->quoteIdentifier($identifier);
     }
@@ -43,7 +43,7 @@ class SqlQuoter
      * @param int|null $type
      * @return string
      */
-    public function quote($input, $type = null)
+    public function quote($input, $type = null): string
     {
         return $this->em->getConnection()->quote($input, $type);
     }

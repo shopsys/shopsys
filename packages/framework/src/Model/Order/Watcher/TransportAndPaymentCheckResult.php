@@ -15,8 +15,8 @@ class TransportAndPaymentCheckResult
      * @param bool $paymentPriceChanged
      */
     public function __construct(
-        $transportPriceChanged,
-        $paymentPriceChanged,
+        bool $transportPriceChanged,
+        bool $paymentPriceChanged,
     ) {
         $this->transportPriceChanged = $transportPriceChanged;
         $this->paymentPriceChanged = $paymentPriceChanged;
@@ -25,7 +25,7 @@ class TransportAndPaymentCheckResult
     /**
      * @return bool
      */
-    public function isTransportPriceChanged()
+    public function isTransportPriceChanged(): bool
     {
         return $this->transportPriceChanged;
     }
@@ -33,7 +33,7 @@ class TransportAndPaymentCheckResult
     /**
      * @return bool
      */
-    public function isPaymentPriceChanged()
+    public function isPaymentPriceChanged(): bool
     {
         return $this->paymentPriceChanged;
     }

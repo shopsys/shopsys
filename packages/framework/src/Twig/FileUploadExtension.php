@@ -20,7 +20,7 @@ class FileUploadExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getLabelByTemporaryFilename', [$this, 'getLabelByTemporaryFilename']),
@@ -31,7 +31,7 @@ class FileUploadExtension extends AbstractExtension
      * @param string $temporaryFilename
      * @return string
      */
-    public function getLabelByTemporaryFilename($temporaryFilename)
+    public function getLabelByTemporaryFilename($temporaryFilename): string
     {
         $filename = $this->fileUpload->getOriginalFilenameByTemporary($temporaryFilename);
         $filepath = $this->fileUpload->getTemporaryDirectory() . '/' . $temporaryFilename;
@@ -48,7 +48,7 @@ class FileUploadExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'fileupload_extension';
     }

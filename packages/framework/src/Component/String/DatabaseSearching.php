@@ -10,7 +10,7 @@ class DatabaseSearching
      * @param string $string
      * @return string
      */
-    public static function getLikeSearchString($string)
+    public static function getLikeSearchString($string): string
     {
         // LIKE pattern must not end with escape character in Postgres
         $string = rtrim($string, '\\');
@@ -27,7 +27,7 @@ class DatabaseSearching
      * @param string|null $string
      * @return string
      */
-    public static function getFullTextLikeSearchString($string)
+    public static function getFullTextLikeSearchString($string): string
     {
         return '%' . self::getLikeSearchString($string) . '%';
     }

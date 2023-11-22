@@ -29,7 +29,7 @@ class CartTest extends TransactionFunctionalTestCase
      */
     private VatFacade $vatFacade;
 
-    public function testRemoveItem()
+    public function testRemoveItem(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
@@ -71,7 +71,7 @@ class CartTest extends TransactionFunctionalTestCase
         $this->assertSame(1, $cart->getItemsCount());
     }
 
-    public function testCleanMakesCartEmpty()
+    public function testCleanMakesCartEmpty(): void
     {
         $product = $this->createProduct();
 
@@ -90,7 +90,7 @@ class CartTest extends TransactionFunctionalTestCase
     /**
      * @return \App\Model\Product\Product
      */
-    private function createProduct()
+    private function createProduct(): \App\Model\Product\Product
     {
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();

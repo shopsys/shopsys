@@ -15,5 +15,5 @@ interface DateTimeFormatterInterface
      * @param string $locale
      * @return string|bool
      */
-    public function format(DateTime $value, $dateType, $timeType, $locale);
+    public function format(DateTime $value, $dateType, $timeType, $locale): string|bool;
 }

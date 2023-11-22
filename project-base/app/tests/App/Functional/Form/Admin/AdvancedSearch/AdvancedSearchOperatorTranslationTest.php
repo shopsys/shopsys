@@ -27,7 +27,7 @@ class AdvancedSearchOperatorTranslationTest extends FunctionalTestCase
      */
     private AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation;
 
-    public function testTranslateOperator()
+    public function testTranslateOperator(): void
     {
         $operators = [];
 
@@ -44,7 +44,7 @@ class AdvancedSearchOperatorTranslationTest extends FunctionalTestCase
         }
     }
 
-    public function testTranslateOperatorNotFoundException()
+    public function testTranslateOperatorNotFoundException(): void
     {
         $advancedSearchTranslator = new AdvancedSearchOperatorTranslation();
 

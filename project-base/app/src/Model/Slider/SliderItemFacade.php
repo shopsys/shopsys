@@ -24,7 +24,7 @@ class SliderItemFacade extends BaseSliderItemFacade
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      * @return \App\Model\Slider\SliderItem
      */
-    public function create(SliderItemData $sliderItemData)
+    public function create(SliderItemData $sliderItemData): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         /** @var \App\Model\Slider\SliderItem $sliderItem */
         $sliderItem = $this->sliderItemFactory->create($sliderItemData);
@@ -42,7 +42,7 @@ class SliderItemFacade extends BaseSliderItemFacade
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      * @return \App\Model\Slider\SliderItem
      */
-    public function edit($sliderItemId, SliderItemData $sliderItemData)
+    public function edit($sliderItemId, SliderItemData $sliderItemData): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
     {
         /** @var \App\Model\Slider\SliderItem $sliderItem */
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
@@ -57,7 +57,7 @@ class SliderItemFacade extends BaseSliderItemFacade
     /**
      * @param int $sliderItemId
      */
-    public function delete($sliderItemId)
+    public function delete($sliderItemId): void
     {
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
 

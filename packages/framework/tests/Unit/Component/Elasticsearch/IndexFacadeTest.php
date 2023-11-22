@@ -100,9 +100,9 @@ class IndexFacadeTest extends TestCase
     }
 
     /**
-     * @param array $affectedIds
-     * @param array $exportData
-     * @param array $expectedIdsToDelete
+     * @param mixed[] $affectedIds
+     * @param mixed[] $exportData
+     * @param mixed[] $expectedIdsToDelete
      * @dataProvider exportIdsDataProvider
      */
     public function testExportIds(array $affectedIds, array $exportData, array $expectedIdsToDelete): void
@@ -140,7 +140,7 @@ class IndexFacadeTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return never[][][]|array<'foo', 'bar'>[][]|array<'foo', 'bam'>[][]|array<'foo', 'baz'>[][][]|int[][][]
      */
     public function exportIdsDataProvider(): array
     {

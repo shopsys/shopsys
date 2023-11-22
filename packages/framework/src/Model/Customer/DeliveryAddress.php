@@ -89,7 +89,7 @@ class DeliveryAddress
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
      */
-    public function edit(DeliveryAddressData $deliveryAddressData)
+    public function edit(DeliveryAddressData $deliveryAddressData): void
     {
         $this->setData($deliveryAddressData);
     }

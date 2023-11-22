@@ -101,7 +101,7 @@ class ProductInOrderValidationTest extends GraphQlTestCase
 
     /**
      * @param string $cartUuid
-     * @return array
+     * @return mixed[]
      */
     private function createOrder(string $cartUuid): array
     {

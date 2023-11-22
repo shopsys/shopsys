@@ -31,8 +31,9 @@ class FeedController extends AdminBaseController
      * @Route("/feed/generate/{feedName}/{domainId}", requirements={"domainId" = "\d+"})
      * @param string $feedName
      * @param int $domainId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function generateAction($feedName, $domainId)
+    public function generateAction(string $feedName, $domainId): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $domainConfig = $this->domain->getDomainConfigById((int)$domainId);
 
@@ -59,8 +60,9 @@ class FeedController extends AdminBaseController
 
     /**
      * @Route("/feed/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $feedsData = [];
 

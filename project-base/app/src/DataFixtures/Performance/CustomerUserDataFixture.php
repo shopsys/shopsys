@@ -37,7 +37,7 @@ class CustomerUserDataFixture
      * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      */
     public function __construct(
-        $userCountPerDomain,
+        int $userCountPerDomain,
         private readonly EntityManagerInterface $em,
         private readonly Domain $domain,
         private readonly SqlLoggerFacade $sqlLoggerFacade,
@@ -55,7 +55,7 @@ class CustomerUserDataFixture
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         // Sql logging during mass data import makes memory leak
         $this->sqlLoggerFacade->temporarilyDisableLogging();
@@ -87,7 +87,7 @@ class CustomerUserDataFixture
      * @param int $userNumber
      * @return \App\Model\Customer\User\CustomerUser
      */
-    private function createCustomerUserOnDomain($domainId, $userNumber)
+    private function createCustomerUserOnDomain(int $domainId, int $userNumber): \App\Model\Customer\User\CustomerUser
     {
         $customerUserUpdateData = $this->getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber);
 
@@ -102,7 +102,7 @@ class CustomerUserDataFixture
      * @param int $userNumber
      * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
-    private function getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber)
+    private function getRandomCustomerUserUpdateDataByDomainId(int $domainId, int $userNumber): \App\Model\Customer\User\CustomerUserUpdateData
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $country = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);

@@ -347,7 +347,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function createUserCartWithHelloKittyProduct(): array
     {

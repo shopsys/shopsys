@@ -76,8 +76,8 @@ abstract class ApplicationTestCase extends WebTestCase
      *
      * @param string|null $username
      * @param string|null $password
-     * @param array $kernelOptions
-     * @param array $clientOptions
+     * @param mixed[] $kernelOptions
+     * @param mixed[] $clientOptions
      * @return \Tests\App\Test\Client
      */
     protected function createNewClient(
@@ -106,7 +106,7 @@ abstract class ApplicationTestCase extends WebTestCase
      *
      * @param string|null $username
      * @param string|null $password
-     * @param array $clientOptions
+     * @param mixed[] $clientOptions
      * @return \Tests\App\Test\Client
      */
     protected function configureCurrentClient(
@@ -125,8 +125,8 @@ abstract class ApplicationTestCase extends WebTestCase
     /**
      * @param string|null $username
      * @param string|null $password
-     * @param array $clientOptions
-     * @return array
+     * @param mixed[] $clientOptions
+     * @return mixed[]
      */
     private function getClientServerParameters(
         ?string $username,

@@ -44,7 +44,7 @@ class ImageConfigLoader
      * @param string $filename
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      */
-    public function loadFromYaml($filename)
+    public function loadFromYaml($filename): \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
     {
         $yamlParser = new Parser();
 
@@ -66,10 +66,10 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $outputConfig
+     * @param mixed[] $outputConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */
-    public function loadFromArray($outputConfig)
+    public function loadFromArray($outputConfig): array
     {
         $this->foundEntityConfigs = [];
         $this->foundEntityNames = [];
@@ -89,9 +89,9 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $entityConfig
+     * @param mixed[] $entityConfig
      */
-    protected function processEntityConfig($entityConfig)
+    protected function processEntityConfig(array $entityConfig): void
     {
         $entityClass = $entityConfig[ImageConfigDefinition::CONFIG_CLASS];
         $entityName = $entityConfig[ImageConfigDefinition::CONFIG_ENTITY_NAME];
@@ -112,10 +112,10 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $sizesConfig
+     * @param mixed[] $sizesConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
-    protected function prepareSizes($sizesConfig)
+    protected function prepareSizes($sizesConfig): array
     {
         $result = [];
 
@@ -157,7 +157,7 @@ class ImageConfigLoader
 
     /**
      * @param string $sizeName
-     * @param array $additionalSizesConfig
+     * @param mixed[] $additionalSizesConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig[]
      */
     protected function prepareAdditionalSizes(string $sizeName, array $additionalSizesConfig): array
@@ -190,10 +190,10 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $typesConfig
-     * @return array
+     * @param mixed[] $typesConfig
+     * @return mixed[]
      */
-    protected function prepareTypes($typesConfig)
+    protected function prepareTypes($typesConfig): array
     {
         $result = [];
 
@@ -211,10 +211,10 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $entityConfig
-     * @return array
+     * @param mixed[] $entityConfig
+     * @return mixed[]
      */
-    protected function getMultipleByType(array $entityConfig)
+    protected function getMultipleByType(array $entityConfig): array
     {
         $multipleByType = [];
         $multipleByType[ImageEntityConfig::WITHOUT_NAME_KEY] = $entityConfig[ImageConfigDefinition::CONFIG_MULTIPLE];

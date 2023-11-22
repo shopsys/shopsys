@@ -22,7 +22,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
      * @param int|string|null $rowId
      * @return int|string
      */
-    public function saveForm(Request $request, $rowId)
+    public function saveForm(Request $request, $rowId): int|string
     {
         $form = $this->getForm($rowId);
         $form->handleRequest($request);
@@ -52,7 +52,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function getGrid()
+    public function getGrid(): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $grid = $this->gridFactory->create();
         $grid->setInlineEditService($this);
@@ -63,7 +63,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     /**
      * @return bool
      */
-    public function canAddNewRow()
+    public function canAddNewRow(): bool
     {
         return true;
     }
@@ -74,7 +74,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
      *
      * @return string
      */
-    public function getServiceName()
+    public function getServiceName(): string
     {
         return static::class;
     }
@@ -83,7 +83,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
      * @param int|string|null $rowId
      * @return \Symfony\Component\Form\FormInterface
      */
-    abstract public function getForm($rowId);
+    abstract public function getForm($rowId): \Symfony\Component\Form\FormInterface;
 
     /**
      * @param int|string $rowId
@@ -95,5 +95,5 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
      * @param mixed $formData
      * @return int|string
      */
-    abstract protected function createEntityAndGetId($formData);
+    abstract protected function createEntityAndGetId($formData): int|string;
 }

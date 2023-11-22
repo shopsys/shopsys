@@ -45,7 +45,7 @@ class CustomerUserPasswordRecoveryMutation extends AbstractMutation
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return array
+     * @return bool[]|array<string, string>[]
      */
     public function recoverPasswordMutation(Argument $argument, InputValidator $validator): array
     {

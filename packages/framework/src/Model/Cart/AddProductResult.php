@@ -17,7 +17,7 @@ class AddProductResult
      * @param bool $isNew
      * @param int $addedQuantity
      */
-    public function __construct(protected readonly CartItem $cartItem, $isNew, $addedQuantity)
+    public function __construct(protected readonly CartItem $cartItem, bool $isNew, int $addedQuantity)
     {
         $this->isNew = $isNew;
         $this->addedQuantity = $addedQuantity;
@@ -26,7 +26,7 @@ class AddProductResult
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
      */
-    public function getCartItem()
+    public function getCartItem(): \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
     {
         return $this->cartItem;
     }
@@ -34,7 +34,7 @@ class AddProductResult
     /**
      * @return bool
      */
-    public function getIsNew()
+    public function getIsNew(): bool
     {
         return $this->isNew;
     }
@@ -42,7 +42,7 @@ class AddProductResult
     /**
      * @return int
      */
-    public function getAddedQuantity()
+    public function getAddedQuantity(): int
     {
         return $this->addedQuantity;
     }

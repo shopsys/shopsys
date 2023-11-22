@@ -47,7 +47,7 @@ class ComparisonMergingTest extends GraphQlWithLoginTestCase
         $this->assertSame($response2['data']['comparison']['products'][0]['name'], $loggedUserComparison->getItems()[0]->getProduct()->getName());
     }
 
-    public function testMergeNotLoggedCustomerComparisonWithLoggedCustomerComparison()
+    public function testMergeNotLoggedCustomerComparisonWithLoggedCustomerComparison(): void
     {
         /** @var \App\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
@@ -89,7 +89,7 @@ class ComparisonMergingTest extends GraphQlWithLoginTestCase
         $this->assertNull($response4['data']['comparison']);
     }
 
-    public function testLogoutCustomerWithComparison()
+    public function testLogoutCustomerWithComparison(): void
     {
         /** @var \App\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);

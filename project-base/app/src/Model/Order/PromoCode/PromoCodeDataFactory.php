@@ -66,7 +66,7 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      */
-    protected function fillFromPromoCode(BasePromoCodeData $promoCodeData, BasePromoCode $promoCode)
+    protected function fillFromPromoCode(BasePromoCodeData $promoCodeData, BasePromoCode $promoCode): void
     {
         $promoCodeData->code = $promoCode->getCode();
         $promoCodeData->domainId = $promoCode->getDomainId();

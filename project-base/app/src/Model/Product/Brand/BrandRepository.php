@@ -32,7 +32,7 @@ class BrandRepository extends BaseBrandRepository
 
     /**
      * @param string $searchText
-     * @return array
+     * @return mixed[]
      */
     public function getResultsForSearch(string $searchText): array
     {

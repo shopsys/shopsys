@@ -13,7 +13,7 @@ class NotNullableColumnsFinder extends BaseNotNullableColumnsFinder
      * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadataInfo
      * @return string[]
      */
-    protected function getNotNullableAssociationColumnNames(ClassMetadataInfo $classMetadataInfo)
+    protected function getNotNullableAssociationColumnNames(ClassMetadataInfo $classMetadataInfo): array
     {
         $notNullableAssociationNames = [];
 

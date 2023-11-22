@@ -16,14 +16,14 @@ abstract class AbstractElasticsearchDataFetcher
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param mixed[] $data
+     * @return mixed[]
      */
     abstract protected function fillEmptyFields(array $data): array;
 
     /**
      * @param \App\Component\Elasticsearch\AbstractFilterQuery $filterQuery
-     * @return array
+     * @return mixed[]
      */
     public function getSingleResult(AbstractFilterQuery $filterQuery): array
     {
@@ -38,7 +38,7 @@ abstract class AbstractElasticsearchDataFetcher
 
     /**
      * @param \App\Component\Elasticsearch\AbstractFilterQuery $filterQuery
-     * @return array
+     * @return mixed[]
      */
     public function getAllResults(AbstractFilterQuery $filterQuery): array
     {

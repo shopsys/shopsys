@@ -29,7 +29,7 @@ class PaymentInOrderValidator extends ConstraintValidator
      * @param mixed $value
      * @param \App\FrontendApi\Model\Component\Constraints\PaymentInOrder $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof PaymentInOrder) {
             throw new UnexpectedTypeException($constraint, PaymentInOrder::class);

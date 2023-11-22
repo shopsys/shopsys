@@ -190,7 +190,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    protected function getAccessoriesData(Product $product)
+    protected function getAccessoriesData(Product $product): array
     {
         $productAccessoriesByPosition = [];
 
@@ -205,7 +205,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
      */
-    protected function getParametersData(Product $product)
+    protected function getParametersData(Product $product): array
     {
         $productParameterValuesData = [];
         $productParameterValues = $this->parameterRepository->getProductParameterValuesByProduct($product);
@@ -220,9 +220,9 @@ class ProductDataFactory implements ProductDataFactoryInterface
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    protected function getNullForAllDomains()
+    protected function getNullForAllDomains(): array
     {
         $nullForAllDomains = [];
 
@@ -236,7 +236,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
     /**
      * @return null[]
      */
-    protected function getNullForAllPricingGroups()
+    protected function getNullForAllPricingGroups(): array
     {
         $inputPrices = [];
 

@@ -45,7 +45,7 @@ class MailTemplateConfiguration
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getReadableNamesIndexedBySlug(): array
     {

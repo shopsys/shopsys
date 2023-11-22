@@ -9,9 +9,9 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange;
 class ProductFilterConfigIdsData
 {
     /**
-     * @param array $parameterValueIdsByParameterId
-     * @param array $flagIds
-     * @param array $brandIds
+     * @param mixed[] $parameterValueIdsByParameterId
+     * @param mixed[] $flagIds
+     * @param mixed[] $brandIds
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange $priceRange
      */
     public function __construct(
@@ -47,7 +47,7 @@ class ProductFilterConfigIdsData
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getParameterValueIdsByParameterId(): array
     {

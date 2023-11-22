@@ -22,7 +22,7 @@ class FlagRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getFlagRepository()
+    protected function getFlagRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Flag::class);
     }
@@ -31,7 +31,7 @@ class FlagRepository
      * @param int $flagId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
      */
-    public function findById($flagId)
+    public function findById($flagId): ?\Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         return $this->getFlagRepository()->find($flagId);
     }
@@ -40,7 +40,7 @@ class FlagRepository
      * @param int $flagId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
-    public function getById($flagId)
+    public function getById($flagId): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         $flag = $this->findById($flagId);
 
@@ -78,7 +78,7 @@ class FlagRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getFlagRepository()->findBy([], ['id' => 'asc']);
     }

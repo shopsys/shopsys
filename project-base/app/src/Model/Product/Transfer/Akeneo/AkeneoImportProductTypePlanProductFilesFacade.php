@@ -65,7 +65,7 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     }
 
     /**
-     * @param array $akeneoData
+     * @param mixed[] $akeneoData
      */
     protected function processItem($akeneoData): void
     {

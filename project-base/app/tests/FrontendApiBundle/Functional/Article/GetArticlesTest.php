@@ -49,9 +49,9 @@ class GetArticlesTest extends GraphQlTestCase
     }
 
     /**
-     * @param array $keys
-     * @param array $actual
-     * @param array $expected
+     * @param mixed[] $keys
+     * @param mixed[] $actual
+     * @param mixed[] $expected
      */
     private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
     {
@@ -62,7 +62,7 @@ class GetArticlesTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[][][]
      */
     private function getArticlesDataProvider(): array
     {
@@ -112,7 +112,7 @@ class GetArticlesTest extends GraphQlTestCase
     /**
      * @param int $articlesCount
      * @param string[] $placements
-     * @return array
+     * @return array<string, mixed>
      */
     private function getFirstArticlesCountResponse(
         int $articlesCount = self::ARTICLES_TOTAL_COUNT,
@@ -127,7 +127,7 @@ class GetArticlesTest extends GraphQlTestCase
     /**
      * @param int $articlesCount
      * @param string[] $placements
-     * @return array
+     * @return array<string, mixed>
      */
     private function getLastCountOfArticlesResponse(int $articlesCount, array $placements = []): array
     {
@@ -138,7 +138,7 @@ class GetArticlesTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<int, array<string|null>>
      */
     private function getExpectedArticles(): array
     {

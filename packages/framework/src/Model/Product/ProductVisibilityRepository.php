@@ -35,7 +35,7 @@ class ProductVisibilityRepository
     /**
      * @param bool $onlyMarkedProducts
      */
-    public function refreshProductsVisibility($onlyMarkedProducts = false)
+    public function refreshProductsVisibility($onlyMarkedProducts = false): void
     {
         $this->calculateIndependentVisibility($onlyMarkedProducts);
         $this->hideVariantsWithInvisibleMainVariant($onlyMarkedProducts);
@@ -51,7 +51,7 @@ class ProductVisibilityRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
-    public function markProductsForRecalculationAffectedByCategory(Category $category)
+    public function markProductsForRecalculationAffectedByCategory(Category $category): void
     {
         $affectedProductsDql = $this->em->createQueryBuilder()
             ->select('IDENTITY(pcd.product)')
@@ -75,7 +75,7 @@ class ProductVisibilityRepository
     /**
      * @param bool $onlyMarkedProducts
      */
-    protected function refreshGlobalProductVisibility($onlyMarkedProducts)
+    protected function refreshGlobalProductVisibility($onlyMarkedProducts): void
     {
         if ($onlyMarkedProducts) {
             $onlyMarkedProductsWhereClause = ' WHERE p.recalculate_visibility = TRUE';
@@ -99,7 +99,7 @@ class ProductVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
      */
-    public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, $domainId)
+    public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, $domainId): void
     {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO product_visibilities (product_id, pricing_group_id, domain_id, visible)
@@ -119,7 +119,7 @@ class ProductVisibilityRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getProductVisibilityRepository()
+    protected function getProductVisibilityRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(ProductVisibility::class);
     }
@@ -134,7 +134,7 @@ class ProductVisibilityRepository
         Product $product,
         PricingGroup $pricingGroup,
         $domainId,
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Product\ProductVisibility {
         $productVisibility = $this->getProductVisibilityRepository()->find([
             'product' => $product->getId(),
             'pricingGroup' => $pricingGroup->getId(),
@@ -161,7 +161,7 @@ class ProductVisibilityRepository
         ]);
     }
 
-    protected function markAllProductsVisibilityAsRecalculated()
+    protected function markAllProductsVisibilityAsRecalculated(): void
     {
         $this->em->getConnection()->executeStatement(
             'UPDATE products SET recalculate_visibility = FALSE WHERE recalculate_visibility = TRUE',
@@ -171,7 +171,7 @@ class ProductVisibilityRepository
     /**
      * @param bool $onlyMarkedProducts
      */
-    protected function calculateIndependentVisibility($onlyMarkedProducts)
+    protected function calculateIndependentVisibility($onlyMarkedProducts): void
     {
         $now = new DateTime();
 
@@ -254,7 +254,7 @@ class ProductVisibilityRepository
     /**
      * @param bool $onlyMarkedProducts
      */
-    protected function hideVariantsWithInvisibleMainVariant($onlyMarkedProducts)
+    protected function hideVariantsWithInvisibleMainVariant($onlyMarkedProducts): void
     {
         if ($onlyMarkedProducts) {
             $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';
@@ -290,7 +290,7 @@ class ProductVisibilityRepository
     /**
      * @param bool $onlyMarkedProducts
      */
-    protected function hideMainVariantsWithoutVisibleVariants($onlyMarkedProducts)
+    protected function hideMainVariantsWithoutVisibleVariants($onlyMarkedProducts): void
     {
         if ($onlyMarkedProducts) {
             $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';

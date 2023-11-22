@@ -38,7 +38,7 @@ class FragmentHandler extends LazyLoadingFragmentHandler
      *
      * {@inheritdoc}
      */
-    public function render($uri, $renderer = 'inline', array $options = []): ?string
+    public function render($uri, string $renderer = 'inline', array $options = []): ?string
     {
         if (!isset($options['ignore_errors'])) {
             $options['ignore_errors'] = false;

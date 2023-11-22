@@ -127,7 +127,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
 
     /**
      * @param string $id
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param string|null $domain
      * @param string|null $locale
      * @return string

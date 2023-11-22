@@ -233,7 +233,7 @@ class TransportAndPaymentWatcher
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function getRememberedTransportAndPayment(): array
     {

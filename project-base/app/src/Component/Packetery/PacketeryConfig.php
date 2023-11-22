@@ -17,7 +17,7 @@ class PacketeryConfig
     private string $sender;
 
     /**
-     * @param array $packeteryConfig
+     * @param mixed[] $packeteryConfig
      */
     public function __construct(array $packeteryConfig)
     {

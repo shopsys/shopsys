@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class BlogArticleElasticsearchDataFetcherTest extends TestCase
 {
-    public function testGetTotalCount()
+    public function testGetTotalCount(): void
     {
         $expectedTotalCount = 10;
         $mockedResultArray = $this->getMockedResultArray($expectedTotalCount, []);
@@ -22,7 +22,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
         $this->assertEquals($expectedTotalCount, $actualTotalCount);
     }
 
-    public function testGetSingleResult()
+    public function testGetSingleResult(): void
     {
         $expectedBlogArticleData = $this->getBlogArticleDataDefaultValues();
         $expectedBlogArticleData['id'] = '1';
@@ -36,7 +36,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
         $this->assertEquals($expectedBlogArticleData, $actualResults);
     }
 
-    public function testGetSingleResultThrowsExceptionWhenNoResultIsReturnedFromElasticsearch()
+    public function testGetSingleResultThrowsExceptionWhenNoResultIsReturnedFromElasticsearch(): void
     {
         $mockedResultArray = $this->getMockedResultArray(0, []);
 
@@ -46,7 +46,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
         $articleElasticsearchDataFetcher->getSingleResult(new FilterQuery('blog_articles'));
     }
 
-    public function testGetAllResults()
+    public function testGetAllResults(): void
     {
         $expectedBlogArticleData1 = $this->getBlogArticleDataDefaultValues();
         $expectedBlogArticleData1['id'] = '1';
@@ -64,7 +64,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
     }
 
     /**
-     * @param array $mockedResultArray
+     * @param mixed[] $mockedResultArray
      * @return \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher
      */
     private function getBlogArticleElasticsearchDataFetcherWithMockedClient(
@@ -77,7 +77,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return bool[]|string[]|never[][]|null[]
      */
     private function getBlogArticleDataDefaultValues(): array
     {
@@ -101,8 +101,8 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
 
     /**
      * @param int $totalCount
-     * @param array $hits
-     * @return array
+     * @param mixed[] $hits
+     * @return int[]|bool[]|never[][]
      */
     private function getMockedResultArray(int $totalCount, array $hits): array
     {

@@ -31,7 +31,7 @@ class ResetWorkerOnClosedEntityManagerSubscriber implements EventSubscriberInter
     }
 
     /**
-     * @return array
+     * @return array<'Symfony\\Component\\Messenger\\Event\\WorkerMessageFailedEvent', array<string|int>>
      */
     public static function getSubscribedEvents(): array
     {

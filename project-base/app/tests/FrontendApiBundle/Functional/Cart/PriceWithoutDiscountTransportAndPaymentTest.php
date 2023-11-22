@@ -77,7 +77,7 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
      * @param \App\Model\Product\Product $product
      * @param int $productQuantity
      * @param string|null $cartUuid
-     * @return array
+     * @return mixed[]
      */
     private function addTestingProductToCart(Product $product, int $productQuantity, ?string $cartUuid = null): array
     {
@@ -91,10 +91,10 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
     }
 
     /**
-     * @param array $cart
+     * @param mixed[] $cart
      * @param \App\Model\Transport\Transport $transport
      * @param string $pickupPlaceIdentifier
-     * @return array
+     * @return array<string, mixed>
      */
     private function addTransportToCart(array $cart, Transport $transport, string $pickupPlaceIdentifier): array
     {
@@ -109,9 +109,9 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
     }
 
     /**
-     * @param array $cart
+     * @param mixed[] $cart
      * @param \App\Model\Payment\Payment $payment
-     * @return array
+     * @return array<string, mixed>
      */
     private function addPaymentToCart(array $cart, Payment $payment): array
     {

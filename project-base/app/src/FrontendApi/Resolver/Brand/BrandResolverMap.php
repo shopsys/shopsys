@@ -26,7 +26,7 @@ class BrandResolverMap extends BaseBrandResolverMap
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function map(): array
     {

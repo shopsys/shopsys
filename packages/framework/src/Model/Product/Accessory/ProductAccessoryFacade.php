@@ -23,7 +23,7 @@ class ProductAccessoryFacade
      * @param int|null $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getTopOfferedAccessories(Product $product, $domainId, PricingGroup $pricingGroup, $limit)
+    public function getTopOfferedAccessories(Product $product, $domainId, PricingGroup $pricingGroup, $limit): array
     {
         return $this->productAccessoryRepository->getTopOfferedAccessories($product, $domainId, $pricingGroup, $limit);
     }

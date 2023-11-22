@@ -61,7 +61,7 @@ class SlugQuery extends AbstractQuery
      * @param \GraphQL\Type\Definition\ResolveInfo $info
      * @return \App\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\App\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|\App\Model\Product\Flag\Flag|array
      */
-    public function slugQuery(string $slug, ResolveInfo $info)
+    public function slugQuery(string $slug, ResolveInfo $info): \App\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\App\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|\App\Model\Product\Flag\Flag|array
     {
         $slugWithoutSlash = ltrim($slug, '/');
         $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($this->domain->getId(), $slugWithoutSlash);

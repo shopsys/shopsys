@@ -27,14 +27,14 @@ class PacketeryCronModule implements SimpleCronModuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function run()
+    public function run(): void
     {
         $transportType = $this->transportTypeFacade->getByCode(TransportTypeEnum::TYPE_PACKETERY);
         $orders = $this->orderFacade->getAllWithoutTrackingNumberByTransportType($transportType);

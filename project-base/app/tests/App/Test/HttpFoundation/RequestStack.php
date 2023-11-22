@@ -29,7 +29,7 @@ class RequestStack extends BaseRequestStack
     /**
      * {@inheritdoc}
      */
-    public function push(Request $request)
+    public function push(Request $request): void
     {
         $this->requestStack->push($request);
     }
@@ -37,7 +37,7 @@ class RequestStack extends BaseRequestStack
     /**
      * {@inheritdoc}
      */
-    public function pop()
+    public function pop(): ?\Symfony\Component\HttpFoundation\Request
     {
         return $this->requestStack->pop();
     }
@@ -45,7 +45,7 @@ class RequestStack extends BaseRequestStack
     /**
      * {@inheritdoc}
      */
-    public function getCurrentRequest()
+    public function getCurrentRequest(): ?\Symfony\Component\HttpFoundation\Request
     {
         return $this->requestStack->getCurrentRequest();
     }
@@ -61,7 +61,7 @@ class RequestStack extends BaseRequestStack
     /**
      * {@inheritdoc}
      */
-    public function getMasterRequest()
+    public function getMasterRequest(): ?\Symfony\Component\HttpFoundation\Request
     {
         return $this->requestStack->getMasterRequest();
     }
@@ -69,7 +69,7 @@ class RequestStack extends BaseRequestStack
     /**
      * {@inheritdoc}
      */
-    public function getParentRequest()
+    public function getParentRequest(): ?\Symfony\Component\HttpFoundation\Request
     {
         return $this->requestStack->getParentRequest();
     }

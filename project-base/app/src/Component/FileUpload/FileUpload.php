@@ -36,9 +36,9 @@ class FileUpload extends BaseFileUpload implements ResetInterface
      * @param \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
      */
     public function __construct(
-        $temporaryDir,
-        $uploadedFileDir,
-        $imageDir,
+        string $temporaryDir,
+        string $uploadedFileDir,
+        string $imageDir,
         FileNamingConvention $fileNamingConvention,
         MountManager $mountManager,
         FilesystemOperator $filesystem,
@@ -60,7 +60,7 @@ class FileUpload extends BaseFileUpload implements ResetInterface
     /**
      * @param \App\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
      */
-    public function preFlushEntity(EntityFileUploadInterface $entity)
+    public function preFlushEntity(EntityFileUploadInterface $entity): void
     {
         parent::preFlushEntity($entity);
 

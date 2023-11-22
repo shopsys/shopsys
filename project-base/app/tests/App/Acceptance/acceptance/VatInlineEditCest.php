@@ -16,7 +16,7 @@ class VatInlineEditCest
      * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage $loginPage
      * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\InlineEditPage $inlineEditPage
      */
-    public function testVatEdit(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage)
+    public function testVatEdit(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage): void
     {
         $me->wantTo('vat can be edited via inline edit');
         $loginPage->loginAsAdmin();
@@ -34,7 +34,7 @@ class VatInlineEditCest
      * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage $loginPage
      * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\InlineEditPage $inlineEditPage
      */
-    public function testVatDeleteAndCreate(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage)
+    public function testVatDeleteAndCreate(AcceptanceTester $me, LoginPage $loginPage, InlineEditPage $inlineEditPage): void
     {
         $me->wantTo('vat can be created and deleted via inline edit');
         $loginPage->loginAsAdmin();

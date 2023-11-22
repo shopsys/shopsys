@@ -30,7 +30,7 @@ class ManualBestsellingProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProduct[]
      */
-    public function getByCategory($domainId, Category $category)
+    public function getByCategory($domainId, Category $category): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('bp')
@@ -49,7 +49,7 @@ class ManualBestsellingProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProduct[]
      */
-    public function getOfferedByCategory($domainId, Category $category, PricingGroup $pricingGroup)
+    public function getOfferedByCategory($domainId, Category $category, PricingGroup $pricingGroup): array
     {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainId, $pricingGroup);
 
@@ -67,7 +67,7 @@ class ManualBestsellingProductRepository
      * @param int $domainId
      * @return int[]
      */
-    public function getCountsIndexedByCategoryId($domainId)
+    public function getCountsIndexedByCategoryId($domainId): array
     {
         $queryBuilder = $this->em->createQueryBuilder();
 

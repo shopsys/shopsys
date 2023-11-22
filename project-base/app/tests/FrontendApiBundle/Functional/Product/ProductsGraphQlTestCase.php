@@ -11,7 +11,7 @@ class ProductsGraphQlTestCase extends GraphQlTestCase
     /**
      * @param string $query
      * @param string $graphQlType
-     * @param array $products
+     * @param mixed[] $products
      * @param bool $found
      */
     protected function assertProducts(string $query, string $graphQlType, array $products, bool $found = true): void

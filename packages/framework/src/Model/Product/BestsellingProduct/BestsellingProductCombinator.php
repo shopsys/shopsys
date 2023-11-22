@@ -16,7 +16,7 @@ class BestsellingProductCombinator
         array $manualProductsIndexedByPosition,
         array $automaticProducts,
         $maxResults,
-    ) {
+    ): array {
         $automaticProductsExcludingManual = $this->getAutomaticProductsExcludingManual(
             $automaticProducts,
             $manualProductsIndexedByPosition,
@@ -37,7 +37,7 @@ class BestsellingProductCombinator
     protected function getAutomaticProductsExcludingManual(
         array $automaticProducts,
         array $manualProducts,
-    ) {
+    ): array {
         foreach ($manualProducts as $manualProduct) {
             $automaticProductKey = array_search($manualProduct, $automaticProducts, true);
 
@@ -59,7 +59,7 @@ class BestsellingProductCombinator
         array $manualProductsIndexedByPosition,
         array $automaticProductsExcludingManual,
         $maxResults,
-    ) {
+    ): array {
         $combinedProducts = [];
 
         for ($position = 0; $position < $maxResults; $position++) {

@@ -55,7 +55,7 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
 
     /**
      * @param string $categoryReferenceName
-     * @return array
+     * @return mixed[]
      */
     protected function getParameterValueIdsForCategoryReferenceIndexedByParameterId(
         string $categoryReferenceName,

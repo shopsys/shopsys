@@ -47,7 +47,7 @@ class DomainDataCreator
     /**
      * @return int
      */
-    public function createNewDomainsData()
+    public function createNewDomainsData(): int
     {
         $newDomainsCount = 0;
 
@@ -88,7 +88,7 @@ class DomainDataCreator
      * @param string $locale
      * @return bool
      */
-    protected function isNewLocale($locale)
+    protected function isNewLocale($locale): bool
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             if ($domainConfig->getLocale() === $locale) {
@@ -102,7 +102,7 @@ class DomainDataCreator
     /**
      * @return string
      */
-    protected function getTemplateLocale()
+    protected function getTemplateLocale(): string
     {
         return $this->domain->getDomainConfigById(self::TEMPLATE_DOMAIN_ID)->getLocale();
     }
@@ -110,7 +110,7 @@ class DomainDataCreator
     /**
      * @param int $domainId
      */
-    protected function processDefaultPricingGroupForNewDomain(int $domainId)
+    protected function processDefaultPricingGroupForNewDomain(int $domainId): void
     {
         $pricingGroup = $this->createDefaultPricingGroupForNewDomain($domainId);
         $this->setting->setForDomain(Setting::DEFAULT_PRICING_GROUP, $pricingGroup->getId(), $domainId);
@@ -120,7 +120,7 @@ class DomainDataCreator
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    protected function createDefaultPricingGroupForNewDomain(int $domainId)
+    protected function createDefaultPricingGroupForNewDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         $domain = $this->domain->getDomainConfigById($domainId);
         $pricingGroupData = $this->pricingGroupDataFactory->create();

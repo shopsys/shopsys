@@ -34,7 +34,7 @@ class FlagRepository extends BaseFlagRepository
     /**
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
-     * @return array
+     * @return mixed[]
      */
     public function getAllFlagAkeneoCodes(): array
     {

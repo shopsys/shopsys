@@ -11,7 +11,7 @@ class RuleFormViewDataFactory
     /**
      * @param string $defaultFilterName
      * @param array|null $requestData
-     * @return array
+     * @return mixed[]
      */
     public function createFromRequestData(string $defaultFilterName, ?array $requestData = null): array
     {
@@ -32,7 +32,7 @@ class RuleFormViewDataFactory
 
     /**
      * @param string $filterName
-     * @return array
+     * @return array<'operator'|'subject'|'value', mixed>
      */
     public function createDefault(string $filterName): array
     {

@@ -15,7 +15,7 @@ class FrontendApiUser extends BaseFrontendApiUser
      * @param string $fullName
      * @param string $email
      * @param string $deviceId
-     * @param array $roles
+     * @param mixed[] $roles
      * @param string|null $administratorUuid
      */
     public function __construct(

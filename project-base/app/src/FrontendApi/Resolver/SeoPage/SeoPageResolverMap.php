@@ -19,7 +19,7 @@ class SeoPageResolverMap extends ResolverMap
     }
 
     /**
-     * @return array
+     * @return array<'SeoPage', array<'canonicalUrl'|'metaDescription'|'ogDescription'|'ogTitle'|'title', \Closure(App\Model\SeoPage\SeoPage $seoPage): (string | null)>>
      */
     protected function map(): array
     {

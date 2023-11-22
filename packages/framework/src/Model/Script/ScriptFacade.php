@@ -33,7 +33,7 @@ class ScriptFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Script\Script[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->scriptRepository->getAll();
     }
@@ -41,7 +41,7 @@ class ScriptFacade
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllQueryBuilder()
+    public function getAllQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         return $this->scriptRepository->getAllQueryBuilder();
     }
@@ -50,7 +50,7 @@ class ScriptFacade
      * @param int $scriptId
      * @return \Shopsys\FrameworkBundle\Model\Script\Script
      */
-    public function getById($scriptId)
+    public function getById($scriptId): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         return $this->scriptRepository->getById($scriptId);
     }
@@ -59,7 +59,7 @@ class ScriptFacade
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
      * @return \Shopsys\FrameworkBundle\Model\Script\Script
      */
-    public function create(ScriptData $scriptData)
+    public function create(ScriptData $scriptData): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         $script = $this->scriptFactory->create($scriptData);
 
@@ -74,7 +74,7 @@ class ScriptFacade
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
      * @return \Shopsys\FrameworkBundle\Model\Script\Script
      */
-    public function edit($scriptId, ScriptData $scriptData)
+    public function edit($scriptId, ScriptData $scriptData): \Shopsys\FrameworkBundle\Model\Script\Script
     {
         $script = $this->scriptRepository->getById($scriptId);
 
@@ -89,7 +89,7 @@ class ScriptFacade
     /**
      * @param int $scriptId
      */
-    public function delete($scriptId)
+    public function delete($scriptId): void
     {
         $script = $this->scriptRepository->getById($scriptId);
 
@@ -101,7 +101,7 @@ class ScriptFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string[]
      */
-    public function getOrderSentPageScriptCodesWithReplacedVariables(Order $order)
+    public function getOrderSentPageScriptCodesWithReplacedVariables(Order $order): array
     {
         $scriptCodes = $this->getScriptCodesByPlacement(Script::PLACEMENT_ORDER_SENT_PAGE);
 
@@ -118,7 +118,7 @@ class ScriptFacade
      * @param int $domainId
      * @return bool
      */
-    public function isGoogleAnalyticsActivated($domainId)
+    public function isGoogleAnalyticsActivated($domainId): bool
     {
         return $this->setting->getForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $domainId) !== null;
     }
@@ -127,7 +127,7 @@ class ScriptFacade
      * @param string|null $trackingId
      * @param int $domainId
      */
-    public function setGoogleAnalyticsTrackingId($trackingId, $domainId)
+    public function setGoogleAnalyticsTrackingId($trackingId, $domainId): void
     {
         $this->setting->setForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $trackingId, $domainId);
     }
@@ -136,7 +136,7 @@ class ScriptFacade
      * @param int $domainId
      * @return string|null
      */
-    public function getGoogleAnalyticsTrackingId($domainId)
+    public function getGoogleAnalyticsTrackingId($domainId): ?string
     {
         return $this->setting->getForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $domainId);
     }
@@ -146,7 +146,7 @@ class ScriptFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
-    protected function replaceVariables($code, Order $order)
+    protected function replaceVariables($code, Order $order): string
     {
         $variableReplacements = [
             self::VARIABLE_NUMBER => $order->getNumber(),

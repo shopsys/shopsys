@@ -98,7 +98,7 @@ class NewProductTest extends ApplicationTestCase
      * @param \Symfony\Component\DomCrawler\Form $form
      * @param \Symfony\Component\Security\Csrf\CsrfToken $token
      */
-    private function setFormCsrfToken(Form $form, CsrfToken $token)
+    private function setFormCsrfToken(Form $form, CsrfToken $token): void
     {
         $form['product_form[_token]'] = $token->getValue();
     }

@@ -31,7 +31,7 @@ class MailWhitelistTransformer implements DataTransformerInterface
 
     /**
      * @param string|null $item
-     * @return array
+     * @return mixed[]
      */
     protected function doTransformMailWhitelist(?string $item): array
     {
@@ -43,7 +43,7 @@ class MailWhitelistTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array $item
+     * @param mixed[] $item
      * @return string|null
      */
     protected function doReverseTransformMailWhitelist(array $item): ?string

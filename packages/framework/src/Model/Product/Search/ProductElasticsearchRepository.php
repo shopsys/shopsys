@@ -35,7 +35,7 @@ class ProductElasticsearchRepository implements ResetInterface
      * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      */
-    public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText)
+    public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText): void
     {
         $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
 
@@ -50,7 +50,7 @@ class ProductElasticsearchRepository implements ResetInterface
      * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      */
-    public function addRelevance(QueryBuilder $productQueryBuilder, $searchText)
+    public function addRelevance(QueryBuilder $productQueryBuilder, $searchText): void
     {
         $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
 
@@ -66,7 +66,7 @@ class ProductElasticsearchRepository implements ResetInterface
      * @param string|null $searchText
      * @return int[]
      */
-    protected function getFoundProductIds(QueryBuilder $productQueryBuilder, $searchText)
+    protected function getFoundProductIds(QueryBuilder $productQueryBuilder, $searchText): array
     {
         $domainId = $productQueryBuilder->getParameter('domainId')->getValue();
 
@@ -123,7 +123,7 @@ class ProductElasticsearchRepository implements ResetInterface
      * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html
      * @param string $indexName
      * @param string $searchText
-     * @return array
+     * @return mixed[]
      */
     protected function createQuery(string $indexName, string $searchText): array
     {
@@ -134,7 +134,7 @@ class ProductElasticsearchRepository implements ResetInterface
     }
 
     /**
-     * @param array $result
+     * @param mixed[] $result
      * @return int[]
      */
     protected function extractIds(array $result): array
@@ -145,8 +145,8 @@ class ProductElasticsearchRepository implements ResetInterface
     }
 
     /**
-     * @param array $result
-     * @return array
+     * @param mixed[] $result
+     * @return mixed[]
      */
     protected function extractHits(array $result): array
     {
@@ -159,7 +159,7 @@ class ProductElasticsearchRepository implements ResetInterface
     }
 
     /**
-     * @param array $result
+     * @param mixed[] $result
      * @return int
      */
     protected function extractTotalCount(array $result): int
@@ -180,7 +180,7 @@ class ProductElasticsearchRepository implements ResetInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @return array
+     * @return mixed[]
      */
     public function getProductsByFilterQuery(FilterQuery $filterQuery): array
     {

@@ -20,7 +20,7 @@ class ImageThumbnailFactory
      * @param string $filepath
      * @return \Intervention\Image\Image
      */
-    public function getImageThumbnail($filepath)
+    public function getImageThumbnail($filepath): \Intervention\Image\Image
     {
         $image = $this->imageProcessor->createInterventionImage($filepath);
         $this->imageProcessor->resize($image, static::THUMBNAIL_WIDTH, static::THUMBNAIL_HEIGHT);

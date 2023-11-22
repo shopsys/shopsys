@@ -14,7 +14,7 @@ class ProgressBarFactory
      * @param int $max
      * @return \Symfony\Component\Console\Helper\ProgressBar
      */
-    public function create(OutputInterface $output, $max)
+    public function create(OutputInterface $output, $max): \Symfony\Component\Console\Helper\ProgressBar
     {
         $bar = new ProgressBar($output, $max);
         $this->initializeCustomPlaceholderFormatters();
@@ -27,7 +27,10 @@ class ProgressBarFactory
         return $bar;
     }
 
-    protected function initializeCustomPlaceholderFormatters()
+    /**
+     * @return string
+     */
+    protected function initializeCustomPlaceholderFormatters(): string
     {
         ProgressBar::setPlaceholderFormatterDefinition('remaining_hms', function (ProgressBar $bar) {
             if ($bar->getProgress() !== 0) {
@@ -51,7 +54,7 @@ class ProgressBarFactory
      * @param int $timeInSeconds
      * @return string
      */
-    protected function formatTimeHms($timeInSeconds)
+    protected function formatTimeHms($timeInSeconds): string
     {
         return sprintf(
             '%dh %02dm %02ds',

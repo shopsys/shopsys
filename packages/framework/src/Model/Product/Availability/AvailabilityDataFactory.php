@@ -60,7 +60,7 @@ class AvailabilityDataFactory implements AvailabilityDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
      */
-    protected function fillFromAvailability(AvailabilityData $availabilityData, Availability $availability)
+    protected function fillFromAvailability(AvailabilityData $availabilityData, Availability $availability): void
     {
         $availabilityData->dispatchTime = $availability->getDispatchTime();
 

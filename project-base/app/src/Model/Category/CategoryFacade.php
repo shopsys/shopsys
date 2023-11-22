@@ -182,7 +182,7 @@ class CategoryFacade extends BaseCategoryFacade
 
     /**
      * @param \App\Model\Category\Category $destinationCategory
-     * @return array
+     * @return mixed[]
      */
     public function getCategoriesInPath(Category $destinationCategory): array
     {
@@ -214,7 +214,7 @@ class CategoryFacade extends BaseCategoryFacade
     /**
      * @param int $categoryId
      */
-    public function deleteById($categoryId)
+    public function deleteById($categoryId): void
     {
         $category = $this->categoryRepository->getById($categoryId);
         $this->scheduleProductsToExportByCategory($category);
@@ -246,7 +246,7 @@ class CategoryFacade extends BaseCategoryFacade
 
     /**
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return array
+     * @return mixed[]
      */
     public function getCategoriesOfProductByFilterData(ProductFilterData $productFilterData): array
     {

@@ -9,7 +9,10 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class PaginationResultTest extends TestCase
 {
-    public function getTestPageCountData()
+    /**
+     * @return int[][]|never[][][]|null[][]
+     */
+    public function getTestPageCountData(): array
     {
         return [
             [1, 10, 40, [], 4],
@@ -26,13 +29,13 @@ class PaginationResultTest extends TestCase
 
     /**
      * @dataProvider getTestPageCountData
-     * @param mixed $page
-     * @param mixed $pageSize
-     * @param mixed $totalCount
-     * @param mixed $results
-     * @param mixed $expectedPageCount
+     * @param int $page
+     * @param int|null $pageSize
+     * @param int $totalCount
+     * @param mixed[] $results
+     * @param int $expectedPageCount
      */
-    public function testGetPageCount($page, $pageSize, $totalCount, $results, $expectedPageCount)
+    public function testGetPageCount(int $page, ?int $pageSize, int $totalCount, array $results, int $expectedPageCount): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, $results);
 
@@ -55,7 +58,7 @@ class PaginationResultTest extends TestCase
      * @param int $totalCount
      * @param bool $expectedIsFirst
      */
-    public function testIsFirstPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsFirst)
+    public function testIsFirstPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsFirst): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 
@@ -84,7 +87,7 @@ class PaginationResultTest extends TestCase
      * @param int $totalCount
      * @param bool $expectedIsLast
      */
-    public function testIsLastPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsLast)
+    public function testIsLastPage(int $page, ?int $pageSize, int $totalCount, bool $expectedIsLast): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 
@@ -109,7 +112,7 @@ class PaginationResultTest extends TestCase
      * @param int $totalCount
      * @param int|null $expectedPrevious
      */
-    public function testGetPreviousPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedPrevious)
+    public function testGetPreviousPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedPrevious): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 
@@ -136,7 +139,7 @@ class PaginationResultTest extends TestCase
      * @param int $totalCount
      * @param int|null $expectedNext
      */
-    public function testGetNextPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedNext)
+    public function testGetNextPage(int $page, ?int $pageSize, int $totalCount, ?int $expectedNext): void
     {
         $paginationResult = new PaginationResult($page, $pageSize, $totalCount, []);
 

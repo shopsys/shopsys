@@ -53,7 +53,7 @@ class AdministratorActivity
      */
     public function __construct(
         Administrator $administrator,
-        $ipAddress,
+        string $ipAddress,
     ) {
         $this->administrator = $administrator;
         $this->ipAddress = $ipAddress;
@@ -61,7 +61,7 @@ class AdministratorActivity
         $this->lastActionTime = new DateTime();
     }
 
-    public function updateLastActionTime()
+    public function updateLastActionTime(): void
     {
         $this->lastActionTime = new DateTime();
     }
@@ -69,7 +69,7 @@ class AdministratorActivity
     /**
      * @return string
      */
-    public function getIpAddress()
+    public function getIpAddress(): string
     {
         return $this->ipAddress;
     }
@@ -77,7 +77,7 @@ class AdministratorActivity
     /**
      * @return \DateTime
      */
-    public function getLoginTime()
+    public function getLoginTime(): \DateTime
     {
         return $this->loginTime;
     }
@@ -85,7 +85,7 @@ class AdministratorActivity
     /**
      * @return \DateTime
      */
-    public function getLastActionTime()
+    public function getLastActionTime(): \DateTime
     {
         return $this->lastActionTime;
     }

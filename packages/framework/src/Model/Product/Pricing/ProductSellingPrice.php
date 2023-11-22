@@ -20,7 +20,7 @@ class ProductSellingPrice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getPricingGroup()
+    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->pricingGroup;
     }
@@ -28,7 +28,7 @@ class ProductSellingPrice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getSellingPrice()
+    public function getSellingPrice(): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         return $this->sellingPrice;
     }

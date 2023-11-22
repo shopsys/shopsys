@@ -14,9 +14,9 @@ class HoneyPotExtension extends AbstractExtension
     protected const PASSWORD_FIELD_NAME = 'password';
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -29,7 +29,7 @@ class HoneyPotExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'honey_pot';
     }
@@ -37,7 +37,7 @@ class HoneyPotExtension extends AbstractExtension
     /**
      * @param \Symfony\Component\Form\FormView $formView
      */
-    public function formHoneyPotCheckPasswordAlreadyRendered(FormView $formView)
+    public function formHoneyPotCheckPasswordAlreadyRendered(FormView $formView): void
     {
         $rootFormView = $this->getRootFormView($formView);
 
@@ -50,7 +50,7 @@ class HoneyPotExtension extends AbstractExtension
      * @param \Symfony\Component\Form\FormView $formView
      * @return \Symfony\Component\Form\FormView
      */
-    protected function getRootFormView(FormView $formView)
+    protected function getRootFormView(FormView $formView): \Symfony\Component\Form\FormView
     {
         $rootFormView = $formView;
 
@@ -65,7 +65,7 @@ class HoneyPotExtension extends AbstractExtension
      * @param \Symfony\Component\Form\FormView $formView
      * @return bool
      */
-    protected function containsNotRenderedPassword(FormView $formView)
+    protected function containsNotRenderedPassword(FormView $formView): bool
     {
         foreach ($formView->children as $childForm) {
             if (strpos($childForm->vars['name'], static::PASSWORD_FIELD_NAME) !== false && !$childForm->isRendered()) {

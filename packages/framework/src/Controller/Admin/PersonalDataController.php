@@ -25,8 +25,9 @@ class PersonalDataController extends AdminBaseController
     /**
      * @Route("/personal-data/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingAction(Request $request)
+    public function settingAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $personalDataDisplaySiteContent = $this->setting->getForDomain(

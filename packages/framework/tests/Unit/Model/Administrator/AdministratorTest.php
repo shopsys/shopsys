@@ -13,7 +13,10 @@ use Tests\FrameworkBundle\Unit\TestCase;
 
 class AdministratorTest extends TestCase
 {
-    public function administratorRolesDataProvider()
+    /**
+     * @return array<'expectedRole'|'roles', 'ROLE_ADMIN'[]|'ROLE_PRODUCTS'[]|'ROLE_CATEGORIES'[]|'ROLE_ADMIN'>[]|array<'expectedRole'|'roles', 'ROLE_SUPER_ADMIN'[]|'ROLE_PRODUCTS'[]|'ROLE_CATEGORIES'[]|'ROLE_SUPER_ADMIN'>[]
+     */
+    public function administratorRolesDataProvider(): array
     {
         return [
             [
@@ -29,10 +32,10 @@ class AdministratorTest extends TestCase
 
     /**
      * @dataProvider administratorRolesDataProvider
-     * @param array $roles
+     * @param mixed[] $roles
      * @param string $expectedRole
      */
-    public function testSetAdministratorRolesWithMandatoryRole(array $roles, string $expectedRole)
+    public function testSetAdministratorRolesWithMandatoryRole(array $roles, string $expectedRole): void
     {
         $administratorData = new AdministratorData();
         $administratorData->realName = 'Administrator';
@@ -55,7 +58,7 @@ class AdministratorTest extends TestCase
         $this->assertContains($expectedRole, $administrator->getRoles());
     }
 
-    public function testSetAdministratorRolesWithoutMandatoryRole()
+    public function testSetAdministratorRolesWithoutMandatoryRole(): void
     {
         $administratorData = new AdministratorData();
         $administratorData->realName = 'Administrator';

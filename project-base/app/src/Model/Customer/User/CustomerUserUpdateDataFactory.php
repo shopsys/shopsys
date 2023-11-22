@@ -144,7 +144,7 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
      * @param \App\Model\Customer\BillingAddress $billingAddress
      * @return \App\Model\Customer\BillingAddressData
      */
-    protected function getAmendedBillingAddressDataByOrder(Order $order, BillingAddress $billingAddress)
+    protected function getAmendedBillingAddressDataByOrder(Order $order, BillingAddress $billingAddress): \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData
     {
         $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
 

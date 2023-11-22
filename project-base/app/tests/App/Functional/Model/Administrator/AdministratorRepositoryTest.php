@@ -17,7 +17,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
      */
     private AdministratorRepository $administratorRepository;
 
-    public function testGetByValidMultidomainLogin()
+    public function testGetByValidMultidomainLogin(): void
     {
         $validMultidomainLoginToken = 'validMultidomainLoginToken';
         $multidomainLoginTokenExpiration = new DateTime('+60 seconds');
@@ -38,7 +38,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
         $this->assertSame($administrator, $administratorFromDb);
     }
 
-    public function testGetByValidMultidomainLoginTokenInvalidTokenException()
+    public function testGetByValidMultidomainLoginTokenInvalidTokenException(): void
     {
         $validMultidomainLoginToken = 'validMultidomainLoginToken';
         $invalidMultidomainLoginToken = 'invalidMultidomainLoginToken';
@@ -58,7 +58,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
         $this->administratorRepository->getByValidMultidomainLoginToken($invalidMultidomainLoginToken);
     }
 
-    public function testGetByValidMultidomainLoginTokenExpiredTokenException()
+    public function testGetByValidMultidomainLoginTokenExpiredTokenException(): void
     {
         $validMultidomainLoginToken = 'validMultidomainLoginToken';
         $multidomainLoginTokenExpiration = new DateTime('-60 seconds');

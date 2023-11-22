@@ -52,9 +52,9 @@ class ProductsBatchLoader
     }
 
     /**
-     * @param array $arrayForSorting
-     * @param array $originalArray
-     * @return array
+     * @param mixed[] $arrayForSorting
+     * @param mixed[] $originalArray
+     * @return mixed[]
      */
     private function sortByOriginalArray(array $arrayForSorting, array $originalArray): array
     {

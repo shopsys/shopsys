@@ -25,7 +25,7 @@ class ProductFlagFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -33,7 +33,7 @@ class ProductFlagFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_IS,
@@ -44,15 +44,16 @@ class ProductFlagFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): string|\Symfony\Component\Form\FormTypeInterface
     {
         return ChoiceType::class;
     }
 
     /**
      * {@inheritdoc}
+     * @return bool[]|string[]|\Shopsys\FrameworkBundle\Model\Product\Flag\Flag[][]
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [
             'expanded' => false,
@@ -66,7 +67,7 @@ class ProductFlagFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {
         $isNotFlags = [];
 

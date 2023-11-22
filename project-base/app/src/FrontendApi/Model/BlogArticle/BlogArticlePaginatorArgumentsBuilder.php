@@ -9,8 +9,8 @@ use Overblog\GraphQLBundle\Definition\Builder\MappingInterface;
 class BlogArticlePaginatorArgumentsBuilder implements MappingInterface
 {
     /**
-     * @param array $config
-     * @return array
+     * @param mixed[] $config
+     * @return array<'after'|'before'|'first'|'last'|'onlyHomepageArticles', array<string|bool>>
      */
     public function toMappingDefinition(array $config): array
     {

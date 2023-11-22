@@ -34,7 +34,7 @@ class OrderMail extends BaseOrderMail
      * @param \App\Model\Order\Order $order
      * @return string
      */
-    protected function getBillingAddressHtmlTable(BaseOrder $order)
+    protected function getBillingAddressHtmlTable(BaseOrder $order): string
     {
         return $this->twig->render('Front/Mail/Order/billingAddress.html.twig', [
             'order' => $order,
@@ -45,7 +45,7 @@ class OrderMail extends BaseOrderMail
 
     /**
      * @param \App\Model\Order\Order $order
-     * @return array
+     * @return mixed[]
      */
     protected function getVariablesReplacementsForBody(BaseOrder $order): array
     {

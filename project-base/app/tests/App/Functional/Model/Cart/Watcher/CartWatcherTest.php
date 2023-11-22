@@ -57,7 +57,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
      */
     private PricingGroupRepository $pricingGroupRepository;
 
-    public function testGetModifiedPriceItemsAndUpdatePrices()
+    public function testGetModifiedPriceItemsAndUpdatePrices(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
         /** @var \App\Model\Product\Product $product */
@@ -86,7 +86,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $this->assertEmpty($modifiedItems3);
     }
 
-    public function testGetNotListableItemsWithItemWithoutProduct()
+    public function testGetNotListableItemsWithItemWithoutProduct(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
@@ -104,7 +104,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $this->assertCount(1, $notListableItems);
     }
 
-    public function testGetNotListableItemsWithVisibleButNotSellableProduct()
+    public function testGetNotListableItemsWithVisibleButNotSellableProduct(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 

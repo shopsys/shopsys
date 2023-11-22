@@ -16,7 +16,10 @@ use Symfony\Component\HttpKernel\Fragment\FragmentRendererInterface;
 
 class FragmentHandlerTest extends TestCase
 {
-    public function testRenderNotIgnoreErrorsWithoutDebug()
+    /**
+     * @return bool
+     */
+    public function testRenderNotIgnoreErrorsWithoutDebug(): bool
     {
         $rendererMock = $this->createMock(FragmentRendererInterface::class);
         $rendererMock->expects($this->any())->method('getName')->willReturn('rendererName');
@@ -25,7 +28,7 @@ class FragmentHandlerTest extends TestCase
             ->with(
                 $this->anything(),
                 $this->anything(),
-                $this->callback(function ($options) {
+                $this->callback(function ($options): bool {
                     return array_key_exists('ignore_errors', $options) && $options['ignore_errors'] === false;
                 }),
             )
@@ -46,7 +49,7 @@ class FragmentHandlerTest extends TestCase
         $fragmentHandler->render('uri', 'rendererName', []);
     }
 
-    public function testDeliveryRedirect()
+    public function testDeliveryRedirect(): void
     {
         $response = new Response('', 301);
 
@@ -67,7 +70,7 @@ class FragmentHandlerTest extends TestCase
         $this->assertSame('', $fragmentHandler->render('uri', 'rendererName', []));
     }
 
-    public function testNotDeliveryErrorResponse()
+    public function testNotDeliveryErrorResponse(): void
     {
         $response = new Response('', 500);
 

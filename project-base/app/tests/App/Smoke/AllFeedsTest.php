@@ -23,7 +23,7 @@ class AllFeedsTest extends FunctionalTestCase
     private FilesystemOperator $filesystem;
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getAllFeedExportCreationData(): array
     {

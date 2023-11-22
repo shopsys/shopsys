@@ -41,7 +41,7 @@ class CategorySeoExtension extends AbstractExtension
      * @param string $choseCategorySeoMixCombinationJson
      * @return \Iterator
      */
-    public function getReadyCategoryMixCombinationParametersPairsIterator(string $choseCategorySeoMixCombinationJson)
+    public function getReadyCategoryMixCombinationParametersPairsIterator(string $choseCategorySeoMixCombinationJson): \Iterator
     {
         $choseCategorySeoMixCombination = ChoseCategorySeoMixCombination::createFromJson($choseCategorySeoMixCombinationJson);
 

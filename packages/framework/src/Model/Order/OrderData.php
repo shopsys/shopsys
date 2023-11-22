@@ -192,7 +192,7 @@ class OrderData
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]
      */
-    public function getNewItemsWithoutTransportAndPayment()
+    public function getNewItemsWithoutTransportAndPayment(): array
     {
         $newItemsWithoutTransportAndPayment = [];
 

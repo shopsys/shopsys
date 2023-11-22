@@ -171,7 +171,7 @@ class ProductsQuery extends BaseProductsQuery
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      */
-    public function productsQuery(Argument $argument)
+    public function productsQuery(Argument $argument): void
     {
         throw new DeprecatedMethodException();
     }
@@ -181,7 +181,7 @@ class ProductsQuery extends BaseProductsQuery
      * @param \GraphQL\Type\Definition\ResolveInfo $info
      * @return \App\FrontendApi\Model\Product\Connection\ProductExtendedConnection|\GraphQL\Executor\Promise\Promise
      */
-    public function productsWithOverlyingEntityQuery(Argument $argument, ResolveInfo $info)
+    public function productsWithOverlyingEntityQuery(Argument $argument, ResolveInfo $info): \App\FrontendApi\Model\Product\Connection\ProductExtendedConnection|\GraphQL\Executor\Promise\Promise
     {
         PageSizeValidator::checkMaxPageSize($argument);
 
@@ -244,7 +244,7 @@ class ProductsQuery extends BaseProductsQuery
      * @return \GraphQL\Executor\Promise\Promise
      * @deprecated Method is deprecated. Use "productsByCategoryOrReadyCategorySeoMixQuery()" instead.
      */
-    public function productsByCategoryQuery(Argument $argument, BaseCategory $category)
+    public function productsByCategoryQuery(Argument $argument, BaseCategory $category): void
     {
         throw new DeprecatedMethodException();
     }

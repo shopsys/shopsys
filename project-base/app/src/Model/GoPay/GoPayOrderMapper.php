@@ -26,7 +26,7 @@ class GoPayOrderMapper
     /**
      * @param \App\Model\Order\Order $order
      * @param string|null $goPayBankSwift
-     * @return array
+     * @return mixed[]
      */
     public function createGoPayPaymentData(Order $order, ?string $goPayBankSwift): array
     {
@@ -82,7 +82,7 @@ class GoPayOrderMapper
 
     /**
      * @param \App\Model\Order\Order $order
-     * @return array
+     * @return mixed[]
      */
     private function createGoPayPaymentItemsData(Order $order): array
     {

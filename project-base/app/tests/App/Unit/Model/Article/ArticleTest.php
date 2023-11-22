@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ArticleTest extends TestCase
 {
-    public function testValidationOfArticleAttributeExtension()
+    public function testValidationOfArticleAttributeExtension(): void
     {
         $articleData = new ArticleData();
         $articleData->createdAt = new Datetime('2000-01-01');

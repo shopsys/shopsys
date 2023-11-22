@@ -17,7 +17,7 @@ class TransMethodSpecification
      * @param int $messageIdArgumentIndex
      * @param int|null $domainArgumentIndex
      */
-    public function __construct($methodName, $messageIdArgumentIndex = 0, $domainArgumentIndex = null)
+    public function __construct(string $methodName, int $messageIdArgumentIndex = 0, ?int $domainArgumentIndex = null)
     {
         $this->methodName = $methodName;
         $this->messageIdArgumentIndex = $messageIdArgumentIndex;
@@ -27,7 +27,7 @@ class TransMethodSpecification
     /**
      * @return string
      */
-    public function getMethodName()
+    public function getMethodName(): string
     {
         return $this->methodName;
     }
@@ -35,7 +35,7 @@ class TransMethodSpecification
     /**
      * @return int
      */
-    public function getMessageIdArgumentIndex()
+    public function getMessageIdArgumentIndex(): int
     {
         return $this->messageIdArgumentIndex;
     }
@@ -43,7 +43,7 @@ class TransMethodSpecification
     /**
      * @return int|null
      */
-    public function getDomainArgumentIndex()
+    public function getDomainArgumentIndex(): ?int
     {
         return $this->domainArgumentIndex;
     }

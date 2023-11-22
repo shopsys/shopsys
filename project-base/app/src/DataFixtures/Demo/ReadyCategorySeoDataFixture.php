@@ -42,7 +42,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     /**
      * {@inheritdoc}
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $firstDomain = $this->domain->getDomainConfigById(1);
         $firstDomainId = $firstDomain->getId();
@@ -346,7 +346,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             CategoryDataFixture::class,

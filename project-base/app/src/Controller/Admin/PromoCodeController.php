@@ -154,7 +154,7 @@ class PromoCodeController extends BasePromoCodeController
      * @Route("/promo-code/new")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $fillFromPromoCodeId = $request->query->get('fillFromPromoCodeId');
 

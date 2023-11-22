@@ -39,7 +39,7 @@ class ProductVideoFacade
             return (bool)$productVideoData->id;
         });
 
-        $videoDataListToCreate = array_filter($productVideoDataList, function (ProductVideoData $productVideoData) {
+        $videoDataListToCreate = array_filter($productVideoDataList, function (ProductVideoData $productVideoData): bool {
             return (bool)$productVideoData->id !== true;
         });
 

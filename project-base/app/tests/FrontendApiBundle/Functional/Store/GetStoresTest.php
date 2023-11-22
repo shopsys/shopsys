@@ -52,9 +52,9 @@ class GetStoresTest extends GraphQlTestCase
     }
 
     /**
-     * @param array $keys
-     * @param array $actual
-     * @param array $expected
+     * @param mixed[] $keys
+     * @param mixed[] $actual
+     * @param mixed[] $expected
      */
     private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
     {
@@ -65,7 +65,7 @@ class GetStoresTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return string[][]|mixed[][][]
      */
     private function getStoresDataProvider(): array
     {
@@ -150,7 +150,7 @@ class GetStoresTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<'city'|'contactInfo'|'country'|'description'|'isDefault'|'locationLatitude'|'locationLongitude'|'name'|'openingHours'|'postcode'|'specialMessage'|'street', mixed>[]
      */
     private function getExpectedStores(): array
     {

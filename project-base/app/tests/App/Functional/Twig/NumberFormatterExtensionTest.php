@@ -19,7 +19,10 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
      */
     private AdministrationFacade $administrationFacade;
 
-    public function formatNumberDataProvider()
+    /**
+     * @return array<int, array<float|string>>
+     */
+    public function formatNumberDataProvider(): array
     {
         return [
             ['input' => '12', 'locale' => 'cs', 'result' => '12'],
@@ -42,11 +45,11 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
 
     /**
      * @dataProvider formatNumberDataProvider
-     * @param mixed $input
-     * @param mixed $locale
-     * @param mixed $result
+     * @param string|float $input
+     * @param string $locale
+     * @param string $result
      */
-    public function testFormatNumber($input, $locale, $result)
+    public function testFormatNumber(string|float $input, string $locale, string $result): void
     {
         $localizationMock = $this->getMockBuilder(Localization::class)
             ->disableOriginalConstructor()

@@ -23,7 +23,7 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $categories = [
             $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
@@ -39,7 +39,7 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             CategoryDataFixture::class,

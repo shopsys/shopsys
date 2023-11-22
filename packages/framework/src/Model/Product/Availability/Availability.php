@@ -50,7 +50,7 @@ class Availability extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
      */
-    public function edit(AvailabilityData $availabilityData)
+    public function edit(AvailabilityData $availabilityData): void
     {
         $this->setData($availabilityData);
     }
@@ -67,7 +67,7 @@ class Availability extends AbstractTranslatableEntity
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -76,7 +76,7 @@ class Availability extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string
      */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -84,7 +84,7 @@ class Availability extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
      */
-    protected function setTranslations(AvailabilityData $availabilityData)
+    protected function setTranslations(AvailabilityData $availabilityData): void
     {
         foreach ($availabilityData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -94,7 +94,7 @@ class Availability extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityTranslation
      */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityTranslation
     {
         return new AvailabilityTranslation();
     }
@@ -102,7 +102,7 @@ class Availability extends AbstractTranslatableEntity
     /**
      * @return int|null
      */
-    public function getDispatchTime()
+    public function getDispatchTime(): ?int
     {
         return $this->dispatchTime;
     }

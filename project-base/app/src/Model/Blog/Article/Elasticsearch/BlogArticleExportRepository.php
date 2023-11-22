@@ -97,7 +97,7 @@ class BlogArticleExportRepository
      * @param \App\Model\Blog\Article\BlogArticle $blogArticle
      * @param int $domainId
      * @param string $locale
-     * @return array
+     * @return array<'breadcrumb'|'categories'|'createdAt'|'mainSlug'|'name'|'perex'|'publishedAt'|'seoH1'|'seoMetaDescription'|'seoTitle'|'slug'|'text'|'url'|'uuid'|'visibleOnHomepage', mixed>
      */
     public function extractBlogArticle(BlogArticle $blogArticle, int $domainId, string $locale): array
     {

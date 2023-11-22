@@ -67,7 +67,7 @@ class AdministratorController extends BaseAdministratorController
     /**
      * {@inheritdoc}
      */
-    public function editAction(Request $request, int $id)
+    public function editAction(Request $request, int $id): \Symfony\Component\HttpFoundation\Response
     {
         $this->denyAccessUnlessHimselfOrGranted($request, $id);
 
@@ -262,7 +262,7 @@ class AdministratorController extends BaseAdministratorController
     }
 
     /**
-     * @param array $twoFactorCodeValidationCallback
+     * @param mixed[] $twoFactorCodeValidationCallback
      * @return \Symfony\Component\Form\FormInterface
      */
     private function createVerificationForm(array $twoFactorCodeValidationCallback): FormInterface

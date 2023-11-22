@@ -41,7 +41,7 @@ class PropertyAnnotationsFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<'property not included in the extension map'|'property redeclared in the child using annotation'|'property redeclared in the child\'s source code', \Roave\BetterReflection\Reflection\ReflectionClass[]>
      */
     public function testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider(): array
     {

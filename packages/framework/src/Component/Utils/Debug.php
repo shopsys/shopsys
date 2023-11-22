@@ -12,7 +12,7 @@ class Debug
      * @param mixed $var
      * @return string
      */
-    public static function export($var)
+    public static function export($var): string
     {
         return DoctrineDebug::dump($var, 2, true, false);
     }

@@ -26,7 +26,7 @@ class BlogArticlesQuery extends AbstractQuery
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return object|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
      */
-    public function blogArticlesQuery(Argument $argument)
+    public function blogArticlesQuery(Argument $argument): object
     {
         PageSizeValidator::checkMaxPageSize($argument);
         $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
@@ -44,7 +44,7 @@ class BlogArticlesQuery extends AbstractQuery
      * @param \App\Model\Blog\Category\BlogCategory $blogCategory
      * @return object|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
      */
-    public function blogArticleByCategoryQuery(Argument $argument, BlogCategory $blogCategory)
+    public function blogArticleByCategoryQuery(Argument $argument, BlogCategory $blogCategory): object
     {
         PageSizeValidator::checkMaxPageSize($argument);
         $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];

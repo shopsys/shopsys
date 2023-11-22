@@ -33,7 +33,7 @@ class CronModuleExecutor
      * @param bool $suspended
      * @return string
      */
-    public function runModule($cronModuleService, $suspended)
+    public function runModule($cronModuleService, $suspended): string
     {
         $cronConfig = $this->cronConfig->getCronModuleConfigByServiceId(get_class($cronModuleService));
 

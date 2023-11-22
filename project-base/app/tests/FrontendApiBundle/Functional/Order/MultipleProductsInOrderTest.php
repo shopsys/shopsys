@@ -69,7 +69,7 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<int, array<'name'|'quantity'|'totalPrice'|'unit'|'unitPrice'|'vatRate', mixed>>
      */
     protected function getExpectedOrderItems(): array
     {

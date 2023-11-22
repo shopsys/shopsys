@@ -30,7 +30,7 @@ class MoneyTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new NumericToMoneyTransformer($options['scale']));
         $builder->addViewTransformer(new RemoveWhitespacesTransformer());
@@ -39,7 +39,7 @@ class MoneyTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['money_pattern'] = $this->getPattern();
 
@@ -56,7 +56,7 @@ class MoneyTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
@@ -78,7 +78,7 @@ class MoneyTypeExtension extends AbstractTypeExtension
      * @return string
      * @see \Symfony\Component\Form\Extension\Core\Type\MoneyType::getPattern()
      */
-    private function getPattern()
+    private function getPattern(): string
     {
         return '{{ widget }}';
     }

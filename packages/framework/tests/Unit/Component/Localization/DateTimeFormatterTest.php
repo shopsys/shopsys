@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 class DateTimeFormatterTest extends TestCase
 {
     /**
-     * @return array
+     * @return array<int, array<'displayTimeZone'|'inputDateTime'|'result', \DateTime|string>>
      */
     public function formatDateTimeDataProvider(): array
     {

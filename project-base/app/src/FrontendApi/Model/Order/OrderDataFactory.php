@@ -136,7 +136,7 @@ class OrderDataFactory extends BaseOrderDataFactory
     }
 
     /**
-     * @param array $input
+     * @param mixed[] $input
      * @param \App\Model\Order\OrderData $orderData
      * @return \App\Model\Order\OrderData
      */

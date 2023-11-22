@@ -20,7 +20,7 @@ use SplFileInfo;
 
 class PhpFileExtractorTest extends TestCase
 {
-    public function testExtractController()
+    public function testExtractController(): void
     {
         $fileName = 'Controller.php';
 
@@ -57,7 +57,7 @@ class PhpFileExtractorTest extends TestCase
     /**
      * @param mixed $filename
      */
-    private function extract($filename)
+    private function extract($filename): \JMS\TranslationBundle\Model\MessageCatalogue
     {
         if (!is_file($filename)) {
             throw new RuntimeException(sprintf('The file "%s" does not exist.', $filename));
@@ -76,7 +76,7 @@ class PhpFileExtractorTest extends TestCase
         return $catalogue;
     }
 
-    private function getDocParser()
+    private function getDocParser(): \Doctrine\Common\Annotations\DocParser
     {
         $docParser = new DocParser();
         $docParser->setImports([

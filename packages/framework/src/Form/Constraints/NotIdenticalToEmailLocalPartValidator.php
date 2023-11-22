@@ -12,10 +12,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class NotIdenticalToEmailLocalPartValidator extends ConstraintValidator
 {
     /**
-     * @param array $values
+     * @param mixed[] $values
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
-    public function validate($values, Constraint $constraint)
+    public function validate($values, Constraint $constraint): void
     {
         if (!$constraint instanceof NotIdenticalToEmailLocalPart) {
             throw new UnexpectedTypeException($constraint, NotIdenticalToEmailLocalPart::class);

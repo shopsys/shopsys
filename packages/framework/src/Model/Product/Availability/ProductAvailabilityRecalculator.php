@@ -30,7 +30,7 @@ class ProductAvailabilityRecalculator
     ) {
     }
 
-    public function runAllScheduledRecalculations()
+    public function runAllScheduledRecalculations(): void
     {
         $this->productRowsIterator = null;
 
@@ -41,7 +41,7 @@ class ProductAvailabilityRecalculator
     /**
      * @return bool
      */
-    public function runBatchOfScheduledDelayedRecalculations()
+    public function runBatchOfScheduledDelayedRecalculations(): bool
     {
         if ($this->productRowsIterator === null) {
             $this->productRowsIterator = $this->productAvailabilityRecalculationScheduler->getProductsIteratorForDelayedRecalculation();
@@ -63,7 +63,7 @@ class ProductAvailabilityRecalculator
         return true;
     }
 
-    public function runImmediateRecalculations()
+    public function runImmediateRecalculations(): void
     {
         $products = $this->productAvailabilityRecalculationScheduler->getProductsForImmediateRecalculation();
 
@@ -76,7 +76,7 @@ class ProductAvailabilityRecalculator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      */
-    protected function recalculateProductAvailability(Product $product)
+    protected function recalculateProductAvailability(Product $product): void
     {
         $calculatedAvailability = $this->productAvailabilityCalculation->calculateAvailability($product);
         $product->setCalculatedAvailability($calculatedAvailability);

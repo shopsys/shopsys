@@ -11,7 +11,10 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
 
 class OrderStatusTest extends TestCase
 {
-    public function checkForDeleteProvider()
+    /**
+     * @return array<int, array<'expectedException'|'type', int|string|null>>
+     */
+    public function checkForDeleteProvider(): array
     {
         return [
             ['type' => OrderStatus::TYPE_NEW, 'expectedException' => OrderStatusDeletionForbiddenException::class],
@@ -23,10 +26,10 @@ class OrderStatusTest extends TestCase
 
     /**
      * @dataProvider checkForDeleteProvider
-     * @param mixed $statusType
-     * @param mixed|null $expectedException
+     * @param int $statusType
+     * @param string|null $expectedException
      */
-    public function testCheckForDelete($statusType, $expectedException = null)
+    public function testCheckForDelete(int $statusType, ?string $expectedException = null): void
     {
         $orderStatusData = new OrderStatusData();
         $orderStatusData->name = ['en' => 'orderStatusName'];

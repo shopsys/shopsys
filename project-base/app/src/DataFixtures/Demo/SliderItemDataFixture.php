@@ -46,7 +46,7 @@ class SliderItemDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $locale = $this->domain->getDomainConfigById($domainId)->getLocale();

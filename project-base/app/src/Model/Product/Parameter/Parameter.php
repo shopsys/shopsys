@@ -82,7 +82,7 @@ class Parameter extends BaseParameter
     /**
      * @param \App\Model\Product\Parameter\ParameterData $parameterData
      */
-    public function edit(BaseParameterData $parameterData)
+    public function edit(BaseParameterData $parameterData): void
     {
         parent::edit($parameterData);
     }
@@ -147,7 +147,7 @@ class Parameter extends BaseParameter
      * @throws \App\Model\Product\Parameter\Exception\DeprecatedParameterPropertyException
      * @deprecated Visibility of parameters is not used on this project
      */
-    public function isVisible()
+    public function isVisible(): bool
     {
         throw new DeprecatedParameterPropertyException('isVisible');
     }

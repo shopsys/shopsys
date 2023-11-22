@@ -21,7 +21,7 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('directories.yaml');
@@ -69,7 +69,7 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
     /**
      * {@inheritdoc}
      */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $container->prependExtensionConfig('doctrine_migrations', [
             'migrations_paths' => [

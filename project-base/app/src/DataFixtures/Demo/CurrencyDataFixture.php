@@ -29,7 +29,7 @@ class CurrencyDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /**
          * The "CZK" and "EUR" currencies are created in database migrations.

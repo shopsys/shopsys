@@ -32,7 +32,7 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
     private function buildImagesGroup(FormBuilderInterface $builder, array $options): void
     {

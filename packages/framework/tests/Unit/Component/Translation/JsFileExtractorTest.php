@@ -15,7 +15,7 @@ use SplFileInfo;
 
 class JsFileExtractorTest extends TestCase
 {
-    public function testExtract()
+    public function testExtract(): void
     {
         /*
          * the method that generates this file is tested elsewhere (project-base/app/assets/js/commands/translations/parseFile.test.js)
@@ -51,7 +51,7 @@ class JsFileExtractorTest extends TestCase
     /**
      * @param mixed $filename
      */
-    private function extract($filename)
+    private function extract($filename): \JMS\TranslationBundle\Model\MessageCatalogue
     {
         if (!is_file($filename)) {
             throw new RuntimeException(sprintf('The file "%s" does not exist.', $filename));
@@ -66,7 +66,10 @@ class JsFileExtractorTest extends TestCase
         return $catalogue;
     }
 
-    private function getExtractor()
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor
+     */
+    private function getExtractor(): \Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor
     {
         return new JsFileExtractor();
     }

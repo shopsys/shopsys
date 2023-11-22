@@ -14,7 +14,7 @@ use Tests\FrameworkBundle\Unit\Component\UploadedFile\Dummy;
 
 class UploadedFileConfigTest extends TestCase
 {
-    public function testGetEntityName()
+    public function testGetEntityName(): void
     {
         $entity = new Dummy();
         $uploadedFileConfig = $this->getUploadedFileConfig();
@@ -22,7 +22,7 @@ class UploadedFileConfigTest extends TestCase
         $this->assertSame('entityName', $uploadedFileConfig->getEntityName($entity));
     }
 
-    public function testGetEntityNameNotFoundException()
+    public function testGetEntityNameNotFoundException(): void
     {
         $entity = new Dummy();
         $fileEntityConfigsByClass = [];
@@ -34,7 +34,7 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileConfig->getEntityName($entity);
     }
 
-    public function testGetAllUploadedFileEntityConfigs()
+    public function testGetAllUploadedFileEntityConfigs(): void
     {
         $fileEntityConfigsByClass = $this->getFileEntityConfigsByClass();
         $uploadedFileConfig = new UploadedFileConfig($fileEntityConfigsByClass);
@@ -42,7 +42,7 @@ class UploadedFileConfigTest extends TestCase
         $this->assertSame($fileEntityConfigsByClass, $uploadedFileConfig->getAllUploadedFileEntityConfigs());
     }
 
-    public function testGetUploadedFileEntityConfig()
+    public function testGetUploadedFileEntityConfig(): void
     {
         $entity = new Dummy();
         $fileEntityConfigsByClass = [];
@@ -54,7 +54,7 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileConfig->getUploadedFileEntityConfig($entity);
     }
 
-    public function testHasUploadedFileEntityConfig()
+    public function testHasUploadedFileEntityConfig(): void
     {
         $entity = new Dummy();
         $uploadedFileConfig = $this->getUploadedFileConfig();
@@ -62,7 +62,7 @@ class UploadedFileConfigTest extends TestCase
         $this->assertTrue($uploadedFileConfig->hasUploadedFileEntityConfig($entity));
     }
 
-    public function testHasNotUploadedFileEntityConfig()
+    public function testHasNotUploadedFileEntityConfig(): void
     {
         $entity = new Dummy();
         $fileEntityConfigsByClass = [];
@@ -71,7 +71,7 @@ class UploadedFileConfigTest extends TestCase
         $this->assertFalse($uploadedFileConfig->hasUploadedFileEntityConfig($entity));
     }
 
-    public function testGetNotExistingUploadedFileTypeConfig()
+    public function testGetNotExistingUploadedFileTypeConfig(): void
     {
         $entity = new Dummy();
         $uploadedFileConfig = $this->getUploadedFileConfig();
@@ -84,7 +84,7 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileEntityConfig->getTypeByName('test');
     }
 
-    public function testTypesHaveRightMultipleSet()
+    public function testTypesHaveRightMultipleSet(): void
     {
         $entity = new Dummy();
         $uploadedFileConfig = $this->getUploadedFileConfig();
@@ -97,7 +97,7 @@ class UploadedFileConfigTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<'Tests\\FrameworkBundle\\Unit\\Component\\UploadedFile\\Dummy', mixed>
      */
     private function getFileEntityConfigsByClass(): array
     {

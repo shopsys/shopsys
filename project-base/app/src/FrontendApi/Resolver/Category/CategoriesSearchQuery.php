@@ -27,7 +27,7 @@ class CategoriesSearchQuery extends BaseCategoriesSearchQuery
     /**
      * {@inheritdoc}
      */
-    public function categoriesSearchQuery(Argument $argument)
+    public function categoriesSearchQuery(Argument $argument): object
     {
         PageSizeValidator::checkMaxPageSize($argument);
 

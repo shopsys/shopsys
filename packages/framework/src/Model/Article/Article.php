@@ -112,7 +112,7 @@ class Article implements OrderableEntityInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      */
-    public function edit(ArticleData $articleData)
+    public function edit(ArticleData $articleData): void
     {
         $this->setData($articleData);
     }
@@ -135,7 +135,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -151,7 +151,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -159,7 +159,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -167,7 +167,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
@@ -175,7 +175,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getSeoTitle()
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
@@ -183,7 +183,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getSeoMetaDescription()
+    public function getSeoMetaDescription(): ?string
     {
         return $this->seoMetaDescription;
     }
@@ -191,7 +191,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getSeoH1()
+    public function getSeoH1(): ?string
     {
         return $this->seoH1;
     }
@@ -199,7 +199,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getPlacement()
+    public function getPlacement(): string
     {
         return $this->placement;
     }
@@ -207,7 +207,7 @@ class Article implements OrderableEntityInterface
     /**
      * @param int $position
      */
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
@@ -215,7 +215,7 @@ class Article implements OrderableEntityInterface
     /**
      * @param string $placement
      */
-    public function setPlacement($placement)
+    public function setPlacement($placement): void
     {
         $this->placement = $placement;
     }
@@ -223,7 +223,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return bool
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }

@@ -56,7 +56,7 @@ class BlogCategoryWithPreloadedChildrenFactory
      * @param \App\Model\Blog\Category\BlogCategory[] $blogCategories
      * @return \App\Model\Blog\Category\BlogCategory[]
      */
-    protected function getFirstLevelBlogCategories(array $blogCategories)
+    protected function getFirstLevelBlogCategories(array $blogCategories): array
     {
         $firstLevelBlogCategories = [];
 
@@ -73,7 +73,7 @@ class BlogCategoryWithPreloadedChildrenFactory
      * @param \App\Model\Blog\Category\BlogCategory[] $blogCategories
      * @return \App\Model\Blog\Category\BlogCategory[][]
      */
-    protected function getBlogCategoriesIndexedByParentId(array $blogCategories)
+    protected function getBlogCategoriesIndexedByParentId(array $blogCategories): array
     {
         $blogCategoriesIndexedByParentId = [];
 

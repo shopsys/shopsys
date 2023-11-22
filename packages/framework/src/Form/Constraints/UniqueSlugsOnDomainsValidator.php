@@ -25,10 +25,10 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
+     * @param mixed[] $values
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
-    public function validate($values, Constraint $constraint)
+    public function validate($values, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueSlugsOnDomains) {
             throw new UnexpectedTypeException($constraint, UniqueSlugsOnDomains::class);
@@ -39,10 +39,10 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
+     * @param mixed[] $values
      * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains $constraint
      */
-    protected function validateDuplication(array $values, UniqueSlugsOnDomains $constraint)
+    protected function validateDuplication(array $values, UniqueSlugsOnDomains $constraint): void
     {
         $slugsCountByDomainId = $this->getSlugsCountIndexedByDomainId($values);
 
@@ -63,10 +63,10 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
+     * @param mixed[] $values
      * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains $constraint
      */
-    protected function validateExists($values, UniqueSlugsOnDomains $constraint)
+    protected function validateExists($values, UniqueSlugsOnDomains $constraint): void
     {
         foreach ($values as $urlData) {
             $domainId = $urlData[UrlListData::FIELD_DOMAIN];
@@ -91,10 +91,10 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
+     * @param mixed[] $values
      * @return int[][]
      */
-    protected function getSlugsCountIndexedByDomainId(array $values)
+    protected function getSlugsCountIndexedByDomainId(array $values): array
     {
         $slugsCountByDomainId = [];
 

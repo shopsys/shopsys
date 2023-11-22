@@ -29,7 +29,7 @@ class ProductController extends BaseProductController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param mixed $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $product = $this->productFacade->getById($id);
         $productData = $this->productDataFactory->createFromProduct($product);

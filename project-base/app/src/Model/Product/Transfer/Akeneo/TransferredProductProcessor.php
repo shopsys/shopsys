@@ -59,7 +59,7 @@ class TransferredProductProcessor
     }
 
     /**
-     * @param array $akeneoProductData
+     * @param mixed[] $akeneoProductData
      * @param \App\Model\Transfer\TransferLoggerInterface $logger
      * @return \App\Model\Product\Product
      */
@@ -85,7 +85,7 @@ class TransferredProductProcessor
     }
 
     /**
-     * @param array $akeneoProductDetailData
+     * @param mixed[] $akeneoProductDetailData
      * @param \App\Model\Transfer\TransferLoggerInterface $logger
      */
     public function processProductDetail(array $akeneoProductDetailData, TransferLoggerInterface $logger): void
@@ -122,7 +122,7 @@ class TransferredProductProcessor
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param array $akeneoProductDetailData
+     * @param mixed[] $akeneoProductDetailData
      * @param \App\Model\Transfer\TransferLoggerInterface $logger
      */
     private function setProductAccessoriesByAkeneoProductDetailData(
@@ -158,7 +158,7 @@ class TransferredProductProcessor
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param array $akeneoProductData
+     * @param mixed[] $akeneoProductData
      */
     private function setProductForImportFiles(Product $product, array $akeneoProductData): void
     {
@@ -168,7 +168,7 @@ class TransferredProductProcessor
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param array $akeneoProductData
+     * @param mixed[] $akeneoProductData
      */
     private function setProductImages(Product $product, array $akeneoProductData): void
     {
@@ -224,7 +224,7 @@ class TransferredProductProcessor
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param array $akeneoMediaFileData
+     * @param mixed[] $akeneoMediaFileData
      * @param string $akeneoImageType
      * @param int $position
      */
@@ -256,7 +256,7 @@ class TransferredProductProcessor
     }
 
     /**
-     * @param array $akeneoProductData
+     * @param mixed[] $akeneoProductData
      * @return \Generator
      */
     private function getGalleryImagesForProduct(array $akeneoProductData): Generator
@@ -269,7 +269,7 @@ class TransferredProductProcessor
     }
 
     /**
-     * @param array $akeneoProductData
+     * @param mixed[] $akeneoProductData
      * @return bool
      */
     public function checkIsAllParametersExistFromAkeneoData(array $akeneoProductData): bool

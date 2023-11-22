@@ -43,7 +43,7 @@ class ProductTranslation extends AbstractTranslation
     /**
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -51,7 +51,7 @@ class ProductTranslation extends AbstractTranslation
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName(?string $name): void
     {
         $this->name = TransformString::getTrimmedStringOrNullOnEmpty($name);
     }
@@ -59,7 +59,7 @@ class ProductTranslation extends AbstractTranslation
     /**
      * @return string|null
      */
-    public function getVariantAlias()
+    public function getVariantAlias(): ?string
     {
         return $this->variantAlias;
     }
@@ -67,7 +67,7 @@ class ProductTranslation extends AbstractTranslation
     /**
      * @param string|null $variantAlias
      */
-    public function setVariantAlias($variantAlias)
+    public function setVariantAlias(?string $variantAlias): void
     {
         $this->variantAlias = TransformString::getTrimmedStringOrNullOnEmpty($variantAlias);
     }

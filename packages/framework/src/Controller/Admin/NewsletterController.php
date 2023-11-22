@@ -34,8 +34,9 @@ class NewsletterController extends AdminBaseController
     /**
      * @Route("/newsletter/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
@@ -70,8 +71,9 @@ class NewsletterController extends AdminBaseController
      * @Route("/newsletter/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(int $id)
+    public function deleteAction(int $id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $email = $this->newsletterFacade->getNewsletterSubscriberById($id)->getEmail();
@@ -94,12 +96,12 @@ class NewsletterController extends AdminBaseController
     /**
      * @Route("/newsletter/export-csv/")
      */
-    public function exportAction()
+    public function exportAction(): \Symfony\Component\HttpFoundation\StreamedResponse
     {
         $response = new StreamedResponse();
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment; filename="emails.csv"');
-        $response->setCallback(function () {
+        $response->setCallback(function (): void {
             $this->streamCsvExport($this->adminDomainTabsFacade->getSelectedDomainId());
         });
 
@@ -109,7 +111,7 @@ class NewsletterController extends AdminBaseController
     /**
      * @param int $domainId
      */
-    protected function streamCsvExport($domainId)
+    protected function streamCsvExport($domainId): void
     {
         $output = new SplFileObject('php://output', 'w+');
 

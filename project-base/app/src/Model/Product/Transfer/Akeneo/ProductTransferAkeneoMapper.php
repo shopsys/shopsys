@@ -55,7 +55,7 @@ class ProductTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoProductData
+     * @param mixed[] $akeneoProductData
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Product\ProductFilesData
      */
@@ -79,7 +79,7 @@ class ProductTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoProductData
+     * @param mixed[] $akeneoProductData
      * @param \App\Model\Product\Product|null $product
      * @param \App\Model\Transfer\TransferLoggerInterface $transferLogger
      * @return \App\Model\Product\ProductData
@@ -136,7 +136,7 @@ class ProductTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoProductData
+     * @param mixed[] $akeneoProductData
      * @return string[]
      */
     public function getProductAccessoryCatnumListFromAkeneoProductData(array $akeneoProductData): array
@@ -170,7 +170,7 @@ class ProductTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoProductData
+     * @param mixed[] $akeneoProductData
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Transfer\TransferLoggerInterface $transferLogger
      */
@@ -226,7 +226,7 @@ class ProductTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoProductParameterData
+     * @param mixed[] $akeneoProductParameterData
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param string|null $productCatnum
      * @return string[]
@@ -259,7 +259,7 @@ class ProductTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoProductParameterData
+     * @param mixed[] $akeneoProductParameterData
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param \App\Model\Product\ProductData $productData
      */
@@ -282,8 +282,8 @@ class ProductTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoProductDataValues
-     * @return array
+     * @param mixed[] $akeneoProductDataValues
+     * @return mixed[]
      */
     protected function getProductFlags(array $akeneoProductDataValues): array
     {
@@ -333,8 +333,8 @@ class ProductTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoProductData
-     * @return array
+     * @param mixed[] $akeneoProductData
+     * @return mixed[]
      */
     public function getParametersFromAkeneoData(array $akeneoProductData): array
     {

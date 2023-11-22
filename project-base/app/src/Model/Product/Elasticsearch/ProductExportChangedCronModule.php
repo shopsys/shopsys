@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportChangedCron
 
 class ProductExportChangedCronModule extends BaseProductExportChangedCronModule
 {
-    public function run()
+    public function run(): void
     {
         parent::run();
 

@@ -25,7 +25,7 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
@@ -86,7 +86,7 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             ProductDataFixture::class,

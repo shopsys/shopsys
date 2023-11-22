@@ -56,9 +56,9 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     * @param array $ast
+     * @param mixed[] $ast
      */
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
         $this->file = $file;
         $this->catalogue = $catalogue;
@@ -93,7 +93,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node\Expr\MethodCall|\PhpParser\Node\Expr\FuncCall $node
      * @return string
      */
-    protected function getMessageId($node)
+    protected function getMessageId($node): string
     {
         $methodName = $this->getNormalizedMethodName($this->getNodeName($node));
         $messageIdArgumentIndex = $this->transMethodSpecifications[$methodName]->getMessageIdArgumentIndex();
@@ -112,7 +112,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node\Expr\MethodCall|\PhpParser\Node\Expr\FuncCall $node
      * @return string
      */
-    protected function getDomain($node)
+    protected function getDomain($node): string
     {
         $methodName = $this->getNormalizedMethodName($this->getNodeName($node));
         $domainArgumentIndex = $this->transMethodSpecifications[$methodName]->getDomainArgumentIndex();
@@ -131,7 +131,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node $node
      * @return bool
      */
-    protected function isTransMethodOrFuncCall(Node $node)
+    protected function isTransMethodOrFuncCall(Node $node): bool
     {
         if ($node instanceof MethodCall || $node instanceof FuncCall) {
             try {
@@ -152,7 +152,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node $node
      * @return bool
      */
-    protected function isIgnored(Node $node)
+    protected function isIgnored(Node $node): bool
     {
         foreach ($this->getAnnotations($node) as $annotation) {
             if ($annotation instanceof Ignore) {
@@ -167,7 +167,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node $node
      * @return \Doctrine\Common\Annotations\Annotation[]|\JMS\TranslationBundle\Annotation\Ignore[]
      */
-    protected function getAnnotations(Node $node)
+    protected function getAnnotations(Node $node): array
     {
         $docComment = $this->getDocComment($node);
 
@@ -185,7 +185,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node $node
      * @return \PhpParser\Comment\Doc|null
      */
-    protected function getDocComment(Node $node)
+    protected function getDocComment(Node $node): ?\PhpParser\Comment\Doc
     {
         $docComment = $node->getDocComment();
 
@@ -202,7 +202,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
      * @param string $methodName
      * @return string
      */
-    protected function getNormalizedMethodName($methodName)
+    protected function getNormalizedMethodName($methodName): string
     {
         return mb_strtolower($methodName);
     }
@@ -211,7 +211,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node $node
      * @return string
      */
-    protected function getNodeName(Node $node)
+    protected function getNodeName(Node $node): string
     {
         if ($node instanceof MethodCall) {
             return (string)$node->name;
@@ -251,6 +251,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
+     * @return null
      */
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
@@ -259,6 +260,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 
     /**
      * {@inheritdoc}
+     * @return null
      */
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast)
     {

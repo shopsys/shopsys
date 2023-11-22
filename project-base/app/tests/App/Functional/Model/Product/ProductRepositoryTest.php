@@ -34,31 +34,31 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
      */
     private ProductFacade $productFacade;
 
-    public function testVisibleAndNotSellingDeniedProductIsListed()
+    public function testVisibleAndNotSellingDeniedProductIsListed(): void
     {
         $this->getAllListableQueryBuilderTest(1, true);
     }
 
-    public function testVisibleAndSellingDeniedProductIsNotListed()
+    public function testVisibleAndSellingDeniedProductIsNotListed(): void
     {
         $this->getAllListableQueryBuilderTest(6, false);
     }
 
-    public function testProductVariantIsNotListed()
+    public function testProductVariantIsNotListed(): void
     {
         $this->getAllListableQueryBuilderTest(53, false);
     }
 
-    public function testProductMainVariantIsListed()
+    public function testProductMainVariantIsListed(): void
     {
         $this->getAllListableQueryBuilderTest(69, true);
     }
 
     /**
-     * @param mixed $productReferenceId
-     * @param mixed $isExpectedInResult
+     * @param int $productReferenceId
+     * @param bool $isExpectedInResult
      */
-    private function getAllListableQueryBuilderTest($productReferenceId, $isExpectedInResult)
+    private function getAllListableQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
@@ -78,31 +78,31 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
 
-    public function testVisibleAndNotSellingDeniedProductIsSellable()
+    public function testVisibleAndNotSellingDeniedProductIsSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(1, true);
     }
 
-    public function testVisibleAndSellingDeniedProductIsNotSellable()
+    public function testVisibleAndSellingDeniedProductIsNotSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(6, false);
     }
 
-    public function testProductVariantIsSellable()
+    public function testProductVariantIsSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(53, true);
     }
 
-    public function testProductMainVariantIsNotSellable()
+    public function testProductMainVariantIsNotSellable(): void
     {
         $this->getAllSellableQueryBuilderTest(69, false);
     }
 
     /**
-     * @param mixed $productReferenceId
-     * @param mixed $isExpectedInResult
+     * @param int $productReferenceId
+     * @param bool $isExpectedInResult
      */
-    private function getAllSellableQueryBuilderTest($productReferenceId, $isExpectedInResult)
+    private function getAllSellableQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
@@ -122,31 +122,31 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
 
-    public function testVisibleAndNotSellingDeniedProductIsOfferred()
+    public function testVisibleAndNotSellingDeniedProductIsOfferred(): void
     {
         $this->getAllOfferedQueryBuilderTest(1, true);
     }
 
-    public function testVisibleAndSellingDeniedProductIsNotOfferred()
+    public function testVisibleAndSellingDeniedProductIsNotOfferred(): void
     {
         $this->getAllOfferedQueryBuilderTest(6, false);
     }
 
-    public function testProductVariantIsOfferred()
+    public function testProductVariantIsOfferred(): void
     {
         $this->getAllOfferedQueryBuilderTest(53, true);
     }
 
-    public function testProductMainVariantIsOfferred()
+    public function testProductMainVariantIsOfferred(): void
     {
         $this->getAllOfferedQueryBuilderTest(69, true);
     }
 
     /**
-     * @param mixed $productReferenceId
-     * @param mixed $isExpectedInResult
+     * @param int $productReferenceId
+     * @param bool $isExpectedInResult
      */
-    private function getAllOfferedQueryBuilderTest($productReferenceId, $isExpectedInResult)
+    private function getAllOfferedQueryBuilderTest(int $productReferenceId, bool $isExpectedInResult): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
@@ -166,7 +166,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
 
-    public function testOrderingByProductPriorityInCategory()
+    public function testOrderingByProductPriorityInCategory(): void
     {
         /** @var \App\Model\Category\Category $category */
         $category = $this->getReference(CategoryDataFixture::CATEGORY_FOOD);
@@ -187,7 +187,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->assertSame($product1, $results[1]);
     }
 
-    public function testOrderingByProductPriorityInSearch()
+    public function testOrderingByProductPriorityInSearch(): void
     {
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 45);
@@ -206,7 +206,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->assertSame($product2, $results[1]);
     }
 
-    public function testGetSortedProductsByIds()
+    public function testGetSortedProductsByIds(): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
@@ -246,7 +246,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
      * @param \App\Model\Product\Product $product
      * @param int $priority
      */
-    private function setProductOrderingPriority(Product $product, $priority)
+    private function setProductOrderingPriority(Product $product, int $priority): void
     {
         $productData = $this->productDataFactory->createFromProduct($product);
         $productData->orderingPriority = $priority;
@@ -257,7 +257,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
      * @param string $searchText
      * @return \App\Model\Product\Product[]
      */
-    private function getProductsForSearchOrderedByPriority($searchText)
+    private function getProductsForSearchOrderedByPriority(string $searchText): array
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
@@ -283,7 +283,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
      * @param \App\Model\Category\Category $category
      * @return \App\Model\Product\Product[]
      */
-    private function getProductsInCategoryOrderedByPriority(Category $category)
+    private function getProductsInCategoryOrderedByPriority(Category $category): array
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(

@@ -105,7 +105,7 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
         }
     }
 
-    private function removeNonTransferedFlags()
+    private function removeNonTransferedFlags(): void
     {
         if ($this->countBeforeImport === count($this->nonImportedFlagCodes)) {
             $this->logger->info(

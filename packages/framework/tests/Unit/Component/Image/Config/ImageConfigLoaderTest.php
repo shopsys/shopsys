@@ -29,7 +29,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->imageConfigLoader = new ImageConfigLoader($filesystem, $entityNameResolver);
     }
 
-    public function testLoadFromArrayDuplicateEntityName()
+    public function testLoadFromArrayDuplicateEntityName(): void
     {
         $inputConfig = [
             [
@@ -59,7 +59,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertInstanceOf(DuplicateEntityNameException::class, $previousException);
     }
 
-    public function testLoadFromArrayDuplicateEntityClass()
+    public function testLoadFromArrayDuplicateEntityClass(): void
     {
         $inputConfig = [
             [
@@ -89,7 +89,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertInstanceOf(DuplicateEntityNameException::class, $previousException);
     }
 
-    public function testLoadFromArrayDuplicateNullSizeName()
+    public function testLoadFromArrayDuplicateNullSizeName(): void
     {
         $inputConfig = [
             [
@@ -129,7 +129,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertInstanceOf(DuplicateSizeNameException::class, $previousException);
     }
 
-    public function testLoadFromArrayDuplicateTypeName()
+    public function testLoadFromArrayDuplicateTypeName(): void
     {
         $inputConfig = [
             [
@@ -162,7 +162,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertInstanceOf(DuplicateTypeNameException::class, $previousException);
     }
 
-    public function testLoadFromArrayAdditionalSizeWithAndHeightAreNull()
+    public function testLoadFromArrayAdditionalSizeWithAndHeightAreNull(): void
     {
         $inputConfig = [
             [
@@ -206,7 +206,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertInstanceOf(WidthAndHeightMissingException::class, $previousException);
     }
 
-    public function testLoadFromArrayAdditionalSizeDuplicateMedia()
+    public function testLoadFromArrayAdditionalSizeDuplicateMedia(): void
     {
         $inputConfig = [
             [
@@ -255,7 +255,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertInstanceOf(DuplicateMediaException::class, $previousException);
     }
 
-    public function testLoadFromArray()
+    public function testLoadFromArray(): void
     {
         $inputConfig = [
             [
@@ -324,7 +324,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertSame(null, $additionalSize->getHeight());
     }
 
-    public function testLoadFromArrayOriginalSize()
+    public function testLoadFromArrayOriginalSize(): void
     {
         $inputConfig = [
             [
@@ -347,7 +347,7 @@ class ImageConfigLoaderTest extends TestCase
         $this->assertFalse($imageSize->getCrop());
     }
 
-    public function testLoadFromArrayExistsOriginalSize()
+    public function testLoadFromArrayExistsOriginalSize(): void
     {
         $inputConfig = [
             [

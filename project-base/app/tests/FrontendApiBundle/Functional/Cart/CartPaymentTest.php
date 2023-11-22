@@ -35,7 +35,7 @@ class CartPaymentTest extends GraphQlTestCase
         $this->assertSame($swift, $responseData['paymentGoPayBankSwift']);
     }
 
-    public function testPaymentIsReturnedAfterAddingToCart()
+    public function testPaymentIsReturnedAfterAddingToCart(): void
     {
         /** @var \App\Model\Payment\Payment $paymentGoPay */
         $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
@@ -50,7 +50,7 @@ class CartPaymentTest extends GraphQlTestCase
     /**
      * @param \App\Model\Payment\Payment $payment
      * @param string $goPayBankSwift
-     * @return array
+     * @return mixed[]
      */
     private function addPaymentToDemoCart(Payment $payment, string $goPayBankSwift): array
     {

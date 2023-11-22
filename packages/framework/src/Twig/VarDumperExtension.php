@@ -12,7 +12,7 @@ class VarDumperExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -25,12 +25,15 @@ class VarDumperExtension extends AbstractExtension
     /**
      * @param mixed $var
      */
-    public function d($var)
+    public function d($var): void
     {
         d($var);
     }
 
-    public function getName()
+    /**
+     * @return 'var_dumper_extension'
+     */
+    public function getName(): string
     {
         return 'var_dumper_extension';
     }

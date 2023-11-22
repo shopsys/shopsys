@@ -69,7 +69,7 @@ class CronModule
     /**
      * @param string $serviceId
      */
-    public function __construct($serviceId)
+    public function __construct(string $serviceId)
     {
         $this->serviceId = $serviceId;
         $this->scheduled = false;
@@ -81,7 +81,7 @@ class CronModule
     /**
      * @return string
      */
-    public function getServiceId()
+    public function getServiceId(): string
     {
         return $this->serviceId;
     }
@@ -89,7 +89,7 @@ class CronModule
     /**
      * @return bool
      */
-    public function isScheduled()
+    public function isScheduled(): bool
     {
         return $this->scheduled;
     }
@@ -97,23 +97,23 @@ class CronModule
     /**
      * @return bool
      */
-    public function isSuspended()
+    public function isSuspended(): bool
     {
         return $this->suspended;
     }
 
-    public function schedule()
+    public function schedule(): void
     {
         $this->scheduled = true;
     }
 
-    public function unschedule()
+    public function unschedule(): void
     {
         $this->scheduled = false;
         $this->suspended = false;
     }
 
-    public function suspend()
+    public function suspend(): void
     {
         $this->suspended = true;
     }

@@ -24,8 +24,9 @@ class FlagController extends AdminBaseController
 
     /**
      * @Route("/product/flag/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $productInlineEdit = $this->flagInlineEdit;
 
@@ -40,8 +41,9 @@ class FlagController extends AdminBaseController
      * @Route("/product/flag/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $fullName = $this->flagFacade->getById($id)->getName();

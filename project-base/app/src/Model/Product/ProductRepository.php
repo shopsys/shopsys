@@ -60,7 +60,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
 class ProductRepository extends BaseProductRepository
 {
     /**
-     * @param array $productCatnums
+     * @param mixed[] $productCatnums
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \App\Model\Product\Product[]
@@ -152,7 +152,7 @@ class ProductRepository extends BaseProductRepository
     }
 
     /**
-     * @param array $catnums
+     * @param mixed[] $catnums
      * @return \App\Model\Product\Product[]
      */
     public function findAllByCatnums(array $catnums): array
@@ -193,7 +193,7 @@ class ProductRepository extends BaseProductRepository
         PricingGroup $pricingGroup,
         $locale,
         $searchText,
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
 
         $this->addTranslation($queryBuilder, $locale);
@@ -215,7 +215,7 @@ class ProductRepository extends BaseProductRepository
         PricingGroup $pricingGroup,
         $locale,
         $searchText,
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
 
         $this->addTranslation($queryBuilder, $locale);
@@ -239,7 +239,7 @@ class ProductRepository extends BaseProductRepository
         $locale,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup,
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         $queryBuilder = $this->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -296,7 +296,7 @@ class ProductRepository extends BaseProductRepository
         $orderingModeId,
         PricingGroup $pricingGroup,
         $locale,
-    ) {
+    ): void {
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_RELEVANCE) {
             $queryBuilder->addOrderBy('relevance', 'asc');
             $queryBuilder->addOrderBy('p.id', 'asc');

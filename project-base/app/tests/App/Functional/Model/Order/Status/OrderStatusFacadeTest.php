@@ -29,7 +29,7 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
      */
     private OrderDataFactoryInterface $orderDataFactory;
 
-    public function testDeleteByIdAndReplace()
+    public function testDeleteByIdAndReplace(): void
     {
         $orderStatusData = new OrderStatusData();
         $orderStatusData->name = ['cs' => 'name'];

@@ -43,7 +43,7 @@ class NormalizeUrlTrailingSlashListener
     }
 
     /**
-     * @param array $routerData
+     * @param mixed[] $routerData
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      */
     private function setRedirectResponse(array $routerData, ExceptionEvent $event): void

@@ -104,7 +104,7 @@ class SitemapRepository extends BaseSitemapRepository
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForSoldOutProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup): array
     {

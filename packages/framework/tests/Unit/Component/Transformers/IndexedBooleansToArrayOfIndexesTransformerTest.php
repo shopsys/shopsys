@@ -9,7 +9,10 @@ use Shopsys\FrameworkBundle\Form\Transformers\IndexedBooleansToArrayOfIndexesTra
 
 class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
 {
-    public function transformValuesProvider()
+    /**
+     * @return array<'expected'|'value', never[]>[]|array<'expected'|'value', int[]|bool[]>[]|array<'expected'|'value', string[]|array<'foo', bool>>[]|array<'expected'|'value', string|null>[]
+     */
+    public function transformValuesProvider(): array
     {
         return [
             ['value' => [], 'expected' => []],
@@ -22,16 +25,19 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
 
     /**
      * @dataProvider transformValuesProvider
-     * @param mixed $value
-     * @param mixed $expected
+     * @param string|mixed[]|null $value
+     * @param mixed[]|null $expected
      */
-    public function testTransform($value, $expected)
+    public function testTransform(string|array|null $value, ?array $expected): void
     {
         $transformer = new IndexedBooleansToArrayOfIndexesTransformer();
         $this->assertSame($expected, $transformer->transform($value));
     }
 
-    public function reverseTransformValuesProvider()
+    /**
+     * @return array<'expected'|'value', bool[]|int[]>[]|array<'expected'|'value', never[]|array<'foo', bool>|string[]>[]|array<'expected'|'value', string|null>[]
+     */
+    public function reverseTransformValuesProvider(): array
     {
         return [
             ['value' => [], 'expected' => []],
@@ -46,10 +52,10 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
 
     /**
      * @dataProvider reverseTransformValuesProvider
-     * @param mixed $value
-     * @param mixed $expected
+     * @param string|mixed[]|null $value
+     * @param mixed[]|null $expected
      */
-    public function testReverseTransform($value, $expected)
+    public function testReverseTransform(string|array|null $value, ?array $expected): void
     {
         $transformer = new IndexedBooleansToArrayOfIndexesTransformer();
         $this->assertSame($expected, $transformer->reverseTransform($value));

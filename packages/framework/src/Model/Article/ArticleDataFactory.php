@@ -57,7 +57,7 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
      */
-    protected function fillFromArticle(ArticleData $articleData, Article $article)
+    protected function fillFromArticle(ArticleData $articleData, Article $article): void
     {
         $articleData->name = $article->getName();
         $articleData->text = $article->getText();
@@ -82,7 +82,7 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      */
-    protected function fillNew(ArticleData $articleData)
+    protected function fillNew(ArticleData $articleData): void
     {
         $articleData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
     }

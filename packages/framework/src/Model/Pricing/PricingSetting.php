@@ -30,7 +30,7 @@ class PricingSetting
     /**
      * @return int
      */
-    public function getInputPriceType()
+    public function getInputPriceType(): int
     {
         return $this->setting->get(self::INPUT_PRICE_TYPE);
     }
@@ -38,7 +38,7 @@ class PricingSetting
     /**
      * @return int
      */
-    public function getDefaultCurrencyId()
+    public function getDefaultCurrencyId(): int
     {
         return $this->setting->get(self::DEFAULT_CURRENCY);
     }
@@ -47,7 +47,7 @@ class PricingSetting
      * @param int $domainId
      * @return int
      */
-    public function getDomainDefaultCurrencyIdByDomainId($domainId)
+    public function getDomainDefaultCurrencyIdByDomainId($domainId): int
     {
         return $this->setting->getForDomain(self::DEFAULT_DOMAIN_CURRENCY, $domainId);
     }
@@ -55,7 +55,7 @@ class PricingSetting
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      */
-    public function setDefaultCurrency(Currency $currency)
+    public function setDefaultCurrency(Currency $currency): void
     {
         $this->setting->set(self::DEFAULT_CURRENCY, $currency->getId());
     }
@@ -64,7 +64,7 @@ class PricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
      */
-    public function setDomainDefaultCurrency(Currency $currency, $domainId)
+    public function setDomainDefaultCurrency(Currency $currency, $domainId): void
     {
         $this->setting->setForDomain(self::DEFAULT_DOMAIN_CURRENCY, $currency->getId(), $domainId);
     }
@@ -82,15 +82,15 @@ class PricingSetting
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $priceLimit
      */
-    public function setFreeTransportAndPaymentPriceLimit($domainId, ?Money $priceLimit)
+    public function setFreeTransportAndPaymentPriceLimit($domainId, ?Money $priceLimit): void
     {
         $this->setting->setForDomain(self::FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT, $priceLimit, $domainId);
     }
 
     /**
-     * @return array
+     * @return int[]
      */
-    public static function getInputPriceTypes()
+    public static function getInputPriceTypes(): array
     {
         return [
             self::INPUT_PRICE_TYPE_WITHOUT_VAT,

@@ -48,7 +48,7 @@ class ImageProcessor
      * @param string $filepath
      * @return \Intervention\Image\Image
      */
-    public function createInterventionImage($filepath)
+    public function createInterventionImage($filepath): \Intervention\Image\Image
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
 
@@ -73,7 +73,7 @@ class ImageProcessor
      * @param string $filepath
      * @return string
      */
-    public function convertToShopFormatAndGetNewFilename($filepath)
+    public function convertToShopFormatAndGetNewFilename(string $filepath): string
     {
         $filename = pathinfo($filepath, PATHINFO_FILENAME);
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
@@ -106,15 +106,15 @@ class ImageProcessor
      * @param bool $crop
      * @return \Intervention\Image\Image
      */
-    public function resize(Image $image, $width, $height, $crop = false)
+    public function resize(Image $image, $width, $height, $crop = false): \Intervention\Image\Image
     {
         if ($crop) {
-            $image->fit($width, $height, function (Constraint $constraint) {
+            $image->fit($width, $height, function (Constraint $constraint): void {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
         } else {
-            $image->resize($width, $height, function (Constraint $constraint) {
+            $image->resize($width, $height, function (Constraint $constraint): void {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
@@ -127,7 +127,7 @@ class ImageProcessor
      * @param \Intervention\Image\Image $image
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
      */
-    public function resizeBySizeConfig(Image $image, ImageSizeConfig $sizeConfig)
+    public function resizeBySizeConfig(Image $image, ImageSizeConfig $sizeConfig): void
     {
         $this->resize($image, $sizeConfig->getWidth(), $sizeConfig->getHeight(), $sizeConfig->getCrop());
     }
@@ -141,7 +141,7 @@ class ImageProcessor
         Image $image,
         ImageSizeConfig $sizeConfig,
         ImageAdditionalSizeConfig $additionalSizeConfig,
-    ) {
+    ): void {
         $this->resize(
             $image,
             $additionalSizeConfig->getWidth(),
@@ -153,7 +153,7 @@ class ImageProcessor
     /**
      * @return string[]
      */
-    public function getSupportedImageExtensions()
+    public function getSupportedImageExtensions(): array
     {
         return $this->supportedImageExtensions;
     }

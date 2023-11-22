@@ -16,13 +16,16 @@ class DomainDbFunctionsFacade
     {
     }
 
-    public function createDomainDbFunctions()
+    public function createDomainDbFunctions(): void
     {
         $this->createDomainIdsByLocaleFunction();
         $this->createLocaleByDomainIdFunction();
     }
 
-    protected function createDomainIdsByLocaleFunction()
+    /**
+     * @return int|string
+     */
+    protected function createDomainIdsByLocaleFunction(): int|string
     {
         $domainsIdsByLocale = [];
 
@@ -53,7 +56,10 @@ class DomainDbFunctionsFacade
         );
     }
 
-    protected function createLocaleByDomainIdFunction()
+    /**
+     * @return int|string
+     */
+    protected function createLocaleByDomainIdFunction(): int|string
     {
         $localeByDomainIdSqlClauses = [];
 

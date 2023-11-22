@@ -52,7 +52,7 @@ class ParameterValue
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -68,7 +68,7 @@ class ParameterValue
     /**
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -76,7 +76,7 @@ class ParameterValue
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -84,7 +84,7 @@ class ParameterValue
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterData
      */
-    public function edit(ParameterValueData $parameterData)
+    public function edit(ParameterValueData $parameterData): void
     {
         $this->text = $parameterData->text;
     }

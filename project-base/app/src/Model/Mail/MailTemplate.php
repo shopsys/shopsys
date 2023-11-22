@@ -33,7 +33,7 @@ class MailTemplate extends BaseMailTemplate
     /**
      * @param \App\Model\Mail\MailTemplateData $mailTemplateData
      */
-    public function edit(BaseMailTemplateData $mailTemplateData)
+    public function edit(BaseMailTemplateData $mailTemplateData): void
     {
         parent::edit($mailTemplateData);
 

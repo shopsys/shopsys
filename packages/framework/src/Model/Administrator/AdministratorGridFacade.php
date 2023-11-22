@@ -31,7 +31,7 @@ class AdministratorGridFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
      */
-    public function restoreAndRememberGridLimit(Administrator $administrator, Grid $grid)
+    public function restoreAndRememberGridLimit(Administrator $administrator, Grid $grid): void
     {
         $administrator->restoreGridLimit($grid);
         $this->rememberGridLimit($administrator, $grid);
@@ -42,7 +42,7 @@ class AdministratorGridFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
      */
-    protected function rememberGridLimit(Administrator $administrator, Grid $grid)
+    protected function rememberGridLimit(Administrator $administrator, Grid $grid): void
     {
         if (!$grid->isEnabledPaging()) {
             throw new RememberGridLimitException($grid->getId());

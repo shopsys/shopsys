@@ -38,7 +38,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function map(): array
     {

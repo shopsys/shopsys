@@ -107,7 +107,7 @@ class CronCommand extends Command
         InputInterface $input,
         OutputInterface $output,
         CronFacade $cronFacade,
-    ) {
+    ): void {
         $instanceNames = $cronFacade->getInstanceNames();
         $io = new SymfonyStyle($input, $output);
 
@@ -135,7 +135,7 @@ class CronCommand extends Command
     {
         uasort(
             $cronModuleConfigs,
-            function (CronModuleConfig $cronModuleConfigA, CronModuleConfig $cronModuleConfigB) {
+            function (CronModuleConfig $cronModuleConfigA, CronModuleConfig $cronModuleConfigB): int {
                 return strcmp($cronModuleConfigA->getServiceId(), $cronModuleConfigB->getServiceId());
             },
         );
@@ -171,7 +171,7 @@ class CronCommand extends Command
         CronFacade $cronFacade,
         MutexFactory $mutexFactory,
         string $instanceName,
-    ) {
+    ): void {
         $requestedModuleServiceId = $input->getOption(self::OPTION_MODULE);
         $runAllModules = $requestedModuleServiceId === null;
         $cronInstances = $this->parameterBag->get('cron_instances');
@@ -205,7 +205,7 @@ class CronCommand extends Command
      * @param int $runEveryMin
      * @return \DateTimeImmutable
      */
-    private function getCurrentRoundedTime(int $runEveryMin)
+    private function getCurrentRoundedTime(int $runEveryMin): \DateTimeImmutable
     {
         $time = new DateTime('now', $this->getCronTimeZone());
         $time->modify('-' . $time->format('s') . ' sec');

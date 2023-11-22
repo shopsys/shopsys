@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
 
 class ImageEntityConfigTest extends TestCase
 {
-    public function testGetTypeSizes()
+    public function testGetTypeSizes(): void
     {
         $types = [
             'TypeName_1' => [
@@ -30,7 +30,7 @@ class ImageEntityConfigTest extends TestCase
         $this->assertSame($types['TypeName_1'], $typeSizes);
     }
 
-    public function testGetTypeSizesNotFound()
+    public function testGetTypeSizesNotFound(): void
     {
         $types = [
             'TypeName_1' => [
@@ -49,7 +49,7 @@ class ImageEntityConfigTest extends TestCase
         $imageEntityConfig->getSizeConfigsByType('TypeName_3');
     }
 
-    public function testGetTypeSize()
+    public function testGetTypeSize(): void
     {
         $types = [
             'TypeName_1' => [
@@ -80,7 +80,7 @@ class ImageEntityConfigTest extends TestCase
      * @param string|null $name
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
      */
-    private function createImageSizeConfig($name)
+    private function createImageSizeConfig(?string $name): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
     {
         return new ImageSizeConfig($name, null, null, false, null, []);
     }

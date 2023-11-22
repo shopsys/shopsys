@@ -31,15 +31,15 @@ class ActionColumn
      * @param string $type
      * @param string $title
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
+     * @param mixed[] $bindingRouteParams
+     * @param mixed[] $additionalRouteParams
      */
     public function __construct(
         protected readonly RouterInterface $router,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
-        $type,
-        $title,
-        $route,
+        string $type,
+        string $title,
+        string $route,
         protected readonly array $bindingRouteParams,
         protected readonly array $additionalRouteParams,
     ) {
@@ -52,7 +52,7 @@ class ActionColumn
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -60,7 +60,7 @@ class ActionColumn
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -68,7 +68,7 @@ class ActionColumn
     /**
      * @return string|null
      */
-    public function getClassAttribute()
+    public function getClassAttribute(): ?string
     {
         return $this->classAttribute;
     }
@@ -76,7 +76,7 @@ class ActionColumn
     /**
      * @return string|null
      */
-    public function getConfirmMessage()
+    public function getConfirmMessage(): ?string
     {
         return $this->confirmMessage;
     }
@@ -85,7 +85,7 @@ class ActionColumn
      * @param string $classAttribute
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function setClassAttribute($classAttribute)
+    public function setClassAttribute(?string $classAttribute): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         $this->classAttribute = $classAttribute;
 
@@ -96,7 +96,7 @@ class ActionColumn
      * @param string $confirmMessage
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function setConfirmMessage($confirmMessage)
+    public function setConfirmMessage(?string $confirmMessage): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         $this->confirmMessage = $confirmMessage;
 
@@ -106,7 +106,7 @@ class ActionColumn
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function setAjaxConfirm()
+    public function setAjaxConfirm(): \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
     {
         $this->isAjaxConfirm = true;
 
@@ -116,16 +116,16 @@ class ActionColumn
     /**
      * @return bool
      */
-    public function isAjaxConfirm()
+    public function isAjaxConfirm(): bool
     {
         return $this->isAjaxConfirm;
     }
 
     /**
-     * @param array $row
+     * @param mixed[] $row
      * @return string
      */
-    public function getTargetUrl(array $row)
+    public function getTargetUrl(array $row): string
     {
         $parameters = $this->additionalRouteParams;
 

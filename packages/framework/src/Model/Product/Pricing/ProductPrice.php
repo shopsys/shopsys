@@ -14,7 +14,7 @@ class ProductPrice extends Price
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      * @param bool $priceFrom
      */
-    public function __construct(Price $price, $priceFrom)
+    public function __construct(Price $price, bool $priceFrom)
     {
         $this->priceFrom = $priceFrom;
 
@@ -24,7 +24,7 @@ class ProductPrice extends Price
     /**
      * @return bool
      */
-    public function isPriceFrom()
+    public function isPriceFrom(): bool
     {
         return $this->priceFrom;
     }

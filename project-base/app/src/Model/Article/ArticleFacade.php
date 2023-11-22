@@ -103,7 +103,7 @@ class ArticleFacade extends BaseArticleFacade
     /**
      * @param int $articleId
      */
-    public function delete($articleId)
+    public function delete($articleId): void
     {
         parent::delete($articleId);
 

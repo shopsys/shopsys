@@ -15,9 +15,9 @@ class NoVarDumperExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('d', function () {
+            new TwigFunction('d', function (): void {
             }),
-            new TwigFunction('dump', function () {
+            new TwigFunction('dump', function (): void {
             }),
         ];
     }

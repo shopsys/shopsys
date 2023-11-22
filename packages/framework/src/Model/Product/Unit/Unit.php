@@ -44,7 +44,7 @@ class Unit extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      */
-    public function edit(UnitData $unitData)
+    public function edit(UnitData $unitData): void
     {
         $this->setData($unitData);
     }
@@ -60,7 +60,7 @@ class Unit extends AbstractTranslatableEntity
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -69,7 +69,7 @@ class Unit extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string
      */
-    public function getName($locale = null)
+    public function getName($locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -77,7 +77,7 @@ class Unit extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      */
-    protected function setTranslations(UnitData $unitData)
+    protected function setTranslations(UnitData $unitData): void
     {
         foreach ($unitData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -87,7 +87,7 @@ class Unit extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation
      */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation
     {
         return new UnitTranslation();
     }

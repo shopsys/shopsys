@@ -13,7 +13,7 @@ class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         /** @var \Doctrine\ORM\Mapping\Driver\AnnotationDriver $annotationReader */
         $annotationReader = $container->get('doctrine.orm.default_metadata_driver');

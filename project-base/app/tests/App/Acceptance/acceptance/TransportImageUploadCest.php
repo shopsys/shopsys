@@ -25,7 +25,7 @@ class TransportImageUploadCest
         AcceptanceTester $me,
         EntityEditPage $entityEditPage,
         LoginPage $loginPage,
-    ) {
+    ): void {
         $me->wantTo('Upload an image in admin transport edit page');
         $loginPage->loginAsAdmin();
         $me->amOnPage('/admin/transport/edit/1');

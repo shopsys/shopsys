@@ -25,7 +25,7 @@ class ProductImageUploadCest
         AcceptanceTester $me,
         EntityEditPage $entityEditPage,
         LoginPage $loginPage,
-    ) {
+    ): void {
         $me->wantTo('upload image in admin product edit page');
         $loginPage->loginAsAdmin();
         $me->amOnPage('/admin/product/edit/1');

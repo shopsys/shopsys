@@ -36,7 +36,7 @@ class MailTemplateFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */
-    public function get($templateName, $domainId)
+    public function get($templateName, $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         return $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
     }
@@ -70,7 +70,7 @@ class MailTemplateFacade
     /**
      * @param string $name
      */
-    public function createMailTemplateForAllDomains($name)
+    public function createMailTemplateForAllDomains(string $name): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $mailTemplateData = $this->mailTemplateDataFactory->create();
@@ -85,7 +85,7 @@ class MailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $attachment
      * @return string
      */
-    public function getMailTemplateAttachmentFilepath(UploadedFile $attachment)
+    public function getMailTemplateAttachmentFilepath(UploadedFile $attachment): string
     {
         return $this->mailTemplateAttachmentFilepathProvider->getTemporaryFilepath($attachment);
     }
@@ -93,7 +93,7 @@ class MailTemplateFacade
     /**
      * @return bool
      */
-    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject()
+    public function existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject(): bool
     {
         return $this->mailTemplateRepository->existsTemplateWithEnabledSendingHavingEmptyBodyOrSubject();
     }

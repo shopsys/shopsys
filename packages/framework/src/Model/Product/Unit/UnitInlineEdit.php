@@ -29,7 +29,7 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @return int
      */
-    protected function createEntityAndGetId($unitData)
+    protected function createEntityAndGetId($unitData): int|string
     {
         $unit = $this->unitFacade->create($unitData);
 
@@ -40,7 +40,7 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      * @param int $unitId
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      */
-    protected function editEntity($unitId, $unitData)
+    protected function editEntity($unitId, $unitData): void
     {
         $this->unitFacade->edit($unitId, $unitData);
     }
@@ -49,7 +49,7 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      * @param int|null $unitId
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($unitId)
+    public function getForm($unitId): \Symfony\Component\Form\FormInterface
     {
         if ($unitId !== null) {
             $unit = $this->unitFacade->getById((int)$unitId);

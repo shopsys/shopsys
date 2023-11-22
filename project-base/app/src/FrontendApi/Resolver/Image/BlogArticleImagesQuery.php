@@ -12,7 +12,7 @@ class BlogArticleImagesQuery extends ImagesQuery implements AliasedInterface
     public const ENTITY_NAME = 'blogArticle';
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @param string|null $type
      * @param array|null $sizes
      * @return \GraphQL\Executor\Promise\Promise
@@ -23,7 +23,7 @@ class BlogArticleImagesQuery extends ImagesQuery implements AliasedInterface
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @param string|null $type
      * @param string|null $size
      * @return \GraphQL\Executor\Promise\Promise

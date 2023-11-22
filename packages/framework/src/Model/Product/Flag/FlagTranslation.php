@@ -30,7 +30,7 @@ class FlagTranslation extends AbstractTranslation
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -38,7 +38,7 @@ class FlagTranslation extends AbstractTranslation
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }

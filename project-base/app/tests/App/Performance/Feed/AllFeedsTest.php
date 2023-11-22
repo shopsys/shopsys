@@ -47,7 +47,7 @@ class AllFeedsTest extends KernelTestCase
         $this->minDuration = $container->getParameter('shopsys.performance_test.feed.min_duration_seconds');
     }
 
-    public function testAllFeedsGeneration()
+    public function testAllFeedsGeneration(): void
     {
         $consoleOutput = new ConsoleOutput();
 
@@ -95,7 +95,7 @@ class AllFeedsTest extends KernelTestCase
      * @param int $maxDuration
      * @return \Tests\App\Performance\Feed\PerformanceTestSample
      */
-    private function doTestFeedGeneration(FeedInfoInterface $feedInfo, DomainConfig $domainConfig, $maxDuration)
+    private function doTestFeedGeneration(FeedInfoInterface $feedInfo, DomainConfig $domainConfig, $maxDuration): \Tests\App\Performance\Feed\PerformanceTestSample
     {
         $performanceTestSample = $this->generateFeed($feedInfo, $domainConfig);
         $this->setPerformanceTestSampleMessage(
@@ -110,7 +110,7 @@ class AllFeedsTest extends KernelTestCase
     /**
      * @return array[]
      */
-    public function getAllFeedGenerationData()
+    public function getAllFeedGenerationData(): array
     {
         /** @var \Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry */
         $feedRegistry = static::$container->get(FeedRegistry::class);
@@ -136,7 +136,7 @@ class AllFeedsTest extends KernelTestCase
      * @param int $maxDuration
      * @return array[]
      */
-    private function getFeedGenerationData(array $feeds, array $domainConfigs, $maxDuration)
+    private function getFeedGenerationData(array $feeds, array $domainConfigs, int $maxDuration): array
     {
         $feedGenerationData = [];
 
@@ -157,8 +157,8 @@ class AllFeedsTest extends KernelTestCase
     private function setPerformanceTestSampleMessage(
         PerformanceTestSample $performanceTestSample,
         $maxDuration,
-        $realDuration,
-    ) {
+        float $realDuration,
+    ): void {
         $minDuration = $this->minDuration;
 
         if ($realDuration < $minDuration) {
@@ -191,7 +191,7 @@ class AllFeedsTest extends KernelTestCase
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Tests\App\Performance\Feed\PerformanceTestSample
      */
-    private function generateFeed(FeedInfoInterface $feed, DomainConfig $domainConfig)
+    private function generateFeed(FeedInfoInterface $feed, DomainConfig $domainConfig): \Tests\App\Performance\Feed\PerformanceTestSample
     {
         $this->setUp();
 
@@ -241,7 +241,7 @@ class AllFeedsTest extends KernelTestCase
     /**
      * @param \Tests\App\Performance\Feed\PerformanceTestSample[] $performanceTestSamples
      */
-    private function assertSamplesAreSuccessful(array $performanceTestSamples)
+    private function assertSamplesAreSuccessful(array $performanceTestSamples): void
     {
         $failMessages = [];
 
@@ -266,7 +266,7 @@ class AllFeedsTest extends KernelTestCase
      * @param \Tests\App\Performance\Feed\PerformanceTestSample[] $performanceTestSamples
      * @param string $jmeterOutputFilename
      */
-    private function exportJmeterCsvReport(array $performanceTestSamples, $jmeterOutputFilename)
+    private function exportJmeterCsvReport(array $performanceTestSamples, string $jmeterOutputFilename): void
     {
         $jmeterCsvReporter = new JmeterCsvReporter();
         $performanceResultsCsvExporter = new PerformanceResultsCsvExporter($jmeterCsvReporter);

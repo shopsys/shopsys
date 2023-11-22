@@ -9,7 +9,7 @@ class ProductStockDataFactory
     /**
      * @return \App\Model\Stock\ProductStockData
      */
-    private function create()
+    private function create(): \App\Model\Stock\ProductStockData
     {
         return new ProductStockData();
     }

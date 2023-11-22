@@ -21,7 +21,7 @@ class PersonalDataAccessRequestRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest|null
      */
-    public function findByHashAndDomainId($hash, $domainId)
+    public function findByHashAndDomainId($hash, $domainId): ?\Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest
     {
         $dateTime = new DateTime('-1 day');
 
@@ -41,7 +41,7 @@ class PersonalDataAccessRequestRepository
      * @param string $hash
      * @return bool
      */
-    public function isHashUsed($hash)
+    public function isHashUsed($hash): bool
     {
         return (bool)$this->getQueryBuilder()
             ->select('count(pdar)')
@@ -54,7 +54,7 @@ class PersonalDataAccessRequestRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getQueryBuilder()
+    protected function getQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('pdar')

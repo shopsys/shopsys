@@ -14,7 +14,7 @@ class FlagGridFactory extends BaseFlagGridFactory
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create(): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder

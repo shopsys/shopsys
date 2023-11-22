@@ -18,17 +18,17 @@ class ProductVisibilityFacade
     {
     }
 
-    public function refreshProductsVisibilityForMarkedDelayed()
+    public function refreshProductsVisibilityForMarkedDelayed(): void
     {
         $this->recalcVisibilityForMarked = true;
     }
 
-    public function refreshProductsVisibility()
+    public function refreshProductsVisibility(): void
     {
         $this->productVisibilityRepository->refreshProductsVisibility();
     }
 
-    public function refreshProductsVisibilityForMarked()
+    public function refreshProductsVisibilityForMarked(): void
     {
         $this->productVisibilityRepository->refreshProductsVisibility(true);
     }
@@ -36,7 +36,7 @@ class ProductVisibilityFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
-    public function markProductsForRecalculationAffectedByCategory(Category $category)
+    public function markProductsForRecalculationAffectedByCategory(Category $category): void
     {
         $this->productVisibilityRepository->markProductsForRecalculationAffectedByCategory($category);
     }

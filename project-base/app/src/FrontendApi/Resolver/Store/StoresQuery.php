@@ -28,7 +28,7 @@ class StoresQuery extends AbstractQuery
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function storesQuery(Argument $argument)
+    public function storesQuery(Argument $argument): object
     {
         PageSizeValidator::checkMaxPageSize($argument);
         $domainId = $this->domain->getId();
@@ -47,7 +47,7 @@ class StoresQuery extends AbstractQuery
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object|null
      */
-    public function storesByTransportQuery(Transport $transport, Argument $argument)
+    public function storesByTransportQuery(Transport $transport, Argument $argument): ?object
     {
         if ($transport->isPersonalPickup()) {
             return $this->storesQuery($argument);

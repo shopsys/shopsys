@@ -31,7 +31,7 @@ class PersonalDataAccessMailFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
      */
-    public function sendMail(PersonalDataAccessRequest $personalDataAccessRequest)
+    public function sendMail(PersonalDataAccessRequest $personalDataAccessRequest): void
     {
         if ($personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_DISPLAY) {
             $mailTemplate = $this->mailTemplateFacade->get(

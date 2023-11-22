@@ -16,7 +16,7 @@ class EntityNameResolverTest extends TestCase
     public const STRING_WITHOUT_SPACES_ON_BORDERS = 'string';
 
     /**
-     * @return array
+     * @return array<string, array<string|never[]>>
      */
     public function resolvingProvider(): array
     {
@@ -59,7 +59,7 @@ class EntityNameResolverTest extends TestCase
 
     /**
      * @dataProvider resolvingProvider
-     * @param array $map
+     * @param mixed[] $map
      * @param string $value
      * @param string $expected
      */
@@ -71,9 +71,9 @@ class EntityNameResolverTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return non-empty-array
      */
-    public function resolvingInStringsProvider(): array
+    public function resolvingInStringsProvider()
     {
         $resolveDataProvider = $this->resolvingProvider();
 
@@ -103,7 +103,7 @@ class EntityNameResolverTest extends TestCase
 
     /**
      * @dataProvider resolvingInStringsProvider
-     * @param array $map
+     * @param mixed[] $map
      * @param string $value
      * @param string $expected
      */

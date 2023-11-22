@@ -188,7 +188,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         /** @var \GraphQL\Executor\Promise\Promise $promise */
         $promise = $paginator->auto($argument, 0); // actual total count is set after the promise is fulfilled
 
-        $promise->then(function (ProductConnection $productConnection) use ($batchLoadDataId) {
+        $promise->then(function (ProductConnection $productConnection) use ($batchLoadDataId): void {
             $productConnection->setTotalCount(ProductsBatchLoader::getTotalByBatchLoadDataId($batchLoadDataId));
         });
 
@@ -211,7 +211,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         return new Paginator(
             $retrieveProductClosure,
             Paginator::MODE_PROMISE,
-            new ConnectionBuilder(null, function ($edges, $pageInfo) use ($productFilterOptionsClosure, $orderingMode, $defaultOrderingMode) {
+            new ConnectionBuilder(null, function ($edges, $pageInfo) use ($productFilterOptionsClosure, $orderingMode, $defaultOrderingMode): \App\FrontendApi\Model\Product\Connection\ProductConnection {
                 return new ProductConnection(
                     $edges,
                     $pageInfo,

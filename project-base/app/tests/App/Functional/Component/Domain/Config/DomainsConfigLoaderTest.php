@@ -17,7 +17,7 @@ class DomainsConfigLoaderTest extends FunctionalTestCase
      */
     private DomainsConfigLoader $domainsConfigLoader;
 
-    public function testLoadDomainConfigsFromYaml()
+    public function testLoadDomainConfigsFromYaml(): void
     {
         $domainsConfigFilepath = self::getContainer()->getParameter('shopsys.domain_config_filepath');
         $domainsUrlsConfigFilepath = self::getContainer()->getParameter('shopsys.domain_urls_config_filepath');
@@ -33,7 +33,7 @@ class DomainsConfigLoaderTest extends FunctionalTestCase
         }
     }
 
-    public function testLoadDomainConfigsFromYamlConfigFileNotFound()
+    public function testLoadDomainConfigsFromYamlConfigFileNotFound(): void
     {
         $domainsUrlsConfigFilepath = self::getContainer()->getParameter('shopsys.domain_urls_config_filepath');
 
@@ -41,7 +41,7 @@ class DomainsConfigLoaderTest extends FunctionalTestCase
         $this->domainsConfigLoader->loadDomainConfigsFromYaml('nonexistentFilename', $domainsUrlsConfigFilepath);
     }
 
-    public function testLoadDomainConfigsFromYamlUrlsConfigFileNotFound()
+    public function testLoadDomainConfigsFromYamlUrlsConfigFileNotFound(): void
     {
         $domainsConfigFilepath = self::getContainer()->getParameter('shopsys.domain_config_filepath');
 
@@ -49,7 +49,7 @@ class DomainsConfigLoaderTest extends FunctionalTestCase
         $this->domainsConfigLoader->loadDomainConfigsFromYaml($domainsConfigFilepath, 'nonexistentFilename');
     }
 
-    public function testLoadDomainConfigsFromYamlDomainConfigsDoNotMatchException()
+    public function testLoadDomainConfigsFromYamlDomainConfigsDoNotMatchException(): void
     {
         $domainsConfigFilepath = __DIR__ . '/test_domains.yaml';
         $domainsUrlsConfigFilepath = __DIR__ . '/test_domains_urls.yaml';

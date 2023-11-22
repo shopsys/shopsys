@@ -73,7 +73,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->getDemoData() as $demoRow) {
             $store = $this->storeFacade->create($this->initStoreData($demoRow));
@@ -82,7 +82,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getDemoData(): array
     {
@@ -155,7 +155,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     }
 
     /**
-     * @param array $demoRow
+     * @param mixed[] $demoRow
      * @return \App\Model\Store\StoreData
      */
     private function initStoreData(array $demoRow): StoreData
@@ -189,7 +189,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         return $storeData;
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             StocksDataFixture::class,

@@ -25,7 +25,7 @@ use Tests\FrameworkBundle\Test\Provider\TestCurrencyProvider;
 
 class OrderPreviewCalculationTest extends FunctionalTestCase
 {
-    public function testCalculatePreviewWithTransportAndPayment()
+    public function testCalculatePreviewWithTransportAndPayment(): void
     {
         $vatData = new VatData();
         $vatData->name = 'vatName';
@@ -121,7 +121,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
         $this->assertSame($transportPrice, $orderPreview->getTransportPrice());
     }
 
-    public function testCalculatePreviewWithoutTransportAndPayment()
+    public function testCalculatePreviewWithoutTransportAndPayment(): void
     {
         $vatData = new VatData();
         $vatData->name = 'vatName';

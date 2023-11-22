@@ -52,7 +52,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return int
      */
     public function getStockQuantity(array $data): int
@@ -61,7 +61,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return bool
      */
     public function isUsingStock(array $data): bool
@@ -70,7 +70,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return string
      */
     public function getFullname(array $data): string
@@ -85,7 +85,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return bool
      */
     public function hasPreorder(array $data): bool
@@ -94,7 +94,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return bool
      */
     public function isSellingDenied(array $data): bool
@@ -103,7 +103,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return string|null
      */
     public function getNamePrefix(array $data): ?string
@@ -112,7 +112,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return string|null
      */
     public function getNameSuffix(array $data): ?string
@@ -121,7 +121,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return string|null
      */
     public function getPartNumber(array $data): ?string
@@ -130,7 +130,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return string
      */
     public function getCatalogNumber(array $data): string
@@ -139,8 +139,8 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param mixed[] $data
+     * @return array<'name'|'status', mixed>
      */
     public function getExtendedAvailability(array $data): array
     {
@@ -151,7 +151,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return string[]
      */
     public function getAvailability(array $data): array
@@ -160,7 +160,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return string
      */
     public function getSlug(array $data): string
@@ -169,8 +169,8 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param mixed[] $data
+     * @return array<int|string, array<'anchorText'|'url', mixed>>
      */
     public function getFiles(array $data): array
     {
@@ -184,8 +184,8 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param mixed[] $data
+     * @return mixed[]
      */
     public function getStoreAvailabilities(array $data): array
     {
@@ -198,7 +198,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return int
      */
     public function getAvailableStoresCount(array $data): int
@@ -207,7 +207,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return int[]
      */
     public function getRelatedProducts(array $data): array
@@ -216,8 +216,8 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param mixed[] $data
+     * @return mixed[]
      */
     public function getBreadcrumb(array $data): array
     {
@@ -225,7 +225,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function getCategoriesPromise(array $data): Promise
@@ -234,7 +234,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function getFlagsPromise(array $data): Promise
@@ -243,7 +243,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function getAccessoriesPromise(array $data): Promise
@@ -252,7 +252,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function getRelatedProductsPromise(array $data): Promise
@@ -261,7 +261,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return \GraphQL\Executor\Promise\Promise|null
      */
     public function getBrandPromise(array $data): ?Promise
@@ -272,7 +272,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return bool
      */
     public function isMainVariant(array $data): bool
@@ -281,8 +281,8 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param mixed[] $data
+     * @return mixed[]
      */
     public function getProductVideos(array $data): array
     {

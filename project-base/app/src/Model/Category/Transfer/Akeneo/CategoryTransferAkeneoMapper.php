@@ -19,7 +19,7 @@ class CategoryTransferAkeneoMapper
     }
 
     /**
-     * @param array $akeneoCategoryData
+     * @param mixed[] $akeneoCategoryData
      * @param \App\Model\Category\Category|null $category
      * @return \App\Model\Category\CategoryData
      */

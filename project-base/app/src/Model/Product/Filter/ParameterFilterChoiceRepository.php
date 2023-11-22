@@ -35,7 +35,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
         PricingGroup $pricingGroup,
         $locale,
         Category $category,
-    ) {
+    ): array {
         // it must contain variants + main variants
         $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
@@ -72,10 +72,10 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
     }
 
     /**
-     * @param array $rows
+     * @param mixed[] $rows
      * @param string $locale
      * @param \App\Model\Category\Category $category
-     * @return array
+     * @return mixed[]
      */
     protected function getVisibleParametersIndexedByIdOrderedByParameterPositionInCategory(
         array $rows,
@@ -111,7 +111,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
     }
 
     /**
-     * @param array $rows
+     * @param mixed[] $rows
      * @param string $locale
      * @return \App\Model\Product\Parameter\Parameter[]
      */
@@ -144,7 +144,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
     }
 
     /**
-     * @param array $rows
+     * @param mixed[] $rows
      * @param string $locale
      * @return \App\Model\Product\Parameter\ParameterValue[]
      */

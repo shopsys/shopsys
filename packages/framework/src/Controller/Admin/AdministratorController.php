@@ -46,8 +46,9 @@ class AdministratorController extends AdminBaseController
 
     /**
      * @Route("/administrator/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
@@ -74,8 +75,9 @@ class AdministratorController extends AdminBaseController
      * @Route("/administrator/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, int $id)
+    public function editAction(Request $request, int $id): \Symfony\Component\HttpFoundation\Response
     {
         $administrator = $this->administratorFacade->getById($id);
 
@@ -151,8 +153,9 @@ class AdministratorController extends AdminBaseController
 
     /**
      * @Route("/administrator/my-account/")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function myAccountAction()
+    public function myAccountAction(): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $loggedUser */
         $loggedUser = $this->getUser();
@@ -165,8 +168,9 @@ class AdministratorController extends AdminBaseController
     /**
      * @Route("/administrator/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->create(), [
             'scenario' => AdministratorFormType::SCENARIO_CREATE,
@@ -212,8 +216,9 @@ class AdministratorController extends AdminBaseController
      * @Route("/administrator/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(int $id)
+    public function deleteAction(int $id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $realName = $this->administratorFacade->getById($id)->getRealName();

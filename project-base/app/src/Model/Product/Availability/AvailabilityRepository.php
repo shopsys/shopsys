@@ -14,7 +14,7 @@ class AvailabilityRepository extends BaseAvailabilityRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $oldAvailability
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $newAvailability
      */
-    public function replaceAvailability(Availability $oldAvailability, Availability $newAvailability)
+    public function replaceAvailability(Availability $oldAvailability, Availability $newAvailability): void
     {
         $this->em->createQueryBuilder()
             ->update(Product::class, 'p')

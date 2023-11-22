@@ -58,7 +58,7 @@ class UploadedFileConfigLoader
     }
 
     /**
-     * @param array $outputConfig
+     * @param mixed[] $outputConfig
      */
     protected function loadFileEntityConfigsFromArray(array $outputConfig): void
     {
@@ -80,7 +80,7 @@ class UploadedFileConfigLoader
     }
 
     /**
-     * @param array $typesConfig
+     * @param mixed[] $typesConfig
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig[]
      */
     protected function prepareTypes(array $typesConfig): array
@@ -106,7 +106,7 @@ class UploadedFileConfigLoader
     }
 
     /**
-     * @param array $entityConfig
+     * @param mixed[] $entityConfig
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
      */
     protected function processEntityConfig(array $entityConfig): UploadedFileEntityConfig

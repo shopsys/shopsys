@@ -27,28 +27,28 @@ interface AdvancedSearchFilterInterface
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Returns an array of OPERATOR_* constants specifying which operators can be used with this filter
      *
      * @return string[]
      */
-    public function getAllowedOperators();
+    public function getAllowedOperators(): array;
 
     /**
      * Returns a form type that should be used for value selection
      *
      * @return string|\Symfony\Component\Form\FormTypeInterface
      */
-    public function getValueFormType();
+    public function getValueFormType(): string|\Symfony\Component\Form\FormTypeInterface;
 
     /**
      * Returns options that will be passed to the form type used for value selection
      *
-     * @return array
+     * @return mixed[]
      */
-    public function getValueFormOptions();
+    public function getValueFormOptions(): array;
 
     /**
      * Method that applies the filtering conditions specified by $rulesData to the provided query builder

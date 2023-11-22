@@ -22,7 +22,7 @@ class SlugResolverMap extends ResolverMap
     public const SLUG_TYPE_PRODUCT = 'product';
 
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function map(): array
     {
@@ -68,7 +68,7 @@ class SlugResolverMap extends ResolverMap
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return string|null
      */
     private function resolveTypenameForEntitiesHydratedFromElasticsearch(array $data): ?string

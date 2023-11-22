@@ -56,7 +56,7 @@ class IndexRepository extends BaseIndexRepository
 
     /**
      * @param string $indexAlias
-     * @param array $data
+     * @param mixed[] $data
      * @param bool $createIfNotExists
      */
     public function bulkUpdate(string $indexAlias, array $data, bool $createIfNotExists = true): void

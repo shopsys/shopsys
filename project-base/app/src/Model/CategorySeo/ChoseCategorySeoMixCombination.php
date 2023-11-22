@@ -40,7 +40,7 @@ class ChoseCategorySeoMixCombination
     }
 
     /**
-     * @param array $choseCategorySeoMixCombinationArray
+     * @param mixed[] $choseCategorySeoMixCombinationArray
      * @return self|null
      */
     public static function createFromArray(array $choseCategorySeoMixCombinationArray): ?self
@@ -66,7 +66,7 @@ class ChoseCategorySeoMixCombination
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getInArray(): array
     {
@@ -133,7 +133,7 @@ class ChoseCategorySeoMixCombination
      * @param int|null $flagId
      * @param string|null $ordering
      * @param int[] $parameterValueIdsByParameterIds
-     * @return array
+     * @return array<'categoryId'|'domainId'|'flagId'|'ordering'|'parameterValueIdsByParameterIds', mixed>
      */
     public static function getChoseCategorySeoMixCombinationArray(
         int $domainId,

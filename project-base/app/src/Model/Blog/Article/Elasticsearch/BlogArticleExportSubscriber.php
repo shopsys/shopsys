@@ -40,7 +40,7 @@ class BlogArticleExportSubscriber extends AbstractExportSubscriber
     }
 
     /**
-     * @return array
+     * @return array<'kernel.response', array<'exportScheduledRows'[]|int[]>>
      */
     public static function getSubscribedEvents(): array
     {

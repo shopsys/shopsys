@@ -25,7 +25,7 @@ class CookiesFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(
-        $environment,
+        string $environment,
         protected readonly ArticleFacade $articleFacade,
         protected readonly Setting $setting,
         protected readonly Domain $domain,
@@ -38,7 +38,7 @@ class CookiesFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
-    public function findCookiesArticleByDomainId(int $domainId)
+    public function findCookiesArticleByDomainId(int $domainId): ?\Shopsys\FrameworkBundle\Model\Article\Article
     {
         $cookiesArticleId = $this->setting->getForDomain(Setting::COOKIES_ARTICLE_ID, $domainId);
 
@@ -55,7 +55,7 @@ class CookiesFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $cookiesArticle
      * @param int $domainId
      */
-    public function setCookiesArticleOnDomain(?Article $cookiesArticle, $domainId)
+    public function setCookiesArticleOnDomain(?Article $cookiesArticle, $domainId): void
     {
         $cookiesArticleId = null;
 
@@ -73,7 +73,7 @@ class CookiesFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
      * @return bool
      */
-    public function isArticleUsedAsCookiesInfo(Article $article)
+    public function isArticleUsedAsCookiesInfo(Article $article): bool
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             if ($this->findCookiesArticleByDomainId($domainConfig->getId()) === $article) {
@@ -87,7 +87,7 @@ class CookiesFacade
     /**
      * @return bool
      */
-    public function isCookiesConsentGiven()
+    public function isCookiesConsentGiven(): bool
     {
         // Cookie fixed bar overlays some elements in viewport and mouseover fails on these elements in acceptance tests.
         if ($this->environment === EnvironmentType::ACCEPTANCE) {

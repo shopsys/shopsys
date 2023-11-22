@@ -31,7 +31,7 @@ class OrderStatusFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusFormData
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function create(OrderStatusData $orderStatusFormData)
+    public function create(OrderStatusData $orderStatusFormData): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         $orderStatus = $this->orderStatusFactory->create($orderStatusFormData, OrderStatus::TYPE_IN_PROGRESS);
         $this->em->persist($orderStatus);
@@ -49,7 +49,7 @@ class OrderStatusFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function edit($orderStatusId, OrderStatusData $orderStatusData)
+    public function edit($orderStatusId, OrderStatusData $orderStatusData): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         $orderStatus = $this->orderStatusRepository->getById($orderStatusId);
         $orderStatus->edit($orderStatusData);
@@ -62,7 +62,7 @@ class OrderStatusFacade
      * @param int $orderStatusId
      * @param int|null $newOrderStatusId
      */
-    public function deleteById($orderStatusId, $newOrderStatusId = null)
+    public function deleteById($orderStatusId, $newOrderStatusId = null): void
     {
         $orderStatus = $this->orderStatusRepository->getById($orderStatusId);
         $orderStatus->checkForDelete();
@@ -80,7 +80,7 @@ class OrderStatusFacade
      * @param int $orderStatusId
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function getById($orderStatusId)
+    public function getById($orderStatusId): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         return $this->orderStatusRepository->getById($orderStatusId);
     }
@@ -89,7 +89,7 @@ class OrderStatusFacade
      * @param int $orderStatusId
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAllExceptId($orderStatusId)
+    public function getAllExceptId($orderStatusId): array
     {
         return $this->orderStatusRepository->getAllExceptId($orderStatusId);
     }
@@ -98,7 +98,7 @@ class OrderStatusFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @return bool
      */
-    public function isOrderStatusUsed(OrderStatus $orderStatus)
+    public function isOrderStatusUsed(OrderStatus $orderStatus): bool
     {
         return $this->orderRepository->isOrderStatusUsed($orderStatus);
     }
@@ -106,7 +106,7 @@ class OrderStatusFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->orderStatusRepository->getAll();
     }
@@ -114,7 +114,7 @@ class OrderStatusFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[]
      */
-    public function getAllIndexedById()
+    public function getAllIndexedById(): array
     {
         return $this->orderStatusRepository->getAllIndexedById();
     }

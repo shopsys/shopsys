@@ -12,7 +12,7 @@ class PerformanceTestSamplesAggregator
      */
     public function getPerformanceTestSamplesAggregatedByUrl(
         array $performanceTestSamples,
-    ) {
+    ): array {
         $aggregatedPerformanceTestSamples = [];
 
         $performanceTestSamplesGroupedByUrl = $this->getPerformanceTestSamplesGroupedByUrl($performanceTestSamples);
@@ -58,8 +58,9 @@ class PerformanceTestSamplesAggregator
 
     /**
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
+     * @return \non-empty-array<\int<0, \max>, \mixed>[]
      */
-    private function getPerformanceTestSamplesGroupedByUrl(array $performanceTestSamples)
+    private function getPerformanceTestSamplesGroupedByUrl(array $performanceTestSamples): array
     {
         $performanceTestSamplesGroupedByUrl = [];
 

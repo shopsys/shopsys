@@ -18,7 +18,7 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
     private Logger $logger;
 
     /**
-     * @param array $goPayConfig
+     * @param mixed[] $goPayConfig
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $paymentMethodFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

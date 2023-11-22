@@ -70,7 +70,7 @@ abstract class AbstractFilterQuery
     }
 
     /**
-     * @return array
+     * @return array<'body'|'index', string|array<'from'|'query'|'size'|'sort', array<'filter'|'must', array<int|string, mixed>>[]|string[]|int>>
      */
     public function getQuery(): array
     {

@@ -160,7 +160,7 @@ class GetStoreTest extends GraphQlTestCase
      * @param string|null $secondOpeningTime
      * @param string|null $secondClosingTime
      * @param \DateTimeImmutable|null $publicHolidayDate
-     * @param array $publicHolidayExcludedStoresIds
+     * @param mixed[] $publicHolidayExcludedStoresIds
      * @param bool $expectedIsOpen
      * @param string|null $expectedDaysFirstOpeningTime
      * @param string|null $expectedDaysFirstClosingTime
@@ -206,7 +206,7 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return \DateTimeImmutable[][]|bool[][]|string[][]|int[][][]|null[][]
      */
     protected function openingHoursDataProvider(): array
     {
@@ -228,9 +228,9 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @param array $keys
-     * @param array $actual
-     * @param array $expected
+     * @param mixed[] $keys
+     * @param mixed[] $actual
+     * @param mixed[] $expected
      */
     private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
     {
@@ -241,7 +241,7 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getStoreDataProvider(): array
     {
@@ -260,7 +260,7 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getStoreDataProviderByUrlSlug(): array
     {
@@ -346,7 +346,7 @@ class GetStoreTest extends GraphQlTestCase
 
     /**
      * @param int $storeId
-     * @return array
+     * @return mixed[]
      */
     private function getExpectedStore(int $storeId): array
     {
@@ -538,7 +538,7 @@ class GetStoreTest extends GraphQlTestCase
      * @param string|null $firstClosingTimeModifier
      * @param string|null $secondOpeningTimeModifier
      * @param string|null $secondClosingTimeModifier
-     * @return array
+     * @return string[]|null[]
      */
     private function createExpectedOpeningDays(
         ?string $firstOpeningTimeModifier,

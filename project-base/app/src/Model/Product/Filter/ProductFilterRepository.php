@@ -24,7 +24,7 @@ class ProductFilterRepository extends BaseProductFilterRepository
      * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
      * @param bool $filterByStock
      */
-    public function filterByStock(QueryBuilder $productsQueryBuilder, $filterByStock)
+    public function filterByStock(QueryBuilder $productsQueryBuilder, $filterByStock): void
     {
         throw new Exception('Filter by Stock is deprecated');
     }
@@ -38,7 +38,7 @@ class ProductFilterRepository extends BaseProductFilterRepository
         QueryBuilder $productsQueryBuilder,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup,
-    ) {
+    ): void {
         $this->filterByPrice(
             $productsQueryBuilder,
             $productFilterData->minimalPrice,

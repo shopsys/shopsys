@@ -127,7 +127,7 @@ class ProductsTest extends ProductsGraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<int, array<'accessories'|'availability'|'brand'|'catalogNumber'|'categories'|'description'|'ean'|'files'|'flags'|'fullName'|'hasPreorder'|'isSellingDenied'|'isUsingStock'|'link'|'name'|'namePrefix'|'nameSuffix'|'orderingPriority'|'parameters'|'partNumber'|'price'|'seoH1'|'seoMetaDescription'|'seoTitle'|'shortDescription'|'stockQuantity'|'unit'|'usps', string|bool|mixed[]|null|int>>
      */
     private function getExpectedDataForFifthProduct(): array
     {

@@ -39,7 +39,7 @@ class ProductInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
      */
-    public function getManualInputPricesDataIndexedByPricingGroupId(Product $product)
+    public function getManualInputPricesDataIndexedByPricingGroupId(Product $product): array
     {
         $manualInputPricesDataByPricingGroupId = [];
 
@@ -56,7 +56,7 @@ class ProductInputPriceFacade
     /**
      * @return bool
      */
-    public function replaceBatchVatAndRecalculateInputPrices()
+    public function replaceBatchVatAndRecalculateInputPrices(): bool
     {
         if ($this->productRowsIterator === null) {
             $this->productRowsIterator = $this->productRepository->getProductIteratorForReplaceVat();

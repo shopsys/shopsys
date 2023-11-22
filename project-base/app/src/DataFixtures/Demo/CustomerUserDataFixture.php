@@ -73,7 +73,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
@@ -105,7 +105,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
     /**
      * @param int $domainId
-     * @param array $data
+     * @param mixed[] $data
      * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
     private function getCustomerUserUpdateData(int $domainId, array $data): CustomerUserUpdateData
@@ -133,7 +133,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @return array
+     * @return array<int, array<'billingAddress'|'customerUserData'|'deliveryAddress', array<'email'|'firstName'|'lastName'|'newsletterSubscription'|'password'|'telephone'|'uuid', bool|string>|array<'city'|'companyCustomer'|'companyName'|'companyNumber'|'companyTaxNumber'|'country'|'postcode'|'street', bool|string|object>|array<'city'|'companyCustomer'|'country'|'postcode'|'street', bool|string|object>|array<'addressFilled'|'city'|'companyName'|'country'|'postcode'|'street'|'telephone'|'uuid', bool|object|string>|array<'city'|'country'|'postcode'|'street'|'uuid', object|string>|array<'addressFilled'|'city'|'companyName'|'country'|'firstName'|'lastName'|'postcode'|'street'|'telephone'|'uuid', bool|object|string>>>
      */
     private function getDefaultCustomerUsersDataProvider(): array
     {
@@ -314,7 +314,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @return array
+     * @return array<'billingAddress'|'customerUserData'|'deliveryAddress', array<'email'|'firstName'|'lastName'|'newsletterSubscription'|'password'|'telephone'|'uuid', bool|string>|array<'city'|'companyCustomer'|'country'|'postcode'|'street'|'uuid', bool|object|string>|array<'addressFilled'|'city'|'country'|'postcode'|'street'|'uuid', bool|object|string>>[]|array<'billingAddress'|'customerUserData', array<'email'|'firstName'|'lastName'|'newsletterSubscription'|'password'|'telephone'|'uuid', bool|string>|array<'city'|'companyCustomer'|'companyName'|'companyNumber'|'companyTaxNumber'|'country'|'postcode'|'street', bool|string|object>>[]
      */
     private function getDistinctCustomerUsersDataProvider(): array
     {
@@ -449,7 +449,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             CountryDataFixture::class,
@@ -459,7 +459,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \App\Model\Customer\User\CustomerUser $customer
      */
-    private function resetPassword(CustomerUser $customer)
+    private function resetPassword(CustomerUser $customer): void
     {
         $resetPasswordHash = $this->hashGenerator->generateHash(
             CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH,
@@ -470,7 +470,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
     /**
      * @param \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @param array $billingAddressInputData
+     * @param mixed[] $billingAddressInputData
      */
     private function setBillingAddressData(
         CustomerUserUpdateData $customerUserUpdateData,
@@ -490,7 +490,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
     /**
      * @param \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @param array $deliveryAddressInputData
+     * @param mixed[] $deliveryAddressInputData
      */
     private function setDeliveryAddressData(
         CustomerUserUpdateData $customerUserUpdateData,

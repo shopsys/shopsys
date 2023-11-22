@@ -20,7 +20,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
 {
     /**
      * @param int[][] $productsIds
-     * @return array
+     * @return array<'products'|'totals', mixed>
      */
     public function getBatchedVisibleByProductIds(array $productsIds): array
     {
@@ -35,7 +35,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
 
     /**
      * @param int[][] $productsIds
-     * @return array
+     * @return array<'products'|'totals', mixed>
      */
     public function getBatchedSellableByProductIds(array $productsIds): array
     {
@@ -50,7 +50,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
 
     /**
      * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
-     * @return array
+     * @return array<'products'|'totals', mixed>
      */
     public function getBatchedByEntities(array $productBatchLoadByEntitiesData): array
     {

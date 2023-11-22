@@ -29,7 +29,7 @@ class ArticlesQuery extends AbstractQuery
      * @param string[] $placements
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function articlesQuery(Argument $argument, array $placements)
+    public function articlesQuery(Argument $argument, array $placements): object
     {
         PageSizeValidator::checkMaxPageSize($argument);
         $this->setDefaultFirstOffsetIfNecessary($argument);

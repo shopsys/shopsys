@@ -32,7 +32,7 @@ class ProductFilterConfigFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForCategory($domainId, $locale, Category $category)
+    public function createForCategory($domainId, $locale, Category $category): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         $pricingGroup = $this->currentCustomerUser->getPricingGroup();
         $parameterFilterChoices = $this->parameterFilterChoiceRepository
@@ -52,7 +52,7 @@ class ProductFilterConfigFactory
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForSearch($domainId, $locale, $searchText)
+    public function createForSearch($domainId, $locale, $searchText): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         $parameterFilterChoices = [];
         $pricingGroup = $this->currentCustomerUser->getPricingGroup();

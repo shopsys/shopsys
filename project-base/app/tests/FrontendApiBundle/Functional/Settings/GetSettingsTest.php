@@ -33,7 +33,7 @@ final class GetSettingsTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return null[][]|'Disallow: /private'[][]|(literal-string & non-falsy-string)[][]
      */
     public function dataProvider(): array
     {
@@ -74,7 +74,7 @@ CONTENT,
 
     /**
      * @param string|null $data
-     * @return array
+     * @return array<'seo', array<'robotsTxtContent', mixed>>
      */
     private function getExpectedSettings(?string $data): array
     {

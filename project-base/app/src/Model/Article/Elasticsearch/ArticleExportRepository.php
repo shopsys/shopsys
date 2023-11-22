@@ -72,7 +72,7 @@ class ArticleExportRepository
 
     /**
      * @param \App\Model\Article\Article $article
-     * @return array
+     * @return array<'breadcrumb'|'createdAt'|'external'|'mainSlug'|'name'|'placement'|'position'|'seoH1'|'seoMetaDescription'|'seoTitle'|'slug'|'text'|'type'|'url'|'uuid', mixed>
      */
     public function extractArticle(Article $article): array
     {

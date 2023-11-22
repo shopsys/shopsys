@@ -226,7 +226,7 @@ class BlogCategoryTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<'data', array<'blogCategory', array<'blogCategoriesTree'|'breadcrumb'|'children'|'description'|'link'|'name'|'parent'|'seoH1'|'seoMetaDescription'|'seoTitle'|'slug'|'uuid', string|never[]|array<'name', string>|array<int, array<'name'|'slug', mixed>>|array<int, array<'children'|'name', array<int, array<'name', string>>|string>>>>>
      */
     private function getExpectedBlogCategoryArray(): array
     {

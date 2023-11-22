@@ -10,7 +10,7 @@ class CategoryWithPreloadedChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildren[]
      */
-    public function createCategoriesWithPreloadedChildren(array $categories)
+    public function createCategoriesWithPreloadedChildren(array $categories): array
     {
         $firstLevelCategories = $this->getFirstLevelCategories($categories);
         $categoriesByParentId = $this->getCategoriesIndexedByParentId($categories);
@@ -32,7 +32,7 @@ class CategoryWithPreloadedChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[][] $categoriesByParentId
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildren[]
      */
-    protected function getCategoriesWithPreloadedChildren(Category $category, array $categoriesByParentId)
+    protected function getCategoriesWithPreloadedChildren(Category $category, array $categoriesByParentId): array
     {
         if (!array_key_exists($category->getId(), $categoriesByParentId)) {
             return [];
@@ -54,7 +54,7 @@ class CategoryWithPreloadedChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    protected function getFirstLevelCategories(array $categories)
+    protected function getFirstLevelCategories(array $categories): array
     {
         $firstLevelCategories = [];
 
@@ -71,7 +71,7 @@ class CategoryWithPreloadedChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[][]
      */
-    protected function getCategoriesIndexedByParentId(array $categories)
+    protected function getCategoriesIndexedByParentId(array $categories): array
     {
         $categoriesIndexedByParentId = [];
 

@@ -19,7 +19,7 @@ class BlogArticlesIdsToBlogArticlesTransformer implements DataTransformerInterfa
     }
 
     /**
-     * @param \App\Model\Blog\Article\BlogArticle[]|mixed $blogArticles
+     * @param mixed $blogArticles
      * @return int[]
      */
     public function transform($blogArticles): array

@@ -10,9 +10,9 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 class ArticlesSearchResolverMap extends ResolverMap
 {
     /**
-     * @return array
+     * @return string|array<'ArticleInterface', array<'%%resolveType', \Closure(mixed $data): string>>
      */
-    protected function map(): array
+    protected function map(): string|array
     {
         return [
             'ArticleInterface' => [

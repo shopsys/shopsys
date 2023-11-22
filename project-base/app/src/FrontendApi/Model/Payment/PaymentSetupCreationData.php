@@ -7,12 +7,12 @@ namespace App\FrontendApi\Model\Payment;
 class PaymentSetupCreationData
 {
     /**
-     * @var array
+     * @var mixed[]
      */
     private array $goPayCreatePaymentSetup;
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getGoPayCreatePaymentSetup(): array
     {
@@ -20,7 +20,7 @@ class PaymentSetupCreationData
     }
 
     /**
-     * @param array $goPayCreatePaymentSetup
+     * @param mixed[] $goPayCreatePaymentSetup
      */
     public function setGoPayCreatePaymentSetup(array $goPayCreatePaymentSetup): void
     {

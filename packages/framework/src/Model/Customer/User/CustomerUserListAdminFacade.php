@@ -23,7 +23,7 @@ class CustomerUserListAdminFacade
     public function getCustomerUserListQueryBuilderByQuickSearchData(
         $domainId,
         QuickSearchFormData $quickSearchData,
-    ) {
+    ): \Doctrine\ORM\QueryBuilder {
         return $this->customerUserRepository->getCustomerUserListQueryBuilderByQuickSearchData(
             $domainId,
             $quickSearchData,

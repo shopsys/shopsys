@@ -34,7 +34,7 @@ class PriceRangeRepository extends BasePriceRangeRepository
      * @param \App\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
-    public function getPriceRangeInCategory($domainId, PricingGroup $pricingGroup, Category $category)
+    public function getPriceRangeInCategory($domainId, PricingGroup $pricingGroup, Category $category): \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
     {
         $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
@@ -52,7 +52,7 @@ class PriceRangeRepository extends BasePriceRangeRepository
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
-    public function getPriceRangeForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText)
+    public function getPriceRangeForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText): \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
     {
         $productsQueryBuilder = $this->productRepository
             ->getSellableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);

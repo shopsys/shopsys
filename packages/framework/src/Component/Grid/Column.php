@@ -24,7 +24,7 @@ class Column
      * @param string $title
      * @param bool $sortable
      */
-    public function __construct($id, $sourceColumnName, $title, $sortable)
+    public function __construct(string $id, string $sourceColumnName, string $title, bool $sortable)
     {
         $this->id = $id;
         $this->sourceColumnName = $sourceColumnName;
@@ -37,7 +37,7 @@ class Column
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -45,7 +45,7 @@ class Column
     /**
      * @return string
      */
-    public function getSourceColumnName()
+    public function getSourceColumnName(): string
     {
         return $this->sourceColumnName;
     }
@@ -53,7 +53,7 @@ class Column
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -61,7 +61,7 @@ class Column
     /**
      * @return bool
      */
-    public function isSortable()
+    public function isSortable(): bool
     {
         return $this->sortable;
     }
@@ -69,7 +69,7 @@ class Column
     /**
      * @return string
      */
-    public function getClassAttribute()
+    public function getClassAttribute(): string
     {
         return $this->classAttribute;
     }
@@ -78,7 +78,7 @@ class Column
      * @param string $class
      * @return \Shopsys\FrameworkBundle\Component\Grid\Column
      */
-    public function setClassAttribute($class)
+    public function setClassAttribute(string $class): \Shopsys\FrameworkBundle\Component\Grid\Column
     {
         $this->classAttribute = $class;
 
@@ -88,7 +88,7 @@ class Column
     /**
      * @return string
      */
-    public function getOrderSourceColumnName()
+    public function getOrderSourceColumnName(): string
     {
         return $this->orderSourceColumnName;
     }

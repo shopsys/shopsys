@@ -22,7 +22,7 @@ class ArticleTest extends TransactionFunctionalTestCase
      */
     private ArticleFactoryInterface $articleFactory;
 
-    public function testArticleIsCorrectlyRestoredFromDatabase()
+    public function testArticleIsCorrectlyRestoredFromDatabase(): void
     {
         /** @var \App\Model\Article\ArticleData $articleData */
         $articleData = $this->articleDataFactory->create();

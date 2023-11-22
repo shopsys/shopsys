@@ -27,12 +27,12 @@ class MergadoFeedItem implements FeedItemInterface
      * @param string $productNo
      * @param string $name
      * @param string $url
-     * @param array $categoryPath
-     * @param array $shortDescriptionUsp
+     * @param mixed[] $categoryPath
+     * @param mixed[] $shortDescriptionUsp
      * @param int $deliveryDays
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $price
      * @param string[] $galleryImageUrls
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @param string $currencyCode
      * @param string|null $description
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $highProductPrice

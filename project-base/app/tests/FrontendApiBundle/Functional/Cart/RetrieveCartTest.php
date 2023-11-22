@@ -294,7 +294,7 @@ class RetrieveCartTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<'accessories'|'availability'|'availableStoresCount'|'brand'|'breadcrumb'|'catalogNumber'|'categories'|'description'|'ean'|'files'|'flags'|'fullName'|'hasPreorder'|'isSellingDenied'|'isUsingStock'|'link'|'name'|'namePrefix'|'nameSuffix'|'orderingPriority'|'parameters'|'partNumber'|'price'|'seoH1'|'seoMetaDescription'|'seoTitle'|'shortDescription'|'slug'|'stockQuantity'|'storeAvailabilities'|'unit'|'usps', mixed>
      */
     private function getExpectedProductDetailWithAllAttributes(): array
     {

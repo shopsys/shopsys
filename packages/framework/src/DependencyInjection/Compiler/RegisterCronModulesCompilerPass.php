@@ -15,7 +15,7 @@ class RegisterCronModulesCompilerPass implements CompilerPassInterface
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $cronConfigDefinition = $container->findDefinition(CronConfig::class);
 

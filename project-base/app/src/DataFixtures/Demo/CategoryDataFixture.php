@@ -59,7 +59,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /**
          * Root category is created in database migration.
@@ -262,7 +262,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
      * @param string|null $referenceName
      * @return \App\Model\Category\Category
      */
-    private function createCategory(CategoryData $categoryData, $referenceName = null)
+    private function createCategory(CategoryData $categoryData, $referenceName = null): \App\Model\Category\Category
     {
         $categoryData->uuid = array_pop($this->uuidPool);
 

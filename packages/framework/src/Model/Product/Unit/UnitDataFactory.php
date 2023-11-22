@@ -60,7 +60,7 @@ class UnitDataFactory implements UnitDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      */
-    protected function fillFromUnit(UnitData $unitData, Unit $unit)
+    protected function fillFromUnit(UnitData $unitData, Unit $unit): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation[] $translations */
         $translations = $unit->getTranslations();

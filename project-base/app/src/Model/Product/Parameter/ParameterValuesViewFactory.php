@@ -7,7 +7,7 @@ namespace App\Model\Product\Parameter;
 class ParameterValuesViewFactory
 {
     /**
-     * @param array $parameterArray
+     * @param mixed[] $parameterArray
      * @return \App\Model\Product\Parameter\ParameterValuesViewData[]
      */
     public function getDimensionParametersFromArray(array $parameterArray): array
@@ -24,7 +24,7 @@ class ParameterValuesViewFactory
     }
 
     /**
-     * @param array $parameterArray
+     * @param mixed[] $parameterArray
      * @return \App\Model\Product\Parameter\ParameterValuesViewData[]
      */
     public function getNonDimensionParametersFromArray(array $parameterArray): array
@@ -41,7 +41,7 @@ class ParameterValuesViewFactory
     }
 
     /**
-     * @param array $parameter
+     * @param mixed[] $parameter
      * @return \App\Model\Product\Parameter\ParameterValuesViewData
      */
     protected function createParameterValueViewData(array $parameter): ParameterValuesViewData

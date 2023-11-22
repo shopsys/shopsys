@@ -101,7 +101,7 @@ EOF,
      * @param string $content
      * @param int $flags
      * @param \SplFileInfo|null $file
-     * @return array
+     * @return mixed[]
      */
     protected function validate(string $content, int $flags, ?SplFileInfo $file = null): array
     {
@@ -126,7 +126,7 @@ EOF,
 
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param array $files
+     * @param mixed[] $files
      * @return int
      */
     protected function display(SymfonyStyle $io, array $files): int
@@ -143,7 +143,7 @@ EOF,
 
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param array $filesInfo
+     * @param mixed[] $filesInfo
      * @return int
      */
     protected function displayTxt(SymfonyStyle $io, array $filesInfo): int
@@ -178,14 +178,14 @@ EOF,
 
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param array $filesInfo
+     * @param mixed[] $filesInfo
      * @return int
      */
     protected function displayJson(SymfonyStyle $io, array $filesInfo): int
     {
         $errors = 0;
 
-        array_walk($filesInfo, function (&$v) use (&$errors) {
+        array_walk($filesInfo, function (&$v) use (&$errors): void {
             $v['file'] = (string)$v['file'];
 
             if (!$v['valid']) {
@@ -273,7 +273,7 @@ EOF,
      */
     protected function getDirectoryIterator(string $directory): RecursiveIteratorIterator
     {
-        $default = function (string $directory) {
+        $default = function (string $directory): \RecursiveIteratorIterator {
             return new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator(
                     $directory,
@@ -292,7 +292,7 @@ EOF,
      */
     protected function isReadable(string $fileOrDirectory): bool
     {
-        $default = function ($fileOrDirectory) {
+        $default = function ($fileOrDirectory): bool {
             return is_readable($fileOrDirectory);
         };
 

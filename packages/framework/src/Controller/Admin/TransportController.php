@@ -36,8 +36,9 @@ class TransportController extends AdminBaseController
     /**
      * @Route("/transport/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $transportData = $this->transportDataFactory->create();
 
@@ -74,8 +75,9 @@ class TransportController extends AdminBaseController
      * @Route("/transport/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $transport = $this->transportFacade->getById($id);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
@@ -118,8 +120,9 @@ class TransportController extends AdminBaseController
      * @Route("/transport/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $transportName = $this->transportFacade->getById($id)->getName();
@@ -139,7 +142,10 @@ class TransportController extends AdminBaseController
         return $this->redirectToRoute('admin_transportandpayment_list');
     }
 
-    public function listAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $grid = $this->transportGridFactory->create();
 

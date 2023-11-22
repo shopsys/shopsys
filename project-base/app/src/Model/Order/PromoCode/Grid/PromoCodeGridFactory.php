@@ -35,7 +35,7 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
      * @param string|null $search
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create($withEditButton = true, ?string $search = null)
+    public function create($withEditButton = true, ?string $search = null): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder

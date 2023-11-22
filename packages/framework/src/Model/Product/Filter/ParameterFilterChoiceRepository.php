@@ -38,7 +38,7 @@ class ParameterFilterChoiceRepository
         PricingGroup $pricingGroup,
         $locale,
         Category $category,
-    ) {
+    ): array {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -76,11 +76,11 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
+     * @param mixed[] $rows
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
-    protected function getVisibleParametersIndexedByIdOrderedByName(array $rows, $locale)
+    protected function getVisibleParametersIndexedByIdOrderedByName(array $rows, $locale): array
     {
         $parameterIds = [];
 
@@ -109,11 +109,11 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
+     * @param mixed[] $rows
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[][]
      */
-    protected function getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, $locale)
+    protected function getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, $locale): array
     {
         $parameterIdsByValueId = [];
 
@@ -137,11 +137,11 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
+     * @param mixed[] $rows
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    protected function getParameterValuesIndexedByIdOrderedByText(array $rows, $locale)
+    protected function getParameterValuesIndexedByIdOrderedByText(array $rows, $locale): array
     {
         $valueIds = [];
 

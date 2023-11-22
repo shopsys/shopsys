@@ -15,7 +15,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 
     /**
      * @dataProvider getOrdersDataProvider
-     * @param array $queryVariables
+     * @param mixed[] $queryVariables
      * @param int|null $offsetInExpected
      * @param int|null $lengthInExpected
      */
@@ -79,7 +79,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     /**
      * @param int|null $offset
      * @param int|null $length
-     * @return array
+     * @return mixed[]
      */
     private function getExpectedUserOrders(?int $offset, ?int $length): array
     {

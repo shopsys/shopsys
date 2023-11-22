@@ -17,8 +17,9 @@ class ParameterFilterOptionResolverMap extends ResolverMap
 
     /**
      * {@inheritdoc}
+     * @return string|array<'ParameterFilterOptionInterface', array<'%%resolveType', \Closure(App\FrontendApi\Model\Product\Filter\ParameterFilterOption $parameterFilterOption): string>>
      */
-    protected function map()
+    protected function map(): string|array
     {
         return [
             'ParameterFilterOptionInterface' => [

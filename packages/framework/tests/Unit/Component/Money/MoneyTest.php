@@ -18,7 +18,7 @@ final class MoneyTest extends TestCase
      * @param int|string $value
      * @param string $expectedAmount
      */
-    public function testCreate($value, string $expectedAmount): void
+    public function testCreate(string|int $value, string $expectedAmount): void
     {
         $money = Money::create($value);
 
@@ -73,7 +73,7 @@ final class MoneyTest extends TestCase
      * @dataProvider invalidValuesCreateProvider
      * @param int|string $value
      */
-    public function testInvalidValuesInCreate($value): void
+    public function testInvalidValuesInCreate(string|float|\Litipk\BigNumbers\Decimal|\Shopsys\FrameworkBundle\Component\Money\Money $value): void
     {
         $this->expectException(MoneyException::class);
 
@@ -326,7 +326,7 @@ final class MoneyTest extends TestCase
      * @param int|string $b
      * @param string $expectedAmount
      */
-    public function testMultiply(string $a, $b, string $expectedAmount): void
+    public function testMultiply(string $a, string|int $b, string $expectedAmount): void
     {
         $moneyA = Money::create($a);
 
@@ -409,7 +409,7 @@ final class MoneyTest extends TestCase
      * @param int $scale
      * @param string $expectedAmount
      */
-    public function testDivide(string $a, $b, int $scale, string $expectedAmount): void
+    public function testDivide(string $a, string|int $b, int $scale, string $expectedAmount): void
     {
         $moneyA = Money::create($a);
 
@@ -483,7 +483,7 @@ final class MoneyTest extends TestCase
      * @dataProvider cannotDivideByZeroProvider
      * @param int|string $divisor
      */
-    public function testCannotDivideByZero($divisor): void
+    public function testCannotDivideByZero(string|int $divisor): void
     {
         $money = Money::create(1);
 

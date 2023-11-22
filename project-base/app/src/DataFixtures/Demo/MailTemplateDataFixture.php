@@ -33,7 +33,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $mailTemplateData = $this->mailTemplateDataFactory->create();
@@ -154,7 +154,7 @@ team of {domain}
         string $name,
         MailTemplateData $mailTemplateData,
         int $domainId,
-    ) {
+    ): void {
         $repository = $manager->getRepository(MailTemplate::class);
 
         $mailTemplate = $repository->findOneBy([
@@ -181,7 +181,7 @@ team of {domain}
     /**
      * @return string[]
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             TransportDataFixture::class,

@@ -28,7 +28,7 @@ class MailTemplateDataFactory extends BaseMailTemplateDataFactory
      * @param \App\Model\Mail\MailTemplateData $mailTemplateData
      * @param \App\Model\Mail\MailTemplate $mailTemplate
      */
-    protected function fillFromMailTemplate(BaseMailTemplateData $mailTemplateData, BaseMailTemplate $mailTemplate)
+    protected function fillFromMailTemplate(BaseMailTemplateData $mailTemplateData, BaseMailTemplate $mailTemplate): void
     {
         parent::fillFromMailTemplate($mailTemplateData, $mailTemplate);
 

@@ -35,7 +35,7 @@ class TransportGridFactory implements GridFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create(): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $queryBuilder = $this->transportRepository->getQueryBuilderForAll()
             ->addSelect('tt')
@@ -72,7 +72,7 @@ class TransportGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getDisplayPrice(Transport $transport)
+    protected function getDisplayPrice(Transport $transport): \Shopsys\FrameworkBundle\Component\Money\Money
     {
         $transportBasePricesIndexedByDomainId = $this->transportFacade->getIndependentBasePricesIndexedByDomainId(
             $transport,

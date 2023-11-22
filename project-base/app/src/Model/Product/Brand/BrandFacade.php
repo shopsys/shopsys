@@ -23,7 +23,7 @@ class BrandFacade extends BaseBrandFacade
 {
     /**
      * @param string $searchText
-     * @return array
+     * @return mixed[]
      */
     public function getBrandsForSearchText(string $searchText): array
     {

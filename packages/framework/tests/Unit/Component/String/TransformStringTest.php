@@ -9,7 +9,10 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 class TransformStringTest extends TestCase
 {
-    public function safeFilenameProvider()
+    /**
+     * @return array<int, array<'actual'|'expected', string>>
+     */
+    public function safeFilenameProvider(): array
     {
         return [
             [
@@ -49,15 +52,18 @@ class TransformStringTest extends TestCase
 
     /**
      * @dataProvider safeFilenameProvider
-     * @param mixed $actual
-     * @param mixed $expected
+     * @param string $actual
+     * @param string $expected
      */
-    public function testSafeFilename($actual, $expected)
+    public function testSafeFilename(string $actual, string $expected): void
     {
         $this->assertSame($expected, TransformString::safeFilename($actual));
     }
 
-    public function stringToFriendlyUrlSlugProvider()
+    /**
+     * @return array<int, array<'actual'|'expected', string>>
+     */
+    public function stringToFriendlyUrlSlugProvider(): array
     {
         return [
             [
@@ -93,15 +99,18 @@ class TransformStringTest extends TestCase
 
     /**
      * @dataProvider stringToFriendlyUrlSlugProvider
-     * @param mixed $actual
-     * @param mixed $expected
+     * @param string $actual
+     * @param string $expected
      */
-    public function testStringToFriendlyUrlSlug($actual, $expected)
+    public function testStringToFriendlyUrlSlug(string $actual, string $expected): void
     {
         $this->assertSame($expected, TransformString::stringToFriendlyUrlSlug($actual));
     }
 
-    public function stringToCamelCaseProvider()
+    /**
+     * @return array<int, array<'actual'|'expected', string>>
+     */
+    public function stringToCamelCaseProvider(): array
     {
         return [
             [
@@ -145,16 +154,16 @@ class TransformStringTest extends TestCase
 
     /**
      * @dataProvider stringToCamelCaseProvider
-     * @param mixed $actual
-     * @param mixed $expected
+     * @param string $actual
+     * @param string $expected
      */
-    public function testStringToCamelCase($actual, $expected)
+    public function testStringToCamelCase(string $actual, string $expected): void
     {
         $this->assertSame($expected, TransformString::stringToCamelCase($actual));
     }
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function stringTrailingSlashesProvider(): array
     {
@@ -207,7 +216,7 @@ class TransformStringTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return string[][]|null[][]
      */
     public function trimmedStringOrNullProvider(): array
     {

@@ -224,7 +224,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * Method is overridden, so it returns parameters for the variants too.
      *
      * @param \App\Model\Product\Product $product
-     * @return array
+     * @return mixed[]
      */
     public function getParameters(BaseProduct $product): array
     {
@@ -255,7 +255,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 
     /**
      * @param \App\Model\Product\Product $product
-     * @return array
+     * @return array<int|string, array<'anchorText'|'url', mixed>>
      */
     public function getFiles(Product $product): array
     {
@@ -321,7 +321,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 
     /**
      * @param \App\Model\Product\Product $product
-     * @return array
+     * @return array<int, array<'name'|'slug', string>>
      */
     public function getBreadcrumb(Product $product): array
     {
@@ -370,7 +370,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 
     /**
      * @param \App\Model\Product\Product $product
-     * @return array
+     * @return array<int|string, array<\App\Model\ProductVideo\ProductVideoTranslations|string|null>>|array<'description'|'token', mixed>
      */
     public function getProductVideos(Product $product): array
     {

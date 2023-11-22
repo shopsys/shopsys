@@ -164,7 +164,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -172,7 +172,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -188,7 +188,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
-    public function getRealName()
+    public function getRealName(): string
     {
         return $this->realName;
     }
@@ -196,7 +196,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -212,7 +212,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
-    public function getLoginToken()
+    public function getLoginToken(): string
     {
         return $this->loginToken;
     }
@@ -220,7 +220,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return \DateTime
      */
-    public function getLastActivity()
+    public function getLastActivity(): \DateTime
     {
         return $this->lastActivity;
     }
@@ -228,7 +228,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return bool
      */
-    public function isSuperadmin()
+    public function isSuperadmin(): bool
     {
         foreach ($this->roles as $role) {
             if ($role->getRole() === Roles::ROLE_SUPER_ADMIN) {
@@ -242,7 +242,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param string $username
      */
-    public function setUsername($username)
+    public function setUsername($username): void
     {
         $this->username = $username;
     }
@@ -250,7 +250,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param string $realName
      */
-    public function setRealname($realName)
+    public function setRealname($realName): void
     {
         $this->realName = $realName;
     }
@@ -258,7 +258,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param string $passwordHash
      */
-    public function setPasswordHash(string $passwordHash)
+    public function setPasswordHash(string $passwordHash): void
     {
         $this->password = $passwordHash;
     }
@@ -266,7 +266,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param string $email
      */
-    public function setEmail($email)
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
@@ -295,7 +295,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param string $loginToken
      */
-    public function setLoginToken($loginToken)
+    public function setLoginToken($loginToken): void
     {
         $this->loginToken = $loginToken;
     }
@@ -303,7 +303,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param \DateTime $lastActivity
      */
-    public function setLastActivity($lastActivity)
+    public function setLastActivity($lastActivity): void
     {
         $this->lastActivity = $lastActivity;
     }
@@ -315,7 +315,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function setMultidomainLoginTokenWithExpiration(
         $multidomainLoginToken,
         DateTime $multidomainLoginTokenExpiration,
-    ) {
+    ): void {
         $this->multidomainLoginToken = $multidomainLoginToken;
         $this->multidomainLoginTokenExpiration = $multidomainLoginTokenExpiration;
     }
@@ -354,7 +354,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * {@inheritdoc}
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
@@ -383,7 +383,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * {@inheritdoc}
      */
-    public function isMultidomainLogin()
+    public function isMultidomainLogin(): bool
     {
         return $this->multidomainLogin;
     }
@@ -391,7 +391,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * {@inheritdoc}
      */
-    public function setMultidomainLogin($multidomainLogin)
+    public function setMultidomainLogin($multidomainLogin): void
     {
         $this->multidomainLogin = $multidomainLogin;
     }
@@ -399,7 +399,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
      */
-    public function restoreGridLimit(Grid $grid)
+    public function restoreGridLimit(Grid $grid): void
     {
         $gridLimit = $this->getGridLimit($grid->getId());
 

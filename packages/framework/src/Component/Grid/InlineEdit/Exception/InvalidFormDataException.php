@@ -9,7 +9,7 @@ use Exception;
 class InvalidFormDataException extends Exception implements InlineEditException
 {
     /**
-     * @param array $formErrors
+     * @param mixed[] $formErrors
      * @param \Exception|null $previous
      */
     public function __construct(protected readonly array $formErrors, ?Exception $previous = null)
@@ -18,9 +18,9 @@ class InvalidFormDataException extends Exception implements InlineEditException
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getFormErrors()
+    public function getFormErrors(): array
     {
         return $this->formErrors;
     }

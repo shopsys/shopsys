@@ -40,7 +40,7 @@ class QueryBuilderExtenderTest extends TestCase
      * @param string $firstJoinedEntity
      * @param string $secondJoinedEntity
      * @param string $expectedJoinedEntity
-     * @param array $extensionMap
+     * @param mixed[] $extensionMap
      */
     public function testExtendJoinWithExtendedEntity(
         string $firstJoinedEntity,
@@ -74,7 +74,7 @@ class QueryBuilderExtenderTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<'extend base entity join with extended entity'|'extend extended entity join with base entity', array<'expectedJoinedEntity'|'extensionMap'|'firstJoinedEntity'|'secondJoinedEntity', mixed>>
      */
     public function extendJoinWithExtendedEntityProvider(): array
     {
@@ -96,7 +96,7 @@ class QueryBuilderExtenderTest extends TestCase
         ];
     }
 
-    public function testDifferentAlias()
+    public function testDifferentAlias(): void
     {
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)

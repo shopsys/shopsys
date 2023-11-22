@@ -44,7 +44,7 @@ class TransportFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function create(TransportData $transportData)
+    public function create(TransportData $transportData): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $transport = $this->transportFactory->create($transportData);
         $this->em->persist($transport);
@@ -61,7 +61,7 @@ class TransportFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      */
-    public function edit(Transport $transport, TransportData $transportData)
+    public function edit(Transport $transport, TransportData $transportData): void
     {
         $transport->edit($transportData);
         $this->updateTransportPrices($transport, $transportData->pricesIndexedByDomainId);
@@ -74,7 +74,7 @@ class TransportFacade
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function getById($id)
+    public function getById($id): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->transportRepository->getById($id);
     }
@@ -82,7 +82,7 @@ class TransportFacade
     /**
      * @param int $id
      */
-    public function deleteById($id)
+    public function deleteById($id): void
     {
         $transport = $this->getById($id);
         $transport->markAsDeleted();
@@ -98,7 +98,7 @@ class TransportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $visiblePayments
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getVisibleOnCurrentDomain(array $visiblePayments)
+    public function getVisibleOnCurrentDomain(array $visiblePayments): array
     {
         return $this->getVisibleByDomainId($this->domain->getId(), $visiblePayments);
     }
@@ -108,7 +108,7 @@ class TransportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $visiblePaymentsOnDomain
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getVisibleByDomainId($domainId, $visiblePaymentsOnDomain)
+    public function getVisibleByDomainId($domainId, array $visiblePaymentsOnDomain): array
     {
         $transports = $this->transportRepository->getAllByDomainId($domainId);
 
@@ -135,7 +135,10 @@ class TransportFacade
         }
     }
 
-    public function getAll()
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    public function getAll(): array
     {
         return $this->transportRepository->getAll();
     }
@@ -143,7 +146,7 @@ class TransportFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getAllIncludingDeleted()
+    public function getAllIncludingDeleted(): array
     {
         return $this->transportRepository->getAllIncludingDeleted();
     }

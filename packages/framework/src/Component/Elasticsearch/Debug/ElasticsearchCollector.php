@@ -44,7 +44,7 @@ class ElasticsearchCollector extends DataCollector
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getData(): array
     {

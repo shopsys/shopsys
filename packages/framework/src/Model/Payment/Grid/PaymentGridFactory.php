@@ -35,7 +35,7 @@ class PaymentGridFactory implements GridFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create(): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $queryBuilder = $this->paymentRepository->getQueryBuilderForAll()
             ->addSelect('pt')
@@ -72,7 +72,7 @@ class PaymentGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getDisplayPrice(Payment $payment)
+    protected function getDisplayPrice(Payment $payment): \Shopsys\FrameworkBundle\Component\Money\Money
     {
         $transportBasePricesIndexedByDomainId = $this->paymentFacade->getIndependentBasePricesIndexedByDomainId(
             $payment,

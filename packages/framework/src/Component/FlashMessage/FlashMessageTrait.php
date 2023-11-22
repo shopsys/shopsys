@@ -17,7 +17,7 @@ trait FlashMessageTrait
 {
     /**
      * @param string $template
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function addSuccessFlashTwig(string $template, array $parameters = []): void
     {
@@ -26,7 +26,7 @@ trait FlashMessageTrait
 
     /**
      * @param string $template
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function addErrorFlashTwig(string $template, array $parameters = []): void
     {
@@ -35,7 +35,7 @@ trait FlashMessageTrait
 
     /**
      * @param string $template
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function addInfoFlashTwig(string $template, array $parameters = []): void
     {
@@ -77,7 +77,7 @@ trait FlashMessageTrait
 
     /**
      * @param string $template
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @return string
      */
     protected function renderStringTwigTemplate(string $template, array $parameters = []): string
@@ -102,34 +102,34 @@ trait FlashMessageTrait
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getErrorMessages()
+    public function getErrorMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_ERROR);
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getInfoMessages()
+    public function getInfoMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_INFO);
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getSuccessMessages()
+    public function getSuccessMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_SUCCESS);
     }
 
     /**
      * @param string $key
-     * @return array
+     * @return mixed[]
      */
-    protected function getMessages($key)
+    protected function getMessages($key): array
     {
         $flashBag = $this->getSession()->getFlashBag();
         $messages = $flashBag->get($key);

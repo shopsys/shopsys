@@ -57,7 +57,7 @@ class ClosedDay
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -65,7 +65,7 @@ class ClosedDay
     /**
      * @return \App\Model\Store\Store[]
      */
-    public function getExcludedStores()
+    public function getExcludedStores(): array
     {
         return $this->excludedStores->getValues();
     }
@@ -73,7 +73,7 @@ class ClosedDay
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -81,7 +81,7 @@ class ClosedDay
     /**
      * @return \DateTimeImmutable
      */
-    public function getDate()
+    public function getDate(): \DateTimeImmutable
     {
         return $this->date;
     }
@@ -89,7 +89,7 @@ class ClosedDay
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

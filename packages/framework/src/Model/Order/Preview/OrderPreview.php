@@ -36,7 +36,7 @@ class OrderPreview
         protected readonly ?Payment $payment = null,
         protected readonly ?Price $paymentPrice = null,
         protected readonly ?Price $roundingPrice = null,
-        $promoCodeDiscountPercent = null,
+        ?string $promoCodeDiscountPercent = null,
     ) {
         $this->promoCodeDiscountPercent = $promoCodeDiscountPercent;
     }
@@ -44,7 +44,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
-    public function getQuantifiedProducts()
+    public function getQuantifiedProducts(): array
     {
         return $this->quantifiedProductsByIndex;
     }
@@ -52,7 +52,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[]
      */
-    public function getQuantifiedItemsPrices()
+    public function getQuantifiedItemsPrices(): array
     {
         return $this->quantifiedItemsPricesByIndex;
     }
@@ -60,7 +60,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    public function getQuantifiedItemsDiscounts()
+    public function getQuantifiedItemsDiscounts(): array
     {
         return $this->quantifiedItemsDiscountsByIndex;
     }
@@ -68,7 +68,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport|null
      */
-    public function getTransport()
+    public function getTransport(): ?\Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->transport;
     }
@@ -76,7 +76,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
-    public function getTransportPrice()
+    public function getTransportPrice(): ?\Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         return $this->transportPrice;
     }
@@ -84,7 +84,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
-    public function getPayment()
+    public function getPayment(): ?\Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->payment;
     }
@@ -92,7 +92,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
-    public function getPaymentPrice()
+    public function getPaymentPrice(): ?\Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         return $this->paymentPrice;
     }
@@ -100,7 +100,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getTotalPrice()
+    public function getTotalPrice(): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         return $this->totalPrice;
     }
@@ -108,7 +108,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getProductsPrice()
+    public function getProductsPrice(): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         return $this->productsPrice;
     }
@@ -116,7 +116,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
-    public function getRoundingPrice()
+    public function getRoundingPrice(): ?\Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         return $this->roundingPrice;
     }
@@ -124,7 +124,7 @@ class OrderPreview
     /**
      * @return string|null
      */
-    public function getPromoCodeDiscountPercent()
+    public function getPromoCodeDiscountPercent(): ?string
     {
         return $this->promoCodeDiscountPercent;
     }

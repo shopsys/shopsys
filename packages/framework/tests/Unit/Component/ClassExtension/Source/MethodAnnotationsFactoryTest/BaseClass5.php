@@ -15,7 +15,7 @@ class BaseClass5
      *
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      */
-    public function setCategory(?Category $category = null)
+    public function setCategory(?Category $category = null): void
     {
     }
 
@@ -38,6 +38,6 @@ class BaseClass5
         bool $false = false,
         ?string $null = null,
         array $emptyArray = [],
-    ) {
+    ): void {
     }
 }

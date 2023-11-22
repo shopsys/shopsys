@@ -37,7 +37,10 @@ class PacketeryClient implements TransferIdentificationInterface
     ) {
     }
 
-    private function getTransferLogger()
+    /**
+     * @return \App\Model\Transfer\TransferLoggerInterface
+     */
+    private function getTransferLogger(): \App\Model\Transfer\TransferLoggerInterface
     {
         if (!isset($this->transferLogger)) {
             $this->transferLogger = $this->transferLoggerFactory->getTransferLoggerByIdentifier($this);
@@ -126,7 +129,7 @@ class PacketeryClient implements TransferIdentificationInterface
      * @param \Symfony\Contracts\HttpClient\ResponseInterface $responseXml
      * @param \App\Model\Order\Order $order
      */
-    private function saveTrackingNumberFromResponse(ResponseInterface $responseXml, Order $order)
+    private function saveTrackingNumberFromResponse(ResponseInterface $responseXml, Order $order): void
     {
         $logger = $this->getTransferLogger();
 

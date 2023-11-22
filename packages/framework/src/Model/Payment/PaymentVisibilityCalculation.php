@@ -23,7 +23,7 @@ class PaymentVisibilityCalculation
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function filterVisible(array $payments, $domainId)
+    public function filterVisible(array $payments, $domainId): array
     {
         $visiblePayments = [];
 
@@ -41,7 +41,7 @@ class PaymentVisibilityCalculation
      * @param int $domainId
      * @return bool
      */
-    protected function isVisible(Payment $payment, $domainId)
+    protected function isVisible(Payment $payment, $domainId): bool
     {
         if (!$this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, $domainId)) {
             return false;
@@ -55,7 +55,7 @@ class PaymentVisibilityCalculation
      * @param int $domainId
      * @return bool
      */
-    protected function hasIndependentlyVisibleTransport(Payment $payment, $domainId)
+    protected function hasIndependentlyVisibleTransport(Payment $payment, $domainId): bool
     {
         foreach ($payment->getTransports() as $transport) {
             if ($this->independentTransportVisibilityCalculation->isIndependentlyVisible($transport, $domainId)) {

@@ -50,13 +50,13 @@ class LoginTest extends GraphQlTestCase
         $this->assertIsString($authorizationResponseData['tokens']['refreshToken']);
     }
 
-    public function testInvalidTokenException()
+    public function testInvalidTokenException(): void
     {
         $this->expectException(InvalidTokenUserMessageException::class);
         $this->tokenFacade->getTokenByString('abcd');
     }
 
-    public function testInvalidTokenInHeader()
+    public function testInvalidTokenInHeader(): void
     {
         $expectedError = [
             'errors' => [

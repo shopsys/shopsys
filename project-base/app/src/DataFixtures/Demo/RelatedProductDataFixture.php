@@ -25,7 +25,7 @@ class RelatedProductDataFixture extends AbstractReferenceFixture implements Depe
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /** @var \App\Model\Product\Product[] $products */
         $products = [
@@ -49,7 +49,7 @@ class RelatedProductDataFixture extends AbstractReferenceFixture implements Depe
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             ProductDataFixture::class,

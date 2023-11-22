@@ -24,7 +24,10 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class TransportPriceCalculationTest extends TestCase
 {
-    public function calculateIndependentPriceProvider()
+    /**
+     * @return array<int, array<'inputPrice'|'inputPriceType'|'priceWithoutVat'|'priceWithVat'|'vatPercent', \Shopsys\FrameworkBundle\Component\Money\Money|int|'21'>>
+     */
+    public function calculateIndependentPriceProvider(): array
     {
         return [
             [
@@ -58,7 +61,7 @@ class TransportPriceCalculationTest extends TestCase
         string $vatPercent,
         Money $priceWithoutVat,
         Money $priceWithVat,
-    ) {
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getInputPriceType'])
             ->disableOriginalConstructor()

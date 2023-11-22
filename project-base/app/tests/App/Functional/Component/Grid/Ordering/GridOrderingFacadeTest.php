@@ -11,7 +11,7 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 
 class GridOrderingFacadeTest extends TransactionFunctionalTestCase
 {
-    public function testSetPositionWrongEntity()
+    public function testSetPositionWrongEntity(): void
     {
         $gridOrderingFacade = new GridOrderingFacade($this->em);
         $entity = new stdClass();

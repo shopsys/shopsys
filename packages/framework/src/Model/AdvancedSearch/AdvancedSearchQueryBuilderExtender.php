@@ -19,7 +19,7 @@ class AdvancedSearchQueryBuilderExtender
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $advancedSearchData
      */
-    public function extendByAdvancedSearchData(QueryBuilder $queryBuilder, array $advancedSearchData)
+    public function extendByAdvancedSearchData(QueryBuilder $queryBuilder, array $advancedSearchData): void
     {
         $rulesDataByFilterName = [];
 

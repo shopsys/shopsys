@@ -25,7 +25,7 @@ class FrontLogoutHandler
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function onLogoutSuccess(Request $request)
+    public function onLogoutSuccess(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $this->orderFlowFacade->resetOrderForm();
         $url = $this->router->generate('front_homepage');

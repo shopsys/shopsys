@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class FriendlyUrlFactoryTest extends TestCase
 {
-    public function testCreateForAllDomains()
+    public function testCreateForAllDomains(): void
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = [

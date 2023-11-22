@@ -26,7 +26,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      * @param \App\Model\Category\Category $category
      * @return \App\Model\Product\Flag\Flag[]
      */
-    public function getFlagFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category)
+    public function getFlagFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category): array
     {
         $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
@@ -66,7 +66,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      * @param string|null $searchText
      * @return \App\Model\Product\Flag\Flag[]
      */
-    public function getFlagFilterChoicesForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText)
+    public function getFlagFilterChoicesForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText): array
     {
         $productsQueryBuilder = $this->productRepository
             ->getSellableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
@@ -100,7 +100,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
         QueryBuilder $productsQueryBuilder,
         string $locale,
         int $domainId,
-    ) {
+    ): array {
         $clonedProductsQueryBuilder = clone $productsQueryBuilder;
 
         $clonedProductsQueryBuilder

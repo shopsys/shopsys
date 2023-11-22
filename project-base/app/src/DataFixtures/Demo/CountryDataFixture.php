@@ -58,7 +58,7 @@ class CountryDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
      * @param string $referenceName
      */
-    private function createCountry(CountryData $countryData, $referenceName): void
+    private function createCountry(CountryData $countryData, string $referenceName): void
     {
         $country = $this->countryFacade->create($countryData);
         $this->addReference($referenceName, $country);

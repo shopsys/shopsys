@@ -97,7 +97,7 @@ class ProductDomain extends BaseProductDomain
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      */
-    public function __construct(Product $product, $domainId)
+    public function __construct(Product $product, int $domainId)
     {
         parent::__construct($product, $domainId);
 

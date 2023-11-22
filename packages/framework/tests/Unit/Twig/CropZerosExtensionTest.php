@@ -9,7 +9,10 @@ use Shopsys\FrameworkBundle\Twig\CropZerosExtension;
 
 class CropZerosExtensionTest extends TestCase
 {
-    public function returnValuesProvider()
+    /**
+     * @return array<int, array<'input'|'return', string>>
+     */
+    public function returnValuesProvider(): array
     {
         return [
             ['input' => '12', 'return' => '12'],
@@ -23,10 +26,10 @@ class CropZerosExtensionTest extends TestCase
 
     /**
      * @dataProvider returnValuesProvider
-     * @param mixed $input
-     * @param mixed $return
+     * @param string $input
+     * @param string $return
      */
-    public function testReturnValues($input, $return)
+    public function testReturnValues(string $input, string $return): void
     {
         $this->assertSame($return, (new CropZerosExtension())->cropZeros($input));
     }

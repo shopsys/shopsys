@@ -334,7 +334,7 @@ class ImageFacade
         object $imageOrEntity,
         ?string $sizeName,
         ?string $type,
-    ) {
+    ): array {
         $image = $this->getImageByObject($imageOrEntity, $type);
 
         $entityConfig = $this->imageConfig->getEntityConfigByEntityName($image->getEntityName());

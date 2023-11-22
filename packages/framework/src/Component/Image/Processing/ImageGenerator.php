@@ -31,7 +31,7 @@ class ImageGenerator
      * @param string|null $sizeName
      * @return string
      */
-    public function generateImageSizeAndGetFilepath(Image $image, $sizeName)
+    public function generateImageSizeAndGetFilepath(Image $image, ?string $sizeName): string
     {
         $this->checkSizeNameIsNotOriginal($image, $sizeName);
 
@@ -56,7 +56,7 @@ class ImageGenerator
      * @param string|null $sizeName
      * @return string
      */
-    public function generateAdditionalImageSizeAndGetFilepath(Image $image, int $additionalIndex, ?string $sizeName)
+    public function generateAdditionalImageSizeAndGetFilepath(Image $image, int $additionalIndex, ?string $sizeName): string
     {
         $this->checkSizeNameIsNotOriginal($image, $sizeName);
 

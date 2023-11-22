@@ -20,7 +20,7 @@ class ProductQueryParams
     }
 
     /**
-     * @param array $uuids
+     * @param mixed[] $uuids
      * @return self
      */
     public function withUuids(array $uuids): self

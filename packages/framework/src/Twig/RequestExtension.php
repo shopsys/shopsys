@@ -20,7 +20,7 @@ class RequestExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -39,9 +39,9 @@ class RequestExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getAllRequestParams()
+    public function getAllRequestParams(): array
     {
         return array_merge(
             $this->getParamsFromRequest(),
@@ -52,23 +52,23 @@ class RequestExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getRoute()
+    public function getRoute(): string
     {
         return $this->requestStack->getMainRequest()->attributes->get('_route');
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    protected function getParamsFromRequest()
+    protected function getParamsFromRequest(): array
     {
         return $this->requestStack->getMainRequest()->query->all();
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getRouteParams()
+    public function getRouteParams(): array
     {
         return $this->requestStack->getMainRequest()->attributes->get('_route_params');
     }
@@ -76,7 +76,7 @@ class RequestExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'request_extension';
     }

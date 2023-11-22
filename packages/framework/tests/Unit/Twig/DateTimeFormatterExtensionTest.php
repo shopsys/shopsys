@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 class DateTimeFormatterExtensionTest extends TestCase
 {
     /**
-     * @return array
+     * @return array<int, array<'input'|'locale'|'result', \DateTime|string>>
      */
     public function formatDateDataProvider(): array
     {
@@ -30,11 +30,11 @@ class DateTimeFormatterExtensionTest extends TestCase
 
     /**
      * @dataProvider formatDateDataProvider
-     * @param mixed $input
-     * @param mixed $locale
-     * @param mixed $result
+     * @param \DateTime|string $input
+     * @param string $locale
+     * @param string $result
      */
-    public function testFormatDate($input, $locale, $result): void
+    public function testFormatDate(\DateTime|string $input, string $locale, string $result): void
     {
         $localizationMock = $this->createLocalizationMock($locale);
         $dateTimeFormatter = $this->createDateTimeFormatter();

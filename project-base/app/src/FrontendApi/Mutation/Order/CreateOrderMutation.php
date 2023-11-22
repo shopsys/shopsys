@@ -133,7 +133,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
     }
 
     /**
-     * @param array $input
+     * @param mixed[] $input
      */
     private function handleDeprecatedFields(array $input): void
     {

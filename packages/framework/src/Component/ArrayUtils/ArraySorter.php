@@ -10,7 +10,7 @@ class ArraySorter
 {
     /**
      * @param string $valueKey
-     * @param array $array
+     * @param mixed[] $array
      * @param string $locale
      */
     public static function sortArrayAlphabeticallyByValue(string $valueKey, array &$array, string $locale): void

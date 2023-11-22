@@ -23,7 +23,7 @@ class ProductListAdminFacade
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getProductListQueryBuilder()
+    public function getProductListQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         /**
          * temporary solution -
@@ -40,7 +40,7 @@ class ProductListAdminFacade
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData)
+    public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->getProductListQueryBuilder();
         $this->productListAdminRepository->extendQueryBuilderByQuickSearchData($queryBuilder, $quickSearchData);

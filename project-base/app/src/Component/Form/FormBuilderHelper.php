@@ -17,7 +17,7 @@ class FormBuilderHelper
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $disabledFields
+     * @param mixed[] $disabledFields
      */
     public function disableFieldsByConfigurations(FormBuilderInterface $builder, array $disabledFields): void
     {
@@ -28,8 +28,8 @@ class FormBuilderHelper
     }
 
     /**
-     * @param array $elements
-     * @param array $disabledFields
+     * @param mixed[] $elements
+     * @param mixed[] $disabledFields
      */
     private function trackFormElements(array $elements, array $disabledFields): void
     {

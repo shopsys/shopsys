@@ -20,7 +20,7 @@ class ProductTransferAkeneoValidator
     }
 
     /**
-     * @param array $akeneoProductData
+     * @param mixed[] $akeneoProductData
      */
     public function validate(array $akeneoProductData): void
     {
@@ -116,7 +116,7 @@ class ProductTransferAkeneoValidator
     }
 
     /**
-     * @param array $akeneoProductData
+     * @param mixed[] $akeneoProductData
      */
     public function validateIdentifier(array $akeneoProductData): void
     {
@@ -142,7 +142,7 @@ class ProductTransferAkeneoValidator
      * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
      * @param array|null $data
      * @param string $validateKeyName
-     * @param array $asserts
+     * @param mixed[] $asserts
      */
     private function validateValueData(
         ConstraintViolationListInterface $violations,
@@ -186,7 +186,7 @@ class ProductTransferAkeneoValidator
      * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
      * @param array|null $data
      * @param string $validateKeyName
-     * @param array $asserts
+     * @param mixed[] $asserts
      */
     protected function validatePriceValue(
         ConstraintViolationListInterface $violations,
@@ -250,7 +250,7 @@ class ProductTransferAkeneoValidator
      * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
      * @param array|null $data
      * @param string $validateKeyName
-     * @param array $asserts
+     * @param mixed[] $asserts
      */
     private function validateLocalizedData(
         ConstraintViolationListInterface $violations,

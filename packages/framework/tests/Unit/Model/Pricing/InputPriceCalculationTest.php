@@ -24,14 +24,17 @@ class InputPriceCalculationTest extends TestCase
         Money $priceWithVat,
         string $vatPercent,
         Money $expectedResult,
-    ) {
+    ): void {
         $inputPriceCalculation = new InputPriceCalculation();
         $actualInputPrice = $inputPriceCalculation->getInputPrice($inputPriceType, $priceWithVat, $vatPercent);
 
         $this->assertThat($actualInputPrice, new IsMoneyEqual($expectedResult));
     }
 
-    public function getInputPriceDataProvider()
+    /**
+     * @return array<int, array<'expectedResult'|'inputPriceType'|'priceWithVat'|'vatPercent', int|\Shopsys\FrameworkBundle\Component\Money\Money|string>>
+     */
+    public function getInputPriceDataProvider(): array
     {
         return [
             [

@@ -43,7 +43,7 @@ class VatFacadeTest extends TransactionFunctionalTestCase
      */
     private PaymentFacade $paymentFacade;
 
-    public function testDeleteByIdAndReplaceForFirstDomain()
+    public function testDeleteByIdAndReplaceForFirstDomain(): void
     {
         $vatData = new VatData();
         $vatData->name = 'name';

@@ -32,7 +32,7 @@ class ProductListOrderingModeForListFacade extends BaseProductListOrderingModeFo
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return string
      */
-    public function getOrderingModeIdFromRequest(Request $request, ?ReadyCategorySeoMix $readyCategorySeoMix = null)
+    public function getOrderingModeIdFromRequest(Request $request, ?ReadyCategorySeoMix $readyCategorySeoMix = null): string
     {
         return $this->requestToOrderingModeIdConverter->getOrderingModeIdFromRequest(
             $request,

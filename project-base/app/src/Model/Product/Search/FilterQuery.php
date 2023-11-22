@@ -185,8 +185,8 @@ class FilterQuery extends BaseFilterQuery
      *
      * @see https://github.com/shopsys/shopsys/pull/1794
      * @param int $selectedParameterId
-     * @param array $selectedValuesIds
-     * @return array
+     * @param mixed[] $selectedValuesIds
+     * @return array<'body'|'index', string|array<'aggs'|'query'|'size', int|array<'bool', array<'filter'|'must', array<int|string, mixed>>>|array<'parameters', array<'aggs'|'nested', array<'path', 'parameters'>|array<'filtered_for_parameter', array<'aggs'|'filter', array<'term', array<'parameters.parameter_id', mixed>>|array<'by_parameters', array<'aggs'|'terms', array<'field'|'size', mixed>|array<'by_value', array<'terms', array<'field'|'size', mixed>>>>>>>>>>>
      */
     public function getParametersPlusNumbersQuery(int $selectedParameterId, array $selectedValuesIds): array
     {
@@ -316,7 +316,7 @@ class FilterQuery extends BaseFilterQuery
      * Parameters aggregation have nested structure in result [parameter_id][parameter_value_id]
      *
      * @param int $pricingGroupId
-     * @return array
+     * @return mixed[]
      */
     public function getAggregationQueryForProductFilterConfig(int $pricingGroupId): array
     {
@@ -358,7 +358,7 @@ class FilterQuery extends BaseFilterQuery
      * For flags, brands, stock, min and max price
      *
      * @param int $pricingGroupId
-     * @return array
+     * @return mixed[]
      */
     public function getAggregationQueryForProductFilterConfigWithoutParameters(int $pricingGroupId): array
     {
@@ -371,7 +371,7 @@ class FilterQuery extends BaseFilterQuery
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getAggregationQueryForProductCountInCategories(): array
     {

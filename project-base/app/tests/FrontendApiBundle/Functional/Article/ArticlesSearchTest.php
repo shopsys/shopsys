@@ -9,7 +9,7 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ArticlesSearchTest extends GraphQlTestCase
 {
-    public function testSearchArticles()
+    public function testSearchArticles(): void
     {
         $query = '
             query {

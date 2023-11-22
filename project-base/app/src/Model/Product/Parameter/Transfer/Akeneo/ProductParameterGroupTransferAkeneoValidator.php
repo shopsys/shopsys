@@ -18,7 +18,7 @@ class ProductParameterGroupTransferAkeneoValidator
     }
 
     /**
-     * @param array $akeneoCategoryData
+     * @param mixed[] $akeneoCategoryData
      */
     public function validate(array $akeneoCategoryData): void
     {

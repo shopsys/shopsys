@@ -30,8 +30,9 @@ class OrderStatusController extends AdminBaseController
 
     /**
      * @Route("/order-status/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $grid = $this->orderStatusInlineEdit->getGrid();
 
@@ -45,8 +46,9 @@ class OrderStatusController extends AdminBaseController
      * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $newId = $request->get('newId');
 
@@ -88,8 +90,9 @@ class OrderStatusController extends AdminBaseController
     /**
      * @Route("/order-status/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction($id): \Symfony\Component\HttpFoundation\Response
     {
         try {
             $orderStatus = $this->orderStatusFacade->getById($id);

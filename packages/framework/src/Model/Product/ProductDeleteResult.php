@@ -16,7 +16,7 @@ class ProductDeleteResult
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getProductsForRecalculations()
+    public function getProductsForRecalculations(): array
     {
         return $this->productsForRecalculations;
     }

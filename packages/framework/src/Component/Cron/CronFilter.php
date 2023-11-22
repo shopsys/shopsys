@@ -11,7 +11,7 @@ class CronFilter
      * @param string[] $scheduledServiceIds
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    public function filterScheduledCronModuleConfigs(array $cronModuleConfigs, array $scheduledServiceIds)
+    public function filterScheduledCronModuleConfigs(array $cronModuleConfigs, array $scheduledServiceIds): array
     {
         foreach ($cronModuleConfigs as $key => $cronModuleConfig) {
             if (!in_array($cronModuleConfig->getServiceId(), $scheduledServiceIds, true)) {

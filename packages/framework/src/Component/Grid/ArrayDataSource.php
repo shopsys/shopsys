@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 class ArrayDataSource implements DataSourceInterface
 {
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @param string|null $rowIdSourceColumnName
      */
     public function __construct(
@@ -23,7 +23,7 @@ class ArrayDataSource implements DataSourceInterface
     /**
      * @return string
      */
-    public function getRowIdSourceColumnName()
+    public function getRowIdSourceColumnName(): ?string
     {
         return $this->rowIdSourceColumnName;
     }
@@ -32,7 +32,7 @@ class ArrayDataSource implements DataSourceInterface
      * @param int $rowId
      * @return mixed
      */
-    public function getOneRow($rowId)
+    public function getOneRow($rowId): array
     {
         if ($this->rowIdSourceColumnName === null) {
             return $this->data[$rowId];
@@ -57,7 +57,7 @@ class ArrayDataSource implements DataSourceInterface
         $page = 1,
         $orderSourceColumnName = null,
         $orderDirection = self::ORDER_ASC,
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult {
         if ($limit !== null) {
             $message = 'Pagination not supported in ArrayDataSource';
 
@@ -76,7 +76,7 @@ class ArrayDataSource implements DataSourceInterface
     /**
      * @return int
      */
-    public function getTotalRowsCount()
+    public function getTotalRowsCount(): int
     {
         return count($this->data);
     }

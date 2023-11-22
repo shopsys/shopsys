@@ -24,7 +24,7 @@ class ExistingEmailValidator extends ConstraintValidator
      * @param string $value
      * @param \App\FrontendApi\Model\Component\Constraints\ExistingEmail $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ExistingEmail) {
             throw new UnexpectedTypeException($constraint, ExistingEmail::class);

@@ -129,7 +129,7 @@ class MergadoFeedItemFactory
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
-     * @return array
+     * @return mixed[]
      */
     private function getProductUsp(Product $product, int $domainId): array
     {

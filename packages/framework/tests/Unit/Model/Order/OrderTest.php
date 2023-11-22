@@ -18,7 +18,7 @@ use Tests\FrameworkBundle\Test\Provider\TestOrderProvider;
 
 class OrderTest extends TestCase
 {
-    public function testGetProductItems()
+    public function testGetProductItems(): void
     {
         $payment = new Payment(new PaymentData());
         $orderData = TestOrderProvider::getTestOrderData();
@@ -55,7 +55,7 @@ class OrderTest extends TestCase
         $this->assertContainsOnlyInstancesOf(OrderItem::class, $productItems);
     }
 
-    public function testGetProductItemsCount()
+    public function testGetProductItemsCount(): void
     {
         $payment = new Payment(new PaymentData());
         $paymentItemPrice = Price::zero();
@@ -89,7 +89,7 @@ class OrderTest extends TestCase
         $this->assertSame(1, $order->getProductItemsCount());
     }
 
-    public function testOrderWithDeliveryAddressSameAsBillingAddress()
+    public function testOrderWithDeliveryAddressSameAsBillingAddress(): void
     {
         $orderData = TestOrderProvider::getTestOrderData();
         $countryData = new CountryData();
@@ -118,7 +118,7 @@ class OrderTest extends TestCase
         $this->assertSame($country, $order->getDeliveryCountry());
     }
 
-    public function testOrderWithoutDeliveryAddressSameAsBillingAddress()
+    public function testOrderWithoutDeliveryAddressSameAsBillingAddress(): void
     {
         $orderData = TestOrderProvider::getTestOrderData();
         $order = new Order($orderData, 'orderNumber', 'urlHash', null);
@@ -133,7 +133,7 @@ class OrderTest extends TestCase
         $this->assertSame($orderData->country, $order->getDeliveryCountry());
     }
 
-    public function testOrderCreatedWithEmptyCreatedAtIsCreatedNow()
+    public function testOrderCreatedWithEmptyCreatedAtIsCreatedNow(): void
     {
         $orderData = TestOrderProvider::getTestOrderData();
         $customerUser = null;
@@ -144,7 +144,7 @@ class OrderTest extends TestCase
         $this->assertDateTimeIsCloseTo(new DateTime(), $order->getCreatedAt(), 5);
     }
 
-    public function testOrderCanBeCreatedWithSpecificCreatedAt()
+    public function testOrderCanBeCreatedWithSpecificCreatedAt(): void
     {
         $orderData = TestOrderProvider::getTestOrderData();
         $customerUser = null;
@@ -161,7 +161,7 @@ class OrderTest extends TestCase
      * @param \DateTimeInterface $actual
      * @param int $deltaInSeconds
      */
-    private function assertDateTimeIsCloseTo(DateTimeInterface $expected, DateTimeInterface $actual, $deltaInSeconds)
+    private function assertDateTimeIsCloseTo(DateTimeInterface $expected, DateTimeInterface $actual, int $deltaInSeconds): void
     {
         $diffInSeconds = $expected->getTimestamp() - $actual->getTimestamp();
 

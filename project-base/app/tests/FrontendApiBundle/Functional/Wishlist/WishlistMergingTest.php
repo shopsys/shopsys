@@ -48,7 +48,7 @@ class WishlistMergingTest extends GraphQlWithLoginTestCase
         $this->assertSame($response2['data']['wishlist']['products'][0]['name'], $loggedWishlist->getItems()[0]->getProduct()->getName());
     }
 
-    public function testMergeNotLoggedCustomerWishlistWithLoggedCustomerWishlist()
+    public function testMergeNotLoggedCustomerWishlistWithLoggedCustomerWishlist(): void
     {
         /** @var \App\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
@@ -90,7 +90,7 @@ class WishlistMergingTest extends GraphQlWithLoginTestCase
         $this->assertNull($response4['data']['wishlist']);
     }
 
-    public function testLogoutCustomerWithWishlist()
+    public function testLogoutCustomerWithWishlist(): void
     {
         /** @var \App\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);

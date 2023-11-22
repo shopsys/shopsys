@@ -34,7 +34,7 @@ class CustomerActivationMail implements MessageFactoryInterface
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
-    public function createMessage(MailTemplate $template, $customerUser)
+    public function createMessage(MailTemplate $template, $customerUser): \Shopsys\FrameworkBundle\Model\Mail\MessageData
     {
         return new MessageData(
             $customerUser->getEmail(),

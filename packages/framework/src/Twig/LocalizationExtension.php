@@ -26,7 +26,7 @@ class LocalizationExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('localeFlag', [$this, 'getLocaleFlagHtml'], ['is_safe' => ['html']]),
@@ -38,7 +38,7 @@ class LocalizationExtension extends AbstractExtension
      * @param bool $showTitle
      * @return string
      */
-    public function getLocaleFlagHtml($locale, $showTitle = true)
+    public function getLocaleFlagHtml(string $locale, $showTitle = true): string
     {
         $filepath = 'public/admin/images/flags/' . $locale . '.png';
         $src = $this->assetPackages->getUrl($filepath);
@@ -64,7 +64,7 @@ class LocalizationExtension extends AbstractExtension
      * @param string $locale
      * @return string
      */
-    protected function getTitle($locale)
+    protected function getTitle(string $locale): string
     {
         return $this->localization->getLanguageName($locale);
     }
@@ -72,7 +72,7 @@ class LocalizationExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'localization';
     }

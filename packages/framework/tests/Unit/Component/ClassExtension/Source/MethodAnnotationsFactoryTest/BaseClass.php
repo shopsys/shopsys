@@ -11,7 +11,7 @@ class BaseClass
      *
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
      */
-    public function getCategoryFacade()
+    public function getCategoryFacade(): void
     {
     }
 }

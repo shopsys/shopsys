@@ -170,7 +170,7 @@ class BlogCategoryFacade
      * @param int $domainId
      * @return \App\Model\Blog\Category\BlogCategory[]
      */
-    public function getVisibleBlogCategoriesInPathFromRootOnDomain(BlogCategory $blogCategory, int $domainId)
+    public function getVisibleBlogCategoriesInPathFromRootOnDomain(BlogCategory $blogCategory, int $domainId): array
     {
         return $this->blogCategoryRepository->getVisibleBlogCategoriesInPathFromRootOnDomain($blogCategory, $domainId);
     }
@@ -235,7 +235,7 @@ class BlogCategoryFacade
      * @param int[] $blogCategoryIds
      * @return \App\Model\Blog\Category\BlogCategory[]
      */
-    public function getByIds(array $blogCategoryIds)
+    public function getByIds(array $blogCategoryIds): array
     {
         return $this->blogCategoryRepository->getByIds($blogCategoryIds);
     }

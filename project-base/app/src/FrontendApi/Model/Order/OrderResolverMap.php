@@ -21,7 +21,7 @@ class OrderResolverMap extends BaseOrderResolverMap
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function map(): array
     {

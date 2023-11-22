@@ -13,8 +13,8 @@ class SqlParametersFlattenerTest extends TestCase
     /**
      * @dataProvider expandArrayParametersDataProvider
      * @param string $dql
-     * @param array $parameters
-     * @param array $expectedFlattenedParameters
+     * @param mixed[] $parameters
+     * @param mixed[] $expectedFlattenedParameters
      */
     public function testExpandArrayParameters(string $dql, array $parameters, array $expectedFlattenedParameters): void
     {

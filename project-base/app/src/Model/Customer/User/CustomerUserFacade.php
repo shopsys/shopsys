@@ -97,10 +97,10 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @return \App\Model\Customer\User\CustomerUser
      */
     public function edit(
-        $customerUserId,
+        int $customerUserId,
         CustomerUserUpdateData $customerUserUpdateData,
         ?DeliveryAddress $deliveryAddress = null,
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = parent::edit($customerUserId, $customerUserUpdateData, $deliveryAddress);
 

@@ -90,9 +90,9 @@ class GetArticleTest extends GraphQlTestCase
     }
 
     /**
-     * @param array $keys
-     * @param array $actual
-     * @param array $expected
+     * @param mixed[] $keys
+     * @param mixed[] $actual
+     * @param mixed[] $expected
      */
     private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
     {
@@ -103,7 +103,7 @@ class GetArticleTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getArticleDataProvider(): array
     {
@@ -126,7 +126,7 @@ class GetArticleTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<'breadcrumb'|'name'|'placement'|'seoH1'|'seoMetaDescription'|'seoTitle'|'slug'|'text', string|array<int, array<'name'|'slug', string>>|null>[]|'termsAndConditionsArticle'[][]|array<'breadcrumb'|'name'|'placement'|'seoH1'|'seoMetaDescription'|'seoTitle'|'slug'|'text', string|array<int, array<'name'|'slug', string>>|null>[]|'cookiesArticle'[]|'privacyPolicyArticle'[][]
      */
     private function getSpecialArticleDataProvider(): array
     {

@@ -24,7 +24,7 @@ class PromoCodeApplicableProductsTotalPriceCalculator
     }
 
     /**
-     * @param array $quantifiedProducts
+     * @param mixed[] $quantifiedProducts
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     public function calculateTotalPrice(array $quantifiedProducts): Price

@@ -9,8 +9,8 @@ use App\Component\Elasticsearch\AbstractElasticsearchDataFetcher;
 class BlogArticleElasticsearchDataFetcher extends AbstractElasticsearchDataFetcher
 {
     /**
-     * @param array $data
-     * @return array
+     * @param mixed[] $data
+     * @return mixed[]
      */
     protected function fillEmptyFields(array $data): array
     {

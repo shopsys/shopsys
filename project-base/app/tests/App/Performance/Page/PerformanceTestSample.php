@@ -27,12 +27,12 @@ class PerformanceTestSample
      * @param bool $isSuccessful
      */
     public function __construct(
-        $routeName,
-        $url,
-        $duration,
-        $queryCount,
-        $statusCode,
-        $isSuccessful,
+        string $routeName,
+        string $url,
+        float $duration,
+        int $queryCount,
+        int $statusCode,
+        bool $isSuccessful,
     ) {
         $this->routeName = $routeName;
         $this->url = $url;
@@ -45,7 +45,7 @@ class PerformanceTestSample
     /**
      * @return string
      */
-    public function getRouteName()
+    public function getRouteName(): string
     {
         return $this->routeName;
     }
@@ -53,7 +53,7 @@ class PerformanceTestSample
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -61,7 +61,7 @@ class PerformanceTestSample
     /**
      * @return float
      */
-    public function getDuration()
+    public function getDuration(): float
     {
         return $this->duration;
     }
@@ -69,7 +69,7 @@ class PerformanceTestSample
     /**
      * @return int
      */
-    public function getQueryCount()
+    public function getQueryCount(): int
     {
         return $this->queryCount;
     }
@@ -77,7 +77,7 @@ class PerformanceTestSample
     /**
      * @return int
      */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
@@ -85,7 +85,7 @@ class PerformanceTestSample
     /**
      * @return bool
      */
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         return $this->isSuccessful;
     }

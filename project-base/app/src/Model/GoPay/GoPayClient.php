@@ -25,7 +25,7 @@ class GoPayClient
     private CachedOAuth $oAuth;
 
     /**
-     * @param array $config
+     * @param mixed[] $config
      */
     public function __construct(private array $config)
     {
@@ -67,7 +67,7 @@ class GoPayClient
     }
 
     /**
-     * @param array $rawPayment
+     * @param mixed[] $rawPayment
      * @return \GoPay\Http\Response
      */
     public function sendPaymentToGoPay(array $rawPayment): Response
@@ -147,7 +147,7 @@ class GoPayClient
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return array
+     * @return mixed[]
      */
     public function downloadGoPayPaymentMethodsByCurrency(Currency $currency): array
     {

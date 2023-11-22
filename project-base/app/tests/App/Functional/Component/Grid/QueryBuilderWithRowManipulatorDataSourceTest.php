@@ -11,7 +11,7 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 
 class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctionalTestCase
 {
-    public function testGetOneRow()
+    public function testGetOneRow(): void
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')
@@ -31,7 +31,7 @@ class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctional
         $this->assertSame('newValue', $row['newField']);
     }
 
-    public function testGetTotalRowsCount()
+    public function testGetTotalRowsCount(): void
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')
@@ -51,7 +51,7 @@ class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctional
         $this->assertSame(10, $count);
     }
 
-    public function testGetRows()
+    public function testGetRows(): void
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('p')

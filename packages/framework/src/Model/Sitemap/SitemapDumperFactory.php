@@ -36,7 +36,7 @@ class SitemapDumperFactory
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumper
      */
-    public function createForDomain($domainId)
+    public function createForDomain($domainId): \Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumper
     {
         return new SitemapDumper(
             $this->eventDispatcher,

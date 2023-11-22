@@ -53,9 +53,10 @@ class CategoryFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
+     * @return string
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): string
     {
         $seoTitlesOptionsByDomainId = [];
         $seoMetaDescriptionsOptionsByDomainId = [];
@@ -234,7 +235,7 @@ class CategoryFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['scenario', 'category'])
@@ -251,7 +252,7 @@ class CategoryFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return string
      */
-    private function getCategoryNameForPlaceholder(DomainConfig $domainConfig, ?Category $category = null)
+    private function getCategoryNameForPlaceholder(DomainConfig $domainConfig, ?Category $category = null): string
     {
         $domainLocale = $domainConfig->getLocale();
 

@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\MarkProductForExportSubs
 class MarkProductForExportSubscriber extends BaseMarkProductForExportSubscriber
 {
     /**
-     * @return array
+     * @return mixed[]
      */
     public static function getSubscribedEvents(): array
     {

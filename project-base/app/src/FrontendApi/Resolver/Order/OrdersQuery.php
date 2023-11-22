@@ -27,7 +27,7 @@ class OrdersQuery extends BaseOrdersQuery
     /**
      * {@inheritdoc}
      */
-    public function ordersQuery(Argument $argument)
+    public function ordersQuery(Argument $argument): object
     {
         PageSizeValidator::checkMaxPageSize($argument);
 

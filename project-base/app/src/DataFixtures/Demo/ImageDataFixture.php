@@ -49,7 +49,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->truncateImagesFromDb();
 
@@ -68,7 +68,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->processDbImagesChanges();
     }
 
-    private function processDbImagesChanges()
+    private function processDbImagesChanges(): void
     {
         $this->processBrandsImages();
         $this->processCategoriesImages();
@@ -80,7 +80,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->restartImagesIdsDbSequence();
     }
 
-    private function processBrandsImages()
+    private function processBrandsImages(): void
     {
         $brandsImagesData = [
             79 => BrandDataFixture::BRAND_APPLE,
@@ -123,7 +123,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
-    private function processCategoriesImages()
+    private function processCategoriesImages(): void
     {
         $categoriesImagesData = [
             68 => CategoryDataFixture::CATEGORY_ELECTRONICS,
@@ -153,7 +153,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
-    private function processPaymentsImages()
+    private function processPaymentsImages(): void
     {
         $paymentsImagesData = [
             53 => PaymentDataFixture::PAYMENT_CARD,
@@ -175,7 +175,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
-    private function processTransportsImages()
+    private function processTransportsImages(): void
     {
         $transportsImagesData = [
             56 => TransportDataFixture::TRANSPORT_CZECH_POST,
@@ -197,7 +197,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
-    private function processProductsImages()
+    private function processProductsImages(): void
     {
         $productsIdsWithImageIdSameAsProductId = [
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
@@ -240,7 +240,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
-    private function processSliderItemsImages()
+    private function processSliderItemsImages(): void
     {
         $imagesIdsIndexedBySliderItemsIds = [
             1 => 59,
@@ -307,7 +307,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param int $entityId
      * @param string $entityName
      * @param int $imageId
-     * @param array $names
+     * @param mixed[] $names
      * @param string|null $type
      * @param string|null $akeneoImageType
      * @param int|null $position
@@ -320,7 +320,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ?string $type = null,
         ?string $akeneoImageType = null,
         ?int $position = null,
-    ) {
+    ): void {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at, akeneo_image_type)
             VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at, :akeneo_image_type)',
@@ -368,7 +368,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param string $origin
      * @param string $target
      */
-    private function moveFilesFromLocalFilesystemToFilesystem(string $origin, string $target)
+    private function moveFilesFromLocalFilesystemToFilesystem(string $origin, string $target): void
     {
         $finder = new Finder();
         $finder->files()->in($origin);
@@ -389,14 +389,14 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
     }
 
-    private function truncateImagesFromDb()
+    private function truncateImagesFromDb(): void
     {
         $this->em->getConnection()->executeStatement(
             'TRUNCATE TABLE ' . self::IMAGES_TABLE_NAME . ', ' . self::IMAGES_TRANSLATIONS_TABLE_NAME,
         );
     }
 
-    private function restartImagesIdsDbSequence()
+    private function restartImagesIdsDbSequence(): void
     {
         $this->em->getConnection()->executeStatement(
             'SELECT SETVAL(pg_get_serial_sequence(\'images\', \'id\'), COALESCE((SELECT MAX(id) FROM images) + 1, 1), false)',
@@ -406,7 +406,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             BrandDataFixture::class,

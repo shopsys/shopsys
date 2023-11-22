@@ -22,7 +22,7 @@ class ParameterFilterValidator extends ConstraintValidator
      * @param mixed $value
      * @param \App\FrontendApi\Model\Component\Constraints\ParameterFilter $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ParameterFilter) {
             throw new UnexpectedTypeException($constraint, ParameterFilter::class);

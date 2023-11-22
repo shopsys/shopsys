@@ -34,7 +34,7 @@ class StrictWebDriver extends WebDriver
     /**
      * {@inheritdoc}
      */
-    protected function match($page, $selector, $throwMalformed = true): array
+    protected function match(\Facebook\WebDriver\WebDriverSearchContext $page, $selector, bool $throwMalformed = true): array
     {
         if (!is_array($selector) && !$selector instanceof WebDriverBy) {
             $message = 'Using match() with fuzzy locator is slow. '
@@ -64,7 +64,7 @@ class StrictWebDriver extends WebDriver
     /**
      * @internal This method prevents developers from using parent method
      * @param mixed $link
-     * @param mixed|null $context
+     * @param mixed $context
      */
     public function click($link, $context = null): void
     {
@@ -525,7 +525,7 @@ class StrictWebDriver extends WebDriver
 
     /**
      * @param string $text
-     * @param array $nodes
+     * @param mixed[] $nodes
      * @param mixed $selector
      */
     protected function assertNodesContain($text, $nodes, $selector = null): void
@@ -537,7 +537,7 @@ class StrictWebDriver extends WebDriver
 
     /**
      * @param string $text
-     * @param array $nodes
+     * @param mixed[] $nodes
      * @param mixed $selector
      */
     protected function assertNodesNotContain($text, $nodes, $selector = null): void

@@ -13,7 +13,7 @@ use Twig\Loader\FilesystemLoader as BaseFilesystemLoader;
 class FilesystemLoader extends BaseFilesystemLoader
 {
     /**
-     * @param array $paths
+     * @param mixed[] $paths
      * @param string|null $rootPath
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain
      */
@@ -49,7 +49,7 @@ class FilesystemLoader extends BaseFilesystemLoader
         return parent::findTemplate($templateName);
     }
 
-    protected function assertDomainDependency()
+    protected function assertDomainDependency(): void
     {
         if (!($this->domain instanceof Domain)) {
             $message = sprintf('Template loader needs an instance of %s class', Domain::class);
@@ -62,7 +62,7 @@ class FilesystemLoader extends BaseFilesystemLoader
      * @param string $templateName
      * @return string|null
      */
-    protected function findMultidesignTemplate($templateName)
+    protected function findMultidesignTemplate($templateName): ?string
     {
         try {
             $designId = $this->domain->getDesignId();

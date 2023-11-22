@@ -34,8 +34,9 @@ class CurrencyController extends AdminBaseController
 
     /**
      * @Route("/currency/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $grid = $this->currencyInlineEdit->getGrid();
 
@@ -47,8 +48,9 @@ class CurrencyController extends AdminBaseController
     /**
      * @Route("/currency/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction($id): \Symfony\Component\HttpFoundation\Response
     {
         try {
             $currency = $this->currencyFacade->getById($id);
@@ -67,8 +69,9 @@ class CurrencyController extends AdminBaseController
      * @Route("/currency/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $fullName = $this->currencyFacade->getById($id)->getName();
@@ -93,8 +96,9 @@ class CurrencyController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function settingsAction(Request $request)
+    public function settingsAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainNames = [];
 

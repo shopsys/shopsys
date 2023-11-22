@@ -27,9 +27,9 @@ class ElasticsearchTracer extends AbstractLogger
 
     /**
      * @param string $requestMessage
-     * @return mixed
+     * @return null|object|string|int|float|bool|mixed[]
      */
-    protected function extractData(string $requestMessage)
+    protected function extractData(string $requestMessage): null|object|string|int|float|bool|array
     {
         $matches = null;
 
@@ -52,7 +52,7 @@ class ElasticsearchTracer extends AbstractLogger
     /**
      * @param mixed $level
      * @param string $message
-     * @param array $context
+     * @param mixed[] $context
      */
     public function log($level, $message, array $context = []): void
     {
@@ -75,7 +75,7 @@ class ElasticsearchTracer extends AbstractLogger
 
     /**
      * @param string $message
-     * @param array $context
+     * @param mixed[] $context
      */
     protected function logRequest($message, array $context = []): void
     {

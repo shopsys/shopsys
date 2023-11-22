@@ -17,7 +17,7 @@ class OrderStatus extends BaseOrderStatus
     /**
      * @param int $type
      */
-    protected function setType($type)
+    protected function setType($type): void
     {
         if (!in_array($type, [
             self::TYPE_NEW,

@@ -166,7 +166,7 @@ class ParameterFacade extends BaseParameterFacade
             $valueIdsForParameter = $parameterValueIdsIndexedByParameterId[$parameter->getId()];
             $parameterValues = array_intersect_key($allParameterValues, array_flip($valueIdsForParameter));
 
-            uasort($parameterValues, function (ParameterValue $first, ParameterValue $second) {
+            uasort($parameterValues, function (ParameterValue $first, ParameterValue $second): int {
                 return strcmp($first->getText(), $second->getText());
             });
 

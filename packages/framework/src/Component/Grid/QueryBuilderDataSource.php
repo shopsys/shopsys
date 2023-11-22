@@ -16,7 +16,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $rowIdSourceColumnName
      */
-    public function __construct(protected readonly QueryBuilder $queryBuilder, $rowIdSourceColumnName)
+    public function __construct(protected readonly QueryBuilder $queryBuilder, string $rowIdSourceColumnName)
     {
         $this->rowIdSourceColumnName = $rowIdSourceColumnName;
     }
@@ -33,7 +33,7 @@ class QueryBuilderDataSource implements DataSourceInterface
         $page = 1,
         $orderSourceColumnName = null,
         $orderDirection = self::ORDER_ASC,
-    ) {
+    ): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult {
         $queryBuilder = clone $this->queryBuilder;
 
         if ($orderSourceColumnName !== null) {
@@ -47,9 +47,9 @@ class QueryBuilderDataSource implements DataSourceInterface
 
     /**
      * @param int $rowId
-     * @return array
+     * @return mixed[]
      */
-    public function getOneRow($rowId)
+    public function getOneRow($rowId): array
     {
         $queryBuilder = clone $this->queryBuilder;
         $this->prepareQueryWithOneRow($queryBuilder, $rowId);
@@ -60,7 +60,7 @@ class QueryBuilderDataSource implements DataSourceInterface
     /**
      * @return int
      */
-    public function getTotalRowsCount()
+    public function getTotalRowsCount(): int
     {
         $queryPaginator = new QueryPaginator($this->queryBuilder, GroupedScalarHydrator::HYDRATION_MODE);
 
@@ -72,7 +72,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param string $orderSourceColumnName
      * @param string $orderDirection
      */
-    protected function addQueryOrder(QueryBuilder $queryBuilder, $orderSourceColumnName, $orderDirection)
+    protected function addQueryOrder(QueryBuilder $queryBuilder, $orderSourceColumnName, $orderDirection): void
     {
         $queryBuilder->orderBy($orderSourceColumnName, $orderDirection);
     }
@@ -81,7 +81,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param int $rowId
      */
-    protected function prepareQueryWithOneRow(QueryBuilder $queryBuilder, $rowId)
+    protected function prepareQueryWithOneRow(QueryBuilder $queryBuilder, $rowId): void
     {
         $queryBuilder
             ->andWhere($this->rowIdSourceColumnName . ' = :rowId')
@@ -94,7 +94,7 @@ class QueryBuilderDataSource implements DataSourceInterface
     /**
      * @return string
      */
-    public function getRowIdSourceColumnName()
+    public function getRowIdSourceColumnName(): string
     {
         return $this->rowIdSourceColumnName;
     }

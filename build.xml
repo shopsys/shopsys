@@ -247,18 +247,15 @@
         <phingcall target="phplint"/>
     </target>
 
-    <target name="phpstan" depends="warmup,tests-acceptance-build" description="Performs static analysis of PHP files using PHPStan on all packages." hidden="true">
+    <target name="phpstan" depends="" description="Performs static analysis of PHP files using PHPStan on all packages." hidden="true">
         <exec executable="${path.phpstan.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="analyze"/>
             <arg value="-c"/>
             <arg path="./phpstan.neon"/>
-            <arg path="${path.packages}/*/src"/>
-            <arg path="${path.packages}/*/tests"/>
-            <arg path="${path.app}"/>
+            <arg path="${path.packages}/framework/src"/>
+            <arg path="${path.packages}/framework/tests"/>
             <arg path="${path.root}/src"/>
             <arg path="${path.root}/tests"/>
-            <arg path="${path.utils}/*/src"/>
-            <arg path="${path.utils}/*/tests"/>
             <arg value="--level=${phpstan.level}"/>
             <arg value="--memory-limit=${phpstan.memory-limit}"/>
             <arg value="-vvv"/>

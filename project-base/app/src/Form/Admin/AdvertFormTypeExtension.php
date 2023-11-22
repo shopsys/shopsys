@@ -42,7 +42,7 @@ class AdvertFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
     private function buildImageGroup(FormBuilderInterface $builder, array $options): void
     {
@@ -136,7 +136,7 @@ class AdvertFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['scenario', 'advert', 'web_image_exists', 'mobile_image_exists'])
@@ -149,7 +149,7 @@ class AdvertFormTypeExtension extends AbstractTypeExtension
                 'mobile_image_exists' => false,
                 'data_class' => AdvertData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'validation_groups' => function (FormInterface $form) {
+                'validation_groups' => function (FormInterface $form): array {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
                     /** @var \App\Model\Advert\AdvertData $advertData */

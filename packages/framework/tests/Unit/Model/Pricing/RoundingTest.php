@@ -13,7 +13,10 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class RoundingTest extends TestCase
 {
-    public function roundingProvider()
+    /**
+     * @return array<int, array<'expectedAsPriceWithoutVat'|'expectedAsPriceWithVat'|'expectedAsVatAmount'|'unroundedPrice', \Shopsys\FrameworkBundle\Component\Money\Money>>
+     */
+    public function roundingProvider(): array
     {
         return [
             [
@@ -57,17 +60,17 @@ class RoundingTest extends TestCase
 
     /**
      * @dataProvider roundingProvider
-     * @param mixed $unroundedPrice
-     * @param mixed $expectedAsPriceWithVat
-     * @param mixed $expectedAsPriceWithoutVat
-     * @param mixed $expectedAsVatAmount
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $unroundedPrice
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsPriceWithVat
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsPriceWithoutVat
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsVatAmount
      */
     public function testRoundingByCurrency(
-        $unroundedPrice,
-        $expectedAsPriceWithVat,
-        $expectedAsPriceWithoutVat,
-        $expectedAsVatAmount,
-    ) {
+        \Shopsys\FrameworkBundle\Component\Money\Money $unroundedPrice,
+        \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsPriceWithVat,
+        \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsPriceWithoutVat,
+        \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsVatAmount,
+    ): void {
         $rounding = new Rounding();
 
         $currency = $this->createCurrency(Currency::ROUNDING_TYPE_INTEGER);
@@ -83,7 +86,10 @@ class RoundingTest extends TestCase
         $this->assertThat($rounding->roundVatAmount($unroundedPrice), new IsMoneyEqual($expectedAsVatAmount));
     }
 
-    public function roundingPriceWithVatProvider()
+    /**
+     * @return array<int, array<string|\Shopsys\FrameworkBundle\Component\Money\Money>>
+     */
+    public function roundingPriceWithVatProvider(): array
     {
         return [
             [
@@ -144,7 +150,7 @@ class RoundingTest extends TestCase
         string $roundingType,
         Money $inputPrice,
         Money $outputPrice,
-    ) {
+    ): void {
         $currency = $this->createCurrency($roundingType);
 
         $rounding = new Rounding();

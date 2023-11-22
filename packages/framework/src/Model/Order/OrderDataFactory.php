@@ -48,7 +48,7 @@ class OrderDataFactory implements OrderDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    protected function fillFromOrder(OrderData $orderData, Order $order)
+    protected function fillFromOrder(OrderData $orderData, Order $order): void
     {
         $orderData->orderNumber = $order->getNumber();
         $orderData->status = $order->getStatus();

@@ -12,7 +12,10 @@ use Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess;
 
 class FilemanagerAccessTest extends TestCase
 {
-    public function isPathAccessibleProvider()
+    /**
+     * @return string[][]|bool[][]|null[][]
+     */
+    public function isPathAccessibleProvider(): array
     {
         return [
             [
@@ -62,12 +65,12 @@ class FilemanagerAccessTest extends TestCase
 
     /**
      * @dataProvider isPathAccessibleProvider
-     * @param mixed $fileuploadDir
-     * @param mixed $testPath
-     * @param mixed $attr
-     * @param mixed $isAccessible
+     * @param string $fileuploadDir
+     * @param string $testPath
+     * @param string $attr
+     * @param bool|null $isAccessible
      */
-    public function testIsPathAccessible($fileuploadDir, $testPath, $attr, $isAccessible)
+    public function testIsPathAccessible(string $fileuploadDir, string $testPath, string $attr, ?bool $isAccessible): void
     {
         $elFinderConfigurationReaderMock = $this->getMockBuilder(ElFinderConfigurationReader::class)
             ->setMethods(null)
@@ -84,12 +87,12 @@ class FilemanagerAccessTest extends TestCase
 
     /**
      * @dataProvider isPathAccessibleProvider
-     * @param mixed $fileuploadDir
-     * @param mixed $testPath
-     * @param mixed $attr
-     * @param mixed $isAccessible
+     * @param string $fileuploadDir
+     * @param string $testPath
+     * @param string $attr
+     * @param bool|null $isAccessible
      */
-    public function testIsPathAccessibleStatic($fileuploadDir, $testPath, $attr, $isAccessible)
+    public function testIsPathAccessibleStatic(string $fileuploadDir, string $testPath, string $attr, ?bool $isAccessible): void
     {
         $elFinderConfigurationReaderMock = $this->getMockBuilder(ElFinderConfigurationReader::class)
             ->setMethods(null)
@@ -105,7 +108,7 @@ class FilemanagerAccessTest extends TestCase
         $this->assertSame(FilemanagerAccess::isPathAccessibleStatic($attr, $testPath, null, null), $isAccessible);
     }
 
-    public function testIsPathAccessibleStaticException()
+    public function testIsPathAccessibleStaticException(): void
     {
         FilemanagerAccess::detachSelf();
         $this->expectException(InstanceNotInjectedException::class);

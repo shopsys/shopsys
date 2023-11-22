@@ -63,9 +63,9 @@ class AkeneoHelper
     }
 
     /**
-     * @param array $itemData
+     * @param mixed[] $itemData
      * @param array|null $akeneoData
-     * @return array
+     * @return mixed[]
      */
     public static function mapLocalizedLabels(array $itemData, ?array $akeneoData): array
     {

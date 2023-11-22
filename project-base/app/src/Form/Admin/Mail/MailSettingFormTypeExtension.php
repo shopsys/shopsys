@@ -15,9 +15,9 @@ class MailSettingFormTypeExtension extends AbstractTypeExtension
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $footerGroup = $builder->add('footerGroup', GroupType::class, [
             'label' => t('Footer'),

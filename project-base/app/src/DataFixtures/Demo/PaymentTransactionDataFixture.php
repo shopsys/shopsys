@@ -25,7 +25,7 @@ class PaymentTransactionDataFixture extends AbstractReferenceFixture implements 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /** @var \App\Model\Order\Order $order */
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_CZ);
@@ -41,7 +41,7 @@ class PaymentTransactionDataFixture extends AbstractReferenceFixture implements 
     /**
      * {@inheritdoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             PaymentDataFixture::class,

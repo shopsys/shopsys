@@ -30,7 +30,7 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<int, array<'input'|'output', string>>
      */
     public function getTestReplaceAnnotationsDataProvider(): array
     {
@@ -89,7 +89,7 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[][]
      */
     public function getTestReplaceInMethodReturnTypeDataProvider(): array
     {
@@ -116,7 +116,7 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[][]
      */
     public function getTestReplaceInInPropertyTypeDataProvider(): array
     {
@@ -140,7 +140,7 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[][]
      */
     public function testReplaceInParameterTypeDataProvider(): array
     {

@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class AuthenticatorTest extends TestCase
 {
-    public function testCheckLoginProcessWithRequestError()
+    public function testCheckLoginProcessWithRequestError(): void
     {
         $authenticator = $this->getAuthenticator();
 
@@ -33,7 +33,7 @@ class AuthenticatorTest extends TestCase
         $authenticator->checkLoginProcess($requestMock);
     }
 
-    public function testCheckLoginProcessWithSessionError()
+    public function testCheckLoginProcessWithSessionError(): void
     {
         $authenticator = $this->getAuthenticator();
 
@@ -53,7 +53,7 @@ class AuthenticatorTest extends TestCase
         $authenticator->checkLoginProcess($requestMock);
     }
 
-    public function testCheckLoginProcessWithoutSessionError()
+    public function testCheckLoginProcessWithoutSessionError(): void
     {
         $authenticator = $this->getAuthenticator();
 
@@ -75,7 +75,7 @@ class AuthenticatorTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Security\Authenticator
      */
-    private function getAuthenticator()
+    private function getAuthenticator(): \Shopsys\FrameworkBundle\Model\Security\Authenticator
     {
         $tokenStorageMock = $this->createMock(TokenStorageInterface::class);
         $eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);

@@ -19,7 +19,7 @@ class AssetTransferAkeneoFacade
     /**
      * @return \Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetApiInterface
      */
-    private function getAssetManagerApiEndpoint()
+    private function getAssetManagerApiEndpoint(): \Akeneo\PimEnterprise\ApiClient\Api\AssetManager\AssetApiInterface
     {
         return $this->akeneoClient->getAssetManagerApi();
     }
@@ -27,9 +27,9 @@ class AssetTransferAkeneoFacade
     /**
      * @param string $assetFamilyCode
      * @param string $imageCode
-     * @return array
+     * @return mixed[]
      */
-    public function getImageData($assetFamilyCode, $imageCode): array
+    public function getImageData(string $assetFamilyCode, string $imageCode): array
     {
         return $this->getAssetManagerApiEndpoint()->get($assetFamilyCode, $imageCode);
     }

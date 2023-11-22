@@ -110,7 +110,7 @@ class GoPayPaymentMethodFacade
 
     /**
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodData $goPayPaymentMethodData
-     * @param array $goPayMethodRawData
+     * @param mixed[] $goPayMethodRawData
      * @param string $language
      */
     public function setFromGoPayRawData(
@@ -127,7 +127,7 @@ class GoPayPaymentMethodFacade
 
     /**
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     * @param array $goPayMethodRawData
+     * @param mixed[] $goPayMethodRawData
      * @param string $language
      */
     private function editByRawData(
@@ -143,7 +143,7 @@ class GoPayPaymentMethodFacade
     }
 
     /**
-     * @param array $goPayMethodRawData
+     * @param mixed[] $goPayMethodRawData
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param string $language
      * @return \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod
@@ -166,7 +166,7 @@ class GoPayPaymentMethodFacade
 
     /**
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     * @param array $goPayMethodRawData
+     * @param mixed[] $goPayMethodRawData
      */
     private function updateSwiftsFromRawData(GoPayPaymentMethod $goPayPaymentMethod, array $goPayMethodRawData): void
     {

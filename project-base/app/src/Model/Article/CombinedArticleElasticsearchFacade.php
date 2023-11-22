@@ -16,7 +16,7 @@ class CombinedArticleElasticsearchFacade
     /**
      * @param string $searchText
      * @param int|null $limit
-     * @return array
+     * @return mixed[]
      */
     public function getArticlesBySearchText(string $searchText, ?int $limit = null): array
     {

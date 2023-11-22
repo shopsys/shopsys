@@ -25,7 +25,7 @@ class ImageLocator extends BaseImageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
-    public function __construct($imageDir, ImageConfig $imageConfig, FilesystemOperator $filesystem)
+    public function __construct(string $imageDir, ImageConfig $imageConfig, FilesystemOperator $filesystem)
     {
         parent::__construct($imageDir, $imageConfig, $filesystem);
     }
@@ -55,7 +55,7 @@ class ImageLocator extends BaseImageLocator
         int $additionalIndex,
         ?string $sizeName,
         ?string $friendlyUrlSlug,
-    ) {
+    ): string {
         $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType(), $sizeName);
 
         $filename = $this->getAdditionalImageFilename($image->getSeoFilename($friendlyUrlSlug), $additionalIndex);

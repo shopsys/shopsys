@@ -36,7 +36,7 @@ class CreateDomainsDbFunctionsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->em->wrapInTransaction(function () use ($output) {
+        $this->em->wrapInTransaction(function () use ($output): void {
             $this->doExecute($output);
         });
 
@@ -46,7 +46,7 @@ class CreateDomainsDbFunctionsCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function doExecute(OutputInterface $output)
+    private function doExecute(OutputInterface $output): void
     {
         $output->writeln('Start of creating db functions.');
 

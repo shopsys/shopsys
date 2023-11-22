@@ -44,7 +44,7 @@ class BlogCategoryFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -91,7 +91,7 @@ class BlogCategoryFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      * @throws \Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
@@ -148,8 +148,8 @@ class BlogCategoryFormType extends AbstractType
     }
 
     /**
-     * @param array $options
-     * @return array
+     * @param mixed[] $options
+     * @return mixed[]
      */
     private function prepareSeoData(array $options): array
     {
@@ -186,7 +186,7 @@ class BlogCategoryFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createSeoGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
@@ -281,7 +281,7 @@ class BlogCategoryFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createImageGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface

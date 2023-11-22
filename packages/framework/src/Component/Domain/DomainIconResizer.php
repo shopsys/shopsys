@@ -33,7 +33,7 @@ class DomainIconResizer
      * @param string $filepath
      * @param string $domainImagesDirectory
      */
-    public function convertToDomainIconFormatAndSave($domainId, $filepath, $domainImagesDirectory)
+    public function convertToDomainIconFormatAndSave($domainId, $filepath, $domainImagesDirectory): void
     {
         $resizedImage = $this->imageProcessor->resize(
             $this->imageProcessor->createInterventionImage($filepath),
