@@ -11,9 +11,9 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserEr
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderQuery as BaseOrderQuery;
 
 /**
- * @property \App\FrontendApi\Model\Order\OrderFacade $frontendApiOrderFacade
+ * @property \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade
  * @property \App\Model\Order\OrderFacade $orderFacade
- * @method __construct(\App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\Model\Order\OrderFacade $orderFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\FrontendApi\Model\Order\OrderFacade $frontendApiOrderFacade)
+ * @method __construct(\App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\Model\Order\OrderFacade $orderFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade)
  * @method \App\Model\Order\Order getOrderForCustomerUserByUuid(\App\Model\Customer\User\CustomerUser $customerUser, string $uuid)
  */
 class OrderQuery extends BaseOrderQuery
@@ -34,7 +34,7 @@ class OrderQuery extends BaseOrderQuery
 
         try {
             if ($orderNumber !== null && $customerUser !== null) {
-                return $this->frontendApiOrderFacade->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
+                return $this->orderApiFacade->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
             }
 
             if ($uuid !== null && $customerUser !== null) {

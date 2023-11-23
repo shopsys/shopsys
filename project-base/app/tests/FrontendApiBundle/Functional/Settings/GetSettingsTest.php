@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Settings;
 
+use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -26,7 +27,7 @@ final class GetSettingsTest extends GraphQlTestCase
         $expectedSettingsData = $this->getExpectedSettings($robotsTxtData);
 
         $graphQlType = 'settings';
-        $response = $this->getResponseContentForQuery($this->getSettingsQuery());
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SettingsQuery.graphql');
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
         self::assertSame($expectedSettingsData, $responseData);
@@ -57,22 +58,6 @@ CONTENT,
     }
 
     /**
-     * @return string
-     */
-    private function getSettingsQuery(): string
-    {
-        return '
-            {
-                settings {
-                    seo {
-                        robotsTxtContent
-                    }
-                }
-            }
-        ';
-    }
-
-    /**
      * @param string|null $data
      * @return array
      */
@@ -82,6 +67,7 @@ CONTENT,
             'seo' => [
                 'robotsTxtContent' => $data,
             ],
+            'maxAllowedPaymentTransactions' => Order::MAX_TRANSACTION_COUNT,
         ];
     }
 }

@@ -105,13 +105,39 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   add consumers and RabbitMQ to deployed application ([#2904](https://github.com/shopsys/shopsys/pull/2904))
     -   set new environment variables `RABBITMQ_DEFAULT_USER`, `RABBITMQ_DEFAULT_PASS`, `RABBITMQ_IP_WHITELIST` in your deployment tool (with use of the default config it will be Gitlab CI)
     -   see #project-base-diff to update your project
--   re-enable phing target cron ([#2875](https://github.com/shopsys/shopsys/pull/2875))
-    -   see #project-base-diff to update your project
+-   re-enable phing target cron ([#2875](https://github.com/shopsys/shopsys/pull/2875)) - see #project-base-diff to update your project
 -   prepare core for dispatch/consume system ([#2907](https://github.com/shopsys/shopsys/pull/2907))
     -   your custom classes that utilize internal array caching or need to be reset between message consumption should now implement the `\Symfony\Contracts\Service\ResetInterface` interface
     -   method `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler::cleanScheduleForImmediateRecalculation()` has been renamed to `reset()`
     -   see #project-base-diff to update your project
--   replace custom application bootstrapping with symfony/runtime ([#2914](https://github.com/shopsys/shopsys/pull/2914))
+-   # replace custom application bootstrapping with symfony/runtime ([#2914](https://github.com/shopsys/shopsys/pull/2914))
+-   improve repeat order related mutations ([#2876](https://github.com/shopsys/shopsys/pull/2876))
+    -   constant `Shopsys\FrameworkBundle\Component\Setting\Setting::ORDER_SENT_PAGE_CONTENT` was removed, use `Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageSettingFacade::ORDER_SENT_PAGE_CONTENT` instead
+    -   `Shopsys\FrameworkBundle\Controller\Admin\CustomerCommunicationController`
+        -   method `__construct()` changed its interface:
+        ```diff
+            public function __construct(
+        -       protected readonly Setting $setting,
+        +       protected readonly OrderContentPageSettingFacade $orderContentPageSettingFacade,
+                protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+            )
+        ```
+        -   method `orderSubmittedAction()` now returns `Symfony\Component\HttpFoundation\Response`
+    -   `Shopsys\FrameworkBundle\Model\Order\OrderFacade`
+        -   constant `VARIABLE_NUMBER` was removed, use `Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade::VARIABLE_NUMBER` instead
+        -   constant `VARIABLE_ORDER_DETAIL_URL` was removed, use `Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade::VARIABLE_ORDER_DETAIL_URL` instead
+        -   constant `VARIABLE_PAYMENT_INSTRUCTIONS` was removed, use `Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade::VARIABLE_PAYMENT_INSTRUCTIONS` instead
+        -   constant `VARIABLE_TRANSPORT_INSTRUCTIONS` was removed, use `Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade::VARIABLE_TRANSPORT_INSTRUCTIONS` instead
+        -   method `getOrderSentPageContent()` was removed, use `Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade::getOrderSentPageContent()` instead
+    -   class `Shopsys\FrontendApiBundle\Model\Order\OrderFacade`
+        -   was renamed to `Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade`, change your usage accordingly
+        -   method `__construct()` changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly OrderRepository $orderRepository,
+        +       protected readonly OrderFacade $orderFacade,
+            )
+        ```
     -   see #project-base-diff to update your project
 -   prevent duplicate color parameters in data fixtures ([#2911](https://github.com/shopsys/shopsys/pull/2911))
     -   see #project-base-diff to update your project
@@ -273,3 +299,15 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   remove EmptyCartWrapper
         -   this component was making whole order process very difficult to predict behavior, now we have the logic from this component splitted into each page of the order process which makes it much more predictable
         -   also this fixes bug with infinite cart page loading
+
+-   improve repeat order related mutations ([#2876](https://github.com/shopsys/shopsys/pull/2876))
+    -   the maximum number of payment transaction is set to 2 (using `MAX_ALLOWED_PAYMENT_TRANSACTIONS`), this means that the user can repeat payment only once, so if this does not match your requirements, you need to change it
+    -   GoPay SWIFT selection was moved directly inside payment selection, which might not be visible right away if you use the same approach as we do (hide unselected transports and payments), however if you do not do that, this new layout might be suitable for you
+    -   RegistrationAfterOrder now takes care of its own conditional rendering, so if you want to add a condition, move it inside the component
+    -   PaymentConfirmationElements and PaymentConfirmationContent were removed and instead a new ConfirmationPageContent is used, which is common for all confirmation pages. If this does not suit your needs (e.g. the page needs to look completely different in each case), you probably want to either modify the new component or use multiple different ones.
+    -   logic for PaymentFail and PaymentSuccess was reduced and is now either inside the usePaymentConfirmationContent hook, which is responsible for fetching the content from the API, or inside ConfirmationPageContent, which is responsible for structuring the content. If you do not want to load the page content from API, these changes might not be necessary for you, and you can simplify the logic by having static components, instead of dynamic ones.
+    -   two new queries for payment confirmation were added on SF. If you have previously implemented the logic for order confirmation page dynamic content, you can follow that example and implement it similarly.
+    -   query for order confirmation was renamed (the word 'Query' was added)
+    -   expiration of confirmation content is now taken into account on SF by ignoring the API error and not rendering the content. This was a bug (missing feature) in previous versions. If you have not fixed it yourself before, you definitely want to implement these changes, because otherwise, the user can see errors when displaying the order confirmation page after a certain timeout.
+    -   query parameters parsed using getStringFromUrlQuery are now also trimmed, which makes sure the API can understand the string. For example, the API does not understand " 440ecde4-b992-4290-8636-4f454c9cf475 " as a valid UUID.
+    -   for not-discussed changes, see #project-base-diff to update your project

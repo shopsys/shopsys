@@ -9,10 +9,12 @@ PaymentMutation:
                     orderUuid:
                         type: "Uuid!"
                 resolve: "@=mutation('payOrderMutation', args)"
-            CheckPaymentStatus:
-                type: "Boolean!"
+            UpdatePaymentStatus:
+                type: "PaymentStatus!"
                 description: "check payment status of order after callback from payment service"
                 args:
                     orderUuid:
                         type: "Uuid!"
-                resolve: "@=mutation('checkPaymentStatusMutation', args)"
+                    orderPaymentStatusPageValidityHash:
+                        type: "String"
+                resolve: "@=mutation('updatePaymentStatusMutation', args)"

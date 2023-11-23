@@ -30,3 +30,17 @@ OrderQuery:
                     orderUuid:
                         type: "Uuid!"
                 description: "Returns HTML content for order sent page."
+            orderPaymentSuccessfulContent:
+                type: "String!"
+                resolve: "@=query('orderPaymentSuccessfulContentQuery', args['orderUuid'])"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns HTML content for order with successful payment."
+            orderPaymentFailedContent:
+                type: "String!"
+                resolve: "@=query('orderPaymentFailedContentQuery', args['orderUuid'])"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns HTML content for order with failed payment."

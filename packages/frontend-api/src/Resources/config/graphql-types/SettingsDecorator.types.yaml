@@ -8,3 +8,7 @@ SettingsDecorator:
                 type: "SeoSetting!"
                 resolve: "@=query('seoSettingsQuery')"
                 description: "Settings related to SEO"
+            maxAllowedPaymentTransactions:
+                type: Int!
+                resolve: "@=query('maxAllowedPaymentTransactionsQuery')"
+                description: "Max allowed payment transactions (how many times is user allowed to try the same payment)"

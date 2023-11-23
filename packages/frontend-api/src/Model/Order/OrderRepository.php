@@ -23,7 +23,6 @@ class OrderRepository
 
     /**
      * @return \Doctrine\ORM\QueryBuilder
-     * @internal This will be replaced by \Shopsys\FrameworkBundle\Model\Order::getOrderRepository() with visibility set to public
      */
     protected function createOrderQueryBuilder()
     {

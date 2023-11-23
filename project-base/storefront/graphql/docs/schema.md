@@ -72,6 +72,7 @@
     * [ParameterValueFilterOption](#parametervaluefilteroption)
     * [Payment](#payment)
     * [PaymentSetupCreationData](#paymentsetupcreationdata)
+    * [PaymentStatus](#paymentstatus)
     * [PersonalData](#personaldata)
     * [PersonalDataPage](#personaldatapage)
     * [Price](#price)
@@ -677,6 +678,34 @@ Returns order filtered using UUID, orderNumber, or urlHash
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>orderPaymentFailedContent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Returns HTML content for order with failed payment.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderPaymentSuccessfulContent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Returns HTML content for order with successful payment.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>orders</strong></td>
 <td valign="top"><a href="#orderconnection">OrderConnection</a></td>
 <td>
@@ -1200,20 +1229,6 @@ Add a transport to the cart, or remove a transport from the cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CheckPaymentStatus</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-check payment status of order after callback from payment service
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>cleanComparison</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -1501,6 +1516,25 @@ Set default delivery address by Uuid
 Set delivery address by Uuid
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>UpdatePaymentStatus</strong></td>
+<td valign="top"><a href="#paymentstatus">PaymentStatus</a>!</td>
+<td>
+
+check payment status of order after callback from payment service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderPaymentStatusPageValidityHash</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -6285,6 +6319,48 @@ Identifiers of GoPay payment method
 </tbody>
 </table>
 
+### PaymentStatus
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>isPaid</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the order is already paid or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>paymentType</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Type of payment
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>transactionCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Count of already processed transactions
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### PersonalData
 
 <table>
@@ -7328,6 +7404,15 @@ Represents settings of the current domain
 <td>
 
 Main text for contact form
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>maxAllowedPaymentTransactions</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Max allowed payment transactions (how many times is user allowed to try the same payment)
 
 </td>
 </tr>

@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Order;
 
 use App\FrontendApi\Model\Order\Exception\OrderCannotBePairedException;
-use App\FrontendApi\Model\Order\Exception\OrderSentPageNotAvailableUserError;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Order;
-use App\Model\Order\OrderFacade as AppOrderFacade;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrontendApiBundle\Model\Order\OrderFacade as BaseOrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade as BaseOrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderRepository;
 
 /**
@@ -19,22 +17,23 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderRepository;
  * @method \App\Model\Order\Order[] getCustomerUserOrderLimitedList(\App\Model\Customer\User\CustomerUser $customerUser, int $limit, int $offset)
  * @method int getCustomerUserOrderCount(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order getByUuidAndCustomerUser(string $uuid, \App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Order\Order getByUuid(string $orderUuid)
  */
-class OrderFacade extends BaseOrderFacade
+class OrderApiFacade extends BaseOrderApiFacade
 {
     private const ONE_HOUR_REGISTRATION_WINDOW = 3600;
 
     /**
      * @param \App\FrontendApi\Model\Order\OrderRepository $orderRepository
-     * @param \App\Model\Order\OrderFacade $appOrderFacade
+     * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         OrderRepository $orderRepository,
-        private readonly AppOrderFacade $appOrderFacade,
+        OrderFacade $orderFacade,
         private readonly EntityManagerInterface $em,
     ) {
-        parent::__construct($orderRepository);
+        parent::__construct($orderRepository, $orderFacade);
     }
 
     /**
@@ -45,15 +44,6 @@ class OrderFacade extends BaseOrderFacade
     public function getByOrderNumberAndCustomerUser(string $orderNumber, CustomerUser $customerUser): Order
     {
         return $this->orderRepository->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
-    }
-
-    /**
-     * @param string $uuid
-     * @return \App\Model\Order\Order
-     */
-    public function getByUuid(string $uuid): Order
-    {
-        return $this->orderRepository->getByUuid($uuid);
     }
 
     /**
@@ -72,28 +62,12 @@ class OrderFacade extends BaseOrderFacade
     }
 
     /**
-     * @param string $orderUuid
-     * @return string
-     */
-    public function getOrderSentPageContent(string $orderUuid): string
-    {
-        $order = $this->getByUuid($orderUuid);
-        $fiveMinutesAgo = new DateTime('-5 minutes');
-
-        if ($order->getCreatedAt() < $fiveMinutesAgo) {
-            throw new OrderSentPageNotAvailableUserError('You cannot request page content for order older than 5 minutes.');
-        }
-
-        return $this->appOrderFacade->getOrderSentPageContent($order->getId());
-    }
-
-    /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param string $orderUuid
      */
     public function pairCustomerUserWithOrderByOrderUuid(CustomerUser $customerUser, string $orderUuid): void
     {
-        $order = $this->orderRepository->getByUuid($orderUuid);
+        $order = $this->getByUuid($orderUuid);
 
         if ($order->getCustomerUser() !== null) {
             throw new OrderCannotBePairedException('Order is owned by another customer.');

@@ -13,8 +13,8 @@ class PaymentTransactionFacade
      * @param \App\Model\Payment\Transaction\PaymentTransactionRepository $paymentTransactionRepository
      */
     public function __construct(
-        private EntityManagerInterface $em,
-        private PaymentTransactionRepository $paymentTransactionRepository,
+        private readonly EntityManagerInterface $em,
+        private readonly PaymentTransactionRepository $paymentTransactionRepository,
     ) {
     }
 

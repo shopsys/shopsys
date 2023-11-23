@@ -1,6 +1,5 @@
-import { ImageWrapper, Message, MessageWrapper, PaymentWrapper } from './PaymentConfirmationElements';
-import { Webline } from 'components/Layout/Webline/Webline';
-import { useOrderSentPageContentApi } from 'graphql/generated';
+import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
+import { useOrderPaymentSuccessfulContentQueryApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -15,16 +14,13 @@ export const PaymentSuccess: FC<PaymentSuccessProps> = ({ orderUuid }) => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.payment_success);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [{ data }] = useOrderSentPageContentApi({ variables: { orderUuid } });
+    const [{ data: contentData, fetching }] = useOrderPaymentSuccessfulContentQueryApi({ variables: { orderUuid } });
 
     return (
-        <Webline>
-            <MessageWrapper>
-                <ImageWrapper>
-                    <img alt={t('Order sent')} src="/public/frontend/images/sent-cart.svg" />
-                </ImageWrapper>
-                <PaymentWrapper>{data !== undefined && <Message message={data.orderSentPageContent} />}</PaymentWrapper>
-            </MessageWrapper>
-        </Webline>
+        <ConfirmationPageContent
+            content={contentData?.orderPaymentSuccessfulContent}
+            heading={t('Your payment was successful')}
+            isFetching={fetching}
+        />
     );
 };

@@ -1,0 +1,12 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "<p> Payment for order number {number} has been successful. <br /><br /> <a href=\"{order_detail_url}\">Track</a> the status of your order. <br /> {transport_instructions} </p>"
+msgstr ""
+
+msgid "<p> Payment for order number {number} has failed. <br /><br /> Please contact us to resolve the issue. </p>"
+msgstr ""
+

@@ -28,6 +28,7 @@ const ApplicationErrors = {
     'wishlist-not-found': 'flash-message',
     'wishlist-item-already-exists': 'flash-message',
     'wishlist-item-not-found': 'flash-message',
+    'order-sent-page-not-available': 'no-log',
 } as const;
 
 type KeysMatching<T, V extends ApplicationErrorVerbosityLevel> = {

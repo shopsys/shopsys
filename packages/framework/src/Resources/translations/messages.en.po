@@ -1687,6 +1687,9 @@ msgstr ""
 msgid "Order saving failed"
 msgstr ""
 
+msgid "Order sent page content"
+msgstr ""
+
 msgid "Order statuses overview"
 msgstr ""
 
@@ -1747,7 +1750,13 @@ msgstr ""
 msgid "Payment <strong>{{ name }}</strong> deleted"
 msgstr ""
 
+msgid "Payment failed page content"
+msgstr ""
+
 msgid "Payment instructions"
+msgstr ""
+
+msgid "Payment successful page content"
 msgstr ""
 
 msgid "Payments"

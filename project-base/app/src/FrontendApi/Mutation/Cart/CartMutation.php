@@ -9,7 +9,7 @@ use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Cart\CartWithModificationsResult;
 use App\FrontendApi\Model\Cart\Exception\InvalidCartItemUserError;
-use App\FrontendApi\Model\Order\OrderFacade;
+use App\FrontendApi\Model\Order\OrderApiFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -21,13 +21,13 @@ class CartMutation extends AbstractMutation
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
-     * @param \App\FrontendApi\Model\Order\OrderFacade $orderFacade
+     * @param \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade
      */
     public function __construct(
         private readonly CartFacade $cartFacade,
         private readonly CurrentCustomerUser $currentCustomerUser,
         private readonly CartWatcherFacade $cartWatcherFacade,
-        private readonly OrderFacade $orderFacade,
+        private readonly OrderApiFacade $orderApiFacade,
     ) {
     }
 
@@ -112,7 +112,7 @@ class CartMutation extends AbstractMutation
 
         $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
 
-        $order = $this->orderFacade->getByUuid($orderUuid);
+        $order = $this->orderApiFacade->getByUuid($orderUuid);
 
         if (!$shouldMerge) {
             $this->cartFacade->deleteCart($cart);

@@ -918,8 +918,6 @@ type Mutation {
   ChangePersonalData(input: ChangePersonalDataInput!): CustomerUser!
   "Add a transport to the cart, or remove a transport from the cart"
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
-  "check payment status of order after callback from payment service"
-  CheckPaymentStatus(orderUuid: Uuid!): Boolean!
   "Remove all products from Comparison and remove it."
   cleanComparison(comparisonUuid: Uuid): String!
   "Remove all products from wishlist and remove it."
@@ -963,6 +961,8 @@ type Mutation {
     "Set delivery address by Uuid"
     deliveryAddressUuid: Uuid!
   ): CustomerUser!
+  "check payment status of order after callback from payment service"
+  UpdatePaymentStatus(orderPaymentStatusPageValidityHash: String, orderUuid: Uuid!): PaymentStatus!
 }
 
 "Represents a navigation structure item"
@@ -1399,6 +1399,15 @@ type PaymentSetupCreationData {
   goPayCreatePaymentSetup: GoPayCreatePaymentSetup
 }
 
+type PaymentStatus {
+  "Whether the order is already paid or not"
+  isPaid: Boolean!
+  "Type of payment"
+  paymentType: String!
+  "Count of already processed transactions"
+  transactionCount: Int!
+}
+
 type PersonalData {
   "Customer user data"
   customerUser: CustomerUser
@@ -1712,6 +1721,10 @@ type Query {
   notificationBars: [NotificationBar!]
   "Returns order filtered using UUID, orderNumber, or urlHash"
   order(orderNumber: String, urlHash: String, uuid: Uuid): Order
+  "Returns HTML content for order with failed payment."
+  orderPaymentFailedContent(orderUuid: Uuid!): String!
+  "Returns HTML content for order with successful payment."
+  orderPaymentSuccessfulContent(orderUuid: Uuid!): String!
   "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
   orders(after: String, before: String, first: Int, last: Int): OrderConnection
   "Returns HTML content for order sent page."
@@ -1963,6 +1976,8 @@ type SeoSetting {
 type Settings {
   "Main text for contact form"
   contactFormMainText: String!
+  "Max allowed payment transactions (how many times is user allowed to try the same payment)"
+  maxAllowedPaymentTransactions: Int!
   "Settings related to pricing"
   pricing: PricingSetting!
   "Settings related to SEO"

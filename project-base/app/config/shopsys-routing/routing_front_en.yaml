@@ -12,10 +12,7 @@ front_logout:
     path: /logout/{_csrf_token}
 
 front_order_paid:
-    path: /order-confirmation
-
-front_order_not_paid:
-    path: /unpaid-order/{orderNumber}
+    path: /order-payment-confirmation
 
 front_order_payment_status_notify:
     path: /order/payment-status-notify

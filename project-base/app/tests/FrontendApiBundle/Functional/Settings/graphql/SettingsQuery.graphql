@@ -1,0 +1,8 @@
+query SettingsQuery {
+    settings {
+        seo {
+            robotsTxtContent
+        }
+        maxAllowedPaymentTransactions
+    }
+}

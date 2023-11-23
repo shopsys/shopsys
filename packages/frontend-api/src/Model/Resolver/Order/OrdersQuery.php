@@ -7,7 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrontendApiBundle\Model\Order\OrderFacade;
+use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 
@@ -17,11 +17,11 @@ class OrdersQuery extends AbstractQuery
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFacade $orderFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
      */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly OrderFacade $orderFacade,
+        protected readonly OrderApiFacade $orderApiFacade,
     ) {
     }
 
@@ -40,10 +40,10 @@ class OrdersQuery extends AbstractQuery
         }
 
         $paginator = new Paginator(function ($offset, $limit) use ($customerUser) {
-            return $this->orderFacade->getCustomerUserOrderLimitedList($customerUser, $limit, $offset);
+            return $this->orderApiFacade->getCustomerUserOrderLimitedList($customerUser, $limit, $offset);
         });
 
-        return $paginator->auto($argument, $this->orderFacade->getCustomerUserOrderCount($customerUser));
+        return $paginator->auto($argument, $this->orderApiFacade->getCustomerUserOrderCount($customerUser));
     }
 
     /**

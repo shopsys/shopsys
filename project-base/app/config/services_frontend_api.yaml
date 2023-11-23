@@ -116,8 +116,8 @@ services:
         alias: App\FrontendApi\Resolver\Order\OrderQuery
         public: true
 
-    Shopsys\FrontendApiBundle\Model\Order\OrderFacade:
-        alias: App\FrontendApi\Model\Order\OrderFacade
+    Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade:
+        alias: App\FrontendApi\Model\Order\OrderApiFacade
 
     Shopsys\FrontendApiBundle\Model\Order\OrderRepository:
         alias: App\FrontendApi\Model\Order\OrderRepository

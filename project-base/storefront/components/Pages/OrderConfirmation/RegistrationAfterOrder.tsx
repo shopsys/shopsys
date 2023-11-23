@@ -5,15 +5,19 @@ import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
+import { useIsCustomerUserRegisteredQueryApi } from 'graphql/generated';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { blurInput } from 'helpers/forms/blurInput';
 import { showErrorMessage } from 'helpers/toasts';
+import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
 import { useRegistration } from 'hooks/auth/useRegistration';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { OrderConfirmationQuery } from 'pages/order-confirmation';
 import { useRef } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
@@ -23,28 +27,41 @@ const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then(
 
 const TEST_IDENTIFIER = 'pages-orderconfirmation-registration-create-account';
 
-type RegistrationAfterOrderProps = {
-    lastOrderUuid: string;
-    registrationData: ContactInformation;
-};
-
-export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOrderUuid, registrationData }) => {
+export const RegistrationAfterOrder: FC = () => {
     const { t } = useTranslation();
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const register = useRegistration();
     const isInvalidRegistrationRef = useRef(false);
+    const { query } = useRouter();
+    const { orderUuid, orderEmail, registrationData } = query as OrderConfirmationQuery;
+    const isUserLoggedIn = useIsUserLoggedIn();
+    const parsedRegistrationData = useRef<ContactInformation | undefined>(
+        registrationData ? (JSON.parse(registrationData) as ContactInformation) : undefined,
+    );
+
+    const [{ data: isCustomerUserRegisteredData, fetching: isInformationAboutUserRegistrationFetching }] =
+        useIsCustomerUserRegisteredQueryApi({
+            variables: {
+                email: orderEmail!,
+            },
+            pause: !orderEmail,
+        });
 
     const onRegistrationHandler = async (data: RegistrationAfterOrderFormType) => {
+        if (!parsedRegistrationData.current || !orderUuid) {
+            return;
+        }
+
         blurInput();
         const registrationError = await register({
             ...data,
-            ...registrationData,
-            country: registrationData.country.value,
-            companyCustomer: registrationData.customer === 'companyCustomer',
+            ...parsedRegistrationData.current,
+            country: parsedRegistrationData.current.country.value,
+            companyCustomer: parsedRegistrationData.current.customer === 'companyCustomer',
             cartUuid: null,
-            lastOrderUuid,
+            lastOrderUuid: orderUuid,
         });
 
         if (registrationError) {
@@ -61,6 +78,16 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({ lastOr
             }
         }
     };
+
+    if (
+        !parsedRegistrationData.current ||
+        isUserLoggedIn ||
+        !orderUuid ||
+        isInformationAboutUserRegistrationFetching ||
+        isCustomerUserRegisteredData?.isCustomerUserRegistered === true
+    ) {
+        return null;
+    }
 
     return (
         <>

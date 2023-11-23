@@ -1112,8 +1112,6 @@ export type MutationApi = {
   ChangePersonalData: CustomerUserApi;
   /** Add a transport to the cart, or remove a transport from the cart */
   ChangeTransportInCart: CartApi;
-  /** check payment status of order after callback from payment service */
-  CheckPaymentStatus: Scalars['Boolean']['output'];
   /** Send message to the site owner */
   Contact: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
@@ -1146,6 +1144,8 @@ export type MutationApi = {
   RequestPersonalDataAccess: PersonalDataPageApi;
   /** Set default delivery address by Uuid */
   SetDefaultDeliveryAddress: CustomerUserApi;
+  /** check payment status of order after callback from payment service */
+  UpdatePaymentStatus: PaymentStatusApi;
   /** Add product to Comparison and create if not exists. */
   addProductToComparison: ComparisonApi;
   /** Add product to wishlist and create if not exists. */
@@ -1193,11 +1193,6 @@ export type MutationChangePersonalDataArgsApi = {
 
 export type MutationChangeTransportInCartArgsApi = {
   input: ChangeTransportInCartInputApi;
-};
-
-
-export type MutationCheckPaymentStatusArgsApi = {
-  orderUuid: Scalars['Uuid']['input'];
 };
 
 
@@ -1273,6 +1268,12 @@ export type MutationRequestPersonalDataAccessArgsApi = {
 
 export type MutationSetDefaultDeliveryAddressArgsApi = {
   deliveryAddressUuid: Scalars['Uuid']['input'];
+};
+
+
+export type MutationUpdatePaymentStatusArgsApi = {
+  orderPaymentStatusPageValidityHash: InputMaybe<Scalars['String']['input']>;
+  orderUuid: Scalars['Uuid']['input'];
 };
 
 
@@ -1795,6 +1796,16 @@ export type PaymentSetupCreationDataApi = {
   goPayCreatePaymentSetup: Maybe<GoPayCreatePaymentSetupApi>;
 };
 
+export type PaymentStatusApi = {
+  __typename?: 'PaymentStatus';
+  /** Whether the order is already paid or not */
+  isPaid: Scalars['Boolean']['output'];
+  /** Type of payment */
+  paymentType: Scalars['String']['output'];
+  /** Count of already processed transactions */
+  transactionCount: Scalars['Int']['output'];
+};
+
 export type PersonalDataApi = {
   __typename?: 'PersonalData';
   /** Customer user data */
@@ -2143,6 +2154,10 @@ export type QueryApi = {
   notificationBars: Maybe<Array<NotificationBarApi>>;
   /** Returns order filtered using UUID, orderNumber, or urlHash */
   order: Maybe<OrderApi>;
+  /** Returns HTML content for order with failed payment. */
+  orderPaymentFailedContent: Scalars['String']['output'];
+  /** Returns HTML content for order with successful payment. */
+  orderPaymentSuccessfulContent: Scalars['String']['output'];
   /** Returns HTML content for order sent page. */
   orderSentPageContent: Scalars['String']['output'];
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
@@ -2298,6 +2313,16 @@ export type QueryOrderArgsApi = {
   orderNumber: InputMaybe<Scalars['String']['input']>;
   urlHash: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type QueryOrderPaymentFailedContentArgsApi = {
+  orderUuid: Scalars['Uuid']['input'];
+};
+
+
+export type QueryOrderPaymentSuccessfulContentArgsApi = {
+  orderUuid: Scalars['Uuid']['input'];
 };
 
 
@@ -2606,6 +2631,8 @@ export type SettingsApi = {
   __typename?: 'Settings';
   /** Main text for contact form */
   contactFormMainText: Scalars['String']['output'];
+  /** Max allowed payment transactions (how many times is user allowed to try the same payment) */
+  maxAllowedPaymentTransactions: Scalars['Int']['output'];
   /** Settings related to pricing */
   pricing: PricingSettingApi;
   /** Settings related to SEO */
@@ -3302,13 +3329,6 @@ export type OrderDetailItemFragmentApi = { __typename: 'OrderItem', name: string
 
 export type OrderListFragmentApi = { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: any, productItems: Array<{ __typename: 'OrderItem', quantity: number }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null }, payment: { __typename: 'Payment', name: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null };
 
-export type CheckPaymentStatusMutationVariablesApi = Exact<{
-  orderUuid: Scalars['Uuid']['input'];
-}>;
-
-
-export type CheckPaymentStatusMutationApi = { __typename?: 'Mutation', CheckPaymentStatus: boolean };
-
 export type CreateOrderMutationVariablesApi = Exact<{
   firstName: Scalars['String']['input'];
   lastName: Scalars['String']['input'];
@@ -3347,6 +3367,14 @@ export type PayOrderMutationVariablesApi = Exact<{
 
 export type PayOrderMutationApi = { __typename?: 'Mutation', PayOrder: { __typename?: 'PaymentSetupCreationData', goPayCreatePaymentSetup: { __typename?: 'GoPayCreatePaymentSetup', gatewayUrl: string, goPayId: string, embedJs: string } | null } };
 
+export type UpdatePaymentStatusMutationVariablesApi = Exact<{
+  orderUuid: Scalars['Uuid']['input'];
+  orderPaymentStatusPageValidityHash?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdatePaymentStatusMutationApi = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'PaymentStatus', isPaid: boolean, transactionCount: number, paymentType: string } };
+
 export type LastOrderQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
@@ -3366,12 +3394,26 @@ export type OrderDetailQueryVariablesApi = Exact<{
 
 export type OrderDetailQueryApi = { __typename?: 'Query', order: { __typename: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, items: Array<{ __typename: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename: 'Transport', name: string }, payment: { __typename: 'Payment', name: string }, country: { __typename: 'Country', name: string }, deliveryCountry: { __typename: 'Country', name: string } | null, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null };
 
-export type OrderSentPageContentVariablesApi = Exact<{
+export type OrderPaymentFailedContentQueryVariablesApi = Exact<{
   orderUuid: Scalars['Uuid']['input'];
 }>;
 
 
-export type OrderSentPageContentApi = { __typename?: 'Query', orderSentPageContent: string };
+export type OrderPaymentFailedContentQueryApi = { __typename?: 'Query', orderPaymentFailedContent: string };
+
+export type OrderPaymentSuccessfulContentQueryVariablesApi = Exact<{
+  orderUuid: Scalars['Uuid']['input'];
+}>;
+
+
+export type OrderPaymentSuccessfulContentQueryApi = { __typename?: 'Query', orderPaymentSuccessfulContent: string };
+
+export type OrderSentPageContentQueryVariablesApi = Exact<{
+  orderUuid: Scalars['Uuid']['input'];
+}>;
+
+
+export type OrderSentPageContentQueryApi = { __typename?: 'Query', orderSentPageContent: string };
 
 export type OrdersQueryVariablesApi = Exact<{
   after: InputMaybe<Scalars['String']['input']>;
@@ -3630,7 +3672,7 @@ export type SeoSettingFragmentApi = { __typename: 'SeoSetting', title: string, t
 export type SettingsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
+export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
 
 export type SliderItemFragmentApi = { __typename: 'SliderItem', uuid: string, name: string, link: string, extendedText: string | null, extendedTextLink: string | null, webMainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, mobileMainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null };
 
@@ -5639,15 +5681,6 @@ export const NotificationBarsDocumentApi = gql`
 export function useNotificationBarsApi(options?: Omit<Urql.UseQueryArgs<NotificationBarsVariablesApi>, 'query'>) {
   return Urql.useQuery<NotificationBarsApi, NotificationBarsVariablesApi>({ query: NotificationBarsDocumentApi, ...options });
 };
-export const CheckPaymentStatusMutationDocumentApi = gql`
-    mutation CheckPaymentStatusMutation($orderUuid: Uuid!) {
-  CheckPaymentStatus(orderUuid: $orderUuid)
-}
-    `;
-
-export function useCheckPaymentStatusMutationApi() {
-  return Urql.useMutation<CheckPaymentStatusMutationApi, CheckPaymentStatusMutationVariablesApi>(CheckPaymentStatusMutationDocumentApi);
-};
 export const CreateOrderMutationDocumentApi = gql`
     mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $deliveryAddressUuid: Uuid, $note: String, $cartUuid: Uuid, $newsletterSubscription: Boolean) {
   CreateOrder(
@@ -5687,6 +5720,22 @@ export const PayOrderMutationDocumentApi = gql`
 export function usePayOrderMutationApi() {
   return Urql.useMutation<PayOrderMutationApi, PayOrderMutationVariablesApi>(PayOrderMutationDocumentApi);
 };
+export const UpdatePaymentStatusMutationDocumentApi = gql`
+    mutation UpdatePaymentStatusMutation($orderUuid: Uuid!, $orderPaymentStatusPageValidityHash: String = null) {
+  UpdatePaymentStatus(
+    orderUuid: $orderUuid
+    orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash
+  ) {
+    isPaid
+    transactionCount
+    paymentType
+  }
+}
+    `;
+
+export function useUpdatePaymentStatusMutationApi() {
+  return Urql.useMutation<UpdatePaymentStatusMutationApi, UpdatePaymentStatusMutationVariablesApi>(UpdatePaymentStatusMutationDocumentApi);
+};
 export const LastOrderQueryDocumentApi = gql`
     query LastOrderQuery {
   lastOrder {
@@ -5720,14 +5769,32 @@ export const OrderDetailQueryDocumentApi = gql`
 export function useOrderDetailQueryApi(options?: Omit<Urql.UseQueryArgs<OrderDetailQueryVariablesApi>, 'query'>) {
   return Urql.useQuery<OrderDetailQueryApi, OrderDetailQueryVariablesApi>({ query: OrderDetailQueryDocumentApi, ...options });
 };
-export const OrderSentPageContentDocumentApi = gql`
-    query OrderSentPageContent($orderUuid: Uuid!) {
+export const OrderPaymentFailedContentQueryDocumentApi = gql`
+    query OrderPaymentFailedContentQuery($orderUuid: Uuid!) {
+  orderPaymentFailedContent(orderUuid: $orderUuid)
+}
+    `;
+
+export function useOrderPaymentFailedContentQueryApi(options: Omit<Urql.UseQueryArgs<OrderPaymentFailedContentQueryVariablesApi>, 'query'>) {
+  return Urql.useQuery<OrderPaymentFailedContentQueryApi, OrderPaymentFailedContentQueryVariablesApi>({ query: OrderPaymentFailedContentQueryDocumentApi, ...options });
+};
+export const OrderPaymentSuccessfulContentQueryDocumentApi = gql`
+    query OrderPaymentSuccessfulContentQuery($orderUuid: Uuid!) {
+  orderPaymentSuccessfulContent(orderUuid: $orderUuid)
+}
+    `;
+
+export function useOrderPaymentSuccessfulContentQueryApi(options: Omit<Urql.UseQueryArgs<OrderPaymentSuccessfulContentQueryVariablesApi>, 'query'>) {
+  return Urql.useQuery<OrderPaymentSuccessfulContentQueryApi, OrderPaymentSuccessfulContentQueryVariablesApi>({ query: OrderPaymentSuccessfulContentQueryDocumentApi, ...options });
+};
+export const OrderSentPageContentQueryDocumentApi = gql`
+    query OrderSentPageContentQuery($orderUuid: Uuid!) {
   orderSentPageContent(orderUuid: $orderUuid)
 }
     `;
 
-export function useOrderSentPageContentApi(options: Omit<Urql.UseQueryArgs<OrderSentPageContentVariablesApi>, 'query'>) {
-  return Urql.useQuery<OrderSentPageContentApi, OrderSentPageContentVariablesApi>({ query: OrderSentPageContentDocumentApi, ...options });
+export function useOrderSentPageContentQueryApi(options: Omit<Urql.UseQueryArgs<OrderSentPageContentQueryVariablesApi>, 'query'>) {
+  return Urql.useQuery<OrderSentPageContentQueryApi, OrderSentPageContentQueryVariablesApi>({ query: OrderSentPageContentQueryDocumentApi, ...options });
 };
 export const OrdersQueryDocumentApi = gql`
     query OrdersQuery($after: String, $first: Int) {
@@ -6138,6 +6205,7 @@ export const SettingsQueryDocumentApi = gql`
       ...SeoSettingFragment
     }
     contactFormMainText
+    maxAllowedPaymentTransactions
   }
 }
     ${PricingSettingFragmentApi}

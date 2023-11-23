@@ -83,29 +83,54 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         </TransportAndPaymentListItem>
     );
 
-    const renderPaymentListItem = (paymentItem: SimplePaymentFragmentApi, isActive: boolean) => (
-        <TransportAndPaymentListItem
-            key={paymentItem.uuid}
-            dataTestId={TEST_IDENTIFIER + 'payment-item' + (isActive ? '-active' : '')}
-            isActive={isActive}
-        >
-            <Radiobutton
-                checked={isActive}
-                dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
-                id={paymentItem.uuid}
-                name="payment"
-                value={paymentItem.uuid}
-                label={
-                    <TransportAndPaymentSelectItemLabel
-                        description={paymentItem.description}
-                        image={paymentItem.mainImage}
-                        name={paymentItem.name}
-                        price={paymentItem.price}
-                    />
-                }
-                onChangeCallback={changePayment}
-            />
-        </TransportAndPaymentListItem>
+    const renderPaymentListItem = (paymentItem: SimplePaymentFragmentApi, isActive: boolean) => {
+        const isGoPaySwiftPayment =
+            paymentItem.uuid === payment?.uuid &&
+            payment.type === 'goPay' &&
+            payment.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT';
+
+        return (
+            <TransportAndPaymentListItem
+                key={paymentItem.uuid}
+                dataTestId={TEST_IDENTIFIER + 'payment-item' + (isActive ? '-active' : '')}
+                isActive={isActive}
+            >
+                <Radiobutton
+                    checked={isActive}
+                    dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
+                    id={paymentItem.uuid}
+                    name="payment"
+                    value={paymentItem.uuid}
+                    label={
+                        <TransportAndPaymentSelectItemLabel
+                            description={paymentItem.description}
+                            image={paymentItem.mainImage}
+                            name={paymentItem.name}
+                            price={paymentItem.price}
+                        />
+                    }
+                    onChangeCallback={changePayment}
+                />
+                {isGoPaySwiftPayment && goPaySwiftSelect}
+            </TransportAndPaymentListItem>
+        );
+    };
+
+    const goPaySwiftSelect = (
+        <div className="relative w-full">
+            <b>{t('Choose your bank')}</b>
+            {getGoPaySwiftsResult.data?.GoPaySwifts.map((goPaySwift) => (
+                <Radiobutton
+                    key={goPaySwift.swift}
+                    checked={paymentGoPayBankSwift === goPaySwift.swift}
+                    id={goPaySwift.swift}
+                    label={goPaySwift.name}
+                    name="goPaySwift"
+                    value={goPaySwift.swift}
+                    onChangeCallback={changeGoPaySwift}
+                />
+            ))}
+        </div>
     );
 
     return (
@@ -145,23 +170,6 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 ? renderPaymentListItem(payment, true)
                                 : transport.payments.map((paymentItem) => renderPaymentListItem(paymentItem, false))}
                         </ul>
-
-                        {payment?.type === 'goPay' && payment.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT' && (
-                            <>
-                                <div className="h3 mb-3">{t('Choose your bank')}</div>
-                                {getGoPaySwiftsResult.data?.GoPaySwifts.map((goPaySwift) => (
-                                    <Radiobutton
-                                        key={goPaySwift.swift}
-                                        checked={paymentGoPayBankSwift === goPaySwift.swift}
-                                        id={goPaySwift.swift}
-                                        label={goPaySwift.name}
-                                        name="goPaySwift"
-                                        value={goPaySwift.swift}
-                                        onChangeCallback={changeGoPaySwift}
-                                    />
-                                ))}
-                            </>
-                        )}
                         {payment !== null && (
                             <ResetButton
                                 dataTestId={TEST_IDENTIFIER + 'reset-payment'}

@@ -1,72 +1,59 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { SkeletonPageConfirmation } from 'components/Blocks/Skeleton/SkeletonPageConfirmation';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { PaymentConfirmationContent } from 'components/Pages/Order/PaymentConfirmation/PaymentConfirmationContent';
-import { OrderSentPageContentDocumentApi, useCheckPaymentStatusMutationApi } from 'graphql/generated';
-import { onGtmCreateOrderEventHandler, onGtmPaymentFailEventHandler } from 'gtm/helpers/eventHandlers';
-import { getGtmCreateOrderEventFromLocalStorage } from 'gtm/helpers/helpers';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { PaymentFail } from 'components/Pages/Order/PaymentConfirmation/PaymentFail';
+import { PaymentSuccess } from 'components/Pages/Order/PaymentConfirmation/PaymentSuccess';
+import { useUpdatePaymentStatus } from 'components/Pages/Order/PaymentConfirmation/helpers';
+import { useSettingsQueryApi } from 'graphql/generated';
+import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
-    const router = useRouter();
-    const [checkPaymentStatusResult, checkPaymentStatus] = useCheckPaymentStatusMutationApi();
 
-    const { orderIdentifier } = router.query;
+    const { orderIdentifier, orderPaymentStatusPageValidityHash } = useRouter().query;
+    const orderUuid = getStringFromUrlQuery(orderIdentifier);
+    const orderPaymentStatusPageValidityHashParam = getStringFromUrlQuery(orderPaymentStatusPageValidityHash);
+    const paymentStatusData = useUpdatePaymentStatus(orderUuid, orderPaymentStatusPageValidityHashParam);
 
-    const orderUuidParam = getOrderUuid(orderIdentifier);
-
-    useEffect(() => {
-        checkPaymentStatus({ orderUuid: orderUuidParam }).then(({ data: checkPaymentStatusResultData }) => {
-            const { gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart } =
-                getGtmCreateOrderEventFromLocalStorage();
-            if (
-                checkPaymentStatusResultData?.CheckPaymentStatus === undefined ||
-                !gtmCreateOrderEventOrderPart ||
-                !gtmCreateOrderEventUserPart
-            ) {
-                return;
-            }
-
-            if (checkPaymentStatusResultData.CheckPaymentStatus) {
-                onGtmCreateOrderEventHandler(gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart, true);
-            } else {
-                onGtmPaymentFailEventHandler(gtmCreateOrderEventOrderPart.id);
-            }
-        });
-    }, []);
+    const [{ data }] = useSettingsQueryApi();
+    const maxAllowedPaymentTransactions = data?.settings?.maxAllowedPaymentTransactions ?? Number.MAX_SAFE_INTEGER;
 
     return (
         <>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Order sent')}>
-                <PaymentConfirmationContent
-                    isSuccess={checkPaymentStatusResult.data?.CheckPaymentStatus === true}
-                    orderUuid={orderUuidParam}
-                />
+                <Webline>
+                    {!paymentStatusData ? (
+                        <SkeletonPageConfirmation />
+                    ) : (
+                        <>
+                            {paymentStatusData.UpdatePaymentStatus.isPaid ? (
+                                <PaymentSuccess orderUuid={orderUuid} />
+                            ) : (
+                                <PaymentFail
+                                    orderPaymentType={paymentStatusData.UpdatePaymentStatus.paymentType}
+                                    orderUuid={orderUuid}
+                                    canPaymentBeRepeated={
+                                        paymentStatusData.UpdatePaymentStatus.transactionCount <
+                                        maxAllowedPaymentTransactions
+                                    }
+                                />
+                            )}
+                        </>
+                    )}
+                </Webline>
             </CommonLayout>
         </>
     );
 };
 
-const getOrderUuid = (orderIdentifier: string[] | string | undefined) => {
-    let orderUuidParam = '';
-    if (orderIdentifier !== undefined) {
-        if (Array.isArray(orderIdentifier)) {
-            orderUuidParam = orderIdentifier[0];
-        } else if (orderIdentifier.trim() !== '') {
-            orderUuidParam = orderIdentifier.trim();
-        }
-    }
-
-    return orderUuidParam;
-};
-
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
-    const orderUuid = getOrderUuid(context.query.orderIdentifier);
+    const orderUuid = getStringFromUrlQuery(context.query.orderIdentifier);
 
     if (orderUuid === '') {
         return {
@@ -79,7 +66,6 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
 
     return initServerSideProps({
         context,
-        prefetchedQueries: [{ query: OrderSentPageContentDocumentApi, variables: { orderUuid } }],
         redisClient,
         domainConfig,
         t,
