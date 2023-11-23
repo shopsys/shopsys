@@ -360,3 +360,4 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   query for order confirmation was renamed (the word 'Query' was added)
     -   expiration of confirmation content is now taken into account on SF by ignoring the API error and not rendering the content. This was a bug (missing feature) in previous versions. If you have not fixed it yourself before, you definitely want to implement these changes, because otherwise, the user can see errors when displaying the order confirmation page after a certain timeout.
     -   query parameters parsed using getStringFromUrlQuery are now also trimmed, which makes sure the API can understand the string. For example, the API does not understand " 440ecde4-b992-4290-8636-4f454c9cf475 " as a valid UUID.
+-   display Transport and Payment description on desktop ([#2930](https://github.com/shopsys/shopsys/pull/2930))
