@@ -74,14 +74,14 @@ test:standards-with-graphql-schema-check:
 test:storefront-standards-with-codegen:
     stage: test
     <<: *only-default
-    image: node:18.15.0-alpine
+    image: node:20-alpine3.17
     tags:
         - tests
     needs:
         - build-storefront
     before_script:
         - corepack enable
-        - corepack prepare --activate pnpm@8.6.0
+        - corepack prepare --activate pnpm@8.10.5
         - pnpm config set store-dir .pnpm-store
         - apk add --no-cache grep
         - cp ./app/schema.graphql ./storefront/schema.graphql

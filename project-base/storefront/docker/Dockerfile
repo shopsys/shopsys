@@ -1,7 +1,7 @@
-FROM node:18.15.0-alpine AS base
+FROM node:20-alpine3.17 AS base
 
 RUN corepack enable
-RUN corepack prepare --activate pnpm@8.6.7
+RUN corepack prepare --activate pnpm@8.10.5
 
 FROM base as dependencies
 
