@@ -38,13 +38,15 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
             />
 
             <div className="flex flex-1 flex-col text-sm lg:flex-auto lg:basis-full lg:flex-row lg:items-center lg:gap-3">
-                <div data-testid={TEST_IDENTIFIER + '-name'}>{name}</div>
+                <div>
+                    <div data-testid={TEST_IDENTIFIER + '-name'}>{name}</div>
 
-                {description && (
-                    <div className="text-greyLight lg:hidden" data-testid={TEST_IDENTIFIER + '-description'}>
-                        {description}
-                    </div>
-                )}
+                    {description && (
+                        <div className="text-greyLight" data-testid={TEST_IDENTIFIER + '-description'}>
+                            {description}
+                        </div>
+                    )}
+                </div>
 
                 {pickupPlaceDetail && (
                     <div>
