@@ -115,7 +115,7 @@ class StockController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->redirectToRoute('admin_stock_list');
+        return $this->redirectToRoute('admin_stock_settings');
     }
 
     /**
