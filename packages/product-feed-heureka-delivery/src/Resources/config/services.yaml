@@ -9,4 +9,4 @@ services:
 
     Shopsys\ProductFeed\HeurekaDeliveryBundle\HeurekaDeliveryFeed:
         tags:
-            - { name: shopsys.product_feed, hours: '*', minutes: '30' }
+            - { name: shopsys.feed, hours: '*', minutes: '30' }
