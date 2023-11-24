@@ -141,7 +141,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   prevent duplicate color parameters in data fixtures ([#2911](https://github.com/shopsys/shopsys/pull/2911))
     -   see #project-base-diff to update your project
--   enable crons to be run at specified times the same as crons ()
+-   enable crons to be run at specified times the same as crons ([#2922](https://github.com/shopsys/shopsys/pull/2922))
     -   replace `HourlyFeedCronModule` and `DailyFeedCronModule` with `FeedCronModule` in `config/services/cron.yaml` and set it to be run every time crons are run to ensure that all feeds are generated
     -   `FeedExportCreationDataQueue` has changed, first parameter is now an array of `Shopsys\FrameworkBundle\Model\Feed\FeedModule` instances instead of module names
     -   method `Shopsys\FrameworkBundle\Model\Feed\FeedFacade::__construct()` changed its interface:
@@ -213,6 +213,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   remove custom stores and stocks implementation as it's now a part of shopsys/framework ([#2918](https://github.com/shopsys/shopsys/pull/2918))
     -   if necessary, extend classes and implement your custom logic
+    -   see #project-base-diff to update your project
+-   add Persoo Category feed and check your feeds ([#2926](https://github.com/shopsys/shopsys/pull/2926))
+    -   we have renamed `shopsys.product_feed` tag to `shopsys.feed` to make it more generic so update it in your `services.yaml` if you have extended any of current feeds or implemented your own
     -   see #project-base-diff to update your project
 
 ### Storefront
