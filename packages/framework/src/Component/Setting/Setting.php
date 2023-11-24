@@ -26,6 +26,7 @@ class Setting
     public const FEED_ITEM_ID_TO_CONTINUE = 'feedItemIdToContinue';
     public const DELIVERY_DAYS_ON_STOCK = 'deliveryDayOnStock';
     public const TRANSFER_DAYS_BETWEEN_STOCKS = 'transferDaysBetweenStocks';
+    public const IMAGE_STRUCTURE_MIGRATED_FOR_PROXY = 'imageStructureMigratedForProxy';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\SettingValue[][]

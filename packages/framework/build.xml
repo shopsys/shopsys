@@ -140,7 +140,7 @@
 
     <target name="build-deploy-part-1-db-independent" depends="build-version-generate,clean,composer-prod,dirs-create,assets,npm" description="First part of application build for production preserving your DB (can be run without maintenance page)."/>
 
-    <target name="build-deploy-part-2-db-dependent" depends="elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,error-pages-generate,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
+    <target name="build-deploy-part-2-db-dependent" depends="elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,migrate-images-for-proxy,error-pages-generate,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
 
     <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace,elasticsearch-index-recreate,elasticsearch-export,error-pages-generate,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
 
@@ -872,6 +872,13 @@
             <arg value="prettier-fix"/>
             <arg path="${path.root}/*.md"/>
             <arg path="${path.root}/docs/**/*.md"/>
+        </exec>
+    </target>
+
+    <target name="migrate-images-for-proxy" description="Remove all the folders with the generated image sizes, move images from the 'original' folders one level up." hidden="true">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:images:migrate"/>
         </exec>
     </target>
 

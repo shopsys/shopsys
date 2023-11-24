@@ -257,13 +257,16 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   annotation fixer: get property type from typehint when the annotation is missing ([#2934](https://github.com/shopsys/shopsys/pull/2934))
     -   run `php phing annotations-fix` in `php-fpm` container to fix the annotations
 -   handle image resizing by image proxy ([#2924](https://github.com/shopsys/shopsys/pull/2924))
-    -   for local development without CDN, the `imageResizer.php` file has a setup for local imgProxy instance
     -   if you are using VSH CDN, the image proxy is already set up for you in `imageResizer.php` file.
+    -   for local development without CDN, the `imageResizer.php` file has a setup for local imgProxy instance
     -   for any other CDN, you can use the `imageResizer.php` file as well, but you have to set up the proxy yourself
     -   instead of defining various image sizes and additional sizes in `images.yaml`, you need to define the image sizes directly in storefront code (use `components/Basic/Image/Image.tsx` component for that purpose)
-    -   you can remove all folders with generated image sizes, and keep only the images from the `original` folder (which must be moved up by one folder)
-        -   e.g. (`web/content/images/product/orignal/1.jpg` -> `web/content/images/product/1.jpg`)
-        -   if you are using S3 storage, you can use `s3cmd mv s3://$bucket_name/$original_folder* s3://$bucket_name/$destination_folder` command to move the images
+    -   during the deployment of the new version, the images structure will be migrated automatically
+        -   **we highly recommend to back up your images (i.e. `web/content/images/` in your S3 bucket) before the deployment and test the migration on devel/beta stage thoroughly to be sure everything works as expected for your data structure**
+        -   all the entity images in all other than `original` folders will be removed, and images from `original` folders will be moved one folder up
+        -   check the `docker/nginx/nginx.conf` file - there is a setup for redirecting the legacy image URLs to the new ones. The setup uses a regex that contains all the legacy image sizes. If you use a different image sizes configuration, you need to modify the sizes in the regex accordingly.
+            -   the same must be done in `app/orchestration/kubernetes/configmap/nginx-storefront.yaml` file (if you do not have the file in your project yet, you have to create it, see https://github.com/shopsys/deployment#customize-deployment for more information)
+        -   see `Shopsys\FrameworkBundle\Command\MigrateImagesCommand` for more details
     -   `Shopsys\FrameworkBundle\Component\Image\AdditionalImageData` class has been removed
     -   the following exceptions were removed from `Shopsys\FrameworkBundle\Component\Image\Config\Exception` namespace:
         -   `DuplicateMediaException`
