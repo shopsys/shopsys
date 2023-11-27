@@ -106,185 +106,181 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         ArraySorter::sortArrayAlphabeticallyByValue('text', $hdmiValues, $this->getLocaleForFirstDomain());
 
-        $expectedResult = [
-            'data' => [
-                'category' => [
-                    'products' => [
-                        'productFilterOptions' => [
-                            'flags' => [
-                                [
-                                    'flag' => [
-                                        'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    ],
-                                    'count' => 2,
-                                    'isAbsolute' => true,
-                                ],
-                            ],
-                            'brands' => [
-                                [
-                                    'brand' => [
-                                        'name' => t('A4tech', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    ],
-                                    'count' => 1,
-                                    'isAbsolute' => true,
-                                ],
-                                [
-                                    'brand' => [
-                                        'name' => t('LG', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    ],
-                                    'count' => 1,
-                                    'isAbsolute' => true,
-                                ],
-                                [
-                                    'brand' => [
-                                        'name' => t('Philips', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    ],
-                                    'count' => 1,
-                                    'isAbsolute' => true,
-                                ],
-                                [
-                                    'brand' => [
-                                        'name' => t('Sencor', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    ],
-                                    'count' => 1,
-                                    'isAbsolute' => true,
-                                ],
-                            ],
-                            'inStock' => 4,
-                            'minimalPrice' => $minimalPrice,
-                            'maximalPrice' => $maximalPrice,
-                            'parameters' => [
-                                [
-                                    'isCollapsed' => false,
-                                    'name' => t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    '__typename' => 'ParameterCheckboxFilterOption',
-                                    'unit' => null,
-                                    'values' => $materials,
-                                ],
-                                [
-                                    'isCollapsed' => false,
-                                    'name' => t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    '__typename' => 'ParameterColorFilterOption',
-                                    'unit' => null,
-                                    'values' => $colors,
-                                ],
-                                [
-                                    'isCollapsed' => false,
-                                    'name' => t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    '__typename' => 'ParameterCheckboxFilterOption',
-                                    'unit' => null,
-                                    'values' => [
-                                        [
-                                            'text' => t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                            'count' => 1,
-                                            'isAbsolute' => true,
-                                        ],
-                                    ],
-                                ],
-                                [
-                                    'isCollapsed' => false,
-                                    'name' => t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    '__typename' => 'ParameterCheckboxFilterOption',
-                                    'unit' => null,
-                                    'values' => [
-                                        [
-                                            'text' => t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                            'count' => 1,
-                                            'isAbsolute' => true,
-                                        ],
-                                    ],
-                                ],
-                                [
-                                    'isCollapsed' => false,
-                                    'name' => t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    '__typename' => 'ParameterCheckboxFilterOption',
-                                    'unit' => null,
-                                    'values' => [
-                                        [
-                                            'text' => t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                            'count' => 1,
-                                            'isAbsolute' => true,
-                                        ],
-                                    ],
-                                ],
-                                [
-                                    'isCollapsed' => true,
-                                    'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    '__typename' => 'ParameterCheckboxFilterOption',
-                                    'unit' => [
-                                        'name' => 'in',
-                                    ],
-                                    'values' => $screenSizes,
-                                ],
-                                [
-                                    'isCollapsed' => true,
-                                    'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    '__typename' => 'ParameterCheckboxFilterOption',
-                                    'unit' => null,
-                                    'values' => $hdmiValues,
-                                ],
-                                [
-                                    'isCollapsed' => false,
-                                    'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    '__typename' => 'ParameterCheckboxFilterOption',
-                                    'unit' => null,
-                                    'values' => [
-                                        [
-                                            'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                            'count' => 3,
-                                            'isAbsolute' => true,
-                                        ],
-                                    ],
-                                ],
-                                [
-                                    'isCollapsed' => false,
-                                    'name' => t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    '__typename' => 'ParameterCheckboxFilterOption',
-                                    'unit' => null,
-                                    'values' => [
-                                        [
-                                            'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                            'count' => 3,
-                                            'isAbsolute' => true,
-                                        ],
-                                    ],
-                                ],
-                                [
-                                    'isCollapsed' => false,
-                                    'name' => t('Gaming mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    '__typename' => 'ParameterCheckboxFilterOption',
-                                    'unit' => null,
-                                    'values' => [
-                                        [
-                                            'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                            'count' => 1,
-                                            'isAbsolute' => true,
-                                        ],
-                                    ],
-                                ],
-                                [
-                                    'isCollapsed' => false,
-                                    'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                    '__typename' => 'ParameterCheckboxFilterOption',
-                                    'unit' => null,
-                                    'values' => [
-                                        [
-                                            'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-                                            'count' => 3,
-                                            'isAbsolute' => true,
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
+        $expectedFlagFilterOptions = [
+            [
+                'flag' => [
+                    'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 2,
+                'isAbsolute' => true,
+            ],
+        ];
+
+        $expectedBrandFilterOptions = [
+            [
+                'brand' => [
+                    'name' => t('A4tech', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 1,
+                'isAbsolute' => true,
+            ],
+            [
+                'brand' => [
+                    'name' => t('LG', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 1,
+                'isAbsolute' => true,
+            ],
+            [
+                'brand' => [
+                    'name' => t('Philips', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 1,
+                'isAbsolute' => true,
+            ],
+            [
+                'brand' => [
+                    'name' => t('Sencor', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+                'count' => 1,
+                'isAbsolute' => true,
+            ],
+        ];
+
+        $expectedParameterFilterOptions = [
+            [
+                'isCollapsed' => false,
+                'name' => t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => $materials,
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterColorFilterOption',
+                'unit' => null,
+                'values' => $colors,
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => [
+                    [
+                        'text' => t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                        'isAbsolute' => true,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => [
+                    [
+                        'text' => t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                        'isAbsolute' => true,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => [
+                    [
+                        'text' => t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                        'isAbsolute' => true,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => true,
+                'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => [
+                    'name' => 'in',
+                ],
+                'values' => $screenSizes,
+            ],
+            [
+                'isCollapsed' => true,
+                'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => $hdmiValues,
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => [
+                    [
+                        'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 3,
+                        'isAbsolute' => true,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => [
+                    [
+                        'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 3,
+                        'isAbsolute' => true,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Gaming mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => [
+                    [
+                        'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                        'isAbsolute' => true,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                '__typename' => 'ParameterCheckboxFilterOption',
+                'unit' => null,
+                'values' => [
+                    [
+                        'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 3,
+                        'isAbsolute' => true,
                     ],
                 ],
             ],
         ];
 
-        $expected = json_encode($expectedResult, JSON_THROW_ON_ERROR);
+        $response = $this->getResponseContentForQuery($query);
+        $data = $this->getResponseDataForGraphQlType($response, 'category');
 
-        $this->assertQueryWithExpectedJson($query, $expected);
+        $this->assertSame(4, $data['products']['productFilterOptions']['inStock']);
+        $this->assertSame($minimalPrice, $data['products']['productFilterOptions']['minimalPrice']);
+        $this->assertSame($maximalPrice, $data['products']['productFilterOptions']['maximalPrice']);
+
+        $this->assertArrayElements($expectedFlagFilterOptions, $data['products']['productFilterOptions']['flags']);
+        $this->assertArrayElements($expectedBrandFilterOptions, $data['products']['productFilterOptions']['brands']);
+        $this->assertArrayElements($expectedParameterFilterOptions, $data['products']['productFilterOptions']['parameters']);
     }
 
     public function testGetElectronicsBrandFilterOptionsWithAppliedFilter(): void
@@ -575,10 +571,9 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ];
 
         $result = $this->getResponseContentForQuery($query);
+        $data = $this->getResponseDataForGraphQlType($result, 'category');
 
-        $resultJson = json_encode($result['data']['category']['products']['productFilterOptions']['parameters']);
-
-        $this->assertJsonStringEqualsJsonString(json_encode($expectedArray, JSON_THROW_ON_ERROR), $resultJson);
+        $this->assertArrayElements($expectedArray, $data['products']['productFilterOptions']['parameters']);
     }
 
     /**
@@ -749,110 +744,106 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('21590');
         $maximalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('24010');
 
-        $expectedResult = '{
-          "data": {
-            "category": {
-              "products": {
-                "productFilterOptions": {
-                  "minimalPrice": "' . $minimalPrice . '",
-                  "maximalPrice": "' . $maximalPrice . '",
-                  "inStock": 2,
-                  "flags": null,
-                  "brands": [
-                    {
-                      "count": 2,
-                      "brand": {
-                        "name": "' . t('LG', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
-                      }
-                    }
-                  ],
-                  "parameters": [
-                    {
-                      "isCollapsed": false,
-                      "name": "' . t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                      "values": [
-                        {
-                          "text": "' . t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                          "count": 1
-                        }
-                      ]
-                    },
-                    {
-                      "isCollapsed": false,
-                      "name": "' . t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                      "values": [
-                        {
-                          "text": "' . t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                          "count": 1
-                        }
-                      ]
-                    },
-                    {
-                      "isCollapsed": false,
-                      "name": "' . t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                      "values": [
-                        {
-                          "text": "' . t('Yes', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                          "count": 2
-                        }
-                      ]
-                    },
-                    {
-                      "isCollapsed": false,
-                      "name": "' . t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                      "values": [
-                        {
-                          "text": "' . t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                          "count": 1
-                        },
-                        {
-                          "text": "' . t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                          "count": 1
-                        }
-                      ]
-                    },
-                    {
-                      "isCollapsed": false,
-                      "name": "' . t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                      "values": [
-                        {
-                          "text": "' . t('47\"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                          "count": 1
-                        },
-                        {
-                          "text": "' . t('60\"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                          "count": 1
-                        }
-                      ]
-                    },
-                    {
-                      "isCollapsed": false,
-                      "name": "' . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                      "values": [
-                        {
-                          "text": "' . t('No', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                          "count": 2
-                        }
-                      ]
-                    },
-                    {
-                      "isCollapsed": false,
-                      "name": "' . t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                      "values": [
-                        {
-                          "text": "' . t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
-                          "count": 2
-                        }
-                      ]
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }';
+        $response = $this->getResponseContentForQuery($query);
+        $data = $this->getResponseDataForGraphQlType($response, 'category');
 
-        $this->assertQueryWithExpectedJson($query, $expectedResult);
+        $this->assertSame(2, $data['products']['productFilterOptions']['inStock']);
+        $this->assertSame($minimalPrice, $data['products']['productFilterOptions']['minimalPrice']);
+        $this->assertSame($maximalPrice, $data['products']['productFilterOptions']['maximalPrice']);
+
+        $this->assertNull($data['products']['productFilterOptions']['flags']);
+
+        $expectedBrandFilterOptions = [
+            [
+                'count' => 2,
+                'brand' => [
+                    'name' => t('LG', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                ],
+            ],
+        ];
+        $this->assertArrayElements($expectedBrandFilterOptions, $data['products']['productFilterOptions']['brands']);
+
+        $expectedParameterFilterOptions = [
+            [
+                'isCollapsed' => false,
+                'name' => t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'values' => [
+                    [
+                        'text' => t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'values' => [
+                    [
+                        'text' => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'values' => [
+                    [
+                        'text' => t('Yes', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 2,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'values' => [
+                    [
+                        'text' => t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                    ],
+                    [
+                        'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'values' => [
+                    [
+                        'text' => t('47"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                    ],
+                    [
+                        'text' => t('60"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 1,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'values' => [
+                    [
+                        'text' => t('No', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 2,
+                    ],
+                ],
+            ],
+            [
+                'isCollapsed' => false,
+                'name' => t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                'values' => [
+                    [
+                        'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
+                        'count' => 2,
+                    ],
+                ],
+            ],
+        ];
+        $this->assertArrayElements($expectedParameterFilterOptions, $data['products']['productFilterOptions']['parameters']);
     }
 
     public function testGetProductFilterOptionsForSearchWhenListingByFlag(): void
