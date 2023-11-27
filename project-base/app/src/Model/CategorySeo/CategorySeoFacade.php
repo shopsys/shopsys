@@ -30,16 +30,6 @@ class CategorySeoFacade
      * @param int $domainId
      * @return \App\Model\Product\Parameter\Parameter[]
      */
-    public function getParametersUsedByProductsInCategory(Category $category, int $domainId): array
-    {
-        return $this->parameterRepository->getParametersUsedByProductsInCategory($category, $domainId);
-    }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     * @param int $domainId
-     * @return \App\Model\Product\Parameter\Parameter[]
-     */
     public function getParametersUsedByProductsInCategoryWithoutSlider(Category $category, int $domainId): array
     {
         return $this->parameterRepository->getParametersUsedByProductsInCategoryWithoutSlider($category, $domainId);

@@ -34,13 +34,14 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
     {
         /** @var \App\Model\Category\Category $categoryElectronics */
         $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
-        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
+        $firstDomainConfig = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
+        $firstDomainLocale = $firstDomainConfig->getLocale();
         $categoryDataFixtureClassReflection = new ReflectionClass(CategoryDataFixture::class);
 
         foreach ($categoryDataFixtureClassReflection->getConstants() as $constant) {
             /** @var \App\Model\Category\Category $category */
             $category = $this->getReference($constant);
-            $parameters = $this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID);
+            $parameters = $this->parameterRepository->getParametersUsedByProductsInCategory($category, $firstDomainConfig);
             $parametersId = [];
 
             foreach ($parameters as $parameter) {

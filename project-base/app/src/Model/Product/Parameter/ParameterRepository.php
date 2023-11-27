@@ -11,6 +11,7 @@ use App\Model\Product\Product;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
@@ -39,17 +40,20 @@ class ParameterRepository extends BaseParameterRepository
 {
     /**
      * @param \App\Model\Category\Category $category
-     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Product\Parameter\Parameter[]
      */
-    public function getParametersUsedByProductsInCategory(Category $category, int $domainId): array
+    public function getParametersUsedByProductsInCategory(Category $category, DomainConfig $domainConfig): array
     {
         $queryBuilder = $this->getParameterRepository()->createQueryBuilder('p')
             ->select('p')
             ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
-            ->groupBy('p');
+            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
+            ->setParameter('locale', $domainConfig->getLocale())
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $domainConfig->getLocale()))
+            ->groupBy('p, pt');
 
-        $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
+        $this->applyCategorySeoConditions($queryBuilder, $category, $domainConfig->getId());
 
         return $queryBuilder->getQuery()->execute();
     }
