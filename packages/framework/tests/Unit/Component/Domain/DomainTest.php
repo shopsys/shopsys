@@ -110,7 +110,7 @@ class DomainTest extends TestCase
 
         $domain = new Domain($domainConfigs, $settingMock);
 
-        $this->assertSame([$domainConfigWithDataCreated], $domain->getAll());
+        $this->assertSame([1 => $domainConfigWithDataCreated], $domain->getAll());
     }
 
     public function testGetDomainConfigById(): void

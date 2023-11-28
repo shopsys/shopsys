@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 use Symfony\Bridge\Monolog\Logger;
 
-class DailyFeedCronModule implements IteratedCronModuleInterface
+class FeedCronModule implements IteratedCronModuleInterface
 {
     protected Logger $logger;
 
@@ -17,15 +17,19 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
 
     protected ?FeedExport $currentFeedExport = null;
 
+    protected bool $areFeedsScheduled = false;
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedFacade $feedFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository $feedModuleRepository
      */
     public function __construct(
         protected readonly FeedFacade $feedFacade,
         protected readonly Domain $domain,
         protected readonly Setting $setting,
+        protected readonly FeedModuleRepository $feedModuleRepository,
     ) {
     }
 
@@ -42,6 +46,11 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
      */
     public function iterate(): bool
     {
+        if ($this->areFeedsScheduled === false) {
+            $this->feedFacade->scheduleFeedsForCurrentTime();
+            $this->areFeedsScheduled = true;
+        }
+
         if ($this->getFeedExportCreationDataQueue()->isEmpty()) {
             $this->logger->debug('Queue is empty, no feeds to process.');
 
@@ -57,6 +66,12 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
         if ($this->currentFeedExport->isFinished()) {
             $feedInfo = $this->currentFeedExport->getFeedInfo();
             $domainConfig = $this->currentFeedExport->getDomainConfig();
+
+            $currentFeedModule = $this->feedModuleRepository->getFeedModuleByNameAndDomainId(
+                $this->getFeedExportCreationDataQueue()->getCurrentFeedName(),
+                $this->getFeedExportCreationDataQueue()->getCurrentDomain()->getId(),
+            );
+            $this->feedFacade->markFeedModuleAsUnscheduled($currentFeedModule);
 
             $this->logger->debug(sprintf(
                 'Feed "%s" generated on domain "%s" into "%s".',
@@ -156,7 +171,7 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
     {
         if ($this->feedExportCreationDataQueue === null) {
             $this->feedExportCreationDataQueue = new FeedExportCreationDataQueue(
-                $this->feedFacade->getFeedNames('daily'),
+                $this->feedModuleRepository->getAllScheduledFeedModules(),
                 $this->domain->getAll(),
             );
         }

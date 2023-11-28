@@ -16,21 +16,13 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 class FeedExportCreationDataQueue
 {
     /**
-     * @var array<int, array{feed_name: string, domain: \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig}>
-     */
-    protected array $dataInQueue = [];
-
-    /**
-     * @param string[] $feedNames
+     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModule[] $feedModules
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domains
      */
-    public function __construct(array $feedNames, array $domains)
-    {
-        foreach ($feedNames as $feedName) {
-            foreach ($domains as $domain) {
-                $this->dataInQueue[] = ['feed_name' => $feedName, 'domain' => $domain];
-            }
-        }
+    public function __construct(
+        protected array $feedModules,
+        protected array $domains,
+    ) {
     }
 
     /**
@@ -38,7 +30,7 @@ class FeedExportCreationDataQueue
      */
     public function getCurrentFeedName(): string
     {
-        return current($this->dataInQueue)['feed_name'];
+        return current($this->feedModules)->getName();
     }
 
     /**
@@ -46,7 +38,15 @@ class FeedExportCreationDataQueue
      */
     public function getCurrentDomain(): DomainConfig
     {
-        return current($this->dataInQueue)['domain'];
+        return $this->domains[current($this->feedModules)->getDomainId()];
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedModule
+     */
+    public function getCurrentFeedModule(): FeedModule
+    {
+        return current($this->feedModules);
     }
 
     /**
@@ -54,7 +54,7 @@ class FeedExportCreationDataQueue
      */
     public function next(): bool
     {
-        array_shift($this->dataInQueue);
+        array_shift($this->feedModules);
 
         return !$this->isEmpty();
     }
@@ -64,6 +64,6 @@ class FeedExportCreationDataQueue
      */
     public function isEmpty(): bool
     {
-        return count($this->dataInQueue) === 0;
+        return count($this->feedModules) === 0;
     }
 }

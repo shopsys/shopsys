@@ -22,9 +22,25 @@ class RegisterProductFeedConfigsCompilerPass implements CompilerPassInterface
 
         foreach ($taggedServiceIds as $serviceId => $tags) {
             foreach ($tags as $tag) {
-                $type = $tag['type'] ?? null;
-                $feedRegistryDefinition->addMethodCall('registerFeed', [new Reference($serviceId), $type]);
+                $feedRegistryDefinition->addMethodCall(
+                    'registerFeed',
+                    [
+                        new Reference($serviceId),
+                        $tag['hours'],
+                        $tag['minutes'],
+                        isset($tag['domain_ids']) ? $this->splitDomainIdsFromString($tag['domain_ids']) : [],
+                    ],
+                );
             }
         }
+    }
+
+    /**
+     * @param string $domainIds
+     * @return int[]
+     */
+    protected function splitDomainIdsFromString(string $domainIds): array
+    {
+        return array_map('intval', explode(',', $domainIds));
     }
 }

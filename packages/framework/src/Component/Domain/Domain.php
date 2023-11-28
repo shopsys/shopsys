@@ -93,7 +93,7 @@ class Domain implements DomainIdsProviderInterface
 
             try {
                 $this->setting->getForDomain(Setting::DOMAIN_DATA_CREATED, $domainId);
-                $domainConfigsWithDataCreated[] = $domainConfig;
+                $domainConfigsWithDataCreated[$domainId] = $domainConfig;
             } catch (SettingValueNotFoundException $ex) {
                 continue;
             }

@@ -395,8 +395,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Feed\FeedRegistry:
         arguments:
-            $knownTypes: ['daily', 'hourly']
-            $defaultType: 'daily'
+            $cronTimeZone: '%shopsys.cron_timezone%'
 
     Shopsys\FrameworkBundle\Component\HttpFoundation\ResponseListener:
         tags:
@@ -1039,3 +1038,6 @@ services:
     Shopsys\FrameworkBundle\Component\Messenger\MessageDispatcherDependency:
         arguments:
             $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+
+    Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactory

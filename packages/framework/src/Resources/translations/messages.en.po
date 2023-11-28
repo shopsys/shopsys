@@ -64,9 +64,6 @@ msgstr ""
 msgid "Account"
 msgstr ""
 
-msgid "Action"
-msgstr ""
-
 msgid "Action after sellout"
 msgstr ""
 
@@ -1075,6 +1072,12 @@ msgstr ""
 msgid "Feed \"{{ feedName }}\" not found."
 msgstr ""
 
+msgid "Feed \"{{ feedName }}\" on domain ID {{ domainId }} not found."
+msgstr ""
+
+msgid "Feed \"{{ feedName }}\" on domain ID {{ domainId }} successfully scheduled."
+msgstr ""
+
 msgid "Feed \"{{ feedName }}\" successfully generated."
 msgstr ""
 
@@ -1994,6 +1997,9 @@ msgid "Save changes in order"
 msgstr ""
 
 msgid "Schedule"
+msgstr ""
+
+msgid "Scheduled"
 msgstr ""
 
 msgid "Script <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> created"

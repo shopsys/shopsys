@@ -6,8 +6,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Feed\FeedRegistry:
         arguments:
-            $knownTypes: ['daily', 'hourly']
-            $defaultType: 'daily'
+            $cronTimeZone: '%shopsys.cron_timezone%'
 
     Shopsys\FrameworkBundle\Component\Domain\Domain:
         factory: ['@Shopsys\FrameworkBundle\Component\Domain\DomainFactory', create]

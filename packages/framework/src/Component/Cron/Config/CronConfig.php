@@ -21,8 +21,9 @@ class CronConfig
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver $cronTimeResolver
      */
-    public function __construct(protected readonly CronTimeResolver $cronTimeResolver)
-    {
+    public function __construct(
+        protected readonly CronTimeResolver $cronTimeResolver,
+    ) {
         $this->cronModuleConfigs = [];
     }
 
@@ -52,7 +53,7 @@ class CronConfig
             throw new InvalidCronModuleException($serviceId);
         }
         $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);
-        $this->cronTimeResolver->validateTimeString($timeMinutes, 55, 5);
+        $this->cronTimeResolver->validateTimeString($timeMinutes, 55, 1);
 
         $cronModuleConfig = new CronModuleConfig($service, $serviceId, $timeHours, $timeMinutes, $readableName, $readableFrequency, $runEveryMin, $timeoutIteratedCronSec);
         $cronModuleConfig->assignToInstance($instanceName);
@@ -63,7 +64,7 @@ class CronConfig
     /**
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    public function getAllCronModuleConfigs()
+    public function getAllCronModuleConfigs(): array
     {
         return $this->cronModuleConfigs;
     }
@@ -72,7 +73,7 @@ class CronConfig
      * @param \DateTimeInterface $roundedTime
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    public function getCronModuleConfigsByTime(DateTimeInterface $roundedTime)
+    public function getCronModuleConfigsByTime(DateTimeInterface $roundedTime): array
     {
         $matchedCronConfigs = [];
 
@@ -89,7 +90,7 @@ class CronConfig
      * @param string $serviceId
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig
      */
-    public function getCronModuleConfigByServiceId($serviceId)
+    public function getCronModuleConfigByServiceId(string $serviceId): CronModuleConfig
     {
         foreach ($this->cronModuleConfigs as $cronConfig) {
             if ($cronConfig->getServiceId() === $serviceId) {

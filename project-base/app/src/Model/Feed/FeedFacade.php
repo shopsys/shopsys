@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedFacade as BaseFeedFacade;
 
 /**
  * @property \App\Model\Feed\FeedExportFactory $feedExportFactory
- * @method __construct(\Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry, \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade, \App\Model\Feed\FeedExportFactory $feedExportFactory, \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider, \League\Flysystem\FilesystemOperator $filesystem)
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry, \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade, \App\Model\Feed\FeedExportFactory $feedExportFactory, \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider, \League\Flysystem\FilesystemOperator $filesystem, \Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository $feedModuleRepository, \Doctrine\ORM\EntityManagerInterface $em)
  */
 class FeedFacade extends BaseFeedFacade
 {
@@ -22,8 +22,8 @@ class FeedFacade extends BaseFeedFacade
      */
     public function createFeedExport(string $feedName, DomainConfig $domainConfig, ?int $lastSeekId = null): FeedExport
     {
-        $feed = $this->feedRegistry->getFeedByName($feedName);
+        $feedConfig = $this->feedRegistry->getFeedConfigByName($feedName);
 
-        return $this->feedExportFactory->create($feed, $domainConfig, $lastSeekId);
+        return $this->feedExportFactory->create($feedConfig->getFeed(), $domainConfig, $lastSeekId);
     }
 }

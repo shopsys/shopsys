@@ -24,12 +24,26 @@
     {% endif %}
 {% endblock %}
 
-{% block grid_value_cell_id_actions %}
+{% block grid_value_cell_id_generate %}
     <a href="{{ url(
         'admin_feed_generate', {
             feedName: row.feedName,
             domainId: row.domainConfig.id
         }
     ) }}" class="btn">{{ 'Generate'|trans }}</a>
+
+{% endblock %}
+
+{% block grid_value_cell_id_schedule %}
+    {% if value is same as(false) %}
+        <a href="{{ url(
+            'admin_feed_schedule', {
+                feedName: row.feedName,
+                domainId: row.domainConfig.id
+            }
+        ) }}" class="btn">{{ 'Schedule'|trans }}</a>
+    {% else %}
+        <span style="color: green;"><i class="svg svg-checked"></i> {{ 'Scheduled'|trans }}</span>
+    {% endif %}
 
 {% endblock %}

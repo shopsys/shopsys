@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
+use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToRetrieveMetadata;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -17,6 +18,8 @@ class FeedFacade
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory $feedExportFactory
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider
      * @param \League\Flysystem\FilesystemOperator $filesystem
+     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository $feedModuleRepository
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         protected readonly FeedRegistry $feedRegistry,
@@ -24,6 +27,8 @@ class FeedFacade
         protected readonly FeedExportFactory $feedExportFactory,
         protected readonly FeedPathProvider $feedPathProvider,
         protected readonly FilesystemOperator $filesystem,
+        protected readonly FeedModuleRepository $feedModuleRepository,
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 
@@ -55,37 +60,37 @@ class FeedFacade
          */
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
 
-        $feed = $this->feedRegistry->getFeedByName($feedName);
+        $feedConfig = $this->feedRegistry->getFeedConfigByName($feedName);
 
-        return $this->feedExportFactory->create($feed, $domainConfig, $lastSeekId);
+        return $this->feedExportFactory->create($feedConfig->getFeed(), $domainConfig, $lastSeekId);
     }
 
     /**
-     * @param string|null $feedType
+     * @param bool $onlyForCurrentTime
      * @return \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface[]
      */
-    public function getFeedsInfo(?string $feedType = null): array
+    public function getFeedsInfo(bool $onlyForCurrentTime = false): array
     {
-        $feeds = $feedType === null ? $this->feedRegistry->getAllFeeds() : $this->feedRegistry->getFeeds($feedType);
+        $feedConfigs = $onlyForCurrentTime ? $this->feedRegistry->getAllFeedConfigs() : $this->feedRegistry->getFeedConfigsForCurrentTime();
 
         $feedsInfo = [];
 
-        foreach ($feeds as $feed) {
-            $feedsInfo[] = $feed->getInfo();
+        foreach ($feedConfigs as $feedConfig) {
+            $feedsInfo[] = $feedConfig->getFeed()->getInfo();
         }
 
         return $feedsInfo;
     }
 
     /**
-     * @param string|null $feedType
+     * @param bool $onlyForCurrentTime
      * @return string[]
      */
-    public function getFeedNames(?string $feedType = null): array
+    public function getFeedNames(bool $onlyForCurrentTime = false): array
     {
         $feedNames = [];
 
-        foreach ($this->getFeedsInfo($feedType) as $feedInfo) {
+        foreach ($this->getFeedsInfo($onlyForCurrentTime) as $feedInfo) {
             $feedNames[] = $feedInfo->getName();
         }
 
@@ -126,5 +131,65 @@ class FeedFacade
         } catch (UnableToRetrieveMetadata $fileNotFundException) {
             return null;
         }
+    }
+
+    public function scheduleFeedsForCurrentTime(): void
+    {
+        $feedConfigsToSchedule = $this->feedRegistry->getFeedConfigsForCurrentTime();
+
+        $this->markFeedConfigsForScheduling($feedConfigsToSchedule);
+    }
+
+    public function scheduleAllFeeds(): void
+    {
+        $feedConfigsToSchedule = $this->feedRegistry->getAllFeedConfigs();
+
+        $this->markFeedConfigsForScheduling($feedConfigsToSchedule);
+    }
+
+    /**
+     * @param string $name
+     */
+    public function scheduleFeedByName(string $name): void
+    {
+        $feedConfigsToSchedule = [$this->feedRegistry->getFeedConfigByName($name)];
+
+        $this->markFeedConfigsForScheduling($feedConfigsToSchedule);
+    }
+
+    /**
+     * @param string $name
+     * @param int $domainId
+     */
+    public function scheduleFeedByNameAndDomainId(string $name, int $domainId): void
+    {
+        $feedModule = $this->feedModuleRepository->getFeedModuleByNameAndDomainId($name, $domainId);
+        $feedModule->schedule();
+        $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModule $feedModule
+     */
+    public function markFeedModuleAsUnscheduled(FeedModule $feedModule): void
+    {
+        $feedModule->unschedule();
+        $this->em->flush();
+    }
+
+    /**
+     * @param array $feedConfigsToSchedule
+     */
+    protected function markFeedConfigsForScheduling(array $feedConfigsToSchedule): void
+    {
+        foreach ($feedConfigsToSchedule as $feedConfig) {
+            $feedModules = $this->feedModuleRepository->getFeedModulesByConfigIndexedByDomainId($feedConfig);
+
+            foreach ($feedModules as $feedModule) {
+                $feedModule->schedule();
+            }
+        }
+
+        $this->em->flush();
     }
 }

@@ -23,8 +23,6 @@ class AllFeedsTest extends KernelTestCase
 
     private int $maxDuration;
 
-    private int $deliveryMaxDuration;
-
     private int $minDuration;
 
     protected function setUp(): void
@@ -41,9 +39,6 @@ class AllFeedsTest extends KernelTestCase
             ->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
         $this->maxDuration = $container->getParameter('shopsys.performance_test.feed.max_duration_seconds');
-        $this->deliveryMaxDuration = $container->getParameter(
-            'shopsys.performance_test.feed.delivery.max_duration_seconds',
-        );
         $this->minDuration = $container->getParameter('shopsys.performance_test.feed.min_duration_seconds');
     }
 
@@ -116,18 +111,12 @@ class AllFeedsTest extends KernelTestCase
         $feedRegistry = static::$container->get(FeedRegistry::class);
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
         $domain = static::$container->get(Domain::class);
-        $dailyFeedGenerationData = $this->getFeedGenerationData(
-            $feedRegistry->getFeeds('daily'),
+
+        return $this->getFeedGenerationData(
+            $feedRegistry->getFeedsForCurrentTime(),
             $domain->getAll(),
             $this->maxDuration,
         );
-        $hourlyFeedGenerationData = $this->getFeedGenerationData(
-            $feedRegistry->getFeeds('hourly'),
-            $domain->getAll(),
-            $this->deliveryMaxDuration,
-        );
-
-        return array_merge($dailyFeedGenerationData, $hourlyFeedGenerationData);
     }
 
     /**

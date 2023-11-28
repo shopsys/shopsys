@@ -55,13 +55,9 @@ services:
 
     # Export
 
-    Shopsys\FrameworkBundle\Model\Feed\DailyFeedCronModule:
+    Shopsys\FrameworkBundle\Model\Feed\FeedCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*/6', minutes: '0', instanceName: export, readableName: 'Generate daily feeds' }
-
-    Shopsys\FrameworkBundle\Model\Feed\HourlyFeedCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '10', instanceName: export, readableName: 'Generate hourly feeds' }
+            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: export, readableName: 'Generate feeds' }
 
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapCronModule:
         tags:

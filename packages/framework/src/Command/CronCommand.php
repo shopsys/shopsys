@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
-use DateTime;
-use DateTimeImmutable;
 use DateTimeZone;
 use NinjaMutex\Lock\LockInterface;
 use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -182,7 +181,7 @@ class CronCommand extends Command
         }
 
         if ($runAllModules) {
-            $cronFacade->scheduleModulesByTime($this->getCurrentRoundedTime($instanceRunEveryMin));
+            $cronFacade->scheduleModulesByTime(DateTimeHelper::getCurrentRoundedTimeForIntervalAndTimezone($instanceRunEveryMin, $this->getCronTimeZone()));
         }
 
         $mutex = $mutexFactory->getPrefixedCronMutex($instanceName);
@@ -199,19 +198,6 @@ class CronCommand extends Command
             $cronFacade->runModuleByServiceId($requestedModuleServiceId);
         }
         $mutex->releaseLock();
-    }
-
-    /**
-     * @param int $runEveryMin
-     * @return \DateTimeImmutable
-     */
-    private function getCurrentRoundedTime(int $runEveryMin)
-    {
-        $time = new DateTime('now', $this->getCronTimeZone());
-        $time->modify('-' . $time->format('s') . ' sec');
-        $time->modify('-' . ($time->format('i') % $runEveryMin) . ' min');
-
-        return DateTimeImmutable::createFromMutable($time);
     }
 
     /**
