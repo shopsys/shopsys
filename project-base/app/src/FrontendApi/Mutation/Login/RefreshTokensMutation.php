@@ -15,6 +15,7 @@ use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
  * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
  * @property \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
  * @method __construct(\App\FrontendApi\Model\Token\TokenFacade $tokenFacade, \App\Model\Customer\User\CustomerUserFacade $customerUserFacade, \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
+ * @property \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
  */
 class RefreshTokensMutation extends BaseRefreshTokensMutation
 {

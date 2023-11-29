@@ -39,6 +39,10 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
  * @method amendCustomerUserDataFromOrder(\App\Model\Customer\User\CustomerUser $customerUser, \App\Model\Order\Order $order, \App\Model\Customer\DeliveryAddress|null $deliveryAddress)
  * @method setEmail(string $email, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \Shopsys\FrameworkBundle\Model\Customer\Customer createCustomerWithBillingAddress(int $domainId, \App\Model\Customer\BillingAddressData $billingAddressData)
+ * @property \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+ * @property \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
+ * @property \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
+ * @property \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
  */
 class CustomerUserFacade extends BaseCustomerUserFacade
 {

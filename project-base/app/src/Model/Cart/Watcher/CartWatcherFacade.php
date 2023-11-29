@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade as BaseCartWatc
  * however, we are not able to get rid of it completely because it is required in Shopsys\FrameworkBundle\Model\Cart\CartFacade
  * @see \App\FrontendApi\Model\Cart\CartWatcherFacade
  * @see https://github.com/shopsys/shopsys/pull/2497
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class CartWatcherFacade extends BaseCartWatcherFacade
 {

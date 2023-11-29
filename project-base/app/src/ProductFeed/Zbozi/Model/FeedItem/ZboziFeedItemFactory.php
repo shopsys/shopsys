@@ -19,6 +19,7 @@ use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain;
  * @method string|null getBrandName(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Price getPrice(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @method string[] getPathToMainCategory(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
+ * @property \App\Model\Category\CategoryFacade $categoryFacade
  */
 class ZboziFeedItemFactory extends BaseZboziFeedItemFactory
 {

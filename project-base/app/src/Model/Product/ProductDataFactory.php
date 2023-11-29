@@ -30,6 +30,11 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 /**
  * @method \App\Model\Product\Product[] getAccessoriesData(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] getParametersData(\App\Model\Product\Product $product)
+ * @property \App\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
+ * @property \App\Model\Product\Unit\UnitFacade $unitFacade
+ * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+ * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
  */
 class ProductDataFactory extends BaseProductDataFactory
 {

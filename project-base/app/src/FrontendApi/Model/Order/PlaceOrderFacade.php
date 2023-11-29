@@ -29,6 +29,7 @@ use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade as BasePlaceOrderFaca
  * @property \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
  * @method \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview createOrderPreview(\Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts, \App\Model\Transport\Transport|null $transport, \App\Model\Payment\Payment|null $payment, \App\Model\Customer\User\CustomerUser|null $customerUser)
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+ * @property \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
  */
 class PlaceOrderFacade extends BasePlaceOrderFacade
 {

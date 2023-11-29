@@ -10,6 +10,10 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersQuery as BaseOrdersQuery;
 
+/**
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+ * @property \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade
+ */
 class OrdersQuery extends BaseOrdersQuery
 {
     /**

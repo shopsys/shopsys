@@ -37,6 +37,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method string|null getSeoH1(\App\Model\Product\Product $product)
  * @method string|null getSeoTitle(\App\Model\Product\Product $product)
  * @method string|null getSeoMetaDescription(\App\Model\Product\Product $product)
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {

@@ -34,9 +34,9 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery as BaseProdu
 
 /**
  * @property \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
- * @property \App\FrontendApi\Model\Product\ProductFacade|null $productFacade
- * @property \App\FrontendApi\Model\Product\Filter\ProductFilterFacade|null $productFilterFacade
- * @property \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory|null $productConnectionFactory
+ * @property \App\FrontendApi\Model\Product\ProductFacade $productFacade
+ * @property \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
+ * @property \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
  * @method setProductFacade(\App\FrontendApi\Model\Product\ProductFacade $productFacade)
  * @method setProductFilterFacade(\App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade)
  * @method setProductConnectionFactory(\App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory)

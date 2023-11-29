@@ -15,6 +15,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderQuery as BaseOrderQuery;
  * @property \App\Model\Order\OrderFacade $orderFacade
  * @method __construct(\App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\Model\Order\OrderFacade $orderFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade)
  * @method \App\Model\Order\Order getOrderForCustomerUserByUuid(\App\Model\Customer\User\CustomerUser $customerUser, string $uuid)
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class OrderQuery extends BaseOrderQuery
 {

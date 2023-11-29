@@ -12,6 +12,7 @@ use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryData
 
 /**
  * @method __construct(\App\Model\Product\ProductRepository $productRepository)
+ * @property \App\Model\Product\ProductRepository $productRepository
  */
 class HeurekaDeliveryDataRepository extends BaseHeurekaDeliveryDataRepository
 {

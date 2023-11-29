@@ -15,12 +15,12 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap as Base
 /**
  * @property \App\Model\Product\Flag\FlagFacade $flagFacade
  * @property \App\Model\Category\CategoryFacade $categoryFacade
- * @property \App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper|null $productArrayFieldMapper
+ * @property \App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper $productArrayFieldMapper
  * @method __construct(\App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper $productEntityFieldMapper, \App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper $productArrayFieldMapper)
  * @method setProductArrayFieldMapper(\App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper $productArrayFieldMapper)
  * @method \App\Model\Product\Flag\Flag[] getFlagsForData(\App\Model\Product\Product|array $data)
  * @method \App\Model\Category\Category[] getCategoriesForData(array $data)
- * @property \App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper|null $productEntityFieldMapper
+ * @property \App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper $productEntityFieldMapper
  * @method setProductEntityFieldMapper(\App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper $productEntityFieldMapper)
  */
 class ProductResolverMap extends BaseProductResolverMap

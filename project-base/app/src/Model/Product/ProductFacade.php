@@ -61,6 +61,8 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method \App\Model\Product\Product[] getProductsWithUnit(\App\Model\Product\Unit\Unit $unit)
  * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
  * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
+ * @property \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+ * @property \App\Model\Product\ProductFactory $productFactory
  */
 class ProductFacade extends BaseProductFacade
 {
