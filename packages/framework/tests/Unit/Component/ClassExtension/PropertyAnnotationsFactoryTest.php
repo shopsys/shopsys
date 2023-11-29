@@ -92,5 +92,9 @@ class PropertyAnnotationsFactoryTest extends TestCase
             '@property \App\Model\Category\CategoryFacade $categoryFacade',
             $annotationLines,
         );
+        $this->assertStringContainsString(
+            '@property \Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass $class',
+            $annotationLines,
+        );
     }
 }

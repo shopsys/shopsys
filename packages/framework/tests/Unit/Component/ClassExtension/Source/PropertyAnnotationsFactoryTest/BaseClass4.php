@@ -12,4 +12,14 @@ class BaseClass4
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
      */
     public $categoryFacade;
+
+    /**
+     * This property defined using constructor property promotion is of a type that is registered in the class extension map and hence the "@property" annotation must be added to the child class
+     *
+     * @param \Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass $class
+     */
+    public function __construct(
+        protected readonly BaseClass $class,
+    ) {
+    }
 }
