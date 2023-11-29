@@ -211,12 +211,36 @@ class Version20231124121921 extends AbstractMigration
             $this->sql('COMMENT ON COLUMN closed_days.date IS \'(DC2Type:date_immutable)\'');
         }
 
-        if (!$this->isAppMigrationNotInstalled('Version20230908095905')) {
-            return;
+        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20200331114558')) {
+            $this->sql('ALTER TABLE order_items ADD personal_pickup_stock_id INT DEFAULT NULL');
+            $this->sql('
+            ALTER TABLE
+                order_items
+            ADD
+                CONSTRAINT FK_62809DB078AE585C FOREIGN KEY (personal_pickup_stock_id) REFERENCES stocks (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+            $this->sql('CREATE INDEX IDX_62809DB078AE585C ON order_items (personal_pickup_stock_id)');
         }
 
-        $this->sql('ALTER TABLE stores DROP opening_hours');
-        $this->sql('DROP TABLE product_stores');
+        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20210712170052')) {
+            $this->sql('ALTER TABLE order_items DROP CONSTRAINT FK_62809DB078AE585C');
+            $this->sql('DROP INDEX IDX_62809DB078AE585C');
+            $this->sql('ALTER TABLE order_items RENAME COLUMN personal_pickup_stock_id TO personal_pickup_store_id');
+            $this->sql('
+                ALTER TABLE
+                    order_items
+                ADD
+                    CONSTRAINT FK_62809DB0C5F1915D FOREIGN KEY (personal_pickup_store_id) REFERENCES stores (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+            $this->sql('CREATE INDEX IDX_62809DB0C5F1915D ON order_items (personal_pickup_store_id)');
+        }
+
+        if ($this->isAppMigrationNotInstalled('Version20230908095905')) {
+            $this->sql('ALTER TABLE stores DROP opening_hours');
+            $this->sql('DROP TABLE product_stores');
+        }
+
+        $this->sql('ALTER TABLE order_items DROP CONSTRAINT FK_62809DB0C5F1915D');
+        $this->sql('DROP INDEX IDX_62809DB0C5F1915D');
+        $this->sql('ALTER TABLE order_items DROP COLUMN personal_pickup_store_id');
     }
 
     /**
