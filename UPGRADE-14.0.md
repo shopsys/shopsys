@@ -208,6 +208,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getAllFeeds()` has been replaced with method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getAllFeedConfigs()`
     -   method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getFeedByName()` has been replaced with method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::getFeedConfigByName()`
     -   method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::assertTypeIsKnown()` has been removed without a replacement
+-   upgrade Storefront docker image ([#2931](https://github.com/shopsys/shopsys/pull/2931))
+    -   now we use Node.js version 20-alpine3.17 and PNPM version 8.10.5
     -   see #project-base-diff to update your project
 
 ### Storefront
