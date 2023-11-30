@@ -58,8 +58,6 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             );
         };
 
-
-
         return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode, $defaultOrderingMode);
     }
 

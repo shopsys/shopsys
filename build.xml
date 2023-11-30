@@ -330,12 +330,6 @@
         <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--configuration"/>
-            <arg value="${path.packages}/read-model/phpunit.xml"/>
-            <arg value="${path.packages}/read-model/tests"/>
-        </exec>
-        <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="--colors=always"/>
-            <arg value="--configuration"/>
             <arg value="${path.packages}/framework/phpunit.xml"/>
         </exec>
         <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">

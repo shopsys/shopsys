@@ -17,7 +17,6 @@ NC="\e[0m"
 get_all_packages() {
     echo "framework \
         frontend-api \
-        read-model \
         google-cloud-bundle \
         s3-bridge \
         category-feed-persoo \

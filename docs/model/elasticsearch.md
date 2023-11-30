@@ -73,7 +73,6 @@ If you need to change the data that are exported into Elasticsearch, overwrite a
 
 ## Use of Elasticsearch
 
-Elasticsearch is used to search, filter and sort products on the frontend and to display products in listing via [Read Model](./introduction-to-read-model.md).
 You can learn more about [Product searching](../model/front-end-product-searching.md) and [Product filtering](../model/front-end-product-filtering.md) in particular articles.
 [Sorting](../introduction/how-to-set-up-domains-and-locales.md#37-sorting-in-different-locales) is done with the help of [ICU analysis plugin](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu.html)
 which ensures that alphabetical sorting is correct for every language and its set of rules.

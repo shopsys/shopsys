@@ -1,6 +1,6 @@
 # Shopsys S3 Bridge
 
-[![Downloads](https://img.shields.io/packagist/dt/shopsys/read-model.svg)](https://packagist.org/packages/shopsys/read-model)
+[![Downloads](https://img.shields.io/packagist/dt/shopsys/s3-bridge.svg)](https://packagist.org/packages/shopsys/s3-bridge)
 
 This bundle for [Shopsys Platform](https://www.shopsys.com) provides integration for S3 storage.
 The bundle is dedicated for projects based on Shopsys Platform (i.e. created from [`shopsys/project-base`](https://github.com/shopsys/project-base)) exclusively.

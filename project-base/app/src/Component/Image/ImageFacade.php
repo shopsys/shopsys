@@ -29,13 +29,10 @@ use Symfony\Contracts\Cache\CacheInterface;
  * @property \App\Component\Image\ImageRepository $imageRepository
  * @property \App\Component\FileUpload\FileUpload $fileUpload
  * @property \App\Component\Image\ImageLocator $imageLocator
- * @method \App\Component\Image\Image[] getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, string|null $type)
  * @method \App\Component\Image\Image[] getAllImagesByEntity(object $entity)
  * @method deleteImageFiles(\App\Component\Image\Image $image)
  * @method \App\Component\Image\Image getImageByObject(object $imageOrEntity, string|null $type = null)
  * @method \App\Component\Image\Image getById(int $imageId)
- * @method \App\Component\Image\Image[] getImagesByEntitiesIndexedByEntityId(int[] $entityIds, string $entityClass)
- * @method \App\Component\Image\Image[] getImagesByEntityId(int $id, string $entityClass)
  * @method \App\Component\Image\Image getImageByEntity(object $entity, string|null $type)
  * @method \App\Component\Image\Image[] getImagesByEntityIndexedById(object $entity, string|null $type)
  */
@@ -158,26 +155,6 @@ class ImageFacade extends BaseImageFacade
             default:
                 return null;
         }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int $id
-     * @param string $extension
-     * @param string $entityName
-     * @param string|null $type
-     * @return string
-     */
-    public function getImageUrlFromAttributes(
-        DomainConfig $domainConfig,
-        int $id,
-        string $extension,
-        string $entityName,
-        ?string $type,
-    ): string {
-        $image = $this->imageRepository->getById($id);
-
-        return $this->getImageUrl($domainConfig, $image, $type);
     }
 
     /**

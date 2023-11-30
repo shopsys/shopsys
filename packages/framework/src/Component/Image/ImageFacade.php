@@ -198,21 +198,6 @@ class ImageFacade
     }
 
     /**
-     * @param int $entityId
-     * @param string $entityName
-     * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
-     */
-    public function getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, ?string $type): array
-    {
-        return $this->imageRepository->getImagesByEntityIndexedById(
-            $entityName,
-            $entityId,
-            $type,
-        );
-    }
-
-    /**
      * @param object $entity
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
@@ -274,31 +259,6 @@ class ImageFacade
         return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
             . $this->imageUrlPrefix
             . $this->imageLocator->getRelativeImageFilepath($image);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int $id
-     * @param string $extension
-     * @param string $entityName
-     * @param string|null $type
-     * @return string
-     */
-    public function getImageUrlFromAttributes(
-        DomainConfig $domainConfig,
-        int $id,
-        string $extension,
-        string $entityName,
-        ?string $type,
-    ): string {
-        $imageFilepath = $this->imageLocator->getRelativeImageFilepathFromAttributes(
-            $id,
-            $extension,
-            $entityName,
-            $type,
-        );
-
-        return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig) . $this->imageUrlPrefix . $imageFilepath;
     }
 
     /**
@@ -372,30 +332,6 @@ class ImageFacade
             $image->setPosition($position);
             $position++;
         }
-    }
-
-    /**
-     * @param int[] $entityIds
-     * @param string $entityClass FQCN
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
-     */
-    public function getImagesByEntitiesIndexedByEntityId(array $entityIds, string $entityClass): array
-    {
-        $entityName = $this->imageConfig->getImageEntityConfigByClass($entityClass)->getEntityName();
-
-        return $this->imageRepository->getMainImagesByEntitiesIndexedByEntityId($entityIds, $entityName);
-    }
-
-    /**
-     * @param int $id
-     * @param string $entityClass
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
-     */
-    public function getImagesByEntityId(int $id, string $entityClass): array
-    {
-        $entityName = $this->imageConfig->getImageEntityConfigByClass($entityClass)->getEntityName();
-
-        return $this->getImagesByEntityIdAndNameIndexedById($id, $entityName, null);
     }
 
     /**

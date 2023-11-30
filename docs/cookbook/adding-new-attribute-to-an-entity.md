@@ -3,11 +3,6 @@
 In the following example, we will add the `extId` (alias "external ID") field to the `Product` entity.
 It is a common modification when you need your e-commerce application and ERP system to co-work smoothly.
 
-!!! note
-
-    If you want to display your new attribute on the front-end product list, you need to extend the [read model layer](../model/introduction-to-read-model.md) as well.<br>
-    Instructions are in [Extending Product List](./extending-product-list.md).
-
 ## Extend framework `Product` entity
 
 !!! tip

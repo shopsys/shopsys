@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository;
@@ -53,140 +51,24 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     /**
      * {@inheritdoc}
      */
-    public function getAccessoriesForProduct(Product $product): array
-    {
-        return $this->productAccessoryRepository->getAllOfferedAccessoriesByProduct(
-            $product,
-            $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup(),
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getVariantsForProduct(Product $product): array
-    {
-        return $this->productRepository->getAllSellableVariantsByMainVariant(
-            $product,
-            $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup(),
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPaginatedProductsInCategory(
-        ProductFilterData $productFilterData,
-        string $orderingModeId,
-        int $page,
-        int $limit,
-        int $categoryId,
-    ): PaginationResult {
-        $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
-            $productFilterData,
-            $orderingModeId,
-            $page,
-            $limit,
-            $categoryId,
-        );
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-
-        return new PaginationResult($page, $limit, $productsResult->getTotal(), $productsResult->getHits());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPaginatedProductsForBrand(
-        string $orderingModeId,
-        int $page,
-        int $limit,
-        int $brandId,
-    ): PaginationResult {
-        $emptyProductFilterData = new ProductFilterData();
-
-        $filterQuery = $this->filterQueryFactory->createListableProductsByBrandId(
-            $emptyProductFilterData,
-            $orderingModeId,
-            $page,
-            $limit,
-            $brandId,
-        );
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-
-        return new PaginationResult($page, $limit, $productsResult->getTotal(), $productsResult->getHits());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPaginatedProductsForSearch(
-        string $searchText,
-        ProductFilterData $productFilterData,
-        string $orderingModeId,
-        int $page,
-        int $limit,
-    ): PaginationResult {
-        $filterQuery = $this->filterQueryFactory->createListableProductsBySearchText(
-            $productFilterData,
-            $orderingModeId,
-            $page,
-            $limit,
-            $searchText,
-        );
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-
-        return new PaginationResult($page, $limit, $productsResult->getTotal(), $productsResult->getHits());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSearchAutocompleteProducts(?string $searchText, int $limit): PaginationResult
-    {
-        $searchText = $searchText ?? '';
-
-        $emptyProductFilterData = new ProductFilterData();
-        $page = 1;
-
-        $filterQuery = $this->filterQueryFactory->createListableProductsBySearchText(
-            $emptyProductFilterData,
-            ProductListOrderingConfig::ORDER_BY_RELEVANCE,
-            $page,
-            $limit,
-            $searchText,
-        );
-
-        $productIds = $this->productElasticsearchRepository->getSortedProductIdsByFilterQuery($filterQuery);
-
-        $listableProductsByIds = $this->productRepository->getListableByIds(
-            $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup(),
-            $productIds->getIds(),
-        );
-
-        return new PaginationResult($page, $limit, $productIds->getTotal(), $listableProductsByIds);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getProductFilterCountDataInCategory(
         int $categoryId,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
+        string $searchText = '',
     ): ProductFilterCountData {
+        $baseFilterQuery = $this->filterQueryFactory->createListableProductsByCategoryIdWithPriceAndStockFilter(
+            $categoryId,
+            $productFilterData,
+        );
+
+        if ($searchText !== '') {
+            $baseFilterQuery = $baseFilterQuery->search($searchText);
+        }
+
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,
-            $this->filterQueryFactory->createListableProductsByCategoryIdWithPriceAndStockFilter(
-                $categoryId,
-                $productFilterData,
-            ),
+            $baseFilterQuery,
         );
     }
 
