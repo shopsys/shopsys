@@ -3,7 +3,6 @@ import grapesjs from 'grapesjs';
 import webPagePlugin from 'grapesjs-preset-webpage';
 import ckeditorPlugin from 'grapesjs-plugin-ckeditor';
 import newsletterPlugin from 'grapesjs-preset-newsletter';
-import countDownPlugin from 'grapesjs-component-countdown';
 import './grapesjs-non-editable-page';
 import './plugins/grapesjs-custom-buttons-plugin';
 import './plugins/grapesjs-products-plugin';
@@ -63,7 +62,6 @@ export default class InitGrapesJs {
         const plugins = [
             webPagePlugin,
             ckeditorPlugin,
-            countDownPlugin,
             'nonEditablePage',
             'customButtons',
             'text-with-image',
@@ -73,6 +71,7 @@ export default class InitGrapesJs {
             'custom-image-file',
             'custom-iframe'
         ];
+
         if (allowProducts) {
             plugins.push('products');
         }
@@ -112,13 +111,6 @@ export default class InitGrapesJs {
                     blocks: [''],
                     useCustomTheme: false
                 },
-                [countDownPlugin]: {
-                    block: {
-                        label: 'Countdown',
-                        category: 'Extra',
-                        attributes: { class: 'fa fa-clock-o' }
-                    }
-                },
                 customButtons: {
                     textareaId: textareaId
                 }
@@ -154,6 +146,15 @@ export default class InitGrapesJs {
                         };
                     }
                 }
+            }
+        });
+
+        editor.TraitManager.addType('textarea', {
+            createInput () {
+                return document.createElement('textarea');
+            },
+            onUpdate ({ elInput, _, trait }) {
+                elInput.value = trait.changed.value;
             }
         });
 

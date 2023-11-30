@@ -210,6 +210,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   method `Shopsys\FrameworkBundle\Model\Feed\FeedRegistry::assertTypeIsKnown()` has been removed without a replacement
 -   upgrade Storefront docker image ([#2931](https://github.com/shopsys/shopsys/pull/2931))
     -   now we use Node.js version 20-alpine3.17 and PNPM version 8.10.5
+-   fix GrapesJS ([#2911](https://github.com/shopsys/shopsys/pull/2911))
+    -   fix styling on FE, fix layout for Text with Image (sides not working), fix iframe sizes, fix video wrapper causing multiple layers in admin, removed Countdown from Blocks
     -   see #project-base-diff to update your project
 -   remove custom stores and stocks implementation as it's now a part of shopsys/framework ([#2918](https://github.com/shopsys/shopsys/pull/2918))
     -   if necessary, extend classes and implement your custom logic
