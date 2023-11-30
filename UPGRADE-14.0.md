@@ -287,179 +287,179 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   method `getEntityConfigByEntityName()` is now strictly typed and its visibility changed to `protected`
         -   method `getAllImageEntityConfigsByClass()` is now strictly typed
         -   method `getImageEntityConfigByClass()` is now strictly typed
--   `Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigDefinition` class has been changed:
-    -   constants `CONFIG_SIZES`, `CONFIG_SIZE_NAME`, `CONFIG_SIZE_WIDTH`, `CONFIG_SIZE_HEIGHT`, `CONFIG_SIZE_CROP`, `CONFIG_SIZE_OCCURRENCE`, `CONFIG_SIZE_ADDITIONAL_SIZES`, and `CONFIG_SIZE_ADDITIONAL_SIZE_MEDIA` were removed
-    -   method `createSizesNode()` was removed
--   `Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader` class has been changed:
-    -   method `loadFromYaml()` is now strictly typed
-    -   method `loadFromArray()` is now strictly typed
-    -   method `processEntityConfig()` is now strictly typed
-    -   method `prepareTypes()` is now strictly typed
-    -   method `getMultipleByType()` is now strictly typed
-    -   method `prepareSizes()` was removed
-    -   method `prepareAdditionalSizes()` was removed
--   `Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig` class has been changed:
-    -   `$sizeConfigsByType` and `$sizeConfigs` properties were removed
-    -   the constructor was changed:
+    -   `Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigDefinition` class has been changed:
+        -   constants `CONFIG_SIZES`, `CONFIG_SIZE_NAME`, `CONFIG_SIZE_WIDTH`, `CONFIG_SIZE_HEIGHT`, `CONFIG_SIZE_CROP`, `CONFIG_SIZE_OCCURRENCE`, `CONFIG_SIZE_ADDITIONAL_SIZES`, and `CONFIG_SIZE_ADDITIONAL_SIZE_MEDIA` were removed
+        -   method `createSizesNode()` was removed
+    -   `Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader` class has been changed:
+        -   method `loadFromYaml()` is now strictly typed
+        -   method `loadFromArray()` is now strictly typed
+        -   method `processEntityConfig()` is now strictly typed
+        -   method `prepareTypes()` is now strictly typed
+        -   method `getMultipleByType()` is now strictly typed
+        -   method `prepareSizes()` was removed
+        -   method `prepareAdditionalSizes()` was removed
+    -   `Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig` class has been changed:
+        -   `$sizeConfigsByType` and `$sizeConfigs` properties were removed
+        -   the constructor was changed:
+            ```diff
+                public function __construct(
+            -       $entityName,
+            -       $entityClass,
+            -       protected readonly array $sizeConfigsByType,
+            -       protected readonly array $sizeConfigs,
+            +       protected readonly string $entityName,
+            +       protected readonly string $entityClass,
+            +       protected readonly array $types,
+                    protected readonly array $multipleByType,
+            ```
+        -   method `getEntityName()` is now strictly typed
+        -   method `getEntityClass()` is now strictly typed
+        -   method `getTypes()` is now strictly typed
+        -   method `isMultiple()` is now strictly typed
+        -   method `getSizeConfigs()` was removed
+        -   method `getSizeConfigsByTypes()` was removed
+        -   method `getSizeConfigsByType()` was removed
+        -   method `getSizeConfig()` was removed
+        -   method `getSizeConfigByType()` was removed
+        -   method `getSizeConfigFromSizeConfigs()` was removed
+    -   `Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig` was removed
+    -   `Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator` class has been changed:
+        -   method `makeImageDirectories()` is now strictly typed
+        -   method `getTargetDirectoriesFromSizeConfigs()` was removed, replaced by `getTargetDirectoryByType()`
+    -   `Shopsys\FrameworkBundle\Component\Image\ImageFacade` class has been changed:
+        -   method `getImageUrl()` interface has changed:
+            ```diff
+                public function getImageUrl(
+                    DomainConfig $domainConfig,
+                    object $imageOrEntity,
+            -       ?string $sizeName = null,
+                    ?string $type = null,
+            ```
+        -   method `getImageUrlFromAttributes()` interface has changed:
+            ```diff
+                public function getImageUrlFromAttributes(
+                    DomainConfig $domainConfig,
+                    int $id,
+                    string $extension,
+                    string $entityName,
+                    ?string $type,
+            -       ?string $sizeName = null,
+            ```
+        -   method `getAllImageEntityConfigsByClass()` has been removed
+        -   method `getAdditionalImagesData()` has been removed
+        -   method `getAdditionalImagesDataFromAttributes()` has been removed
+        -   method `getAdditionalImageUrl()` has been removed
+    -   ` Shopsys\FrameworkBundle\Component\Image\ImageLocator` class has been changed:
+        -   `ADDITIONAL_IMAGE_MASK` constant was removed
+        -   `getRelativeImageFilepath()` method has changed its interface:
+            ```diff
+            -   public function getRelativeImageFilepath(Image $image, $sizeName)
+            +   public function getRelativeImageFilepath(Image $image): string
+            ```
+        -   `getRelativeAdditionalImageFilepath()` method has been removed
+        -   `getRelativeImageFilepathFromAttributes()` method has changed its interface:
+            ```diff
+               public function getRelativeImageFilepathFromAttributes(
+                   int $id,
+                   string $extension,
+                   string $entityName,
+                   ?string $type,
+            -      ?string $sizeName = null,
+            -      ?int $additionalIndex = null,
+            ```
+        -   `getAbsoluteAdditionalImageFilepath()` method has been removed
+        -   `getAbsoluteImageFilepath()` method has changed its interface:
+            ```diff
+            -   public function getAbsoluteImageFilepath(Image $image, $sizeName)
+            +   public function getAbsoluteImageFilepath(Image $image): string
+            ```
+        -   `getRelativeImagePath()` method has changed its interface:
+            ```diff
+            -   public function getRelativeImagePath($entityName, $type, $sizeName)
+            +   public function getRelativeImagePath(string $entityName, ?string $type): string
+            ```
+        -   `getAdditionalImageFilename()` method has been removed
+    -   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageGenerator` class has been removed
+    -   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageGeneratorFacade` class has been removed
+    -   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor::resizeBySizeConfig()` method has been removed
+    -   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor::resizeByAdditionalSizeConfig()` method has been removed
+    -   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor::getSupportedImageExtensions()` method has been removed
+    -   `Shopsys\FrameworkBundle\Controller\Admin\ImageController` class has been removed
+    -   `admin_image_overview` route has been removed
+    -   `images` and `images -> sizes` menu items has been removed from the administration menu
+    -   `Cropping`, `Height [px]`, `Image size`, `Occurrence`, `Size name`, `Width [px]`, and `default` translation message IDs has been removed
+    -   `framework/src/Resources/views/Admin/Content/Image/overview.html.twig` Twig template has been removed
+    -   `imageExists`, `imageUrl`, `noimage`, and `getImages` Twig functions had been removed
+    -   `Shopsys\FrameworkBundle\Twig\ImageExtension::imageExists()` method is now strictly typed
+    -   `Shopsys\FrameworkBundle\Twig\ImageExtension::getImageUrl()` method changed its visibility to `protected` and changed its interface:
         ```diff
-            public function __construct(
-        -       $entityName,
-        -       $entityClass,
-        -       protected readonly array $sizeConfigsByType,
-        -       protected readonly array $sizeConfigs,
-        +       protected readonly string $entityName,
-        +       protected readonly string $entityClass,
-        +       protected readonly array $types,
-                protected readonly array $multipleByType,
+        -   public function getImageUrl($imageOrEntity, $sizeName = null, $type = null)
+        +   protected function getImageUrl($imageOrEntity, ?string $type = null): string
         ```
-    -   method `getEntityName()` is now strictly typed
-    -   method `getEntityClass()` is now strictly typed
-    -   method `getTypes()` is now strictly typed
-    -   method `isMultiple()` is now strictly typed
-    -   method `getSizeConfigs()` was removed
-    -   method `getSizeConfigsByTypes()` was removed
-    -   method `getSizeConfigsByType()` was removed
-    -   method `getSizeConfig()` was removed
-    -   method `getSizeConfigByType()` was removed
-    -   method `getSizeConfigFromSizeConfigs()` was removed
--   `Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig` was removed
--   `Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator` class has been changed:
-    -   method `makeImageDirectories()` is now strictly typed
-    -   method `getTargetDirectoriesFromSizeConfigs()` was removed, replaced by `getTargetDirectoryByType()`
--   `Shopsys\FrameworkBundle\Component\Image\ImageFacade` class has been changed:
-    -   method `getImageUrl()` interface has changed:
+    -   `Shopsys\FrameworkBundle\Twig\ImageExtension::getImages()` method has been removed
+    -   `Shopsys\FrameworkBundle\Twig\ImageExtension::getNoimageHtml()` method changed its visibility to `protected` and is now strictly typed
+    -   `Shopsys\FrameworkBundle\Twig\ImageExtension::getImageHtmlByEntityName()` has changed its interface:
         ```diff
-            public function getImageUrl(
-                DomainConfig $domainConfig,
-                object $imageOrEntity,
-        -       ?string $sizeName = null,
-                ?string $type = null,
+        -   protected function getImageHtmlByEntityName(array $attributes, $entityName, $additionalImagesData = []): string
+        +   protected function getImageHtmlByEntityName(array $attributes, string $entityName): string
         ```
-    -   method `getImageUrlFromAttributes()` interface has changed:
+    -   `Shopsys\FrameworkBundle\Twig\ImageExtension::getImageCssClass()` has changed its interface:
         ```diff
-            public function getImageUrlFromAttributes(
-                DomainConfig $domainConfig,
-                int $id,
-                string $extension,
-                string $entityName,
-                ?string $type,
-        -       ?string $sizeName = null,
+        -   protected function getImageCssClass($entityName, $type, $sizeName)
+        +   protected function getImageCssClass(string $entityName, ?string $type): string
         ```
-    -   method `getAllImageEntityConfigsByClass()` has been removed
-    -   method `getAdditionalImagesData()` has been removed
-    -   method `getAdditionalImagesDataFromAttributes()` has been removed
-    -   method `getAdditionalImageUrl()` has been removed
--   ` Shopsys\FrameworkBundle\Component\Image\ImageLocator` class has been changed:
-    -   `ADDITIONAL_IMAGE_MASK` constant was removed
-    -   `getRelativeImageFilepath()` method has changed its interface:
+    -   `Shopsys\FrontendApiBundle\Model\Resolver\Image\Exception\ImageSizeInvalidUserError` class has been removed
+    -   `Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery` class has been changed:
+        -   `IMAGE_ENTITY_ADVERT` constant was removed
+        -   method `imagesByEntityQuery()` has changed its interface:
         ```diff
-        -   public function getRelativeImageFilepath(Image $image, $sizeName)
-        +   public function getRelativeImageFilepath(Image $image): string
+        -   public function imagesByEntityQuery(object $entity, ?string $type, ?string $size): array
+        +   public function imagesByEntityQuery(object $entity, ?string $type): array
         ```
-    -   `getRelativeAdditionalImageFilepath()` method has been removed
-    -   `getRelativeImageFilepathFromAttributes()` method has changed its interface:
+        -   method `imagesByProductQuery()` has changed its interface:
         ```diff
-           public function getRelativeImageFilepathFromAttributes(
-               int $id,
-               string $extension,
-               string $entityName,
-               ?string $type,
-        -      ?string $sizeName = null,
-        -      ?int $additionalIndex = null,
+        -   public function imagesByProductQuery($data, ?string $type, ?string $size): array
+        +   public function imagesByProductQuery($data, ?string $type): array
         ```
-    -   `getAbsoluteAdditionalImageFilepath()` method has been removed
-    -   `getAbsoluteImageFilepath()` method has changed its interface:
+        -   method `imagesByAdvertQuery()` has changed its interface:
         ```diff
-        -   public function getAbsoluteImageFilepath(Image $image, $sizeName)
-        +   public function getAbsoluteImageFilepath(Image $image): string
+        -   public function imagesByAdvertQuery(Advert $advert, ?string $type, ?string $size): array
+        +   public function imagesByAdvertQuery(Advert $advert, ?string $type): array
         ```
-    -   `getRelativeImagePath()` method has changed its interface:
+        -   method `resolveByEntityId()` has changed its interface:
         ```diff
-        -   public function getRelativeImagePath($entityName, $type, $sizeName)
-        +   public function getRelativeImagePath(string $entityName, ?string $type): string
+        -   protected function resolveByEntityId(int $entityId, string $entityName, ?string $type, ?string $size): array
+        +   protected function resolveByEntityId(int $entityId, string $entityName, ?string $type): array
         ```
-    -   `getAdditionalImageFilename()` method has been removed
--   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageGenerator` class has been removed
--   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageGeneratorFacade` class has been removed
--   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor::resizeBySizeConfig()` method has been removed
--   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor::resizeByAdditionalSizeConfig()` method has been removed
--   `Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor::getSupportedImageExtensions()` method has been removed
--   `Shopsys\FrameworkBundle\Controller\Admin\ImageController` class has been removed
--   `admin_image_overview` route has been removed
--   `images` and `images -> sizes` menu items has been removed from the administration menu
--   `Cropping`, `Height [px]`, `Image size`, `Occurrence`, `Size name`, `Width [px]`, and `default` translation message IDs has been removed
--   `framework/src/Resources/views/Admin/Content/Image/overview.html.twig` Twig template has been removed
--   `imageExists`, `imageUrl`, `noimage`, and `getImages` Twig functions had been removed
--   `Shopsys\FrameworkBundle\Twig\ImageExtension::imageExists()` method is now strictly typed
--   `Shopsys\FrameworkBundle\Twig\ImageExtension::getImageUrl()` method changed its visibility to `protected` and changed its interface:
-    ```diff
-    -   public function getImageUrl($imageOrEntity, $sizeName = null, $type = null)
-    +   protected function getImageUrl($imageOrEntity, ?string $type = null): string
-    ```
--   `Shopsys\FrameworkBundle\Twig\ImageExtension::getImages()` method has been removed
--   `Shopsys\FrameworkBundle\Twig\ImageExtension::getNoimageHtml()` method changed its visibility to `protected` and is now strictly typed
--   `Shopsys\FrameworkBundle\Twig\ImageExtension::getImageHtmlByEntityName()` has changed its interface:
-    ```diff
-    -   protected function getImageHtmlByEntityName(array $attributes, $entityName, $additionalImagesData = []): string
-    +   protected function getImageHtmlByEntityName(array $attributes, string $entityName): string
-    ```
--   `Shopsys\FrameworkBundle\Twig\ImageExtension::getImageCssClass()` has changed its interface:
-    ```diff
-    -   protected function getImageCssClass($entityName, $type, $sizeName)
-    +   protected function getImageCssClass(string $entityName, ?string $type): string
-    ```
--   `Shopsys\FrontendApiBundle\Model\Resolver\Image\Exception\ImageSizeInvalidUserError` class has been removed
--   `Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery` class has been changed:
-    -   `IMAGE_ENTITY_ADVERT` constant was removed
-    -   method `imagesByEntityQuery()` has changed its interface:
-    ```diff
-    -   public function imagesByEntityQuery(object $entity, ?string $type, ?string $size): array
-    +   public function imagesByEntityQuery(object $entity, ?string $type): array
-    ```
-    -   method `imagesByProductQuery()` has changed its interface:
-    ```diff
-    -   public function imagesByProductQuery($data, ?string $type, ?string $size): array
-    +   public function imagesByProductQuery($data, ?string $type): array
-    ```
-    -   method `imagesByAdvertQuery()` has changed its interface:
-    ```diff
-    -   public function imagesByAdvertQuery(Advert $advert, ?string $type, ?string $size): array
-    +   public function imagesByAdvertQuery(Advert $advert, ?string $type): array
-    ```
-    -   method `resolveByEntityId()` has changed its interface:
-    ```diff
-    -   protected function resolveByEntityId(int $entityId, string $entityName, ?string $type, ?string $size): array
-    +   protected function resolveByEntityId(int $entityId, string $entityName, ?string $type): array
-    ```
-    -   method `getResolvedImages()` has changed its interface:
-    ```diff
-    -   protected function getResolvedImages(array $images, array $sizeConfigs): array
-    +   protected function getResolvedImages(array $images): array
-    ```
-    -   method `getResolvedImage()` has changed its interface:
-    ```diff
-    -   protected function getResolvedImage(Image $image, ImageSizeConfig $sizeConfig): array
-    +   protected function getResolvedImage(Image $image): array
-    ```
-    -   method `getSizeConfigs()` has been removed
-    -   method `getSizeConfigsForAdvert()` has been removed
+        -   method `getResolvedImages()` has changed its interface:
+        ```diff
+        -   protected function getResolvedImages(array $images, array $sizeConfigs): array
+        +   protected function getResolvedImages(array $images): array
+        ```
+        -   method `getResolvedImage()` has changed its interface:
+        ```diff
+        -   protected function getResolvedImage(Image $image, ImageSizeConfig $sizeConfig): array
+        +   protected function getResolvedImage(Image $image): array
+        ```
+        -   method `getSizeConfigs()` has been removed
+        -   method `getSizeConfigsForAdvert()` has been removed
     -   `Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade::getImagesUrlsIndexedByProductId()` method has changed its interface:
         ```diff
         -    public function getImagesUrlsIndexedByProductId(array $products, DomainConfig $domainConfig, $sizeName = null)
         +    public function getImagesUrlsIndexedByProductId(array $products, DomainConfig $domainConfig): array
         ```
--   FE API image queries no longer accept `size` argument
-    -   i.e. `AdvertImageDecorator.images`, `BrandDecorator.images`, `CategoryDecorator.images`, `PaymentDecorator.images`, `ProductDecorator.images`, and `TransportDecorator.images`
--   the following fields has been removed from `ImageDecorator.types`:
-    -   `type`, `position`, `size`, `width`, and `height`
--   image lazy loading via `image` Twig function is not supported anymore:
-    -   `Shopsys\FrameworkBundle\Twig\ImageExtension` class has been changed:
-        -   `PLACEHOLDER_FILENAME` and `BROWSERS_WITHOUT_NATIVE_LAZY_LOAD` constants were removed
-        -   `$browser` property was removed
-        -   `$isLazyLoadEnabled` constructor parameter was removed
-        -   `getImagePlaceholder()`, `isLazyLoadEnabled()`, `makeHtmlAttributesLazyLoaded()`, and `isNativeLazyLoadSupported()` methods were removed
-    -   `shopsys.image.enable_lazy_load` container parameter was removed
--   see #project-base-diff to update your project
+    -   FE API image queries no longer accept `size` argument
+        -   i.e. `AdvertImageDecorator.images`, `BrandDecorator.images`, `CategoryDecorator.images`, `PaymentDecorator.images`, `ProductDecorator.images`, and `TransportDecorator.images`
+    -   the following fields has been removed from `ImageDecorator.types`:
+        -   `type`, `position`, `size`, `width`, and `height`
+    -   image lazy loading via `image` Twig function is not supported anymore:
+        -   `Shopsys\FrameworkBundle\Twig\ImageExtension` class has been changed:
+            -   `PLACEHOLDER_FILENAME` and `BROWSERS_WITHOUT_NATIVE_LAZY_LOAD` constants were removed
+            -   `$browser` property was removed
+            -   `$isLazyLoadEnabled` constructor parameter was removed
+            -   `getImagePlaceholder()`, `isLazyLoadEnabled()`, `makeHtmlAttributesLazyLoaded()`, and `isNativeLazyLoadSupported()` methods were removed
+        -   `shopsys.image.enable_lazy_load` container parameter was removed
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
