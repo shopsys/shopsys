@@ -14,7 +14,6 @@ use App\Model\Payment\PaymentFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
-use App\Model\Store\StoreFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
@@ -22,6 +21,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
@@ -337,7 +337,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $this->addTestingProductToNewCart(1);
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
-        /** @var \App\Model\Store\Store $store */
+        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
         $this->addTransportToExistingCart($transport, $store->getUuid());
         $this->storeFacade->delete($store->getId());
@@ -362,7 +362,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
 
-        /** @var \App\Model\Store\Store $store */
+        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
         $this->addTransportToExistingCart($transport, $store->getUuid());
 

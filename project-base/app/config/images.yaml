@@ -301,7 +301,7 @@
                 - {width: 84, height: 84, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: store
-    class: App\Model\Store\Store
+    class: Shopsys\FrameworkBundle\Model\Store\Store
     multiple: true
     sizes:
         -   name: ~

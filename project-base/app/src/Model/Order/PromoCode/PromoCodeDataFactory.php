@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
-use App\Component\DateTimeHelper\DateTimeHelper;
 use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
 use DateTime;
 use DateTimeZone;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData as BasePromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory as BasePromoCodeDataFactory;
@@ -23,7 +23,7 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
-     * @param \App\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
+     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
      * @param \App\Model\Order\PromoCode\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
      * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository

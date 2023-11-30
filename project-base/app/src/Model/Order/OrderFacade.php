@@ -519,7 +519,6 @@ class OrderFacade extends BaseOrderFacade
 
         if ($pickupStore !== null) {
             $transportName = sprintf('%s %s', $transportName, $pickupStore->getName());
-            $orderItemData->personalPickupStore = $pickupStore;
         }
 
         $orderItemData->name = $transportName;

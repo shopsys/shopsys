@@ -7,9 +7,6 @@ namespace App\Model\Product;
 use App\Component\Setting\Setting;
 use App\Model\ProductVideo\ProductVideoDataFactory;
 use App\Model\ProductVideo\ProductVideoRepository;
-use App\Model\Stock\ProductStockDataFactory;
-use App\Model\Stock\ProductStockFacade;
-use App\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
@@ -26,6 +23,9 @@ use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory as BaseProductDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
+use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
 /**
  * @method \App\Model\Product\Product[] getAccessoriesData(\App\Model\Product\Product $product)
@@ -46,9 +46,9 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     * @param \App\Model\Stock\ProductStockFacade $stockProductFacade
-     * @param \App\Model\Stock\StockFacade $stockFacade
-     * @param \App\Model\Stock\ProductStockDataFactory $stockProductDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $stockProductFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $stockProductDataFactory
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory

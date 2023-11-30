@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Store;
 
 use App\FrontendApi\Resolver\Store\Exception\StoreNotFoundUserError;
-use App\Model\Store\Exception\StoreByUuidNotFoundException;
-use App\Model\Store\Exception\StoreNotFoundException;
-use App\Model\Store\Store;
-use App\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
+use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
+use Shopsys\FrameworkBundle\Model\Store\Exception\StoreNotFoundException;
+use Shopsys\FrameworkBundle\Model\Store\Store;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
@@ -18,7 +18,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 class StoreQuery extends AbstractQuery
 {
     /**
-     * @param \App\Model\Store\StoreFacade $storeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
@@ -32,7 +32,7 @@ class StoreQuery extends AbstractQuery
     /**
      * @param string|null $uuid
      * @param string|null $urlSlug
-     * @return \App\Model\Store\Store
+     * @return \Shopsys\FrameworkBundle\Model\Store\Store
      */
     public function storeQuery(?string $uuid = null, ?string $urlSlug = null): Store
     {
@@ -55,7 +55,7 @@ class StoreQuery extends AbstractQuery
 
     /**
      * @param string $urlSlug
-     * @return \App\Model\Store\Store
+     * @return \Shopsys\FrameworkBundle\Model\Store\Store
      */
     protected function getVisibleByDomainIdAndSlug(string $urlSlug): Store
     {

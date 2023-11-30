@@ -17,8 +17,6 @@ class Version20230908095905 extends AbstractMigration
         $this->sql('ALTER TABLE category_domains DROP short_description');
         $this->sql('ALTER TABLE categories DROP svg_icon');
         $this->sql('ALTER TABLE categories DROP over_limit_quantity');
-        $this->sql('ALTER TABLE stores DROP opening_hours');
-        $this->sql('DROP TABLE product_stores');
     }
 
     /**

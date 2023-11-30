@@ -59,4 +59,43 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
     {
         return $this->sqlQueries;
     }
+
+    /**
+     * @param string $version
+     * @return bool
+     */
+    protected function isAppMigrationNotInstalled(string $version): bool
+    {
+        return !$this->sql(
+            'SELECT COUNT(*) FROM migrations WHERE version = :version;',
+            ['version' => $this->prefixAppMigrationVersion($version)],
+        )->fetchOne();
+    }
+
+    /**
+     * @param string $version
+     * @return bool
+     */
+    protected function isAppMigrationNotInstalledRemoveIfExists(string $version): bool
+    {
+        $isAppMigrationNotInstalled = $this->isAppMigrationNotInstalled($version);
+
+        if (!$isAppMigrationNotInstalled) {
+            $this->sql(
+                'DELETE FROM migrations WHERE version = :version;',
+                ['version' => $this->prefixAppMigrationVersion($version)],
+            );
+        }
+
+        return $isAppMigrationNotInstalled;
+    }
+
+    /**
+     * @param string $version
+     * @return string
+     */
+    protected function prefixAppMigrationVersion(string $version): string
+    {
+        return 'App\\Migrations\\' . $version;
+    }
 }

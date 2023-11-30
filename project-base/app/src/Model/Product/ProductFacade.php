@@ -6,9 +6,6 @@ namespace App\Model\Product;
 
 use App\Model\Category\Category as AppCategory;
 use App\Model\ProductVideo\ProductVideoFacade;
-use App\Model\Stock\ProductStockData;
-use App\Model\Stock\ProductStockFacade;
-use App\Model\Stock\StockFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -36,6 +33,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockData;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
+use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
@@ -90,8 +90,8 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
-     * @param \App\Model\Stock\ProductStockFacade $productStockFacade
-     * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\ProductVideo\ProductVideoFacade $productVideoFacade
      */
     public function __construct(

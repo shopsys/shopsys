@@ -13,13 +13,13 @@ use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
 use App\Model\SeoPage\SeoPage;
-use App\Model\Store\Store;
 use Doctrine\ORM\Query\Expr\Orx;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository as BaseFriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 
 /**
  * @method \App\Component\Router\FriendlyUrl\FriendlyUrl|null findByDomainIdAndSlug(int $domainId, string $slug)

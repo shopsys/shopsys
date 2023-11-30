@@ -16,9 +16,6 @@ msgstr "-- Vyber roli --"
 msgid "-- Select name of the transfer --"
 msgstr "-- Vyber název převodu --"
 
-msgid "0"
-msgstr ""
-
 msgid "301 (Permanent redirect)"
 msgstr "301 (Trvalé přesměrování)"
 
@@ -454,20 +451,11 @@ msgstr "Vytvořit nový článek blogu"
 msgid "Create new blog category"
 msgstr "Vytvořit novou rubriku blogu"
 
-msgid "Create new holiday or internal day"
-msgstr "Vytvořit nový svátek nebo interní den"
-
 msgid "Create new item"
 msgstr "Vytvořit novou položku"
 
 msgid "Create new order status"
 msgstr "Vytvořit nový stav objednávky"
-
-msgid "Create new store"
-msgstr "Vytvořit novou prodejnu"
-
-msgid "Create new warehouse"
-msgstr "Vytvořit nový sklad"
 
 msgid "Create notification bar"
 msgstr "Vytvořit notifikační lištu"
@@ -493,9 +481,6 @@ msgstr "Zákazníci - zobrazení"
 msgid "Customers overview"
 msgstr "Přehled zákazníků"
 
-msgid "Date"
-msgstr "Datum"
-
 msgid "Date and time"
 msgstr "Datum a čas"
 
@@ -511,26 +496,8 @@ msgstr "Datum publikace"
 msgid "Day"
 msgstr "Den"
 
-msgid "Days for transfer between warehouses"
-msgstr "Dny pro přesun mezi sklady"
-
 msgid "Days until delivery"
 msgstr "Dní do doručení"
-
-msgid "Days until stocking"
-msgstr "Dní do naskladnění"
-
-msgid "Default store"
-msgstr "Výchozí prodejna"
-
-msgid "Default store cannot be removed"
-msgstr "Výchozí prodejna nemůže být odstraněna"
-
-msgid "Default warehouse"
-msgstr "Výchozí sklad"
-
-msgid "Default warehouse cannot be removed"
-msgstr "Výchozí sklad nemůže být odstraněn"
 
 msgid "Delete"
 msgstr "Smazat"
@@ -540,9 +507,6 @@ msgstr "Smazat kategorii i seo mix"
 
 msgid "Delivery address"
 msgstr "Dodací adresa"
-
-msgid "Department stores"
-msgstr "Obchodní domy"
 
 msgid "Description"
 msgstr "Popis"
@@ -592,9 +556,6 @@ msgstr "Opravdu chcete odstranit tento příznak?"
 msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
 msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL může mít špatný vliv na SEO."
 
-msgid "Do you really want to remove this holiday / internal day?"
-msgstr "Opravdu si přejete odstranit tento svátek / interní den?"
-
 msgid "Do you really want to remove this language constant translation?"
 msgstr "Opravdu chcete odstranit tento překlad jazykové konstanty?"
 
@@ -618,12 +579,6 @@ msgstr "Opravdu si přejete odebrat tento slevový kupón?"
 
 msgid "Do you really want to remove this shipping?"
 msgstr "Opravdu si přejete odebrat tuto dopravu?"
-
-msgid "Do you really want to remove this store? This step is irreversible!"
-msgstr "Opravdu si přejete odstranit tuto prodejnu? Tento krok nelze vzít zpět!"
-
-msgid "Do you really want to remove this warehouse? By deleting this warehouse you will remove all stock quantities from products and association to stores. This step is irreversible!"
-msgstr "Opravdu si přejete odstranit tento sklad? Odstraněním skladu dojde i k odstranění všech skladových zásob produktů a bude zrušena vazba prodejny. Tento krok nelze vzít zpět!"
 
 msgid "Domain"
 msgstr "Doména"
@@ -694,9 +649,6 @@ msgstr "Editace příznaku"
 msgid "Editing flag - {{ name }}"
 msgstr "Editace příznaku - {{ name }}"
 
-msgid "Editing holiday / internal day - {{ name }}"
-msgstr "Editace svátku / interního dne - {{ name }}"
-
 msgid "Editing item"
 msgstr "Editace položky"
 
@@ -735,12 +687,6 @@ msgstr "Editace typu dopravy"
 
 msgid "Editing transport type - %code%"
 msgstr "Editace typu dopravy - %code%"
-
-msgid "Editing warehouse"
-msgstr "Editace skladu"
-
-msgid "Editing warehouse - %name%"
-msgstr "Editace skladu - %name%"
 
 msgid "Email"
 msgstr "E-mail"
@@ -784,9 +730,6 @@ msgstr "Vyřazení z prodeje dle domén"
 msgid "Exclude from sale on whole eshop"
 msgstr "Vyřadit z prodeje na celém eshopu"
 
-msgid "Excluded stores"
-msgstr "Vyjmuté prodejny"
-
 msgid "Expand"
 msgstr "Rozbalit"
 
@@ -813,12 +756,6 @@ msgstr "Rozšířená SEO kategorie - filtry"
 
 msgid "Extended SEO category - set combinations with SEO values"
 msgstr "Rozšířená SEO kategorie - kombinace s nastavenými SEO hodnotami"
-
-msgid "External ID"
-msgstr "Externí ID"
-
-msgid "External bridge ID"
-msgstr "Externí ID můstku"
 
 msgid "External scripts"
 msgstr "Měřící skripty"
@@ -955,26 +892,11 @@ msgstr "Skrýt"
 msgid "Hide on domain"
 msgstr "Skrýt na doméně"
 
-msgid "Holiday / internal day"
-msgstr "Svátek / interní den"
-
-msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr "Svátek / interní den <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
-
-msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr "Svátek / interní den <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
-
-msgid "Holiday / internal day <strong>{{ name }}</strong> deleted"
-msgstr "Svátek / interní <strong>{{ name }}</strong> byl smazán"
-
 msgid "Holiday / internal day detail"
 msgstr "Detail svátku / interního dne"
 
 msgid "Holidays and internal days"
 msgstr "Svátky a interní dny"
-
-msgid "Holidays and internal days overview"
-msgstr "Přehled svátků a interních dní"
 
 msgid "Home page"
 msgstr "Domovská stránka"
@@ -1000,9 +922,6 @@ msgstr "Velikost obrázku - zobrazení"
 msgid "Image will be deleted after saving."
 msgstr "Obrázek bude smazán po uložení."
 
-msgid "Images"
-msgstr "Obrázky"
-
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr "Na záložce konkrétní domény není možné upravovat pořadí a zanoření kategorií. Prosím přejděte na kartu kategorie nebo na přehled kategorií všech domén."
 
@@ -1020,9 +939,6 @@ msgstr "Instalační manuál"
 
 msgid "Integrations"
 msgstr "Integrace"
-
-msgid "Internal note"
-msgstr "Interní poznámka"
 
 msgid "Invalid two-factor authentication code."
 msgstr "Neplatný kód dvoufaktorového ověření."
@@ -1297,14 +1213,8 @@ msgstr "Nebyla nalezena žádná stránka."
 msgid "No products are set. Please add some in the component settings."
 msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastavení komponenty."
 
-msgid "No store is created. You have to create one first."
-msgstr "Žádná prodejna není vytvořena. Nejdříve musíte nějakou vytvořit."
-
 msgid "No transport types found."
 msgstr "Nebyly nalezeny žádné typy doprav."
-
-msgid "No warehouse associated"
-msgstr "Žádný sklad není přiřazen"
 
 msgid "Nominal"
 msgstr "Nominální"
@@ -1347,9 +1257,6 @@ msgstr "Open Graph titulek"
 
 msgid "Open in new window"
 msgstr "Otevírat v novém okně"
-
-msgid "Opening hours"
-msgstr "Otevírací doba"
 
 msgid "Operator information - full"
 msgstr "Informace o provozovateli - vše"
@@ -1765,9 +1672,6 @@ msgstr "Uložit změny"
 msgid "Save changes in order"
 msgstr "Uložit změny v pořadí"
 
-msgid "Save warehouse settings"
-msgstr "Uložit nastavení skladu"
-
 msgid "Scaled promo code"
 msgstr "Škálovaný slevový kupón"
 
@@ -1816,9 +1720,6 @@ msgstr "Vybíraná rubrika blogu neexistuje."
 msgid "Selected flag doesn't exist."
 msgstr "Vybraný příznak neexistuje."
 
-msgid "Selected holiday / internal day doesn't exist."
-msgstr "Vybraný svátek / interní den neexistuje."
-
 msgid "Selected navigation item does not exist."
 msgstr "Zvolená položka navigace neexistuje."
 
@@ -1828,9 +1729,6 @@ msgstr "Vybraná notifikační lišta neexistuje"
 msgid "Selected transfer issue was not found"
 msgstr "Vybraný problém v přenosu nebyl nalezen"
 
-msgid "Selected warehouse does not exist."
-msgstr "Vybraný sklad neexistuje."
-
 msgid "Send me authentication code"
 msgstr "Pošlete mi ověřovací kód"
 
@@ -1839,9 +1737,6 @@ msgstr "Odeslat refundaci a uložit objednávku"
 
 msgid "Seo"
 msgstr "Seo"
-
-msgid "Set as default"
-msgstr "Nastavit jako výchozí"
 
 msgid "Settings"
 msgstr "Nastavení"
@@ -1900,24 +1795,6 @@ msgstr "Skladovost"
 msgid "Store"
 msgstr "Prodejna"
 
-msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr "Prodejna <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
-
-msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
-msgstr "Prodejna <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
-
-msgid "Store <strong>{{ name }}</strong> was deleted"
-msgstr "Prodejna <strong>{{ name }}</strong> byla odstraněna"
-
-msgid "Store <strong>{{ name }}</strong> was set as default."
-msgstr "Prodejna <strong>{{ name }}</strong> byla nastavena jako výchozí."
-
-msgid "Store does not exist"
-msgstr "Prodejna neexistuje"
-
-msgid "Store list"
-msgstr "Seznam prodejen"
-
 msgid "Storefront queries cache has been cleaned."
 msgstr "Cache s dotazy na FE byla smazána."
 
@@ -1971,9 +1848,6 @@ msgstr "Vybraný příznak nelze smazat."
 
 msgid "There are no parameter values of type color yet."
 msgstr "Žádná hodnota parametru typu barva zatím nebyla vytvořena."
-
-msgid "There is no warehouse on this domain yet."
-msgstr "Žádný sklad na této doméně zatím nebyl vytvořen."
 
 msgid "This SEO page cannot be deleted."
 msgstr "Tato SEO stránka nemůže být smazána."
@@ -2116,9 +1990,6 @@ msgstr "Nastavení URL"
 msgid "URL addresses"
 msgstr "URL adresy"
 
-msgid "URL settings"
-msgstr "Nastavení URL"
-
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
 msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_text%\"</strong>, to je jak naschvál!"
 
@@ -2212,26 +2083,8 @@ msgstr "Viditelný na domovské stránce"
 msgid "Warehouse"
 msgstr "Sklad"
 
-msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr "Sklad <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
-
-msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr "Sklad <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
-
-msgid "Warehouse <strong>{{ name }}</strong> deleted"
-msgstr "Sklad <strong>{{ name }}</strong> byl smazá"
-
-msgid "Warehouse <strong>{{ name }}</strong> was set as default."
-msgstr "Sklad <strong>{{ name }}</strong> byl nastaven jako výchozí."
-
 msgid "Warehouse detail"
 msgstr "Detail skladu"
-
-msgid "Warehouse overview"
-msgstr "Přehled skladů"
-
-msgid "Warehouse setting %domainName% saved."
-msgstr "Nastavení %domainName% skladů uloženo."
 
 msgid "Warehouse settings"
 msgstr "Nastavení skladů"

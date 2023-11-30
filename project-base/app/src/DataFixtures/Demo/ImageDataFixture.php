@@ -291,7 +291,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($storesImagesData as $imageId) {
-            /** @var \App\Model\Store\Store $store */
+            /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
             $store = $this->getReference(StoreDataFixture::STORE_PREFIX . '1');
             $names = [];
 

@@ -11,8 +11,8 @@ use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
-use App\Model\Store\Store;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class SlugResolverMap extends ResolverMap
 {

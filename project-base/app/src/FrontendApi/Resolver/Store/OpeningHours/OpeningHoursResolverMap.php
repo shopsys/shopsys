@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Store\OpeningHours;
 
-use App\Model\Store\ClosedDay\ClosedDayFacade;
-use App\Model\Store\OpeningHours\OpeningHours;
-use App\Model\Store\OpeningHours\OpeningHoursDataFactory;
-use App\Model\Store\Store;
 use DateTimeImmutable;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class OpeningHoursResolverMap extends ResolverMap
 {
     /**
-     * @var array<int, array<int, \App\Model\Store\ClosedDay\ClosedDay>>
+     * @var array<int, array<int, \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay>>
      */
     protected array $thisWeekClosedDaysIndexedByStoreIdAndDayNumber = [];
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
-     * @param \App\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHoursDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHoursDataFactory
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -39,7 +39,7 @@ class OpeningHoursResolverMap extends ResolverMap
         return [
             'OpeningHours' => [
                 'isOpen' => function (array $openingHours): bool {
-                    /** @var \App\Model\Store\OpeningHours\OpeningHours $openingHour */
+                    /** @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHour */
                     $openingHour = reset($openingHours);
 
                     $now = new DateTimeImmutable(
@@ -71,7 +71,7 @@ class OpeningHoursResolverMap extends ResolverMap
     }
 
     /**
-     * @param \App\Model\Store\Store $store
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @param int $dayNumber
      * @return bool
      */
@@ -99,7 +99,7 @@ class OpeningHoursResolverMap extends ResolverMap
     }
 
     /**
-     * @param \App\Model\Store\OpeningHours\OpeningHours $openingHours
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHours
      * @return array
      */
     protected function mapOpeningHoursToArray(OpeningHours $openingHours): array

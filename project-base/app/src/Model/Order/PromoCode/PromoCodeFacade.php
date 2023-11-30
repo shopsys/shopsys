@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
-use App\Component\DateTimeHelper\DateTimeHelper;
 use App\Component\String\HashGenerator;
 use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData as BasePromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade as BasePromoCodeFacade;
@@ -32,7 +32,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactory $promoCodeFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
+     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeProductFactory $promoCodeProductFactory

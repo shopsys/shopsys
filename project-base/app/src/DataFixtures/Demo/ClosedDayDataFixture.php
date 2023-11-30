@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Store\ClosedDay\ClosedDayDataFactory;
-use App\Model\Store\ClosedDay\ClosedDayFacade;
-use App\Model\Store\StoreFacade;
 use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 
 class ClosedDayDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Store\StoreFacade $storeFacade
-     * @param \App\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
-     * @param \App\Model\Store\ClosedDay\ClosedDayDataFactory $closedDayDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory $closedDayDataFactory
      */
     public function __construct(
         private readonly Domain $domain,

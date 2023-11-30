@@ -1,0 +1,25 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_name %}
+    <a href="{{ url('admin_stock_edit', { id: row.s.id }) }}">{{ value }}</a> {% if row.s.isDefault %}*{% endif %}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'Warehouse'|trans %}
+    {{ parent() }}
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'There is no warehouse on this domain yet.'|trans }}
+{% endblock %}
+
+{% block grid_action_cell_type_delete %}
+    {% if row.s.isDefault %}
+        <span title="{{ 'Default warehouse cannot be removed'|trans }}"
+            class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="left">
+            {{ icon('info') }}
+        </span>
+    {% else %}
+        {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
+    {% endif %}
+{% endblock %}

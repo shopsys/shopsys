@@ -8,9 +8,6 @@ use App\FrontendApi\Model\Order\Exception\InvalidPacketeryAddressIdUserError;
 use App\FrontendApi\Resolver\Store\Exception\StoreNotFoundUserError;
 use App\Model\Cart\Cart;
 use App\Model\Order\OrderData;
-use App\Model\Store\Exception\StoreByUuidNotFoundException;
-use App\Model\Store\Store;
-use App\Model\Store\StoreFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -19,6 +16,9 @@ use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
+use Shopsys\FrameworkBundle\Model\Store\Store;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory as BaseOrderDataFactory;
 
@@ -38,7 +38,7 @@ class OrderDataFactory extends BaseOrderDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \App\Model\Store\StoreFacade $storeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      */
     public function __construct(
         OrderDataFactoryInterface $orderDataFactory,
@@ -108,7 +108,7 @@ class OrderDataFactory extends BaseOrderDataFactory
 
     /**
      * @param \App\Model\Order\OrderData $orderData
-     * @param \App\Model\Store\Store $store
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      */
     private function setOrderDataByStore(OrderData $orderData, Store $store): void
     {

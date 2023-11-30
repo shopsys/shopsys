@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Image;
 
-use App\Model\Store\Store;
 use GraphQL\Executor\Promise\Promise;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 
 final class StoreImagesQuery extends ImagesQuery
 {
     private const STORE_ENTITY_NAME = 'store';
 
     /**
-     * @param \App\Model\Store\Store|array $data
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store|array $data
      * @param string|null $type
      * @param array|null $sizes
      * @return \GraphQL\Executor\Promise\Promise

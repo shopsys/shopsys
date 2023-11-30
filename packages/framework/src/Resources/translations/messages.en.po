@@ -37,6 +37,9 @@ msgstr ""
 msgid "-- Choose unit --"
 msgstr ""
 
+msgid "0"
+msgstr ""
+
 msgid "<a href=\"{{ url }}\">Default product in stock availability is not set.</a>"
 msgstr ""
 
@@ -511,6 +514,9 @@ msgstr ""
 msgid "Create new customer"
 msgstr ""
 
+msgid "Create new holiday or internal day"
+msgstr ""
+
 msgid "Create new order status"
 msgstr ""
 
@@ -521,6 +527,12 @@ msgid "Create new product"
 msgstr ""
 
 msgid "Create new script"
+msgstr ""
+
+msgid "Create new store"
+msgstr ""
+
+msgid "Create new warehouse"
 msgstr ""
 
 msgid "Create parameter"
@@ -646,6 +658,9 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
+msgid "Date"
+msgstr ""
+
 msgid "Date and time of order creation"
 msgstr ""
 
@@ -653,6 +668,12 @@ msgid "Date of creation and privacy policy agreement"
 msgstr ""
 
 msgid "Date of registration and privacy policy agreement"
+msgstr ""
+
+msgid "Days for transfer between warehouses"
+msgstr ""
+
+msgid "Days until stocking"
 msgstr ""
 
 msgid "Default VAT rate"
@@ -673,6 +694,12 @@ msgstr ""
 msgid "Default product in stock availability"
 msgstr ""
 
+msgid "Default store"
+msgstr ""
+
+msgid "Default store cannot be removed"
+msgstr ""
+
 msgid "Default unit"
 msgstr ""
 
@@ -680,6 +707,12 @@ msgid "Default unit settings modified"
 msgstr ""
 
 msgid "Default unit will be used when creating new product"
+msgstr ""
+
+msgid "Default warehouse"
+msgstr ""
+
+msgid "Default warehouse cannot be removed"
 msgstr ""
 
 msgid "Delete"
@@ -692,6 +725,9 @@ msgid "Delivery address"
 msgstr ""
 
 msgid "Delivery address is the same as billing address"
+msgstr ""
+
+msgid "Department stores"
 msgstr ""
 
 msgid "Description"
@@ -778,6 +814,9 @@ msgstr ""
 msgid "Do you really want to remove this flag?"
 msgstr ""
 
+msgid "Do you really want to remove this holiday / internal day?"
+msgstr ""
+
 msgid "Do you really want to remove this page?"
 msgstr ""
 
@@ -799,7 +838,13 @@ msgstr ""
 msgid "Do you really want to remove this shipping?"
 msgstr ""
 
+msgid "Do you really want to remove this store? This step is irreversible!"
+msgstr ""
+
 msgid "Do you really want to remove this subscriber?"
+msgstr ""
+
+msgid "Do you really want to remove this warehouse? By deleting this warehouse you will remove all stock quantities from products and association to stores. This step is irreversible!"
 msgstr ""
 
 msgid "Do you really want to remove unit \"%name%\" permanently? It is not used anywhere."
@@ -868,6 +913,9 @@ msgstr ""
 msgid "Edit domain icon"
 msgstr ""
 
+msgid "Edit store"
+msgstr ""
+
 msgid "Editing administrator"
 msgstr ""
 
@@ -922,6 +970,9 @@ msgstr ""
 msgid "Editing email template - %name%"
 msgstr ""
 
+msgid "Editing holiday / internal day - {{ name }}"
+msgstr ""
+
 msgid "Editing order"
 msgstr ""
 
@@ -962,6 +1013,12 @@ msgid "Editing slider page"
 msgstr ""
 
 msgid "Editing slider page - %name%"
+msgstr ""
+
+msgid "Editing warehouse"
+msgstr ""
+
+msgid "Editing warehouse - %name%"
 msgstr ""
 
 msgid "Email"
@@ -1051,6 +1108,9 @@ msgstr ""
 msgid "Excluded from sale"
 msgstr ""
 
+msgid "Excluded stores"
+msgstr ""
+
 msgid "Excluding VAT"
 msgstr ""
 
@@ -1061,6 +1121,12 @@ msgid "Expected maximum duration"
 msgstr ""
 
 msgid "Export email list in CSV format"
+msgstr ""
+
+msgid "External ID"
+msgstr ""
+
+msgid "External bridge ID"
 msgstr ""
 
 msgid "External scripts"
@@ -1222,6 +1288,21 @@ msgstr ""
 msgid "Hiding product"
 msgstr ""
 
+msgid "Holiday / internal day"
+msgstr ""
+
+msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Holiday / internal day <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Holiday / internal day <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Holidays and internal days overview"
+msgstr ""
+
 msgid "I buy on company behalf"
 msgstr ""
 
@@ -1280,6 +1361,9 @@ msgid "Input price without VAT"
 msgstr ""
 
 msgid "Instructions"
+msgstr ""
+
+msgid "Internal note"
 msgstr ""
 
 msgid "It is possible to use this when creating a link: mark the text you want to create the link from with mouse and push the Link button (top right, interconnected staples icon). In the popup menu select the protocol <different> and insert the text \"%orderDetailUrlConstant%\" in the URL field (Including the braces)"
@@ -1480,6 +1564,9 @@ msgstr ""
 msgid "New category"
 msgstr ""
 
+msgid "New closed day"
+msgstr ""
+
 msgid "New country"
 msgstr ""
 
@@ -1517,6 +1604,12 @@ msgid "New shipping"
 msgstr ""
 
 msgid "New slider page"
+msgstr ""
+
+msgid "New store"
+msgstr ""
+
+msgid "New warehouse"
 msgstr ""
 
 msgid "No"
@@ -1597,10 +1690,16 @@ msgstr ""
 msgid "No shipping created so far."
 msgstr ""
 
+msgid "No store is created. You have to create one first."
+msgstr ""
+
 msgid "No subscribers found."
 msgstr ""
 
 msgid "No units found. You have to create some first."
+msgstr ""
+
+msgid "No warehouse associated"
 msgstr ""
 
 msgid "Not possible to assign product to itself"
@@ -1640,6 +1739,9 @@ msgid "Only checked products"
 msgstr ""
 
 msgid "Open in a new tab"
+msgstr ""
+
+msgid "Opening hours"
 msgstr ""
 
 msgid "Operator information"
@@ -1996,6 +2098,9 @@ msgstr ""
 msgid "Save changes in order"
 msgstr ""
 
+msgid "Save warehouse settings"
+msgstr ""
+
 msgid "Schedule"
 msgstr ""
 
@@ -2080,6 +2185,9 @@ msgstr ""
 msgid "Selected flag doesn't exist."
 msgstr ""
 
+msgid "Selected holiday / internal day doesn't exist."
+msgstr ""
+
 msgid "Selected order doesn't exist."
 msgstr ""
 
@@ -2119,6 +2227,9 @@ msgstr ""
 msgid "Selected unit doesn't exist."
 msgstr ""
 
+msgid "Selected warehouse does not exist."
+msgstr ""
+
 msgid "Selling end date"
 msgstr ""
 
@@ -2138,6 +2249,9 @@ msgid "Set"
 msgstr ""
 
 msgid "Set alternative availability"
+msgstr ""
+
+msgid "Set as default"
 msgstr ""
 
 msgid "Set prices manually"
@@ -2224,6 +2338,27 @@ msgstr ""
 msgid "Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
 msgstr ""
 
+msgid "Store"
+msgstr ""
+
+msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr ""
+
+msgid "Store <strong>{{ name }}</strong> was deleted"
+msgstr ""
+
+msgid "Store <strong>{{ name }}</strong> was set as default."
+msgstr ""
+
+msgid "Store does not exist"
+msgstr ""
+
+msgid "Store list"
+msgstr ""
+
 msgid "Street"
 msgstr ""
 
@@ -2273,6 +2408,9 @@ msgid "The current list of URL addresses can be found in the project's repositor
 msgstr ""
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
+msgstr ""
+
+msgid "There is no warehouse on this domain yet."
 msgstr ""
 
 msgid "There was an error during logout attempt. If you really want to sign out, please try it again."
@@ -2471,6 +2609,30 @@ msgid "Visibility"
 msgstr ""
 
 msgid "Visibility for unlogged customers"
+msgstr ""
+
+msgid "Warehouse"
+msgstr ""
+
+msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Warehouse <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Warehouse <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Warehouse <strong>{{ name }}</strong> was set as default."
+msgstr ""
+
+msgid "Warehouse overview"
+msgstr ""
+
+msgid "Warehouse setting %domainName% saved."
+msgstr ""
+
+msgid "Warehouse settings"
 msgstr ""
 
 msgid "Warehouses"

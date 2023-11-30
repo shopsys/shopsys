@@ -68,8 +68,6 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Migrations/Version20200319113341.php',
             __DIR__ . '/src/Migrations/Version20200831091231.php',
             __DIR__ . '/src/Controller/Admin/CategorySeoController.php',
-            __DIR__ . '/src/Form/Admin/StockFormType.php',
-            __DIR__ . '/src/Form/Admin/Store/StoreFormType.php',
             __DIR__ . '/src/Form/Admin/TransportFormTypeExtension.php',
             __DIR__ . '/src/Form/Front/Customer/User/CustomerUserFormType.php',
             __DIR__ . '/src/Form/Front/Registration/RegistrationFormType.php',

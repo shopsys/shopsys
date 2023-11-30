@@ -11,16 +11,16 @@ use App\FrontendApi\Model\Transport\Exception\TransportPriceChangedException;
 use App\FrontendApi\Model\Transport\Exception\TransportWeightLimitExceededException;
 use App\Model\Cart\Cart;
 use App\Model\Order\Preview\OrderPreviewFactory;
-use App\Model\Store\StoreFacade;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 
 class TransportValidationFacade
 {
     /**
-     * @param \App\Model\Store\StoreFacade $storeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory

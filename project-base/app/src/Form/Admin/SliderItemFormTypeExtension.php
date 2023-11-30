@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Component\DateTimeHelper\DateTimeHelper;
 use App\Model\Slider\SliderItemFacade;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
