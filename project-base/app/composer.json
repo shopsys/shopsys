@@ -88,6 +88,7 @@
         "shopsys/product-feed-google": "14.0.x-dev",
         "shopsys/product-feed-heureka": "14.0.x-dev",
         "shopsys/product-feed-heureka-delivery": "14.0.x-dev",
+        "shopsys/product-feed-persoo": "14.0.x-dev",
         "shopsys/product-feed-zbozi": "14.0.x-dev",
         "shopsys/s3-bridge": "14.0.x-dev",
         "snc/redis-bundle": "^4.4.1",

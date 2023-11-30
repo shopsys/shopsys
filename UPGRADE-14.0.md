@@ -535,6 +535,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   public function getOrderingPriority()
     +   public function getOrderingPriority(int $domainId)
     ```
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade::getProductParameterValues()` changed its interface:
+    ```diff
+    -   public function getProductParameterValues(Product $product)
+    +   public function getProductParameterValues(Product $product, ?string $locale = null)
+    ```
     -   see #project-base-diff to update your project
 
 ### Storefront

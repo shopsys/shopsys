@@ -56,14 +56,15 @@ class ProductCachedAttributesFacade implements ResetInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param string|null $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
-    public function getProductParameterValues(Product $product)
+    public function getProductParameterValues(Product $product, ?string $locale = null)
     {
         if (isset($this->parameterValuesByProductId[$product->getId()])) {
             return $this->parameterValuesByProductId[$product->getId()];
         }
-        $locale = $this->localization->getLocale();
+        $locale = $locale ?? $this->localization->getLocale();
 
         $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByName(
             $product,
@@ -73,7 +74,7 @@ class ProductCachedAttributesFacade implements ResetInterface
         foreach ($productParameterValues as $index => $productParameterValue) {
             $parameter = $productParameterValue->getParameter();
 
-            if ($parameter->getName() === null
+            if ($parameter->getName($locale) === null
                 || $productParameterValue->getValue()->getLocale() !== $locale
             ) {
                 unset($productParameterValues[$index]);

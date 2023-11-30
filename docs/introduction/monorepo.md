@@ -36,6 +36,7 @@ If you are interested, you can read more about the monorepo approach here - http
 -   [shopsys/product-feed-google](https://github.com/shopsys/product-feed-google)
 -   [shopsys/product-feed-heureka](https://github.com/shopsys/product-feed-heureka)
 -   [shopsys/product-feed-heureka-delivery](https://github.com/shopsys/product-feed-heureka-delivery)
+-   [shopsys/product-feed-persoo](https://github.com/shopsys/product-feed-persoo)
 -   [shopsys/plugin-interface](https://github.com/shopsys/plugin-interface)
 -   [shopsys/coding-standards](https://github.com/shopsys/coding-standards)
 -   [shopsys/http-smoke-testing](https://github.com/shopsys/http-smoke-testing)
