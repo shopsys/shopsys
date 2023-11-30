@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
-use Sinergi\BrowserDetector\Browser;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -17,20 +16,11 @@ use Twig\TwigFunction;
 class ImageExtension extends AbstractExtension
 {
     protected const NOIMAGE_FILENAME = 'noimage.png';
-    protected const PLACEHOLDER_FILENAME = 'placeholder.gif';
-    protected const BROWSERS_WITHOUT_NATIVE_LAZY_LOAD = [
-        Browser::SAFARI,
-        Browser::IE,
-        Browser::OPERA_MINI,
-    ];
     protected const NON_HTML_ATTRIBUTES = [
         'type',
-        'lazy',
     ];
 
     protected string $frontDesignImageUrlPrefix;
-
-    protected Browser $browser;
 
     /**
      * @param string $frontDesignImageUrlPrefix
@@ -38,7 +28,6 @@ class ImageExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Twig\Environment $twigEnvironment
-     * @param bool $isLazyLoadEnabled
      */
     public function __construct(
         $frontDesignImageUrlPrefix,
@@ -46,7 +35,6 @@ class ImageExtension extends AbstractExtension
         protected readonly ImageLocator $imageLocator,
         protected readonly ImageFacade $imageFacade,
         protected readonly Environment $twigEnvironment,
-        protected readonly bool $isLazyLoadEnabled = false,
     ) {
         $this->frontDesignImageUrlPrefix = rtrim($frontDesignImageUrlPrefix, '/');
     }
@@ -139,14 +127,6 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @return string
-     */
-    protected function getImagePlaceholder(): string
-    {
-        return $this->domain->getUrl() . $this->frontDesignImageUrlPrefix . '/' . static::PLACEHOLDER_FILENAME;
-    }
-
-    /**
      * @param string $entityName
      * @param string|null $type
      * @return string
@@ -190,27 +170,10 @@ class ImageExtension extends AbstractExtension
     {
         $htmlAttributes = $this->extractHtmlAttributesFromAttributes($attributes);
 
-        if ($this->isLazyLoadEnabled($attributes) === true) {
-            $htmlAttributes = $this->makeHtmlAttributesLazyLoaded($htmlAttributes);
-        }
-
         return $this->twigEnvironment->render('@ShopsysFramework/Common/image.html.twig', [
             'attr' => $htmlAttributes,
             'imageCssClass' => $this->getImageCssClass($entityName, $attributes['type']),
         ]);
-    }
-
-    /**
-     * @param array $attributes
-     * @return bool
-     */
-    protected function isLazyLoadEnabled(array $attributes): bool
-    {
-        if ($attributes['src'] === $this->getEmptyImageUrl()) {
-            return false;
-        }
-
-        return array_key_exists('lazy', $attributes) ? (bool)$attributes['lazy'] : $this->isLazyLoadEnabled;
     }
 
     /**
@@ -226,33 +189,5 @@ class ImageExtension extends AbstractExtension
         }
 
         return $htmlAttributes;
-    }
-
-    /**
-     * @param array $htmlAttributes
-     * @return array
-     */
-    protected function makeHtmlAttributesLazyLoaded(array $htmlAttributes): array
-    {
-        $htmlAttributes['loading'] = 'lazy';
-        $htmlAttributes['data-src'] = $htmlAttributes['src'];
-
-        if (!$this->isNativeLazyLoadSupported()) {
-            $htmlAttributes['src'] = $this->getImagePlaceholder();
-        }
-
-        return $htmlAttributes;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isNativeLazyLoadSupported(): bool
-    {
-        if (!isset($this->browser)) {
-            $this->browser = new Browser();
-        }
-
-        return !in_array($this->browser->getName(), static::BROWSERS_WITHOUT_NATIVE_LAZY_LOAD, true);
     }
 }

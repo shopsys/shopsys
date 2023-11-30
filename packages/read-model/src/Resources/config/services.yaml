@@ -32,4 +32,3 @@ services:
         class: Shopsys\ReadModelBundle\Twig\ImageExtension
         arguments:
             $frontDesignImageUrlPrefix: '%shopsys.front_design_image_url_prefix%'
-            $isLazyLoadEnabled: '%shopsys.image.enable_lazy_load%'

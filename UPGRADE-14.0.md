@@ -452,6 +452,13 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   i.e. `AdvertImageDecorator.images`, `BrandDecorator.images`, `CategoryDecorator.images`, `PaymentDecorator.images`, `ProductDecorator.images`, and `TransportDecorator.images`
 -   the following fields has been removed from `ImageDecorator.types`:
     -   `type`, `position`, `size`, `width`, and `height`
+-   image lazy loading via `image` Twig function is not supported anymore:
+    -   `Shopsys\FrameworkBundle\Twig\ImageExtension` class has been changed:
+        -   `PLACEHOLDER_FILENAME` and `BROWSERS_WITHOUT_NATIVE_LAZY_LOAD` constants were removed
+        -   `$browser` property was removed
+        -   `$isLazyLoadEnabled` constructor parameter was removed
+        -   `getImagePlaceholder()`, `isLazyLoadEnabled()`, `makeHtmlAttributesLazyLoaded()`, and `isNativeLazyLoadSupported()` methods were removed
+    -   `shopsys.image.enable_lazy_load` container parameter was removed
 -   see #project-base-diff to update your project
 
 ### Storefront

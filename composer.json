@@ -140,7 +140,6 @@
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "shopsys/ordered-form": "^5.2",
         "shopsys/postgres-search-bundle": "^0.4",
-        "sinergi/browser-detector": "^6.1",
         "snc/redis-bundle": "^4.4.1",
         "stof/doctrine-extensions-bundle": "^1.3.0",
         "symfony-cmf/routing": "^2.0.3",

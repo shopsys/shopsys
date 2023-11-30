@@ -33,7 +33,7 @@ Besides the rules that are checked by automatic tools, we have few rules for whi
 -   Names in configuration files (e.g., [`parameters_common.yaml`](https://github.com/shopsys/project-base/blob/master/config/parameters_common.yaml)) are underscored
 
     ```
-    shopsys.image.enable_lazy_load
+    shopsys.display_cron_overview_for_superadmin_only
     ```
 
 -   Methods for data retrieving are prefixed with "get". If the method can return `null`, it is prefixed with "find" instead.

@@ -23,7 +23,6 @@ parameters:
     build-version: '0000000000000000_%kernel.environment%'
     shopsys.display_timezone: Europe/Prague
     shopsys.cron_timezone: Europe/Prague
-    shopsys.image.enable_lazy_load: true
     admin_url: 'admin'
 
     # Set to true to log validation errors with log level ERROR instead of INFO
