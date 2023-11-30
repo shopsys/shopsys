@@ -250,6 +250,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly ProductListFacade $productListFacade,
     ```
     -   see #project-base-diff to update your project
+-   remove backend API ([#2937](https://github.com/shopsys/shopsys/pull/2937))
+    -   if you used the backend API, you need to implement it by yourself
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductFacade::findByProductQueryParams()` method has been removed
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductRepository::findByProductQueryParams()` method has been removed
 
 ### Storefront
 
