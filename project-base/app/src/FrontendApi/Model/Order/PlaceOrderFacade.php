@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
+use Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -42,6 +43,7 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher $placedOrderMessageDispatcher
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
      * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory
@@ -57,6 +59,7 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         Domain $domain,
         CurrentCustomerUser $currentCustomerUser,
         CustomerUserFacade $customerUserFacade,
+        PlacedOrderMessageDispatcher $placedOrderMessageDispatcher,
         private PromoCodeLimitResolver $promoCodeLimitResolver,
         private DeliveryAddressDataFactory $deliveryAddressDataFactory,
         private DeliveryAddressFactory $deliveryAddressFactory,
@@ -72,6 +75,7 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
             $domain,
             $currentCustomerUser,
             $customerUserFacade,
+            $placedOrderMessageDispatcher,
         );
     }
 
@@ -125,6 +129,8 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
                 $this->newsletterFacade->addSubscribedEmail($orderData->email, $this->domain->getId());
             }
         }
+
+        $this->placedOrderMessageDispatcher->dispatchPlacedOrderMessage($order->getId());
 
         return $order;
     }

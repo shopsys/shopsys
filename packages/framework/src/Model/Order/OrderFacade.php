@@ -156,20 +156,24 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param bool $disallowHeurekaVerifiedByCustomers
+     * @param int $orderId
+     * @return bool
      */
-    public function sendHeurekaOrderInfo(Order $order, $disallowHeurekaVerifiedByCustomers)
+    public function sendHeurekaOrderInfo(int $orderId): bool
     {
+        $order = $this->getById($orderId);
         $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());
         $locale = $domainConfig->getLocale();
 
-        if ($this->heurekaFacade->isHeurekaShopCertificationActivated($order->getDomainId()) &&
-            $this->heurekaFacade->isDomainLocaleSupported($locale) &&
-            !$disallowHeurekaVerifiedByCustomers
+        if ($this->heurekaFacade->isDomainLocaleSupported($locale) === false ||
+            $this->heurekaFacade->isHeurekaShopCertificationActivated($order->getDomainId()) === false
         ) {
-            $this->heurekaFacade->sendOrderInfo($order);
+            return false;
         }
+
+        $this->heurekaFacade->sendOrderInfo($order);
+
+        return true;
     }
 
     /**
