@@ -175,20 +175,11 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 
     /**
      * @param \App\Model\Product\Product $product
-     * @return int
-     */
-    public function getOrderingPriority(Product $product): int
-    {
-        return $product->getDomainOrderingPriority($this->domain->getId());
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
      * @return \App\Model\Product\Flag\Flag[]
      */
     public function getFlags(Product $product): array
     {
-        $flags = $product->getFlagsForDomain($this->domain->getId());
+        $flags = $product->getFlags($this->domain->getId());
 
         $flagsIndexedById = [];
 
@@ -207,7 +198,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         }
 
         foreach ($variants as $variant) {
-            $variantFlags = $variant->getFlagsForDomain($this->domain->getId());
+            $variantFlags = $variant->getFlags($this->domain->getId());
 
             foreach ($variantFlags as $variantFlag) {
                 $flagsIndexedById[$variantFlag->getId()] = $variantFlag;

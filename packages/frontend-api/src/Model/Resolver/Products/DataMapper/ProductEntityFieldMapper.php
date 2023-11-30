@@ -137,4 +137,13 @@ class ProductEntityFieldMapper
     {
         return $product->getSeoMetaDescription($this->domain->getId());
     }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return int
+     */
+    public function getOrderingPriority(Product $product): int
+    {
+        return $product->getOrderingPriority($this->domain->getId());
+    }
 }

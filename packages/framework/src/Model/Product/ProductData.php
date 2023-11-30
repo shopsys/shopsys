@@ -79,9 +79,9 @@ class ProductData
     public $outOfStockAvailability;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[][]|null[][]
      */
-    public $flags;
+    public $flagsByDomainId;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category[][]
@@ -99,9 +99,9 @@ class ProductData
     public $variantAlias;
 
     /**
-     * @var int
+     * @var int[]|null[]
      */
-    public $orderingPriority;
+    public $orderingPriorityByDomainId;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
@@ -173,16 +173,40 @@ class ProductData
      */
     public $vatsIndexedByDomainId;
 
+    /**
+     * @var string[]|null[]
+     */
+    public $shortDescriptionUsp1ByDomainId;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $shortDescriptionUsp2ByDomainId;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $shortDescriptionUsp3ByDomainId;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $shortDescriptionUsp4ByDomainId;
+
+    /**
+     * @var string[]|null[]
+     */
+    public $shortDescriptionUsp5ByDomainId;
+
     public function __construct()
     {
         $this->name = [];
         $this->sellingDenied = false;
         $this->hidden = false;
-        $this->flags = [];
+        $this->flagsByDomainId = [];
         $this->usingStock = false;
         $this->categoriesByDomainId = [];
         $this->variantAlias = [];
-        $this->orderingPriority = 0;
         $this->parameters = [];
         $this->manualInputPricesByPricingGroupId = [];
         $this->seoTitles = [];
@@ -195,5 +219,11 @@ class ProductData
         $this->seoH1s = [];
         $this->pluginData = [];
         $this->vatsIndexedByDomainId = [];
+        $this->orderingPriorityByDomainId = [];
+        $this->shortDescriptionUsp1ByDomainId = [];
+        $this->shortDescriptionUsp2ByDomainId = [];
+        $this->shortDescriptionUsp3ByDomainId = [];
+        $this->shortDescriptionUsp4ByDomainId = [];
+        $this->shortDescriptionUsp5ByDomainId = [];
     }
 }

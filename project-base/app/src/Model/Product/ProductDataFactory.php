@@ -40,16 +40,16 @@ class ProductDataFactory extends BaseProductDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
+     * @param \App\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
+     * @param \App\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $stockProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
@@ -139,15 +139,8 @@ class ProductDataFactory extends BaseProductDataFactory
         parent::fillNew($productData);
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $productData->shortDescriptionUsp1[$domainId] = null;
-            $productData->shortDescriptionUsp2[$domainId] = null;
-            $productData->shortDescriptionUsp3[$domainId] = null;
-            $productData->shortDescriptionUsp4[$domainId] = null;
-            $productData->shortDescriptionUsp5[$domainId] = null;
-            $productData->flags[$domainId] = [];
             $productData->saleExclusion[$domainId] = false;
             $productData->domainHidden[$domainId] = false;
-            $productData->domainOrderingPriority[$domainId] = 0;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -184,15 +177,15 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->seoMetaDescriptions[$domainId] = $product->getSeoMetaDescription($domainId);
             $productData->vatsIndexedByDomainId[$domainId] = $product->getVatForDomain($domainId);
 
-            $productData->shortDescriptionUsp1[$domainId] = $product->getShortDescriptionUsp1($domainId);
-            $productData->shortDescriptionUsp2[$domainId] = $product->getShortDescriptionUsp2($domainId);
-            $productData->shortDescriptionUsp3[$domainId] = $product->getShortDescriptionUsp3($domainId);
-            $productData->shortDescriptionUsp4[$domainId] = $product->getShortDescriptionUsp4($domainId);
-            $productData->shortDescriptionUsp5[$domainId] = $product->getShortDescriptionUsp5($domainId);
-            $productData->flags[$domainId] = $product->getFlagsForDomain($domainId);
+            $productData->shortDescriptionUsp1ByDomainId[$domainId] = $product->getShortDescriptionUsp1($domainId);
+            $productData->shortDescriptionUsp2ByDomainId[$domainId] = $product->getShortDescriptionUsp2($domainId);
+            $productData->shortDescriptionUsp3ByDomainId[$domainId] = $product->getShortDescriptionUsp3($domainId);
+            $productData->shortDescriptionUsp4ByDomainId[$domainId] = $product->getShortDescriptionUsp4($domainId);
+            $productData->shortDescriptionUsp5ByDomainId[$domainId] = $product->getShortDescriptionUsp5($domainId);
+            $productData->flagsByDomainId[$domainId] = $product->getFlags($domainId);
             $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
             $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
-            $productData->domainOrderingPriority[$domainId] = $product->getDomainOrderingPriority($domainId);
+            $productData->orderingPriorityByDomainId[$domainId] = $product->getOrderingPriority($domainId);
 
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
@@ -216,7 +209,6 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->hidden = $product->isHidden();
         $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();
         $productData->brand = $product->getBrand();
-        $productData->orderingPriority = $product->getOrderingPriority();
 
         $productData->parameters = $this->getParametersData($product);
 

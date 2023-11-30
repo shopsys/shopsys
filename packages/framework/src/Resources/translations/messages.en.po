@@ -2275,6 +2275,12 @@ msgstr ""
 msgid "Short description"
 msgstr ""
 
+msgid "Short description %number%"
+msgstr ""
+
+msgid "Short description USP"
+msgstr ""
+
 msgid "Short description can be set in the main variant."
 msgstr ""
 

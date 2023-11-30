@@ -146,7 +146,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9177759';
         $productData->partno = 'SLE 22F46DM4';
         $productData->ean = '8845781245930';
-        $productData->orderingPriority = 1;
+        $this->set0rderingPriority($productData, 1);
         $productData->weight = 3000;
 
         $parameterTranslations = [];
@@ -3030,7 +3030,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9176544MS';
         $productData->partno = 'TIC100';
         $productData->ean = '8845781243207';
-        $productData->orderingPriority = 2;
+        $this->set0rderingPriority($productData, 2);
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
@@ -3153,7 +3153,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9176578';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781243205';
-        $productData->orderingPriority = 1;
+        $this->set0rderingPriority($productData, 1);
 
         $parameterTranslations = [];
 
@@ -3242,7 +3242,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '7700769';
         $productData->partno = '22MT44D';
         $productData->ean = '8845781245931';
-        $productData->orderingPriority = 1;
+        $this->set0rderingPriority($productData, 1);
 
         $parameterTranslations = [];
 
@@ -3367,7 +3367,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '8981537';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781245939';
-        $productData->orderingPriority = 1;
+        $this->set0rderingPriority($productData, 1);
 
         $parameterTranslations = [];
 
@@ -3412,7 +3412,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '8981538';
         $productData->partno = 'T27D590EZ';
         $productData->ean = '8845781245940';
-        $productData->orderingPriority = 1;
+        $this->set0rderingPriority($productData, 1);
 
         $parameterTranslations = [];
 
@@ -6078,11 +6078,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private function fillShortDescriptionUpsBySeoDescription(ProductData $productData): void
     {
         foreach ($productData->seoMetaDescriptions as $domainId => $seoDescription) {
-            $productData->shortDescriptionUsp1[$domainId] = $seoDescription;
-            $productData->shortDescriptionUsp2[$domainId] = $seoDescription;
-            $productData->shortDescriptionUsp3[$domainId] = $seoDescription;
-            $productData->shortDescriptionUsp4[$domainId] = $seoDescription;
-            $productData->shortDescriptionUsp5[$domainId] = $seoDescription;
+            $productData->shortDescriptionUsp1ByDomainId[$domainId] = $seoDescription;
+            $productData->shortDescriptionUsp2ByDomainId[$domainId] = $seoDescription;
+            $productData->shortDescriptionUsp3ByDomainId[$domainId] = $seoDescription;
+            $productData->shortDescriptionUsp4ByDomainId[$domainId] = $seoDescription;
+            $productData->shortDescriptionUsp5ByDomainId[$domainId] = $seoDescription;
         }
     }
 
@@ -6267,7 +6267,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             foreach ($flagReferences as $flagReference) {
-                $productData->flags[$domainId][] = $this->persistentReferenceFacade->getReference($flagReference);
+                $productData->flagsByDomainId[$domainId][] = $this->persistentReferenceFacade->getReference($flagReference);
             }
         }
     }
@@ -6433,6 +6433,17 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productStockData = $this->productStockDataFactory->createFromStock($stock);
             $productStockData->productQuantity = $quantity;
             $productData->stockProductData[$stock->getId()] = $productStockData;
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @param int $orderingPriority
+     */
+    private function set0rderingPriority(ProductData $productData, int $orderingPriority): void
+    {
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $productData->orderingPriorityByDomainId[$domainId] = $orderingPriority;
         }
     }
 }

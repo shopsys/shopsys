@@ -328,9 +328,6 @@ msgstr "Vyplňte prosím kód skriptu"
 msgid "Please enter script name"
 msgstr "Vyplňte prosím název skriptu"
 
-msgid "Please enter sorting priority"
-msgstr "Prosím vyplňte prioritu řazení zboží"
-
 msgid "Please enter stock quantity"
 msgstr "Prosím zadejte množství skladem"
 

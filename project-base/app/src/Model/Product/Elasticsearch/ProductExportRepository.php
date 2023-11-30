@@ -32,7 +32,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
  * @property \App\Model\Product\ProductFacade $productFacade
  * @method int[] extractVariantIds(\App\Model\Product\Product $product)
  * @method string extractDetailUrl(int $domainId, \App\Model\Product\Product $product)
- * @method int[] extractFlags(\App\Model\Product\Product $product)
+ * @method int[] extractFlags(int $domainId, \App\Model\Product\Product $product)
  * @method int[] extractCategories(int $domainId, \App\Model\Product\Product $product)
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
@@ -197,7 +197,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'is_available' => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
             'prices' => $prices,
             'parameters' => $parameters,
-            'ordering_priority' => $product->getDomainOrderingPriority($domainId),
+            'ordering_priority' => $product->getOrderingPriority($domainId),
             'calculated_selling_denied' => $product->getCalculatedSaleExclusion($domainId),
             'selling_denied' => $product->isSellingDenied(),
             'availability' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),

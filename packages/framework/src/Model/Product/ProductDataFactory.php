@@ -81,6 +81,13 @@ class ProductDataFactory implements ProductDataFactoryInterface
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $productVatsIndexedByDomain[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
+            $productData->shortDescriptionUsp1ByDomainId[$domainId] = null;
+            $productData->shortDescriptionUsp2ByDomainId[$domainId] = null;
+            $productData->shortDescriptionUsp3ByDomainId[$domainId] = null;
+            $productData->shortDescriptionUsp4ByDomainId[$domainId] = null;
+            $productData->shortDescriptionUsp5ByDomainId[$domainId] = null;
+            $productData->flagsByDomainId[$domainId] = [];
+            $productData->orderingPriorityByDomainId[$domainId] = 0;
         }
 
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomain;
@@ -141,6 +148,13 @@ class ProductDataFactory implements ProductDataFactoryInterface
             $productData->seoTitles[$domainId] = $product->getSeoTitle($domainId);
             $productData->seoMetaDescriptions[$domainId] = $product->getSeoMetaDescription($domainId);
             $productData->vatsIndexedByDomainId[$domainId] = $product->getVatForDomain($domainId);
+            $productData->shortDescriptionUsp1ByDomainId[$domainId] = $product->getShortDescriptionUsp1($domainId);
+            $productData->shortDescriptionUsp2ByDomainId[$domainId] = $product->getShortDescriptionUsp2($domainId);
+            $productData->shortDescriptionUsp3ByDomainId[$domainId] = $product->getShortDescriptionUsp3($domainId);
+            $productData->shortDescriptionUsp4ByDomainId[$domainId] = $product->getShortDescriptionUsp4($domainId);
+            $productData->shortDescriptionUsp5ByDomainId[$domainId] = $product->getShortDescriptionUsp5($domainId);
+            $productData->flagsByDomainId[$domainId] = $product->getFlags($domainId);
+            $productData->orderingPriorityByDomainId[$domainId] = $product->getOrderingPriority($domainId);
 
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
@@ -158,7 +172,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->sellingFrom = $product->getSellingFrom();
         $productData->sellingTo = $product->getSellingTo();
         $productData->sellingDenied = $product->isSellingDenied();
-        $productData->flags = $product->getFlags();
         $productData->usingStock = $product->isUsingStock();
         $productData->stockQuantity = $product->getStockQuantity();
         $productData->unit = $product->getUnit();
@@ -169,7 +182,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->hidden = $product->isHidden();
         $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();
         $productData->brand = $product->getBrand();
-        $productData->orderingPriority = $product->getOrderingPriority();
 
         $productData->parameters = $this->getParametersData($product);
 

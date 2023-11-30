@@ -1735,24 +1735,6 @@ msgstr ""
 msgid "Shipping instructions"
 msgstr ""
 
-msgid "Short description 1"
-msgstr ""
-
-msgid "Short description 2"
-msgstr ""
-
-msgid "Short description 3"
-msgstr ""
-
-msgid "Short description 4"
-msgstr ""
-
-msgid "Short description 5"
-msgstr ""
-
-msgid "Short description USP"
-msgstr ""
-
 msgid "Short description of category"
 msgstr ""
 
@@ -1772,9 +1754,6 @@ msgid "Slider items - view"
 msgstr ""
 
 msgid "Slug"
-msgstr ""
-
-msgid "Sorting priority"
 msgstr ""
 
 msgid "Standard"

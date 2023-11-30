@@ -129,6 +129,7 @@ class ProductFormType extends AbstractType
         $builder->add($this->createPricesGroup($builder, $product));
         $builder->add($this->createDescriptionsGroup($builder, $product));
         $builder->add($this->createShortDescriptionsGroup($builder, $product));
+        $builder->add($this->createShortDescriptionsUspGroup($builder));
         $builder->add($this->createParametersGroup($builder));
         $builder->add($this->createSeoGroup($builder, $product));
         $builder->add($this->createImagesGroup($builder, $options));
@@ -226,13 +227,20 @@ class ProductFormType extends AbstractType
         }
 
         $builderBasicInformationGroup
-            ->add('flags', ChoiceType::class, [
+            ->add('flagsByDomainId', MultidomainType::class, [
+                'entry_type' => ChoiceType::class,
+                'entry_options' => [
+                    'attr' => [
+                        'class' => 'input--full-width',
+                    ],
+                    'choices' => $this->flagFacade->getAll(),
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'multiple' => true,
+                    'expanded' => true,
+                ],
                 'required' => false,
-                'choices' => $this->flagFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'multiple' => true,
-                'expanded' => true,
+                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
                 'label' => t('Flags'),
             ])
             ->add('brand', ChoiceType::class, [
@@ -558,10 +566,10 @@ class ProductFormType extends AbstractType
             ]);
 
         $builderDisplayAvailabilityGroup
-            ->add('orderingPriority', IntegerType::class, [
-                'required' => true,
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter sorting priority']),
+            ->add('orderingPriorityByDomainId', MultidomainType::class, [
+                'entry_type' => TextType::class,
+                'entry_options' => [
+                    'required' => true,
                 ],
                 'label' => t('Sorting priority'),
             ]);
@@ -877,5 +885,53 @@ class ProductFormType extends AbstractType
                 'label' => t('Accessories'),
             ])
             ->addViewTransformer($this->removeDuplicatesTransformer);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createShortDescriptionsUspGroup(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        $builderShortDescriptionsUspGroup = $builder->create('shortDescriptionsUspGroups', GroupType::class, [
+            'label' => t('Short description USP'),
+        ]);
+
+        $builderShortDescriptionsUspGroup
+            ->add('shortDescriptionUsp1ByDomainId', MultidomainType::class, [
+                'label' => t('Short description %number%', ['%number%' => 1]),
+                'entry_type' => TextType::class,
+                'required' => false,
+            ]);
+
+        $builderShortDescriptionsUspGroup
+            ->add('shortDescriptionUsp2ByDomainId', MultidomainType::class, [
+                'label' => t('Short description %number%', ['%number%' => 2]),
+                'entry_type' => TextType::class,
+                'required' => false,
+            ]);
+
+        $builderShortDescriptionsUspGroup
+            ->add('shortDescriptionUsp3ByDomainId', MultidomainType::class, [
+                'label' => t('Short description %number%', ['%number%' => 3]),
+                'entry_type' => TextType::class,
+                'required' => false,
+            ]);
+
+        $builderShortDescriptionsUspGroup
+            ->add('shortDescriptionUsp4ByDomainId', MultidomainType::class, [
+                'label' => t('Short description %number%', ['%number%' => 4]),
+                'entry_type' => TextType::class,
+                'required' => false,
+            ]);
+
+        $builderShortDescriptionsUspGroup
+            ->add('shortDescriptionUsp5ByDomainId', MultidomainType::class, [
+                'label' => t('Short description %number%', ['%number%' => 5]),
+                'entry_type' => TextType::class,
+                'required' => false,
+            ]);
+
+        return $builderShortDescriptionsUspGroup;
     }
 }

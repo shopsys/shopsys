@@ -12,34 +12,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\Product[] $variants
  * @property \App\Model\Product\Product[] $accessories
  * @property \App\Model\Product\Unit\Unit|null $unit
+ * @property \App\Model\Product\Flag\Flag[][]|null[][] $flagsByDomainId
  */
 class ProductData extends BaseProductData
 {
-    /**
-     * @var string[]|null[]
-     */
-    public $shortDescriptionUsp1;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $shortDescriptionUsp2;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $shortDescriptionUsp3;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $shortDescriptionUsp4;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $shortDescriptionUsp5;
-
     /**
      * @var string[]|null[]
      */
@@ -61,20 +37,9 @@ class ProductData extends BaseProductData
     public $saleExclusion;
 
     /**
-     * @var \App\Model\Product\Flag\Flag[][]|null[][]
-     * @phpstan-ignore-next-line Overridden property type
-     */
-    public $flags;
-
-    /**
      * @var bool[]|null[]
      */
     public $domainHidden;
-
-    /**
-     * @var int[]|null[]
-     */
-    public $domainOrderingPriority;
 
     /**
      * @var int|null
@@ -95,18 +60,11 @@ class ProductData extends BaseProductData
     {
         parent::__construct();
 
-        $this->shortDescriptionUsp1 = [];
-        $this->shortDescriptionUsp2 = [];
-        $this->shortDescriptionUsp3 = [];
-        $this->shortDescriptionUsp4 = [];
-        $this->shortDescriptionUsp5 = [];
         $this->namePrefix = [];
         $this->nameSufix = [];
         $this->stockProductData = [];
         $this->saleExclusion = [];
-        $this->flags = [];
         $this->domainHidden = [];
-        $this->domainOrderingPriority = [];
         $this->weight = null;
         $this->relatedProducts = [];
         $this->productVideosData = [];

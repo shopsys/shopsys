@@ -19,9 +19,6 @@ Product:
             ean:
                 type: "String"
                 description: "EAN"
-            usps:
-                type: "[String!]!"
-                description: "List of product's unique selling propositions"
             name:
                 type: "String!"
                 description: "Localized product name (domain dependent)"

@@ -40,6 +40,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
  * @property \App\Model\Product\Unit\Unit $unit
  * @method \App\Model\Product\Unit\Unit getUnit()
+ * @method \App\Model\Product\Flag\Flag[] getFlags(int $domainId)
  */
 class Product extends BaseProduct
 {
@@ -200,15 +201,8 @@ class Product extends BaseProduct
 
         foreach ($this->domains as $productDomain) {
             $domainId = $productDomain->getDomainId();
-            $productDomain->setShortDescriptionUsp1($productData->shortDescriptionUsp1[$domainId]);
-            $productDomain->setShortDescriptionUsp2($productData->shortDescriptionUsp2[$domainId]);
-            $productDomain->setShortDescriptionUsp3($productData->shortDescriptionUsp3[$domainId]);
-            $productDomain->setShortDescriptionUsp4($productData->shortDescriptionUsp4[$domainId]);
-            $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
-            $productDomain->setFlags($productData->flags[$domainId] ?? []);
             $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
             $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
-            $productDomain->setDomainOrderingPriority((int)$productData->domainOrderingPriority[$domainId]);
         }
     }
 
@@ -266,51 +260,6 @@ class Product extends BaseProduct
 
     /**
      * @param int $domainId
-     * @return string|null
-     */
-    public function getShortDescriptionUsp1(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getShortDescriptionUsp1();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getShortDescriptionUsp2(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getShortDescriptionUsp2();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getShortDescriptionUsp3(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getShortDescriptionUsp3();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getShortDescriptionUsp4(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getShortDescriptionUsp4();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getShortDescriptionUsp5(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getShortDescriptionUsp5();
-    }
-
-    /**
-     * @param int $domainId
      * @return string[]
      */
     public function getAllNonEmptyShortDescriptionUsp(int $domainId): array
@@ -333,22 +282,13 @@ class Product extends BaseProduct
 
     /**
      * @param int $domainId
-     * @return \App\Model\Product\Flag\Flag[]
-     */
-    public function getFlagsForDomain(int $domainId)
-    {
-        return $this->getProductDomain($domainId)->getFlags();
-    }
-
-    /**
-     * @param int $domainId
      * @return int[]
      */
     public function getFlagsIdsForDomain(int $domainId): array
     {
         $flagIds = [];
 
-        foreach ($this->getFlagsForDomain($domainId) as $flag) {
+        foreach ($this->getFlags($domainId) as $flag) {
             $flagIds[] = $flag->getId();
         }
 
@@ -470,33 +410,6 @@ class Product extends BaseProduct
     }
 
     /**
-     * @param int $domainId
-     * @return  int
-     */
-    public function getDomainOrderingPriority(int $domainId): int
-    {
-        return $this->getProductDomain($domainId)->getDomainOrderingPriority();
-    }
-
-    /**
-     * @param \App\Model\Product\Flag\Flag[] $flags
-     */
-    protected function editFlags(array $flags)
-    {
-        // Keep this function empty - flags were moved to Domain
-    }
-
-    /**
-     * @return array
-     */
-    public function getFlags()
-    {
-        // Return empty array to override default functionality.
-        // Flags were moved to Domain.
-        return [];
-    }
-
-    /**
      * @return bool
      */
     public function isUsingStock()
@@ -594,7 +507,7 @@ class Product extends BaseProduct
      */
     public function hasFlagByAkeneoCodeForDomain(string $akeneoCode, int $domainId): bool
     {
-        foreach ($this->getFlagsForDomain($domainId) as $flag) {
+        foreach ($this->getFlags($domainId) as $flag) {
             if ($flag->getAkeneoCode() === $akeneoCode) {
                 return true;
             }

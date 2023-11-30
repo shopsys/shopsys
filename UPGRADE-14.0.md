@@ -509,6 +509,32 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   add Persoo Product feed and remove unused code ([#2939](https://github.com/shopsys/shopsys/pull/2939))
     -   product plan and assembly instructions have been removed from project-base, see diff to update your project
+    -   most of the `ProductDomain` attributes and methods has been moved to `framework`, see diff to update your project
+        -   attribute `domainOrderingPriority` has been renamed to `orderingPriority`
+    -   most of the domain specific attributes from `ProductData` has been moved to `framework`, see diff to update your project
+        -   attribute `shortDescriptionUsp1` has been renamed to `shortDescriptionUsp1ByDomainId`
+        -   same for all other `shortDescriptionUspX` attributes
+        -   attribute `flags` has been renamed to `flagsByDomainId`
+        -   attribute `domainOrderingPriority` has been renamed to `orderingPriorityByDomainId`
+    -   unused method `Shopsys\FrameworkBundle\Model\Product\Product::getProductCategoryDomainsByDomainIdIndexedByCategoryId()` has been removed without a replacement
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository::extractFlags()` changed its interface:
+    ```diff
+    -   protected function extractFlags(Product $product): array
+    +   protected function extractFlags(int $domainId, Product $product): array
+    ```
+    -   `Shopsys\FrameworkBundle\Model\Product\Product::$flags` has been moved to `Shopsys\FrameworkBundle\Model\Product\ProductDomain::$flags`
+    -   `Shopsys\FrameworkBundle\Model\Product\Product::$orderingPriority` has been moved to `Shopsys\FrameworkBundle\Model\Product\ProductDomain::$orderingPriority`
+    -   `Shopsys\FrameworkBundle\Model\Product\Product::editFlags()` has been removed and setting is now done in `Shopsys\FrameworkBundle\Model\Product\Product::setDomains()`
+    -   `Shopsys\FrameworkBundle\Model\Product\Product::getFlags()` changed its interface:
+    ```diff
+    -   public function getFlags()
+    +   public function getFlags(int $domainId)
+    ```
+    -   `Shopsys\FrameworkBundle\Model\Product\Product::getOrderingPriority()` changed its interface:
+    ```diff
+    -   public function getOrderingPriority()
+    +   public function getOrderingPriority(int $domainId)
+    ```
     -   see #project-base-diff to update your project
 
 ### Storefront

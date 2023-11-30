@@ -424,7 +424,7 @@ class RetrieveCartTest extends GraphQlTestCase
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $firstDomainLocale,
             ),
-            'orderingPriority' => 0,
+            'orderingPriority' => 1,
             'parameters' => [
                 [
                     'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

@@ -1735,24 +1735,6 @@ msgstr "Nastavení"
 msgid "Shipping instructions"
 msgstr "Přepravní instrukce"
 
-msgid "Short description 1"
-msgstr "Krátký popis 1"
-
-msgid "Short description 2"
-msgstr "Krátký popis 2"
-
-msgid "Short description 3"
-msgstr "Krátký popis 3"
-
-msgid "Short description 4"
-msgstr "Krátký popis 4"
-
-msgid "Short description 5"
-msgstr "Krátký popis 5"
-
-msgid "Short description USP"
-msgstr "Krátký popis USP"
-
 msgid "Short description of category"
 msgstr "Krátký popis kategorie"
 
@@ -1773,9 +1755,6 @@ msgstr "Bannery - zobrazení"
 
 msgid "Slug"
 msgstr "Slug"
-
-msgid "Sorting priority"
-msgstr "Priorita řazení"
 
 msgid "Standard"
 msgstr "Standardní"
