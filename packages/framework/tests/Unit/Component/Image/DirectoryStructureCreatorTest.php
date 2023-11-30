@@ -37,8 +37,8 @@ class DirectoryStructureCreatorTest extends TestCase
         $filesystemMock
             ->method('createDirectory')
             ->withConsecutive(
-                ['imageDir/entityName1/'],
-                ['imageDir/entityName2/type/'],
+                ['imageDir/entityName1'],
+                ['imageDir/entityName2/type'],
             );
         $imageLocator = new ImageLocator($imageDir, $imageConfig, $filesystemMock);
         $creator = new DirectoryStructureCreator(

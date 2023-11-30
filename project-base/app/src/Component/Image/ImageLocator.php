@@ -35,6 +35,6 @@ class ImageLocator extends BaseImageLocator
     {
         $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType());
 
-        return $path . $image->getSeoFilename($friendlyUrlSlug);
+        return $path . '/' . $image->getSeoFilename($friendlyUrlSlug);
     }
 }

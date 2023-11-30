@@ -32,7 +32,7 @@ class ImageLocator
     {
         $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType());
 
-        return $path . $image->getFilename();
+        return $path . '/' . $image->getFilename();
     }
 
     /**
@@ -52,7 +52,7 @@ class ImageLocator
 
         $filename = $id . '.' . $extension;
 
-        return $path . $filename;
+        return $path . '/' . $filename;
     }
 
     /**
@@ -91,6 +91,6 @@ class ImageLocator
             $pathParts[] = $type;
         }
 
-        return implode('/', $pathParts) . '/';
+        return implode('/', $pathParts);
     }
 }
