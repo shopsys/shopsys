@@ -102,10 +102,6 @@ class PromotedProductsTest extends GraphQlTestCase
                     partNumber
                     ean
                     usps
-                    files {
-                      anchorText
-                      url
-                    }
                 }
             }
         ';
@@ -178,10 +174,6 @@ class PromotedProductsTest extends GraphQlTestCase
                     partNumber
                     ean
                     usps
-                    files {
-                      anchorText
-                      url
-                    }
                 }
             }
         ';

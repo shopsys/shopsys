@@ -507,6 +507,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   remove preorder and vendor delivery date features ([#2942](https://github.com/shopsys/shopsys/pull/2942))
     -   see #project-base-diff to update your project
+-   add Persoo Product feed and remove unused code ([#2939](https://github.com/shopsys/shopsys/pull/2939))
+    -   product plan and assembly instructions have been removed from project-base, see diff to update your project
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

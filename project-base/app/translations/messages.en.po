@@ -928,9 +928,6 @@ msgstr ""
 msgid "Instagram URL"
 msgstr ""
 
-msgid "Installation manual"
-msgstr ""
-
 msgid "Integrations"
 msgstr ""
 
@@ -1915,9 +1912,6 @@ msgstr ""
 msgid "Transfer type"
 msgstr ""
 
-msgid "Transferred files"
-msgstr ""
-
 msgid "Transfers"
 msgstr ""
 
@@ -1967,9 +1961,6 @@ msgid "Type"
 msgstr ""
 
 msgid "Type of image"
-msgstr ""
-
-msgid "Type plan"
 msgstr ""
 
 msgid "URL"
@@ -2135,12 +2126,6 @@ msgid "e.g. Sale-04-20-2020"
 msgstr ""
 
 msgid "e.g. red-1035x340-jpg-carousel"
-msgstr ""
-
-msgid "files transfer \"Installation manual\""
-msgstr ""
-
-msgid "files transfer \"Type plan\""
 msgstr ""
 
 msgid "flags"

@@ -12,7 +12,6 @@ use App\Model\Category\Category;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Product;
-use App\Model\Product\ProductFacade;
 use App\Model\Product\ProductRepository;
 use App\Model\ProductVideo\ProductVideo;
 use App\Model\ProductVideo\ProductVideoTranslationsRepository;
@@ -47,7 +46,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
-     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\ProductRepository $productRepository
@@ -65,7 +63,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductAccessoryFacade $productAccessoryFacade,
         CurrentCustomerUser $currentCustomerUser,
         ParameterWithValuesFactory $parameterWithValuesFactory,
-        private ProductFacade $productFacade,
         private ProductAvailabilityFacade $productAvailabilityFacade,
         private FriendlyUrlFacade $friendlyUrlFacade,
         private ProductRepository $productRepository,
@@ -252,26 +249,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     public function getSlug(Product $product): string
     {
         return '/' . $this->friendlyUrlFacade->getMainFriendlyUrlSlug($this->domain->getId(), 'front_product_detail', $product->getId());
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return array
-     */
-    public function getFiles(Product $product): array
-    {
-        $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomainConfig(
-            $product,
-            $this->domain->getDomainConfigById($this->domain->getId()),
-        );
-
-        return array_map(
-            static fn ($fileData) => [
-                'anchorText' => $fileData['anchor_text'],
-                'url' => $fileData['url'],
-            ],
-            $downloadFiles,
-        );
     }
 
     /**

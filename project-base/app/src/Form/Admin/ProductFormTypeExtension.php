@@ -21,7 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints;
@@ -101,7 +100,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setStocksGroup($builder);
         $this->setDisplayAvailabilityGroup($builder, $product);
         $this->setPricesGroup($builder, $product);
-        $this->setTransferredFilesGroup($builder, $product);
         $this->setRelatedProductsGroup($builder, $product);
         $this->setVideoGroup($builder);
 
@@ -187,35 +185,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 ],
                 'label' => t('Sorting priority'),
             ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \App\Model\Product\Product|null $product
-     */
-    private function setTransferredFilesGroup(FormBuilderInterface $builder, ?Product $product): void
-    {
-        if ($product === null) {
-            return;
-        }
-
-        $groupBuilder = $builder->create('transferredFilesGroup', GroupType::class, [
-            'label' => t('Transferred files'),
-        ]);
-
-        $groupBuilder->add('assemblyInstructionFileUrl', MultidomainType::class, [
-            'label' => t('Installation manual'),
-            'required' => false,
-            'entry_type' => UrlType::class,
-        ]);
-
-        $groupBuilder->add('productTypePlanFileUrl', MultidomainType::class, [
-            'label' => t('Type plan'),
-            'required' => false,
-            'entry_type' => UrlType::class,
-        ]);
-
-        $builder->add($groupBuilder);
     }
 
     /**

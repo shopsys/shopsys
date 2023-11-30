@@ -34,9 +34,6 @@ Product:
             fullName:
                 type: "String!"
                 description: "The full name of the product, which consists of a prefix, name, and a suffix"
-            files:
-                type: "[File!]!"
-                description: "List of downloadable files"
             storeAvailabilities:
                 type: "[StoreAvailability!]!"
                 description: "List of availabilities in individual stores"

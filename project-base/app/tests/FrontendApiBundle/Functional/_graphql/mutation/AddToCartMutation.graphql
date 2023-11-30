@@ -156,10 +156,6 @@ fragment TestProductFragment on Product {
     partNumber
     ean
     usps
-    files {
-        anchorText
-        url
-    }
     storeAvailabilities {
         store {
             name
@@ -229,10 +225,6 @@ fragment TestMainVariantFragment on MainVariant {
     partNumber
     ean
     usps
-    files {
-        anchorText
-        url
-    }
     storeAvailabilities {
         store {
             name

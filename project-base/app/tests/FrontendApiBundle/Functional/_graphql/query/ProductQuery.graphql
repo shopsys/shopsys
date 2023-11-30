@@ -54,10 +54,6 @@ query Product($uuid: Uuid) {
         partNumber
         ean
         usps
-        files {
-            anchorText
-            url
-        }
         storeAvailabilities {
             store {
                 name

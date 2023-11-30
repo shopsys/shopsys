@@ -44,26 +44,12 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 class Product extends BaseProduct
 {
     public const PDF_SUFFIX = '.pdf';
-    public const FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE = 'assemblyInstruction';
-    public const FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE = 'productTypePlan';
 
     /**
      * @var string
      * @ORM\Column(type="string", length=100, unique=true, nullable=false)
      */
     protected $catnum;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $downloadAssemblyInstructionFiles;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $downloadProductTypePlanFiles;
 
     /**
      * @var null
@@ -177,8 +163,6 @@ class Product extends BaseProduct
     {
         parent::setData($productData);
 
-        $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
-        $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
         $this->weight = $productData->weight;
         $this->relatedProducts = new ArrayCollection($productData->relatedProducts);
     }
@@ -225,28 +209,6 @@ class Product extends BaseProduct
             $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
             $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
             $productDomain->setDomainOrderingPriority((int)$productData->domainOrderingPriority[$domainId]);
-        }
-    }
-
-    /**
-     * @param \App\Model\Product\ProductFilesData $productFilesData
-     */
-    public function editFileAttributes(ProductFilesData $productFilesData): void
-    {
-        foreach ($this->domains as $productDomain) {
-            $domainId = $productDomain->getDomainId();
-
-            if ($this->getAssemblyInstructionCode($domainId) !== $productFilesData->assemblyInstructionCode[$domainId]) {
-                $productDomain->setAssemblyInstructionCode($productFilesData->assemblyInstructionCode[$domainId]);
-                $this->setDownloadAssemblyInstructionFiles(true);
-            }
-
-            if ($this->getProductTypePlanCode($domainId) === $productFilesData->productTypePlanCode[$domainId]) {
-                continue;
-            }
-
-            $productDomain->setProductTypePlanCode($productFilesData->productTypePlanCode[$domainId]);
-            $this->setDownloadProductTypePlanFiles(true);
         }
     }
 
@@ -463,40 +425,6 @@ class Product extends BaseProduct
     }
 
     /**
-     * @param bool $downloadAssemblyInstructionFiles
-     */
-    public function setDownloadAssemblyInstructionFiles(bool $downloadAssemblyInstructionFiles): void
-    {
-        $this->downloadAssemblyInstructionFiles = $downloadAssemblyInstructionFiles;
-    }
-
-    /**
-     * @param bool $downloadProductTypePlanFiles
-     */
-    public function setDownloadProductTypePlanFiles(bool $downloadProductTypePlanFiles): void
-    {
-        $this->downloadProductTypePlanFiles = $downloadProductTypePlanFiles;
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getAssemblyInstructionCode(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getAssemblyInstructionCode();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getProductTypePlanCode(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getProductTypePlanCode();
-    }
-
-    /**
      * @param int $domainId
      * @param string $type
      * @return string
@@ -512,22 +440,6 @@ class Product extends BaseProduct
     public function getProductDomains()
     {
         return $this->domains;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDownloadAssemblyInstructionFiles(): bool
-    {
-        return $this->downloadAssemblyInstructionFiles;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDownloadProductTypePlanFiles(): bool
-    {
-        return $this->downloadProductTypePlanFiles;
     }
 
     /**

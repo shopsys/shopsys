@@ -79,7 +79,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'product_available_stores_count_information',
             'product_videos',
             'store_availabilities_information',
-            'files',
             'usps',
             'searching_names',
             'searching_descriptions',

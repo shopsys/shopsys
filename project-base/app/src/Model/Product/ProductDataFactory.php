@@ -40,21 +40,20 @@ class ProductDataFactory extends BaseProductDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \App\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
-     * @param \App\Model\Product\Unit\UnitFacade $unitFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $stockProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $stockProductDataFactory
-     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
      * @param \App\Model\ProductVideo\ProductVideoRepository $productVideoRepository
@@ -75,7 +74,6 @@ class ProductDataFactory extends BaseProductDataFactory
         private readonly ProductStockFacade $stockProductFacade,
         private readonly StockFacade $stockFacade,
         private readonly ProductStockDataFactory $stockProductDataFactory,
-        private readonly ProductFacade $productFacade,
         private readonly Setting $setting,
         private readonly ProductVideoDataFactory $productVideoDataFactory,
         private readonly ProductVideoRepository $productVideoRepository,
@@ -128,7 +126,6 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData = $this->createInstance();
         $this->fillFromProduct($productData, $product);
         $this->fillStockProductByProduct($productData, $product);
-        $this->fillProductFilesAttributesFromProduct($productData, $product);
         $this->fillProductVideosByProductId($productData, $product);
 
         return $productData;
@@ -147,8 +144,6 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->shortDescriptionUsp3[$domainId] = null;
             $productData->shortDescriptionUsp4[$domainId] = null;
             $productData->shortDescriptionUsp5[$domainId] = null;
-            $productData->assemblyInstructionFileUrl[$domainId] = null;
-            $productData->productTypePlanFileUrl[$domainId] = null;
             $productData->flags[$domainId] = [];
             $productData->saleExclusion[$domainId] = false;
             $productData->domainHidden[$domainId] = false;
@@ -238,39 +233,8 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->images = $this->imageUploadDataFactory->createFromEntityAndType($product, null);
         $productData->variants = $product->getVariants();
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
-
-        $productData->downloadAssemblyInstructionFiles = $product->isDownloadAssemblyInstructionFiles();
-        $productData->downloadProductTypePlanFiles = $product->isDownloadAssemblyInstructionFiles();
-
         $productData->weight = $product->getWeight();
         $productData->relatedProducts = $product->getRelatedProducts();
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product $product
-     */
-    private function fillProductFilesAttributesFromProduct(ProductData $productData, Product $product): void
-    {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-            $productData->assemblyInstructionFileUrl[$domainId] = null;
-            $productData->productTypePlanFileUrl[$domainId] = null;
-
-            if ($product->getAssemblyInstructionCode($domainId) !== null) {
-                $productData->assemblyInstructionFileUrl[$domainId] = $this->productFacade->getProductTransferredFileUrl(
-                    $product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE),
-                    $domainConfig->getUrl(),
-                );
-            }
-
-            if ($product->getProductTypePlanCode($domainId) !== null) {
-                $productData->productTypePlanFileUrl[$domainId] = $this->productFacade->getProductTransferredFileUrl(
-                    $product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE),
-                    $domainConfig->getUrl(),
-                );
-            }
-        }
     }
 
     /**

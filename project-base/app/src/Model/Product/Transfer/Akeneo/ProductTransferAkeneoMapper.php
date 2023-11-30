@@ -16,8 +16,6 @@ use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFaca
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
-use App\Model\Product\ProductFilesData;
-use App\Model\Product\ProductFilesDataFactory;
 use App\Model\Transfer\TransferLoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -34,7 +32,6 @@ class ProductTransferAkeneoMapper
     /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
@@ -44,7 +41,6 @@ class ProductTransferAkeneoMapper
     public function __construct(
         private ProductDataFactory $productDataFactory,
         private CategoryFacade $categoryFacade,
-        private ProductFilesDataFactory $productFilesDataFactory,
         private ParameterFacade $parameterFacade,
         private ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         ParameterValueDataFactoryInterface $parameterValueDataFactory,
@@ -52,30 +48,6 @@ class ProductTransferAkeneoMapper
         private ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade,
     ) {
         $this->parameterValueDataFactory = $parameterValueDataFactory;
-    }
-
-    /**
-     * @param array $akeneoProductData
-     * @param \App\Model\Product\Product $product
-     * @return \App\Model\Product\ProductFilesData
-     */
-    public function mapAkeneoProductDataToProductFilesData(
-        array $akeneoProductData,
-        Product $product,
-    ): ProductFilesData {
-        $productFilesData = $this->productFilesDataFactory->createFromProduct($product);
-
-        $productFilesData->assemblyInstructionCode = AkeneoProductHelper::mapDomainDataString(
-            $productFilesData->assemblyInstructionCode,
-            $akeneoProductData['values']['assembly_instruction'] ?? null,
-        );
-
-        $productFilesData->productTypePlanCode = AkeneoProductHelper::mapDomainDataString(
-            $productFilesData->productTypePlanCode,
-            $akeneoProductData['values']['product_type_plan'] ?? null,
-        );
-
-        return $productFilesData;
     }
 
     /**

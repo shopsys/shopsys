@@ -928,9 +928,6 @@ msgstr "Rozložení uvnitř"
 msgid "Instagram URL"
 msgstr "URL Instagramu"
 
-msgid "Installation manual"
-msgstr "Instalační manuál"
-
 msgid "Integrations"
 msgstr "Integrace"
 
@@ -1915,9 +1912,6 @@ msgstr "Problém v přenosu byl označen jako vyřešený"
 msgid "Transfer type"
 msgstr "Typ přenosu"
 
-msgid "Transferred files"
-msgstr "Přenesené soubory"
-
 msgid "Transfers"
 msgstr "Přenosy"
 
@@ -1968,9 +1962,6 @@ msgstr "Typ"
 
 msgid "Type of image"
 msgstr "Typ obrázku"
-
-msgid "Type plan"
-msgstr "Typový plán"
 
 msgid "URL"
 msgstr "URL"
@@ -2136,12 +2127,6 @@ msgstr "např. Akce-04-20-2020"
 
 msgid "e.g. red-1035x340-jpg-carousel"
 msgstr "např. cervena-1035x340-jpg-carousel"
-
-msgid "files transfer \"Installation manual\""
-msgstr "přenos souborů \"Instalační manuál\""
-
-msgid "files transfer \"Type plan\""
-msgstr "přenos souborů \"Typový plán\""
 
 msgid "flags"
 msgstr "příznaků"

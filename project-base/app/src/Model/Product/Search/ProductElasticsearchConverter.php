@@ -37,7 +37,6 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
         $result['unit'] = $product['unit'] ?? '';
         $result['stock_quantity'] = $product['stock_quantity'] ?? 0;
         $result['is_sale_exclusion'] = $product['is_sale_exclusion'] ?? true;
-        $result['files'] = $product['files'] ?? [];
         $result['main_category_path'] = $product['main_category_path'] ?? '';
         $result['breadcrumb'] = $product['breadcrumb'] ?? [];
 

@@ -107,12 +107,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '20', instanceName: importAkeneoProduct, readableName: 'Import flags from Akeneo' }
 
-    # Akeneo import files
-
-    App\Model\Product\Transfer\Akeneo\AkeneoImportProductFilesCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importAkeneoFiles, readableName: 'Import product files from Akeneo' }
-
     # GoPay
 
     App\Model\GoPay\GoPayAvailablePaymentsCronModule:

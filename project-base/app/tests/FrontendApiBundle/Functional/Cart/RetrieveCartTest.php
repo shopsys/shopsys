@@ -538,7 +538,6 @@ class RetrieveCartTest extends GraphQlTestCase
                     $firstDomainLocale,
                 ),
             ],
-            'files' => [],
             'storeAvailabilities' => [
                 [
                     'store' => [
@@ -632,10 +631,6 @@ class RetrieveCartTest extends GraphQlTestCase
             partNumber
             ean
             usps
-            files {
-                anchorText
-                url
-            }
             storeAvailabilities {
                 store {
                     name

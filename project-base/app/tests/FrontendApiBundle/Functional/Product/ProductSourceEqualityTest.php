@@ -111,10 +111,6 @@ class ProductSourceEqualityTest extends GraphQlTestCase
             partNumber
             ean
             usps
-            files {
-              anchorText
-              url
-            }
             storeAvailabilities {
                 store {
                     name

@@ -677,14 +677,6 @@ input DeliveryAddressInput {
   uuid: Uuid = null
 }
 
-"Represents a downloadable file"
-type File {
-  "Clickable text for a hyperlink"
-  anchorText: String!
-  "Url to download the file"
-  url: String!
-}
-
 "Represents a flag"
 type Flag implements Breadcrumb & Slug & ProductListable {
   "Hierarchy of the current element in relation to the structure"
@@ -806,8 +798,6 @@ type MainVariant implements Product & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
-  "List of downloadable files"
-  files: [File!]!
   "List of flags"
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
@@ -1458,8 +1448,6 @@ interface Product {
   description: String
   "EAN"
   ean: String
-  "List of downloadable files"
-  files: [File!]!
   "List of flags"
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
@@ -1860,8 +1848,6 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
-  "List of downloadable files"
-  files: [File!]!
   "List of flags"
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
@@ -2136,8 +2122,6 @@ type Variant implements Product & Breadcrumb & Slug {
   description: String
   "EAN"
   ean: String
-  "List of downloadable files"
-  files: [File!]!
   "List of flags"
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"

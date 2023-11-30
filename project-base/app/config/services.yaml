@@ -412,14 +412,6 @@ services:
 
     App\Model\Product\Transfer\Akeneo\TransferredProductProcessor: ~
 
-    App\Model\Product\Transfer\Akeneo\AkeneoImportAssemblyInstructionProductFilesFacade:
-        arguments:
-            $productFilesDir: "%shopsys.product_files_dir%"
-
-    App\Model\Product\Transfer\Akeneo\AkeneoImportProductTypePlanProductFilesFacade:
-        arguments:
-            $productFilesDir: "%shopsys.product_files_dir%"
-
     Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface:
         factory: ['@App\Component\Akeneo\AkeneoClientFactory', createClient]
 
@@ -502,10 +494,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator:
         alias: App\Model\Product\ProductBreadcrumbGenerator
-
-    App\Model\Product\ProductFacade:
-        arguments:
-            $productFilesUrlPrefix: '%shopsys.product_files_url_prefix%'
 
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade:
         class: App\Model\Product\ProductVisibilityFacade

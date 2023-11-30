@@ -56,36 +56,6 @@ class ProductData extends BaseProductData
     public $stockProductData;
 
     /**
-     * @var bool
-     */
-    public $downloadAssemblyInstructionFiles = false;
-
-    /**
-     * @var bool
-     */
-    public $downloadProductTypePlanFiles = false;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $assemblyInstructionCode;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $productTypePlanCode;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $assemblyInstructionFileUrl;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $productTypePlanFileUrl;
-
-    /**
      * @var bool[]
      */
     public $saleExclusion;
@@ -133,10 +103,6 @@ class ProductData extends BaseProductData
         $this->namePrefix = [];
         $this->nameSufix = [];
         $this->stockProductData = [];
-        $this->assemblyInstructionCode = [];
-        $this->productTypePlanCode = [];
-        $this->assemblyInstructionFileUrl = [];
-        $this->productTypePlanFileUrl = [];
         $this->saleExclusion = [];
         $this->flags = [];
         $this->domainHidden = [];

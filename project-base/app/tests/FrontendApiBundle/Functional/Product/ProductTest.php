@@ -115,10 +115,6 @@ class ProductTest extends GraphQlTestCase
                     partNumber
                     ean
                     usps
-                    files {
-                      anchorText
-                      url
-                    }
                     storeAvailabilities {
                         store {
                             name
@@ -386,7 +382,6 @@ class ProductTest extends GraphQlTestCase
                             $firstDomainLocale,
                         ),
                     ],
-                    'files' => [],
                     'storeAvailabilities' => [
                         [
                             'store' => [
