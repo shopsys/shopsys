@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Image;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
-use League\Flysystem\UnableToDeleteFile;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -342,8 +342,8 @@ class ImageFacade
                         $this->fileUpload->getTemporaryFilepath($sourceImage->getFilename()),
                     ),
                 );
-            } catch (UnableToDeleteFile $exception) {
-                $this->logger->error('Image could not be copied because file was not found', [$exception]);
+            } catch (Exception $exception) {
+                $this->logger->error('Image could not be copied', [$exception]);
 
                 continue;
             }
