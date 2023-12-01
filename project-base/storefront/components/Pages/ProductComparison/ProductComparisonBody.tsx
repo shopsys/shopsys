@@ -1,14 +1,14 @@
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
-import { ComparedProductFragmentApi } from 'graphql/generated';
+import { ProductInProductListFragmentApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
 type ProductComparisonBodyProps = {
-    productsCompare: ComparedProductFragmentApi[];
+    comparedProducts: ProductInProductListFragmentApi[];
     parametersDataState: { name: string; values: string[] }[];
 };
 
-export const ProductComparisonBody: FC<ProductComparisonBodyProps> = (props) => {
+export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ comparedProducts, parametersDataState }) => {
     const { t } = useTranslation();
 
     return (
@@ -17,7 +17,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = (props) => 
                 <BodyItem isSticky>
                     <div>{t('Price with VAT')}</div>
                 </BodyItem>
-                {props.productsCompare.map((product) => (
+                {comparedProducts.map((product) => (
                     <BodyItem key={`price-${product.uuid}`}>
                         <ProductPrice productPrice={product.price} />
                     </BodyItem>
@@ -25,7 +25,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = (props) => 
             </tr>
             <tr className="[&>td]:bg-white [&>td]:odd:bg-greyVeryLight">
                 <BodyItem isSticky>{t('Availability')}</BodyItem>
-                {props.productsCompare.map((product) => (
+                {comparedProducts.map((product) => (
                     <BodyItem key={`availability-${product.uuid}`}>
                         <div
                             className={twJoin(
@@ -40,7 +40,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = (props) => 
                 ))}
             </tr>
 
-            {props.parametersDataState.map((parameter, parameterIndex) => (
+            {parametersDataState.map((parameter, parameterIndex) => (
                 <tr key={`parameter-${parameterIndex}`} className="[&>td]:bg-white [&>td]:odd:bg-greyVeryLight">
                     <BodyItem isSticky>{parameter.name}</BodyItem>
 

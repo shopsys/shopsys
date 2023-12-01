@@ -1,0 +1,6 @@
+title: Caching
+arrange:
+    - index.md
+    - intro.md
+    - redis-cache.md
+    - graphcache.md

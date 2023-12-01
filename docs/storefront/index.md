@@ -11,7 +11,7 @@ The Storefront is a client for consuming and displaying data from [Frontend API]
 -   [Best Practises](./best-practises.md)
 -   [Translations](./translations.md)
 -   [GraphQL](./graphql.md)
--   [Caching](./caching.md)
+-   [Caching](./caching/index.md)
 -   [Store Management](./store-management.md)
 -   [Authentication](./authentication.md)
 -   [Image Component](./image-component.md)

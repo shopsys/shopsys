@@ -1,8 +1,0 @@
-mutation addProductToWishlist($productUuid: Uuid!, $wishlistUuid: Uuid){
-    addProductToWishlist(productUuid:$productUuid, wishlistUuid: $wishlistUuid){
-        uuid
-        products{
-            name
-        }
-    }
-}

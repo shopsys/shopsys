@@ -21,12 +21,12 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'store-not-found': t('Store not found.'),
         'product-not-found': t('Product not found.'),
         'handling-with-logged-customer-comparison': t('Product not found.'),
-        'comparison-not-found': t('Comparison not found.'),
-        'compared-item-not-found': t('Compared product not found.'),
-        'compared-item-already-exists': t('Compared product is already compared.'),
-        'wishlist-not-found': t('Wishlist not found.'),
-        'wishlist-item-already-exists': t('Product in wishlist already exists.'),
-        'wishlist-item-not-found': t('Product in wishlist not found.'),
+        'comparison-product-list-not-found': t('Comparison not found.'),
+        'comparison-product-not-in-list': t('Compared product not found.'),
+        'comparison-product-already-in-list': t('Compared product is already compared.'),
+        'wishlist-product-list-not-found': t('Wishlist not found.'),
+        'wishlist-product-already-in-list': t('Product in wishlist already exists.'),
+        'wishlist-product-not-in-list': t('Product in wishlist not found.'),
     };
 
     return ERROR_MESSAGES[errorCode];

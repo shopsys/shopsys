@@ -1,0 +1,11 @@
+ProductListInputDecorator:
+    type: input-object
+    config:
+        fields:
+            uuid:
+                type: "Uuid"
+                description: "Product list identifier"
+                defaultValue: null
+            type:
+                type: "ProductListTypeEnum!"
+                description: "Product list type"

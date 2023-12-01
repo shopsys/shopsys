@@ -12,8 +12,10 @@ export const useRegistration = () => {
     const router = useRouter();
     const updateAuthLoadingState = usePersistStore((s) => s.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+    const productListUuids = usePersistStore((s) => s.productListUuids);
+    const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
 
-    const register = async (registrationInput: RegistrationDataInputApi) => {
+    const register = async (registrationInput: Omit<RegistrationDataInputApi, 'productListsUuids'>) => {
         blurInput();
         const registerResult = await registerMutation({
             input: {
@@ -33,6 +35,7 @@ export const useRegistration = () => {
                 postcode: registrationInput.postcode,
                 street: registrationInput.street,
                 telephone: registrationInput.telephone,
+                productListsUuids: Object.values(productListUuids),
             },
         });
 
@@ -41,6 +44,7 @@ export const useRegistration = () => {
             const refreshToken = registerResult.data.Register.tokens.refreshToken;
 
             setTokensToCookies(accessToken, refreshToken);
+            updateProductListUuids({});
 
             updateAuthLoadingState(
                 registerResult.data.Register.showCartMergeInfo

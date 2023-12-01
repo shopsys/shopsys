@@ -2,9 +2,9 @@ import { ProductListItem } from './ProductListItem';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { useComparison } from 'hooks/comparison/useComparison';
+import { useComparison } from 'hooks/productLists/comparison/useComparison';
+import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
 import { useQueryParams } from 'hooks/useQueryParams';
-import { useWishlist } from 'hooks/useWishlist';
 import dynamic from 'next/dynamic';
 import React, { RefObject } from 'react';
 

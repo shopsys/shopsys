@@ -34,7 +34,11 @@ export const LoginContent: FC = () => {
         }
 
         const loginResult = await login(
-            { email: data.email, password: data.password, previousCartUuid: cartUuid },
+            {
+                email: data.email,
+                password: data.password,
+                previousCartUuid: cartUuid,
+            },
             redirectUrl,
         );
 

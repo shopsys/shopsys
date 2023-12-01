@@ -1,6 +1,0 @@
-fragment ComparedProductFragment on Product {
-    ...ListedProductFragment
-    parameters {
-        ...ParameterFragment
-    }
-}

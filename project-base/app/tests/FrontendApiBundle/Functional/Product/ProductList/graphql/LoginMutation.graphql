@@ -1,0 +1,5 @@
+mutation Login($email: String!, $password: Password!, $productListsUuids: [Uuid!]!) {
+    Login(input: { email: $email, password: $password, productListsUuids: $productListsUuids }) {
+        __typename
+    }
+}

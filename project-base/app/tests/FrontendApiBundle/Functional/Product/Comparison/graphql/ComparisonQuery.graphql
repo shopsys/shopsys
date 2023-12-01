@@ -1,8 +1,0 @@
-query($comparisonUuid: Uuid){
-    comparison(uuid: $comparisonUuid){
-        uuid
-        products{
-            name
-        }
-    }
-}

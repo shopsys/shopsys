@@ -1,5 +1,0 @@
-query WishlistQuery($wishlistUuid: Uuid){
-    wishlist(wishlistUuid: $wishlistUuid) {
-        ...WishlistFragment
-    }
-}

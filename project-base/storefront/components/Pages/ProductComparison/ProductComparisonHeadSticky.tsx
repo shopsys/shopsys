@@ -1,15 +1,15 @@
 import { Image } from 'components/Basic/Image/Image';
-import { ComparedProductFragmentApi } from 'graphql/generated';
-import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
+import { ProductInProductListFragmentApi } from 'graphql/generated';
+import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';
 import { twJoin } from 'tailwind-merge';
 
 type ProductComparisonHeadStickyProps = {
-    productsCompare: ComparedProductFragmentApi[];
+    comparedProducts: ProductInProductListFragmentApi[];
     tableMarginLeft: number;
 };
 
 export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> = (props) => {
-    const { tableStickyHeadActive } = useComparisonTable(props.productsCompare.length);
+    const { tableStickyHeadActive } = useComparisonTable(props.comparedProducts.length);
 
     return (
         <div
@@ -20,7 +20,7 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
         >
             <div className="mx-auto flex w-full max-w-7xl flex-nowrap overflow-hidden">
                 <div className="border-r-1 static z-[2] flex h-full min-w-[115px] max-w-[182px] shrink-0 border-greyVeryLight bg-white sm:w-auto sm:min-w-[205px] sm:max-w-none md:min-w-[250px] md:max-w-none lg:min-w-[256px]" />
-                {props.productsCompare.map((product, index) => (
+                {props.comparedProducts.map((product, index) => (
                     <div
                         key={`headSticky-${product.uuid}`}
                         className="border-r-1 flex min-w-[calc(182px+12px*2)] max-w-[calc(182px+12px*2)] shrink-0 basis-64 items-center border-greyVeryLight py-3 px-1 sm:min-w-[calc(205px+20px*2)] sm:max-w-[calc(205px+20px*2)]"

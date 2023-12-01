@@ -1,0 +1,5 @@
+mutation RemoveProductListMutation($productListUuid: Uuid, $type: ProductListTypeEnum!) {
+    RemoveProductList(input:{type: $type, uuid: $productListUuid}) {
+        uuid
+    }
+}

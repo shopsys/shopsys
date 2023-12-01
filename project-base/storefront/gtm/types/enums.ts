@@ -40,7 +40,6 @@ export enum GtmProductListNameType {
     product_detail_related_products = 'product detail related products',
     autocomplete_search_results = 'autocomplete_search_results',
     wishlist = 'wishlist',
-    sharedWishlist = 'sharedWishlist',
     other = 'other',
     bestsellers = 'bestsellers',
 }

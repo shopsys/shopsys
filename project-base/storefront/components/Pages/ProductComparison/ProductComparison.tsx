@@ -4,7 +4,7 @@ import { SkeletonModuleComparison } from 'components/Blocks/Skeleton/SkeletonMod
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useGtmSliderProductListViewEvent } from 'gtm/hooks/productList/useGtmSliderProductListViewEvent';
 import { GtmProductListNameType } from 'gtm/types/enums';
-import { useComparison } from 'hooks/comparison/useComparison';
+import { useComparison } from 'hooks/productLists/comparison/useComparison';
 import useTranslation from 'next-translate/useTranslation';
 
 export const ProductComparison: FC = () => {
@@ -20,7 +20,7 @@ export const ProductComparison: FC = () => {
 
             {fetching && <SkeletonModuleComparison />}
 
-            {comparison?.products && !fetching && <ProductComparisonContent productsCompare={comparison.products} />}
+            {comparison?.products && !fetching && <ProductComparisonContent comparedProducts={comparison.products} />}
 
             {!comparison?.products && !fetching && (
                 <div className="flex items-center">

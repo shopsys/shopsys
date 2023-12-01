@@ -1,7 +1,0 @@
-fragment ProductComparisonFragment on Comparison{
-    __typename
-    uuid
-    products {
-        ...ComparedProductFragment
-    }
-}

@@ -36,7 +36,6 @@
     * [CategoryEdge](#categoryedge)
     * [CategoryHierarchyItem](#categoryhierarchyitem)
     * [CompanyCustomerUser](#companycustomeruser)
-    * [Comparison](#comparison)
     * [Country](#country)
     * [CreateOrderResult](#createorderresult)
     * [DeliveryAddress](#deliveryaddress)
@@ -80,6 +79,7 @@
     * [ProductConnection](#productconnection)
     * [ProductEdge](#productedge)
     * [ProductFilterOptions](#productfilteroptions)
+    * [ProductList](#productlist)
     * [ProductPrice](#productprice)
     * [RegularCustomerUser](#regularcustomeruser)
     * [RegularProduct](#regularproduct)
@@ -97,7 +97,6 @@
     * [Unit](#unit)
     * [Variant](#variant)
     * [VideoToken](#videotoken)
-    * [Wishlist](#wishlist)
   * [Inputs](#inputs)
     * [AddOrderItemsToCartInput](#addorderitemstocartinput)
     * [AddToCartInput](#addtocartinput)
@@ -118,6 +117,8 @@
     * [PersonalDataAccessRequestInput](#personaldataaccessrequestinput)
     * [PriceInput](#priceinput)
     * [ProductFilter](#productfilter)
+    * [ProductListInput](#productlistinput)
+    * [ProductListUpdateInput](#productlistupdateinput)
     * [RecoverPasswordInput](#recoverpasswordinput)
     * [RefreshTokenInput](#refreshtokeninput)
     * [RegistrationDataInput](#registrationdatainput)
@@ -128,6 +129,7 @@
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
+    * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
   * [Scalars](#scalars)
     * [Boolean](#boolean)
@@ -516,20 +518,6 @@ Returns category filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>comparison</strong></td>
-<td valign="top"><a href="#comparison">Comparison</a></td>
-<td>
-
-Get comparison by UUID or comparison of logged customer user.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>cookiesArticle</strong></td>
 <td valign="top"><a href="#articlesite">ArticleSite</a></td>
 <td>
@@ -824,6 +812,30 @@ Returns product filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>productList</strong></td>
+<td valign="top"><a href="#productlist">ProductList</a></td>
+<td>
+
+Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productListsByType</strong></td>
+<td valign="top">[<a href="#productlist">ProductList</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">productListType</td>
+<td valign="top"><a href="#productlisttypeenum">ProductListTypeEnum</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
 <td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
@@ -1064,20 +1076,6 @@ Returns available transport methods based on the current cart state
 <td valign="top"><a href="#variant">Variant</a></td>
 <td></td>
 </tr>
-<tr>
-<td colspan="2" valign="top"><strong>wishlist</strong></td>
-<td valign="top"><a href="#wishlist">Wishlist</a></td>
-<td>
-
-Get wishlist by uuid or if customer is logged, try find for logged customer.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">wishlistUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
 </tbody>
 </table>
 
@@ -1107,41 +1105,17 @@ Fills cart based on a given order, possibly merging it with the current cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>addProductToComparison</strong></td>
-<td valign="top"><a href="#comparison">Comparison</a>!</td>
+<td colspan="2" valign="top"><strong>AddProductToList</strong></td>
+<td valign="top"><a href="#productlist">ProductList</a>!</td>
 <td>
 
-Add product to Comparison and create if not exists.
+Adds a product to a product list
 
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">comparisonUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">productUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>addProductToWishlist</strong></td>
-<td valign="top"><a href="#wishlist">Wishlist</a>!</td>
-<td>
-
-Add product to wishlist and create if not exists.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">productUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">wishlistUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productlistupdateinput">ProductListUpdateInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -1226,34 +1200,6 @@ Add a transport to the cart, or remove a transport from the cart
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#changetransportincartinput">ChangeTransportInCartInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>cleanComparison</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Remove all products from Comparison and remove it.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">comparisonUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>cleanWishlist</strong></td>
-<td valign="top"><a href="#wishlist">Wishlist</a></td>
-<td>
-
-Remove all products from wishlist and remove it.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">wishlistUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
 <tr>
@@ -1420,41 +1366,31 @@ Remove product from cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>removeProductFromComparison</strong></td>
-<td valign="top"><a href="#comparison">Comparison</a></td>
+<td colspan="2" valign="top"><strong>RemoveProductFromList</strong></td>
+<td valign="top"><a href="#productlist">ProductList</a></td>
 <td>
 
-Remove product from Comparison and if is Comparison empty remove it.
+Removes a product from a product list
 
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">comparisonUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productlistupdateinput">ProductListUpdateInput</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">productUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>removeProductFromWishlist</strong></td>
-<td valign="top"><a href="#wishlist">Wishlist</a></td>
+<td colspan="2" valign="top"><strong>RemoveProductList</strong></td>
+<td valign="top"><a href="#productlist">ProductList</a></td>
 <td>
 
-Remove product from wishlist and if is wishlist empty remove it.
+Removes the product list
 
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">productUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">wishlistUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -3738,39 +3674,6 @@ Phone number
 <td>
 
 UUID
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### Comparison
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td>
-
-List of compared products
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-Comparison identifier
 
 </td>
 </tr>
@@ -6715,6 +6618,48 @@ Parameter filter options
 </tbody>
 </table>
 
+### ProductList
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>products</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+An array of the products in the list
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>type</strong></td>
+<td valign="top"><a href="#productlisttypeenum">ProductListTypeEnum</a>!</td>
+<td>
+
+Product list type
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Product list identifier
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### ProductPrice
 
 Represents the price of the product
@@ -8470,39 +8415,6 @@ UUID
 </tbody>
 </table>
 
-### Wishlist
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td>
-
-List of wishlist products
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-Wishlist identifier
-
-</td>
-</tr>
-</tbody>
-</table>
-
 ## Inputs
 
 ### AddOrderItemsToCartInput
@@ -9067,6 +8979,15 @@ The user email.
 <td>
 
 The user password.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productListsUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+Uuids of product lists that should be merged to the product lists of the user
 
 </td>
 </tr>
@@ -9636,6 +9557,66 @@ Parameter filter
 </tbody>
 </table>
 
+### ProductListInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>type</strong></td>
+<td valign="top"><a href="#productlisttypeenum">ProductListTypeEnum</a>!</td>
+<td>
+
+Product list type
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Product list identifier
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ProductListUpdateInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>productListInput</strong></td>
+<td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Product identifier
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### RecoverPasswordInput
 
 <table>
@@ -9836,6 +9817,15 @@ Customer user password
 <td>
 
 Billing address zip code (will be on the tax invoice)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productListsUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+Uuids of product lists that should be merged to the product lists of the user after registration
 
 </td>
 </tr>
@@ -10067,6 +10057,27 @@ Display data
 Export data
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### ProductListTypeEnum
+
+One of possible types of the product list
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>WISHLIST</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>COMPARISON</strong></td>
+<td></td>
 </tr>
 </tbody>
 </table>

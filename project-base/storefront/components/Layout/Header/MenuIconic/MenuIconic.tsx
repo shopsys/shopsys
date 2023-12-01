@@ -2,9 +2,9 @@ import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
 import { CompareIcon, HeartIcon, MarkerIcon } from 'components/Basic/Icon/IconsSvg';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
-import { useComparison } from 'hooks/comparison/useComparison';
+import { useComparison } from 'hooks/productLists/comparison/useComparison';
+import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useWishlist } from 'hooks/useWishlist';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 

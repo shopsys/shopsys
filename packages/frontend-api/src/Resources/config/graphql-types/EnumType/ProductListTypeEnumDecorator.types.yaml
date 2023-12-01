@@ -1,0 +1,6 @@
+ProductListTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of possible types of the product list"
+        enumClass: "Shopsys\\FrameworkBundle\\Model\\Product\\List\\ProductListTypeEnum"

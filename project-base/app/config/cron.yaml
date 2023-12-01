@@ -40,13 +40,9 @@ services:
         tags:
             - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Download Heureka categories' }
 
-    App\Model\Product\Comparison\RemoveOldComparisonsCronModule:
+    Shopsys\FrameworkBundle\Model\Product\List\RemoveOldProductListsCronModule:
         tags:
-            - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Delete old comparisons' }
-
-    App\Model\Wishlist\RemoveOldWishlistsCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Delete old wishlists' }
+            - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Delete old product lists' }
 
     # This module should run as last because it creates multiple kernels and fake requests.
     Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule:

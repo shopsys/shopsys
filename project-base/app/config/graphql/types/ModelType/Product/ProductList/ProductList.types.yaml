@@ -1,0 +1,4 @@
+ProductList:
+    type: object
+    inherits:
+        - 'ProductListDecorator'

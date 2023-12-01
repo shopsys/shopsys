@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Login;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidAccountOrPasswordUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\TooManyLoginAttemptsUserError;
@@ -24,6 +25,7 @@ class LoginMutation extends AbstractMutation
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
      * @param \Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter $loginRateLimiter
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      */
     public function __construct(
         protected readonly FrontendCustomerUserProvider $frontendCustomerUserProvider,
@@ -31,6 +33,7 @@ class LoginMutation extends AbstractMutation
         protected readonly TokenFacade $tokenFacade,
         protected readonly DefaultLoginRateLimiter $loginRateLimiter,
         protected readonly RequestStack $requestStack,
+        protected readonly ProductListFacade $productListFacade,
     ) {
     }
 
@@ -63,6 +66,8 @@ class LoginMutation extends AbstractMutation
         $deviceId = Uuid::uuid4()->toString();
 
         $this->loginRateLimiter->reset($this->requestStack->getCurrentRequest());
+
+        $this->productListFacade->mergeProductListsToCustomerUser($input['productListsUuids'], $user);
 
         return [
             'accessToken' => $this->tokenFacade->createAccessTokenAsString($user, $deviceId),

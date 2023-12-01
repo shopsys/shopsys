@@ -3,9 +3,9 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useIsUserLoggedIn } from 'hooks/auth/useIsUserLoggedIn';
-import { useComparison } from 'hooks/comparison/useComparison';
+import { useComparison } from 'hooks/productLists/comparison/useComparison';
+import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import { useWishlist } from 'hooks/useWishlist';
 import useTranslation from 'next-translate/useTranslation';
 import { useContext } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';

@@ -3,16 +3,16 @@ import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
-import { ComparedProductFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
+import { ProductInProductListFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
-import { useComparisonTable } from 'hooks/comparison/useComparisonTable';
+import { useComparisonTable } from 'hooks/productLists/comparison/useComparisonTable';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 
 type ProductComparisonItemProps = {
-    product: ComparedProductFragmentApi;
+    product: ProductInProductListFragmentApi;
     productsCompareCount: number;
     listIndex: number;
     toggleProductInComparison: () => void;

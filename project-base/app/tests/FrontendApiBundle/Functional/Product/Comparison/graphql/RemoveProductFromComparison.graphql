@@ -1,8 +1,0 @@
-mutation removeProductFromComparison($productUuid: Uuid!, $comparisonUuid: Uuid){
-    removeProductFromComparison(productUuid:$productUuid, comparisonUuid: $comparisonUuid){
-        uuid
-        products{
-            name
-        }
-    }
-}

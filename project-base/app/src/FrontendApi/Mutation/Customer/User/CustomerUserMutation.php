@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation as BaseCustomerUserMutation;
@@ -44,6 +45,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      * @param \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      * @param \App\Model\Customer\User\RegistrationFacadeInterface $registrationFacade
      * @param \App\Model\Customer\User\RegistrationDataFactoryInterface $registrationDataFactory
      * @param \App\FrontendApi\Model\Cart\MergeCartFacade $mergeCartFacade
@@ -58,6 +60,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
         CustomerUserFacade $customerUserFacade,
         CustomerUserDataFactory $customerUserDataFactory,
         TokenFacade $tokenFacade,
+        ProductListFacade $productListFacade,
         private readonly RegistrationFacadeInterface $registrationFacade,
         private readonly RegistrationDataFactoryInterface $registrationDataFactory,
         private readonly MergeCartFacade $mergeCartFacade,
@@ -72,6 +75,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
             $customerUserFacade,
             $customerUserDataFactory,
             $tokenFacade,
+            $productListFacade,
         );
     }
 
@@ -95,6 +99,8 @@ class CustomerUserMutation extends BaseCustomerUserMutation
         if ($argument['input']['lastOrderUuid'] !== null) {
             $this->orderFacade->pairCustomerUserWithOrderByOrderUuid($customerUser, $argument['input']['lastOrderUuid']);
         }
+
+        $this->productListFacade->mergeProductListsToCustomerUser($argument['input']['productListsUuids'], $customerUser);
 
         $deviceId = Uuid::uuid4()->toString();
 

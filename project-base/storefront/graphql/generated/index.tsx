@@ -742,14 +742,6 @@ export type CompanyCustomerUserApi = CustomerUserApi & {
   uuid: Scalars['Uuid']['output'];
 };
 
-export type ComparisonApi = {
-  __typename?: 'Comparison';
-  /** List of compared products */
-  products: Array<ProductApi>;
-  /** Comparison identifier */
-  uuid: Scalars['Uuid']['output'];
-};
-
 export type ContactInputApi = {
   /** Email address of the sender */
   email: Scalars['String']['input'];
@@ -999,6 +991,8 @@ export type LoginInputApi = {
   email: Scalars['String']['input'];
   /** The user password. */
   password: Scalars['Password']['input'];
+  /** Uuids of product lists that should be merged to the product lists of the user */
+  productListsUuids: Array<Scalars['Uuid']['input']>;
 };
 
 export type LoginResultApi = {
@@ -1100,6 +1094,8 @@ export type MutationApi = {
   __typename?: 'Mutation';
   /** Fills cart based on a given order, possibly merging it with the current cart */
   AddOrderItemsToCart: CartApi;
+  /** Adds a product to a product list */
+  AddProductToList: ProductListApi;
   /** Add product to cart for future checkout */
   AddToCart: AddToCartResultApi;
   /** Apply new promo code for the future checkout */
@@ -1136,6 +1132,10 @@ export type MutationApi = {
   Register: LoginResultApi;
   /** Remove product from cart */
   RemoveFromCart: CartApi;
+  /** Removes a product from a product list */
+  RemoveProductFromList: Maybe<ProductListApi>;
+  /** Removes the product list */
+  RemoveProductList: Maybe<ProductListApi>;
   /** Remove already used promo code from cart */
   RemovePromoCodeFromCart: CartApi;
   /** Request password recovery - email with hash will be sent */
@@ -1146,23 +1146,16 @@ export type MutationApi = {
   SetDefaultDeliveryAddress: CustomerUserApi;
   /** check payment status of order after callback from payment service */
   UpdatePaymentStatus: PaymentStatusApi;
-  /** Add product to Comparison and create if not exists. */
-  addProductToComparison: ComparisonApi;
-  /** Add product to wishlist and create if not exists. */
-  addProductToWishlist: WishlistApi;
-  /** Remove all products from Comparison and remove it. */
-  cleanComparison: Scalars['String']['output'];
-  /** Remove all products from wishlist and remove it. */
-  cleanWishlist: Maybe<WishlistApi>;
-  /** Remove product from Comparison and if is Comparison empty remove it. */
-  removeProductFromComparison: Maybe<ComparisonApi>;
-  /** Remove product from wishlist and if is wishlist empty remove it. */
-  removeProductFromWishlist: Maybe<WishlistApi>;
 };
 
 
 export type MutationAddOrderItemsToCartArgsApi = {
   input: AddOrderItemsToCartInputApi;
+};
+
+
+export type MutationAddProductToListArgsApi = {
+  input: ProductListUpdateInputApi;
 };
 
 
@@ -1251,6 +1244,16 @@ export type MutationRemoveFromCartArgsApi = {
 };
 
 
+export type MutationRemoveProductFromListArgsApi = {
+  input: ProductListUpdateInputApi;
+};
+
+
+export type MutationRemoveProductListArgsApi = {
+  input: ProductListInputApi;
+};
+
+
 export type MutationRemovePromoCodeFromCartArgsApi = {
   input: RemovePromoCodeFromCartInputApi;
 };
@@ -1274,40 +1277,6 @@ export type MutationSetDefaultDeliveryAddressArgsApi = {
 export type MutationUpdatePaymentStatusArgsApi = {
   orderPaymentStatusPageValidityHash: InputMaybe<Scalars['String']['input']>;
   orderUuid: Scalars['Uuid']['input'];
-};
-
-
-export type MutationAddProductToComparisonArgsApi = {
-  comparisonUuid: InputMaybe<Scalars['Uuid']['input']>;
-  productUuid: Scalars['Uuid']['input'];
-};
-
-
-export type MutationAddProductToWishlistArgsApi = {
-  productUuid: Scalars['Uuid']['input'];
-  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-
-export type MutationCleanComparisonArgsApi = {
-  comparisonUuid: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-
-export type MutationCleanWishlistArgsApi = {
-  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-
-export type MutationRemoveProductFromComparisonArgsApi = {
-  comparisonUuid: InputMaybe<Scalars['Uuid']['input']>;
-  productUuid: Scalars['Uuid']['input'];
-};
-
-
-export type MutationRemoveProductFromWishlistArgsApi = {
-  productUuid: Scalars['Uuid']['input'];
-  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 /** Represents a navigation structure item */
@@ -2030,6 +1999,35 @@ export type ProductFilterOptionsApi = {
   parameters: Maybe<Array<ParameterFilterOptionInterfaceApi>>;
 };
 
+export type ProductListApi = {
+  __typename?: 'ProductList';
+  /** An array of the products in the list */
+  products: Array<ProductApi>;
+  /** Product list type */
+  type: ProductListTypeEnumApi;
+  /** Product list identifier */
+  uuid: Scalars['Uuid']['output'];
+};
+
+export type ProductListInputApi = {
+  /** Product list type */
+  type: ProductListTypeEnumApi;
+  /** Product list identifier */
+  uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+/** One of possible types of the product list */
+export enum ProductListTypeEnumApi {
+  ComparisonApi = 'COMPARISON',
+  WishlistApi = 'WISHLIST'
+}
+
+export type ProductListUpdateInputApi = {
+  productListInput: ProductListInputApi;
+  /** Product identifier */
+  productUuid: Scalars['Uuid']['input'];
+};
+
 /** Paginated and ordered products */
 export type ProductListableApi = {
   /** Paginated and ordered products */
@@ -2130,8 +2128,6 @@ export type QueryApi = {
   categoriesSearch: CategoryConnectionApi;
   /** Returns category filtered using UUID or URL slug */
   category: Maybe<CategoryApi>;
-  /** Get comparison by UUID or comparison of logged customer user. */
-  comparison: Maybe<ComparisonApi>;
   /** Returns information about cookies article */
   cookiesArticle: Maybe<ArticleSiteApi>;
   /** Returns available countries */
@@ -2172,6 +2168,9 @@ export type QueryApi = {
   privacyPolicyArticle: Maybe<ArticleSiteApi>;
   /** Returns product filtered using UUID or URL slug */
   product: Maybe<ProductApi>;
+  /** Find product list by UUID and type or if customer is logged, try find the the oldest list of the given type for the logged customer. The logged customer can also optionally pass the UUID of his product list. */
+  productList: Maybe<ProductListApi>;
+  productListsByType: Array<ProductListApi>;
   /** Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords */
   products: ProductConnectionApi;
   /** Returns list of products by catalog numbers */
@@ -2198,8 +2197,6 @@ export type QueryApi = {
   transport: Maybe<TransportApi>;
   /** Returns available transport methods based on the current cart state */
   transports: Array<TransportApi>;
-  /** Get wishlist by uuid or if customer is logged, try find for logged customer. */
-  wishlist: Maybe<WishlistApi>;
 };
 
 
@@ -2293,11 +2290,6 @@ export type QueryCategoryArgsApi = {
 };
 
 
-export type QueryComparisonArgsApi = {
-  uuid: InputMaybe<Scalars['Uuid']['input']>;
-};
-
-
 export type QueryFlagArgsApi = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
@@ -2347,6 +2339,16 @@ export type QueryPaymentArgsApi = {
 export type QueryProductArgsApi = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type QueryProductListArgsApi = {
+  input: ProductListInputApi;
+};
+
+
+export type QueryProductListsByTypeArgsApi = {
+  productListType: ProductListTypeEnumApi;
 };
 
 
@@ -2402,11 +2404,6 @@ export type QueryTransportsArgsApi = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
-
-export type QueryWishlistArgsApi = {
-  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
-};
-
 export type RecoverPasswordInputApi = {
   /** Customer user email. */
   email: Scalars['String']['input'];
@@ -2451,6 +2448,8 @@ export type RegistrationDataInputApi = {
   password: Scalars['Password']['input'];
   /** Billing address zip code (will be on the tax invoice) */
   postcode: Scalars['String']['input'];
+  /** Uuids of product lists that should be merged to the product lists of the user after registration */
+  productListsUuids: Array<Scalars['Uuid']['input']>;
   /** Billing address street name (will be on the tax invoice) */
   street: Scalars['String']['input'];
   /** The customer's telephone number */
@@ -2929,14 +2928,6 @@ export type VideoTokenApi = {
   token: Scalars['String']['output'];
 };
 
-export type WishlistApi = {
-  __typename?: 'Wishlist';
-  /** List of wishlist products */
-  products: Array<ProductApi>;
-  /** Wishlist identifier */
-  uuid: Scalars['Uuid']['output'];
-};
-
 type AdvertsFragment_AdvertCode_Api = { __typename: 'AdvertCode', code: string, uuid: string, name: string, positionName: string, type: string, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string }> };
 
 type AdvertsFragment_AdvertImage_Api = { __typename: 'AdvertImage', link: string | null, uuid: string, name: string, positionName: string, type: string, mainImage: { __typename: 'Image', position: number | null, name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, mainImageMobile: { __typename: 'Image', position: number | null, name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string }> };
@@ -3029,6 +3020,7 @@ export type LoginVariablesApi = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['Password']['input'];
   previousCartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  productListsUuids: Array<Scalars['Uuid']['input']> | Scalars['Uuid']['input'];
 }>;
 
 
@@ -3486,13 +3478,43 @@ export type ProductFilterOptionsParametersColorFragmentApi = { __typename: 'Para
 
 export type ProductFilterOptionsParametersSliderFragmentApi = { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: number | null, isSelectable: boolean, unit: { __typename: 'Unit', name: string } | null };
 
-type ComparedProductFragment_MainVariant_Api = { __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> };
+type ProductInProductListFragment_MainVariant_Api = { __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> };
 
-type ComparedProductFragment_RegularProduct_Api = { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> };
+type ProductInProductListFragment_RegularProduct_Api = { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> };
 
-type ComparedProductFragment_Variant_Api = { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> };
+type ProductInProductListFragment_Variant_Api = { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> };
 
-export type ComparedProductFragmentApi = ComparedProductFragment_MainVariant_Api | ComparedProductFragment_RegularProduct_Api | ComparedProductFragment_Variant_Api;
+export type ProductInProductListFragmentApi = ProductInProductListFragment_MainVariant_Api | ProductInProductListFragment_RegularProduct_Api | ProductInProductListFragment_Variant_Api;
+
+export type ProductListFragmentApi = { __typename: 'ProductList', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> };
+
+export type AddProductToListMutationVariablesApi = Exact<{
+  input: ProductListUpdateInputApi;
+}>;
+
+
+export type AddProductToListMutationApi = { __typename?: 'Mutation', AddProductToList: { __typename: 'ProductList', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } };
+
+export type RemoveProductFromListMutationVariablesApi = Exact<{
+  input: ProductListUpdateInputApi;
+}>;
+
+
+export type RemoveProductFromListMutationApi = { __typename?: 'Mutation', RemoveProductFromList: { __typename: 'ProductList', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } | null };
+
+export type RemoveProductListMutationVariablesApi = Exact<{
+  input: ProductListInputApi;
+}>;
+
+
+export type RemoveProductListMutationApi = { __typename?: 'Mutation', RemoveProductList: { __typename?: 'ProductList', uuid: string } | null };
+
+export type ProductListQueryVariablesApi = Exact<{
+  input: ProductListInputApi;
+}>;
+
+
+export type ProductListQueryApi = { __typename?: 'Query', productList: { __typename: 'ProductList', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } | null };
 
 export type ListedProductConnectionFragmentApi = { __typename: 'ProductConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean }, edges: Array<{ __typename: 'ProductEdge', node: { __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | null } | null> | null };
 
@@ -3520,8 +3542,6 @@ export type ProductDetailInterfaceFragmentApi = ProductDetailInterfaceFragment_M
 
 export type ProductPriceFragmentApi = { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean };
 
-export type ProductComparisonFragmentApi = { __typename: 'Comparison', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> };
-
 type SimpleProductFragment_MainVariant_Api = { __typename: 'MainVariant', id: number, uuid: string, catalogNumber: string, fullName: string, slug: string, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, unit: { __typename?: 'Unit', name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename?: 'Category', name: string }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi } };
 
 type SimpleProductFragment_RegularProduct_Api = { __typename: 'RegularProduct', id: number, uuid: string, catalogNumber: string, fullName: string, slug: string, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, unit: { __typename?: 'Unit', name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename?: 'Category', name: string }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi } };
@@ -3531,29 +3551,6 @@ type SimpleProductFragment_Variant_Api = { __typename: 'Variant', id: number, uu
 export type SimpleProductFragmentApi = SimpleProductFragment_MainVariant_Api | SimpleProductFragment_RegularProduct_Api | SimpleProductFragment_Variant_Api;
 
 export type VideoTokenFragmentApi = { __typename: 'VideoToken', description: string, token: string };
-
-export type AddProductToComparisonMutationVariablesApi = Exact<{
-  productUuid: Scalars['Uuid']['input'];
-  comparisonUuid: InputMaybe<Scalars['Uuid']['input']>;
-}>;
-
-
-export type AddProductToComparisonMutationApi = { __typename?: 'Mutation', addProductToComparison: { __typename: 'Comparison', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } };
-
-export type CleanComparisonMutationVariablesApi = Exact<{
-  comparisonUuid: InputMaybe<Scalars['Uuid']['input']>;
-}>;
-
-
-export type CleanComparisonMutationApi = { __typename?: 'Mutation', cleanComparison: string };
-
-export type RemoveProductFromComparisonMutationVariablesApi = Exact<{
-  productUuid: Scalars['Uuid']['input'];
-  comparisonUuid: InputMaybe<Scalars['Uuid']['input']>;
-}>;
-
-
-export type RemoveProductFromComparisonMutationApi = { __typename?: 'Mutation', removeProductFromComparison: { __typename: 'Comparison', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } | null };
 
 export type BrandProductsQueryVariablesApi = Exact<{
   endCursor: Scalars['String']['input'];
@@ -3576,13 +3573,6 @@ export type CategoryProductsQueryVariablesApi = Exact<{
 
 
 export type CategoryProductsQueryApi = { __typename?: 'Query', products: { __typename: 'ProductConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean }, edges: Array<{ __typename: 'ProductEdge', node: { __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | null } | null> | null } };
-
-export type ComparisonQueryVariablesApi = Exact<{
-  comparisonUuid: InputMaybe<Scalars['Uuid']['input']>;
-}>;
-
-
-export type ComparisonQueryApi = { __typename?: 'Query', comparison: { __typename: 'Comparison', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } | null };
 
 export type FlagProductsQueryVariablesApi = Exact<{
   endCursor: Scalars['String']['input'];
@@ -3740,45 +3730,6 @@ export type TransportsQueryVariablesApi = Exact<{
 
 
 export type TransportsQueryApi = { __typename?: 'Query', transports: Array<{ __typename: 'Transport', uuid: string, name: string, description: string | null, instruction: string | null, daysUntilDelivery: number, isPersonalPickup: boolean, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, payments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }>, stores: { __typename: 'StoreConnection', edges: Array<{ __typename: 'StoreEdge', node: { __typename: 'Store', slug: string, name: string, description: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, identifier: string, openingHours: { __typename?: 'OpeningHours', isOpen: boolean, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', dayOfWeek: number, firstOpeningTime: string | null, firstClosingTime: string | null, secondOpeningTime: string | null, secondClosingTime: string | null }> }, country: { __typename: 'Country', name: string, code: string } } | null } | null> | null } | null, transportType: { __typename: 'TransportType', code: string } }> };
-
-export type WishlistFragmentApi = { __typename: 'Wishlist', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> };
-
-export type AddProductToWishlistMutationVariablesApi = Exact<{
-  productUuid: Scalars['Uuid']['input'];
-  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
-}>;
-
-
-export type AddProductToWishlistMutationApi = { __typename?: 'Mutation', addProductToWishlist: { __typename: 'Wishlist', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } };
-
-export type CleanWishlistMutationVariablesApi = Exact<{
-  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
-}>;
-
-
-export type CleanWishlistMutationApi = { __typename?: 'Mutation', cleanWishlist: { __typename: 'Wishlist', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } | null };
-
-export type RemoveProductFromWishlistMutationVariablesApi = Exact<{
-  productUuid: Scalars['Uuid']['input'];
-  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
-}>;
-
-
-export type RemoveProductFromWishlistMutationApi = { __typename?: 'Mutation', removeProductFromWishlist: { __typename: 'Wishlist', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } | null };
-
-export type SharedWishlistQueryVariablesApi = Exact<{
-  catnums: Array<Scalars['String']['input']> | Scalars['String']['input'];
-}>;
-
-
-export type SharedWishlistQueryApi = { __typename?: 'Query', productsByCatnums: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> };
-
-export type WishlistQueryVariablesApi = Exact<{
-  wishlistUuid: InputMaybe<Scalars['Uuid']['input']>;
-}>;
-
-
-export type WishlistQueryApi = { __typename?: 'Query', wishlist: { __typename: 'Wishlist', uuid: string, products: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename: 'Category', name: string }> }> } | null };
 
 
       export interface PossibleTypesResultData {
@@ -4937,6 +4888,37 @@ export const OrderListFragmentApi = gql`
 }
     ${PageInfoFragmentApi}
 ${ListedOrderFragmentApi}`;
+export const ParameterFragmentApi = gql`
+    fragment ParameterFragment on Parameter {
+  __typename
+  uuid
+  name
+  visible
+  values {
+    __typename
+    uuid
+    text
+  }
+}
+    `;
+export const ProductInProductListFragmentApi = gql`
+    fragment ProductInProductListFragment on Product {
+  ...ListedProductFragment
+  parameters {
+    ...ParameterFragment
+  }
+}
+    ${ListedProductFragmentApi}
+${ParameterFragmentApi}`;
+export const ProductListFragmentApi = gql`
+    fragment ProductListFragment on ProductList {
+  __typename
+  uuid
+  products {
+    ...ProductInProductListFragment
+  }
+}
+    ${ProductInProductListFragmentApi}`;
 export const ListedProductConnectionFragmentApi = gql`
     fragment ListedProductConnectionFragment on ProductConnection {
   __typename
@@ -4951,19 +4933,6 @@ export const ListedProductConnectionFragmentApi = gql`
   }
 }
     ${ListedProductFragmentApi}`;
-export const ParameterFragmentApi = gql`
-    fragment ParameterFragment on Parameter {
-  __typename
-  uuid
-  name
-  visible
-  values {
-    __typename
-    uuid
-    text
-  }
-}
-    `;
 export const VideoTokenFragmentApi = gql`
     fragment VideoTokenFragment on VideoToken {
   __typename
@@ -5098,24 +5067,6 @@ export const ProductDetailFragmentApi = gql`
 }
     ${ProductDetailInterfaceFragmentApi}
 ${StoreAvailabilityFragmentApi}`;
-export const ComparedProductFragmentApi = gql`
-    fragment ComparedProductFragment on Product {
-  ...ListedProductFragment
-  parameters {
-    ...ParameterFragment
-  }
-}
-    ${ListedProductFragmentApi}
-${ParameterFragmentApi}`;
-export const ProductComparisonFragmentApi = gql`
-    fragment ProductComparisonFragment on Comparison {
-  __typename
-  uuid
-  products {
-    ...ComparedProductFragment
-  }
-}
-    ${ComparedProductFragmentApi}`;
 export const SimpleProductFragmentApi = gql`
     fragment SimpleProductFragment on Product {
   __typename
@@ -5206,15 +5157,6 @@ export const SliderItemFragmentApi = gql`
 }
     ${SliderItemImagesWebDefaultFragmentApi}
 ${SliderItemImagesMobileDefaultFragmentApi}`;
-export const WishlistFragmentApi = gql`
-    fragment WishlistFragment on Wishlist {
-  __typename
-  uuid
-  products {
-    ...ListedProductFragment
-  }
-}
-    ${ListedProductFragmentApi}`;
 export const AdvertsQueryDocumentApi = gql`
     query AdvertsQuery {
   adverts {
@@ -5309,8 +5251,10 @@ export function useBlogArticlesQueryApi(options?: Omit<Urql.UseQueryArgs<BlogArt
   return Urql.useQuery<BlogArticlesQueryApi, BlogArticlesQueryVariablesApi>({ query: BlogArticlesQueryDocumentApi, ...options });
 };
 export const LoginDocumentApi = gql`
-    mutation Login($email: String!, $password: Password!, $previousCartUuid: Uuid) {
-  Login(input: {email: $email, password: $password, cartUuid: $previousCartUuid}) {
+    mutation Login($email: String!, $password: Password!, $previousCartUuid: Uuid, $productListsUuids: [Uuid!]!) {
+  Login(
+    input: {email: $email, password: $password, cartUuid: $previousCartUuid, productListsUuids: $productListsUuids}
+  ) {
     tokens {
       ...TokenFragments
     }
@@ -5931,42 +5875,49 @@ export const PersonalDataPageTextQueryDocumentApi = gql`
 export function usePersonalDataPageTextQueryApi(options?: Omit<Urql.UseQueryArgs<PersonalDataPageTextQueryVariablesApi>, 'query'>) {
   return Urql.useQuery<PersonalDataPageTextQueryApi, PersonalDataPageTextQueryVariablesApi>({ query: PersonalDataPageTextQueryDocumentApi, ...options });
 };
-export const AddProductToComparisonMutationDocumentApi = gql`
-    mutation AddProductToComparisonMutation($productUuid: Uuid!, $comparisonUuid: Uuid) {
-  addProductToComparison(
-    productUuid: $productUuid
-    comparisonUuid: $comparisonUuid
-  ) {
-    ...ProductComparisonFragment
+export const AddProductToListMutationDocumentApi = gql`
+    mutation AddProductToListMutation($input: ProductListUpdateInput!) {
+  AddProductToList(input: $input) {
+    ...ProductListFragment
   }
 }
-    ${ProductComparisonFragmentApi}`;
+    ${ProductListFragmentApi}`;
 
-export function useAddProductToComparisonMutationApi() {
-  return Urql.useMutation<AddProductToComparisonMutationApi, AddProductToComparisonMutationVariablesApi>(AddProductToComparisonMutationDocumentApi);
+export function useAddProductToListMutationApi() {
+  return Urql.useMutation<AddProductToListMutationApi, AddProductToListMutationVariablesApi>(AddProductToListMutationDocumentApi);
 };
-export const CleanComparisonMutationDocumentApi = gql`
-    mutation CleanComparisonMutation($comparisonUuid: Uuid) {
-  cleanComparison(comparisonUuid: $comparisonUuid)
+export const RemoveProductFromListMutationDocumentApi = gql`
+    mutation RemoveProductFromListMutation($input: ProductListUpdateInput!) {
+  RemoveProductFromList(input: $input) {
+    ...ProductListFragment
+  }
+}
+    ${ProductListFragmentApi}`;
+
+export function useRemoveProductFromListMutationApi() {
+  return Urql.useMutation<RemoveProductFromListMutationApi, RemoveProductFromListMutationVariablesApi>(RemoveProductFromListMutationDocumentApi);
+};
+export const RemoveProductListMutationDocumentApi = gql`
+    mutation RemoveProductListMutation($input: ProductListInput!) {
+  RemoveProductList(input: $input) {
+    uuid
+  }
 }
     `;
 
-export function useCleanComparisonMutationApi() {
-  return Urql.useMutation<CleanComparisonMutationApi, CleanComparisonMutationVariablesApi>(CleanComparisonMutationDocumentApi);
+export function useRemoveProductListMutationApi() {
+  return Urql.useMutation<RemoveProductListMutationApi, RemoveProductListMutationVariablesApi>(RemoveProductListMutationDocumentApi);
 };
-export const RemoveProductFromComparisonMutationDocumentApi = gql`
-    mutation RemoveProductFromComparisonMutation($productUuid: Uuid!, $comparisonUuid: Uuid) {
-  removeProductFromComparison(
-    productUuid: $productUuid
-    comparisonUuid: $comparisonUuid
-  ) {
-    ...ProductComparisonFragment
+export const ProductListQueryDocumentApi = gql`
+    query ProductListQuery($input: ProductListInput!) {
+  productList(input: $input) {
+    ...ProductListFragment
   }
 }
-    ${ProductComparisonFragmentApi}`;
+    ${ProductListFragmentApi}`;
 
-export function useRemoveProductFromComparisonMutationApi() {
-  return Urql.useMutation<RemoveProductFromComparisonMutationApi, RemoveProductFromComparisonMutationVariablesApi>(RemoveProductFromComparisonMutationDocumentApi);
+export function useProductListQueryApi(options: Omit<Urql.UseQueryArgs<ProductListQueryVariablesApi>, 'query'>) {
+  return Urql.useQuery<ProductListQueryApi, ProductListQueryVariablesApi>({ query: ProductListQueryDocumentApi, ...options });
 };
 export const BrandProductsQueryDocumentApi = gql`
     query BrandProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $urlSlug: String, $pageSize: Int) {
@@ -6001,17 +5952,6 @@ export const CategoryProductsQueryDocumentApi = gql`
 
 export function useCategoryProductsQueryApi(options: Omit<Urql.UseQueryArgs<CategoryProductsQueryVariablesApi>, 'query'>) {
   return Urql.useQuery<CategoryProductsQueryApi, CategoryProductsQueryVariablesApi>({ query: CategoryProductsQueryDocumentApi, ...options });
-};
-export const ComparisonQueryDocumentApi = gql`
-    query ComparisonQuery($comparisonUuid: Uuid) {
-  comparison(uuid: $comparisonUuid) {
-    ...ProductComparisonFragment
-  }
-}
-    ${ProductComparisonFragmentApi}`;
-
-export function useComparisonQueryApi(options?: Omit<Urql.UseQueryArgs<ComparisonQueryVariablesApi>, 'query'>) {
-  return Urql.useQuery<ComparisonQueryApi, ComparisonQueryVariablesApi>({ query: ComparisonQueryDocumentApi, ...options });
 };
 export const FlagProductsQueryDocumentApi = gql`
     query FlagProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $urlSlug: String, $pageSize: Int) {
@@ -6330,62 +6270,4 @@ export const TransportsQueryDocumentApi = gql`
 
 export function useTransportsQueryApi(options?: Omit<Urql.UseQueryArgs<TransportsQueryVariablesApi>, 'query'>) {
   return Urql.useQuery<TransportsQueryApi, TransportsQueryVariablesApi>({ query: TransportsQueryDocumentApi, ...options });
-};
-export const AddProductToWishlistMutationDocumentApi = gql`
-    mutation AddProductToWishlistMutation($productUuid: Uuid!, $wishlistUuid: Uuid) {
-  addProductToWishlist(productUuid: $productUuid, wishlistUuid: $wishlistUuid) {
-    ...WishlistFragment
-  }
-}
-    ${WishlistFragmentApi}`;
-
-export function useAddProductToWishlistMutationApi() {
-  return Urql.useMutation<AddProductToWishlistMutationApi, AddProductToWishlistMutationVariablesApi>(AddProductToWishlistMutationDocumentApi);
-};
-export const CleanWishlistMutationDocumentApi = gql`
-    mutation CleanWishlistMutation($wishlistUuid: Uuid) {
-  cleanWishlist(wishlistUuid: $wishlistUuid) {
-    ...WishlistFragment
-  }
-}
-    ${WishlistFragmentApi}`;
-
-export function useCleanWishlistMutationApi() {
-  return Urql.useMutation<CleanWishlistMutationApi, CleanWishlistMutationVariablesApi>(CleanWishlistMutationDocumentApi);
-};
-export const RemoveProductFromWishlistMutationDocumentApi = gql`
-    mutation RemoveProductFromWishlistMutation($productUuid: Uuid!, $wishlistUuid: Uuid) {
-  removeProductFromWishlist(
-    productUuid: $productUuid
-    wishlistUuid: $wishlistUuid
-  ) {
-    ...WishlistFragment
-  }
-}
-    ${WishlistFragmentApi}`;
-
-export function useRemoveProductFromWishlistMutationApi() {
-  return Urql.useMutation<RemoveProductFromWishlistMutationApi, RemoveProductFromWishlistMutationVariablesApi>(RemoveProductFromWishlistMutationDocumentApi);
-};
-export const SharedWishlistQueryDocumentApi = gql`
-    query SharedWishlistQuery($catnums: [String!]!) {
-  productsByCatnums(catnums: $catnums) {
-    ...ListedProductFragment
-  }
-}
-    ${ListedProductFragmentApi}`;
-
-export function useSharedWishlistQueryApi(options: Omit<Urql.UseQueryArgs<SharedWishlistQueryVariablesApi>, 'query'>) {
-  return Urql.useQuery<SharedWishlistQueryApi, SharedWishlistQueryVariablesApi>({ query: SharedWishlistQueryDocumentApi, ...options });
-};
-export const WishlistQueryDocumentApi = gql`
-    query WishlistQuery($wishlistUuid: Uuid) {
-  wishlist(wishlistUuid: $wishlistUuid) {
-    ...WishlistFragment
-  }
-}
-    ${WishlistFragmentApi}`;
-
-export function useWishlistQueryApi(options?: Omit<Urql.UseQueryArgs<WishlistQueryVariablesApi>, 'query'>) {
-  return Urql.useQuery<WishlistQueryApi, WishlistQueryVariablesApi>({ query: WishlistQueryDocumentApi, ...options });
 };

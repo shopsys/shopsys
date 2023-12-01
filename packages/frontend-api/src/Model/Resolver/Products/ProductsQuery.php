@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
+use GraphQL\Executor\Promise\Promise;
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
+use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
@@ -21,11 +25,15 @@ class ProductsQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      */
     public function __construct(
         protected readonly ProductFacade $productFacade,
         protected readonly ProductFilterFacade $productFilterFacade,
         protected readonly ProductConnectionFactory $productConnectionFactory,
+        protected readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
+        protected readonly ProductListFacade $productListFacade,
     ) {
     }
 
@@ -163,5 +171,16 @@ class ProductsQuery extends AbstractQuery
         }
 
         return ProductListOrderingConfig::ORDER_BY_PRIORITY;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductList $productList
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function productsByProductListQuery(ProductList $productList): Promise
+    {
+        $productIds = $this->productListFacade->getProductIdsByProductList($productList);
+
+        return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
     }
 }
