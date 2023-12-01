@@ -466,7 +466,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   method `getImageUrlFromAttributes()` was removed
         -   method `getImagesByEntitiesIndexedByEntityId()` was removed
         -   method `getImagesByEntityId()` was removed
-    -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface`, `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade`, `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade` classes have been changed:
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface`, `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade` classes have been changed:
         -   method `getAccessoriesForProduct()` was removed
         -   method `getVariantsForProduct()` was removed
         -   method `getPaginatedProductsInCategory()` was removed
@@ -482,8 +482,26 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         +       string $searchText = '',
             ): ProductFilterCountData
         ```
-    -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade`
-        -   method `getAllOfferedProducts()` was removed
+    -   class `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade` was removed, use `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade` instead
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductRepository`
+        -   method `getPaginationResultForListableInCategory()` was removed
+        -   method `getAllListableTranslatedAndOrderedQueryBuilder()` was removed
+        -   method `getAllListableTranslatedAndOrderedQueryBuilderByCategory()` was removed
+        -   method `getPaginationResultForListableForBrand()` was removed
+        -   method `getFilteredListableInCategoryQueryBuilder()` was removed
+        -   method `getPaginationResultForSearchListable()` was removed
+        -   method `getFilteredListableForSearchQueryBuilder()` was removed
+        -   method `applyOrdering()` was removed
+        -   method `__construct` changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly EntityManagerInterface $em,
+        -       protected readonly ProductFilterRepository $productFilterRepository,
+        -       protected readonly QueryBuilderExtender $queryBuilderExtender,
+        -       protected readonly Localization $localization,
+                protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
+            )
+        ```
     -   see #project-base-diff to update your project
 
 ### Storefront

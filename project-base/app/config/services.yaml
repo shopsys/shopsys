@@ -525,9 +525,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository:
         alias: App\Model\Product\Elasticsearch\ProductExportRepository
 
-    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade:
-        alias: App\Model\Product\ProductOnCurrentDomainFacade
-
     Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository:
         alias: App\Model\Product\Filter\BrandFilterChoiceRepository
 

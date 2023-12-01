@@ -4,16 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product;
 
-use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\Model\Category\Category;
-use App\Model\Product\Filter\ProductFilterData;
-use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -23,16 +16,6 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
      * @inject
      */
     private ProductRepository $productRepository;
-
-    /**
-     * @inject
-     */
-    private ProductDataFactoryInterface $productDataFactory;
-
-    /**
-     * @inject
-     */
-    private ProductFacade $productFacade;
 
     public function testVisibleAndNotSellingDeniedProductIsListed()
     {
@@ -166,46 +149,6 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $this->assertSame(in_array($product, $result, true), $isExpectedInResult);
     }
 
-    public function testOrderingByProductPriorityInCategory()
-    {
-        /** @var \App\Model\Category\Category $category */
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_FOOD);
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 70);
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 71);
-
-        $this->setProductOrderingPriority($product1, 0);
-        $this->setProductOrderingPriority($product2, -1);
-
-        $results = $this->getProductsInCategoryOrderedByPriority($category);
-        $this->assertSame($product1, $results[0]);
-        $this->assertSame($product2, $results[1]);
-
-        $this->setProductOrderingPriority($product2, 1);
-
-        $results = $this->getProductsInCategoryOrderedByPriority($category);
-        $this->assertSame($product2, $results[0]);
-        $this->assertSame($product1, $results[1]);
-    }
-
-    public function testOrderingByProductPriorityInSearch()
-    {
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 45);
-
-        $this->setProductOrderingPriority($product1, 2);
-        $this->setProductOrderingPriority($product2, 3);
-
-        $results = $this->getProductsForSearchOrderedByPriority('sencor');
-        $this->assertSame($product2, $results[0]);
-        $this->assertSame($product1, $results[1]);
-
-        $this->setProductOrderingPriority($product2, 1);
-
-        $results = $this->getProductsForSearchOrderedByPriority('sencor');
-        $this->assertSame($product1, $results[0]);
-        $this->assertSame($product2, $results[1]);
-    }
-
     public function testGetSortedProductsByIds()
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
@@ -240,68 +183,5 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         $results = $this->productRepository->getOfferedByIds($this->domain->getId(), $pricingGroup, $sortedProductIds);
 
         $this->assertSame($sortedProducts, $results);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $priority
-     */
-    private function setProductOrderingPriority(Product $product, $priority)
-    {
-        $productData = $this->productDataFactory->createFromProduct($product);
-        $productData->orderingPriority = $priority;
-        $this->productFacade->edit($product->getId(), $productData);
-    }
-
-    /**
-     * @param string $searchText
-     * @return \App\Model\Product\Product[]
-     */
-    private function getProductsForSearchOrderedByPriority($searchText)
-    {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(
-            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID,
-        );
-
-        $paginationResult = $this->productRepository->getPaginationResultForSearchListable(
-            $searchText,
-            Domain::FIRST_DOMAIN_ID,
-            $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale(),
-            new ProductFilterData(),
-            ProductListOrderingConfig::ORDER_BY_PRIORITY,
-            $pricingGroup,
-            1,
-            PHP_INT_MAX,
-        );
-
-        return $paginationResult->getResults();
-    }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     * @return \App\Model\Product\Product[]
-     */
-    private function getProductsInCategoryOrderedByPriority(Category $category)
-    {
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(
-            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID,
-        );
-
-        $paginationResult = $this->productRepository->getPaginationResultForListableInCategory(
-            $category,
-            Domain::FIRST_DOMAIN_ID,
-            $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale(),
-            new ProductFilterData(),
-            ProductListOrderingConfig::ORDER_BY_PRIORITY,
-            $pricingGroup,
-            1,
-            PHP_INT_MAX,
-        );
-
-        return $paginationResult->getResults();
     }
 }
