@@ -31,9 +31,12 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                         data-testid={TEST_IDENTIFIER + variant.catalogNumber}
                     >
                         <Image
+                            priority
                             alt={variant.mainImage?.name || variant.fullName}
-                            image={variant.mainImage}
-                            wrapperClassName="flex h-48 lg:h-16 lg:w-16"
+                            className="flex h-48 lg:h-16 lg:w-16"
+                            height={200}
+                            src={variant.mainImage?.url}
+                            width={1200}
                         />
 
                         <div className="flex-1 text-center lg:text-left">{variant.fullName}</div>

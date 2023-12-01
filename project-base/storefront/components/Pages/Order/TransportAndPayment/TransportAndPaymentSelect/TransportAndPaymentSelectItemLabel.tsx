@@ -29,7 +29,9 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
     return (
         <div className="flex w-full flex-row items-center gap-3" data-testid={TEST_IDENTIFIER}>
-            <Image alt={image?.name} className="h-6 w-11 shrink-0 basis-11" image={image} wrapperClassName="shrink-0" />
+            <div className="flex w-12  items-center">
+                <Image alt={image?.name ?? name} className="w-auto" height={48} src={image?.url} width={48} />
+            </div>
 
             <div className="flex flex-1 flex-col text-sm lg:flex-auto lg:basis-full lg:flex-row lg:items-center lg:gap-3">
                 <div>

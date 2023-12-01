@@ -19,7 +19,7 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
             )}
         >
             <div className="mx-auto flex w-full max-w-7xl flex-nowrap overflow-hidden">
-                <div className="border-r-1 static z-[2] flex h-full min-w-[115px] max-w-[182px] shrink-0 border-greyVeryLight bg-white sm:w-auto sm:min-w-[205px] sm:max-w-none md:min-w-[250px] md:max-w-none lg:min-w-[256px]" />
+                <div className="border-r-1 static z-[2] flex h-full min-w-[115px] max-w-[182px] shrink-0 border-greyVeryLight bg-white sm:w-auto sm:min-w-[220px] sm:max-w-none md:min-w-[265px] md:max-w-none lg:min-w-[270px] vl:min-w-[290px]" />
                 {props.comparedProducts.map((product, index) => (
                     <div
                         key={`headSticky-${product.uuid}`}
@@ -27,7 +27,13 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
                         style={index === 0 ? { marginLeft: -props.tableMarginLeft } : undefined}
                     >
                         <a className="w-16" href={product.slug}>
-                            <Image alt={product.mainImage?.name || product.fullName} image={product.mainImage} />
+                            <Image
+                                alt={product.mainImage?.name || product.fullName}
+                                className="w-auto"
+                                height={64}
+                                src={product.mainImage?.url}
+                                width={64}
+                            />
                         </a>
                         <div className="ml-2 flex flex-1 flex-col">
                             <a className="text-xs no-underline hover:no-underline" href={product.slug}>

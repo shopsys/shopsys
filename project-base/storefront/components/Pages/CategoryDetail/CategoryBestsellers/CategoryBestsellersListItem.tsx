@@ -14,8 +14,6 @@ type CategoryBestsellersListItemProps = {
     listIndex: number;
 };
 
-const TEST_IDENTIFIER = 'pages-category-bestseller-item-';
-
 export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> = ({
     product,
     gtmProductListName,
@@ -26,24 +24,23 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
 
     return (
         <div className="flex flex-wrap items-center gap-y-4 border-t border-greyLight py-4 first-of-type:border-0 lg:flex-nowrap lg:gap-5">
-            <div className="flex w-full items-center lg:basis-7/12">
-                <div data-testid={TEST_IDENTIFIER + 'name'}>
-                    <ExtendedNextLink
-                        className="flex items-center gap-5 font-bold no-underline"
-                        href={product.slug}
-                        type="product"
-                        onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
-                    >
-                        <Image
-                            alt={product.fullName}
-                            className="max-h-[80px] max-w-[80px]"
-                            dataTestId={TEST_IDENTIFIER + 'image'}
-                            image={product.mainImage}
-                        />
-                        <span>{product.fullName}</span>
-                    </ExtendedNextLink>
+            <ExtendedNextLink
+                className="flex items-center gap-5 font-bold no-underline lg:flex-1"
+                href={product.slug}
+                type="product"
+                onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
+            >
+                <div className="flex w-20 shrink-0 items-center justify-center">
+                    <Image
+                        alt={product.mainImage?.name || product.fullName}
+                        className="max-h-20 w-auto shrink-0"
+                        height={80}
+                        src={product.mainImage?.url}
+                        width={80}
+                    />
                 </div>
-            </div>
+                <span>{product.fullName}</span>
+            </ExtendedNextLink>
 
             <div className="basis-4/6 lg:basis-3/12 lg:text-center">
                 <span

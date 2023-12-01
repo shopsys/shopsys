@@ -1,5 +1,6 @@
+import imageLogo from '/public/images/logo.svg';
+import { Image } from 'components/Basic/Image/Image';
 import useTranslation from 'next-translate/useTranslation';
-import Image from 'next/image';
 
 const TEST_IDENTIFIER = 'layout-footer-footercopyright';
 
@@ -14,7 +15,7 @@ export const FooterCopyright: FC = () => {
             <div className="flex items-center text-sm text-greyLight">
                 {t('Customized E-shop by')}
                 <a className="ml-2 flex w-20" href="https://www.shopsys.com" rel="noreferrer" target="_blank">
-                    <Image alt="footer logo" height={18} src="/images/logo.svg" width={77} />
+                    <Image alt="footer logo" src={imageLogo} />
                 </a>
             </div>
         </div>

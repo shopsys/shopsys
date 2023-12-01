@@ -1,6 +1,7 @@
 import { StoreInfoBox } from './StoreInfoBox';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { MarkerIcon } from 'components/Basic/Icon/IconsSvg';
+import { Image } from 'components/Basic/Image/Image';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
@@ -8,7 +9,6 @@ import { createMapMarker } from 'helpers/createMapMarker';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
-import Image from 'next/image';
 import { useCallback, useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { MapMarker } from 'types/map';
@@ -64,7 +64,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
                                 <Image
                                     priority
                                     alt={t('Stores')}
-                                    height={160}
+                                    height={210}
                                     src={`/images/stores_${defaultLocale}.png`}
                                     width={210}
                                 />
@@ -90,16 +90,14 @@ export const StoresContent: FC<StoresContentProps> = ({ stores }) => {
                                     href={store.slug}
                                     type="store"
                                 >
-                                    <>
-                                        <div className="flex flex-row items-center text-lg text-primary">
-                                            <MarkerIcon className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
-                                            <StoreButton>{store.name}</StoreButton>
-                                        </div>
+                                    <div className="flex flex-row items-center text-lg text-primary">
+                                        <MarkerIcon className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
+                                        <StoreButton>{store.name}</StoreButton>
+                                    </div>
 
-                                        <div className="flex flex-row items-center text-lg text-primary">
-                                            <StoreButton isRight>{t('Store detail')}</StoreButton>
-                                        </div>
-                                    </>
+                                    <div className="flex flex-row items-center text-lg text-primary">
+                                        <StoreButton isRight>{t('Store detail')}</StoreButton>
+                                    </div>
                                 </ExtendedNextLink>
                             ))}
                     </div>

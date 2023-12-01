@@ -108,9 +108,8 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                             <div className="flex items-center gap-2">
                                                 <Image
                                                     alt={order.transport.mainImage?.name || order.transport.name}
-                                                    className="h-9 w-9"
                                                     height={20}
-                                                    image={order.transport.mainImage}
+                                                    src={order.transport.mainImage?.url}
                                                     width={36}
                                                 />
                                                 <span className="flex-1">{order.transport.name}</span>

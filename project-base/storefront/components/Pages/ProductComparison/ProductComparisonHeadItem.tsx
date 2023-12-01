@@ -40,7 +40,13 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
             <div className="flex h-[365px] w-[182px] flex-col gap-2 sm:w-[205px]">
                 <div className="flex flex-col items-center ">
                     <div className="flex h-[185px] w-full items-center justify-center pt-4 pb-3">
-                        <Image alt={product.mainImage?.name || product.fullName} image={product.mainImage} />
+                        <Image
+                            alt={product.mainImage?.name || product.fullName}
+                            className="max-h-full w-auto"
+                            height={185}
+                            src={product.mainImage?.url}
+                            width={200}
+                        />
                     </div>
                     <ExtendedNextLink
                         className="text-primary no-underline hover:no-underline"

@@ -1,5 +1,7 @@
+import needAdviceImage from '/public/images/need_advice.webp';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { PhoneIcon } from 'components/Basic/Icon/IconsSvg';
+import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -20,14 +22,11 @@ export const FooterBoxInfo: FC = () => {
 
     return (
         <div className="relative mb-11 flex items-center lg:mb-24" data-testid={TEST_IDENTIFIER}>
-            <picture>
-                <source srcSet="/images/need_advice2x.webp 2x, /images/need_advice2x.webp 1x" />
-                <img
-                    alt={t('Need advice?')}
-                    className="absolute left-0 bottom-0 block h-12 w-12 translate-y-1/2 lg:h-16 lg:w-16"
-                    src="/images/need_advice.webp"
-                />
-            </picture>
+            <Image
+                alt={t('Need advice?')}
+                className="absolute left-0 bottom-0 block h-12 w-12 translate-y-1/2 lg:h-16 lg:w-16"
+                src={needAdviceImage}
+            />
             <div className="relative ml-16 flex flex-1 flex-col items-start rounded bg-primary p-4 before:absolute before:-left-1 before:-bottom-1 before:h-6 before:w-4 before:rounded-bl before:bg-primary before:content-[''] before:[transform:rotate(0deg)skewX(-41deg)scale(1.414,0.707)] lg:ml-24 lg:flex-row lg:items-center lg:justify-between lg:py-5 lg:pr-5 lg:pl-8">
                 <div className="mb-3 text-lg font-bold text-white lg:mr-3 lg:mb-0 lg:flex-1 lg:text-2xl vl:flex-none">
                     {t('Need advice?')}

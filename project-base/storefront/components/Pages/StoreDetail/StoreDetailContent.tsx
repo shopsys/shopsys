@@ -118,8 +118,11 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                 >
                                     <Image
                                         alt={image.name || `${store.storeName}-${index}`}
-                                        className="cursor-pointer"
-                                        image={image}
+                                        className="w-auto cursor-pointer"
+                                        height={190}
+                                        loading="lazy"
+                                        src={image.url}
+                                        width={280}
                                     />
                                 </div>
                             ))}

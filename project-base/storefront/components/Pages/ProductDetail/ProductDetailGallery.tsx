@@ -33,11 +33,13 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                 )}
             >
                 <Image
+                    priority
                     alt={mainImage?.name || productName}
-                    className="max-h-[460px] w-auto"
-                    height={400}
-                    image={mainImage}
-                    wrapperClassName="block h-full"
+                    className="max-h-[500px] w-auto"
+                    height={500}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    src={mainImage?.url}
+                    width={720}
                 />
 
                 {!!flags.length && (
@@ -73,7 +75,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                 )}
                             >
                                 {isImage && (
-                                    <img
+                                    <Image
                                         alt={galleryItem.name || `${productName}-${index}`}
                                         className="max-h-16 w-auto sm:max-h-20"
                                         height={90}
@@ -84,7 +86,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
 
                                 {isVideo && (
                                     <>
-                                        <img
+                                        <Image
                                             alt={galleryItem.description}
                                             className="max-h-20 w-auto"
                                             height={360}

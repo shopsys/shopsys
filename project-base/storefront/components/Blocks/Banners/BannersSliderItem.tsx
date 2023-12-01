@@ -1,3 +1,4 @@
+import { Image } from 'components/Basic/Image/Image';
 import { SliderItemFragmentApi } from 'graphql/generated';
 
 type BannersSliderItemProps = {
@@ -16,14 +17,19 @@ export const BannersSliderItem: FC<BannersSliderItemProps> = ({
             {!image ? (
                 <BannerImage alt="no image" src="images/optimized-noimage.webp" />
             ) : (
-                <picture>
-                    <BannerImage alt={image.name || name} src={image.url} />
-                </picture>
+                <BannerImage alt={image.name || name} src={image.url} />
             )}
         </a>
     );
 };
 
 const BannerImage: FC<{ src: string; alt: string }> = ({ src, alt }) => (
-    <img alt={alt} className="block h-full w-full object-cover" src={src} />
+    <Image
+        alt={alt}
+        className="block h-full w-full object-cover"
+        height={300}
+        sizes="(max-width: 1024px) 100vw, 80vw"
+        src={src}
+        width={1025}
+    />
 );

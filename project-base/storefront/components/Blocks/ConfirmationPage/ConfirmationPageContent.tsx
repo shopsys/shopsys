@@ -1,3 +1,5 @@
+import sentCartImage from '/public/images/sent-cart.svg';
+import { Image } from 'components/Basic/Image/Image';
 import { SkeletonPageConfirmation } from 'components/Blocks/Skeleton/SkeletonPageConfirmation';
 import { ReactElement } from 'react';
 
@@ -21,7 +23,7 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
     return (
         <div className="mt-16 mb-10 flex flex-col items-center justify-center lg:mt-16 lg:mb-24 lg:flex-row">
             <div className="mb-0 w-40 lg:mr-32">
-                <img alt={heading} src="/public/frontend/images/sent-cart.svg" />
+                <Image alt={heading} src={sentCartImage} />
             </div>
             <div>
                 <div className="h1 mb-3">{heading}</div>
