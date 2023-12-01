@@ -107,6 +107,7 @@ use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer;
 use Shopsys\CodingStandards\CsFixer\RedundantMarkDownTrailingSpacesFixer;
 use Shopsys\CodingStandards\Finder\FileFinder;
+use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
 use Shopsys\CodingStandards\Helper\FqnNameResolver;
 use Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineDefaultValueSniff;
@@ -213,7 +214,7 @@ return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->rule(NoSpaceAfterCastSniff::class);
     $ecsConfig->rule(CallTimePassByReferenceSniff::class);
     $ecsConfig->ruleWithConfiguration(CyclomaticComplexitySniff::class, [
-        'absoluteComplexity' => 13,
+        'absoluteComplexity' => CyclomaticComplexitySniffSetting::DEFAULT_ABSOLUTE_COMPLEXITY,
     ]);
     $ecsConfig->rule(ConstructorNameSniff::class);
     $ecsConfig->rule(CamelCapsFunctionNameSniff::class);

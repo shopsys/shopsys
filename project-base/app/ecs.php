@@ -133,6 +133,9 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Model/Order/OrderFacade.php',
             __DIR__ . '/src/Model/Product/Search/ProductElasticsearchConverter.php',
             __DIR__ . '/src/FrontendApi/Resolver/Category/CategoryResolverMap.php',
+            __DIR__ . '/src/Model/Blog/Article/Elasticsearch/BlogArticleElasticsearchDataFetcher.php',
+            __DIR__ . '/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoMapper.php',
+            __DIR__ . '/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoValidator.php',
         ],
         CamelCapsFunctionNameSniff::class => [
             __DIR__ . '/tests/App/Test/Codeception/ActorInterface.php',
