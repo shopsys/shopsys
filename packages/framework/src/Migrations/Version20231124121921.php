@@ -233,8 +233,11 @@ class Version20231124121921 extends AbstractMigration
             $this->sql('CREATE INDEX IDX_62809DB0C5F1915D ON order_items (personal_pickup_store_id)');
         }
 
-        if ($this->isAppMigrationNotInstalled('Version20230908095905')) {
+        if ($this->columnExists('stores', 'opening_hours')) {
             $this->sql('ALTER TABLE stores DROP opening_hours');
+        }
+
+        if ($this->tableExists('product_stores')) {
             $this->sql('DROP TABLE product_stores');
         }
 

@@ -98,4 +98,28 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
     {
         return 'App\\Migrations\\' . $version;
     }
+
+    /**
+     * @param string $tableName
+     * @param string $columnName
+     * @return bool
+     */
+    protected function columnExists(string $tableName, string $columnName): bool
+    {
+        return $this->sql('SELECT EXISTS (SELECT FROM information_schema.columns WHERE table_name = :table_name AND column_name = :column_name)', [
+            'table_name' => $tableName,
+            'column_name' => $columnName,
+        ])->fetchOne();
+    }
+
+    /**
+     * @param string $tableName
+     * @return bool
+     */
+    protected function tableExists(string $tableName): bool
+    {
+        return $this->sql('SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = :table_name)', [
+            'table_name' => $tableName,
+        ])->fetchOne();
+    }
 }
