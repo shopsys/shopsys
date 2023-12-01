@@ -59,7 +59,7 @@ Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
 
 ## How to implement a custom product feed?
 
-The heart of a product feed plugin is a service implementing the [`FeedInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedInterface.php) that is tagged in a DI container with `shopsys.product_feed` tag.
+The heart of a product feed plugin is a service implementing the [`FeedInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedInterface.php) that is tagged in a DI container with `shopsys.feed` tag.
 Tags `hours` and `minutes` are mandatory and define when the feed should be generated.
 
 The annotations in the feed interfaces ([`FeedInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedInterface.php), [`FeedInfoInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedInfoInterface.php) and [`FeedItemInterface`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Model/Feed/FeedItemInterface.php)) should explain a lot.
@@ -70,7 +70,7 @@ When in doubt, you can take a look at the [already implemented product feeds](ht
 [Already existing product feed modules](https://github.com/search?q=topic%3Aproduct-feed+org%3Ashopsys) can be customized in several ways:
 
 -   to use a different Twig template you can either [override the template](https://symfony.com/doc/3.3/templating/overriding.html)
-    or you can extend the service tagged as `shopsys.product_feed` and override the `getTemplateFilepath` method in it
+    or you can extend the service tagged as `shopsys.feed` and override the `getTemplateFilepath` method in it
 -   you can use a different `FeedItemInterface` implementation by extending its factory service
     (e.g., [GoogleFeedItemFactory](https://github.com/shopsys/shopsys/blob/master/packages/product-feed-google/src/Model/FeedItem/GoogleFeedItemFactory.php))
 -   you can even change the way the underlying Product entities are fetched from the database by extending the feed's product repository

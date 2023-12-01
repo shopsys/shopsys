@@ -20,6 +20,7 @@ get_all_packages() {
         read-model \
         google-cloud-bundle \
         s3-bridge \
+        category-feed-persoo \
         product-feed-zbozi \
         product-feed-google \
         product-feed-heureka \

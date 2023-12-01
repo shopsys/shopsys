@@ -1,0 +1,12 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Shopsys\CategoryFeed\PersooBundle\:
+        resource: '../../*'
+
+    Shopsys\CategoryFeed\PersooBundle\PersooCategoryFeed:
+        tags:
+            - { name: shopsys.feed, hours: '*', minutes: '5' }

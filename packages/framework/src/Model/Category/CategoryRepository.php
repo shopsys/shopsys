@@ -23,6 +23,8 @@ class CategoryRepository extends NestedTreeRepository
 {
     public const MOVE_DOWN_TO_BOTTOM = true;
 
+    protected ?Category $rootCategory = null;
+
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
@@ -136,17 +138,19 @@ class CategoryRepository extends NestedTreeRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getRootCategory()
+    public function getRootCategory(): Category
     {
-        $rootCategory = $this->getCategoryRepository()->findOneBy(['parent' => null]);
+        if ($this->rootCategory === null) {
+            $this->rootCategory = $this->getCategoryRepository()->findOneBy(['parent' => null]);
 
-        if ($rootCategory === null) {
-            $message = 'Root category not found';
+            if ($this->rootCategory === null) {
+                $message = 'Root category not found';
 
-            throw new RootCategoryNotFoundException($message);
+                throw new RootCategoryNotFoundException($message);
+            }
         }
 
-        return $rootCategory;
+        return $this->rootCategory;
     }
 
     /**
@@ -251,7 +255,7 @@ class CategoryRepository extends NestedTreeRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getPreOrderTreeTraversalForAllCategoriesByDomainQueryBuilder($domainId, $locale)
+    public function getPreOrderTreeTraversalForAllCategoriesByDomainQueryBuilder($domainId, $locale)
     {
         $queryBuilder = $this->getAllQueryBuilder();
         $this->addTranslation($queryBuilder, $locale);
