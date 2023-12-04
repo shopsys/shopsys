@@ -18,6 +18,7 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderRepository;
  * @method int getCustomerUserOrderCount(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order getByUuidAndCustomerUser(string $uuid, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order getByUuid(string $orderUuid)
+ * @property \App\Model\Order\OrderFacade $orderFacade
  */
 class OrderApiFacade extends BaseOrderApiFacade
 {

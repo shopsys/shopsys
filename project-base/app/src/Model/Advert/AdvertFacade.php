@@ -12,6 +12,9 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade as BaseAdvertFacade;
  * @method \App\Model\Advert\Advert|null findRandomAdvertByPositionOnCurrentDomain(string $positionName, \App\Model\Category\Category|null $category = null)
  * @method \App\Model\Advert\Advert create(\App\Model\Advert\AdvertData $advertData)
  * @method \App\Model\Advert\Advert edit(int $advertId, \App\Model\Advert\AdvertData $advertData)
+ * @property \App\Model\Advert\AdvertRepository $advertRepository
+ * @property \App\Component\Image\ImageFacade $imageFacade
+ * @property \App\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
  */
 class AdvertFacade extends BaseAdvertFacade
 {

@@ -10,6 +10,7 @@ use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as BaseImageFacade;
 
 /**
  * @method \App\Component\Image\Image[] getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, string|null $type)
+ * @property \App\Component\Image\ImageRepository $imageRepository
  */
 class ImageFacade extends BaseImageFacade
 {

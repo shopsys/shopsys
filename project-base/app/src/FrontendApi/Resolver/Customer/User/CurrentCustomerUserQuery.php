@@ -10,6 +10,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Customer\User\CurrentCustomerUserQu
 /**
  * @method __construct(\App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser)
  * @method \App\Model\Customer\User\CustomerUser currentCustomerUserQuery()
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class CurrentCustomerUserQuery extends BaseCurrentCustomerUserQuery
 {

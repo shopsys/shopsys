@@ -23,6 +23,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFie
  * @method \App\Model\Category\Category[] getCategories(array $data)
  * @method \App\Model\Product\Flag\Flag[] getFlags(array $data)
  * @method \App\Model\Product\Brand\Brand|null getBrand(array $data)
+ * @property \App\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
  */
 class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 {

@@ -12,7 +12,7 @@ use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomain;
 use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository as BaseGoogleProductRepository;
 
 /**
- * @property \App\Model\Product\ProductRepository $productRepository;
+ * @property \App\Model\Product\ProductRepository $productRepository
  * @method __construct(\App\Model\Product\ProductRepository $productRepository)
  */
 class GoogleProductRepository extends BaseGoogleProductRepository

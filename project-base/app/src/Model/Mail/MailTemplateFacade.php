@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository;
  * @property \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
  * @method \App\Model\Mail\MailTemplate getById(int $id)
  * @method \App\Model\Mail\MailTemplate edit(int $id, \App\Model\Mail\MailTemplateData $mailTemplateData)
+ * @property \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
  */
 class MailTemplateFacade extends BaseMailTemplateFacade
 {

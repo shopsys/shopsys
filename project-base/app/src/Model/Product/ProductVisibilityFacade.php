@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 /**
  * @method __construct(\App\Model\Product\ProductVisibilityRepository $productVisibilityRepository)
  * @method markProductsForRecalculationAffectedByCategory(\App\Model\Category\Category $category)
+ * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
  */
 class ProductVisibilityFacade extends BaseProductVisibilityFacade
 {

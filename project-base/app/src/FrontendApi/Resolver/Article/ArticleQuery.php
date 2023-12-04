@@ -18,6 +18,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Article\Exception\ArticleNotFoundUs
  * @method \App\Model\Article\Article articleByUuidOrUrlSlugQuery(string|null $uuid = null, string|null $urlSlug = null)
  * @method \App\Model\Article\Article getVisibleByDomainIdAndUuid(string $uuid)
  * @method \App\Model\Article\Article getVisibleByDomainIdAndSlug(string $urlSlug)
+ * @property \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
  */
 class ArticleQuery extends AbstractQuery
 {

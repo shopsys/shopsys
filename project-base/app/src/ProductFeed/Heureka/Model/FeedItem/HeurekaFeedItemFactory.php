@@ -18,6 +18,7 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacad
  * @method string|null getBrandName(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Price getPrice(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @method string|null getHeurekaCategoryFullName(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
+ * @property \App\Model\Category\CategoryFacade $categoryFacade
  */
 class HeurekaFeedItemFactory extends BaseHeurekaFeedItemFactory
 {

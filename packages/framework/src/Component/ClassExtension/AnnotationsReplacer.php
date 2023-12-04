@@ -58,6 +58,10 @@ class AnnotationsReplacer
         $type = $this->docBlockParser->getPropertyType($reflectionProperty);
 
         if ($type === null) {
+            $type = TypehintHelper::getPropertyTypeFromTypehint($reflectionProperty);
+        }
+
+        if ($type === null) {
             return '';
         }
 

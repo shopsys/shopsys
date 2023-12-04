@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory as BaseBrandDat
  * @method fillNew(\App\Model\Product\Brand\BrandData $brandData)
  * @method fillFromBrand(\App\Model\Product\Brand\BrandData $brandData, \App\Model\Product\Brand\Brand $brand)
  * @method __construct(\App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory)
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  */
 class BrandDataFactory extends BaseBrandDataFactory
 {

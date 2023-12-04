@@ -17,6 +17,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
  * The class need the prefix because of the conflicting name in GraphQL generated classes
  *
  * @see https://github.com/overblog/GraphQLBundle/issues/863
+ * @property \App\Model\Payment\PaymentFacade $paymentFacade
+ * @property \App\Model\Transport\TransportFacade $transportFacade
  */
 class AppPaymentTransportRelationValidator extends PaymentTransportRelationValidator
 {

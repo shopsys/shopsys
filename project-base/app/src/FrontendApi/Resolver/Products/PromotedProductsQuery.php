@@ -13,6 +13,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsQuery as B
 
 /**
  * @property \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class PromotedProductsQuery extends BasePromotedProductsQuery
 {

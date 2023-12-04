@@ -8,6 +8,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesQuery as BaseCategoriesQuery;
 
+/**
+ * @property \App\Model\Category\CategoryFacade $categoryFacade
+ */
 class CategoriesQuery extends BaseCategoriesQuery
 {
     /**
@@ -32,7 +35,7 @@ class CategoriesQuery extends BaseCategoriesQuery
         /** @var \App\Model\Category\Category $rootCategory */
         $rootCategory = $this->categoryFacade->getRootCategory();
 
-        return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainConfig( // @phpstan-ignore-line
+        return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainConfig(
             $rootCategory,
             $this->domain->getCurrentDomainConfig(),
         );

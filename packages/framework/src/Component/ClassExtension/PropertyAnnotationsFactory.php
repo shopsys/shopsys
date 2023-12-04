@@ -102,9 +102,11 @@ class PropertyAnnotationsFactory
         ReflectionProperty $reflectionProperty,
         string $frameworkClassPattern,
     ): bool {
+        $propertyTypeString = $reflectionProperty->getDocComment() !== '' ? $reflectionProperty->getDocComment() : TypehintHelper::getPropertyTypeFromTypehint($reflectionProperty);
+
         return (bool)preg_match(
             $frameworkClassPattern,
-            $reflectionProperty->getDocComment(),
+            $propertyTypeString ?? '',
         );
     }
 }

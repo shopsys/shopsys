@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory as
 
 /**
  * @method __construct(\App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Symfony\Component\HttpFoundation\RequestStack $requestStack)
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class CustomerUserIdentifierFactory extends BaseCustomerUserIdentifierFactory
 {

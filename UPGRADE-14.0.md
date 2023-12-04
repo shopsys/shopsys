@@ -254,6 +254,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   if you used the backend API, you need to implement it by yourself
     -   `Shopsys\FrameworkBundle\Model\Product\ProductFacade::findByProductQueryParams()` method has been removed
     -   `Shopsys\FrameworkBundle\Model\Product\ProductRepository::findByProductQueryParams()` method has been removed
+-   annotation fixer: get property type from typehint when the annotation is missing ([#2934](https://github.com/shopsys/shopsys/pull/2934))
+    -   run `php phing annotations-fix` in `php-fpm` container to fix the annotations
 
 ### Storefront
 
