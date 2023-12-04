@@ -64,8 +64,6 @@ parameters:
         - %currentWorkingDirectory%/packages/coding-standards/*
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
         - %currentWorkingDirectory%/packages/framework/tests/Unit/Component/ClassExtension/Source/*
-        # Exclude backend api package as the integration is currently removed
-        - %currentWorkingDirectory%/packages/backend-api/*
         # Exclude coding standards for generated files
         - %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/*
 includes:

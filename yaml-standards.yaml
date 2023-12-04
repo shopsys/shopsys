@@ -11,7 +11,6 @@
         - ./project-base/storefront/**/*.{yaml,yml}
         - ./project-base/storefront/*.{yaml,yml}
         - ./packages/framework/assets/node_modules/**/*.{yaml,yml}
-        - ./packages/backend-api/install/config/oauth2/parameters_oauth.yaml.dist
     checkers:
         -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
             parameters:
