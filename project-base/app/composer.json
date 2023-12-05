@@ -76,7 +76,7 @@
         "scheb/2fa-qr-code": "^5.7",
         "sensio/framework-extra-bundle": "^5.2",
         "sentry/sentry-symfony": "^4.2.8",
-        "shopsys/deployment": "~1.1.0",
+        "shopsys/deployment": "~2.0.0",
         "shopsys/form-types-bundle": "14.0.x-dev",
         "shopsys/framework": "14.0.x-dev",
         "shopsys/frontend-api": "14.0.x-dev",
