@@ -6,6 +6,7 @@ namespace App\Model\ProductFeed\Mergado\FeedItem;
 
 use App\Component\Image\ImageFacade;
 use App\Model\Category\CategoryFacade;
+use App\Model\Product\Availability\AvailabilityStatusEnum;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
@@ -62,7 +63,7 @@ class MergadoFeedItemFactory
             $domainId,
             $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId),
         );
-        $availability = $this->availabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId);
+
         $flags = $this->extractProductFlags($product, $domainId);
 
         return new MergadoFeedItem(
@@ -72,7 +73,7 @@ class MergadoFeedItemFactory
             $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
             $this->categoryFacade->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain($product, $domainConfig),
             $this->getProductUsp($product, $domainId),
-            $this->availabilityFacade->calculateProductAvailabilityDaysForDomainId($product, $domainId),
+            $this->availabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId),
             $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId($product, $domainId, null),
             $this->getOtherProductImages($product, $domainConfig),
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
@@ -80,7 +81,7 @@ class MergadoFeedItemFactory
             $product->getDescription($domainId),
             $productPrice,
             $flags,
-            $availability,
+            $this->mapStockStatusToAvailability($this->availabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId)),
             $product->getBrand(),
             $this->productUrlsBatchLoader->getResizedProductImageUrl($product, $domainConfig),
             $product->isVariant() ? $product->getMainVariant()->getId() : null,
@@ -163,5 +164,17 @@ class MergadoFeedItemFactory
         }
 
         return $imageUrls;
+    }
+
+    /**
+     * @param \App\Model\Product\Availability\AvailabilityStatusEnum $availabilityStatus
+     * @return string
+     */
+    private function mapStockStatusToAvailability(AvailabilityStatusEnum $availabilityStatus): string
+    {
+        return match ($availabilityStatus) {
+            AvailabilityStatusEnum::InStock => 'in stock',
+            default => 'out of stock'
+        };
     }
 }

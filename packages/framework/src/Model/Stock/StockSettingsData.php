@@ -9,10 +9,5 @@ class StockSettingsData
     /**
      * @var int|null
      */
-    public $delivery;
-
-    /**
-     * @var int|null
-     */
     public $transfer;
 }

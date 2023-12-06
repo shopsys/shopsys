@@ -68,7 +68,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'unit',
             'stock_quantity',
             'variants',
-            'has_preorder',
             'main_variant_id',
             'seo_h1',
             'seo_title',

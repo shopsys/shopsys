@@ -122,14 +122,6 @@ class ProductTransferAkeneoMapper
 
         $this->mapProductParameters($akeneoProductData, $productData, $transferLogger);
 
-        $productData->preorder = $akeneoProductData['values']['preorder'][0]['data'] ?? false;
-
-        $vendorDeliveryDate = $akeneoProductData['values']['vendor_delivery_date'][0]['data'] ?? null;
-
-        if ($vendorDeliveryDate !== null) {
-            $productData->vendorDeliveryDate = intval($vendorDeliveryDate);
-        }
-
         $productData->flags = AkeneoProductHelper::mapDomainDataArray($productData->flags, $this->getProductFlags($akeneoProductData['values']));
 
         return $productData;

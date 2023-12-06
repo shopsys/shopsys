@@ -160,7 +160,6 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->nameSufix[$locale] = null;
         }
 
-        $productData->preorder = false;
         $productData->availability = $this->availabilityFacade->getById($this->setting->get('defaultAvailabilityInStockId'));
     }
 
@@ -243,8 +242,6 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->downloadAssemblyInstructionFiles = $product->isDownloadAssemblyInstructionFiles();
         $productData->downloadProductTypePlanFiles = $product->isDownloadAssemblyInstructionFiles();
 
-        $productData->preorder = $product->hasPreorder();
-        $productData->vendorDeliveryDate = $product->getVendorDeliveryDate();
         $productData->weight = $product->getWeight();
         $productData->relatedProducts = $product->getRelatedProducts();
     }

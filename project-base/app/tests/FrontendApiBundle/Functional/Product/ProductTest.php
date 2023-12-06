@@ -115,7 +115,6 @@ class ProductTest extends GraphQlTestCase
                     partNumber
                     ean
                     usps
-                    hasPreorder
                     files {
                       anchorText
                       url
@@ -387,7 +386,6 @@ class ProductTest extends GraphQlTestCase
                             $firstDomainLocale,
                         ),
                     ],
-                    'hasPreorder' => false,
                     'files' => [],
                     'storeAvailabilities' => [
                         [

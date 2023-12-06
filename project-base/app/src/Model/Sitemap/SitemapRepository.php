@@ -41,43 +41,6 @@ class SitemapRepository extends BaseSitemapRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
-     */
-    public function getSitemapItemsForVisibleProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup): array
-    {
-        $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup);
-        $queryBuilder->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId');
-        $queryBuilder
-            ->select('fu.slug')
-            ->join(
-                FriendlyUrl::class,
-                'fu',
-                Join::WITH,
-                'fu.routeName = :productDetailRouteName
-                AND fu.entityId = p.id
-                AND fu.domainId = :domainId
-                AND fu.main = TRUE',
-            )
-            ->andWhere('p.variantType != :variantTypeMain')
-            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
-            ->setParameter('productDetailRouteName', 'front_product_detail')
-            ->setParameter('domainId', $domainConfig->getId());
-
-        $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
-            ->select('1')
-            ->from(ProductStock::class, 'ps')
-            ->join(StockDomain::class, 'sd', Join::WITH, 'ps.stock = sd.stock AND sd.domainId = :domainId')
-            ->where('ps.product = p')
-            ->having('SUM(ps.productQuantity) > 0');
-
-        $queryBuilder->andWhere('EXISTS(' . $subquery->getDQL() . ') OR (p.preorder = true AND pd.saleExclusion = false)');
-
-        return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
     public function getSitemapItemsForVisibleCategorySeoMix(DomainConfig $domainConfig): array
@@ -133,7 +96,7 @@ class SitemapRepository extends BaseSitemapRepository
             ->having('SUM(ps.productQuantity) = 0');
 
         $this->productRepository->addDomain($queryBuilder, $domainConfig->getId());
-        $queryBuilder->andWhere('EXISTS(' . $subquery->getDQL() . ') AND (p.preorder = false OR pd.saleExclusion = true)');
+        $queryBuilder->andWhere('EXISTS(' . $subquery->getDQL() . ') AND (pd.saleExclusion = true)');
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
     }

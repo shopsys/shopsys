@@ -6,7 +6,6 @@ namespace App\Model\Order\Preview;
 
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
@@ -35,7 +34,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
@@ -44,7 +42,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         PaymentPriceCalculation $paymentPriceCalculation,
         OrderPriceCalculation $orderPriceCalculation,
         private readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
-        private readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
         parent::__construct(
             $quantifiedProductPriceCalculation,
@@ -166,28 +163,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $personalPickupStore,
             $promoCode,
         );
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @param int $domainId
-     * @return string[]
-     */
-    protected function getProductsAvailability(array $quantifiedProducts, int $domainId): array
-    {
-        $availability = [];
-
-        foreach ($quantifiedProducts as $quantifiedProduct) {
-            /** @var \App\Model\Product\Product $product */
-            $product = $quantifiedProduct->getProduct();
-            $availability[$product->getId()] =
-                $this->productAvailabilityFacade->getProductAvailabilityInformationByQuantifiedProductAndDomainId(
-                    $quantifiedProduct,
-                    $domainId,
-                );
-        }
-
-        return $availability;
     }
 
     /**

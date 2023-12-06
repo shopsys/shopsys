@@ -37,7 +37,7 @@ class RetrieveCartTest extends GraphQlTestCase
 
     public function testAddToCartResultIsValidForMoreQuantityThanOnStock(): void
     {
-        $maximumAvailableQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($this->testingProduct, $this->domain->getId());
+        $maximumAvailableQuantity = $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($this->testingProduct, $this->domain->getId());
 
         $desiredQuantity = $maximumAvailableQuantity + 3000;
         $mutation = 'mutation {
@@ -81,7 +81,7 @@ class RetrieveCartTest extends GraphQlTestCase
 
     public function testAddToCartResultIsValidForMoreQuantityThanOnStockOnSecondAdd(): void
     {
-        $maximumAvailableQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($this->testingProduct, $this->domain->getId());
+        $maximumAvailableQuantity = $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($this->testingProduct, $this->domain->getId());
 
         $decrease = 200;
         $notOnStockCount = 3000;
@@ -538,7 +538,6 @@ class RetrieveCartTest extends GraphQlTestCase
                     $firstDomainLocale,
                 ),
             ],
-            'hasPreorder' => false,
             'files' => [],
             'storeAvailabilities' => [
                 [
@@ -633,7 +632,6 @@ class RetrieveCartTest extends GraphQlTestCase
             partNumber
             ean
             usps
-            hasPreorder
             files {
                 anchorText
                 url

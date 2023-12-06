@@ -96,7 +96,6 @@ class ProductsTest extends ProductsGraphQlTestCase
                             partNumber
                             ean
                             usps
-                            hasPreorder
                             files {
                               anchorText
                               url
@@ -240,7 +239,6 @@ class ProductsTest extends ProductsGraphQlTestCase
                 'partNumber' => '22MT44D',
                 'ean' => '8845781245931',
                 'usps' => [],
-                'hasPreorder' => false,
                 'files' => [],
             ],
         ];

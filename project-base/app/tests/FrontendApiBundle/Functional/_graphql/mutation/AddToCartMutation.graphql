@@ -156,7 +156,6 @@ fragment TestProductFragment on Product {
     partNumber
     ean
     usps
-    hasPreorder
     files {
         anchorText
         url
@@ -230,7 +229,6 @@ fragment TestMainVariantFragment on MainVariant {
     partNumber
     ean
     usps
-    hasPreorder
     files {
         anchorText
         url

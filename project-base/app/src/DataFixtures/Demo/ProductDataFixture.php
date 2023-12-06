@@ -1985,7 +1985,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->usingStock = true;
         $productData->stockQuantity = 550;
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
-        $this->setStocksQuantity($productData, 0);
+        $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
@@ -1993,7 +1993,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = false;
-        $productData->preorder = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $this->createProduct($productData);
@@ -2416,7 +2415,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
-        $productData->preorder = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $this->createProduct($productData);
