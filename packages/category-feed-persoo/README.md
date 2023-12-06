@@ -20,31 +20,6 @@ First, you download the package using [Composer](https://getcomposer.org/):
 composer require shopsys/category-feed-persoo
 ```
 
-### Register
-
-For the bundle to be loaded in your application you need to register it in the `app/AppKernel.php` file of your project:
-
-```php
-// ...
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = [
-            // ...
-            new Shopsys\CategoryFeed\PersooBundle\ShopsysCategoryFeedPersooBundle(),
-            // ...
-        ];
-
-        // ...
-
-        return $bundles;
-    }
-
-    // ...
-}
-```
-
 ## How to use
 
 You should see the new feed immediately after installation in the administration feed list.

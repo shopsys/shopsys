@@ -20,31 +20,6 @@ First, you download the package using [Composer](https://getcomposer.org/):
 composer require shopsys/product-feed-heureka-delivery
 ```
 
-### Register
-
-For the bundle to be loaded in your application you need to register it in the `app/AppKernel.php` file of your project:
-
-```php
-// ...
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = [
-            // ...
-            new Shopsys\ProductFeed\HeurekaDeliveryBundle\ShopsysProductFeedHeurekaDeliveryBundle(),
-            // ...
-        ];
-
-        // ...
-
-        return $bundles;
-    }
-
-    // ...
-}
-```
-
 ### Register cron
 
 For the bundle to download Heureka categories each day you need to add cron to your `config/services/cron.yaml` if it is not present yet:

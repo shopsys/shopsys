@@ -22,22 +22,6 @@ First, you download the package using [Composer](https://getcomposer.org/):
 composer require shopsys/frontend-api
 ```
 
-### Register
-
-For the bundle to be loaded in your application you need to register it and the required `Overblog\GraphQLBundle` in `registerBundles()` method in the `app/AppKernel.php` file of your project:
-
-```diff
-+ new Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle(),
-+ new Overblog\GraphQLBundle\OverblogGraphQLBundle(),
-```
-
-and for easier development register GraphiQLBundle for development environment
-
-```diff
-  if ($this->getEnvironment() === EnvironmentType::DEVELOPMENT) {
-+     $bundles[] = new Overblog\GraphiQLBundle\OverblogGraphiQLBundle();
-```
-
 ## Configuration
 
 Detailed information about [configuring the package](https://docs.shopsys.com/en/latest/frontend-api/) can be found in Shopsys Platform Knowledge Base.
