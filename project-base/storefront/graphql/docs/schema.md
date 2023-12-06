@@ -4353,15 +4353,6 @@ The full name of the product, which consists of a prefix, name, and a suffix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasPreorder</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Distinguishes if the product can be pre-ordered
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
@@ -6732,15 +6723,6 @@ The full name of the product, which consists of a prefix, name, and a suffix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasPreorder</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Distinguishes if the product can be pre-ordered
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
@@ -7863,15 +7845,6 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>hasPreorder</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Distinguishes if the product can be pre-ordered
 
 </td>
 </tr>
@@ -10525,15 +10498,6 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>hasPreorder</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Distinguishes if the product can be pre-ordered
 
 </td>
 </tr>

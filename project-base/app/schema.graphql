@@ -812,8 +812,6 @@ type MainVariant implements Product & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
-  "Distinguishes if the product can be pre-ordered"
-  hasPreorder: Boolean!
   "Product id"
   id: Int!
   "Product images"
@@ -1466,8 +1464,6 @@ interface Product {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
-  "Distinguishes if the product can be pre-ordered"
-  hasPreorder: Boolean!
   "Product id"
   id: Int!
   "Product images"
@@ -1870,8 +1866,6 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
-  "Distinguishes if the product can be pre-ordered"
-  hasPreorder: Boolean!
   "Product id"
   id: Int!
   "Product images"
@@ -2148,8 +2142,6 @@ type Variant implements Product & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
-  "Distinguishes if the product can be pre-ordered"
-  hasPreorder: Boolean!
   "Product id"
   id: Int!
   "Product images"
