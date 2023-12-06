@@ -11,7 +11,7 @@ use App\FrontendApi\Resolver\Products\Flag\FlagQuery;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
-use App\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
 use GraphQL\Executor\Promise\Promise;
@@ -287,7 +287,7 @@ class ProductsQuery extends BaseProductsQuery
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Category\Category $category
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingMode
      * @param string $defaultOrderingMode
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix

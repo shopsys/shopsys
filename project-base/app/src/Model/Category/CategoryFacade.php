@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Category;
 
 use App\Model\Category\LinkedCategory\LinkedCategoryFacade;
-use App\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -215,7 +215,7 @@ class CategoryFacade extends BaseCategoryFacade
     }
 
     /**
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return array
      */
     public function getCategoriesOfProductByFilterData(ProductFilterData $productFilterData): array

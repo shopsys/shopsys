@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Product\BatchLoad;
 
-use App\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class ProductBatchLoadByEntityData
 {
@@ -15,7 +15,7 @@ class ProductBatchLoadByEntityData
      * @param int $limit
      * @param int $offset
      * @param string $orderingModeId
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $search
      */
     public function __construct(
@@ -55,7 +55,7 @@ class ProductBatchLoadByEntityData
     }
 
     /**
-     * @return \App\Model\Product\Filter\ProductFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
      */
     public function getProductFilterData(): ProductFilterData
     {

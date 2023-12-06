@@ -19,20 +19,22 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
  * @method \App\Model\Product\Product getVisibleProductById(int $productId)
  * @method \App\Model\Product\Product[] getAccessoriesForProduct(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product[] getVariantsForProduct(\App\Model\Product\Product $product)
- * @method \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult getPaginatedProductsForSearch(string $searchText, \App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
- * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForSearch(string|null $searchText, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \App\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult getPaginatedProductsForSearch(string $searchText, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForSearch(string|null $searchText, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
  * @property \App\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository
  * @property \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
  * @property \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
- * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForAll(\App\Model\Product\Filter\ProductFilterData $productFilterData)
- * @method \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult getPaginatedProductsInCategory(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForAll(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult getPaginatedProductsInCategory(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
- * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataInCategory(int $categoryId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \App\Model\Product\Filter\ProductFilterData $productFilterData, string $searchText = "")
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataInCategory(int $categoryId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $searchText = "")
  * @property \App\Model\Category\CategoryRepository $categoryRepository
  * @property \App\Model\Product\Brand\BrandRepository $brandRepository
+ * @property \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+ * @method __construct(\App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository, \App\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository, \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory, \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory)
  */
 class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElasticFacade
 {
@@ -67,7 +69,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
 
     /**
      * @param int $flagId
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
@@ -92,7 +94,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     }
 
     /**
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return int[]
      */
     public function getCategoryIdsForFilterData(ProductFilterData $productFilterData)
@@ -102,7 +104,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
 
     /**
      * @param int $brandId
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */

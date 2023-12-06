@@ -8,21 +8,20 @@ use App\FrontendApi\Model\Product\ProductsBatchLoader;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
-use App\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Flag\Flag;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData as BaseProductFilterData;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory as BaseProductConnectionFactory;
 
 /**
  * @property \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
  * @property \App\FrontendApi\Model\Product\Filter\ProductFilterOptionsFactory $productFilterOptionsFactory
  * @method __construct(\App\FrontendApi\Model\Product\Filter\ProductFilterOptionsFactory $productFilterOptionsFactory, \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade)
- * @method \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection createConnectionForBrand(\App\Model\Product\Brand\Brand $brand, callable $retrieveProductClosure, int $countOfProducts, \Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Filter\ProductFilterData $productFilterData)
- * @method \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection createConnectionForCategory(\App\Model\Category\Category $category, callable $retrieveProductClosure, int $countOfProducts, \Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection createConnectionForBrand(\App\Model\Product\Brand\Brand $brand, callable $retrieveProductClosure, int $countOfProducts, \Overblog\GraphQLBundle\Definition\Argument $argument, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection createConnectionForCategory(\App\Model\Category\Category $category, callable $retrieveProductClosure, int $countOfProducts, \Overblog\GraphQLBundle\Definition\Argument $argument, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
  */
 class ProductConnectionFactory extends BaseProductConnectionFactory
 {
@@ -30,7 +29,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param \App\Model\Category\Category $category
      * @param callable $retrieveProductClosure
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingMode
      * @param string $defaultOrderingMode
      * @param string $batchLoadDataId
@@ -65,7 +64,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param \App\Model\Product\Flag\Flag $flag
      * @param callable $retrieveProductClosure
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingMode
      * @param string $defaultOrderingMode
      * @param string $batchLoadDataId
@@ -97,7 +96,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param \App\Model\Product\Brand\Brand $brand
      * @param callable $retrieveProductClosure
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingMode
      * @param string $defaultOrderingMode
      * @param string $batchLoadDataId
@@ -129,7 +128,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param callable $retrieveProductClosure
      * @param int $countOfProducts
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string|null $orderingMode
      * @return \App\FrontendApi\Model\Product\Connection\ProductExtendedConnection
      */
@@ -137,7 +136,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         callable $retrieveProductClosure,
         int $countOfProducts,
         Argument $argument,
-        BaseProductFilterData $productFilterData,
+        ProductFilterData $productFilterData,
         ?string $orderingMode = null,
     ): ProductExtendedConnection {
         $searchText = $argument['search'] ?? '';

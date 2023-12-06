@@ -931,6 +931,54 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   you have to implement your custom pages by yourself to sitemap and graphql
     -   if you're using custom storefront, you have to implement hreflang tags yourself
     -   see #project-base-diff to update your project
+-   add Persoo autocompletion
+    -   `Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory` has been introduced so use it for creation of `ProductFilterData` instead of `new ProductFilterData()`
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly ProductRepository $productRepository,
+            protected readonly Domain $domain,
+            protected readonly CurrentCustomerUser $currentCustomerUser,
+            protected readonly CategoryRepository $categoryRepository,
+            protected readonly ProductFilterCountRepository $productFilterCountRepository,
+            protected readonly ProductAccessoryRepository $productAccessoryRepository,
+            protected readonly BrandRepository $brandRepository,
+    +       protected readonly ProductFilterDataFactory $productFilterDataFactory,
+        )
+    ```
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly ProductRepository $productRepository,
+            protected readonly Domain $domain,
+            protected readonly CurrentCustomerUser $currentCustomerUser,
+            protected readonly ProductAccessoryRepository $productAccessoryRepository,
+            protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
+            protected readonly ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository,
+            protected readonly FilterQueryFactory $filterQueryFactory,
+    +       protected readonly ProductFilterDataFactory $productFilterDataFactory,
+        )
+    ```
+    -   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly FlagFacade $flagFacade,
+            protected readonly BrandFacade $brandFacade,
+            protected readonly ParameterFacade $parameterFacade,
+    +       protected readonly ProductFilterDataFactory $productFilterDataFactory,
+        )
+    ```
+    -   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly Domain $domain,
+            protected readonly ProductFilterDataMapper $productFilterDataMapper,
+            protected readonly ProductFilterNormalizer $productFilterNormalizer,
+            protected readonly ProductFilterConfigFactory $productFilterConfigFactory,
+    +       protected readonly ProductFilterDataFactory $productFilterDataFactory,
+        )
+    ```
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

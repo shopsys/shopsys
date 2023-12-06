@@ -10,7 +10,7 @@ use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory;
 use App\Model\Product\Filter\ParameterFilterData;
-use App\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -48,7 +48,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
         foreach ($this->categoryTestCasesProvider() as $testCaseName => $dataProvider) {
             /** @var \App\Model\Category\Category $category */
             $category = $dataProvider[0];
-            /** @var \App\Model\Product\Filter\ProductFilterData $filterData */
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData */
             $filterData = $dataProvider[1];
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];

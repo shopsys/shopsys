@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 
 class ProductFilterFacade
 {
@@ -24,12 +25,14 @@ class ProductFilterFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer $productFilterNormalizer
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ProductFilterDataMapper $productFilterDataMapper,
         protected readonly ProductFilterNormalizer $productFilterNormalizer,
         protected readonly ProductFilterConfigFactory $productFilterConfigFactory,
+        protected readonly ProductFilterDataFactory $productFilterDataFactory,
     ) {
     }
 
@@ -114,7 +117,7 @@ class ProductFilterFacade
     public function getValidatedProductFilterDataForAll(Argument $argument): ProductFilterData
     {
         if ($argument['filter'] === null) {
-            return new ProductFilterData();
+            return $this->productFilterDataFactory->create();
         }
 
         $productFilterConfig = $this->getProductFilterConfigForAll();
@@ -130,7 +133,7 @@ class ProductFilterFacade
     public function getValidatedProductFilterDataForCategory(Argument $argument, Category $category): ProductFilterData
     {
         if ($argument['filter'] === null) {
-            return new ProductFilterData();
+            return $this->productFilterDataFactory->create();
         }
 
         $productFilterConfig = $this->getProductFilterConfigForCategory($category);
@@ -146,7 +149,7 @@ class ProductFilterFacade
     public function getValidatedProductFilterDataForBrand(Argument $argument, Brand $brand): ProductFilterData
     {
         if ($argument['filter'] === null) {
-            return new ProductFilterData();
+            return $this->productFilterDataFactory->create();
         }
 
         $productFilterConfig = $this->getProductFilterConfigForBrand($brand);

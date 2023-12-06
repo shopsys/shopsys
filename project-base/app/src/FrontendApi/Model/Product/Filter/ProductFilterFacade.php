@@ -4,52 +4,30 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Product\Filter;
 
-use App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory;
-use App\Model\Product\Filter\ProductFilterData;
-use App\Model\Product\Filter\ProductFilterDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Flag\Flag;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade as BaseProductFilterFacade;
-use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer;
 
 /**
  * @property \App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper
  * @property \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory $productFilterConfigFactory
- * @method \App\Model\Product\Filter\ProductFilterData getValidatedProductFilterData(\Overblog\GraphQLBundle\Definition\Argument $argument, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData getValidatedProductFilterData(\Overblog\GraphQLBundle\Definition\Argument $argument, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig getProductFilterConfigForCategory(\App\Model\Category\Category $category, string $searchText = "")
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData getValidatedProductFilterDataForAll(\Overblog\GraphQLBundle\Definition\Argument $argument)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData getValidatedProductFilterDataForCategory(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Category\Category $category)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData getValidatedProductFilterDataForBrand(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Brand\Brand $brand)
+ * @property \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+ * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper, \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer $productFilterNormalizer, \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory $productFilterConfigFactory, \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory)
  */
 class ProductFilterFacade extends BaseProductFilterFacade
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer $productFilterNormalizer
-     * @param \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory $productFilterConfigFactory
-     * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
-     */
-    public function __construct(
-        Domain $domain,
-        ProductFilterDataMapper $productFilterDataMapper,
-        ProductFilterNormalizer $productFilterNormalizer,
-        ProductFilterConfigFactory $productFilterConfigFactory,
-        private ProductFilterDataFactory $productFilterDataFactory,
-    ) {
-        parent::__construct(
-            $domain,
-            $productFilterDataMapper,
-            $productFilterNormalizer,
-            $productFilterConfigFactory,
-        );
-    }
-
-    /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Flag\Flag $flag
-     * @return \App\Model\Product\Filter\ProductFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
      */
     public function getValidatedProductFilterDataForFlag(Argument $argument, Flag $flag): ProductFilterData
     {
@@ -81,60 +59,6 @@ class ProductFilterFacade extends BaseProductFilterFacade
         }
 
         return $this->productFilterConfigCache[$cacheKey];
-    }
-
-    /**
-     * Method is extended because of https://github.com/shopsys/shopsys/pull/2380
-     *
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \App\Model\Product\Filter\ProductFilterData
-     */
-    public function getValidatedProductFilterDataForAll(Argument $argument): ProductFilterData
-    {
-        if ($argument['filter'] === null) {
-            return $this->productFilterDataFactory->create();
-        }
-
-        /** @var \App\Model\Product\Filter\ProductFilterData $productFilterData */
-        $productFilterData = parent::getValidatedProductFilterDataForAll($argument);
-
-        return $productFilterData;
-    }
-
-    /**
-     * Method is extended because of https://github.com/shopsys/shopsys/pull/2380
-     *
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \App\Model\Category\Category $category
-     * @return \App\Model\Product\Filter\ProductFilterData
-     */
-    public function getValidatedProductFilterDataForCategory(Argument $argument, Category $category): ProductFilterData
-    {
-        if ($argument['filter'] === null) {
-            return $this->productFilterDataFactory->create();
-        }
-
-        $productFilterConfig = $this->getProductFilterConfigForCategory($category, $argument['search'] ?? '');
-
-        return $this->getValidatedProductFilterData($argument, $productFilterConfig);
-    }
-
-    /**
-     * Method is extended because of https://github.com/shopsys/shopsys/pull/2380
-     *
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \App\Model\Product\Brand\Brand $brand
-     * @return \App\Model\Product\Filter\ProductFilterData
-     */
-    public function getValidatedProductFilterDataForBrand(Argument $argument, Brand $brand): ProductFilterData
-    {
-        if ($argument['filter'] === null) {
-            return $this->productFilterDataFactory->create();
-        }
-
-        $productFilterConfig = $this->getProductFilterConfigForBrand($brand, $argument['search'] ?? '');
-
-        return $this->getValidatedProductFilterData($argument, $productFilterConfig);
     }
 
     /**
