@@ -304,12 +304,6 @@ msgstr "Ulice a č. popisné nesmí být delší než {{ limit }} znaků"
 msgid "Street name cannot be longer than {{ limit }} characters"
 msgstr "Název ulice nesmí být delší než {{ limit }} znaků"
 
-msgid "Supplier's delivery time must be 0 or more"
-msgstr "Dodací lhůta dodavatele musí být 0 nebo více"
-
-msgid "Supplier's delivery time must be a number"
-msgstr "Dodací lhůta dodavatele musí být číslo"
-
 msgid "Tax number cannot be longer than {{ limit }} characters"
 msgstr "DIČ nesmí být delší než {{ limit }} znaků"
 

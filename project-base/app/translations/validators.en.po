@@ -304,12 +304,6 @@ msgstr ""
 msgid "Street name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Supplier's delivery time must be 0 or more"
-msgstr ""
-
-msgid "Supplier's delivery time must be a number"
-msgstr ""
-
 msgid "Tax number cannot be longer than {{ limit }} characters"
 msgstr ""
 

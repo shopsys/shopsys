@@ -670,9 +670,6 @@ msgstr ""
 msgid "Days for transfer between warehouses"
 msgstr ""
 
-msgid "Days until stocking"
-msgstr ""
-
 msgid "Default VAT rate"
 msgstr ""
 
