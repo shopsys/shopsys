@@ -24,6 +24,10 @@ framework:
                         type: direct
                     queues:
                         placed_orders: ~
+                retry_strategy:
+                    max_retries: 5
+                    delay: 60000
+                    multiplier: 5
 
         routing:
             Shopsys\FrameworkBundle\Component\Messenger\ExampleMessage: example_transport

@@ -40,6 +40,8 @@ class HeurekaPlacedOrderMessageHandler
                 'orderId' => $placedOrderMessage->orderId,
                 'exception' => $exception,
             ]);
+
+            throw $exception;
         }
     }
 }
