@@ -146,7 +146,7 @@ class ZboziFeedItemTest extends TestCase
 
     public function testZboziFeedItemWithImgUrl()
     {
-        $this->productUrlsBatchLoaderMock->method('getProductImageUrl')
+        $this->productUrlsBatchLoaderMock->method('getResizedProductImageUrl')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn('https://example.com/img/product/1');
 
         $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);

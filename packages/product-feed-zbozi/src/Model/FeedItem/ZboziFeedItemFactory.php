@@ -53,7 +53,7 @@ class ZboziFeedItemFactory
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
             $mainVariantId,
             $product->getDescription($domainConfig->getId()),
-            $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
+            $this->productUrlsBatchLoader->getResizedProductImageUrl($product, $domainConfig),
             $this->getBrandName($product),
             $product->getEan(),
             $product->getPartno(),

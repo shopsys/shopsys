@@ -110,7 +110,7 @@ class HeurekaProductDataBatchLoader
     public function getProductImageUrl(Product $product, DomainConfig $domainConfig): ?string
     {
         try {
-            return $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig);
+            return $this->productUrlsBatchLoader->getResizedProductImageUrl($product, $domainConfig);
         } catch (ProductImageUrlNotLoadedException $e) {
             throw new HeurekaProductDataNotLoadedException($product, $domainConfig, 'URL for image', $e);
         }
