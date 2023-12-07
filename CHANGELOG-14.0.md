@@ -20,7 +20,6 @@ There is a list of all the repositories maintained by the monorepo:
 -   [shopsys/product-feed-zbozi](https://github.com/shopsys/product-feed-zbozi)
 -   [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)
 -   [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
--   [shopsys/read-model](https://github.com/shopsys/read-model)
 -   [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
 -   [shopsys/php-image](https://github.com/shopsys/php-image)
 

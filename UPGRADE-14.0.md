@@ -460,6 +460,49 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
             -   `getImagePlaceholder()`, `isLazyLoadEnabled()`, `makeHtmlAttributesLazyLoaded()`, and `isNativeLazyLoadSupported()` methods were removed
         -   `shopsys.image.enable_lazy_load` container parameter was removed
     -   see #project-base-diff to update your project
+-   remove usage of shopsys/read-model package ([#2935](https://github.com/shopsys/shopsys/pull/2935))
+    -   `Shopsys\FrameworkBundle\Component\Image\ImageFacade` class has been changed:
+        -   method `getImagesByEntityIdAndNameIndexedById()` was removed
+        -   method `getImageUrlFromAttributes()` was removed
+        -   method `getImagesByEntitiesIndexedByEntityId()` was removed
+        -   method `getImagesByEntityId()` was removed
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface`, `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade` classes have been changed:
+        -   method `getAccessoriesForProduct()` was removed
+        -   method `getVariantsForProduct()` was removed
+        -   method `getPaginatedProductsInCategory()` was removed
+        -   method `getPaginatedProductsForBrand()` was removed
+        -   method `getPaginatedProductsForSearch()` was removed
+        -   method `getSearchAutocompleteProducts()` was removed
+        -   method `getProductFilterCountDataInCategory()` changed its interface:
+        ```diff
+            public function getProductFilterCountDataInCategory(
+                int $categoryId,
+                ProductFilterConfig $productFilterConfig,
+                ProductFilterData $productFilterData,
+        +       string $searchText = '',
+            ): ProductFilterCountData
+        ```
+    -   class `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade` was removed, use `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade` instead
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductRepository`
+        -   method `getPaginationResultForListableInCategory()` was removed
+        -   method `getAllListableTranslatedAndOrderedQueryBuilder()` was removed
+        -   method `getAllListableTranslatedAndOrderedQueryBuilderByCategory()` was removed
+        -   method `getPaginationResultForListableForBrand()` was removed
+        -   method `getFilteredListableInCategoryQueryBuilder()` was removed
+        -   method `getPaginationResultForSearchListable()` was removed
+        -   method `getFilteredListableForSearchQueryBuilder()` was removed
+        -   method `applyOrdering()` was removed
+        -   method `__construct` changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly EntityManagerInterface $em,
+        -       protected readonly ProductFilterRepository $productFilterRepository,
+        -       protected readonly QueryBuilderExtender $queryBuilderExtender,
+        -       protected readonly Localization $localization,
+                protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
+            )
+        ```
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

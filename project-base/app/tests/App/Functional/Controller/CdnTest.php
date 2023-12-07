@@ -32,13 +32,11 @@ class CdnTest extends FunctionalTestCase
         );
         $this->assertStringStartsWith($cdnDomain, $productImageUrl);
 
-        $productImageUrl = $imageFacade->getImageUrlFromAttributes(
+        $productImageUrl = $imageFacade->getImageUrl(
             $this->domain->getCurrentDomainConfig(),
-            $product->getId(),
-            'jpg',
-            'product',
-            null,
+            $product,
         );
+
         $this->assertStringStartsWith($cdnDomain, $productImageUrl);
     }
 

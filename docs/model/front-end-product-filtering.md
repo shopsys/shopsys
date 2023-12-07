@@ -8,14 +8,11 @@ These two pages are represented by `ProductController` and `SearchController`, w
 -   `getPaginatedProductsInCategory()` to obtain filtered products in category
 -   `getPaginatedProductsForSearch()` to obtain filtered products from search results
 
-Currently, there are two implementations of `ProductOnCurrentDomainFacadeInterface`:
+Currently, there is single implementation of `ProductOnCurrentDomainFacadeInterface`:
 
--   `ProductOnCurrentDomainElasticFacade` _(default)_
+-   `ProductOnCurrentDomainElasticFacade`
     -   filters data through Elasticsearch
     -   much faster than filtering through SQL and remains fast independently on the number of selected filters
--   `ProductOnCurrentDomainFacade`
-    -   filters data through SQL
-    -   slower than Elasticsearch, but on the other hand can be used easily on more complex pricing models (for example, exact price is calculated with SQL function)
 
 ## Filtering through Elasticsearch
 
@@ -29,22 +26,3 @@ Aggregation numbers are counted with help of Elasticsearch too thanks to methods
 `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade::getProductFilterCountDataForSearch`.
 
 List of choices (exact parameters, brands, flags) is loaded from PostgreSQL as there is no benefit from loading them from Elasticsearch.
-
-## Filtering through SQL
-
-Behavior of the filter is defined in the class `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade`.
-
-Each filtering method calls appropriate method in `Shopsys\FrameworkBundle\Model\Product\ProductRepository` class in which a Doctrine `QueryBuilder` object is composed to get proper products with SQL query.
-
-## Choose an Implementation
-
-You can choose which one of them will be used by setting one of the previously mentioned implementations in your `services.yaml` and `services_test.yaml` configuration.
-
-Along with filtering the choice will influence the data source for the product lists and product data of front-end API for increased performance.
-
-You can find more about this topic in [Introduction to Read Model](./introduction-to-read-model.md#read-model-options).
-
-!!! note
-
-    If you need to extend the implementation of your choice, it is possible you will need to adjust abstract test `Tests\App\Functional\Model\Product\ProductOnCurrentDomainFacadeTest` accordingly.<br>
-    In that case is perfectly fine to skip or delete implementation of this test for the one you don't use.

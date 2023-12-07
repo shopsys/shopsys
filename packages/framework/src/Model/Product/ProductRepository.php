@@ -7,22 +7,14 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
-use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Exception\InvalidOrderingModeException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
@@ -30,16 +22,10 @@ class ProductRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository $productFilterRepository
-     * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly ProductFilterRepository $productFilterRepository,
-        protected readonly QueryBuilderExtender $queryBuilderExtender,
-        protected readonly Localization $localization,
         protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
     ) {
     }
@@ -114,8 +100,8 @@ class ProductRepository
             ->from(Product::class, 'p')
             ->join(ProductVisibility::class, 'prv', Join::WITH, 'prv.product = p.id')
             ->where('prv.domainId = :domainId')
-                ->andWhere('prv.pricingGroup = :pricingGroup')
-                ->andWhere('prv.visible = TRUE')
+            ->andWhere('prv.pricingGroup = :pricingGroup')
+            ->andWhere('prv.visible = TRUE')
             ->orderBy('p.id');
 
         $queryBuilder->setParameter('domainId', $domainId);
@@ -264,304 +250,6 @@ class ProductRepository
     {
         $queryBuilder->andWhere('p.brand = :brand');
         $queryBuilder->setParameter('brand', $brand);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $page
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getPaginationResultForListableInCategory(
-        Category $category,
-        $domainId,
-        $locale,
-        ProductFilterData $productFilterData,
-        $orderingModeId,
-        PricingGroup $pricingGroup,
-        $page,
-        $limit,
-    ) {
-        $queryBuilder = $this->getFilteredListableInCategoryQueryBuilder(
-            $category,
-            $domainId,
-            $locale,
-            $productFilterData,
-            $pricingGroup,
-        );
-
-        $this->applyOrdering($queryBuilder, $orderingModeId, $pricingGroup, $locale);
-
-        $queryPaginator = new QueryPaginator($queryBuilder);
-
-        return $queryPaginator->getResult($page, $limit);
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @param string $orderingModeId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllListableTranslatedAndOrderedQueryBuilder(
-        int $domainId,
-        string $locale,
-        string $orderingModeId,
-        PricingGroup $pricingGroup,
-    ): QueryBuilder {
-        $queryBuilder = $this->getAllListableQueryBuilder(
-            $domainId,
-            $pricingGroup,
-        );
-
-        $this->addTranslation($queryBuilder, $locale);
-        $this->applyOrdering($queryBuilder, $orderingModeId, $pricingGroup, $locale);
-
-        return $queryBuilder;
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @param string $orderingModeId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllListableTranslatedAndOrderedQueryBuilderByCategory(
-        int $domainId,
-        string $locale,
-        string $orderingModeId,
-        PricingGroup $pricingGroup,
-        Category $category,
-    ): QueryBuilder {
-        $queryBuilder = $this->getListableInCategoryQueryBuilder(
-            $domainId,
-            $pricingGroup,
-            $category,
-        );
-
-        $this->addTranslation($queryBuilder, $locale);
-        $this->applyOrdering($queryBuilder, $orderingModeId, $pricingGroup, $locale);
-
-        return $queryBuilder;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @param int $domainId
-     * @param string $locale
-     * @param string $orderingModeId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $page
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getPaginationResultForListableForBrand(
-        Brand $brand,
-        $domainId,
-        $locale,
-        $orderingModeId,
-        PricingGroup $pricingGroup,
-        $page,
-        $limit,
-    ) {
-        $queryBuilder = $this->getListableForBrandQueryBuilder(
-            $domainId,
-            $pricingGroup,
-            $brand,
-        );
-
-        $this->addTranslation($queryBuilder, $locale);
-        $this->addDomain($queryBuilder, $domainId);
-        $this->applyOrdering($queryBuilder, $orderingModeId, $pricingGroup, $locale);
-
-        $queryPaginator = new QueryPaginator($queryBuilder);
-
-        return $queryPaginator->getResult($page, $limit);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $domainId
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getFilteredListableInCategoryQueryBuilder(
-        Category $category,
-        $domainId,
-        $locale,
-        ProductFilterData $productFilterData,
-        PricingGroup $pricingGroup,
-    ) {
-        $queryBuilder = $this->getListableInCategoryQueryBuilder(
-            $domainId,
-            $pricingGroup,
-            $category,
-        );
-
-        $this->addTranslation($queryBuilder, $locale);
-        $this->addDomain($queryBuilder, $domainId);
-        $this->productFilterRepository->applyFiltering(
-            $queryBuilder,
-            $productFilterData,
-            $pricingGroup,
-        );
-
-        return $queryBuilder;
-    }
-
-    /**
-     * @param string|null $searchText
-     * @param int $domainId
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $page
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getPaginationResultForSearchListable(
-        $searchText,
-        $domainId,
-        $locale,
-        ProductFilterData $productFilterData,
-        $orderingModeId,
-        PricingGroup $pricingGroup,
-        $page,
-        $limit,
-    ) {
-        $queryBuilder = $this->getFilteredListableForSearchQueryBuilder(
-            $searchText,
-            $domainId,
-            $locale,
-            $productFilterData,
-            $pricingGroup,
-        );
-
-        $this->productElasticsearchRepository->addRelevance($queryBuilder, $searchText);
-        $this->applyOrdering($queryBuilder, $orderingModeId, $pricingGroup, $locale);
-
-        $queryPaginator = new QueryPaginator($queryBuilder);
-
-        return $queryPaginator->getResult($page, $limit);
-    }
-
-    /**
-     * @param string|null $searchText
-     * @param int $domainId
-     * @param string $locale
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getFilteredListableForSearchQueryBuilder(
-        $searchText,
-        $domainId,
-        $locale,
-        ProductFilterData $productFilterData,
-        PricingGroup $pricingGroup,
-    ) {
-        $queryBuilder = $this->getListableBySearchTextQueryBuilder(
-            $domainId,
-            $pricingGroup,
-            $locale,
-            $searchText,
-        );
-
-        $this->productFilterRepository->applyFiltering(
-            $queryBuilder,
-            $productFilterData,
-            $pricingGroup,
-        );
-
-        return $queryBuilder;
-    }
-
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string $orderingModeId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
-     */
-    protected function applyOrdering(
-        QueryBuilder $queryBuilder,
-        $orderingModeId,
-        PricingGroup $pricingGroup,
-        $locale,
-    ) {
-        if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_RELEVANCE) {
-            $queryBuilder->addOrderBy('relevance', 'asc');
-            $queryBuilder->addOrderBy('p.id', 'asc');
-
-            return;
-        }
-
-        $queryBuilder->join('p.calculatedAvailability', 'pca');
-        $queryBuilder->addSelect('CASE WHEN pca.dispatchTime IS NULL THEN 1 ELSE 0 END as HIDDEN dispatchTimeIsNull');
-        $queryBuilder->orderBy('dispatchTimeIsNull', 'ASC');
-        $queryBuilder->addOrderBy('pca.dispatchTime', 'ASC');
-
-        switch ($orderingModeId) {
-            case ProductListOrderingConfig::ORDER_BY_NAME_ASC:
-                $collation = $this->localization->getCollationByLocale($locale);
-                $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'asc');
-
-                break;
-
-            case ProductListOrderingConfig::ORDER_BY_NAME_DESC:
-                $collation = $this->localization->getCollationByLocale($locale);
-                $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'desc');
-
-                break;
-
-            case ProductListOrderingConfig::ORDER_BY_PRICE_ASC:
-                $this->queryBuilderExtender->addOrExtendJoin(
-                    $queryBuilder,
-                    ProductCalculatedPrice::class,
-                    'pcp',
-                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup',
-                );
-                $queryBuilder->addOrderBy('pcp.priceWithVat', 'asc');
-                $queryBuilder->setParameter('pricingGroup', $pricingGroup);
-
-                break;
-
-            case ProductListOrderingConfig::ORDER_BY_PRICE_DESC:
-                $this->queryBuilderExtender->addOrExtendJoin(
-                    $queryBuilder,
-                    ProductCalculatedPrice::class,
-                    'pcp',
-                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup',
-                );
-                $queryBuilder->addOrderBy('pcp.priceWithVat', 'desc');
-                $queryBuilder->setParameter('pricingGroup', $pricingGroup);
-
-                break;
-
-            case ProductListOrderingConfig::ORDER_BY_PRIORITY:
-                $queryBuilder->addOrderBy('p.orderingPriority', 'desc');
-                $collation = $this->localization->getCollationByLocale($locale);
-                $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'asc');
-
-                break;
-
-            default:
-                $message = 'Product list ordering mode "' . $orderingModeId . '" is not supported.';
-
-                throw new InvalidOrderingModeException($message);
-        }
-
-        $queryBuilder->addOrderBy('p.id', 'asc');
     }
 
     /**

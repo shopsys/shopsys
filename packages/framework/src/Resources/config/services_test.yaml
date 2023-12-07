@@ -14,8 +14,6 @@ services:
             - '%shopsys.domain_config_filepath%'
             - '%shopsys.domain_urls_config_filepath%'
 
-    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade: ~
-
     prezent_doctrine_translatable.listener:
         class: Tests\FrameworkBundle\Test\TestTranslatableListener
         tags:

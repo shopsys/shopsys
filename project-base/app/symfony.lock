@@ -714,9 +714,6 @@
     "shopsys/product-feed-zbozi": {
         "version": "v9.1.1"
     },
-    "shopsys/read-model": {
-        "version": "v9.1.1"
-    },
     "shopsys/s3-bridge": {
         "version": "12.0.0"
     },

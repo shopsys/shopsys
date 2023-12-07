@@ -43,7 +43,6 @@ If you are interested, you can read more about the monorepo approach here - http
 -   [shopsys/migrations](https://github.com/shopsys/migrations)
 -   [shopsys/monorepo-tools](https://github.com/shopsys/monorepo-tools)
 -   [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)
--   [shopsys/read-model](https://github.com/shopsys/read-model)
 -   [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
 -   [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
 -   [shopsys/php-image](https://github.com/shopsys/php-image)

@@ -281,14 +281,6 @@ services:
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface:
         alias: App\Model\Payment\PaymentDataFactory
 
-    Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface:
-        class: Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFacade
-
-    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface:
-        alias: Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade
-
-    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade: ~
-
     Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade:
         alias: App\Model\Product\Listing\ProductListOrderingModeForBrandFacade
 
@@ -532,9 +524,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository:
         alias: App\Model\Product\Elasticsearch\ProductExportRepository
-
-    Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade:
-        alias: App\Model\Product\ProductOnCurrentDomainFacade
 
     Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository:
         alias: App\Model\Product\Filter\BrandFilterChoiceRepository
