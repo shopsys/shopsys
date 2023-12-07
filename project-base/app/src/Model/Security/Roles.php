@@ -128,8 +128,6 @@ class Roles extends BaseRoles
     public const ROLE_TRANSPORT_TYPE_FULL = 'ROLE_TRANSPORT_TYPE_FULL';
     public const ROLE_TRANSPORT_TYPE_VIEW = 'ROLE_TRANSPORT_TYPE_VIEW';
 
-    public const ROLE_IMAGE_SIZE_VIEW = 'ROLE_IMAGE_SIZE_VIEW';
-
     public const ROLE_SEO_FULL = 'ROLE_SEO_FULL';
     public const ROLE_SEO_VIEW = 'ROLE_SEO_VIEW';
 
@@ -363,9 +361,6 @@ class Roles extends BaseRoles
             [
                 self::ROLE_LANGUAGE_CONSTANTS_FULL => t('Language constants - full'),
                 self::ROLE_LANGUAGE_CONSTANTS_VIEW => t('Language constants - view'),
-            ],
-            [
-                self::ROLE_IMAGE_SIZE_VIEW => t('Image sizes - view'),
             ],
             [
                 self::ROLE_FEED_VIEW => t('Feeds - view'),

@@ -50,19 +50,6 @@ Render the new advert on the product detail page (or wherever else you want) by 
 If you misspell the position name (or otherwise use a non-registered one), an exception will be thrown including the list of all registered positions.
 So don't worry about calling the controller in the wrong way.
 
-Add a new entry into `noticer` section in `config/images.yaml` config if you want to provide additional information about the new position for the images overview admin page (`Settings > Image size > Image size` on URL `admin/image/overview/`)
-
-```yaml
-- name: noticer
-  class: Shopsys\FrameworkBundle\Model\Advert\Advert
-  sizes:
-      - name: productDetail
-        width: 1160
-        height: ~
-        crop: false
-        occurrence: 'Front-end: Product detail'
-```
-
 ## Conclusion
 
 An administrator can now pick the newly created position when creating an ad in the _Marketing > Advertising system_ section.

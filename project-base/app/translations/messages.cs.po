@@ -916,9 +916,6 @@ msgstr "Pokud chcete provést refundaci, musíte nastavit její výši."
 msgid "Image"
 msgstr "Obrázek"
 
-msgid "Image sizes - view"
-msgstr "Velikost obrázku - zobrazení"
-
 msgid "Image will be deleted after saving."
 msgstr "Obrázek bude smazán po uložení."
 

@@ -3,6 +3,8 @@ fragment ColumnCategoryFragment on Category {
     uuid
     name
     slug
-    ...CategoryImagesDefaultFragment
+    mainImage {
+        ...ImageFragment
+    }
     ...NavigationSubCategoriesLinkFragment
 }

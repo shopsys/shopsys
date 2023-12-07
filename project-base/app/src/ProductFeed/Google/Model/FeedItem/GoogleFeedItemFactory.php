@@ -33,7 +33,7 @@ class GoogleFeedItemFactory extends BaseGoogleFeedItemFactory
             $product->getDescription($domainConfig->getId()),
             $product->getEan(),
             $product->getPartno(),
-            $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
+            $this->productUrlsBatchLoader->getResizedProductImageUrl($product, $domainConfig),
         );
     }
 }

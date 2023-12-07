@@ -1,38 +1,22 @@
 # Image Component
 
-UI component shows images served by the API with correct sizes on different devices.
+UI component that is a custom wrapper for the [`Next/Image` component](https://nextjs.org/docs/pages/api-reference/components/image).
 
-## Components props
+The required images sizes are served on-the-fly via image proxy, and the whole magic works thanks to the following steps:
 
--   **image** - `ImageSizesFragmentApi` - nullable, property served from the API
--   **alt** - `string` - alternative text for image
--   **type** - `string` - size variant of image according to `images.yaml` (example)
--   **loading** - optional - HTML loading attribute for a specific image loading behavior (auto, lazy, eager)
--   **testId** - optional - string, used for testing
+-   The [`loader`](https://nextjs.org/docs/pages/api-reference/components/image#loader) prop setting for the `Image` component.
+-   The `nginx.conf` webserver configuration that forwards the image requests to the `imageResizer.php` script.
+-   The `imageResizer` script itself that is responsible for serving the images from the image proxy:
+    -   Locally and on the CI server, there is an [`imgProxy`](https://docs.imgproxy.net/) service running in a Docker container.
+    -   For production, image proxy provided by [VSH CDN](https://support.vshosting.cz/en/CDN/manipulating-images-in-cdn/) is used.
+
+## Usage
+
+You can check official documentation for Next Image component [here](https://nextjs.org/docs/pages/api-reference/components/image). With this component we are able to use everything what the API provides us.
+
+Purpose of this component is to add our custom loader. And add better error handling (in case of an error there is an empty image placeholder instead of broken image). Every other props are shared with Next Image component so feel free to use it as you wish.
 
 ## Code example
-
-```yaml
-images.yaml
----
-- name: transport
-  class: Shopsys\FrameworkBundle\Model\Transport\Transport
-  sizes:
-      - name: ~ # size variant of image (should be passed to 'type' property) - "~" means "default"
-        width: 35
-        height: 20
-        occurrence: 'Front-end: Ordering process'
-        # additional sizes are used for responsive images in "source" tags in picture element
-        # "media" should always be provided and contains valid media query
-        additionalSizes:
-            - { width: 70, height: 40, media: 'only screen and (-webkit-min-device-pixel-ratio: 1.5)' }
-            - {
-                  width: 90,
-                  height: 50,
-                  media: 'only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)',
-              }
-            - { width: 45, height: 25, media: '(min-width: 769px)' }
-```
 
 ```tsx
 yourComponent.tsx
@@ -41,7 +25,7 @@ import { Image } from 'components/Basic/Image/Image';
 ...
 
 <div>
-    <Image image={data.image} type="default" alt={data.name} />
+    <Image src={data.image?.url} alt={data.image?.name || data.name} width={300} height={300}/>
 </div>
 
 ...

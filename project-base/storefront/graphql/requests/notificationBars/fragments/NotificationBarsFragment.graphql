@@ -3,6 +3,6 @@ fragment NotificationBarsFragment on NotificationBar {
     text
     rgbColor
     mainImage {
-        ...ImageSizesFragment
+        ...ImageFragment
     }
 }

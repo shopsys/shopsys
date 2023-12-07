@@ -42,8 +42,10 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                     <div className="flex h-[185px] w-full items-center justify-center pt-4 pb-3">
                         <Image
                             alt={product.mainImage?.name || product.fullName}
-                            image={product.mainImage}
-                            type="list"
+                            className="max-h-full w-auto"
+                            height={185}
+                            src={product.mainImage?.url}
+                            width={200}
                         />
                     </div>
                     <ExtendedNextLink

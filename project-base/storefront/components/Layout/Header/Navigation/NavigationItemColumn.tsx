@@ -21,9 +21,10 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({ columnCate
                         >
                             <Image
                                 alt={columnCategory.mainImage?.name || columnCategory.name}
-                                className="h-16 mix-blend-multiply"
-                                image={columnCategory.mainImage}
-                                type="default"
+                                className="h-14 w-auto mix-blend-multiply"
+                                height={56}
+                                src={columnCategory.mainImage?.url}
+                                width={64}
                             />
                         </ExtendedNextLink>
 

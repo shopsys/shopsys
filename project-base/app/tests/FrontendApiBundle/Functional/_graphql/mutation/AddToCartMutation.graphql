@@ -86,10 +86,8 @@ mutation AddToCart(
                     vatAmount
                 }
                 images {
-                    position
-                    sizes {
-                        url
-                    }
+                    url
+                    name
                 }
                 stores {
                     edges {

@@ -14,7 +14,6 @@ type SimpleNavigationListItemProps = {
 
 export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
     listedItem,
-    imageType,
     linkType,
     dataTestId,
     className,
@@ -33,17 +32,19 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
                 )}
             >
                 {itemImage && (
-                    <Image
-                        alt={itemImage.name || listedItem.name}
-                        className="h-12 min-w-[64px] mix-blend-multiply"
-                        image={itemImage}
-                        type={imageType ?? 'default'}
-                        width={64}
-                    />
+                    <div className="h-12 w-16 shrink-0">
+                        <Image
+                            alt={itemImage.name || listedItem.name}
+                            className="mx-auto max-h-full w-auto mix-blend-multiply"
+                            height={48}
+                            src={itemImage.url}
+                            width={64}
+                        />
+                    </div>
                 )}
 
-                <div className={twJoin('max-w-full text-center ', itemImage && 'lg:text-left')}>
-                    <span className="block max-w-full text-sm text-dark">{listedItem.name}</span>
+                <div className={twJoin('text-center ', itemImage && 'lg:text-left')}>
+                    <div className="text-sm text-dark">{listedItem.name}</div>
                     {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
                         <span className="ml-2 whitespace-nowrap text-sm text-greyLight">({listedItem.totalCount})</span>
                     )}

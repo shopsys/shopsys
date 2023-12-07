@@ -1,6 +1,6 @@
 import { Image } from 'components/Basic/Image/Image';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
-import { ImageSizesFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
+import { ImageFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
@@ -10,7 +10,7 @@ type TransportAndPaymentSelectItemLabelProps = {
     price?: { priceWithVat: string; priceWithoutVat: string; vatAmount: string };
     daysUntilDelivery?: number;
     description?: string | null;
-    image?: ImageSizesFragmentApi | null;
+    image?: ImageFragmentApi | null;
     pickupPlaceDetail?: ListedStoreFragmentApi;
 };
 
@@ -29,13 +29,9 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
     return (
         <div className="flex w-full flex-row items-center gap-3" data-testid={TEST_IDENTIFIER}>
-            <Image
-                alt={image?.name}
-                className="h-6 w-11 shrink-0 basis-11"
-                image={image}
-                type="default"
-                wrapperClassName="shrink-0"
-            />
+            <div className="flex w-12  items-center">
+                <Image alt={image?.name ?? name} className="w-auto" height={48} src={image?.url} width={48} />
+            </div>
 
             <div className="flex flex-1 flex-col text-sm lg:flex-auto lg:basis-full lg:flex-row lg:items-center lg:gap-3">
                 <div>

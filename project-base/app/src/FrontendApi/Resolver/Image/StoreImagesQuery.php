@@ -14,13 +14,12 @@ final class StoreImagesQuery extends ImagesQuery
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\Store|array $data
      * @param string|null $type
-     * @param array|null $sizes
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function imagesByStorePromiseQuery(Store|array $data, ?string $type, ?array $sizes): Promise
+    public function imagesByStorePromiseQuery(Store|array $data, ?string $type): Promise
     {
         $storeId = $data instanceof Store ? $data->getId() : $data['id'];
 
-        return $this->resolveByEntityIdPromise($storeId, self::STORE_ENTITY_NAME, $type, $sizes);
+        return $this->resolveByEntityIdPromise($storeId, self::STORE_ENTITY_NAME, $type);
     }
 }

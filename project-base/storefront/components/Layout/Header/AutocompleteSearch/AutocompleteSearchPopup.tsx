@@ -32,8 +32,6 @@ type AutocompleteProps = {
 
 const TEST_IDENTIFIER = 'layout-header-search-autocomplete-popup';
 
-const imageTwClass = 'lg:w-full';
-
 export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
     autocompleteSearchQueryValue,
     autocompleteSearchResults: { articlesSearch, brandSearch, categoriesSearch, productsSearch },
@@ -120,10 +118,10 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                                         >
                                             <Image
                                                 alt={product.mainImage?.name || product.fullName}
-                                                className="flex h-16 w-20 items-center justify-center"
-                                                image={product.mainImage}
-                                                type="thumbnailMedium"
-                                                wrapperClassName={imageTwClass}
+                                                className="mx-auto flex items-center justify-center"
+                                                height={64}
+                                                src={product.mainImage?.url}
+                                                width={80}
                                             />
 
                                             <span className="flex-1">{product.fullName}</span>

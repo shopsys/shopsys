@@ -47,7 +47,6 @@ security:
             - ROLE_STORE_FULL
             - ROLE_PARAMETER_VALUE_FULL
             - ROLE_TRANSPORT_TYPE_FULL
-            - ROLE_IMAGE_SIZE_VIEW
             - ROLE_SEO_FULL
             - ROLE_CATEGORY_SEO_FULL
             - ROLE_FRIENDLY_URL_FULL
@@ -98,7 +97,6 @@ security:
             - ROLE_STORE_VIEW
             - ROLE_PARAMETER_VALUE_VIEW
             - ROLE_TRANSPORT_TYPE_VIEW
-            - ROLE_IMAGE_SIZE_VIEW
             - ROLE_SEO_VIEW
             - ROLE_CATEGORY_SEO_VIEW
             - ROLE_FRIENDLY_URL_VIEW
@@ -394,8 +392,6 @@ security:
         # transport types
         - { path: ^/%admin_url%/transport-type/, roles: ROLE_TRANSPORT_TYPE_VIEW, method: [GET] }
         - { path: ^/%admin_url%/transport-type/, roles: ROLE_TRANSPORT_TYPE_FULL, method: [POST] }
-        # image sizes
-        - { path: ^/%admin_url%/image/overview, roles: ROLE_IMAGE_SIZE_VIEW }
         # SEO
         - { path: ^/%admin_url%/seo/category/new/ready-combination/category/, roles: ROLE_CATEGORY_SEO_VIEW, methods: [GET] }
         - { path: ^/%admin_url%/seo/category/new/ready-combination/category/, roles: ROLE_CATEGORY_SEO_FULL, methods: [POST] }

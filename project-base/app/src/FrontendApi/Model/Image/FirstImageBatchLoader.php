@@ -9,10 +9,7 @@ use App\FrontendApi\Model\Image\ImageFacade as FrontendApiImageFacade;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
-use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 
@@ -75,7 +72,7 @@ class FirstImageBatchLoader
                 continue;
             }
 
-            $entityResolvedImage = $this->getResolvedImage($imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()], $imageBatchLoadData->getSizeConfigs());
+            $entityResolvedImage = $this->getResolvedImage($imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()]);
             $images[$imageBatchLoadData->getId()] = $entityResolvedImage;
         }
 
@@ -125,55 +122,17 @@ class FirstImageBatchLoader
 
     /**
      * @param \App\Component\Image\Image $image
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
-     * @return array|null
-     */
-    private function getResolvedImage(Image $image, array $sizeConfigs): ?array
-    {
-        $imageSizes = [];
-
-        foreach ($sizeConfigs as $sizeConfig) {
-            try {
-                $imageSizes[] = $this->getResolvedImageSize($image, $sizeConfig);
-            } catch (ImageNotFoundException $exception) {
-                continue;
-            }
-        }
-
-        if ($imageSizes === []) {
-            return null;
-        }
-
-        return [
-            'position' => $image->getPosition(),
-            'type' => $image->getType(),
-            'sizes' => $imageSizes,
-        ];
-    }
-
-    /**
-     * @param \App\Component\Image\Image $image
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
      * @return array
      */
-    private function getResolvedImageSize(Image $image, ImageSizeConfig $sizeConfig): array
+    private function getResolvedImage(Image $image): array
     {
         return [
-            'width' => $sizeConfig->getWidth(),
-            'height' => $sizeConfig->getHeight(),
-            'size' => $sizeConfig->getName() ?? ImageConfig::DEFAULT_SIZE_NAME,
             'url' => $this->imageFacade->getImageUrl(
                 $this->domain->getCurrentDomainConfig(),
                 $image,
-                $sizeConfig->getName(),
                 $image->getType(),
             ),
-            'additionalSizes' => $this->imageFacade->getAdditionalImagesData(
-                $this->domain->getCurrentDomainConfig(),
-                $image,
-                $sizeConfig->getName(),
-                $image->getType(),
-            ),
+            'name' => $image->getName(),
         ];
     }
 }

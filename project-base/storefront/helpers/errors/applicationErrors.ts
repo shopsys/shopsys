@@ -12,7 +12,6 @@ const ApplicationErrors = {
     'personal-data-request-type-invalid': 'flash-message',
     'blog-category-not-found': 'flash-message',
     'image-type-invalid': 'flash-message',
-    'image-size-invalid': 'flash-message',
     'order-not-found': 'flash-message',
     'personal-data-hash-invalid': 'flash-message',
     'product-price-missing': 'flash-message',

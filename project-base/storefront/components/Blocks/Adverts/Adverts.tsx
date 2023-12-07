@@ -1,4 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { Image } from 'components/Basic/Image/Image';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { AdvertsFragmentApi, CategoryDetailFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
 import { Fragment } from 'react';
@@ -46,21 +47,26 @@ export const Adverts: FC<AdvertsProps> = ({
                         return null;
                     }
 
-                    const mainImage = advert.mainImage?.sizes.find(({ size }) => size === positionName);
-                    const mainImageMobile = advert.mainImageMobile?.sizes.find(({ size }) => size === positionName);
+                    const mainImage = advert.mainImage;
+                    const mainImageMobile = advert.mainImageMobile;
 
                     const ImageComponent = (
-                        <picture>
-                            {/* use min-width equal to Tailwind "lg" breakpoint */}
-                            <source media="(min-width: 48.0625em)" srcSet={mainImage?.url} />
-                            <img
-                                alt={advert.mainImage?.name || advert.mainImageMobile?.name || advert.name}
-                                className="w-full"
-                                height={mainImageMobile?.height || undefined}
-                                src={mainImageMobile?.url}
-                                width={mainImageMobile?.width || undefined}
+                        <>
+                            <Image
+                                alt={mainImage?.name || advert.name}
+                                className="hidden lg:block"
+                                height={400}
+                                src={mainImage?.url}
+                                width={1280}
                             />
-                        </picture>
+                            <Image
+                                alt={mainImageMobile?.name || advert.name}
+                                className="lg:hidden"
+                                height={300}
+                                src={mainImageMobile?.url}
+                                width={770}
+                            />
+                        </>
                     );
 
                     return (

@@ -5,7 +5,6 @@ import { ListedItemPropType } from 'types/simpleNavigation';
 
 type SimpleNavigationProps = {
     listedItems: ListedItemPropType[];
-    imageType?: string;
     isWithoutSlider?: true;
     itemClassName?: string;
     linkType: PageType;
@@ -15,7 +14,6 @@ const TEST_IDENTIFIER = 'blocks-simplenavigation';
 
 export const SimpleNavigation: FC<SimpleNavigationProps> = ({
     listedItems,
-    imageType,
     isWithoutSlider,
     className,
     itemClassName,
@@ -36,7 +34,6 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({
                     key={index}
                     className={itemClassName}
                     dataTestId={TEST_IDENTIFIER + '-' + index}
-                    imageType={imageType}
                     linkType={linkType}
                     listedItem={listedItem}
                 >

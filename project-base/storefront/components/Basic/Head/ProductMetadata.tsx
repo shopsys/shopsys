@@ -10,7 +10,6 @@ type ProductMetadataProps = {
 export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
     const { currencyCode } = useDomainConfig();
     const router = useRouter();
-    const imageUrls = product.images.map((image) => image.sizes.find((size) => size.size === 'default')?.url);
 
     return (
         <Head>
@@ -23,7 +22,7 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
                         '@context': 'https://schema.org/',
                         '@type': 'Product',
                         name: product.fullName,
-                        image: imageUrls,
+                        image: product.images.length > 0 ? product.images[0].url : null,
                         description: product.description,
                         sku: product.catalogNumber,
                         mpn: product.ean,

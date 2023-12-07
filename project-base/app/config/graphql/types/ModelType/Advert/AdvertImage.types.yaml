@@ -7,22 +7,16 @@ AdvertImage:
             images:
                 type: "[Image!]!"
                 description: "Advert images"
-                resolve: '@=query("imagesByAdvertPromiseQuery", value, args["type"], args["sizes"])'
+                resolve: '@=query("imagesByAdvertPromiseQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"
-                        defaultValue: null
-                    sizes:
-                        type: "[String!]"
                         defaultValue: null
             mainImage:
                 type: "Image"
                 description: "Adverts first image by params"
-                resolve: '@=query("mainImageByAdvertPromiseQuery", value, args["type"], args["size"])'
+                resolve: '@=query("mainImageByAdvertPromiseQuery", value, args["type"])'
                 args:
                     type:
-                        type: "String"
-                        defaultValue: null
-                    size:
                         type: "String"
                         defaultValue: null

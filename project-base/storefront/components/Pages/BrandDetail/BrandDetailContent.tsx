@@ -21,7 +21,12 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 <h1 className="mb-3">{brand.seoH1 !== null ? brand.seoH1 : brand.name}</h1>
                 <div className="mb-5 flex w-full flex-col justify-start md:flex-row">
                     <div className="mr-5 min-w-[13.75rem] self-start" data-testid={TEST_IDENTIFIER + 'image'}>
-                        <Image alt={brand.mainImage?.name || brand.name} image={brand.mainImage} type="default" />
+                        <Image
+                            alt={brand.mainImage?.name || brand.name}
+                            height={220}
+                            src={brand.mainImage?.url}
+                            width={220}
+                        />
                     </div>
                     <div
                         className="self-start  md:self-center [&>section]:text-base [&>section]:text-dark"

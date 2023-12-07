@@ -5,7 +5,9 @@ fragment BlogArticleDetailFragment on BlogArticle {
     name
     slug
     link
-    ...BlogArticleImageListGridFragment
+    mainImage {
+        ...ImageFragment
+    }
     breadcrumb {
         ...BreadcrumbFragment
     }

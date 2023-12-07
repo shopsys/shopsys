@@ -10,6 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Setting\Setting as BaseSetting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -138,6 +139,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
 
             $this->setDomainDefaultCurrency($domainId);
         }
+        $this->setting->set(BaseSetting::IMAGE_STRUCTURE_MIGRATED_FOR_PROXY, true);
     }
 
     /**

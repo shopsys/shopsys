@@ -9,8 +9,6 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class ImageLocator
 {
-    protected const ADDITIONAL_IMAGE_MASK = 'additional_{index}_{filename}';
-
     protected string $imageDir;
 
     /**
@@ -28,29 +26,13 @@ class ImageLocator
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     * @param string|null $sizeName
      * @return string
      */
-    public function getRelativeImageFilepath(Image $image, $sizeName)
+    public function getRelativeImageFilepath(Image $image): string
     {
-        $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType(), $sizeName);
+        $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType());
 
-        return $path . $image->getFilename();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     * @param int $additionalIndex
-     * @param string|null $sizeName
-     * @return string
-     */
-    public function getRelativeAdditionalImageFilepath(Image $image, int $additionalIndex, ?string $sizeName)
-    {
-        $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType(), $sizeName);
-
-        $filename = $this->getAdditionalImageFilename($image->getFilename(), $additionalIndex);
-
-        return $path . $filename;
+        return $path . '/' . $image->getFilename();
     }
 
     /**
@@ -58,8 +40,6 @@ class ImageLocator
      * @param string $extension
      * @param string $entityName
      * @param string|null $type
-     * @param string|null $sizeName
-     * @param int|null $additionalIndex
      * @return string
      */
     public function getRelativeImageFilepathFromAttributes(
@@ -67,41 +47,21 @@ class ImageLocator
         string $extension,
         string $entityName,
         ?string $type,
-        ?string $sizeName = null,
-        ?int $additionalIndex = null,
     ): string {
-        $path = $this->getRelativeImagePath($entityName, $type, $sizeName);
+        $path = $this->getRelativeImagePath($entityName, $type);
 
         $filename = $id . '.' . $extension;
 
-        if ($additionalIndex !== null) {
-            $filename = $this->getAdditionalImageFilename($filename, $additionalIndex);
-        }
-
-        return $path . $filename;
+        return $path . '/' . $filename;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     * @param string|null $sizeName
      * @return string
      */
-    public function getAbsoluteImageFilepath(Image $image, $sizeName)
+    public function getAbsoluteImageFilepath(Image $image): string
     {
-        $relativePath = $this->getRelativeImageFilepath($image, $sizeName);
-
-        return $this->imageDir . $relativePath;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
-     * @param int $additionalIndex
-     * @param string|null $sizeName
-     * @return string
-     */
-    public function getAbsoluteAdditionalImageFilepath(Image $image, int $additionalIndex, ?string $sizeName)
-    {
-        $relativePath = $this->getRelativeAdditionalImageFilepath($image, $additionalIndex, $sizeName);
+        $relativePath = $this->getRelativeImageFilepath($image);
 
         return $this->imageDir . $relativePath;
     }
@@ -112,7 +72,7 @@ class ImageLocator
      */
     public function imageExists(Image $image)
     {
-        $imageFilepath = $this->getAbsoluteImageFilepath($image, ImageConfig::ORIGINAL_SIZE_NAME);
+        $imageFilepath = $this->getAbsoluteImageFilepath($image);
 
         return $this->filesystem->has($imageFilepath);
     }
@@ -120,38 +80,17 @@ class ImageLocator
     /**
      * @param string $entityName
      * @param string|null $type
-     * @param string|null $sizeName
      * @return string
      */
-    public function getRelativeImagePath($entityName, $type, $sizeName)
+    public function getRelativeImagePath(string $entityName, ?string $type): string
     {
-        $this->imageConfig->assertImageSizeConfigByEntityNameExists($entityName, $type, $sizeName);
+        $this->imageConfig->assertImageConfigByEntityNameExists($entityName, $type);
         $pathParts = [$entityName];
 
         if ($type !== null) {
             $pathParts[] = $type;
         }
 
-        if ($sizeName === null) {
-            $pathParts[] = ImageConfig::DEFAULT_SIZE_NAME;
-        } else {
-            $pathParts[] = $sizeName;
-        }
-
-        return implode('/', $pathParts) . '/';
-    }
-
-    /**
-     * @param string $filename
-     * @param int $additionalIndex
-     * @return string
-     */
-    protected function getAdditionalImageFilename(string $filename, int $additionalIndex): string
-    {
-        return str_replace(
-            ['{index}', '{filename}'],
-            [$additionalIndex, $filename],
-            static::ADDITIONAL_IMAGE_MASK,
-        );
+        return implode('/', $pathParts);
     }
 }

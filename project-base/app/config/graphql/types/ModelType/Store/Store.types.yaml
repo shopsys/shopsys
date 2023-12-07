@@ -54,11 +54,8 @@ Store:
             images:
                 type: "[Image!]!"
                 description: "Store images"
-                resolve: '@=query("imagesByStorePromiseQuery", value, args["type"], args["sizes"])'
+                resolve: '@=query("imagesByStorePromiseQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"
-                        defaultValue: null
-                    sizes:
-                        type: "[String!]"
                         defaultValue: null

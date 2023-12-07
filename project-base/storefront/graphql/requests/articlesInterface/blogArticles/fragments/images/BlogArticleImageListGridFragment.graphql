@@ -1,5 +1,0 @@
-fragment BlogArticleImageListGridFragment on BlogArticle {
-    mainImage {
-        ...ImageSizesFragment
-    }
-}

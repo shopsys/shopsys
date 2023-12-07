@@ -5,6 +5,10 @@ fragment SliderItemFragment on SliderItem {
     link
     extendedText
     extendedTextLink
-    ...SliderItemImagesWebDefaultFragment
-    ...SliderItemImagesMobileDefaultFragment
+    webMainImage: mainImage (type: "web") {
+        ...ImageFragment
+    }
+    mobileMainImage: mainImage(type: "mobile") {
+        ...ImageFragment
+    }
 }

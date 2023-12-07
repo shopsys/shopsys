@@ -8,7 +8,6 @@
   * [Objects](#objects)
     * [AddProductResult](#addproductresult)
     * [AddToCartResult](#addtocartresult)
-    * [AdditionalSize](#additionalsize)
     * [AdvertCode](#advertcode)
     * [AdvertImage](#advertimage)
     * [AdvertPosition](#advertposition)
@@ -46,7 +45,6 @@
     * [GoPayCreatePaymentSetup](#gopaycreatepaymentsetup)
     * [GoPayPaymentMethod](#gopaypaymentmethod)
     * [Image](#image)
-    * [ImageSize](#imagesize)
     * [LanguageConstant](#languageconstant)
     * [Link](#link)
     * [LoginResult](#loginresult)
@@ -1537,59 +1535,6 @@ check payment status of order after callback from payment service
 </tbody>
 </table>
 
-### AdditionalSize
-
-Represents a singe additional image size
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>height</strong></td>
-<td valign="top"><a href="#int">Int</a></td>
-<td>
-
-Height in pixels defined in images.yaml
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>media</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Recommended media query defined in images.yaml
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>url</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-URL address of image
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>width</strong></td>
-<td valign="top"><a href="#int">Int</a></td>
-<td>
-
-Width in pixels defined in images.yaml
-
-</td>
-</tr>
-</tbody>
-</table>
-
 ### AdvertCode
 
 <table>
@@ -1690,16 +1635,6 @@ Advert images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -1721,11 +1656,6 @@ Advert link
 Adverts first image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -2159,11 +2089,6 @@ Blog article images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -2185,11 +2110,6 @@ The blog article absolute URL
 Blog article image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -2585,16 +2505,6 @@ Brand images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -2616,11 +2526,6 @@ Brand main URL
 Brand image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -3222,16 +3127,6 @@ Category images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -3253,11 +3148,6 @@ A list of categories linked to the given category
 Category image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -4241,74 +4131,7 @@ Represents an image
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Image name for ALT attribute
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>position</strong></td>
-<td valign="top"><a href="#int">Int</a></td>
-<td>
-
-Position of image in list
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>sizes</strong></td>
-<td valign="top">[<a href="#imagesize">ImageSize</a>!]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Image type
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### ImageSize
-
-Represents a single image size
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>additionalSizes</strong></td>
-<td valign="top">[<a href="#additionalsize">AdditionalSize</a>!]!</td>
-<td>
-
-Additional sizes for different screen types
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>height</strong></td>
-<td valign="top"><a href="#int">Int</a></td>
-<td>
-
-Height in pixels defined in images.yaml
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>size</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Image size defined in images.yaml
+Name of the image usable as an alternative text
 
 </td>
 </tr>
@@ -4317,16 +4140,7 @@ Image size defined in images.yaml
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-URL address of image
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>width</strong></td>
-<td valign="top"><a href="#int">Int</a></td>
-<td>
-
-Width in pixels defined in images.yaml
+URL address of the image
 
 </td>
 </tr>
@@ -4566,16 +4380,6 @@ Product images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -4612,11 +4416,6 @@ Product link
 Product image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -4922,11 +4721,6 @@ Notification bar images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -4939,11 +4733,6 @@ Notification bar images
 Notification bar image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -6094,16 +5883,6 @@ Payment images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -6125,11 +5904,6 @@ Localized payment instruction (domain dependent)
 Payment image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -6985,16 +6759,6 @@ Product images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -7031,11 +6795,6 @@ Product link
 Product image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -7251,11 +7010,6 @@ Image for og image meta tag by params
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>ogTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -7440,11 +7194,6 @@ Slider item images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -7466,11 +7215,6 @@ Target link
 Slider item image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -7559,11 +7303,6 @@ Store description
 Store images
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -7849,16 +7588,6 @@ Transport images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -7889,11 +7618,6 @@ Pointer telling if the transport is of type personal pickup
 Transport image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -8170,16 +7894,6 @@ Product images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -8216,11 +7930,6 @@ Product link
 Product image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
@@ -10847,16 +10556,6 @@ Product images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -10893,11 +10592,6 @@ Product link
 Product image by params
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">type</td>

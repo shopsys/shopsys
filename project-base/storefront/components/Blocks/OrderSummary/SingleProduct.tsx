@@ -14,12 +14,15 @@ export const SingleProduct: FC<SingleProductProps> = ({ item }) => {
 
     return (
         <li className="flex items-center border-b border-creamWhite py-3">
-            <Image
-                alt={item.product.mainImage?.name || item.product.fullName}
-                className="mr-4 h-14 w-14"
-                image={item.product.mainImage}
-                type="thumbnailExtraSmall"
-            />
+            <div className="mr-4 flex w-14 items-center justify-center">
+                <Image
+                    alt={item.product.mainImage?.name || item.product.fullName}
+                    className="max-h-14 w-auto"
+                    height={56}
+                    src={item.product.mainImage?.url}
+                    width={56}
+                />
+            </div>
 
             <div className="flex flex-1 items-center">
                 <span className="flex-1 pr-3 text-sm">

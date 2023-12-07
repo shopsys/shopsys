@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
-use Sinergi\BrowserDetector\Browser;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -17,21 +16,11 @@ use Twig\TwigFunction;
 class ImageExtension extends AbstractExtension
 {
     protected const NOIMAGE_FILENAME = 'noimage.png';
-    protected const PLACEHOLDER_FILENAME = 'placeholder.gif';
-    protected const BROWSERS_WITHOUT_NATIVE_LAZY_LOAD = [
-        Browser::SAFARI,
-        Browser::IE,
-        Browser::OPERA_MINI,
-    ];
     protected const NON_HTML_ATTRIBUTES = [
         'type',
-        'size',
-        'lazy',
     ];
 
     protected string $frontDesignImageUrlPrefix;
-
-    protected Browser $browser;
 
     /**
      * @param string $frontDesignImageUrlPrefix
@@ -39,7 +28,6 @@ class ImageExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Twig\Environment $twigEnvironment
-     * @param bool $isLazyLoadEnabled
      */
     public function __construct(
         $frontDesignImageUrlPrefix,
@@ -47,7 +35,6 @@ class ImageExtension extends AbstractExtension
         protected readonly ImageLocator $imageLocator,
         protected readonly ImageFacade $imageFacade,
         protected readonly Environment $twigEnvironment,
-        protected readonly bool $isLazyLoadEnabled = false,
     ) {
         $this->frontDesignImageUrlPrefix = rtrim($frontDesignImageUrlPrefix, '/');
     }
@@ -58,11 +45,7 @@ class ImageExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('imageExists', [$this, 'imageExists']),
-            new TwigFunction('imageUrl', [$this, 'getImageUrl']),
             new TwigFunction('image', [$this, 'getImageHtml'], ['is_safe' => ['html']]),
-            new TwigFunction('noimage', [$this, 'getNoimageHtml'], ['is_safe' => ['html']]),
-            new TwigFunction('getImages', [$this, 'getImages']),
         ];
     }
 
@@ -71,7 +54,7 @@ class ImageExtension extends AbstractExtension
      * @param string|null $type
      * @return bool
      */
-    public function imageExists($imageOrEntity, $type = null)
+    public function imageExists($imageOrEntity, ?string $type = null): bool
     {
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $type);
@@ -84,32 +67,20 @@ class ImageExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
-     * @param string|null $sizeName
      * @param string|null $type
      * @return string
      */
-    public function getImageUrl($imageOrEntity, $sizeName = null, $type = null)
+    protected function getImageUrl($imageOrEntity, ?string $type = null): string
     {
         try {
             return $this->imageFacade->getImageUrl(
                 $this->domain->getCurrentDomainConfig(),
                 $imageOrEntity,
-                $sizeName,
                 $type,
             );
         } catch (ImageNotFoundException $e) {
             return $this->getEmptyImageUrl();
         }
-    }
-
-    /**
-     * @param object $entity
-     * @param string|null $type
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
-     */
-    public function getImages($entity, $type = null)
-    {
-        return $this->imageFacade->getImagesByEntityIndexedById($entity, $type);
     }
 
     /**
@@ -124,16 +95,10 @@ class ImageExtension extends AbstractExtension
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $attributes['type']);
             $entityName = $image->getEntityName();
-            $attributes['src'] = $this->getImageUrl($image, $attributes['size'], $attributes['type']);
+            $attributes['src'] = $this->getImageUrl($image, $attributes['type']);
             $attributes['alt'] = $image->getName();
-            $additionalImagesData = $this->imageFacade->getAdditionalImagesData(
-                $this->domain->getCurrentDomainConfig(),
-                $image,
-                $attributes['size'],
-                $attributes['type'],
-            );
 
-            return $this->getImageHtmlByEntityName($attributes, $entityName, $additionalImagesData);
+            return $this->getImageHtmlByEntityName($attributes, $entityName);
         } catch (ImageNotFoundException $e) {
             return $this->getNoimageHtml($attributes);
         }
@@ -143,15 +108,14 @@ class ImageExtension extends AbstractExtension
      * @param array $attributes
      * @return string
      */
-    public function getNoimageHtml(array $attributes = [])
+    protected function getNoimageHtml(array $attributes = []): string
     {
         $this->preventDefault($attributes);
 
         $entityName = 'noimage';
         $attributes['src'] = $this->getEmptyImageUrl();
-        $additionalImagesData = [];
 
-        return $this->getImageHtmlByEntityName($attributes, $entityName, $additionalImagesData);
+        return $this->getImageHtmlByEntityName($attributes, $entityName);
     }
 
     /**
@@ -163,26 +127,16 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @return string
-     */
-    protected function getImagePlaceholder(): string
-    {
-        return $this->domain->getUrl() . $this->frontDesignImageUrlPrefix . '/' . static::PLACEHOLDER_FILENAME;
-    }
-
-    /**
      * @param string $entityName
      * @param string|null $type
-     * @param string|null $sizeName
      * @return string
      */
-    protected function getImageCssClass($entityName, $type, $sizeName)
+    protected function getImageCssClass(string $entityName, ?string $type): string
     {
         $allClassParts = [
             'image',
             $entityName,
             $type,
-            $sizeName,
         ];
         $classParts = array_filter($allClassParts);
 
@@ -203,7 +157,6 @@ class ImageExtension extends AbstractExtension
     protected function preventDefault(array &$attributes): void
     {
         Utils::setArrayDefaultValue($attributes, 'type');
-        Utils::setArrayDefaultValue($attributes, 'size');
         Utils::setArrayDefaultValue($attributes, 'alt', '');
         Utils::setArrayDefaultValue($attributes, 'title', $attributes['alt']);
     }
@@ -211,35 +164,16 @@ class ImageExtension extends AbstractExtension
     /**
      * @param array $attributes
      * @param string $entityName
-     * @param \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] $additionalImagesData
      * @return string
      */
-    protected function getImageHtmlByEntityName(array $attributes, $entityName, $additionalImagesData = []): string
+    protected function getImageHtmlByEntityName(array $attributes, string $entityName): string
     {
         $htmlAttributes = $this->extractHtmlAttributesFromAttributes($attributes);
 
-        if ($this->isLazyLoadEnabled($attributes) === true) {
-            $htmlAttributes = $this->makeHtmlAttributesLazyLoaded($htmlAttributes);
-        }
-
         return $this->twigEnvironment->render('@ShopsysFramework/Common/image.html.twig', [
             'attr' => $htmlAttributes,
-            'additionalImagesData' => $additionalImagesData,
-            'imageCssClass' => $this->getImageCssClass($entityName, $attributes['type'], $attributes['size']),
+            'imageCssClass' => $this->getImageCssClass($entityName, $attributes['type']),
         ]);
-    }
-
-    /**
-     * @param array $attributes
-     * @return bool
-     */
-    protected function isLazyLoadEnabled(array $attributes): bool
-    {
-        if ($attributes['src'] === $this->getEmptyImageUrl()) {
-            return false;
-        }
-
-        return array_key_exists('lazy', $attributes) ? (bool)$attributes['lazy'] : $this->isLazyLoadEnabled;
     }
 
     /**
@@ -255,33 +189,5 @@ class ImageExtension extends AbstractExtension
         }
 
         return $htmlAttributes;
-    }
-
-    /**
-     * @param array $htmlAttributes
-     * @return array
-     */
-    protected function makeHtmlAttributesLazyLoaded(array $htmlAttributes): array
-    {
-        $htmlAttributes['loading'] = 'lazy';
-        $htmlAttributes['data-src'] = $htmlAttributes['src'];
-
-        if (!$this->isNativeLazyLoadSupported()) {
-            $htmlAttributes['src'] = $this->getImagePlaceholder();
-        }
-
-        return $htmlAttributes;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isNativeLazyLoadSupported(): bool
-    {
-        if (!isset($this->browser)) {
-            $this->browser = new Browser();
-        }
-
-        return !in_array($this->browser->getName(), static::BROWSERS_WITHOUT_NATIVE_LAZY_LOAD, true);
     }
 }

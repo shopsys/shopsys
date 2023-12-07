@@ -20,6 +20,17 @@ const nextConfig = {
         disableClientWebpackPlugin: process.env.APP_ENV === 'development',
         hideSourceMaps: true,
     },
+    images: {
+        loader: 'custom',
+        remotePatterns: [
+            {
+                hostname: process.env.DOMAIN_HOSTNAME_1,
+            },
+            {
+                hostname: process.env.DOMAIN_HOSTNAME_2,
+            },
+        ],
+    },
     serverRuntimeConfig: {
         internalGraphqlEndpoint: `${process.env.INTERNAL_ENDPOINT}graphql/`,
     },

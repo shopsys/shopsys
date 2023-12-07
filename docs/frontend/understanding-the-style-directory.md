@@ -116,9 +116,9 @@ File `templates/Front/Content/Advert/box.html.twig` would look like is shown bel
     <div class="in-place in-place--{{advert.positionName}} dont-print">
         {% if advert.type == 'image' %}
             {% if advert.link == null %}
-                {{ image(advert, { size: 'original' }) }}
+                {{ image(advert) }}
             {% else %}
-                <a href="{{ advert.link }}">{{ image(advert, { size: 'original' }) }}</a>
+                <a href="{{ advert.link }}">{{ image(advert) }}</a>
             {% endif %}
         {% elseif advert.type == 'code' %}
             {{ advert.code | raw }}

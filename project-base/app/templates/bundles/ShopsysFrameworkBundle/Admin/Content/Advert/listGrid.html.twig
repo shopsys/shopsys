@@ -2,7 +2,7 @@
 
 {% block grid_value_cell_id_preview %}
     {% if row.advert.type == TYPE_IMAGE %}
-        {{ image(row.advert, {type: 'web', size: 'original', height: 30, lazy: false}) }}
+        {{ image(row.advert, {type: 'web', height: 30 }) }}
     {% else %}
         {{ '- html -' }}
     {% endif %}

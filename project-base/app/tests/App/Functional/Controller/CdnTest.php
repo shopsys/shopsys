@@ -40,29 +40,6 @@ class CdnTest extends FunctionalTestCase
             null,
         );
         $this->assertStringStartsWith($cdnDomain, $productImageUrl);
-
-        $additionalImagesData = $imageFacade->getAdditionalImagesDataFromAttributes(
-            $this->domain->getCurrentDomainConfig(),
-            $product->getId(),
-            'jpg',
-            'product',
-            null,
-        );
-
-        foreach ($additionalImagesData as $additionalImageData) {
-            $this->assertStringStartsWith($cdnDomain, $additionalImageData->url);
-        }
-
-        $additionalImagesData = $imageFacade->getAdditionalImagesData(
-            $this->domain->getCurrentDomainConfig(),
-            $product,
-            null,
-            null,
-        );
-
-        foreach ($additionalImagesData as $additionalImageData) {
-            $this->assertStringStartsWith($cdnDomain, $additionalImageData->url);
-        }
     }
 
     public function tearDown(): void

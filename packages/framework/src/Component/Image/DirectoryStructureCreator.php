@@ -33,28 +33,26 @@ class DirectoryStructureCreator
         $this->domainImageDir = $domainImageDir;
     }
 
-    public function makeImageDirectories()
+    public function makeImageDirectories(): void
     {
         $imageEntityConfigs = $this->imageConfig->getAllImageEntityConfigsByClass();
         $directories = [];
 
         foreach ($imageEntityConfigs as $imageEntityConfig) {
-            $sizeConfigs = $imageEntityConfig->getSizeConfigs();
-            $sizesDirectories = $this->getTargetDirectoriesFromSizeConfigs(
-                $imageEntityConfig->getEntityName(),
-                null,
-                $sizeConfigs,
-            );
-            $directories = array_merge($directories, $sizesDirectories);
+            $types = $imageEntityConfig->getTypes();
 
-            foreach ($imageEntityConfig->getTypes() as $type) {
-                $typeSizes = $imageEntityConfig->getSizeConfigsByType($type);
-                $typeSizesDirectories = $this->getTargetDirectoriesFromSizeConfigs(
+            if (count($types) === 0) {
+                $directories[] = $this->getTargetDirectoryByType(
+                    $imageEntityConfig->getEntityName(),
+                    null,
+                );
+            }
+
+            foreach ($types as $type) {
+                $directories[] = $this->getTargetDirectoryByType(
                     $imageEntityConfig->getEntityName(),
                     $type,
-                    $typeSizes,
                 );
-                $directories = array_merge($directories, $typeSizesDirectories);
             }
         }
 
@@ -68,18 +66,10 @@ class DirectoryStructureCreator
     /**
      * @param string $entityName
      * @param string|null $type
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
-     * @return string[]
+     * @return string
      */
-    protected function getTargetDirectoriesFromSizeConfigs($entityName, $type, array $sizeConfigs)
+    protected function getTargetDirectoryByType(string $entityName, ?string $type): string
     {
-        $directories = [];
-
-        foreach ($sizeConfigs as $sizeConfig) {
-            $relativePath = $this->imageLocator->getRelativeImagePath($entityName, $type, $sizeConfig->getName());
-            $directories[] = $this->imageDir . $relativePath;
-        }
-
-        return $directories;
+        return $this->imageDir . $this->imageLocator->getRelativeImagePath($entityName, $type);
     }
 }

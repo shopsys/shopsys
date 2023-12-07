@@ -1,4 +1,6 @@
 import { TextInput } from './TextInput';
+import eyeIcon from '/public/svg/eye.svg';
+import { Image } from 'components/Basic/Image/Image';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { InputHTMLAttributes, ReactElement, useCallback, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
@@ -56,9 +58,9 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                 onBlur={field.onBlur}
                 onChange={field.onChange}
             >
-                <img
+                <Image
                     alt="eye icon"
-                    src="/svg/eye.svg"
+                    src={eyeIcon}
                     className={twJoin(
                         'absolute top-1/2 right-4 w-6 -translate-y-1/2 cursor-pointer',
                         inputType === 'text' && 'opacity-50',

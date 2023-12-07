@@ -12,22 +12,16 @@ NotificationBar:
             images:
                 type: "[Image!]!"
                 description: "Notification bar images"
-                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"], args["sizes"])'
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"
-                        defaultValue: null
-                    sizes:
-                        type: "[String!]"
                         defaultValue: null
             mainImage:
                 type: "Image"
                 description: "Notification bar image by params"
-                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"], args["size"])'
+                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"])'
                 args:
                     type:
-                        type: "String"
-                        defaultValue: null
-                    size:
                         type: "String"
                         defaultValue: null

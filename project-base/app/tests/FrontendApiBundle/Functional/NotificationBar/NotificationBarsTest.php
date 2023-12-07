@@ -11,33 +11,16 @@ class NotificationBarsTest extends GraphQlTestCase
 {
     public function testNavigation(): void
     {
-        $query = '
-            query {
-                notificationBars {
-                   text
-                   rgbColor
-                   images {
-                       position
-                       sizes {
-                           url
-                       }
-                   }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/NotificationBarsQuery.graphql');
+        $responseData = $this->getResponseDataForGraphQlType($response, 'notificationBars');
+        $expectedData = [
+            [
+                'text' => t('Notification in the bar, notification of a new event.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                'rgbColor' => '#000000',
+                'images' => [],
+            ],
+        ];
 
-        $jsonExpected = '{
-            "data": {
-                "notificationBars": [
-                    {
-                        "text": "' . t('Notification in the bar, notification of a new event.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
-                        "rgbColor": "#000000",
-                        "images": []
-                    }
-                ]
-            }
-        }';
-
-        $this->assertQueryWithExpectedJson($query, $jsonExpected);
+        $this->assertSame($expectedData, $responseData);
     }
 }

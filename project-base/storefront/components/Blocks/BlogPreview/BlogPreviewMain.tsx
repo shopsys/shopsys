@@ -21,9 +21,11 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles }) => (
                 >
                     <Image
                         alt={article.mainImage?.name || article.name}
-                        className="rounded"
-                        image={article.mainImage}
-                        type="list"
+                        className="mx-auto rounded"
+                        height={220}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 35vw"
+                        src={article.mainImage?.url}
+                        width={700}
                     />
                 </ArticleLink>
 

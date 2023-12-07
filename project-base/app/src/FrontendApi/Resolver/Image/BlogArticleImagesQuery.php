@@ -14,22 +14,20 @@ class BlogArticleImagesQuery extends ImagesQuery implements AliasedInterface
     /**
      * @param array $data
      * @param string|null $type
-     * @param array|null $sizes
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function imagesByBlogArticlePromiseQuery(array $data, ?string $type, ?array $sizes): Promise
+    public function imagesByBlogArticlePromiseQuery(array $data, ?string $type): Promise
     {
-        return $this->resolveByEntityIdPromise($data['id'], self::ENTITY_NAME, $type, $sizes);
+        return $this->resolveByEntityIdPromise($data['id'], self::ENTITY_NAME, $type);
     }
 
     /**
      * @param array $data
      * @param string|null $type
-     * @param string|null $size
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function mainImageByBlogArticlePromiseQuery(array $data, ?string $type, ?string $size): Promise
+    public function mainImageByBlogArticlePromiseQuery(array $data, ?string $type): Promise
     {
-        return $this->mainImageByEntityIdPromiseQuery($data['id'], self::ENTITY_NAME, $type, $size);
+        return $this->mainImageByEntityIdPromiseQuery($data['id'], self::ENTITY_NAME, $type);
     }
 }

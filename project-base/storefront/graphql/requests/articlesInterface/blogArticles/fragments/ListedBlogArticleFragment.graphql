@@ -3,7 +3,9 @@ fragment ListedBlogArticleFragment on BlogArticle {
     uuid
     name
     link
-    ...BlogArticleImageListFragment
+    mainImage {
+        ...ImageFragment
+    }
     publishDate
     perex
     slug

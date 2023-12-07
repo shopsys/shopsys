@@ -12,15 +12,13 @@ class SeoPageImagesQuery extends ImagesQuery
 {
     /**
      * @param \App\Model\SeoPage\SeoPage $seoPage
-     * @param string|null $size
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function ogImageBySeoPageQuery(SeoPage $seoPage, ?string $size): Promise
+    public function ogImageBySeoPageQuery(SeoPage $seoPage): Promise
     {
         return $this->mainImageByEntityPromiseQuery(
             $seoPage,
             SeoPageFacade::IMAGE_TYPE_OG,
-            $size,
         );
     }
 }

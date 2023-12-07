@@ -16,8 +16,10 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles }) => (
                     <Image
                         alt={article.mainImage?.name || article.name}
                         className="rounded"
-                        image={article.mainImage}
-                        type="list"
+                        height={250}
+                        sizes="(max-width: 600px) 90vw, (max-width: 1024px) 40vw, 10vw"
+                        src={article.mainImage?.url}
+                        width={768}
                     />
                 </ArticleLink>
 

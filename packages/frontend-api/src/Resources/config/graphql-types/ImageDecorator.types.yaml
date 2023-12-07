@@ -6,22 +6,7 @@ ImageDecorator:
         fields:
             name:
                 type: "String"
-                description: "Name of image usable as alternative text"
-            type:
-                type: "String"
-                description: "Image type"
-            position:
-                type: "Int"
-                description: "Position of image in list"
-            size:
-                type: "String"
-                description: "Image size defined in images.yaml"
+                description: "Name of the image usable as an alternative text"
             url:
-                type: "String"
-                description: "URL address of image"
-            width:
-                type: "Int"
-                description: "Width in pixels defined in images.yaml"
-            height:
-                type: "Int"
-                description: "Height in pixels defined in images.yaml"
+                type: "String!"
+                description: "URL address of the image"

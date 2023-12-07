@@ -113,14 +113,16 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                 <div
                                     key={index}
                                     className="lightboxItem basis-[304px] p-3"
-                                    data-src={image.sizes.find((size) => size.size === 'default')?.url}
+                                    data-src={image.url}
                                     title={store.storeName}
                                 >
                                     <Image
                                         alt={image.name || `${store.storeName}-${index}`}
-                                        className="cursor-pointer"
-                                        image={image}
-                                        type="thumbnail"
+                                        className="w-auto cursor-pointer"
+                                        height={190}
+                                        loading="lazy"
+                                        src={image.url}
+                                        width={280}
                                     />
                                 </div>
                             ))}

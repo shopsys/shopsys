@@ -60,6 +60,8 @@ function deploy() {
         ["S3_BUCKET_NAME"]=${PROJECT_NAME}
 
         ["CDN_DOMAIN"]=${CDN_DOMAIN}
+        ["CDN_API_KEY"]=${CDN_API_KEY}
+        ["CDN_API_SALT"]=${CDN_API_SALT}
 
         ["PACKETERY_ENABLED"]=${PACKETERY_ENABLED}
         ["PACKETERY_REST_API_URL"]=${PACKETERY_REST_API_URL}

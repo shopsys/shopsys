@@ -31,21 +31,11 @@ class ImageExtension extends BaseImageExtension
                 $imageView->getExtension(),
                 $entityName,
                 $imageView->getType(),
-                $attributes['size'],
-            );
-
-            $additionalImagesData = $this->imageFacade->getAdditionalImagesDataFromAttributes(
-                $this->domain->getCurrentDomainConfig(),
-                $imageView->getId(),
-                $imageView->getExtension(),
-                $entityName,
-                $imageView->getType(),
-                $attributes['size'],
             );
 
             $attributes['alt'] = $imageView->getName();
 
-            return $this->getImageHtmlByEntityName($attributes, $entityName, $additionalImagesData);
+            return $this->getImageHtmlByEntityName($attributes, $entityName);
         }
 
         return parent::getImageHtml($imageView, $attributes);
@@ -53,11 +43,10 @@ class ImageExtension extends BaseImageExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|object $imageView
-     * @param string|null $sizeName
      * @param string|null $type
      * @return string
      */
-    public function getImageUrl($imageView, $sizeName = null, $type = null)
+    protected function getImageUrl($imageView, ?string $type = null): string
     {
         if ($imageView instanceof ImageView) {
             $entityName = $imageView->getEntityName();
@@ -68,10 +57,9 @@ class ImageExtension extends BaseImageExtension
                 $imageView->getExtension(),
                 $entityName,
                 $type,
-                $sizeName,
             );
         }
 
-        return parent::getImageUrl($imageView, $sizeName, $type);
+        return parent::getImageUrl($imageView, $type);
     }
 }

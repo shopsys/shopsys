@@ -12,13 +12,6 @@ class PromotedCategoriesTest extends GraphQlTestCase
     public function testPromotedCategoriesWithName(): void
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
-        $query = '
-            query {
-                promotedCategories {
-                    name
-                }
-            }
-        ';
 
         $expectedCategories = [
             ['name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
@@ -27,49 +20,26 @@ class PromotedCategoriesTest extends GraphQlTestCase
         ];
 
         $graphQlType = 'promotedCategories';
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PromotedCategoriesQuery.graphql', [
+            'firstProducts' => 1,
+        ]);
 
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
-        self::assertEquals($expectedCategories, $responseData, json_encode($responseData));
+        $this->assertCount(count($expectedCategories), $responseData);
+
+        foreach ($expectedCategories as $key => $expectedCategory) {
+            $this->assertSame($expectedCategory['name'], $responseData[$key]['name']);
+        }
     }
 
     public function testPromotedCategoriesReturnsSameCategoryAsCategoryDetail(): void
     {
-        $queryPromotedCategories = '
-            query {
-                promotedCategories {
-                    uuid
-                    name
-                    children {
-                        name
-                    }
-                    parent {
-                        name
-                    }
-                    products(first: 1) {
-                        edges {
-                            node {
-                                name
-                            }
-                        }
-                    }
-                    images {
-                        position
-                        sizes {
-                            url
-                        }
-                    }
-                    seoH1
-                    seoTitle
-                    seoMetaDescription
-                }
-            }
-        ';
-
         $graphQlType = 'promotedCategories';
-        $responsePromotedCategories = $this->getResponseContentForQuery($queryPromotedCategories);
+        $responsePromotedCategories = $this->getResponseContentForGql(__DIR__ . '/graphql/PromotedCategoriesQuery.graphql', [
+            'firstProducts' => 1,
+        ]);
 
         $this->assertResponseContainsArrayOfDataForGraphQlType($responsePromotedCategories, $graphQlType);
         $responseDataPromotedCategories = $this->getResponseDataForGraphQlType($responsePromotedCategories, $graphQlType);
@@ -79,39 +49,11 @@ class PromotedCategoriesTest extends GraphQlTestCase
 
         $categoryUuid = $responseDataPromotedCategories[0]['uuid'];
 
-        $queryCategoryDetail = '
-            query {
-                category(uuid: "' . $categoryUuid . '") {
-                    uuid
-                    name
-                    children {
-                        name
-                    }
-                    parent {
-                        name
-                    }
-                    products(first: 1) {
-                        edges {
-                            node {
-                                name
-                            }
-                        }
-                    }
-                    images {
-                        position
-                        sizes {
-                            url
-                        }
-                    }
-                    seoH1
-                    seoTitle
-                    seoMetaDescription
-                }
-            }
-        ';
-
         $graphQlType = 'category';
-        $responseCategoryDetail = $this->getResponseContentForQuery($queryCategoryDetail);
+        $responseCategoryDetail = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoryQuery.graphql', [
+            'categoryUuid' => $categoryUuid,
+            'firstProducts' => 1,
+        ]);
 
         $this->assertResponseContainsArrayOfDataForGraphQlType($responseCategoryDetail, $graphQlType);
         $responseDataCategoryDetail = $this->getResponseDataForGraphQlType($responseCategoryDetail, $graphQlType);

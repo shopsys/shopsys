@@ -4,326 +4,50 @@
 #    types:
 #        -   name: gallery
 #            multiple: true
-#            sizes:
-#                -   name: detail
-#                    width: 200
-#                    height: 300
-#                    crop: false
-#                    occurrence: 'Front-end: Product detail, when selected'
-#                    additionalSizes:
-#                       - {width: 1100, height: ~, media: "(min-width: 1200px)"}
-#                       - {width: 275, height: ~, media: "(max-width: 480px)"}
-#                -   name: list
-#                    width: 100
-#                    height: 100
-#                    crop: true
-#                    occurrence: 'Front-end: Product detail'
 #        -   name: main
-#            sizes:
-#                -   name: ~
-#                    width: 200
-#                    height: 300
-#                    crop: false
-#                    occurrence: 'Front-end: Product detail, Product list'
 
 -   name: payment
     class: Shopsys\FrameworkBundle\Model\Payment\Payment
-    sizes:
-        -   name: ~
-            width: 45
-            height: 25
-            crop: false
-            occurrence: 'Front-end: Ordering process'
-            additionalSizes:
-                - {width: 90, height: 50, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: category
     class: Shopsys\FrameworkBundle\Model\Category\Category
-    sizes:
-        -   name: ~
-            width: 64
-            height: 48
-            crop: false
-            occurrence: 'Front-end: Product list by category'
-            additionalSizes:
-                - {width: 128, height: 96, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: product
     class: Shopsys\FrameworkBundle\Model\Product\Product
     multiple: true
-    sizes:
-        -   name: ~
-            width: 605
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Main image in product detail'
-            additionalSizes:
-                - {width: 710, height: ~, media: "(min-width: 480px) and (max-width: 768px)"}
-                - {width: 1210, height: ~, media: "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: galleryThumbnail
-            width: 64
-            height: 64
-            crop: false
-            occurrence: 'Front-end: Thumbnail of images under the main image in product detail'
-            additionalSizes:
-                - {width: 128, height: 128, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-                - {width: 1210, height: ~, media: "only screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 1.5)"}
-                - {width: 605, height: ~, media: "(max-width: 768px)"}
-        -   name: modal
-            width: 96
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Product in modal'
-            additionalSizes:
-                - {width: 192, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: list
-            width: 160
-            height: 160
-            crop: false
-            occurrence: 'Front-end: Listing of products in section, listing of products on special offer'
-            additionalSizes:
-                - {width: 320, height: 320, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: thumbnail
-            width: 90
-            height: 63
-            crop: false
-            occurrence: 'Front-end: best selling products, variant on the product detail, cart images'
-            additionalSizes:
-                - {width: 180, height: 126, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: thumbnailSmall
-            width: 43
-            height: 28
-            crop: false
-            occurrence: 'Front-end: preview in dropdown cart'
-            additionalSizes:
-                - {width: 86, height: 56, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: thumbnailExtraSmall
-            width: 54
-            height: 54
-            crop: false
-            occurrence: 'Front-end: preview in cart during ordering process'
-            additionalSizes:
-                - {width: 108, height: 108, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: thumbnailMedium
-            width: 72
-            height: 48
-            crop: false
-            occurrence: 'Front-end: Preview in autocomplete for search, category image in navigation'
-            additionalSizes:
-                - {width: 144, height: 96, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: sliderItem
     class: Shopsys\FrameworkBundle\Model\Slider\SliderItem
     types:
         -   name: web
-            sizes:
-                -   name: ~
-                    width: 968
-                    height: 318
-                    crop: false
-                    occurrence: 'Front-end: Main page slider'
-                    additionalSizes:
-                        - { width: 1936, height: 636, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)" }
-                        - { width: 1200, height: 394, media: "only screen and (min-width: 1024px)" }
-                        - { width: 2400, height: 788, media: "only screen and (min-width: 1024px) and (-webkit-min-device-pixel-ratio: 1.5)" }
         -   name: mobile
-            sizes:
-                -   name: ~
-                    width: 285
-                    height: 199
-                    crop: false
-                    occurrence: 'Front-end: Mobile main page slider'
-                    additionalSizes:
-                        - { width: 570, height: 398, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)" }
-                        - { width: 713, height: 498, media: "only screen and (min-width: 600px)" }
-                        - { width: 1426, height: 996, media: "only screen and (min-width: 600px) and (-webkit-min-device-pixel-ratio: 1.5)" }
 
 -   name: transport
     class: Shopsys\FrameworkBundle\Model\Transport\Transport
-    sizes:
-        -   name: ~
-            width: 35
-            height: 20
-            crop: false
-            occurrence: 'Front-end: Ordering process'
-            additionalSizes:
-                - {width: 70, height: 40, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-                - {width: 90, height: 50, media: "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"}
-                - {width: 45, height: 25, media: "(min-width: 769px)"}
 
 -   name: noticer
     class: Shopsys\FrameworkBundle\Model\Advert\Advert
     types:
         -   name: web
-            sizes:
-                -   name: header
-                    width: 1160
-                    height: 300
-                    crop: false
-                    occurrence: 'Front-end: Advertising under heading'
-                -   name: footer
-                    width: 1160
-                    height: 300
-                    crop: false
-                    occurrence: 'Front-end: Advertising above footer'
-                -   name: productList
-                    width: 846
-                    height: 200
-                    crop: false
-                    occurrence: 'Front-end: Advertising in category (above the category name)'
-                -   name: productListSecondRow
-                    width: 846
-                    height: 200
-                    crop: false
-                    occurrence: 'Front-end: Advertising in category (between first and second row)'
-                -   name: cartPreview
-                    width: 500
-                    height: 150
-                    crop: false
-                    occurrence: 'Front-end: Advertising in cart (above the cart preview)'
-                -   name: productListMiddle
-                    width: 1390
-                    height: 350
-                    crop: false
-                    occurrence: 'Front-end: Advertising in middle category (above the product list)'
-                -   name: productListMiddleRetina
-                    width: 2780
-                    height: 700
-                    crop: false
-                    occurrence: 'Front-end: Advertising in middle category (above the product list) on Retina displays'
         -   name: mobile
-            sizes:
-                -   name: header
-                    width: 425
-                    height: 140
-                    crop: false
-                    occurrence: 'Front-end: Advertising under heading'
-                -   name: footer
-                    width: 425
-                    height: 140
-                    crop: false
-                    occurrence: 'Front-end: Advertising above footer'
-                -   name: productList
-                    width: 425
-                    height: 140
-                    crop: false
-                    occurrence: 'Front-end: Advertising in category (above the category name)'
-                -   name: productListSecondRow
-                    width: 425
-                    height: 140
-                    crop: false
-                    occurrence: 'Front-end: Advertising in category (between first and second row)'
-                -   name: cartPreview
-                    width: 425
-                    height: 140
-                    crop: false
-                    occurrence: 'Front-end: Advertising in cart (above the cart preview)'
-                -   name: productListMiddle
-                    width: 328
-                    height: 120
-                    crop: false
-                    occurrence: 'Front-end: Advertising in middle category (above the product list)'
-                -   name: productListMiddleRetina
-                    width: 656
-                    height: 175
-                    crop: false
-                    occurrence: 'Front-end: Advertising in middle category (above the product list) - retina display'
 
 -   name: brand
     class: Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-    sizes:
-        -   name: ~
-            width: 300
-            height: 200
-            crop: false
-            occurrence: 'Front-end: Brand page'
 
 -   name:  blogCategory
     class: App\Model\Blog\Category\BlogCategory
-    sizes:
-        -   name: ~
-            width: 400
-            height: 250
-            crop: true
-            occurrence: 'Front-end: Blog category detail'
 
 -   name:  blogArticle
     class: App\Model\Blog\Article\BlogArticle
-    sizes:
-        -   name: ~
-            width: 960
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Blog article detail'
-            additionalSizes:
-                - {width: 1920, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: list
-            width: 328
-            height: 179
-            crop: true
-            occurrence: 'Front-end: Blog article list'
-            additionalSizes:
-                - {width: 656, height: 358, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: listAside
-            width: 231
-            height: 127
-            crop: true
-            occurrence: 'Front-end: Blog article list'
-            additionalSizes:
-                - {width: 296, height: 254, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: listGrid
-            width: 450
-            height: 220
-            crop: true
-            occurrence: 'Front-end: Blog article list'
-            additionalSizes:
-                - {width: 900, height: 440, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: searchThumbnail
-            width: 116
-            height: 78
-            crop: true
-            occurrence: 'Front-end: Blog article thumbnail'
-        -   name: listBig
-            width: 549
-            height: 390
-            crop: true
-            occurrence: 'Front-end: Blog article list with big images'
 
 -   name: notificationBar
     class: App\Model\NotificationBar\NotificationBar
-    sizes:
-        -   name: ~
-            width: 42
-            height: 42
-            crop: false
-            occurrence: 'Front-end: Notification bar'
-            additionalSizes:
-                - {width: 84, height: 84, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: store
     class: Shopsys\FrameworkBundle\Model\Store\Store
     multiple: true
-    sizes:
-        -   name: ~
-            width: 600
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Store detail'
-            additionalSizes:
-                - {width: 1200, height: ~, media: "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: thumbnail
-            width: 300
-            height: 200
-            crop: false
-            occurrence: 'Front-end: Store thumbnail'
 
 -   name: seoPage
     class: App\Model\SeoPage\SeoPage
     types:
         -   name: og
-            sizes:
-                -   name: ~
-                    width: 1200
-                    height: ~
-                    crop: false
-                    occurrence: 'Front-end: SEO Og image'

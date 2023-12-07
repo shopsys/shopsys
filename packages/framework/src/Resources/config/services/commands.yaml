@@ -31,3 +31,7 @@ services:
     # the command is supposed to be used in DEV environment only so it is configured in services_dev.yaml
     Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
         autoconfigure: false
+
+    Shopsys\FrameworkBundle\Command\MigrateImagesCommand:
+        arguments:
+            - '%shopsys.image_dir%'

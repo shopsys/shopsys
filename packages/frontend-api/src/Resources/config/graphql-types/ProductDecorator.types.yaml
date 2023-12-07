@@ -38,13 +38,11 @@ ProductDecorator:
             images:
                 type: "[Image]!"
                 description: "Product images"
-                resolve: '@=query("imagesByProductQuery", value, args["type"], args["size"])'
+                resolve: '@=query("imagesByProductQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
-                    size:
-                        type: "String"
             brand:
                 type: "Brand"
                 description: "Brand of product"

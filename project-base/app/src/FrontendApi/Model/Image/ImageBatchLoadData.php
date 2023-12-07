@@ -16,13 +16,11 @@ class ImageBatchLoadData
     /**
      * @param int $entityId
      * @param string $entityName
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
      * @param string|null $type
      */
     public function __construct(
         private int $entityId,
         private string $entityName,
-        private array $sizeConfigs,
         private ?string $type,
     ) {
         $this->id = Uuid::uuid4()->toString();
@@ -58,13 +56,5 @@ class ImageBatchLoadData
     public function getType(): ?string
     {
         return $this->type;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
-     */
-    public function getSizeConfigs(): array
-    {
-        return $this->sizeConfigs;
     }
 }

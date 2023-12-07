@@ -10,13 +10,10 @@ AdvertImageDecorator:
                 description: "Advert link"
             images:
                 type: "[Image!]!"
-                description: "Advert image"
-                resolve: '@=query("imagesByAdvertQuery", value, args["type"], args["size"])'
+                description: "Advert images"
+                resolve: '@=query("imagesByAdvertQuery", value, args["type"])'
                 args:
                     type:
-                        type: "String"
-                        defaultValue: null
-                    size:
                         type: "String"
                         defaultValue: null
         interfaces:

@@ -916,9 +916,6 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-msgid "Image sizes - view"
-msgstr ""
-
 msgid "Image will be deleted after saving."
 msgstr ""
 

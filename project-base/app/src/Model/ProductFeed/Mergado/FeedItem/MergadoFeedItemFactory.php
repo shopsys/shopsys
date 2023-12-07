@@ -12,6 +12,7 @@ use App\Model\Product\Product;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
+use Shopsys\FrameworkBundle\Model\Feed\FeedItemImageHelper;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
@@ -81,7 +82,7 @@ class MergadoFeedItemFactory
             $flags,
             $availability,
             $product->getBrand(),
-            $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
+            $this->productUrlsBatchLoader->getResizedProductImageUrl($product, $domainConfig),
             $product->isVariant() ? $product->getMainVariant()->getId() : null,
         );
     }
@@ -155,7 +156,7 @@ class MergadoFeedItemFactory
 
         foreach ($images as $image) {
             try {
-                $imageUrls[] = $this->imageFacade->getImageUrl($domainConfig, $image, 'original');
+                $imageUrls[] = FeedItemImageHelper::limitWidthInImageUrl($this->imageFacade->getImageUrl($domainConfig, $image));
             } catch (ImageNotFoundException $exception) {
                 $this->logger->error(sprintf('Image with id "%s" not found on filesystem', $image->getId()));
             }

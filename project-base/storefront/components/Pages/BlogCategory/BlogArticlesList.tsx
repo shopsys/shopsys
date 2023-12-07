@@ -15,18 +15,20 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
     return (
         <ul className="flex w-full flex-col flex-wrap md:flex-row">
             {blogArticles.map((blogArticle) => (
-                <li key={blogArticle.uuid} className="mb-14 flex w-full flex-col p-0 md:flex-row">
+                <li key={blogArticle.uuid} className="mb-14 flex w-full flex-col p-0 md:flex-row md:gap-x-10">
                     <div className="mb-3 w-full text-center md:mb-0 md:w-48">
                         <ExtendedNextLink href={blogArticle.link} type="blogArticle">
                             <Image
                                 alt={blogArticle.mainImage?.name || blogArticle.name}
-                                image={blogArticle.mainImage}
-                                type="list"
+                                height={600}
+                                sizes="(max-width: 600px) 100vw, 20vw"
+                                src={blogArticle.mainImage?.url}
+                                width={600}
                             />
                         </ExtendedNextLink>
                     </div>
 
-                    <div className="flex w-full flex-col md:pl-10">
+                    <div className="flex flex-1 flex-col">
                         <div>
                             {blogArticle.blogCategories.map((blogArticleCategory) => (
                                 <Fragment key={blogArticleCategory.uuid}>

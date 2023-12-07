@@ -53,13 +53,14 @@ export const CartListItem: FC<CartListItemProps> = ({
             data-testid={TEST_IDENTIFIER + itemCatnum}
         >
             <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0">
-                <div className="flex w-24 shrink-0" data-testid={TEST_IDENTIFIER + 'image'}>
+                <div className="flex h-12 w-24 shrink-0" data-testid={TEST_IDENTIFIER + 'image'}>
                     <ExtendedNextLink className="relative h-full w-full" href={productSlug} type="product">
                         <Image
                             alt={product.mainImage?.name || product.fullName}
-                            className="h-14"
-                            image={product.mainImage}
-                            type="thumbnailExtraSmall"
+                            className="mx-auto max-h-full w-auto"
+                            height={56}
+                            src={product.mainImage?.url}
+                            width={96}
                         />
                     </ExtendedNextLink>
                 </div>

@@ -8,12 +8,10 @@ const keyNull = () => null;
 const keyUuid = (data: Data) => data.uuid as string | null;
 const keyName = (data: Data) => data.name as string | null;
 const keyCode = (data: Data) => data.code as string | null;
-const keyUrl = (data: Data) => data.url as string | null;
 
 export const cache = cacheExchange({
     schema: schema as unknown as IntrospectionQuery,
     keys: {
-        AdditionalSize: keyUrl,
         Advert: keyUuid,
         AdvertCode: keyUuid,
         AdvertImage: keyUuid,
@@ -42,7 +40,6 @@ export const cache = cacheExchange({
         FlagFilterOption: keyNull,
         GoPayPaymentMethod: (data) => data.identifier as string | null,
         Image: keyNull,
-        ImageSize: keyUrl,
         Link: keyNull,
         MainVariant: keyUuid,
         NavigationItem: keyNull,

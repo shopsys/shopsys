@@ -5,7 +5,7 @@ fragment SeoPageFragment on SeoPage {
     canonicalUrl
     ogTitle
     ogDescription
-    ogImage(size: "default") {
-        ...ImageSizesFragment
+    ogImage {
+        ...ImageFragment
     }
 }

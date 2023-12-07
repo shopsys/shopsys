@@ -45,9 +45,9 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                                 <div className="mr-3 flex w-11">
                                     <Image
                                         alt={item.mainImage.name || item.text}
-                                        className="mr-3"
-                                        image={item.mainImage}
-                                        type="default"
+                                        height={44}
+                                        src={item.mainImage.url}
+                                        width={44}
                                     />
                                 </div>
                             )}

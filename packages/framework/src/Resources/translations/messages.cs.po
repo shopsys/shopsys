@@ -592,9 +592,6 @@ msgstr "Cron s serviceID `%serviceId%` byl zapnut"
 msgid "Cron with serviceID `%serviceId%` was scheduled"
 msgstr "Cron se serviceId `%serviceId%` byl naplánován"
 
-msgid "Cropping"
-msgstr "Ořezávání"
-
 msgid "Currencies and rounding"
 msgstr "Měny a zaokrouhlování"
 
@@ -1258,9 +1255,6 @@ msgstr "Nadpis (H1)"
 msgid "Headline"
 msgstr "Titulek"
 
-msgid "Height [px]"
-msgstr "Výška [px]"
-
 msgid "Heureka - Verified by Customer"
 msgstr "Heureka - Ověřeno zákazníky"
 
@@ -1326,9 +1320,6 @@ msgstr "Pokud chcete, aby se změny projevily všude (na produkci, develu, local
 
 msgid "Image"
 msgstr "Obrázek"
-
-msgid "Image size"
-msgstr "Velikost obrázku"
 
 msgid "Image will be deleted after saving."
 msgstr "Po uložení bude obrázek smazán"
@@ -1722,9 +1713,6 @@ msgstr "Počet objednávek"
 
 msgid "Number of products in filter"
 msgstr "Počty zboží ve filtru"
-
-msgid "Occurrence"
-msgstr "Výskyt"
 
 msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
 msgstr "Pokusili jste se přihlásit výchozími přihlašovacími údaji. V produkčním prostředí toto není dovoleno. Pokud jste hacker, běžte prosím jinam. Pokud jste oprávněný uživatel, použijte jiný účet nebo kontaktujte vývojáře, aby vám změnili heslo."
@@ -2293,9 +2281,6 @@ msgstr "Krátký popis"
 msgid "Short description can be set in the main variant."
 msgstr "Krátký popis se nastavuje u hlavní varianty."
 
-msgid "Size name"
-msgstr "Název rozměru"
-
 msgid "Slider on main page"
 msgstr "Slider na titulce"
 
@@ -2647,9 +2632,6 @@ msgstr "Mějte na paměti, že při vytváření cenové skupiny je nutné, aby 
 msgid "Whitelist is active, but empty. No email will be sent from the app."
 msgstr "Whitelist je aktivní, ale prázdný. Z aplikace nebude odeslán žádný e-mail."
 
-msgid "Width [px]"
-msgstr "Šířka [px]"
-
 msgid "XML Feeds"
 msgstr "XML Feedy"
 
@@ -2739,9 +2721,6 @@ msgstr "měny"
 
 msgid "customers"
 msgstr "zákazníků"
-
-msgid "default"
-msgstr "default"
 
 msgid "doesn't include"
 msgstr "neobsahuje"

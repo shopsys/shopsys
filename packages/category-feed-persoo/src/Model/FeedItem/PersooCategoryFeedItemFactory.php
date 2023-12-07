@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
+use Shopsys\FrameworkBundle\Model\Feed\FeedItemImageHelper;
 
 class PersooCategoryFeedItemFactory
 {
@@ -39,7 +40,7 @@ class PersooCategoryFeedItemFactory
         $rootCategory = $this->categoryRepository->getRootCategory();
 
         try {
-            $imageUrl = $this->imageFacade->getImageUrl($domainConfig, $category);
+            $imageUrl = FeedItemImageHelper::limitWidthInImageUrl($this->imageFacade->getImageUrl($domainConfig, $category));
         } catch (ImageNotFoundException) {
             $imageUrl = null;
         }

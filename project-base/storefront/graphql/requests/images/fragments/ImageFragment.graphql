@@ -1,0 +1,5 @@
+fragment ImageFragment on Image {
+    __typename
+    name
+    url
+}

@@ -41,8 +41,10 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, added
                     <div className="mb-4 flex w-24 items-center justify-center md:mb-0">
                         <Image
                             alt={product.mainImage.name || product.fullName}
-                            image={product.mainImage}
-                            type="thumbnailMedium"
+                            className="max-h-20 w-auto"
+                            height={48}
+                            src={product.mainImage.url}
+                            width={72}
                         />
                     </div>
                 )}

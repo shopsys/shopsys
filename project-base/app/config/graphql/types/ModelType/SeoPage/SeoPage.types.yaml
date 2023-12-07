@@ -21,8 +21,4 @@ SeoPage:
             ogImage:
                 type: "Image"
                 description: "Image for og image meta tag by params"
-                resolve: '@=query("ogImageBySeoPageQuery", value, args["size"])'
-                args:
-                    size:
-                        type: "String"
-                        defaultValue: null
+                resolve: '@=query("ogImageBySeoPageQuery", value)'

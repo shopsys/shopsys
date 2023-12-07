@@ -19,7 +19,6 @@ services:
     Shopsys\FrameworkBundle\Twig\ImageExtension:
         arguments:
             $frontDesignImageUrlPrefix: '%shopsys.front_design_image_url_prefix%'
-            $isLazyLoadEnabled: '%shopsys.image.enable_lazy_load%'
 
     Shopsys\FrameworkBundle\Twig\LocalizationExtension:
         arguments:

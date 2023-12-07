@@ -592,9 +592,6 @@ msgstr ""
 msgid "Cron with serviceID `%serviceId%` was scheduled"
 msgstr ""
 
-msgid "Cropping"
-msgstr ""
-
 msgid "Currencies and rounding"
 msgstr ""
 
@@ -1258,9 +1255,6 @@ msgstr ""
 msgid "Headline"
 msgstr ""
 
-msgid "Height [px]"
-msgstr ""
-
 msgid "Heureka - Verified by Customer"
 msgstr ""
 
@@ -1325,9 +1319,6 @@ msgid "If you want for these changes to manifest everywhere (on production, deve
 msgstr ""
 
 msgid "Image"
-msgstr ""
-
-msgid "Image size"
 msgstr ""
 
 msgid "Image will be deleted after saving."
@@ -1721,9 +1712,6 @@ msgid "Number of orders"
 msgstr ""
 
 msgid "Number of products in filter"
-msgstr ""
-
-msgid "Occurrence"
 msgstr ""
 
 msgid "Oh, you just tried to log in using default credentials. We do not allow that on production environment. If you are random hacker, please go somewhere else. If you are authorized user, please use another account or contact developers and change password during deployment."
@@ -2293,9 +2281,6 @@ msgstr ""
 msgid "Short description can be set in the main variant."
 msgstr ""
 
-msgid "Size name"
-msgstr ""
-
 msgid "Slider on main page"
 msgstr ""
 
@@ -2647,9 +2632,6 @@ msgstr ""
 msgid "Whitelist is active, but empty. No email will be sent from the app."
 msgstr ""
 
-msgid "Width [px]"
-msgstr ""
-
 msgid "XML Feeds"
 msgstr ""
 
@@ -2738,9 +2720,6 @@ msgid "currencies"
 msgstr ""
 
 msgid "customers"
-msgstr ""
-
-msgid "default"
 msgstr ""
 
 msgid "doesn't include"

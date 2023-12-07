@@ -19,13 +19,11 @@ CategoryDecorator:
             images:
                 type: "[Image!]!"
                 description: "Category images"
-                resolve: '@=query("imagesByEntityQuery", value, args["type"], args["size"])'
+                resolve: '@=query("imagesByEntityQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
-                    size:
-                        type: "String"
             products:
                 type: "ProductConnection"
                 description: "Paginated and ordered products of category"

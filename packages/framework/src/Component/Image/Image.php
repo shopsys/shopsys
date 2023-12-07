@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
-use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
@@ -157,7 +156,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
                 $this->temporaryFilename,
                 true,
                 $this->entityName,
-                $this->type . '/' . ImageConfig::ORIGINAL_SIZE_NAME,
+                $this->type . '/',
                 FileNamingConvention::TYPE_ID,
             );
         }

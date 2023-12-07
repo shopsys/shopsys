@@ -42,7 +42,6 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
 ## Frontend
 * [Design implementation and Customization](./frontend/design-implementation-and-customization.md)
 * [Introduction to LESS](./frontend/introduction-to-less.md)
-* [Configuring Image Sizes for Individual Devices Width](./frontend/configuring-image-sizes-for-individual-devices-width.md)
 * [Frontend Troubleshooting](./frontend/frontend-troubleshooting.md)
 * [Understanding the Style Directory](./frontend/understanding-the-style-directory.md)
 * [Basic Design Styleguide](frontend/basic-design-styleguide.md)

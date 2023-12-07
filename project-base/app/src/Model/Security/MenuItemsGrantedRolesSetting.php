@@ -142,9 +142,6 @@ class MenuItemsGrantedRolesSetting
             'settings' . self::MENU_ITEM_PATH_SEPARATOR . 'lists' . self::MENU_ITEM_PATH_SEPARATOR . 'transport_type' => [
                 Roles::ROLE_TRANSPORT_TYPE_VIEW,
             ],
-            'settings' . self::MENU_ITEM_PATH_SEPARATOR . 'images' => [
-                Roles::ROLE_IMAGE_SIZE_VIEW,
-            ],
             'settings' . self::MENU_ITEM_PATH_SEPARATOR . 'seo' . self::MENU_ITEM_PATH_SEPARATOR . 'seo' => [
                 Roles::ROLE_SEO_VIEW,
             ],

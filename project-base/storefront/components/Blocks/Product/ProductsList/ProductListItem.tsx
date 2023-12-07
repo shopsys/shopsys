@@ -77,9 +77,10 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     <div className="relative">
                         <Image
                             alt={product.mainImage?.name || product.fullName}
-                            className="h-40 justify-center lg:hover:mix-blend-multiply"
-                            image={product.mainImage}
-                            type="list"
+                            className="mx-auto h-40 w-auto"
+                            height={160}
+                            src={product.mainImage?.url}
+                            width={320}
                         />
                         {!!product.flags.length && (
                             <div className="absolute top-3 left-4 flex flex-col">

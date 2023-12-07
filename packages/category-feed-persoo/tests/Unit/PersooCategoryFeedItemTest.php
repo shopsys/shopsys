@@ -133,6 +133,6 @@ class PersooCategoryFeedItemTest extends TestCase
 
         $persooCategoryFeedItem = $this->persooFeedItemFactory->create($this->defaultCategory, $this->defaultDomain);
 
-        self::assertEquals(self::CATEGORY_IMAGE_URL, $persooCategoryFeedItem->getImageLink());
+        self::assertEquals(self::CATEGORY_IMAGE_URL . '?width=605', $persooCategoryFeedItem->getImageLink());
     }
 }
