@@ -73,6 +73,7 @@ class FeedExport
         $itemsInBatch = $this->feed->getItems($this->domainConfig, $this->lastSeekId, static::BATCH_SIZE);
 
         if ($this->lastSeekId === null) {
+            $this->clearTemporaryFile();
             $this->writeToFeed($this->feedRenderer->renderBegin($this->domainConfig));
         }
 
@@ -160,5 +161,13 @@ class FeedExport
     protected function getTemporaryLocalFilepath(): string
     {
         return $this->feedLocalFilepath . '_local' . static::TEMPORARY_FILENAME_SUFFIX;
+    }
+
+    protected function clearTemporaryFile(): void
+    {
+        if ($this->localFilesystem->exists($this->getTemporaryLocalFilepath())) {
+            $this->localFilesystem->remove($this->getTemporaryLocalFilepath());
+            $this->localFilesystem->touch($this->getTemporaryLocalFilepath());
+        }
     }
 }
