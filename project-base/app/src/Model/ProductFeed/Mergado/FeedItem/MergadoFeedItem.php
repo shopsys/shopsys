@@ -37,7 +37,7 @@ class MergadoFeedItem implements FeedItemInterface
      * @param string|null $description
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $highProductPrice
      * @param string[] $flags
-     * @param int|null $availability
+     * @param string $availability
      * @param \App\Model\Product\Brand\Brand|null $brand
      * @param string|null $imageUrl
      * @param int|null $mainVariantId
@@ -57,7 +57,7 @@ class MergadoFeedItem implements FeedItemInterface
         private readonly ?string $description,
         private readonly ProductPrice $highProductPrice,
         private readonly array $flags,
-        private readonly ?int $availability,
+        private readonly string $availability,
         private readonly ?Brand $brand = null,
         private readonly ?string $imageUrl = null,
         private readonly ?int $mainVariantId = null,
@@ -209,9 +209,9 @@ class MergadoFeedItem implements FeedItemInterface
     }
 
     /**
-     * @return int|null
+     * @return string
      */
-    public function getAvailability(): ?int
+    public function getAvailability(): string
     {
         return $this->availability;
     }

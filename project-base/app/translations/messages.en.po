@@ -109,9 +109,6 @@ msgstr ""
 msgid "All - view"
 msgstr ""
 
-msgid "Allow overselling"
-msgstr ""
-
 msgid "An authentication exception occurred."
 msgstr ""
 
@@ -1808,9 +1805,6 @@ msgid "Street"
 msgstr ""
 
 msgid "Sunday"
-msgstr ""
-
-msgid "Supplier's delivery time"
 msgstr ""
 
 msgid "TOP"

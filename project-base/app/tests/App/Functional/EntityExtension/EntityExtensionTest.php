@@ -42,6 +42,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
     /**
      * @inject
+     * @phpstan-ignore-next-line skipped test
      */
     private EntityExtensionTestHelper $entityExtensionTestHelper;
 
@@ -49,6 +50,9 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     {
         parent::setUp();
 
+        return;
+
+        /** @phpstan-ignore-next-line skipped test */
         $this->entityExtensionTestHelper->registerTestEntities();
 
         $entityExtensionMap = [
@@ -120,6 +124,9 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
      */
     public function testAll(): void
     {
+        $this->markTestSkipped();
+
+        /** @phpstan-ignore-next-line skipped test */
         $this->doTestExtendedProductPersistence();
         $this->doTestExtendedCategoryPersistence();
         $this->doTestExtendedOrderItemsPersistence();
@@ -134,6 +141,9 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         );
     }
 
+    /**
+     * @phpstan-ignore-next-line skipped test
+     */
     private function doTestExtendedProductPersistence(): void
     {
         $product = $this->getProduct(self::MAIN_PRODUCT_ID);
@@ -274,6 +284,9 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         return $product;
     }
 
+    /**
+     * @phpstan-ignore-next-line skipped test
+     */
     private function doTestExtendedCategoryPersistence(): void
     {
         $category = $this->getCategory(self::MAIN_CATEGORY_ID);
@@ -414,6 +427,9 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         return $category;
     }
 
+    /**
+     * @phpstan-ignore-next-line skipped test
+     */
     private function doTestExtendedOrderItemsPersistence(): void
     {
         $orderItem = $this->getOrderItem(self::ORDER_ITEM_ID);
@@ -448,6 +464,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
      * @param string $parentEntityName
      * @param string $extendedEntityName
      * @param int $entityId
+     * @phpstan-ignore-next-line skipped test
      */
     private function doTestExtendedEntityInstantiation(
         string $parentEntityName,

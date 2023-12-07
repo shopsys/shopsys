@@ -111,7 +111,7 @@ class CartWatcherFacade
     {
         foreach ($cart->getItems() as $cartItem) {
             $product = $cartItem->getProduct();
-            $maximumOrderQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($product, $this->domain->getId());
+            $maximumOrderQuantity = $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $this->domain->getId());
 
             if ($maximumOrderQuantity === 0) {
                 $cart->removeItemById($cartItem->getId());

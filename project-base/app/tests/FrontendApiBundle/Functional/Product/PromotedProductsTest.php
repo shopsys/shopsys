@@ -102,7 +102,6 @@ class PromotedProductsTest extends GraphQlTestCase
                     partNumber
                     ean
                     usps
-                    hasPreorder
                     files {
                       anchorText
                       url
@@ -179,7 +178,6 @@ class PromotedProductsTest extends GraphQlTestCase
                     partNumber
                     ean
                     usps
-                    hasPreorder
                     files {
                       anchorText
                       url

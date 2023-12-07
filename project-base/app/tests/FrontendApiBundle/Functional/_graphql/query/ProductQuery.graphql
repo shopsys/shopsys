@@ -54,7 +54,6 @@ query Product($uuid: Uuid) {
         partNumber
         ean
         usps
-        hasPreorder
         files {
             anchorText
             url

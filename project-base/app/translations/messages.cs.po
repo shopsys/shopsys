@@ -109,9 +109,6 @@ msgstr "Vše"
 msgid "All - view"
 msgstr "Vše - zobrazení"
 
-msgid "Allow overselling"
-msgstr "Povolit nákup do mínusu"
-
 msgid "An authentication exception occurred."
 msgstr "Došlo k výjimce během přihlášení."
 
@@ -1809,9 +1806,6 @@ msgstr "Ulice"
 
 msgid "Sunday"
 msgstr "Neděle"
-
-msgid "Supplier's delivery time"
-msgstr "Dodací lhůta dodavatele"
 
 msgid "TOP"
 msgstr "TOP"

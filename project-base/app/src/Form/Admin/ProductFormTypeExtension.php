@@ -154,11 +154,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             ->remove('outOfStockAvailability');
 
         $groupBuilder
-            ->add('preorder', YesNoType::class, [
-                'required' => false,
-                'disabled' => $this->isProductMainVariant($product),
-                'label' => t('Allow overselling'),
-            ])
             ->add('sellingDenied', YesNoType::class, [
                 'required' => false,
                 'label' => t('Exclude from sale on whole eshop'),
@@ -172,15 +167,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
                 'entry_type' => YesNoType::class,
                 'position' => ['after' => 'sellingDenied'],
-            ])
-            ->add('vendorDeliveryDate', TextType::class, [
-                'required' => false,
-                'label' => t('Supplier\'s delivery time'),
-                'constraints' => [
-                    new Constraints\Type(['type' => 'numeric', 'message' => 'Supplier\'s delivery time must be a number']),
-                    new Constraints\GreaterThanOrEqual(['value' => 0, 'message' => 'Supplier\'s delivery time must be 0 or more']),
-                ],
-
             ])
             ->add('usingStock', YesNoType::class, [
                 'data' => true,

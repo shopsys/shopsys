@@ -344,9 +344,6 @@
       "stock_quantity": {
         "type": "integer"
       },
-      "has_preorder": {
-        "type": "boolean"
-      },
       "variants": {
         "type": "integer"
       },

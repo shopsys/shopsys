@@ -670,9 +670,6 @@ msgstr "Datum registrace a dohody o ochraně soukromí"
 msgid "Days for transfer between warehouses"
 msgstr "Dny pro přesun mezi sklady"
 
-msgid "Days until stocking"
-msgstr "Dní do naskladnění"
-
 msgid "Default VAT rate"
 msgstr "Výchozí sazba DPH"
 

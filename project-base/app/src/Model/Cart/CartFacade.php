@@ -110,7 +110,7 @@ class CartFacade extends BaseCartFacade
         BaseCart $cart,
         bool $isAbsoluteQuantity = false,
     ): AddProductResult {
-        $maximumOrderQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($product, $this->domain->getId());
+        $maximumOrderQuantity = $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $this->domain->getId());
         $notOnStockQuantity = 0;
 
         if (!is_int($quantity) || $quantity <= 0) {

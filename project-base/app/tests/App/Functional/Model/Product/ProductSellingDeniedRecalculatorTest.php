@@ -147,7 +147,6 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $variant1ProductData */
         $variant1ProductData = $this->productDataFactory->createFromProduct($variant1);
         $variant1ProductData->sellingDenied = false;
-        $variant1ProductData->preorder = false;
 
         foreach ($variant1ProductData->stockProductData as &$stockProductData) {
             $stockProductData->productQuantity = 0;

@@ -66,18 +66,6 @@ class Product extends BaseProduct
     private $downloadProductTypePlanFiles;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $preorder;
-
-    /**
-     * @var int|null
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $vendorDeliveryDate;
-
-    /**
      * @var null
      * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
      * @see \App\Component\Doctrine\RemoveMappingsSubscriber
@@ -191,8 +179,6 @@ class Product extends BaseProduct
 
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
-        $this->preorder = $productData->preorder;
-        $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
         $this->weight = $productData->weight;
         $this->relatedProducts = new ArrayCollection($productData->relatedProducts);
     }
@@ -554,22 +540,6 @@ class Product extends BaseProduct
     }
 
     /**
-     * @return  bool
-     */
-    public function hasPreorder(): bool
-    {
-        $result = $this->preorder;
-
-        if ($this->isMainVariant()) {
-            foreach ($this->getVariants() as $variant) {
-                $result = $result || $variant->hasPreorder();
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * @param int $domainId
      * @return  bool
      */
@@ -585,14 +555,6 @@ class Product extends BaseProduct
     public function getCalculatedSaleExclusion(int $domainId): bool
     {
         return $this->getProductDomain($domainId)->getCalculatedSaleExclusion();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getVendorDeliveryDate(): ?int
-    {
-        return $this->vendorDeliveryDate;
     }
 
     /**

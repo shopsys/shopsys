@@ -86,19 +86,9 @@ class ProductData extends BaseProductData
     public $productTypePlanFileUrl;
 
     /**
-     * @var bool
-     */
-    public $preorder;
-
-    /**
      * @var bool[]
      */
     public $saleExclusion;
-
-    /**
-     * @var int|null
-     */
-    public $vendorDeliveryDate;
 
     /**
      * @var \App\Model\Product\Flag\Flag[][]|null[][]
@@ -147,7 +137,6 @@ class ProductData extends BaseProductData
         $this->productTypePlanCode = [];
         $this->assemblyInstructionFileUrl = [];
         $this->productTypePlanFileUrl = [];
-        $this->preorder = false;
         $this->saleExclusion = [];
         $this->flags = [];
         $this->domainHidden = [];

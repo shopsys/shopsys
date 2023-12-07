@@ -20,14 +20,6 @@ class StockSettingsFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('delivery', TextType::class, [
-                'label' => t('Days until stocking'),
-                'constraints' => [
-                    new Constraints\NotBlank(),
-                    new Constraints\Regex(['pattern' => '/^\d+$/']),
-                    new Constraints\GreaterThanOrEqual(['value' => 0]),
-                ],
-            ])
             ->add('transfer', TextType::class, [
                 'label' => t('Days for transfer between warehouses'),
                 'constraints' => [

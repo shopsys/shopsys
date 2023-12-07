@@ -151,7 +151,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
     public function testMoreQuantityThanAvailableAddedToCart(): void
     {
         $productAvailabilityFacade = self::getContainer()->get(ProductAvailabilityFacade::class);
-        $maximumAvailableQuantity = $productAvailabilityFacade->getMaximumOrderQuantity($this->testingProduct, $this->domain->getId());
+        $maximumAvailableQuantity = $productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($this->testingProduct, $this->domain->getId());
 
         $productQuantity = $maximumAvailableQuantity + 3000;
         $newlyCreatedCart = $this->addTestingProductToNewCart($productQuantity);

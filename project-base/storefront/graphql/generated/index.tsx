@@ -983,8 +983,6 @@ export type MainVariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
-  /** Distinguishes if the product can be pre-ordered */
-  hasPreorder: Scalars['Boolean']['output'];
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */
@@ -1827,8 +1825,6 @@ export type ProductApi = {
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
-  /** Distinguishes if the product can be pre-ordered */
-  hasPreorder: Scalars['Boolean']['output'];
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */
@@ -2458,8 +2454,6 @@ export type RegularProductApi = BreadcrumbApi & ProductApi & SlugApi & {
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
-  /** Distinguishes if the product can be pre-ordered */
-  hasPreorder: Scalars['Boolean']['output'];
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */
@@ -2789,8 +2783,6 @@ export type VariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
-  /** Distinguishes if the product can be pre-ordered */
-  hasPreorder: Scalars['Boolean']['output'];
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */

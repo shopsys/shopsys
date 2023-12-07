@@ -24,7 +24,10 @@ class StockSettingsDataFacade
      */
     public function edit(StockSettingsData $stockSettingsData): void
     {
-        $this->setting->setForDomain(Setting::DELIVERY_DAYS_ON_STOCK, (int)$stockSettingsData->delivery, $this->adminDomainTabsFacade->getSelectedDomainId());
-        $this->setting->setForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, (int)$stockSettingsData->transfer, $this->adminDomainTabsFacade->getSelectedDomainId());
+        $this->setting->setForDomain(
+            Setting::TRANSFER_DAYS_BETWEEN_STOCKS,
+            (int)$stockSettingsData->transfer,
+            $this->adminDomainTabsFacade->getSelectedDomainId(),
+        );
     }
 }

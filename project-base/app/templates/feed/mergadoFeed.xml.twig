@@ -40,11 +40,7 @@
         {% if item.mainVariantId is not null %}
             <ITEMGROUP_ID>{{ item.mainVariantId }}</ITEMGROUP_ID>
         {% endif %}
-        {% if item.availability is not null %}
-            <AVAILABILITY>{{ item.availability }}</AVAILABILITY>
-        {% else %}
-            <AVAILABILITY>out of stock</AVAILABILITY>
-        {% endif %}
+        <AVAILABILITY>{{ item.availability }}</AVAILABILITY>
         <CONDITION>new</CONDITION>
         {% for flagOrder, flagDescription in item.flags %}
             <CUSTOM_LABEL_{{ flagOrder }}>

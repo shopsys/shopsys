@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\StocksDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
@@ -14,6 +15,7 @@ use ReflectionClass;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductFacadeTest extends TransactionFunctionalTestCase
@@ -39,6 +41,11 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
     private VatFacade $vatFacade;
 
     /**
+     * @inject
+     */
+    private ProductStockDataFactory $productStockDataFactory;
+
+    /**
      * @dataProvider getTestCalculationHiddenAndSellingDeniedDataProvider
      * @param mixed $hidden
      * @param mixed $sellingDenied
@@ -56,7 +63,14 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productData->sellingDenied = $sellingDenied;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
-        $productData->preorder = true;
+
+        /** @var \Shopsys\FrameworkBundle\Model\Stock\Stock $stock */
+        $stock = $this->getReference(StocksDataFixture::STOCK_PREFIX . 1);
+
+        $productStockData = $this->productStockDataFactory->createFromStock($stock);
+        $productStockData->productQuantity = 10;
+        $productData->stockProductData[$stock->getId()] = $productStockData;
+
         $productData->catnum = '123';
         $this->setVats($productData);
 
@@ -66,8 +80,8 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
 
         $productFromDb = $this->productFacade->getById($product->getId());
 
-        $this->assertSame($calculatedHidden, $productFromDb->getCalculatedHidden());
-        $this->assertSame($calculatedSellingDenied, $productFromDb->getCalculatedSellingDenied());
+        $this->assertSame($calculatedHidden, $productFromDb->getCalculatedHidden(), 'Calculated hidden:');
+        $this->assertSame($calculatedSellingDenied, $productFromDb->getCalculatedSellingDenied(), 'Calculated selling denied:');
     }
 
     public function getTestCalculationHiddenAndSellingDeniedDataProvider()
