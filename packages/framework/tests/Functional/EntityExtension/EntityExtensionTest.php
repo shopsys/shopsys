@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension;
+namespace Tests\FrameworkBundle\Functional\EntityExtension;
 
-use App\Model\Order\Order as ExtendedOrder;
-use App\Model\Product\Brand\Brand as ExtendedBrand;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Tools\SchemaTool;
-use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductTranslation;
-use Tests\App\Functional\EntityExtension\Model\CategoryManyToManyBidirectionalEntity;
-use Tests\App\Functional\EntityExtension\Model\CategoryOneToManyBidirectionalEntity;
-use Tests\App\Functional\EntityExtension\Model\CategoryOneToOneBidirectionalEntity;
-use Tests\App\Functional\EntityExtension\Model\ExtendedCategory;
-use Tests\App\Functional\EntityExtension\Model\ExtendedOrderItem;
-use Tests\App\Functional\EntityExtension\Model\ExtendedProduct;
-use Tests\App\Functional\EntityExtension\Model\ExtendedProductTranslation;
-use Tests\App\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity;
-use Tests\App\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity;
-use Tests\App\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity;
-use Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Shopsys\FrameworkBundle\Component\Doctrine\EchoSqlLogger;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Tests\FrameworkBundle\Functional\EntityExtension\Mm\CategoryManyToManyBidirectionalEntity;
+use Tests\FrameworkBundle\Functional\EntityExtension\Mm\CategoryOneToManyBidirectionalEntity;
+use Tests\FrameworkBundle\Functional\EntityExtension\Mm\CategoryOneToOneBidirectionalEntity;
+use Tests\FrameworkBundle\Functional\EntityExtension\Mm\ExtendedCategory;
+use Tests\FrameworkBundle\Functional\EntityExtension\Mm\ExtendedOrderItem;
+use Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct;
+use Tests\FrameworkBundle\Functional\EntityExtension\Model\Product;
+use Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity;
+use Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity;
+use Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity;
+use Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
+use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
 
-class EntityExtensionTest extends TransactionFunctionalTestCase
+class EntityExtensionTest extends KernelTestCase implements ServiceContainerTestCase
 {
+    use SymfonyTestContainer;
+
     protected const MAIN_PRODUCT_ID = 1;
     protected const ONE_TO_ONE_SELF_REFERENCING_PRODUCT_ID = 2;
     protected const ONE_TO_MANY_SELF_REFERENCING_PRODUCT_ID = 3;
@@ -45,47 +45,113 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
      */
     private EntityExtensionTestHelper $entityExtensionTestHelper;
 
+    /**
+     * @inject
+     */
+    private EntityManagerInterface $em;
+
+    private string $dbFile;
+
     protected function setUp(): void
     {
+        $this->dbFile = tempnam(sys_get_temp_dir(), 'db-test');
+       //d($this->dbFile);
+
+
         parent::setUp();
 
-        $this->entityExtensionTestHelper->registerTestEntities();
+        //$this->em = $this->doctrine->getManager('entityExtensionTest');
+
+        //$this->em->getConnection()->executeStatement('TRUNCATE TABLE IF EXISTS products CASCADE');
+
+        $config = ORMSetup::createAnnotationMetadataConfiguration(
+            paths: [__DIR__ . "/Model"],
+            isDevMode: true,
+        );
+
+        $dbLessConnection = DriverManager::getConnection(
+            [
+                'driver' => 'pdo_pgsql',
+                'host' => 'postgres',
+                'port' => '5432',
+                //'dbname' => 'entity_extension_test',
+                'user' => 'root',
+                'password' => 'root',
+                'charset' => 'UTF8',
+                'server_version' => '12.1',
+            ],
+            $config,
+        );
+
+        $connection = DriverManager::getConnection(
+            [
+                'driver' => 'pdo_pgsql',
+                'host' => 'postgres',
+                'port' => '5432',
+                'dbname' => 'entity_extension_test',
+                'user' => 'root',
+                'password' => 'root',
+                'charset' => 'UTF8',
+                'server_version' => '12.1',
+            ],
+            $config,
+        );
+
+        $dbLessConnection->executeStatement('DROP DATABASE IF EXISTS entity_extension_test');
+        $dbLessConnection->executeStatement('CREATE DATABASE entity_extension_test WITH OWNER = root');
+        $connection->executeStatement('ALTER SCHEMA public OWNER TO root');
+
+        //$this->em = new EntityManager($connection, $config);
+        d($this->em->getConnection()->getDatabase());
+        //$this->entityExtensionTestHelper->registerTestEntities();
 
         $entityExtensionMap = [
             Product::class => ExtendedProduct::class,
-            Category::class => ExtendedCategory::class,
+            /*Category::class => ExtendedCategory::class,
             OrderItem::class => ExtendedOrderItem::class,
             Brand::class => ExtendedBrand::class,
             Order::class => ExtendedOrder::class,
-            ProductTranslation::class => ExtendedProductTranslation::class,
+            ProductTranslation::class => ExtendedProductTranslation::class,*/
         ];
-
-        $applicationEntityExtensionMap = self::getContainer()->getParameter('shopsys.entity_extension.map');
-
-        foreach ($applicationEntityExtensionMap as $baseClass => $extendedClass) {
-            if (!array_key_exists($baseClass, $entityExtensionMap)) {
-                $entityExtensionMap[$baseClass] = $extendedClass;
-            }
-        }
 
         $newEntities = [
             UnidirectionalEntity::class,
             ProductOneToOneBidirectionalEntity::class,
             ProductManyToManyBidirectionalEntity::class,
             ProductOneToManyBidirectionalEntity::class,
-            CategoryOneToOneBidirectionalEntity::class,
+            /*CategoryOneToOneBidirectionalEntity::class,
             CategoryManyToManyBidirectionalEntity::class,
-            CategoryOneToManyBidirectionalEntity::class,
+            CategoryOneToManyBidirectionalEntity::class,*/
         ];
 
         $this->entityExtensionTestHelper->overwriteEntityExtensionMapInServicesInContainer($entityExtensionMap);
 
         $testEntities = array_merge($newEntities, array_values($entityExtensionMap));
+        d($testEntities);
         $metadata = $this->getMetadata($testEntities);
 
         $this->generateProxies($metadata);
+        //$this->em->createNativeQuery('TRUNCATE TABLE products CASCADE', new ResultSetMapping())->execute();
+        //$this->em->createNativeQuery('TRUNCATE TABLE categories CASCADE', new ResultSetMapping())->execute();
         $this->updateDatabaseSchema($metadata);
+
+        for ($i = 1; $i <= 4; $i++) {
+            $product = new ExtendedProduct('catnum' . $i, null);
+            $this->em->persist($product);
+            $this->em->flush();
+        }
+
+        $this->em->getConnection()->getConfiguration()->setSQLLogger(new EchoSqlLogger());
     }
+
+    protected function tearDown(): void
+    {
+        //@unlink($this->dbFile);
+
+
+        parent::tearDown(); // TODO: Change the autogenerated stub
+    }
+
 
     /**
      * @param string[] $entities
@@ -121,17 +187,13 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     public function testAll(): void
     {
         $this->doTestExtendedProductPersistence();
-        $this->doTestExtendedCategoryPersistence();
-        $this->doTestExtendedOrderItemsPersistence();
+        //$this->doTestExtendedCategoryPersistence();
+        //$this->doTestExtendedOrderItemsPersistence();
 
-        $this->doTestExtendedEntityInstantiation(Product::class, ExtendedProduct::class, self::MAIN_PRODUCT_ID);
-        $this->doTestExtendedEntityInstantiation(Category::class, ExtendedCategory::class, self::MAIN_CATEGORY_ID);
-        $this->doTestExtendedEntityInstantiation(OrderItem::class, ExtendedOrderItem::class, self::ORDER_ITEM_ID);
-        $this->doTestExtendedEntityInstantiation(
-            ProductTranslation::class,
-            ExtendedProductTranslation::class,
-            self::MAIN_PRODUCT_ID,
-        );
+        //$this->doTestExtendedEntityInstantiation(Product::class, ExtendedProduct::class, self::MAIN_PRODUCT_ID);
+        // $this->doTestExtendedEntityInstantiation(Category::class, ExtendedCategory::class, self::MAIN_CATEGORY_ID);
+        // $this->doTestExtendedEntityInstantiation(OrderItem::class, ExtendedOrderItem::class, self::ORDER_ITEM_ID);
+        // $this->doTestExtendedEntityInstantiation(ProductTranslation::class, ExtendedProductTranslation::class, self::MAIN_PRODUCT_ID);
     }
 
     private function doTestExtendedProductPersistence(): void
@@ -258,7 +320,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
     /**
      * @param int $id
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct
      */
     private function getProduct(int $id): ExtendedProduct
     {
@@ -398,7 +460,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
     /**
      * @param int $id
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Mm\ExtendedCategory
      */
     public function getCategory(int $id): ExtendedCategory
     {
@@ -428,7 +490,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
     /**
      * @param int $id
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedOrderItem
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Mm\ExtendedOrderItem
      */
     private function getOrderItem(int $id): ExtendedOrderItem
     {

@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension\Model;
+namespace Tests\FrameworkBundle\Functional\EntityExtension\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
 
 /**
  * @ORM\Entity
@@ -22,97 +20,99 @@ class ExtendedProduct extends Product
     protected ?string $stringField;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UnidirectionalEntity")
+     * @ORM\ManyToOne(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity")
      * @ORM\JoinColumn(nullable=true, name="manyToOneUnidirectionalEntity_id", referencedColumnName="id")
      */
     protected UnidirectionalEntity $manyToOneUnidirectionalEntity;
 
     /**
-     * @ORM\OneToOne(targetEntity="UnidirectionalEntity")
+     * @ORM\OneToOne(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity")
      * @ORM\JoinColumn(nullable=true, name="oneToOneUnidirectionalEntity_id", referencedColumnName="id")
      */
     protected UnidirectionalEntity $oneToOneUnidirectionalEntity;
 
     /**
-     * @ORM\OneToOne(targetEntity="ProductOneToOneBidirectionalEntity", mappedBy="product")
+     * @ORM\OneToOne(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity", mappedBy="product")
      * @ORM\JoinColumn(nullable=true)
      */
     protected ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity;
 
     /**
-     * @ORM\OneToOne(targetEntity="ExtendedProduct")
+     * @ORM\OneToOne(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct")
      * @ORM\JoinColumn(nullable=true, name="oneToOneSelfReferencing_id", referencedColumnName="id")
      */
     protected ExtendedProduct $oneToOneSelfReferencingEntity;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity[]
-     * @ORM\OneToMany(targetEntity="ProductOneToManyBidirectionalEntity", mappedBy="product")
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity>
+     * @ORM\OneToMany(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity", mappedBy="product")
      */
-    protected Collection|array $oneToManyBidirectionalEntities;
+    protected Collection $oneToManyBidirectionalEntities;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]
-     * @ORM\ManyToMany(targetEntity="UnidirectionalEntity")
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity>
+     * @ORM\ManyToMany(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity")
      * @ORM\JoinTable(name="products_oneToManyUnidirectionalWithJoinTableEntity",
      *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="oneToManyUnidirectionalWithJoinTableEntity_id", referencedColumnName="id", unique=true)}
      *      )
      */
-    protected Collection|array $oneToManyUnidirectionalWithJoinTableEntities;
+    protected Collection $oneToManyUnidirectionalWithJoinTableEntities;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
-     * @ORM\OneToMany(targetEntity="ExtendedProduct", mappedBy="oneToManySelfReferencingInverseEntity")
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct>
+     * @ORM\OneToMany(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct", mappedBy="oneToManySelfReferencingInverseEntity")
      */
-    protected Collection|array $oneToManySelfReferencingEntities;
+    protected Collection $oneToManySelfReferencingEntities;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ExtendedProduct", inversedBy="oneToManySelfReferencingEntities")
+     * @ORM\ManyToOne(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct", inversedBy="oneToManySelfReferencingEntities")
      * @ORM\JoinColumn(nullable=true, name="oneToManySelfReferencingParent_id", referencedColumnName="id")
      */
     protected ExtendedProduct $oneToManySelfReferencingInverseEntity;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]
-     * @ORM\ManyToMany(targetEntity="UnidirectionalEntity")
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity>
+     * @ORM\ManyToMany(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity")
      * @ORM\JoinTable(name="products_manyToManyUnidirectionalEntity",
      *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="manyToManyUnidirectionalEntity_id", referencedColumnName="id")}
      *      )
      */
-    protected Collection|array $manyToManyUnidirectionalEntities;
+    protected Collection $manyToManyUnidirectionalEntities;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity[]
-     * @ORM\ManyToMany(targetEntity="ProductManyToManyBidirectionalEntity", inversedBy="products")
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity>
+     * @ORM\ManyToMany(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity", inversedBy="products")
      * @ORM\JoinTable(name="products_manyToManyBidirectionalEntity")
      */
-    protected Collection|array $manyToManyBidirectionalEntities;
+    protected Collection $manyToManyBidirectionalEntities;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
-     * @ORM\ManyToMany(targetEntity="ExtendedProduct", mappedBy="manyToManySelfReferencingInverseEntities")
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct>
+     * @ORM\ManyToMany(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct", mappedBy="manyToManySelfReferencingInverseEntities")
      */
-    protected Collection|array $manyToManySelfReferencingEntities;
+    protected Collection $manyToManySelfReferencingEntities;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
-     * @ORM\ManyToMany(targetEntity="ExtendedProduct", inversedBy="manyToManySelfReferencingEntities")
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct>
+     * @ORM\ManyToMany(targetEntity="Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct", inversedBy="manyToManySelfReferencingEntities")
      * @ORM\JoinTable(name="products_manyToManySelfReferencing",
      *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="manyToManySelfReferencing_id", referencedColumnName="id")}
      *      )
      */
-    protected Collection|array $manyToManySelfReferencingInverseEntities;
+    protected Collection $manyToManySelfReferencingInverseEntities;
 
     /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product[]|null $variants
+     * @param string $catnum
+     * @param string|null $stringField
      */
-    protected function __construct(ProductData $productData, ?array $variants = null)
-    {
-        parent::__construct($productData, $variants);
+    public function __construct(
+        string $catnum,
+        ?string $stringField,
+    ) {
+        parent::__construct($catnum);
 
         $this->oneToManyBidirectionalEntities = new ArrayCollection();
         $this->oneToManyUnidirectionalWithJoinTableEntities = new ArrayCollection();
@@ -121,10 +121,11 @@ class ExtendedProduct extends Product
         $this->manyToManyBidirectionalEntities = new ArrayCollection();
         $this->manyToManySelfReferencingEntities = new ArrayCollection();
         $this->manyToManySelfReferencingInverseEntities = new ArrayCollection();
+        $this->stringField = $stringField;
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity
      */
     public function getManyToOneUnidirectionalEntity(): UnidirectionalEntity
     {
@@ -132,7 +133,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $manyToOneUnidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity $manyToOneUnidirectionalEntity
      */
     public function setManyToOneUnidirectionalEntity(UnidirectionalEntity $manyToOneUnidirectionalEntity): void
     {
@@ -140,7 +141,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity
      */
     public function getOneToOneUnidirectionalEntity(): UnidirectionalEntity
     {
@@ -148,7 +149,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $oneToOneUnidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity $oneToOneUnidirectionalEntity
      */
     public function setOneToOneUnidirectionalEntity(UnidirectionalEntity $oneToOneUnidirectionalEntity): void
     {
@@ -156,7 +157,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity
      */
     public function getOneToOneBidirectionalEntity(): ProductOneToOneBidirectionalEntity
     {
@@ -164,7 +165,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity
      */
     public function setOneToOneBidirectionalEntity(
         ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity,
@@ -174,7 +175,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct
      */
     public function getOneToOneSelfReferencingEntity(): self
     {
@@ -182,7 +183,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct $oneToOneSelfReferencingEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct $oneToOneSelfReferencingEntity
      */
     public function setOneToOneSelfReferencingEntity(self $oneToOneSelfReferencingEntity): void
     {
@@ -190,7 +191,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity[]
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity[]
      */
     public function getOneToManyBidirectionalEntities(): array
     {
@@ -198,7 +199,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity $oneToManyBidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity $oneToManyBidirectionalEntity
      */
     public function addOneToManyBidirectionalEntity(
         ProductOneToManyBidirectionalEntity $oneToManyBidirectionalEntity,
@@ -208,7 +209,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity[]
      */
     public function getOneToManyUnidirectionalWithJoinTableEntities(): array
     {
@@ -216,7 +217,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity
      */
     public function addOneToManyUnidirectionalWithJoinTableEntity(
         UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity,
@@ -225,7 +226,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct[]
      */
     public function getOneToManySelfReferencingEntities(): array
     {
@@ -233,7 +234,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct
      */
     public function getOneToManySelfReferencingInverseEntity(): self
     {
@@ -241,7 +242,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct $oneToManySelfReferencing
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct $oneToManySelfReferencing
      */
     public function addOneToManySelfReferencingEntity(self $oneToManySelfReferencing): void
     {
@@ -250,7 +251,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity[]
      */
     public function getManyToManyUnidirectionalEntities(): array
     {
@@ -258,7 +259,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $manyToManyUnidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity $manyToManyUnidirectionalEntity
      */
     public function addManyToManyUnidirectionalEntity(UnidirectionalEntity $manyToManyUnidirectionalEntity): void
     {
@@ -266,7 +267,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity[]
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity[]
      */
     public function getManyToManyBidirectionalEntities(): array
     {
@@ -274,7 +275,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity $manyToManyBidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity $manyToManyBidirectionalEntity
      */
     public function addManyToManyBidirectionalEntity(
         ProductManyToManyBidirectionalEntity $manyToManyBidirectionalEntity,
@@ -284,7 +285,7 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct[]
      */
     public function getManyToManySelfReferencingEntities(): array
     {
@@ -292,15 +293,15 @@ class ExtendedProduct extends Product
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct[]
      */
-    public function getManyToManySelfReferencingInverseEntities()
+    public function getManyToManySelfReferencingInverseEntities(): array
     {
         return $this->manyToManySelfReferencingInverseEntities->getValues();
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct $manyToManySelfReferencing
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProduct $manyToManySelfReferencing
      */
     public function addManyToManySelfReferencingEntity(self $manyToManySelfReferencing): void
     {
@@ -311,7 +312,7 @@ class ExtendedProduct extends Product
     /**
      * @return string|null
      */
-    public function getStringField()
+    public function getStringField(): ?string
     {
         return $this->stringField;
     }
@@ -319,13 +320,13 @@ class ExtendedProduct extends Product
     /**
      * @param string|null $stringField
      */
-    public function setStringField($stringField): void
+    public function setStringField(?string $stringField): void
     {
         $this->stringField = $stringField;
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProductTranslation
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedProductTranslation
      */
     protected function createTranslation(): ExtendedProductTranslation
     {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension\Model;
+namespace Tests\FrameworkBundle\Functional\EntityExtension\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 

@@ -12,18 +12,20 @@ services:
     Tests\App\Test\Client:
 
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver:
-        class: Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver
+        class: Tests\FrameworkBundle\Functional\EntityExtension\OverwritableEntityNameResolver
         arguments:
             - "%shopsys.entity_extension.map%"
 
-    Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver:
+    Tests\FrameworkBundle\Functional\EntityExtension\OverwritableEntityNameResolver:
         alias: Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
 
-    Tests\App\Functional\EntityExtension\OverwritableEntityExtensionSubscriber:
+    Tests\FrameworkBundle\Functional\EntityExtension\OverwritableEntityExtensionSubscriber:
         arguments:
             $entityExtensionMap: '%shopsys.entity_extension.map%'
         tags:
             - { name: doctrine.event_subscriber, priority: -10 }
+
+    Tests\FrameworkBundle\Functional\EntityExtension\EntityExtensionTestHelper: ~
 
     Symfony\Bridge\Twig\Extension\HttpKernelRuntime:
         arguments: ['@fragment.handler']
@@ -39,8 +41,6 @@ services:
 
     App\Model\GoPay\GoPayClientFactory:
         alias: Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory
-
-    Tests\App\Functional\EntityExtension\EntityExtensionTestHelper: ~
 
     Symfony\Component\HttpFoundation\RequestStack:
         class: Tests\App\Test\HttpFoundation\RequestStack

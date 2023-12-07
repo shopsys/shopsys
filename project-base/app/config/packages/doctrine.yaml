@@ -3,7 +3,7 @@ doctrine:
         driver: "%database_driver%"
         host: "%env(DATABASE_HOST)%"
         port: "%env(DATABASE_PORT)%"
-        dbname: "%env(DATABASE_NAME)%"
+        dbname: "entity_extension_test"
         user: "%env(DATABASE_USER)%"
         password: "%env(DATABASE_PASSWORD)%"
         charset: UTF8
@@ -33,29 +33,11 @@ doctrine:
             pool: doctrine.query_cache_pool
         auto_mapping: false
         mappings:
-            ShopsysFrameworkBundle:
+            EntityExtensionTest:
                 type: annotation
-                dir: '%shopsys.framework.root_dir%/src/Model'
-                alias: ShopsysFrameworkBundle
-                prefix: Shopsys\FrameworkBundle\Model
-                is_bundle: false
-            ShopsysFrameworkBundleComponent:
-                type: annotation
-                dir: '%shopsys.framework.root_dir%/src/Component'
-                alias: ShopsysFrameworkBundleComponent
-                prefix: Shopsys\FrameworkBundle\Component
-                is_bundle: false
-            App:
-                type: annotation
-                dir: '%kernel.project_dir%/src/Model'
-                alias: App
-                prefix: App\Model
-                is_bundle: false
-            AppComponent:
-                type: annotation
-                dir: '%kernel.project_dir%/src/Component'
-                alias: AppComponent
-                prefix: App\Component
+                dir: '%shopsys.framework.root_dir%/tests/Functional/EntityExtension/Model'
+                alias: EntityExtensionTest
+                prefix: Tests\FrameworkBundle\Functional\EntityExtension\Model
                 is_bundle: false
         hydrators:
             GroupedScalarHydrator: \Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator

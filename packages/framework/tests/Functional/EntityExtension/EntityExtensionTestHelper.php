@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension;
+namespace Tests\FrameworkBundle\Functional\EntityExtension;
 
 use Doctrine\Bundle\DoctrineBundle\Mapping\MappingDriver;
 use Doctrine\Common\Annotations\AnnotationReader;
@@ -15,8 +15,8 @@ class EntityExtensionTestHelper
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
-     * @param \Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver $overwritableEntityNameResolver
-     * @param \Tests\App\Functional\EntityExtension\OverwritableEntityExtensionSubscriber $overwritableEntityExtensionSubscriber
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\OverwritableEntityNameResolver $overwritableEntityNameResolver
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\OverwritableEntityExtensionSubscriber $overwritableEntityExtensionSubscriber
      */
     public function __construct(
         private readonly EntityManagerDecorator $em,
@@ -45,7 +45,7 @@ class EntityExtensionTestHelper
             $metadataDriverChain = $mappingDriver->getDriver();
 
             if ($metadataDriverChain instanceof MappingDriverChain) {
-                $metadataDriverChain->addDriver($driver, 'Tests\\App\\Functional\\EntityExtension');
+                $metadataDriverChain->addDriver($driver, 'Tests\\FrameworkBundle\\Functional\\EntityExtension');
             } else {
                 Assert::fail(sprintf('Metadata driver must be type of %s', MappingDriverChain::class));
             }

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension;
+namespace Tests\FrameworkBundle\Functional\EntityExtension;
 
-use Tests\App\Functional\EntityExtension\Model\DummyEntity;
-use Tests\App\Functional\EntityExtension\Model\ExtendedDummyEntity;
+use Tests\FrameworkBundle\Functional\EntityExtension\Model\DummyEntity;
+use Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedDummyEntity;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class EntityExtensionSubscriberTest extends TransactionFunctionalTestCase

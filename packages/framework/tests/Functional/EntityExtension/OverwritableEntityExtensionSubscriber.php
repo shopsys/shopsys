@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension;
+namespace Tests\FrameworkBundle\Functional\EntityExtension;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber;
 

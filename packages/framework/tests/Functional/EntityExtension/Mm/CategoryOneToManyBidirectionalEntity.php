@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension\Model;
+namespace Tests\FrameworkBundle\Functional\EntityExtension\Mm;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -46,7 +46,7 @@ class CategoryOneToManyBidirectionalEntity
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Mm\ExtendedCategory
      */
     public function getCategory(): ExtendedCategory
     {
@@ -54,7 +54,7 @@ class CategoryOneToManyBidirectionalEntity
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory $category
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Mm\ExtendedCategory $category
      */
     public function setCategory(ExtendedCategory $category): void
     {

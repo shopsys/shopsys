@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension\Model;
+namespace Tests\FrameworkBundle\Functional\EntityExtension\Mm;
 
+use App\Model\Category\Category;
 use App\Model\Category\CategoryData;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Category\Category;
+use Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity;
 
 /**
  * @ORM\Entity
@@ -46,13 +47,13 @@ class ExtendedCategory extends Category
     protected ExtendedCategory $oneToOneSelfReferencingEntity;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\CategoryOneToManyBidirectionalEntity[]
+     * @var \Doctrine\Common\Collections\Collection|\Tests\FrameworkBundle\Functional\EntityExtension\Mm\CategoryOneToManyBidirectionalEntity[]
      * @ORM\OneToMany(targetEntity="CategoryOneToManyBidirectionalEntity", mappedBy="category")
      */
     protected Collection|array $oneToManyBidirectionalEntities;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]
+     * @var \Doctrine\Common\Collections\Collection|\Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity[]
      * @ORM\ManyToMany(targetEntity="UnidirectionalEntity")
      * @ORM\JoinTable(name="categories_oneToManyUnidirectionalWithJoinTableEntity",
      *      joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
@@ -62,7 +63,7 @@ class ExtendedCategory extends Category
     protected Collection|array $oneToManyUnidirectionalWithJoinTableEntities;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
+     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedCategory[]
      * @ORM\OneToMany(targetEntity="ExtendedCategory", mappedBy="oneToManySelfReferencingInverseEntity")
      */
     protected Collection|array $oneToManySelfReferencingEntities;
@@ -74,7 +75,7 @@ class ExtendedCategory extends Category
     protected Collection|ExtendedCategory $oneToManySelfReferencingInverseEntity;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]
+     * @var \Doctrine\Common\Collections\Collection|\Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity[]
      * @ORM\ManyToMany(targetEntity="UnidirectionalEntity")
      * @ORM\JoinTable(name="categories_manyToManyUnidirectionalEntity",
      *      joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
@@ -84,20 +85,20 @@ class ExtendedCategory extends Category
     protected Collection|array $manyToManyUnidirectionalEntities;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\CategoryManyToManyBidirectionalEntity[]
+     * @var \Doctrine\Common\Collections\Collection|\Tests\FrameworkBundle\Functional\EntityExtension\Mm\CategoryManyToManyBidirectionalEntity[]
      * @ORM\ManyToMany(targetEntity="CategoryManyToManyBidirectionalEntity", inversedBy="categories")
      * @ORM\JoinTable(name="categories_manyToManyBidirectionalEntity")
      */
     protected Collection|array $manyToManyBidirectionalEntities;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
+     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedCategory[]
      * @ORM\ManyToMany(targetEntity="ExtendedCategory", mappedBy="manyToManySelfReferencingInverseEntities")
      */
     protected Collection|array $manyToManySelfReferencingEntities;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
+     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedCategory[]
      * @ORM\ManyToMany(targetEntity="ExtendedCategory", inversedBy="manyToManySelfReferencingEntities")
      * @ORM\JoinTable(name="categories_manyToManySelfReferencing",
      *      joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
@@ -123,7 +124,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity
      */
     public function getManyToOneUnidirectionalEntity(): UnidirectionalEntity
     {
@@ -131,7 +132,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $manyToOneUnidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity $manyToOneUnidirectionalEntity
      */
     public function setManyToOneUnidirectionalEntity(UnidirectionalEntity $manyToOneUnidirectionalEntity): void
     {
@@ -139,7 +140,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity
      */
     public function getOneToOneUnidirectionalEntity(): UnidirectionalEntity
     {
@@ -147,7 +148,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $oneToOneUnidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity $oneToOneUnidirectionalEntity
      */
     public function setOneToOneUnidirectionalEntity(UnidirectionalEntity $oneToOneUnidirectionalEntity): void
     {
@@ -155,7 +156,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\CategoryOneToOneBidirectionalEntity
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Mm\CategoryOneToOneBidirectionalEntity
      */
     public function getOneToOneBidirectionalEntity(): CategoryOneToOneBidirectionalEntity
     {
@@ -163,7 +164,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Mm\CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity
      */
     public function setOneToOneBidirectionalEntity(
         CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity,
@@ -173,7 +174,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory
+     * @return \Tests\App\Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedCategory
      */
     public function getOneToOneSelfReferencingEntity(): self
     {
@@ -181,7 +182,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory $oneToOneSelfReferencing
+     * @param \Tests\App\Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedCategory $oneToOneSelfReferencing
      */
     public function setOneToOneSelfReferencingEntity(self $oneToOneSelfReferencing): void
     {
@@ -189,7 +190,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\CategoryOneToManyBidirectionalEntity[]
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Mm\CategoryOneToManyBidirectionalEntity[]
      */
     public function getOneToManyBidirectionalEntities(): array
     {
@@ -197,7 +198,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\CategoryOneToManyBidirectionalEntity $oneToManyBidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Mm\CategoryOneToManyBidirectionalEntity $oneToManyBidirectionalEntity
      */
     public function addOneToManyBidirectionalEntity(
         CategoryOneToManyBidirectionalEntity $oneToManyBidirectionalEntity,
@@ -207,7 +208,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity[]
      */
     public function getOneToManyUnidirectionalWithJoinTableEntities(): array
     {
@@ -215,7 +216,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity
      */
     public function addOneToManyUnidirectionalWithJoinTableEntity(
         UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity,
@@ -224,7 +225,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
+     * @return \Tests\App\Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedCategory[]
      */
     public function getOneToManySelfReferencingEntities(): array
     {
@@ -232,7 +233,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory
+     * @return \Tests\App\Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedCategory
      */
     public function getOneToManySelfReferencingInverseEntity(): self
     {
@@ -240,7 +241,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory $oneToManySelfReferencing
+     * @param \Tests\App\Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedCategory $oneToManySelfReferencing
      */
     public function addOneToManySelfReferencingEntity(self $oneToManySelfReferencing): void
     {
@@ -249,7 +250,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity[]
      */
     public function getManyToManyUnidirectionalEntities(): array
     {
@@ -257,7 +258,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $manyToManyUnidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Model\UnidirectionalEntity $manyToManyUnidirectionalEntity
      */
     public function addManyToManyUnidirectionalEntity(UnidirectionalEntity $manyToManyUnidirectionalEntity): void
     {
@@ -265,7 +266,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\CategoryManyToManyBidirectionalEntity[]
+     * @return \Tests\FrameworkBundle\Functional\EntityExtension\Mm\CategoryManyToManyBidirectionalEntity[]
      */
     public function getManyToManyBidirectionalEntities(): array
     {
@@ -273,7 +274,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\CategoryManyToManyBidirectionalEntity $manyToManyBidirectionalEntity
+     * @param \Tests\FrameworkBundle\Functional\EntityExtension\Mm\CategoryManyToManyBidirectionalEntity $manyToManyBidirectionalEntity
      */
     public function addManyToManyBidirectionalEntity(
         CategoryManyToManyBidirectionalEntity $manyToManyBidirectionalEntity,
@@ -283,7 +284,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
+     * @return \Tests\App\Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedCategory[]
      */
     public function getManyToManySelfReferencingEntities(): array
     {
@@ -291,7 +292,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
+     * @return \Tests\App\Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedCategory[]
      */
     public function getManyToManySelfReferencingInverseEntities(): array
     {
@@ -299,7 +300,7 @@ class ExtendedCategory extends Category
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory $manyToManySelfReferencing
+     * @param \Tests\App\Tests\FrameworkBundle\Functional\EntityExtension\Model\ExtendedCategory $manyToManySelfReferencing
      */
     public function addManyToManySelfReferencingEntity(self $manyToManySelfReferencing): void
     {

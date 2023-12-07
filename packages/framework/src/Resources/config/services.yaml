@@ -37,6 +37,14 @@ services:
             - '@doctrine.dbal.default_connection'
             - '@doctrine.orm.default_configuration'
 
+    doctrine.orm.entityExtensionTest_entity_manager:
+        class: Doctrine\ORM\EntityManager
+        factory: [Doctrine\ORM\EntityManager, create]
+        public: true
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '@doctrine.orm.default_configuration'
+
     doctrine.orm.entity_manager.abstract:
         synthetic: true
         public: true
