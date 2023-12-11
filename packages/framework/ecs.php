@@ -120,6 +120,7 @@ return static function (ECSConfig $ecsConfig): void {
         CyclomaticComplexitySniff::class . '.MaxExceeded' => [
             __DIR__ . '/src/Form/Constraints/FileAbstractFilesystemValidator.php',
             __DIR__ . '/src/Model/Product/Search/ProductElasticsearchConverter.php',
+            __DIR__ . '/src/Migrations/Version20231124121921.php',
         ],
         EmptyStatementSniff::class . '.DetectedCatch' => [
             __DIR__ . '/src/Component/Elasticsearch/Debug/ElasticsearchTracer.php',

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
+use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
 use Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
@@ -37,12 +38,13 @@ return static function (ECSConfig $ecsConfig): void {
             FunctionLengthSniff::class => [
                 __DIR__ . '/utils/releaser/src/ReleaseWorker/Release/CreateAndPushGitTagsExceptProjectBaseReleaseWorker.php',
             ],
-            CyclomaticComplexitySniff::class . '.MaxExceeded' => [
-                __DIR__ . '/packages/framework/src/Model/Product/Search/ProductElasticsearchConverter.php',
-            ],
         ]
     );
 
     $ecsConfig->import(__DIR__ . '/packages/*/ecs.php');
     $ecsConfig->import(__DIR__ . '/project-base/app/ecs.php');
+
+    $ecsConfig->ruleWithConfiguration(CyclomaticComplexitySniff::class, [
+        'absoluteComplexity' => CyclomaticComplexitySniffSetting::DEFAULT_ABSOLUTE_COMPLEXITY,
+    ]);
 };
