@@ -12,7 +12,7 @@ class WysiwygCdnDataTransformer implements DataTransformerInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
      */
-    public function __construct(private readonly CdnFacade $cdnFacade)
+    public function __construct(protected readonly CdnFacade $cdnFacade)
     {
     }
 

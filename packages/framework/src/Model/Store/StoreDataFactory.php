@@ -18,10 +18,10 @@ class StoreDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHourDataFactory
      */
     public function __construct(
-        private readonly Domain $domain,
-        private readonly FriendlyUrlFacade $friendlyUrlFacade,
-        private readonly ImageUploadDataFactory $imageUploadDataFactory,
-        private readonly OpeningHoursDataFactory $openingHourDataFactory,
+        protected readonly Domain $domain,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
+        protected readonly OpeningHoursDataFactory $openingHourDataFactory,
     ) {
     }
 

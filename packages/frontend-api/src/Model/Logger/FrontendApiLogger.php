@@ -16,8 +16,8 @@ class FrontendApiLogger implements LoggerInterface
      * @param bool $isValidationLoggedAsError
      */
     public function __construct(
-        private readonly LoggerInterface $logger,
-        private readonly bool $isValidationLoggedAsError,
+        protected readonly LoggerInterface $logger,
+        protected readonly bool $isValidationLoggedAsError,
     ) {
     }
 
