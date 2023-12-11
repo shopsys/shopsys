@@ -12,6 +12,7 @@ use PhpCsFixer\FixerConfiguration\FixerOption;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use Shopsys\CodingStandards\Exception\NamespaceNotFoundException;
@@ -105,7 +106,7 @@ private function method()
      */
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAllTokenKindsFound([T_PRIVATE]) && $this->checkNamespace($tokens);
+        return $tokens->isAnyTokenKindsFound([T_PRIVATE, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE]) && $this->checkNamespace($tokens);
     }
 
     /**
@@ -167,6 +168,10 @@ private function method()
     {
         foreach (array_keys($tokens->findGivenKind(T_PRIVATE)) as $index) {
             $tokens[$index] = new Token([T_PROTECTED, 'protected']);
+        }
+
+        foreach (array_keys($tokens->findGivenKind(CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE)) as $index) {
+            $tokens[$index] = new Token([CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PROTECTED, 'protected']);
         }
     }
 
