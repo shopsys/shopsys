@@ -18,31 +18,6 @@ First, you download the package using [Composer](https://getcomposer.org/):
 composer require shopsys/google-cloud-bundle
 ```
 
-### Register
-
-For the bundle to be loaded in your application you need to register it in the `app/AppKernel.php` file of your project:
-
-```php
-// ...
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = [
-            // ...
-            new Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle(),
-            // ...
-        ];
-
-        // ...
-
-        return $bundles;
-    }
-
-    // ...
-}
-```
-
 ## Responsibilities
 
 -   Bundle allows you to use client and adapter for Google Cloud Storage Bucket

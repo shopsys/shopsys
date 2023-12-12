@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Category\Category as AppCategory;
-use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
@@ -73,28 +72,6 @@ class ProductRepository extends BaseProductRepository
         return $this->em->createQueryBuilder()
             ->select('p')
             ->from(Product::class, 'p');
-    }
-
-    /**
-     * @return \Doctrine\ORM\Internal\Hydration\IterableResult
-     */
-    public function getProductsWithoutProductTypePlanFilesIterator(): IterableResult
-    {
-        return $this->getAllProductsQueryBuilder()
-            ->where('p.downloadProductTypePlanFiles = true')
-            ->getQuery()
-            ->iterate();
-    }
-
-    /**
-     * @return \Doctrine\ORM\Internal\Hydration\IterableResult
-     */
-    public function getProductsWithoutAssemblyInstructionFilesIterator(): IterableResult
-    {
-        return $this->getAllProductsQueryBuilder()
-            ->where('p.downloadAssemblyInstructionFiles = true')
-            ->getQuery()
-            ->iterate();
     }
 
     /**

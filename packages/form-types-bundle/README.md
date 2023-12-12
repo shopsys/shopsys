@@ -18,31 +18,6 @@ First, you download the package using [Composer](https://getcomposer.org/):
 composer require shopsys/form-types
 ```
 
-### Register
-
-For the bundle to be loaded in your application you need to register it in the `app/AppKernel.php` file of your project:
-
-```php
-// ...
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = [
-            // ...
-            new Shopsys\FormTypesBundle\ShopsysFormTypesBundle(),
-            // ...
-        ];
-
-        // ...
-
-        return $bundles;
-    }
-
-    // ...
-}
-```
-
 ## How to use a custom form type
 
 The form types in this package are regular Symfony form types.

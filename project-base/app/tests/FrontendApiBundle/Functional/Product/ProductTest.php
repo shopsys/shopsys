@@ -115,10 +115,6 @@ class ProductTest extends GraphQlTestCase
                     partNumber
                     ean
                     usps
-                    files {
-                      anchorText
-                      url
-                    }
                     storeAvailabilities {
                         store {
                             name
@@ -272,7 +268,7 @@ class ProductTest extends GraphQlTestCase
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale,
                     ),
-                    'orderingPriority' => 0,
+                    'orderingPriority' => 1,
                     'parameters' => [
                         [
                             'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -386,7 +382,6 @@ class ProductTest extends GraphQlTestCase
                             $firstDomainLocale,
                         ),
                     ],
-                    'files' => [],
                     'storeAvailabilities' => [
                         [
                             'store' => [

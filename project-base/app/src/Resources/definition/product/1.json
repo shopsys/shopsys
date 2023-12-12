@@ -382,17 +382,6 @@
           }
         }
       },
-      "files": {
-        "type": "nested",
-        "properties": {
-          "anchor_text": {
-            "type": "text"
-          },
-          "url":{
-            "type": "text"
-          }
-        }
-      },
       "usps": {
         "type": "text"
       },

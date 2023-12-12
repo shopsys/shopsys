@@ -40,30 +40,17 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
  * @property \App\Model\Product\Unit\Unit $unit
  * @method \App\Model\Product\Unit\Unit getUnit()
+ * @method \App\Model\Product\Flag\Flag[] getFlags(int $domainId)
  */
 class Product extends BaseProduct
 {
     public const PDF_SUFFIX = '.pdf';
-    public const FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE = 'assemblyInstruction';
-    public const FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE = 'productTypePlan';
 
     /**
      * @var string
      * @ORM\Column(type="string", length=100, unique=true, nullable=false)
      */
     protected $catnum;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $downloadAssemblyInstructionFiles;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $downloadProductTypePlanFiles;
 
     /**
      * @var null
@@ -177,8 +164,6 @@ class Product extends BaseProduct
     {
         parent::setData($productData);
 
-        $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
-        $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
         $this->weight = $productData->weight;
         $this->relatedProducts = new ArrayCollection($productData->relatedProducts);
     }
@@ -216,37 +201,8 @@ class Product extends BaseProduct
 
         foreach ($this->domains as $productDomain) {
             $domainId = $productDomain->getDomainId();
-            $productDomain->setShortDescriptionUsp1($productData->shortDescriptionUsp1[$domainId]);
-            $productDomain->setShortDescriptionUsp2($productData->shortDescriptionUsp2[$domainId]);
-            $productDomain->setShortDescriptionUsp3($productData->shortDescriptionUsp3[$domainId]);
-            $productDomain->setShortDescriptionUsp4($productData->shortDescriptionUsp4[$domainId]);
-            $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
-            $productDomain->setFlags($productData->flags[$domainId] ?? []);
             $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
             $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
-            $productDomain->setDomainOrderingPriority((int)$productData->domainOrderingPriority[$domainId]);
-        }
-    }
-
-    /**
-     * @param \App\Model\Product\ProductFilesData $productFilesData
-     */
-    public function editFileAttributes(ProductFilesData $productFilesData): void
-    {
-        foreach ($this->domains as $productDomain) {
-            $domainId = $productDomain->getDomainId();
-
-            if ($this->getAssemblyInstructionCode($domainId) !== $productFilesData->assemblyInstructionCode[$domainId]) {
-                $productDomain->setAssemblyInstructionCode($productFilesData->assemblyInstructionCode[$domainId]);
-                $this->setDownloadAssemblyInstructionFiles(true);
-            }
-
-            if ($this->getProductTypePlanCode($domainId) === $productFilesData->productTypePlanCode[$domainId]) {
-                continue;
-            }
-
-            $productDomain->setProductTypePlanCode($productFilesData->productTypePlanCode[$domainId]);
-            $this->setDownloadProductTypePlanFiles(true);
         }
     }
 
@@ -304,51 +260,6 @@ class Product extends BaseProduct
 
     /**
      * @param int $domainId
-     * @return string|null
-     */
-    public function getShortDescriptionUsp1(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getShortDescriptionUsp1();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getShortDescriptionUsp2(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getShortDescriptionUsp2();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getShortDescriptionUsp3(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getShortDescriptionUsp3();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getShortDescriptionUsp4(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getShortDescriptionUsp4();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getShortDescriptionUsp5(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getShortDescriptionUsp5();
-    }
-
-    /**
-     * @param int $domainId
      * @return string[]
      */
     public function getAllNonEmptyShortDescriptionUsp(int $domainId): array
@@ -371,22 +282,13 @@ class Product extends BaseProduct
 
     /**
      * @param int $domainId
-     * @return \App\Model\Product\Flag\Flag[]
-     */
-    public function getFlagsForDomain(int $domainId)
-    {
-        return $this->getProductDomain($domainId)->getFlags();
-    }
-
-    /**
-     * @param int $domainId
      * @return int[]
      */
     public function getFlagsIdsForDomain(int $domainId): array
     {
         $flagIds = [];
 
-        foreach ($this->getFlagsForDomain($domainId) as $flag) {
+        foreach ($this->getFlags($domainId) as $flag) {
             $flagIds[] = $flag->getId();
         }
 
@@ -463,40 +365,6 @@ class Product extends BaseProduct
     }
 
     /**
-     * @param bool $downloadAssemblyInstructionFiles
-     */
-    public function setDownloadAssemblyInstructionFiles(bool $downloadAssemblyInstructionFiles): void
-    {
-        $this->downloadAssemblyInstructionFiles = $downloadAssemblyInstructionFiles;
-    }
-
-    /**
-     * @param bool $downloadProductTypePlanFiles
-     */
-    public function setDownloadProductTypePlanFiles(bool $downloadProductTypePlanFiles): void
-    {
-        $this->downloadProductTypePlanFiles = $downloadProductTypePlanFiles;
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getAssemblyInstructionCode(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getAssemblyInstructionCode();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getProductTypePlanCode(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getProductTypePlanCode();
-    }
-
-    /**
      * @param int $domainId
      * @param string $type
      * @return string
@@ -512,22 +380,6 @@ class Product extends BaseProduct
     public function getProductDomains()
     {
         return $this->domains;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDownloadAssemblyInstructionFiles(): bool
-    {
-        return $this->downloadAssemblyInstructionFiles;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDownloadProductTypePlanFiles(): bool
-    {
-        return $this->downloadProductTypePlanFiles;
     }
 
     /**
@@ -555,33 +407,6 @@ class Product extends BaseProduct
     public function getCalculatedSaleExclusion(int $domainId): bool
     {
         return $this->getProductDomain($domainId)->getCalculatedSaleExclusion();
-    }
-
-    /**
-     * @param int $domainId
-     * @return  int
-     */
-    public function getDomainOrderingPriority(int $domainId): int
-    {
-        return $this->getProductDomain($domainId)->getDomainOrderingPriority();
-    }
-
-    /**
-     * @param \App\Model\Product\Flag\Flag[] $flags
-     */
-    protected function editFlags(array $flags)
-    {
-        // Keep this function empty - flags were moved to Domain
-    }
-
-    /**
-     * @return array
-     */
-    public function getFlags()
-    {
-        // Return empty array to override default functionality.
-        // Flags were moved to Domain.
-        return [];
     }
 
     /**
@@ -682,7 +507,7 @@ class Product extends BaseProduct
      */
     public function hasFlagByAkeneoCodeForDomain(string $akeneoCode, int $domainId): bool
     {
-        foreach ($this->getFlagsForDomain($domainId) as $flag) {
+        foreach ($this->getFlags($domainId) as $flag) {
             if ($flag->getAkeneoCode() === $akeneoCode) {
                 return true;
             }

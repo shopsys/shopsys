@@ -816,15 +816,6 @@ export type DeliveryAddressInputApi = {
   uuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
-/** Represents a downloadable file */
-export type FileApi = {
-  __typename?: 'File';
-  /** Clickable text for a hyperlink */
-  anchorText: Scalars['String']['output'];
-  /** Url to download the file */
-  url: Scalars['String']['output'];
-};
-
 /** Represents a flag */
 export type FlagApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   __typename?: 'Flag';
@@ -977,8 +968,6 @@ export type MainVariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
-  /** List of downloadable files */
-  files: Array<FileApi>;
   /** List of flags */
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
@@ -1819,8 +1808,6 @@ export type ProductApi = {
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
-  /** List of downloadable files */
-  files: Array<FileApi>;
   /** List of flags */
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
@@ -2448,8 +2435,6 @@ export type RegularProductApi = BreadcrumbApi & ProductApi & SlugApi & {
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
-  /** List of downloadable files */
-  files: Array<FileApi>;
   /** List of flags */
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
@@ -2777,8 +2762,6 @@ export type VariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   description: Maybe<Scalars['String']['output']>;
   /** EAN */
   ean: Maybe<Scalars['String']['output']>;
-  /** List of downloadable files */
-  files: Array<FileApi>;
   /** List of flags */
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */

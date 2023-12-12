@@ -78,7 +78,6 @@ class TransferredProductProcessor
             $product = $this->productFacade->edit($product->getId(), $productData);
         }
 
-        $this->setProductForImportFiles($product, $akeneoProductData);
         $this->setProductImages($product, $akeneoProductData);
 
         return $product;
@@ -154,16 +153,6 @@ class TransferredProductProcessor
         }
 
         return $accessories;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param array $akeneoProductData
-     */
-    private function setProductForImportFiles(Product $product, array $akeneoProductData): void
-    {
-        $productFilesData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductFilesData($akeneoProductData, $product);
-        $this->productFacade->editProductFileAttributes($product, $productFilesData);
     }
 
     /**

@@ -13,6 +13,9 @@ ProductDecorator:
             shortDescription:
                 type: "String"
                 description: "Localized product short description (domain dependent)"
+            usps:
+                type: "[String!]!"
+                description: "List of product's unique selling propositions"
             link:
                 type: "String!"
                 description: "Product link"

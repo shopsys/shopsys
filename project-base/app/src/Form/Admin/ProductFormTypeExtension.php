@@ -6,22 +6,18 @@ namespace App\Form\Admin;
 
 use App\Component\Form\FormBuilderHelper;
 use App\Form\Constraints\UniqueProductCatnum;
-use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Product;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\StockProductFormType;
-use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints;
@@ -32,12 +28,10 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
-     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         private readonly FormBuilderHelper $formBuilderHelper,
-        private readonly FlagFacade $flagFacade,
         private readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
@@ -97,11 +91,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
         $this->setBasicInformationGroup($builder);
         $this->setSeoGroup($builder);
-        $this->setShortDescriptionsUspGroup($builder);
         $this->setStocksGroup($builder);
         $this->setDisplayAvailabilityGroup($builder, $product);
         $this->setPricesGroup($builder, $product);
-        $this->setTransferredFilesGroup($builder, $product);
         $this->setRelatedProductsGroup($builder, $product);
         $this->setVideoGroup($builder);
 
@@ -116,22 +108,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $groupBuilder = $builder->get('basicInformationGroup');
 
         $groupBuilder
-            ->add('flags', MultidomainType::class, [
-                'entry_type' => ChoiceType::class,
-                'entry_options' => [
-                    'attr' => [
-                        'class' => 'input--full-width',
-                    ],
-                    'choices' => $this->flagFacade->getAll(),
-                    'choice_label' => 'name',
-                    'choice_value' => 'id',
-                    'multiple' => true,
-                    'expanded' => true,
-                ],
-                'required' => false,
-                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
-                'label' => t('Flags'),
-            ])
             ->add('weight', IntegerType::class, [
                 'label' => t('Weight (g)'),
                 'required' => false,
@@ -146,7 +122,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     {
         $groupBuilder = $builder->get('displayAvailabilityGroup');
         $groupBuilder->remove('availability');
-        $groupBuilder->remove('orderingPriority');
 
         $groupBuilder->get('stockGroup')
             ->remove('stockQuantity')
@@ -179,43 +154,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
                 'entry_type' => YesNoType::class,
                 'position' => ['after' => 'hidden'],
-            ])
-            ->add('domainOrderingPriority', MultidomainType::class, [
-                'entry_type' => TextType::class,
-                'entry_options' => [
-                    'required' => true,
-                ],
-                'label' => t('Sorting priority'),
             ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \App\Model\Product\Product|null $product
-     */
-    private function setTransferredFilesGroup(FormBuilderInterface $builder, ?Product $product): void
-    {
-        if ($product === null) {
-            return;
-        }
-
-        $groupBuilder = $builder->create('transferredFilesGroup', GroupType::class, [
-            'label' => t('Transferred files'),
-        ]);
-
-        $groupBuilder->add('assemblyInstructionFileUrl', MultidomainType::class, [
-            'label' => t('Installation manual'),
-            'required' => false,
-            'entry_type' => UrlType::class,
-        ]);
-
-        $groupBuilder->add('productTypePlanFileUrl', MultidomainType::class, [
-            'label' => t('Type plan'),
-            'required' => false,
-            'entry_type' => UrlType::class,
-        ]);
-
-        $builder->add($groupBuilder);
     }
 
     /**
@@ -229,57 +168,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         if ($this->isProductMainVariant($product)) {
             $builderPricesGroup->remove('disabledPricesOnMainVariant');
         }
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
-    private function setShortDescriptionsUspGroup(FormBuilderInterface $builder): void
-    {
-        $builderShortDescriptionsUspGroup = $builder->create('shortDescriptionsUspGroups', GroupType::class, [
-            'label' => t('Short description USP'),
-        ]);
-
-        $builderShortDescriptionsUspGroup
-            ->add('shortDescriptionUsp1', MultidomainType::class, [
-                'label' => t('Short description 1'),
-                'entry_type' => TextType::class,
-                'required' => false,
-            ]);
-
-        $builderShortDescriptionsUspGroup
-            ->add('shortDescriptionUsp2', MultidomainType::class, [
-                'label' => t('Short description 2'),
-                'entry_type' => TextType::class,
-                'required' => false,
-            ]);
-
-        $builderShortDescriptionsUspGroup
-            ->add('shortDescriptionUsp3', MultidomainType::class, [
-                'label' => t('Short description 3'),
-                'entry_type' => TextType::class,
-                'required' => false,
-            ]);
-
-        $builderShortDescriptionsUspGroup
-            ->add('shortDescriptionUsp4', MultidomainType::class, [
-                'label' => t('Short description 4'),
-                'entry_type' => TextType::class,
-                'required' => false,
-            ]);
-
-        $builderShortDescriptionsUspGroup
-            ->add('shortDescriptionUsp5', MultidomainType::class, [
-                'label' => t('Short description 5'),
-                'entry_type' => TextType::class,
-                'required' => false,
-            ]);
-
-        $builder->add($builderShortDescriptionsUspGroup);
-
-        /** @var \Ivory\OrderedForm\Builder\OrderedFormBuilder $shortDescriptionsUspGroups */
-        $shortDescriptionsUspGroups = $builder->get('shortDescriptionsUspGroups');
-        $shortDescriptionsUspGroups->setPosition(['after' => 'shortDescriptionsGroup']);
     }
 
     /**

@@ -164,21 +164,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param array $data
      * @return array
      */
-    public function getFiles(array $data): array
-    {
-        return array_map(
-            static fn ($fileData) => [
-                'anchorText' => $fileData['anchor_text'],
-                'url' => $fileData['url'],
-            ],
-            $data['files'],
-        );
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
     public function getStoreAvailabilities(array $data): array
     {
         // after update graphql bundle (to v1 - support php8.1) we can expose availability status as enum

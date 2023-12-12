@@ -16,8 +16,6 @@ use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFaca
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
-use App\Model\Product\ProductFilesData;
-use App\Model\Product\ProductFilesDataFactory;
 use App\Model\Transfer\TransferLoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -34,7 +32,6 @@ class ProductTransferAkeneoMapper
     /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
@@ -44,7 +41,6 @@ class ProductTransferAkeneoMapper
     public function __construct(
         private ProductDataFactory $productDataFactory,
         private CategoryFacade $categoryFacade,
-        private ProductFilesDataFactory $productFilesDataFactory,
         private ParameterFacade $parameterFacade,
         private ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         ParameterValueDataFactoryInterface $parameterValueDataFactory,
@@ -52,30 +48,6 @@ class ProductTransferAkeneoMapper
         private ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade,
     ) {
         $this->parameterValueDataFactory = $parameterValueDataFactory;
-    }
-
-    /**
-     * @param array $akeneoProductData
-     * @param \App\Model\Product\Product $product
-     * @return \App\Model\Product\ProductFilesData
-     */
-    public function mapAkeneoProductDataToProductFilesData(
-        array $akeneoProductData,
-        Product $product,
-    ): ProductFilesData {
-        $productFilesData = $this->productFilesDataFactory->createFromProduct($product);
-
-        $productFilesData->assemblyInstructionCode = AkeneoProductHelper::mapDomainDataString(
-            $productFilesData->assemblyInstructionCode,
-            $akeneoProductData['values']['assembly_instruction'] ?? null,
-        );
-
-        $productFilesData->productTypePlanCode = AkeneoProductHelper::mapDomainDataString(
-            $productFilesData->productTypePlanCode,
-            $akeneoProductData['values']['product_type_plan'] ?? null,
-        );
-
-        return $productFilesData;
     }
 
     /**
@@ -106,13 +78,13 @@ class ProductTransferAkeneoMapper
         $productData->nameSufix = AkeneoProductHelper::mapLocalizedDataString($productData->nameSufix, $akeneoProductData['values']['name_sufix'] ?? null);
 
         $productData->descriptions = AkeneoProductHelper::mapDomainDataString($productData->descriptions, $akeneoProductData['values']['description'] ?? null);
-        $productData->shortDescriptionUsp1 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp1, $akeneoProductData['values']['usp1'] ?? null);
-        $productData->shortDescriptionUsp2 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp2, $akeneoProductData['values']['usp2'] ?? null);
-        $productData->shortDescriptionUsp3 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp3, $akeneoProductData['values']['usp3'] ?? null);
-        $productData->shortDescriptionUsp4 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp4, $akeneoProductData['values']['usp4'] ?? null);
-        $productData->shortDescriptionUsp5 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp5, $akeneoProductData['values']['usp5'] ?? null);
+        $productData->shortDescriptionUsp1ByDomainId = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp1ByDomainId, $akeneoProductData['values']['usp1'] ?? null);
+        $productData->shortDescriptionUsp2ByDomainId = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp2ByDomainId, $akeneoProductData['values']['usp2'] ?? null);
+        $productData->shortDescriptionUsp3ByDomainId = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp3ByDomainId, $akeneoProductData['values']['usp3'] ?? null);
+        $productData->shortDescriptionUsp4ByDomainId = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp4ByDomainId, $akeneoProductData['values']['usp4'] ?? null);
+        $productData->shortDescriptionUsp5ByDomainId = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp5ByDomainId, $akeneoProductData['values']['usp5'] ?? null);
 
-        $productData->domainOrderingPriority = AkeneoProductHelper::mapDomainDataInt($productData->domainOrderingPriority, $akeneoProductData['values']['product_priority'] ?? []);
+        $productData->orderingPriorityByDomainId = AkeneoProductHelper::mapDomainDataInt($productData->orderingPriorityByDomainId, $akeneoProductData['values']['product_priority'] ?? []);
 
         $productCategories = $this->getProductCategories($akeneoProductData['categories']);
         $productData->categoriesByDomainId = [
@@ -122,7 +94,7 @@ class ProductTransferAkeneoMapper
 
         $this->mapProductParameters($akeneoProductData, $productData, $transferLogger);
 
-        $productData->flags = AkeneoProductHelper::mapDomainDataArray($productData->flags, $this->getProductFlags($akeneoProductData['values']));
+        $productData->flagsByDomainId = AkeneoProductHelper::mapDomainDataArray($productData->flagsByDomainId, $this->getProductFlags($akeneoProductData['values']));
 
         return $productData;
     }

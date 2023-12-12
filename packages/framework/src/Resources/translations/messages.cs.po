@@ -2275,6 +2275,12 @@ msgstr "Dopravy a platby"
 msgid "Short description"
 msgstr "Krátký popis"
 
+msgid "Short description %number%"
+msgstr "Krátký popis %number%"
+
+msgid "Short description USP"
+msgstr "Krátký popis USP"
+
 msgid "Short description can be set in the main variant."
 msgstr "Krátký popis se nastavuje u hlavní varianty."
 

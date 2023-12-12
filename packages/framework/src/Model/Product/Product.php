@@ -191,13 +191,6 @@ class Product extends AbstractTranslatableEntity
     protected $productCategoryDomains;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection
-     * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\Flag\Flag")
-     * @ORM\JoinTable(name="product_flags")
-     */
-    protected $flags;
-
-    /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
@@ -237,12 +230,6 @@ class Product extends AbstractTranslatableEntity
     protected $variantType;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    protected $orderingPriority;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductDomain", mappedBy="product", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
@@ -276,7 +263,6 @@ class Product extends AbstractTranslatableEntity
         $this->calculatedVisibility = false;
         $this->createDomains($productData);
         $this->productCategoryDomains = new ArrayCollection();
-        $this->flags = new ArrayCollection($productData->flags);
         $this->recalculatePrice = true;
         $this->recalculateVisibility = true;
         $this->calculatedHidden = true;
@@ -304,7 +290,6 @@ class Product extends AbstractTranslatableEntity
         array $productCategoryDomains,
         ProductData $productData,
     ) {
-        $this->editFlags($productData->flags);
         $this->setDomains($productData);
 
         if (!$this->isVariant()) {
@@ -335,7 +320,6 @@ class Product extends AbstractTranslatableEntity
         $this->unit = $productData->unit;
         $this->recalculateAvailability = true;
         $this->setTranslations($productData);
-        $this->orderingPriority = $productData->orderingPriority;
     }
 
     /**
@@ -355,18 +339,6 @@ class Product extends AbstractTranslatableEntity
     public static function createMainVariant(ProductData $productData, array $variants)
     {
         return new static($productData, $variants);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flags
-     */
-    protected function editFlags(array $flags)
-    {
-        $this->flags->clear();
-
-        foreach ($flags as $flag) {
-            $this->flags->add($flag);
-        }
     }
 
     /**
@@ -576,11 +548,12 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
+     * @param int $domainId
      * @return int
      */
-    public function getOrderingPriority()
+    public function getOrderingPriority(int $domainId)
     {
-        return $this->orderingPriority;
+        return $this->getProductDomain($domainId)->getOrderingPriority();
     }
 
     /**
@@ -661,27 +634,11 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[]
-     */
-    protected function getProductCategoryDomainsByDomainIdIndexedByCategoryId($domainId)
-    {
-        $productCategoryDomainsByCategoryId = [];
-
-        foreach ($this->productCategoryDomains as $productCategoryDomain) {
-            if ($productCategoryDomain->getDomainId() === $domainId) {
-                $productCategoryDomainsByCategoryId[$productCategoryDomain->getCategory()->getId()] = $productCategoryDomain;
-            }
-        }
-
-        return $productCategoryDomainsByCategoryId;
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getFlags()
+    public function getFlags(int $domainId)
     {
-        return $this->flags->getValues();
+        return $this->getProductDomain($domainId)->getFlags();
     }
 
     /**
@@ -923,6 +880,13 @@ class Product extends AbstractTranslatableEntity
             $productDomain->setDescription($productData->descriptions[$domainId]);
             $productDomain->setShortDescription($productData->shortDescriptions[$domainId]);
             $productDomain->setVat($productData->vatsIndexedByDomainId[$domainId]);
+            $productDomain->setShortDescriptionUsp1($productData->shortDescriptionUsp1ByDomainId[$domainId]);
+            $productDomain->setShortDescriptionUsp2($productData->shortDescriptionUsp2ByDomainId[$domainId]);
+            $productDomain->setShortDescriptionUsp3($productData->shortDescriptionUsp3ByDomainId[$domainId]);
+            $productDomain->setShortDescriptionUsp4($productData->shortDescriptionUsp4ByDomainId[$domainId]);
+            $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5ByDomainId[$domainId]);
+            $productDomain->setFlags($productData->flagsByDomainId[$domainId] ?? []);
+            $productDomain->setOrderingPriority((int)$productData->orderingPriorityByDomainId[$domainId]);
         }
     }
 
@@ -1081,5 +1045,50 @@ class Product extends AbstractTranslatableEntity
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescriptionUsp1(int $domainId)
+    {
+        return $this->getProductDomain($domainId)->getShortDescriptionUsp1();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescriptionUsp2(int $domainId)
+    {
+        return $this->getProductDomain($domainId)->getShortDescriptionUsp2();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescriptionUsp3(int $domainId)
+    {
+        return $this->getProductDomain($domainId)->getShortDescriptionUsp3();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescriptionUsp4(int $domainId)
+    {
+        return $this->getProductDomain($domainId)->getShortDescriptionUsp4();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getShortDescriptionUsp5(int $domainId)
+    {
+        return $this->getProductDomain($domainId)->getShortDescriptionUsp5();
     }
 }

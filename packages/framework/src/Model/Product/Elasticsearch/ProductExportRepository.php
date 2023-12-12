@@ -149,7 +149,7 @@ class ProductExportRepository
      */
     protected function extractResult(Product $product, int $domainId, string $locale): array
     {
-        $flagIds = $this->extractFlags($product);
+        $flagIds = $this->extractFlags($domainId, $product);
         $categoryIds = $this->extractCategories($domainId, $product);
         $parameters = $this->extractParameters($locale, $product);
         $prices = $this->extractPrices($domainId, $product);
@@ -177,7 +177,7 @@ class ProductExportRepository
             'in_stock' => $product->getCalculatedAvailability()->getDispatchTime() === 0,
             'prices' => $prices,
             'parameters' => $parameters,
-            'ordering_priority' => $product->getOrderingPriority(),
+            'ordering_priority' => $product->getOrderingPriority($domainId),
             'calculated_selling_denied' => $product->getCalculatedSellingDenied(),
             'selling_denied' => $product->isSellingDenied(),
             'availability' => $product->getCalculatedAvailability()->getName($locale),
@@ -251,14 +251,15 @@ class ProductExportRepository
     }
 
     /**
+     * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return int[]
      */
-    protected function extractFlags(Product $product): array
+    protected function extractFlags(int $domainId, Product $product): array
     {
         $flagIds = [];
 
-        foreach ($product->getFlags() as $flag) {
+        foreach ($product->getFlags($domainId) as $flag) {
             $flagIds[] = $flag->getId();
         }
 

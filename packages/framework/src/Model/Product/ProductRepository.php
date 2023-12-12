@@ -55,6 +55,7 @@ class ProductRepository
     public function getAllListableQueryBuilder($domainId, PricingGroup $pricingGroup)
     {
         $queryBuilder = $this->getAllOfferedQueryBuilder($domainId, $pricingGroup);
+        $this->addDomain($queryBuilder, $domainId);
         $queryBuilder->andWhere('p.variantType != :variantTypeVariant')
             ->setParameter('variantTypeVariant', Product::VARIANT_TYPE_VARIANT);
 

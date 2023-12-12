@@ -7,7 +7,6 @@ namespace App\Model\Product;
 use App\Model\Category\Category as AppCategory;
 use App\Model\ProductVideo\ProductVideoFacade;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
@@ -66,10 +65,7 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  */
 class ProductFacade extends BaseProductFacade
 {
-    public const ASSETS_FILE_TYPE = '.pdf';
-
     /**
-     * @param string $productFilesUrlPrefix
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
@@ -97,7 +93,6 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\ProductVideo\ProductVideoFacade $productVideoFacade
      */
     public function __construct(
-        private readonly string $productFilesUrlPrefix,
         EntityManagerInterface $em,
         ProductRepository $productRepository,
         ProductVisibilityFacade $productVisibilityFacade,
@@ -243,16 +238,6 @@ class ProductFacade extends BaseProductFacade
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param \App\Model\Product\ProductFilesData $productFilesData
-     */
-    public function editProductFileAttributes(BaseProduct $product, ProductFilesData $productFilesData): void
-    {
-        $product->editFileAttributes($productFilesData);
-        $this->em->flush();
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
      * @param \App\Model\Product\ProductData $productData
      */
     public function setAdditionalDataAfterCreate(BaseProduct $product, ProductData $productData)
@@ -276,62 +261,6 @@ class ProductFacade extends BaseProductFacade
         $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
-    }
-
-    /**
-     * @param string $fileName
-     * @param string $domainUrl
-     * @param string|null $browserCacheCleanerSuffix
-     * @return string
-     */
-    public function getProductTransferredFileUrl(
-        string $fileName,
-        string $domainUrl,
-        ?string $browserCacheCleanerSuffix = null,
-    ): string {
-        return $domainUrl . $this->productFilesUrlPrefix . $fileName . ($browserCacheCleanerSuffix !== null ? '?' . md5($browserCacheCleanerSuffix) : '');
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return array
-     */
-    public function getDownloadFilesForProductByDomainConfig(BaseProduct $product, DomainConfig $domainConfig): array
-    {
-        $downloadFileUrls = [];
-
-        if ($product->isDownloadAssemblyInstructionFiles() === false && $product->getAssemblyInstructionCode($domainConfig->getId()) !== null) {
-            $url = $this->getProductTransferredFileUrl(
-                $product->getProductFileNameByType(
-                    $domainConfig->getId(),
-                    Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE,
-                ),
-                $domainConfig->getUrl(),
-                $product->getAssemblyInstructionCode($domainConfig->getId()),
-            );
-            $downloadFileUrls[] = [
-                'anchor_text' => t('Installation manual'),
-                'url' => $url,
-            ];
-        }
-
-        if ($product->isDownloadProductTypePlanFiles() === false && $product->getProductTypePlanCode($domainConfig->getId()) !== null) {
-            $url = $this->getProductTransferredFileUrl(
-                $product->getProductFileNameByType(
-                    $domainConfig->getId(),
-                    Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE,
-                ),
-                $domainConfig->getUrl(),
-                $product->getProductTypePlanCode($domainConfig->getId()),
-            );
-            $downloadFileUrls[] = [
-                'anchor_text' => t('Type plan'),
-                'url' => $url,
-            ];
-        }
-
-        return $downloadFileUrls;
     }
 
     /**

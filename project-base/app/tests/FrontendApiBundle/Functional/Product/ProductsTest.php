@@ -96,10 +96,6 @@ class ProductsTest extends ProductsGraphQlTestCase
                             partNumber
                             ean
                             usps
-                            files {
-                              anchorText
-                              url
-                            }
                         }
                     }
                 }
@@ -176,7 +172,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'orderingPriority' => 0,
+                'orderingPriority' => 1,
                 'parameters' => [
                     [
                         'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -239,7 +235,6 @@ class ProductsTest extends ProductsGraphQlTestCase
                 'partNumber' => '22MT44D',
                 'ean' => '8845781245931',
                 'usps' => [],
-                'files' => [],
             ],
         ];
     }

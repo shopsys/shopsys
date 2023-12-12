@@ -47,14 +47,13 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $stockProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $stockProductDataFactory
-     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
      * @param \App\Model\ProductVideo\ProductVideoRepository $productVideoRepository
@@ -75,7 +74,6 @@ class ProductDataFactory extends BaseProductDataFactory
         private readonly ProductStockFacade $stockProductFacade,
         private readonly StockFacade $stockFacade,
         private readonly ProductStockDataFactory $stockProductDataFactory,
-        private readonly ProductFacade $productFacade,
         private readonly Setting $setting,
         private readonly ProductVideoDataFactory $productVideoDataFactory,
         private readonly ProductVideoRepository $productVideoRepository,
@@ -128,7 +126,6 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData = $this->createInstance();
         $this->fillFromProduct($productData, $product);
         $this->fillStockProductByProduct($productData, $product);
-        $this->fillProductFilesAttributesFromProduct($productData, $product);
         $this->fillProductVideosByProductId($productData, $product);
 
         return $productData;
@@ -142,17 +139,8 @@ class ProductDataFactory extends BaseProductDataFactory
         parent::fillNew($productData);
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $productData->shortDescriptionUsp1[$domainId] = null;
-            $productData->shortDescriptionUsp2[$domainId] = null;
-            $productData->shortDescriptionUsp3[$domainId] = null;
-            $productData->shortDescriptionUsp4[$domainId] = null;
-            $productData->shortDescriptionUsp5[$domainId] = null;
-            $productData->assemblyInstructionFileUrl[$domainId] = null;
-            $productData->productTypePlanFileUrl[$domainId] = null;
-            $productData->flags[$domainId] = [];
             $productData->saleExclusion[$domainId] = false;
             $productData->domainHidden[$domainId] = false;
-            $productData->domainOrderingPriority[$domainId] = 0;
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -189,15 +177,15 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->seoMetaDescriptions[$domainId] = $product->getSeoMetaDescription($domainId);
             $productData->vatsIndexedByDomainId[$domainId] = $product->getVatForDomain($domainId);
 
-            $productData->shortDescriptionUsp1[$domainId] = $product->getShortDescriptionUsp1($domainId);
-            $productData->shortDescriptionUsp2[$domainId] = $product->getShortDescriptionUsp2($domainId);
-            $productData->shortDescriptionUsp3[$domainId] = $product->getShortDescriptionUsp3($domainId);
-            $productData->shortDescriptionUsp4[$domainId] = $product->getShortDescriptionUsp4($domainId);
-            $productData->shortDescriptionUsp5[$domainId] = $product->getShortDescriptionUsp5($domainId);
-            $productData->flags[$domainId] = $product->getFlagsForDomain($domainId);
+            $productData->shortDescriptionUsp1ByDomainId[$domainId] = $product->getShortDescriptionUsp1($domainId);
+            $productData->shortDescriptionUsp2ByDomainId[$domainId] = $product->getShortDescriptionUsp2($domainId);
+            $productData->shortDescriptionUsp3ByDomainId[$domainId] = $product->getShortDescriptionUsp3($domainId);
+            $productData->shortDescriptionUsp4ByDomainId[$domainId] = $product->getShortDescriptionUsp4($domainId);
+            $productData->shortDescriptionUsp5ByDomainId[$domainId] = $product->getShortDescriptionUsp5($domainId);
+            $productData->flagsByDomainId[$domainId] = $product->getFlags($domainId);
             $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
             $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
-            $productData->domainOrderingPriority[$domainId] = $product->getDomainOrderingPriority($domainId);
+            $productData->orderingPriorityByDomainId[$domainId] = $product->getOrderingPriority($domainId);
 
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
@@ -221,7 +209,6 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->hidden = $product->isHidden();
         $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();
         $productData->brand = $product->getBrand();
-        $productData->orderingPriority = $product->getOrderingPriority();
 
         $productData->parameters = $this->getParametersData($product);
 
@@ -238,39 +225,8 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->images = $this->imageUploadDataFactory->createFromEntityAndType($product, null);
         $productData->variants = $product->getVariants();
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
-
-        $productData->downloadAssemblyInstructionFiles = $product->isDownloadAssemblyInstructionFiles();
-        $productData->downloadProductTypePlanFiles = $product->isDownloadAssemblyInstructionFiles();
-
         $productData->weight = $product->getWeight();
         $productData->relatedProducts = $product->getRelatedProducts();
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product $product
-     */
-    private function fillProductFilesAttributesFromProduct(ProductData $productData, Product $product): void
-    {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-            $productData->assemblyInstructionFileUrl[$domainId] = null;
-            $productData->productTypePlanFileUrl[$domainId] = null;
-
-            if ($product->getAssemblyInstructionCode($domainId) !== null) {
-                $productData->assemblyInstructionFileUrl[$domainId] = $this->productFacade->getProductTransferredFileUrl(
-                    $product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE),
-                    $domainConfig->getUrl(),
-                );
-            }
-
-            if ($product->getProductTypePlanCode($domainId) !== null) {
-                $productData->productTypePlanFileUrl[$domainId] = $this->productFacade->getProductTransferredFileUrl(
-                    $product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE),
-                    $domainConfig->getUrl(),
-                );
-            }
-        }
     }
 
     /**

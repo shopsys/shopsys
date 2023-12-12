@@ -328,9 +328,6 @@ msgstr ""
 msgid "Please enter script name"
 msgstr ""
 
-msgid "Please enter sorting priority"
-msgstr ""
-
 msgid "Please enter stock quantity"
 msgstr ""
 

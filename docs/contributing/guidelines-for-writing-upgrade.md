@@ -47,6 +47,7 @@ Each upgrade file must have a link to the main UPGRADE.md file with general info
 -   shopsys/product-feed-heureka
 -   shopsys/product-feed-heureka-delivery
 -   shopsys/product-feed-zbozi
+-   shopsys/product-feed-persoo
 
 Each section must contain instructions relevant only to the package they cover, and the sections have to be ordered as they are in the list above.
 
