@@ -17,6 +17,7 @@ use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\EarlyExitSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
@@ -150,6 +151,9 @@ return static function (ECSConfig $ecsConfig): void {
         ],
         DeclareStrictTypesFixer::class => [
             __DIR__ . '/src/*',
+        ],
+        EarlyExitSniff::class => [
+            __DIR__ . '/src/Migrations/Version20231213165330.php',
         ],
     ]);
 

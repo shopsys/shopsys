@@ -2,29 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Category;
+namespace Shopsys\FrameworkBundle\Model\Category;
 
-use App\Model\Product\Parameter\ParameterFacade;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class CategoryParameterFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
-     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
-        private EntityManagerInterface $em,
-        private CategoryParameterRepository $categoryParameterRepository,
-        private ParameterFacade $parameterFacade,
+        protected readonly EntityManagerInterface $em,
+        protected readonly CategoryParameterRepository $categoryParameterRepository,
+        protected readonly ParameterFacade $parameterFacade,
     ) {
     }
 
     /**
-     * @param \App\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param int[] $parameterIds
-     * @param \App\Model\Product\Parameter\Parameter[] $parametersCollapsed
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[] $parametersCollapsed
      */
     public function saveRelation(Category $category, array $parameterIds, array $parametersCollapsed): void
     {
@@ -83,8 +83,8 @@ class CategoryParameterFacade
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @return \App\Model\Product\Parameter\Parameter[]
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getParametersCollapsedByCategory(Category $category): array
     {

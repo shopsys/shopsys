@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Category;
+namespace Shopsys\FrameworkBundle\Model\Category;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -15,14 +15,15 @@ class CategoryParameterRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(private EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+    ) {
     }
 
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    private function getRepository(): EntityRepository
+    protected function getRepository(): EntityRepository
     {
         return $this->em->getRepository(CategoryParameter::class);
     }
@@ -30,7 +31,7 @@ class CategoryParameterRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getQueryBuilder(): QueryBuilder
+    protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('cp')
@@ -38,8 +39,8 @@ class CategoryParameterRepository
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @return \App\Model\Category\CategoryParameter[]
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryParameter[]
      */
     public function getAllByCategory(Category $category): array
     {
@@ -47,8 +48,8 @@ class CategoryParameterRepository
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @return \App\Model\Category\CategoryParameter[]
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryParameter[]
      */
     public function getCategoryParametersByCategorySortedByPosition(Category $category): array
     {
@@ -62,8 +63,8 @@ class CategoryParameterRepository
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @return \App\Model\Product\Parameter\Parameter[]
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getParametersCollapsedByCategory(Category $category): array
     {

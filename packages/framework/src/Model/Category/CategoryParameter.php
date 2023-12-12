@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Category;
+namespace Shopsys\FrameworkBundle\Model\Category;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
@@ -14,36 +14,36 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 class CategoryParameter
 {
     /**
-     * @var \App\Model\Category\Category
+     * @var \Shopsys\FrameworkBundle\Model\Category\Category
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="\App\Model\Category\Category")
+     * @ORM\ManyToOne(targetEntity="\Shopsys\FrameworkBundle\Model\Category\Category")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
-    private $category;
+    protected $category;
 
     /**
-     * @var \App\Model\Product\Parameter\Parameter
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="\App\Model\Product\Parameter\Parameter")
+     * @ORM\ManyToOne(targetEntity="\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter")
      * @ORM\JoinColumn(name="parameter_id", referencedColumnName="id", onDelete="CASCADE", nullable=false )
      */
-    private $parameter;
+    protected $parameter;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $collapsed;
+    protected $collapsed;
 
     /**
      * @var int
      * @ORM\Column(type="integer")
      */
-    private $position;
+    protected $position;
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param bool $collapsed
      * @param int $position
      */
@@ -56,17 +56,17 @@ class CategoryParameter
     }
 
     /**
-     * @return \App\Model\Category\Category
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getCategory(): Category
+    public function getCategory()
     {
         return $this->category;
     }
 
     /**
-     * @return \App\Model\Product\Parameter\Parameter
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
-    public function getParameter(): Parameter
+    public function getParameter()
     {
         return $this->parameter;
     }
@@ -74,7 +74,7 @@ class CategoryParameter
     /**
      * @return bool
      */
-    public function isCollapsed(): bool
+    public function isCollapsed()
     {
         return $this->collapsed;
     }
@@ -90,7 +90,7 @@ class CategoryParameter
     /**
      * @return int
      */
-    public function getPosition(): int
+    public function getPosition()
     {
         return $this->position;
     }

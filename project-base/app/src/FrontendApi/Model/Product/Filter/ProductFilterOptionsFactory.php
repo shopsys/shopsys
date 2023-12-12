@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Product\Filter;
 
 use App\Model\Category\Category;
-use App\Model\Category\CategoryParameterFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Flag\Flag;
@@ -14,6 +13,7 @@ use App\Model\Product\Parameter\ParameterValue;
 use App\Model\Product\ProductOnCurrentDomainElasticFacade;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
+use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -41,7 +41,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
-     * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade
      */
     public function __construct(
         ModuleFacade $moduleFacade,

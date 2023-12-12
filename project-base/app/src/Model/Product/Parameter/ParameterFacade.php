@@ -6,10 +6,10 @@ namespace App\Model\Product\Parameter;
 
 use App\Component\UploadedFile\UploadedFileFacade;
 use App\Model\Category\Category;
-use App\Model\Category\CategoryParameterRepository;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
+use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory as BaseCategoryDataFactory;
+use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
 
 /**
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -24,7 +25,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
      * @param \App\Model\Category\LinkedCategory\LinkedCategoryRepository $linkedCategoryRepository
      */
     public function __construct(
@@ -96,7 +97,9 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         parent::fillFromCategory($categoryData, $category);
 
         $categoryData->akeneoCode = $category->getAkeneoCode();
-        $categoryData->parametersCollapsed = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
+        /** @var \App\Model\Product\Parameter\Parameter[] $parameters */
+        $parameters = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
+        $categoryData->parametersCollapsed = $parameters;
         $categoryData->parametersPosition = $this->getParametersSortedByPositionFilteredByCategory($category);
 
         $linkedCategories = $this->linkedCategoryRepository->getAllByParentCategory($category);
