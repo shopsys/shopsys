@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\Doctrine;
+namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
 class OrderByCollationHelper
 {

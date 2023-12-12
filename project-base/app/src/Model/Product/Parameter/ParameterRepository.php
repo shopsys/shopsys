@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
-use App\Component\Doctrine\OrderByCollationHelper;
 use App\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use App\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;

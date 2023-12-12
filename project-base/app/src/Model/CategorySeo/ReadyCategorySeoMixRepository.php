@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
-use App\Component\Doctrine\OrderByCollationHelper;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ObjectRepository;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Symfony\Contracts\Service\ResetInterface;

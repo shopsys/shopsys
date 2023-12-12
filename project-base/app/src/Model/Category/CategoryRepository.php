@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
-use App\Component\Doctrine\OrderByCollationHelper;
 use App\Model\Category\LinkedCategory\LinkedCategory;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
