@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
 use Shopsys\FrameworkBundle\Model\Category\CategoryEvent;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyEvent;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupEvent;
 use Shopsys\FrameworkBundle\Model\Product\AffectedProductsFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandEvent;
@@ -100,6 +101,7 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
             BrandEvent::DELETE => 'dispatchAffectedByBrand',
             CategoryEvent::UPDATE => 'dispatchAffectedByCategory',
             CategoryEvent::DELETE => 'dispatchAffectedByCategory',
+            CurrencyEvent::UPDATE => 'dispatchAllProducts',
             FlagEvent::DELETE => 'dispatchAffectedByFlag',
             ParameterEvent::DELETE => 'dispatchAffectedByParameter',
             ParameterEvent::UPDATE => 'dispatchAffectedByParameter',

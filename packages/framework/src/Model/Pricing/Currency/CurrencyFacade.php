@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\DeletingNotAllowedToDeleteCurrencyException;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CurrencyFacade
 {
@@ -20,8 +20,8 @@ class CurrencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface $currencyFactory
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -29,8 +29,8 @@ class CurrencyFacade
         protected readonly PricingSetting $pricingSetting,
         protected readonly OrderRepository $orderRepository,
         protected readonly Domain $domain,
-        protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         protected readonly CurrencyFactoryInterface $currencyFactory,
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -62,6 +62,8 @@ class CurrencyFacade
         $this->em->persist($currency);
         $this->em->flush();
 
+        $this->dispatchCurrencyEvent($currency, CurrencyEvent::CREATE);
+
         return $currency;
     }
 
@@ -81,7 +83,8 @@ class CurrencyFacade
             $currency->setExchangeRate($currencyData->exchangeRate);
         }
         $this->em->flush();
-        $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
+
+        $this->dispatchCurrencyEvent($currency, CurrencyEvent::UPDATE);
 
         return $currency;
     }
@@ -96,6 +99,9 @@ class CurrencyFacade
         if (in_array($currency->getId(), $this->getNotAllowedToDeleteCurrencyIds(), true)) {
             throw new DeletingNotAllowedToDeleteCurrencyException();
         }
+
+        $this->dispatchCurrencyEvent($currency, CurrencyEvent::DELETE);
+
         $this->em->remove($currency);
         $this->em->flush();
     }
@@ -143,7 +149,7 @@ class CurrencyFacade
     public function setDomainDefaultCurrency(Currency $currency, $domainId)
     {
         $this->pricingSetting->setDomainDefaultCurrency($currency, $domainId);
-        $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
+        $this->dispatchCurrencyEvent($currency, CurrencyEvent::UPDATE);
     }
 
     /**
@@ -228,5 +234,15 @@ class CurrencyFacade
         $outputCurrencyExchangeRate = Decimal::fromString($outputCurrency->getExchangeRate());
 
         return $inputCurrencyExchangeRate->div($outputCurrencyExchangeRate, 6);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param string $eventType
+     * @see \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyEvent class
+     */
+    protected function dispatchCurrencyEvent(Currency $currency, string $eventType): void
+    {
+        $this->eventDispatcher->dispatch(new CurrencyEvent($currency), $eventType);
     }
 }
