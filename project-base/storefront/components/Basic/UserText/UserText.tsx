@@ -1,5 +1,4 @@
 import { GrapesJs } from './GrapesJs';
-import styles from './UserText.module.sass';
 
 type UserTextProps = {
     htmlContent: string;
@@ -11,11 +10,5 @@ export const UserText: FC<UserTextProps> = ({ dataTestId, htmlContent, isGrapesJ
         return <GrapesJs content={htmlContent} dataTestId={dataTestId} />;
     }
 
-    return (
-        <section
-            className={styles.userTextBasic}
-            dangerouslySetInnerHTML={{ __html: htmlContent }}
-            data-testid={dataTestId}
-        />
-    );
+    return <section dangerouslySetInnerHTML={{ __html: htmlContent }} data-testid={dataTestId} />;
 };

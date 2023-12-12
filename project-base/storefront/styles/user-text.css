@@ -2,45 +2,12 @@
 
 @layer components {
     .user-text {
-        @apply text-greyLight antialiased;
-
-        p,
-        ul,
-        ol,
-        li {
-            @apply text-[inherit];
-        }
-
-        h2,
-        h3,
-        h4,
-        h5 {
-            @apply mb-2 text-lg;
-        }
-
-        p {
-            @apply mb-7 last:mb-0;
-        }
-
-        strong,
-        b {
-            @apply font-normal text-primary;
-        }
-
-        a {
-            @apply text-primary underline hover:no-underline;
-        }
-
         ul {
-            @apply mb-7 list-none p-0;
+            @apply list-inside list-disc;
+        }
 
-            li {
-                @apply relative mb-5 pl-4 after:absolute after:top-2 after:left-0 after:h-1 after:w-1 after:rounded-full after:bg-primary after:content-[""];
-            }
-
-            ul {
-                @apply mt-1 ml-4;
-            }
+        ol {
+            @apply list-inside list-decimal;
         }
 
         img {
@@ -50,48 +17,48 @@
         iframe {
             @apply max-w-full;
         }
-    }
 
-    .grapesjs-text {
-        div,
-        p {
-            @apply py-1 px-0;
+        iframe:not(.gjs-iframe) {
+            @apply aspect-video w-full;
         }
 
-        ul,
-        ol {
-            @apply grid;
+        video {
+            @apply w-full;
         }
 
         .row {
             @apply block w-full gap-3 py-3 lg:flex lg:flex-wrap;
 
             .column {
-                @apply flex flex-1 flex-col last:pr-0;
+                @apply flex flex-1 flex-col py-3;
             }
         }
 
-        .video {
-            @apply relative h-0 overflow-hidden pb-[56.25%];
+        .image-position {
+            &-center {
+                @apply mx-auto;
+            }
 
-            iframe {
-                @apply absolute left-0 top-0 h-full w-full;
+            &-right {
+                @apply ml-auto;
             }
         }
 
         .gjs-text-with-image {
-            @apply w-full;
+            .gjs-text-with-image-inner {
+                @apply flex flex-wrap items-start gap-5 lg:flex-nowrap;
 
-            & .inner {
-                @apply flex flex-col items-start lg:flex-row lg:gap-8;
-
-                & .image {
-                    @apply mb-4 !h-auto w-full lg:mb-4 lg:w-52 xl:!mb-4 xl:!w-[350px];
+                & img {
+                    @apply !w-full flex-shrink-0 lg:max-w-sm;
                 }
 
-                &.right {
-                    & .image {
+                &.gjs-text-with-image-float-right {
+                    & img {
                         @apply order-2;
+                    }
+
+                    & .text {
+                        @apply order-1;
                     }
                 }
             }

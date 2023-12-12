@@ -47,7 +47,6 @@ class GrapesJsParser
             ->allowSafeElements()
             ->allowStaticElements()
             ->allowRelativeLinks()
-            ->dropAttribute('style', 'div')
             ->allowElement('iframe', '*')
             ->withMaxInputLength(25000);
 

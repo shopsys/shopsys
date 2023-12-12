@@ -49,11 +49,9 @@ export default grapesjs.plugins.add('custom-blocks', (editor, options) => {
         label: 'Video',
         category: 'Basic',
         attributes: { class: 'fa fa-youtube-play' },
-        content: `
-            <div class="video">
-                <video src="img/video2.webm" />
-            </div>
-        `
+        content: {
+            type: 'video'
+        }
     });
 
     editor.Blocks.add('map', {

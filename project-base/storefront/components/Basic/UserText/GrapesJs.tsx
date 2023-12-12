@@ -6,8 +6,8 @@ type GrapesJsProps = {
 
 export const GrapesJs: FC<GrapesJsProps> = ({ dataTestId, content, className }) => (
     <section
-        className={twMergeCustom('grapesjs-text user-text', className)}
-        dangerouslySetInnerHTML={{ __html: content !== undefined ? content : '' }}
+        className={twMergeCustom('user-text', className)}
+        dangerouslySetInnerHTML={{ __html: content || '' }}
         data-gjs-type="editable"
         data-testid={dataTestId}
     />
