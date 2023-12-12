@@ -88,6 +88,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
             $productData->shortDescriptionUsp5ByDomainId[$domainId] = null;
             $productData->flagsByDomainId[$domainId] = [];
             $productData->orderingPriorityByDomainId[$domainId] = 0;
+            $productData->saleExclusion[$domainId] = false;
         }
 
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomain;
@@ -155,6 +156,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
             $productData->shortDescriptionUsp5ByDomainId[$domainId] = $product->getShortDescriptionUsp5($domainId);
             $productData->flagsByDomainId[$domainId] = $product->getFlags($domainId);
             $productData->orderingPriorityByDomainId[$domainId] = $product->getOrderingPriority($domainId);
+            $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
 
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,

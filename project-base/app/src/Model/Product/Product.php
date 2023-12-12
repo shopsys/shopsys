@@ -199,7 +199,6 @@ class Product extends BaseProduct
 
         foreach ($this->domains as $productDomain) {
             $domainId = $productDomain->getDomainId();
-            $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
             $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
         }
     }
@@ -387,15 +386,6 @@ class Product extends BaseProduct
     public function isDomainHidden(int $domainId): ?bool
     {
         return $this->getProductDomain($domainId)->isDomainHidden();
-    }
-
-    /**
-     * @param int $domainId
-     * @return  bool
-     */
-    public function getSaleExclusion(int $domainId): bool
-    {
-        return $this->getProductDomain($domainId)->getSaleExclusion();
     }
 
     /**

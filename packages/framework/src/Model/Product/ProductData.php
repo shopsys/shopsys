@@ -198,6 +198,11 @@ class ProductData
      */
     public $shortDescriptionUsp5ByDomainId;
 
+    /**
+     * @var bool[]
+     */
+    public $saleExclusion;
+
     public function __construct()
     {
         $this->name = [];
@@ -225,5 +230,6 @@ class ProductData
         $this->shortDescriptionUsp3ByDomainId = [];
         $this->shortDescriptionUsp4ByDomainId = [];
         $this->shortDescriptionUsp5ByDomainId = [];
+        $this->saleExclusion = [];
     }
 }

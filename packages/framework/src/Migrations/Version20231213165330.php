@@ -18,6 +18,11 @@ class Version20231213165330 extends AbstractMigration
             $this->sql('ALTER TABLE transports ADD days_until_delivery INT NOT NULL DEFAULT 0');
             $this->sql('ALTER TABLE transports ALTER days_until_delivery DROP DEFAULT');
         }
+
+        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20200407071420')) {
+            $this->sql('ALTER TABLE product_domains ADD sale_exclusion BOOLEAN NOT NULL DEFAULT FALSE');
+            $this->sql('ALTER TABLE product_domains ALTER sale_exclusion DROP DEFAULT;');
+        }
     }
 
     /**

@@ -868,6 +868,7 @@ class Product extends AbstractTranslatableEntity
             $productDomain->setDescription($productData->descriptions[$domainId]);
             $productDomain->setShortDescription($productData->shortDescriptions[$domainId]);
             $productDomain->setVat($productData->vatsIndexedByDomainId[$domainId]);
+            $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
             $productDomain->setShortDescriptionUsp1($productData->shortDescriptionUsp1ByDomainId[$domainId]);
             $productDomain->setShortDescriptionUsp2($productData->shortDescriptionUsp2ByDomainId[$domainId]);
             $productDomain->setShortDescriptionUsp3($productData->shortDescriptionUsp3ByDomainId[$domainId]);
@@ -944,6 +945,15 @@ class Product extends AbstractTranslatableEntity
     public function isMarkedForVisibilityRecalculation()
     {
         return $this->recalculateVisibility;
+    }
+
+    /**
+     * @param int $domainId
+     * @return  bool
+     */
+    public function getSaleExclusion(int $domainId)
+    {
+        return $this->getProductDomain($domainId)->getSaleExclusion();
     }
 
     /**

@@ -32,11 +32,6 @@ class ProductData extends BaseProductData
     public $stockProductData;
 
     /**
-     * @var bool[]
-     */
-    public $saleExclusion;
-
-    /**
      * @var bool[]|null[]
      */
     public $domainHidden;
@@ -63,7 +58,6 @@ class ProductData extends BaseProductData
         $this->namePrefix = [];
         $this->nameSufix = [];
         $this->stockProductData = [];
-        $this->saleExclusion = [];
         $this->domainHidden = [];
         $this->weight = null;
         $this->relatedProducts = [];

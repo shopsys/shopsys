@@ -26,12 +26,6 @@ class ProductDomain extends BaseProductDomain
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    protected $saleExclusion;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
     protected $calculatedSaleExclusion;
 
     /**
@@ -49,22 +43,6 @@ class ProductDomain extends BaseProductDomain
         parent::__construct($product, $domainId);
 
         $this->calculatedSaleExclusion = true;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getSaleExclusion(): bool
-    {
-        return $this->saleExclusion;
-    }
-
-    /**
-     * @param bool $saleExclusion
-     */
-    public function setSaleExclusion(bool $saleExclusion): void
-    {
-        $this->saleExclusion = $saleExclusion;
     }
 
     /**

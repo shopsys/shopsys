@@ -133,6 +133,12 @@ class ProductDomain
     protected $orderingPriority;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $saleExclusion;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      */
@@ -361,5 +367,21 @@ class ProductDomain
     public function setOrderingPriority(int $orderingPriority): void
     {
         $this->orderingPriority = $orderingPriority;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getSaleExclusion()
+    {
+        return $this->saleExclusion;
+    }
+
+    /**
+     * @param bool $saleExclusion
+     */
+    public function setSaleExclusion(bool $saleExclusion): void
+    {
+        $this->saleExclusion = $saleExclusion;
     }
 }

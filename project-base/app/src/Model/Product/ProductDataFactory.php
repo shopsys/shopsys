@@ -139,7 +139,6 @@ class ProductDataFactory extends BaseProductDataFactory
         parent::fillNew($productData);
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $productData->saleExclusion[$domainId] = false;
             $productData->domainHidden[$domainId] = false;
         }
 
