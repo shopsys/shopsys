@@ -150,4 +150,13 @@ class BrandFacade
     {
         return $this->brandRepository->getByUuids($uuids);
     }
+
+    /**
+     * @param int[] $brandsIds
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    public function getBrandsByIds(array $brandsIds): array
+    {
+        return $this->brandRepository->getBrandsByIds($brandsIds);
+    }
 }

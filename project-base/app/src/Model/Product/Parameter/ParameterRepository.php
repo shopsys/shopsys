@@ -35,6 +35,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
  * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesByUuids(string[] $uuids)
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory, \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory)
+ * @method \App\Model\Product\Parameter\Parameter[] getVisibleParametersByIds(int[] $parameterIds, string $locale)
+ * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesByIds(int[] $parameterValueIds)
  */
 class ParameterRepository extends BaseParameterRepository
 {
@@ -399,44 +401,5 @@ class ParameterRepository extends BaseParameterRepository
         }
 
         return $productParameterValuesIndexedByProductIdAndParameterName;
-    }
-
-    /**
-     * @param int[] $parameterIds
-     * @param string $locale
-     * @return \App\Model\Product\Parameter\Parameter[]
-     */
-    public function getVisibleParametersByIds(array $parameterIds, string $locale): array
-    {
-        $parametersQueryBuilder = $this->getParameterRepository()->createQueryBuilder('p')
-            ->select('p, pt')
-            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
-            ->where('p.id IN (:parameterIds)')
-            ->setParameter('parameterIds', $parameterIds)
-            ->setParameter('locale', $locale)
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $locale), 'asc');
-
-        return $parametersQueryBuilder->getQuery()->getResult();
-    }
-
-    /**
-     * @param int[] $parameterValueIds
-     * @return \App\Model\Product\Parameter\ParameterValue[]
-     */
-    public function getParameterValuesByIds(array $parameterValueIds): array
-    {
-        $parameterValues = $this->getParameterValueRepository()->createQueryBuilder('pv')
-            ->where('pv.id IN (:parameterValueIds)')
-            ->setParameter('parameterValueIds', $parameterValueIds)
-            ->getQuery()->getResult();
-
-        $parameterValuesIndexedById = [];
-
-        /** @var \App\Model\Product\Parameter\ParameterValue $parameterValue */
-        foreach ($parameterValues as $parameterValue) {
-            $parameterValuesIndexedById[$parameterValue->getId()] = $parameterValue;
-        }
-
-        return $parameterValuesIndexedById;
     }
 }

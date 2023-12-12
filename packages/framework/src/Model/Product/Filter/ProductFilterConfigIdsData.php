@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Filter\Elasticsearch;
-
-use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange;
+namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 class ProductFilterConfigIdsData
 {
@@ -15,10 +13,10 @@ class ProductFilterConfigIdsData
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange $priceRange
      */
     public function __construct(
-        private array $parameterValueIdsByParameterId,
-        private array $flagIds,
-        private array $brandIds,
-        private PriceRange $priceRange,
+        protected readonly array $parameterValueIdsByParameterId,
+        protected readonly array $flagIds,
+        protected readonly array $brandIds,
+        protected readonly PriceRange $priceRange,
     ) {
     }
 

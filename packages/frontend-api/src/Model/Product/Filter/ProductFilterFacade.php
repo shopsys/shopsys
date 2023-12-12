@@ -71,17 +71,18 @@ class ProductFilterFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function getProductFilterConfigForCategory(Category $category): ProductFilterConfig
+    public function getProductFilterConfigForCategory(Category $category, string $searchText = ''): ProductFilterConfig
     {
-        $cacheKey = 'category_' . $category->getId();
+        $cacheKey = 'category_' . $category->getId() . '_search_' . $searchText;
 
         if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForCategory(
-                $this->domain->getId(),
                 $this->domain->getLocale(),
                 $category,
+                $searchText,
             );
         }
 

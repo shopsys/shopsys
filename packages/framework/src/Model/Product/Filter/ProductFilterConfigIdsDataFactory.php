@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Filter\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange;
 
 class ProductFilterConfigIdsDataFactory
 {
@@ -16,14 +15,14 @@ class ProductFilterConfigIdsDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly CurrencyFacade $currencyFacade,
-        private readonly Domain $domain,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
     /**
      * @param array $aggregationElasticsearchResult
-     * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigIdsData
      */
     public function createFromElasticsearchAggregationResult(
         array $aggregationElasticsearchResult,
@@ -40,7 +39,7 @@ class ProductFilterConfigIdsDataFactory
      * @param array $aggregationResult
      * @return int[]
      */
-    private function extractBrandIds(array $aggregationResult): array
+    protected function extractBrandIds(array $aggregationResult): array
     {
         $brandsData = $aggregationResult['brands']['buckets'];
 
@@ -57,7 +56,7 @@ class ProductFilterConfigIdsDataFactory
      * @param array $aggregationResult
      * @return int[]
      */
-    private function extractFlagIds(array $aggregationResult): array
+    protected function extractFlagIds(array $aggregationResult): array
     {
         $flagsData = $aggregationResult['flags']['buckets'];
 
@@ -74,7 +73,7 @@ class ProductFilterConfigIdsDataFactory
      * @param array $aggregationResult
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
-    private function extractPriceRange(array $aggregationResult): PriceRange
+    protected function extractPriceRange(array $aggregationResult): PriceRange
     {
         $pricesData = $aggregationResult['prices']['filter_pricing_group'];
 
@@ -91,7 +90,7 @@ class ProductFilterConfigIdsDataFactory
      * @param array $aggregationResult
      * @return array
      */
-    private function extractParameterValueIdsByParameterId(array $aggregationResult): array
+    protected function extractParameterValueIdsByParameterId(array $aggregationResult): array
     {
         if (!array_key_exists('parameters', $aggregationResult)) {
             return [];

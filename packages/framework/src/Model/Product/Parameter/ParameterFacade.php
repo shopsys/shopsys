@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParameterFacade
@@ -14,12 +17,14 @@ class ParameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly ParameterFactoryInterface $parameterFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly CategoryParameterRepository $categoryParameterRepository,
     ) {
     }
 
@@ -148,5 +153,50 @@ class ParameterFacade
     public function getParameterValuesByUuids(array $uuids): array
     {
         return $this->parameterRepository->getParameterValuesByUuids($uuids);
+    }
+
+    /**
+     * @param int[][] $parameterValueIdsIndexedByParameterId
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
+     */
+    public function getParameterFilterChoicesByIds(array $parameterValueIdsIndexedByParameterId, string $locale): array
+    {
+        $parameterValueIds = array_reduce($parameterValueIdsIndexedByParameterId, 'array_merge', []);
+        $allParameters = $this->parameterRepository->getVisibleParametersByIds(
+            array_keys($parameterValueIdsIndexedByParameterId),
+            $locale,
+        );
+        $allParameterValues = $this->parameterRepository->getParameterValuesByIds($parameterValueIds);
+
+        $parameterFilterChoices = [];
+
+        foreach ($allParameters as $parameter) {
+            $valueIdsForParameter = $parameterValueIdsIndexedByParameterId[$parameter->getId()];
+            $parameterValues = array_intersect_key($allParameterValues, array_flip($valueIdsForParameter));
+
+            uasort($parameterValues, static function (ParameterValue $first, ParameterValue $second) {
+                return strcmp($first->getText(), $second->getText());
+            });
+
+            $parameterFilterChoices[] = new ParameterFilterChoice(
+                $parameter,
+                $parameterValues,
+            );
+        }
+
+        return $parameterFilterChoices;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return int[]
+     */
+    public function getParametersIdsSortedByPositionFilteredByCategory(Category $category): array
+    {
+        return array_map(
+            static fn ($categoryParameter) => $categoryParameter->getParameter()->getId(),
+            $this->categoryParameterRepository->getCategoryParametersByCategorySortedByPosition($category),
+        );
     }
 }

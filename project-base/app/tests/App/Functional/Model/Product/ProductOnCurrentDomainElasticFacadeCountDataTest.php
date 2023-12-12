@@ -54,9 +54,9 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
             $expectedCountData = $dataProvider[2];
 
             $filterConfig = $this->productFilterConfigFactory->createForCategory(
-                $this->domain->getId(),
                 $this->domain->getLocale(),
                 $category,
+                '',
             );
             $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory(
                 $category->getId(),

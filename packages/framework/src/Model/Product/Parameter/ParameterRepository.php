@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -334,5 +335,44 @@ class ParameterRepository
         }
 
         return $parameterValuesByUuid;
+    }
+
+    /**
+     * @param int[] $parameterIds
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     */
+    public function getVisibleParametersByIds(array $parameterIds, string $locale): array
+    {
+        $parametersQueryBuilder = $this->getParameterRepository()->createQueryBuilder('p')
+            ->select('p, pt')
+            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
+            ->where('p.id IN (:parameterIds)')
+            ->setParameter('parameterIds', $parameterIds)
+            ->setParameter('locale', $locale)
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $locale), 'asc');
+
+        return $parametersQueryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param int[] $parameterValueIds
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getParameterValuesByIds(array $parameterValueIds): array
+    {
+        $parameterValues = $this->getParameterValueRepository()->createQueryBuilder('pv')
+            ->where('pv.id IN (:parameterValueIds)')
+            ->setParameter('parameterValueIds', $parameterValueIds)
+            ->getQuery()->getResult();
+
+        $parameterValuesIndexedById = [];
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue */
+        foreach ($parameterValues as $parameterValue) {
+            $parameterValuesIndexedById[$parameterValue->getId()] = $parameterValue;
+        }
+
+        return $parameterValuesIndexedById;
     }
 }

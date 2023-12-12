@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class PriceRangeRepository
@@ -101,12 +101,12 @@ class PriceRangeRepository
         $queryBuilder = clone $productsQueryBuilder;
 
         $this->queryBuilderExtender
-            ->addOrExtendJoin($queryBuilder, ProductCalculatedPrice::class, 'pcp', 'pcp.product = p')
-            ->andWhere('pcp.pricingGroup = :pricingGroup')
+            ->addOrExtendJoin($queryBuilder, ProductManualInputPrice::class, 'pmip', 'pmip.product = p')
+            ->andWhere('pmip.pricingGroup = :pricingGroup')
             ->setParameter('pricingGroup', $pricingGroup)
             ->resetDQLPart('groupBy')
             ->resetDQLPart('orderBy')
-            ->select('MIN(pcp.priceWithVat) AS minimalPrice, MAX(pcp.priceWithVat) AS maximalPrice');
+            ->select('MIN(pmip.priceWithVat) AS minimalPrice, MAX(pmip.priceWithVat) AS maximalPrice');
 
         $priceRangeData = $queryBuilder->getQuery()->execute();
         $priceRangeDataRow = reset($priceRangeData);

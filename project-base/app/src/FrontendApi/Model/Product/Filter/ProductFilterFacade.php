@@ -20,6 +20,7 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer;
  * @property \App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper
  * @property \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory $productFilterConfigFactory
  * @method \App\Model\Product\Filter\ProductFilterData getValidatedProductFilterData(\Overblog\GraphQLBundle\Definition\Argument $argument, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig getProductFilterConfigForCategory(\App\Model\Category\Category $category, string $searchText = "")
  */
 class ProductFilterFacade extends BaseProductFilterFacade
 {
@@ -148,27 +149,6 @@ class ProductFilterFacade extends BaseProductFilterFacade
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForSearch(
                 $this->domain->getId(),
                 $this->domain->getLocale(),
-                $searchText,
-            );
-        }
-
-        return $this->productFilterConfigCache[$cacheKey];
-    }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     * @param string $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
-     */
-    public function getProductFilterConfigForCategory(Category $category, string $searchText = ''): ProductFilterConfig
-    {
-        $cacheKey = 'category_' . $category->getId() . '_search_' . $searchText;
-
-        if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
-            $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForCategory(
-                $this->domain->getId(),
-                $this->domain->getLocale(),
-                $category,
                 $searchText,
             );
         }
