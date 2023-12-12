@@ -112,19 +112,29 @@ class ProductFilterOptionsFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $searchText
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
      */
     public function createProductFilterOptionsForAll(
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
+        string $searchText = '',
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
         }
 
-        $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForAll(
-            $productFilterData,
-        );
+        if ($searchText !== '') {
+            $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForSearch(
+                $searchText,
+                $productFilterConfig,
+                $productFilterData,
+            );
+        } else {
+            $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForAll(
+                $productFilterData,
+            );
+        }
 
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,

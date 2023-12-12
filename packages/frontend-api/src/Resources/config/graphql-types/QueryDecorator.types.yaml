@@ -32,6 +32,18 @@ QueryDecorator:
                     urlSlug:
                         type: "String"
                 description: "Returns product filtered using UUID or URL slug"
+            productsSearch:
+                type: "ProductConnection!"
+                argsBuilder:
+                    builder: "PaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'
+                resolve: "@=query('productsSearchQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                args:
+                    search:
+                        type: "String!"
+                description: "Returns list of searched products that can be paginated using `first`, `last`, `before` and `after` keywords"
             RegularProduct:
                 type: 'RegularProduct'
             MainVariant:

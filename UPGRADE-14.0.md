@@ -931,7 +931,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   you have to implement your custom pages by yourself to sitemap and graphql
     -   if you're using custom storefront, you have to implement hreflang tags yourself
     -   see #project-base-diff to update your project
--   add Persoo autocompletion
+-   add Persoo autocompletion ([#2983](https://github.com/shopsys/shopsys/pull/2983))
     -   `Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory` has been introduced so use it for creation of `ProductFilterData` instead of `new ProductFilterData()`
     -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade::__construct()` changed its interface:
     ```diff
@@ -978,6 +978,62 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly ProductFilterDataFactory $productFilterDataFactory,
         )
     ```
+    -   `Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection::__construct()` changed its interface:
+    ```diff
+         public function __construct(
+             array $edges,
+             ?PageInfoInterface $pageInfo,
+    -        int $totalCount,
+    -        callable $productFilterOptionsClosure,
+    +        protected readonly $productFilterOptionsClosure,
+    +        protected readonly ?string $orderingMode = null,
+    +        protected $totalCount = null,
+    +        protected string $defaultOrderingMode = ProductListOrderingConfig::ORDER_BY_PRIORITY,
+         )
+    ```
+    -   `Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory::createConnection()` changed its interface:
+    ```diff
+         protected function createConnection(
+             callable $retrieveProductClosure,
+             int $countOfProducts,
+             Argument $argument,
+    -        callable $getProductFilterConfigClosure,
+    +        \Closure $getProductFilterConfigClosure,
+    +        ?string $orderingMode = null,
+         )
+    ```
+    -   `Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory::createConnectionForAll()` changed its interface:
+    ```diff
+        public function createConnectionForAll(
+            callable $retrieveProductClosure,
+            int $countOfProducts,
+            Argument $argument,
+            ProductFilterData $productFilterData,
+    +       ?string $orderingMode = null,
+        )
+    ```
+    -   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory::createProductFilterOptionsForAll` changed its interface:
+    ```diff
+        public function createProductFilterOptionsForAll(
+            ProductFilterConfig $productFilterConfig,
+            ProductFilterData $productFilterData,
+    +       string $searchText = '',
+        )
+    ```
+
+    -   `Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery::__construct` changed its interface:
+
+    ```diff
+        public function __construct(
+            protected readonly ProductFacade $productFacade,
+            protected readonly ProductFilterFacade $productFilterFacade,
+            protected readonly ProductConnectionFactory $productConnectionFactory,
+            protected readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
+            protected readonly ProductListFacade $productListFacade,
+    +       protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
+        )
+    ```
+
     -   see #project-base-diff to update your project
 
 ### Storefront

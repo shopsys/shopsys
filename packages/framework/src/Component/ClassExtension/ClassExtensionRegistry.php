@@ -68,6 +68,22 @@ class ClassExtensionRegistry
             }
         }
 
+        $finder = Finder::create()
+            ->files()
+            ->ignoreUnreadableDirs()
+            ->in($this->frameworkRootDir . '/../frontend-api/src')
+            ->name('/.*\.php/');
+
+        /** @var \Symfony\Component\Finder\SplFileInfo $file */
+        foreach ($finder as $file) {
+            $frontendApiClassFqcn = $this->getFqcn($file->getPathname());
+            $projectClassFqcn = str_replace('Shopsys\FrontendApiBundle', 'App\FrontendApi', $frontendApiClassFqcn);
+
+            if (class_exists($projectClassFqcn)) {
+                $otherClassesMap[$frontendApiClassFqcn] = $projectClassFqcn;
+            }
+        }
+
         return $otherClassesMap;
     }
 

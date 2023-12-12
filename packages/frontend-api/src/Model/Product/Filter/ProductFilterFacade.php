@@ -156,4 +156,23 @@ class ProductFilterFacade
 
         return $this->getValidatedProductFilterData($argument, $productFilterConfig);
     }
+
+    /**
+     * @param string $searchText
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+     */
+    public function getProductFilterConfigForSearch(string $searchText): ProductFilterConfig
+    {
+        $cacheKey = 'search_' . $searchText;
+
+        if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
+            $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForSearch(
+                $this->domain->getId(),
+                $this->domain->getLocale(),
+                $searchText,
+            );
+        }
+
+        return $this->productFilterConfigCache[$cacheKey];
+    }
 }

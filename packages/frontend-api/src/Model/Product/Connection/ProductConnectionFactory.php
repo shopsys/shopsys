@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product\Connection;
 
+use Closure;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -28,14 +29,16 @@ class ProductConnectionFactory
      * @param callable $retrieveProductClosure
      * @param int $countOfProducts
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param callable $getProductFilterConfigClosure
+     * @param \Closure $getProductFilterConfigClosure
+     * @param string|null $orderingMode
      * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection
      */
     protected function createConnection(
         callable $retrieveProductClosure,
         int $countOfProducts,
         Argument $argument,
-        callable $getProductFilterConfigClosure,
+        Closure $getProductFilterConfigClosure,
+        ?string $orderingMode = null,
     ): ProductConnection {
         $paginator = new Paginator($retrieveProductClosure);
         $connection = $paginator->auto($argument, $countOfProducts);
@@ -43,8 +46,9 @@ class ProductConnectionFactory
         return new ProductConnection(
             $connection->getEdges(),
             $connection->getPageInfo(),
-            $connection->getTotalCount(),
             $getProductFilterConfigClosure,
+            $orderingMode,
+            $connection->getTotalCount(),
         );
     }
 
@@ -53,6 +57,7 @@ class ProductConnectionFactory
      * @param int $countOfProducts
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string|null $orderingMode
      * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection
      */
     public function createConnectionForAll(
@@ -60,11 +65,20 @@ class ProductConnectionFactory
         int $countOfProducts,
         Argument $argument,
         ProductFilterData $productFilterData,
+        ?string $orderingMode = null,
     ): ProductConnection {
-        $productFilterOptionsClosure = function () use ($productFilterData) {
+        $searchText = $argument['search'] ?? '';
+        $productFilterOptionsClosure = function () use ($productFilterData, $searchText) {
+            if ($searchText === '') {
+                $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForAll();
+            } else {
+                $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForSearch($searchText);
+            }
+
             return $this->productFilterOptionsFactory->createProductFilterOptionsForAll(
-                $this->productFilterFacade->getProductFilterConfigForAll(),
+                $productFilterConfig,
                 $productFilterData,
+                $searchText,
             );
         };
 
@@ -73,6 +87,7 @@ class ProductConnectionFactory
             $countOfProducts,
             $argument,
             $productFilterOptionsClosure,
+            $orderingMode,
         );
     }
 
