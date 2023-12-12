@@ -767,4 +767,79 @@ class FilterQuery
             ],
         ];
     }
+
+    /**
+     * Applies all filters for filter
+     * For flags, brands, stock, parameters, min and max price
+     * Parameters aggregation have nested structure in result [parameter_id][parameter_value_id]
+     *
+     * @param int $pricingGroupId
+     * @return array
+     */
+    public function getAggregationQueryForProductFilterConfig(int $pricingGroupId): array
+    {
+        $query = $this->getAbsoluteNumbersWithParametersQuery();
+
+        $query['body']['aggs']['prices'] = [
+            'nested' => [
+                'path' => 'prices',
+            ],
+            'aggs' => [
+                'filter_pricing_group' => [
+                    'filter' => [
+                        'term' => [
+                            'prices.pricing_group_id' => $pricingGroupId,
+                        ],
+                    ],
+                    'aggs' => [
+                        'min_price' => [
+                            'min' => [
+                                'field' => 'prices.price_with_vat',
+                            ],
+                        ],
+                        'max_price' => [
+                            'max' => [
+                                'field' => 'prices.price_with_vat',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+
+        ];
+
+        return $query;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAggregationQueryForProductCountInCategories(): array
+    {
+        $query = $this->getQuery();
+        $query['body']['aggs'] = [
+            'by_categories' => [
+                'terms' => ['field' => 'categories'],
+            ],
+        ];
+
+        return $query;
+    }
+
+    /**
+     * Applies all filters for filter
+     * For flags, brands, stock, min and max price
+     *
+     * @param int $pricingGroupId
+     * @return array
+     */
+    public function getAggregationQueryForProductFilterConfigWithoutParameters(int $pricingGroupId): array
+    {
+        $query = $this->getAggregationQueryForProductFilterConfig($pricingGroupId);
+
+        // Remove parameters from filter
+        unset($query['body']['aggs']['parameters']);
+
+        return $query;
+    }
 }
