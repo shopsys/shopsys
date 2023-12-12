@@ -513,9 +513,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository:
         alias: App\Model\Product\Filter\ParameterFilterChoiceRepository
 
-    Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository:
-        alias: App\Model\Product\Filter\ProductFilterRepository
-
     App\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig:
