@@ -516,9 +516,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository:
         alias: App\Model\Product\Filter\ProductFilterRepository
 
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository:
-        alias: App\Model\Product\ProductVisibilityRepository
-
     App\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig:

@@ -23,6 +23,11 @@ class Version20231213165330 extends AbstractMigration
             $this->sql('ALTER TABLE product_domains ADD sale_exclusion BOOLEAN NOT NULL DEFAULT FALSE');
             $this->sql('ALTER TABLE product_domains ALTER sale_exclusion DROP DEFAULT;');
         }
+
+        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20200618125834')) {
+            $this->sql('ALTER TABLE product_domains ADD domain_hidden BOOLEAN NOT NULL DEFAULT FALSE');
+            $this->sql('ALTER TABLE product_domains ALTER domain_hidden DROP DEFAULT');
+        }
     }
 
     /**

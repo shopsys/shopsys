@@ -41,6 +41,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\Unit\Unit $unit
  * @method \App\Model\Product\Unit\Unit getUnit()
  * @method \App\Model\Product\Flag\Flag[] getFlags(int $domainId)
+ * @method setDomains(\App\Model\Product\ProductData $productData)
  */
 class Product extends BaseProduct
 {
@@ -180,19 +181,6 @@ class Product extends BaseProduct
     protected function createTranslation()
     {
         return new ProductTranslation();
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    protected function setDomains(BaseProductData $productData): void
-    {
-        parent::setDomains($productData);
-
-        foreach ($this->domains as $productDomain) {
-            $domainId = $productDomain->getDomainId();
-            $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
-        }
     }
 
     /**
@@ -369,15 +357,6 @@ class Product extends BaseProduct
     public function getProductDomains()
     {
         return $this->domains;
-    }
-
-    /**
-     * @param int $domainId
-     * @return bool|null
-     */
-    public function isDomainHidden(int $domainId): ?bool
-    {
-        return $this->getProductDomain($domainId)->isDomainHidden();
     }
 
     /**

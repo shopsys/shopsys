@@ -32,11 +32,6 @@ class ProductData extends BaseProductData
     public $stockProductData;
 
     /**
-     * @var bool[]|null[]
-     */
-    public $domainHidden;
-
-    /**
      * @var int|null
      */
     public ?int $weight;
@@ -58,7 +53,6 @@ class ProductData extends BaseProductData
         $this->namePrefix = [];
         $this->nameSufix = [];
         $this->stockProductData = [];
-        $this->domainHidden = [];
         $this->weight = null;
         $this->relatedProducts = [];
         $this->productVideosData = [];

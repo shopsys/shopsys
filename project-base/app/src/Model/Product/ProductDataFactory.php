@@ -137,10 +137,6 @@ class ProductDataFactory extends BaseProductDataFactory
     {
         parent::fillNew($productData);
 
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $productData->domainHidden[$domainId] = false;
-        }
-
         foreach ($this->domain->getAllLocales() as $locale) {
             $productData->namePrefix[$locale] = null;
             $productData->nameSufix[$locale] = null;

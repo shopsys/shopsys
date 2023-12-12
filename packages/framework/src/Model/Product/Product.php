@@ -562,6 +562,15 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param int $domainId
+     * @return bool|null
+     */
+    public function isDomainHidden(int $domainId)
+    {
+        return $this->getProductDomain($domainId)->isDomainHidden();
+    }
+
+    /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getFlags(int $domainId)
@@ -756,6 +765,7 @@ class Product extends AbstractTranslatableEntity
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5ByDomainId[$domainId]);
             $productDomain->setFlags($productData->flagsByDomainId[$domainId] ?? []);
             $productDomain->setOrderingPriority((int)$productData->orderingPriorityByDomainId[$domainId]);
+            $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
         }
     }
 

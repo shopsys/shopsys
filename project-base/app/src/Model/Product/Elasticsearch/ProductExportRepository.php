@@ -36,11 +36,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
  * @method int[] extractCategories(int $domainId, \App\Model\Product\Product $product)
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
- * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityFacade
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
  * @property \App\Model\Category\CategoryFacade $categoryFacade
- * @method setCategoryFacade(\App\Model\Category\CategoryFacade $categoryFacade)
  * @method string getBrandUrlForDomainByProduct(\App\Model\Product\Product $product, int $domainId)
  * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade

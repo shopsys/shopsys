@@ -203,6 +203,11 @@ class ProductData
      */
     public $saleExclusion;
 
+    /**
+     * @var bool[]|null[]
+     */
+    public $domainHidden;
+
     public function __construct()
     {
         $this->name = [];
@@ -231,5 +236,6 @@ class ProductData
         $this->shortDescriptionUsp4ByDomainId = [];
         $this->shortDescriptionUsp5ByDomainId = [];
         $this->saleExclusion = [];
+        $this->domainHidden = [];
     }
 }
