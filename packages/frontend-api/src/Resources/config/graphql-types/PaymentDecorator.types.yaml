@@ -26,7 +26,7 @@ PaymentDecorator:
             images:
                 type: "[Image!]!"
                 description: "Payment images"
-                resolve: '@=query("imagesByEntityQuery", value, args["type"])'
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"

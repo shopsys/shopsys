@@ -2,35 +2,34 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Image;
+namespace Shopsys\FrontendApiBundle\Component\Image;
 
-use App\Component\Image\ImageFacade;
-use App\FrontendApi\Model\Image\ImageFacade as FrontendApiImageFacade;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Image;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 
 class FirstImageBatchLoader
 {
     /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \App\FrontendApi\Model\Image\ImageFacade $frontendApiImageFacade
-     * @param \App\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageApiFacade $imageApiFacade
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly PromiseAdapter $promiseAdapter,
-        private readonly FrontendApiImageFacade $frontendApiImageFacade,
-        private readonly ImageFacade $imageFacade,
-        private readonly Domain $domain,
+        protected readonly PromiseAdapter $promiseAdapter,
+        protected readonly ImageApiFacade $imageApiFacade,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
     /**
-     * @param \App\FrontendApi\Model\Image\ImageBatchLoadData[] $imagesBatchLoadData
+     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData[] $imagesBatchLoadData
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadByBatchData(array $imagesBatchLoadData): Promise
@@ -49,12 +48,12 @@ class FirstImageBatchLoader
     }
 
     /**
-     * @param \App\FrontendApi\Model\Image\ImageBatchLoadData[] $imagesBatchLoadData
+     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData[] $imagesBatchLoadData
      * @param string $entityName
      * @param string $type
      * @return array<string, array|null>
      */
-    private function getImagesByEntityNameAndTypeIndexedByDataId(
+    protected function getImagesByEntityNameAndTypeIndexedByDataId(
         array $imagesBatchLoadData,
         string $entityName,
         string $type,
@@ -63,7 +62,7 @@ class FirstImageBatchLoader
             $type = null;
         }
         $entityIds = array_map(fn (ImageBatchLoadData $imageBatchLoadData) => $imageBatchLoadData->getEntityId(), $imagesBatchLoadData);
-        $imagesIndexedByEntityId = $this->frontendApiImageFacade->getImagesByTypeAndPositionIndexedByEntityId($entityIds, $entityName, $type);
+        $imagesIndexedByEntityId = $this->imageApiFacade->getImagesByTypeAndPositionIndexedByEntityId($entityIds, $entityName, $type);
 
         $images = [];
 
@@ -80,10 +79,10 @@ class FirstImageBatchLoader
     }
 
     /**
-     * @param \App\FrontendApi\Model\Image\ImageBatchLoadData[] $imagesBatchLoadData
-     * @return \App\FrontendApi\Model\Image\ImageBatchLoadData[][][]
+     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData[] $imagesBatchLoadData
+     * @return \Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData[][][]
      */
-    private function getImageBatchLoadDataArrayIndexedByEntityAndType(array $imagesBatchLoadData): array
+    protected function getImageBatchLoadDataArrayIndexedByEntityAndType(array $imagesBatchLoadData): array
     {
         $result = [];
 
@@ -98,10 +97,10 @@ class FirstImageBatchLoader
 
     /**
      * @param array<string, array|null> $imagesIndexedByImageBatchLoadDataId
-     * @param \App\FrontendApi\Model\Image\ImageBatchLoadData[] $imagesBatchLoadData
+     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData[] $imagesBatchLoadData
      * @return array<int, array|null>
      */
-    private function sortImagesByOriginalInputData(
+    protected function sortImagesByOriginalInputData(
         array $imagesIndexedByImageBatchLoadDataId,
         array $imagesBatchLoadData,
     ): array {
@@ -121,10 +120,10 @@ class FirstImageBatchLoader
     }
 
     /**
-     * @param \App\Component\Image\Image $image
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
      * @return array
      */
-    private function getResolvedImage(Image $image): array
+    protected function getResolvedImage(Image $image): array
     {
         return [
             'url' => $this->imageFacade->getImageUrl(

@@ -28,7 +28,7 @@ BrandDecorator:
             images:
                 type: "[Image!]!"
                 description: "Brand images"
-                resolve: '@=query("imagesByEntityQuery", value, args["type"])'
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"

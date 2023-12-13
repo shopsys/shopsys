@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Image;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
 use GraphQL\Executor\Promise\Promise;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 
-final class StoreImagesQuery extends ImagesQuery
+class StoreImagesQuery extends ImagesQuery
 {
-    private const STORE_ENTITY_NAME = 'store';
+    protected const STORE_ENTITY_NAME = 'store';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\Store|array $data
@@ -20,6 +20,6 @@ final class StoreImagesQuery extends ImagesQuery
     {
         $storeId = $data instanceof Store ? $data->getId() : $data['id'];
 
-        return $this->resolveByEntityIdPromise($storeId, self::STORE_ENTITY_NAME, $type);
+        return $this->resolveByEntityIdPromise($storeId, static::STORE_ENTITY_NAME, $type);
     }
 }

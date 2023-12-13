@@ -93,4 +93,16 @@ class ImageLocator
 
         return implode('/', $pathParts);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
+     * @param string|null $friendlyUrlSlug
+     * @return string
+     */
+    public function getRelativeImageFilepathWithSlug(Image $image, ?string $friendlyUrlSlug): string
+    {
+        $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType());
+
+        return $path . '/' . $image->getSeoFilename($friendlyUrlSlug);
+    }
 }

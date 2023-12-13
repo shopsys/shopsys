@@ -7,6 +7,7 @@ namespace App\FrontendApi\Resolver\Image;
 use App\Model\SeoPage\SeoPage;
 use App\Model\SeoPage\SeoPageFacade;
 use GraphQL\Executor\Promise\Promise;
+use Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery;
 
 class SeoPageImagesQuery extends ImagesQuery
 {

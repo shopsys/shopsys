@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Image;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
-use App\FrontendApi\Model\Image\ImageBatchLoadData;
 use GraphQL\Executor\Promise\Promise;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
+use Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData;
 
 class AdvertImagesQuery extends ImagesQuery
 {
-    private const ENTITY_NAME = 'noticer';
+    protected const ENTITY_NAME = 'noticer';
 
     /**
      * @param \App\Model\Advert\Advert $advert
@@ -22,7 +22,7 @@ class AdvertImagesQuery extends ImagesQuery
         return $this->imagesBatchLoader->load(
             new ImageBatchLoadData(
                 $advert->getId(),
-                self::ENTITY_NAME,
+                static::ENTITY_NAME,
                 $type,
             ),
         );
@@ -35,6 +35,6 @@ class AdvertImagesQuery extends ImagesQuery
      */
     public function mainImageByAdvertPromiseQuery(Advert $advert, ?string $type): Promise
     {
-        return $this->mainImageByEntityIdPromiseQuery($advert->getId(), self::ENTITY_NAME, $type);
+        return $this->mainImageByEntityIdPromiseQuery($advert->getId(), static::ENTITY_NAME, $type);
     }
 }

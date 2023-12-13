@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Image;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
 use GraphQL\Executor\Promise\Promise;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 
-class BlogArticleImagesQuery extends ImagesQuery implements AliasedInterface
+class BlogArticleImagesQuery extends ImagesQuery
 {
-    public const ENTITY_NAME = 'blogArticle';
+    protected const ENTITY_NAME = 'blogArticle';
 
     /**
      * @param array $data
@@ -18,7 +17,7 @@ class BlogArticleImagesQuery extends ImagesQuery implements AliasedInterface
      */
     public function imagesByBlogArticlePromiseQuery(array $data, ?string $type): Promise
     {
-        return $this->resolveByEntityIdPromise($data['id'], self::ENTITY_NAME, $type);
+        return $this->resolveByEntityIdPromise($data['id'], static::ENTITY_NAME, $type);
     }
 
     /**
@@ -28,6 +27,6 @@ class BlogArticleImagesQuery extends ImagesQuery implements AliasedInterface
      */
     public function mainImageByBlogArticlePromiseQuery(array $data, ?string $type): Promise
     {
-        return $this->mainImageByEntityIdPromiseQuery($data['id'], self::ENTITY_NAME, $type);
+        return $this->mainImageByEntityIdPromiseQuery($data['id'], static::ENTITY_NAME, $type);
     }
 }

@@ -3,9 +3,12 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader: '@images_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $firstImageBatchLoader: '@first_image_batch_loader'
 
     Shopsys\FrontendApiBundle\:
-        resource: '../../**/*{Facade,Factory,Mapper,Mutation,Query,Repository,Subscriber,Validator,Provider}.php'
+        resource: '../../**/*{Facade,Factory,Mapper,Mutation,Query,Repository,Subscriber,Validator,Provider,Loader}.php'
 
     resolverMaps:
         namespace: Shopsys\FrontendApiBundle\

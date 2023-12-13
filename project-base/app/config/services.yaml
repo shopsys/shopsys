@@ -609,12 +609,6 @@ services:
         tags:
             - { name: shopsys.friendly_url_provider }
 
-    App\Component\Image\ImageLocator:
-        arguments: ['%shopsys.image_dir%']
-
-    Shopsys\FrameworkBundle\Component\Image\ImageLocator:
-        alias: App\Component\Image\ImageLocator
-
     Shopsys\FrameworkBundle\Component\Image\ImageFacade:
         alias: App\Component\Image\ImageFacade
 

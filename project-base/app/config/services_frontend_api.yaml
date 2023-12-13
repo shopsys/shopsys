@@ -138,9 +138,6 @@ services:
         alias: App\FrontendApi\Resolver\Category\CategoriesQuery
         public: true
 
-    Shopsys\FrontendApiBundle\Component\Image\ImageFacade:
-        alias: App\FrontendApi\Model\Image\ImageFacade
-
     Shopsys\FrontendApiBundle\Model\Category\CategoryFacade:
         alias: App\FrontendApi\Model\Category\CategoryFacade
 

@@ -6,8 +6,8 @@ namespace Tests\App\Functional\Component\Image;
 
 use App\Component\FileUpload\FileUpload;
 use App\Component\Image\Image;
-use App\Component\Image\ImageLocator;
 use League\Flysystem\MountManager;
+use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 

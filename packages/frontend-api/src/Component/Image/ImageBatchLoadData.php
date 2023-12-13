@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Image;
+namespace Shopsys\FrontendApiBundle\Component\Image;
 
 use Ramsey\Uuid\Uuid;
 
@@ -11,7 +11,7 @@ class ImageBatchLoadData
     /**
      * @var string
      */
-    private string $id;
+    protected string $id;
 
     /**
      * @param int $entityId
@@ -19,9 +19,9 @@ class ImageBatchLoadData
      * @param string|null $type
      */
     public function __construct(
-        private int $entityId,
-        private string $entityName,
-        private ?string $type,
+        protected readonly int $entityId,
+        protected readonly string $entityName,
+        protected readonly ?string $type,
     ) {
         $this->id = Uuid::uuid4()->toString();
     }

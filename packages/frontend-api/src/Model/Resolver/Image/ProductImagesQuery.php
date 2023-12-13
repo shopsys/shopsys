@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Image;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
-use App\FrontendApi\Model\Image\ImageBatchLoadData;
 use GraphQL\Executor\Promise\Promise;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData;
 
 class ProductImagesQuery extends ImagesQuery
 {
-    private const PRODUCT_ENTITY_NAME = 'product';
+    protected const PRODUCT_ENTITY_NAME = 'product';
 
     /**
      * @param \App\Model\Product\Product|array $data
@@ -21,7 +21,7 @@ class ProductImagesQuery extends ImagesQuery
     {
         $productId = $data instanceof Product ? $data->getId() : $data['id'];
 
-        return $this->resolveByEntityIdPromise($productId, self::PRODUCT_ENTITY_NAME, $type);
+        return $this->resolveByEntityIdPromise($productId, static::PRODUCT_ENTITY_NAME, $type);
     }
 
     /**
@@ -36,7 +36,7 @@ class ProductImagesQuery extends ImagesQuery
         return $this->firstImageBatchLoader->load(
             new ImageBatchLoadData(
                 $productId,
-                self::PRODUCT_ENTITY_NAME,
+                static::PRODUCT_ENTITY_NAME,
                 $type,
             ),
         );
