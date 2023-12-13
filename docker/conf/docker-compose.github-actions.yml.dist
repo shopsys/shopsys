@@ -48,6 +48,8 @@ services:
     php-fpm:
         image: php-fpm-image
         container_name: shopsys-framework-php-fpm
+        environment:
+            - MESSENGER_TRANSPORT_DSN=in-memory://
         volumes:
             - web-data:/var/www/html/project-base/app/web
         ports:
