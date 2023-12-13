@@ -19,6 +19,7 @@ class ProductRecalculationFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationRepository $productRecalculationRepository
      */
     public function __construct(
         protected readonly IndexFacade $indexFacade,
@@ -26,6 +27,7 @@ class ProductRecalculationFacade
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
         protected readonly Domain $domain,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
+        protected readonly ProductRecalculationRepository $productRecalculationRepository,
     ) {
     }
 
@@ -34,13 +36,15 @@ class ProductRecalculationFacade
      */
     public function recalculate(array $productIds): void
     {
-        $this->productVisibilityFacade->calculateProductVisibilityForIds($productIds);
+        $idsToRecalculate = $this->productRecalculationRepository->getIdsToRecalculate($productIds);
+
+        $this->productVisibilityFacade->calculateProductVisibilityForIds($idsToRecalculate);
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $this->indexFacade->exportIds(
                 $this->indexRegistry->getIndexByIndexName(ProductIndex::getName()),
                 $this->indexDefinitionLoader->getIndexDefinition(ProductIndex::getName(), $domainId),
-                $productIds,
+                $idsToRecalculate,
             );
         }
     }

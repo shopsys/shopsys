@@ -161,9 +161,7 @@ class ProductFacade
 
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
-        // @todo after variants are handled, this may be simplified
-        $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
-        $this->productRecalculationDispatcher->dispatchSingleProductId($productToExport->getId());
+        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
 
         return $product;
     }

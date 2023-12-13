@@ -189,16 +189,7 @@ class ProductFacade extends BaseProductFacade
 
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
-        // @todo after handling variants this may be simplified or edit may be moved to framework
         $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
-
-        if ($product->isMainVariant()) {
-            foreach ($product->getVariants() as $variant) {
-                $this->productRecalculationDispatcher->dispatchSingleProductId($variant->getId());
-            }
-        } elseif ($product->isVariant()) {
-            $this->productRecalculationDispatcher->dispatchSingleProductId($product->getMainVariant()->getId());
-        }
 
         $this->editProductStockRelation($productData, $product);
 
