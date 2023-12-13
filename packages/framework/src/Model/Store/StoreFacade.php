@@ -21,12 +21,12 @@ class StoreFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
-        private readonly StoreRepository $storeRepository,
-        private readonly StoreFactory $storeFactory,
-        private readonly FriendlyUrlFacade $friendlyUrlFacade,
-        private readonly ImageFacade $imageFacade,
-        private readonly EntityManagerInterface $em,
-        private readonly ProductRepository $productRepository,
+        protected readonly StoreRepository $storeRepository,
+        protected readonly StoreFactory $storeFactory,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductRepository $productRepository,
     ) {
     }
 

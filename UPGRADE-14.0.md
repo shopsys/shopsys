@@ -541,6 +541,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +   public function getProductParameterValues(Product $product, ?string $locale = null)
     ```
     -   see #project-base-diff to update your project
+-   check the visibility of properties ([#2944](https://github.com/shopsys/shopsys/pull/2944))
+    -   `Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer::$cdnFacade` is now protected
+    -   `Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapCronModule::$imageSitemapFacade` is now protected
 
 ### Storefront
 

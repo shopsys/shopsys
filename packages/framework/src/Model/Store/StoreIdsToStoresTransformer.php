@@ -11,7 +11,7 @@ class StoreIdsToStoresTransformer implements DataTransformerInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreRepository $storeRepository
      */
-    public function __construct(private readonly StoreRepository $storeRepository)
+    public function __construct(protected readonly StoreRepository $storeRepository)
     {
     }
 
