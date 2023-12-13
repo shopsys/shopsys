@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Symfony\Component\Filesystem\Filesystem;
 
 class FeedExportFactory
@@ -19,14 +20,16 @@ class FeedExportFactory
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager
+     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
      */
     public function __construct(
-        protected readonly FeedRendererFactory $feedRendererFactory,
-        protected readonly FilesystemOperator $filesystem,
+        protected readonly FeedRendererFactory    $feedRendererFactory,
+        protected readonly FilesystemOperator     $filesystem,
         protected readonly EntityManagerInterface $em,
-        protected readonly FeedPathProvider $feedPathProvider,
-        protected readonly Filesystem $localFilesystem,
-        protected readonly MountManager $mountManager,
+        protected readonly FeedPathProvider       $feedPathProvider,
+        protected readonly Filesystem             $localFilesystem,
+        protected readonly MountManager           $mountManager,
+        protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
     ) {
     }
 
@@ -53,6 +56,7 @@ class FeedExportFactory
             $this->em,
             $feedFilepath,
             $feedLocalFilepath,
+            $this->productUrlsBatchLoader,
             $lastSeekId,
         );
     }

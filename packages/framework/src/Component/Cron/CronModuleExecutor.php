@@ -80,6 +80,13 @@ class CronModuleExecutor
             DateInterval::createFromDateString($cronConfig->getTimeoutIteratedCronSec() . ' seconds'),
         );
 
+        $memoryLimit = (int)str_replace(array('G', 'M', 'K'), array('000000000', '000000', '000'), ini_get('memory_limit'));
+        $memoryUsage = memory_get_usage(true);
+
+        if ($memoryUsage >= $memoryLimit * 0.9) {
+            return false;
+        }
+
         return $canRunUntil > new DateTimeImmutable('now');
     }
 }

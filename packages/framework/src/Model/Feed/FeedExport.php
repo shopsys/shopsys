@@ -9,6 +9,7 @@ use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Symfony\Component\Filesystem\Filesystem;
 
 class FeedExport
@@ -28,6 +29,7 @@ class FeedExport
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param string $feedFilepath
      * @param string $feedLocalFilepath
+     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
      * @param int|null $lastSeekId
      */
     public function __construct(
@@ -40,6 +42,7 @@ class FeedExport
         protected readonly EntityManagerInterface $em,
         protected readonly string $feedFilepath,
         protected readonly string $feedLocalFilepath,
+        protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected ?int $lastSeekId = null,
     ) {
     }
@@ -91,6 +94,8 @@ class FeedExport
         }
 
         $this->em->clear();
+        gc_collect_cycles();
+        $this->productUrlsBatchLoader->reset();
     }
 
     /**
