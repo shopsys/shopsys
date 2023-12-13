@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductCannotBeTransformedException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyMainVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
@@ -567,6 +568,15 @@ class Product extends AbstractTranslatableEntity
     public function isDomainHidden(int $domainId)
     {
         return $this->getProductDomain($domainId)->isDomainHidden();
+    }
+
+    public function setAsMainVariant(): void
+    {
+        if ($this->isMainVariant() || $this->isVariant()) {
+            throw new ProductCannotBeTransformedException($this);
+        }
+
+        $this->variantType = static::VARIANT_TYPE_MAIN;
     }
 
     /**

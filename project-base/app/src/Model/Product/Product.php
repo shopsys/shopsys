@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Product\Exception\DeprecatedAvailabilityPropertyFromProductException;
-use App\Model\Product\Exception\ProductCannotBeTransformedException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
@@ -434,15 +433,6 @@ class Product extends BaseProduct
         foreach ($this->getVariants() as $variant) {
             $variant->copyProductCategoryDomains($productCategoryDomains);
         }
-    }
-
-    public function setAsMainVariant(): void
-    {
-        if ($this->isMainVariant() || $this->isVariant()) {
-            throw new ProductCannotBeTransformedException($this);
-        }
-
-        $this->variantType = self::VARIANT_TYPE_MAIN;
     }
 
     /**

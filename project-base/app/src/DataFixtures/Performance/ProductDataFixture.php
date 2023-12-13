@@ -47,7 +47,7 @@ class ProductDataFixture
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \App\Model\Product\ProductVariantFacade $productVariantFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \Faker\Generator $faker

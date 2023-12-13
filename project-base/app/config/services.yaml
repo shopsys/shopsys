@@ -495,9 +495,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductFactory:
         alias: App\Model\Product\ProductFactory
 
-    Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade:
-        alias: App\Model\Product\ProductVariantFacade
-
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository:
         alias: App\Model\Product\Elasticsearch\ProductExportRepository
 
