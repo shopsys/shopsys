@@ -6,10 +6,12 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use DateInterval;
 use DateTimeImmutable;
+use Shopsys\FrameworkBundle\Component\Bytes\BytesHelper;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
+use Symfony\Bridge\Monolog\Logger;
 
 class CronModuleExecutor
 {
@@ -21,9 +23,11 @@ class CronModuleExecutor
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
+     * @param \Symfony\Bridge\Monolog\Logger $logger
      */
     public function __construct(
         protected readonly CronConfig $cronConfig,
+        protected readonly Logger $logger,
     ) {
         $this->startedAt = new DateTimeImmutable('now');
     }
@@ -79,6 +83,14 @@ class CronModuleExecutor
         $canRunUntil = $this->startedAt->add(
             DateInterval::createFromDateString($cronConfig->getTimeoutIteratedCronSec() . ' seconds'),
         );
+
+        $memoryUsage = memory_get_usage(true);
+
+        if ($memoryUsage >= BytesHelper::getPhpMemoryLimitInBytes() * 0.9) {
+            $this->logger->info('Cron was running out of memory, so it was put to sleep to prevent failure.');
+
+            return false;
+        }
 
         return $canRunUntil > new DateTimeImmutable('now');
     }

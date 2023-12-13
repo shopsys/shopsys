@@ -598,6 +598,13 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly ServicesResetter $servicesResetter,
         )
     ```
+    -   `Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly CronConfig $cronConfig,
+    +       protected readonly Logger $logger,
+        )
+    ```
     -   see #project-base-diff to update your project
 
 ### Storefront

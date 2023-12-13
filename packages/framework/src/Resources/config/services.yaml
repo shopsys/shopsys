@@ -154,7 +154,9 @@ services:
 
     Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig: ~
 
-    Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor: ~
+    Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor:
+        arguments:
+            $logger: '@monolog.logger.cron'
 
     Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting:
         arguments:
