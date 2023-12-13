@@ -24,7 +24,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
@@ -64,7 +63,6 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \App\Model\Product\ProductFactory $productFactory
@@ -88,7 +86,6 @@ class ProductFacade extends BaseProductFacade
         PricingGroupRepository $pricingGroupRepository,
         ProductManualInputPriceFacade $productManualInputPriceFacade,
         FriendlyUrlFacade $friendlyUrlFacade,
-        ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         ProductAccessoryRepository $productAccessoryRepository,
         PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         ProductFactoryInterface $productFactory,
@@ -112,7 +109,6 @@ class ProductFacade extends BaseProductFacade
             $pricingGroupRepository,
             $productManualInputPriceFacade,
             $friendlyUrlFacade,
-            $productSellingDeniedRecalculator,
             $productAccessoryRepository,
             $pluginCrudExtensionFacade,
             $productFactory,
@@ -125,22 +121,6 @@ class ProductFacade extends BaseProductFacade
             $productStockFacade,
             $stockFacade,
         );
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @return \App\Model\Product\Product
-     */
-    public function create(ProductData $productData)
-    {
-        /** @var \App\Model\Product\Product $product */
-        $product = parent::create($productData);
-
-        $this->editProductStockRelation($productData, $product);
-
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
-
-        return $product;
     }
 
     /**
@@ -163,34 +143,8 @@ class ProductFacade extends BaseProductFacade
      */
     public function edit($productId, ProductData $productData)
     {
-        $product = $this->productRepository->getById($productId);
-
-        $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple($product, $productData->categoriesByDomainId);
-        $product->edit($productCategoryDomains, $productData);
-
-        $this->saveParameters($product, $productData->parameters);
-
-        if (!$product->isMainVariant()) {
-            $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
-        }
-
-        if ($product->isMainVariant()) {
-            $product->refreshVariants($productData->variants);
-        }
-
-        $this->refreshProductAccessories($product, $productData->accessories);
-        $this->em->flush();
-        $this->imageFacade->manageImages($product, $productData->images);
-        $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullnames());
-
-        $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
-
-        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
-
-        $this->editProductStockRelation($productData, $product);
-
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
+        /** @var \App\Model\Product\Product $product */
+        $product = parent::edit($productId, $productData);
 
         $this->productVideoFacade->saveProductVideosToProduct($product, $productData->productVideosData);
 
@@ -199,33 +153,10 @@ class ProductFacade extends BaseProductFacade
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param \App\Model\Product\ProductData $productData
-     */
-    public function setAdditionalDataAfterCreate(BaseProduct $product, ProductData $productData)
-    {
-        // Persist of ProductCategoryDomain requires known primary key of Product
-        // @see https://github.com/doctrine/doctrine2/issues/4869
-        $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple($product, $productData->categoriesByDomainId);
-        $product->setProductCategoryDomains($productCategoryDomains);
-        $this->em->flush();
-
-        $this->saveParameters($product, $productData->parameters);
-        $this->createProductVisibilities($product);
-        $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
-        $this->refreshProductAccessories($product, $productData->accessories);
-        $this->imageFacade->manageImages($product, $productData->images);
-
-        $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
      */
     protected function saveParameters(BaseProduct $product, array $productParameterValuesData)
     {
-
         // Doctrine runs INSERTs before DELETEs in UnitOfWork. In case of UNIQUE constraint
         // in database, this leads in trying to insert duplicate entry.
         // That's why it's necessary to do remove and flush first.

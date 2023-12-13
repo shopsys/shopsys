@@ -65,6 +65,8 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
 
         $product = $this->productFacade->create($productData);
 
+        $this->handleDispatchedRecalculationMessages();
+
         $this->em->clear();
 
         $productFromDb = $this->productFacade->getById($product->getId());

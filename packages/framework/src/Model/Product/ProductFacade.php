@@ -37,7 +37,6 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
@@ -60,7 +59,6 @@ class ProductFacade
         protected readonly PricingGroupRepository $pricingGroupRepository,
         protected readonly ProductManualInputPriceFacade $productManualInputPriceFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
-        protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         protected readonly ProductAccessoryRepository $productAccessoryRepository,
         protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         protected readonly ProductFactoryInterface $productFactory,
@@ -124,7 +122,6 @@ class ProductFacade
         $this->createProductVisibilities($product);
         $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
         $this->refreshProductAccessories($product, $productData->accessories);
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
         $this->imageFacade->manageImages($product, $productData->images);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
@@ -158,7 +155,6 @@ class ProductFacade
 
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->em->flush();
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
         $this->imageFacade->manageImages($product, $productData->images);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);

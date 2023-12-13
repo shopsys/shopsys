@@ -7,17 +7,11 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
-use App\Model\Product\ProductSellingDeniedRecalculator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 use function sleep;
 
 class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
 {
-    /**
-     * @inject
-     */
-    private ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
-
     /**
      * @inject
      */
@@ -36,7 +30,6 @@ class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
         $productData = $this->productDataFactory->createFromProduct($product);
         $productData->saleExclusion[$this->domain->getId()] = true;
         $this->productFacade->edit($product->getId(), $productData);
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
         $this->handleDispatchedRecalculationMessages();
 
