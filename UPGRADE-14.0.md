@@ -569,6 +569,36 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
             )
         ```
     -   see #project-base-diff to update your project
+-   improve memory usage of feed exports and crons ([#2945](https://github.com/shopsys/shopsys/pull/2945))
+    -   `Shopsys\FrameworkBundle\Model\Feed\FeedExport::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly FeedInterface $feed,
+            protected readonly DomainConfig $domainConfig,
+            protected readonly FeedRenderer $feedRenderer,
+            protected readonly FilesystemOperator $filesystem,
+            protected readonly Filesystem $localFilesystem,
+            protected readonly MountManager $mountManager,
+            protected readonly EntityManagerInterface $em,
+            protected readonly string $feedFilepath,
+            protected readonly string $feedLocalFilepath,
+    +       protected readonly ServicesResetter $servicesResetter,
+            protected ?int $lastSeekId = null,
+        )
+    ```
+    -   `Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly FeedRendererFactory $feedRendererFactory,
+            protected readonly FilesystemOperator $filesystem,
+            protected readonly EntityManagerInterface $em,
+            protected readonly FeedPathProvider $feedPathProvider,
+            protected readonly Filesystem $localFilesystem,
+            protected readonly MountManager $mountManager,
+    +       protected readonly ServicesResetter $servicesResetter,
+        )
+    ```
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

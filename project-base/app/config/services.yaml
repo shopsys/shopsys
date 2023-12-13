@@ -688,7 +688,9 @@ services:
     App\Model\Customer\Mail\CustomerActivationMail: ~
 
     Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory:
-        alias: App\Model\Feed\FeedExportFactory
+        class: App\Model\Feed\FeedExportFactory
+        arguments:
+            $servicesResetter: '@services_resetter'
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade:
         alias: App\Model\Customer\User\CustomerUserPasswordFacade

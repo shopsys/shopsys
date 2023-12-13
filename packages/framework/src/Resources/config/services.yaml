@@ -1043,3 +1043,7 @@ services:
     Shopsys\FrameworkBundle\Model\Order\Messenger\HeurekaPlacedOrderMessageHandler:
         arguments:
             $logger: '@monolog.logger.queue'
+
+    Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory:
+        arguments:
+            $servicesResetter: '@services_resetter'
