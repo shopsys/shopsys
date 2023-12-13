@@ -52,13 +52,20 @@ class FeedCronModule implements IteratedCronModuleInterface
         }
 
         if ($this->getFeedExportCreationDataQueue()->isEmpty()) {
-            $this->logger->debug('Queue is empty, no feeds to process.');
+            $this->logger->info('Queue is empty, no feeds to process.');
 
             return false;
         }
 
         if ($this->currentFeedExport === null) {
             $this->currentFeedExport = $this->createCurrentFeedExport();
+
+            $this->logger->info(sprintf(
+                'Started generation of feed "%s" generated on domain "%s" into "%s".',
+                $this->currentFeedExport->getFeedInfo()->getName(),
+                $this->currentFeedExport->getDomainConfig()->getName(),
+                $this->feedFacade->getFeedFilepath($this->currentFeedExport->getFeedInfo(), $this->currentFeedExport->getDomainConfig()),
+            ));
         }
 
         $this->currentFeedExport->generateBatch();
@@ -73,7 +80,7 @@ class FeedCronModule implements IteratedCronModuleInterface
             );
             $this->feedFacade->markFeedModuleAsUnscheduled($currentFeedModule);
 
-            $this->logger->debug(sprintf(
+            $this->logger->info(sprintf(
                 'Feed "%s" generated on domain "%s" into "%s".',
                 $feedInfo->getName(),
                 $domainConfig->getName(),
@@ -86,6 +93,13 @@ class FeedCronModule implements IteratedCronModuleInterface
 
             if ($existsNext === true) {
                 $this->currentFeedExport = $this->createCurrentFeedExport();
+
+                $this->logger->info(sprintf(
+                    'Started generation of feed "%s" generated on domain "%s" into "%s".',
+                    $this->currentFeedExport->getFeedInfo()->getName(),
+                    $this->currentFeedExport->getDomainConfig()->getName(),
+                    $this->feedFacade->getFeedFilepath($this->currentFeedExport->getFeedInfo(), $this->currentFeedExport->getDomainConfig()),
+                ));
             }
 
             return $existsNext;
@@ -112,7 +126,7 @@ class FeedCronModule implements IteratedCronModuleInterface
         $this->setting->set(Setting::FEED_DOMAIN_ID_TO_CONTINUE, $currentDomain->getId());
         $this->setting->set(Setting::FEED_ITEM_ID_TO_CONTINUE, $lastSeekId);
 
-        $this->logger->debug(sprintf(
+        $this->logger->info(sprintf(
             'Going to sleep... Will continue with feed "%s" on "%s", processing from ID %d.',
             $currentFeedName,
             $currentDomain->getName(),
@@ -132,18 +146,29 @@ class FeedCronModule implements IteratedCronModuleInterface
             $queue = $this->getFeedExportCreationDataQueue();
 
             while (
-                $feedNameToContinue !== $queue->getCurrentFeedName()
-                || $domainIdToContinue !== $queue->getCurrentDomain()->getId()
+                $queue->isEmpty() === false && (
+                    $feedNameToContinue !== $queue->getCurrentFeedName() ||
+                    $domainIdToContinue !== $queue->getCurrentDomain()->getId()
+                )
             ) {
                 $queue->next();
             }
+
+            if ($queue->isEmpty()) {
+                $this->setting->set(Setting::FEED_NAME_TO_CONTINUE, null);
+                $this->setting->set(Setting::FEED_DOMAIN_ID_TO_CONTINUE, null);
+
+
+                return;
+            }
         }
+
 
         $lastSeekId = $this->setting->get(Setting::FEED_ITEM_ID_TO_CONTINUE);
         $this->currentFeedExport = $this->createCurrentFeedExport($lastSeekId);
         $this->currentFeedExport->wakeUp();
 
-        $this->logger->debug(sprintf(
+        $this->logger->info(sprintf(
             'Waking up... Continuing with feed "%s" on "%s", processing from ID %d.',
             $this->getFeedExportCreationDataQueue()->getCurrentFeedName(),
             $this->getFeedExportCreationDataQueue()->getCurrentDomain()->getName(),
