@@ -34,6 +34,8 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @property \App\Model\Product\Unit\UnitFacade $unitFacade
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+ * @method fillProductStockByProduct(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
+ * @method fillProductStockByStocks(\App\Model\Product\ProductData $productData)
  */
 class ProductDataFactory extends BaseProductDataFactory
 {
@@ -50,9 +52,9 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $stockProductFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $stockProductDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
      * @param \App\Model\ProductVideo\ProductVideoRepository $productVideoRepository
@@ -70,9 +72,9 @@ class ProductDataFactory extends BaseProductDataFactory
         PricingGroupFacade $pricingGroupFacade,
         AvailabilityFacade $availabilityFacade,
         ImageUploadDataFactory $imageUploadDataFactory,
-        private readonly ProductStockFacade $stockProductFacade,
-        private readonly StockFacade $stockFacade,
-        private readonly ProductStockDataFactory $stockProductDataFactory,
+        ProductStockFacade $productStockFacade,
+        StockFacade $stockFacade,
+        ProductStockDataFactory $productStockDataFactory,
         private readonly Setting $setting,
         private readonly ProductVideoDataFactory $productVideoDataFactory,
         private readonly ProductVideoRepository $productVideoRepository,
@@ -90,6 +92,9 @@ class ProductDataFactory extends BaseProductDataFactory
             $pricingGroupFacade,
             $availabilityFacade,
             $imageUploadDataFactory,
+            $productStockFacade,
+            $stockFacade,
+            $productStockDataFactory,
         );
     }
 
@@ -111,7 +116,7 @@ class ProductDataFactory extends BaseProductDataFactory
     {
         $productData = $this->createInstance();
         $this->fillNew($productData);
-        $this->fillStockProductByStocks($productData);
+        $this->fillProductStockByStocks($productData);
 
         return $productData;
     }
@@ -124,7 +129,7 @@ class ProductDataFactory extends BaseProductDataFactory
     {
         $productData = $this->createInstance();
         $this->fillFromProduct($productData, $product);
-        $this->fillStockProductByProduct($productData, $product);
+        $this->fillProductStockByProduct($productData, $product);
         $this->fillProductVideosByProductId($productData, $product);
 
         return $productData;
@@ -221,29 +226,6 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
         $productData->weight = $product->getWeight();
         $productData->relatedProducts = $product->getRelatedProducts();
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    private function fillStockProductByStocks(ProductData $productData): void
-    {
-        foreach ($this->stockFacade->getAllStocks() as $stock) {
-            $productData->stockProductData[$stock->getId()] = $this->stockProductDataFactory->createFromStock($stock);
-        }
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product $product
-     */
-    private function fillStockProductByProduct(ProductData $productData, Product $product): void
-    {
-        $this->fillStockProductByStocks($productData);
-
-        foreach ($this->stockProductFacade->getProductStocksByProduct($product) as $stockProduct) {
-            $productData->stockProductData[$stockProduct->getStock()->getId()] = $this->stockProductDataFactory->createFromProductStock($stockProduct);
-        }
     }
 
     /**

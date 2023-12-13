@@ -336,6 +336,20 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
+     * @return string[]
+     */
+    public function getFullnames()
+    {
+        $fullNamesByLocale = [];
+
+        foreach ($this->translations as $translation) {
+            $fullNamesByLocale[$translation->getLocale()] = $this->getName($translation->getLocale());
+        }
+
+        return $fullNamesByLocale;
+    }
+
+    /**
      * @param string|null $locale
      * @return string|null
      */

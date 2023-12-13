@@ -27,11 +27,6 @@ class ProductData extends BaseProductData
     public $nameSufix;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Stock\ProductStockData[]
-     */
-    public $stockProductData;
-
-    /**
      * @var int|null
      */
     public ?int $weight;
@@ -52,7 +47,6 @@ class ProductData extends BaseProductData
 
         $this->namePrefix = [];
         $this->nameSufix = [];
-        $this->stockProductData = [];
         $this->weight = null;
         $this->relatedProducts = [];
         $this->productVideosData = [];

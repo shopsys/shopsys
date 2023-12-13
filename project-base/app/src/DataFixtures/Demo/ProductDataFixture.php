@@ -6432,7 +6432,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($stocks as $stock) {
             $productStockData = $this->productStockDataFactory->createFromStock($stock);
             $productStockData->productQuantity = $quantity;
-            $productData->stockProductData[$stock->getId()] = $productStockData;
+            $productData->productStockData[$stock->getId()] = $productStockData;
         }
     }
 

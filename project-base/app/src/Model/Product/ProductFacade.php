@@ -28,7 +28,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
-use Shopsys\FrameworkBundle\Model\Stock\ProductStockData;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
@@ -48,7 +47,10 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method \App\Model\Product\Product getByUuid(string $uuid)
  * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
  * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
+ * @method \App\Model\Product\Product create(\App\Model\Product\ProductData $productData)
  * @property \App\Model\Product\ProductFactory $productFactory
+ * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
+ * @method editProductStockRelation(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
  */
 class ProductFacade extends BaseProductFacade
 {
@@ -96,8 +98,8 @@ class ProductFacade extends BaseProductFacade
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
         ProductRecalculationDispatcher $productRecalculationDispatcher,
-        private readonly ProductStockFacade $productStockFacade,
-        private readonly StockFacade $stockFacade,
+        ProductStockFacade $productStockFacade,
+        StockFacade $stockFacade,
         private readonly ProductVideoFacade $productVideoFacade,
     ) {
         parent::__construct(
@@ -120,6 +122,8 @@ class ProductFacade extends BaseProductFacade
             $productVisibilityFactory,
             $productPriceCalculation,
             $productRecalculationDispatcher,
+            $productStockFacade,
+            $stockFacade,
         );
     }
 
@@ -281,25 +285,5 @@ class ProductFacade extends BaseProductFacade
     public function refreshProductAccessories(BaseProduct $product, array $accessories): void
     {
         parent::refreshProductAccessories($product, $accessories);
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product $product
-     */
-    public function editProductStockRelation(ProductData $productData, Product $product): void
-    {
-        $stockIds = array_map(
-            fn (ProductStockData $productStockData): int => $productStockData->stockId,
-            $productData->stockProductData,
-        );
-
-        $stocksIndexedById = $this->stockFacade->getStocksByIdsIndexedById($stockIds);
-
-        $this->productStockFacade->editProductStockRelations(
-            $product,
-            $stocksIndexedById,
-            $productData->stockProductData,
-        );
     }
 }

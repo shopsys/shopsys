@@ -17,6 +17,9 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFac
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
+use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
 class ProductDataFactory implements ProductDataFactoryInterface
 {
@@ -33,6 +36,9 @@ class ProductDataFactory implements ProductDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
      */
     public function __construct(
         protected readonly VatFacade $vatFacade,
@@ -47,6 +53,9 @@ class ProductDataFactory implements ProductDataFactoryInterface
         protected readonly PricingGroupFacade $pricingGroupFacade,
         protected readonly AvailabilityFacade $availabilityFacade,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
+        protected readonly ProductStockFacade $productStockFacade,
+        protected readonly StockFacade $stockFacade,
+        protected readonly ProductStockDataFactory $productStockDataFactory,
     ) {
     }
 
@@ -261,5 +270,28 @@ class ProductDataFactory implements ProductDataFactoryInterface
         }
 
         return $inputPrices;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     */
+    protected function fillProductStockByProduct(ProductData $productData, Product $product): void
+    {
+        $this->fillProductStockByStocks($productData);
+
+        foreach ($this->productStockFacade->getProductStocksByProduct($product) as $productStock) {
+            $productData->productStockData[$productStock->getStock()->getId()] = $this->productStockDataFactory->createFromProductStock($productStock);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     */
+    protected function fillProductStockByStocks(ProductData $productData): void
+    {
+        foreach ($this->stockFacade->getAllStocks() as $stock) {
+            $productData->productStockData[$stock->getId()] = $this->productStockDataFactory->createFromStock($stock);
+        }
     }
 }

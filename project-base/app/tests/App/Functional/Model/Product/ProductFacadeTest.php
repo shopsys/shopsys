@@ -58,7 +58,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
 
         $productStockData = $this->productStockDataFactory->createFromStock($stock);
         $productStockData->productQuantity = 10;
-        $productData->stockProductData[$stock->getId()] = $productStockData;
+        $productData->productStockData[$stock->getId()] = $productStockData;
 
         $productData->catnum = '123';
         $this->setVats($productData);

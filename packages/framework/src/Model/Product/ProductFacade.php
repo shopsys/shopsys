@@ -21,6 +21,9 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockData;
+use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
+use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
 class ProductFacade
 {
@@ -44,6 +47,8 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -65,6 +70,8 @@ class ProductFacade
         protected readonly ProductVisibilityFactoryInterface $productVisibilityFactory,
         protected readonly ProductPriceCalculation $productPriceCalculation,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        protected readonly ProductStockFacade $productStockFacade,
+        protected readonly StockFacade $stockFacade,
     ) {
     }
 
@@ -90,6 +97,8 @@ class ProductFacade
         $this->setAdditionalDataAfterCreate($product, $productData);
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
+
+        $this->editProductStockRelation($productData, $product);
 
         $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
 
@@ -118,6 +127,7 @@ class ProductFacade
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
         $this->imageFacade->manageImages($product, $productData->images);
+        $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
     }
 
@@ -129,7 +139,6 @@ class ProductFacade
     public function edit($productId, ProductData $productData)
     {
         $product = $this->productRepository->getById($productId);
-        $originalNames = $product->getNames();
 
         $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple(
             $product,
@@ -141,17 +150,23 @@ class ProductFacade
 
         if (!$product->isMainVariant()) {
             $this->productManualInputPriceFacade->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
-        } else {
+        }
+
+        if ($product->isMainVariant()) {
             $product->refreshVariants($productData->variants);
         }
+
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->em->flush();
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
+
         $this->imageFacade->manageImages($product, $productData->images);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->createFriendlyUrlsWhenRenamed($product, $originalNames);
+        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullnames());
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
+
+        $this->editProductStockRelation($productData, $product);
 
         $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
 
@@ -324,6 +339,26 @@ class ProductFacade
     public function getByUuid(string $uuid): Product
     {
         return $this->productRepository->getOneByUuid($uuid);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     */
+    public function editProductStockRelation(ProductData $productData, Product $product): void
+    {
+        $stockIds = array_map(
+            static fn (ProductStockData $productStockData): int => $productStockData->stockId,
+            $productData->productStockData,
+        );
+
+        $stocksIndexedById = $this->stockFacade->getStocksByIdsIndexedById($stockIds);
+
+        $this->productStockFacade->editProductStockRelations(
+            $product,
+            $stocksIndexedById,
+            $productData->productStockData,
+        );
     }
 
     /**

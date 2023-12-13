@@ -63,13 +63,13 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);
 
-        $productData->stockProductData = [];
+        $productData->productStockData = [];
 
         foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
-            $stockProductData = $this->productStockDataFactory->createFromStock($stock);
-            $stockProductData->productQuantity = $stockQuantity;
+            $productStockData = $this->productStockDataFactory->createFromStock($stock);
+            $productStockData->productQuantity = $stockQuantity;
 
-            $productData->stockProductData[] = $stockProductData;
+            $productData->productStockData[] = $productStockData;
         }
 
         $this->productFacade->edit($product->getId(), $productData);
@@ -107,12 +107,12 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);
 
-        $productData->stockProductData = [];
+        $productData->productStockData = [];
 
         foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
-            $stockProductData = $this->productStockDataFactory->createFromStock($stock);
-            $stockProductData->productQuantity = $stockQuantity;
-            $productData->stockProductData[] = $stockProductData;
+            $productStockData = $this->productStockDataFactory->createFromStock($stock);
+            $productStockData->productQuantity = $stockQuantity;
+            $productData->productStockData[] = $productStockData;
         }
 
         $this->productFacade->edit($product->getId(), $productData);
@@ -143,12 +143,12 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);
 
-        $productData->stockProductData = [];
+        $productData->productStockData = [];
 
         foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
-            $stockProductData = $this->productStockDataFactory->createFromStock($stock);
-            $stockProductData->productQuantity = $stockQuantity;
-            $productData->stockProductData[] = $stockProductData;
+            $productStockData = $this->productStockDataFactory->createFromStock($stock);
+            $productStockData->productQuantity = $stockQuantity;
+            $productData->productStockData[] = $productStockData;
         }
 
         $this->productFacade->edit($product->getId(), $productData);

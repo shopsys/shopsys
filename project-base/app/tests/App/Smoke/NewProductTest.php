@@ -85,13 +85,13 @@ class NewProductTest extends ApplicationTestCase
         $form['product_form[displayAvailabilityGroup][sellingFrom]'] = '1.1.1990';
         $form['product_form[displayAvailabilityGroup][sellingTo]'] = '1.1.2000';
         $form['product_form[displayAvailabilityGroup][unit]']->setValue((string)$unit->getId());
-        $form['product_form[stocksGroup][stockProductData][1][productQuantity]'] = '1';
-        $form['product_form[stocksGroup][stockProductData][2][productQuantity]'] = '2';
-        $form['product_form[stocksGroup][stockProductData][3][productQuantity]'] = '3';
-        $form['product_form[stocksGroup][stockProductData][4][productQuantity]'] = '4';
-        $form['product_form[stocksGroup][stockProductData][5][productQuantity]'] = '5';
-        $form['product_form[stocksGroup][stockProductData][6][productQuantity]'] = '6';
-        $form['product_form[stocksGroup][stockProductData][7][productQuantity]'] = '7';
+        $form['product_form[stocksGroup][productStockData][1][productQuantity]'] = '1';
+        $form['product_form[stocksGroup][productStockData][2][productQuantity]'] = '2';
+        $form['product_form[stocksGroup][productStockData][3][productQuantity]'] = '3';
+        $form['product_form[stocksGroup][productStockData][4][productQuantity]'] = '4';
+        $form['product_form[stocksGroup][productStockData][5][productQuantity]'] = '5';
+        $form['product_form[stocksGroup][productStockData][6][productQuantity]'] = '6';
+        $form['product_form[stocksGroup][productStockData][7][productQuantity]'] = '7';
     }
 
     /**

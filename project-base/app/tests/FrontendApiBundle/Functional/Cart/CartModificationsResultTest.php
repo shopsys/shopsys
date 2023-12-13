@@ -551,11 +551,11 @@ class CartModificationsResultTest extends GraphQlTestCase
     {
         $productData = $this->productDataFactory->createFromProduct($this->testingProduct);
 
-        foreach ($productData->stockProductData as $stockProductData) {
-            $stockProductData->productQuantity = 0;
+        foreach ($productData->productStockData as $productStockData) {
+            $productStockData->productQuantity = 0;
         }
 
-        $productData->stockProductData[1]->productQuantity = 1;
+        $productData->productStockData[1]->productQuantity = 1;
 
         $this->productFacade->edit($this->testingProduct->getId(), $productData);
         $this->handleDispatchedRecalculationMessages();
@@ -565,8 +565,8 @@ class CartModificationsResultTest extends GraphQlTestCase
     {
         $productData = $this->productDataFactory->createFromProduct($this->testingProduct);
 
-        foreach ($productData->stockProductData as $stockProductData) {
-            $stockProductData->productQuantity = 0;
+        foreach ($productData->productStockData as $productStockData) {
+            $productStockData->productQuantity = 0;
         }
         $this->productFacade->editProductStockRelation($productData, $this->testingProduct);
         $this->em->clear();
