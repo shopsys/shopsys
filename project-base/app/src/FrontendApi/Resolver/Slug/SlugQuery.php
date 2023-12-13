@@ -6,14 +6,10 @@ namespace App\FrontendApi\Resolver\Slug;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use App\FrontendApi\Resolver\Article\ArticleQuery;
-use App\FrontendApi\Resolver\Blog\Article\BlogArticleQuery;
-use App\FrontendApi\Resolver\Blog\Category\BlogCategoryQuery;
 use App\FrontendApi\Resolver\Products\Flag\FlagQuery;
 use App\FrontendApi\Resolver\Slug\Exception\NoResultFoundForSlugUserError;
 use App\FrontendApi\Resolver\Store\StoreQuery;
 use App\Model\Article\Article;
-use App\Model\Blog\Article\BlogArticle;
-use App\Model\Blog\Category\BlogCategory;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
@@ -21,7 +17,11 @@ use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
 use GraphQL\Type\Definition\ResolveInfo;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
+use Shopsys\FrontendApiBundle\Model\Blog\Article\BlogArticleQuery;
+use Shopsys\FrontendApiBundle\Model\Blog\Category\BlogCategoryQuery;
 use Shopsys\FrontendApiBundle\Model\Error\EntityNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery;
@@ -35,8 +35,8 @@ class SlugQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Resolver\Article\ArticleQuery $articleQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
-     * @param \App\FrontendApi\Resolver\Blog\Article\BlogArticleQuery $blogArticleQuery
-     * @param \App\FrontendApi\Resolver\Blog\Category\BlogCategoryQuery $blogCategoryQuery
+     * @param \Shopsys\FrontendApiBundle\Model\Blog\Article\BlogArticleQuery $blogArticleQuery
+     * @param \Shopsys\FrontendApiBundle\Model\Blog\Category\BlogCategoryQuery $blogCategoryQuery
      * @param \App\FrontendApi\Resolver\Category\CategoryQuery $categoryQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailQuery $productDetailQuery
      * @param \App\FrontendApi\Resolver\Store\StoreQuery $storeQuery
@@ -59,7 +59,7 @@ class SlugQuery extends AbstractQuery
     /**
      * @param string $slug
      * @param \GraphQL\Type\Definition\ResolveInfo $info
-     * @return \App\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\Shopsys\FrameworkBundle\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|\App\Model\Product\Flag\Flag|array
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\Shopsys\FrameworkBundle\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|\App\Model\Product\Flag\Flag|array
      */
     public function slugQuery(string $slug, ResolveInfo $info)
     {

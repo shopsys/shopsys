@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 
 /**
- * Heavily inspired by @see \App\Model\Blog\Article\Elasticsearch\FilterQueryFactory
+ * Heavily inspired by @see \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQueryFactory
  *
  * @see https://github.com/shopsys/shopsys/issues/2362
  */

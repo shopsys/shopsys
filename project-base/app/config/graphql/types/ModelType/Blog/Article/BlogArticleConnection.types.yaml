@@ -6,3 +6,5 @@ BlogArticleConnection:
             totalCount:
                 type: "Int!"
                 description: "Total number of the blog articles"
+    inherits:
+        - 'BlogArticleConnectionDecorator'

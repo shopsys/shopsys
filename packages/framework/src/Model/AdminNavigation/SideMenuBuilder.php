@@ -271,6 +271,16 @@ class SideMenuBuilder
             ['route' => 'admin_bestsellingproduct_detail', 'label' => t('Editing bestseller'), 'display' => false],
         );
 
+        $blogMenu = $menu->addChild('blog', ['label' => t('Blog')]);
+
+        $blogCategories = $blogMenu->addChild('blogCategories', ['route' => 'admin_blogcategory_list', 'label' => t('Blog categories')]);
+        $blogCategories->addChild('newBlogCategories', ['route' => 'admin_blogcategory_new', 'display' => false, 'label' => t('New blog category')]);
+        $blogCategories->addChild('editBlogCategories', ['route' => 'admin_blogcategory_edit', 'display' => false]);
+
+        $blogArticles = $blogMenu->addChild('blogArticles', ['route' => 'admin_blogarticle_list', 'label' => t('Blog articles')]);
+        $blogArticles->addChild('newBlogArticles', ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('New blog article')]);
+        $blogArticles->addChild('editBlogArticles', ['route' => 'admin_blogarticle_edit', 'display' => false]);
+
         $menu->addChild('newsletter', ['route' => 'admin_newsletter_list', 'label' => t('Email newsletter')]);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_MARKETING, $menu);

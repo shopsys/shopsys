@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Article\Elasticsearch;
 
-use App\Component\Elasticsearch\AbstractElasticsearchDataFetcher;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractElasticsearchDataFetcher;
 
 class ArticleElasticsearchDataFetcher extends AbstractElasticsearchDataFetcher
 {

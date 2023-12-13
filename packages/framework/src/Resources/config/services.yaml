@@ -16,7 +16,7 @@ services:
         public: false
 
     Shopsys\FrameworkBundle\:
-        resource: '../../**/*{Calculation,Collector,Dispatcher,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer}.php'
+        resource: '../../**/*{Calculation,Collector,Dispatcher,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\:
@@ -1039,3 +1039,12 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler:
         arguments:
             $logger: '@monolog.logger.queue'
+
+    Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityRecalculationListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex: ~
+
+    Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade:
+        arguments: [ '@snc_redis.blog_article_export_queue' ]

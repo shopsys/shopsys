@@ -8,6 +8,7 @@ use App\Model\Article\Article;
 use App\Model\Article\ArticleData;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType;
+use Shopsys\FrameworkBundle\Form\GrapesJsType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

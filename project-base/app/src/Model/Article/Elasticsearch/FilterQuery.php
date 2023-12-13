@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Article\Elasticsearch;
 
-use App\Component\Elasticsearch\AbstractFilterQuery;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractFilterQuery;
 
 class FilterQuery extends AbstractFilterQuery
 {

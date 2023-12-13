@@ -178,6 +178,9 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
+msgid "Ancestor category"
+msgstr ""
+
 msgid "Applicable variables"
 msgstr ""
 
@@ -296,6 +299,39 @@ msgid "Billing address - name, last name, company, company number, tax number an
 msgstr ""
 
 msgid "Billing data"
+msgstr ""
+
+msgid "Blog"
+msgstr ""
+
+msgid "Blog article"
+msgstr ""
+
+msgid "Blog article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
+msgstr ""
+
+msgid "Blog article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been updated"
+msgstr ""
+
+msgid "Blog article <strong>{{ name }}</strong> has been removed"
+msgstr ""
+
+msgid "Blog articles"
+msgstr ""
+
+msgid "Blog categories"
+msgstr ""
+
+msgid "Blog category"
+msgstr ""
+
+msgid "Blog category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
+msgstr ""
+
+msgid "Blog category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been updated"
+msgstr ""
+
+msgid "Blog category <strong>{{ name }}</strong> has been removed"
 msgstr ""
 
 msgid "Brand"
@@ -505,6 +541,12 @@ msgstr ""
 msgid "Create new article"
 msgstr ""
 
+msgid "Create new blog article"
+msgstr ""
+
+msgid "Create new blog category"
+msgstr ""
+
 msgid "Create new brand"
 msgstr ""
 
@@ -664,7 +706,13 @@ msgstr ""
 msgid "Date and time of order creation"
 msgstr ""
 
+msgid "Date of creation"
+msgstr ""
+
 msgid "Date of creation and privacy policy agreement"
+msgstr ""
+
+msgid "Date of publication"
 msgstr ""
 
 msgid "Date of registration and privacy policy agreement"
@@ -802,6 +850,9 @@ msgstr ""
 msgid "Do you really want to remove this article?"
 msgstr ""
 
+msgid "Do you really want to remove this blog article?"
+msgstr ""
+
 msgid "Do you really want to remove this brand? If it is used anywhere it will be unset."
 msgstr ""
 
@@ -932,6 +983,18 @@ msgid "Editing article - %name%"
 msgstr ""
 
 msgid "Editing bestseller"
+msgstr ""
+
+msgid "Editing blog article"
+msgstr ""
+
+msgid "Editing blog article - %name%"
+msgstr ""
+
+msgid "Editing blog category"
+msgstr ""
+
+msgid "Editing blog category - %name%"
 msgstr ""
 
 msgid "Editing brand"
@@ -1360,6 +1423,9 @@ msgstr ""
 msgid "Internal note"
 msgstr ""
 
+msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"
+msgstr ""
+
 msgid "It is possible to use this when creating a link: mark the text you want to create the link from with mouse and push the Link button (top right, interconnected staples icon). In the popup menu select the protocol <different> and insert the text \"%orderDetailUrlConstant%\" in the URL field (Including the braces)"
 msgstr ""
 
@@ -1552,6 +1618,12 @@ msgstr ""
 msgid "New article"
 msgstr ""
 
+msgid "New blog article"
+msgstr ""
+
+msgid "New blog category"
+msgstr ""
+
 msgid "New brand"
 msgstr ""
 
@@ -1622,6 +1694,9 @@ msgid "No articles found on this domain. You have to create some first."
 msgstr ""
 
 msgid "No availabilities found. You have to create some first."
+msgstr ""
+
+msgid "No blog articles found."
 msgstr ""
 
 msgid "No brands found. You have to create some first."
@@ -1862,6 +1937,9 @@ msgid "Payments"
 msgstr ""
 
 msgid "Percent"
+msgstr ""
+
+msgid "Perex"
 msgstr ""
 
 msgid "Personal data"
@@ -2161,6 +2239,12 @@ msgstr ""
 msgid "Selected availatibily doesn't exist."
 msgstr ""
 
+msgid "Selected blog article does not exist."
+msgstr ""
+
+msgid "Selected blog category does not exist."
+msgstr ""
+
 msgid "Selected brand doesn't exist."
 msgstr ""
 
@@ -2234,6 +2318,9 @@ msgid "Send email about change to this status"
 msgstr ""
 
 msgid "Sending emails off, no email will be sent from the app."
+msgstr ""
+
+msgid "Seo"
 msgstr ""
 
 msgid "Set"
@@ -2608,6 +2695,9 @@ msgstr ""
 msgid "Visibility for unlogged customers"
 msgstr ""
 
+msgid "Visible on homepage"
+msgstr ""
+
 msgid "Warehouse"
 msgstr ""
 
@@ -2720,6 +2810,9 @@ msgid "availability"
 msgstr ""
 
 msgid "before"
+msgstr ""
+
+msgid "blog articles"
 msgstr ""
 
 msgid "brands"

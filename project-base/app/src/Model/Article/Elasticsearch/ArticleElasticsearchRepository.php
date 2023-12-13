@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Article\Elasticsearch;
 
-use App\Component\Elasticsearch\NoResultException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoResultException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
@@ -30,7 +30,7 @@ class ArticleElasticsearchRepository
 
         try {
             return $this->articleElasticsearchDataFetcher->getSingleResult($filterQuery);
-        } catch (NoResultException $exception) {
+        } catch (ElasticsearchNoResultException $exception) {
             throw new ArticleNotFoundException(sprintf('Article with UUID \'%s\' not found.', $uuid));
         }
     }
@@ -45,7 +45,7 @@ class ArticleElasticsearchRepository
 
         try {
             return $this->articleElasticsearchDataFetcher->getSingleResult($filterQuery);
-        } catch (NoResultException $exception) {
+        } catch (ElasticsearchNoResultException $exception) {
             throw new ArticleNotFoundException(sprintf('Article not found by id "%s"', $articleId));
         }
     }
@@ -111,7 +111,7 @@ class ArticleElasticsearchRepository
 
         try {
             return $this->articleElasticsearchDataFetcher->getSingleResult($filterQuery);
-        } catch (NoResultException $exception) {
+        } catch (ElasticsearchNoResultException $exception) {
             return null;
         }
     }

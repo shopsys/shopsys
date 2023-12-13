@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 
-use App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BlogArticlesTest extends GraphQlTestCase
@@ -16,7 +16,7 @@ class BlogArticlesTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        /** @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleFacade */
+        /** @var \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleFacade */
         $blogArticleFacade = self::getContainer()->get(BlogArticleElasticsearchFacade::class);
         $this->totalBlogArticlesCount = $blogArticleFacade->getAllBlogArticlesTotalCount();
     }

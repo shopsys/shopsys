@@ -4,14 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Blog\Article\BlogArticleData;
-use App\Model\Blog\Article\BlogArticleDataFactory;
-use App\Model\Blog\Article\BlogArticleFacade;
-use App\Model\Blog\BlogVisibilityFacade;
-use App\Model\Blog\Category\BlogCategory;
-use App\Model\Blog\Category\BlogCategoryData;
-use App\Model\Blog\Category\BlogCategoryDataFactory;
-use App\Model\Blog\Category\BlogCategoryFacade;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,6 +11,14 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
+use Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 
 class BlogArticleDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -53,12 +53,12 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     private int $articleCounter = 1;
 
     /**
-     * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
-     * @param \App\Model\Blog\Article\BlogArticleDataFactory $blogArticleDataFactory
-     * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory $blogArticleDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Blog\BlogVisibilityFacade $blogVisibilityFacade
-     * @param \App\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityFacade $blogVisibilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
@@ -142,9 +142,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     }
 
     /**
-     * @param \App\Model\Blog\Category\BlogCategory $parentCategory
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $parentCategory
      * @param int $subcategoryOrder
-     * @return \App\Model\Blog\Category\BlogCategoryData
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData
      */
     private function createSubcategory(BlogCategory $parentCategory, int $subcategoryOrder): BlogCategoryData
     {
@@ -177,8 +177,8 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     }
 
     /**
-     * @param \App\Model\Blog\Category\BlogCategory[] $blogCategories
-     * @return \App\Model\Blog\Article\BlogArticleData
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[] $blogCategories
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleData
      */
     private function createArticle(array $blogCategories): BlogArticleData
     {

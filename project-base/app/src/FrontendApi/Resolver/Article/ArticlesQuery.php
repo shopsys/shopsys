@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Article;
 
-use App\FrontendApi\Component\Validation\PageSizeValidator;
 use App\Model\Article\Elasticsearch\ArticleElasticsearchFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
+use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 /**

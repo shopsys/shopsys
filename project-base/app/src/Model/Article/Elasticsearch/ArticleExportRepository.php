@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Article\Elasticsearch;
 
-use App\Component\Breadcrumb\BreadcrumbFacade;
-use App\Component\GrapesJs\GrapesJsParser;
 use App\Model\Article\Article;
+use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
+use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 
@@ -15,8 +15,8 @@ class ArticleExportRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
-     * @param \App\Component\GrapesJs\GrapesJsParser $grapesJsParser
+     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
+     * @param \Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser $grapesJsParser
      */
     public function __construct(
         private readonly ArticleRepository $articleRepository,
@@ -43,7 +43,7 @@ class ArticleExportRepository
      * @param int $domainId
      * @param int $limit
      * @param int $lastProcessedId
-     * @return \App\Model\Article\Article[]
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
     public function getAllVisibleArticleSitesByDomainId(int $domainId, int $limit, int $lastProcessedId): array
     {
@@ -59,7 +59,7 @@ class ArticleExportRepository
     /**
      * @param int $domainId
      * @param int[] $articleIds
-     * @return \App\Model\Article\Article[]
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article[]
      */
     public function getVisibleArticleSitesByDomainIdAndArticleIds(int $domainId, array $articleIds): array
     {
@@ -71,7 +71,7 @@ class ArticleExportRepository
     }
 
     /**
-     * @param \App\Model\Article\Article $article
+     * @param \Shopsys\FrameworkBundle\Model\Article\Article $article
      * @return array
      */
     public function extractArticle(Article $article): array

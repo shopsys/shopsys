@@ -115,9 +115,6 @@ msgstr "Došlo k výjimce během přihlášení."
 msgid "An email with 6 digit code was sent to your email address."
 msgstr "E-mail s šesticiferným kódem byl odeslán na vaši e-mailovou adresu."
 
-msgid "Ancestor category"
-msgstr "Rodičovská kategorie"
-
 msgid "Apply according to customer"
 msgstr "Aplikovat podle zákazníka"
 
@@ -205,9 +202,6 @@ msgstr "Nejprodávanější zboží - zobrazení"
 msgid "Billing address - name, last name, company, company number, tax number and billing address"
 msgstr "Faktuřní adresa - jméno, příjmení, společnost, IČ, DIČ a fakturační adresa"
 
-msgid "Blog"
-msgstr "Blog"
-
 msgid "Blog article"
 msgstr "Článek blogu"
 
@@ -217,21 +211,6 @@ msgstr "Články blogu - vše"
 msgid "Blog article - view"
 msgstr "Články blogu - zobrazní"
 
-msgid "Blog article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
-msgstr "Článek blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
-
-msgid "Blog article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been updated"
-msgstr "Článek blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl změněn"
-
-msgid "Blog article <strong>{{ name }}</strong> has been removed"
-msgstr "Článek blogu <strong>{{ name }}</strong> byl smazán"
-
-msgid "Blog articles"
-msgstr "Články blogu"
-
-msgid "Blog categories"
-msgstr "Rubriky blogu"
-
 msgid "Blog category"
 msgstr "Rubrika blogu"
 
@@ -240,15 +219,6 @@ msgstr "Kategorie blogu - vše"
 
 msgid "Blog category - view"
 msgstr "Kategorie blogu - zobrazení"
-
-msgid "Blog category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
-msgstr "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
-
-msgid "Blog category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been updated"
-msgstr "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
-
-msgid "Blog category <strong>{{ name }}</strong> has been removed"
-msgstr "Rubrika blogu <strong>{{ name }}</strong> byla smazána"
 
 msgid "Brand"
 msgstr "Značka"
@@ -439,12 +409,6 @@ msgstr "Vytvořit novou skupinu práv pro administrátora"
 msgid "Create new banner"
 msgstr "Vytvořit nový banner"
 
-msgid "Create new blog article"
-msgstr "Vytvořit nový článek blogu"
-
-msgid "Create new blog category"
-msgstr "Vytvořit novou rubriku blogu"
-
 msgid "Create new item"
 msgstr "Vytvořit novou položku"
 
@@ -480,12 +444,6 @@ msgstr "Datum a čas"
 
 msgid "Date and time of order creation"
 msgstr "Datum a čas vytvoření objednávky"
-
-msgid "Date of creation"
-msgstr "Datum vytvoření"
-
-msgid "Date of publication"
-msgstr "Datum publikace"
 
 msgid "Day"
 msgstr "Den"
@@ -523,9 +481,6 @@ msgstr "Datum zobrazení OD"
 msgid "Display date TO"
 msgstr "Datum zobrazení DO"
 
-msgid "Display on"
-msgstr "Zobrazit na"
-
 msgid "Do you really want to mark this issue as resolved?"
 msgstr "Opravdu chcete tento problém označit jako vyřešený?"
 
@@ -534,9 +489,6 @@ msgstr "Opravdu chcete smazat tuto SEO stránku?"
 
 msgid "Do you really want to remove this administrator role group?"
 msgstr "Opravdu chcete smazat tuto skupinu práv pro administrátora?"
-
-msgid "Do you really want to remove this blog article?"
-msgstr "Opravdu chcete odebrat tento článek blogu?"
 
 msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr "Opravdu chcete smazat tuto kategorii i s jejich SEO mixy?"
@@ -621,18 +573,6 @@ msgstr "Editace reklamy - %name%"
 
 msgid "Editing banner"
 msgstr "Upravit banner"
-
-msgid "Editing blog article"
-msgstr "Editace článku blogu"
-
-msgid "Editing blog article - %name%"
-msgstr "Editace článku blogu - %name%"
-
-msgid "Editing blog category"
-msgstr "Editace rubriky blogu"
-
-msgid "Editing blog category - %name%"
-msgstr "Editace rubriky blogu - %name%"
 
 msgid "Editing email template - %name%"
 msgstr "Editace šablony emailu - %name%"
@@ -895,9 +835,6 @@ msgstr "Svátky a interní dny"
 msgid "Home page"
 msgstr "Domovská stránka"
 
-msgid "ID"
-msgstr "ID"
-
 msgid "If the time FROM is filled in, enter the date FROM too."
 msgstr "Pokud je vyplněn čas OD, vyplňte i datum OD."
 
@@ -933,9 +870,6 @@ msgstr "Neplatný kód dvoufaktorového ověření."
 
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr "Je vysoce doporučeno toto nastavení otestovat na vývojovém nebo CI serveru před tím, než bude použita v produkci!"
-
-msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"
-msgstr "Na konkrétní záložce domény není možné upravovat pořadí a zanoření rubrik blogu. Prosím přejděte na detail kategorie nebo na přehled kategorií na všech doménách"
 
 msgid "Key"
 msgstr "Klíč"
@@ -1123,12 +1057,6 @@ msgstr "Nová skupina práv pro administrátora"
 msgid "New banner"
 msgstr "Nový banner"
 
-msgid "New blog article"
-msgstr "Nový článek blogu"
-
-msgid "New blog category"
-msgstr "Nová rubrika blogu"
-
 msgid "New closed day"
 msgstr "Nový svátek / interní den"
 
@@ -1179,9 +1107,6 @@ msgstr "Nebyly nalezeny žádné SEO stránky."
 
 msgid "No articles found on this domain. You have to create some first."
 msgstr "Nebyly nalezeny žádné články na této doméně. Musíte prvně nějaký vytvořit."
-
-msgid "No blog articles found."
-msgstr "Nebyly nalezeny žádné články blogu."
 
 msgid "No combinations of SEO categories found."
 msgstr "Nebyly nalezeny žádné kombinace SEO kategorií."
@@ -1401,9 +1326,6 @@ msgstr "Typ platby"
 
 msgid "Percents"
 msgstr "Procenta"
-
-msgid "Perex"
-msgstr "Perex"
 
 msgid "Personal data access"
 msgstr "Přístup k osobním údajům"
@@ -1639,9 +1561,6 @@ msgstr "SEO stránky"
 msgid "Sale"
 msgstr "Výprodej"
 
-msgid "Sale category settings"
-msgstr "Nastavení výprodejové kategorie"
-
 msgid "Sales overview (last 7 days)"
 msgstr "Přehled prodejů (posledních 7 dní)"
 
@@ -1650,9 +1569,6 @@ msgstr "Sobota"
 
 msgid "Save"
 msgstr "Uložit"
-
-msgid "Save changes"
-msgstr "Uložit změny"
 
 msgid "Save changes in order"
 msgstr "Uložit změny v pořadí"
@@ -1695,12 +1611,6 @@ msgstr "Vybraná SEO stránka neexistuje"
 
 msgid "Selected administrator role group doesn't exist."
 msgstr "Vybraná skupina práv pro administrátora neexistuje."
-
-msgid "Selected blog article does not exist."
-msgstr "Vybraný článek blogu neexistuje."
-
-msgid "Selected blog category does not exist."
-msgstr "Vybíraná rubrika blogu neexistuje."
 
 msgid "Selected flag doesn't exist."
 msgstr "Vybraný příznak neexistuje."
@@ -2029,9 +1939,6 @@ msgstr "Videa"
 msgid "Visibility"
 msgstr "Viditelnost"
 
-msgid "Visible on homepage"
-msgstr "Viditelný na domovské stránce"
-
 msgid "Warehouse"
 msgstr "Sklad"
 
@@ -2088,9 +1995,6 @@ msgstr ""
 
 msgid "Youtube URL"
 msgstr "Youtube URL"
-
-msgid "blog articles"
-msgstr "článků blogu"
 
 msgid "e.g. Sale-04-20-2020"
 msgstr "např. Akce-04-20-2020"

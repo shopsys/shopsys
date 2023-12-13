@@ -1,0 +1,22 @@
+ArticleInterfaceDecorator:
+    type: interface
+    decorator: true
+    config:
+        description: "Represents entity that is considered to be an article on the eshop"
+        fields:
+            uuid:
+                type: "Uuid!"
+            name:
+                type: "String!"
+            slug:
+                type: "String!"
+            text:
+                type: "String"
+            seoTitle:
+                type: "String"
+            seoMetaDescription:
+                type: "String"
+            seoH1:
+                type: "String"
+            breadcrumb:
+                type: "[Link!]!"

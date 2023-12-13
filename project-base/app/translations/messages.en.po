@@ -115,9 +115,6 @@ msgstr ""
 msgid "An email with 6 digit code was sent to your email address."
 msgstr ""
 
-msgid "Ancestor category"
-msgstr ""
-
 msgid "Apply according to customer"
 msgstr ""
 
@@ -205,9 +202,6 @@ msgstr ""
 msgid "Billing address - name, last name, company, company number, tax number and billing address"
 msgstr ""
 
-msgid "Blog"
-msgstr ""
-
 msgid "Blog article"
 msgstr ""
 
@@ -217,21 +211,6 @@ msgstr ""
 msgid "Blog article - view"
 msgstr ""
 
-msgid "Blog article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
-msgstr ""
-
-msgid "Blog article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been updated"
-msgstr ""
-
-msgid "Blog article <strong>{{ name }}</strong> has been removed"
-msgstr ""
-
-msgid "Blog articles"
-msgstr ""
-
-msgid "Blog categories"
-msgstr ""
-
 msgid "Blog category"
 msgstr ""
 
@@ -239,15 +218,6 @@ msgid "Blog category - full"
 msgstr ""
 
 msgid "Blog category - view"
-msgstr ""
-
-msgid "Blog category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
-msgstr ""
-
-msgid "Blog category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been updated"
-msgstr ""
-
-msgid "Blog category <strong>{{ name }}</strong> has been removed"
 msgstr ""
 
 msgid "Brand"
@@ -439,12 +409,6 @@ msgstr ""
 msgid "Create new banner"
 msgstr ""
 
-msgid "Create new blog article"
-msgstr ""
-
-msgid "Create new blog category"
-msgstr ""
-
 msgid "Create new item"
 msgstr ""
 
@@ -479,12 +443,6 @@ msgid "Date and time"
 msgstr ""
 
 msgid "Date and time of order creation"
-msgstr ""
-
-msgid "Date of creation"
-msgstr ""
-
-msgid "Date of publication"
 msgstr ""
 
 msgid "Day"
@@ -523,9 +481,6 @@ msgstr ""
 msgid "Display date TO"
 msgstr ""
 
-msgid "Display on"
-msgstr ""
-
 msgid "Do you really want to mark this issue as resolved?"
 msgstr ""
 
@@ -533,9 +488,6 @@ msgid "Do you really want to remove this SEO page?"
 msgstr ""
 
 msgid "Do you really want to remove this administrator role group?"
-msgstr ""
-
-msgid "Do you really want to remove this blog article?"
 msgstr ""
 
 msgid "Do you really want to remove this category even with their SEO mixes?"
@@ -620,18 +572,6 @@ msgid "Editing advertising - %name%"
 msgstr ""
 
 msgid "Editing banner"
-msgstr ""
-
-msgid "Editing blog article"
-msgstr ""
-
-msgid "Editing blog article - %name%"
-msgstr ""
-
-msgid "Editing blog category"
-msgstr ""
-
-msgid "Editing blog category - %name%"
 msgstr ""
 
 msgid "Editing email template - %name%"
@@ -895,9 +835,6 @@ msgstr ""
 msgid "Home page"
 msgstr ""
 
-msgid "ID"
-msgstr ""
-
 msgid "If the time FROM is filled in, enter the date FROM too."
 msgstr ""
 
@@ -932,9 +869,6 @@ msgid "Invalid two-factor authentication code."
 msgstr ""
 
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
-msgstr ""
-
-msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"
 msgstr ""
 
 msgid "Key"
@@ -1123,12 +1057,6 @@ msgstr ""
 msgid "New banner"
 msgstr ""
 
-msgid "New blog article"
-msgstr ""
-
-msgid "New blog category"
-msgstr ""
-
 msgid "New closed day"
 msgstr ""
 
@@ -1178,9 +1106,6 @@ msgid "No SEO pages found."
 msgstr ""
 
 msgid "No articles found on this domain. You have to create some first."
-msgstr ""
-
-msgid "No blog articles found."
 msgstr ""
 
 msgid "No combinations of SEO categories found."
@@ -1400,9 +1325,6 @@ msgid "Payment type"
 msgstr ""
 
 msgid "Percents"
-msgstr ""
-
-msgid "Perex"
 msgstr ""
 
 msgid "Personal data access"
@@ -1639,9 +1561,6 @@ msgstr ""
 msgid "Sale"
 msgstr ""
 
-msgid "Sale category settings"
-msgstr ""
-
 msgid "Sales overview (last 7 days)"
 msgstr ""
 
@@ -1649,9 +1568,6 @@ msgid "Saturday"
 msgstr ""
 
 msgid "Save"
-msgstr ""
-
-msgid "Save changes"
 msgstr ""
 
 msgid "Save changes in order"
@@ -1694,12 +1610,6 @@ msgid "Selected SEO page does not exist"
 msgstr ""
 
 msgid "Selected administrator role group doesn't exist."
-msgstr ""
-
-msgid "Selected blog article does not exist."
-msgstr ""
-
-msgid "Selected blog category does not exist."
 msgstr ""
 
 msgid "Selected flag doesn't exist."
@@ -2029,9 +1939,6 @@ msgstr ""
 msgid "Visibility"
 msgstr ""
 
-msgid "Visible on homepage"
-msgstr ""
-
 msgid "Warehouse"
 msgstr ""
 
@@ -2087,9 +1994,6 @@ msgid "Youtube ID"
 msgstr ""
 
 msgid "Youtube URL"
-msgstr ""
-
-msgid "blog articles"
 msgstr ""
 
 msgid "e.g. Sale-04-20-2020"

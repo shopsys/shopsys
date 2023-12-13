@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Model\Article;
 
 use App\Model\Article\Elasticsearch\ArticleIndex;
-use App\Model\Blog\Article\Elasticsearch\BlogArticleIndex;
 use Elasticsearch\Client;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
+use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex;
 
 class CombinedArticleElasticsearchRepository
 {

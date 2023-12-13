@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Store;
 
-use App\FrontendApi\Component\Validation\PageSizeValidator;
 use App\Model\Transport\Transport;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
+use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class StoresQuery extends AbstractQuery

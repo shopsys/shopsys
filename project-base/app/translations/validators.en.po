@@ -37,9 +37,6 @@ msgstr ""
 msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Heading (H1) cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -122,9 +119,6 @@ msgid "Please enter code"
 msgstr ""
 
 msgid "Please enter company name"
-msgstr ""
-
-msgid "Please enter date of creation"
 msgstr ""
 
 msgid "Please enter email"

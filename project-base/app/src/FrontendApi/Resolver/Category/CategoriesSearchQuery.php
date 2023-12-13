@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Category;
 
-use App\FrontendApi\Component\Validation\PageSizeValidator;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesSearchQuery as BaseCategoriesSearchQuery;
 

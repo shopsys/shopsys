@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Breadcrumb;
 
-use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use InvalidArgumentException;
+use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class BreadcrumbQuery extends AbstractQuery
 {
     /**
-     * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
+     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      */
     public function __construct(
         private readonly BreadcrumbFacade $breadcrumbFacade,

@@ -258,4 +258,60 @@ class FriendlyUrlFacade
             return $mainFriendlyUrl->getSlug();
         });
     }
+
+    /**
+     * @param int $domainId
+     * @param string $routeName
+     * @param int $entityId
+     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
+     */
+    public function getMainFriendlyUrl(int $domainId, string $routeName, int $entityId): FriendlyUrl
+    {
+        $friendlyUrl = $this->findMainFriendlyUrl($domainId, $routeName, $entityId);
+
+        if ($friendlyUrl === null) {
+            throw new FriendlyUrlNotFoundException(sprintf('Main friendly URL not found for route "%s", domain ID "%d", and entity ID "%d".', $routeName, $domainId, $entityId));
+        }
+
+        return $friendlyUrl;
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $routeName
+     * @param int $entityId
+     * @return string
+     */
+    public function getMainFriendlyUrlSlug(int $domainId, string $routeName, int $entityId): string
+    {
+        $cacheKey = $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey(
+            $routeName,
+            $domainId,
+            $entityId,
+        );
+
+        /** @var string|null $friendlyUrlSlug */
+        $friendlyUrlSlug = $this->mainFriendlyUrlSlugCache->get($cacheKey, function () use ($domainId, $routeName, $entityId) {
+            $friendlyUrl = $this->friendlyUrlRepository->findMainFriendlyUrl($domainId, $routeName, $entityId);
+
+            return $friendlyUrl?->getSlug();
+        });
+
+        if ($friendlyUrlSlug === null) {
+            throw new FriendlyUrlNotFoundException(sprintf('Main friendly URL not found for route "%s", domain ID "%d", and entity ID "%d".', $routeName, $domainId, $entityId));
+        }
+
+        return $friendlyUrlSlug;
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $routeName
+     * @param int $entityId
+     * @return string[]
+     */
+    public function getAllSlugsByRouteNameAndEntityId(int $domainId, string $routeName, int $entityId): array
+    {
+        return $this->friendlyUrlRepository->getAllSlugsByRouteNameAndDomainId($domainId, $routeName, $entityId);
+    }
 }
