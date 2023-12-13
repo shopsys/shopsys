@@ -244,6 +244,9 @@ msgstr "Dostupnost <strong>{{ oldName }}</strong> byla nahrazena dostupností <s
 msgid "Availability after sellout"
 msgstr "Dostupnost při vyprodání"
 
+msgid "Available immediately"
+msgstr "Ihned k odběru"
+
 msgid "Available in stock"
 msgstr "Skladem"
 
@@ -1330,6 +1333,9 @@ msgstr "Obrázky"
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr "Na záložce konkrétní domény není možné upravovat pořadí a zanoření kategorií. Prosím přejděte na kartu kategorie nebo na přehled kategorií všech domén."
 
+msgid "In stock"
+msgstr "Skladem"
+
 msgid "Inactive"
 msgstr "Neaktivní"
 
@@ -1795,6 +1801,9 @@ msgstr "Hodnota objednávek"
 msgid "Origin"
 msgstr "Původ"
 
+msgid "Out of stock"
+msgstr "Vyprodáno"
+
 msgid "Page <strong>{{ name }}</strong> deleted"
 msgstr "Stránka <strong>{{ name }}</strong> byla smazána"
 
@@ -1962,9 +1971,6 @@ msgstr "Zboží v objednávce"
 
 msgid "Product is excluded from the sale due to sellout"
 msgstr "Produkt je vyřazen z prodeje z důvodu vyprodání"
-
-msgid "Product is hidden due to sellout"
-msgstr "Produkt je skrytý z důvodu vyprodání"
 
 msgid "Product is main variant."
 msgstr "Produkt je hlavní variantou."
@@ -2488,6 +2494,9 @@ msgstr "Nelze přidat"
 msgid "Unable to add product"
 msgstr "Zboží se nepodařilo vložit"
 
+msgid "Unavailable"
+msgstr "Nedostupné"
+
 msgid "Unexpected error occurred, file was not uploaded."
 msgstr "Došlo k neočekávané chybě, soubor nebyl nahrán."
 
@@ -2823,6 +2832,12 @@ msgstr "používá"
 
 msgid "without positioning"
 msgstr "bez umístění"
+
+msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
+msgstr "{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] K dispozici za %count% týdnů"
+
+msgid "{0}|{1}Available in <span class=\"box-detail__avail__text__strong\">%count%</span> store|[2,Inf]Available in <span class=\"box-detail__avail__text__strong\">%count%</span> stores"
+msgstr "{0}|{1}Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejnách"
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."
 msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Před odesláním formuláře musíte počkat %seconds% vteřiny. |[5,Inf] Před odesláním formuláře musíte počkat %seconds% vteřin."
