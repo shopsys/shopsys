@@ -150,10 +150,10 @@ class ProductVisibilityRepository
                             OR
                             EXISTS (
                                 SELECT 1
-                                FROM product_calculated_prices as pcp
-                                WHERE pcp.price_with_vat > 0
-                                    AND pcp.product_id = pv.product_id
-                                    AND pcp.pricing_group_id = pv.pricing_group_id
+                                FROM product_manual_input_prices as pmip
+                                WHERE pmip.input_price > 0
+                                    AND pmip.product_id = pv.product_id
+                                    AND pmip.pricing_group_id = pv.pricing_group_id
                             )
                         )
                         AND EXISTS (

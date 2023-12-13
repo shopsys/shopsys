@@ -19,7 +19,6 @@ use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -61,11 +60,6 @@ class CartModificationsResultTest extends GraphQlTestCase
      * @inject
      */
     private PaymentDataFactory $paymentDataFactory;
-
-    /**
-     * @inject
-     */
-    private ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
 
     protected function setUp(): void
     {
@@ -536,7 +530,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $productData->sellingDenied = true;
 
         $this->productFacade->edit($this->testingProduct->getId(), $productData);
-        $this->dispatchFakeKernelResponseEventToTriggerImmediateRecalculations();
+        $this->handleDispatchedRecalculationMessages();
     }
 
     private function modifyPriceOfTestingProduct(): void
@@ -550,7 +544,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         }
 
         $this->productFacade->edit($this->testingProduct->getId(), $productData);
-        $this->dispatchFakeKernelResponseEventToTriggerImmediateRecalculations();
+        $this->handleDispatchedRecalculationMessages();
     }
 
     private function setOneItemLeftOnStockForTestingProduct(): void
@@ -564,7 +558,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $productData->stockProductData[1]->productQuantity = 1;
 
         $this->productFacade->edit($this->testingProduct->getId(), $productData);
-        $this->dispatchFakeKernelResponseEventToTriggerImmediateRecalculations();
+        $this->handleDispatchedRecalculationMessages();
     }
 
     private function setNoItemLeftOnStockForTestingProduct(): void
@@ -575,7 +569,6 @@ class CartModificationsResultTest extends GraphQlTestCase
             $stockProductData->productQuantity = 0;
         }
         $this->productFacade->editProductStockRelation($productData, $this->testingProduct);
-        $this->productPriceRecalculationScheduler->reset();
         $this->em->clear();
         gc_collect_cycles();
     }

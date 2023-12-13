@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
-use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\StocksDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -27,11 +25,6 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
      * @inject
      */
     private ProductFacade $productFacade;
-
-    /**
-     * @inject
-     */
-    private ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
 
     /**
      * @inject
@@ -103,24 +96,6 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
                 'calculatedSellingDenied' => true,
             ],
         ];
-    }
-
-    public function testEditSchedulesPriceRecalculation()
-    {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-        $productId = $product->getId();
-
-        $productData = $this->productDataFactory->create();
-        $productData->catnum = '123';
-        $this->setVats($productData);
-
-        $this->productFacade->edit($productId, $productData);
-
-        $this->assertArrayHasKey(
-            $productId,
-            $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation(),
-        );
     }
 
     /**

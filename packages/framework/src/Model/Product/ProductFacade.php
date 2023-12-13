@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalc
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
@@ -32,7 +31,6 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -54,7 +52,6 @@ class ProductFacade
         protected readonly ParameterRepository $parameterRepository,
         protected readonly Domain $domain,
         protected readonly ImageFacade $imageFacade,
-        protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         protected readonly PricingGroupRepository $pricingGroupRepository,
         protected readonly ProductManualInputPriceFacade $productManualInputPriceFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
@@ -122,8 +119,6 @@ class ProductFacade
 
         $this->imageFacade->manageImages($product, $productData->images);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
-
-        $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
     /**
@@ -141,7 +136,6 @@ class ProductFacade
             $productData->categoriesByDomainId,
         );
         $product->edit($productCategoryDomains, $productData);
-        $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         $this->saveParameters($product, $productData->parameters);
 
@@ -159,8 +153,6 @@ class ProductFacade
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
-        $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
-
         $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
 
         return $product;
@@ -176,9 +168,6 @@ class ProductFacade
         $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
 
         foreach ($productsForRecalculations as $productForRecalculations) {
-            $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation(
-                $productForRecalculations,
-            );
             $this->productRecalculationDispatcher->dispatchSingleProductId($productForRecalculations->getId());
         }
 

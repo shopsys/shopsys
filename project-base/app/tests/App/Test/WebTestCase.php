@@ -7,11 +7,17 @@ namespace Tests\App\Test;
 use Psr\Container\ContainerInterface;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrameworkBundle\Test\ProductIndexBackupFacade;
 use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
@@ -42,6 +48,11 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
      * @inject
      */
     protected ProductIndexBackupFacade $productIndexBackupFacade;
+
+    /**
+     * @inject
+     */
+    private EventDispatcherInterface $eventDispatcher;
 
     protected function setUp(): void
     {
@@ -143,6 +154,8 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
     {
         $this->productIndexBackupFacade->createSnapshot();
 
+        $this->dispatchFakeKernelResponseEventToTriggerSendMessageToTransport();
+
         /** @var \Symfony\Component\Messenger\Transport\InMemoryTransport $transport */
         $transport = self::getContainer()->get('messenger.transport.product_recalculation');
         $handler = $this->productRecalculationMessageHandler;
@@ -154,5 +167,22 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
             $message = $envelope->getMessage();
             $handler($message);
         }
+    }
+
+    /**
+     * By dispatching the kernel response event, the message is sent to the transport thanks to the
+     * DelayedEnvelope/DispatchCollectedEnvelopesSubscriber.
+     * Until the subscriber is called, the messages are collected only in the DelayedEnvelopesCollector.
+     */
+    private function dispatchFakeKernelResponseEventToTriggerSendMessageToTransport(): void
+    {
+        $fakeKernelResponseEvent = new ResponseEvent(
+            self::$kernel,
+            new Request(),
+            HttpKernelInterface::MAIN_REQUEST,
+            new Response(),
+        );
+
+        $this->eventDispatcher->dispatch($fakeKernelResponseEvent, 'kernel.response');
     }
 }

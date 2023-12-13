@@ -87,10 +87,6 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Model/Product/ProductFacade.php',
             __DIR__ . '/src/Component/Image/ImageFacade.php',
         ],
-        EmptyStatementSniff::class . '.DetectedWhile' => [
-            __DIR__ . '/src/Model/Product/Availability/ProductAvailabilityRecalculator.php',
-            __DIR__ . '/src/Model/Product/Pricing/ProductPriceRecalculator.php',
-        ],
         CamelCapsFunctionNameSniff::class => [
             __DIR__ . '/src/Component/Doctrine/MoneyType.php',
             __DIR__ . '/tests/Test/Codeception/ActorInterface.php',

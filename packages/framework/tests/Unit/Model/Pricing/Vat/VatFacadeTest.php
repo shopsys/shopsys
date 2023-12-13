@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class VatFacadeTest extends TestCase
 {
@@ -47,22 +47,20 @@ class VatFacadeTest extends TestCase
             ->with($this->equalTo(1))
             ->willReturn($expected);
 
-        $productPriceRecalculationSchedulerMock = $this->getMockBuilder(ProductPriceRecalculationScheduler::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
         $domainMock = $this->getMockBuilder(Domain::class)
             ->setMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();
 
+        $productRecalculationDispatcherMock = $this->createMock(ProductRecalculationDispatcher::class);
+
         $vatFacade = new VatFacade(
             $emMock,
             $vatRepositoryMock,
             $settingMock,
-            $productPriceRecalculationSchedulerMock,
             new VatFactory(new EntityNameResolver([])),
             $domainMock,
+            $productRecalculationDispatcherMock,
         );
 
         $defaultVat = $vatFacade->getDefaultVatForDomain(Domain::FIRST_DOMAIN_ID);
@@ -90,21 +88,20 @@ class VatFacadeTest extends TestCase
             ->method('setForDomain')
             ->with($this->equalTo(Vat::SETTING_DEFAULT_VAT), $this->equalTo(1));
 
-        $productPriceRecalculationSchedulerMock = $this->getMockBuilder(ProductPriceRecalculationScheduler::class)
-            ->disableOriginalConstructor()
-            ->getMock();
         $domainMock = $this->getMockBuilder(Domain::class)
             ->setMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();
 
+        $productRecalculationDispatcherMock = $this->createMock(ProductRecalculationDispatcher::class);
+
         $vatFacade = new VatFacade(
             $emMock,
             $vatRepositoryMock,
             $settingMock,
-            $productPriceRecalculationSchedulerMock,
             new VatFactory(new EntityNameResolver([])),
             $domainMock,
+            $productRecalculationDispatcherMock,
         );
         $vatFacade->setDefaultVatForDomain($vatMock, Domain::FIRST_DOMAIN_ID);
     }

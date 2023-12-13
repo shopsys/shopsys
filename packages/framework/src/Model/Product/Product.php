@@ -167,12 +167,6 @@ class Product extends AbstractTranslatableEntity
     protected $productCategoryDomains;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $recalculatePrice;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Brand\Brand")
      * @ORM\JoinColumn(name="brand_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
@@ -225,7 +219,6 @@ class Product extends AbstractTranslatableEntity
         $this->setAvailabilityAndStock($productData);
         $this->createDomains($productData);
         $this->productCategoryDomains = new ArrayCollection();
-        $this->recalculatePrice = true;
         $this->calculatedSellingDenied = true;
 
         $this->variants = new ArrayCollection();
@@ -323,7 +316,6 @@ class Product extends AbstractTranslatableEntity
     public function changeVatForDomain(Vat $vat, int $domainId): void
     {
         $this->getProductDomain($domainId)->setVat($vat);
-        $this->recalculatePrice = true;
     }
 
     /**
@@ -608,11 +600,6 @@ class Product extends AbstractTranslatableEntity
     public function getBrand()
     {
         return $this->brand;
-    }
-
-    public function markPriceAsRecalculated()
-    {
-        $this->recalculatePrice = false;
     }
 
     /**

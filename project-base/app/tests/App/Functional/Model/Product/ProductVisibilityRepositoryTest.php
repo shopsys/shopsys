@@ -20,7 +20,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
@@ -37,11 +36,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
      * @inject
      */
     private PricingGroupFacade $pricingGroupFacade;
-
-    /**
-     * @inject
-     */
-    private ProductPriceRecalculator $productPriceRecalculator;
 
     /**
      * @inject
@@ -139,14 +133,13 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     private function createProductAndGetVisibility(ProductData $productData): ProductVisibility
     {
         $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
 
-        $this->em->flush();
         $id = $product->getId();
         $this->createImage('product', $id);
+
         $this->em->clear();
 
-        $this->productVisibilityRepository->refreshProductsVisibility();
+        $this->handleDispatchedRecalculationMessages();
 
         /** @var \App\Model\Product\Product $productAgain */
         $productAgain = $this->em->getRepository(Product::class)->find($id);

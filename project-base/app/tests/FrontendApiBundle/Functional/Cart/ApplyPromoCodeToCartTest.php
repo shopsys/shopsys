@@ -380,7 +380,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $productData->sellingDenied = true;
 
         $this->productFacade->edit($product->getId(), $productData);
-        $this->dispatchFakeKernelResponseEventToTriggerImmediateRecalculations();
+        $this->handleDispatchedRecalculationMessages();
     }
 
     /**

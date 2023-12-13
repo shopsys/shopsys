@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
@@ -60,7 +59,6 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -85,7 +83,6 @@ class ProductFacade extends BaseProductFacade
         ParameterRepository $parameterRepository,
         Domain $domain,
         ImageFacade $imageFacade,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         PricingGroupRepository $pricingGroupRepository,
         ProductManualInputPriceFacade $productManualInputPriceFacade,
         FriendlyUrlFacade $friendlyUrlFacade,
@@ -110,7 +107,6 @@ class ProductFacade extends BaseProductFacade
             $parameterRepository,
             $domain,
             $imageFacade,
-            $productPriceRecalculationScheduler,
             $pricingGroupRepository,
             $productManualInputPriceFacade,
             $friendlyUrlFacade,
@@ -167,7 +163,6 @@ class ProductFacade extends BaseProductFacade
 
         $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple($product, $productData->categoriesByDomainId);
         $product->edit($productCategoryDomains, $productData);
-        $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         $this->saveParameters($product, $productData->parameters);
 
@@ -186,8 +181,6 @@ class ProductFacade extends BaseProductFacade
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullnames());
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
-
-        $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
 
@@ -220,8 +213,6 @@ class ProductFacade extends BaseProductFacade
 
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
-
-        $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
     }
 
     /**

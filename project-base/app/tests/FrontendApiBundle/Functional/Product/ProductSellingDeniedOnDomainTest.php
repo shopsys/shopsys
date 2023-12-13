@@ -38,8 +38,6 @@ class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
         $this->productFacade->edit($product->getId(), $productData);
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
-        $this->dispatchFakeKernelResponseEventToTriggerImmediateRecalculations();
-
         $this->handleDispatchedRecalculationMessages();
 
         // wait for elastic to reindex

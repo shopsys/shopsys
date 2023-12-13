@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatMarkedAsDeletedDeleteException;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatWithReplacedDeleteException;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class VatFacade
 {
@@ -17,17 +17,17 @@ class VatFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository $vatRepository
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface $vatFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly VatRepository $vatRepository,
         protected readonly Setting $setting,
-        protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         protected readonly VatFactoryInterface $vatFactory,
         protected readonly Domain $domain,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
 
@@ -84,7 +84,7 @@ class VatFacade
         $vat->edit($vatData);
         $this->em->flush();
 
-        $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
+        $this->productRecalculationDispatcher->dispatchAllProducts();
 
         return $vat;
     }

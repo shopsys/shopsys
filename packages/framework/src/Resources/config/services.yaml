@@ -442,10 +442,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
-
     # Define RedirectController explicitly to prevent creating it on-the-fly
     # when redirecting (it causes unnecessary container rebuild).
     # ContainerControllerResolver fetch RedirectController from container, therefore it must be a public service
@@ -692,9 +688,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceFactory
 
     Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory
