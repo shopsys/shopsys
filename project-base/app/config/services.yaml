@@ -757,9 +757,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Token\TokenFacade:
         alias: App\FrontendApi\Model\Token\TokenFacade
 
-    App\FrontendApi\Component\ExpressionLanguage\DynamicPaginationComplexityExpressionFunction:
-        tags: ['overblog_graphql.expression_function']
-
     App\FrontendApi\Model\Token\TokenAuthenticator: ~
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Component\ExpressionLanguage;
+namespace Shopsys\FrontendApiBundle\Component\ExpressionLanguage;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 
 /**
- * @see \App\FrontendApi\Component\ExpressionLanguage\DynamicPaginationComplexityExpressionFunction
+ * @see \Shopsys\FrontendApiBundle\Component\ExpressionLanguage\DynamicPaginationComplexityExpressionFunction
  */
 class ComplexityCalculator
 {
