@@ -1,0 +1,25 @@
+ArticleLinkDecorator:
+    type: object
+    decorator: true
+    config:
+        interfaces:
+            - 'NotBlogArticleInterface'
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID of the article link"
+            placement:
+                type: "String!"
+                description: "Placement of the article link"
+            name:
+                type: "String!"
+                description: "Name of article link, used as anchor text"
+            createdAt:
+                type: "DateTime!"
+                description: "Creation date time of the article link"
+            url:
+                type: "String!"
+                description: "Destination url of article link"
+            external:
+                type: "Boolean!"
+                description: "If the the article should be open in a new tab"

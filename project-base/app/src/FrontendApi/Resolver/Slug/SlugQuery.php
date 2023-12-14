@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Slug;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlRepository;
-use App\FrontendApi\Resolver\Article\ArticleQuery;
 use App\FrontendApi\Resolver\Products\Flag\FlagQuery;
 use App\FrontendApi\Resolver\Slug\Exception\NoResultFoundForSlugUserError;
 use App\FrontendApi\Resolver\Store\StoreQuery;
@@ -24,6 +23,7 @@ use Shopsys\FrontendApiBundle\Model\Blog\Article\BlogArticleQuery;
 use Shopsys\FrontendApiBundle\Model\Blog\Category\BlogCategoryQuery;
 use Shopsys\FrontendApiBundle\Model\Error\EntityNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailQuery;
@@ -33,7 +33,7 @@ class SlugQuery extends AbstractQuery
     /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\FrontendApi\Resolver\Article\ArticleQuery $articleQuery
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleQuery $articleQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
      * @param \Shopsys\FrontendApiBundle\Model\Blog\Article\BlogArticleQuery $blogArticleQuery
      * @param \Shopsys\FrontendApiBundle\Model\Blog\Category\BlogCategoryQuery $blogCategoryQuery
@@ -76,7 +76,7 @@ class SlugQuery extends AbstractQuery
         try {
             switch ($entity) {
                 case Article::class:
-                    $article = $this->articleQuery->articleQuery(null, $slugWithoutSlash);
+                    $article = $this->articleQuery->articleByUuidOrUrlSlugQuery(null, $slugWithoutSlash);
                     $article[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_ARTICLE;
 
                     return $article;

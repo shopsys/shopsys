@@ -5,127 +5,91 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
-use Shopsys\FrameworkBundle\Model\Article\Article;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchFacade;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
-use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
-use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
-use Shopsys\FrontendApiBundle\Model\Article\ArticleFacade;
 use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
-use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Article\Exception\ArticleNotFoundUserError;
 
 class ArticleQuery extends AbstractQuery
 {
     /**
-     * @param \Shopsys\FrontendApiBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade
-     * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchFacade $articleElasticsearchFacade
+     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
     public function __construct(
-        protected readonly ArticleFacade $articleFacade,
         protected readonly Domain $domain,
-        protected readonly LegalConditionsFacade $legalConditionsFacade,
-        protected readonly CookiesFacade $cookiesFacade,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly ArticleElasticsearchFacade $articleElasticsearchFacade,
+        protected readonly Setting $setting,
     ) {
     }
 
     /**
      * @param string|null $uuid
      * @param string|null $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
+     * @return array
      */
-    public function articleByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): Article
-    {
-        if ($uuid !== null) {
-            return $this->getVisibleByDomainIdAndUuid($uuid);
-        }
-
-        if ($urlSlug !== null) {
-            return $this->getVisibleByDomainIdAndSlug($urlSlug);
-        }
-
-        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
-     */
-    public function termsAndConditionsArticleQuery(): Article
-    {
-        $article = $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId());
-
-        if ($article === null) {
-            throw new ArticleNotFoundUserError('Terms and condition article was not found', 'terms-and-conditions');
-        }
-
-        return $article;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
-     */
-    public function privacyPolicyArticleQuery(): Article
-    {
-        $article = $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId());
-
-        if ($article === null) {
-            throw new ArticleNotFoundUserError('Privacy policy article was not found', 'privacy-policy');
-        }
-
-        return $article;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
-     */
-    public function cookiesArticleQuery(): Article
-    {
-        $article = $this->cookiesFacade->findCookiesArticleByDomainId($this->domain->getId());
-
-        if ($article === null) {
-            throw new ArticleNotFoundUserError('Information about cookies article was not found', 'cookies');
-        }
-
-        return $article;
-    }
-
-    /**
-     * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
-     */
-    protected function getVisibleByDomainIdAndUuid(string $uuid): Article
+    public function articleByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): array
     {
         try {
-            return $this->articleFacade->getVisibleByDomainIdAndUuid($this->domain->getId(), $uuid);
+            if ($uuid !== null) {
+                $articleData = $this->articleElasticsearchFacade->getByUuid($uuid);
+            } elseif ($urlSlug !== null) {
+                $articleData = $this->articleElasticsearchFacade->getBySlug($urlSlug);
+            } else {
+                throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+            }
         } catch (ArticleNotFoundException $articleNotFoundException) {
             throw new ArticleNotFoundUserError($articleNotFoundException->getMessage());
         }
+
+        return $articleData;
     }
 
     /**
-     * @param string $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
+     * @return array
      */
-    protected function getVisibleByDomainIdAndSlug(string $urlSlug): Article
+    public function termsAndConditionsArticleQuery(): array
+    {
+        return $this->getSpecialArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, 'terms-and-conditions');
+    }
+
+    /**
+     * @return array
+     */
+    public function privacyPolicyArticleQuery(): array
+    {
+        return $this->getSpecialArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, 'privacy-policy');
+    }
+
+    /**
+     * @return array
+     */
+    public function cookiesArticleQuery(): array
+    {
+        return $this->getSpecialArticle(Setting::COOKIES_ARTICLE_ID, 'cookies');
+    }
+
+    /**
+     * @param string $settingName
+     * @param string $articleIdentifier
+     * @return array
+     */
+    protected function getSpecialArticle(string $settingName, string $articleIdentifier): array
     {
         try {
-            $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
-                $this->domain->getId(),
-                'front_article_detail',
-                $urlSlug,
-            );
+            $specialArticleId = $this->setting->getForDomain($settingName, $this->domain->getId());
 
-            return $this->articleFacade->getVisibleByDomainIdAndId(
-                $this->domain->getId(),
-                $friendlyUrl->getEntityId(),
-            );
-        } catch (FriendlyUrlNotFoundException | ArticleNotFoundException $articleNotFoundException) {
-            throw new ArticleNotFoundUserError('Article with URL slug `' . $urlSlug . '` does not exist.');
+            if ($specialArticleId === null) {
+                throw new ArticleNotFoundUserError(sprintf('Special article setting "%s" is not set', $settingName), $articleIdentifier);
+            }
+
+            return $this->articleElasticsearchFacade->getById($specialArticleId);
+        } catch (ArticleNotFoundException|SettingValueNotFoundException $exception) {
+            throw new ArticleNotFoundUserError($exception->getMessage(), $articleIdentifier);
         }
     }
 }

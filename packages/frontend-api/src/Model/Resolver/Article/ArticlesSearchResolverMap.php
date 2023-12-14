@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Article;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
 use InvalidArgumentException;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;

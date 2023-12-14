@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Article;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade;
@@ -10,13 +10,13 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class ArticlesSearchQuery extends AbstractQuery
 {
-    private const ARTICLE_SEARCH_LIMIT = 50;
+    protected const ARTICLE_SEARCH_LIMIT = 50;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
      */
     public function __construct(
-        private readonly CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade,
+        protected readonly CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade,
     ) {
     }
 
@@ -28,7 +28,7 @@ class ArticlesSearchQuery extends AbstractQuery
     {
         return $this->combinedArticleElasticsearchFacade->getArticlesBySearchText(
             $argument['search'] ?? '',
-            self::ARTICLE_SEARCH_LIMIT,
+            static::ARTICLE_SEARCH_LIMIT,
         );
     }
 }

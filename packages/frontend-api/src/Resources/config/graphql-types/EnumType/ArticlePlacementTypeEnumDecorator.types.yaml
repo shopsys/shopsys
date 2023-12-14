@@ -1,0 +1,21 @@
+ArticlePlacementTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "Possible placements of an article (used as an input for 'articles' query)"
+        values:
+            footer1:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Article\\Article::PLACEMENT_FOOTER_1")'
+                description: "Articles in 1st footer column"
+            footer2:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Article\\Article::PLACEMENT_FOOTER_2")'
+                description: "Articles in 2nd footer column"
+            footer3:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Article\\Article::PLACEMENT_FOOTER_3")'
+                description: "Articles in 3rd footer column"
+            footer4:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Article\\Article::PLACEMENT_FOOTER_4")'
+                description: "Articles in 4th footer column"
+            none:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Article\\Article::PLACEMENT_NONE")'
+                description: "Articles without specific placement"
