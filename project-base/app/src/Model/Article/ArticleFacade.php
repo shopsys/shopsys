@@ -51,7 +51,7 @@ class ArticleFacade extends BaseArticleFacade
     }
 
     /**
-     * @param \App\Model\Article\ArticleData $articleData
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      * @return \App\Model\Article\Article
      */
     public function create(ArticleData $articleData): Article
@@ -66,7 +66,7 @@ class ArticleFacade extends BaseArticleFacade
 
     /**
      * @param int $articleId
-     * @param \App\Model\Article\ArticleData $articleData
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      * @return \App\Model\Article\Article
      */
     public function edit($articleId, ArticleData $articleData): Article

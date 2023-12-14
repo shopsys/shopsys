@@ -196,9 +196,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory:
         alias: App\Model\Order\Status\Grid\OrderStatusGridFactory
 
-    Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface:
-        alias: App\Model\Article\ArticleDataFactory
-
     Shopsys\FrameworkBundle\Model\Article\ArticleFacade:
         alias: App\Model\Article\ArticleFacade
 

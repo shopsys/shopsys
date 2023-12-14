@@ -16,8 +16,14 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
  */
 class Article implements OrderableEntityInterface
 {
-    public const PLACEMENT_FOOTER = 'footer';
     public const PLACEMENT_NONE = 'none';
+    public const PLACEMENT_FOOTER_1 = 'footer1';
+    public const PLACEMENT_FOOTER_2 = 'footer2';
+    public const PLACEMENT_FOOTER_3 = 'footer3';
+    public const PLACEMENT_FOOTER_4 = 'footer4';
+
+    public const TYPE_SITE = 'site';
+    public const TYPE_LINK = 'link';
 
     protected const GEDMO_SORTABLE_LAST_POSITION = -1;
 
@@ -96,7 +102,25 @@ class Article implements OrderableEntityInterface
      * @var \DateTime
      * @ORM\Column(type="datetime")
      */
-    protected DateTime $createdAt;
+    protected $createdAt;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $external;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $type;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $url;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
@@ -130,6 +154,9 @@ class Article implements OrderableEntityInterface
         $this->placement = $articleData->placement;
         $this->hidden = $articleData->hidden;
         $this->createdAt = $articleData->createdAt ?? new DateTime();
+        $this->external = $articleData->external;
+        $this->type = $articleData->type;
+        $this->url = $articleData->url;
     }
 
     /**
@@ -234,5 +261,45 @@ class Article implements OrderableEntityInterface
     public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExternal()
+    {
+        return $this->external;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLinkType()
+    {
+        return $this->type === self::TYPE_LINK;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

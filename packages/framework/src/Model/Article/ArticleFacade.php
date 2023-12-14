@@ -169,7 +169,10 @@ class ArticleFacade
     public function getAvailablePlacementChoices(): array
     {
         return [
-            t('in footer') => Article::PLACEMENT_FOOTER,
+            t('Articles in footer') . ' 1' => Article::PLACEMENT_FOOTER_1,
+            t('Articles in footer') . ' 2' => Article::PLACEMENT_FOOTER_2,
+            t('Articles in footer') . ' 3' => Article::PLACEMENT_FOOTER_3,
+            t('Articles in footer') . ' 4' => Article::PLACEMENT_FOOTER_4,
             t('without positioning') => Article::PLACEMENT_NONE,
         ];
     }
