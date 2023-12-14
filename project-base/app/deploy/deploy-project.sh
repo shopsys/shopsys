@@ -119,6 +119,7 @@ function merge() {
     # <consumer-name>:<transport-names-separated-by-space>:<number-of-consumers>
     DEFAULT_CONSUMERS=(
         "example:example_transport:1"
+        "placed_order:placed_order_transport:1"
     )
 
     source "${BASE_PATH}/vendor/shopsys/deployment/deploy/functions.sh"

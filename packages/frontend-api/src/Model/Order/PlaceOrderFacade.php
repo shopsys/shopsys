@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
+use Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -30,6 +31,7 @@ class PlaceOrderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher $placedOrderMessageDispatcher
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
@@ -40,6 +42,7 @@ class PlaceOrderFacade
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly PlacedOrderMessageDispatcher $placedOrderMessageDispatcher,
     ) {
     }
 
@@ -67,6 +70,8 @@ class PlaceOrderFacade
         if ($customerUser instanceof CustomerUser) {
             $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, null);
         }
+
+        $this->placedOrderMessageDispatcher->dispatchPlacedOrderMessage($order->getId());
 
         return $order;
     }

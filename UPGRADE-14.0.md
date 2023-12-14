@@ -544,6 +544,31 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   check the visibility of properties ([#2944](https://github.com/shopsys/shopsys/pull/2944))
     -   `Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer::$cdnFacade` is now protected
     -   `Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapCronModule::$imageSitemapFacade` is now protected
+-   order info is now asynchronously sent to Heureka after order is created [#2936](https://github.com/shopsys/shopsys/pull/2936)
+    -   `Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade` class has changed:
+        -   method `__construct()` changed its interface:
+            ```diff
+                public function __construct(
+                -    protected readonly Logger $logger,
+                     protected readonly HeurekaShopCertificationFactory $heurekaShopCertificationFactory,
+                )
+            ```
+        -   method `sendOrderInfo()` is now strictly typed
+        -   `logError()` method has been removed
+    -   `Shopsys\FrameworkBundle\Model\Order\OrderFacade::sendHeurekaOrderInfo()` method changed its interface:
+        ```diff
+        -   public function sendHeurekaOrderInfo(Order $order, $disallowHeurekaVerifiedByCustomers)
+        +   public function sendHeurekaOrderInfo(int $orderId): bool
+        ```
+    -   `Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade::__contruct()` changed its interface:
+        ```diff
+            public function __construct(
+               // ...
+               protected readonly CustomerUserFacade $customerUserFacade,
+        +      protected readonly PlacedOrderMessageDispatcher $placedOrderMessageDispatcher,
+            )
+        ```
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

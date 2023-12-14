@@ -1,5 +1,5 @@
 monolog:
-    channels: ["cron", "slow"]
+    channels: ["cron", "queue", "slow"]
     handlers:
         sentry:
             type: stream
@@ -13,7 +13,7 @@ monolog:
                 VERBOSITY_VERBOSE: DEBUG
                 VERBOSITY_VERY_VERBOSE: DEBUG
                 VERBOSITY_DEBUG: DEBUG
-            channels: cron
+            channels: [cron, queue]
         cron_output:
             type: stream
             path: "%shopsys.log_stream%"

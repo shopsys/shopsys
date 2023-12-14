@@ -425,10 +425,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting: ~
 
-    Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade:
-        arguments:
-            - '@logger'
-
     Shopsys\FrameworkBundle\Model\Pricing\DelayedPricingSetting: ~
 
     Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler:
@@ -1043,3 +1039,7 @@ services:
         alias: Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactory
 
     Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper: ~
+
+    Shopsys\FrameworkBundle\Model\Order\Messenger\HeurekaPlacedOrderMessageHandler:
+        arguments:
+            $logger: '@monolog.logger.queue'

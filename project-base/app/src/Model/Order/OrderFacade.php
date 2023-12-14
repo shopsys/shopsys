@@ -64,7 +64,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
  * @property \App\Model\Order\Item\OrderItemFactory $orderItemFactory
- * @method sendHeurekaOrderInfo(\App\Model\Order\Order $order, bool $disallowHeurekaVerifiedByCustomers)
  * @method prefillFrontOrderData(\App\Model\Order\FrontOrderData $orderData, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order[] getCustomerUserOrderList(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order[] getCustomerUserOrderLimitedList(\App\Model\Customer\User\CustomerUser $customerUser, int $limit, int $offset)

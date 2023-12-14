@@ -39,17 +39,17 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
 class OrderFacadeHeurekaTest extends TestCase
 {
-    public function testNotSendHeurekaOrderInfoWhenShopCertificationIsNotActivated()
+    public function testNotSendHeurekaOrderInfoWhenShopCertificationIsNotActivated(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
         $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(false);
 
         $heurekaFacade->expects($this->never())->method('sendOrderInfo');
 
-        $this->runHeurekaTest($heurekaFacade, false);
+        $this->runHeurekaTest($heurekaFacade);
     }
 
-    public function testNotSendHeurekaOrderInfoWhenDomainLocaleNotSupported()
+    public function testNotSendHeurekaOrderInfoWhenDomainLocaleNotSupported(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
         $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(true);
@@ -57,21 +57,10 @@ class OrderFacadeHeurekaTest extends TestCase
 
         $heurekaFacade->expects($this->never())->method('sendOrderInfo');
 
-        $this->runHeurekaTest($heurekaFacade, false);
+        $this->runHeurekaTest($heurekaFacade);
     }
 
-    public function testNotSendHeurekaOrderInfoWhenSendingIsDisallowed()
-    {
-        $heurekaFacade = $this->createMock(HeurekaFacade::class);
-        $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(true);
-        $heurekaFacade->method('isDomainLocaleSupported')->willReturn(true);
-
-        $heurekaFacade->expects($this->never())->method('sendOrderInfo');
-
-        $this->runHeurekaTest($heurekaFacade, true);
-    }
-
-    public function testSendHeurekaOrderInfo()
+    public function testSendHeurekaOrderInfo(): void
     {
         $heurekaFacade = $this->createMock(HeurekaFacade::class);
         $heurekaFacade->method('isHeurekaShopCertificationActivated')->willReturn(true);
@@ -79,19 +68,23 @@ class OrderFacadeHeurekaTest extends TestCase
 
         $heurekaFacade->expects($this->once())->method('sendOrderInfo');
 
-        $this->runHeurekaTest($heurekaFacade, false);
+        $this->runHeurekaTest($heurekaFacade);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      */
-    private function createOrderFacade(HeurekaFacade $heurekaFacade): OrderFacade
+    private function createOrderFacade(HeurekaFacade $heurekaFacade, Order $order): OrderFacade
     {
+        $orderRepositoryMock = $this->createMock(OrderRepository::class);
+        $orderRepositoryMock->method('getById')->willReturn($order);
+
         return new OrderFacade(
             $this->createMock(EntityManagerInterface::class),
             $this->createMock(OrderNumberSequenceRepository::class),
-            $this->createMock(OrderRepository::class),
+            $orderRepositoryMock,
             $this->createMock(OrderUrlGenerator::class),
             $this->createMock(OrderStatusRepository::class),
             $this->createMock(OrderMailFacade::class),
@@ -120,13 +113,12 @@ class OrderFacadeHeurekaTest extends TestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
-     * @param bool $disallowHeurekaVerifiedByCustomers
      */
-    private function runHeurekaTest(HeurekaFacade $heurekaFacade, $disallowHeurekaVerifiedByCustomers): void
+    private function runHeurekaTest(HeurekaFacade $heurekaFacade): void
     {
-        $orderFacade = $this->createOrderFacade($heurekaFacade);
         $order = $this->createOrderMock();
-        $orderFacade->sendHeurekaOrderInfo($order, $disallowHeurekaVerifiedByCustomers);
+        $orderFacade = $this->createOrderFacade($heurekaFacade, $order);
+        $orderFacade->sendHeurekaOrderInfo($order->getId());
     }
 
     /**
@@ -146,6 +138,7 @@ class OrderFacadeHeurekaTest extends TestCase
     private function createOrderMock(): MockObject
     {
         $order = $this->createMock(Order::class);
+        $order->method('getId')->willReturn(1);
         $order->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);
 
         return $order;
