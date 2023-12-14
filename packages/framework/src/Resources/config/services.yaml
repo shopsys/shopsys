@@ -1048,3 +1048,5 @@ services:
 
     Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade:
         arguments: [ '@snc_redis.blog_article_export_queue' ]
+
+    Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex: ~

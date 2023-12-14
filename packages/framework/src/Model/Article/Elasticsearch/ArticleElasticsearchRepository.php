@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Article\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoResultException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
@@ -11,12 +11,12 @@ use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 class ArticleElasticsearchRepository
 {
     /**
-     * @param \App\Model\Article\Elasticsearch\FilterQueryFactory $filterQueryFactory
-     * @param \App\Model\Article\Elasticsearch\ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher
+     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQueryFactory $filterQueryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher
      */
     public function __construct(
-        private FilterQueryFactory $filterQueryFactory,
-        private ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher,
+        protected readonly FilterQueryFactory $filterQueryFactory,
+        protected readonly ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher,
     ) {
     }
 
@@ -105,7 +105,7 @@ class ArticleElasticsearchRepository
      * @param string $slug
      * @return array|null
      */
-    private function findBySlug(string $slug): ?array
+    protected function findBySlug(string $slug): ?array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredBySlug($slug);
 

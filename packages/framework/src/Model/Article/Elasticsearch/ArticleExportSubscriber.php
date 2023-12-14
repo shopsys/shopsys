@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Article\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -14,11 +14,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class ArticleExportSubscriber extends AbstractExportSubscriber
 {
     /**
-     * @param \App\Model\Article\Elasticsearch\ArticleExportScheduler $articleExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportScheduler $articleExportScheduler
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \App\Model\Article\Elasticsearch\ArticleIndex $index
+     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(

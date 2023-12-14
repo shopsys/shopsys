@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Article\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractFilterQuery;
 
@@ -23,7 +23,7 @@ class FilterQuery extends AbstractFilterQuery
 
     /**
      * @param string $uuid
-     * @return \App\Model\Article\Elasticsearch\FilterQuery
+     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
      */
     public function filterByUuid(string $uuid): self
     {
@@ -39,7 +39,7 @@ class FilterQuery extends AbstractFilterQuery
 
     /**
      * @param string $slug
-     * @return \App\Model\Article\Elasticsearch\FilterQuery
+     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
      */
     public function filterBySlug(string $slug): self
     {
@@ -55,7 +55,7 @@ class FilterQuery extends AbstractFilterQuery
 
     /**
      * @param string[] $placements
-     * @return $this
+     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
      */
     public function filterByPlacements(array $placements): self
     {
@@ -71,7 +71,7 @@ class FilterQuery extends AbstractFilterQuery
 
     /**
      * @param int $articleId
-     * @return $this
+     * @return \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQuery
      */
     public function filterById(int $articleId): self
     {

@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Article\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
-use App\Model\Article\Article;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 
 class ArticleExportRepository
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser $grapesJsParser
      */
     public function __construct(
-        private readonly ArticleRepository $articleRepository,
-        private readonly FriendlyUrlFacade $friendlyUrlFacade,
-        private readonly BreadcrumbFacade $breadcrumbFacade,
-        private readonly GrapesJsParser $grapesJsParser,
+        protected readonly ArticleRepository $articleRepository,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly BreadcrumbFacade $breadcrumbFacade,
+        protected readonly GrapesJsParser $grapesJsParser,
     ) {
     }
 

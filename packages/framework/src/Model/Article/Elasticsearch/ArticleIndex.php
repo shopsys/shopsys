@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Article\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
@@ -11,11 +11,11 @@ class ArticleIndex extends AbstractIndex
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Article\Elasticsearch\ArticleExportRepository $articleExportRepository
+     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportRepository $articleExportRepository
      */
     public function __construct(
-        protected Domain $domain,
-        private ArticleExportRepository $articleExportRepository,
+        protected readonly Domain $domain,
+        protected readonly ArticleExportRepository $articleExportRepository,
     ) {
     }
 

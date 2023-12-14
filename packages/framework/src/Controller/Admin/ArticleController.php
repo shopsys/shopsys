@@ -50,8 +50,9 @@ class ArticleController extends AdminBaseController
      * @Route("/article/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id): Response
     {
         $article = $this->articleFacade->getById($id);
         $articleData = $this->articleDataFactory->createFromArticle($article);
@@ -115,8 +116,9 @@ class ArticleController extends AdminBaseController
     /**
      * @Route("/article/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $articleData = $this->articleDataFactory->create();
 
@@ -154,8 +156,9 @@ class ArticleController extends AdminBaseController
      * @Route("/article/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         try {
             $fullName = $this->articleFacade->getById($id)->getName();
@@ -178,8 +181,9 @@ class ArticleController extends AdminBaseController
     /**
      * @Route("/article/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id): Response
     {
         $article = $this->articleFacade->getById($id);
 
@@ -205,7 +209,7 @@ class ArticleController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function saveOrderingAction(Request $request)
+    public function saveOrderingAction(Request $request): JsonResponse
     {
         $this->articleFacade->saveOrdering($request->get('rowIdsByGridId'));
 

@@ -18,13 +18,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @property \App\Model\Article\ArticleFacade $articleFacade
  * @property \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
  */
 class ArticleController extends BaseArticleController
 {
     /**
-     * @param \App\Model\Article\ArticleFacade $articleFacade
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory $articleDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
@@ -60,7 +59,7 @@ class ArticleController extends BaseArticleController
     /**
      * {@inheritdoc}
      */
-    public function editAction(Request $request, $id): Response
+    public function editAction(Request $request, int $id): Response
     {
         $response = parent::editAction($request, $id);
 
@@ -84,7 +83,7 @@ class ArticleController extends BaseArticleController
     /**
      * {@inheritdoc}
      */
-    public function deleteAction($id): Response
+    public function deleteAction(int $id): Response
     {
         $response = parent::deleteAction($id);
 

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Article;
 
 use App\Component\Setting\Setting;
-use App\Model\Article\Elasticsearch\ArticleElasticsearchFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting as BaseSetting;
+use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchFacade;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
@@ -23,7 +23,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Article\Exception\ArticleNotFoundUs
 class ArticleQuery extends AbstractQuery
 {
     /**
-     * @param \App\Model\Article\Elasticsearch\ArticleElasticsearchFacade $articleElasticsearchFacade
+     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchFacade $articleElasticsearchFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */

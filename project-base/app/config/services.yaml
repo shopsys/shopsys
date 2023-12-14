@@ -196,11 +196,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory:
         alias: App\Model\Order\Status\Grid\OrderStatusGridFactory
 
-    Shopsys\FrameworkBundle\Model\Article\ArticleFacade:
-        alias: App\Model\Article\ArticleFacade
-
-    App\Model\Article\Elasticsearch\ArticleIndex: ~
-
     League\Flysystem\FilesystemOperator:
         alias: main_filesystem
 

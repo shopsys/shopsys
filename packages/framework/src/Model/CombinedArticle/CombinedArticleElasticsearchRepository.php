@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Article;
+namespace Shopsys\FrameworkBundle\Model\CombinedArticle;
 
-use App\Model\Article\Elasticsearch\ArticleIndex;
 use Elasticsearch\Client;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
+use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex;
 
 class CombinedArticleElasticsearchRepository
@@ -19,9 +19,9 @@ class CombinedArticleElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      */
     public function __construct(
-        private Client $client,
-        private Domain $domain,
-        private IndexDefinitionLoader $indexDefinitionLoader,
+        protected readonly Client $client,
+        protected readonly Domain $domain,
+        protected readonly IndexDefinitionLoader $indexDefinitionLoader,
     ) {
     }
 
@@ -91,7 +91,7 @@ class CombinedArticleElasticsearchRepository
     /**
      * @return string
      */
-    private function getCombinedArticleIndex(): string
+    protected function getCombinedArticleIndex(): string
     {
         $domainId = $this->domain->getId();
         $articleIndexName = $this->indexDefinitionLoader->getIndexDefinition(
@@ -111,7 +111,7 @@ class CombinedArticleElasticsearchRepository
      * @param int|null $limit
      * @return array
      */
-    private function getSearchQuery(string $searchText, ?int $limit = null): array
+    protected function getSearchQuery(string $searchText, ?int $limit = null): array
     {
         $query = [
             'index' => $this->getCombinedArticleIndex(),

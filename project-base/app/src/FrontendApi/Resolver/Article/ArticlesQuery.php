@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Article;
 
-use App\Model\Article\Elasticsearch\ArticleElasticsearchFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
+use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchFacade;
 use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
@@ -18,7 +18,7 @@ class ArticlesQuery extends AbstractQuery
     private const DEFAULT_FIRST_LIMIT = 10;
 
     /**
-     * @param \App\Model\Article\Elasticsearch\ArticleElasticsearchFacade $articleElasticsearchFacade
+     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchFacade $articleElasticsearchFacade
      */
     public function __construct(private readonly ArticleElasticsearchFacade $articleElasticsearchFacade)
     {

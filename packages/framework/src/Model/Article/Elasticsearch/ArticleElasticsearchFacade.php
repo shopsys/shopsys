@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Article\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
 class ArticleElasticsearchFacade
 {
     /**
-     * @param \App\Model\Article\Elasticsearch\ArticleElasticsearchRepository $articleElasticsearchRepository
+     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchRepository $articleElasticsearchRepository
      */
-    public function __construct(private ArticleElasticsearchRepository $articleElasticsearchRepository)
-    {
+    public function __construct(
+        protected readonly ArticleElasticsearchRepository $articleElasticsearchRepository,
+    ) {
     }
 
     /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Article\Elasticsearch;
+namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportCronModule;
@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
 class ArticleExportCronModule extends AbstractExportCronModule
 {
     /**
-     * @param \App\Model\Article\Elasticsearch\ArticleIndex $index
+     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

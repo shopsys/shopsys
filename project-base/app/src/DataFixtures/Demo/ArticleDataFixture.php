@@ -63,7 +63,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     ];
 
     /**
-     * @param \App\Model\Article\ArticleFacade $articleFacade
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory $articleDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
