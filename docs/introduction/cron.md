@@ -62,3 +62,7 @@ but in some cases, the overall time of the "every 5 minutes" cron modules can be
 Then it's possible, some cron modules will never be run.
 
 It's crucial to monitor your crons and, if necessary, update their periodicity and timeout or split them into [multiple Cron Instances](#multiple-cron-instances).
+
+!!! note
+
+    Crons implementing `Shopsys\Plugin\Cron\IteratedCronModuleInterface` with the correct implementation of iterate, wakeUp, and sleep methods will be checked during every iteration if their memory limit is not approaching and if so, they will be stopped and started again in the next iteration.

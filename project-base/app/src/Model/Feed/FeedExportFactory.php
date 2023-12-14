@@ -47,6 +47,7 @@ class FeedExportFactory extends BaseFeedExportFactory
             $this->em,
             $feedFilepath,
             $feedLocalFilepath,
+            $this->servicesResetter,
             $lastSeekId,
         );
     }

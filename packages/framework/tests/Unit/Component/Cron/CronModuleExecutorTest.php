@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
+use Symfony\Bridge\Monolog\Logger;
 
 class CronModuleExecutorTest extends TestCase
 {
@@ -87,6 +88,9 @@ class CronModuleExecutorTest extends TestCase
         $cronTimeResolver = new CronTimeResolver();
         $cronConfig = new CronConfig($cronTimeResolver);
 
+        /** @var \Symfony\Bridge\Monolog\Logger $loggerMock */
+        $loggerMock = $this->createMock(Logger::class);
+
         foreach ($servicesIndexedById as $serviceId => $service) {
             $cronConfig->registerCronModuleInstance(
                 $service,
@@ -101,6 +105,6 @@ class CronModuleExecutorTest extends TestCase
             );
         }
 
-        return new CronModuleExecutor($cronConfig);
+        return new CronModuleExecutor($cronConfig, $loggerMock);
     }
 }
