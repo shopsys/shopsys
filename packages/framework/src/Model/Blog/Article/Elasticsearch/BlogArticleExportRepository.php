@@ -8,7 +8,10 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository;
@@ -22,6 +25,8 @@ class BlogArticleExportRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser $grapesJsParser
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -29,6 +34,8 @@ class BlogArticleExportRepository
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly GrapesJsParser $grapesJsParser,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -103,6 +110,13 @@ class BlogArticleExportRepository
     {
         $blogArticleCategories = $blogArticle->getBlogCategoriesIndexedByDomainId()[$domainId];
         $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_blogarticle_detail', $blogArticle->getId());
+        $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+        try {
+            $imageUrl = $this->imageFacade->getImageUrl($domainConfig, $blogArticle);
+        } catch (ImageNotFoundException $exception) {
+            $imageUrl = null;
+        }
 
         return [
             'name' => $blogArticle->getName($locale),
@@ -120,6 +134,7 @@ class BlogArticleExportRepository
             'categories' => array_map(fn (BlogCategory $blogCategory) => $blogCategory->getId(), $blogArticleCategories),
             'mainSlug' => $mainFriendlyUrl->getSlug(),
             'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($blogArticle->getId(), 'front_blogarticle_detail', $domainId, $locale),
+            'imageUrl' => $imageUrl,
         ];
     }
 }
