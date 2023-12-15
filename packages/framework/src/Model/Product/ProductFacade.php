@@ -356,41 +356,4 @@ class ProductFacade
             $productData->productStockData,
         );
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param array $originalNames
-     */
-    protected function createFriendlyUrlsWhenRenamed(Product $product, array $originalNames): void
-    {
-        $changedNames = $this->getChangedNamesByLocale($product, $originalNames);
-
-        if (count($changedNames) === 0) {
-            return;
-        }
-
-        $this->friendlyUrlFacade->createFriendlyUrls(
-            'front_product_detail',
-            $product->getId(),
-            $changedNames,
-        );
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param array $originalNames
-     * @return array
-     */
-    protected function getChangedNamesByLocale(Product $product, array $originalNames): array
-    {
-        $changedProductNames = [];
-
-        foreach ($product->getNames() as $locale => $name) {
-            if ($name !== null && $name !== $originalNames[$locale]) {
-                $changedProductNames[$locale] = $name;
-            }
-        }
-
-        return $changedProductNames;
-    }
 }

@@ -44,8 +44,6 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method createProductVisibilities(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getByUuid(string $uuid)
- * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
- * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
  * @method \App\Model\Product\Product create(\App\Model\Product\ProductData $productData)
  * @property \App\Model\Product\ProductFactory $productFactory
  * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
