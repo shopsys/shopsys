@@ -1807,6 +1807,9 @@ msgstr ""
 msgid "Open in a new tab"
 msgstr ""
 
+msgid "Open in new window"
+msgstr ""
+
 msgid "Opening hours"
 msgstr ""
 
@@ -2377,6 +2380,9 @@ msgstr ""
 msgid "Short description can be set in the main variant."
 msgstr ""
 
+msgid "Site"
+msgstr ""
+
 msgid "Slider on main page"
 msgstr ""
 
@@ -2564,6 +2570,9 @@ msgid "Tracking ID"
 msgstr ""
 
 msgid "Type"
+msgstr ""
+
+msgid "URL"
 msgstr ""
 
 msgid "URL addresses"
@@ -2852,9 +2861,6 @@ msgid "in category (above the product list)"
 msgstr ""
 
 msgid "in category (between first and second row of products)"
-msgstr ""
-
-msgid "in footer"
 msgstr ""
 
 msgid "include"

@@ -82,9 +82,6 @@ msgstr "Odběrné místo se zadaným UUID není dostupné"
 msgid "Please check Tax number format"
 msgstr "Prosím zkontrolujte formát DIČ"
 
-msgid "Please choose article placement"
-msgstr "Vyberte prosím umístění článku"
-
 msgid "Please choose country"
 msgstr "Prosím vyberte stát"
 
@@ -99,12 +96,6 @@ msgstr "Prosím vyberte typ omezení"
 
 msgid "Please enter GTM ID"
 msgstr "Prosím vyplňte GTM ID"
-
-msgid "Please enter URL"
-msgstr "Vyplňte prosím URL"
-
-msgid "Please enter article content"
-msgstr "Vyplňte prosím obsah článku"
 
 msgid "Please enter article name"
 msgstr "Vyplňte prosím název článku"

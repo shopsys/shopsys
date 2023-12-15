@@ -7,9 +7,6 @@ msgstr ""
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr ""
 
-msgid "-- Choose article position --"
-msgstr ""
-
 msgid "-- Select a role --"
 msgstr ""
 
@@ -143,12 +140,6 @@ msgid "Articles - full"
 msgstr ""
 
 msgid "Articles - view"
-msgstr ""
-
-msgid "Articles in footer"
-msgstr ""
-
-msgid "Articles without positioning"
 msgstr ""
 
 msgid "Assign to category"
@@ -925,9 +916,6 @@ msgstr ""
 msgid "Limits"
 msgstr ""
 
-msgid "Link"
-msgstr ""
-
 msgid "Link Block"
 msgstr ""
 
@@ -953,9 +941,6 @@ msgid "List of products"
 msgstr ""
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
-msgstr ""
-
-msgid "Location"
 msgstr ""
 
 msgid "Log in"
@@ -1103,9 +1088,6 @@ msgid "No"
 msgstr ""
 
 msgid "No SEO pages found."
-msgstr ""
-
-msgid "No articles found on this domain. You have to create some first."
 msgstr ""
 
 msgid "No combinations of SEO categories found."
@@ -1648,9 +1630,6 @@ msgstr ""
 msgid "Show in the category"
 msgstr ""
 
-msgid "Site"
-msgstr ""
-
 msgid "Slider items - full"
 msgstr ""
 
@@ -1846,9 +1825,6 @@ msgstr ""
 msgid "Type of image"
 msgstr ""
 
-msgid "URL"
-msgstr ""
-
 msgid "URL Settings"
 msgstr ""
 
@@ -2030,9 +2006,6 @@ msgid "relevance"
 msgstr ""
 
 msgid "turnover in"
-msgstr ""
-
-msgid "without positioning"
 msgstr ""
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"

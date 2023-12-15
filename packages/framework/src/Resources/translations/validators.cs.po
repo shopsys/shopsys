@@ -190,6 +190,9 @@ msgstr "Prosím vyberte viditelnost."
 msgid "Please enter HTML code for advertisement area"
 msgstr "Vyplňte prosím HTML kód pro reklamní plochu"
 
+msgid "Please enter URL"
+msgstr "Vyplňte prosím URL"
+
 msgid "Please enter VAT in correct format."
 msgstr "Prosím zadejte DPH v platném formátu"
 

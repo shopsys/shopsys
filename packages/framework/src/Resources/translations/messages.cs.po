@@ -1807,6 +1807,9 @@ msgstr "Pouze zaškrtnuté zboží"
 msgid "Open in a new tab"
 msgstr "Otevřít v novém panelu"
 
+msgid "Open in new window"
+msgstr "Otevírat v novém okně"
+
 msgid "Opening hours"
 msgstr "Otevírací doba"
 
@@ -2377,6 +2380,9 @@ msgstr "Krátký popis USP"
 msgid "Short description can be set in the main variant."
 msgstr "Krátký popis se nastavuje u hlavní varianty."
 
+msgid "Site"
+msgstr "Stránka"
+
 msgid "Slider on main page"
 msgstr "Slider na titulce"
 
@@ -2565,6 +2571,9 @@ msgstr "Číslo pro měření"
 
 msgid "Type"
 msgstr "Typ"
+
+msgid "URL"
+msgstr "URL"
 
 msgid "URL addresses"
 msgstr "URL adresy"
@@ -2853,9 +2862,6 @@ msgstr "v kategorii (nad výpisem produktů)"
 
 msgid "in category (between first and second row of products)"
 msgstr "v kategorii (mezi prvním a druhým řádkem produktů)"
-
-msgid "in footer"
-msgstr "v patičce"
 
 msgid "include"
 msgstr "obsahuje"

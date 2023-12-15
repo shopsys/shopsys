@@ -7,9 +7,6 @@ msgstr ""
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
 
-msgid "-- Choose article position --"
-msgstr ""
-
 msgid "-- Select a role --"
 msgstr "-- Vyber roli --"
 
@@ -144,12 +141,6 @@ msgstr "Články - vše"
 
 msgid "Articles - view"
 msgstr "Články - zobrazení"
-
-msgid "Articles in footer"
-msgstr "Články v patičce"
-
-msgid "Articles without positioning"
-msgstr "Články bez umístění"
 
 msgid "Assign to category"
 msgstr "Přiřazení do kategorie"
@@ -925,9 +916,6 @@ msgstr "Nastavení právních podmínek upraveno."
 msgid "Limits"
 msgstr "Limity"
 
-msgid "Link"
-msgstr "Odkaz"
-
 msgid "Link Block"
 msgstr "Blok odkazu"
 
@@ -954,9 +942,6 @@ msgstr "Seznam produktů"
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr "Seznam produktů v objednávce (název, množství, cena za jednotku včetně DPH, celková cena za položku včetně DPH)"
-
-msgid "Location"
-msgstr "Lokace"
 
 msgid "Log in"
 msgstr "Přihlásit se"
@@ -1104,9 +1089,6 @@ msgstr "Ne"
 
 msgid "No SEO pages found."
 msgstr "Nebyly nalezeny žádné SEO stránky."
-
-msgid "No articles found on this domain. You have to create some first."
-msgstr "Nebyly nalezeny žádné články na této doméně. Musíte prvně nějaký vytvořit."
 
 msgid "No combinations of SEO categories found."
 msgstr "Nebyly nalezeny žádné kombinace SEO kategorií."
@@ -1648,9 +1630,6 @@ msgstr "Zobrazit kombinace"
 msgid "Show in the category"
 msgstr "Zobrazit v rozcestníku"
 
-msgid "Site"
-msgstr "Stránka"
-
 msgid "Slider items - full"
 msgstr "Bannery - vše"
 
@@ -1846,9 +1825,6 @@ msgstr "Typ"
 msgid "Type of image"
 msgstr "Typ obrázku"
 
-msgid "URL"
-msgstr "URL"
-
 msgid "URL Settings"
 msgstr "Nastavení URL"
 
@@ -2031,9 +2007,6 @@ msgstr "relevance"
 
 msgid "turnover in"
 msgstr "obrat v"
-
-msgid "without positioning"
-msgstr "bez pozice"
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
 msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vytvořeny <strong>%count%</strong> slevové kupóny|[5,Inf] Bylo vytvořeno <strong>%count%</strong> slevových kupónů"

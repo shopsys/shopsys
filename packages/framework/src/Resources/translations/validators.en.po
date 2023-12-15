@@ -190,6 +190,9 @@ msgstr ""
 msgid "Please enter HTML code for advertisement area"
 msgstr ""
 
+msgid "Please enter URL"
+msgstr ""
+
 msgid "Please enter VAT in correct format."
 msgstr ""
 
