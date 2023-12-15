@@ -94,6 +94,6 @@ module.exports = {
             }
         }
 
-        return (await import('./i18n-translator')).getLocalTranslates(locale, namespace);
+        return (await import('./i18n-translator')).getFreshTranslates(locale, namespace);
     },
 };

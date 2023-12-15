@@ -1,11 +1,4 @@
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function getLocalTranslates(locale, namespace) {
-    let localTranslates = (await import(`./public/locales/${locale}/${namespace}.json`)).default;
-
-    return fillEmptyTranslatesWithKeys(localTranslates);
-}
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getFreshTranslates(locale, namespace) {
     const [localTranslatesResponse, userTranslatesResponse] = await Promise.all([
         fetch(`${process.env.INTERNAL_ENDPOINT}/locales/${locale}/${namespace}.json`),
