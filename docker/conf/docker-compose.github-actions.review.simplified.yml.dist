@@ -42,6 +42,7 @@ services:
             GOPAY_CS_CLIENTSECRET: GOPAY_CLIENTSECRET
             PACKETERY_API_KEY: PACKETERY_API_KEY_VALUE
             PACKETERY_API_PASSWORD: PACKETERY_API_PASSWORD_VALUE
+            MESSENGER_TRANSPORT_VHOST: BRANCH_NAME
         networks:
             - default
             - services-network
