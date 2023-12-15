@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryEvent;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyEvent;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupEvent;
@@ -20,10 +21,12 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\AffectedProductsFacade $affectedProductsFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
+     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
         protected readonly AffectedProductsFacade $affectedProductsFacade,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -92,6 +95,11 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
         $this->productRecalculationDispatcher->dispatchAllProducts();
     }
 
+    public function cleanStorefrontSettingsQueryCache(): void
+    {
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SETTINGS_QUERY_KEY_PART);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -101,7 +109,10 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
             BrandEvent::DELETE => 'dispatchAffectedByBrand',
             CategoryEvent::UPDATE => 'dispatchAffectedByCategory',
             CategoryEvent::DELETE => 'dispatchAffectedByCategory',
-            CurrencyEvent::UPDATE => 'dispatchAllProducts',
+            CurrencyEvent::UPDATE => [
+                ['dispatchAllProducts'],
+                ['cleanStorefrontSettingsQueryCache'],
+            ],
             FlagEvent::DELETE => 'dispatchAffectedByFlag',
             ParameterEvent::DELETE => 'dispatchAffectedByParameter',
             ParameterEvent::UPDATE => 'dispatchAffectedByParameter',
