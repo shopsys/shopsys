@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Navigation;
 
-use App\Component\Redis\CleanStorefrontCacheFacade;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 
 class NavigationItemFacade
 {
@@ -16,7 +16,7 @@ class NavigationItemFacade
      * @param \App\Model\Navigation\NavigationItemRepository $navigationItemRepository
      * @param \App\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
      * @param \App\Model\Navigation\NavigationItemDetailFactory $navigationItemDetailFactory
-     * @param \App\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
         private readonly EntityManagerDecorator $em,

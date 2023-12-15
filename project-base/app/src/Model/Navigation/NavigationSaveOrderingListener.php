@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Navigation;
 
-use App\Component\Redis\CleanStorefrontCacheFacade;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 class NavigationSaveOrderingListener
@@ -12,7 +12,7 @@ class NavigationSaveOrderingListener
     private const SAVE_ORDERING_URI = '/admin/_grid/save-ordering/';
 
     /**
-     * @param \App\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
         private readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,

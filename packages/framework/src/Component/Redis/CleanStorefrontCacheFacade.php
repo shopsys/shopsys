@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\Redis;
+namespace Shopsys\FrameworkBundle\Component\Redis;
 
 use Redis;
 
@@ -11,12 +11,13 @@ class CleanStorefrontCacheFacade
     public const NAVIGATION_QUERY_KEY_PART = 'NavigationQuery';
     public const BLOG_ARTICLES_QUERY_KEY_PART = 'BlogArticlesQuery';
     public const ARTICLES_QUERY_KEY_PART = 'ArticlesQuery';
+    public const SETTINGS_QUERY_KEY_PART = 'SettingsQuery';
 
     /**
      * @param \Redis $storefrontGraphqlQueryClient
      */
     public function __construct(
-        private readonly Redis $storefrontGraphqlQueryClient,
+        protected readonly Redis $storefrontGraphqlQueryClient,
     ) {
     }
 
@@ -41,7 +42,7 @@ class CleanStorefrontCacheFacade
     /**
      * @param string $keyPattern
      */
-    private function cleanStorefrontCacheByKeyPattern(string $keyPattern): void
+    protected function cleanStorefrontCacheByKeyPattern(string $keyPattern): void
     {
         $prefix = (string)$this->storefrontGraphqlQueryClient->getOption(Redis::OPT_PREFIX);
 

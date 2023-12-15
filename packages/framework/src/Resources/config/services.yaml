@@ -284,6 +284,10 @@ services:
     Shopsys\FrameworkBundle\Component\Setting\ClearSettingsCacheDoctrineSubscriber:
         tags: ['doctrine.event_subscriber']
 
+    Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade:
+        arguments:
+            $storefrontGraphqlQueryClient: '@snc_redis.storefront_graphql_query'
+
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory:
         arguments:
             - '@event_dispatcher'

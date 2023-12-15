@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\LanguageConstant;
 
-use App\Component\Redis\CleanStorefrontCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use League\Flysystem\FilesystemOperator;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use function GuzzleHttp\json_decode;
 
 class LanguageConstantFacade
@@ -21,7 +21,7 @@ class LanguageConstantFacade
      * @param string $languageConstantsUrlPattern
      * @param string $domainLocalesDirectory
      * @param \League\Flysystem\FilesystemOperator $filesystem
-     * @param \App\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
         private readonly EntityManagerInterface $em,
