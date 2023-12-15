@@ -38,14 +38,28 @@ class CombinedArticleElasticsearchRepository
     }
 
     /**
-     * @param array $result
+     * @param int $domainId
+     * @param int $from
+     * @param int $maxResults
      * @return array
      */
-    protected function extractHits(array $result): array
+    public function getArticlesByDomainId(int $domainId, int $from, int $maxResults): array
     {
-        return array_map(function ($value) {
+        $result = $this->client->search($this->getArticlesByDomainIdQuery($domainId, $from, $maxResults));
+
+        return $this->extractHits($result, $domainId);
+    }
+
+    /**
+     * @param array $result
+     * @param int|null $domainId
+     * @return array
+     */
+    protected function extractHits(array $result, ?int $domainId = null): array
+    {
+        return array_map(function ($value) use ($domainId) {
             $data = $value['_source'];
-            $data['index'] = $this->getIndexNameFromIndexVersion($value['_index']);
+            $data['index'] = $this->getIndexNameFromIndexVersion($value['_index'], $domainId);
             $data['id'] = (int)$value['_id'];
 
             return $this->fillEmptyFields($data);
@@ -54,17 +68,18 @@ class CombinedArticleElasticsearchRepository
 
     /**
      * @param string $indexVersion
+     * @param int|null $domainId
      * @return string
      */
-    protected function getIndexNameFromIndexVersion(string $indexVersion): string
+    protected function getIndexNameFromIndexVersion(string $indexVersion, ?int $domainId = null): string
     {
-        $blogArticleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(BlogArticleIndex::getName(), $this->domain->getId())->getVersionedIndexName();
+        $blogArticleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(BlogArticleIndex::getName(), $domainId ?? $this->domain->getId())->getVersionedIndexName();
 
         if ($indexVersion === $blogArticleVersionedIndexName) {
             return BlogArticleIndex::getName();
         }
 
-        $articleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(ArticleIndex::getName(), $this->domain->getId())->getVersionedIndexName();
+        $articleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(ArticleIndex::getName(), $domainId ?? $this->domain->getId())->getVersionedIndexName();
 
         if ($indexVersion === $articleVersionedIndexName) {
             return ArticleIndex::getName();
@@ -89,11 +104,12 @@ class CombinedArticleElasticsearchRepository
     }
 
     /**
+     * @param int|null $domainId
      * @return string
      */
-    protected function getCombinedArticleIndex(): string
+    protected function getCombinedArticleIndex(?int $domainId = null): string
     {
-        $domainId = $this->domain->getId();
+        $domainId = $domainId ?? $this->domain->getId();
         $articleIndexName = $this->indexDefinitionLoader->getIndexDefinition(
             ArticleIndex::getName(),
             $domainId,
@@ -120,26 +136,7 @@ class CombinedArticleElasticsearchRepository
                 'query' => [
                     'bool' => [
                         'must' => [
-                            [
-                                'bool' => [
-                                    'should' => [
-                                        [
-                                            'match' => [
-                                                'type' => 'site',
-                                            ],
-                                        ],
-                                        [
-                                            'bool' => [
-                                                'must_not' => [
-                                                    'exists' => [
-                                                        'field' => 'type',
-                                                    ],
-                                                ],
-                                            ],
-                                        ],
-                                    ],
-                                ],
-                            ],
+                            $this->getCombinedArticlesCondition(),
                             [
                                 'multi_match' => [
                                     'query' => $searchText,
@@ -164,5 +161,54 @@ class CombinedArticleElasticsearchRepository
         }
 
         return $query;
+    }
+
+    /**
+     * @param int $domainId
+     * @param int $from
+     * @param int $maxResults
+     * @return array
+     */
+    protected function getArticlesByDomainIdQuery(int $domainId, int $from, int $maxResults): array
+    {
+        return [
+            'index' => $this->getCombinedArticleIndex($domainId),
+            'body' => [
+                'from' => $from,
+                'size' => $maxResults,
+                'query' => [
+                    'bool' => [
+                        'must' => [$this->getCombinedArticlesCondition()],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCombinedArticlesCondition(): array
+    {
+        return [
+            'bool' => [
+                'should' => [
+                    [
+                        'match' => [
+                            'type' => 'site',
+                        ],
+                    ],
+                    [
+                        'bool' => [
+                            'must_not' => [
+                                'exists' => [
+                                    'field' => 'type',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 }

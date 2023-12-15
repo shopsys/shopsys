@@ -22,6 +22,7 @@ return [
     Shopsys\ProductFeed\ZboziBundle\ShopsysProductFeedZboziBundle::class => ['all' => true],
     Shopsys\ProductFeed\HeurekaDeliveryBundle\ShopsysProductFeedHeurekaDeliveryBundle::class => ['all' => true],
     Shopsys\ProductFeed\PersooBundle\ShopsysProductFeedPersooBundle::class => ['all' => true],
+    Shopsys\ArticleFeed\PersooBundle\ShopsysArticleFeedPersooBundle::class => ['all' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],

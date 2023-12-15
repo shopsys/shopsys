@@ -19,6 +19,7 @@ There is a list of all the repositories maintained by the monorepo:
 -   [shopsys/product-feed-heureka-delivery](https://github.com/shopsys/product-feed-heureka-delivery)
 -   [shopsys/product-feed-zbozi](https://github.com/shopsys/product-feed-zbozi)
 -   [shopsys/product-feed-persoo](https://github.com/shopsys/product-feed-persoo)
+-   [shopsys/article-feed-persoo](https://github.com/shopsys/article-feed-persoo)
 -   [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)
 -   [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
 -   [shopsys/frontend-api](https://github.com/shopsys/frontend-api)

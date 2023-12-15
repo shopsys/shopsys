@@ -20,6 +20,7 @@
             "Shopsys\\ProductFeed\\HeurekaBundle\\": "packages/product-feed-heureka/src/",
             "Shopsys\\ProductFeed\\HeurekaDeliveryBundle\\": "packages/product-feed-heureka-delivery/src/",
             "Shopsys\\ProductFeed\\PersooBundle\\": "packages/product-feed-persoo/src/",
+            "Shopsys\\ArticleFeed\\PersooBundle\\": "packages/article-feed-persoo/src/",
             "Shopsys\\S3Bridge\\": "packages/s3-bridge/src/",
             "Shopsys\\FrameworkBundle\\": "packages/framework/src/",
             "Sniffer\\": "project-base/app/sniffer/"
@@ -253,6 +254,7 @@
         }
     },
     "replace": {
+        "shopsys/article-feed-persoo": "self.version",
         "shopsys/category-feed-persoo": "self.version",
         "shopsys/form-types-bundle": "self.version",
         "shopsys/frontend-api": "self.version",
