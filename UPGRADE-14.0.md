@@ -463,6 +463,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   `shopsys.image.enable_lazy_load` container parameter was removed
     -   see #project-base-diff to update your project
 -   remove usage of shopsys/read-model package ([#2935](https://github.com/shopsys/shopsys/pull/2935))
+    -   The shopsys/read-model package is no longer supported.
+        If your project still requires it, either fork the original repository for self-maintenance or copy the necessary code into your project.
+        Shopsys will no longer maintain this package.
     -   `Shopsys\FrameworkBundle\Component\Image\ImageFacade` class has been changed:
         -   method `getImagesByEntityIdAndNameIndexedById()` was removed
         -   method `getImageUrlFromAttributes()` was removed
