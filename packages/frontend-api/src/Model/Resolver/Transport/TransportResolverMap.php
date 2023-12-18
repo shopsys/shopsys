@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Transport;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Transport;
 
-use App\Model\Payment\PaymentFacade;
-use App\Model\Transport\Transport;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class TransportResolverMap extends ResolverMap
 {
     /**
-     * @param \App\Model\Payment\PaymentFacade $paymentFacade
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      */
-    public function __construct(private PaymentFacade $paymentFacade)
-    {
+    public function __construct(
+        protected readonly PaymentFacade $paymentFacade,
+    ) {
     }
 
     /**
-     * @see https://github.com/shopsys/shopsys/issues/2381
      * @return array
      */
     protected function map(): array

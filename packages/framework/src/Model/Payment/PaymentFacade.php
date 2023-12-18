@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
 class PaymentFacade
@@ -267,5 +268,16 @@ class PaymentFacade
     public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Payment
     {
         return $this->paymentRepository->getEnabledOnDomainByUuid($uuid, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
+     */
+    public function getVisibleOnCurrentDomainByTransport(Transport $transport): array
+    {
+        $paymentsByTransport = $this->paymentRepository->getAllByTransport($transport);
+
+        return  $this->paymentVisibilityCalculation->filterVisible($paymentsByTransport, $this->domain->getId());
     }
 }
