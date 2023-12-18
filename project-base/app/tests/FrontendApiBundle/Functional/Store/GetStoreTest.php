@@ -67,7 +67,9 @@ class GetStoreTest extends GraphQlTestCase
             [$uuid, $expectedStoreData] = $dataSet;
 
             $graphQlType = 'store';
-            $response = $this->getResponseContentForQuery($this->getStoreQueryByUuid($uuid));
+            $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+                'uuid' => $uuid,
+            ]);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -101,7 +103,9 @@ class GetStoreTest extends GraphQlTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Store\Store $storeOnSecondDomain */
         $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 3);
 
-        $response = $this->getResponseContentForQuery($this->getStoreQueryByUuid($storeOnSecondDomain->getUuid()));
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+            'uuid' => $storeOnSecondDomain->getUuid(),
+        ]);
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $response['errors'][0];
         self::assertArrayHasKey('message', $errors, Json::encode($errors));
@@ -111,7 +115,9 @@ class GetStoreTest extends GraphQlTestCase
         );
 
         $urlSlug = 'zilina';
-        $response = $this->getResponseContentForQuery($this->getStoreQueryByUrlSlug($urlSlug));
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+            'slug' => $urlSlug,
+        ]);
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $response['errors'][0];
         self::assertArrayHasKey('message', $errors, Json::encode($errors));
@@ -127,7 +133,9 @@ class GetStoreTest extends GraphQlTestCase
             [$urlSlug, $expectedStoreData] = $dataSet;
 
             $graphQlType = 'store';
-            $response = $this->getResponseContentForQuery($this->getStoreQueryByUrlSlug($urlSlug));
+            $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+                'slug' => $urlSlug,
+            ]);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -187,7 +195,7 @@ class GetStoreTest extends GraphQlTestCase
             $this->createClosedDay($publicHolidayDate, $publicHolidayExcludedStoresIds);
         }
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreOpeningHoursQuery.graphql', [
             'uuid' => $store->getUuid(),
         ]);
 
@@ -447,67 +455,6 @@ class GetStoreTest extends GraphQlTestCase
         }
 
         return $data;
-    }
-
-    /**
-     * @param string $uuid
-     * @return string
-     */
-    public function getStoreQueryByUuid(string $uuid): string
-    {
-        $graphQlTypeWithFilters = 'store (uuid:"' . $uuid . '")';
-
-        return $this->getStoreQuery($graphQlTypeWithFilters);
-    }
-
-    /**
-     * @param string $urlSlug
-     * @return string
-     */
-    public function getStoreQueryByUrlSlug(string $urlSlug): string
-    {
-        $graphQlTypeWithFilters = 'store (urlSlug:"' . $urlSlug . '")';
-
-        return $this->getStoreQuery($graphQlTypeWithFilters);
-    }
-
-    /**
-     * @param string $graphQlTypeWithFilters
-     * @return string
-     */
-    private function getStoreQuery(string $graphQlTypeWithFilters): string
-    {
-        return '
-            query {
-                ' . $graphQlTypeWithFilters . ' { 
-                    name
-                    slug
-                    isDefault
-                    description
-                    street
-                    city
-                    postcode
-                    country {
-                        code
-                    }
-                    openingHours {
-                        openingHoursOfDays {
-                            firstOpeningTime
-                            firstClosingTime
-                            secondOpeningTime
-                            secondClosingTime
-                        }
-                    }
-                    specialMessage
-                    locationLatitude
-                    locationLongitude
-                    breadcrumb {
-                        name
-                        slug
-                    }
-                }
-            }
-        ';
     }
 
     /**
