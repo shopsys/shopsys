@@ -608,6 +608,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   docker-compose: add rabbitMQ container for cypress tests on gitlab CI [#2950](https://github.com/shopsys/shopsys/pull/2950)
     -   see #project-base-diff to update your project
+-   enhance your stores tests ([#2835](https://github.com/shopsys/shopsys/pull/2951))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
