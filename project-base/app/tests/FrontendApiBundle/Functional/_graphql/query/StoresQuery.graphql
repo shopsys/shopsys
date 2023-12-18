@@ -1,0 +1,30 @@
+query Stores ($first: Int, $last: Int) {
+    stores (first: $first, last: $last) {
+        edges {
+            node {
+                uuid
+                name
+                isDefault
+                description
+                contactInfo
+                street
+                city
+                postcode
+                country {
+                    code
+                }
+                openingHours {
+                    openingHoursOfDays {
+                        firstOpeningTime
+                        firstClosingTime
+                        secondOpeningTime
+                        secondClosingTime
+                    }
+                }
+                specialMessage
+                locationLatitude
+                locationLongitude
+            }
+        }
+    }
+}

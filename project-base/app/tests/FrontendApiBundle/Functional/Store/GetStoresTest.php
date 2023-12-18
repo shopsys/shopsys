@@ -13,10 +13,9 @@ class GetStoresTest extends GraphQlTestCase
     public function testGetStores(): void
     {
         foreach ($this->getStoresDataProvider() as $dataSet) {
-            [$query, $expectedStoresData] = $dataSet;
+            [$response, $expectedStoresData] = $dataSet;
 
             $graphQlType = 'stores';
-            $response = $this->getResponseContentForQuery($query);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -71,82 +70,22 @@ class GetStoresTest extends GraphQlTestCase
     {
         return [
             [
-                $this->getAllStoresQuery(),
+                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql'),
                 $this->getExpectedStores(),
             ],
             [
-                $this->getFirstStoreQuery(),
+                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql', [
+                    'first' => 1,
+                ]),
                 array_slice($this->getExpectedStores(), 0, 1),
             ],
             [
-                $this->getLastStoreQuery(),
+                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql', [
+                    'last' => 1,
+                ]),
                 array_slice($this->getExpectedStores(), 1, 1),
             ],
         ];
-    }
-
-    /**
-     * @return string
-     */
-    private function getAllStoresQuery(): string
-    {
-        return $this->getStoresQuery('stores');
-    }
-
-    /**
-     * @return string
-     */
-    private function getFirstStoreQuery(): string
-    {
-        return $this->getStoresQuery('stores (first: 1)');
-    }
-
-    /**
-     * @return string
-     */
-    private function getLastStoreQuery(): string
-    {
-        return $this->getStoresQuery('stores (last: 1)');
-    }
-
-    /**
-     * @param string $graphQlTypeWithFilters
-     * @return string
-     */
-    private function getStoresQuery(string $graphQlTypeWithFilters): string
-    {
-        return '
-            {
-                ' . $graphQlTypeWithFilters . ' {
-                    edges {
-                        node {
-                            uuid
-                            name
-                            isDefault
-                            description
-                            contactInfo
-                            street
-                            city
-                            postcode
-                            country {
-                                code
-                            }
-                            openingHours {
-                                openingHoursOfDays {
-                                    firstOpeningTime
-                                    firstClosingTime
-                                    secondOpeningTime
-                                    secondClosingTime
-                                }
-                            }
-                            specialMessage
-                            locationLatitude
-                            locationLongitude
-                        }
-                    }
-                }
-            }
-        ';
     }
 
     /**
