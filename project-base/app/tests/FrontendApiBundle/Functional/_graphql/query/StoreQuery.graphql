@@ -10,14 +10,6 @@ query StoreQuery($uuid: Uuid, $slug: String) {
         country {
             code
         }
-        openingHours {
-            openingHoursOfDays {
-                firstOpeningTime
-                firstClosingTime
-                secondOpeningTime
-                secondClosingTime
-            }
-        }
         specialMessage
         locationLatitude
         locationLongitude

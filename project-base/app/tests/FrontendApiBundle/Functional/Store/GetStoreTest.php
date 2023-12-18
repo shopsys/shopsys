@@ -83,7 +83,6 @@ class GetStoreTest extends GraphQlTestCase
                     'city',
                     'postcode',
                     'country',
-                    'openingHours',
                     'specialMessage',
                     'locationLatitude',
                     'locationLongitude',
@@ -149,7 +148,6 @@ class GetStoreTest extends GraphQlTestCase
                     'city',
                     'postcode',
                     'country',
-                    'openingHours',
                     'specialMessage',
                     'locationLatitude',
                     'locationLongitude',
@@ -464,52 +462,6 @@ class GetStoreTest extends GraphQlTestCase
     private function getExpectedStore(int $storeId): array
     {
         $storesSlug = $this->urlGenerator->generate('front_stores');
-        $openingHours = [
-            'openingHoursOfDays' => [
-                [
-                    'firstOpeningTime' => '06:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '18:00',
-                ],
-                [
-                    'firstOpeningTime' => '07:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '17:00',
-                ],
-                [
-                    'firstOpeningTime' => '08:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '16:00',
-                ],
-                [
-                    'firstOpeningTime' => '09:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '15:00',
-                ],
-                [
-                    'firstOpeningTime' => '10:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '14:00',
-                ],
-                [
-                    'firstOpeningTime' => '08:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => null,
-                    'secondClosingTime' => null,
-                ],
-                [
-                    'firstOpeningTime' => '09:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => null,
-                    'secondClosingTime' => null,
-                ],
-            ],
-        ];
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $data = [
@@ -525,7 +477,6 @@ class GetStoreTest extends GraphQlTestCase
                     'code' => 'CZ',
                 ],
                 'contactInfo' => null,
-                'openingHours' => $openingHours,
                 'specialMessage' => null,
                 'locationLatitude' => '49.8574975',
                 'locationLongitude' => '18.2738861',
@@ -552,7 +503,6 @@ class GetStoreTest extends GraphQlTestCase
                     'code' => 'CZ',
                 ],
                 'contactInfo' => null,
-                'openingHours' => $openingHours,
                 'specialMessage' => null,
                 'locationLatitude' => '50.0346875',
                 'locationLongitude' => '15.7707169',

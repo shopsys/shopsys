@@ -13,14 +13,6 @@ query Stores ($first: Int, $last: Int) {
                 country {
                     code
                 }
-                openingHours {
-                    openingHoursOfDays {
-                        firstOpeningTime
-                        firstClosingTime
-                        secondOpeningTime
-                        secondClosingTime
-                    }
-                }
                 specialMessage
                 locationLatitude
                 locationLongitude
