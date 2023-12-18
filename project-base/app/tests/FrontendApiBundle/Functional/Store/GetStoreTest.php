@@ -206,24 +206,190 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return iterable
      */
-    protected function openingHoursDataProvider(): array
+    protected function openingHoursDataProvider(): iterable
     {
-        return [
-            ['-1 hour', '+1 hour', null, null, null, [], true, '-1 hour', '+1 hour', null, null],
-            [null, null, '-1 hour', '+1 hour', null, [], true, null, null, '-1 hour', '+1 hour'],
-            ['-1 hour', '+1 hour', null, null, $this->getNow(), [1], true, '-1 hour', '+1 hour', null, null],
-            [null, null, '-1 hour', '+1 hour', $this->getNow(), [], false, null, null, null, null],
-            [null, null, null, null, null, [], false, null, null, null, null],
-            ['+1 hour', '+2 hour', null, null, null, [], false, '+1 hour', '+2 hour', null, null],
-            [null, null, '+1 hour', '+2 hour', null, [], false, null, null, '+1 hour', '+2 hour'],
-            ['-2 hour', '-1 hour', null, null, null, [], false, '-2 hour', '-1 hour', null, null],
-            [null, null, '-2 hour', '-1 hour', null, [], false, null, null, '-2 hour', '-1 hour'],
-            ['-1 hour', null, null, '+1 hour', null, [], false, '-1 hour', null, null, '+1 hour'],
-            [null, '+1 hour', '-1 hour', null, null, [], false, null, '+1 hour', '-1 hour', null],
-            ['+1 hour', '-1 hour', null, null, null, [], false, '+1 hour', '-1 hour', null, null],
-            [null, null, '+1 hour', '-1 hour', null, [], false, null, null, '+1 hour', '-1 hour'],
+        yield 'store opened only forenoon' => [
+            'firstOpeningTime' => '-1 hour',
+            'firstClosingTime' => '+1 hour',
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => true,
+            'expectedDaysFirstOpeningTime' => '-1 hour',
+            'expectedDaysFirstClosingTime' => '+1 hour',
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store opened only afternoon' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => '-1 hour',
+            'secondClosingTime' => '+1 hour',
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => true,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => '-1 hour',
+            'expectedDaysSecondClosingTime' => '+1 hour',
+        ];
+
+        yield 'store opened only forenoon and excluded from the public holiday' => [
+            'firstOpeningTime' => '-1 hour',
+            'firstClosingTime' => '+1 hour',
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => $this->getNow(),
+            'publicHolidayExcludedStoresIds' => [1],
+            'expectedIsOpen' => true,
+            'expectedDaysFirstOpeningTime' => '-1 hour',
+            'expectedDaysFirstClosingTime' => '+1 hour',
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store opened only afternoon and not excluded from the public holiday' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => '-1 hour',
+            'secondClosingTime' => '+1 hour',
+            'publicHolidayDate' => $this->getNow(),
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store not opened at all' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store opens in an hour (forenoon)' => [
+            'firstOpeningTime' => '+1 hour',
+            'firstClosingTime' => '+2 hour',
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => '+1 hour',
+            'expectedDaysFirstClosingTime' => '+2 hour',
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store opens in an hour (afternoon)' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => '+1 hour',
+            'secondClosingTime' => '+2 hour',
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => '+1 hour',
+            'expectedDaysSecondClosingTime' => '+2 hour',
+        ];
+
+        yield 'store closed an hour ago (forenoon)' => [
+            'firstOpeningTime' => '-2 hour',
+            'firstClosingTime' => '-1 hour',
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => '-2 hour',
+            'expectedDaysFirstClosingTime' => '-1 hour',
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store closed an hour ago (afternoon)' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => '-2 hour',
+            'secondClosingTime' => '-1 hour',
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => '-2 hour',
+            'expectedDaysSecondClosingTime' => '-1 hour',
+        ];
+
+        yield 'store with missing first closing time and missing second opening time' => [
+            'firstOpeningTime' => '-1 hour',
+            'firstClosingTime' => null,
+            'secondOpeningTime' => null,
+            'secondClosingTime' => '+1 hour',
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => '-1 hour',
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => '+1 hour',
+        ];
+
+        yield 'store with missing first opening time and missing second closing time' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => '+1 hour',
+            'secondOpeningTime' => '-1 hour',
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => '+1 hour',
+            'expectedDaysSecondOpeningTime' => '-1 hour',
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store that closes sooner then opens (forenoon)' => [
+            'firstOpeningTime' => '+1 hour',
+            'firstClosingTime' => '-1 hour',
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => '+1 hour',
+            'expectedDaysFirstClosingTime' => '-1 hour',
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store that closes sooner then opens (afternoon)' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => '+1 hour',
+            'secondClosingTime' => '-1 hour',
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => '+1 hour',
+            'expectedDaysSecondClosingTime' => '-1 hour',
         ];
     }
 
