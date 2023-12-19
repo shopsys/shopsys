@@ -14,7 +14,6 @@ class AvailabilityFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository $availabilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactoryInterface $availabilityFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
@@ -22,7 +21,6 @@ class AvailabilityFacade
         protected readonly EntityManagerInterface $em,
         protected readonly AvailabilityRepository $availabilityRepository,
         protected readonly Setting $setting,
-        protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         protected readonly AvailabilityFactoryInterface $availabilityFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
@@ -109,7 +107,6 @@ class AvailabilityFacade
     public function setDefaultInStockAvailability(Availability $availability)
     {
         $this->setting->set(Setting::DEFAULT_AVAILABILITY_IN_STOCK, $availability->getId());
-        $this->productAvailabilityRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
     }
 
     /**

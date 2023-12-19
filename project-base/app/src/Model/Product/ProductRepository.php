@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\Category\Category as AppCategory;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Exception;
@@ -31,16 +30,10 @@ use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
  * @method \App\Model\Product\Product getSellableById(int $id, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][] getProductsForPriceRecalculationIterator()
  * @method \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][] getProductsForAvailabilityRecalculationIterator()
- * @method \App\Model\Product\Product[] getAtLeastSomewhereSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant)
  * @method \App\Model\Product\Product[] getOfferedByIds(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int[] $sortedProductIds)
  * @method \App\Model\Product\Product[] getListableByIds(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int[] $sortedProductIds)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getOneByUuid(string $uuid)
- * @method markProductsForExport(\App\Model\Product\Product[] $products)
- * @method \App\Model\Product\Product[] getProductsWithBrand(\App\Model\Product\Brand\Brand $brand)
- * @method \App\Model\Product\Product[] getProductsWithFlag(\App\Model\Product\Flag\Flag $flag)
- * @method \App\Model\Product\Product[] getProductsWithUnit(\App\Model\Product\Unit\Unit $unit)
- * @method array getProductsWithParameter(\App\Model\Product\Parameter\Parameter $parameter)
  * @method \App\Model\Product\Product[] getAllSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  */
 class ProductRepository extends BaseProductRepository
@@ -62,16 +55,6 @@ class ProductRepository extends BaseProductRepository
             ->setParameter('catnums', $productCatnums)
             ->getQuery()
             ->execute();
-    }
-
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllProductsQueryBuilder(): QueryBuilder
-    {
-        return $this->em->createQueryBuilder()
-            ->select('p')
-            ->from(Product::class, 'p');
     }
 
     /**
@@ -187,20 +170,6 @@ class ProductRepository extends BaseProductRepository
         $this->productElasticsearchRepository->filterBySearchText($queryBuilder, $searchText);
 
         return $queryBuilder;
-    }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     * @return \App\Model\Product\Product[]
-     */
-    public function getProductsByCategory(AppCategory $category): array
-    {
-        return $this->getAllProductsQueryBuilder()
-            ->join('p.productCategoryDomains', 'pcd')
-            ->where('pcd.category = :category')
-            ->setParameter('category', $category)
-            ->getQuery()
-            ->execute();
     }
 
     /**

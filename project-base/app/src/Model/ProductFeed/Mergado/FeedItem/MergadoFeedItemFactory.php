@@ -6,8 +6,6 @@ namespace App\Model\ProductFeed\Mergado\FeedItem;
 
 use App\Component\Image\ImageFacade;
 use App\Model\Category\CategoryFacade;
-use App\Model\Product\Availability\AvailabilityStatusEnum;
-use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
 use Psr\Log\LoggerInterface;
@@ -16,6 +14,8 @@ use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemImageHelper;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
@@ -27,7 +27,7 @@ class MergadoFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader $productParametersBatchLoader
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $availabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -167,7 +167,7 @@ class MergadoFeedItemFactory
     }
 
     /**
-     * @param \App\Model\Product\Availability\AvailabilityStatusEnum $availabilityStatus
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum $availabilityStatus
      * @return string
      */
     private function mapStockStatusToAvailability(AvailabilityStatusEnum $availabilityStatus): string

@@ -60,7 +60,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         );
         $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
         $this->assertArrayHasKey('items', $data);
-        $this->assertCartItems($expectedItems, $data['items']);
+        $this->assertArrayElements($expectedItems, $data['items']);
 
         $this->assertActualCartContent($data['uuid'], $expectedItems);
     }
@@ -135,7 +135,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         );
         $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
         $this->assertArrayHasKey('items', $data);
-        $this->assertCartItems($expectedItems, $data['items']);
+        $this->assertArrayElements($expectedItems, $data['items']);
 
         $this->assertActualCartContent($cartUuid, $expectedItems);
     }
@@ -180,7 +180,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         );
         $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
         $this->assertArrayHasKey('items', $data);
-        $this->assertCartItems($expectedItems, $data['items']);
+        $this->assertArrayElements($expectedItems, $data['items']);
 
         $this->assertActualCartContent($cartUuid, $expectedItems);
     }
@@ -215,7 +215,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         );
         $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
         $this->assertArrayHasKey('items', $data);
-        $this->assertCartItems($expectedItems, $data['items']);
+        $this->assertArrayElements($expectedItems, $data['items']);
 
         $this->assertActualCartContent($data['uuid'], $expectedItems);
 
@@ -258,7 +258,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         );
         $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
         $this->assertArrayHasKey('items', $data);
-        $this->assertCartItems($expectedItems, $data['items']);
+        $this->assertArrayElements($expectedItems, $data['items']);
 
         $this->assertActualCartContent($data['uuid'], $expectedItems);
     }
@@ -305,7 +305,7 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
         );
         $data = $this->getResponseDataForGraphQlType($response, 'AddOrderItemsToCart');
         $this->assertArrayHasKey('items', $data);
-        $this->assertCartItems($expectedItems, $data['items']);
+        $this->assertArrayElements($expectedItems, $data['items']);
 
         $this->assertActualCartContent($cartUuid, $expectedItems);
     }
@@ -333,21 +333,6 @@ class AnonymousAddOrderItemsToCartTest extends GraphQlTestCase
 
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
         $this->assertArrayHasKey('items', $data);
-        $this->assertCartItems($expectedItems, $data['items']);
-    }
-
-    /**
-     * Compare expected items while ignoring the order of the items
-     *
-     * @param array $expectedItems
-     * @param array $items
-     */
-    private function assertCartItems(array $expectedItems, array $items): void
-    {
-        $this->assertSameSize($expectedItems, $items);
-
-        foreach ($expectedItems as $expectedItem) {
-            $this->assertContains($expectedItem, $items);
-        }
+        $this->assertArrayElements($expectedItems, $data['items']);
     }
 }

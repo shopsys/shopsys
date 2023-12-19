@@ -7,6 +7,9 @@ namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ProductFilterConfigFactory
 {
@@ -16,6 +19,10 @@ class ProductFilterConfigFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository $brandFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository $priceRangeRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterElasticFacade $productFilterElasticFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      */
     public function __construct(
         protected readonly ParameterFilterChoiceRepository $parameterFilterChoiceRepository,
@@ -23,27 +30,41 @@ class ProductFilterConfigFactory
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly BrandFilterChoiceRepository $brandFilterChoiceRepository,
         protected readonly PriceRangeRepository $priceRangeRepository,
+        protected readonly ProductFilterElasticFacade $productFilterElasticFacade,
+        protected readonly ParameterFacade $parameterFacade,
+        protected readonly FlagFacade $flagFacade,
+        protected readonly BrandFacade $brandFacade,
     ) {
     }
 
     /**
-     * @param int $domainId
      * @param string $locale
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForCategory($domainId, $locale, Category $category)
-    {
-        $pricingGroup = $this->currentCustomerUser->getPricingGroup();
-        $parameterFilterChoices = $this->parameterFilterChoiceRepository
-            ->getParameterFilterChoicesInCategory($domainId, $pricingGroup, $locale, $category);
-        $flagFilterChoices = $this->flagFilterChoiceRepository
-            ->getFlagFilterChoicesInCategory($domainId, $pricingGroup, $locale, $category);
-        $brandFilterChoices = $this->brandFilterChoiceRepository
-            ->getBrandFilterChoicesInCategory($domainId, $pricingGroup, $category);
-        $priceRange = $this->priceRangeRepository->getPriceRangeInCategory($domainId, $pricingGroup, $category);
+    public function createForCategory(
+        string $locale,
+        Category $category,
+        string $searchText,
+    ): ProductFilterConfig {
+        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInCategory(
+            $category->getId(),
+            $this->currentCustomerUser->getPricingGroup(),
+            $searchText,
+        );
 
-        return new ProductFilterConfig($parameterFilterChoices, $flagFilterChoices, $brandFilterChoices, $priceRange);
+        $aggregatedParameterFilterChoices = $this->parameterFacade->getParameterFilterChoicesByIds(
+            $productFilterConfigIdsData->getParameterValueIdsByParameterId(),
+            $locale,
+        );
+
+        return new ProductFilterConfig(
+            $this->getSortedParameterFilterChoicesForCategory($aggregatedParameterFilterChoices, $category),
+            $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
+            $this->brandFacade->getBrandsByIds($productFilterConfigIdsData->getBrandIds()),
+            $productFilterConfigIdsData->getPriceRange(),
+        );
     }
 
     /**
@@ -101,5 +122,32 @@ class ProductFilterConfigFactory
             ->getBrandFilterChoicesForAll($domainId, $pricingGroup);
 
         return new ProductFilterConfig([], $flagFilterChoices, $brandFilterChoices, $priceRange);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $aggregatedParameterFilterChoices
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
+     */
+    protected function getSortedParameterFilterChoicesForCategory(
+        array $aggregatedParameterFilterChoices,
+        Category $category,
+    ): array {
+        $aggregatedParametersFilterChoicesIndexedByParameterId = [];
+
+        foreach ($aggregatedParameterFilterChoices as $aggregatedParameterFilterChoice) {
+            $aggregatedParametersFilterChoicesIndexedByParameterId[$aggregatedParameterFilterChoice->getParameter()->getId()] = $aggregatedParameterFilterChoice;
+        }
+
+        $sortedParameterFilterChoices = [];
+
+        foreach ($this->parameterFacade->getParametersIdsSortedByPositionFilteredByCategory($category) as $sortedParameterId) {
+            if (!array_key_exists($sortedParameterId, $aggregatedParametersFilterChoicesIndexedByParameterId)) {
+                continue;
+            }
+            $sortedParameterFilterChoices[] = $aggregatedParametersFilterChoicesIndexedByParameterId[$sortedParameterId];
+        }
+
+        return $sortedParameterFilterChoices;
     }
 }

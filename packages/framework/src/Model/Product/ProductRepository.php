@@ -9,14 +9,9 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
-use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class ProductRepository
 {
@@ -278,6 +273,27 @@ class ProductRepository
     }
 
     /**
+     * @return iterable<array{id: int}>
+     */
+    public function iterateAllProductIds(): iterable
+    {
+        return $this->getAllProductsQueryBuilder()
+            ->select('p.id')
+            ->getQuery()
+            ->toIterable();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getAllProductsQueryBuilder(): QueryBuilder
+    {
+        return $this->em->createQueryBuilder()
+            ->select('p')
+            ->from(Product::class, 'p');
+    }
+
+    /**
      * @param int $id
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
@@ -335,51 +351,6 @@ class ProductRepository
         return $query->iterate();
     }
 
-    public function markAllProductsForAvailabilityRecalculation()
-    {
-        $this->em
-            ->createQuery('UPDATE ' . Product::class . ' p SET p.recalculateAvailability = TRUE
-                WHERE p.recalculateAvailability = FALSE')
-            ->execute();
-    }
-
-    public function markAllProductsForPriceRecalculation()
-    {
-        // Performance optimization:
-        // Main variant price recalculation is triggered by variants visibility recalculation
-        // and visibility recalculation is triggered by variant price recalculation.
-        // Therefore main variant price recalculation is useless here.
-        $this->em
-            ->createQuery('UPDATE ' . Product::class . ' p SET p.recalculatePrice = TRUE
-                WHERE p.variantType != :variantTypeMain AND p.recalculateAvailability = FALSE')
-            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
-            ->execute();
-    }
-
-    /**
-     * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]
-     */
-    public function getProductsForPriceRecalculationIterator()
-    {
-        return $this->getProductRepository()
-            ->createQueryBuilder('p')
-            ->where('p.recalculatePrice = TRUE')
-            ->getQuery()
-            ->iterate();
-    }
-
-    /**
-     * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]
-     */
-    public function getProductsForAvailabilityRecalculationIterator()
-    {
-        return $this->getProductRepository()
-            ->createQueryBuilder('p')
-            ->where('p.recalculateAvailability = TRUE')
-            ->getQuery()
-            ->iterate();
-    }
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
      * @param int $domainId
@@ -409,26 +380,6 @@ class ProductRepository
             ->andWhere('p.stockQuantity > 0');
 
         return $queryBuilder;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getAtLeastSomewhereSellableVariantsByMainVariant(Product $mainVariant)
-    {
-        $queryBuilder = $this->em->createQueryBuilder()
-            ->select('p')
-            ->from(Product::class, 'p')
-            ->andWhere('p.calculatedVisibility = TRUE')
-            ->andWhere('p.calculatedSellingDenied = FALSE')
-            ->andWhere('p.variantType = :variantTypeVariant')->setParameter(
-                'variantTypeVariant',
-                Product::VARIANT_TYPE_VARIANT,
-            )
-            ->andWhere('p.mainVariant = :mainVariant')->setParameter('mainVariant', $mainVariant);
-
-        return $queryBuilder->getQuery()->execute();
     }
 
     /**
@@ -520,94 +471,5 @@ class ProductRepository
     public function getAllOfferedProducts(int $domainId, PricingGroup $pricingGroup): array
     {
         return $this->getAllOfferedQueryBuilder($domainId, $pricingGroup)->getQuery()->execute();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     */
-    public function markProductsForExport(array $products): void
-    {
-        $this->em->createQuery('UPDATE ' . Product::class . ' p SET p.exportProduct = TRUE WHERE p IN (:products)')
-            ->setParameter('products', $products)
-            ->execute();
-    }
-
-    public function markAllProductsForExport(): void
-    {
-        $this->em->createQuery('UPDATE ' . Product::class . ' p SET p.exportProduct = TRUE')
-            ->execute();
-    }
-
-    public function markAllProductsAsExported(): void
-    {
-        $this->em->createQuery('UPDATE ' . Product::class . ' p SET p.exportProduct = FALSE')
-            ->execute();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @return array
-     */
-    public function getProductsWithParameter(Parameter $parameter): array
-    {
-        return $this->getProductRepository()->createQueryBuilder('p')
-            ->innerJoin(ProductParameterValue::class, 'ppv', 'WITH', 'ppv.product = p')
-            ->where('ppv.parameter = :parameter')
-            ->setParameter('parameter', $parameter)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithAvailability(Availability $availability): array
-    {
-        return $this->getProductRepository()->createQueryBuilder('p')
-            ->where('p.calculatedAvailability = :availability')
-            ->setParameter('availability', $availability)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithBrand(Brand $brand): array
-    {
-        return $this->getProductRepository()->createQueryBuilder('p')
-            ->where('p.brand = :brand')
-            ->setParameter('brand', $brand)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithFlag(Flag $flag): array
-    {
-        return $this->getProductRepository()->createQueryBuilder('p')
-            ->leftJoin('p.flags', 'f')
-            ->where('f.id = :flag')
-            ->setParameter('flag', $flag)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    public function getProductsWithUnit(Unit $unit): array
-    {
-        return $this->getProductRepository()->createQueryBuilder('p')
-            ->where('p.unit = :unit')
-            ->setParameter('unit', $unit)
-            ->getQuery()
-            ->getResult();
     }
 }

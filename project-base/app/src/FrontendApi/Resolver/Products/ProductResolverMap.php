@@ -41,12 +41,6 @@ class ProductResolverMap extends BaseProductResolverMap
                     return FieldResolver::valueFromObjectOrArray($value, $info->fieldName);
                 }
             },
-            'availability' => function ($value) {
-                /** @var \App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper|\App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper $mapper */
-                $mapper = $value instanceof Product ? $this->productEntityFieldMapper : $this->productArrayFieldMapper;
-
-                return $mapper->getExtendedAvailability($value);
-            },
         ];
     }
 

@@ -20,6 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * @method \App\Model\Product\Flag\Flag[] getByIds(int[] $flagIds)
  * @method \App\Model\Product\Flag\Flag getByUuid(string $uuid)
  * @method \App\Model\Product\Flag\Flag[] getByUuids(string[] $uuids)
+ * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByIds(int[] $flagsIds, string $locale)
  */
 class FlagFacade extends BaseFlagFacade
 {
@@ -106,16 +107,6 @@ class FlagFacade extends BaseFlagFacade
         }
 
         return false;
-    }
-
-    /**
-     * @param int[] $flagsIds
-     * @param string $locale
-     * @return \App\Model\Product\Flag\Flag[]
-     */
-    public function getVisibleFlagsByIds(array $flagsIds, string $locale): array
-    {
-        return $this->flagRepository->getVisibleFlagsByIds($flagsIds, $locale);
     }
 
     /**

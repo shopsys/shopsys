@@ -86,6 +86,12 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     protected $uuid;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $daysUntilDelivery;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      */
     public function __construct(TransportData $transportData)
@@ -116,6 +122,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     protected function setData(TransportData $transportData): void
     {
         $this->hidden = $transportData->hidden;
+        $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->setTranslations($transportData);
     }
 
@@ -385,5 +392,13 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDaysUntilDelivery()
+    {
+        return $this->daysUntilDelivery;
     }
 }

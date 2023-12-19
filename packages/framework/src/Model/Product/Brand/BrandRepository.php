@@ -5,18 +5,20 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
 
 class BrandRepository
 {
-    protected EntityManagerInterface $em;
-
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly Domain $domain,
+    ) {
     }
 
     /**
@@ -74,5 +76,20 @@ class BrandRepository
     public function getByUuids(array $uuids): array
     {
         return $this->getBrandRepository()->findBy(['uuid' => $uuids]);
+    }
+
+    /**
+     * @param int[] $brandsIds
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    public function getBrandsByIds(array $brandsIds): array
+    {
+        $brandsQueryBuilder = $this->getBrandRepository()->createQueryBuilder('b')
+            ->select('b')
+            ->where('b.id IN (:brandIds)')
+            ->setParameter('brandIds', $brandsIds)
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('b.name', $this->domain->getLocale()), 'asc');
+
+        return $brandsQueryBuilder->getQuery()->getResult();
     }
 }

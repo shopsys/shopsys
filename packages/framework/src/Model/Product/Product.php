@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductCannotBeTransformedException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyMainVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
@@ -119,12 +120,6 @@ class Product extends AbstractTranslatableEntity
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    protected $calculatedHidden;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
     protected $usingStock;
 
     /**
@@ -161,25 +156,6 @@ class Product extends AbstractTranslatableEntity
     protected $outOfStockAvailability;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Availability\Availability")
-     * @ORM\JoinColumn(name="calculated_availability_id", referencedColumnName="id", nullable=false)
-     */
-    protected $calculatedAvailability;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $recalculateAvailability;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $calculatedVisibility;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[]|\Doctrine\Common\Collections\Collection
      * @ORM\OneToMany(
      *   targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain",
@@ -189,18 +165,6 @@ class Product extends AbstractTranslatableEntity
      * )
      */
     protected $productCategoryDomains;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $recalculatePrice;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $recalculateVisibility;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
@@ -242,12 +206,6 @@ class Product extends AbstractTranslatableEntity
     protected $uuid;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $exportProduct;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
@@ -259,15 +217,9 @@ class Product extends AbstractTranslatableEntity
         $this->partno = $productData->partno;
         $this->ean = $productData->ean;
         $this->setAvailabilityAndStock($productData);
-        $this->calculatedAvailability = $this->availability;
-        $this->calculatedVisibility = false;
         $this->createDomains($productData);
         $this->productCategoryDomains = new ArrayCollection();
-        $this->recalculatePrice = true;
-        $this->recalculateVisibility = true;
-        $this->calculatedHidden = true;
         $this->calculatedSellingDenied = true;
-        $this->exportProduct = true;
 
         $this->variants = new ArrayCollection();
 
@@ -303,8 +255,6 @@ class Product extends AbstractTranslatableEntity
             $this->ean = $productData->ean;
         }
         $this->setData($productData);
-
-        $this->markForVisibilityRecalculation();
     }
 
     /**
@@ -318,7 +268,6 @@ class Product extends AbstractTranslatableEntity
         $this->hidden = $productData->hidden;
         $this->brand = $productData->brand;
         $this->unit = $productData->unit;
-        $this->recalculateAvailability = true;
         $this->setTranslations($productData);
     }
 
@@ -367,7 +316,6 @@ class Product extends AbstractTranslatableEntity
     public function changeVatForDomain(Vat $vat, int $domainId): void
     {
         $this->getProductDomain($domainId)->setVat($vat);
-        $this->recalculatePrice = true;
     }
 
     /**
@@ -385,6 +333,20 @@ class Product extends AbstractTranslatableEntity
     public function getName($locale = null)
     {
         return $this->translation($locale)->getName();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFullnames()
+    {
+        $fullNamesByLocale = [];
+
+        foreach ($this->translations as $translation) {
+            $fullNamesByLocale[$translation->getLocale()] = $this->getName($translation->getLocale());
+        }
+
+        return $fullNamesByLocale;
     }
 
     /**
@@ -470,14 +432,6 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return bool
      */
-    public function getCalculatedHidden()
-    {
-        return $this->calculatedHidden;
-    }
-
-    /**
-     * @return bool
-     */
     public function isSellingDenied()
     {
         return $this->sellingDenied;
@@ -540,14 +494,6 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
-     */
-    public function getCalculatedAvailability()
-    {
-        return $this->calculatedAvailability;
-    }
-
-    /**
      * @param int $domainId
      * @return int
      */
@@ -562,7 +508,6 @@ class Product extends AbstractTranslatableEntity
     public function setAvailability(Availability $availability)
     {
         $this->availability = $availability;
-        $this->recalculateAvailability = true;
     }
 
     /**
@@ -571,16 +516,6 @@ class Product extends AbstractTranslatableEntity
     public function setOutOfStockAvailability(?Availability $outOfStockAvailability = null)
     {
         $this->outOfStockAvailability = $outOfStockAvailability;
-        $this->recalculateAvailability = true;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $calculatedAvailability
-     */
-    public function setCalculatedAvailability(Availability $calculatedAvailability)
-    {
-        $this->calculatedAvailability = $calculatedAvailability;
-        $this->recalculateAvailability = false;
     }
 
     /**
@@ -634,6 +569,24 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param int $domainId
+     * @return bool|null
+     */
+    public function isDomainHidden(int $domainId)
+    {
+        return $this->getProductDomain($domainId)->isDomainHidden();
+    }
+
+    public function setAsMainVariant(): void
+    {
+        if ($this->isMainVariant() || $this->isVariant()) {
+            throw new ProductCannotBeTransformedException($this);
+        }
+
+        $this->variantType = static::VARIANT_TYPE_MAIN;
+    }
+
+    /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getFlags(int $domainId)
@@ -661,71 +614,6 @@ class Product extends AbstractTranslatableEntity
     public function getBrand()
     {
         return $this->brand;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function getCalculatedVisibility()
-    {
-        return $this->calculatedVisibility;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isVisible()
-    {
-        return $this->getCalculatedVisibility();
-    }
-
-    public function markPriceAsRecalculated()
-    {
-        $this->recalculatePrice = false;
-    }
-
-    /**
-     * @param bool $recalculateVisibility
-     */
-    protected function setRecalculateVisibility($recalculateVisibility)
-    {
-        $this->recalculateVisibility = $recalculateVisibility;
-    }
-
-    public function markForVisibilityRecalculation()
-    {
-        $this->setRecalculateVisibility(true);
-
-        if ($this->isMainVariant()) {
-            foreach ($this->getVariants() as $variant) {
-                $variant->setRecalculateVisibility(true);
-            }
-        } elseif ($this->isVariant()) {
-            $mainVariant = $this->getMainVariant();
-            /**
-             * When the product is fetched from persistence, the mainVariant is only a proxy object,
-             * when we call something on this proxy object, Doctrine fetches it from persistence too.
-             *
-             * The problem is the Doctrine seems to not fetch the main variant when we only write something into it,
-             * but when we read something first, Doctrine fetches the object, and the use-case works correctly.
-             *
-             * If you think this is strange and it shouldn't work even before the code was moved to Product, you are right, this is strange.
-             * When the code is outside of Product, Doctrine does the job correctly, but once the code is inside of Product,
-             * Doctrine seems to not fetching the main variant.
-             */
-            $mainVariant->isMarkedForVisibilityRecalculation();
-            $mainVariant->setRecalculateVisibility(true);
-        }
-    }
-
-    public function markForAvailabilityRecalculation()
-    {
-        $this->recalculateAvailability = true;
-    }
-
-    public function markForExport(): void
-    {
-        $this->exportProduct = true;
     }
 
     /**
@@ -880,6 +768,7 @@ class Product extends AbstractTranslatableEntity
             $productDomain->setDescription($productData->descriptions[$domainId]);
             $productDomain->setShortDescription($productData->shortDescriptions[$domainId]);
             $productDomain->setVat($productData->vatsIndexedByDomainId[$domainId]);
+            $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
             $productDomain->setShortDescriptionUsp1($productData->shortDescriptionUsp1ByDomainId[$domainId]);
             $productDomain->setShortDescriptionUsp2($productData->shortDescriptionUsp2ByDomainId[$domainId]);
             $productDomain->setShortDescriptionUsp3($productData->shortDescriptionUsp3ByDomainId[$domainId]);
@@ -887,6 +776,7 @@ class Product extends AbstractTranslatableEntity
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5ByDomainId[$domainId]);
             $productDomain->setFlags($productData->flagsByDomainId[$domainId] ?? []);
             $productDomain->setOrderingPriority((int)$productData->orderingPriorityByDomainId[$domainId]);
+            $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
         }
     }
 
@@ -951,11 +841,12 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @return bool
+     * @param int $domainId
+     * @return  bool
      */
-    public function isMarkedForVisibilityRecalculation()
+    public function getSaleExclusion(int $domainId)
     {
-        return $this->recalculateVisibility;
+        return $this->getProductDomain($domainId)->getSaleExclusion();
     }
 
     /**

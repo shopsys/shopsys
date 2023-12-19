@@ -4,54 +4,61 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
-use Shopsys\FrameworkBundle\Model\Category\Category;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class ProductVisibilityFacade
 {
-    protected bool $recalcVisibilityForMarked = false;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      */
-    public function __construct(protected readonly ProductVisibilityRepository $productVisibilityRepository)
-    {
+    public function __construct(
+        protected readonly ProductVisibilityRepository $productVisibilityRepository,
+    ) {
     }
 
-    public function refreshProductsVisibilityForMarkedDelayed()
+    /**
+     * @param int[] $productIds
+     */
+    public function calculateProductVisibilityForIds(array $productIds): void
     {
-        $this->recalcVisibilityForMarked = true;
+        $this->productVisibilityRepository->refreshProductsVisibility($productIds);
     }
 
-    public function refreshProductsVisibility()
+    public function calculateProductVisibilityForAll(): void
     {
         $this->productVisibilityRepository->refreshProductsVisibility();
     }
 
-    public function refreshProductsVisibilityForMarked()
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility[]
+     */
+    public function findProductVisibilitiesByDomainIdAndProduct(int $domainId, Product $product): array
     {
-        $this->productVisibilityRepository->refreshProductsVisibility(true);
+        return $this->productVisibilityRepository->findProductVisibilitiesByDomainIdAndProduct($domainId, $product);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibility
      */
-    public function markProductsForRecalculationAffectedByCategory(Category $category)
-    {
-        $this->productVisibilityRepository->markProductsForRecalculationAffectedByCategory($category);
+    public function getProductVisibility(
+        Product $product,
+        PricingGroup $pricingGroup,
+        int $domainId,
+    ): ProductVisibility {
+        return $this->productVisibilityRepository->getProductVisibility($product, $pricingGroup, $domainId);
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param int $domainId
      */
-    public function onKernelResponse(ResponseEvent $event): void
+    public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, int $domainId): void
     {
-        if (!$event->isMainRequest()) {
-            return;
-        }
-
-        if ($this->recalcVisibilityForMarked) {
-            $this->refreshProductsVisibilityForMarked();
-        }
+        $this->productVisibilityRepository->createAndRefreshProductVisibilitiesForPricingGroup($pricingGroup, $domainId);
     }
 }

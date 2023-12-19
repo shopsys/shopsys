@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Category\CategoryParameterFacade;
 use App\Model\Product\Parameter\ParameterRepository;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -12,11 +11,12 @@ use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade;
 
 class CategoryParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
@@ -34,13 +34,14 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
     {
         /** @var \App\Model\Category\Category $categoryElectronics */
         $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
-        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
+        $firstDomainConfig = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
+        $firstDomainLocale = $firstDomainConfig->getLocale();
         $categoryDataFixtureClassReflection = new ReflectionClass(CategoryDataFixture::class);
 
         foreach ($categoryDataFixtureClassReflection->getConstants() as $constant) {
             /** @var \App\Model\Category\Category $category */
             $category = $this->getReference($constant);
-            $parameters = $this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID);
+            $parameters = $this->parameterRepository->getParametersUsedByProductsInCategory($category, $firstDomainConfig);
             $parametersId = [];
 
             foreach ($parameters as $parameter) {

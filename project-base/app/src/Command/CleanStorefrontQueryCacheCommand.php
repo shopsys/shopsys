@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Component\Redis\CleanStorefrontCacheFacade;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CleanStorefrontQueryCacheCommand extends Command
 {
     /**
-     * @param \App\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
         private readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,

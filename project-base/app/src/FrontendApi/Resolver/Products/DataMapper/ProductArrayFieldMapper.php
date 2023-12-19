@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Products\DataMapper;
 
-use App\Component\Deprecation\DeprecatedMethodException;
-use App\Model\Product\Availability\AvailabilityStatusEnum;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -128,27 +126,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     public function getCatalogNumber(array $data): string
     {
         return $data['catnum'];
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    public function getExtendedAvailability(array $data): array
-    {
-        return [
-            'name' => $data['availability'],
-            'status' => $data['availability_status'], // after update graphql bundle we can expose availability status as enum: AvailabilityStatusEnum::from($data['availability_status'])
-        ];
-    }
-
-    /**
-     * @param array $data
-     * @return string[]
-     */
-    public function getAvailability(array $data): array
-    {
-        throw new DeprecatedMethodException();
     }
 
     /**

@@ -67,11 +67,14 @@ class ProductArrayFieldMapper
 
     /**
      * @param array $data
-     * @return string[]
+     * @return array{name: string, status: string}
      */
     public function getAvailability(array $data): array
     {
-        return ['name' => $data['availability']];
+        return [
+            'name' => $data['availability'],
+            'status' => $data['availability_status'], // after update graphql bundle we can expose availability status as enum: AvailabilityStatusEnum::from($data['availability_status'])
+        ];
     }
 
     /**

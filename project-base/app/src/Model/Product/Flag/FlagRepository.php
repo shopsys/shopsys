@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Flag;
 
-use App\Component\Doctrine\OrderByCollationHelper;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagRepository;
 
@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagReposit
  * @method \App\Model\Product\Flag\Flag[] getByIds(int[] $flagIds)
  * @method \App\Model\Product\Flag\Flag getByUuid(string $uuid)
  * @method \App\Model\Product\Flag\Flag[] getByUuids(string[] $uuids)
+ * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByIds(int[] $flagsIds, string $locale)
  */
 class FlagRepository extends BaseFlagRepository
 {
@@ -45,25 +46,6 @@ class FlagRepository extends BaseFlagRepository
             ->execute();
 
         return array_column($result, 'akeneoCode');
-    }
-
-    /**
-     * @param int[] $flagsIds
-     * @param string $locale
-     * @return \App\Model\Product\Flag\Flag[]
-     */
-    public function getVisibleFlagsByIds(array $flagsIds, string $locale): array
-    {
-        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
-            ->select('f, ft')
-            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->where('f.id IN (:flagsIds)')
-            ->andWhere('f.visible = true')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
-            ->setParameter('flagsIds', $flagsIds)
-            ->setParameter('locale', $locale);
-
-        return $flagsQueryBuilder->getQuery()->getResult();
     }
 
     /**

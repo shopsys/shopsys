@@ -7,13 +7,13 @@ namespace App\FrontendApi\Model\Cart;
 use App\Model\Cart\Cart;
 use App\Model\Cart\CartPromoCodeFacade;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
-use App\Model\Product\Availability\ProductAvailabilityFacade;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 
 class CartWatcherFacade
 {
@@ -23,7 +23,7 @@ class CartWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Model\Cart\TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade

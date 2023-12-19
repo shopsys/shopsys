@@ -343,7 +343,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         $productData->sellingDenied = true;
 
         $this->productFacade->edit($product->getId(), $productData);
-        $this->dispatchFakeKernelResponseEventToTriggerImmediateRecalculations();
+        $this->handleDispatchedRecalculationMessages();
     }
 
     /**

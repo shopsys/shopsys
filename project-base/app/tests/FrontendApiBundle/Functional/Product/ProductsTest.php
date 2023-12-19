@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\VatDataFixture;
-use App\Model\Product\Availability\AvailabilityStatusEnum;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
 
 class ProductsTest extends ProductsGraphQlTestCase
 {

@@ -163,9 +163,6 @@ msgstr "Ověřovací kód"
 msgid "Authenticator key"
 msgstr "Ověřovací klíč"
 
-msgid "Available immediately"
-msgstr "Ihned k odběru"
-
 msgid "Back to category selection"
 msgstr "Zpět na volbu kategorie"
 
@@ -1306,9 +1303,6 @@ msgstr "Hodnota objednávek"
 msgid "Original translation"
 msgstr "Původní překlad"
 
-msgid "Out of stock"
-msgstr "Vyprodáno"
-
 msgid "Outside layout"
 msgstr "Rozložení vně"
 
@@ -1957,9 +1951,6 @@ msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_t
 msgid "Unable to load list of language constants"
 msgstr "Nepodařilo se načíst přehled jazykových konstant"
 
-msgid "Unavailable"
-msgstr "Nedostupné"
-
 msgid "Units - full"
 msgstr "Měrné jednotky - vše"
 
@@ -2139,12 +2130,6 @@ msgstr "obrat v"
 
 msgid "without positioning"
 msgstr "bez pozice"
-
-msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
-msgstr "{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] K dispozici za %count% týdnů"
-
-msgid "{0}|{1}Available in <span class=\"box-detail__avail__text__strong\">%count%</span> store|[2,Inf]Available in <span class=\"box-detail__avail__text__strong\">%count%</span> stores"
-msgstr "{0}|{1}Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejnách"
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
 msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vytvořeny <strong>%count%</strong> slevové kupóny|[5,Inf] Bylo vytvořeno <strong>%count%</strong> slevových kupónů"

@@ -108,34 +108,6 @@ class ProductTest extends TestCase
         $mainVariant->addVariant($mainVariant);
     }
 
-    public function testMarkForVisibilityRecalculation()
-    {
-        $productData = TestProductProvider::getTestProductData();
-        $product = Product::create($productData);
-        $product->markForVisibilityRecalculation();
-        $this->assertTrue($product->isMarkedForVisibilityRecalculation());
-    }
-
-    public function testMarkForVisibilityRecalculationMainVariant()
-    {
-        $productData = TestProductProvider::getTestProductData();
-        $variant = Product::create($productData);
-        $mainVariant = Product::createMainVariant($productData, [$variant]);
-        $mainVariant->markForVisibilityRecalculation();
-        $this->assertTrue($mainVariant->isMarkedForVisibilityRecalculation());
-        $this->assertTrue($variant->isMarkedForVisibilityRecalculation());
-    }
-
-    public function testMarkForVisibilityRecalculationVariant()
-    {
-        $productData = TestProductProvider::getTestProductData();
-        $variant = Product::create($productData);
-        $mainVariant = Product::createMainVariant($productData, [$variant]);
-        $variant->markForVisibilityRecalculation();
-        $this->assertTrue($variant->isMarkedForVisibilityRecalculation());
-        $this->assertTrue($mainVariant->isMarkedForVisibilityRecalculation());
-    }
-
     public function testDeleteResultNotVariant()
     {
         $productData = TestProductProvider::getTestProductData();

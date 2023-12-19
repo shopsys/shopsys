@@ -10,18 +10,18 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class CartWatcher
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        protected readonly ProductVisibilityRepository $productVisibilityRepository,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly Domain $domain,
     ) {
     }
@@ -60,7 +60,7 @@ class CartWatcher
         foreach ($cart->getItems() as $item) {
             try {
                 $product = $item->getProduct();
-                $productVisibility = $this->productVisibilityRepository
+                $productVisibility = $this->productVisibilityFacade
                     ->getProductVisibility(
                         $product,
                         $currentCustomerUser->getPricingGroup(),

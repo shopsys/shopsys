@@ -17,6 +17,7 @@ use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
+use SlevomatCodingStandard\Sniffs\ControlStructures\EarlyExitSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
@@ -86,10 +87,6 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Model/Product/ProductFacade.php',
             __DIR__ . '/src/Component/Image/ImageFacade.php',
         ],
-        EmptyStatementSniff::class . '.DetectedWhile' => [
-            __DIR__ . '/src/Model/Product/Availability/ProductAvailabilityRecalculator.php',
-            __DIR__ . '/src/Model/Product/Pricing/ProductPriceRecalculator.php',
-        ],
         CamelCapsFunctionNameSniff::class => [
             __DIR__ . '/src/Component/Doctrine/MoneyType.php',
             __DIR__ . '/tests/Test/Codeception/ActorInterface.php',
@@ -150,6 +147,9 @@ return static function (ECSConfig $ecsConfig): void {
         ],
         DeclareStrictTypesFixer::class => [
             __DIR__ . '/src/*',
+        ],
+        EarlyExitSniff::class => [
+            __DIR__ . '/src/Migrations/Version20231213165330.php',
         ],
     ]);
 

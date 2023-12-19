@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Filter;
 
-use App\Component\Doctrine\OrderByCollationHelper;
-use App\Model\Category\CategoryParameter;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Category\CategoryParameter;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository as BaseParameterFilterChoiceRepository;

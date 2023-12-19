@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product;
 
-use App\DataFixtures\Demo\ProductDataFixture;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
+use App\Model\Product\ProductDataFactory;
+use App\Model\Product\ProductFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 {
-    /**
-     * @inject
-     */
-    private ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
-
     /**
      * @inject
      */
@@ -25,19 +18,12 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private ProductDataFactoryInterface $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
-    public function testCalculateSellingDeniedForProductSellableVariant()
+    public function testCalculateSellingDeniedForProductSellableVariant(): void
     {
-        /** @var \App\Model\Product\Product $variant1 */
-        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
-        /** @var \App\Model\Product\Product $variant2 */
-        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
-        /** @var \App\Model\Product\Product $variant3 */
-        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
-        /** @var \App\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($mainVariant);
+        $variant1 = $this->productFacade->getById(53);
+        $variant3 = $this->productFacade->getById(148);
 
         $variant1productData = $this->productDataFactory->createFromProduct($variant1);
         $variant1productData->sellingDenied = true;
@@ -51,10 +37,14 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         }
         $this->productFacade->edit($variant3->getId(), $variant3productData);
 
-        $this->em->refresh($variant1);
-        $this->em->refresh($variant2);
-        $this->em->refresh($variant3);
-        $this->em->refresh($mainVariant);
+        $this->handleDispatchedRecalculationMessages();
+
+        $this->em->clear();
+
+        $variant1 = $this->productFacade->getById(53);
+        $variant2 = $this->productFacade->getById(54);
+        $variant3 = $this->productFacade->getById(148);
+        $mainVariant = $this->productFacade->getById(69);
 
         $this->assertTrue($variant1->getCalculatedSellingDenied());
         $this->assertFalse($variant2->getCalculatedSellingDenied());
@@ -62,22 +52,14 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $this->assertFalse($mainVariant->getCalculatedSellingDenied());
     }
 
-    public function testCalculateSellingDeniedForProductNotSellableVariants()
+    public function testCalculateSellingDeniedForProductNotSellableVariants(): void
     {
-        /** @var \App\Model\Product\Product $variant1 */
-        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
-        /** @var \App\Model\Product\Product $variant2 */
-        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
-        /** @var \App\Model\Product\Product $variant3 */
-        $variant3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '148');
-        /** @var \App\Model\Product\Product $variant4 */
-        $variant4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '149');
-        /** @var \App\Model\Product\Product $variant5 */
-        $variant5 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '150');
-        /** @var \App\Model\Product\Product $variant6 */
-        $variant6 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '151');
-        /** @var \App\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
+        $variant1 = $this->productFacade->getById(53);
+        $variant2 = $this->productFacade->getById(54);
+        $variant3 = $this->productFacade->getById(148);
+        $variant4 = $this->productFacade->getById(149);
+        $variant5 = $this->productFacade->getById(150);
+        $variant6 = $this->productFacade->getById(151);
 
         $variant1productData = $this->productDataFactory->createFromProduct($variant1);
         $variant1productData->sellingDenied = true;
@@ -98,15 +80,17 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $variant6productData->sellingDenied = true;
         $this->productFacade->edit($variant6->getId(), $variant6productData);
 
-        $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($mainVariant);
+        $this->handleDispatchedRecalculationMessages();
 
-        $this->em->refresh($variant1);
-        $this->em->refresh($variant2);
-        $this->em->refresh($variant3);
-        $this->em->refresh($variant4);
-        $this->em->refresh($variant5);
-        $this->em->refresh($variant6);
-        $this->em->refresh($mainVariant);
+        $this->em->clear();
+
+        $variant1 = $this->productFacade->getById(53);
+        $variant2 = $this->productFacade->getById(54);
+        $variant3 = $this->productFacade->getById(148);
+        $variant4 = $this->productFacade->getById(149);
+        $variant5 = $this->productFacade->getById(150);
+        $variant6 = $this->productFacade->getById(151);
+        $mainVariant = $this->productFacade->getById(69);
 
         $this->assertTrue($variant1->getCalculatedSellingDenied());
         $this->assertTrue($variant2->getCalculatedSellingDenied());
@@ -117,46 +101,46 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $this->assertTrue($mainVariant->getCalculatedSellingDenied());
     }
 
-    public function testCalculateSellingDeniedForProductNotSellableMainVariant()
+    public function testCalculateSellingDeniedForProductNotSellableMainVariant(): void
     {
-        /** @var \App\Model\Product\Product $variant1 */
-        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
-        /** @var \App\Model\Product\Product $variant2 */
-        $variant2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '54');
-        /** @var \App\Model\Product\Product $mainVariant */
-        $mainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '69');
+        $mainVariant = $this->productFacade->getById(69);
 
-        $mainVariantproductData = $this->productDataFactory->createFromProduct($mainVariant);
-        $mainVariantproductData->sellingDenied = true;
-        $this->productFacade->edit($mainVariant->getId(), $mainVariantproductData);
+        $mainVariantProductData = $this->productDataFactory->createFromProduct($mainVariant);
+        $mainVariantProductData->sellingDenied = true;
+        $this->productFacade->edit($mainVariant->getId(), $mainVariantProductData);
 
-        $this->em->refresh($variant1);
-        $this->em->refresh($variant2);
-        $this->em->refresh($mainVariant);
+        $this->handleDispatchedRecalculationMessages();
+
+        $this->em->clear();
+
+        $variant1 = $this->productFacade->getById(53);
+        $variant2 = $this->productFacade->getById(54);
+        $mainVariant = $this->productFacade->getById(69);
 
         $this->assertTrue($variant1->getCalculatedSellingDenied());
         $this->assertTrue($variant2->getCalculatedSellingDenied());
         $this->assertTrue($mainVariant->getCalculatedSellingDenied());
     }
 
-    public function testPropagationCalculatedSaleExclusionToCalculateSellingDeniedForVariant()
+    public function testPropagationCalculatedSaleExclusionToCalculateSellingDeniedForVariant(): void
     {
-        /** @var \App\Model\Product\Product $variant1 */
-        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
+        $variant1 = $this->productFacade->getById(53);
 
         /** @var \App\Model\Product\ProductData $variant1ProductData */
         $variant1ProductData = $this->productDataFactory->createFromProduct($variant1);
         $variant1ProductData->sellingDenied = false;
 
-        foreach ($variant1ProductData->stockProductData as &$stockProductData) {
-            $stockProductData->productQuantity = 0;
+        foreach ($variant1ProductData->productStockData as $productStockData) {
+            $productStockData->productQuantity = 0;
         }
 
         $this->productFacade->edit($variant1->getId(), $variant1ProductData);
 
+        $this->handleDispatchedRecalculationMessages();
+
         $this->em->clear();
 
-        $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
+        $variant1 = $this->productFacade->getById(53);
 
         foreach ($this->domain->getAll() as $domainConfig) {
             $this->assertTrue($variant1->getCalculatedSaleExclusion($domainConfig->getId()));

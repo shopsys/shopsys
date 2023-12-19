@@ -30,6 +30,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer
      * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly ParameterRepository $parameterRepository,
@@ -38,6 +39,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer,
         private readonly CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
         private readonly Localization $localization,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -78,7 +80,9 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
 
         $parameterNamesById = [];
 
-        foreach ($this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID) as $parameter) {
+        $parametersUsedByProductsInCategory = $this->parameterRepository->getParametersUsedByProductsInCategory($category, $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
+
+        foreach ($parametersUsedByProductsInCategory as $parameter) {
             $parameterNamesById[$parameter->getId()] = $parameter->getName();
         }
 
@@ -91,7 +95,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         $parametersFilterBuilder->add('parametersCollapsed', ChoiceType::class, [
             'required' => false,
             'label' => t('Filter parameters closed by default'),
-            'choices' => $this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID),
+            'choices' => $parametersUsedByProductsInCategory,
             'expanded' => true,
             'choice_label' => 'name',
             'choice_value' => 'id',

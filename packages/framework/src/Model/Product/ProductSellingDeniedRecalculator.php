@@ -20,50 +20,32 @@ class ProductSellingDeniedRecalculator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int[] $productIds
      */
-    public function calculateSellingDeniedForProduct(Product $product)
+    public function calculateSellingDeniedForProductIds(array $productIds): void
     {
-        $products = $this->getProductsForCalculations($product);
-        $this->calculate($products);
+        $this->calculate($productIds);
     }
 
-    public function calculateSellingDeniedForAll()
+    public function calculateSellingDeniedForAll(): void
     {
         $this->calculate();
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @param int[] $productIds
      */
-    protected function calculate(array $products = [])
+    protected function calculate(array $productIds = []): void
     {
-        $this->calculateIndependent($products);
-        $this->propagateMainVariantSellingDeniedToVariants($products);
-        $this->propagateVariantsSellingDeniedToMainVariant($products);
+        $this->calculateIndependent($productIds);
+        $this->propagateMainVariantSellingDeniedToVariants($productIds);
+        $this->propagateVariantsSellingDeniedToMainVariant($productIds);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     * @param int[] $productIds
      */
-    protected function getProductsForCalculations(Product $product)
-    {
-        $products = [$product];
-
-        if ($product->isMainVariant()) {
-            $products = array_merge($products, $product->getVariants());
-        } elseif ($product->isVariant()) {
-            $products[] = $product->getMainVariant();
-        }
-
-        return $products;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     */
-    protected function calculateIndependent(array $products)
+    protected function calculateIndependent(array $productIds): void
     {
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')
@@ -78,16 +60,16 @@ class ProductSellingDeniedRecalculator
             ')
             ->setParameter('outOfStockActionExcludeFromSale', Product::OUT_OF_STOCK_ACTION_EXCLUDE_FROM_SALE);
 
-        if (count($products) > 0) {
-            $qb->andWhere('p IN (:products)')->setParameter('products', $products);
+        if (count($productIds) > 0) {
+            $qb->andWhere('p IN (:productIds)')->setParameter('productIds', $productIds);
         }
         $qb->getQuery()->execute();
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @param int[] $productIds
      */
-    protected function propagateMainVariantSellingDeniedToVariants(array $products)
+    protected function propagateMainVariantSellingDeniedToVariants(array $productIds): void
     {
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')
@@ -104,16 +86,16 @@ class ProductSellingDeniedRecalculator
             )
             ->setParameter('variantTypeVariant', Product::VARIANT_TYPE_VARIANT);
 
-        if (count($products) > 0) {
-            $qb->andWhere('p IN (:products)')->setParameter('products', $products);
+        if (count($productIds) > 0) {
+            $qb->andWhere('p IN (:productIds)')->setParameter('productIds', $productIds);
         }
         $qb->getQuery()->execute();
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
+     * @param int[] $productIds
      */
-    protected function propagateVariantsSellingDeniedToMainVariant(array $products)
+    protected function propagateVariantsSellingDeniedToMainVariant(array $productIds): void
     {
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')
@@ -130,8 +112,8 @@ class ProductSellingDeniedRecalculator
             )
             ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN);
 
-        if (count($products) > 0) {
-            $qb->andWhere('p IN (:products)')->setParameter('products', $products);
+        if (count($productIds) > 0) {
+            $qb->andWhere('p IN (:productIds)')->setParameter('productIds', $productIds);
         }
         $qb->getQuery()->execute();
     }

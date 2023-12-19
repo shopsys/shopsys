@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Products\DataMapper;
 
 use App\Component\Breadcrumb\BreadcrumbFacade;
-use App\Component\Deprecation\DeprecatedMethodException;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\FrontendApi\Model\Parameter\ParameterWithValuesFactory;
 use App\Model\Category\Category;
-use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
@@ -20,7 +18,7 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade;
@@ -36,6 +34,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method string|null getSeoH1(\App\Model\Product\Product $product)
  * @method string|null getSeoTitle(\App\Model\Product\Product $product)
  * @method string|null getSeoMetaDescription(\App\Model\Product\Product $product)
+ * @method array{name: string, status: string} getAvailability(\App\Model\Product\Product $product)
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
@@ -46,7 +45,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
-     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
@@ -63,16 +62,16 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductAccessoryFacade $productAccessoryFacade,
         CurrentCustomerUser $currentCustomerUser,
         ParameterWithValuesFactory $parameterWithValuesFactory,
-        private ProductAvailabilityFacade $productAvailabilityFacade,
-        private FriendlyUrlFacade $friendlyUrlFacade,
-        private ProductRepository $productRepository,
-        private PricingGroupSettingFacade $pricingGroupSettingFacade,
-        protected ParameterRepository $parameterRepository,
-        private BreadcrumbFacade $breadcrumbFacade,
-        private DataLoaderInterface $categoriesBatchLoader,
-        private DataLoaderInterface $productsSellableByIdsBatchLoader,
-        private DataLoaderInterface $brandsBatchLoader,
-        private readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
+        ProductAvailabilityFacade $productAvailabilityFacade,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly ProductRepository $productRepository,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly ParameterRepository $parameterRepository,
+        protected readonly BreadcrumbFacade $breadcrumbFacade,
+        protected readonly DataLoaderInterface $categoriesBatchLoader,
+        protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
+        protected readonly DataLoaderInterface $brandsBatchLoader,
+        protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
     ) {
         parent::__construct(
             $domain,
@@ -80,6 +79,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productAccessoryFacade,
             $currentCustomerUser,
             $parameterWithValuesFactory,
+            $productAvailabilityFacade,
         );
     }
 
@@ -135,33 +135,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     public function getCatalogNumber(Product $product): string
     {
         return $product->getCatnum();
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return array{name: string, status: string}
-     */
-    public function getExtendedAvailability(Product $product): array
-    {
-        return [
-            'name' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId(
-                $product,
-                $this->domain->getId(),
-            ),
-            'status' => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId(
-                $product,
-                $this->domain->getId(),
-            )->value,
-        ];
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
-     */
-    public function getAvailability(BaseProduct $product): Availability
-    {
-        throw new DeprecatedMethodException();
     }
 
     /**

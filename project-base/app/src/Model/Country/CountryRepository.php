@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Country;
 
-use App\Component\Doctrine\OrderByCollationHelper;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\Country\CountryRepository as BaseCountryRepository;
 
 class CountryRepository extends BaseCountryRepository

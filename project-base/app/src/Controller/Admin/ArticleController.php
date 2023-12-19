@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Component\Redis\CleanStorefrontCacheFacade;
 use App\Model\Article\Article;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Controller\Admin\ArticleController as BaseArticleController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface;
@@ -35,7 +35,7 @@ class ArticleController extends BaseArticleController
      * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
      * @param \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade
-     * @param \App\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
         ArticleFacade $articleFacade,

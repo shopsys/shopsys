@@ -17,16 +17,7 @@ class CategoryVisibilityRecalculationScheduler
     {
     }
 
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     */
-    public function scheduleRecalculation(Category $category)
-    {
-        $this->recalculate = true;
-        $this->productVisibilityFacade->markProductsForRecalculationAffectedByCategory($category);
-    }
-
-    public function scheduleRecalculationWithoutDependencies()
+    public function scheduleRecalculation()
     {
         $this->recalculate = true;
     }

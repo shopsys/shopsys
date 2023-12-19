@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade as BaseBrandFacade;
  * @method \App\Model\Product\Brand\Brand getByUuid(string $uuid)
  * @method \App\Model\Product\Brand\Brand[] getByUuids(string[] $uuids)
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+ * @method \App\Model\Product\Brand\Brand[] getBrandsByIds(int[] $brandsIds)
  */
 class BrandFacade extends BaseBrandFacade
 {
@@ -28,14 +29,5 @@ class BrandFacade extends BaseBrandFacade
     public function getBrandsForSearchText(string $searchText): array
     {
         return $this->brandRepository->getResultsForSearch($searchText);
-    }
-
-    /**
-     * @param int[] $brandsIds
-     * @return \App\Model\Product\Brand\Brand[]
-     */
-    public function getBrandsByIds(array $brandsIds): array
-    {
-        return $this->brandRepository->getBrandsByIds($brandsIds);
     }
 }

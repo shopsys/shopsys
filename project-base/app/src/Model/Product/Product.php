@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Product\Exception\DeprecatedAvailabilityPropertyFromProductException;
-use App\Model\Product\Exception\ProductCannotBeTransformedException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
@@ -41,6 +40,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\Unit\Unit $unit
  * @method \App\Model\Product\Unit\Unit getUnit()
  * @method \App\Model\Product\Flag\Flag[] getFlags(int $domainId)
+ * @method setDomains(\App\Model\Product\ProductData $productData)
  */
 class Product extends BaseProduct
 {
@@ -79,14 +79,6 @@ class Product extends BaseProduct
      * @see \App\Component\Doctrine\RemoveMappingsSubscriber
      */
     protected $usingStock;
-
-    /**
-     * @var null
-     * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
-     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
-     * @phpstan-ignore-next-line Removed property
-     */
-    protected $calculatedAvailability;
 
     /**
      * @var int|null
@@ -153,8 +145,6 @@ class Product extends BaseProduct
         $this->editRelatedProducts($productData->relatedProducts);
 
         parent::edit($productCategoryDomains, $productData);
-
-        $this->markForExport();
     }
 
     /**
@@ -190,20 +180,6 @@ class Product extends BaseProduct
     protected function createTranslation()
     {
         return new ProductTranslation();
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    protected function setDomains(BaseProductData $productData): void
-    {
-        parent::setDomains($productData);
-
-        foreach ($this->domains as $productDomain) {
-            $domainId = $productDomain->getDomainId();
-            $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
-            $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
-        }
     }
 
     /**
@@ -384,24 +360,6 @@ class Product extends BaseProduct
 
     /**
      * @param int $domainId
-     * @return bool|null
-     */
-    public function isDomainHidden(int $domainId): ?bool
-    {
-        return $this->getProductDomain($domainId)->isDomainHidden();
-    }
-
-    /**
-     * @param int $domainId
-     * @return  bool
-     */
-    public function getSaleExclusion(int $domainId): bool
-    {
-        return $this->getProductDomain($domainId)->getSaleExclusion();
-    }
-
-    /**
-     * @param int $domainId
      * @return bool
      */
     public function getCalculatedSaleExclusion(int $domainId): bool
@@ -415,7 +373,6 @@ class Product extends BaseProduct
     public function isUsingStock()
     {
         //is always false and is by default set in migration to false.
-        //removing old stock functionality means product.calculatedHidden is always setup by product.hidden
         return false;
     }
 
@@ -452,11 +409,6 @@ class Product extends BaseProduct
         return null;
     }
 
-    public function getCalculatedAvailability()
-    {
-        throw new DeprecatedAvailabilityPropertyFromProductException('calculatedAvailability', $this->calculatedAvailability);
-    }
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      */
@@ -481,15 +433,6 @@ class Product extends BaseProduct
         foreach ($this->getVariants() as $variant) {
             $variant->copyProductCategoryDomains($productCategoryDomains);
         }
-    }
-
-    public function setAsMainVariant(): void
-    {
-        if ($this->isMainVariant() || $this->isVariant()) {
-            throw new ProductCannotBeTransformedException($this);
-        }
-
-        $this->variantType = self::VARIANT_TYPE_MAIN;
     }
 
     /**

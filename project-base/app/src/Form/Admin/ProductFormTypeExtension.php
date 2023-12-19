@@ -10,7 +10,7 @@ use App\Model\Product\Product;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
-use Shopsys\FrameworkBundle\Form\Admin\Stock\StockProductFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStockFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
@@ -189,9 +189,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             'label' => t('Warehouses'),
         ]);
 
-        $stockGroupBuilder->add('stockProductData', CollectionType::class, [
+        $stockGroupBuilder->add('productStockData', CollectionType::class, [
             'required' => false,
-            'entry_type' => StockProductFormType::class,
+            'entry_type' => ProductStockFormType::class,
             'render_form_row' => false,
         ]);
 

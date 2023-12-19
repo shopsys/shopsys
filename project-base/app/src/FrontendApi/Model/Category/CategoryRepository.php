@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Category;
 
-use App\Component\Doctrine\OrderByCollationHelper;
 use App\Model\Category\LinkedCategory\LinkedCategory;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
 

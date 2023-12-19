@@ -7,6 +7,7 @@ namespace Shopsys\ProductFeed\ZboziBundle\Model\FeedItem;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -20,12 +21,14 @@ class ZboziFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader $productParametersBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
         protected readonly CategoryFacade $categoryFacade,
+        protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
     }
 
@@ -57,7 +60,7 @@ class ZboziFeedItemFactory
             $this->getBrandName($product),
             $product->getEan(),
             $product->getPartno(),
-            $product->getCalculatedAvailability()->getDispatchTime(),
+            $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainConfig->getId()),
             $cpc,
             $cpcSearch,
         );

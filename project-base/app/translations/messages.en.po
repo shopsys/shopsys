@@ -163,9 +163,6 @@ msgstr ""
 msgid "Authenticator key"
 msgstr ""
 
-msgid "Available immediately"
-msgstr ""
-
 msgid "Back to category selection"
 msgstr ""
 
@@ -1306,9 +1303,6 @@ msgstr ""
 msgid "Original translation"
 msgstr ""
 
-msgid "Out of stock"
-msgstr ""
-
 msgid "Outside layout"
 msgstr ""
 
@@ -1957,9 +1951,6 @@ msgstr ""
 msgid "Unable to load list of language constants"
 msgstr ""
 
-msgid "Unavailable"
-msgstr ""
-
 msgid "Units - full"
 msgstr ""
 
@@ -2138,12 +2129,6 @@ msgid "turnover in"
 msgstr ""
 
 msgid "without positioning"
-msgstr ""
-
-msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
-msgstr ""
-
-msgid "{0}|{1}Available in <span class=\"box-detail__avail__text__strong\">%count%</span> store|[2,Inf]Available in <span class=\"box-detail__avail__text__strong\">%count%</span> stores"
 msgstr ""
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"

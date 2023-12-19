@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
-use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\StocksDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
-use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
-use ReflectionClass;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -33,11 +29,6 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
-
-    /**
-     * @inject
-     */
     private VatFacade $vatFacade;
 
     /**
@@ -46,16 +37,14 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
     private ProductStockDataFactory $productStockDataFactory;
 
     /**
-     * @dataProvider getTestCalculationHiddenAndSellingDeniedDataProvider
+     * @dataProvider getTestSellingDeniedDataProvider
      * @param mixed $hidden
      * @param mixed $sellingDenied
-     * @param mixed $calculatedHidden
      * @param mixed $calculatedSellingDenied
      */
-    public function testCalculationHiddenAndSellingDenied(
+    public function testSellingDenied(
         $hidden,
         $sellingDenied,
-        $calculatedHidden,
         $calculatedSellingDenied,
     ) {
         $productData = $this->productDataFactory->create();
@@ -69,82 +58,46 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
 
         $productStockData = $this->productStockDataFactory->createFromStock($stock);
         $productStockData->productQuantity = 10;
-        $productData->stockProductData[$stock->getId()] = $productStockData;
+        $productData->productStockData[$stock->getId()] = $productStockData;
 
         $productData->catnum = '123';
         $this->setVats($productData);
 
         $product = $this->productFacade->create($productData);
 
+        $this->handleDispatchedRecalculationMessages();
+
         $this->em->clear();
 
         $productFromDb = $this->productFacade->getById($product->getId());
 
-        $this->assertSame($calculatedHidden, $productFromDb->getCalculatedHidden(), 'Calculated hidden:');
         $this->assertSame($calculatedSellingDenied, $productFromDb->getCalculatedSellingDenied(), 'Calculated selling denied:');
     }
 
-    public function getTestCalculationHiddenAndSellingDeniedDataProvider()
+    public function getTestSellingDeniedDataProvider()
     {
         return [
             [
                 'hidden' => true,
                 'sellingDenied' => true,
-                'calculatedHidden' => true,
                 'calculatedSellingDenied' => true,
             ],
             [
                 'hidden' => false,
                 'sellingDenied' => false,
-                'calculatedHidden' => false,
                 'calculatedSellingDenied' => false,
             ],
             [
                 'hidden' => true,
                 'sellingDenied' => false,
-                'calculatedHidden' => true,
                 'calculatedSellingDenied' => false,
             ],
             [
                 'hidden' => false,
                 'sellingDenied' => true,
-                'calculatedHidden' => false,
                 'calculatedSellingDenied' => true,
             ],
         ];
-    }
-
-    public function testEditMarkProductForVisibilityRecalculation()
-    {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-
-        $reflectionClass = new ReflectionClass(Product::class);
-        $reflectionPropertyRecalculateVisibility = $reflectionClass->getProperty('recalculateVisibility');
-        $reflectionPropertyRecalculateVisibility->setAccessible(true);
-        $reflectionPropertyRecalculateVisibility->setValue($product, false);
-
-        $this->productFacade->edit($product->getId(), $this->productDataFactory->createFromProduct($product));
-
-        $this->assertSame(true, $reflectionPropertyRecalculateVisibility->getValue($product));
-    }
-
-    public function testEditSchedulesPriceRecalculation()
-    {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-        $productId = $product->getId();
-
-        $productData = $this->productDataFactory->create();
-        $productData->catnum = '123';
-        $this->setVats($productData);
-
-        $this->productFacade->edit($productId, $productData);
-
-        $this->assertArrayHasKey(
-            $productId,
-            $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation(),
-        );
     }
 
     /**

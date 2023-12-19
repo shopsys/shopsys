@@ -9,6 +9,7 @@ use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class ProductInputPriceFacade
 {
@@ -25,6 +26,7 @@ class ProductInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator $productInputPriceRecalculator
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -32,6 +34,7 @@ class ProductInputPriceFacade
         protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
         protected readonly ProductRepository $productRepository,
         protected readonly ProductInputPriceRecalculator $productInputPriceRecalculator,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
 
@@ -93,7 +96,7 @@ class ProductInputPriceFacade
                 );
 
                 $product->changeVatForDomain($newVat, $domainId);
-                $product->markForExport();
+                $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
             }
         }
 

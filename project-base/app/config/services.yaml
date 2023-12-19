@@ -299,17 +299,11 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductRepository:
         alias: App\Model\Product\ProductRepository
 
-    Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator:
-        alias: App\Model\Product\ProductHiddenRecalculator
-
     Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator:
         alias: App\Model\Product\ProductSellingDeniedRecalculator
 
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository:
         alias: App\Model\Product\Availability\AvailabilityRepository
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade:
-        alias: App\Model\Product\Availability\AvailabilityFacade
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade:
         alias: App\Model\Product\Brand\BrandFacade
@@ -495,20 +489,11 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator:
         alias: App\Model\Product\ProductBreadcrumbGenerator
 
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade:
-        class: App\Model\Product\ProductVisibilityFacade
-        tags:
-            # must be ran after CategoryVisibilityRepository and ProductPriceRecalculator
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 10 }
-
     Shopsys\FrameworkBundle\Model\Product\ProductFacade:
         alias: App\Model\Product\ProductFacade
 
     Shopsys\FrameworkBundle\Model\Product\ProductFactory:
         alias: App\Model\Product\ProductFactory
-
-    Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade:
-        alias: App\Model\Product\ProductVariantFacade
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository:
         alias: App\Model\Product\Elasticsearch\ProductExportRepository
@@ -524,17 +509,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository:
         alias: App\Model\Product\Filter\ParameterFilterChoiceRepository
-
-    Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository:
-        alias: App\Model\Product\Filter\ProductFilterRepository
-
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository:
-        alias: App\Model\Product\ProductVisibilityRepository
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation:
-        alias: App\Model\Product\Availability\ProductAvailabilityCalculation
-
-    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator: ~
 
     App\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
 
@@ -701,9 +675,6 @@ services:
 
     App\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\MarkProductForExportSubscriber:
-        alias: App\Model\Product\Elasticsearch\MarkProductForExportSubscriber
-
     Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter:
         class: App\Component\Domain\DomainAwareSecurityHeadersSetter
         tags:
@@ -763,10 +734,6 @@ services:
                 - '@snc_redis.global'
                 - '@snc_redis.blog_article_export_queue'
 
-    App\Component\Redis\CleanStorefrontCacheFacade:
-        arguments:
-            $storefrontGraphqlQueryClient: '@snc_redis.storefront_graphql_query'
-
     Shopsys\FrameworkBundle\Component\Redis\RedisFacade:
         alias: App\Component\Redis\RedisFacade
 
@@ -807,13 +774,6 @@ services:
 
     App\FrontendApi\Component\ExpressionLanguage\DynamicPaginationComplexityExpressionFunction:
         tags: ['overblog_graphql.expression_function']
-
-    App\Model\ImageSitemap\ImageSitemapFacade:
-        arguments:
-            - '%shopsys.sitemaps_dir%'
-            - '%shopsys.sitemaps_url_prefix%'
-
-    App\Model\ImageSitemap\ImageSitemapFilePrefixer: ~
 
     App\FrontendApi\Model\Token\TokenAuthenticator: ~
 

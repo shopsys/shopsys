@@ -15,7 +15,7 @@
             <span class="in-product-visibility__title-position js-product-visibility-icon in-icon svg
                 {% if isVisibleForDefaultPricingGroupOnEachDomain(product) %}
                     svg-visible in-icon--visible
-                {% elseif product.visible and not isVisibleForDefaultPricingGroupOnEachDomain(product) %}
+                {% elseif isVisibleForDefaultPricingGroupOnSomeDomain(product) %}
                     svg-visible in-icon--partially-visible
                 {% else %}
                     svg-invisible in-icon--invisible

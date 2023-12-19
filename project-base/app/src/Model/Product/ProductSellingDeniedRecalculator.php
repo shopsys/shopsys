@@ -4,60 +4,58 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator as BaseProductSellingDeniedRecalculator;
 
-/**
- * @method calculateSellingDeniedForProduct(\App\Model\Product\Product $product)
- * @method \App\Model\Product\Product[] getProductsForCalculations(\App\Model\Product\Product $product)
- */
 class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalculator
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(EntityManagerInterface $entityManager, private Domain $domain)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        private readonly Domain $domain,
+    ) {
         parent::__construct($entityManager);
     }
 
     /**
-     * @param \App\Model\Product\Product[] $products
+     * {@inheritdoc}
      */
-    protected function calculate(array $products = [])
+    protected function calculate(array $productIds = []): void
     {
-        $this->calculateIndependent($products);
-        $this->propagateCalculatedSaleExclusionToCalculatedSellingDenied($products);
-        $this->propagateMainVariantSellingDeniedToVariants($products);
-        $this->propagateVariantsSellingDeniedToMainVariant($products);
+        $this->calculateIndependent($productIds);
+        $this->propagateCalculatedSaleExclusionToCalculatedSellingDenied($productIds);
+        $this->propagateMainVariantSellingDeniedToVariants($productIds);
+        $this->propagateVariantsSellingDeniedToMainVariant($productIds);
     }
 
     /**
-     * @param \App\Model\Product\Product[] $products
+     * {@inheritdoc}
      */
-    protected function calculateIndependent(array $products)
+    protected function calculateIndependent(array $productIds): void
     {
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')
             ->set('p.calculatedSellingDenied', 'p.sellingDenied');
 
-        if (count($products) > 0) {
-            $qb->andWhere('p IN (:products)')->setParameter('products', $products);
+        if (count($productIds) > 0) {
+            $qb->andWhere('p IN (:productIds)')->setParameter('productIds', $productIds);
         }
         $qb->getQuery()->execute();
 
-        $this->calculatePerDomain($products);
+        $this->calculatePerDomain($productIds);
     }
 
     /**
-     * @param \App\Model\Product\Product[] $products
+     * @param int[] $productIds
      */
-    private function calculatePerDomain(array $products)
+    private function calculatePerDomain(array $productIds): void
     {
         $query = 'UPDATE product_domains AS pd
             SET calculated_sale_exclusion = CASE
@@ -89,13 +87,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
             FROM products AS p
             WHERE p.id = pd.product_id
                 AND pd.domain_id = :domainId
-            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
-
-        $productIds = [];
-
-        foreach ($products as $product) {
-            $productIds[] = $product->getId();
-        }
+            ' . (count($productIds) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $params = [];
         $params['productIds'] = $productIds;
@@ -108,7 +100,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                 $query,
                 $params,
                 [
-                    'productIds' => Connection::PARAM_INT_ARRAY,
+                    'productIds' => ArrayParameterType::INTEGER,
                     'variantTypeMain' => Types::STRING,
                     'domainId' => Types::INTEGER,
                 ],
@@ -117,9 +109,9 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
     }
 
     /**
-     * @param \App\Model\Product\Product[] $products
+     * @param int[] $productIds
      */
-    private function propagateCalculatedSaleExclusionToCalculatedSellingDenied(array $products): void
+    private function propagateCalculatedSaleExclusionToCalculatedSellingDenied(array $productIds): void
     {
         $query = 'UPDATE products as p
                 SET calculated_selling_denied = TRUE
@@ -130,36 +122,30 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                     WHERE pd.product_id = p.id
                         AND pd.calculated_sale_exclusion = FALSE
                 )
-            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
-
-        $productIds = [];
-
-        foreach ($products as $product) {
-            $productIds[] = $product->getId();
-        }
+            ' . (count($productIds) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $this->em->getConnection()->executeStatement(
             $query,
             ['productIds' => $productIds],
-            ['productIds' => Connection::PARAM_INT_ARRAY],
+            ['productIds' => ArrayParameterType::INTEGER],
         );
     }
 
     /**
-     * @param \App\Model\Product\Product[] $products
+     * @param int[] $productIds
      */
-    protected function propagateMainVariantSellingDeniedToVariants(array $products)
+    protected function propagateMainVariantSellingDeniedToVariants(array $productIds): void
     {
-        parent::propagateMainVariantSellingDeniedToVariants($products);
+        parent::propagateMainVariantSellingDeniedToVariants($productIds);
 
-        $this->propagateMainVariantSellingDeniedToVariantsCalculatedSaleExclusion($products);
-        $this->propagateMainVariantCalculateSaleExclusionToVariantsCalculatedSaleExclusion($products);
+        $this->propagateMainVariantSellingDeniedToVariantsCalculatedSaleExclusion($productIds);
+        $this->propagateMainVariantCalculateSaleExclusionToVariantsCalculatedSaleExclusion($productIds);
     }
 
     /**
-     * @param \App\Model\Product\Product[] $products
+     * @param int[] $productIds
      */
-    private function propagateMainVariantSellingDeniedToVariantsCalculatedSaleExclusion(array $products): void
+    private function propagateMainVariantSellingDeniedToVariantsCalculatedSaleExclusion(array $productIds): void
     {
         $query = 'UPDATE product_domains as pd
                 SET calculated_sale_exclusion = TRUE
@@ -169,13 +155,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                 AND pd.product_id = p.id
                 AND pd.calculated_sale_exclusion = FALSE
                 AND p.calculated_selling_denied = TRUE
-            ' . (count($products) > 0 ? ' AND m.id IN (:productIds)' : '');
-
-        $productIds = [];
-
-        foreach ($products as $product) {
-            $productIds[] = $product->getId();
-        }
+            ' . (count($productIds) > 0 ? ' AND m.id IN (:productIds)' : '');
 
         $this->em->getConnection()->executeStatement(
             $query,
@@ -184,17 +164,18 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                 'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
             ],
             [
-                'productIds' => Connection::PARAM_INT_ARRAY,
+                'productIds' => ArrayParameterType::INTEGER,
                 'variantTypeMain' => Types::STRING,
             ],
         );
     }
 
     /**
-     * @param \App\Model\Product\Product[] $products
+     * @param int[] $productIds
      */
-    private function propagateMainVariantCalculateSaleExclusionToVariantsCalculatedSaleExclusion(array $products): void
-    {
+    private function propagateMainVariantCalculateSaleExclusionToVariantsCalculatedSaleExclusion(
+        array $productIds,
+    ): void {
         $query = 'UPDATE product_domains as pd
                 SET calculated_sale_exclusion = TRUE
                 FROM products as p
@@ -205,13 +186,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                 AND pdm.domain_id = pd.domain_id
                 AND pd.calculated_sale_exclusion = FALSE
                 AND pdm.calculated_sale_exclusion = TRUE
-            ' . (count($products) > 0 ? ' AND m.id IN (:productIds)' : '');
-
-        $productIds = [];
-
-        foreach ($products as $product) {
-            $productIds[] = $product->getId();
-        }
+            ' . (count($productIds) > 0 ? ' AND m.id IN (:productIds)' : '');
 
         $this->em->getConnection()->executeStatement(
             $query,
@@ -220,27 +195,27 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                 'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
             ],
             [
-                'productIds' => Connection::PARAM_INT_ARRAY,
+                'productIds' => ArrayParameterType::INTEGER,
                 'variantTypeMain' => Types::STRING,
             ],
         );
     }
 
     /**
-     * @param \App\Model\Product\Product[] $products
+     * @param int[] $productIds
      */
-    protected function propagateVariantsSellingDeniedToMainVariant(array $products)
+    protected function propagateVariantsSellingDeniedToMainVariant(array $productIds): void
     {
-        parent::propagateVariantsSellingDeniedToMainVariant($products);
+        parent::propagateVariantsSellingDeniedToMainVariant($productIds);
 
-        $this->propagateVariantsSaleExclusionToMainVariantCalculateSaleExclusion($products);
-        $this->propagateVariantsSaleExclusionToMainVariantCalculateSellingDenied($products);
+        $this->propagateVariantsSaleExclusionToMainVariantCalculateSaleExclusion($productIds);
+        $this->propagateVariantsSaleExclusionToMainVariantCalculateSellingDenied($productIds);
     }
 
     /**
-     * @param \App\Model\Product\Product[] $products
+     * @param int[] $productIds
      */
-    private function propagateVariantsSaleExclusionToMainVariantCalculateSaleExclusion(array $products): void
+    private function propagateVariantsSaleExclusionToMainVariantCalculateSaleExclusion(array $productIds): void
     {
         $query = 'UPDATE product_domains as pd
                 SET calculated_sale_exclusion = TRUE
@@ -255,13 +230,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                     WHERE v.main_variant_id = p.id
                         AND pdv.calculated_sale_exclusion = FALSE
                 )
-            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
-
-        $productIds = [];
-
-        foreach ($products as $product) {
-            $productIds[] = $product->getId();
-        }
+            ' . (count($productIds) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $this->em->getConnection()->executeStatement(
             $query,
@@ -270,16 +239,16 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                 'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
             ],
             [
-                'productIds' => Connection::PARAM_INT_ARRAY,
+                'productIds' => ArrayParameterType::INTEGER,
                 'variantTypeMain' => Types::STRING,
             ],
         );
     }
 
     /**
-     * @param \App\Model\Product\Product[] $products
+     * @param int[] $productIds
      */
-    private function propagateVariantsSaleExclusionToMainVariantCalculateSellingDenied(array $products): void
+    private function propagateVariantsSaleExclusionToMainVariantCalculateSellingDenied(array $productIds): void
     {
         $query = 'UPDATE products as p
                 SET calculated_selling_denied = TRUE
@@ -292,13 +261,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                     WHERE v.main_variant_id = p.id
                         AND pdv.calculated_sale_exclusion = FALSE
                 )
-            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
-
-        $productIds = [];
-
-        foreach ($products as $product) {
-            $productIds[] = $product->getId();
-        }
+            ' . (count($productIds) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $this->em->getConnection()->executeStatement(
             $query,
@@ -307,7 +270,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                 'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
             ],
             [
-                'productIds' => Connection::PARAM_INT_ARRAY,
+                'productIds' => ArrayParameterType::INTEGER,
                 'variantTypeMain' => Types::STRING,
             ],
         );

@@ -332,4 +332,19 @@ abstract class GraphQlTestCase extends ApplicationTestCase
 
         return MoneyFormatterHelper::formatWithMaxFractionDigits($money);
     }
+
+    /**
+     * Compare the expected array while ignoring the order of the elements
+     *
+     * @param array $expectedArray
+     * @param array $actualArray
+     */
+    public function assertArrayElements(array $expectedArray, array $actualArray): void
+    {
+        $this->assertSameSize($expectedArray, $actualArray);
+
+        foreach ($expectedArray as $expectedItem) {
+            $this->assertContains($expectedItem, $actualArray);
+        }
+    }
 }

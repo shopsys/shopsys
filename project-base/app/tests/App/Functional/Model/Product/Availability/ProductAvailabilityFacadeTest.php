@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Availability;
 
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -63,13 +63,13 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);
 
-        $productData->stockProductData = [];
+        $productData->productStockData = [];
 
         foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
-            $stockProductData = $this->productStockDataFactory->createFromStock($stock);
-            $stockProductData->productQuantity = $stockQuantity;
+            $productStockData = $this->productStockDataFactory->createFromStock($stock);
+            $productStockData->productQuantity = $stockQuantity;
 
-            $productData->stockProductData[] = $stockProductData;
+            $productData->productStockData[] = $productStockData;
         }
 
         $this->productFacade->edit($product->getId(), $productData);
@@ -107,12 +107,12 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);
 
-        $productData->stockProductData = [];
+        $productData->productStockData = [];
 
         foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
-            $stockProductData = $this->productStockDataFactory->createFromStock($stock);
-            $stockProductData->productQuantity = $stockQuantity;
-            $productData->stockProductData[] = $stockProductData;
+            $productStockData = $this->productStockDataFactory->createFromStock($stock);
+            $productStockData->productQuantity = $stockQuantity;
+            $productData->productStockData[] = $productStockData;
         }
 
         $this->productFacade->edit($product->getId(), $productData);
@@ -143,12 +143,12 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->createFromProduct($product);
 
-        $productData->stockProductData = [];
+        $productData->productStockData = [];
 
         foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
-            $stockProductData = $this->productStockDataFactory->createFromStock($stock);
-            $stockProductData->productQuantity = $stockQuantity;
-            $productData->stockProductData[] = $stockProductData;
+            $productStockData = $this->productStockDataFactory->createFromStock($stock);
+            $productStockData->productQuantity = $stockQuantity;
+            $productData->productStockData[] = $productStockData;
         }
 
         $this->productFacade->edit($product->getId(), $productData);

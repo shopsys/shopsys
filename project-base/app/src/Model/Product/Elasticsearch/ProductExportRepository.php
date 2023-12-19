@@ -6,7 +6,6 @@ namespace App\Model\Product\Elasticsearch;
 
 use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Model\Category\CategoryFacade;
-use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
@@ -19,6 +18,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository as BaseProductExportRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
@@ -26,7 +26,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 /**
  * @property \App\Model\Product\ProductFacade $productFacade
@@ -36,11 +36,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
  * @method int[] extractCategories(int $domainId, \App\Model\Product\Product $product)
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
- * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
  * @property \App\Model\Category\CategoryFacade $categoryFacade
- * @method setCategoryFacade(\App\Model\Category\CategoryFacade $categoryFacade)
  * @method string getBrandUrlForDomainByProduct(\App\Model\Product\Product $product, int $domainId)
  * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -57,12 +55,12 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
-     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
@@ -74,12 +72,12 @@ class ProductExportRepository extends BaseProductExportRepository
         ParameterRepository $parameterRepository,
         ProductFacade $productFacade,
         FriendlyUrlRepository $friendlyUrlRepository,
-        ProductVisibilityRepository $productVisibilityRepository,
+        ProductVisibilityFacade $productVisibilityFacade,
         FriendlyUrlFacade $friendlyUrlFacade,
         CategoryFacade $categoryFacade,
         ProductAccessoryFacade $productAccessoryFacade,
         BrandCachedFacade $brandCachedFacade,
-        private readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        ProductAvailabilityFacade $productAvailabilityFacade,
         private readonly ProductRepository $productRepository,
         private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         private readonly ProductPriceCalculation $productPriceCalculation,
@@ -91,11 +89,12 @@ class ProductExportRepository extends BaseProductExportRepository
             $parameterRepository,
             $productFacade,
             $friendlyUrlRepository,
-            $productVisibilityRepository,
+            $productVisibilityFacade,
             $friendlyUrlFacade,
             $categoryFacade,
             $productAccessoryFacade,
             $brandCachedFacade,
+            $productAvailabilityFacade,
         );
     }
 

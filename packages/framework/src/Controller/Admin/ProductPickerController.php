@@ -114,6 +114,8 @@ class ProductPickerController extends AdminBaseController
             function ($row) {
                 $product = $this->productFacade->getById($row['p']['id']);
                 $row['product'] = $product;
+                // actual visibility is rendered in the template, this is just a placeholder for column
+                $row['visibility'] = null;
 
                 return $row;
             },
@@ -125,7 +127,7 @@ class ProductPickerController extends AdminBaseController
 
         $grid->addColumn('name', 'pt.name', t('Name'), true);
         $grid->addColumn('catnum', 'p.catnum', t('Catalog number'), true);
-        $grid->addColumn('calculatedVisibility', 'p.calculatedVisibility', t('Visibility'), true)
+        $grid->addColumn('visibility', 'visibility', t('Visibility'))
             ->setClassAttribute('table-col table-col-10 text-center');
         $grid->addColumn('select', 'p.id', '')->setClassAttribute('table-col table-col-15 text-center');
 

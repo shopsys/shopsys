@@ -26,12 +26,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
 class Transport extends BaseTransport
 {
     /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    private int $daysUntilDelivery;
-
-    /**
      * @var \App\Model\Transport\Type\TransportType
      * @ORM\ManyToOne(targetEntity="App\Model\Transport\Type\TransportType")
      * @ORM\JoinColumn(nullable=false)
@@ -73,7 +67,6 @@ class Transport extends BaseTransport
     {
         parent::setData($transportData);
 
-        $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->trackingUrl = $transportData->trackingUrl;
         $this->transportType = $transportData->transportType;
         $this->maxWeight = $transportData->maxWeight > 0 ? $transportData->maxWeight : null;
@@ -89,14 +82,6 @@ class Transport extends BaseTransport
         foreach ($transportData->trackingInstructions as $locale => $trackingInstruction) {
             $this->translation($locale)->setTrackingInstruction($trackingInstruction);
         }
-    }
-
-    /**
-     * @return int
-     */
-    public function getDaysUntilDelivery(): int
-    {
-        return $this->daysUntilDelivery;
     }
 
     /**

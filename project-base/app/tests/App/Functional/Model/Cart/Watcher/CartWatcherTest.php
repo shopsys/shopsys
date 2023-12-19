@@ -22,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CartWatcherTest extends TransactionFunctionalTestCase
@@ -118,11 +118,11 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $currentCustomerUserMock = $this->createCustomerUserMock();
 
-        $productVisibilityRepositoryMock = $this->createProductVisibilityRepositoryMock();
+        $productVisibilityFacadeMock = $this->createProductVisibilityFacadeMock();
 
         $cartWatcher = new CartWatcher(
             $this->productPriceCalculationForCustomerUser,
-            $productVisibilityRepositoryMock,
+            $productVisibilityFacadeMock,
             $this->domain,
         );
 
@@ -191,9 +191,9 @@ class CartWatcherTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|(\Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository&\PHPUnit\Framework\MockObject\MockObject)
+     * @return \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
      */
-    public function createProductVisibilityRepositoryMock(): ProductVisibilityRepository|MockObject
+    public function createProductVisibilityFacadeMock(): ProductVisibilityFacade
     {
         $productVisibilityMock = $this->getMockBuilder(ProductVisibility::class)
             ->disableOriginalConstructor()
@@ -205,16 +205,16 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             ->method('isVisible')
             ->willReturn(true);
 
-        $productVisibilityRepositoryMock = $this->getMockBuilder(ProductVisibilityRepository::class)
+        $productVisibilityFacadeMock = $this->getMockBuilder(ProductVisibilityFacade::class)
             ->disableOriginalConstructor()
             ->setMethods(['getProductVisibility'])
             ->getMock();
 
-        $productVisibilityRepositoryMock
+        $productVisibilityFacadeMock
             ->expects($this->any())
             ->method('getProductVisibility')
             ->willReturn($productVisibilityMock);
 
-        return $productVisibilityRepositoryMock;
+        return $productVisibilityFacadeMock;
     }
 }

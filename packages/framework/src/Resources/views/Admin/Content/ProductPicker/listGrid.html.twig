@@ -14,12 +14,35 @@
     {{ row.product|productListDisplayName }}
 {% endblock %}
 
-{% block grid_value_cell_id_calculatedVisibility %}
-    <span class="in-icon svg svg-{{ value ? 'visible in-icon--visible' : 'invisible in-icon--invisible' }}"
-        title="{{ value ? 'Yes'|trans : 'No'|trans }}"
-    ></span>
+{% block grid_value_cell_id_visibility %}
+    {% if isMultidomain() %}
+        <span class="js-product-visibility position-relative" data-visibility-url="{{ url('admin_product_visibility', {productId: row.p.id}) }}">
+            <span class="js-product-visibility-icon in-icon svg
+                {% if isVisibleForDefaultPricingGroupOnEachDomain(row.product) %}
+                    svg-visible in-icon--visible
+                {% elseif value and not isVisibleForDefaultPricingGroupOnEachDomain(row.product) %}
+                    svg-visible in-icon--partially-visible
+                {% else %}
+                    svg-invisible in-icon--invisible
+                {% endif %}"
+            ></span>
+            <span class="js-product-visibility-box">
+                <span class="in-product-visibility js-product-visibility-box-window display-none"></span>
+            </span>
+        </span>
+    {% else %}
+        {% if isVisibleForDefaultPricingGroupOnEachDomain(row.product) %}
+            {% apply spaceless %}
+                <a href="{{ findUrlByDomainId('front_product_detail', { id: row.product.id }, getDomain().id) }}">
+                    <span class="in-icon svg svg-visible in-icon--visible"></span>
+                </a>
+            {% endapply %}
+        {% else %}
+            <span class="in-icon svg svg-invisible in-icon--invisible"></span>
+        {% endif %}
+    {% endif %}
     {% if row.p.calculatedSellingDenied %}
-        <i class="svg svg-cart in-icon" title="{{ 'Product excluded from sale'|trans }}"></i>
+        <span class="in-icon in-icon--denied svg svg-cart" title="{{ 'Product excluded from sale'|trans }}"></span>
     {% endif %}
 {% endblock %}
 

@@ -66,7 +66,6 @@ class TransportDataFactory extends BaseTransportDataFactory
     {
         parent::fillNew($transportData);
 
-        $transportData->daysUntilDelivery = 0;
         $transportData->transportType = $this->transportTypeFacade->getByCode(TransportTypeEnum::TYPE_COMMON);
         $transportData->trackingUrl = null;
 
@@ -83,7 +82,6 @@ class TransportDataFactory extends BaseTransportDataFactory
     {
         $transportData = $this->createInstance();
         $this->fillFromTransport($transportData, $transport);
-        $transportData->daysUntilDelivery = $transport->getDaysUntilDelivery();
         $transportData->transportType = $transport->getTransportType();
         $transportData->trackingUrl = $transport->getTrackingUrl();
         $transportData->maxWeight = $transport->getMaxWeight();

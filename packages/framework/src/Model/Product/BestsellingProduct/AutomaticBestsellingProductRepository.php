@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class AutomaticBestsellingProductRepository
@@ -45,18 +45,18 @@ class AutomaticBestsellingProductRepository
 
         $queryBuilder
             ->addSelect('COUNT(op) AS HIDDEN orderCount')
-            ->join(ProductCalculatedPrice::class, 'pcp', Join::WITH, 'pcp.product = p')
+            ->join(ProductManualInputPrice::class, 'pmip', Join::WITH, 'pmip.product = p')
             ->join(OrderItem::class, 'op', Join::WITH, 'op.product = p')
             ->join('op.order', 'o')
             ->join('o.status', 'os')
-            ->andWhere('pcp.pricingGroup = prv.pricingGroup')
+            ->andWhere('pmip.pricingGroup = prv.pricingGroup')
             ->andWhere('os.type = :orderStatusType')
             ->setParameter('orderStatusType', OrderStatus::TYPE_DONE)
             ->andWhere('o.createdAt >= :createdAt')
             ->setParameter('createdAt', $ordersCreatedAtLimit)
             ->orderBy('orderCount', 'DESC')
-            ->addOrderBy('pcp.priceWithVat', 'DESC')
-            ->groupBy('p.id, pcp.product, pcp.pricingGroup')
+            ->addOrderBy('pmip.inputPrice', 'DESC')
+            ->groupBy('p.id, pmip.product, pmip.pricingGroup')
             ->setMaxResults($maxResults);
 
         return $queryBuilder->getQuery()->execute();

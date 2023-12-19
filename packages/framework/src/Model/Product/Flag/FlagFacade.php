@@ -121,4 +121,14 @@ class FlagFacade
     {
         return $this->flagRepository->getByUuids($uuids);
     }
+
+    /**
+     * @param int[] $flagsIds
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    public function getVisibleFlagsByIds(array $flagsIds, string $locale): array
+    {
+        return $this->flagRepository->getVisibleFlagsByIds($flagsIds, $locale);
+    }
 }

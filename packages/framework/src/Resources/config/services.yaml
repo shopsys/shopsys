@@ -164,7 +164,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository:
         tags:
-            # must be ran before ProductVisibilityFacade
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
 
     Shopsys\FrameworkBundle\Component\Cron\CronFacade:
@@ -284,6 +283,10 @@ services:
 
     Shopsys\FrameworkBundle\Component\Setting\ClearSettingsCacheDoctrineSubscriber:
         tags: ['doctrine.event_subscriber']
+
+    Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade:
+        arguments:
+            $storefrontGraphqlQueryClient: '@snc_redis.storefront_graphql_query'
 
     Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory:
         arguments:
@@ -433,10 +436,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
         arguments:
             - '@bestselling_product_cache'
@@ -446,16 +445,6 @@ services:
     Shopsys\FrameworkBundle\Model\Pricing\PricingSetting: ~
 
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
-
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator:
-        tags:
-            # must be run before ProductVisibilityFacade
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
-
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade:
-        tags:
-            # must be ran after CategoryVisibilityRepository and ProductPriceRecalculator
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 10 }
 
     # Define RedirectController explicitly to prevent creating it on-the-fly
     # when redirecting (it causes unnecessary container rebuild).
@@ -703,9 +692,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceFactory
 
     Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory
@@ -1049,3 +1035,7 @@ services:
     Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory:
         arguments:
             $servicesResetter: '@services_resetter'
+
+    Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler:
+        arguments:
+            $logger: '@monolog.logger.queue'

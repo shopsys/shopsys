@@ -244,6 +244,9 @@ msgstr ""
 msgid "Availability after sellout"
 msgstr ""
 
+msgid "Available immediately"
+msgstr ""
+
 msgid "Available in stock"
 msgstr ""
 
@@ -1330,6 +1333,9 @@ msgstr ""
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr ""
 
+msgid "In stock"
+msgstr ""
+
 msgid "Inactive"
 msgstr ""
 
@@ -1795,6 +1801,9 @@ msgstr ""
 msgid "Origin"
 msgstr ""
 
+msgid "Out of stock"
+msgstr ""
+
 msgid "Page <strong>{{ name }}</strong> deleted"
 msgstr ""
 
@@ -1961,9 +1970,6 @@ msgid "Product in order"
 msgstr ""
 
 msgid "Product is excluded from the sale due to sellout"
-msgstr ""
-
-msgid "Product is hidden due to sellout"
 msgstr ""
 
 msgid "Product is main variant."
@@ -2488,6 +2494,9 @@ msgstr ""
 msgid "Unable to add product"
 msgstr ""
 
+msgid "Unavailable"
+msgstr ""
+
 msgid "Unexpected error occurred, file was not uploaded."
 msgstr ""
 
@@ -2822,6 +2831,12 @@ msgid "uses"
 msgstr ""
 
 msgid "without positioning"
+msgstr ""
+
+msgid "{0,1} Available in one week|[2,Inf] Available in %count% weeks"
+msgstr ""
+
+msgid "{0}|{1}Available in <span class=\"box-detail__avail__text__strong\">%count%</span> store|[2,Inf]Available in <span class=\"box-detail__avail__text__strong\">%count%</span> stores"
 msgstr ""
 
 msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must wait %seconds% seconds before submitting the form."

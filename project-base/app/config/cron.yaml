@@ -73,25 +73,9 @@ services:
 
     # Products
 
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCronModule:
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductRecalculationCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: products, readableName: 'Recalculate product prices' }
-
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityImmediateCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: products, readableName: 'Recalculate immediate product visibilities' }
-
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityMidnightCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: products, readableName: 'Recalculate midnight product visibilities' }
-
-    App\Model\Product\Elasticsearch\ProductExportCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: products, readableName: "Export products to Elasticsearch" }
-
-    App\Model\Product\Elasticsearch\ProductExportChangedCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: products, readableName: "Export changed products to Elasticsearch" }
+            - { name: shopsys.cron, hours: '0', minutes: '0', instanceName: products, readableName: "Dispatches all products to be recalculated and exported" }
 
     # Akeneo import products
 

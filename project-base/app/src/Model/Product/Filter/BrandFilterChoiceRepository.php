@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Filter;
 
-use App\Component\Doctrine\OrderByCollationHelper;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository as BaseBrandFilterChoiceRepository;

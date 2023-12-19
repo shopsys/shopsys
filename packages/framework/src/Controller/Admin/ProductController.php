@@ -315,6 +315,8 @@ class ProductController extends AdminBaseController
             function ($row) {
                 $product = $this->productFacade->getById($row['p']['id']);
                 $row['product'] = $product;
+                // actual visibility is rendered in the template, this is just a placeholder for column
+                $row['visibility'] = null;
 
                 return $row;
             },
@@ -327,7 +329,7 @@ class ProductController extends AdminBaseController
 
         $grid->addColumn('name', 'pt.name', t('Name'), true);
         $grid->addColumn('price', 'priceForProductList', t('Price'), true)->setClassAttribute('text-right');
-        $grid->addColumn('calculatedVisibility', 'p.calculatedVisibility', t('Visibility'))
+        $grid->addColumn('visibility', 'visibility', t('Visibility'))
             ->setClassAttribute('text-center table-col table-col-10');
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');

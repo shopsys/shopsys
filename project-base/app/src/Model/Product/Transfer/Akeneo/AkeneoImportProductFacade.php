@@ -9,10 +9,9 @@ use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
 use App\Component\Setting\Setting;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade;
-use App\Model\Product\ProductFacade;
 use DateTime;
 use Generator;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 {
@@ -26,28 +25,22 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade $productTransferAkeneoFacade
-     * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
-     * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper $productTransferAkeneoMapper
-     * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade
      * @param \App\Model\Product\Transfer\Akeneo\TransferredProductProcessor $transferredProductProcessor
      * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportProductDetailFacade $akeneoImportProductDetailFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
-        protected ProductTransferAkeneoFacade $productTransferAkeneoFacade,
-        protected ProductTransferAkeneoValidator $productTransferAkeneoValidator,
-        protected ProductTransferAkeneoMapper $productTransferAkeneoMapper,
-        protected ProductFacade $productFacade,
-        private ProductVisibilityFacade $productVisibilityFacade,
-        protected Setting $setting,
-        private AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade,
-        private AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade,
-        private TransferredProductProcessor $transferredProductProcessor,
-        private AkeneoImportProductDetailFacade $akeneoImportProductDetailFacade,
+        private readonly ProductTransferAkeneoFacade $productTransferAkeneoFacade,
+        private readonly Setting $setting,
+        private readonly AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade,
+        private readonly AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade,
+        private readonly TransferredProductProcessor $transferredProductProcessor,
+        private readonly AkeneoImportProductDetailFacade $akeneoImportProductDetailFacade,
+        private readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
         parent::__construct($akeneoImportTransferDependency);
 
@@ -101,6 +94,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $product = $this->transferredProductProcessor->processProduct($akeneoProductData, $this->logger);
         $this->processedProductIdentifierList[] = $product->getCatnum();
         $this->setLastUpdatedProduct($akeneoProductData['updated']);
+        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
     }
 
     protected function doAfterTransfer(): void
@@ -108,7 +102,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $this->downloadProductDetails();
         $this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
         $this->logger->info('Transfer is done.');
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
     }
 
     private function downloadProductDetails(): void

@@ -12,13 +12,14 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class ProductExportRepository
 {
@@ -27,22 +28,24 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly ProductFacade $productFacade,
         protected readonly FriendlyUrlRepository $friendlyUrlRepository,
-        protected readonly ProductVisibilityRepository $productVisibilityRepository,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly CategoryFacade $categoryFacade,
         protected readonly ProductAccessoryFacade $productAccessoryFacade,
         protected readonly BrandCachedFacade $brandCachedFacade,
+        protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
     }
 
@@ -106,42 +109,6 @@ class ProductExportRepository
     }
 
     /**
-     * @param int $lastProcessedId
-     * @param int $batchSize
-     * @return int[]
-     */
-    public function getProductIdsForChanged(int $lastProcessedId, int $batchSize): array
-    {
-        $result = $this->em->createQueryBuilder()
-            ->select('p.id')
-            ->from(Product::class, 'p')
-            ->where('p.exportProduct = TRUE')
-            ->andWhere('p.id > :lastProcessedId')
-            ->orderBy('p.id')
-            ->setParameter('lastProcessedId', $lastProcessedId)
-            ->setMaxResults($batchSize)
-            ->getQuery()
-            ->getArrayResult();
-
-        return array_column($result, 'id');
-    }
-
-    /**
-     * @return int
-     */
-    public function getProductChangedCount(): int
-    {
-        $queryBuilder = $this->em->createQueryBuilder()
-            ->select('p.id')
-            ->from(Product::class, 'p')
-            ->where('p.exportProduct = TRUE');
-
-        $result = new QueryPaginator($queryBuilder);
-
-        return $result->getTotalCount();
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @param string $locale
@@ -174,14 +141,14 @@ class ProductExportRepository
                 $product,
                 $domainId,
             )->getId(),
-            'in_stock' => $product->getCalculatedAvailability()->getDispatchTime() === 0,
+            'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
             'prices' => $prices,
             'parameters' => $parameters,
             'ordering_priority' => $product->getOrderingPriority($domainId),
             'calculated_selling_denied' => $product->getCalculatedSellingDenied(),
             'selling_denied' => $product->isSellingDenied(),
-            'availability' => $product->getCalculatedAvailability()->getName($locale),
-            'availability_dispatch_time' => $product->getCalculatedAvailability()->getDispatchTime(),
+            'availability' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
+            'availability_dispatch_time' => $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId),
             'is_main_variant' => $product->isMainVariant(),
             'is_variant' => $product->isVariant(),
             'detail_url' => $detailUrl,
@@ -189,7 +156,7 @@ class ProductExportRepository
             'uuid' => $product->getUuid(),
             'unit' => $product->getUnit()->getName($locale),
             'is_using_stock' => $product->isUsingStock(),
-            'stock_quantity' => $product->getStockQuantity(),
+            'stock_quantity' => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $domainId),
             'variants' => $variantIds,
             'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
             'seo_h1' => $product->getSeoH1($domainId),
@@ -358,7 +325,7 @@ class ProductExportRepository
     {
         $visibility = [];
 
-        foreach ($this->productVisibilityRepository->findProductVisibilitiesByDomainIdAndProduct(
+        foreach ($this->productVisibilityFacade->findProductVisibilitiesByDomainIdAndProduct(
             $domainId,
             $product,
         ) as $productVisibility) {

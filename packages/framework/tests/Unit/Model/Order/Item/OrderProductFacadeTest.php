@@ -11,12 +11,9 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Tests\FrameworkBundle\Unit\Model\Product\TestProductProvider;
 
 final class OrderProductFacadeTest extends TestCase
@@ -35,12 +32,9 @@ final class OrderProductFacadeTest extends TestCase
 
         $this->orderProductFacade = new OrderProductFacade(
             $this->createMock(EntityManager::class),
-            $this->createMock(ProductHiddenRecalculator::class),
-            $this->createMock(ProductSellingDeniedRecalculator::class),
-            $this->createMock(ProductAvailabilityRecalculationScheduler::class),
-            $this->createMock(ProductVisibilityFacade::class),
             $moduleFacadeMock,
             $this->createMock(ProductRepository::class),
+            $this->createMock(ProductRecalculationDispatcher::class),
         );
     }
 

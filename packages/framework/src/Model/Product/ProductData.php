@@ -198,6 +198,21 @@ class ProductData
      */
     public $shortDescriptionUsp5ByDomainId;
 
+    /**
+     * @var bool[]
+     */
+    public $saleExclusion;
+
+    /**
+     * @var bool[]|null[]
+     */
+    public $domainHidden;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Stock\ProductStockData[]
+     */
+    public $productStockData;
+
     public function __construct()
     {
         $this->name = [];
@@ -205,6 +220,7 @@ class ProductData
         $this->hidden = false;
         $this->flagsByDomainId = [];
         $this->usingStock = false;
+        $this->productStockData = [];
         $this->categoriesByDomainId = [];
         $this->variantAlias = [];
         $this->parameters = [];
@@ -225,5 +241,7 @@ class ProductData
         $this->shortDescriptionUsp3ByDomainId = [];
         $this->shortDescriptionUsp4ByDomainId = [];
         $this->shortDescriptionUsp5ByDomainId = [];
+        $this->saleExclusion = [];
+        $this->domainHidden = [];
     }
 }

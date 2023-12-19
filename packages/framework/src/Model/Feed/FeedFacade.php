@@ -8,13 +8,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToRetrieveMetadata;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class FeedFacade
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory $feedExportFactory
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider
      * @param \League\Flysystem\FilesystemOperator $filesystem
@@ -23,7 +21,6 @@ class FeedFacade
      */
     public function __construct(
         protected readonly FeedRegistry $feedRegistry,
-        protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly FeedExportFactory $feedExportFactory,
         protected readonly FeedPathProvider $feedPathProvider,
         protected readonly FilesystemOperator $filesystem,
@@ -53,13 +50,6 @@ class FeedFacade
      */
     public function createFeedExport(string $feedName, DomainConfig $domainConfig, ?int $lastSeekId = null): FeedExport
     {
-        /*
-         * Product is visible, when it has at least one visible category.
-         * Hiding a category therefore could cause change of product's visibility but the visibility recalculation is not invoked immediately,
-         * so we need to recalculate product's visibility here in order to get consistent data for feed generation.
-         */
-        $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
-
         $feedConfig = $this->feedRegistry->getFeedConfigByName($feedName);
 
         return $this->feedExportFactory->create($feedConfig->getFeed(), $domainConfig, $lastSeekId);
