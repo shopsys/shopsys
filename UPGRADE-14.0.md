@@ -619,6 +619,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   change product recalculations to be asynchronous ([#2917](https://github.com/shopsys/shopsys/pull/2917))
     -   see the specialized upgrade note in [upgrade-product-recalculations.md](./upgrade-product-recalculations.md)
     -   see #project-base-diff to update your project
+-   docker-compose: add rabbitMQ and php-consumer containers for review stage on gitlab CI [#2953](https://github.com/shopsys/shopsys/pull/2953)
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
