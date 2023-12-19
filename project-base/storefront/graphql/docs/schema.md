@@ -679,6 +679,20 @@ Returns HTML content for order with failed payment.
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>orderPayments</strong></td>
+<td valign="top">[<a href="#payment">Payment</a>!]!</td>
+<td>
+
+Returns payments available for the given order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>orderPaymentSuccessfulContent</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>

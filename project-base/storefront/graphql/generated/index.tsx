@@ -2110,6 +2110,8 @@ export type QueryApi = {
   orderPaymentFailedContent: Scalars['String']['output'];
   /** Returns HTML content for order with successful payment. */
   orderPaymentSuccessfulContent: Scalars['String']['output'];
+  /** Returns payments available for the given order */
+  orderPayments: Array<PaymentApi>;
   /** Returns HTML content for order sent page. */
   orderSentPageContent: Scalars['String']['output'];
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
@@ -2272,6 +2274,11 @@ export type QueryOrderPaymentFailedContentArgsApi = {
 
 
 export type QueryOrderPaymentSuccessfulContentArgsApi = {
+  orderUuid: Scalars['Uuid']['input'];
+};
+
+
+export type QueryOrderPaymentsArgsApi = {
   orderUuid: Scalars['Uuid']['input'];
 };
 

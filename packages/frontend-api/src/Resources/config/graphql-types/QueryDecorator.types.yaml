@@ -231,3 +231,10 @@ QueryDecorator:
                         type: "[String!]!"
                         description: "Array of product catalog numbers"
                 description: "Returns list of products by catalog numbers"
+            orderPayments:
+                type: '[Payment!]!'
+                resolve: "@=query('orderPaymentsQuery', args['orderUuid'])"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns payments available for the given order"

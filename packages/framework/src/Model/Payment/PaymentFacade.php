@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -271,13 +272,32 @@ class PaymentFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
+     */
+    public function getVisibleForOrder(Order $order): array
+    {
+        return $this->getVisibleOnDomainByTransport($order->getDomainId(), $order->getTransport());
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
     public function getVisibleOnCurrentDomainByTransport(Transport $transport): array
     {
+        return $this->getVisibleOnDomainByTransport($this->domain->getId(), $transport);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
+     */
+    protected function getVisibleOnDomainByTransport(int $domainId, Transport $transport): array
+    {
         $paymentsByTransport = $this->paymentRepository->getAllByTransport($transport);
 
-        return  $this->paymentVisibilityCalculation->filterVisible($paymentsByTransport, $this->domain->getId());
+        return $this->paymentVisibilityCalculation->filterVisible($paymentsByTransport, $domainId);
     }
 }

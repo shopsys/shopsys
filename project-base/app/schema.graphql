@@ -1722,6 +1722,8 @@ type Query {
   order(orderNumber: String, urlHash: String, uuid: Uuid): Order
   "Returns HTML content for order with failed payment."
   orderPaymentFailedContent(orderUuid: Uuid!): String!
+  "Returns payments available for the given order"
+  orderPayments(orderUuid: Uuid!): [Payment!]!
   "Returns HTML content for order with successful payment."
   orderPaymentSuccessfulContent(orderUuid: Uuid!): String!
   "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
