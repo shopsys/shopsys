@@ -80,6 +80,12 @@ services:
         ports:
             - "8060:8080"
 
+    rabbitmq:
+        image: rabbitmq:3.12-management-alpine
+        container_name: shopsys-framework-rabbitmq
+        ports:
+            - "15672:15672"
+
 volumes:
     web-volume:
     postgres-data:
