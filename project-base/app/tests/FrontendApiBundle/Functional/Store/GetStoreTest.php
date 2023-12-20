@@ -67,7 +67,9 @@ class GetStoreTest extends GraphQlTestCase
             [$uuid, $expectedStoreData] = $dataSet;
 
             $graphQlType = 'store';
-            $response = $this->getResponseContentForQuery($this->getStoreQueryByUuid($uuid));
+            $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+                'uuid' => $uuid,
+            ]);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -81,7 +83,6 @@ class GetStoreTest extends GraphQlTestCase
                     'city',
                     'postcode',
                     'country',
-                    'openingHours',
                     'specialMessage',
                     'locationLatitude',
                     'locationLongitude',
@@ -101,7 +102,9 @@ class GetStoreTest extends GraphQlTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Store\Store $storeOnSecondDomain */
         $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 3);
 
-        $response = $this->getResponseContentForQuery($this->getStoreQueryByUuid($storeOnSecondDomain->getUuid()));
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+            'uuid' => $storeOnSecondDomain->getUuid(),
+        ]);
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $response['errors'][0];
         self::assertArrayHasKey('message', $errors, Json::encode($errors));
@@ -111,7 +114,9 @@ class GetStoreTest extends GraphQlTestCase
         );
 
         $urlSlug = 'zilina';
-        $response = $this->getResponseContentForQuery($this->getStoreQueryByUrlSlug($urlSlug));
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+            'slug' => $urlSlug,
+        ]);
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $response['errors'][0];
         self::assertArrayHasKey('message', $errors, Json::encode($errors));
@@ -127,7 +132,9 @@ class GetStoreTest extends GraphQlTestCase
             [$urlSlug, $expectedStoreData] = $dataSet;
 
             $graphQlType = 'store';
-            $response = $this->getResponseContentForQuery($this->getStoreQueryByUrlSlug($urlSlug));
+            $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+                'slug' => $urlSlug,
+            ]);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -141,7 +148,6 @@ class GetStoreTest extends GraphQlTestCase
                     'city',
                     'postcode',
                     'country',
-                    'openingHours',
                     'specialMessage',
                     'locationLatitude',
                     'locationLongitude',
@@ -187,7 +193,7 @@ class GetStoreTest extends GraphQlTestCase
             $this->createClosedDay($publicHolidayDate, $publicHolidayExcludedStoresIds);
         }
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreOpeningHoursQuery.graphql', [
             'uuid' => $store->getUuid(),
         ]);
 
@@ -206,24 +212,190 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return iterable
      */
-    protected function openingHoursDataProvider(): array
+    protected function openingHoursDataProvider(): iterable
     {
-        return [
-            ['-1 hour', '+1 hour', null, null, null, [], true, '-1 hour', '+1 hour', null, null],
-            [null, null, '-1 hour', '+1 hour', null, [], true, null, null, '-1 hour', '+1 hour'],
-            ['-1 hour', '+1 hour', null, null, $this->getNow(), [1], true, '-1 hour', '+1 hour', null, null],
-            [null, null, '-1 hour', '+1 hour', $this->getNow(), [], false, null, null, null, null],
-            [null, null, null, null, null, [], false, null, null, null, null],
-            ['+1 hour', '+2 hour', null, null, null, [], false, '+1 hour', '+2 hour', null, null],
-            [null, null, '+1 hour', '+2 hour', null, [], false, null, null, '+1 hour', '+2 hour'],
-            ['-2 hour', '-1 hour', null, null, null, [], false, '-2 hour', '-1 hour', null, null],
-            [null, null, '-2 hour', '-1 hour', null, [], false, null, null, '-2 hour', '-1 hour'],
-            ['-1 hour', null, null, '+1 hour', null, [], false, '-1 hour', null, null, '+1 hour'],
-            [null, '+1 hour', '-1 hour', null, null, [], false, null, '+1 hour', '-1 hour', null],
-            ['+1 hour', '-1 hour', null, null, null, [], false, '+1 hour', '-1 hour', null, null],
-            [null, null, '+1 hour', '-1 hour', null, [], false, null, null, '+1 hour', '-1 hour'],
+        yield 'store opened only forenoon' => [
+            'firstOpeningTime' => '-1 hour',
+            'firstClosingTime' => '+1 hour',
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => true,
+            'expectedDaysFirstOpeningTime' => '-1 hour',
+            'expectedDaysFirstClosingTime' => '+1 hour',
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store opened only afternoon' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => '-1 hour',
+            'secondClosingTime' => '+1 hour',
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => true,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => '-1 hour',
+            'expectedDaysSecondClosingTime' => '+1 hour',
+        ];
+
+        yield 'store opened only forenoon and excluded from the public holiday' => [
+            'firstOpeningTime' => '-1 hour',
+            'firstClosingTime' => '+1 hour',
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => $this->getNow(),
+            'publicHolidayExcludedStoresIds' => [1],
+            'expectedIsOpen' => true,
+            'expectedDaysFirstOpeningTime' => '-1 hour',
+            'expectedDaysFirstClosingTime' => '+1 hour',
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store opened only afternoon and not excluded from the public holiday' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => '-1 hour',
+            'secondClosingTime' => '+1 hour',
+            'publicHolidayDate' => $this->getNow(),
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store not opened at all' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store opens in an hour (forenoon)' => [
+            'firstOpeningTime' => '+1 hour',
+            'firstClosingTime' => '+2 hour',
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => '+1 hour',
+            'expectedDaysFirstClosingTime' => '+2 hour',
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store opens in an hour (afternoon)' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => '+1 hour',
+            'secondClosingTime' => '+2 hour',
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => '+1 hour',
+            'expectedDaysSecondClosingTime' => '+2 hour',
+        ];
+
+        yield 'store closed an hour ago (forenoon)' => [
+            'firstOpeningTime' => '-2 hour',
+            'firstClosingTime' => '-1 hour',
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => '-2 hour',
+            'expectedDaysFirstClosingTime' => '-1 hour',
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store closed an hour ago (afternoon)' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => '-2 hour',
+            'secondClosingTime' => '-1 hour',
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => '-2 hour',
+            'expectedDaysSecondClosingTime' => '-1 hour',
+        ];
+
+        yield 'store with missing first closing time and missing second opening time' => [
+            'firstOpeningTime' => '-1 hour',
+            'firstClosingTime' => null,
+            'secondOpeningTime' => null,
+            'secondClosingTime' => '+1 hour',
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => '-1 hour',
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => '+1 hour',
+        ];
+
+        yield 'store with missing first opening time and missing second closing time' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => '+1 hour',
+            'secondOpeningTime' => '-1 hour',
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => '+1 hour',
+            'expectedDaysSecondOpeningTime' => '-1 hour',
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store that closes sooner then opens (forenoon)' => [
+            'firstOpeningTime' => '+1 hour',
+            'firstClosingTime' => '-1 hour',
+            'secondOpeningTime' => null,
+            'secondClosingTime' => null,
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => '+1 hour',
+            'expectedDaysFirstClosingTime' => '-1 hour',
+            'expectedDaysSecondOpeningTime' => null,
+            'expectedDaysSecondClosingTime' => null,
+        ];
+
+        yield 'store that closes sooner then opens (afternoon)' => [
+            'firstOpeningTime' => null,
+            'firstClosingTime' => null,
+            'secondOpeningTime' => '+1 hour',
+            'secondClosingTime' => '-1 hour',
+            'publicHolidayDate' => null,
+            'publicHolidayExcludedStoresIds' => [],
+            'expectedIsOpen' => false,
+            'expectedDaysFirstOpeningTime' => null,
+            'expectedDaysFirstClosingTime' => null,
+            'expectedDaysSecondOpeningTime' => '+1 hour',
+            'expectedDaysSecondClosingTime' => '-1 hour',
         ];
     }
 
@@ -284,119 +456,12 @@ class GetStoreTest extends GraphQlTestCase
     }
 
     /**
-     * @param string $uuid
-     * @return string
-     */
-    public function getStoreQueryByUuid(string $uuid): string
-    {
-        $graphQlTypeWithFilters = 'store (uuid:"' . $uuid . '")';
-
-        return $this->getStoreQuery($graphQlTypeWithFilters);
-    }
-
-    /**
-     * @param string $urlSlug
-     * @return string
-     */
-    public function getStoreQueryByUrlSlug(string $urlSlug): string
-    {
-        $graphQlTypeWithFilters = 'store (urlSlug:"' . $urlSlug . '")';
-
-        return $this->getStoreQuery($graphQlTypeWithFilters);
-    }
-
-    /**
-     * @param string $graphQlTypeWithFilters
-     * @return string
-     */
-    private function getStoreQuery(string $graphQlTypeWithFilters): string
-    {
-        return '
-            query {
-                ' . $graphQlTypeWithFilters . ' { 
-                    name
-                    slug
-                    isDefault
-                    description
-                    street
-                    city
-                    postcode
-                    country {
-                        code
-                    }
-                    openingHours {
-                        openingHoursOfDays {
-                            firstOpeningTime
-                            firstClosingTime
-                            secondOpeningTime
-                            secondClosingTime
-                        }
-                    }
-                    specialMessage
-                    locationLatitude
-                    locationLongitude
-                    breadcrumb {
-                        name
-                        slug
-                    }
-                }
-            }
-        ';
-    }
-
-    /**
      * @param int $storeId
      * @return array
      */
     private function getExpectedStore(int $storeId): array
     {
         $storesSlug = $this->urlGenerator->generate('front_stores');
-        $openingHours = [
-            'openingHoursOfDays' => [
-                [
-                    'firstOpeningTime' => '06:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '18:00',
-                ],
-                [
-                    'firstOpeningTime' => '07:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '17:00',
-                ],
-                [
-                    'firstOpeningTime' => '08:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '16:00',
-                ],
-                [
-                    'firstOpeningTime' => '09:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '15:00',
-                ],
-                [
-                    'firstOpeningTime' => '10:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '14:00',
-                ],
-                [
-                    'firstOpeningTime' => '08:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => null,
-                    'secondClosingTime' => null,
-                ],
-                [
-                    'firstOpeningTime' => '09:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => null,
-                    'secondClosingTime' => null,
-                ],
-            ],
-        ];
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $data = [
@@ -412,7 +477,6 @@ class GetStoreTest extends GraphQlTestCase
                     'code' => 'CZ',
                 ],
                 'contactInfo' => null,
-                'openingHours' => $openingHours,
                 'specialMessage' => null,
                 'locationLatitude' => '49.8574975',
                 'locationLongitude' => '18.2738861',
@@ -439,7 +503,6 @@ class GetStoreTest extends GraphQlTestCase
                     'code' => 'CZ',
                 ],
                 'contactInfo' => null,
-                'openingHours' => $openingHours,
                 'specialMessage' => null,
                 'locationLatitude' => '50.0346875',
                 'locationLongitude' => '15.7707169',

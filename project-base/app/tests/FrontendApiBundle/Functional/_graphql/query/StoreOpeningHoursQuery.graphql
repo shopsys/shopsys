@@ -1,0 +1,14 @@
+query StoreOpeningHoursQuery($uuid: Uuid!) {
+    store(uuid: $uuid) {
+        openingHours {
+            isOpen
+            openingHoursOfDays {
+                dayOfWeek
+                firstOpeningTime
+                firstClosingTime
+                secondOpeningTime
+                secondClosingTime
+            }
+        }
+    }
+}

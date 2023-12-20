@@ -13,10 +13,9 @@ class GetStoresTest extends GraphQlTestCase
     public function testGetStores(): void
     {
         foreach ($this->getStoresDataProvider() as $dataSet) {
-            [$query, $expectedStoresData] = $dataSet;
+            [$response, $expectedStoresData] = $dataSet;
 
             $graphQlType = 'stores';
-            $response = $this->getResponseContentForQuery($query);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -39,7 +38,6 @@ class GetStoresTest extends GraphQlTestCase
                         'city',
                         'postcode',
                         'country',
-                        'openingHours',
                         'specialMessage',
                         'locationLatitude',
                         'locationLongitude',
@@ -71,82 +69,22 @@ class GetStoresTest extends GraphQlTestCase
     {
         return [
             [
-                $this->getAllStoresQuery(),
+                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql'),
                 $this->getExpectedStores(),
             ],
             [
-                $this->getFirstStoreQuery(),
+                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql', [
+                    'first' => 1,
+                ]),
                 array_slice($this->getExpectedStores(), 0, 1),
             ],
             [
-                $this->getLastStoreQuery(),
+                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql', [
+                    'last' => 1,
+                ]),
                 array_slice($this->getExpectedStores(), 1, 1),
             ],
         ];
-    }
-
-    /**
-     * @return string
-     */
-    private function getAllStoresQuery(): string
-    {
-        return $this->getStoresQuery('stores');
-    }
-
-    /**
-     * @return string
-     */
-    private function getFirstStoreQuery(): string
-    {
-        return $this->getStoresQuery('stores (first: 1)');
-    }
-
-    /**
-     * @return string
-     */
-    private function getLastStoreQuery(): string
-    {
-        return $this->getStoresQuery('stores (last: 1)');
-    }
-
-    /**
-     * @param string $graphQlTypeWithFilters
-     * @return string
-     */
-    private function getStoresQuery(string $graphQlTypeWithFilters): string
-    {
-        return '
-            {
-                ' . $graphQlTypeWithFilters . ' {
-                    edges {
-                        node {
-                            uuid
-                            name
-                            isDefault
-                            description
-                            contactInfo
-                            street
-                            city
-                            postcode
-                            country {
-                                code
-                            }
-                            openingHours {
-                                openingHoursOfDays {
-                                    firstOpeningTime
-                                    firstClosingTime
-                                    secondOpeningTime
-                                    secondClosingTime
-                                }
-                            }
-                            specialMessage
-                            locationLatitude
-                            locationLongitude
-                        }
-                    }
-                }
-            }
-        ';
     }
 
     /**
@@ -155,46 +93,6 @@ class GetStoresTest extends GraphQlTestCase
     private function getExpectedStores(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
-        $openingHours = [
-            'openingHoursOfDays' => [
-                [
-                    'firstOpeningTime' => '06:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '18:00',
-                ], [
-                    'firstOpeningTime' => '07:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '17:00',
-                ], [
-                    'firstOpeningTime' => '08:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '16:00',
-                ], [
-                    'firstOpeningTime' => '09:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '15:00',
-                ], [
-                    'firstOpeningTime' => '10:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => '13:00',
-                    'secondClosingTime' => '14:00',
-                ], [
-                    'firstOpeningTime' => '08:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => null,
-                    'secondClosingTime' => null,
-                ], [
-                    'firstOpeningTime' => '09:00',
-                    'firstClosingTime' => '11:00',
-                    'secondOpeningTime' => null,
-                    'secondClosingTime' => null,
-                ],
-            ],
-        ];
 
         return [
             [
@@ -208,7 +106,6 @@ class GetStoresTest extends GraphQlTestCase
                     'code' => 'CZ',
                 ],
                 'contactInfo' => null,
-                'openingHours' => $openingHours,
                 'specialMessage' => null,
                 'locationLatitude' => '49.8574975',
                 'locationLongitude' => '18.2738861',
@@ -223,7 +120,6 @@ class GetStoresTest extends GraphQlTestCase
                     'code' => 'CZ',
                 ],
                 'contactInfo' => null,
-                'openingHours' => $openingHours,
                 'specialMessage' => null,
                 'locationLatitude' => '50.0346875',
                 'locationLongitude' => '15.7707169',

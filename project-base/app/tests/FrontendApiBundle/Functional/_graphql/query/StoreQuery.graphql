@@ -1,14 +1,21 @@
-query StoreQuery($uuid: Uuid!) {
-    store(uuid: $uuid) {
-        openingHours {
-            isOpen
-            openingHoursOfDays {
-                dayOfWeek
-                firstOpeningTime
-                firstClosingTime
-                secondOpeningTime
-                secondClosingTime
-            }
+query StoreQuery($uuid: Uuid, $slug: String) {
+    store(uuid: $uuid, urlSlug: $slug) {
+        name
+        slug
+        isDefault
+        description
+        street
+        city
+        postcode
+        country {
+            code
+        }
+        specialMessage
+        locationLatitude
+        locationLongitude
+        breadcrumb {
+            name
+            slug
         }
     }
 }
