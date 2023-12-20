@@ -6,10 +6,7 @@ namespace App\Model\Order;
 
 use App\Component\Deprecation\DeprecatedMethodException;
 use App\Model\Order\Item\OrderItemDataFactory;
-use App\Model\Order\Status\OrderStatus;
-use App\Model\Payment\Payment;
 use App\Model\Payment\Service\PaymentServiceFacade;
-use App\Model\Payment\Transaction\PaymentTransaction;
 use App\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use App\Model\Security\LoginAsUserFacade;
@@ -114,7 +111,6 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \App\Model\Order\Item\OrderItemFactory $orderItemFactory
      * @param \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
      * @param \App\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
      * @param \App\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
@@ -148,7 +144,6 @@ class OrderFacade extends BaseOrderFacade
         TransportPriceCalculation $transportPriceCalculation,
         OrderItemFactoryInterface $orderItemFactory,
         private readonly OrderItemDataFactory $orderItemDataFactory,
-        private readonly OrderDataFactory $orderDataFactory,
         private readonly PaymentTransactionFacade $paymentTransactionFacade,
         private readonly PaymentServiceFacade $paymentServiceFacade,
         private readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
@@ -377,92 +372,6 @@ class OrderFacade extends BaseOrderFacade
     public function getAllUnpaidGoPayOrders(DateTime $fromDate): array
     {
         return $this->orderRepository->getAllUnpaidGoPayOrders($fromDate);
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @return bool
-     */
-    public function isUnpaidOrderPaymentChangeable(Order $order): bool
-    {
-        return $order->getStatus()->getType() === OrderStatus::TYPE_NEW &&
-            $order->getPayment()->isGoPay() &&
-            count(array_filter($order->getGoPayTransactions(), function (PaymentTransaction $paymentTransaction) {
-                return $paymentTransaction->isPaid();
-            })) === 0;
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Payment\Payment $payment
-     * @param int $domainId
-     */
-    public function changeOrderPayment(Order $order, Payment $payment, int $domainId): void
-    {
-        $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice($payment, $order->getCurrency(), $domainId);
-
-        $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = $payment->getName();
-        $orderItemData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
-        $orderItemData->priceWithVat = $paymentPrice->getPriceWithVat();
-        $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
-        $orderItemData->quantity = 1;
-        $orderItemData->payment = $payment;
-        $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData($orderItemData, $order);
-
-        $orderPaymentData = $this->orderItemDataFactory->createFromOrderItem($orderPayment);
-        $orderData = $this->orderDataFactory->createFromOrder($order);
-        $orderData->orderPayment = $orderPaymentData;
-        $order->removeItem($order->getOrderPayment());
-        $this->edit($order->getId(), $orderData);
-    }
-
-    /**
-     * @param \App\Model\Order\FrontOrderData $frontOrderFormData
-     * @param \App\Model\Payment\Payment[] $payments
-     * @param \App\Model\Transport\Transport[] $transports
-     * @return \App\Model\Order\FrontOrderData
-     */
-    public function revalidatePaymentAndTransport(
-        FrontOrderData $frontOrderFormData,
-        array $payments,
-        array $transports,
-    ) {
-        if ($frontOrderFormData->payment !== null) {
-            $isPaymentValid = false;
-            $paymentId = $frontOrderFormData->payment->getId();
-
-            foreach ($payments as $payment) {
-                if ($payment->getId() === $paymentId) {
-                    $isPaymentValid = true;
-
-                    break;
-                }
-            }
-
-            if ($isPaymentValid === false) {
-                $frontOrderFormData->payment = null;
-            }
-        }
-
-        if ($frontOrderFormData->transport !== null) {
-            $transportId = $frontOrderFormData->transport->getId();
-            $isTransportValid = false;
-
-            foreach ($transports as $transport) {
-                if ($transport->getId() === $transportId) {
-                    $isTransportValid = true;
-
-                    break;
-                }
-            }
-
-            if ($isTransportValid === false) {
-                $frontOrderFormData->transport = null;
-            }
-        }
-
-        return $frontOrderFormData;
     }
 
     /**
