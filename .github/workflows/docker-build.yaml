@@ -730,7 +730,7 @@ jobs:
                 if: "!contains(github.event.pull_request.labels.*.name, 'Use docker-compose defined services for review')"
                 run: |
                     mv docker-compose.review.simplified.yml ${BRANCH_NAME}/docker-compose.yml
-                    bash ./${BRANCH_NAME}/rabbitmq-vhost.sh create ${BRANCH_NAME}
+                    bash ./${BRANCH_NAME}/rabbitmq-vhost.sh create ${BRANCH_NAME_ESCAPED}
             -   name: Update docker-compose.yaml with secrets
                 run: |
                     sed -i "s#GOPAY_GOID#${{ secrets.GOPAY_GOID }}#" "${BRANCH_NAME}/docker-compose.yml"
