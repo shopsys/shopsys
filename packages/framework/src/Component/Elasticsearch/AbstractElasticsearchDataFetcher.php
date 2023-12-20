@@ -28,7 +28,8 @@ abstract class AbstractElasticsearchDataFetcher
      */
     public function getSingleResult(AbstractFilterQuery $filterQuery): array
     {
-        $results = $this->getAllResults($filterQuery);
+        $singleItemQuery = $filterQuery->setLimit(1);
+        $results = $this->getAllResults($singleItemQuery);
 
         if (count($results) === 0) {
             throw new ElasticsearchNoResultException();
