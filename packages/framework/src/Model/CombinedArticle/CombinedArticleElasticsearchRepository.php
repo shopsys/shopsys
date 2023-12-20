@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\CombinedArticle;
 
 use Elasticsearch\Client;
 use InvalidArgumentException;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleIndex;
@@ -15,47 +14,46 @@ class CombinedArticleElasticsearchRepository
 {
     /**
      * @param \Elasticsearch\Client $client
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      */
     public function __construct(
         protected readonly Client $client,
-        protected readonly Domain $domain,
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
     ) {
     }
 
     /**
      * @param string $searchText
+     * @param int $domainId
      * @param int|null $limit
      * @return array
      */
-    public function getArticlesBySearchText(string $searchText, ?int $limit = null): array
+    public function getArticlesBySearchText(string $searchText, int $domainId, ?int $limit = null): array
     {
-        $result = $this->client->search($this->getSearchQuery($searchText, $limit));
+        $result = $this->client->search($this->getSearchQuery($searchText, $domainId, $limit));
 
-        return $this->extractHits($result);
+        return $this->extractHits($result, $domainId);
     }
 
     /**
      * @param int $domainId
      * @param int $from
-     * @param int $maxResults
+     * @param int $limit
      * @return array
      */
-    public function getArticlesByDomainId(int $domainId, int $from, int $maxResults): array
+    public function getArticlesByDomainId(int $domainId, int $from, int $limit): array
     {
-        $result = $this->client->search($this->getArticlesByDomainIdQuery($domainId, $from, $maxResults));
+        $result = $this->client->search($this->getArticlesByDomainIdQuery($domainId, $from, $limit));
 
         return $this->extractHits($result, $domainId);
     }
 
     /**
      * @param array $result
-     * @param int|null $domainId
+     * @param int $domainId
      * @return array
      */
-    protected function extractHits(array $result, ?int $domainId = null): array
+    protected function extractHits(array $result, int $domainId): array
     {
         return array_map(function ($value) use ($domainId) {
             $data = $value['_source'];
@@ -68,18 +66,18 @@ class CombinedArticleElasticsearchRepository
 
     /**
      * @param string $indexVersion
-     * @param int|null $domainId
+     * @param int $domainId
      * @return string
      */
-    protected function getIndexNameFromIndexVersion(string $indexVersion, ?int $domainId = null): string
+    protected function getIndexNameFromIndexVersion(string $indexVersion, int $domainId): string
     {
-        $blogArticleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(BlogArticleIndex::getName(), $domainId ?? $this->domain->getId())->getVersionedIndexName();
+        $blogArticleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(BlogArticleIndex::getName(), $domainId)->getVersionedIndexName();
 
         if ($indexVersion === $blogArticleVersionedIndexName) {
             return BlogArticleIndex::getName();
         }
 
-        $articleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(ArticleIndex::getName(), $domainId ?? $this->domain->getId())->getVersionedIndexName();
+        $articleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(ArticleIndex::getName(), $domainId)->getVersionedIndexName();
 
         if ($indexVersion === $articleVersionedIndexName) {
             return ArticleIndex::getName();
@@ -104,12 +102,11 @@ class CombinedArticleElasticsearchRepository
     }
 
     /**
-     * @param int|null $domainId
+     * @param int $domainId
      * @return string
      */
-    protected function getCombinedArticleIndex(?int $domainId = null): string
+    protected function getCombinedArticleIndex(int $domainId): string
     {
-        $domainId = $domainId ?? $this->domain->getId();
         $articleIndexName = $this->indexDefinitionLoader->getIndexDefinition(
             ArticleIndex::getName(),
             $domainId,
@@ -124,13 +121,14 @@ class CombinedArticleElasticsearchRepository
 
     /**
      * @param string $searchText
+     * @param int $domainId
      * @param int|null $limit
      * @return array
      */
-    protected function getSearchQuery(string $searchText, ?int $limit = null): array
+    protected function getSearchQuery(string $searchText, int $domainId, ?int $limit = null): array
     {
         $query = [
-            'index' => $this->getCombinedArticleIndex(),
+            'index' => $this->getCombinedArticleIndex($domainId),
             'body' => [
                 'from' => 0,
                 'query' => [
@@ -166,16 +164,16 @@ class CombinedArticleElasticsearchRepository
     /**
      * @param int $domainId
      * @param int $from
-     * @param int $maxResults
+     * @param int $limit
      * @return array
      */
-    protected function getArticlesByDomainIdQuery(int $domainId, int $from, int $maxResults): array
+    protected function getArticlesByDomainIdQuery(int $domainId, int $from, int $limit): array
     {
         return [
             'index' => $this->getCombinedArticleIndex($domainId),
             'body' => [
                 'from' => $from,
-                'size' => $maxResults,
+                'size' => $limit,
                 'query' => [
                     'bool' => [
                         'must' => [$this->getCombinedArticlesCondition()],
