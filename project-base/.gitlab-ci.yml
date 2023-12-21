@@ -159,6 +159,7 @@ review:
         - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
         - chmod +x ./gitlab/scripts/set-urls-for-review.sh && ./gitlab/scripts/set-urls-for-review.sh setDomainsToDockerCompose
         - docker-compose down --rmi all -v --remove-orphans
+        - chmod +x ./gitlab/scripts/rabbitmq-vhost.sh && ./gitlab/scripts/rabbitmq-vhost.sh create ${COMPOSE_PROJECT_NAME}
         - docker-compose up -d
         - ./gitlab/scripts/set-urls-for-review.sh setUrlsToDomainsUrls
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
@@ -181,6 +182,7 @@ review:stop:
         - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y elasticsearch-index-delete
         - docker-compose down --rmi all -v --remove-orphans
+        - chmod +x ./gitlab/scripts/rabbitmq-vhost.sh && ./gitlab/scripts/rabbitmq-vhost.sh remove ${COMPOSE_PROJECT_NAME}
         - /home/ci/clean.sh ${COMPOSE_PROJECT_NAME}
     rules:
         -   if: '$MIRROR_ONLY == "true"'
