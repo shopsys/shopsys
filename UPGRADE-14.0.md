@@ -610,6 +610,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   enhance your stores tests ([#2835](https://github.com/shopsys/shopsys/pull/2951))
     -   see #project-base-diff to update your project
+-   allow more files to be uploaded in WYSIWYG editor ([#2948](https://github.com/shopsys/shopsys/pull/2948))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

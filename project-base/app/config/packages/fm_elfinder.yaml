@@ -13,7 +13,23 @@ fm_elfinder:
                         flysystem:
                             enabled: true
                             filesystem: 'main_filesystem'
-                        upload_allow: ['image/png', 'image/jpg', 'image/jpeg']
+                        upload_allow:
+                            - 'image/png'
+                            - 'image/jpg'
+                            - 'image/jpeg'
+                            - 'image/gif'
+                            - 'image/webp'
+                            - 'text/csv'
+                            - 'text/plain'
+                            - 'application/pdf'
+                            - 'application/msword'
+                            - 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                            - 'application/vnd.ms-excel'
+                            - 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                            - 'application/vnd.ms-powerpoint'
+                            - 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+                            - 'application/zip'
+                            - 'video/quicktime'
                         tmb_path: 'web/%shopsys.filemanager_upload_web_dir%/_thumbnails'
                         url: '%shopsys.filemanager_upload_web_dir%'
                         tmb_url: '%shopsys.filemanager_upload_web_dir%/_thumbnails'
@@ -41,7 +57,23 @@ fm_elfinder:
                         flysystem:
                             enabled: true
                             filesystem: 'main_filesystem'
-                        upload_allow: [ 'image/png', 'image/jpg', 'image/jpeg' ]
+                        upload_allow:
+                            - 'image/png'
+                            - 'image/jpg'
+                            - 'image/jpeg'
+                            - 'image/gif'
+                            - 'image/webp'
+                            - 'text/csv'
+                            - 'text/plain'
+                            - 'application/pdf'
+                            - 'application/msword'
+                            - 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                            - 'application/vnd.ms-excel'
+                            - 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                            - 'application/vnd.ms-powerpoint'
+                            - 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+                            - 'application/zip'
+                            - 'video/quicktime'
                         tmb_path: 'web/%shopsys.filemanager_upload_web_dir%/_thumbnails'
                         url: '%shopsys.filemanager_upload_web_dir%'
                         tmb_url: '/%shopsys.filemanager_upload_web_dir%/_thumbnails'
