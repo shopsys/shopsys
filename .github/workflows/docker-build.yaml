@@ -747,6 +747,7 @@ jobs:
                     docker compose up -d --wait --force-recreate
                     ./set-urls-for-review.sh setUrlsToDomainsUrls
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys demo-data error-pages-generate warmup
+                    docker compose exec -T php-consumer php phing -D production.confirm.action=y frontend-api-generate-new-keys
                     ./set-urls-for-review.sh printDomains
             -   name: Add Review URL to Pull request description
                 uses: Jerome1337/comment-pull-request@v1.0.4

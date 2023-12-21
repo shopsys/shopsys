@@ -162,6 +162,7 @@ review:
         - docker-compose up -d
         - ./gitlab/scripts/set-urls-for-review.sh setUrlsToDomainsUrls
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
+        - docker-compose exec -T php-consumer php phing -D production.confirm.action=y frontend-api-generate-new-keys
         - ./gitlab/scripts/set-urls-for-review.sh printDomains
     tags:
         - review
