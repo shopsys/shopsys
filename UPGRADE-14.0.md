@@ -110,7 +110,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   your custom classes that utilize internal array caching or need to be reset between message consumption should now implement the `\Symfony\Contracts\Service\ResetInterface` interface
     -   method `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler::cleanScheduleForImmediateRecalculation()` has been renamed to `reset()`
     -   see #project-base-diff to update your project
--   # replace custom application bootstrapping with symfony/runtime ([#2914](https://github.com/shopsys/shopsys/pull/2914))
+-   replace custom application bootstrapping with symfony/runtime ([#2914](https://github.com/shopsys/shopsys/pull/2914))
+    -   see #project-base-diff to update your project
 -   improve repeat order related mutations ([#2876](https://github.com/shopsys/shopsys/pull/2876))
     -   constant `Shopsys\FrameworkBundle\Component\Setting\Setting::ORDER_SENT_PAGE_CONTENT` was removed, use `Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageSettingFacade::ORDER_SENT_PAGE_CONTENT` instead
     -   `Shopsys\FrameworkBundle\Controller\Admin\CustomerCommunicationController`
@@ -463,6 +464,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   `shopsys.image.enable_lazy_load` container parameter was removed
     -   see #project-base-diff to update your project
 -   remove usage of shopsys/read-model package ([#2935](https://github.com/shopsys/shopsys/pull/2935))
+    -   The shopsys/read-model package is no longer supported.
+        If your project still requires it, either fork the original repository for self-maintenance or copy the necessary code into your project.
+        Shopsys will no longer maintain this package.
     -   `Shopsys\FrameworkBundle\Component\Image\ImageFacade` class has been changed:
         -   method `getImagesByEntityIdAndNameIndexedById()` was removed
         -   method `getImageUrlFromAttributes()` was removed
