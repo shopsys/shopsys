@@ -788,8 +788,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   all SF packages were updated to the highest possible patch within the current minor version
 
 -   implement NextImage component ([#2924](https://github.com/shopsys/shopsys/pull/2924))
+
     -   Now we don't use `srcset` solution anymore for which was our `Image` component prepared. It was replaced with the solution provided by Next.js which is `NextImage` component. This component allows us many more possibilities. But it comes with a price. Since `NextImage` is capable of different image rendering methods we need to adjust each image to the chosen method. For this there is no specific advice, but we have 2 methods:
         -   Each `Image` has specific dimensions `width` and `height`, here we need to usually adjust `w-auto` or `max-h-full` so it is displayed properly. All depends on project and specific place.
         -   `Image` component has `fill` prop, no need to specify `width` or `height` props. But it needs some wrapper which has specified dimensions to limit the image. Then you can use different `object-fit` CSS properties.
         -   check all places where you use the `Image` component and modify them accordingly as the component interface has changed
         -   in your `next.config.js`, add all your domains names into `images -> remotePatterns` setting
+
+-   improve translation caching ([#2949](https://github.com/shopsys/shopsys/pull/2949))
