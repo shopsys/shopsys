@@ -134,7 +134,7 @@ class ZboziFeedItemTest extends TestCase
 
     public function testZboziFeedItemWithDescription()
     {
-        $this->defaultProduct->method('getDescription')
+        $this->defaultProduct->method('getDescriptionAsPlainText')
             ->with(1)->willReturn('product description');
 
         $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, null, $this->defaultDomain);

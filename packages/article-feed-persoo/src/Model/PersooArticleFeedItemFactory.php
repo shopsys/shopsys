@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ArticleFeed\PersooBundle\Model;
 
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemImageHelper;
 
 class PersooArticleFeedItemFactory
@@ -19,7 +20,7 @@ class PersooArticleFeedItemFactory
             $itemNumber,
             $articleData['name'],
             $articleData['url'],
-            $articleData['text'],
+            TransformString::convertHtmlToPlainText($articleData['text']),
             $this->getImageUrl($articleData),
         );
     }

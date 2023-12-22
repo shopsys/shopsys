@@ -238,4 +238,80 @@ class TransformStringTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @dataProvider convertHtmlToPlainTextDataProvider
+     * @param string|null $htmlString
+     * @param string|null $expected
+     */
+    public function testConvertHtmlToPlainText(?string $htmlString, ?string $expected): void
+    {
+        $this->assertSame($expected, TransformString::convertHtmlToPlainText($htmlString));
+    }
+
+    /**
+     *  @return iterable
+     */
+    public function convertHtmlToPlainTextDataProvider(): iterable
+    {
+        yield 'null' => [
+            'htmlString' => null,
+            'expected' => null,
+        ];
+
+        yield 'empty string' => [
+            'htmlString' => '',
+            'expected' => '',
+        ];
+
+        yield 'string without html tags' => [
+            'htmlString' => 'foo bar',
+            'expected' => 'foo bar',
+        ];
+
+        yield 'string with html tags' => [
+            'htmlString' => '<p>foo <strong>bar</strong></p>',
+            'expected' => 'foo bar',
+        ];
+
+        yield 'string with html tags and new line' => [
+            'htmlString' => "<p>foo\n<strong>bar</strong></p>",
+            'expected' => 'foo bar',
+        ];
+
+        yield 'string with html tags and new line and trailing space' => [
+            'htmlString' => "<p>foo\n<strong>bar</strong></p> ",
+            'expected' => 'foo bar',
+        ];
+
+        yield 'string with html tags and new line and space and tab' => [
+            'htmlString' => "<p>foo\n<strong>bar</strong></p> \t",
+            'expected' => 'foo bar',
+        ];
+
+        yield 'string with html tags and new line and tab and multiple spaces' => [
+            'htmlString' => "<p>foo\n<strong>bar</strong></p> \t  ",
+            'expected' => 'foo bar',
+        ];
+
+        yield 'string with html tags and new lines and spaces and tab' => [
+            'htmlString' => "<p>foo\n<strong>bar</strong></p> \t  \n",
+            'expected' => 'foo bar',
+        ];
+
+        yield 'string with html tags and new lines and spaces and tab and trailing space' => [
+            'htmlString' => "<p>foo\n<strong>bar</strong></p> \t  \n ",
+            'expected' => 'foo bar',
+        ];
+
+        yield 'string with html tags and new lines and spaces and tabs' => [
+            'htmlString' => "<p>foo\n<strong>bar</strong></p> \t  \n \t",
+            'expected' => 'foo bar',
+        ];
+
+        yield 'string with html entities' => [
+            'htmlString' => '&#34;foo &amp; bar&#34;',
+            'expected' => '"foo & bar"',
+        ];
+    }
 }

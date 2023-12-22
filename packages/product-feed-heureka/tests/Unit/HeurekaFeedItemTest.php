@@ -127,7 +127,7 @@ class HeurekaFeedItemTest extends TestCase
 
     public function testHeurekaFeedItemWithDescription()
     {
-        $this->defaultProduct->method('getDescription')
+        $this->defaultProduct->method('getDescriptionAsPlainText')
             ->with(1)->willReturn('product description');
 
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);

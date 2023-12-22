@@ -48,7 +48,7 @@ class PersooFeedItemFactory
         $availability = $product->getCalculatedSellingDenied() === true ?
             t('Out of stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) :
             t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
-        $productDescription = $product->isVariant() ? $product->getMainVariant()->getDescription($domainConfig->getId()) : $product->getDescription($domainConfig->getId());
+        $productDescription = $product->isVariant() ? $product->getMainVariant()->getDescriptionAsPlainText($domainConfig->getId()) : $product->getDescriptionAsPlainText($domainConfig->getId());
         $categories = $product->getCategoriesIndexedByDomainId()[$domainConfig->getId()];
         $categoryHierarchyNamesByCategoryId = [];
         $categoryHierarchyIdsByCategoryId = [];

@@ -149,4 +149,17 @@ class TransformString
     {
         return mb_convert_encoding($string, 'UTF-8', 'UTF-8');
     }
+
+    /**
+     * @param string|null $htmlText
+     * @return string|null
+     */
+    public static function convertHtmlToPlainText(?string $htmlText): ?string
+    {
+        if ($htmlText === null) {
+            return null;
+        }
+
+        return trim(preg_replace('/\s\s+/', ' ', strip_tags(str_replace('<', ' <', html_entity_decode($htmlText)))));
+    }
 }

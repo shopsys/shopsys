@@ -42,7 +42,7 @@ class ZboziFeedItemFactory extends BaseZboziFeedItemFactory
             $this->getPathToMainCategory($product, $domainConfig),
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
             $mainVariantId,
-            $product->getDescription($domainConfig->getId()),
+            $product->getDescriptionAsPlainText($domainConfig->getId()),
             $this->productUrlsBatchLoader->getResizedProductImageUrl($product, $domainConfig),
             $this->getBrandName($product),
             $product->getEan(),
