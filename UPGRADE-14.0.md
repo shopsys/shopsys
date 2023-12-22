@@ -616,6 +616,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   allow more files to be uploaded in WYSIWYG editor ([#2948](https://github.com/shopsys/shopsys/pull/2948))
     -   see #project-base-diff to update your project
+-   change product recalculations to be asynchronous ([#2917](https://github.com/shopsys/shopsys/pull/2917))
+    -   see the specialized upgrade note in [upgrade-product-recalculations.md](./upgrade-product-recalculations.md)
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
