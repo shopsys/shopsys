@@ -46,11 +46,38 @@ services:
             PACKETERY_API_PASSWORD: ~
             PACKETERY_SENDER: ~
             FORCE_ELASTIC_LIMITS: 1
+            MESSENGER_TRANSPORT_VHOST: ${COMPOSE_PROJECT_NAME}
         labels:
             - traefik.enable=false
         networks:
             - default
             - services-network
+
+    php-consumer:
+        restart: always
+        image: ${TAG}
+        depends_on:
+            - php-fpm
+        environment:
+            ELASTIC_SEARCH_INDEX_PREFIX: ${COMPOSE_PROJECT_NAME}
+            IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
+            REDIS_PREFIX: ${COMPOSE_PROJECT_NAME}
+            DATABASE_NAME: ${COMPOSE_PROJECT_NAME}
+            PACKETERY_ENABLED: ~
+            PACKETERY_REST_API_URL: ~
+            PACKETERY_API_PASSWORD: ~
+            PACKETERY_SENDER: ~
+            FORCE_ELASTIC_LIMITS: 1
+            MESSENGER_TRANSPORT_VHOST: ${COMPOSE_PROJECT_NAME}
+        networks:
+            - default
+            - services-network
+        entrypoint:
+            - /bin/sh
+            - -c
+            - sleep 5 && ./docker/php-fpm/consumer-entrypoint.sh 600
+        labels:
+            - traefik.enable=false
 
     img-proxy:
         image: darthsim/imgproxy:latest
