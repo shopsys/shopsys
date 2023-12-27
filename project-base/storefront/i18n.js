@@ -4,7 +4,6 @@ const { captureException } = require('@sentry/nextjs');
 const REDIS_URL = `redis://${process.env.REDIS_HOST}`;
 const REDIS_PREFIX = `${process.env.REDIS_PREFIX}:fe:translates:`;
 const REDIS_UPDATE_JOB_TIMEOUT = 5; // seconds (default: 30)
-const REDIS_IS_CACHED_TIMEOUT = 86400; // all day long (cache is invalidated on translation change on backend)
 
 const logException = (e) => {
     if (process.env.APP_ENV === 'development') {
@@ -47,13 +46,12 @@ module.exports = {
 
                 await redisClient.connect();
 
-                const [cachedTranslates, isCached, updateJobIsRunning] = await redisClient.mGet([
+                const [cachedTranslates, updateJobIsRunning] = await redisClient.mGet([
                     redisKey,
-                    redisKey + '/cached',
                     redisKey + '/updating',
                 ]);
 
-                if (isCached === null && updateJobIsRunning === null) {
+                if (cachedTranslates === null && updateJobIsRunning === null) {
                     const cacheToRedis = async () => {
                         const setUpdatingFlag = await redisClient.set(redisKey + '/updating', 'true', {
                             NX: true,
@@ -66,12 +64,7 @@ module.exports = {
                             const translatesToCache = JSON.stringify(freshTranslates);
 
                             if (translatesToCache) {
-                                await Promise.all([
-                                    redisClient.set(redisKey, translatesToCache),
-                                    redisClient.set(redisKey + '/cached', 'true', {
-                                        EX: REDIS_IS_CACHED_TIMEOUT,
-                                    }),
-                                ]);
+                                await Promise.all([redisClient.set(redisKey, translatesToCache)]);
                             }
                         }
                     };
@@ -94,6 +87,6 @@ module.exports = {
             }
         }
 
-        return (await import('./i18n-translator')).getLocalTranslates(locale, namespace);
+        return (await import('./i18n-translator')).getFreshTranslates(locale, namespace);
     },
 };
