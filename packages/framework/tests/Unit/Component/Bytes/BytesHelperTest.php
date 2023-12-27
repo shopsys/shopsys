@@ -25,6 +25,7 @@ class BytesHelperTest extends TestCase
     public function phpStringBytesToBytesDataProvider(): array
     {
         return [
+            ['phpStringBytes' => '-1', 'expectedBytes' => -1],
             ['phpStringBytes' => '12', 'expectedBytes' => 12],
             ['phpStringBytes' => '12K', 'expectedBytes' => 12288],
             ['phpStringBytes' => '12M', 'expectedBytes' => 12582912],
