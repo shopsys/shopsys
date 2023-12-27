@@ -40,22 +40,48 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
     protected function process(array $jobs): void
     {
         $productIds = [];
+        $acknowledgers = [];
 
         /**
          * @var \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessage $message
          * @var \Symfony\Component\Messenger\Handler\Acknowledger $ack
          */
         foreach ($jobs as [$message, $ack]) {
-            try {
-                $productIds[] = $message->productId;
-                $ack->ack($message->productId);
-            } catch (Throwable $e) {
-                $this->logger->error($e->getMessage());
-                $ack->nack($e);
-            }
+            $productIds[] = $message->productId;
+            $acknowledgers[] = $ack;
         }
 
-        $this->productRecalculationFacade->recalculate($productIds);
+        try {
+            $this->productRecalculationFacade->recalculate($productIds);
+            $this->ackAll($acknowledgers);
+        } catch (Throwable $e) {
+            $this->logger->error($e->getMessage());
+            $this->nackAll($acknowledgers, $e);
+
+            return;
+        }
+
         $this->logger->info('Product recalculated', ['product_ids' => json_encode($productIds, JSON_THROW_ON_ERROR)]);
+    }
+
+    /**
+     * @param \Symfony\Component\Messenger\Handler\Acknowledger[] $acknowledgers
+     */
+    protected function ackAll(array $acknowledgers): void
+    {
+        foreach ($acknowledgers as $acknowledger) {
+            $acknowledger->ack();
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\Messenger\Handler\Acknowledger[] $acknowledgers
+     * @param \Throwable $e
+     */
+    protected function nackAll(array $acknowledgers, Throwable $e): void
+    {
+        foreach ($acknowledgers as $acknowledger) {
+            $acknowledger->nack($e);
+        }
     }
 }
