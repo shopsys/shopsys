@@ -23,3 +23,5 @@ parameters:
     env(REDIS_PREFIX): ''
     env(ELASTIC_SEARCH_INDEX_PREFIX): ''
     env(MAILER_FORCE_WHITELIST): 0
+
+    gopay_config: []

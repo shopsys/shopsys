@@ -183,10 +183,21 @@ class OrderData
      */
     public $origin;
 
+    /**
+     * @var string|null
+     */
+    public $goPayBankSwift;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundData[]
+     */
+    public $paymentTransactionRefunds;
+
     public function __construct()
     {
         $this->itemsWithoutTransportAndPayment = [];
         $this->deliveryAddressSameAsBillingAddress = false;
+        $this->paymentTransactionRefunds = [];
     }
 
     /**

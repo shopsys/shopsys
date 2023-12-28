@@ -61,6 +61,21 @@ class PaymentData
      */
     public $uuid;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null
+     */
+    public $goPayPaymentMethod;
+
+    /**
+     * @var string
+     */
+    public $type;
+
+    /**
+     * @var bool
+     */
+    public $hiddenByGoPay;
+
     public function __construct()
     {
         $this->name = [];
@@ -72,5 +87,6 @@ class PaymentData
         $this->czkRounding = false;
         $this->pricesIndexedByDomainId = [];
         $this->vatsIndexedByDomainId = [];
+        $this->type = Payment::TYPE_BASIC;
     }
 }

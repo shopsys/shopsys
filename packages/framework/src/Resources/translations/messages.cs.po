@@ -289,6 +289,9 @@ msgstr "Prům. trvání (mm:ss)"
 msgid "Back to overview"
 msgstr "Zpět na přehled"
 
+msgid "Basic"
+msgstr "Základní"
+
 msgid "Basic frontend currency %domainName%"
 msgstr "Základní měna frontendu %domainName%"
 
@@ -1243,6 +1246,12 @@ msgstr "Externí ID můstku"
 msgid "External scripts"
 msgstr "Měřící skripty"
 
+msgid "External transaction ID"
+msgstr "Externí indentifikátor transakce"
+
+msgid "External transaction status"
+msgstr "Externí status transakce"
+
 msgid "Feed"
 msgstr "Feed"
 
@@ -1357,6 +1366,18 @@ msgstr "Přejít na Frontend"
 msgid "Go to page:"
 msgstr "Přejít na stránku:"
 
+msgid "GoPay"
+msgstr "GoPay"
+
+msgid "GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right."
+msgstr "GoPay API vrátilo chybu - jděte do administrace GoPay, najděte transakci %paymentId% a zkontrolujte, zda je vše v pořádku."
+
+msgid "GoPay payment method"
+msgstr "Platební metoda GoPay"
+
+msgid "GoPay payment status"
+msgstr "Stav platby GoPay"
+
 msgid "Google analytics"
 msgstr "Google analytics"
 
@@ -1434,6 +1455,9 @@ msgstr "Ikona"
 
 msgid "If you change currency settings, prices of all products will be recalculated"
 msgstr "Pokud změníte nastavení měn, dojde k přepočítání cen všech produktů"
+
+msgid "If you want execute refund, you have to setup refund amount."
+msgstr "Pokud chcete provést refundaci, musíte nastavit její výši."
 
 msgid "If you want for these changes to manifest everywhere (on production, devel, localhost etc.) instruct a programmer to commit the changes into GIT!"
 msgstr "Pokud chcete, aby se změny projevily všude (na produkci, develu, localhostu apod.), dejte vědět programátorovi, aby změny zavedl do GITu!"
@@ -1843,6 +1867,9 @@ msgstr "Nelze přiřadit produkt sám sobě"
 msgid "Not possible to create variations of products that are already variant or main variant."
 msgstr "Nelze vytvářet varianty ze zboží, které jsou již variantou nebo hlavní variantou."
 
+msgid "Not refundable"
+msgstr "Nerefundovatelné"
+
 msgid "Note"
 msgstr "Poznámka"
 
@@ -1918,6 +1945,9 @@ msgstr "Detail objednávky"
 msgid "Order detail URL address"
 msgstr "URL adresa detailu objednávky"
 
+msgid "Order has not been sent to GoPay"
+msgstr "Objednávka nebyla odeslána do GoPay"
+
 msgid "Order in CZK round to whole crowns"
 msgstr "Objednávku v CZK zaokrouhlit na celé koruny"
 
@@ -1969,6 +1999,9 @@ msgstr "Název stránky"
 msgid "Page title"
 msgstr "Titulek stránky"
 
+msgid "Paid amount"
+msgstr "Zaplacená částka"
+
 msgid "Parameter"
 msgstr "Parametr"
 
@@ -2008,14 +2041,47 @@ msgstr "Byla upravena platba <strong><a href=\"{{ url }}\">{{ name }}</a></stron
 msgid "Payment <strong>{{ name }}</strong> deleted"
 msgstr "Platba <strong>{{ name }}</strong> byla smazána"
 
+msgid "Payment authorized"
+msgstr "Platba předautorizována"
+
+msgid "Payment canceled"
+msgstr "Platba zrušena"
+
+msgid "Payment created"
+msgstr "Platba vytvořena"
+
 msgid "Payment failed page content"
 msgstr "Obsah stránky po neúspěšné platbě"
+
+msgid "Payment has expired"
+msgstr "Vypršela platnost platby"
 
 msgid "Payment instructions"
 msgstr "Pokyny k platbě"
 
+msgid "Payment method chosen"
+msgstr "Platební metoda vybrána"
+
+msgid "Payment method name"
+msgstr "Název platební metody"
+
+msgid "Payment paid"
+msgstr "Platba zaplacena"
+
+msgid "Payment partially refunded"
+msgstr "Platba částečně refundována"
+
+msgid "Payment refunded"
+msgstr "Refundovaná platba"
+
 msgid "Payment successful page content"
 msgstr "Obsah stránky po dokončené platbě"
+
+msgid "Payment transactions"
+msgstr "Platební transakce"
+
+msgid "Payment type"
+msgstr "Typ platby"
 
 msgid "Payments"
 msgstr "Platby"
@@ -2190,6 +2256,15 @@ msgstr "Rychlé vyhledávání"
 
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr "Výši sazby nelze upravit. Je třeba vytvořit novou sazbu a starou odstranit s nahrazením za novou."
+
+msgid "Refund amount"
+msgstr "Refundovat částku"
+
+msgid "Refundable amount"
+msgstr "Refundovatelná částka"
+
+msgid "Refunded amount"
+msgstr "Refundovaná částka"
 
 msgid "Registered cust."
 msgstr "Registrovaní zák."
@@ -2425,6 +2500,9 @@ msgstr "Odeslat e-mail s potvrzením registrace zákazníkovi"
 msgid "Send email about change to this status"
 msgstr "Zasílat e-mail o změně na tento stav"
 
+msgid "Send refund and save order"
+msgstr "Odeslat refundaci a uložit objednávku"
+
 msgid "Sending emails off, no email will be sent from the app."
 msgstr "Odesílání e-mailů je vypnuto, z aplikace nebude odeslán žádný e-mail."
 
@@ -2626,6 +2704,9 @@ msgstr "Tuto položku můžete nastavit na kartě konkrétní varianty"
 msgid "This may significantly impact site performance and should be avoided whenever possible."
 msgstr "Toto nastavení může významně ovlivnit výkon webu a nemělo by se používat, pokud to není nutné."
 
+msgid "This payment method is hidden by GoPay."
+msgstr "Tento způsob platby je skrytý systémem GoPay."
+
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
 msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje objednávky, které nebyly úspěšně vyřízeny."
 
@@ -2676,6 +2757,9 @@ msgstr "Celková cena s DPH"
 
 msgid "Tracking ID"
 msgstr "Číslo pro měření"
+
+msgid "Transport type"
+msgstr "Typ dopravy"
 
 msgid "Two selected domains cannot have the same language"
 msgstr "Dvě vybrané domény nemohou mít stejný jazyk"
@@ -2874,6 +2958,9 @@ msgstr "Zde můžete přetáhnout další obsah."
 
 msgid "You can drag articles here."
 msgstr "Zde můžete přetáhnout články"
+
+msgid "You can refund only %refundableAmount%."
+msgstr "Mužete refundovat pouze %refundableAmount%."
 
 msgid "You can set the categories on product detail of the main variant"
 msgstr "Kategorie můžete nastavit na kartě hlavní varianty"

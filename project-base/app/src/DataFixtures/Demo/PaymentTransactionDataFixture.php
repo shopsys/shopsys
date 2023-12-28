@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Order\Order;
-use App\Model\Payment\Transaction\PaymentTransactionDataFactory;
-use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 
 class PaymentTransactionDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @param \App\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
-     * @param \App\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
      */
     public function __construct(
         private readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,

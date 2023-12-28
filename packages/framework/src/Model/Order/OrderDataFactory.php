@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 
 class OrderDataFactory implements OrderDataFactoryInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface $orderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
      */
     public function __construct(
         protected readonly OrderItemDataFactoryInterface $orderItemDataFactory,
+        protected readonly PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
     ) {
     }
 
@@ -90,5 +93,11 @@ class OrderDataFactory implements OrderDataFactoryInterface
         $orderData->createdAsAdministratorName = $order->getCreatedAsAdministratorName();
         $orderData->orderTransport = $this->orderItemDataFactory->createFromOrderItem($order->getOrderTransport());
         $orderData->orderPayment = $this->orderItemDataFactory->createFromOrderItem($order->getOrderPayment());
+
+        $orderData->goPayBankSwift = $order->getGoPayBankSwift();
+
+        foreach ($order->getPaymentTransactions() as $paymentTransaction) {
+            $orderData->paymentTransactionRefunds[$paymentTransaction->getId()] = $this->paymentTransactionRefundDataFactory->createFromPaymentTransaction($paymentTransaction);
+        }
     }
 }

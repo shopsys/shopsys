@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Payment;
 
-use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
 
@@ -32,34 +31,6 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
  */
 class PaymentFacade extends BasePaymentFacade
 {
-    /**
-     * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     */
-    public function hideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): void
-    {
-        $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod);
-
-        foreach ($payments as $payment) {
-            $payment->hideByGoPay();
-        }
-
-        $this->em->flush();
-    }
-
-    /**
-     * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     */
-    public function unHideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): void
-    {
-        $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod);
-
-        foreach ($payments as $payment) {
-            $payment->unHideByGoPay();
-        }
-
-        $this->em->flush();
-    }
-
     /**
      * @return \App\Model\Payment\Payment[]
      */

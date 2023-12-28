@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -299,5 +300,33 @@ class PaymentFacade
         $paymentsByTransport = $this->paymentRepository->getAllByTransport($transport);
 
         return $this->paymentVisibilityCalculation->filterVisible($paymentsByTransport, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
+     */
+    public function hideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): void
+    {
+        $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod);
+
+        foreach ($payments as $payment) {
+            $payment->hideByGoPay();
+        }
+
+        $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
+     */
+    public function unHideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): void
+    {
+        $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod);
+
+        foreach ($payments as $payment) {
+            $payment->unHideByGoPay();
+        }
+
+        $this->em->flush();
     }
 }

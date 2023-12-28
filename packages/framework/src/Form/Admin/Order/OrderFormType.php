@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Order;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionsType;
+use Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction\PaymentTransactionType;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyCustomerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
@@ -14,6 +16,7 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\OrderItemsType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
+use Shopsys\FrameworkBundle\Model\GoPay\GoPayOrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
@@ -55,18 +58,21 @@ class OrderFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $domainId = $options['order']->getDomainId();
+        /** @var \Shopsys\FrameworkBundle\Model\Order\Order $order */
+        $order = $options['order'];
+        $domainId = $order->getDomainId();
         $countries = $this->countryFacade->getAllOnDomain($domainId);
         $builder
-            ->add($this->createBasicInformationGroup($builder, $options['order']))
+            ->add($this->createBasicInformationGroup($builder, $order))
             ->add($this->createPersonalDataGroup($builder))
             ->add($this->createCompanyDataGroup($builder))
             ->add($this->createBillingDataGroup($builder, $countries))
             ->add($this->createShippingAddressGroup($builder, $countries))
             ->add($this->createNoteGroup($builder))
             ->add('orderItems', OrderItemsType::class, [
-                'order' => $options['order'],
+                'order' => $order,
             ])
+            ->add($this->createPaymentTransactionsGroup($builder, $order))
 
             ->add('save', SubmitType::class);
     }
@@ -102,20 +108,17 @@ class OrderFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createBasicInformationGroup(FormBuilderInterface $builder, Order $order)
+    private function createBasicInformationGroup(FormBuilderInterface $builder, Order $order): FormBuilderInterface
     {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => t('Basic information'),
         ]);
 
-        if ($order !== null) {
-            $builderBasicInformationGroup->add('id', DisplayOnlyType::class, [
+        $builderBasicInformationGroup
+            ->add('id', DisplayOnlyType::class, [
                 'label' => t('ID'),
                 'data' => $order->getId(),
-            ]);
-        }
-
-        $builderBasicInformationGroup
+            ])
             ->add('orderDetail', DisplayOnlyUrlType::class, [
                 'label' => t('Order detail'),
                 'route' => 'front_customer_order_detail_unregistered',
@@ -174,6 +177,34 @@ class OrderFormType extends AbstractType
                 ]);
         }
 
+        $builderBasicInformationGroup
+            ->add('payment', DisplayOnlyType::class, [
+                'label' => t('Payment type'),
+                'data' => $order->getPayment()->getName(),
+            ]);
+
+        if ($order->getPayment()->isGoPay() === true) {
+            $goPayPaymentTransactions = $order->getGoPayTransactions();
+
+            if (count($goPayPaymentTransactions) > 0) {
+                $translatedGoPayStatus = GoPayOrderStatus::getTranslatedGoPayStatus(end($goPayPaymentTransactions)->getExternalPaymentStatus());
+            } else {
+                $translatedGoPayStatus = t('Order has not been sent to GoPay');
+            }
+
+            $builderBasicInformationGroup
+                ->add('gopayStatus', DisplayOnlyType::class, [
+                    'label' => t('GoPay payment status'),
+                    'data' => $translatedGoPayStatus,
+                ]);
+        }
+
+        $builderBasicInformationGroup
+            ->add('transport', DisplayOnlyType::class, [
+                'label' => t('Transport type'),
+                'data' => $order->getTransport()->getName(),
+            ]);
+
         return $builderBasicInformationGroup;
     }
 
@@ -181,7 +212,7 @@ class OrderFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createPersonalDataGroup(FormBuilderInterface $builder)
+    private function createPersonalDataGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderPersonalDataGroup = $builder->create('personalDataGroup', GroupType::class, [
             'label' => t('Personal data'),
@@ -237,7 +268,7 @@ class OrderFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createCompanyDataGroup(FormBuilderInterface $builder)
+    private function createCompanyDataGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderCompanyDataGroup = $builder->create('companyDataGroup', GroupType::class, [
             'label' => t('Company data'),
@@ -283,7 +314,7 @@ class OrderFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Country\Country[] $countries
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createBillingDataGroup(FormBuilderInterface $builder, array $countries)
+    private function createBillingDataGroup(FormBuilderInterface $builder, array $countries): FormBuilderInterface
     {
         $builderBillingDataGroup = $builder->create('billingDataGroup', GroupType::class, [
             'label' => t('Billing data'),
@@ -338,7 +369,7 @@ class OrderFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Country\Country[] $countries
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createShippingAddressGroup(FormBuilderInterface $builder, array $countries)
+    private function createShippingAddressGroup(FormBuilderInterface $builder, array $countries): FormBuilderInterface
     {
         $builderShippingAddressGroup = $builder->create('shippingAddressGroup', GroupType::class, [
             'label' => t('Delivery address'),
@@ -477,7 +508,7 @@ class OrderFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createNoteGroup(FormBuilderInterface $builder)
+    private function createNoteGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderNoteGroup = $builder->create('noteGroup', GroupType::class, [
             'label' => t('Note'),
@@ -490,5 +521,28 @@ class OrderFormType extends AbstractType
             ]);
 
         return $builderNoteGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createPaymentTransactionsGroup(FormBuilderInterface $builder, Order $order): FormBuilderInterface
+    {
+        $builderPaymentGroup = $builder->create('paymentTransactionsGroup', GroupType::class, [
+            'label' => t('Payment transactions'),
+        ]);
+
+        $builderPaymentGroup->add('paymentTransactionRefunds', PaymentTransactionsType::class, [
+            'entry_type' => PaymentTransactionType::class,
+            'error_bubbling' => false,
+            'allow_add' => false,
+            'allow_delete' => false,
+            'required' => false,
+            'order' => $order,
+        ]);
+
+        return $builderPaymentGroup;
     }
 }

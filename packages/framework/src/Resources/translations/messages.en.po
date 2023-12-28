@@ -289,6 +289,9 @@ msgstr ""
 msgid "Back to overview"
 msgstr ""
 
+msgid "Basic"
+msgstr ""
+
 msgid "Basic frontend currency %domainName%"
 msgstr ""
 
@@ -1243,6 +1246,12 @@ msgstr ""
 msgid "External scripts"
 msgstr ""
 
+msgid "External transaction ID"
+msgstr ""
+
+msgid "External transaction status"
+msgstr ""
+
 msgid "Feed"
 msgstr ""
 
@@ -1357,6 +1366,18 @@ msgstr ""
 msgid "Go to page:"
 msgstr ""
 
+msgid "GoPay"
+msgstr ""
+
+msgid "GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right."
+msgstr ""
+
+msgid "GoPay payment method"
+msgstr ""
+
+msgid "GoPay payment status"
+msgstr ""
+
 msgid "Google analytics"
 msgstr ""
 
@@ -1433,6 +1454,9 @@ msgid "Icon"
 msgstr ""
 
 msgid "If you change currency settings, prices of all products will be recalculated"
+msgstr ""
+
+msgid "If you want execute refund, you have to setup refund amount."
 msgstr ""
 
 msgid "If you want for these changes to manifest everywhere (on production, devel, localhost etc.) instruct a programmer to commit the changes into GIT!"
@@ -1843,6 +1867,9 @@ msgstr ""
 msgid "Not possible to create variations of products that are already variant or main variant."
 msgstr ""
 
+msgid "Not refundable"
+msgstr ""
+
 msgid "Note"
 msgstr ""
 
@@ -1918,6 +1945,9 @@ msgstr ""
 msgid "Order detail URL address"
 msgstr ""
 
+msgid "Order has not been sent to GoPay"
+msgstr ""
+
 msgid "Order in CZK round to whole crowns"
 msgstr ""
 
@@ -1969,6 +1999,9 @@ msgstr ""
 msgid "Page title"
 msgstr ""
 
+msgid "Paid amount"
+msgstr ""
+
 msgid "Parameter"
 msgstr ""
 
@@ -2008,13 +2041,46 @@ msgstr ""
 msgid "Payment <strong>{{ name }}</strong> deleted"
 msgstr ""
 
+msgid "Payment authorized"
+msgstr ""
+
+msgid "Payment canceled"
+msgstr ""
+
+msgid "Payment created"
+msgstr ""
+
 msgid "Payment failed page content"
+msgstr ""
+
+msgid "Payment has expired"
 msgstr ""
 
 msgid "Payment instructions"
 msgstr ""
 
+msgid "Payment method chosen"
+msgstr ""
+
+msgid "Payment method name"
+msgstr ""
+
+msgid "Payment paid"
+msgstr ""
+
+msgid "Payment partially refunded"
+msgstr ""
+
+msgid "Payment refunded"
+msgstr ""
+
 msgid "Payment successful page content"
+msgstr ""
+
+msgid "Payment transactions"
+msgstr ""
+
+msgid "Payment type"
 msgstr ""
 
 msgid "Payments"
@@ -2189,6 +2255,15 @@ msgid "Quick search"
 msgstr ""
 
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
+msgstr ""
+
+msgid "Refund amount"
+msgstr ""
+
+msgid "Refundable amount"
+msgstr ""
+
+msgid "Refunded amount"
 msgstr ""
 
 msgid "Registered cust."
@@ -2425,6 +2500,9 @@ msgstr ""
 msgid "Send email about change to this status"
 msgstr ""
 
+msgid "Send refund and save order"
+msgstr ""
+
 msgid "Sending emails off, no email will be sent from the app."
 msgstr ""
 
@@ -2626,6 +2704,9 @@ msgstr ""
 msgid "This may significantly impact site performance and should be avoided whenever possible."
 msgstr ""
 
+msgid "This payment method is hidden by GoPay."
+msgstr ""
+
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
 msgstr ""
 
@@ -2675,6 +2756,9 @@ msgid "Total price including VAT"
 msgstr ""
 
 msgid "Tracking ID"
+msgstr ""
+
+msgid "Transport type"
 msgstr ""
 
 msgid "Two selected domains cannot have the same language"
@@ -2873,6 +2957,9 @@ msgid "You can drag additional content here."
 msgstr ""
 
 msgid "You can drag articles here."
+msgstr ""
+
+msgid "You can refund only %refundableAmount%."
 msgstr ""
 
 msgid "You can set the categories on product detail of the main variant"

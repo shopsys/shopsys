@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-use App\Model\Payment\Payment;
-use App\Model\Payment\Transaction\PaymentTransaction;
 use App\Model\Transport\Transport;
 use App\Model\Transport\Type\TransportType;
-use DateTime;
 use Doctrine\ORM\Query\Expr\Join;
-use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
 
 /**
@@ -34,26 +30,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
  */
 class OrderRepository extends BaseOrderRepository
 {
-    /**
-     * @param \DateTime $fromDate
-     * @return \App\Model\Order\Order[]
-     */
-    public function getAllUnpaidGoPayOrders(DateTime $fromDate): array
-    {
-        $queryBuilder = $this->createOrderQueryBuilder()
-            ->join(Payment::class, 'p', Join::WITH, 'o.payment = p.id')
-            ->join(PaymentTransaction::class, 'pt', Join::WITH, 'o.id = pt.order AND p.id = pt.payment')
-            ->andWhere('p.type = :type')
-            ->andWhere('o.createdAt >= :fromDate')
-            ->andWhere('pt.externalPaymentStatus NOT IN (:paymentStatuses)')
-            ->orderBy('o.createdAt', 'ASC')
-            ->setParameter('fromDate', $fromDate)
-            ->setParameter('paymentStatuses', [PaymentStatus::PAID, PaymentStatus::CANCELED, PaymentStatus::TIMEOUTED])
-            ->setParameter('type', Payment::TYPE_GOPAY);
-
-        return $queryBuilder->getQuery()->execute();
-    }
-
     /**
      * @param \App\Model\Transport\Type\TransportType $transportType
      * @return \App\Model\Order\Order[]

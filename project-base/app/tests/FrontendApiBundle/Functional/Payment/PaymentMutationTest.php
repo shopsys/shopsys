@@ -6,9 +6,9 @@ namespace Tests\FrontendApiBundle\Functional\Payment;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
-use App\Model\Payment\Transaction\PaymentTransactionDataFactory;
-use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use GoPay\Definition\Response\PaymentStatus;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentMutationTest extends GraphQlTestCase

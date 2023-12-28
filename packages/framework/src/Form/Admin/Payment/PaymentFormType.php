@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\PriceAndVatTableByDomainsType;
+use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
@@ -29,10 +30,12 @@ class PaymentFormType extends AbstractType
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
+     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
         private readonly PaymentFacade $paymentFacade,
+        private readonly GoPayPaymentMethodFacade $goPayPaymentMethodFacade,
     ) {
     }
 
@@ -40,9 +43,9 @@ class PaymentFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $payment */
+        /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment */
         $payment = $options['payment'];
         $builderBasicInformationGroup = $builder->create('basicInformation', GroupType::class, [
             'label' => t('Basic information'),
@@ -72,10 +75,7 @@ class PaymentFormType extends AbstractType
                 'required' => false,
                 'label' => t('Display on'),
             ])
-            ->add('hidden', YesNoType::class, [
-                'required' => false,
-                'label' => t('Hidden'),
-            ])
+            ->add('hidden', YesNoType::class, $this->getHiddenFieldOptions($payment))
             ->add('transports', ChoiceType::class, [
                 'required' => false,
                 'choices' => $this->transportFacade->getAll(),
@@ -85,6 +85,31 @@ class PaymentFormType extends AbstractType
                 'expanded' => true,
                 'empty_message' => t('You have to create some shipping first.'),
                 'label' => t('Available shipping methods'),
+            ])
+            ->add('type', ChoiceType::class, [
+                'label' => t('Type'),
+                'choices' => [
+                    t('Basic') => Payment::TYPE_BASIC,
+                    t('GoPay') => Payment::TYPE_GOPAY,
+                ],
+                'multiple' => false,
+                'expanded' => false,
+                'required' => true,
+                'attr' => [
+                    'class' => 'js-payment-type',
+                ],
+            ])
+            ->add('goPayPaymentMethod', ChoiceType::class, [
+                'label' => t('GoPay payment method'),
+                'choices' => $this->goPayPaymentMethodFacade->getAll(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'multiple' => false,
+                'expanded' => false,
+                'required' => true,
+                'attr' => [
+                    'class' => 'js-payment-gopay-payment-method',
+                ],
             ]);
 
         $builderPriceGroup = $builder->create('prices', GroupType::class, [
@@ -156,7 +181,7 @@ class PaymentFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('payment')
             ->setAllowedTypes('payment', [Payment::class, 'null'])
@@ -164,5 +189,27 @@ class PaymentFormType extends AbstractType
                 'data_class' => PaymentData::class,
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
+     * @return array
+     */
+    private function getHiddenFieldOptions(?Payment $payment): array
+    {
+        $hiddenFieldOptions = [
+            'required' => false,
+            'label' => t('Hidden'),
+        ];
+
+        if ($payment !== null && $payment->isHiddenByGoPay()) {
+            $hiddenFieldOptions['attr'] = [
+                'disabled' => true,
+                'icon' => true,
+                'iconTitle' => t('This payment method is hidden by GoPay.'),
+            ];
+        }
+
+        return $hiddenFieldOptions;
     }
 }

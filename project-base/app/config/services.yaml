@@ -444,13 +444,6 @@ services:
     Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation:
         alias: App\Model\Payment\IndependentPaymentVisibilityCalculation
 
-    App\Model\GoPay\GoPayClientFactory:
-        arguments:
-            - '%gopay_config%'
-
-    App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade:
-        public: true
-
     App\Model\Order\Preview\OrderPreviewCalculation: ~
 
     App\Model\Order\Mail\OrderMail: ~

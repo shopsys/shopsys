@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\FrontendApi\Mutation\Payment;
 
 use App\FrontendApi\Model\Order\OrderApiFacade;
-use App\FrontendApi\Model\Payment\PaymentSetupCreationData;
 use App\FrontendApi\Mutation\Payment\Exception\MaxTransactionCountReachedUserError;
 use App\FrontendApi\Mutation\Payment\Exception\OrderAlreadyPaidUserError;
-use App\Model\Payment\Service\PaymentServiceFacade;
 use GraphQL\Error\Error;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationData;
+use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Throwable;
 
@@ -19,7 +19,7 @@ class PaymentMutation extends AbstractMutation
 {
     /**
      * @param \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade
-     * @param \App\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
      * @param \App\Model\Order\OrderFacade $orderFacade
      */
     public function __construct(
@@ -31,7 +31,7 @@ class PaymentMutation extends AbstractMutation
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \App\FrontendApi\Model\Payment\PaymentSetupCreationData
+     * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationData
      */
     public function payOrderMutation(Argument $argument): PaymentSetupCreationData
     {
