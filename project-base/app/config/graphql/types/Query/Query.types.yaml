@@ -17,7 +17,6 @@ Query:
         - 'CartQuery'
         - 'TransportQuery'
         - 'CountryQuery'
-        - 'GoPayQuery'
         - 'LanguageConstantQuery'
         - 'SettingsQuery'
         - 'SeoPageQuery'

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\GoPay;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\GoPay;
 
 use Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -15,8 +15,8 @@ class GoPayQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
-        private readonly GoPayBankSwiftFacade $goPayBankSwiftFacade,
-        private readonly CurrencyFacade $currencyFacade,
+        protected readonly GoPayBankSwiftFacade $goPayBankSwiftFacade,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 

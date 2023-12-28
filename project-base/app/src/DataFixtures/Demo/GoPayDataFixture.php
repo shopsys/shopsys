@@ -30,8 +30,8 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         [
             'name' => 'Aqua bank',
             'swift' => 'ABC123456',
-            'image_normal_url' => 'airbank image Url',
-            'image_large_url' => 'airbank large image Url',
+            'image_normal_url' => 'Aqua bank image Url',
+            'image_large_url' => 'Aqua bank large image Url',
             'is_online' => true,
         ],
     ];

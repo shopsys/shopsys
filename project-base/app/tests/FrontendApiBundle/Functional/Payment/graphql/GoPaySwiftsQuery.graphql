@@ -1,0 +1,9 @@
+query GoPaySwifts ($currencyCode: String!) {
+    GoPaySwifts (currencyCode: $currencyCode){
+        swift
+        name
+        imageLargeUrl
+        imageNormalUrl
+        isOnline
+    }
+}
