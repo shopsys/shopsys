@@ -44,7 +44,6 @@ class FeedExportFactory
         $feedRenderer = $this->feedRendererFactory->create($feed);
         $feedFilepath = $this->feedPathProvider->getFeedFilepath($feed->getInfo(), $domainConfig);
         $feedLocalFilepath = $this->feedPathProvider->getFeedLocalFilepath($feed->getInfo(), $domainConfig);
-        $lastSeekId = $lastSeekId !== null ? (int)$lastSeekId : $lastSeekId;
 
         return new FeedExport(
             $feed,
