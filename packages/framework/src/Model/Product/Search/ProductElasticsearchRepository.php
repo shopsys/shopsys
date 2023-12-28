@@ -152,7 +152,10 @@ class ProductElasticsearchRepository implements ResetInterface
     {
         return array_map(function ($value) {
             $data = $value['_source'];
-            $data['id'] = (int)$value['_id'];
+
+            if (!array_key_exists('id', $data)) {
+                $data['id'] = (int)$value['_id'];
+            }
 
             return $this->productElasticsearchConverter->fillEmptyFields($data);
         }, $result['hits']['hits']);
