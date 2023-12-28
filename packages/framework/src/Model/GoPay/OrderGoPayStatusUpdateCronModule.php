@@ -37,16 +37,20 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
         $twentyOneDaysAgo = $now->sub(DateInterval::createFromDateString('21 days'));
         $orders = $this->goPayFacade->getAllUnpaidGoPayOrders($twentyOneDaysAgo);
 
-        $this->logger->info('Downloading status updates for `' . count($orders) . '` orders.');
+        $this->logger->info('Downloading status updates for orders.', [
+            'ordersCount' => count($orders),
+        ]);
 
         foreach ($orders as $order) {
-            $this->logger->info('Downloading GoPay status for order with ID `' . $order->getId() . '`.');
+            $orderId = $order->getId();
+            $this->logger->info('Downloading GoPay status for order', [
+                'orderId' => $orderId,
+            ]);
 
             if ($order->isDeleted()) {
-                $this->logger->info(sprintf(
-                    'Order status of order with ID `%s` has not been changed because is deleted',
-                    $order->getId(),
-                ));
+                $this->logger->info('Order status of order has not been changed because the order is deleted', [
+                    'orderId' => $orderId,
+                ]);
 
                 continue;
             }
@@ -69,14 +73,11 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
                 $newStatus = $goPayTransaction->getExternalPaymentStatus();
 
                 if ($oldStatus !== $newStatus) {
-                    $this->logger->info(
-                        sprintf(
-                            'Order with id `%d` changed GoPay status from `%s` to `%s`.',
-                            $order->getId(),
-                            $oldStatus,
-                            $newStatus,
-                        ),
-                    );
+                    $this->logger->info('Order changed GoPay status', [
+                        'orderId' => $orderId,
+                        'oldStatus' => $oldStatus,
+                        'newStatus' => $newStatus,
+                    ]);
                 }
             }
 
@@ -84,7 +85,9 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
                 continue;
             }
 
-            $this->logger->info('Sending order e-mail.');
+            $this->logger->info('Sending order e-mail.', [
+                'orderId' => $orderId,
+            ]);
             $this->orderMailFacade->sendEmail($order);
         }
 
