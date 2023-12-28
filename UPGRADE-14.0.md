@@ -627,6 +627,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   define elasticsearch type for ID in structure ([#2495](https://github.com/shopsys/shopsys/pull/2495))
     -   see #project-base-diff to update your project
+-   add failure transport for unprocessable messages ([#2958](https://github.com/shopsys/shopsys/pull/2958))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

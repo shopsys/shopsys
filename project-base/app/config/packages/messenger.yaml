@@ -1,11 +1,13 @@
 framework:
     messenger:
         reset_on_message: true
+        failure_transport: failed
         buses:
             messenger.bus.default:
                 middleware:
                     - 'Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayEnvelopeMiddleware'
         transports:
+            failed: 'doctrine://default?queue_name=failed'
             product_recalculation:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:
