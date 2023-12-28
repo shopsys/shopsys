@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Mutation\Payment\Exception;
+namespace Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception;
 
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-class MaxTransactionCountReachedUserError extends UserError implements UserErrorWithCodeInterface
+class OrderAlreadyPaidUserError extends UserError implements UserErrorWithCodeInterface
 {
-    private const CODE = 'max-transaction-count-reached';
+    public const CODE = 'order-already-paid';
 
     /**
      * {@inheritdoc}

@@ -8,7 +8,6 @@ Mutation:
         - 'PersonalDataMutation'
         - 'CustomerMutation'
         - 'ContactFormMutation'
-        - 'PaymentMutation'
         - 'PaymentInCartMutation'
         - 'TransportMutation'
         - 'RegisterMutation'
