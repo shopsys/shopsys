@@ -270,6 +270,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   check the `docker/nginx/nginx.conf` file - there is a setup for redirecting the legacy image URLs to the new ones. The setup uses a regex that contains all the legacy image sizes. If you use a different image sizes configuration, you need to modify the sizes in the regex accordingly.
             -   the same must be done in `app/orchestration/kubernetes/configmap/nginx-storefront.yaml` file (if you do not have the file in your project yet, you have to create it, see https://github.com/shopsys/deployment#customize-deployment for more information)
         -   see `Shopsys\FrameworkBundle\Command\MigrateImagesCommand` for more details
+    -   to have the image proxy container working properly on CI, you might need to upgrade Docker on your CI server to version `20.10.24` or higher
+        -   see https://github.com/docker-library/golang/issues/467 for more details
+        -   e.g. for Debian distributions, simple `apt upgrade` should do the trick
+        -   the same applies to your localhost
     -   `Shopsys\FrameworkBundle\Component\Image\AdditionalImageData` class has been removed
     -   the following exceptions were removed from `Shopsys\FrameworkBundle\Component\Image\Config\Exception` namespace:
         -   `DuplicateMediaException`
