@@ -26,6 +26,7 @@ import './GridInlineEdit';
 import './GridMassAction';
 import './GridDragAndDrop';
 import './GridMultipleDragAndDrop';
+import './HreflangSetting';
 import './MailTemplate';
 import './MailWhitelist';
 import './MassAction';

@@ -91,10 +91,16 @@ msgstr ""
 msgid "Add item"
 msgstr ""
 
+msgid "Add language combination"
+msgstr ""
+
 msgid "Add product"
 msgstr ""
 
 msgid "Add requirement"
+msgstr ""
+
+msgid "Add some alternate language combinations"
 msgstr ""
 
 msgid "Add some mail whitelist patterns"
@@ -173,6 +179,15 @@ msgid "All prices have to be handled manually if checked, otherwise the unit pri
 msgstr ""
 
 msgid "All search results"
+msgstr ""
+
+msgid "Alternate language domains"
+msgstr ""
+
+msgid "Alternate language settings"
+msgstr ""
+
+msgid "Alternate language settings modified"
 msgstr ""
 
 msgid "Amount"
@@ -1264,6 +1279,9 @@ msgstr ""
 msgid "For deleting unit \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which unit you want to set instead?"
 msgstr ""
 
+msgid "For more information about hreflang tags, see the <a href=\"https://developers.google.com/search/docs/specialty/international/localized-versions\">Google documentation</a>."
+msgstr ""
+
 msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
 msgstr ""
 
@@ -1358,6 +1376,9 @@ msgid "Holiday / internal day <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Holidays and internal days overview"
+msgstr ""
+
+msgid "Hreflang tags help search engines understand the language and regional targeting of your content. By selecting multiple domains, you ensure that hreflang tags will be properly rendered in sitemap and on the page. Search engines then properly index and display the correct versions of your content to users across different regions."
 msgstr ""
 
 msgid "I buy on company behalf"
@@ -1799,6 +1820,9 @@ msgid "Ok"
 msgstr ""
 
 msgid "On each run (usually every 5 minutes)"
+msgstr ""
+
+msgid "One domain cannot be used in two groups"
 msgstr ""
 
 msgid "Only checked products"
@@ -2567,6 +2591,9 @@ msgid "Total price including VAT"
 msgstr ""
 
 msgid "Tracking ID"
+msgstr ""
+
+msgid "Two selected domains cannot have the same language"
 msgstr ""
 
 msgid "Type"

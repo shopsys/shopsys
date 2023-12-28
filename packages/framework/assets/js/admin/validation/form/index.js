@@ -6,3 +6,4 @@ import './validationAdvert';
 import './validationOrder';
 import './validationProduct';
 import './validationPromoCode';
+import './validationHreflangSetting';

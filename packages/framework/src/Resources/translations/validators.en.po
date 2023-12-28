@@ -10,6 +10,9 @@ msgstr ""
 msgid "Amount of money should be greater than or equal to zero."
 msgstr ""
 
+msgid "At least two domains must be selected"
+msgstr ""
+
 msgid "Availability name cannot be longer than {{ limit }} characters"
 msgstr ""
 
