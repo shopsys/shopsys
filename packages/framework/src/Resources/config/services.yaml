@@ -1032,10 +1032,6 @@ services:
         arguments:
             $logger: '@monolog.logger.queue'
 
-    Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory:
-        arguments:
-            $servicesResetter: '@services_resetter'
-
     Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler:
         arguments:
             $logger: '@monolog.logger.queue'
@@ -1050,3 +1046,7 @@ services:
         arguments: [ '@snc_redis.blog_article_export_queue' ]
 
     Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex: ~
+
+    Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter:
+        arguments:
+            $resettableServices: !tagged kernel.reset

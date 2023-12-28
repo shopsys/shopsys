@@ -8,8 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpKernel\DependencyInjection\ServicesResetter;
 
 class FeedExportFactory
 {
@@ -20,7 +20,7 @@ class FeedExportFactory
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager
-     * @param \Symfony\Component\HttpKernel\DependencyInjection\ServicesResetter $servicesResetter
+     * @param \Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter $servicesResetter
      */
     public function __construct(
         protected readonly FeedRendererFactory $feedRendererFactory,
