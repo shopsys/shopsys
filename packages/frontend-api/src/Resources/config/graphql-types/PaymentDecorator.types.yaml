@@ -34,3 +34,6 @@ PaymentDecorator:
             transports:
                 type: "[Transport!]!"
                 description: "List of assigned transports"
+            goPayPaymentMethod:
+                type: "GoPayPaymentMethod"
+                description: "Additional data for GoPay payment"

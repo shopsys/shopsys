@@ -7,9 +7,6 @@ Payment:
             type:
                 type: "String!"
                 description: "Type of payment"
-            goPayPaymentMethod:
-                type: "GoPayPaymentMethod"
-                description: "Additional data for GoPay payment"
             price:
                 type: "Price!"
                 description: "Payment price"
