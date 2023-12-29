@@ -991,10 +991,10 @@ msgstr ""
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
 msgstr ""
 
-msgid "GoPay - Payment By Card"
+msgid "GoPay - Payment By Card [%locale%]"
 msgstr ""
 
-msgid "GoPay - Quick Bank Account Transfer"
+msgid "GoPay - Quick Bank Account Transfer [%locale%]"
 msgstr ""
 
 msgid "Goods care"

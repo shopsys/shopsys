@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Payment;
 
 use App\DataFixtures\Demo\OrderDataFixture;
-use App\DataFixtures\Demo\PaymentDataFixture;
 use GoPay\Definition\Response\PaymentStatus;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception\MaxTransactionCountReachedUserError;
@@ -62,7 +62,7 @@ class PaymentMutationTest extends GraphQlTestCase
 
         $this->assertTrue($content['isPaid']);
         $this->assertSame(2, $content['transactionCount']);
-        $this->assertSame(PaymentDataFixture::PAYMENT_GOPAY, $content['paymentType']);
+        $this->assertSame(Payment::TYPE_GOPAY, $content['paymentType']);
 
 
         $this->em->clear();

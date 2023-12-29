@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Payment;
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -48,7 +49,7 @@ class OrderPaymentsTest extends GraphQlTestCase
         yield 'order on second domain with dron delivery transport' => [
             'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 24,
             'expectedPaymentReferenceNames' => [
-                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
+                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::SECOND_DOMAIN_ID,
                 PaymentDataFixture::PAYMENT_LATER,
             ],
         ];
@@ -64,8 +65,8 @@ class OrderPaymentsTest extends GraphQlTestCase
             'expectedPaymentReferenceNames' => [
                 PaymentDataFixture::PAYMENT_CARD,
                 PaymentDataFixture::PAYMENT_CASH,
-                PaymentDataFixture::PAYMENT_GOPAY,
-                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
+                PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID,
+                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID,
             ],
         ];
 
@@ -73,7 +74,7 @@ class OrderPaymentsTest extends GraphQlTestCase
             'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 3,
             'expectedPaymentReferenceNames' => [
                 PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
-                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
+                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID,
             ],
         ];
     }

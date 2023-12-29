@@ -65,6 +65,14 @@ class DomainConfig
     /**
      * @return string
      */
+    public function getLocaleUppercase(): string
+    {
+        return strtoupper($this->locale);
+    }
+
+    /**
+     * @return string
+     */
     public function getStylesDirectory()
     {
         return $this->stylesDirectory;

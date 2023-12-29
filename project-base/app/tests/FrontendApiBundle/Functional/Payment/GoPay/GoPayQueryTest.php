@@ -17,17 +17,17 @@ class GoPayQueryTest extends GraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'GoPaySwifts');
         $expected = [
             [
-                'swift' => '123456XZY',
+                'swift' => 'AIRACSPP',
                 'name' => 'Airbank',
                 'imageLargeUrl' => 'airbank large image Url',
                 'imageNormalUrl' => 'airbank image Url',
                 'isOnline' => true,
             ],
             [
-                'swift' => 'ABC123456',
-                'name' => 'Aqua bank',
-                'imageLargeUrl' => 'Aqua bank large image Url',
-                'imageNormalUrl' => 'Aqua bank image Url',
+                'swift' => 'FIOBCSPP',
+                'name' => 'FIO banka',
+                'imageLargeUrl' => 'FIO bank large image Url',
+                'imageNormalUrl' => 'FIO bank image Url',
                 'isOnline' => true,
             ],
         ];
