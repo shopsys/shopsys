@@ -93,7 +93,7 @@ class PaymentMutationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
-        $this->assertSame($errors[0]['extensions']['userCode'], OrderAlreadyPaidUserError::CODE);
+        $this->assertSame(OrderAlreadyPaidUserError::CODE, $errors[0]['extensions']['userCode']);
     }
 
     public function testOrderCannotBePaidForPaymentWithTwoTransactions(): void
@@ -109,6 +109,6 @@ class PaymentMutationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
-        $this->assertSame($errors[0]['extensions']['userCode'], MaxTransactionCountReachedUserError::CODE);
+        $this->assertSame(MaxTransactionCountReachedUserError::CODE, $errors[0]['extensions']['userCode']);
     }
 }
