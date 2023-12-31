@@ -653,6 +653,15 @@ export type ChangePaymentInCartInputApi = {
   paymentUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
+export type ChangePaymentInOrderInputApi = {
+  /** Order identifier */
+  orderUuid: Scalars['Uuid']['input'];
+  /** Selected bank swift code of goPay payment bank transfer */
+  paymentGoPayBankSwift: InputMaybe<Scalars['String']['input']>;
+  /** UUID of a payment that should be assigned to the order. */
+  paymentUuid: Scalars['Uuid']['input'];
+};
+
 export type ChangePersonalDataInputApi = {
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String']['input'];
@@ -1071,6 +1080,8 @@ export type MutationApi = {
   ChangePassword: CustomerUserApi;
   /** Add a payment to the cart, or remove a payment from the cart */
   ChangePaymentInCart: CartApi;
+  /** change payment in an order after the order creation (available for unpaid GoPay orders only) */
+  ChangePaymentInOrder: OrderApi;
   /** Changes customer user personal data */
   ChangePersonalData: CustomerUserApi;
   /** Add a transport to the cart, or remove a transport from the cart */
@@ -1143,6 +1154,11 @@ export type MutationChangePasswordArgsApi = {
 
 export type MutationChangePaymentInCartArgsApi = {
   input: ChangePaymentInCartInputApi;
+};
+
+
+export type MutationChangePaymentInOrderArgsApi = {
+  input: ChangePaymentInOrderInputApi;
 };
 
 

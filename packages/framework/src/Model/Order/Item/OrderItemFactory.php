@@ -128,4 +128,21 @@ class OrderItemFactory implements OrderItemFactoryInterface
 
         return $orderTransport;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+     */
+    public function createPaymentByOrderItemData(OrderItemData $orderItemData, Order $order): OrderItem
+    {
+        return $this->createPayment(
+            $order,
+            $orderItemData->name,
+            new Price($orderItemData->priceWithoutVat, $orderItemData->priceWithVat),
+            $orderItemData->vatPercent,
+            $orderItemData->quantity,
+            $orderItemData->payment,
+        );
+    }
 }

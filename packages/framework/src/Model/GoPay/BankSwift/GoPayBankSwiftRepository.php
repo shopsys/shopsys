@@ -6,7 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\GoPay\BankSwift;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class GoPayBankSwiftRepository
 {
@@ -38,5 +40,30 @@ class GoPayBankSwiftRepository
             ->setParameter('paymentMethod', $paymentMethod)
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param string $goPayBankSwift
+     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @return \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwift|null
+     */
+    public function findBySwiftAndPaymentMethodAndCurrency(
+        string $goPayBankSwift,
+        GoPayPaymentMethod $goPayPaymentMethod,
+        Currency $currency,
+    ): ?GoPayBankSwift {
+        $queryBuilder = $this->em->getRepository(GoPayPaymentMethod::class)
+            ->createQueryBuilder('pm')
+            ->select('gbs')
+            ->join(GoPayBankSwift::class, 'gbs', Join::WITH, 'pm = gbs.goPayPaymentMethod')
+            ->where('gbs.swift = :swift')
+            ->andWhere('pm = :paymentMethod')
+            ->andWhere('pm.currency = :currency')
+            ->setParameter('swift', $goPayBankSwift)
+            ->setParameter('paymentMethod', $goPayPaymentMethod)
+            ->setParameter('currency', $currency);
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 }

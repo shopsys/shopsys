@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\GoPay;
 
+use GoPay\Definition\Response\PaymentStatus;
+
 class GoPayOrderStatus
 {
     /**
@@ -27,14 +29,14 @@ class GoPayOrderStatus
     protected static function getGoPayStatusesToTranslate(): array
     {
         return [
-            'CREATED' => t('Payment created'),
-            'PAYMENT_METHOD_CHOSEN' => t('Payment method chosen'),
-            'PAID' => t('Payment paid'),
-            'AUTHORIZED' => t('Payment authorized'),
-            'CANCELED' => t('Payment canceled'),
-            'TIMEOUTED' => t('Payment has expired'),
-            'REFUNDED' => t('Payment refunded'),
-            'PARTIALLY_REFUNDED' => t('Payment partially refunded'),
+            PaymentStatus::CREATED => t('Payment created'),
+            PaymentStatus::PAYMENT_METHOD_CHOSEN => t('Payment method chosen'),
+            PaymentStatus::PAID => t('Payment paid'),
+            PaymentStatus::AUTHORIZED => t('Payment authorized'),
+            PaymentStatus::CANCELED => t('Payment canceled'),
+            PaymentStatus::TIMEOUTED => t('Payment has expired'),
+            PaymentStatus::REFUNDED => t('Payment refunded'),
+            PaymentStatus::PARTIALLY_REFUNDED => t('Payment partially refunded'),
         ];
     }
 }

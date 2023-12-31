@@ -517,6 +517,15 @@ input ChangePaymentInCartInput {
   paymentUuid: Uuid
 }
 
+input ChangePaymentInOrderInput {
+  "Order identifier"
+  orderUuid: Uuid!
+  "Selected bank swift code of goPay payment bank transfer"
+  paymentGoPayBankSwift: String = null
+  "UUID of a payment that should be assigned to the order."
+  paymentUuid: Uuid!
+}
+
 input ChangePersonalDataInput {
   "Billing address city name (will be on the tax invoice)"
   city: String!
@@ -893,6 +902,8 @@ type Mutation {
   ChangePassword(input: ChangePasswordInput!): CustomerUser!
   "Add a payment to the cart, or remove a payment from the cart"
   ChangePaymentInCart(input: ChangePaymentInCartInput!): Cart!
+  "change payment in an order after the order creation (available for unpaid GoPay orders only)"
+  ChangePaymentInOrder(input: ChangePaymentInOrderInput!): Order!
   "Changes customer user personal data"
   ChangePersonalData(input: ChangePersonalDataInput!): CustomerUser!
   "Add a transport to the cart, or remove a transport from the cart"

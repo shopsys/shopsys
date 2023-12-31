@@ -98,3 +98,11 @@ MutationDecorator:
                     orderPaymentStatusPageValidityHash:
                         type: "String"
                 resolve: "@=mutation('updatePaymentStatusMutation', args)"
+            ChangePaymentInOrder:
+                type: "Order!"
+                description: "change payment in an order after the order creation (available for unpaid GoPay orders only)"
+                args:
+                    input:
+                        type: ChangePaymentInOrderInput!
+                        validation: cascade
+                resolve: "@=mutation('changePaymentInOrderMutation', args)"

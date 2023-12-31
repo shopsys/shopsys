@@ -1,0 +1,17 @@
+ChangePaymentInOrderInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        validation:
+            -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder: ~
+        fields:
+            orderUuid:
+                type: "Uuid!"
+                description: "Order identifier"
+            paymentUuid:
+                type: "Uuid!"
+                description: "UUID of a payment that should be assigned to the order."
+            paymentGoPayBankSwift:
+                type: "String"
+                description: "Selected bank swift code of goPay payment bank transfer"
+                defaultValue: null

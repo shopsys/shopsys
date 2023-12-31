@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\GoPay\BankSwift;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class GoPayBankSwiftFacade
 {
@@ -14,12 +16,14 @@ class GoPayBankSwiftFacade
      * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository $goPayPaymentMethodRepository
      * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftFactory $goPayBankSwiftFactory
+     * @param \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwiftRepository $goPayBankSwiftRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory,
         protected readonly GoPayPaymentMethodRepository $goPayPaymentMethodRepository,
         protected readonly GoPayBankSwiftFactory $goPayBankSwiftFactory,
+        protected readonly GoPayBankSwiftRepository $goPayBankSwiftRepository,
     ) {
     }
 
@@ -71,5 +75,19 @@ class GoPayBankSwiftFacade
     public function getAllByCurrencyId(int $currencyId): array
     {
         return $this->goPayPaymentMethodRepository->getBankSwiftsByCurrencyId($currencyId);
+    }
+
+    /**
+     * @param string $goPayBankSwift
+     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @return \Shopsys\FrameworkBundle\Model\GoPay\BankSwift\GoPayBankSwift|null
+     */
+    public function findBySwiftAndPaymentMethodAndCurrency(
+        string $goPayBankSwift,
+        GoPayPaymentMethod $goPayPaymentMethod,
+        Currency $currency,
+    ): ?GoPayBankSwift {
+        return $this->goPayBankSwiftRepository->findBySwiftAndPaymentMethodAndCurrency($goPayBankSwift, $goPayPaymentMethod, $currency);
     }
 }

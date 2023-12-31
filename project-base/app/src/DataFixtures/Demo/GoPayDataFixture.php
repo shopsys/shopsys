@@ -21,17 +21,20 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
     public const PAYMENT_CARD_METHOD = 'gopay_payment_card_method';
     public const BANK_ACCOUNT_METHOD = 'gopay_bank_account_method';
 
+    public const AIRBANK_SWIFT_PATTERN = 'AIRA%sPP';
+    private const FIO_SWIFT_PATTERN = 'FIOB%sPP';
+
     private const SWIFT_DEMO_DATA = [
         [
             'name' => 'Airbank',
-            'swift_pattern' => 'AIRA%sPP',
+            'swift_pattern' => self::AIRBANK_SWIFT_PATTERN,
             'image_normal_url' => 'airbank image Url',
             'image_large_url' => 'airbank large image Url',
             'is_online' => true,
         ],
         [
             'name' => 'FIO banka',
-            'swift_pattern' => 'FIOB%sPP',
+            'swift_pattern' => self::FIO_SWIFT_PATTERN,
             'image_normal_url' => 'FIO bank image Url',
             'image_large_url' => 'FIO bank large image Url',
             'is_online' => true,

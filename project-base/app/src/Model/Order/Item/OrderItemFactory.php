@@ -10,35 +10,16 @@ use BadMethodCallException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory as BaseOrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
  * @method \App\Model\Order\Item\OrderItem createProduct(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\Price $price, string $vatPercent, int $quantity, string|null $unitName, string|null $catnum, \App\Model\Product\Product|null $product = null)
+ * @method \App\Model\Order\Item\OrderItem createPayment(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\Price $price, string $vatPercent, int $quantity, \App\Model\Payment\Payment $payment)
+ * @method \App\Model\Order\Item\OrderItem createPaymentByOrderItemData(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Order $order)
  */
 class OrderItemFactory extends BaseOrderItemFactory
 {
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param \App\Model\Payment\Payment $payment
-     * @return \App\Model\Order\Item\OrderItem
-     */
-    public function createPayment(
-        BaseOrder $order,
-        string $name,
-        Price $price,
-        string $vatPercent,
-        int $quantity,
-        Payment $payment,
-    ): BaseOrderItem {
-        throw new BadMethodCallException('Use ' . self::class . '::createPaymentByOrderItemData() instead of this method');
-    }
-
     /**
      * @param \App\Model\Order\Order $order
      * @param string $name
@@ -83,26 +64,6 @@ class OrderItemFactory extends BaseOrderItemFactory
         );
         $orderItem->setPromoCodeIdentifier($orderItemData->promoCodeIdentifier);
         $orderItem->setRelatedOrderItem($orderItemData->relatedOrderItem);
-
-        return $orderItem;
-    }
-
-    /**
-     * @param \App\Model\Order\Item\OrderItemData $orderItemData
-     * @param \App\Model\Order\Order $order
-     * @return \App\Model\Order\Item\OrderItem
-     */
-    public function createPaymentByOrderItemData(OrderItemData $orderItemData, Order $order): OrderItem
-    {
-        /** @var \App\Model\Order\Item\OrderItem $orderItem */
-        $orderItem = parent::createPayment(
-            $order,
-            $orderItemData->name,
-            new Price($orderItemData->priceWithoutVat, $orderItemData->priceWithVat),
-            $orderItemData->vatPercent,
-            $orderItemData->quantity,
-            $orderItemData->payment,
-        );
 
         return $orderItem;
     }

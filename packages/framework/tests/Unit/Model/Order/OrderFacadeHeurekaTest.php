@@ -18,11 +18,13 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository;
@@ -110,10 +112,12 @@ class OrderFacadeHeurekaTest extends TestCase
             $this->createMock(NumberFormatterExtension::class),
             $this->createMock(PaymentPriceCalculation::class),
             $this->createMock(TransportPriceCalculation::class),
-            $this->createMock(OrderItemFactoryInterface::class),
+            $this->createMock(OrderItemFactory::class),
             $this->createMock(PaymentTransactionFacade::class),
             $this->createMock(PaymentTransactionDataFactory::class),
             $this->createMock(PaymentServiceFacade::class),
+            $this->createMock(OrderItemDataFactory::class),
+            $this->createMock(OrderDataFactory::class),
         );
     }
 

@@ -102,6 +102,7 @@
     * [CartInput](#cartinput)
     * [ChangePasswordInput](#changepasswordinput)
     * [ChangePaymentInCartInput](#changepaymentincartinput)
+    * [ChangePaymentInOrderInput](#changepaymentinorderinput)
     * [ChangePersonalDataInput](#changepersonaldatainput)
     * [ChangeTransportInCartInput](#changetransportincartinput)
     * [ContactInput](#contactinput)
@@ -1224,6 +1225,20 @@ Add a payment to the cart, or remove a payment from the cart
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#changepaymentincartinput">ChangePaymentInCartInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ChangePaymentInOrder</strong></td>
+<td valign="top"><a href="#order">Order</a>!</td>
+<td>
+
+change payment in an order after the order creation (available for unpaid GoPay orders only)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#changepaymentinorderinput">ChangePaymentInOrderInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -8412,6 +8427,47 @@ Selected bank swift code of goPay payment bank transfer
 <td>
 
 UUID of a payment that should be added to the cart. If this is set to null, the payment is removed from the cart
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ChangePaymentInOrderInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>orderUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Order identifier
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Selected bank swift code of goPay payment bank transfer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>paymentUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of a payment that should be assigned to the order.
 
 </td>
 </tr>

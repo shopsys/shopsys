@@ -29,6 +29,7 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as BaseOrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade as BaseOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository;
@@ -80,6 +81,9 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  * @method setOrderPaymentStatusPageValidFromNow(\App\Model\Order\Order $order)
  * @method \App\Model\Order\Order[] getAllUnpaidGoPayOrders(\DateTime $fromDate)
+ * @property \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+ * @property \App\Model\Order\OrderDataFactory $orderDataFactory
+ * @method changeOrderPayment(\App\Model\Order\Order $order, \App\Model\Payment\Payment $payment)
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -114,6 +118,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
+     * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Security\LoginAsUserFacade $loginAsUserFacade
      */
     public function __construct(
@@ -143,10 +148,11 @@ class OrderFacade extends BaseOrderFacade
         PaymentPriceCalculation $paymentPriceCalculation,
         TransportPriceCalculation $transportPriceCalculation,
         OrderItemFactoryInterface $orderItemFactory,
-        private readonly OrderItemDataFactory $orderItemDataFactory,
+        OrderItemDataFactory $orderItemDataFactory,
         PaymentTransactionFacade $paymentTransactionFacade,
         PaymentServiceFacade $paymentServiceFacade,
         PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        BaseOrderDataFactory $orderDataFactory,
         private readonly LoginAsUserFacade $loginAsUserFacade,
     ) {
         parent::__construct(
@@ -179,6 +185,8 @@ class OrderFacade extends BaseOrderFacade
             $paymentTransactionFacade,
             $paymentTransactionDataFactory,
             $paymentServiceFacade,
+            $orderItemDataFactory,
+            $orderDataFactory,
         );
     }
 

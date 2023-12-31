@@ -247,6 +247,9 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface:
         alias: App\Model\Order\OrderDataFactory
 
+    Shopsys\FrameworkBundle\Model\Order\OrderDataFactory:
+        alias: App\Model\Order\OrderDataFactory
+
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface:
         alias: App\Model\Order\Item\OrderItemDataFactory
 

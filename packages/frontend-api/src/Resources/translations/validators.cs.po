@@ -37,17 +37,14 @@ msgstr "Staré heslo musí mít minimálně {{ limit }} znaků"
 msgid "Password must be at least {{ limit }} characters long"
 msgstr "Heslo musí mít minimálně {{ limit }} znaků"
 
-msgid "Payment {{ paymentUuid }} cannot be changed"
-msgstr ""
+msgid "Payment cannot be changed"
+msgstr "Platbu nelze změnit"
 
-msgid "Payment {{ paymentUuid }} cannot be used with swift {{ swift }}"
-msgstr ""
+msgid "Payment {{ paymentUuid }} cannot be used with SWIFT {{ swift }}"
+msgstr "Platba {{ paymentUuid }} nemůže být použita se SWIFT kódem {{ swift }}"
 
-msgid "Payment {{ paymentUuid }} cannot be used with transport {{ transportUuid }}"
-msgstr ""
-
-msgid "Payment {{ paymentUuid }} is not available"
-msgstr ""
+msgid "Payment {{ paymentUuid }} is not available for order {{ orderUuid }}"
+msgstr "Platba {{ paymentUuid }} není dostupná pro objednávku {{ orderUuid }}"
 
 msgid "Payment {{ uuid }} doesn't exist"
 msgstr "Platba {{ uuid }} neexistuje"
