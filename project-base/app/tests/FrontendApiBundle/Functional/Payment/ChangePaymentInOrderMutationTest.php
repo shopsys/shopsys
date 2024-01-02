@@ -9,8 +9,10 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Payment\Exception\PaymentNotFoundUserError;
@@ -27,6 +29,36 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
      * @inject
      */
     private PaymentTransactionFacade $paymentTransactionFacade;
+
+    /**
+     * @inject
+     */
+    private PricingSetting $pricingSetting;
+
+    public function testChangePaymentInOrderRespectsFreeTransportSetting(): void
+    {
+        // make sure the payment and transport is free
+        $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($this->domain->getId(), Money::create(1));
+
+        /** @var \App\Model\Order\Order $order */
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
+        /** @var \App\Model\Payment\Payment $paymentCreditCard */
+        $paymentCreditCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $this->assertGreaterThan(Money::zero(), $paymentCreditCard->getPrice($this->domain->getId())->getPrice());
+
+        $expectedTotalPrice = $order->getTotalPriceWithoutVat()->getAmount();
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
+            'input' => [
+                'orderUuid' => $order->getUuid(),
+                'paymentUuid' => $paymentCreditCard->getUuid(),
+            ],
+        ]);
+
+        $responseData = $this->getResponseDataForGraphQlType($response, 'ChangePaymentInOrder');
+
+        $this->assertSame($expectedTotalPrice, $responseData['totalPrice']['priceWithoutVat']);
+    }
 
     public function testChangePaymentInOrderMutation(): void
     {

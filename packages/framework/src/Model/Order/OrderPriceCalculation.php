@@ -32,6 +32,7 @@ class OrderPriceCalculation
         $priceWithVat = Money::zero();
         $priceWithoutVat = Money::zero();
         $productPriceWithVat = Money::zero();
+        $productPriceWithoutVat = Money::zero();
 
         foreach ($order->getItems() as $orderItem) {
             $itemTotalPrice = $this->orderItemPriceCalculation->calculateTotalPrice($orderItem);
@@ -39,12 +40,15 @@ class OrderPriceCalculation
             $priceWithVat = $priceWithVat->add($itemTotalPrice->getPriceWithVat());
             $priceWithoutVat = $priceWithoutVat->add($itemTotalPrice->getPriceWithoutVat());
 
-            if ($orderItem->isTypeProduct()) {
-                $productPriceWithVat = $productPriceWithVat->add($itemTotalPrice->getPriceWithVat());
+            if (!$orderItem->isTypeProduct()) {
+                continue;
             }
+
+            $productPriceWithVat = $productPriceWithVat->add($itemTotalPrice->getPriceWithVat());
+            $productPriceWithoutVat = $productPriceWithoutVat->add($itemTotalPrice->getPriceWithoutVat());
         }
 
-        return new OrderTotalPrice($priceWithVat, $priceWithoutVat, $productPriceWithVat);
+        return new OrderTotalPrice($priceWithVat, $priceWithoutVat, $productPriceWithVat, $productPriceWithoutVat);
     }
 
     /**

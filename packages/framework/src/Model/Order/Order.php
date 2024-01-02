@@ -117,6 +117,13 @@ class Order
      * @ORM\Column(type="money", precision=20, scale=6)
      */
     #[ExcludeLog]
+    protected $totalProductPriceWithoutVat;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money
+     * @ORM\Column(type="money", precision=20, scale=6)
+     */
+    #[ExcludeLog]
     protected $totalProductPriceWithVat;
 
     /**
@@ -345,7 +352,7 @@ class Order
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
         $this->origin = $orderData->origin;
         $this->uuid = $orderData->uuid ?: Uuid::uuid4()->toString();
-        $this->setTotalPrice(new OrderTotalPrice(Money::zero(), Money::zero(), Money::zero()));
+        $this->setTotalPrice(new OrderTotalPrice(Money::zero(), Money::zero(), Money::zero(), Money::zero()));
         $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();
         $this->paymentTransactions = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;
@@ -668,14 +675,6 @@ class Order
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function getTotalProductPriceWithVat()
-    {
-        return $this->totalProductPriceWithVat;
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
     public function getCurrency()
@@ -691,6 +690,7 @@ class Order
         $this->totalPriceWithVat = $orderTotalPrice->getPriceWithVat();
         $this->totalPriceWithoutVat = $orderTotalPrice->getPriceWithoutVat();
         $this->totalProductPriceWithVat = $orderTotalPrice->getProductPriceWithVat();
+        $this->totalProductPriceWithoutVat = $orderTotalPrice->getProductPriceWithoutVat();
     }
 
     /**
@@ -1097,5 +1097,13 @@ class Order
     public function setOrderPaymentStatusPageValidityHashToNull(): void
     {
         $this->orderPaymentStatusPageValidityHash = null;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalProductsPrice(): Price
+    {
+        return new Price($this->totalProductPriceWithoutVat, $this->totalProductPriceWithVat);
     }
 }

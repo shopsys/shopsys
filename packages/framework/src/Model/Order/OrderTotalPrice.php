@@ -12,11 +12,13 @@ class OrderTotalPrice
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $productPriceWithVat
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $productPriceWithoutVat
      */
     public function __construct(
         protected readonly Money $priceWithVat,
         protected readonly Money $priceWithoutVat,
         protected readonly Money $productPriceWithVat,
+        protected readonly Money $productPriceWithoutVat,
     ) {
     }
 
@@ -42,5 +44,13 @@ class OrderTotalPrice
     public function getProductPriceWithVat(): Money
     {
         return $this->productPriceWithVat;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getProductPriceWithoutVat(): Money
+    {
+        return $this->productPriceWithoutVat;
     }
 }

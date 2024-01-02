@@ -5,5 +5,8 @@ mutation ChangePaymentInOrderMutation($input: ChangePaymentInOrderInput!) {
             uuid
             name
         }
+        totalPrice {
+            priceWithoutVat
+        }
     }
 }

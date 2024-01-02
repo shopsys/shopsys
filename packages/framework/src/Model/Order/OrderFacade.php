@@ -648,7 +648,12 @@ class OrderFacade
      */
     public function changeOrderPayment(Order $order, Payment $payment): void
     {
-        $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice($payment, $order->getCurrency(), $order->getDomainId());
+        $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
+            $payment,
+            $order->getCurrency(),
+            $order->getTotalProductsPrice(),
+            $order->getDomainId(),
+        );
 
         $orderItemData = $this->orderItemDataFactory->create();
         $orderItemData->name = $payment->getName();
