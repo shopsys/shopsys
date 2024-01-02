@@ -84,6 +84,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
  * @property \App\Model\Order\OrderDataFactory $orderDataFactory
  * @method changeOrderPayment(\App\Model\Order\Order $order, \App\Model\Payment\Payment $payment)
+ * @method fillOrderPayment(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
  */
 class OrderFacade extends BaseOrderFacade
 {

@@ -256,4 +256,15 @@ class CartFacade
         $this->cartRepository->deleteOldCartsForUnregisteredCustomerUsers(static::DAYS_LIMIT);
         $this->cartRepository->deleteOldCartsForRegisteredCustomerUsers(static::DAYS_LIMIT);
     }
+
+    /**
+     * @param string $cartIdentifier
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
+     */
+    public function findCartByCartIdentifier(string $cartIdentifier): ?Cart
+    {
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($cartIdentifier);
+
+        return $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
+    }
 }
