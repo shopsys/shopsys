@@ -735,8 +735,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:
         alias: App\FrontendApi\Model\Token\TokenAuthenticator
 
-    App\FrontendApi\Component\GqlContext\GqlContextInitializer: ~
-
     Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory:
         alias: App\Model\Transport\Grid\TransportGridFactory
 

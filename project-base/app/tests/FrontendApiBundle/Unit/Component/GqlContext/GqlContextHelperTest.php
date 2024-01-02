@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Unit\Component\GqlContext;
 
-use App\FrontendApi\Component\GqlContext\GqlContextHelper;
 use ArrayObject;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 
 class GqlContextHelperTest extends TestCase
 {

@@ -62,3 +62,5 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProvider:
         tags:
             - { name: 'shopsys.frontend_api.products_search_results_provider', priority: 1 }
+
+    Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextInitializer: ~

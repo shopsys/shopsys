@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Component\GqlContext;
+namespace Shopsys\FrontendApiBundle\Component\GqlContext;
 
 use ArrayObject;
 

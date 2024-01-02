@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Unit\Component\GqlContext;
 
-use App\FrontendApi\Component\GqlContext\GqlContextInitializer;
 use ArrayObject;
 use GraphQL\Type\SchemaConfig;
 use Overblog\GraphQLBundle\Definition\Type\ExtensibleSchema;
 use Overblog\GraphQLBundle\Event\ExecutorArgumentsEvent;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextInitializer;
 
 class GqlContextInitializerTest extends TestCase
 {

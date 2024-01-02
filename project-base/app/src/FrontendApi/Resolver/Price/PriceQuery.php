@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Price;
 
-use App\FrontendApi\Component\GqlContext\GqlContextHelper;
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Resolver\Price\Exception\ProductPriceMissingUserError;
 use App\Model\Order\Preview\OrderPreviewFactory;
@@ -21,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
+use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 use Shopsys\FrontendApiBundle\Model\Price\PriceFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceQuery as BasePriceQuery;
 
