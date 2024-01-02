@@ -22,6 +22,7 @@ use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Price\PriceFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Price\Exception\ProductPriceMissingUserError;
 
 class PriceQuery extends AbstractQuery
 {
@@ -58,10 +59,16 @@ class PriceQuery extends AbstractQuery
     public function priceByProductQuery($data): ProductPrice
     {
         if ($data instanceof Product) {
-            return $this->productCachedAttributesFacade->getProductSellingPrice($data);
+            $productPrice = $this->productCachedAttributesFacade->getProductSellingPrice($data);
+        } else {
+            $productPrice = $this->priceFacade->createProductPriceFromArrayForCurrentCustomer($data['prices']);
         }
 
-        return $this->priceFacade->createProductPriceFromArrayForCurrentCustomer($data['prices']);
+        if ($productPrice === null) {
+            throw new ProductPriceMissingUserError('The product price is not set.');
+        }
+
+        return $productPrice;
     }
 
     /**

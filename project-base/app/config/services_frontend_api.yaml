@@ -88,10 +88,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory:
         alias: App\FrontendApi\Model\Product\Connection\ProductConnectionFactory
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceQuery:
-        alias: App\FrontendApi\Resolver\Price\PriceQuery
-        public: true
-
     Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportsQuery:
         alias: App\FrontendApi\Resolver\Transport\TransportsQuery
         public: true
