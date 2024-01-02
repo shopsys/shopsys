@@ -123,9 +123,53 @@ class PriceQuery extends AbstractQuery
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @param string|null $cartUuid
+     * @param \ArrayObject|null $context
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function priceByTransportQuery(Transport $transport): Price
+    public function priceByTransportQuery(
+        Transport $transport,
+        ?string $cartUuid = null,
+        ?ArrayObject $context = null,
+    ): Price {
+        $cartUuid = $cartUuid ?? GqlContextHelper::getCartUuid($context);
+
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+        if ($customerUser === null && $cartUuid === null) {
+            return $this->calculateIndependentTransportPrice($transport);
+        }
+
+        $cart = $this->cartApiFacade->findCart($customerUser, $cartUuid);
+
+        if ($cart === null) {
+            return $this->calculateIndependentTransportPrice($transport);
+        }
+
+        $domainId = $this->domain->getId();
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        $orderPreview = $this->orderPreviewFactory->create(
+            $currency,
+            $domainId,
+            $cart->getQuantifiedProducts(),
+            $transport,
+            null,
+            $customerUser,
+        );
+
+        return $this->transportPriceCalculation->calculatePrice(
+            $transport,
+            $currency,
+            $orderPreview->getProductsPrice(),
+            $domainId,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    protected function calculateIndependentTransportPrice(Transport $transport): Price
     {
         return $this->transportPriceCalculation->calculateIndependentPrice(
             $transport,
