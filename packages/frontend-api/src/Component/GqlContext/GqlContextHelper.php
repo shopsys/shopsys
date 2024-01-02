@@ -29,4 +29,13 @@ class GqlContextHelper
     {
         return self::getArgs($context)['cartUuid'] ?? null;
     }
+
+    /**
+     * @param \ArrayObject|null $context
+     * @return string|null
+     */
+    public static function getOrderUuid(?ArrayObject $context): ?string
+    {
+        return self::getArgs($context)['orderUuid'] ?? null;
+    }
 }

@@ -8,11 +8,38 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class OrderPaymentsTest extends GraphQlTestCase
 {
+    /**
+     * @inject
+     */
+    private PricingSetting $pricingSetting;
+
+    public function testOrderPaymentsPricesWhenFreePriceLimitIsMet(): void
+    {
+        // make sure the payment and transport is free
+        $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($this->domain->getId(), Money::create(1));
+
+        /** @var \App\Model\Order\Order $order */
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/OrderPaymentsPricesQuery.graphql',
+            [
+                'orderUuid' => $order->getUuid(),
+            ],
+        );
+
+        foreach ($this->getResponseDataForGraphQlType($response, 'orderPayments') as $paymentData) {
+            $this->assertSame(MoneyFormatterHelper::formatWithMaxFractionDigits(Money::zero()), $paymentData['price']['priceWithoutVat']);
+        }
+    }
+
     /**
      * @group multidomain
      * @dataProvider getOrderPaymentsMultidomainDataProvider

@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
+use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Price\PriceFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Price\Exception\ProductPriceMissingUserError;
@@ -37,6 +38,7 @@ class PriceQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
      */
     public function __construct(
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
@@ -49,6 +51,7 @@ class PriceQuery extends AbstractQuery
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly OrderPreviewFactory $orderPreviewFactory,
         protected readonly CartApiFacade $cartApiFacade,
+        protected readonly OrderApiFacade $orderApiFacade,
     ) {
     }
 
@@ -83,6 +86,18 @@ class PriceQuery extends AbstractQuery
         ?ArrayObject $context = null,
     ): Price {
         $cartUuid = $cartUuid ?? GqlContextHelper::getCartUuid($context);
+        $orderUuid = GqlContextHelper::getOrderUuid($context);
+
+        if ($cartUuid === null && $orderUuid !== null) {
+            $order = $this->orderApiFacade->getByUuid($orderUuid);
+
+            return $this->paymentPriceCalculation->calculatePrice(
+                $payment,
+                $order->getCurrency(),
+                $order->getTotalProductsPrice(),
+                $order->getDomainId(),
+            );
+        }
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
