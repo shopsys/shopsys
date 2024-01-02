@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 /**
  * @method \App\Model\Order\Item\OrderItem createProduct(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\Price $price, string $vatPercent, int $quantity, string|null $unitName, string|null $catnum, \App\Model\Product\Product|null $product = null)
  * @method \App\Model\Order\Item\OrderItem createPayment(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\Price $price, string $vatPercent, int $quantity, \App\Model\Payment\Payment $payment)
- * @method \App\Model\Order\Item\OrderItem createPaymentByOrderItemData(\App\Model\Order\Item\OrderItemData $orderItemData, \App\Model\Order\Order $order)
  */
 class OrderItemFactory extends BaseOrderItemFactory
 {

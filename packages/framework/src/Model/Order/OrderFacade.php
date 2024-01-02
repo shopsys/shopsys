@@ -447,6 +447,7 @@ class OrderFacade
             $payment,
         );
         $order->addItem($orderPayment);
+        $this->em->persist($orderPayment);
     }
 
     /**
@@ -655,16 +656,14 @@ class OrderFacade
             $order->getDomainId(),
         );
 
-        $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = $payment->getName();
-        $orderItemData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
-        $orderItemData->priceWithVat = $paymentPrice->getPriceWithVat();
-        $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
-        $orderItemData->quantity = 1;
-        $orderItemData->payment = $payment;
-        $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData($orderItemData, $order);
+        $orderPaymentData = $this->orderItemDataFactory->create();
+        $orderPaymentData->name = $payment->getName();
+        $orderPaymentData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
+        $orderPaymentData->priceWithVat = $paymentPrice->getPriceWithVat();
+        $orderPaymentData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
+        $orderPaymentData->quantity = 1;
+        $orderPaymentData->payment = $payment;
 
-        $orderPaymentData = $this->orderItemDataFactory->createFromOrderItem($orderPayment);
         $orderData = $this->orderDataFactory->createFromOrder($order);
         $orderData->orderPayment = $orderPaymentData;
         $this->edit($order->getId(), $orderData);

@@ -359,37 +359,6 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      */
-    protected function fillOrderPayment(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
-    {
-        $payment = $order->getPayment();
-        $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
-            $payment,
-            $order->getCurrency(),
-            $orderPreview->getProductsPrice(),
-            $order->getDomainId(),
-        );
-
-        $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = $payment->getName($locale);
-        $orderItemData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
-        $orderItemData->priceWithVat = $paymentPrice->getPriceWithVat();
-        $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
-        $orderItemData->quantity = 1;
-        $orderItemData->payment = $payment;
-        $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData(
-            $orderItemData,
-            $order,
-        );
-
-        $order->addItem($orderPayment);
-        $this->em->persist($orderPayment);
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
-     * @param string $locale
-     */
     protected function fillOrderTransport(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
     {
         $transport = $order->getTransport();
