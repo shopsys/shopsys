@@ -21,7 +21,7 @@ class PaymentsTest extends GraphQlTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $this->domain->getId());
 
-        $firstDomainLocaleUppercase = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocaleUppercase();
+        $firstDomainLocale = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
         $arrayExpected = [
             [
                 'name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
@@ -84,7 +84,7 @@ class PaymentsTest extends GraphQlTestCase
                 'goPayPaymentMethod' => null,
             ],
             [
-                'name' => t('GoPay - Payment By Card [%locale%]', ['%locale%' => $firstDomainLocaleUppercase], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'name' => t('GoPay - Payment By Card [%locale%]', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => null,
                 'instruction' => null,
                 'position' => 3,
@@ -97,14 +97,14 @@ class PaymentsTest extends GraphQlTestCase
                 ],
                 'goPayPaymentMethod' => [
                     'identifier' => 'PAYMENT_CARD',
-                    'name' => sprintf('[%s] Credit card', $firstDomainLocaleUppercase),
+                    'name' => sprintf('[%s] Credit card', $firstDomainLocale),
                     'imageNormalUrl' => 'https://gate.gopay.cz/images/checkout/payment_card.png',
                     'imageLargeUrl' => 'https://gate.gopay.cz/images/checkout/payment_card@2x.png',
                     'paymentGroup' => 'card-payment',
                 ],
             ],
             [
-                'name' => t('GoPay - Quick Bank Account Transfer [%locale%]', ['%locale%' => $firstDomainLocaleUppercase], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'name' => t('GoPay - Quick Bank Account Transfer [%locale%]', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => t('Quick and Safe payment via bank account transfer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'instruction' => null,
                 'position' => 4,
@@ -119,7 +119,7 @@ class PaymentsTest extends GraphQlTestCase
                 ],
                 'goPayPaymentMethod' => [
                     'identifier' => 'BANK_ACCOUNT',
-                    'name' => sprintf('[%s] Quick bank account transfer', $firstDomainLocaleUppercase),
+                    'name' => sprintf('[%s] Quick bank account transfer', $firstDomainLocale),
                     'imageNormalUrl' => 'https://gate.gopay.cz/images/checkout/bank_account.png',
                     'imageLargeUrl' => 'https://gate.gopay.cz/images/checkout/bank_account@2x.png',
                     'paymentGroup' => 'bank-transfer',

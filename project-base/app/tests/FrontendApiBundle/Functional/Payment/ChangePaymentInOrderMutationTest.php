@@ -62,8 +62,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
 
     public function testChangePaymentInOrderMutation(): void
     {
-        $firstDomainLocaleUppercase = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocaleUppercase();
-        $swiftForFirstDomain = sprintf(GoPayDataFixture::AIRBANK_SWIFT_PATTERN, $firstDomainLocaleUppercase);
+        $swiftForFirstDomain = sprintf(GoPayDataFixture::AIRBANK_SWIFT_PATTERN, $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale());
 
         /** @var \App\Model\Order\Order $order */
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
@@ -208,8 +207,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
 
     public function testChangePaymentInOrderValidationSwiftForAnotherDomain(): void
     {
-        $secondDomainLocaleUppercase = $this->domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID)->getLocaleUppercase();
-        $swiftForSecondDomain = sprintf(GoPayDataFixture::AIRBANK_SWIFT_PATTERN, $secondDomainLocaleUppercase);
+        $swiftForSecondDomain = sprintf(GoPayDataFixture::AIRBANK_SWIFT_PATTERN, $this->domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID)->getLocale());
 
         $this->testInvalidSwift($swiftForSecondDomain);
     }

@@ -193,7 +193,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $paymentData->name[$locale] = t('GoPay - Quick Bank Account Transfer [%locale%]', ['%locale%' => $domainConfig->getLocaleUppercase()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->name[$locale] = t('GoPay - Quick Bank Account Transfer [%locale%]', ['%locale%' => $domainConfig->getLocale()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $paymentData->description[$locale] = t('Quick and Safe payment via bank account transfer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
@@ -222,7 +222,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $paymentData->name[$locale] = t('GoPay - Payment By Card [%locale%]', ['%locale%' => $domainConfig->getLocaleUppercase()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->name[$locale] = t('GoPay - Payment By Card [%locale%]', ['%locale%' => $domainConfig->getLocale()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $paymentData->description[$locale] = '';
             $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }

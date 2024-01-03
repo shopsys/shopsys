@@ -133,10 +133,10 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             foreach (self::DEMO_DATA as $data) {
-                $localeUppercase = $domainConfig->getLocaleUppercase();
+                $locale = $domainConfig->getLocale();
                 $domainId = $domainConfig->getId();
 
-                $goPayPaymentMethodData = $this->getGoPayPaymentMethodData($data, $localeUppercase, $domainId);
+                $goPayPaymentMethodData = $this->getGoPayPaymentMethodData($data, $locale, $domainId);
                 $goPayPaymentMethod = $this->createGoPayPaymentMethod($data['reference_name'], $goPayPaymentMethodData, $domainId);
 
                 if ($data['identifier'] !== 'BANK_ACCOUNT') {
@@ -144,7 +144,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
                 }
 
                 foreach (self::SWIFT_DEMO_DATA as $swiftData) {
-                    $this->createGoPayBankSwift($goPayPaymentMethod, $swiftData, $localeUppercase);
+                    $this->createGoPayBankSwift($goPayPaymentMethod, $swiftData, $locale);
                 }
             }
         }
@@ -152,18 +152,18 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     /**
      * @param array $data
-     * @param string $localeUppercase
+     * @param string $locale
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData
      */
     private function getGoPayPaymentMethodData(
         array $data,
-        string $localeUppercase,
+        string $locale,
         int $domainId,
     ): GoPayPaymentMethodData {
         $goPayPaymentMethodData = $this->goPayPaymentMethodDataFactory->createInstance();
         $goPayPaymentMethodData->identifier = $data['identifier'];
-        $goPayPaymentMethodData->name = sprintf($data['name_pattern'], $localeUppercase);
+        $goPayPaymentMethodData->name = sprintf($data['name_pattern'], $locale);
         $goPayPaymentMethodData->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $goPayPaymentMethodData->imageNormalUrl = 'https://gate.gopay.cz/images/checkout/' . $data['image_normal_url'] . '.png';
         $goPayPaymentMethodData->imageLargeUrl = 'https://gate.gopay.cz/images/checkout/' . $data['image_large_url'] . '.png';
@@ -175,17 +175,17 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
      * @param array $swiftData
-     * @param string $localeUppercase
+     * @param string $locale
      */
     private function createGoPayBankSwift(
         GoPayPaymentMethod $goPayPaymentMethod,
         array $swiftData,
-        string $localeUppercase,
+        string $locale,
     ): void {
         $goPayBankSwiftData = $this->goPayBankSwiftDataFactory->createInstance();
         $goPayBankSwiftData->goPayPaymentMethod = $goPayPaymentMethod;
         $goPayBankSwiftData->name = $swiftData['name'];
-        $goPayBankSwiftData->swift = sprintf($swiftData['swift_pattern'], $localeUppercase);
+        $goPayBankSwiftData->swift = sprintf($swiftData['swift_pattern'], $locale);
         $goPayBankSwiftData->isOnline = $swiftData['is_online'];
         $goPayBankSwiftData->imageNormalUrl = $swiftData['image_normal_url'];
         $goPayBankSwiftData->imageLargeUrl = $swiftData['image_large_url'];
