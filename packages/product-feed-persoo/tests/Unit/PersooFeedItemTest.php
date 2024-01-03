@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
@@ -120,12 +121,15 @@ class PersooFeedItemTest extends TestCase
         $productCachedAttributesFacade = $this->createMock(ProductCachedAttributesFacade::class);
         $productCachedAttributesFacade->method('getProductParameterValues')->willReturn([$productParameterValue]);
 
+        $productAvailabilityFacade = $this->createMock(ProductAvailabilityFacade::class);
+
         $this->persooFeedItemFactory = new PersooFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
             $this->currencyFacadeMock,
             $this->productUrlsBatchLoaderMock,
             $categoryRepositoryMock,
             $productCachedAttributesFacade,
+            $productAvailabilityFacade,
         );
     }
 
