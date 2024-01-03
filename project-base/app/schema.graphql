@@ -483,7 +483,7 @@ type CategoryEdge {
 }
 
 type CategoryHierarchyItem {
-  "ID of category"
+  "ID of the category"
   id: Int!
   "Localized category name (domain dependent)"
   name: String!

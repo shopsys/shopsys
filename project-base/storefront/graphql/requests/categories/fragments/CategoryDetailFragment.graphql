@@ -29,4 +29,8 @@ fragment CategoryDetailFragment on Category {
     bestsellers {
         ...ListedProductFragment
     }
+    categoryHierarchy {
+        id
+        name
+    }
 }

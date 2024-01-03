@@ -3392,7 +3392,7 @@ The item at the end of the edge.
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-ID of category
+ID of the category
 
 </td>
 </tr>
