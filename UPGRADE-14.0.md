@@ -631,6 +631,139 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   remove unnecessary extended class FeedExportFactory as the underlying issue was resolved (([#2959](https://github.com/shopsys/shopsys/pull/2959)))
     -   see #project-base-diff to update your project
+-   add persoo article feed ([#2940](https://github.com/shopsys/shopsys/pull/2940))
+    -   there is a new `Product::getDescriptionAsPlainText()` method that returns the product description without HTML tags - check your XML feeds and use the method if necessary
+    -   `Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver` class was changed:
+        -   `registerGenerators()` is now strictly typed
+        -   `resolveBreadcrumbItems()` is now strictly typed
+        -   `hasGeneratorForRoute()` is now strictly typed
+    -   `Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly ProductRepository $productRepository,
+            protected readonly CategoryRepository $categoryRepository,
+            protected readonly ArticleRepository $articleRepository,
+    +       protected readonly BlogArticleRepository $blogArticleRepository,
+        ) {
+        }
+    ```
+    -   `Shopsys\FrameworkBundle\Component\Image\ImageFacade::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            // ...
+            protected readonly LoggerInterface $logger,
+            protected readonly CdnFacade $cdnFacade,
+    +       protected readonly CacheInterface|AdapterInterface $cache,
+    ```
+    -   `Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly ImageFacade $imageFacade,
+            protected readonly ImageConfig $imageConfig,
+            protected readonly Domain $domain,
+    -       protected readonly FrontendApiImageFacade $frontendApiImageFacade,
+    +       protected readonly ImageApiFacade $imageApiFacade,
+    +       protected readonly DataLoaderInterface $imagesBatchLoader,
+    +       protected readonly DataLoaderInterface $firstImageBatchLoader,
+    ```
+    -   `Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery` class was changed:
+        -   `imagesByEntityQuery()` has been removed, use `imagesByEntityPromiseQuery()` instead
+        -   `imagesByAdvertQuery()` has been removed, use `imagesByEntityPromiseQuery()` instead
+        -   `imagesByProductQuery()` has been removed, use `imagesByEntityPromiseQuery()` instead
+        -   `resolveByEntityId()` has been removed, use `resolveByEntityIdPromise()` instead
+        -   `getResolvedImages()` has been removed
+        -   `getResolvedImage()` has been removed
+        -   `IMAGE_ENTITY_PRODUCT` constant has been removed
+    -   `Shopsys\FrameworkBundle\Controller\Admin\ArticleController` class was changed:
+        -   `listAction()` is now strictly typed
+        -   `editAction()` is now strictly typed
+        -   `newAction()` is now strictly typed
+        -   `deleteAction()` is now strictly typed
+        -   `deleteConfirmAction()` is now strictly typed
+        -   `saveOrderingAction()` is now strictly typed
+    -   `Shopsys\FrameworkBundle\Model\Article\Article::PLACEMENT_FOOTER` constant was removed, replaced with the new constants: `PLACEMENT_FOOTER_1`, `PLACEMENT_FOOTER_2`, `PLACEMENT_FOOTER_3`, `PLACEMENT_FOOTER_4`
+    -   `Shopsys\FrameworkBundle\Model\Article\ArticleFacade::__construct()` changed its interface:
+    ```diff
+         public function __construct(
+             protected readonly EntityManagerInterface $em,
+             protected readonly ArticleRepository $articleRepository,
+             protected readonly Domain $domain,
+             protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+             protected readonly ArticleFactoryInterface $articleFactory,
+    +        protected readonly ArticleExportScheduler $articleExportScheduler,
+    ```
+    -   `Shopsys\FrameworkBundle\Model\Article\ArticleFacade` class was changed:
+        -   `findById()` is now strictly typed
+        -   `getById()` is now strictly typed
+        -   `getAllArticlesCountByDomainId()` is now strictly typed
+        -   `getOrderedArticlesByDomainIdAndPlacementQueryBuilder()` is now strictly typed
+        -   `create()` is now strictly typed
+        -   `edit()` is now strictly typed
+        -   `delete()` is now strictly typed
+        -   `saveOrdering()` is now strictly typed
+        -   `getAllByDomainId()` is now strictly typed
+        -   `getVisibleById()` was removed
+        -   `getVisibleArticlesForPlacementOnCurrentDomain()` was removed
+    -   `Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getAllVisibleQueryBuilder()` is now strictly typed
+    -   `Shopsys\FrontendApiBundle\Model\Article\ArticleFacade` was removed
+    -   `Shopsys\FrontendApiBundle\Model\Article\ArticleRepository` was removed
+    -   `Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleQuery` class was changed:
+        -   `__construct()` interface has changed:
+        ```diff
+            public function __construct(
+        -       protected readonly ArticleFacade $articleFacade,
+                protected readonly Domain $domain,
+        -       protected readonly LegalConditionsFacade $legalConditionsFacade,
+        -       protected readonly CookiesFacade $cookiesFacade,
+        -       protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        +       protected readonly ArticleElasticsearchFacade $articleElasticsearchFacade,
+        +       protected readonly Setting $setting,
+        ```
+        -   `articleByUuidOrUrlSlugQuery()` interface has changed:
+        ```diff
+        -    public function articleByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): Article
+        +    public function articleByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): array
+        ```
+        -   `termsAndConditionsArticleQuery()` interface has changed:
+        ```diff
+        -    public function termsAndConditionsArticleQuery(): Article
+        +    public function termsAndConditionsArticleQuery(): array
+        ```
+        -   `privacyPolicyArticleQuery()` interface has changed:
+        ```diff
+        -    public function privacyPolicyArticleQuery(): Article
+        +    public function privacyPolicyArticleQuery(): array
+        ```
+        -   `cookiesArticleQuery()` interface has changed:
+        ```diff
+        -    public function cookiesArticleQuery(): Article
+        +    public function cookiesArticleQuery(): array
+        ```
+        -   `getVisibleByDomainIdAndUuid()` was removed
+        -   `getVisibleByDomainIdAndSlug()` was removed
+    -   `Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticlesQuery` class was changed:
+        -   `__construct()` interface has changed:
+        ```diff
+            public function __construct(
+        -       protected readonly ArticleFacade $articleFacade,
+                protected readonly Domain $domain,
+        +       protected readonly ArticleElasticsearchFacade $articleElasticsearchFacade,
+        ```
+        -   `articlesQuery()` interface has changed:
+        ```diff
+        -   public function articlesQuery(Argument $argument, ?string $placement)
+        +   public function articlesQuery(Argument $argument, array $placements)
+        ```
+        -   `getArticlesList()` was removed
+        -   `getArticlesCount()` was removed
+    -   `Shopsys\FrontendApiBundle\Component\Image\ImageFacade` was removed
+    -   Frontend API `articles` query now returns `ArticleConnection!` type instead of `ArticleConnection`
+    -   Frontend API `articles` query argument `placement` has now `[ArticlePlacementTypeEnum!]` type instead of `String`
+    -   Frontend API `article` query now returns `NotBlogArticleInterface` type instead of `Article`
+    -   Frontend API `termsAndConditionsArticle` query now returns `ArticleSite` type instead of `Article`
+    -   Frontend API `privacyPolicyArticle` query now returns `ArticleSite` type instead of `Article`
+    -   Frontend API `cookiesArticle` query now returns `ArticleSite` type instead of `Article`
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
