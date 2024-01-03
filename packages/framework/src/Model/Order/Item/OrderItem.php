@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\MainVariantCannotBeOrderedException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasOnlyOneTotalPriceException;
@@ -19,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
  * @ORM\Table(name="order_items")
  * @ORM\Entity
  */
+#[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 class OrderItem
 {
     public const TYPE_PAYMENT = 'payment';
@@ -44,6 +49,7 @@ class OrderItem
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Order", inversedBy="items")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[LoggableParentProperty]
     protected $order;
 
     /**
@@ -151,7 +157,7 @@ class OrderItem
         $this->name = $name;
         $this->priceWithoutVat = $price->getPriceWithoutVat();
         $this->priceWithVat = $price->getPriceWithVat();
-        $this->vatPercent = $vatPercent;
+        $this->vatPercent = Decimal::create($vatPercent, 6)->innerValue();
         $this->quantity = $quantity;
         $this->type = $type;
         $this->unitName = $unitName;
@@ -178,6 +184,7 @@ class OrderItem
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getName()
     {
         return $this->name;

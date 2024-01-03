@@ -111,20 +111,20 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
 
         return [
             0 => [
-                'name' => $helloKittyName,
-                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh),
-                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh),
-                'quantity' => 1,
-                'vatRate' => $vatHigh->getPercent(),
-                'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            ],
-            1 => [
                 'name' => $this->getExpectedPromoCodeItemName($firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('-289.26', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('-289.26', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => $vatHigh->getPercent(),
                 'unit' => null,
+            ],
+            1 => [
+                'name' => $helloKittyName,
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh),
+                'quantity' => 1,
+                'vatRate' => $vatHigh->getPercent(),
+                'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ],
             2 => [
                 'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

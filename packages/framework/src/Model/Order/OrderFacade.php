@@ -116,7 +116,6 @@ class OrderFacade
         );
 
         $this->em->persist($order);
-        $this->em->flush();
 
         $this->fillOrderItems($order, $orderPreview);
 
@@ -376,7 +375,6 @@ class OrderFacade
             );
 
             $this->em->persist($orderItem);
-            $this->em->flush();
 
             if ($quantifiedItemDiscount !== null) {
                 $this->addOrderItemDiscount(

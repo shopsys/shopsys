@@ -313,7 +313,6 @@ class OrderFacade extends BaseOrderFacade
             );
 
             $this->em->persist($orderItem);
-            $this->em->flush();
 
             if ($quantifiedItemDiscount === null) {
                 continue;

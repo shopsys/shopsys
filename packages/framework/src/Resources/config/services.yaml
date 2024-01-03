@@ -1052,3 +1052,13 @@ services:
     Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter:
         arguments:
             $resettableServices: !tagged kernel.reset
+
+    Shopsys\FrameworkBundle\Component\EntityLog\EventListener\EntityLogEventListener:
+        tags:
+            - { name: doctrine.event_listener, event: postPersist, priority: 1 }
+            - { name: doctrine.event_listener, event: postUpdate, priority: 1 }
+            - { name: doctrine.event_listener, event: preRemove, priority: 1 }
+            - { name: doctrine.event_listener, event: postFlush, priority: 1 }
+
+    Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ChangeSetResolver:
+        arguments: [!tagged shopsys.data_type_resolver]

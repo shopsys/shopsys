@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Country;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Model\Country\Exception\CountryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
@@ -86,6 +87,7 @@ class Country extends AbstractTranslatableEntity
         }
     }
 
+    #[EntityLogIdentify(EntityLogIdentify::IS_LOCALIZED)]
     /**
      * @param string|null $locale
      * @return string
