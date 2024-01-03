@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Tests\ArticleFeed\PersooBundle\Unit;
+
 use Shopsys\ArticleFeed\PersooBundle\Model\PersooArticleFeedItemFactory;
 use Tests\FrameworkBundle\Unit\TestCase;
 
