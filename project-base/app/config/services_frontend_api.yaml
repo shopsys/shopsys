@@ -76,14 +76,6 @@ services:
         alias: App\FrontendApi\Resolver\Category\CategoryQuery
         public: true
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleQuery:
-        alias: App\FrontendApi\Resolver\Article\ArticleQuery
-        public: true
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticlesQuery:
-        alias: App\FrontendApi\Resolver\Article\ArticlesQuery
-        public: true
-
     Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation:
         alias: App\FrontendApi\Mutation\Order\CreateOrderMutation
 
@@ -137,9 +129,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesQuery:
         alias: App\FrontendApi\Resolver\Category\CategoriesQuery
         public: true
-
-    Shopsys\FrontendApiBundle\Component\Image\ImageFacade:
-        alias: App\FrontendApi\Model\Image\ImageFacade
 
     Shopsys\FrontendApiBundle\Model\Category\CategoryFacade:
         alias: App\FrontendApi\Model\Category\CategoryFacade

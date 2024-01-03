@@ -64,6 +64,21 @@ class ArticleData
      */
     public $createdAt;
 
+    /**
+     * @var bool
+     */
+    public $external = false;
+
+    /**
+     * @var string
+     */
+    public $type = Article::TYPE_SITE;
+
+    /**
+     * @var string|null
+     */
+    public $url;
+
     public function __construct()
     {
         $this->urls = new UrlListData();

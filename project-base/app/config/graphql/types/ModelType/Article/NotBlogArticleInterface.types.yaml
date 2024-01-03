@@ -1,20 +1,4 @@
 NotBlogArticleInterface:
     type: interface
-    config:
-        description: "Represents an article that is not a blog article"
-        fields:
-            uuid:
-                type: "Uuid!"
-                description: "UUID of the article link"
-            placement:
-                type: "String!"
-                description: "placement of the article"
-            name:
-                type: "String!"
-                description: "name of article link"
-            createdAt:
-                type: "DateTime!"
-                description: "creation date time of the article"
-            external:
-                type: "Boolean!"
-                description: "If the the article should be open in a new tab"
+    inherits:
+        - 'NotBlogArticleInterfaceDecorator'

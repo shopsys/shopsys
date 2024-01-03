@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Products;
 
 use App\Component\Deprecation\DeprecatedMethodException;
-use App\FrontendApi\Component\Validation\PageSizeValidator;
 use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use App\FrontendApi\Resolver\Category\CategoryQuery;
 use App\FrontendApi\Resolver\Products\Flag\FlagQuery;
@@ -26,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;

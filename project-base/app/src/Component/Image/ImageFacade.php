@@ -4,37 +4,31 @@ declare(strict_types=1);
 
 namespace App\Component\Image;
 
-use App\Model\Category\Category;
-use App\Model\Product\Brand\Brand;
-use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
-use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 
 /**
  * @property \App\Component\Image\ImageRepository $imageRepository
  * @property \App\Component\FileUpload\FileUpload $fileUpload
- * @property \App\Component\Image\ImageLocator $imageLocator
  * @method \App\Component\Image\Image[] getAllImagesByEntity(object $entity)
  * @method deleteImageFiles(\App\Component\Image\Image $image)
  * @method \App\Component\Image\Image getImageByObject(object $imageOrEntity, string|null $type = null)
  * @method \App\Component\Image\Image getById(int $imageId)
  * @method \App\Component\Image\Image getImageByEntity(object $entity, string|null $type)
  * @method \App\Component\Image\Image[] getImagesByEntityIndexedById(object $entity, string|null $type)
+ * @method string|null getSeoNameByImageAndLocale(\App\Component\Image\Image $image, string $locale)
  */
 class ImageFacade extends BaseImageFacade
 {
@@ -49,7 +43,7 @@ class ImageFacade extends BaseImageFacade
      * @param \App\Component\Image\ImageRepository $imageRepository
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \App\Component\FileUpload\FileUpload $fileUpload
-     * @param \App\Component\Image\ImageLocator $imageLocator
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactory $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Psr\Log\LoggerInterface $logger
@@ -69,7 +63,7 @@ class ImageFacade extends BaseImageFacade
         MountManager $mountManager,
         LoggerInterface $logger,
         CdnFacade $cdnFacade,
-        private readonly CacheInterface|AdapterInterface $cache,
+        CacheInterface|AdapterInterface $cache,
         private readonly Domain $domain,
     ) {
         parent::__construct(
@@ -84,77 +78,8 @@ class ImageFacade extends BaseImageFacade
             $mountManager,
             $logger,
             $cdnFacade,
+            $cache,
         );
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param object $imageOrEntity
-     * @param string|null $type
-     * @return string
-     */
-    public function getImageUrl(
-        DomainConfig $domainConfig,
-        object $imageOrEntity,
-        ?string $type = null,
-    ): string {
-        $image = $this->getImageByObject($imageOrEntity, $type);
-        $cacheId = $this->getCacheIdForImageUrl($image->getId(), $domainConfig->getId());
-
-        $friendlyUrlSeoEntityName = $this->cache->get(
-            $cacheId,
-            function () use ($image, $domainConfig) {
-                if (!$this->imageLocator->imageExists($image)) {
-                    throw new ImageNotFoundException();
-                }
-
-                $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
-
-                return $this->getFriendlyUrlSlug($seoEntityName);
-            },
-        );
-
-        return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
-            . $this->imageUrlPrefix
-            . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $friendlyUrlSeoEntityName);
-    }
-
-    /**
-     * @param string|null $seoEntityName
-     * @return string|null
-     */
-    private function getFriendlyUrlSlug(?string $seoEntityName): ?string
-    {
-        if ($seoEntityName === null) {
-            return null;
-        }
-
-        return TransformString::stringToFriendlyUrlSlug($seoEntityName);
-    }
-
-    /**
-     * @param \App\Component\Image\Image $image
-     * @param string $locale
-     * @return string|null
-     */
-    private function getSeoNameByImageAndLocale(Image $image, string $locale): ?string
-    {
-        switch ($image->getEntityName()) {
-            case 'category':
-                $category = $this->em->getRepository(Category::class)->find($image->getEntityId());
-
-                return $category?->getName($locale);
-            case 'product':
-                $product = $this->em->getRepository(Product::class)->find($image->getEntityId());
-
-                return $product?->getName($locale);
-            case 'brand':
-                $brand = $this->em->getRepository(Brand::class)->find($image->getEntityId());
-
-                return $brand?->getName();
-            default:
-                return null;
-        }
     }
 
     /**
@@ -274,21 +199,5 @@ class ImageFacade extends BaseImageFacade
         }
 
         parent::saveImageOrdering($persistedImages);
-    }
-
-    /**
-     * @param int $imageId
-     * @param int $domainId
-     * @return string
-     */
-    private function getCacheIdForImageUrl(
-        int $imageId,
-        int $domainId,
-    ): string {
-        return sprintf(
-            'ImageUrl_imageId-%d_domainId-%d',
-            $imageId,
-            $domainId,
-        );
     }
 }

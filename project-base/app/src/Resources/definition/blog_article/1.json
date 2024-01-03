@@ -204,6 +204,9 @@
             "type": "keyword"
           }
         }
+      },
+      "imageUrl": {
+        "type": "text"
       }
     }
   }

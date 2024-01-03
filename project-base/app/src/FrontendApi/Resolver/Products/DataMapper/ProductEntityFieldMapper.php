@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Products\DataMapper;
 
-use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\FrontendApi\Model\Parameter\ParameterWithValuesFactory;
 use App\Model\Category\Category;
@@ -15,6 +14,7 @@ use App\Model\ProductVideo\ProductVideo;
 use App\Model\ProductVideo\ProductVideoTranslationsRepository;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
+use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -50,7 +50,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
+     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader

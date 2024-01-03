@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Article\Article;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData;
 use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
@@ -63,8 +63,8 @@ class ArticleDataFixture extends AbstractReferenceFixture
     ];
 
     /**
-     * @param \App\Model\Article\ArticleFacade $articleFacade
-     * @param \App\Model\Article\ArticleDataFactory $articleDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory $articleDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -220,7 +220,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \App\Model\Article\ArticleData $articleData
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      * @param string|null $referenceName
      */
     private function createArticleFromArticleData(ArticleData $articleData, ?string $referenceName = null): void
@@ -237,7 +237,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
         /** @var \App\Model\Article\Article $cookiesArticle */
         $cookiesArticle = $this->getReferenceForDomain(self::ARTICLE_COOKIES, Domain::SECOND_DOMAIN_ID);
         $cookiesArticleData = $this->articleDataFactory->createFromArticle($cookiesArticle);
-        $cookiesArticleData->placement = Article::PLACEMENT_FOOTER;
+        $cookiesArticleData->placement = Article::PLACEMENT_FOOTER_2;
 
         $this->articleFacade->edit($cookiesArticle->getId(), $cookiesArticleData);
     }

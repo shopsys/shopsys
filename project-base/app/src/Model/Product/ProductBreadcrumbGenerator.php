@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface;
 use App\Model\Category\Category;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
+use Shopsys\FrameworkBundle\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator as BaseProductBreadcrumbGenerator;
 
 /**

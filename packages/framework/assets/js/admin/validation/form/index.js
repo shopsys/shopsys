@@ -1,3 +1,4 @@
+import './validationArticle';
 import './validationCustomer';
 import './validationFreTransportAndPayment';
 import './validationMailTemplate';

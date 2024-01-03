@@ -37,9 +37,6 @@ msgstr "Barva příznaku musí mít správný formát hexadecimálního kódu, n
 msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr "Název příznaku nemůže být delší než {{ limit }} znaků"
 
-msgid "Heading (H1) cannot be longer than {{ limit }} characters"
-msgstr "Nadpis (H1) nesmí být delší než {{ limit }} znaků"
-
 msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr "IČ nesmí být delší než {{ limit }} znaků"
 
@@ -85,9 +82,6 @@ msgstr "Odběrné místo se zadaným UUID není dostupné"
 msgid "Please check Tax number format"
 msgstr "Prosím zkontrolujte formát DIČ"
 
-msgid "Please choose article placement"
-msgstr "Vyberte prosím umístění článku"
-
 msgid "Please choose country"
 msgstr "Prosím vyberte stát"
 
@@ -103,12 +97,6 @@ msgstr "Prosím vyberte typ omezení"
 msgid "Please enter GTM ID"
 msgstr "Prosím vyplňte GTM ID"
 
-msgid "Please enter URL"
-msgstr "Vyplňte prosím URL"
-
-msgid "Please enter article content"
-msgstr "Vyplňte prosím obsah článku"
-
 msgid "Please enter article name"
 msgstr "Vyplňte prosím název článku"
 
@@ -123,9 +111,6 @@ msgstr "Vyplňte prosím kód"
 
 msgid "Please enter company name"
 msgstr "Vyplňte prosím název společnosti"
-
-msgid "Please enter date of creation"
-msgstr "Vyplňte prosím datum vytvoření"
 
 msgid "Please enter email"
 msgstr "Vyplňte prosím e-mail"

@@ -24,7 +24,6 @@ class ArticleTest extends TransactionFunctionalTestCase
 
     public function testArticleIsCorrectlyRestoredFromDatabase()
     {
-        /** @var \App\Model\Article\ArticleData $articleData */
         $articleData = $this->articleDataFactory->create();
 
         $articleData->name = 'Demonstrative name';

@@ -17,6 +17,11 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\EntityIdentifierException;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Product;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class ImageFacade
 {
@@ -32,6 +37,7 @@ class ImageFacade
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
+     * @param \Symfony\Contracts\Cache\CacheInterface|\Symfony\Component\Cache\Adapter\AdapterInterface $cache
      */
     public function __construct(
         protected readonly string $imageUrlPrefix,
@@ -45,6 +51,7 @@ class ImageFacade
         protected readonly MountManager $mountManager,
         protected readonly LoggerInterface $logger,
         protected readonly CdnFacade $cdnFacade,
+        protected readonly CacheInterface|AdapterInterface $cache,
     ) {
     }
 
@@ -251,14 +258,24 @@ class ImageFacade
         ?string $type = null,
     ): string {
         $image = $this->getImageByObject($imageOrEntity, $type);
+        $cacheId = $this->getCacheIdForImageUrl($image->getId(), $domainConfig->getId());
 
-        if (!$this->imageLocator->imageExists($image)) {
-            throw new ImageNotFoundException();
-        }
+        $friendlyUrlSeoEntityName = $this->cache->get(
+            $cacheId,
+            function () use ($image, $domainConfig) {
+                if (!$this->imageLocator->imageExists($image)) {
+                    throw new ImageNotFoundException();
+                }
+
+                $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
+
+                return $this->getFriendlyUrlSlug($seoEntityName);
+            },
+        );
 
         return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
             . $this->imageUrlPrefix
-            . $this->imageLocator->getRelativeImageFilepath($image);
+            . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $friendlyUrlSeoEntityName);
     }
 
     /**
@@ -345,5 +362,49 @@ class ImageFacade
         }
 
         $this->em->flush();
+    }
+
+    /**
+     * @param int $imageId
+     * @param int $domainId
+     * @return string
+     */
+    protected function getCacheIdForImageUrl(
+        int $imageId,
+        int $domainId,
+    ): string {
+        return sprintf(
+            'ImageUrl_imageId-%d_domainId-%d',
+            $imageId,
+            $domainId,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
+     * @param string $locale
+     * @return string|null
+     */
+    protected function getSeoNameByImageAndLocale(Image $image, string $locale): ?string
+    {
+        return match ($image->getEntityName()) {
+            'category' => $this->em->getRepository(Category::class)->find($image->getEntityId())?->getName($locale),
+            'product' => $this->em->getRepository(Product::class)->find($image->getEntityId())?->getName($locale),
+            'brand' => $this->em->getRepository(Brand::class)->find($image->getEntityId())?->getName(),
+            default => null,
+        };
+    }
+
+    /**
+     * @param string|null $seoEntityName
+     * @return string|null
+     */
+    protected function getFriendlyUrlSlug(?string $seoEntityName): ?string
+    {
+        if ($seoEntityName === null) {
+            return null;
+        }
+
+        return TransformString::stringToFriendlyUrlSlug($seoEntityName);
     }
 }

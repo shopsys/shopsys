@@ -37,9 +37,6 @@ msgstr ""
 msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Heading (H1) cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -85,9 +82,6 @@ msgstr ""
 msgid "Please check Tax number format"
 msgstr ""
 
-msgid "Please choose article placement"
-msgstr ""
-
 msgid "Please choose country"
 msgstr ""
 
@@ -103,12 +97,6 @@ msgstr ""
 msgid "Please enter GTM ID"
 msgstr ""
 
-msgid "Please enter URL"
-msgstr ""
-
-msgid "Please enter article content"
-msgstr ""
-
 msgid "Please enter article name"
 msgstr ""
 
@@ -122,9 +110,6 @@ msgid "Please enter code"
 msgstr ""
 
 msgid "Please enter company name"
-msgstr ""
-
-msgid "Please enter date of creation"
 msgstr ""
 
 msgid "Please enter email"

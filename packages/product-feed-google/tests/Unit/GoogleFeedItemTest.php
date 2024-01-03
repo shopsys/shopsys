@@ -172,7 +172,7 @@ class GoogleFeedItemTest extends TestCase
 
     public function testGoogleFeedItemWithDescription()
     {
-        $this->defaultProduct->method('getDescription')
+        $this->defaultProduct->method('getDescriptionAsPlainText')
             ->with(1)->willReturn('product description');
 
         $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);

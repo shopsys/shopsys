@@ -1,0 +1,3 @@
+BlogArticleConnectionDecorator:
+    type: object
+    decorator: true

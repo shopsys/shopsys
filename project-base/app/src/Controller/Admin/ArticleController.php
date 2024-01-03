@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Model\Article\Article;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -17,18 +16,15 @@ use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @property \App\Model\Article\ArticleDataFactory $articleDataFactory
- * @property \App\Model\Article\ArticleFacade $articleFacade
  * @property \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
  */
 class ArticleController extends BaseArticleController
 {
     /**
-     * @param \App\Model\Article\ArticleFacade $articleFacade
-     * @param \App\Model\Article\ArticleDataFactory $articleDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory $articleDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
@@ -61,32 +57,9 @@ class ArticleController extends BaseArticleController
     }
 
     /**
-     * @Route("/article/list/")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function listAction(): Response
-    {
-        $gridFooter1 = $this->getGrid(Article::PLACEMENT_FOOTER_1);
-        $gridFooter2 = $this->getGrid(Article::PLACEMENT_FOOTER_2);
-        $gridFooter3 = $this->getGrid(Article::PLACEMENT_FOOTER_3);
-        $gridFooter4 = $this->getGrid(Article::PLACEMENT_FOOTER_4);
-        $gridNone = $this->getGrid(Article::PLACEMENT_NONE);
-        $articlesCountOnSelectedDomain = $this->articleFacade->getAllArticlesCountByDomainId($this->adminDomainTabsFacade->getSelectedDomainId());
-
-        return $this->render('@ShopsysFramework/Admin/Content/Article/list.html.twig', [
-            'gridViewFooter1' => $gridFooter1->createView(),
-            'gridViewFooter2' => $gridFooter2->createView(),
-            'gridViewFooter3' => $gridFooter3->createView(),
-            'gridViewFooter4' => $gridFooter4->createView(),
-            'gridViewNone' => $gridNone->createView(),
-            'articlesCountOnSelectedDomain' => $articlesCountOnSelectedDomain,
-        ]);
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function editAction(Request $request, $id): Response
+    public function editAction(Request $request, int $id): Response
     {
         $response = parent::editAction($request, $id);
 
@@ -110,7 +83,7 @@ class ArticleController extends BaseArticleController
     /**
      * {@inheritdoc}
      */
-    public function deleteAction($id): Response
+    public function deleteAction(int $id): Response
     {
         $response = parent::deleteAction($id);
 

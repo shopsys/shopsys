@@ -88,15 +88,27 @@ QueryDecorator:
                         type: "String"
                 description: "Returns order filtered using UUID or urlHash"
             articles:
-                type: "ArticleConnection"
+                type: "ArticleConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('articlesQuery', args, args['placement'])"
+                complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     placement:
-                        type: "String"
+                        type: "[ArticlePlacementTypeEnum!]"
+                        defaultValue: []
+                        validation:
+                            -   NotNull: ~
+                        description: "An array of the required articles placements"
                 description: "Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement`"
+            articlesSearch:
+                type: "[ArticleInterface!]!"
+                resolve: "@=query('articlesSearchQuery', args)"
+                args:
+                    search:
+                        type: "String!"
+                description: "Returns list of searched articles and blog articles"
             article:
-                type: 'Article'
+                type: 'NotBlogArticleInterface'
                 resolve: "@=query('articleByUuidOrUrlSlugQuery', args['uuid'], args['urlSlug'])"
                 args:
                     uuid:
@@ -105,17 +117,21 @@ QueryDecorator:
                         type: "String"
                 description: "Returns article filtered using UUID or URL slug"
             termsAndConditionsArticle:
-                type: 'Article'
+                type: 'ArticleSite'
                 resolve: "@=query('termsAndConditionsArticleQuery')"
                 description: "Returns Terms and Conditions article"
             privacyPolicyArticle:
-                type: 'Article'
+                type: 'ArticleSite'
                 resolve: "@=query('privacyPolicyArticleQuery')"
                 description: "Returns privacy policy article"
             cookiesArticle:
-                type: 'Article'
+                type: 'ArticleSite'
                 resolve: "@=query('cookiesArticleQuery')"
                 description: "Returns information about cookies article"
+            ArticleSite:
+                type: "ArticleSite"
+            ArticleLink:
+                type: "ArticleLink"
             brands:
                 type: '[Brand!]!'
                 resolve: "@=query('brandsQuery')"
@@ -167,3 +183,31 @@ QueryDecorator:
                 args:
                     productListType:
                         type: "ProductListTypeEnum!"
+            blogArticle:
+                type: 'BlogArticle'
+                resolve: "@=query('blogArticleByUuidOrUrlSlugQuery', args['uuid'], args['urlSlug'])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns blog article filtered using UUID or URL slug"
+            blogArticles:
+                type: "BlogArticleConnection!"
+                argsBuilder: "BlogArticlePaginatorArgumentsBuilder"
+                resolve: "@=query('blogArticlesQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                description: "Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords"
+            blogCategory:
+                type: 'BlogCategory'
+                resolve: "@=query('blogCategoryByUuidOrUrlSlugQuery', args['uuid'], args['urlSlug'])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns blog category filtered using UUID or URL slug"
+            blogCategories:
+                type: '[BlogCategory!]!'
+                resolve: "@=query('blogCategoriesQuery')"
+                description: "Returns a complete list of the blog categories"

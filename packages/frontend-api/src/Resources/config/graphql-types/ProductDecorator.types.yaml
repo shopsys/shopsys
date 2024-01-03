@@ -41,7 +41,7 @@ ProductDecorator:
             images:
                 type: "[Image]!"
                 description: "Product images"
-                resolve: '@=query("imagesByProductQuery", value, args["type"])'
+                resolve: '@=query("imagesByProductPromiseQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"

@@ -7,10 +7,6 @@ services:
     App\Form\:
         resource: '../src/Form/'
 
-    App\Form\Admin\ArticleFormTypeExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType }
-
     App\Form\Admin\AdministratorFormTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType }

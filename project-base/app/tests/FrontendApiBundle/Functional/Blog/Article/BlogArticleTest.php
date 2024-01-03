@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 
-use App\Component\GrapesJs\GrapesJsParser;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
-use App\Model\Blog\Article\BlogArticle;
+use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -157,7 +157,7 @@ class BlogArticleTest extends GraphQlTestCase
         $locale = $this->getFirstDomainLocale();
         $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(1, 'front_blogarticle_detail', $this->blogArticle->getId());
 
-        /** @var \App\Model\Blog\Category\BlogCategory $firstBlogCategory */
+        /** @var \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $firstBlogCategory */
         $firstBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY);
         $firstBlogCategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogCategory->getId()]);
 

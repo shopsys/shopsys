@@ -8,7 +8,7 @@
     <item>
         <g:id>{{ item.id }}</g:id>
         <title>{{ item.title }}</title>
-        <g:description>{{ item.description|striptags|replace({"\n": ' '})|trim }}</g:description>
+        <g:description>{{ item.description }}</g:description>
         <link>{{ item.link }}</link>
         {% if item.imageLink is not null -%}
             <g:image_link>{{ item.imageLink }}</g:image_link>

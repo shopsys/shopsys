@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AdminBaseController
@@ -49,8 +50,9 @@ class ArticleController extends AdminBaseController
      * @Route("/article/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id): Response
     {
         $article = $this->articleFacade->getById($id);
         $articleData = $this->articleDataFactory->createFromArticle($article);
@@ -90,17 +92,22 @@ class ArticleController extends AdminBaseController
 
     /**
      * @Route("/article/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(): Response
     {
-        $gridFooter = $this->getGrid(Article::PLACEMENT_FOOTER);
+        $gridFooter1 = $this->getGrid(Article::PLACEMENT_FOOTER_1);
+        $gridFooter2 = $this->getGrid(Article::PLACEMENT_FOOTER_2);
+        $gridFooter3 = $this->getGrid(Article::PLACEMENT_FOOTER_3);
+        $gridFooter4 = $this->getGrid(Article::PLACEMENT_FOOTER_4);
         $gridNone = $this->getGrid(Article::PLACEMENT_NONE);
-        $articlesCountOnSelectedDomain = $this->articleFacade->getAllArticlesCountByDomainId(
-            $this->adminDomainTabsFacade->getSelectedDomainId(),
-        );
+        $articlesCountOnSelectedDomain = $this->articleFacade->getAllArticlesCountByDomainId($this->adminDomainTabsFacade->getSelectedDomainId());
 
         return $this->render('@ShopsysFramework/Admin/Content/Article/list.html.twig', [
-            'gridViewFooter' => $gridFooter->createView(),
+            'gridViewFooter1' => $gridFooter1->createView(),
+            'gridViewFooter2' => $gridFooter2->createView(),
+            'gridViewFooter3' => $gridFooter3->createView(),
+            'gridViewFooter4' => $gridFooter4->createView(),
             'gridViewNone' => $gridNone->createView(),
             'articlesCountOnSelectedDomain' => $articlesCountOnSelectedDomain,
         ]);
@@ -109,8 +116,9 @@ class ArticleController extends AdminBaseController
     /**
      * @Route("/article/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $articleData = $this->articleDataFactory->create();
 
@@ -148,8 +156,9 @@ class ArticleController extends AdminBaseController
      * @Route("/article/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         try {
             $fullName = $this->articleFacade->getById($id)->getName();
@@ -172,8 +181,9 @@ class ArticleController extends AdminBaseController
     /**
      * @Route("/article/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id): Response
     {
         $article = $this->articleFacade->getById($id);
 
@@ -199,7 +209,7 @@ class ArticleController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function saveOrderingAction(Request $request)
+    public function saveOrderingAction(Request $request): JsonResponse
     {
         $this->articleFacade->saveOrdering($request->get('rowIdsByGridId'));
 

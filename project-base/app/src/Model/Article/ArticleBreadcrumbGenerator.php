@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Article;
 
-use App\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface;
+use Shopsys\FrameworkBundle\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Model\Article\ArticleBreadcrumbGenerator as BaseArticleBreadcrumbGenerator;
 
 class ArticleBreadcrumbGenerator extends BaseArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface

@@ -16,10 +16,10 @@ overblog_dataloader:
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadSellableByIds"
         imagesBatchLoader:
             alias: "images_batch_loader"
-            batch_load_fn: "@App\\FrontendApi\\Model\\Image\\ImagesBatchLoader:loadByBatchData"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Image\\ImagesBatchLoader:loadByBatchData"
         firstImageBatchLoader:
             alias: "first_image_batch_loader"
-            batch_load_fn: "@App\\FrontendApi\\Model\\Image\\FirstImageBatchLoader:loadByBatchData"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Component\\Image\\FirstImageBatchLoader:loadByBatchData"
         readyCategorySeoMixesBatchLoader:
             alias: "ready_category_seo_mixes_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Category\\ReadyCategorySeoMixBatchLoader:loadByCategoryIds"

@@ -25,6 +25,7 @@ get_all_packages() {
         product-feed-heureka \
         product-feed-heureka-delivery \
         product-feed-persoo \
+        article-feed-persoo \
         plugin-interface \
         coding-standards \
         http-smoke-testing \

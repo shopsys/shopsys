@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Elasticsearch;
 
-use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Product;
@@ -12,6 +11,7 @@ use App\Model\Product\ProductRepository;
 use App\Model\ProductVideo\ProductVideo;
 use App\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
@@ -64,7 +64,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
+     * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \App\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      */
     public function __construct(

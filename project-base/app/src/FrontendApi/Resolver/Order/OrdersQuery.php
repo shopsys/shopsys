@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Order;
 
-use App\FrontendApi\Component\Validation\PageSizeValidator;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersQuery as BaseOrdersQuery;
 

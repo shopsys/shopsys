@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Article;
 
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
+use Shopsys\FrameworkBundle\Form\GrapesJsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
+use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
@@ -21,12 +22,17 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
 class ArticleFormType extends AbstractType
 {
+    private const VALIDATION_GROUP_TYPE_SITE = 'typeSite';
+    private const VALIDATION_GROUP_TYPE_LINK = 'typeLink';
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -90,10 +96,39 @@ class ArticleFormType extends AbstractType
                 'required' => false,
                 'label' => t('Hide'),
             ])
-            ->add('text', CKEditorType::class, [
+            ->add('external', YesNoType::class, [
+                'required' => true,
+                'label' => t('Open in new window'),
+            ])
+            ->add('type', ChoiceType::class, [
+                'required' => true,
+                'choices' => [
+                    t('Site') => Article::TYPE_SITE,
+                    t('Link') => Article::TYPE_LINK,
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'label' => t('Type'),
+            ])
+            ->add('url', UrlType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter article content']),
+                    new Constraints\NotBlank([
+                        'message' => 'Please enter URL',
+                        'groups' => [self::VALIDATION_GROUP_TYPE_LINK],
+                    ]),
+                ],
+                'label' => t('URL'),
+                'trim' => true,
+            ])
+            ->add('text', GrapesJsType::class, [
+                'required' => true,
+                'allow_products' => true,
+                'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Please enter article content',
+                        'groups' => [self::VALIDATION_GROUP_TYPE_SITE],
+                    ]),
                 ],
                 'label' => t('Content'),
             ])
@@ -167,6 +202,20 @@ class ArticleFormType extends AbstractType
             ->setDefaults([
                 'data_class' => ArticleData::class,
                 'attr' => ['novalidate' => 'novalidate'],
+                'validation_groups' => function (FormInterface $form) {
+                    $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
+
+                    /** @var \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData */
+                    $articleData = $form->getData();
+
+                    if ($articleData->type === Article::TYPE_SITE) {
+                        $validationGroups[] = self::VALIDATION_GROUP_TYPE_SITE;
+                    } elseif ($articleData->type === Article::TYPE_LINK) {
+                        $validationGroups[] = self::VALIDATION_GROUP_TYPE_LINK;
+                    }
+
+                    return $validationGroups;
+                },
             ]);
     }
 

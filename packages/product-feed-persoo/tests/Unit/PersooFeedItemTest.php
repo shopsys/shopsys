@@ -240,7 +240,7 @@ class PersooFeedItemTest extends TestCase
 
     public function testPersooFeedItemWithDescription(): void
     {
-        $this->defaultProduct->method('getDescription')
+        $this->defaultProduct->method('getDescriptionAsPlainText')
             ->with($this->defaultDomain->getId())->willReturn(self::PRODUCT_DESCRIPTION);
 
         $persooFeedItem = $this->persooFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);

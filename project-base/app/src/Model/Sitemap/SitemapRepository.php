@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\Sitemap;
 
-use App\Model\Blog\Article\BlogArticleRepository;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
-use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
-use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository as BaseSitemapRepository;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
 use Shopsys\FrameworkBundle\Model\Stock\StockDomain;
@@ -21,24 +17,10 @@ use Shopsys\FrameworkBundle\Model\Stock\StockDomain;
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Category\CategoryRepository $categoryRepository
+ * @method __construct(\App\Model\Product\ProductRepository $productRepository, \App\Model\Category\CategoryRepository $categoryRepository, \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository $blogArticleRepository)
  */
 class SitemapRepository extends BaseSitemapRepository
 {
-    /**
-     * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \App\Model\Category\CategoryRepository $categoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
-     * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
-     */
-    public function __construct(
-        ProductRepository $productRepository,
-        CategoryRepository $categoryRepository,
-        ArticleRepository $articleRepository,
-        private BlogArticleRepository $blogArticleRepository,
-    ) {
-        parent::__construct($productRepository, $categoryRepository, $articleRepository);
-    }
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
@@ -120,33 +102,6 @@ class SitemapRepository extends BaseSitemapRepository
                 AND fu.main = TRUE',
             )
             ->setParameter('articlesRouteName', 'front_article_detail')
-            ->setParameter('domainId', $domainConfig->getId());
-
-        return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
-     */
-    public function getSitemapItemsForBlogArticlesOnDomain(DomainConfig $domainConfig): array
-    {
-        $queryBuilder = $this->blogArticleRepository->getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder(
-            $domainConfig->getId(),
-            $domainConfig->getLocale(),
-        );
-        $queryBuilder
-            ->select('fu.slug')
-            ->join(
-                FriendlyUrl::class,
-                'fu',
-                Join::WITH,
-                'fu.routeName = :blogArticlesRouteName
-                AND fu.entityId = ba.id
-                AND fu.domainId = :domainId
-                AND fu.main = TRUE',
-            )
-            ->setParameter('blogArticlesRouteName', 'front_blogarticle_detail')
             ->setParameter('domainId', $domainConfig->getId());
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);

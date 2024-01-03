@@ -11,7 +11,7 @@ AdvertImageDecorator:
             images:
                 type: "[Image!]!"
                 description: "Advert images"
-                resolve: '@=query("imagesByAdvertQuery", value, args["type"])'
+                resolve: '@=query("imagesByAdvertPromiseQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"

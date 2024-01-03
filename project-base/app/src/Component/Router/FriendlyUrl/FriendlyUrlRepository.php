@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Component\Router\FriendlyUrl;
 
 use App\Model\Article\Article;
-use App\Model\Blog\Article\BlogArticle;
-use App\Model\Blog\Category\BlogCategory;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
@@ -19,6 +17,8 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository as BaseFriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 
 /**
@@ -124,22 +124,5 @@ class FriendlyUrlRepository extends BaseFriendlyUrlRepository
             },
             $results,
         );
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $routeName
-     * @param int $entityId
-     * @return string[]
-     */
-    public function getAllSlugsByRouteNameAndDomainId(int $domainId, string $routeName, int $entityId): array
-    {
-        $friendlyUrls = $this->getFriendlyUrlRepository()->findBy([
-            'domainId' => $domainId,
-            'routeName' => $routeName,
-            'entityId' => $entityId,
-        ]);
-
-        return array_map(fn (FriendlyUrl $friendlyUrl) => $friendlyUrl->getSlug(), $friendlyUrls);
     }
 }

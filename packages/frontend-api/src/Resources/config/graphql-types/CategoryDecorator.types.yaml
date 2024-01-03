@@ -19,7 +19,7 @@ CategoryDecorator:
             images:
                 type: "[Image!]!"
                 description: "Category images"
-                resolve: '@=query("imagesByEntityQuery", value, args["type"])'
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"

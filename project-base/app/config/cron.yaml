@@ -63,13 +63,17 @@ services:
         tags:
             - { name: shopsys.cron, hours: '4', minutes: '10', instanceName: export, readableName: 'Generate image sitemap' }
 
-    App\Model\Article\Elasticsearch\ArticleExportCronModule:
+    Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportCronModule:
         tags:
             - { name: shopsys.cron, hours: '3', minutes: '10', instanceName: export, readableName: "Export articles to Elasticsearch" }
 
-    App\Model\Blog\Article\Elasticsearch\BlogArticleExportCronModule:
+    Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportCronModule:
         tags:
             - { name: shopsys.cron, hours: '3', minutes: '10', instanceName: export, readableName: "Export blog articles to Elasticsearch" }
+
+    Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportChangedCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '5', instanceName: export, readableName: "Export changed blog articles to Elasticsearch" }
 
     # Products
 

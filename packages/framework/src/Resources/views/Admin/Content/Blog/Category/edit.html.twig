@@ -1,0 +1,8 @@
+{% extends '@ShopsysFramework/Admin/Content/Blog/Category/detail.html.twig' %}
+
+{% block title %}- {{ 'Editing blog category'|trans }} - {{ blogCategory.name }}{% endblock %}
+{% block h1 %}{{ 'Editing blog category'|trans }} - {{ blogCategory.name }}{% endblock %}
+
+{% if blogCategory.isMainPage %}
+    {% do form.settings.parent.setRendered %}
+{% endif %}

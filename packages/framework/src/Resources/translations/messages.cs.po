@@ -178,6 +178,9 @@ msgstr "Všechny výsledky hledání"
 msgid "Amount"
 msgstr "Množství"
 
+msgid "Ancestor category"
+msgstr "Rodičovská kategorie"
+
 msgid "Applicable variables"
 msgstr "Použitelné proměnné"
 
@@ -297,6 +300,39 @@ msgstr "Fakturační adresa - jméno, příjmení, firma, ič, dič a fakt. adre
 
 msgid "Billing data"
 msgstr "Fakturační údaje"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Blog article"
+msgstr "Článek blogu"
+
+msgid "Blog article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
+msgstr "Článek blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
+
+msgid "Blog article <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been updated"
+msgstr "Článek blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl změněn"
+
+msgid "Blog article <strong>{{ name }}</strong> has been removed"
+msgstr "Článek blogu <strong>{{ name }}</strong> byl smazán"
+
+msgid "Blog articles"
+msgstr "Články blogu"
+
+msgid "Blog categories"
+msgstr "Rubriky blogu"
+
+msgid "Blog category"
+msgstr "Rubrika blogu"
+
+msgid "Blog category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been created"
+msgstr "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
+
+msgid "Blog category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> has been updated"
+msgstr "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
+
+msgid "Blog category <strong>{{ name }}</strong> has been removed"
+msgstr "Rubrika blogu <strong>{{ name }}</strong> byla smazána"
 
 msgid "Brand"
 msgstr "Značka"
@@ -505,6 +541,12 @@ msgstr "Vytvořit novou reklamu"
 msgid "Create new article"
 msgstr "Vytvořit nový článek"
 
+msgid "Create new blog article"
+msgstr "Vytvořit nový článek blogu"
+
+msgid "Create new blog category"
+msgstr "Vytvořit novou rubriku blogu"
+
 msgid "Create new brand"
 msgstr "Vytvořit novou značku"
 
@@ -664,8 +706,14 @@ msgstr "Datum"
 msgid "Date and time of order creation"
 msgstr "Datum a čas vytvoření objednávky"
 
+msgid "Date of creation"
+msgstr "Datum vytvoření"
+
 msgid "Date of creation and privacy policy agreement"
 msgstr "Datum vytvoření a dohody o ochraně osobních údajů"
+
+msgid "Date of publication"
+msgstr "Datum publikace"
 
 msgid "Date of registration and privacy policy agreement"
 msgstr "Datum registrace a dohody o ochraně soukromí"
@@ -802,6 +850,9 @@ msgstr "Opravdu chcete odstranit tuto reklamu?"
 msgid "Do you really want to remove this article?"
 msgstr "Opravdu chcete odstranit tento článek?"
 
+msgid "Do you really want to remove this blog article?"
+msgstr "Opravdu chcete odebrat tento článek blogu?"
+
 msgid "Do you really want to remove this brand? If it is used anywhere it will be unset."
 msgstr "Opravdu chcete odstranit tuto značku? Pokud je někde použita, bude odnastavena."
 
@@ -933,6 +984,18 @@ msgstr "Editace článku - %name%"
 
 msgid "Editing bestseller"
 msgstr "Editace nejprodávanějšího zboží"
+
+msgid "Editing blog article"
+msgstr "Editace článku blogu"
+
+msgid "Editing blog article - %name%"
+msgstr "Editace článku blogu - %name%"
+
+msgid "Editing blog category"
+msgstr "Editace rubriky blogu"
+
+msgid "Editing blog category - %name%"
+msgstr "Editace rubriky blogu - %name%"
 
 msgid "Editing brand"
 msgstr "Editace značky"
@@ -1360,6 +1423,9 @@ msgstr "Pokyny"
 msgid "Internal note"
 msgstr "Interní poznámka"
 
+msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"
+msgstr "Na konkrétní záložce domény není možné upravovat pořadí a zanoření rubrik blogu. Prosím přejděte na detail kategorie nebo na přehled kategorií na všech doménách"
+
 msgid "It is possible to use this when creating a link: mark the text you want to create the link from with mouse and push the Link button (top right, interconnected staples icon). In the popup menu select the protocol <different> and insert the text \"%orderDetailUrlConstant%\" in the URL field (Including the braces)"
 msgstr "Lze použít při vytváření odkazu takto: myší označíte text, ze kterého chcete vytvořit odkaz, a klepnete na tlačítko Odkaz (vpravo nahoře, ikonka propojených sponek). Ve vyskakovacím menu vyberete protokol <jiný> a do políčka URL vložíte text \"%orderDetailUrlConstant%\" (včetně složených závorek)."
 
@@ -1552,6 +1618,12 @@ msgstr "Nová reklama"
 msgid "New article"
 msgstr "Nový článek"
 
+msgid "New blog article"
+msgstr "Nový článek blogu"
+
+msgid "New blog category"
+msgstr "Nová rubrika blogu"
+
 msgid "New brand"
 msgstr "Nová značka"
 
@@ -1623,6 +1695,9 @@ msgstr "Na této doméně nebyly nalezeny žádné články. Nejprve musíte ně
 
 msgid "No availabilities found. You have to create some first."
 msgstr "Nebyly nalezeny žádné dostupnosti. Nejprve musíte nějaké vytvořit."
+
+msgid "No blog articles found."
+msgstr "Nebyly nalezeny žádné články blogu."
 
 msgid "No brands found. You have to create some first."
 msgstr "Nebyly nalezeny žádné značky. Nejprve musíte nějaké vytvořit."
@@ -1731,6 +1806,9 @@ msgstr "Pouze zaškrtnuté zboží"
 
 msgid "Open in a new tab"
 msgstr "Otevřít v novém panelu"
+
+msgid "Open in new window"
+msgstr "Otevírat v novém okně"
 
 msgid "Opening hours"
 msgstr "Otevírací doba"
@@ -1863,6 +1941,9 @@ msgstr "Platby"
 
 msgid "Percent"
 msgstr "Procent"
+
+msgid "Perex"
+msgstr "Perex"
 
 msgid "Personal data"
 msgstr "Osobní údaje"
@@ -2161,6 +2242,12 @@ msgstr "Zvolená dostupnost neexistuje"
 msgid "Selected availatibily doesn't exist."
 msgstr "Zvolená dostupnost neexistuje."
 
+msgid "Selected blog article does not exist."
+msgstr "Vybraný článek blogu neexistuje."
+
+msgid "Selected blog category does not exist."
+msgstr "Vybíraná rubrika blogu neexistuje."
+
 msgid "Selected brand doesn't exist."
 msgstr "Zvolená značka neexistuje."
 
@@ -2236,6 +2323,9 @@ msgstr "Zasílat e-mail o změně na tento stav"
 msgid "Sending emails off, no email will be sent from the app."
 msgstr "Odesílání e-mailů je vypnuto, z aplikace nebude odeslán žádný e-mail."
 
+msgid "Seo"
+msgstr "Seo"
+
 msgid "Set"
 msgstr "Nastavit"
 
@@ -2289,6 +2379,9 @@ msgstr "Krátký popis USP"
 
 msgid "Short description can be set in the main variant."
 msgstr "Krátký popis se nastavuje u hlavní varianty."
+
+msgid "Site"
+msgstr "Stránka"
 
 msgid "Slider on main page"
 msgstr "Slider na titulce"
@@ -2479,6 +2572,9 @@ msgstr "Číslo pro měření"
 msgid "Type"
 msgstr "Typ"
 
+msgid "URL"
+msgstr "URL"
+
 msgid "URL addresses"
 msgstr "URL adresy"
 
@@ -2608,6 +2704,9 @@ msgstr "Viditelnost"
 msgid "Visibility for unlogged customers"
 msgstr "Viditelnost pro neregistrované zákazníky"
 
+msgid "Visible on homepage"
+msgstr "Viditelný na domovské stránce"
+
 msgid "Warehouse"
 msgstr "Sklad"
 
@@ -2722,6 +2821,9 @@ msgstr "dostupností"
 msgid "before"
 msgstr "před"
 
+msgid "blog articles"
+msgstr "článků blogu"
+
 msgid "brands"
 msgstr "značek"
 
@@ -2760,9 +2862,6 @@ msgstr "v kategorii (nad výpisem produktů)"
 
 msgid "in category (between first and second row of products)"
 msgstr "v kategorii (mezi prvním a druhým řádkem produktů)"
-
-msgid "in footer"
-msgstr "v patičce"
 
 msgid "include"
 msgstr "obsahuje"

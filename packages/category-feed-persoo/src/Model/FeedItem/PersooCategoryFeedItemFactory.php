@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemImageHelper;
@@ -57,7 +58,7 @@ class PersooCategoryFeedItemFactory
             array_reverse($hierarchyIds),
             $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId($domainConfig->getId(), 'front_product_list', $category->getId()),
             array_reverse($hierarchyNames),
-            $category->getDescription($domainConfig->getId()),
+            TransformString::convertHtmlToPlainText($category->getDescription($domainConfig->getId())),
             $imageUrl,
         );
     }

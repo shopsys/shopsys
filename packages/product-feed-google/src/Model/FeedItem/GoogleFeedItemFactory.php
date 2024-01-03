@@ -41,7 +41,7 @@ class GoogleFeedItemFactory
             $this->getCurrency($domainConfig),
             $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
             $this->getBrandName($product),
-            $product->getDescription($domainConfig->getId()),
+            $product->getDescriptionAsPlainText($domainConfig->getId()),
             $product->getEan(),
             $product->getPartno(),
             $this->productUrlsBatchLoader->getResizedProductImageUrl($product, $domainConfig),

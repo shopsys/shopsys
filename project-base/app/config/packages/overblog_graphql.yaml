@@ -12,7 +12,7 @@ overblog_graphql:
                 -   alias: "PaginatorArgumentsBuilder"
                     class: App\FrontendApi\Component\Arguments\PaginatorArgumentsBuilder
                 -   alias: "BlogArticlePaginatorArgumentsBuilder"
-                    class: App\FrontendApi\Model\BlogArticle\BlogArticlePaginatorArgumentsBuilder
+                    class: Shopsys\FrontendApiBundle\Component\Arguments\BlogArticlePaginatorArgumentsBuilder
         # these settings are suggested by docs: https://github.com/overblog/GraphQLBundle/blob/master/docs/index.md#composer-autoloader-configuration-optional
         use_classloader_listener: false
         auto_compile: true

@@ -1,0 +1,21 @@
+{% block begin %}
+<?xml version="1.0" encoding="utf-8"?>
+<articles>
+{% endblock %}
+
+{% block item %}
+    <article>
+        <title>{{ item.title }}</title>
+        <link>{{ item.link }}</link>
+        {% if item.description is not null %}
+            <description><![CDATA[{{ item.description }}]]></description>
+        {% endif %}
+        {% if item.imageLink is not null %}
+            <imageLink>{{ item.imageLink }}</imageLink>
+        {% endif %}
+    </article>
+{% endblock %}
+
+{% block end %}
+</articles>
+{% endblock %}

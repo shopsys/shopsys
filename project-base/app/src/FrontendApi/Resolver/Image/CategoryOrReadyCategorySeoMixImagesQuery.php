@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Image;
 
-use App\FrontendApi\Model\Image\ImageBatchLoadData;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use GraphQL\Executor\Promise\Promise;
 use InvalidArgumentException;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
+use Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData;
+use Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery;
 
-class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery implements AliasedInterface
+class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery
 {
     private const CATEGORY_ENTITY_NAME = 'category';
 

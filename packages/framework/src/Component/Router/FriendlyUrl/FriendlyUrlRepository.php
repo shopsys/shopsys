@@ -136,4 +136,21 @@ class FriendlyUrlRepository
 
         return $queryBuilder->getQuery()->execute();
     }
+
+    /**
+     * @param int $domainId
+     * @param string $routeName
+     * @param int $entityId
+     * @return string[]
+     */
+    public function getAllSlugsByRouteNameAndDomainId(int $domainId, string $routeName, int $entityId): array
+    {
+        $friendlyUrls = $this->getFriendlyUrlRepository()->findBy([
+            'domainId' => $domainId,
+            'routeName' => $routeName,
+            'entityId' => $entityId,
+        ]);
+
+        return array_map(fn (FriendlyUrl $friendlyUrl) => $friendlyUrl->getSlug(), $friendlyUrls);
+    }
 }

@@ -149,10 +149,6 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade:
         class: 'App\Model\Customer\User\CustomerUserFacade'
 
-    App\Model\Blog\BlogVisibilityRecalculationListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade:
         alias: App\Component\UploadedFile\UploadedFileFacade
 
@@ -199,16 +195,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory:
         alias: App\Model\Order\Status\Grid\OrderStatusGridFactory
-
-    Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface:
-        alias: App\Model\Article\ArticleDataFactory
-
-    Shopsys\FrameworkBundle\Model\Article\ArticleFacade:
-        alias: App\Model\Article\ArticleFacade
-
-    App\Model\Article\Elasticsearch\ArticleIndex: ~
-
-    App\Model\Blog\Article\Elasticsearch\BlogArticleIndex: ~
 
     League\Flysystem\FilesystemOperator:
         alias: main_filesystem
@@ -615,12 +601,6 @@ services:
         tags:
             - { name: shopsys.friendly_url_provider }
 
-    App\Component\Image\ImageLocator:
-        arguments: ['%shopsys.image_dir%']
-
-    Shopsys\FrameworkBundle\Component\Image\ImageLocator:
-        alias: App\Component\Image\ImageLocator
-
     Shopsys\FrameworkBundle\Component\Image\ImageFacade:
         alias: App\Component\Image\ImageFacade
 
@@ -742,17 +722,8 @@ services:
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail:
         alias: App\Model\PersonalData\Mail\PersonalDataExportMail
 
-    App\Component\Breadcrumb\BreadcrumbResolver:
-        arguments: [ !tagged shopsys.breadcrumb_generator ]
-
-    Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver:
-        alias: App\Component\Breadcrumb\BreadcrumbResolver
-
     Shopsys\FrameworkBundle\Model\Article\ArticleBreadcrumbGenerator:
         alias: App\Model\Article\ArticleBreadcrumbGenerator
-
-    App\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade:
-        arguments: ['@snc_redis.blog_article_export_queue']
 
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
         alias: App\Model\MultidomainEntityClassProvider
@@ -771,9 +742,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Token\TokenFacade:
         alias: App\FrontendApi\Model\Token\TokenFacade
-
-    App\FrontendApi\Component\ExpressionLanguage\DynamicPaginationComplexityExpressionFunction:
-        tags: ['overblog_graphql.expression_function']
 
     App\FrontendApi\Model\Token\TokenAuthenticator: ~
 

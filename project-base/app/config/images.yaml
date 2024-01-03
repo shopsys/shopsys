@@ -35,10 +35,10 @@
     class: Shopsys\FrameworkBundle\Model\Product\Brand\Brand
 
 -   name:  blogCategory
-    class: App\Model\Blog\Category\BlogCategory
+    class: Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory
 
 -   name:  blogArticle
-    class: App\Model\Blog\Article\BlogArticle
+    class: Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle
 
 -   name: notificationBar
     class: App\Model\NotificationBar\NotificationBar

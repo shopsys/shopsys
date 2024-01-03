@@ -1,0 +1,28 @@
+on: [push]
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
+name: "Checks and tests"
+jobs:
+    checks-and-tests:
+        name: Run checks and tests
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Install PHP, extensions and tools
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.1'
+                    extensions: bcmath, gd, intl, pdo_pgsql, redis, pgsql, zip
+                    tools: composer
+            -   name: Install Composer dependencies
+                run: composer install --optimize-autoloader --no-interaction
+            -   name: Run parallel-lint
+                run: php vendor/bin/parallel-lint ./src ./tests
+            -   name: Run Easy Coding Standards
+                run: php vendor/bin/ecs check --verbose ./src ./tests
+            -   name: Run PHPUnit
+                run: php vendor/bin/phpunit tests

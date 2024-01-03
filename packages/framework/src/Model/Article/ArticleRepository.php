@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
@@ -135,12 +136,14 @@ class ArticleRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllVisibleQueryBuilder()
+    public function getAllVisibleQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('a')
             ->from(Article::class, 'a')
-            ->where('a.hidden = false');
+            ->where('a.hidden = false')
+            ->andWhere('a.createdAt <= :todayDate')
+            ->setParameter('todayDate', new DateTime());
     }
 
     /**
