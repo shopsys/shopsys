@@ -945,3 +945,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   improve translation caching ([#2949](https://github.com/shopsys/shopsys/pull/2949))
 -   fix Search results Blog Article link type ([#2961](https://github.com/shopsys/shopsys/pull/2961))
     -   Wrong link type was causing the link to not work. Solved by replacing "article" with "blogArticle".
+-   add categoryHierarchy to Category query ([#2962](https://github.com/shopsys/shopsys/pull/2962))
+    -   in order to have proper category tree for GTM (and Persoo) we need to add proper category hierarchy tree, now we send whole tree instead of last category id
