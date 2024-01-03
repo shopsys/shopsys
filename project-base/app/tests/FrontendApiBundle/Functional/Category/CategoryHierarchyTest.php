@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Category;
 
+use App\DataFixtures\Demo\CategoryDataFixture;
+use App\Model\Category\Category;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -12,12 +14,73 @@ class CategoryHierarchyTest extends GraphQlTestCase
 {
     private const QUERY_FOLDER = __DIR__ . '/../_graphql/query/CategoryHierarchy';
 
+    private Category $categoryTvAudio;
+
+    private Category $categoryElectronics;
+
+    private Category $categoryPhoto;
+
+    private Category $categoryPrinters;
+
+    private Category $categoryPc;
+
+    private Category $categoryPhones;
+
+    private Category $categoryCoffee;
+
+    private Category $categoryFood;
+
+    private Category $categoryGardenTools;
+
+    private Category $categoryToys;
+
+    private Category $categoryBooks;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var \App\Model\Category\Category $categoryTvAudio */
+        $categoryTvAudio = $this->getReference(CategoryDataFixture::CATEGORY_TV);
+        /** @var \App\Model\Category\Category $categoryElectronics */
+        $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+        /** @var \App\Model\Category\Category $categoryPhoto */
+        $categoryPhoto = $this->getReference(CategoryDataFixture::CATEGORY_PHOTO);
+        /** @var \App\Model\Category\Category $categoryPrinters */
+        $categoryPrinters = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
+        /** @var \App\Model\Category\Category $categoryPc */
+        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
+        /** @var \App\Model\Category\Category $categoryPhones */
+        $categoryPhones = $this->getReference(CategoryDataFixture::CATEGORY_PHONES);
+        /** @var \App\Model\Category\Category $categoryCoffee */
+        $categoryCoffee = $this->getReference(CategoryDataFixture::CATEGORY_COFFEE);
+        /** @var \App\Model\Category\Category $categoryFood */
+        $categoryFood = $this->getReference(CategoryDataFixture::CATEGORY_FOOD);
+        /** @var \App\Model\Category\Category $categoryGardenTools */
+        $categoryGardenTools = $this->getReference(CategoryDataFixture::CATEGORY_GARDEN_TOOLS);
+        /** @var \App\Model\Category\Category $categoryToys */
+        $categoryToys = $this->getReference(CategoryDataFixture::CATEGORY_TOYS);
+        /** @var \App\Model\Category\Category $categoryBooks */
+        $categoryBooks = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS);
+
+        $this->categoryTvAudio = $categoryTvAudio;
+        $this->categoryElectronics = $categoryElectronics;
+        $this->categoryPhoto = $categoryPhoto;
+        $this->categoryPrinters = $categoryPrinters;
+        $this->categoryPc = $categoryPc;
+        $this->categoryPhones = $categoryPhones;
+        $this->categoryCoffee = $categoryCoffee;
+        $this->categoryFood = $categoryFood;
+        $this->categoryGardenTools = $categoryGardenTools;
+        $this->categoryToys = $categoryToys;
+        $this->categoryBooks = $categoryBooks;
+    }
+
     public function testCategoryHierarchyOnSingleCategory(): void
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
 
-        $printersName = t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
-        $printersSlug = TransformString::stringToFriendlyUrlSlug($printersName);
+        $printersSlug = TransformString::stringToFriendlyUrlSlug($this->categoryPrinters->getName($firstDomainLocale));
 
         $response = $this->getResponseContentForGql(self::QUERY_FOLDER . '/SingleCategoryQuery.graphql', [
             'urlSlug' => $printersSlug,
@@ -25,16 +88,7 @@ class CategoryHierarchyTest extends GraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'category');
 
         $expected = [
-            'categoryHierarchy' => [
-                [
-                    'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'uuid' => 'dea6764b-a03b-4171-8243-46e730c8b90b',
-                ],
-                [
-                    'name' => $printersName,
-                    'uuid' => 'a1c81439-e169-48f3-8432-98934b0ee2d7',
-                ],
-            ],
+            'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryElectronics, $this->categoryPrinters]),
         ];
 
         self::assertSame($expected, $data);
@@ -50,43 +104,23 @@ class CategoryHierarchyTest extends GraphQlTestCase
         $expected = [
             [
                 'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'categoryHierarchy' => [[
-                    'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'uuid' => 'dea6764b-a03b-4171-8243-46e730c8b90b',
-                ],
-                ],
+                'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryElectronics]),
             ],
             [
                 'name' => t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'categoryHierarchy' => [[
-                    'name' => t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'uuid' => 'b4700dea-4b83-43d3-9df1-f162a114cacd',
-                ],
-                ],
+                'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryBooks]),
             ],
             [
                 'name' => t('Toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'categoryHierarchy' => [[
-                    'name' => t('Toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'uuid' => 'c5d5a03e-1d11-43e6-9b24-9058d13346b3',
-                ],
-                ],
+                'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryToys]),
             ],
             [
                 'name' => t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'categoryHierarchy' => [[
-                    'name' => t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'uuid' => '8075297b-30b7-49e0-bd89-b4e5dec2f5b8',
-                ],
-                ],
+                'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryGardenTools]),
             ],
             [
                 'name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'categoryHierarchy' => [[
-                    'name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                    'uuid' => '57157d5a-b15b-495c-b689-65d395f1c50f',
-                ],
-                ],
+                'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryFood]),
             ],
         ];
 
@@ -105,81 +139,27 @@ class CategoryHierarchyTest extends GraphQlTestCase
                 'children' => [
                     [
                         'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'categoryHierarchy' => [
-                            [
-                                'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => 'dea6764b-a03b-4171-8243-46e730c8b90b',
-                            ],
-                            [
-                                'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => 'c8154b52-af56-45cf-b8b7-36b00bf490c3',
-                            ],
-                        ],
+                        'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryElectronics, $this->categoryTvAudio]),
                     ],
                     [
                         'name' => t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'categoryHierarchy' => [
-                            [
-                                'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => 'dea6764b-a03b-4171-8243-46e730c8b90b',
-                            ],
-                            [
-                                'name' => t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => '4b31f43c-ed0a-4db6-979b-10c27d7791f3',
-                            ],
-                        ],
+                        'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryElectronics, $this->categoryPhoto]),
                     ],
                     [
                         'name' => t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'categoryHierarchy' => [
-                            [
-                                'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => 'dea6764b-a03b-4171-8243-46e730c8b90b',
-                            ],
-                            [
-                                'name' => t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => 'a1c81439-e169-48f3-8432-98934b0ee2d7',
-                            ],
-                        ],
+                        'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryElectronics, $this->categoryPrinters]),
                     ],
                     [
                         'name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'categoryHierarchy' => [
-                            [
-                                'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => 'dea6764b-a03b-4171-8243-46e730c8b90b',
-                            ],
-                            [
-                                'name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => 'f79ade94-3f89-4244-b424-3911a1d82a64',
-                            ],
-                        ],
+                        'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryElectronics, $this->categoryPc]),
                     ],
                     [
                         'name' => t('Mobile Phones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'categoryHierarchy' => [
-                            [
-                                'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => 'dea6764b-a03b-4171-8243-46e730c8b90b',
-                            ],
-                            [
-                                'name' => t('Mobile Phones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => '6eaaa31b-0b11-45c8-bee0-0423423a799a',
-                            ],
-                        ],
+                        'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryElectronics, $this->categoryPhones]),
                     ],
                     [
                         'name' => t('Coffee Machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'categoryHierarchy' => [
-                            [
-                                'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => 'dea6764b-a03b-4171-8243-46e730c8b90b',
-                            ],
-                            [
-                                'name' => t('Coffee Machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                'uuid' => '8d18e212-ca21-43d0-9a61-4677bc2ed0a7',
-                            ],
-                        ],
+                        'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryElectronics, $this->categoryCoffee]),
                     ],
                 ],
             ],
@@ -190,5 +170,18 @@ class CategoryHierarchyTest extends GraphQlTestCase
         ];
 
         self::assertSame($expected, $data);
+    }
+
+    /**
+     * @param \App\Model\Category\Category[] $categories
+     * @return array<int, array{id: int, name: string, uuid: string}>
+     */
+    private function getExpectedCategoryHierarchyData(array $categories): array
+    {
+        return array_map(fn (Category $category) => [
+            'id' => $category->getId(),
+            'name' => $category->getName($this->getLocaleForFirstDomain()),
+            'uuid' => $category->getUuid(),
+        ], $categories);
     }
 }

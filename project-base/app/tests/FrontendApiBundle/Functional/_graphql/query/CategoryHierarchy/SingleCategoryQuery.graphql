@@ -3,6 +3,7 @@ query SingleCategoryQuery(
 ) {
     category(urlSlug: $urlSlug) {
         categoryHierarchy {
+            id
             name
             uuid
         }

@@ -536,7 +536,7 @@ export type CategoryApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   bestsellers: Array<ProductApi>;
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<LinkApi>;
-  /** All parent category names with their UUIDs */
+  /** All parent category names with their IDs and UUIDs */
   categoryHierarchy: Array<CategoryHierarchyItemApi>;
   /** Descendant categories */
   children: Array<CategoryApi>;
@@ -621,6 +621,8 @@ export type CategoryEdgeApi = {
 
 export type CategoryHierarchyItemApi = {
   __typename?: 'CategoryHierarchyItem';
+  /** ID of category */
+  id: Scalars['Int']['output'];
   /** Localized category name (domain dependent) */
   name: Scalars['String']['output'];
   /** UUID */

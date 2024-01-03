@@ -43,4 +43,4 @@ CategoryDecorator:
                 description: "Seo meta description of category"
             categoryHierarchy:
                 type: "[CategoryHierarchyItem!]!"
-                description: "All parent category names with their UUIDs"
+                description: "All parent category names with their IDs and UUIDs"
