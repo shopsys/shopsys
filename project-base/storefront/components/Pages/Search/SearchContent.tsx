@@ -42,7 +42,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, fetching 
                         {!!searchResults.articlesSearch.length && (
                             <div className="mt-6">
                                 <div className="h3 mb-3">{t('Found articles')}</div>
-                                <SimpleNavigation linkType="article" listedItems={searchResults.articlesSearch} />
+                                <SimpleNavigation linkType="blogArticle" listedItems={searchResults.articlesSearch} />
                             </div>
                         )}
 
