@@ -60,7 +60,7 @@ class PersooFeedItemFactory
             $categoryHierarchyNames[] = $category->getName($locale);
             $categoryHierarchyIds[] = $category->getId();
 
-            while ($parent !== null && $parent !== $rootCategory) {
+            while ($parent !== null && $parent->getId() !== $rootCategory->getId()) {
                 $categoryHierarchyIds[] = $parent->getId();
                 $categoryHierarchyNames[] = $parent->getName($locale);
                 $parent = $parent->getParent();

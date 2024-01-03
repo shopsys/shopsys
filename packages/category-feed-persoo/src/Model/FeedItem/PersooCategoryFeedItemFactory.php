@@ -46,7 +46,7 @@ class PersooCategoryFeedItemFactory
             $imageUrl = null;
         }
 
-        while ($parent !== null && $parent !== $rootCategory) {
+        while ($parent !== null && $parent->getId() !== $rootCategory->getId()) {
             $hierarchyIds[] = $parent->getId();
             $hierarchyNames[] = $parent->getName($locale);
             $parent = $parent->getParent();
