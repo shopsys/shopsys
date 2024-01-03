@@ -25,7 +25,7 @@ class GoPayQueryTest extends GraphQlTestCase
             ],
             [
                 'swift' => 'FIOBCSPP',
-                'name' => 'FIO banka',
+                'name' => 'FIO bank',
                 'imageLargeUrl' => 'FIO bank large image Url',
                 'imageNormalUrl' => 'FIO bank image Url',
                 'isOnline' => true,

@@ -33,7 +33,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
             'is_online' => true,
         ],
         [
-            'name' => 'FIO banka',
+            'name' => 'FIO bank',
             'swift_pattern' => self::FIO_SWIFT_PATTERN,
             'image_normal_url' => 'FIO bank image Url',
             'image_large_url' => 'FIO bank large image Url',
@@ -45,7 +45,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         [
             'reference_name' => self::PAYMENT_CARD_METHOD,
             'identifier' => GoPayPaymentMethod::IDENTIFIER_PAYMENT_CARD,
-            'name_pattern' => '[%s] Platební karta',
+            'name_pattern' => '[%s] Credit card',
             'image_normal_url' => 'payment_card',
             'image_large_url' => 'payment_card@2x',
             'payment_group' => 'card-payment',
@@ -53,7 +53,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         [
             'reference_name' => self::BANK_ACCOUNT_METHOD,
             'identifier' => GoPayPaymentMethod::IDENTIFIER_BANK_TRANSFER,
-            'name_pattern' => '[%s] Rychlý bankovní převod',
+            'name_pattern' => '[%s] Quick bank account transfer',
             'image_normal_url' => 'bank_account',
             'image_large_url' => 'bank_account@2x',
             'payment_group' => 'bank-transfer',
@@ -93,7 +93,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         [
             'reference_name' => null,
             'identifier' => 'MPAYMENT',
-            'name_pattern' => '[%s] m-platba',
+            'name_pattern' => '[%s] m-payment',
             'image_normal_url' => 'mpayment',
             'image_large_url' => 'mpayment@2x',
             'payment_group' => 'others',

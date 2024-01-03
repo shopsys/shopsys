@@ -97,7 +97,7 @@ class PaymentsTest extends GraphQlTestCase
                 ],
                 'goPayPaymentMethod' => [
                     'identifier' => 'PAYMENT_CARD',
-                    'name' => sprintf('[%s] Platební karta', $firstDomainLocaleUppercase),
+                    'name' => sprintf('[%s] Credit card', $firstDomainLocaleUppercase),
                     'imageNormalUrl' => 'https://gate.gopay.cz/images/checkout/payment_card.png',
                     'imageLargeUrl' => 'https://gate.gopay.cz/images/checkout/payment_card@2x.png',
                     'paymentGroup' => 'card-payment',
@@ -119,7 +119,7 @@ class PaymentsTest extends GraphQlTestCase
                 ],
                 'goPayPaymentMethod' => [
                     'identifier' => 'BANK_ACCOUNT',
-                    'name' => sprintf('[%s] Rychlý bankovní převod', $firstDomainLocaleUppercase),
+                    'name' => sprintf('[%s] Quick bank account transfer', $firstDomainLocaleUppercase),
                     'imageNormalUrl' => 'https://gate.gopay.cz/images/checkout/bank_account.png',
                     'imageLargeUrl' => 'https://gate.gopay.cz/images/checkout/bank_account@2x.png',
                     'paymentGroup' => 'bank-transfer',
