@@ -29,7 +29,7 @@
             <image_link>{{ item.imageLink }}</image_link>
         {% endif -%}
         <availability>{{ item.availability }}</availability>
-        <price>{{ item.price.priceWithVat|moneyFormat(2) }} {{ item.currency.code }}</price>
+        <price>{{ item.price.priceWithVat|moneyFormat(2) }}</price>
         {%  if item.brand is not null -%}
             <brand>{{ item.brand }}</brand>
         {% endif -%}

@@ -6,11 +6,11 @@ namespace Shopsys\ProductFeed\PersooBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
-use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -25,6 +25,7 @@ class PersooFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
@@ -32,6 +33,7 @@ class PersooFeedItemFactory
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly CategoryRepository $categoryRepository,
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
+        protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
     }
 
@@ -45,9 +47,7 @@ class PersooFeedItemFactory
         $locale = $domainConfig->getLocale();
         $rootCategory = $this->categoryRepository->getRootCategory();
         $mainCategory = $this->categoryRepository->getProductMainCategoryOnDomain($product, $domainConfig->getId());
-        $availability = $product->getCalculatedSellingDenied() === true ?
-            t('Out of stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) :
-            t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
+        $availability = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainConfig->getId());
         $productDescription = $product->isVariant() ? $product->getMainVariant()->getDescriptionAsPlainText($domainConfig->getId()) : $product->getDescriptionAsPlainText($domainConfig->getId());
         $categories = $product->getCategoriesIndexedByDomainId()[$domainConfig->getId()];
         $categoryHierarchyNamesByCategoryId = [];
@@ -60,7 +60,7 @@ class PersooFeedItemFactory
             $categoryHierarchyNames[] = $category->getName($locale);
             $categoryHierarchyIds[] = $category->getId();
 
-            while ($parent !== null && $parent !== $rootCategory) {
+            while ($parent !== null && $parent->getId() !== $rootCategory->getId()) {
                 $categoryHierarchyIds[] = $parent->getId();
                 $categoryHierarchyNames[] = $parent->getName($locale);
                 $parent = $parent->getParent();
