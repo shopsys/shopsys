@@ -941,3 +941,5 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   in your `next.config.js`, add all your domains names into `images -> remotePatterns` setting
 
 -   improve translation caching ([#2949](https://github.com/shopsys/shopsys/pull/2949))
+-   fix Search results Blog Article link type ([#2961](https://github.com/shopsys/shopsys/pull/2961))
+    -   Wrong link type was causing the link to not work. Solved by replacing "article" with "blogArticle".
