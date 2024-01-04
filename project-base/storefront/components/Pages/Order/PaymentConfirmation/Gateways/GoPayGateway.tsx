@@ -9,10 +9,17 @@ import { useEffect, useRef, useState } from 'react';
 type GoPayGatewayProps = {
     orderUuid: string;
     requiresAction?: boolean;
+    isDisabled?: boolean;
     initialButtonText?: string;
 };
 
-export const GoPayGateway: FC<GoPayGatewayProps> = ({ orderUuid, requiresAction, initialButtonText, className }) => {
+export const GoPayGateway: FC<GoPayGatewayProps> = ({
+    orderUuid,
+    requiresAction,
+    initialButtonText,
+    className,
+    isDisabled,
+}) => {
     const [initiatedPaymentGate, setInitiatedPaymentGate] = useState(!requiresAction);
     const [goPayPaymentSetup, setGoPayPaymentSetup] = useState<GoPayCreatePaymentSetupApi | undefined>(undefined);
     const [, payOrder] = usePayOrderMutationApi();
@@ -54,7 +61,7 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({ orderUuid, requiresAction,
                 />
             )}
             {requiresAction && (
-                <Button className={className} onClick={() => setInitiatedPaymentGate(true)}>
+                <Button className={className} isDisabled={isDisabled} onClick={() => setInitiatedPaymentGate(true)}>
                     {initiatedPaymentGate ? (
                         <>
                             <SpinnerIcon className="w-5" />
