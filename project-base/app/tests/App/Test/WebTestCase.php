@@ -11,6 +11,8 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAllProductsMessage;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAllProductsMessageHandler;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -43,6 +45,11 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
      * @inject
      */
     protected ProductRecalculationMessageHandler $productRecalculationMessageHandler;
+
+    /**
+     * @inject
+     */
+    protected DispatchAllProductsMessageHandler $dispatchAllProductsMessageHandler;
 
     /**
      * @inject
@@ -149,8 +156,10 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
 
     /**
      * Consumes messages dispatched by ProductRecalculationDispatcher class and run recalculations for dispatched messages
+     *
+     * @param array|null $allowedProductIds If null, all messages are processed. Otherwise, only messages with product IDs in this array are processed.
      */
-    public function handleDispatchedRecalculationMessages(): void
+    public function handleDispatchedRecalculationMessages(?array $allowedProductIds = null): void
     {
         $this->productIndexBackupFacade->createSnapshot();
 
@@ -160,16 +169,37 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         $regularPriorityTransport = self::getContainer()->get('messenger.transport.product_recalculation_priority_regular');
         /** @var \Symfony\Component\Messenger\Transport\InMemoryTransport $highPriorityTransport */
         $highPriorityTransport = self::getContainer()->get('messenger.transport.product_recalculation_priority_high');
-        $handler = $this->productRecalculationMessageHandler;
+        $productRecalculationMessageHandler = $this->productRecalculationMessageHandler;
+        $dispatchAllProductsMessageHandler = $this->dispatchAllProductsMessageHandler;
 
+        $envelopes = $regularPriorityTransport->getSent();
+
+        foreach ($envelopes as $envelope) {
+            $message = $envelope->getMessage();
+
+            if ($message instanceof DispatchAllProductsMessage) {
+                $dispatchAllProductsMessageHandler($message);
+
+                // all products were dispatched, so we can stop processing messages
+                break;
+            }
+        }
+
+        $this->dispatchFakeKernelResponseEventToTriggerSendMessageToTransport();
         $envelopes = [...$highPriorityTransport->getSent(), ...$regularPriorityTransport->getSent()];
 
         foreach ($envelopes as $envelope) {
             $message = $envelope->getMessage();
 
-            if ($message instanceof AbstractProductRecalculationMessage) {
-                $handler($message);
+            if (!($message instanceof AbstractProductRecalculationMessage)) {
+                continue;
             }
+
+            if ($allowedProductIds !== null && !in_array($message->productId, $allowedProductIds, true)) {
+                continue;
+            }
+
+            $productRecalculationMessageHandler($message);
         }
     }
 
