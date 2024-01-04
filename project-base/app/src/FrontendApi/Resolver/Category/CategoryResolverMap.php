@@ -14,12 +14,14 @@ use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap as BaseCategoryResolverMap;
 
 class CategoryResolverMap extends BaseCategoryResolverMap
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader
@@ -28,13 +30,14 @@ class CategoryResolverMap extends BaseCategoryResolverMap
      */
     public function __construct(
         Domain $domain,
-        private FriendlyUrlFacade $friendlyUrlFacade,
-        private DataLoaderInterface $readyCategorySeoMixesBatchLoader,
-        private DataLoaderInterface $categoryChildrenBatchLoader,
-        private DataLoaderInterface $linkedCategoriesBatchLoader,
-        private CategoryFacade $categoryFacade,
+        HreflangLinksFacade $hreflangLinksFacade,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+        private readonly DataLoaderInterface $readyCategorySeoMixesBatchLoader,
+        private readonly DataLoaderInterface $categoryChildrenBatchLoader,
+        private readonly DataLoaderInterface $linkedCategoriesBatchLoader,
+        private readonly CategoryFacade $categoryFacade,
     ) {
-        parent::__construct($domain);
+        parent::__construct($domain, $hreflangLinksFacade);
     }
 
     /**
@@ -86,42 +89,38 @@ class CategoryResolverMap extends BaseCategoryResolverMap
      * @param \App\Model\Category\Category $category
      * @return mixed
      */
-    private function mapByCategory(string $fieldName, Category $category)
+    private function mapCommonFields(string $fieldName, Category $category): mixed
     {
-        switch ($fieldName) {
-            case 'id':
-                return $category->getId();
-            case 'uuid':
-                return $category->getUuid();
-            case 'name':
-                return $category->getName($this->domain->getLocale()) ?? '';
-            case 'description':
-                return $category->getDescription($this->domain->getId());
-            case 'children':
-                return $this->categoryChildrenBatchLoader->load($category);
-            case 'parent':
-                $parent = $category->getParent();
+        return match ($fieldName) {
+            'id' => $category->getId(),
+            'name' => $category->getName($this->domain->getLocale()) ?? '',
+            'children' => $this->categoryChildrenBatchLoader->load($category),
+            'parent' => $category->getParent() !== null && $category->getParent()->getParent() !== null ? $category->getParent() : null,
+            'readyCategorySeoMixLinks' => $this->readyCategorySeoMixesBatchLoader->load($category->getId()),
+            'linkedCategories' => $this->linkedCategoriesBatchLoader->load($category),
+            'categoryHierarchy' => $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain($category, $this->domain->getId()),
+            'hreflangLinks' => $this->hreflangLinksFacade->getForCategory($category, $this->domain->getId()),
+            default => throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName)),
+        };
+    }
 
-                return $parent !== null && $parent->getParent() !== null ? $parent : null;
-            case 'seoH1':
-                return $category->getSeoH1($this->domain->getId());
-            case 'seoTitle':
-                return $category->getSeoTitle($this->domain->getId());
-            case 'seoMetaDescription':
-                return $category->getSeoMetaDescription($this->domain->getId());
-            case 'slug':
-                return $this->getSlug($category->getId(), 'front_product_list');
-            case 'originalCategorySlug':
-                return null;
-            case 'readyCategorySeoMixLinks':
-                return $this->readyCategorySeoMixesBatchLoader->load($category->getId());
-            case 'linkedCategories':
-                return $this->linkedCategoriesBatchLoader->load($category);
-            case 'categoryHierarchy':
-                return $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain($category, $this->domain->getId());
-            default:
-                throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName));
-        }
+    /**
+     * @param string $fieldName
+     * @param \App\Model\Category\Category $category
+     * @return mixed
+     */
+    private function mapByCategory(string $fieldName, Category $category): mixed
+    {
+        return match ($fieldName) {
+            'uuid' => $category->getUuid(),
+            'description' => $category->getDescription($this->domain->getId()),
+            'seoH1' => $category->getSeoH1($this->domain->getId()),
+            'seoTitle' => $category->getSeoTitle($this->domain->getId()),
+            'seoMetaDescription' => $category->getSeoMetaDescription($this->domain->getId()),
+            'slug' => $this->getSlug($category->getId(), 'front_product_list'),
+            'originalCategorySlug' => null,
+            default => $this->mapCommonFields($fieldName, $category),
+        };
     }
 
     /**
@@ -129,41 +128,19 @@ class CategoryResolverMap extends BaseCategoryResolverMap
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
      * @return mixed
      */
-    private function mapByReadyCategorySeoMix(string $fieldName, ReadyCategorySeoMix $readyCategorySeoMix)
+    private function mapByReadyCategorySeoMix(string $fieldName, ReadyCategorySeoMix $readyCategorySeoMix): mixed
     {
         $category = $readyCategorySeoMix->getCategory();
 
-        switch ($fieldName) {
-            case 'id':
-                return $category->getId();
-            case 'uuid':
-                return $readyCategorySeoMix->getUuid();
-            case 'name':
-                return $category->getName($this->domain->getLocale()) ?? '';
-            case 'description':
-                return $readyCategorySeoMix->getDescription() ?? '';
-            case 'children':
-                return $this->categoryChildrenBatchLoader->load($category);
-            case 'parent':
-                $parent = $category->getParent();
-
-                return $parent !== null && $parent->getParent() !== null ? $parent : null;
-            case 'seoH1':
-                return $readyCategorySeoMix->getH1();
-            case 'seoTitle':
-                return $readyCategorySeoMix->getTitle() ?? $readyCategorySeoMix->getH1();
-            case 'seoMetaDescription':
-                return $readyCategorySeoMix->getMetaDescription() ?? $category->getSeoMetaDescription($this->domain->getId());
-            case 'slug':
-                return $this->getSlug($readyCategorySeoMix->getId(), 'front_category_seo');
-            case 'originalCategorySlug':
-                return $this->getSlug($category->getId(), 'front_product_list');
-            case 'readyCategorySeoMixLinks':
-                return $this->readyCategorySeoMixesBatchLoader->load($category->getId());
-            case 'linkedCategories':
-                return $this->linkedCategoriesBatchLoader->load($category);
-            default:
-                throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName));
-        }
+        return match ($fieldName) {
+            'uuid' => $readyCategorySeoMix->getUuid(),
+            'description' => $readyCategorySeoMix->getDescription() ?? '',
+            'seoH1' => $readyCategorySeoMix->getH1(),
+            'seoTitle' => $readyCategorySeoMix->getTitle() ?? $readyCategorySeoMix->getH1(),
+            'seoMetaDescription' => $readyCategorySeoMix->getMetaDescription() ?? $category->getSeoMetaDescription($this->domain->getId()),
+            'slug' => $this->getSlug($readyCategorySeoMix->getId(), 'front_category_seo'),
+            'originalCategorySlug' => $this->getSlug($category->getId(), 'front_product_list'),
+            default => $this->mapCommonFields($fieldName, $category),
+        };
     }
 }

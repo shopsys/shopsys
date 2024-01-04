@@ -6,10 +6,12 @@ namespace Shopsys\FrameworkBundle\Model\Seo;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 
 class HreflangLinksFacade
 {
+    protected const ROUTE_PRODUCT_LIST = 'front_product_list';
     protected const ROUTE_BRAND_DETAIL = 'front_brand_detail';
 
     /**
@@ -22,6 +24,35 @@ class HreflangLinksFacade
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param int $currentDomainId
+     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
+     */
+    public function getForCategory(Category $category, int $currentDomainId): array
+    {
+        $domainIds = $this->getRelevantDomainIds($currentDomainId);
+
+        $result = [];
+
+        foreach ($domainIds as $domainId) {
+            if ($category->isVisible($domainId) === false) {
+                continue;
+            }
+
+            $result[] = new HreflangLink(
+                $this->domain->getDomainConfigById($domainId)->getLocale(),
+                $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
+                    $domainId,
+                    static::ROUTE_PRODUCT_LIST,
+                    $category->getId(),
+                ),
+            );
+        }
+
+        return $result;
     }
 
     /**

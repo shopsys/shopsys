@@ -1,0 +1,8 @@
+query CategoryHreflangLinksQuery($urlSlug: String!) {
+    category(urlSlug: $urlSlug) {
+        hreflangLinks{
+            hreflang
+            href
+        }
+    }
+}

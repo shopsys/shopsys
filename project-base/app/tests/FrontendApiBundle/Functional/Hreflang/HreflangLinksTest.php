@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Hreflang;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BrandDataFixture;
+use App\DataFixtures\Demo\CategoryDataFixture;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -31,6 +32,13 @@ class HreflangLinksTest extends GraphQlTestCase
             'routeName' => 'front_brand_detail',
             'graphQlFileName' => 'BrandHreflangLinksQuery.graphql',
             'entityName' => 'brand',
+        ];
+
+        yield 'Category' => [
+            'entityReference' => CategoryDataFixture::CATEGORY_BOOKS,
+            'routeName' => 'front_product_list',
+            'graphQlFileName' => 'CategoryHreflangLinksQuery.graphql',
+            'entityName' => 'category',
         ];
     }
 
