@@ -20,8 +20,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class ProductsQuery extends AbstractQuery
 {
-    protected const DEFAULT_FIRST_LIMIT = 10;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
@@ -138,16 +136,6 @@ class ProductsQuery extends AbstractQuery
             $argument,
             $productFilterData,
         );
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     */
-    protected function setDefaultFirstOffsetIfNecessary(Argument $argument): void
-    {
-        if ($argument->offsetExists('first') === false && $argument->offsetExists('last') === false) {
-            $argument->offsetSet('first', static::DEFAULT_FIRST_LIMIT);
-        }
     }
 
     /**
