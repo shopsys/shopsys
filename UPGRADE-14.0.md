@@ -764,6 +764,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   Frontend API `privacyPolicyArticle` query now returns `ArticleSite` type instead of `Article`
     -   Frontend API `cookiesArticle` query now returns `ArticleSite` type instead of `Article`
     -   see #project-base-diff to update your project
+-   fix broken drag and drop in GrapesJS in Safari ([#2966])(https://github.com/shopsys/shopsys/pull/2966)
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
