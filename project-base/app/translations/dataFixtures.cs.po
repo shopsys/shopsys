@@ -2153,5 +2153,5 @@ msgid "wood"
 msgstr "dřevo"
 
 msgid "| Demo eshop"
-msgstr ""
+msgstr "| Demo e-shop"
 
