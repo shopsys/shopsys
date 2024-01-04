@@ -7,10 +7,10 @@ namespace Tests\App\Test;
 use Psr\Container\ContainerInterface;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -165,9 +165,11 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         $envelopes = [...$highPriorityTransport->getSent(), ...$regularPriorityTransport->getSent()];
 
         foreach ($envelopes as $envelope) {
-            /** @var \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage $message */
             $message = $envelope->getMessage();
-            $handler($message);
+
+            if ($message instanceof AbstractProductRecalculationMessage) {
+                $handler($message);
+            }
         }
     }
 
