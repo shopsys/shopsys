@@ -65,7 +65,7 @@
         "codemirror": "^5.60.0",
         "counterup2": "^1.0.4",
         "grapesjs": "^0.20.3",
-        "grapesjs-plugin-ckeditor": "^0.0.10",
+        "grapesjs-plugin-ckeditor": "^1.0.1",
         "grapesjs-preset-newsletter": "^0.2.21",
         "grapesjs-preset-webpage": "^1.0.2",
         "intersection-observer": "^0.11.0",

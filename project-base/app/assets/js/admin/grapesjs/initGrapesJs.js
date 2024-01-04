@@ -86,7 +86,7 @@ export default class InitGrapesJs {
             noticeOnUnload: false,
             avoidInlineStyle: false,
             forceClass: false,
-            nativeDnD: false,
+            nativeDnD: true,
             plugins: plugins,
             pluginsOpts: {
                 [ckeditorPlugin]: {
