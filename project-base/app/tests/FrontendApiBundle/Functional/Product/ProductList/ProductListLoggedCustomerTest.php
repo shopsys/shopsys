@@ -9,10 +9,7 @@ use App\DataFixtures\Demo\ProductListDataFixture;
 use Iterator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
-use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductAlreadyInListUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductListUserErrorCodeHelper;
-use Shopsys\FrontendApiBundle\Model\Mutation\ProductList\Exception\ProductNotInListUserError;
-use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundUserError;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
@@ -170,7 +167,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
         $this->assertCount(1, $errors);
-        $this->assertSame(ProductListUserErrorCodeHelper::getUserErrorCode($productListType, ProductAlreadyInListUserError::CODE), $errors[0]['extensions']['userCode']);
+        $this->assertSame(ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-already-in-list'), $errors[0]['extensions']['userCode']);
     }
 
     /**
@@ -188,7 +185,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
         $this->assertCount(1, $errors);
-        $this->assertSame(ProductNotFoundUserError::CODE, $errors[0]['extensions']['userCode']);
+        $this->assertSame('product-not-found', $errors[0]['extensions']['userCode']);
     }
 
     /**
@@ -207,7 +204,7 @@ class ProductListLoggedCustomerTest extends GraphQlWithLoginTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
         $this->assertCount(1, $errors);
-        $this->assertSame(ProductListUserErrorCodeHelper::getUserErrorCode($productListType, ProductNotInListUserError::CODE), $errors[0]['extensions']['userCode']);
+        $this->assertSame(ProductListUserErrorCodeHelper::getUserErrorCode($productListType, 'product-not-in-list'), $errors[0]['extensions']['userCode']);
     }
 
     /**

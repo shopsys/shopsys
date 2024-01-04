@@ -10,7 +10,7 @@ use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class ProductListNotFoundUserError extends UserError implements UserErrorWithCodeInterface
 {
-    public const CODE = 'product-list-not-found';
+    protected const CODE = 'product-list-not-found';
 
     /**
      * @param string $message

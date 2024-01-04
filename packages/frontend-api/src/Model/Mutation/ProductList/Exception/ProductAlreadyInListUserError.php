@@ -10,7 +10,7 @@ use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class ProductAlreadyInListUserError extends UserError implements UserErrorWithCodeInterface
 {
-    public const CODE = 'product-already-in-list';
+    protected const CODE = 'product-already-in-list';
 
     /**
      * @param string $message

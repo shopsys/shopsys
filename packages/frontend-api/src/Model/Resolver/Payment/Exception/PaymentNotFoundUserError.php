@@ -9,7 +9,7 @@ use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class PaymentNotFoundUserError extends EntityNotFoundUserError implements UserErrorWithCodeInterface
 {
-    public const CODE = 'payment-not-found';
+    protected const CODE = 'payment-not-found';
 
     /**
      * {@inheritdoc}

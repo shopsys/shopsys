@@ -14,8 +14,6 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFact
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder;
-use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
-use Shopsys\FrontendApiBundle\Model\Resolver\Payment\Exception\PaymentNotFoundUserError;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ChangePaymentInOrderMutationTest extends GraphQlTestCase
@@ -97,7 +95,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $errors = $this->getErrorsFromResponse($response);
         $extensions = $errors[0]['extensions'];
 
-        self::assertSame(OrderNotFoundUserError::CODE, $extensions['userCode']);
+        self::assertSame('order-not-found', $extensions['userCode']);
     }
 
     public function testChangePaymentInOrderMutationNonExistingPayment(): void
@@ -115,7 +113,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $errors = $this->getErrorsFromResponse($response);
         $extensions = $errors[0]['extensions'];
 
-        self::assertSame(PaymentNotFoundUserError::CODE, $extensions['userCode']);
+        self::assertSame('payment-not-found', $extensions['userCode']);
     }
 
     public function testChangePaymentInOrderValidationUnavailablePayment(): void

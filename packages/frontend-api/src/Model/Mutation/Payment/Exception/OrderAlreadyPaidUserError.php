@@ -9,13 +9,13 @@ use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class OrderAlreadyPaidUserError extends UserError implements UserErrorWithCodeInterface
 {
-    public const CODE = 'order-already-paid';
+    protected const CODE = 'order-already-paid';
 
     /**
      * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {
-        return self::CODE;
+        return static::CODE;
     }
 }

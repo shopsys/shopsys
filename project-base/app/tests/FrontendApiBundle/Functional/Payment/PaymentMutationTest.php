@@ -9,8 +9,6 @@ use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
-use Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception\MaxTransactionCountReachedUserError;
-use Shopsys\FrontendApiBundle\Model\Mutation\Payment\Exception\OrderAlreadyPaidUserError;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentMutationTest extends GraphQlTestCase
@@ -93,7 +91,7 @@ class PaymentMutationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
-        $this->assertSame(OrderAlreadyPaidUserError::CODE, $errors[0]['extensions']['userCode']);
+        $this->assertSame('order-already-paid', $errors[0]['extensions']['userCode']);
     }
 
     public function testOrderCannotBePaidForPaymentWithTwoTransactions(): void
@@ -109,6 +107,6 @@ class PaymentMutationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
-        $this->assertSame(MaxTransactionCountReachedUserError::CODE, $errors[0]['extensions']['userCode']);
+        $this->assertSame('max-transaction-count-reached', $errors[0]['extensions']['userCode']);
     }
 }

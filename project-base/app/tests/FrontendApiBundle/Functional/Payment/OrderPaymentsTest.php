@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
-use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class OrderPaymentsTest extends GraphQlTestCase
@@ -122,7 +121,7 @@ class OrderPaymentsTest extends GraphQlTestCase
         $this->assertArrayHasKey('extensions', $errors[0]);
         $this->assertArrayHasKey('userCode', $errors[0]['extensions']);
         $this->assertSame(
-            OrderNotFoundUserError::CODE,
+            'order-not-found',
             $errors[0]['extensions']['userCode'],
         );
     }

@@ -9,7 +9,7 @@ use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class OrderNotFoundUserError extends EntityNotFoundUserError implements UserErrorWithCodeInterface
 {
-    public const CODE = 'order-not-found';
+    protected const CODE = 'order-not-found';
 
     /**
      * {@inheritdoc}
