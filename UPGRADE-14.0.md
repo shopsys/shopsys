@@ -629,6 +629,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   add failure transport for unprocessable messages ([#2958](https://github.com/shopsys/shopsys/pull/2958))
     -   see #project-base-diff to update your project
+-   add Symfony Toolbar to JavaScript Storefront ([#2967](https://github.com/shopsys/shopsys/pull/2967))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

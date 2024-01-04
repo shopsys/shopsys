@@ -330,6 +330,9 @@
     "litipk/php-bignumbers": {
         "version": "0.8.6"
     },
+    "mgdsoft/symfony-profiler-spa": {
+        "version": "v1.0.4"
+    },
     "monolog/monolog": {
         "version": "1.25.1"
     },

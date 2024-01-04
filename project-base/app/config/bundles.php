@@ -43,4 +43,5 @@ return [
     Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
     Overblog\DataLoaderBundle\OverblogDataLoaderBundle::class => ['all' => true],
+    MGDSoft\SymfonyProfilerSPA\Bundle\SymfonyProfilerSPABundle::class => ['dev' => true],
 ];

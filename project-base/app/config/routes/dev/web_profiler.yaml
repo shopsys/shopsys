@@ -5,3 +5,7 @@ web_profiler_wdt:
 web_profiler_profiler:
     resource: '@WebProfilerBundle/Resources/config/routing/profiler.xml'
     prefix: /_profiler
+
+mgd_profiler_spa:
+    resource: '@SymfonyProfilerSPABundle/Resources/config/routing/routing.yml'
+    prefix: /

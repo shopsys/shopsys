@@ -1,7 +1,8 @@
 import { captureException } from '@sentry/nextjs';
+import { isEnvironment } from 'helpers/isEnvironment';
 
 export const logException = (e: unknown): void => {
-    if (process.env.APP_ENV === 'development') {
+    if (isEnvironment('development')) {
         // eslint-disable-next-line no-console
         console.error(e);
     }
