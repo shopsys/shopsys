@@ -1,0 +1,11 @@
+HreflangLinkDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            hreflang:
+                type: "String!"
+                description: "Language code for hreflang meta tag"
+            href:
+                type: "String!"
+                description: "URL for hreflang meta tag"

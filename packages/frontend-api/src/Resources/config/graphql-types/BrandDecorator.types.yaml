@@ -2,6 +2,8 @@ BrandDecorator:
     type: object
     decorator: true
     config:
+        interfaces:
+            - 'Hreflang'
         description: "Represents a brand"
         fields:
             uuid:
@@ -41,3 +43,6 @@ BrandDecorator:
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
                 resolve: '@=query("productsByBrandQuery", args, value)'
+            hreflangLinks:
+                type: "[HreflangLink!]!"
+                description: "Alternate links for hreflang meta tags"
