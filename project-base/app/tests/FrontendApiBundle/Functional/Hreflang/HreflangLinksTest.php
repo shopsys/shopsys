@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Hreflang;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -40,6 +41,13 @@ class HreflangLinksTest extends GraphQlTestCase
             'graphQlFileName' => 'CategoryHreflangLinksQuery.graphql',
             'entityName' => 'category',
         ];
+
+        yield 'Product' => [
+            'entityReference' => ProductDataFixture::PRODUCT_PREFIX . 1,
+            'routeName' => 'front_product_detail',
+            'graphQlFileName' => 'ProductHreflangLinksQuery.graphql',
+            'entityName' => 'product',
+        ];
     }
 
     /**
@@ -58,6 +66,13 @@ class HreflangLinksTest extends GraphQlTestCase
         $this->seoSettingFacade->setAllAlternativeDomains([]);
 
         $entity = $this->getReference($entityReference);
+
+        if ($graphQlType === 'product') {
+            $this->handleDispatchedRecalculationMessages([$entity->getId()]);
+
+            // Wait for elasticsearch to index the product
+            sleep(1);
+        }
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/' . $graphQlFileName,
@@ -102,6 +117,7 @@ class HreflangLinksTest extends GraphQlTestCase
         string $graphQlType,
     ): void {
         $entity = $this->getReference($entityReference);
+        $secondDomainId = 2;
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/' . $graphQlFileName,

@@ -27,6 +27,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 /**
  * @property \App\Model\Product\ProductFacade $productFacade
@@ -61,6 +62,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
@@ -78,6 +80,7 @@ class ProductExportRepository extends BaseProductExportRepository
         ProductAccessoryFacade $productAccessoryFacade,
         BrandCachedFacade $brandCachedFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
+        HreflangLinksFacade $hreflangLinksFacade,
         private readonly ProductRepository $productRepository,
         private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         private readonly ProductPriceCalculation $productPriceCalculation,
@@ -95,6 +98,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $productAccessoryFacade,
             $brandCachedFacade,
             $productAvailabilityFacade,
+            $hreflangLinksFacade,
         );
     }
 
@@ -237,6 +241,7 @@ class ProductExportRepository extends BaseProductExportRepository
                     'description' => ($this->productVideoTranslationsRepository->findByProductVideoIdAndLocale($productVideo->getId(), $locale))->getDescription(),
                 ];
             }, $product->getProductVideos()),
+            'hreflang_links' => $this->hreflangLinksFacade->getForProduct($product, $domainId),
         ];
     }
 

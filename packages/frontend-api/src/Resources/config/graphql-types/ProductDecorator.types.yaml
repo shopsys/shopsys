@@ -68,3 +68,6 @@ ProductDecorator:
             seoMetaDescription:
                 type: "String"
                 description: "Seo meta description of product"
+            hreflangLinks:
+                type: "[HreflangLink!]!"
+                description: "Alternate links for hreflang meta tags"

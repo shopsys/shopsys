@@ -6,3 +6,4 @@ RegularProductDecorator:
     config:
         interfaces:
             - 'Product'
+            - 'Hreflang'

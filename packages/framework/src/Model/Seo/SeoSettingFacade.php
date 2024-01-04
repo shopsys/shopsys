@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Seo;
 
 use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 
 class SeoSettingFacade
 {
@@ -17,9 +18,12 @@ class SeoSettingFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
-    public function __construct(protected readonly Setting $setting)
-    {
+    public function __construct(
+        protected readonly Setting $setting,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+    ) {
     }
 
     /**
@@ -146,5 +150,7 @@ class SeoSettingFacade
     public function setAllAlternativeDomains(array $alternativeLanguageDomains): void
     {
         $this->setting->set(self::SEO_ALTERNATIVE_DOMAINS, Json::encode($alternativeLanguageDomains));
+
+        $this->productRecalculationDispatcher->dispatchAllProducts();
     }
 }

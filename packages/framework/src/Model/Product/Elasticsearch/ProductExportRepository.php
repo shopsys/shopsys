@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 class ProductExportRepository
 {
@@ -34,6 +35,7 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -46,6 +48,7 @@ class ProductExportRepository
         protected readonly ProductAccessoryFacade $productAccessoryFacade,
         protected readonly BrandCachedFacade $brandCachedFacade,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        protected readonly HreflangLinksFacade $hreflangLinksFacade,
     ) {
     }
 
@@ -163,6 +166,7 @@ class ProductExportRepository
             'seo_title' => $product->getSeoTitle($domainId),
             'seo_meta_description' => $product->getSeoMetaDescription($domainId),
             'accessories' => $this->extractAccessoriesIds($product),
+            'hreflang_links' => $this->hreflangLinksFacade->getForProduct($product, $domainId),
         ];
     }
 

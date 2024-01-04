@@ -52,6 +52,7 @@ class ProductElasticsearchConverterTest extends TestCase
             'seo_h1' => null,
             'seo_title' => null,
             'seo_meta_description' => null,
+            'hreflang_links' => [],
         ];
 
         $converter = new ProductElasticsearchConverter();
@@ -116,6 +117,7 @@ class ProductElasticsearchConverterTest extends TestCase
             'seo_h1' => null,
             'seo_title' => null,
             'seo_meta_description' => null,
+            'hreflang_links' => [],
         ];
 
         $converter = new ProductElasticsearchConverter();
