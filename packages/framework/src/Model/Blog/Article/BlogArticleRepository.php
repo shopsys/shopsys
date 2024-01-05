@@ -150,6 +150,20 @@ class BlogArticleRepository
     }
 
     /**
+     * @param int $domainId
+     * @return int[]
+     */
+    public function getAllIdsByDomainId(int $domainId): array
+    {
+        $result = $this->getBlogArticlesByDomainIdQueryBuilder($domainId)
+            ->select('ba.id')
+            ->getQuery()
+            ->execute();
+
+        return array_column($result, 'id');
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
      * @param int $domainId
      * @param string $locale

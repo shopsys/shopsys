@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Seo;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -17,6 +18,7 @@ class HreflangLinksFacade
     protected const ROUTE_PRODUCT_DETAIL = 'front_product_detail';
     protected const ROUTE_PRODUCT_LIST = 'front_product_list';
     protected const ROUTE_BRAND_DETAIL = 'front_brand_detail';
+    protected const ROUTE_BLOG_ARTICLE_DETAIL = 'front_blogarticle_detail';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
@@ -116,6 +118,31 @@ class HreflangLinksFacade
                     $domainId,
                     static::ROUTE_BRAND_DETAIL,
                     $brand->getId(),
+                ),
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle $blogArticle
+     * @param int $currentDomainId
+     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
+     */
+    public function getForBlogArticle(BlogArticle $blogArticle, int $currentDomainId): array
+    {
+        $domainIds = $this->getRelevantDomainIds($currentDomainId);
+
+        $result = [];
+
+        foreach ($domainIds as $domainId) {
+            $result[] = new HreflangLink(
+                $this->domain->getDomainConfigById($domainId)->getLocale(),
+                $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
+                    $domainId,
+                    static::ROUTE_BLOG_ARTICLE_DETAIL,
+                    $blogArticle->getId(),
                 ),
             );
         }

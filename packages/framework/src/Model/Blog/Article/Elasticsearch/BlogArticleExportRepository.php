@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 class BlogArticleExportRepository
 {
@@ -27,6 +28,7 @@ class BlogArticleExportRepository
      * @param \Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser $grapesJsParser
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -36,6 +38,7 @@ class BlogArticleExportRepository
         protected readonly GrapesJsParser $grapesJsParser,
         protected readonly ImageFacade $imageFacade,
         protected readonly Domain $domain,
+        protected readonly HreflangLinksFacade $hreflangLinksFacade,
     ) {
     }
 
@@ -135,6 +138,7 @@ class BlogArticleExportRepository
             'mainSlug' => $mainFriendlyUrl->getSlug(),
             'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($blogArticle->getId(), 'front_blogarticle_detail', $domainId, $locale),
             'imageUrl' => $imageUrl,
+            'hreflangLinks' => $this->hreflangLinksFacade->getForBlogArticle($blogArticle, $domainId),
         ];
     }
 }

@@ -40,6 +40,9 @@ class BlogArticleResolverMap extends ResolverMap
                 'link' => static function (array $blogArticleData) {
                     return $blogArticleData['url'];
                 },
+                'hreflangLinks' => function (array $blogArticleData) {
+                    return $blogArticleData['hreflangLinks'];
+                },
             ],
         ];
     }

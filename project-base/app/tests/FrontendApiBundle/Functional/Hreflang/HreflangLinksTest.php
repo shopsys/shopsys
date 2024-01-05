@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Hreflang;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use App\DataFixtures\Demo\BlogArticleDataFixture;
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
@@ -48,6 +49,13 @@ class HreflangLinksTest extends GraphQlTestCase
             'graphQlFileName' => 'ProductHreflangLinksQuery.graphql',
             'entityName' => 'product',
         ];
+
+        yield 'BlogArticle' => [
+            'entityReference' => BlogArticleDataFixture::FIRST_DEMO_BLOG_ARTICLE,
+            'routeName' => 'front_blogarticle_detail',
+            'graphQlFileName' => 'BlogArticleHreflangLinksQuery.graphql',
+            'entityName' => 'blogArticle',
+        ];
     }
 
     /**
@@ -72,6 +80,10 @@ class HreflangLinksTest extends GraphQlTestCase
 
             // Wait for elasticsearch to index the product
             sleep(1);
+        }
+
+        if ($graphQlType === 'blogArticle') {
+            $this->markTestSkipped('Cron module export changed has to be run before to obtain proper data. This test may be enabled after blog articles are exported via queue.');
         }
 
         $response = $this->getResponseContentForGql(
@@ -118,6 +130,10 @@ class HreflangLinksTest extends GraphQlTestCase
     ): void {
         $entity = $this->getReference($entityReference);
         $secondDomainId = 2;
+
+        if ($graphQlType === 'blogArticle') {
+            $this->markTestSkipped('Cron module export changed has to be run before to obtain proper data. This test may be enabled after blog articles are exported via queue.');
+        }
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/' . $graphQlFileName,

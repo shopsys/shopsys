@@ -205,6 +205,17 @@
       },
       "imageUrl": {
         "type": "text"
+      },
+      "hreflang_links": {
+        "type": "nested",
+        "properties": {
+          "hreflang": {
+            "type": "keyword"
+          },
+          "href":  {
+            "type": "keyword"
+          }
+        }
       }
     }
   }
