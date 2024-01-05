@@ -30,14 +30,16 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                         className="mx-auto flex w-full max-w-sm flex-col items-center gap-2 border border-greyLighter p-2 md:max-w-none lg:flex-row lg:border-0 "
                         data-testid={TEST_IDENTIFIER + variant.catalogNumber}
                     >
-                        <Image
-                            priority
-                            alt={variant.mainImage?.name || variant.fullName}
-                            className="flex h-48 lg:h-16 lg:w-16"
-                            height={200}
-                            src={variant.mainImage?.url}
-                            width={1200}
-                        />
+                        <div className="relative h-48 w-full lg:h-16 lg:w-16">
+                            <Image
+                                fill
+                                priority
+                                alt={variant.mainImage?.name || variant.fullName}
+                                className="object-contain"
+                                sizes="(max-width: 600px) 100vw, (max-width: 768px) 50vw, 8vw"
+                                src={variant.mainImage?.url}
+                            />
+                        </div>
 
                         <div className="flex-1 text-center lg:text-left">{variant.fullName}</div>
 
