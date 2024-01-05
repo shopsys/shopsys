@@ -9,8 +9,8 @@ use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpKernel\DependencyInjection\ServicesResetter;
 
 class FeedExport
 {
@@ -29,7 +29,7 @@ class FeedExport
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param string $feedFilepath
      * @param string $feedLocalFilepath
-     * @param \Symfony\Component\HttpKernel\DependencyInjection\ServicesResetter $servicesResetter
+     * @param \Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter $servicesResetter
      * @param int|null $lastSeekId
      */
     public function __construct(

@@ -8,11 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Feed\FeedExport;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade as BaseFeedFacade;
 
-/**
- * @property \App\Model\Feed\FeedExportFactory $feedExportFactory
- * @method __construct(\Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry, \App\Model\Feed\FeedExportFactory $feedExportFactory, \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider, \League\Flysystem\FilesystemOperator $filesystem, \Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository $feedModuleRepository, \Doctrine\ORM\EntityManagerInterface $em)
- * @property \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
- */
 class FeedFacade extends BaseFeedFacade
 {
     /**

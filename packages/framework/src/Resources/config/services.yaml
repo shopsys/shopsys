@@ -16,7 +16,7 @@ services:
         public: false
 
     Shopsys\FrameworkBundle\:
-        resource: '../../**/*{Calculation,Collector,Dispatcher,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
+        resource: '../../**/*{Calculation,Dispatcher,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\:
@@ -1019,6 +1019,8 @@ services:
             $environment: '%kernel.environment%'
             $forceElasticLimit: '%env(FORCE_ELASTIC_LIMITS)%'
 
+    Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector: ~
+
     Shopsys\FrameworkBundle\Component\Messenger\MessageDispatcherDependency:
         arguments:
             $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
@@ -1031,10 +1033,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\Messenger\HeurekaPlacedOrderMessageHandler:
         arguments:
             $logger: '@monolog.logger.queue'
-
-    Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory:
-        arguments:
-            $servicesResetter: '@services_resetter'
 
     Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler:
         arguments:
@@ -1050,3 +1048,7 @@ services:
         arguments: [ '@snc_redis.blog_article_export_queue' ]
 
     Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex: ~
+
+    Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter:
+        arguments:
+            $resettableServices: !tagged kernel.reset
