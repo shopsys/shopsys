@@ -25,12 +25,6 @@ class Version20220830204025 extends AbstractMigration
             SET text = \'<div class="gjs-text-ckeditor">\' || text || \'</div>\'
             WHERE text IS NOT NULL AND text NOT LIKE \'%gjs-text-ckeditor%\' 
         ');
-
-        $this->sql('
-            UPDATE blog_article_translations 
-            SET description = \'<div class="gjs-text-ckeditor">\' || description || \'</div>\'
-            WHERE description IS NOT NULL AND description NOT LIKE \'%gjs-text-ckeditor%\' 
-        ');
     }
 
     /**
