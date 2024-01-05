@@ -1,5 +1,4 @@
 import Register from 'framework/common/utils/Register';
-import constant from '../utils/constant';
 
 (new Register()).registerCallback($container => {
     const getCheckedPositionName = function () {
@@ -7,7 +6,7 @@ import constant from '../utils/constant';
     };
 
     const initAdvertForm = function () {
-        if (getCheckedPositionName() === constant('\\App\\Model\\Advert\\AdvertPositionRegistry::CATEGORIES_ABOVE_PRODUCT_LIST')) {
+        if (getCheckedPositionName() === 'productListMiddle') {
             $('#advert_form_settings').find('.js-category-tree-form').closest('.form-line').show();
         } else {
             $('#advert_form_settings').find('.js-category-tree-form').closest('.form-line').hide();

@@ -1,4 +1,4 @@
-import constant from '../../admin/utils/constant';
+import { VALIDATION_GROUP_DEFAULT } from '../../admin/validation/form/validation';
 import CustomizeBundle from './customizeBundle';
 import DoubleFormSubmitProtection from '../utils/DoubleFormSubmitProtection';
 
@@ -108,8 +108,8 @@ FpJsFormValidator.getElementValue = function (element) {
     if (i && undefined === value) {
         value = this.getMappedValue(element);
     } else if (
-        element.type === constant('\\Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType::class')
-        || (Object.keys(element.children).length > 0 && element.type !== constant('\\Shopsys\\FrameworkBundle\\Form\\FileUploadType::class') && element.type !== constant('\\Shopsys\\FrameworkBundle\\Form\\ImageUploadType::class'))
+        element.type === 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType'
+        || (Object.keys(element.children).length > 0 && element.type !== 'Shopsys\\FrameworkBundle\\Form\\FileUploadType' && element.type !== 'Shopsys\\FrameworkBundle\\Form\\ImageUploadType')
     ) {
         value = {};
         for (var childName in element.children) {
@@ -128,15 +128,15 @@ FpJsFormValidator.getElementValue = function (element) {
 
 FpJsFormValidator._getInputValue = FpJsFormValidator.getInputValue;
 FpJsFormValidator.getInputValue = function (element) {
-    if (element.type === constant('\\FOS\\CKEditorBundle\\Form\\Type\\CKEditorType::class')
+    if (element.type === 'FOS\\CKEditorBundle\\Form\\Type\\CKEditorType'
         && CKEDITOR.instances[element.id]
     ) {
         return CKEDITOR.instances[element.id].getData();
     }
-    if (element.type === constant('\\Shopsys\\FrameworkBundle\\Form\\FileUploadType::class') || element.type === constant('\\Shopsys\\FrameworkBundle\\Form\\ImageUploadType::class')) {
+    if (element.type === 'Shopsys\\FrameworkBundle\\Form\\FileUploadType' || element.type === 'Shopsys\\FrameworkBundle\\Form\\ImageUploadType') {
         return $(element.domNode).find('.js-file-upload-uploaded-file').toArray();
     }
-    if (element.type === constant('\\Shopsys\\FrameworkBundle\\Form\\ProductsType::class')) {
+    if (element.type === 'Shopsys\\FrameworkBundle\\Form\\ProductsType') {
         var value = [];
         $(element.domNode).find('.js-products-picker-item-input').each(function () {
             value.push($(this).val());
@@ -190,7 +190,7 @@ FpJsFormValidator.createElement = function (model) {
 FpJsFormValidator._checkValidationGroups = FpJsFormValidator.checkValidationGroups;
 FpJsFormValidator.checkValidationGroups = function (needle, haystack) {
     if (typeof haystack === 'undefined') {
-        haystack = [constant('\\Symfony\\Component\\Validator\\Constraint::DEFAULT_GROUP')];
+        haystack = [VALIDATION_GROUP_DEFAULT];
     }
     return FpJsFormValidator._checkValidationGroups(needle, haystack);
 };

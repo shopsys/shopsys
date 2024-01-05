@@ -1,5 +1,3 @@
-import constant from '../utils/constant';
-
 (function ($) {
 
     const Shopsys = window.Shopsys || {};
@@ -12,7 +10,7 @@ import constant from '../utils/constant';
             const selectedType = $paymentType.val();
             const $goPayPaymentMethodFormLine = $('.js-payment-gopay-payment-method').closest('.form-line');
 
-            if (selectedType === constant('\\App\\Model\\Payment\\Payment::TYPE_GOPAY')) {
+            if (selectedType === 'gopPay') {
                 $goPayPaymentMethodFormLine.show();
             } else {
                 $goPayPaymentMethodFormLine.hide();

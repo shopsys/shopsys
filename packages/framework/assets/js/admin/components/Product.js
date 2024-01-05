@@ -1,4 +1,3 @@
-import constant from '../utils/constant';
 import Register from '../../common/utils/Register';
 
 export default class Product {
@@ -10,12 +9,13 @@ export default class Product {
             Product.toggleIsUsingStock($(this).val() === '1');
         });
 
+        const alternateAvailability = 'setAlternateAvailability';
         $outOfStockActionSelection.change(function () {
-            Product.toggleIsUsingAlternateAvailability($(this).val() === constant('\\Shopsys\\FrameworkBundle\\Model\\Product\\Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY'));
+            Product.toggleIsUsingAlternateAvailability($(this).val() === alternateAvailability);
         });
 
         Product.toggleIsUsingStock(usingStockSelection.filter(':checked').val() === '1');
-        Product.toggleIsUsingAlternateAvailability($outOfStockActionSelection.val() === constant('\\Shopsys\\FrameworkBundle\\Model\\Product\\Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY'));
+        Product.toggleIsUsingAlternateAvailability($outOfStockActionSelection.val() === alternateAvailability);
 
         Product.initializeSideNavigation($container);
     }
