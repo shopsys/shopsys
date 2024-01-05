@@ -59,6 +59,7 @@
     * [OrderConnection](#orderconnection)
     * [OrderEdge](#orderedge)
     * [OrderItem](#orderitem)
+    * [OrderPaymentsConfig](#orderpaymentsconfig)
     * [PageInfo](#pageinfo)
     * [Parameter](#parameter)
     * [ParameterCheckboxFilterOption](#parametercheckboxfilteroption)
@@ -681,7 +682,7 @@ Returns HTML content for order with failed payment.
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>orderPayments</strong></td>
-<td valign="top">[<a href="#payment">Payment</a>!]!</td>
+<td valign="top"><a href="#orderpaymentsconfig">OrderPaymentsConfig</a>!</td>
 <td>
 
 Returns payments available for the given order
@@ -5426,6 +5427,39 @@ Order item price per unit
 <td>
 
 Applied VAT rate percentage applied to the order item
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderPaymentsConfig
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>availablePayments</strong></td>
+<td valign="top">[<a href="#payment">Payment</a>!]!</td>
+<td>
+
+All available payment methods for the order (excluding the current one)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>currentPayment</strong></td>
+<td valign="top"><a href="#payment">Payment</a>!</td>
+<td>
+
+Current payment method used in the order
 
 </td>
 </tr>

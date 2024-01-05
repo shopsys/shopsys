@@ -232,7 +232,7 @@ QueryDecorator:
                         description: "Array of product catalog numbers"
                 description: "Returns list of products by catalog numbers"
             orderPayments:
-                type: '[Payment!]!'
+                type: 'OrderPaymentsConfig!'
                 resolve: "@=query('orderPaymentsQuery', args['orderUuid'])"
                 args:
                     orderUuid:

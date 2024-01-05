@@ -34,7 +34,9 @@ class OrderPaymentsTest extends GraphQlTestCase
             ],
         );
 
-        foreach ($this->getResponseDataForGraphQlType($response, 'orderPayments') as $paymentData) {
+        $orderPaymentsResponse = $this->getResponseDataForGraphQlType($response, 'orderPayments');
+
+        foreach ($orderPaymentsResponse['availablePayments'] as $paymentData) {
             $this->assertSame(MoneyFormatterHelper::formatWithMaxFractionDigits(Money::zero()), $paymentData['price']['priceWithoutVat']);
         }
     }
@@ -43,26 +45,30 @@ class OrderPaymentsTest extends GraphQlTestCase
      * @group multidomain
      * @dataProvider getOrderPaymentsMultidomainDataProvider
      * @param string $orderReferenceName
-     * @param array $expectedPaymentReferenceNames
+     * @param string $expectedCurrentPaymentReferenceName
+     * @param array $expectedAvailablePaymentReferenceNames
      */
     public function testGetOrderPaymentsMultidomain(
         string $orderReferenceName,
-        array $expectedPaymentReferenceNames,
+        string $expectedCurrentPaymentReferenceName,
+        array $expectedAvailablePaymentReferenceNames,
     ): void {
-        $this->assertOrderPayments($orderReferenceName, $expectedPaymentReferenceNames);
+        $this->assertOrderPayments($orderReferenceName, $expectedCurrentPaymentReferenceName, $expectedAvailablePaymentReferenceNames);
     }
 
     /**
      * @group singledomain
      * @dataProvider getOrderPaymentsSingledomainDataProvider
      * @param string $orderReferenceName
-     * @param array $expectedPaymentReferenceNames
+     * @param string $expectedCurrentPaymentReferenceName
+     * @param array $expectedAvailablePaymentReferenceNames
      */
     public function testGetOrderPaymentsSingledomain(
         string $orderReferenceName,
-        array $expectedPaymentReferenceNames,
+        string $expectedCurrentPaymentReferenceName,
+        array $expectedAvailablePaymentReferenceNames,
     ): void {
-        $this->assertOrderPayments($orderReferenceName, $expectedPaymentReferenceNames);
+        $this->assertOrderPayments($orderReferenceName, $expectedCurrentPaymentReferenceName, $expectedAvailablePaymentReferenceNames);
     }
 
     /**
@@ -74,9 +80,9 @@ class OrderPaymentsTest extends GraphQlTestCase
 
         yield 'order on second domain with dron delivery transport' => [
             'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 24,
-            'expectedPaymentReferenceNames' => [
+            'expectedCurrentPaymentReferenceName' => PaymentDataFixture::PAYMENT_LATER,
+            'expectedAvailablePaymentReferenceNames' => [
                 PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::SECOND_DOMAIN_ID,
-                PaymentDataFixture::PAYMENT_LATER,
             ],
         ];
     }
@@ -88,18 +94,18 @@ class OrderPaymentsTest extends GraphQlTestCase
     {
         yield 'order with personal collection transport' => [
             'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 1,
-            'expectedPaymentReferenceNames' => [
+            'expectedCurrentPaymentReferenceName' => PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID,
+            'expectedAvailablePaymentReferenceNames' => [
                 PaymentDataFixture::PAYMENT_CARD,
                 PaymentDataFixture::PAYMENT_CASH,
-                PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID,
                 PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID,
             ],
         ];
 
         yield 'order with Czech post transport' => [
             'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 3,
-            'expectedPaymentReferenceNames' => [
-                PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
+            'expectedCurrentPaymentReferenceName' => PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
+            'expectedAvailablePaymentReferenceNames' => [
                 PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID,
             ],
         ];
@@ -132,24 +138,22 @@ class OrderPaymentsTest extends GraphQlTestCase
      */
     private function getExpectedPaymentsResponse(array $expectedPaymentReferenceNames): array
     {
-        /** @var \App\Model\Payment\Payment[] $expectedPayments */
-        $expectedPayments = array_map(
-            fn (string $expectedPaymentReferenceName) => $this->getReference($expectedPaymentReferenceName),
-            $expectedPaymentReferenceNames,
-        );
-
         return array_map(
-            fn (Payment $expectedPayment) => ['uuid' => $expectedPayment->getUuid(), 'name' => $expectedPayment->getName($this->getFirstDomainLocale())],
-            $expectedPayments,
+            fn (string $paymentReferenceName) => $this->getExpectedPaymentResponse($paymentReferenceName),
+            $expectedPaymentReferenceNames,
         );
     }
 
     /**
      * @param string $orderReferenceName
-     * @param array $expectedPaymentReferenceNames
+     * @param string $expectedCurrentPaymentReferenceName
+     * @param array $expectedAvailablePaymentReferenceNames
      */
-    private function assertOrderPayments(string $orderReferenceName, array $expectedPaymentReferenceNames): void
-    {
+    private function assertOrderPayments(
+        string $orderReferenceName,
+        string $expectedCurrentPaymentReferenceName,
+        array $expectedAvailablePaymentReferenceNames,
+    ): void {
         /** @var \App\Model\Order\Order $order */
         $order = $this->getReference($orderReferenceName);
         $response = $this->getResponseContentForGql(
@@ -159,8 +163,24 @@ class OrderPaymentsTest extends GraphQlTestCase
             ],
         );
         $this->assertSame(
-            $this->getExpectedPaymentsResponse($expectedPaymentReferenceNames),
-            $this->getResponseDataForGraphQlType($response, 'orderPayments'),
+            $this->getExpectedPaymentsResponse($expectedAvailablePaymentReferenceNames),
+            $this->getResponseDataForGraphQlType($response, 'orderPayments')['availablePayments'],
         );
+        $this->assertSame(
+            $this->getExpectedPaymentResponse($expectedCurrentPaymentReferenceName),
+            $this->getResponseDataForGraphQlType($response, 'orderPayments')['currentPayment'],
+        );
+    }
+
+    /**
+     * @param string $paymentReferenceName
+     * @return array{uuid: string, name: string}
+     */
+    private function getExpectedPaymentResponse(string $paymentReferenceName): array
+    {
+        /** @var \App\Model\Payment\Payment $payment */
+        $payment = $this->getReference($paymentReferenceName);
+
+        return ['uuid' => $payment->getUuid(), 'name' => $payment->getName($this->getFirstDomainLocale())];
     }
 }

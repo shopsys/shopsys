@@ -1,7 +1,9 @@
 query OrderPayments($orderUuid: Uuid!) {
     orderPayments(orderUuid: $orderUuid) {
-        price {
-            priceWithoutVat
+        availablePayments {
+            price {
+                priceWithoutVat
+            }
         }
     }
 }

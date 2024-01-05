@@ -1,6 +1,12 @@
 query OrderPayments($orderUuid: Uuid!) {
     orderPayments(orderUuid: $orderUuid) {
-        uuid
-        name
+        currentPayment {
+            uuid
+            name
+        }
+        availablePayments {
+            uuid
+            name
+        }
     }
 }

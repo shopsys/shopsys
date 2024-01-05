@@ -1530,6 +1530,14 @@ export type OrderItemApi = {
   vatRate: Scalars['String']['output'];
 };
 
+export type OrderPaymentsConfigApi = {
+  __typename?: 'OrderPaymentsConfig';
+  /** All available payment methods for the order (excluding the current one) */
+  availablePayments: Array<PaymentApi>;
+  /** Current payment method used in the order */
+  currentPayment: PaymentApi;
+};
+
 /** Represents a product in order */
 export type OrderProductInputApi = {
   /** Quantity of products */
@@ -2127,7 +2135,7 @@ export type QueryApi = {
   /** Returns HTML content for order with successful payment. */
   orderPaymentSuccessfulContent: Scalars['String']['output'];
   /** Returns payments available for the given order */
-  orderPayments: Array<PaymentApi>;
+  orderPayments: OrderPaymentsConfigApi;
   /** Returns HTML content for order sent page. */
   orderSentPageContent: Scalars['String']['output'];
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
@@ -3376,13 +3384,6 @@ export type OrderPaymentSuccessfulContentQueryVariablesApi = Exact<{
 
 export type OrderPaymentSuccessfulContentQueryApi = { __typename?: 'Query', orderPaymentSuccessfulContent: string };
 
-export type OrderPaymentsQueryVariablesApi = Exact<{
-  orderUuid: Scalars['Uuid']['input'];
-}>;
-
-
-export type OrderPaymentsQueryApi = { __typename?: 'Query', orderPayments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }> };
-
 export type OrderSentPageContentQueryVariablesApi = Exact<{
   orderUuid: Scalars['Uuid']['input'];
 }>;
@@ -3792,7 +3793,7 @@ export type TransportsQueryApi = { __typename?: 'Query', transports: Array<{ __t
   }
 };
       export default result;
-
+    
 export const SimpleCategoryFragmentApi = gql`
     fragment SimpleCategoryFragment on Category {
   __typename
@@ -5735,17 +5736,6 @@ export const OrderPaymentSuccessfulContentQueryDocumentApi = gql`
 
 export function useOrderPaymentSuccessfulContentQueryApi(options: Omit<Urql.UseQueryArgs<OrderPaymentSuccessfulContentQueryVariablesApi>, 'query'>) {
   return Urql.useQuery<OrderPaymentSuccessfulContentQueryApi, OrderPaymentSuccessfulContentQueryVariablesApi>({ query: OrderPaymentSuccessfulContentQueryDocumentApi, ...options });
-};
-export const OrderPaymentsQueryDocumentApi = gql`
-    query OrderPaymentsQuery($orderUuid: Uuid!) {
-  orderPayments(orderUuid: $orderUuid) {
-    ...SimplePaymentFragment
-  }
-}
-    ${SimplePaymentFragmentApi}`;
-
-export function useOrderPaymentsQueryApi(options: Omit<Urql.UseQueryArgs<OrderPaymentsQueryVariablesApi>, 'query'>) {
-  return Urql.useQuery<OrderPaymentsQueryApi, OrderPaymentsQueryVariablesApi>({ query: OrderPaymentsQueryDocumentApi, ...options });
 };
 export const OrderSentPageContentQueryDocumentApi = gql`
     query OrderSentPageContentQuery($orderUuid: Uuid!) {

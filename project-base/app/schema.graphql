@@ -1197,6 +1197,13 @@ type OrderItem {
   vatRate: String!
 }
 
+type OrderPaymentsConfig {
+  "All available payment methods for the order (excluding the current one)"
+  availablePayments: [Payment!]!
+  "Current payment method used in the order"
+  currentPayment: Payment!
+}
+
 "Represents a product in order"
 input OrderProductInput {
   "Quantity of products"
@@ -1734,7 +1741,7 @@ type Query {
   "Returns HTML content for order with failed payment."
   orderPaymentFailedContent(orderUuid: Uuid!): String!
   "Returns payments available for the given order"
-  orderPayments(orderUuid: Uuid!): [Payment!]!
+  orderPayments(orderUuid: Uuid!): OrderPaymentsConfig!
   "Returns HTML content for order with successful payment."
   orderPaymentSuccessfulContent(orderUuid: Uuid!): String!
   "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
