@@ -32,15 +32,17 @@ export const useChangePaymentInOrder = (withRedirectAfterChanging = true) => {
 
         showSuccessMessage(t('Your payment has been successfully changed'));
 
-        if (withRedirectAfterChanging) {
-            if (isUserLoggedIn) {
-                router.push({
-                    pathname: customerOrderDetailUrl,
-                    query: { orderNumber: editedOrder.number },
-                });
-            } else {
-                router.push(`${orderByHashUrl}/${editedOrder.urlHash}`);
-            }
+        if (!withRedirectAfterChanging) {
+            return;
+        }
+
+        if (isUserLoggedIn) {
+            router.push({
+                pathname: customerOrderDetailUrl,
+                query: { orderNumber: editedOrder.number },
+            });
+        } else {
+            router.push(`${orderByHashUrl}/${editedOrder.urlHash}`);
         }
     };
 

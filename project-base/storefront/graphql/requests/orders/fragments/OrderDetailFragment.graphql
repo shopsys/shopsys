@@ -13,6 +13,7 @@ fragment OrderDetailFragment on Order {
     payment {
         __typename
         name
+        type
     }
     status
     firstName

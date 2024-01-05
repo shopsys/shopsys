@@ -117,6 +117,9 @@ export const cacheUpdates: UpdatesConfig = {
         RemoveProductList(_result: RemoveProductListMutationApi, args: RemoveProductListMutationVariablesApi, cache) {
             manuallyRemoveProductListQuery(cache, args.input);
         },
+        ChangePaymentInOrder(_result, _args, cache) {
+            invalidateFields(cache, ['order']);
+        },
     },
 };
 

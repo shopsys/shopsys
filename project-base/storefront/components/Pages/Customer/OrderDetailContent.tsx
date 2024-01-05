@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Row, Cell, CellHead, Table, CellMinor } from 'components/Basic/Table/Table';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { OrderDetailFragmentApi } from 'graphql/generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
@@ -9,6 +10,7 @@ import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
+import { PaymentTypeEnum } from 'types/payment';
 
 const NotAddedProductsPopup = dynamic(() =>
     import('./NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),
@@ -93,6 +95,16 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                         <Cell dataTestId={TEST_IDENTIFIER + 'note'}>{order.note}</Cell>
                                     </Row>
                                 </Table>
+                            </Cell>
+                        )}
+                        {order.payment.type === PaymentTypeEnum.GoPay && (
+                            <Cell className="flex-1">
+                                <ColumnHeader>{t('Payment information')}</ColumnHeader>
+                                <PaymentsInOrderSelect
+                                    canPaymentBeRepeated
+                                    orderUuid={order.uuid}
+                                    withRedirectAfterChanging={false}
+                                />
                             </Cell>
                         )}
                     </Row>

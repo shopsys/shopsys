@@ -2,5 +2,8 @@ mutation ChangePaymentInOrderMutation($input: ChangePaymentInOrderInput!) {
     ChangePaymentInOrder(input: $input) {
         urlHash
         number
+        payment {
+            ...SimplePaymentFragment
+        }
     }
 }
