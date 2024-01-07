@@ -11,6 +11,7 @@ import {
 } from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getNumberFromUrlQuery, getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
@@ -78,13 +79,14 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     })
                     .toPromise();
 
-                if (
-                    (!blogCategoryResponse.data || !blogCategoryResponse.data.blogCategory) &&
-                    !(context.res.statusCode === 503)
-                ) {
-                    return {
-                        notFound: true,
-                    };
+                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                    blogCategoryResponse.error?.graphQLErrors,
+                    blogCategoryResponse.data?.blogCategory,
+                    context.res,
+                );
+
+                if (serverSideErrorResponse) {
+                    return serverSideErrorResponse;
                 }
             }
 
