@@ -33,7 +33,7 @@ class ErrorCodeSubscriber implements EventSubscriberInterface
         }
 
         if ($userCode === null && $code === null) {
-            return;
+            $code = 500;
         }
 
         $formattedError = $event->getFormattedError();
