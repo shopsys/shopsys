@@ -191,13 +191,15 @@ enum AvailabilityStatusEnum {
   OutOfStock
 }
 
-type BlogArticle implements Breadcrumb & Slug & ArticleInterface {
+type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
   "The list of the blog article blog categories"
   blogCategories: [BlogCategory!]!
   "Hierarchy of the current element in relation to the structure"
   breadcrumb: [Link!]!
   "Date and time of the blog article creation"
   createdAt: DateTime!
+  "Alternate links for hreflang meta tags"
+  hreflangLinks: [HreflangLink!]!
   "ID of category"
   id: Int!
   "Blog article images"
@@ -246,7 +248,7 @@ type BlogArticleEdge {
   node: BlogArticle
 }
 
-type BlogCategory implements Breadcrumb & Slug {
+type BlogCategory implements Breadcrumb & Slug & Hreflang {
   "Total count of blog articles in this category"
   articlesTotalCount: Int!
   "Paginated blog articles of the given blog category"
@@ -259,6 +261,8 @@ type BlogCategory implements Breadcrumb & Slug {
   children: [BlogCategory!]!
   "The blog category description"
   description: String
+  "Alternate links for hreflang meta tags"
+  hreflangLinks: [HreflangLink!]!
   "The blog category absolute URL"
   link: String!
   "The blog category name"
@@ -278,11 +282,13 @@ type BlogCategory implements Breadcrumb & Slug {
 }
 
 "Represents a brand"
-type Brand implements Breadcrumb & Slug & ProductListable {
+type Brand implements Hreflang & Breadcrumb & Slug & ProductListable {
   "Hierarchy of the current element in relation to the structure"
   breadcrumb: [Link!]!
   "Brand description"
   description: String
+  "Alternate links for hreflang meta tags"
+  hreflangLinks: [HreflangLink!]!
   "ID of category"
   id: Int!
   "Brand images"
@@ -434,6 +440,8 @@ type Category implements Breadcrumb & Slug & ProductListable {
   children: [Category!]!
   "Localized category description (domain dependent)"
   description: String
+  "Alternate links for hreflang meta tags"
+  hreflangLinks: [HreflangLink!]!
   "ID of category"
   id: Int!
   "Category images"
@@ -743,6 +751,19 @@ type GoPayPaymentMethod {
   paymentGroup: String!
 }
 
+"Represents entity able to return alternate links for hreflang meta tags"
+interface Hreflang {
+  "Alternate links for hreflang meta tags"
+  hreflangLinks: [HreflangLink!]!
+}
+
+type HreflangLink {
+  "URL for hreflang meta tag"
+  href: String!
+  "Language code for hreflang meta tag"
+  hreflang: String!
+}
+
 "Represents an image"
 type Image {
   "Name of the image usable as an alternative text"
@@ -786,7 +807,7 @@ type LoginResult {
 }
 
 "Represents a product"
-type MainVariant implements Product & Breadcrumb & Slug {
+type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   accessories: [Product!]!
   availability: Availability!
   "Number of the stores where the product is available"
@@ -806,6 +827,8 @@ type MainVariant implements Product & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Alternate links for hreflang meta tags"
+  hreflangLinks: [HreflangLink!]!
   "Product id"
   id: Int!
   "Product images"
@@ -1456,6 +1479,8 @@ interface Product {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Alternate links for hreflang meta tags"
+  hreflangLinks: [HreflangLink!]!
   "Product id"
   id: Int!
   "Product images"
@@ -1836,7 +1861,7 @@ type RegularCustomerUser implements CustomerUser {
 }
 
 "Represents a product"
-type RegularProduct implements Product & Breadcrumb & Slug {
+type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   accessories: [Product!]!
   availability: Availability!
   "Number of the stores where the product is available"
@@ -1856,6 +1881,8 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Alternate links for hreflang meta tags"
+  hreflangLinks: [HreflangLink!]!
   "Product id"
   id: Int!
   "Product images"
@@ -1918,9 +1945,11 @@ input RemovePromoCodeFromCartInput {
 }
 
 "Represents SEO settings for specific page"
-type SeoPage {
+type SeoPage implements Hreflang {
   "Page's canonical link"
   canonicalUrl: String
+  "Alternate links for hreflang meta tags"
+  hreflangLinks: [HreflangLink!]!
   "Description for meta tag"
   metaDescription: String
   "Description for og:description meta tag"
@@ -2110,7 +2139,7 @@ type Unit {
 scalar Uuid
 
 "Represents a product"
-type Variant implements Product & Breadcrumb & Slug {
+type Variant implements Product & Hreflang & Breadcrumb & Slug {
   accessories: [Product!]!
   availability: Availability!
   "Number of the stores where the product is available"
@@ -2130,6 +2159,8 @@ type Variant implements Product & Breadcrumb & Slug {
   flags: [Flag!]!
   "The full name of the product, which consists of a prefix, name, and a suffix"
   fullName: String!
+  "Alternate links for hreflang meta tags"
+  hreflangLinks: [HreflangLink!]!
   "Product id"
   id: Int!
   "Product images"

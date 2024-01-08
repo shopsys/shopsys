@@ -43,6 +43,7 @@
     * [GoPayBankSwift](#gopaybankswift)
     * [GoPayCreatePaymentSetup](#gopaycreatepaymentsetup)
     * [GoPayPaymentMethod](#gopaypaymentmethod)
+    * [HreflangLink](#hreflanglink)
     * [Image](#image)
     * [LanguageConstant](#languageconstant)
     * [Link](#link)
@@ -143,6 +144,7 @@
     * [Breadcrumb](#breadcrumb)
     * [CartInterface](#cartinterface)
     * [CustomerUser](#customeruser)
+    * [Hreflang](#hreflang)
     * [NotBlogArticleInterface](#notblogarticleinterface)
     * [ParameterFilterOptionInterface](#parameterfilteroptioninterface)
     * [PriceInterface](#priceinterface)
@@ -2070,6 +2072,15 @@ Date and time of the blog article creation
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
+<td>
+
+Alternate links for hreflang meta tags
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
@@ -2379,6 +2390,15 @@ The blog category description
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
+<td>
+
+Alternate links for hreflang meta tags
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -2482,6 +2502,15 @@ Hierarchy of the current element in relation to the structure
 <td>
 
 Brand description
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
+<td>
+
+Alternate links for hreflang meta tags
 
 </td>
 </tr>
@@ -3104,6 +3133,15 @@ Descendant categories
 <td>
 
 Localized category description (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
+<td>
+
+Alternate links for hreflang meta tags
 
 </td>
 </tr>
@@ -4085,6 +4123,39 @@ Group of payment methods
 </tbody>
 </table>
 
+### HreflangLink
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>href</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+URL for hreflang meta tag
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hreflang</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Language code for hreflang meta tag
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### Image
 
 Represents an image
@@ -4313,6 +4384,15 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
+<td>
+
+Alternate links for hreflang meta tags
 
 </td>
 </tr>
@@ -6678,6 +6758,15 @@ The full name of the product, which consists of a prefix, name, and a suffix
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
+<td>
+
+Alternate links for hreflang meta tags
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
@@ -6916,6 +7005,15 @@ Represents SEO settings for specific page
 <td>
 
 Page's canonical link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
+<td>
+
+Alternate links for hreflang meta tags
 
 </td>
 </tr>
@@ -7791,6 +7889,15 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
+<td>
+
+Alternate links for hreflang meta tags
 
 </td>
 </tr>
@@ -10187,6 +10294,32 @@ UUID
 </tbody>
 </table>
 
+### Hreflang
+
+Represents entity able to return alternate links for hreflang meta tags
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
+<td>
+
+Alternate links for hreflang meta tags
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### NotBlogArticleInterface
 
 Represents an article that is not a blog article
@@ -10444,6 +10577,15 @@ List of flags
 <td>
 
 The full name of the product, which consists of a prefix, name, and a suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
+<td>
+
+Alternate links for hreflang meta tags
 
 </td>
 </tr>
