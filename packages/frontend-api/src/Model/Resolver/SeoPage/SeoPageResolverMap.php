@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\SeoPage;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\SeoPage;
 
-use App\Model\SeoPage\SeoPage;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 
 class SeoPageResolverMap extends ResolverMap
 {
@@ -14,7 +14,7 @@ class SeoPageResolverMap extends ResolverMap
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly Domain $domain,
+        protected readonly Domain $domain,
     ) {
     }
 

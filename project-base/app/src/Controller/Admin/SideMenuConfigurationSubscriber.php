@@ -15,8 +15,9 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     /**
      * @param \Symfony\Component\Security\Core\Security $security
      */
-    public function __construct(private Security $security)
-    {
+    public function __construct(
+        private readonly Security $security,
+    ) {
     }
 
     /**
@@ -170,10 +171,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $categorySeoMenu->addChild('new_combinations', ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Extended SEO category - combinations'), 'display' => false]);
         $categorySeoMenu->addChild('new_combination', ['route' => 'admin_categoryseo_readycombination', 'label' => t('Extended SEO category - set combinations with SEO values'), 'display' => false]);
         $seoMenu->addChild('unusedFriendlyUrlList', ['route' => 'admin_unused_friendly_url_list', 'label' => t('Unused friendly URL list')]);
-
-        $seoPageMenu = $seoMenu->addChild('seoPageList', ['route' => 'admin_seopage_list', 'label' => t('SEO pages')]);
-        $seoPageMenu->addChild('seoPageNew', ['route' => 'admin_seopage_new', 'label' => t('New SEO page'), 'display' => false]);
-        $seoPageMenu->addChild('seoPageEdit', ['route' => 'admin_seopage_edit', 'label' => t('Editing SEO page'), 'display' => false]);
 
         $listMenu = $settingsMenu->getChild('lists');
         $listMenu->removeChild('availabilities');

@@ -307,6 +307,12 @@ msgstr "Zadejte prosím název reklamní plochy"
 msgid "Please enter order status name in all languages"
 msgstr "Vyplňte prosím název stavu objednávky ve všech jazycích"
 
+msgid "Please enter page URL"
+msgstr "Odkaz musí být platnou URL adresou"
+
+msgid "Please enter page name"
+msgstr "Prosím vyplňte název stránky"
+
 msgid "Please enter parameter name"
 msgstr "Vyplňte prosím název parametru"
 

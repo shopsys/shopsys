@@ -385,6 +385,9 @@ msgstr ""
 msgid "Calculated price including VAT"
 msgstr ""
 
+msgid "Canonical URL"
+msgstr ""
+
 msgid "Catalog number"
 msgstr ""
 
@@ -533,6 +536,9 @@ msgid "Country code in ISO 3166-1 alpha-2"
 msgstr ""
 
 msgid "Create"
+msgstr ""
+
+msgid "Create SEO page"
 msgstr ""
 
 msgid "Create VAT rate"
@@ -856,6 +862,9 @@ msgstr ""
 msgid "Do you really want to remove the order?"
 msgstr ""
 
+msgid "Do you really want to remove this SEO page?"
+msgstr ""
+
 msgid "Do you really want to remove this administrator?"
 msgstr ""
 
@@ -977,6 +986,9 @@ msgid "Edit domain icon"
 msgstr ""
 
 msgid "Edit store"
+msgstr ""
+
+msgid "Editing SEO page"
 msgstr ""
 
 msgid "Editing administrator"
@@ -1630,6 +1642,9 @@ msgstr ""
 msgid "Name serves only for internal use within the administration."
 msgstr ""
 
+msgid "New SEO page"
+msgstr ""
+
 msgid "New administrator"
 msgstr ""
 
@@ -1700,6 +1715,9 @@ msgid "New warehouse"
 msgstr ""
 
 msgid "No"
+msgstr ""
+
+msgid "No SEO pages found."
 msgstr ""
 
 msgid "No URLs so far."
@@ -1828,6 +1846,12 @@ msgstr ""
 msgid "Only checked products"
 msgstr ""
 
+msgid "Open Graph description"
+msgstr ""
+
+msgid "Open Graph title"
+msgstr ""
+
 msgid "Open in a new tab"
 msgstr ""
 
@@ -1907,6 +1931,12 @@ msgid "Out of stock"
 msgstr ""
 
 msgid "Page <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Page URL"
+msgstr ""
+
+msgid "Page name"
 msgstr ""
 
 msgid "Page title"
@@ -2173,10 +2203,25 @@ msgstr ""
 msgid "SEO"
 msgstr ""
 
+msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "SEO Page <strong>{{ name }}</strong> removed"
+msgstr ""
+
 msgid "SEO attributes settings"
 msgstr ""
 
 msgid "SEO attributes settings modified"
+msgstr ""
+
+msgid "SEO page"
+msgstr ""
+
+msgid "SEO pages"
 msgstr ""
 
 msgid "Sales including/excluding VAT settings"
@@ -2243,6 +2288,12 @@ msgid "Searching searches in order number, registered customer email, customer's
 msgstr ""
 
 msgid "Select new value"
+msgstr ""
+
+msgid "Selected SEO page cannot be deleted"
+msgstr ""
+
+msgid "Selected SEO page does not exist"
 msgstr ""
 
 msgid "Selected VAT doesn't exist"
@@ -2528,6 +2579,9 @@ msgid "There was an error during logout attempt. If you really want to sign out,
 msgstr ""
 
 msgid "There was an error while saving. The order isn't saved."
+msgstr ""
+
+msgid "This SEO page cannot be deleted."
 msgstr ""
 
 msgid "This currency can't be deleted, it is set as default or is saved with order."

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\SeoPage;
+namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -14,13 +14,13 @@ class SeoPageGridFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \App\Model\SeoPage\SeoPageRepository $seoPageRepository
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageRepository $seoPageRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
-        private readonly GridFactory $gridFactory,
-        private readonly SeoPageRepository $seoPageRepository,
-        private readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly GridFactory $gridFactory,
+        protected readonly SeoPageRepository $seoPageRepository,
+        protected readonly DomainRouterFactory $domainRouterFactory,
     ) {
     }
 
@@ -69,7 +69,7 @@ class SeoPageGridFactory
         $grid->addDeleteActionColumn('admin_seopage_deleteconfirm', ['id' => 'sp.id'])
             ->setAjaxConfirm();
 
-        $grid->setTheme('Admin/Content/SeoPage/listGrid.html.twig');
+        $grid->setTheme('@ShopsysFramework/Admin/Content/Seo/Page/listGrid.html.twig');
 
         return $grid;
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\SeoPage;
+namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
@@ -16,14 +16,14 @@ class SeoPageDataFactory
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        private readonly Domain $domain,
-        private readonly DomainRouterFactory $domainRouterFactory,
-        private readonly ImageUploadDataFactory $imageUploadDataFactory,
+        protected readonly Domain $domain,
+        protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }
 
     /**
-     * @return \App\Model\SeoPage\SeoPageData
+     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData
      */
     public function create(): SeoPageData
     {
@@ -34,8 +34,8 @@ class SeoPageDataFactory
     }
 
     /**
-     * @param \App\Model\SeoPage\SeoPage $seoPage
-     * @return \App\Model\SeoPage\SeoPageData
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
+     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData
      */
     public function createFromSeoPage(SeoPage $seoPage): SeoPageData
     {
@@ -46,10 +46,10 @@ class SeoPageDataFactory
     }
 
     /**
-     * @param \App\Model\SeoPage\SeoPageData $seoPageData
-     * @param \App\Model\SeoPage\SeoPage $seoPage
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
      */
-    private function fillFromSeoPage(SeoPageData $seoPageData, SeoPage $seoPage): void
+    protected function fillFromSeoPage(SeoPageData $seoPageData, SeoPage $seoPage): void
     {
         $seoPageData->pageName = $seoPage->getPageName();
 
@@ -71,10 +71,10 @@ class SeoPageDataFactory
 
     /**
      * @param int $domainId
-     * @param \App\Model\SeoPage\SeoPage $seoPage
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
      * @return string
      */
-    private function generatePageSlug(int $domainId, SeoPage $seoPage): string
+    protected function generatePageSlug(int $domainId, SeoPage $seoPage): string
     {
         $seoPageDomainRouter = $this->domainRouterFactory->getRouter($domainId);
         $friendlyUrl = $seoPageDomainRouter->generate('front_page_seo', [

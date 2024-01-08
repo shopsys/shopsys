@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Model\SeoPage;
+namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
-use App\Component\Image\ImageFacade;
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use App\Model\SeoPage\Exception\DefaultSeoPageCannotBeDeletedException;
-use App\Model\SeoPage\Exception\SeoPageNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\DefaultSeoPageCannotBeDeletedException;
+use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageNotFoundException;
 
 class SeoPageFacade
 {
@@ -18,22 +18,22 @@ class SeoPageFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Model\SeoPage\SeoPageRepository $seoPageRepository
-     * @param \App\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageRepository $seoPageRepository
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      */
     public function __construct(
-        private readonly Domain $domain,
-        private readonly EntityManagerInterface $em,
-        private readonly FriendlyUrlFacade $friendlyUrlFacade,
-        private readonly SeoPageRepository $seoPageRepository,
-        private readonly ImageFacade $imageFacade,
+        protected readonly Domain $domain,
+        protected readonly EntityManagerInterface $em,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly SeoPageRepository $seoPageRepository,
+        protected readonly ImageFacade $imageFacade,
     ) {
     }
 
     /**
-     * @param \App\Model\SeoPage\SeoPageData $seoPageData
-     * @return \App\Model\SeoPage\SeoPage
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
+     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
      */
     public function create(SeoPageData $seoPageData): SeoPage
     {
@@ -58,8 +58,8 @@ class SeoPageFacade
 
     /**
      * @param int $seoPageId
-     * @param \App\Model\SeoPage\SeoPageData $seoPageData
-     * @return \App\Model\SeoPage\SeoPage
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
+     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
      */
     public function edit(int $seoPageId, SeoPageData $seoPageData): SeoPage
     {
@@ -93,7 +93,7 @@ class SeoPageFacade
 
     /**
      * @param int $seoPageId
-     * @return \App\Model\SeoPage\SeoPage
+     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
      */
     public function getById(int $seoPageId): SeoPage
     {
@@ -103,7 +103,7 @@ class SeoPageFacade
     /**
      * @param int $domainId
      * @param string $pageSlug
-     * @return \App\Model\SeoPage\SeoPage
+     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
      */
     public function getByDomainIdAndPageSlug(int $domainId, string $pageSlug): SeoPage
     {

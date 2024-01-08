@@ -597,10 +597,6 @@ services:
         tags:
             - {name: shopsys.friendly_url_provider}
 
-    App\Model\SeoPage\SeoPageFriendlyUrlDataProvider:
-        tags:
-            - { name: shopsys.friendly_url_provider }
-
     Shopsys\FrameworkBundle\Component\Image\ImageFacade:
         alias: App\Component\Image\ImageFacade
 

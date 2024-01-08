@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Model\SeoPage;
+namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
 
 class SeoPageFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterface
 {
-    private const ROUTE_NAME = 'front_page_seo';
+    protected const ROUTE_NAME = 'front_page_seo';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Component\Router\FriendlyUrl\FriendlyUrlData[]
+     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
     public function getFriendlyUrlData(DomainConfig $domainConfig): array
     {
@@ -25,6 +25,6 @@ class SeoPageFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterface
      */
     public function getRouteName(): string
     {
-        return self::ROUTE_NAME;
+        return static::ROUTE_NAME;
     }
 }

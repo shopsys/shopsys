@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Model\SeoPage;
+namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
-use App\Model\SeoPage\Exception\SeoPageNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageNotFoundException;
 
 class SeoPageRepository
 {
@@ -15,17 +15,17 @@ class SeoPageRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        private readonly EntityManagerInterface $em,
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 
     /**
      * @param int $seoPageId
-     * @return \App\Model\SeoPage\SeoPage
+     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
      */
     public function getById(int $seoPageId): SeoPage
     {
-        /** @var \App\Model\SeoPage\SeoPage|null $seoPage */
+        /** @var \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage|null $seoPage */
         $seoPage = $this->getSeoPageRepository()->find($seoPageId);
 
         if ($seoPage === null) {
@@ -38,7 +38,7 @@ class SeoPageRepository
     }
 
     /**
-     * @return \App\Model\SeoPage\SeoPage[]
+     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage[]
      */
     public function getAll(): array
     {
@@ -56,7 +56,7 @@ class SeoPageRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    private function getSeoPageRepository(): EntityRepository
+    protected function getSeoPageRepository(): EntityRepository
     {
         return $this->em->getRepository(SeoPage::class);
     }

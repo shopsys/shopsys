@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Model\SeoPage;
+namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
-use App\Model\SeoPage\Exception\SeoPageDomainNotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageDomainNotFoundException;
 
 /**
  * @ORM\Table(name="seo_pages")
@@ -23,28 +22,28 @@ class SeoPage
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private int $id;
+    protected $id;
 
     /**
      * @var string
      * @ORM\Column(type="text", nullable=false)
      */
-    private string $pageName;
+    protected $pageName;
 
     /**
-     * @var \App\Model\SeoPage\SeoPageDomain[]|\Doctrine\Common\Collections\Collection
-     * @ORM\OneToMany(targetEntity="App\Model\SeoPage\SeoPageDomain", mappedBy="seoPage", cascade={"persist"})
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDomain>
+     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDomain", mappedBy="seoPage", cascade={"persist"})
      */
-    private Collection $domains;
+    protected $domains;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private bool $defaultPage;
+    protected $defaultPage;
 
     /**
-     * @param \App\Model\SeoPage\SeoPageData $seoPageData
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
      */
     public function __construct(
         SeoPageData $seoPageData,
@@ -57,7 +56,7 @@ class SeoPage
     }
 
     /**
-     * @param \App\Model\SeoPage\SeoPageData $seoPageData
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
      */
     public function edit(SeoPageData $seoPageData): void
     {
@@ -67,7 +66,7 @@ class SeoPage
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -75,7 +74,7 @@ class SeoPage
     /**
      * @return string
      */
-    public function getPageName(): string
+    public function getPageName()
     {
         return $this->pageName;
     }
@@ -84,52 +83,52 @@ class SeoPage
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoTitle(int $domainId): ?string
+    public function getSeoTitle(int $domainId)
     {
-        return  $this->getSeoPageDomain($domainId)->getSeoTitle();
+        return $this->getSeoPageDomain($domainId)->getSeoTitle();
     }
 
     /**
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoMetaDescription(int $domainId): ?string
+    public function getSeoMetaDescription(int $domainId)
     {
-        return  $this->getSeoPageDomain($domainId)->getSeoMetaDescription();
+        return $this->getSeoPageDomain($domainId)->getSeoMetaDescription();
     }
 
     /**
      * @param int $domainId
      * @return string|null
      */
-    public function getCanonicalUrl(int $domainId): ?string
+    public function getCanonicalUrl(int $domainId)
     {
-        return  $this->getSeoPageDomain($domainId)->getCanonicalUrl();
+        return $this->getSeoPageDomain($domainId)->getCanonicalUrl();
     }
 
     /**
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoOgTitle(int $domainId): ?string
+    public function getSeoOgTitle(int $domainId)
     {
-        return  $this->getSeoPageDomain($domainId)->getSeoOgTitle();
+        return $this->getSeoPageDomain($domainId)->getSeoOgTitle();
     }
 
     /**
      * @param int $domainId
      * @return string|null
      */
-    public function getSeoOgDescription(int $domainId): ?string
+    public function getSeoOgDescription(int $domainId)
     {
-        return  $this->getSeoPageDomain($domainId)->getSeoOgDescription();
+        return $this->getSeoPageDomain($domainId)->getSeoOgDescription();
     }
 
     /**
      * @param int $domainId
-     * @return \App\Model\SeoPage\SeoPageDomain
+     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDomain
      */
-    private function getSeoPageDomain(int $domainId): SeoPageDomain
+    protected function getSeoPageDomain(int $domainId): SeoPageDomain
     {
         foreach ($this->domains as $seoPageDomain) {
             if ($seoPageDomain->getDomainId() === $domainId) {
@@ -141,18 +140,18 @@ class SeoPage
     }
 
     /**
-     * @param \App\Model\SeoPage\SeoPageData $seoPageData
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
      */
-    private function setData(SeoPageData $seoPageData): void
+    protected function setData(SeoPageData $seoPageData): void
     {
         $this->setDomains($seoPageData);
         $this->defaultPage = $seoPageData->defaultPage;
     }
 
     /**
-     * @param \App\Model\SeoPage\SeoPageData $seoPageData
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
      */
-    private function createDomains(SeoPageData $seoPageData): void
+    protected function createDomains(SeoPageData $seoPageData): void
     {
         $domainIds = array_keys($seoPageData->seoTitlesIndexedByDomainId);
 
@@ -165,9 +164,9 @@ class SeoPage
     }
 
     /**
-     * @param \App\Model\SeoPage\SeoPageData $seoPageData
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
      */
-    private function setDomains(SeoPageData $seoPageData): void
+    protected function setDomains(SeoPageData $seoPageData): void
     {
         foreach ($this->domains as $seoPageDomain) {
             $domainId = $seoPageDomain->getDomainId();
@@ -183,7 +182,7 @@ class SeoPage
     /**
      * @return bool
      */
-    public function isDefaultPage(): bool
+    public function isDefaultPage()
     {
         return $this->defaultPage;
     }

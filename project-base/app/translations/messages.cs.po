@@ -247,9 +247,6 @@ msgstr "CMS"
 msgid "Cancel"
 msgstr "Zrušit"
 
-msgid "Canonical URL"
-msgstr "Kanonická URL"
-
 msgid "Catalog number"
 msgstr "Katalogové číslo"
 
@@ -382,9 +379,6 @@ msgstr "Stát"
 msgid "Create"
 msgstr "Vytvořit"
 
-msgid "Create SEO page"
-msgstr "Vytvořit SEO stránku"
-
 msgid "Create and download CSV"
 msgstr "Vytvořit a stáhnout CSV"
 
@@ -475,9 +469,6 @@ msgstr "Datum zobrazení DO"
 msgid "Do you really want to mark this issue as resolved?"
 msgstr "Opravdu chcete tento problém označit jako vyřešený?"
 
-msgid "Do you really want to remove this SEO page?"
-msgstr "Opravdu chcete smazat tuto SEO stránku?"
-
 msgid "Do you really want to remove this administrator role group?"
 msgstr "Opravdu chcete smazat tuto skupinu práv pro administrátora?"
 
@@ -546,9 +537,6 @@ msgstr "Upravit prodejnu"
 
 msgid "Edit transport type"
 msgstr "Upravit typ dopravy"
-
-msgid "Editing SEO page"
-msgstr "Editace SEO stránky"
 
 msgid "Editing administrator"
 msgstr "Editace administrátora"
@@ -1027,9 +1015,6 @@ msgstr "Položka navigace <strong>{{ name }}</strong> byla odebrána"
 msgid "New"
 msgstr "Novinka"
 
-msgid "New SEO page"
-msgstr "Nová SEO stránka"
-
 msgid "New administrator"
 msgstr "Nový administrátor"
 
@@ -1084,9 +1069,6 @@ msgstr "E-maily zpravodaje - zobrazení"
 msgid "No"
 msgstr "Ne"
 
-msgid "No SEO pages found."
-msgstr "Nebyly nalezeny žádné SEO stránky."
-
 msgid "No combinations of SEO categories found."
 msgstr "Nebyly nalezeny žádné kombinace SEO kategorií."
 
@@ -1140,12 +1122,6 @@ msgstr "Počet objednávek"
 
 msgid "Oops! Error occurred."
 msgstr "Jejda! Nastala chyba."
-
-msgid "Open Graph description"
-msgstr "Open Graph popis"
-
-msgid "Open Graph title"
-msgstr "Open Graph titulek"
 
 msgid "Open in new window"
 msgstr "Otevírat v novém okně"
@@ -1212,12 +1188,6 @@ msgstr "Rozložení vně"
 
 msgid "Package tracking"
 msgstr "Sledování zásilky"
-
-msgid "Page URL"
-msgstr "URL stránky"
-
-msgid "Page name"
-msgstr "Název stránky"
 
 msgid "Page not found"
 msgstr "Stránka nenalazena"
@@ -1504,23 +1474,11 @@ msgstr "Role"
 msgid "Rounding"
 msgstr "Zaokrouhlení"
 
-msgid "SEO"
-msgstr "SEO"
-
 msgid "SEO - full"
 msgstr "SEO - vše"
 
 msgid "SEO - view"
 msgstr "SEO - zobrazení"
-
-msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr "SEO stránka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
-
-msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr "SEO stránka <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
-
-msgid "SEO Page <strong>{{ name }}</strong> removed"
-msgstr "SEO stránka <strong>{{ name }}</strong> byla smazána"
 
 msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed"
 msgstr "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána"
@@ -1530,9 +1488,6 @@ msgstr "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} nebyla smazána
 
 msgid "SEO page"
 msgstr "SEO stránka"
-
-msgid "SEO pages"
-msgstr "SEO stránky"
 
 msgid "Sale"
 msgstr "Výprodej"
@@ -1578,12 +1533,6 @@ msgstr "Hledání v přenosech"
 
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
-
-msgid "Selected SEO page cannot be deleted"
-msgstr "Vybraná SEO stránka nemůže být smazána"
-
-msgid "Selected SEO page does not exist"
-msgstr "Vybraná SEO stránka neexistuje"
 
 msgid "Selected administrator role group doesn't exist."
 msgstr "Vybraná skupina práv pro administrátora neexistuje."
@@ -1692,9 +1641,6 @@ msgstr "Vybraný příznak nelze smazat."
 
 msgid "There are no parameter values of type color yet."
 msgstr "Žádná hodnota parametru typu barva zatím nebyla vytvořena."
-
-msgid "This SEO page cannot be deleted."
-msgstr "Tato SEO stránka nemůže být smazána."
 
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr "Tento příznak nelze smazat, protože se používá v definici"

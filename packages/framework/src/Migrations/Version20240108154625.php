@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Migrations;
+namespace Shopsys\FrameworkBundle\Migrations;
 
-use App\Model\SeoPage\SeoPage;
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20230207100358 extends AbstractMigration implements ContainerAwareInterface
+class Version20240108154625 extends AbstractMigration implements ContainerAwareInterface
 {
     use MultidomainMigrationTrait;
 
@@ -58,6 +57,10 @@ class Version20230207100358 extends AbstractMigration implements ContainerAwareI
      */
     public function up(Schema $schema): void
     {
+        if (!$this->isAppMigrationNotInstalledRemoveIfExists('Version20230207100358')) {
+            return;
+        }
+
         $this->sql('CREATE TABLE seo_pages (id SERIAL NOT NULL, page_name TEXT NOT NULL, default_page BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->sql('
             CREATE TABLE seo_page_domains (

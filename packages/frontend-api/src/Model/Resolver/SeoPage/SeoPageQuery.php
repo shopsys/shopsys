@@ -2,31 +2,31 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\SeoPage;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\SeoPage;
 
-use App\FrontendApi\Resolver\SeoPage\Exception\SeoPageNotFoundUserError;
-use App\Model\SeoPage\Exception\SeoPageNotFoundException;
-use App\Model\SeoPage\SeoPage;
-use App\Model\SeoPage\SeoPageFacade;
-use App\Model\SeoPage\SeoPageSlugTransformer;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageNotFoundException;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageSlugTransformer;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\SeoPage\Exception\SeoPageNotFoundUserError;
 
 class SeoPageQuery extends AbstractQuery
 {
     /**
-     * @param \App\Model\SeoPage\SeoPageFacade $seoPageFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade $seoPageFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly SeoPageFacade $seoPageFacade,
-        private readonly Domain $domain,
+        protected readonly SeoPageFacade $seoPageFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
     /**
      * @param string $pageSlug
-     * @return \App\Model\SeoPage\SeoPage
+     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
      */
     public function seoPageByPageSlugQuery(string $pageSlug): SeoPage
     {

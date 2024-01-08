@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\SeoPage\Exception;
+namespace Shopsys\FrameworkBundle\Model\Seo\Page\Exception;
 
 use Throwable;
 

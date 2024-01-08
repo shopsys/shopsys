@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\SeoPage;
+namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 class SeoPageSlugTransformer
 {

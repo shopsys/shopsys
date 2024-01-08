@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use App\Form\Admin\SeoPageFormType;
-use App\Model\SeoPage\Exception\DefaultSeoPageCannotBeDeletedException;
-use App\Model\SeoPage\Exception\SeoPageNotFoundException;
-use App\Model\SeoPage\SeoPageDataFactory;
-use App\Model\SeoPage\SeoPageFacade;
-use App\Model\SeoPage\SeoPageGridFactory;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoPageFormType;
+use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\DefaultSeoPageCannotBeDeletedException;
+use Shopsys\FrameworkBundle\Model\Seo\Page\Exception\SeoPageNotFoundException;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageGridFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,17 +21,17 @@ class SeoPageController extends AdminBaseController
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\SeoPage\SeoPageGridFactory $seoPageGridFactory
-     * @param \App\Model\SeoPage\SeoPageDataFactory $seoPageDataFactory
-     * @param \App\Model\SeoPage\SeoPageFacade $seoPageFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageGridFactory $seoPageGridFactory
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory $seoPageDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade $seoPageFacade
      * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
      */
     public function __construct(
-        private readonly Domain $domain,
-        private readonly SeoPageGridFactory $seoPageGridFactory,
-        private readonly SeoPageDataFactory $seoPageDataFactory,
-        private readonly SeoPageFacade $seoPageFacade,
-        private readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
+        protected readonly Domain $domain,
+        protected readonly SeoPageGridFactory $seoPageGridFactory,
+        protected readonly SeoPageDataFactory $seoPageDataFactory,
+        protected readonly SeoPageFacade $seoPageFacade,
+        protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
     ) {
     }
 
@@ -44,7 +43,7 @@ class SeoPageController extends AdminBaseController
     {
         $grid = $this->seoPageGridFactory->create($this->domain->getId());
 
-        return $this->render('Admin/Content/SeoPage/list.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/Seo/Page/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -82,7 +81,7 @@ class SeoPageController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('Admin/Content/SeoPage/new.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/Seo/Page/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -122,7 +121,7 @@ class SeoPageController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('Admin/Content/SeoPage/edit.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/Seo/Page/edit.html.twig', [
             'form' => $form->createView(),
             'seoPage' => $seoPage,
         ]);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\SeoPage;
+namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,54 +23,54 @@ class SeoPageDomain
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private int $id;
+    protected $id;
 
     /**
      * @var int
      * @ORM\Column(name="domain_id", type="integer")
      */
-    private int $domainId;
+    protected $domainId;
 
     /**
      * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
-    private ?string $seoTitle;
+    protected $seoTitle;
 
     /**
      * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
-    private ?string $seoMetaDescription;
+    protected $seoMetaDescription;
 
     /**
      * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
-    private ?string $canonicalUrl;
+    protected $canonicalUrl;
 
     /**
      * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
-    private ?string $seoOgTitle;
+    protected $seoOgTitle;
 
     /**
      * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
-    private ?string $seoOgDescription;
+    protected $seoOgDescription;
 
     /**
-     * @var \App\Model\SeoPage\SeoPage
-     * @ORM\ManyToOne(targetEntity="App\Model\SeoPage\SeoPage", inversedBy="domains")
+     * @var \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage", inversedBy="domains")
      * @ORM\JoinColumn(name="seo_page_id", nullable=false, referencedColumnName="id", onDelete="CASCADE")
      */
-    private SeoPage $seoPage;
+    protected $seoPage;
 
     /**
      * @param int $domainId
-     * @param \App\Model\SeoPage\SeoPage $seoPage
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
      */
     public function __construct(
         int $domainId,
@@ -78,18 +78,12 @@ class SeoPageDomain
     ) {
         $this->domainId = $domainId;
         $this->seoPage = $seoPage;
-
-        $this->seoTitle = null;
-        $this->seoMetaDescription = null;
-        $this->canonicalUrl = null;
-        $this->seoOgTitle = null;
-        $this->seoOgDescription = null;
     }
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -97,13 +91,13 @@ class SeoPageDomain
     /**
      * @return int
      */
-    public function getDomainId(): int
+    public function getDomainId()
     {
         return $this->domainId;
     }
 
     /**
-     * @return \App\Model\SeoPage\SeoPage
+     * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
      */
     public function getSeoPage(): SeoPage
     {
@@ -113,7 +107,7 @@ class SeoPageDomain
     /**
      * @return string|null
      */
-    public function getSeoTitle(): ?string
+    public function getSeoTitle()
     {
         return $this->seoTitle;
     }
@@ -129,7 +123,7 @@ class SeoPageDomain
     /**
      * @return string|null
      */
-    public function getSeoMetaDescription(): ?string
+    public function getSeoMetaDescription()
     {
         return $this->seoMetaDescription;
     }
@@ -145,7 +139,7 @@ class SeoPageDomain
     /**
      * @return string|null
      */
-    public function getCanonicalUrl(): ?string
+    public function getCanonicalUrl()
     {
         return $this->canonicalUrl;
     }
@@ -161,7 +155,7 @@ class SeoPageDomain
     /**
      * @return string|null
      */
-    public function getSeoOgTitle(): ?string
+    public function getSeoOgTitle()
     {
         return $this->seoOgTitle;
     }
@@ -177,7 +171,7 @@ class SeoPageDomain
     /**
      * @return string|null
      */
-    public function getSeoOgDescription(): ?string
+    public function getSeoOgDescription()
     {
         return $this->seoOgDescription;
     }

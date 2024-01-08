@@ -307,6 +307,12 @@ msgstr ""
 msgid "Please enter order status name in all languages"
 msgstr ""
 
+msgid "Please enter page URL"
+msgstr ""
+
+msgid "Please enter page name"
+msgstr ""
+
 msgid "Please enter parameter name"
 msgstr ""
 

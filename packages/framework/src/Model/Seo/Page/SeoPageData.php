@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\SeoPage;
+namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 
@@ -11,42 +11,42 @@ class SeoPageData
     /**
      * @var string
      */
-    public string $pageName;
+    public $pageName;
 
     /**
      * @var bool
      */
-    public bool $defaultPage;
+    public $defaultPage;
 
     /**
      * @var string[]|null[]
      */
-    public array $pageSlugsIndexedByDomainId;
+    public $pageSlugsIndexedByDomainId;
 
     /**
      * @var string[]|null[]
      */
-    public array $seoTitlesIndexedByDomainId;
+    public $seoTitlesIndexedByDomainId;
 
     /**
      * @var string[]|null[]
      */
-    public array $seoMetaDescriptionsIndexedByDomainId;
+    public $seoMetaDescriptionsIndexedByDomainId;
 
     /**
      * @var string[]|null[]
      */
-    public array $canonicalUrlsIndexedByDomainId;
+    public $canonicalUrlsIndexedByDomainId;
 
     /**
      * @var string[]|null[]
      */
-    public array $seoOgTitlesIndexedByDomainId;
+    public $seoOgTitlesIndexedByDomainId;
 
     /**
      * @var string[]|null[]
      */
-    public array $seoOgDescriptionsIndexedByDomainId;
+    public $seoOgDescriptionsIndexedByDomainId;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData

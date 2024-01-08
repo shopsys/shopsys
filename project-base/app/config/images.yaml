@@ -48,6 +48,6 @@
     multiple: true
 
 -   name: seoPage
-    class: App\Model\SeoPage\SeoPage
+    class: Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
     types:
         -   name: og

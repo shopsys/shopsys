@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin;
+namespace Shopsys\FrameworkBundle\Form\Admin\Seo;
 
-use App\Model\SeoPage\SeoPage;
-use App\Model\SeoPage\SeoPageData;
-use App\Model\SeoPage\SeoPageFacade;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -56,7 +56,7 @@ class SeoPageFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \App\Model\SeoPage\SeoPage|null $seoPage
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage|null $seoPage
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createBasicInformationGroup(
@@ -158,7 +158,7 @@ class SeoPageFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \App\Model\SeoPage\SeoPage|null $seoPage
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage|null $seoPage
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createImageGroup(FormBuilderInterface $builder, ?SeoPage $seoPage): FormBuilderInterface

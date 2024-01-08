@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\SeoPage;
 
-use App\Model\SeoPage\SeoPage;
-use App\Model\SeoPage\SeoPageDataFactory;
-use App\Model\SeoPage\SeoPageFacade;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class SeoPageTest extends TransactionFunctionalTestCase

@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Image;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
-use App\Model\SeoPage\SeoPage;
-use App\Model\SeoPage\SeoPageFacade;
 use GraphQL\Executor\Promise\Promise;
-use Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
 
 class SeoPageImagesQuery extends ImagesQuery
 {
     /**
-     * @param \App\Model\SeoPage\SeoPage $seoPage
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function ogImageBySeoPageQuery(SeoPage $seoPage): Promise
