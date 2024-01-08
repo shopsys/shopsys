@@ -17,14 +17,16 @@ import { useRouter } from 'next/router';
 const OrderDetailPage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
+    const [customerUrl, customerOrdersUrl] = getInternationalizedStaticUrls(['/customer', '/customer/orders'], url);
     const router = useRouter();
     const orderNumber = getStringFromUrlQuery(router.query.orderNumber);
     const [{ data: orderData, fetching, error }] = useOrderDetailQueryApi({
         variables: { orderNumber },
     });
     const breadcrumbs: BreadcrumbFragmentApi[] = [
+        { __typename: 'Link', name: t('Customer'), slug: customerUrl },
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
+        { __typename: 'Link', name: orderNumber, slug: '' },
     ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
