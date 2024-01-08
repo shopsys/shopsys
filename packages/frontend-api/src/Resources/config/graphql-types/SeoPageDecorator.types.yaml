@@ -2,6 +2,8 @@ SeoPageDecorator:
     type: object
     decorator: true
     config:
+        interfaces:
+            - "Hreflang"
         description: "Represents SEO settings for specific page"
         fields:
             title:
@@ -23,3 +25,6 @@ SeoPageDecorator:
                 type: "Image"
                 description: "Image for og image meta tag by params"
                 resolve: '@=query("ogImageBySeoPageQuery", value)'
+            hreflangLinks:
+                type: "[HreflangLink!]!"
+                description: "Alternate links for hreflang meta tags"

@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\BlogArticleDataFixture;
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\SeoPageDataFixture;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -62,6 +63,13 @@ class HreflangLinksTest extends GraphQlTestCase
             'routeName' => 'front_blogcategory_detail',
             'graphQlFileName' => 'BlogCategoryHreflangLinksQuery.graphql',
             'entityName' => 'blogCategory',
+        ];
+
+        yield 'SeoPage' => [
+            'entityReference' => SeoPageDataFixture::FIRST_DEMO_SEO_PAGE,
+            'routeName' => 'front_page_seo',
+            'graphQlFileName' => 'SeoPageHreflangLinksQuery.graphql',
+            'entityName' => 'seoPage',
         ];
     }
 

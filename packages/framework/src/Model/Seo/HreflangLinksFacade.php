@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 
 class HreflangLinksFacade
 {
@@ -21,6 +22,7 @@ class HreflangLinksFacade
     protected const ROUTE_BRAND_DETAIL = 'front_brand_detail';
     protected const ROUTE_BLOG_ARTICLE_DETAIL = 'front_blogarticle_detail';
     protected const ROUTE_BLOG_CATEGORY_DETAIL = 'front_blogcategory_detail';
+    protected const ROUTE_PAGE_SEO = 'front_page_seo';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
@@ -131,14 +133,24 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle|\Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|\Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\Product\Product $entity
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
+     * @param int $currentDomainId
+     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
+     */
+    public function getForSeoPage(SeoPage $seoPage, int $currentDomainId): array
+    {
+        return $this->doGetHrefLinks($seoPage, $currentDomainId, static::ROUTE_PAGE_SEO);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle|\Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|\Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\Product\Product|\Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $entity
      * @param int $currentDomainId
      * @param string $routeName
      * @param callable|null $isVisibleCallable
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     protected function doGetHrefLinks(
-        BlogArticle|BlogCategory|Brand|Category|Product $entity,
+        BlogArticle|BlogCategory|Brand|Category|Product|SeoPage $entity,
         int $currentDomainId,
         string $routeName,
         ?callable $isVisibleCallable = null,
