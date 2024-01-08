@@ -2161,7 +2161,7 @@ export type QueryApi = {
   promotedProducts: Array<ProductApi>;
   /** Returns SEO settings for a specific page based on the url slug of that page */
   seoPage: Maybe<SeoPageApi>;
-  /** Returns current setting */
+  /** Returns current settings */
   settings: Maybe<SettingsApi>;
   /** Returns a complete list of the slider items */
   sliderItems: Array<SliderItemApi>;

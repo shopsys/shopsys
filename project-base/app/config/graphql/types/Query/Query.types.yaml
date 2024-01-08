@@ -18,5 +18,4 @@ Query:
         - 'TransportQuery'
         - 'CountryQuery'
         - 'LanguageConstantQuery'
-        - 'SettingsQuery'
         - 'SeoPageQuery'
