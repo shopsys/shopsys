@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Migrations;
+namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
@@ -14,8 +14,10 @@ class Version20200219145345 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE adverts ADD datetime_visible_from TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
-        $this->sql('ALTER TABLE adverts ADD datetime_visible_to TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
+        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20200219145345')) {
+            $this->sql('ALTER TABLE adverts ADD datetime_visible_from TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
+            $this->sql('ALTER TABLE adverts ADD datetime_visible_to TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
+        }
     }
 
     /**
