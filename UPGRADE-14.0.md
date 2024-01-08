@@ -952,3 +952,4 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   improve error handling for friendly URL pages based on API status codes ([#2973](https://github.com/shopsys/shopsys/pull/2973))
     -   API now returns a 500 code if there is a server error
     -   friendly URL pages now react to API 500 errors and API not found errors, and display the correct pages based on this datapoint
+-   improve Breadcrumbs navigation on customer order page ([#2974](https://github.com/shopsys/shopsys/pull/2974))
