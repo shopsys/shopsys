@@ -7213,6 +7213,15 @@ Main text for contact form
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>displayTimezone</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Timezone that is used for displaying time
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>maxAllowedPaymentTransactions</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>

@@ -2616,6 +2616,8 @@ export type SettingsApi = {
   __typename?: 'Settings';
   /** Main text for contact form */
   contactFormMainText: Scalars['String']['output'];
+  /** Timezone that is used for displaying time */
+  displayTimezone: Scalars['String']['output'];
   /** Max allowed payment transactions (how many times is user allowed to try the same payment) */
   maxAllowedPaymentTransactions: Scalars['Int']['output'];
   /** Settings related to pricing */

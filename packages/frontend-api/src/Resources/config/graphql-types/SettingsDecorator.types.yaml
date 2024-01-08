@@ -20,3 +20,7 @@ SettingsDecorator:
                 type: String!
                 resolve: "@=query('contactFormMainTextQuery')"
                 description: "Main text for contact form"
+            displayTimezone:
+                type: String!
+                resolve: "@=query('displayTimezoneQuery')"
+                description: "Timezone that is used for displaying time"
