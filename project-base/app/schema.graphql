@@ -1980,6 +1980,8 @@ type SeoSetting {
 type Settings {
   "Main text for contact form"
   contactFormMainText: String!
+  "Timezone that is used for displaying time"
+  displayTimezone: String!
   "Max allowed payment transactions (how many times is user allowed to try the same payment)"
   maxAllowedPaymentTransactions: Int!
   "Settings related to pricing"
