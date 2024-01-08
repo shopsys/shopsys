@@ -17,7 +17,6 @@ const GALLERY_SHOWN_ITEMS_COUNT = 5;
 export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, images, productName, videoIds = [] }) => {
     const [firstImage, ...additionalImages] = images;
     const mainImage = images.length ? firstImage : undefined;
-    const mainImageUrl = mainImage?.url;
 
     const galleryItems = [...videoIds, ...additionalImages];
     const galleryLastShownItemIndex = GALLERY_SHOWN_ITEMS_COUNT - 1;
@@ -26,7 +25,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
     return (
         <Gallery className="basis-1/2 flex-col gap-6 vl:basis-3/5 vl:flex-row" selector=".lightboxItem">
             <div
-                data-src={mainImageUrl}
+                data-src={mainImage?.url}
                 className={twJoin(
                     'relative flex w-full justify-center vl:order-2',
                     additionalImages.length && 'lightboxItem',
@@ -34,6 +33,14 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
             >
                 <Image
                     priority
+                    // TODO Replace Lightgallery with a better compatible image modal gallery
+                    // Lightgallery is not cooperating right with NextImage component. Lightgallery
+                    // doesn't know about which image (width) was loaded from srcset so it takes src
+                    // from image loaded with NextImage which is full size of 3840px and loads it
+                    // immediately after page loads in order to having it downloaded after user opens
+                    // image modal. After image modal opens LightGallery loads original image (which
+                    // is without `width` query) anyway. So preloaded image is loaded for nothing.
+                    unoptimized
                     alt={mainImage?.name || productName}
                     className="max-h-[500px] w-auto"
                     height={500}
