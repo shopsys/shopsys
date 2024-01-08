@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Settings;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Settings;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade;
@@ -15,8 +15,8 @@ class ContactFormMainTextQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade $contactFormSettingsFacade
      */
     public function __construct(
-        private readonly Domain $domain,
-        private readonly ContactFormSettingsFacade $contactFormSettingsFacade,
+        protected readonly Domain $domain,
+        protected readonly ContactFormSettingsFacade $contactFormSettingsFacade,
     ) {
     }
 

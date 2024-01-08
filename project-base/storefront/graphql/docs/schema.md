@@ -997,7 +997,7 @@ Returns SEO settings for a specific page based on the url slug of that page
 <td valign="top"><a href="#settings">Settings</a></td>
 <td>
 
-Returns current setting
+Returns current settings
 
 </td>
 </tr>

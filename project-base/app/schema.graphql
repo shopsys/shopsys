@@ -1761,7 +1761,7 @@ type Query {
   RegularProduct: RegularProduct
   "Returns SEO settings for a specific page based on the url slug of that page"
   seoPage(pageSlug: String!): SeoPage
-  "Returns current setting"
+  "Returns current settings"
   settings: Settings
   "Returns a complete list of the slider items"
   sliderItems: [SliderItem!]!

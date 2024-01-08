@@ -19,5 +19,4 @@ Query:
         - 'CountryQuery'
         - 'GoPayQuery'
         - 'LanguageConstantQuery'
-        - 'SettingsQuery'
         - 'SeoPageQuery'

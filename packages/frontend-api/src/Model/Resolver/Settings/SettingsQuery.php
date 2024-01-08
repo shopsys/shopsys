@@ -17,6 +17,10 @@ class SettingsQuery extends AbstractQuery
      */
     public function settingsQuery(): array
     {
+        /*
+         * the fields themselves are resolved with their own resolvers
+         * see config/graphql-types/Settings/SettingsDecorator.types.yaml
+         */
         return [];
     }
 }
