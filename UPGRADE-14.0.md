@@ -996,3 +996,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   new optional parameter `shouldOverwriteCustomerUserCart` was added to `LoginMutation`
     -   you can use it if in certain scenarios it makes more sense to overwrite customer user's cart instead of merging it
     -   see #project-base-diff to update your project
+-   fix image sizes ([#2968](https://github.com/shopsys/shopsys/pull/2968))
+
+    -   after migration to Next Image component there were some places left to adjust proper image sizes
+    -   Fix additionally downloaded image is loaded after product page render. `Lightgallery` is not cooperating right with `NextImage` component. It doesn't know about which image (`width`) was loaded from `srcset` so it takes src from image loaded with `NextImage` which is full size of 3840px and loads it immediately after page loads in order to having it downloaded after user opens an image modal. After the image modal opens `LightGallery` loads original image (which is without `width` query) anyway. So preloaded image is loaded for nothing. Proper fix is replacing `Lightgallery` with new component for Image Modal Gallery.
+    -   Remove `image-rendering:-webkit-optimize-contrast` from images. This property is causing some of images to be rendered with sharp edges on places where it is not wanted. Browsers algorithms seem to handle this value correctly on its own without need to use specific rendering property.
