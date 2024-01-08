@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Seo;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -19,6 +20,7 @@ class HreflangLinksFacade
     protected const ROUTE_PRODUCT_LIST = 'front_product_list';
     protected const ROUTE_BRAND_DETAIL = 'front_brand_detail';
     protected const ROUTE_BLOG_ARTICLE_DETAIL = 'front_blogarticle_detail';
+    protected const ROUTE_BLOG_CATEGORY_DETAIL = 'front_blogcategory_detail';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
@@ -105,6 +107,25 @@ class HreflangLinksFacade
             $blogArticle,
             $currentDomainId,
             static::ROUTE_BLOG_ARTICLE_DETAIL,
+            $isVisibleCallable,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
+     * @param int $currentDomainId
+     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
+     */
+    public function getForBlogCategory(BlogCategory $blogCategory, int $currentDomainId): array
+    {
+        $isVisibleCallable = static function (BlogCategory $blogCategory, int $domainId): bool {
+            return $blogCategory->isVisible($domainId);
+        };
+
+        return $this->doGetHrefLinks(
+            $blogCategory,
+            $currentDomainId,
+            static::ROUTE_BLOG_CATEGORY_DETAIL,
             $isVisibleCallable,
         );
     }

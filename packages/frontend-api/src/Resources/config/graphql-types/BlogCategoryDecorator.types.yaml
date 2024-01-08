@@ -5,6 +5,7 @@ BlogCategoryDecorator:
         interfaces:
             - 'Breadcrumb'
             - 'Slug'
+            - 'Hreflang'
         fields:
             uuid:
                 type: "Uuid!"
@@ -51,3 +52,6 @@ BlogCategoryDecorator:
             articlesTotalCount:
                 type: "Int!"
                 description: "Total count of blog articles in this category"
+            hreflangLinks:
+                type: "[HreflangLink!]!"
+                description: "Alternate links for hreflang meta tags"

@@ -56,6 +56,13 @@ class HreflangLinksTest extends GraphQlTestCase
             'graphQlFileName' => 'BlogArticleHreflangLinksQuery.graphql',
             'entityName' => 'blogArticle',
         ];
+
+        yield 'BlogCategory' => [
+            'entityReference' => BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY,
+            'routeName' => 'front_blogcategory_detail',
+            'graphQlFileName' => 'BlogCategoryHreflangLinksQuery.graphql',
+            'entityName' => 'blogCategory',
+        ];
     }
 
     /**
