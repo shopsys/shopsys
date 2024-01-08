@@ -43,32 +43,22 @@ class HreflangLinksFacade
      */
     public function getForProduct(Product $product, int $currentDomainId): array
     {
-        $domainIds = $this->getRelevantDomainIds($currentDomainId);
-
-        $result = [];
-
-        foreach ($domainIds as $domainId) {
+        $isVisibleCallable = function (Product $product, int $domainId): bool {
             $productVisibility = $this->productVisibilityFacade->getProductVisibility(
                 $product,
                 $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId),
                 $domainId,
             );
 
-            if (!$productVisibility->isVisible()) {
-                continue;
-            }
+            return $productVisibility->isVisible();
+        };
 
-            $result[] = new HreflangLink(
-                $this->domain->getDomainConfigById($domainId)->getLocale(),
-                $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
-                    $domainId,
-                    static::ROUTE_PRODUCT_DETAIL,
-                    $product->getId(),
-                ),
-            );
-        }
-
-        return $result;
+        return $this->doGetHrefLinks(
+            $product,
+            $currentDomainId,
+            static::ROUTE_PRODUCT_DETAIL,
+            $isVisibleCallable,
+        );
     }
 
     /**
@@ -78,26 +68,16 @@ class HreflangLinksFacade
      */
     public function getForCategory(Category $category, int $currentDomainId): array
     {
-        $domainIds = $this->getRelevantDomainIds($currentDomainId);
+        $isVisibleCallable = static function (Category $category, int $domainId): bool {
+            return $category->isVisible($domainId);
+        };
 
-        $result = [];
-
-        foreach ($domainIds as $domainId) {
-            if ($category->isVisible($domainId) === false) {
-                continue;
-            }
-
-            $result[] = new HreflangLink(
-                $this->domain->getDomainConfigById($domainId)->getLocale(),
-                $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
-                    $domainId,
-                    static::ROUTE_PRODUCT_LIST,
-                    $category->getId(),
-                ),
-            );
-        }
-
-        return $result;
+        return $this->doGetHrefLinks(
+            $category,
+            $currentDomainId,
+            static::ROUTE_PRODUCT_LIST,
+            $isVisibleCallable,
+        );
     }
 
     /**
@@ -107,22 +87,7 @@ class HreflangLinksFacade
      */
     public function getForBrand(Brand $brand, int $currentDomainId): array
     {
-        $domainIds = $this->getRelevantDomainIds($currentDomainId);
-
-        $result = [];
-
-        foreach ($domainIds as $domainId) {
-            $result[] = new HreflangLink(
-                $this->domain->getDomainConfigById($domainId)->getLocale(),
-                $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
-                    $domainId,
-                    static::ROUTE_BRAND_DETAIL,
-                    $brand->getId(),
-                ),
-            );
-        }
-
-        return $result;
+        return $this->doGetHrefLinks($brand, $currentDomainId, static::ROUTE_BRAND_DETAIL);
     }
 
     /**
@@ -132,17 +97,46 @@ class HreflangLinksFacade
      */
     public function getForBlogArticle(BlogArticle $blogArticle, int $currentDomainId): array
     {
+        $isVisibleCallable = static function (BlogArticle $blogArticle, int $domainId): bool {
+            return $blogArticle->isVisible($domainId);
+        };
+
+        return $this->doGetHrefLinks(
+            $blogArticle,
+            $currentDomainId,
+            static::ROUTE_BLOG_ARTICLE_DETAIL,
+            $isVisibleCallable,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle|\Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|\Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\Product\Product $entity
+     * @param int $currentDomainId
+     * @param string $routeName
+     * @param callable|null $isVisibleCallable
+     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
+     */
+    protected function doGetHrefLinks(
+        BlogArticle|BlogCategory|Brand|Category|Product $entity,
+        int $currentDomainId,
+        string $routeName,
+        ?callable $isVisibleCallable = null,
+    ): array {
         $domainIds = $this->getRelevantDomainIds($currentDomainId);
 
         $result = [];
 
         foreach ($domainIds as $domainId) {
+            if ($isVisibleCallable !== null && $isVisibleCallable($entity, $domainId) === false) {
+                continue;
+            }
+
             $result[] = new HreflangLink(
                 $this->domain->getDomainConfigById($domainId)->getLocale(),
                 $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
                     $domainId,
-                    static::ROUTE_BLOG_ARTICLE_DETAIL,
-                    $blogArticle->getId(),
+                    $routeName,
+                    $entity->getId(),
                 ),
             );
         }
