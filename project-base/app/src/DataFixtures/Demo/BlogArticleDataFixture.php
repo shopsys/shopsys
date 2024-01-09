@@ -186,7 +186,8 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
         $blogArticleData->uuid = array_pop($this->uuidPool);
 
-        $blogArticleData->publishDate = new DateTime(sprintf('-%s days', $this->articleCounter + 3));
+        $dateTime = new DateTime(sprintf('-%s days', $this->articleCounter + 3));
+        $blogArticleData->publishDate = $dateTime->setTime(0, 0);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
