@@ -1194,6 +1194,18 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   column `fulltext_tsvector` on table `product_domains`
         -   column `name_tsvector` on table `product_translations`
     -   see #project-base-diff to update your project
+-   add display timezone to FE API SettingsQuery ([#2977](https://github.com/shopsys/shopsys/pull/2977))
+    -   `Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface::getDisplayTimeZone()` was removed, use `getDisplayTimeZoneByDomainId(int $domainId)` instead
+    -   `Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider` class was changed:
+        -   `__construct()` interface has changed:
+        ```diff
+        -    public function __construct(?string $timeZoneString = null)
+        +    public function __construct(protected readonly Domain $domain)
+        ```
+        -   `getDisplayTimeZone()` was removed, use `getDisplayTimeZoneByDomainId(int $domainId)` instead
+        -   `$displayTimeZone` property was removed
+    -   `shopsys.display_timezone` container parameter was removed, use timezone setting per domain (in `config/domains.yaml`) instead
+    -   see #project-base-diff to update your project
 
 -   replace ElasticsearchIndexException usage with separate Exceptions for each use case ([#3003](https://github.com/shopsys/shopsys/pull/3003))
     -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::invalidJsonInDefinitionFile()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchInvalidJsonInDefinitionFileException`
