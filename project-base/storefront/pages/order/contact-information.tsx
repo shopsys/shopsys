@@ -25,7 +25,6 @@ import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmMessageOriginType, GtmPageType } from 'gtm/types/enums';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
-import { isStoreHydrated } from 'helpers/isStoreHydrated';
 import { getIsPaymentWithPaymentGate } from 'helpers/mappers/payment';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
@@ -54,8 +53,8 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
     const customer = usePersistStore((store) => store.contactInformation.customer);
-    const [transportAndPaymentUrl, orderConfirmationUrl, cartUrl] = getInternationalizedStaticUrls(
-        ['/order/transport-and-payment', '/order-confirmation', '/cart'],
+    const [transportAndPaymentUrl, orderConfirmationUrl] = getInternationalizedStaticUrls(
+        ['/order/transport-and-payment', '/order-confirmation'],
         domainConfig.url,
     );
     const [orderCreating, setOrderCreating] = useState(false);
@@ -87,16 +86,6 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
             }
         }
     }, []);
-
-    useEffect(() => {
-        if (currentCart.cart !== undefined) {
-            if (!currentCart.cart?.items.length) {
-                router.replace(cartUrl);
-            } else if (!(currentCart.transport && currentCart.payment)) {
-                router.replace(transportAndPaymentUrl);
-            }
-        }
-    }, [currentCart.cart, currentCart.cart?.items, currentCart.transport, currentCart.payment, isStoreHydrated()]);
 
     const onCreateOrderHandler: SubmitHandler<typeof defaultValues> = async (formValues) => {
         setOrderCreating(true);
@@ -267,7 +256,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                         {isLoginPopupOpened && (
                             <Popup onCloseCallback={() => setIsLoginPopupOpened(false)}>
                                 <div className="h2 mb-3">{t('Login')}</div>
-                                <Login defaultEmail={emailValue} />
+                                <Login shouldOverwriteCustomerUserCart defaultEmail={emailValue} />
                             </Popup>
                         )}
                     </>

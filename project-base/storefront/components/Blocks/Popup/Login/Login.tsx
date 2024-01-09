@@ -22,11 +22,12 @@ import * as Yup from 'yup';
 
 type LoginProps = {
     defaultEmail?: string;
+    shouldOverwriteCustomerUserCart?: boolean;
 };
 
 const TEST_IDENTIFIER = 'blocks-popup-login';
 
-export const Login: FC<LoginProps> = ({ defaultEmail }) => {
+export const Login: FC<LoginProps> = ({ defaultEmail, shouldOverwriteCustomerUserCart }) => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { url } = useDomainConfig();
@@ -44,6 +45,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
             email: data.email,
             password: data.password,
             previousCartUuid: cartUuid,
+            shouldOverwriteCustomerUserCart,
         });
 
         handleFormErrors(
