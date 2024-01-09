@@ -56,9 +56,6 @@ Category:
             linkedCategories:
                 type: "[Category!]!"
                 description: "A list of categories linked to the given category"
-            categoryHierarchy:
-                type: "[CategoryHierarchyItem!]!"
-                description: "All parent category names with their UUIDs"
             mainImage:
                 type: "Image"
                 description: "Category image by params"

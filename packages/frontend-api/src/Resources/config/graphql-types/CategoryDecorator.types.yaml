@@ -41,3 +41,6 @@ CategoryDecorator:
             seoMetaDescription:
                 type: "String"
                 description: "Seo meta description of category"
+            categoryHierarchy:
+                type: "[CategoryHierarchyItem!]!"
+                description: "All parent category names with their IDs and UUIDs"

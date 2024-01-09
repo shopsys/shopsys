@@ -3085,7 +3085,7 @@ Hierarchy of the current element in relation to the structure
 <td valign="top">[<a href="#categoryhierarchyitem">CategoryHierarchyItem</a>!]!</td>
 <td>
 
-All parent category names with their UUIDs
+All parent category names with their IDs and UUIDs
 
 </td>
 </tr>
@@ -3387,6 +3387,15 @@ The item at the end of the edge.
 </tr>
 </thead>
 <tbody>
+<tr>
+<td colspan="2" valign="top"><strong>id</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+ID of the category
+
+</td>
+</tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>

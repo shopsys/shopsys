@@ -151,10 +151,8 @@ const getPageInfoForCategoryDetailPage = (
 ): GtmCategoryDetailPageInfoType => ({
     ...defaultPageInfo,
     type: getCategoryOrSeoCategoryGtmPageType(categoryDetailData.originalCategorySlug),
-    category: categoryDetailData.breadcrumb.map((item: BreadcrumbFragmentApi) => {
-        return item.name;
-    }),
-    categoryId: [categoryDetailData.id],
+    category: categoryDetailData.breadcrumb.map(({ name }) => name),
+    categoryId: categoryDetailData.categoryHierarchy.map(({ id }) => id),
 });
 
 const getPageInfoForBlogArticleDetailPage = (

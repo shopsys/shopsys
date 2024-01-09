@@ -1,10 +1,4 @@
 CategoryHierarchyItem:
     type: object
-    config:
-        fields:
-            name:
-                type: "String!"
-                description: "Localized category name (domain dependent)"
-            uuid:
-                type: "Uuid!"
-                description: "UUID"
+    inherits:
+        - 'CategoryHierarchyItemDecorator'

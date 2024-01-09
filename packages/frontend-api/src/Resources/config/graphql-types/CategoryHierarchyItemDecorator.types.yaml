@@ -1,0 +1,14 @@
+CategoryHierarchyItemDecorator:
+    decorator: true
+    type: object
+    config:
+        fields:
+            id:
+                type: "Int!"
+                description: "ID of the category"
+            name:
+                type: "String!"
+                description: "Localized category name (domain dependent)"
+            uuid:
+                type: "Uuid!"
+                description: "UUID"

@@ -3,6 +3,7 @@ query ChildrenQuery {
         children {
             name
             categoryHierarchy {
+                id
                 name
                 uuid
             }
