@@ -13,6 +13,7 @@ import {
 } from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getMappedProductFilter } from 'helpers/filterOptions/getMappedProductFilter';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getRedirectWithOffsetPage } from 'helpers/loadMore';
@@ -112,10 +113,14 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     flagProductsResponsePromise,
                 ]);
 
-                if ((!flagDetailResponse.data || !flagDetailResponse.data.flag) && !(context.res.statusCode === 503)) {
-                    return {
-                        notFound: true,
-                    };
+                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                    flagDetailResponse.error?.graphQLErrors,
+                    flagDetailResponse.data?.flag,
+                    context.res,
+                );
+
+                if (serverSideErrorResponse) {
+                    return serverSideErrorResponse;
                 }
             }
 

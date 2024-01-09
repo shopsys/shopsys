@@ -9,6 +9,7 @@ import {
 } from 'graphql/generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
+import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
@@ -67,10 +68,14 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     })
                     .toPromise();
 
-                if ((!articleResponse.data || !articleResponse.data.article) && !(context.res.statusCode === 503)) {
-                    return {
-                        notFound: true,
-                    };
+                const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
+                    articleResponse.error?.graphQLErrors,
+                    articleResponse.data?.article,
+                    context.res,
+                );
+
+                if (serverSideErrorResponse) {
+                    return serverSideErrorResponse;
                 }
             }
 
