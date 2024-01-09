@@ -944,6 +944,8 @@ export type LoginInputApi = {
   password: Scalars['Password']['input'];
   /** Uuids of product lists that should be merged to the product lists of the user */
   productListsUuids: Array<Scalars['Uuid']['input']>;
+  /** A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid */
+  shouldOverwriteCustomerUserCart: Scalars['Boolean']['input'];
 };
 
 export type LoginResultApi = {
@@ -2923,6 +2925,7 @@ export type LoginVariablesApi = Exact<{
   password: Scalars['Password']['input'];
   previousCartUuid: InputMaybe<Scalars['Uuid']['input']>;
   productListsUuids: Array<Scalars['Uuid']['input']> | Scalars['Uuid']['input'];
+  shouldOverwriteCustomerUserCart?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
@@ -5100,9 +5103,9 @@ export function useBlogArticlesQueryApi(options?: Omit<Urql.UseQueryArgs<BlogArt
   return Urql.useQuery<BlogArticlesQueryApi, BlogArticlesQueryVariablesApi>({ query: BlogArticlesQueryDocumentApi, ...options });
 };
 export const LoginDocumentApi = gql`
-    mutation Login($email: String!, $password: Password!, $previousCartUuid: Uuid, $productListsUuids: [Uuid!]!) {
+    mutation Login($email: String!, $password: Password!, $previousCartUuid: Uuid, $productListsUuids: [Uuid!]!, $shouldOverwriteCustomerUserCart: Boolean = false) {
   Login(
-    input: {email: $email, password: $password, cartUuid: $previousCartUuid, productListsUuids: $productListsUuids}
+    input: {email: $email, password: $password, cartUuid: $previousCartUuid, productListsUuids: $productListsUuids, shouldOverwriteCustomerUserCart: $shouldOverwriteCustomerUserCart}
   ) {
     tokens {
       ...TokenFragments

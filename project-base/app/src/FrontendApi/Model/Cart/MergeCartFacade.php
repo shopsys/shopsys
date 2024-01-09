@@ -43,6 +43,22 @@ class MergeCartFacade
     }
 
     /**
+     * @param string $cartUuid
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     */
+    public function overwriteCustomerCartWithCartByUuid(string $cartUuid, CustomerUser $customerUser): void
+    {
+        $oldCart = $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
+        $customerCart = $this->cartFacade->getCartCreateIfNotExists($customerUser, null);
+
+        $oldCart->assignCartToCustomerUser($customerUser);
+
+        $this->entityManager->flush();
+
+        $this->cartFacade->deleteCart($customerCart);
+    }
+
+    /**
      * @param \App\Model\Cart\Cart $cart
      * @param \App\Model\Cart\Cart $currentCart
      */
