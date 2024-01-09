@@ -1439,3 +1439,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   added possibility for controlling error verbosity on SF (can be now devel or user) which can be set independently of the actual node environment. This allows for better error debugging on SF
     -   errorDebugging controls the verbosity of errors on SF, it is controlled by an environment variable
     -   `error-handling.md` was extended with the new information and can be used to update your project
+
+-   add display timezone to FE API SettingsQuery ([#2977](https://github.com/shopsys/shopsys/pull/2977))
+    -   timezone is now taken from API (part of SettingsQuery)
+    -   timezone application was kept in `useFormatDate`
+    -   SF falls back to the timezone set in NextJS config if API is unavailable
+    -   NextJS config timezone was renamed from `timezone` to `fallbackTimezone`
+    -   see #project-base-diff to update your project
