@@ -3644,7 +3644,7 @@ export type SeoSettingFragmentApi = { __typename: 'SeoSetting', title: string, t
 export type SettingsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
+export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, displayTimezone: string, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
 
 export type SliderItemFragmentApi = { __typename: 'SliderItem', uuid: string, name: string, link: string, extendedText: string | null, extendedTextLink: string | null, webMainImage: { __typename: 'Image', name: string | null, url: string } | null, mobileMainImage: { __typename: 'Image', name: string | null, url: string } | null };
 
@@ -6167,6 +6167,7 @@ export const SettingsQueryDocumentApi = gql`
     }
     contactFormMainText
     maxAllowedPaymentTransactions
+    displayTimezone
   }
 }
     ${PricingSettingFragmentApi}
