@@ -41,6 +41,24 @@ class HreflangLinksFacade
     }
 
     /**
+     * @param int $domainId
+     * @param string $routeName
+     * @param int $entityId
+     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink
+     */
+    public function createHreflangLink(int $domainId, string $routeName, int $entityId): HreflangLink
+    {
+        return new HreflangLink(
+            $this->domain->getDomainConfigById($domainId)->getLocale(),
+            $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
+                $domainId,
+                $routeName,
+                $entityId,
+            ),
+        );
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $currentDomainId
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
@@ -164,14 +182,7 @@ class HreflangLinksFacade
                 continue;
             }
 
-            $result[] = new HreflangLink(
-                $this->domain->getDomainConfigById($domainId)->getLocale(),
-                $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
-                    $domainId,
-                    $routeName,
-                    $entity->getId(),
-                ),
-            );
+            $result[] = $this->createHreflangLink($domainId, $routeName, $entity->getId());
         }
 
         return $result;

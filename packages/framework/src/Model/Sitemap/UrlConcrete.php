@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Sitemap;
+namespace Shopsys\FrameworkBundle\Model\Sitemap;
 
 use Presta\SitemapBundle\Sitemap\Url\UrlConcrete as BaseUrlConcrete;
 use Presta\SitemapBundle\Sitemap\Utils;
