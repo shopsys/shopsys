@@ -46,7 +46,6 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
     ) => {
         const { url } = useDomainConfig();
         const { t } = useTranslation();
-        const isMainVariant = product.isMainVariant;
 
         return (
             <li
@@ -71,7 +70,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 <ExtendedNextLink
                     className="flex h-full flex-col gap-3 no-underline hover:no-underline"
                     href={product.slug}
-                    type={isMainVariant ? 'productMainVariant' : 'product'}
+                    type={product.isMainVariant ? 'productMainVariant' : 'product'}
                     onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
                 >
                     <div className="relative">
