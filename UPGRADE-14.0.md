@@ -840,6 +840,17 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   )
         +   ): void
         ```
+-   [move](#movement-of-features-from-project-base-to-packages) productsByCatnums endpoint from project-base to frontend-api package ([#2716](https://github.com/shopsys/shopsys/pull/2716))
+    -   constructor of `Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery` has changed:
+    ```diff
+        public function __construct(
+            protected readonly ProductFacade $productFacade,
+            protected readonly ProductFilterFacade $productFilterFacade,
+            protected readonly ProductConnectionFactory $productConnectionFactory,
+    +       protected readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
+    +       protected readonly ProductRepository $productRepository,
+        )
+    ```
     -   see #project-base-diff to update your project
 
 ### Storefront
@@ -1018,6 +1029,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   improve translation caching ([#2949](https://github.com/shopsys/shopsys/pull/2949))
 
 -   fix Search results Blog Article link type ([#2961](https://github.com/shopsys/shopsys/pull/2961))
+
     -   Wrong link type was causing the link to not work. Solved by replacing "article" with "blogArticle".
 
 -   add categoryHierarchy to Category query ([#2962](https://github.com/shopsys/shopsys/pull/2962))

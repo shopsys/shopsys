@@ -472,4 +472,41 @@ class ProductRepository
     {
         return $this->getAllOfferedQueryBuilder($domainId, $pricingGroup)->getQuery()->execute();
     }
+
+    /**
+     * @param string[] $catnums
+     * @return int[]
+     */
+    public function getProductIdsByCatnums(array $catnums): array
+    {
+        $result = $this->em->createQueryBuilder()
+            ->select('p.id, p.catnum')
+            ->from(Product::class, 'p')
+            ->where('p.catnum IN (:catnums)')
+            ->setParameter('catnums', $catnums)
+            ->getQuery()
+            ->getScalarResult();
+
+        $catnumToIdMap = array_column($result, 'id', 'catnum');
+
+        return $this->getSortedProductIds($catnums, $catnumToIdMap);
+    }
+
+    /**
+     * @param string[] $catnumsToSortBy
+     * @param array<string, int> $catnumToIdMap
+     * @return int[]
+     */
+    protected function getSortedProductIds(array $catnumsToSortBy, array $catnumToIdMap): array
+    {
+        $sortedProductIds = [];
+
+        foreach ($catnumsToSortBy as $catnum) {
+            if (array_key_exists($catnum, $catnumToIdMap)) {
+                $sortedProductIds[] = $catnumToIdMap[$catnum];
+            }
+        }
+
+        return $sortedProductIds;
+    }
 }

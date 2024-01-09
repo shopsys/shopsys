@@ -14,7 +14,6 @@ use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
-use App\Model\Product\ProductRepository;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Type\Definition\ResolveInfo;
 use InvalidArgumentException;
@@ -25,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
@@ -40,6 +40,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery as BaseProdu
  * @method setProductFacade(\App\FrontendApi\Model\Product\ProductFacade $productFacade)
  * @method setProductFilterFacade(\App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade)
  * @method setProductConnectionFactory(\App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory)
+ * @property \App\Model\Product\ProductRepository $productRepository
  */
 class ProductsQuery extends BaseProductsQuery
 {
@@ -49,9 +50,9 @@ class ProductsQuery extends BaseProductsQuery
      * @param \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
-     * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
      * @param \App\Model\Product\ProductRepository $productRepository
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
+     * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      * @param \App\FrontendApi\Resolver\Category\CategoryQuery $categoryQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
      * @param \App\FrontendApi\Resolver\Products\Flag\FlagQuery $flagQuery
@@ -62,14 +63,14 @@ class ProductsQuery extends BaseProductsQuery
         ProductConnectionFactory $productConnectionFactory,
         ProductListFacade $productListFacade,
         DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
-        private readonly ProductFilterDataFactory $productFilterDataFactory,
+        ProductRepository $productRepository,
         private readonly DataLoaderInterface $productsByEntitiesBatchLoader,
-        private readonly ProductRepository $productRepository,
+        private readonly ProductFilterDataFactory $productFilterDataFactory,
         private readonly CategoryQuery $categoryQuery,
         private readonly BrandQuery $brandQuery,
         private readonly FlagQuery $flagQuery,
     ) {
-        parent::__construct($productFacade, $productFilterFacade, $productConnectionFactory, $productsVisibleAndSortedByIdsBatchLoader, $productListFacade);
+        parent::__construct($productFacade, $productFilterFacade, $productConnectionFactory, $productsVisibleAndSortedByIdsBatchLoader, $productListFacade, $productRepository);
     }
 
     /**
@@ -281,17 +282,6 @@ class ProductsQuery extends BaseProductsQuery
             $this->getDefaultOrderingMode($argument),
             $batchLoadDataId,
         );
-    }
-
-    /**
-     * @param string[] $catnums
-     * @return \GraphQL\Executor\Promise\Promise
-     */
-    public function productsByCatnumsQuery(array $catnums): Promise
-    {
-        $productIds = $this->productRepository->getProductIdsByCatnums($catnums);
-
-        return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
     }
 
     /**

@@ -211,3 +211,11 @@ QueryDecorator:
                 type: '[BlogCategory!]!'
                 resolve: "@=query('blogCategoriesQuery')"
                 description: "Returns a complete list of the blog categories"
+            productsByCatnums:
+                type: "[Product!]!"
+                resolve: '@=query("productsByCatnumsQuery", args["catnums"])'
+                args:
+                    catnums:
+                        type: "[String!]!"
+                        description: "Array of product catalog numbers"
+                description: "Returns list of products by catalog numbers"
