@@ -14,8 +14,6 @@ class DateTimeHelper
 {
     public const UTC_TIMEZONE = 'UTC';
 
-    public const TIME_REGEX = '#^([01]?[0-9]|2[0-3]):[0-5][0-9]$#'; //hh:mm
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */
@@ -36,29 +34,6 @@ class DateTimeHelper
         if ($dateTime === false) {
             throw new CannotParseDateTimeException($format, $time);
         }
-
-        return $dateTime;
-    }
-
-    /**
-     * @param string $original
-     * @return \DateTime
-     */
-    public function convertDatetimeStringFromDisplayTimeZoneToUtc(string $original): DateTime
-    {
-        $dateTime = new DateTime($original, $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId(1));
-        $dateTime->setTimezone(new DateTimeZone(self::UTC_TIMEZONE));
-
-        return $dateTime;
-    }
-
-    /**
-     * @param \DateTime $dateTime
-     * @return \DateTime
-     */
-    public function convertDateTimeFromUtcToDisplayTimeZone(DateTime $dateTime): DateTime
-    {
-        $dateTime->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId(1));
 
         return $dateTime;
     }

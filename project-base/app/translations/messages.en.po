@@ -619,6 +619,12 @@ msgstr ""
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
 msgstr ""
 
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
+msgstr ""
+
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
+msgstr ""
+
 msgid "Entered code is not valid"
 msgstr ""
 
@@ -787,10 +793,7 @@ msgstr ""
 msgid "Home page"
 msgstr ""
 
-msgid "If the time FROM is filled in, enter the date FROM too."
-msgstr ""
-
-msgid "If the time TO is filled in, enter the date TO too."
+msgid "If you want execute refund, you have to setup refund amount."
 msgstr ""
 
 msgid "Image"
@@ -1579,9 +1582,6 @@ msgstr ""
 msgid "TikTok URL"
 msgstr ""
 
-msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
-msgstr ""
-
 msgid "Time from"
 msgstr ""
 
@@ -1741,19 +1741,7 @@ msgstr ""
 msgid "Valid from"
 msgstr ""
 
-msgid "Valid from (date)"
-msgstr ""
-
-msgid "Valid from (time)"
-msgstr ""
-
 msgid "Valid to"
-msgstr ""
-
-msgid "Valid to (date)"
-msgstr ""
-
-msgid "Valid to (time)"
 msgstr ""
 
 msgid "Value"
