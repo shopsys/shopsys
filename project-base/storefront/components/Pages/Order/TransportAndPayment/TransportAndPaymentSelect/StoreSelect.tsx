@@ -18,7 +18,7 @@ export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, transport
     );
 
     return (
-        <ul>
+        <ul className="max-h-[70dvh] overflow-y-auto">
             {mappedStores?.map((pickupPlace) => (
                 <TransportAndPaymentListItem
                     key={pickupPlace.identifier}
