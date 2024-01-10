@@ -10,6 +10,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade as BaseFriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 
 /**
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
@@ -121,6 +122,10 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
     {
         $mainFriendlyUrlSlug = $this->getMainFriendlyUrlSlug($domainId, $routeName, $entityId);
         $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+        if ($mainFriendlyUrlSlug === SeoPage::SEO_PAGE_HOMEPAGE_SLUG) {
+            return $domainConfig->getUrl();
+        }
 
         return $domainConfig->getUrl() . '/' . $mainFriendlyUrlSlug;
     }
