@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Blog;
 use DateTime;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\BlogCategoriesType;
@@ -210,7 +209,6 @@ class BlogArticleFormType extends AbstractType
                 ],
                 'label' => t('Date of publication'),
                 'data' => $blogArticle === null ? new DateTime() : $blogArticle->getPublishDate(),
-                'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             ]);
 
         return $builderSettingsGroup;
