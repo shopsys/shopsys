@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Twig;
 
 use DateTime;
+use DateTimeZone;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\CustomDateTimeFormatPatternRepositoryFactory;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 
@@ -66,9 +70,23 @@ class DateTimeFormatterExtensionTest extends TestCase
      */
     protected function createDateTimeFormatter(): DateTimeFormatter
     {
-        $displayTimeZoneProvider = new DisplayTimeZoneProvider();
+        $displayTimeZoneProvider = new DisplayTimeZoneProvider($this->getMockedDomain());
         $dateTimeFormatPatternRepository = (new CustomDateTimeFormatPatternRepositoryFactory())->create();
 
         return new DateTimeFormatter($dateTimeFormatPatternRepository, $displayTimeZoneProvider);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private function getMockedDomain(): Domain
+    {
+        $settingMock = $this->getMockBuilder(Setting::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $dateTimeZone = new DateTimeZone('Europe/Prague');
+        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $dateTimeZone);
+
+        return new Domain([$domainConfig], $settingMock);
     }
 }

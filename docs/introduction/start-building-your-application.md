@@ -10,7 +10,7 @@ Here are first steps you should start with.
 ## Set up timezone to display dates
 
 Dates are internally stored in UTC. That supports portability and eases integration with other systems.
-To see dates properly in the desired timezone, you can change `shopsys.display_timezone` parameter (default value is `Europe/Prague`).
+To see dates properly in the desired timezone, you can change `timezone` setting in `config/domains.yaml` file.
 
 _Note: Read more about [working with date-time values](./working-with-date-time-values.md)_
 

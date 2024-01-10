@@ -5,28 +5,24 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Localization;
 
 use DateTimeZone;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class DisplayTimeZoneProvider implements DisplayTimeZoneProviderInterface
 {
-    protected DateTimeZone $displayTimeZone;
-
     /**
-     * @param string|null $timeZoneString
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(?string $timeZoneString = null)
-    {
-        if ($timeZoneString === null) {
-            $timeZoneString = date_default_timezone_get();
-        }
-
-        $this->displayTimeZone = new DateTimeZone($timeZoneString);
+    public function __construct(
+        protected readonly Domain $domain,
+    ) {
     }
 
     /**
+     * @param int $domainId
      * @return \DateTimeZone
      */
-    public function getDisplayTimeZone(): DateTimeZone
+    public function getDisplayTimeZoneByDomainId(int $domainId): DateTimeZone
     {
-        return $this->displayTimeZone;
+        return $this->domain->getDomainConfigById($domainId)->getDateTimeZone();
     }
 }

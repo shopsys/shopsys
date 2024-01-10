@@ -46,7 +46,7 @@ class DateTimeHelper
      */
     public function convertDatetimeStringFromDisplayTimeZoneToUtc(string $original): DateTime
     {
-        $dateTime = new DateTime($original, $this->displayTimeZoneProvider->getDisplayTimeZone());
+        $dateTime = new DateTime($original, $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId(1));
         $dateTime->setTimezone(new DateTimeZone(self::UTC_TIMEZONE));
 
         return $dateTime;
@@ -58,7 +58,7 @@ class DateTimeHelper
      */
     public function convertDateTimeFromUtcToDisplayTimeZone(DateTime $dateTime): DateTime
     {
-        $dateTime->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZone());
+        $dateTime->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId(1));
 
         return $dateTime;
     }

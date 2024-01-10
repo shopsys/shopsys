@@ -38,7 +38,7 @@ class ShopsysFrameworkDataCollector extends DataCollector
             'currentDomainName' => $this->domain->getName(),
             'currentDomainLocale' => $this->domain->getLocale(),
             'systemTimeZone' => date_default_timezone_get(),
-            'displayTimeZone' => $this->displayTimeZoneProvider->getDisplayTimeZone()->getName(),
+            'displayTimeZone' => $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($this->domain->getId())->getName(),
         ];
     }
 
