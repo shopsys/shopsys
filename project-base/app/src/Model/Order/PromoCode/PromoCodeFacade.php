@@ -6,9 +6,7 @@ namespace App\Model\Order\PromoCode;
 
 use App\Component\String\HashGenerator;
 use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData as BasePromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade as BasePromoCodeFacade;
@@ -22,9 +20,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository;
  */
 class PromoCodeFacade extends BasePromoCodeFacade
 {
-    public const PROMOCODE_DEFAULT_TIME_FROM = '00:00:00';
-    public const PROMOCODE_DEFAULT_TIME_TO = '23:59:59';
-    public const DATABASE_DATE_FORMAT = 'Y-m-d';
     private const MASS_CREATE_BATCH_SIZE = 200;
 
     /**
@@ -32,7 +27,6 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactory $promoCodeFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeProductFactory $promoCodeProductFactory
@@ -51,7 +45,6 @@ class PromoCodeFacade extends BasePromoCodeFacade
         PromoCodeRepository $promoCodeRepository,
         PromoCodeFactoryInterface $promoCodeFactory,
         private Domain $domain,
-        private DateTimeHelper $dateTimeHelper,
         private PromoCodeProductRepository $promoCodeProductRepository,
         private PromoCodeCategoryRepository $promoCodeCategoryRepository,
         private PromoCodeProductFactory $promoCodeProductFactory,
@@ -93,8 +86,6 @@ class PromoCodeFacade extends BasePromoCodeFacade
      */
     public function create(BasePromoCodeData $promoCodeData): PromoCode
     {
-        $this->prepareDatetimeValid($promoCodeData);
-
         /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
         $promoCode = parent::create($promoCodeData);
         $this->refreshPromoCodeRelations($promoCode, $promoCodeData);
@@ -109,8 +100,6 @@ class PromoCodeFacade extends BasePromoCodeFacade
      */
     public function edit($promoCodeId, BasePromoCodeData $promoCodeData): PromoCode
     {
-        $this->prepareDatetimeValid($promoCodeData);
-
         /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
         $promoCode = parent::edit($promoCodeId, $promoCodeData);
         $this->refreshPromoCodeRelations($promoCode, $promoCodeData);
@@ -355,40 +344,6 @@ class PromoCodeFacade extends BasePromoCodeFacade
         }
 
         $this->em->flush();
-    }
-
-    /**
-     * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
-     */
-    private function prepareDatetimeValid(PromoCodeData $promoCodeData): void
-    {
-        if ($promoCodeData->dateValidFrom !== null) {
-            $promoCodeData->datetimeValidFrom = $this->createDateTimeInUtc(
-                $promoCodeData->dateValidFrom,
-                $promoCodeData->timeValidFrom ?? self::PROMOCODE_DEFAULT_TIME_FROM,
-            );
-        }
-
-        $promoCodeData->timeValidTo = $promoCodeData->timeValidTo ? $promoCodeData->timeValidTo . ':59' : self::PROMOCODE_DEFAULT_TIME_TO;
-
-        if ($promoCodeData->dateValidTo !== null) {
-            $promoCodeData->datetimeValidTo = $this->createDateTimeInUtc(
-                $promoCodeData->dateValidTo,
-                $promoCodeData->timeValidTo,
-            );
-        }
-    }
-
-    /**
-     * @param \DateTime $date
-     * @param string $time
-     * @return \DateTime
-     */
-    private function createDateTimeInUtc(DateTime $date, string $time): DateTime
-    {
-        return $this->dateTimeHelper->convertDatetimeStringFromDisplayTimeZoneToUtc(
-            $date->format(self::DATABASE_DATE_FORMAT) . 'T' . $time,
-        );
     }
 
     /**

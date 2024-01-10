@@ -622,6 +622,12 @@ msgstr "Vložte 6 místný ověřovací kód z e-mailu. Nejprve o něj musíte z
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
 msgstr "Vložte 6 místný ověřovací kód z mobilní aplikace pro dvoufaktorovou autentizaci."
 
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
+msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 00:00:00)"
+
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
+msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2024 23:59:59)"
+
 msgid "Entered code is not valid"
 msgstr "Zadaný kód není platný"
 
@@ -810,12 +816,6 @@ msgstr "Svátky a interní dny"
 
 msgid "Home page"
 msgstr "Domovská stránka"
-
-msgid "If the time FROM is filled in, enter the date FROM too."
-msgstr "Pokud je vyplněn čas OD, vyplňte i datum OD."
-
-msgid "If the time TO is filled in, enter the date TO too."
-msgstr "Pokud je vyplněn čas DO, vyplňte i datum DO."
 
 msgid "If you want execute refund, you have to setup refund amount."
 msgstr "Pokud chcete provést refundaci, musíte nastavit její výši."
@@ -1663,9 +1663,6 @@ msgstr "Čtvrtek"
 msgid "TikTok URL"
 msgstr "TikTok URL"
 
-msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
-msgstr "Formát času: \"hh:mm\", např.: \"07:45\", \"23:05\""
-
 msgid "Time from"
 msgstr "Čas od"
 
@@ -1825,20 +1822,8 @@ msgstr "Uživatelský překlad"
 msgid "Valid from"
 msgstr "Platnost od"
 
-msgid "Valid from (date)"
-msgstr "Datum platnosti OD"
-
-msgid "Valid from (time)"
-msgstr "Čas platnosti OD"
-
 msgid "Valid to"
 msgstr "Platnost do"
-
-msgid "Valid to (date)"
-msgstr "Datum platnosti DO"
-
-msgid "Valid to (time)"
-msgstr "Čas platnosti DO"
 
 msgid "Value"
 msgstr "Hodnota"

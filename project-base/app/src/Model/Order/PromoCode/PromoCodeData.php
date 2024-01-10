@@ -16,26 +16,6 @@ class PromoCodeData extends BasePromoCodeData
     /**
      * @var \DateTime|null
      */
-    public $dateValidFrom;
-
-    /**
-     * @var \DateTime|null
-     */
-    public $dateValidTo;
-
-    /**
-     * @var string|null
-     */
-    public $timeValidFrom;
-
-    /**
-     * @var string|null
-     */
-    public $timeValidTo;
-
-    /**
-     * @var \DateTime|null
-     */
     public $datetimeValidFrom;
 
     /**
