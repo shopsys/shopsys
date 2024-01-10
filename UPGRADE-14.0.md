@@ -956,3 +956,4 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   fix missing variant link types ([#2976](https://github.com/shopsys/shopsys/pull/2976))
     -   fix Add to cart popup product link type
     -   fix Bestsellers product link type
+-   add scroll to cart order personal pick up place select modal ([#2979](https://github.com/shopsys/shopsys/pull/2979))
