@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Form;
 
 use DateTime;
+use DateTimeZone;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
@@ -48,12 +52,27 @@ class DateTimeTypeTest extends TypeTestCase
      */
     protected function getExtensions(): array
     {
-        $displayTimeZoneProvider = new DisplayTimeZoneProvider('Europe/Prague');
+        $displayTimeZoneProvider = new DisplayTimeZoneProvider($this->getMockedDomain('Europe/Prague'));
 
         $dateTimeType = new DateTimeType($displayTimeZoneProvider);
 
         return [
             new PreloadedExtension([$dateTimeType], []),
         ];
+    }
+
+    /**
+     * @param string $dateTimeZoneString
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private function getMockedDomain(string $dateTimeZoneString): Domain
+    {
+        $settingMock = $this->getMockBuilder(Setting::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $dateTimeZone = new DateTimeZone($dateTimeZoneString);
+        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $dateTimeZone);
+
+        return new Domain([$domainConfig], $settingMock);
     }
 }

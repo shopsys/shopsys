@@ -8,8 +8,7 @@ It's easy to implement show dates that suites your needs, for example, each user
 ## Configuration
 
 What timezone will be used is controlled by the implementation of `DisplayTimeZoneProviderInterface`.
-Default implementation `DisplayTimeZoneProvider` takes into account parameter `shopsys.display_timezone` and convert all the dates into this timezone.
-The default value is `Europe/Prague`.
+Default implementation `DisplayTimeZoneProvider` takes into account domain timezone setting from `config/domains.yaml` file and convert all the dates into this timezone.
 
 ## Display dates
 

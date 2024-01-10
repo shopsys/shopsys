@@ -8,9 +8,6 @@ parameters:
     # Administration locale. Must be registered in domains.yaml
     shopsys.admin_locale: en
 
-    # All time values are displayed in this timezone (default is PHP timezone)
-    shopsys.display_timezone: ~
-
     # Hours defined in cron.yaml correspond to this timezone (default is PHP timezone)
     shopsys.cron_timezone: ~
 

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Localization;
 
 use DateTime;
 use IntlDateFormatter;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class DateTimeFormatter implements DateTimeFormatterInterface
 {
@@ -32,7 +33,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
             $locale,
             $dateType,
             $timeType,
-            $this->displayTimeZoneProvider->getDisplayTimeZone(),
+            $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId(Domain::FIRST_DOMAIN_ID),
             null,
             $this->getCustomPattern($locale, $dateType, $timeType),
         );

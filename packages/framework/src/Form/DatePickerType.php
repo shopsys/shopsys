@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -33,7 +34,7 @@ class DatePickerType extends AbstractType
         ];
 
         if ($this->displayTimeZoneProvider !== null) {
-            $defaults['view_timezone'] = $this->displayTimeZoneProvider->getDisplayTimeZone()->getName();
+            $defaults['view_timezone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId(Domain::FIRST_DOMAIN_ID)->getName();
         }
 
         $resolver->setDefaults($defaults);

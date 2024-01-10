@@ -420,8 +420,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface:
         class: Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider
-        arguments:
-            ['%shopsys.display_timezone%']
 
     CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
         class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository

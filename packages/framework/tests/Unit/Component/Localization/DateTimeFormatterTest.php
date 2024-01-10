@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Localization;
 
 use DateTime;
+use DateTimeZone;
 use IntlDateFormatter;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPatternRepository;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class DateTimeFormatterTest extends TestCase
 {
@@ -46,8 +50,9 @@ class DateTimeFormatterTest extends TestCase
      */
     public function testFormatDateTimeWithTimezone(DateTime $inputDateTime, string $dateTimeZone, string $result): void
     {
+        $mockedDomain = $this->getMockedDomain($dateTimeZone);
         $dateTimeFormatPatternRepository = new DateTimeFormatPatternRepository();
-        $displayTimeZoneProvider = new DisplayTimeZoneProvider($dateTimeZone);
+        $displayTimeZoneProvider = new DisplayTimeZoneProvider($mockedDomain);
 
         $dateTimeFormatter = new DateTimeFormatter($dateTimeFormatPatternRepository, $displayTimeZoneProvider);
 
@@ -59,5 +64,20 @@ class DateTimeFormatterTest extends TestCase
         );
 
         $this->assertEquals($result, $formattedDate);
+    }
+
+    /**
+     * @param string $dateTimeZoneString
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private function getMockedDomain(string $dateTimeZoneString): Domain
+    {
+        $settingMock = $this->getMockBuilder(Setting::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $dateTimeZone = new DateTimeZone($dateTimeZoneString);
+        $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $dateTimeZone);
+
+        return new Domain([$domainConfig], $settingMock);
     }
 }
