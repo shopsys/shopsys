@@ -852,6 +852,85 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         )
     ```
     -   see #project-base-diff to update your project
+-   add hreflang feature ([#2970](https://github.com/shopsys/shopsys/pull/2970))
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `framework` package:
+        -   `SeoPage`
+        -   `Sitemap` behavior
+        -   `FriendlyUrlFacade::findByDomainIdAndSlug()`
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to `frontend-api` package:
+        -   `SeoPage` query and resolver map
+    -   method `Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            Redis $redisQueue,
+    +       protected readonly BlogArticleFacade $blogArticleFacade,
+    ```
+    -   method `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly EntityManagerInterface $em,
+            protected readonly ParameterRepository $parameterRepository,
+            protected readonly ProductFacade $productFacade,
+            protected readonly FriendlyUrlRepository $friendlyUrlRepository,
+            protected readonly ProductVisibilityFacade $productVisibilityFacade,
+            protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+            protected readonly CategoryFacade $categoryFacade,
+            protected readonly ProductAccessoryFacade $productAccessoryFacade,
+            protected readonly BrandCachedFacade $brandCachedFacade,
+            protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+    +       protected readonly HreflangLinksFacade $hreflangLinksFacade,
+    ```
+    -   method `Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly Setting $setting,
+    +       protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+    +       protected readonly BlogArticleExportQueueFacade $blogArticleExportQueueFacade,
+    ```
+    -   method `Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly Domain $domain,
+    +       protected readonly HreflangLinksFacade $hreflangLinksFacade,
+    ```
+    -   method `Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandResolverMap::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly UrlGeneratorInterface $urlGenerator,
+            protected readonly Domain $domain,
+    +       protected readonly HreflangLinksFacade $hreflangLinksFacade,
+    ```
+    -   method `Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly Domain $domain,
+            protected readonly ProductCollectionFacade $productCollectionFacade,
+            protected readonly ProductAccessoryFacade $productAccessoryFacade,
+            protected readonly CurrentCustomerUser $currentCustomerUser,
+            protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
+            protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+    +       protected readonly HreflangLinksFacade $hreflangLinksFacade,
+    ```
+    -   `Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem` now have new property `$id`
+        -   any extended `Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository` method now have to select also `fu.entityId` column
+    -   `Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade` is now strictly typed
+    -   `Shopsys\FrameworkBundle\Model\Sitemap\SitemapListener`
+        -   constant `PRIORITY_NONE` was removed
+        -   method `__construct()` changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly SitemapFacade $sitemapFacade,
+                protected readonly Domain $domain,
+                protected readonly DomainRouterFactory $domainRouterFactory,
+        +       protected readonly HreflangLinksFacade $hreflangLinksFacade,
+        +       protected readonly SeoSettingFacade $seoSettingFacade,
+        ```
+        -   method `addUrlsBySitemapItems()` was removed
+        -   method `addHomepageUrl()` was removed
+        -   all methods in this class are now strictly typed
+    -   you have to implement your custom pages by yourself to sitemap and graphql
+    -   if you're using custom storefront, you have to implement hreflang tags yourself
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
