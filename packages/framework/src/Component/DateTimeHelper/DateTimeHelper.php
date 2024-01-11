@@ -12,8 +12,6 @@ use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterf
 
 class DateTimeHelper
 {
-    public const UTC_TIMEZONE = 'UTC';
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */

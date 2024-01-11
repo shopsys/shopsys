@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Model\Advert\AdvertFacade;
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Advert\AdvertFormType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
@@ -123,11 +122,9 @@ class AdvertFormTypeExtension extends AbstractTypeExtension
     private function buildVisibilityIntervalForm(FormBuilderInterface $builder): void
     {
         $builder->add('datetimeVisibleFrom', DatePickerType::class, [
-            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             'required' => false,
             'label' => t('Display date FROM'),
         ])->add('datetimeVisibleTo', DatePickerType::class, [
-            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             'required' => false,
             'label' => t('Display date TO'),
         ]);

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Store;
 
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayData;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -45,7 +44,6 @@ class ClosedDayFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter date']),
                 ],
-                'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             ])
             ->add('name', TextType::class, [
                 'required' => true,
