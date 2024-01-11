@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
 use Doctrine\ORM\Mapping as ORM;
+use Litipk\BigNumbers\Decimal;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
@@ -295,7 +296,7 @@ class OrderItem
             $this->setTotalPrice(new Price($orderItemData->totalPriceWithoutVat, $orderItemData->totalPriceWithVat));
         }
 
-        $this->vatPercent = $orderItemData->vatPercent;
+        $this->vatPercent = Decimal::create($orderItemData->vatPercent, 6)->innerValue();
         $this->quantity = $orderItemData->quantity;
         $this->unitName = $orderItemData->unitName;
         $this->catnum = $orderItemData->catnum;

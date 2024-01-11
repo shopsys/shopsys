@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
+use Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid\EntityLogGridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
@@ -38,6 +40,7 @@ class OrderController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
+     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid\EntityLogGridFactory $entityLogGridFactory
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
@@ -50,6 +53,7 @@ class OrderController extends AdminBaseController
         protected readonly Domain $domain,
         protected readonly OrderDataFactoryInterface $orderDataFactory,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
+        protected readonly EntityLogGridFactory $entityLogGridFactory,
     ) {
     }
 
@@ -95,9 +99,15 @@ class OrderController extends AdminBaseController
             t('Editing order - Nr. %number%', ['%number%' => $order->getNumber()]),
         );
 
+        $entityLogGrid = $this->entityLogGridFactory->createByEntityNameAndEntityId(
+            EntityLogFacade::getEntityNameByEntity($order),
+            $order->getId(),
+        );
+
         return $this->render('@ShopsysFramework/Admin/Content/Order/edit.html.twig', [
             'form' => $form->createView(),
             'order' => $order,
+            'entityLogGridView' => $entityLogGrid->createView(),
         ]);
     }
 

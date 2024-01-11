@@ -31,7 +31,7 @@ class EntityLogRepository
      * @param int $entityId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getQueryBuilderByEntityNameAndEntityId(string $entityName, int $entityId): QueryBuilder
+    public function getQueryBuilderByEntityNameAndEntityId(string $entityName, int $entityId): QueryBuilder
     {
         return $this->getRepository()->createQueryBuilder('el')
             ->select('el')
