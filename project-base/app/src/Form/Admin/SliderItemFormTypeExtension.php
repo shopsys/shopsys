@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Model\Slider\SliderItemFacade;
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
@@ -108,11 +107,9 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
     private function buildVisibilityIntervalForm(FormBuilderInterface $builder): void
     {
         $builder->add('datetimeVisibleFrom', DatePickerType::class, [
-            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             'required' => false,
             'label' => t('Display date FROM'),
         ])->add('datetimeVisibleTo', DatePickerType::class, [
-            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
             'required' => false,
             'label' => t('Display date TO'),
         ]);
