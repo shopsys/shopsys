@@ -1751,6 +1751,8 @@ type Query {
     "Array of product catalog numbers"
     catnums: [String!]!
   ): [Product!]!
+  "Returns list of searched products that can be paginated using `first`, `last`, `before` and `after` keywords"
+  productsSearch(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String!): ProductConnection!
   "Returns promoted categories"
   promotedCategories: [Category!]!
   "Returns promoted products"

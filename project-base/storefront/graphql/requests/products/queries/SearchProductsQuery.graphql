@@ -5,7 +5,7 @@ query SearchProductsQuery(
     $search: String!
     $pageSize: Int
 ) {
-    products(after: $endCursor, orderingMode: $orderingMode, filter: $filter, search: $search, first: $pageSize) {
+    productsSearch(after: $endCursor, orderingMode: $orderingMode, filter: $filter, search: $search, first: $pageSize) {
         orderingMode
         defaultOrderingMode
         totalCount

@@ -361,6 +361,12 @@
             <arg value="${path.utils}/releaser/phpunit.xml"/>
             <arg value="${path.utils}/releaser/tests/"/>
         </exec>
+        <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="--colors=always"/>
+            <arg value="--configuration"/>
+            <arg value="${path.packages}/persoo/phpunit.xml"/>
+            <arg value="${path.packages}/persoo/tests/"/>
+        </exec>
     </target>
 
     <target name="tests-unit-jest" description="Runs js's unit tests.">
@@ -375,7 +381,6 @@
     </target>
 
     <target name="translations-dump" depends="domains-info-load" description="Extracts translatable messages in the whole monorepo.">
-
         <phingcall target="shopsys_framework.translations-dump"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -470,6 +475,15 @@
             <arg value="--dir=${path.packages}/article-feed-persoo/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/article-feed-persoo/src/Resources/translations"/>
+            <arg line="${domains-info.locales}"/>
+        </exec>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="translation:extract"/>
+            <arg value="--bundle=ShopsysPersooBundle"/>
+            <arg value="--dir=${path.packages}/persoo/src"/>
+            <arg value="--output-format=po"/>
+            <arg value="--output-dir=${path.packages}/persoo/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
         </exec>
     </target>

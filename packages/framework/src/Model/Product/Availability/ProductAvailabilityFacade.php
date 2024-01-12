@@ -45,10 +45,10 @@ class ProductAvailabilityFacade implements ResetInterface
         $domainLocale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
-            return t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
+            return $this->getOnStockText($domainLocale);
         }
 
-        return t('Out of stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
+        return $this->getOutOfStockText($domainLocale);
     }
 
     /**
@@ -260,5 +260,23 @@ class ProductAvailabilityFacade implements ResetInterface
     public function reset(): void
     {
         $this->productAvailabilityDomainCache = [];
+    }
+
+    /**
+     * @param string $domainLocale
+     * @return string
+     */
+    public function getOnStockText(string $domainLocale): string
+    {
+        return t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
+    }
+
+    /**
+     * @param string $domainLocale
+     * @return string
+     */
+    public function getOutOfStockText(string $domainLocale): string
+    {
+        return t('Out of stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale);
     }
 }

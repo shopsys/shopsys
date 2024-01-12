@@ -1,0 +1,19 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Shopsys\PersooBundle\Component\Persoo\PersooClient:
+        arguments:
+            $persooApiUrl: '%env(string:PERSOO_API_URL)%'
+            $persooAccountId: '%env(string:PERSOO_ACCOUNT_ID)%'
+            $persooIsProductionMode: '%env(bool:PERSOO_IS_PRODUCTION_MODE)%'
+
+    Shopsys\PersooBundle\Component\Persoo\Filter\ProductFilterToPersooFilterMapper: ~
+
+    Shopsys\PersooBundle\Model\Product\ProductSearchResultsProvider:
+        arguments:
+            $enabledDomainIds: '%persoo.enabled_domain_ids%'
+        tags:
+            - { name: 'shopsys.frontend_api.products_search_results_provider', priority: 100 }

@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Product\Connection;
 
 use Closure;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -68,19 +69,7 @@ class ProductConnectionFactory
         ?string $orderingMode = null,
     ): ProductConnection {
         $searchText = $argument['search'] ?? '';
-        $productFilterOptionsClosure = function () use ($productFilterData, $searchText) {
-            if ($searchText === '') {
-                $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForAll();
-            } else {
-                $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForSearch($searchText);
-            }
-
-            return $this->productFilterOptionsFactory->createProductFilterOptionsForAll(
-                $productFilterConfig,
-                $productFilterData,
-                $searchText,
-            );
-        };
+        $productFilterOptionsClosure = $this->getProductFilterOptionsClosure($productFilterData, $searchText);
 
         return $this->createConnection(
             $retrieveProductClosure,
@@ -151,5 +140,62 @@ class ProductConnectionFactory
             $argument,
             $productFilterOptionsClosure,
         );
+    }
+
+    /**
+     * @param array $products
+     * @param string $search
+     * @param int $offset
+     * @param int $limit
+     * @param int $countOfProducts
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string|null $orderingMode
+     * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection
+     */
+    public function createConnectionForSearchFromArray(
+        array $products,
+        string $search,
+        int $offset,
+        int $limit,
+        int $countOfProducts,
+        ProductFilterData $productFilterData,
+        ?string $orderingMode = null,
+    ): ProductConnection {
+        $connectionBuilder = new ConnectionBuilder();
+        $connection = $connectionBuilder->connectionFromArray($products);
+
+        $pageInfo = $connection->getPageInfo();
+        $pageInfo->setHasPreviousPage($offset > 0);
+        $pageInfo->setHasNextPage($offset + $limit < $countOfProducts);
+
+        return new ProductConnection(
+            $connection->getEdges(),
+            $pageInfo,
+            $this->getProductFilterOptionsClosure($productFilterData, $search),
+            $orderingMode,
+            $countOfProducts,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param mixed $searchText
+     * @return \Closure
+     */
+    protected function getProductFilterOptionsClosure(ProductFilterData $productFilterData, mixed $searchText): Closure
+    {
+        return function () use ($productFilterData, $searchText) {
+            if ($searchText === '') {
+                $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForAll();
+            } else {
+                $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForSearch($searchText);
+            }
+
+            return $this->productFilterOptionsFactory->createProductFilterOptionsForAll(
+                $productFilterConfig,
+                $productFilterData,
+                $searchText,
+            );
+        };
     }
 }

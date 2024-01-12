@@ -17,7 +17,7 @@ class ProductConnection extends Connection
      * @param \Overblog\GraphQLBundle\Relay\Connection\PageInfoInterface|null $pageInfo
      * @param \Closure $productFilterOptionsClosure
      * @param string|null $orderingMode
-     * @param null $totalCount
+     * @param int|null $totalCount
      * @param string $defaultOrderingMode
      */
     public function __construct(

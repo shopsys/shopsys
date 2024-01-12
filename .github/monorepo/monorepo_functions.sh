@@ -33,6 +33,7 @@ get_all_packages() {
         migrations \
         monorepo-tools \
         php-image \
+        persoo \
         project-base"
 }
 
