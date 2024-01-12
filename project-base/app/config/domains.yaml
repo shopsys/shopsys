@@ -9,4 +9,4 @@ domains:
         name: 2.shopsys
         locale: cs
         styles_directory: domain2
-        timezone: Europe/Bratislava
+        timezone: Europe/Prague
