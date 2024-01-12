@@ -156,14 +156,16 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
 
         $this->dispatchFakeKernelResponseEventToTriggerSendMessageToTransport();
 
-        /** @var \Symfony\Component\Messenger\Transport\InMemoryTransport $transport */
-        $transport = self::getContainer()->get('messenger.transport.product_recalculation');
+        /** @var \Symfony\Component\Messenger\Transport\InMemoryTransport $regularPriorityTransport */
+        $regularPriorityTransport = self::getContainer()->get('messenger.transport.product_recalculation_priority_regular');
+        /** @var \Symfony\Component\Messenger\Transport\InMemoryTransport $highPriorityTransport */
+        $highPriorityTransport = self::getContainer()->get('messenger.transport.product_recalculation_priority_high');
         $handler = $this->productRecalculationMessageHandler;
 
-        $envelopes = $transport->getSent();
+        $envelopes = [...$highPriorityTransport->getSent(), ...$regularPriorityTransport->getSent()];
 
         foreach ($envelopes as $envelope) {
-            /** @var \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessage $message */
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage $message */
             $message = $envelope->getMessage();
             $handler($message);
         }

@@ -25,11 +25,11 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessage $message
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage $message
      * @param \Symfony\Component\Messenger\Handler\Acknowledger|null $ack
      * @return mixed
      */
-    public function __invoke(ProductRecalculationMessage $message, ?Acknowledger $ack = null): mixed
+    public function __invoke(AbstractProductRecalculationMessage $message, ?Acknowledger $ack = null): mixed
     {
         return $this->handle($message, $ack);
     }
@@ -43,7 +43,7 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
         $acknowledgers = [];
 
         /**
-         * @var \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessage $message
+         * @var \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage $message
          * @var \Symfony\Component\Messenger\Handler\Acknowledger $ack
          */
         foreach ($jobs as [$message, $ack]) {
