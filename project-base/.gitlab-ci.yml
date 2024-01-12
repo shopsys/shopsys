@@ -296,6 +296,21 @@ deploy:devel:
         kubernetes:
             namespace: ${PROJECT_NAME}
 
+deploy:alpha:
+    <<: *deploy
+    resource_group: deploy_alpha
+    variables:
+        KUBE_CONFIG: ${KUBE_CONFIG_DEVEL}
+    rules:
+        -   if: '$CI_PIPELINE_SOURCE == "schedule"'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH == "alpha" || $CI_COMMIT_BRANCH =~ /^alpha-.*$/'
+    environment:
+        name: devel-alpha
+        url: https://${DOMAIN_HOSTNAME_1}
+        kubernetes:
+            namespace: ${PROJECT_NAME}
+
 test:gatling:
     stage: test
     image:
