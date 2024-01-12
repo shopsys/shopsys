@@ -1790,7 +1790,7 @@ msgid "No flags found. You have to create some first."
 msgstr "Nebyly nalezeny žádné příznaky. Nejprve musíte nějaké vytvořit."
 
 msgid "No logs created so far."
-msgstr "Žádné protokly nejsou zatím vytvořeny."
+msgstr "Žádné protokoly nejsou zatím vytvořeny."
 
 msgid "No order found."
 msgstr "Nebyla nalezena žádná objednávka."

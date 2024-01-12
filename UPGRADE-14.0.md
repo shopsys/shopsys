@@ -1137,6 +1137,27 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
     -   see #project-base-diff to update your project
 
+-   log entity changes ([#2980](https://github.com/shopsys/shopsys/pull/2980))
+
+    -   see #project-base-diff to update your project
+    -   if you have extended `OrderItem`, or `Order` don't forget to add the appropriate loggable attribute to keep the entity logged – see https://docs.shopsys.com/en/14.0/nodel/log-entity-changes/
+    -   `Shopsys\FrameworkBundle\Controller\Admin\OrderController::__construct()` changed its interface:
+
+    ```diff
+        public function __construct(
+            protected readonly OrderFacade $orderFacade,
+            protected readonly AdvancedSearchOrderFacade $advancedSearchOrderFacade,
+            protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
+            protected readonly AdministratorGridFacade $administratorGridFacade,
+            protected readonly GridFactory $gridFactory,
+            protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+            protected readonly OrderItemFacade $orderItemFacade,
+            protected readonly Domain $domain,
+            protected readonly OrderDataFactoryInterface $orderDataFactory,
+            protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
+        +   protected readonly EntityLogGridFactory $entityLogGridFactory,
+    ```
+
 -   sent emails via async queue ([#2998](https://github.com/shopsys/shopsys/pull/2998))
     -   see #project-base-diff to update your project
 -   change the product catnums field type in GrapesJs to text (([#2994](https://github.com/shopsys/shopsys/pull/2994)))
