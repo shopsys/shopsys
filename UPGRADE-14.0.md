@@ -772,6 +772,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `Shopsys\FrameworkBundle\Controller\Admin\ProductController` class was changed:
         -   `editAction()` is now strictly typed
         -   `newAction()` is now strictly typed
+        -   `deleteAction()` is now strictly typed
     -   `Shopsys\FrameworkBundle\Model\Product\ProductFacade` class was changed:
         -   `create()` method changed its interface:
         ```diff
@@ -790,6 +791,15 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         +       ?ProductRecalculationPriorityEnumInterface $priority = null,
         -   )
         +   ): Product
+        ```
+        -   `delete()` method changed its interface:
+        ```diff
+            public function delete(
+        -       $productId
+        +       int $productId,
+        +       ?ProductRecalculationPriorityEnumInterface $priority = null,
+        -   )
+        +   ): void
         ```
     -   see #project-base-diff to update your project
 

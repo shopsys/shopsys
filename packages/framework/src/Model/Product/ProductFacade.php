@@ -180,18 +180,21 @@ class ProductFacade
 
     /**
      * @param int $productId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum|null $priority nullable because of https://github.com/nikic/PHP-Parser/pull/940
      */
-    public function delete($productId)
-    {
+    public function delete(
+        int $productId,
+        ?ProductRecalculationPriorityEnumInterface $priority = null,
+    ): void {
         $product = $this->productRepository->getById($productId);
         $productDeleteResult = $product->getProductDeleteResult();
         $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
 
         foreach ($productsForRecalculations as $productForRecalculations) {
-            $this->productRecalculationDispatcher->dispatchSingleProductId($productForRecalculations->getId());
+            $this->productRecalculationDispatcher->dispatchSingleProductId($productForRecalculations->getId(), $priority ?? ProductRecalculationPriorityEnum::REGULAR);
         }
 
-        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
+        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority ?? ProductRecalculationPriorityEnum::REGULAR);
 
         $this->em->remove($product);
         $this->em->flush();

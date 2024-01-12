@@ -230,13 +230,14 @@ class ProductController extends AdminBaseController
      * @Route("/product/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         try {
             $product = $this->productFacade->getById($id);
 
-            $this->productFacade->delete($id);
+            $this->productFacade->delete($id, ProductRecalculationPriorityEnum::HIGH);
 
             $this->addSuccessFlashTwig(
                 t('Product <strong>{{ product|productDisplayName }}</strong> deleted'),
