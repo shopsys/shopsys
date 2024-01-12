@@ -598,9 +598,6 @@ msgstr ""
 msgid "Editing pararameter value of type color - %name%"
 msgstr ""
 
-msgid "Editing product - %name%"
-msgstr ""
-
 msgid "Editing promo code"
 msgstr ""
 
@@ -1376,9 +1373,6 @@ msgid "Privacy policy article setting - view"
 msgstr ""
 
 msgid "Product"
-msgstr ""
-
-msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
 msgstr ""
 
 msgid "Products - full"

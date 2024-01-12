@@ -598,9 +598,6 @@ msgstr "Editace hodnoty parametru typu barva"
 msgid "Editing pararameter value of type color - %name%"
 msgstr "Úprava hodnoty parametru typu barva - %name%"
 
-msgid "Editing product - %name%"
-msgstr "Editace produktu - %name%"
-
 msgid "Editing promo code"
 msgstr "Editace slevového kupónu"
 
@@ -1377,9 +1374,6 @@ msgstr "Nastavení zásad ochrany osobních údajů - zobrazení"
 
 msgid "Product"
 msgstr "Produkt"
-
-msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
-msgstr "Produkt <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> byl upraven"
 
 msgid "Products - full"
 msgstr "Produkty - vše"
