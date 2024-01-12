@@ -21,6 +21,8 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnumInterface;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockData;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -84,10 +86,13 @@ class ProductFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum|null $priority nullable because of https://github.com/nikic/PHP-Parser/pull/940
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function create(ProductData $productData)
-    {
+    public function create(
+        ProductData $productData,
+        ?ProductRecalculationPriorityEnumInterface $priority = null,
+    ): Product {
         $product = $this->productFactory->create($productData);
 
         $this->em->persist($product);
@@ -98,7 +103,7 @@ class ProductFacade
 
         $this->editProductStockRelation($productData, $product);
 
-        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
+        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority ?? ProductRecalculationPriorityEnum::REGULAR);
 
         return $product;
     }
@@ -131,10 +136,14 @@ class ProductFacade
     /**
      * @param int $productId
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum|null $priority nullable because of https://github.com/nikic/PHP-Parser/pull/940
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function edit($productId, ProductData $productData)
-    {
+    public function edit(
+        int $productId,
+        ProductData $productData,
+        ?ProductRecalculationPriorityEnumInterface $priority = null,
+    ): Product {
         $product = $this->productRepository->getById($productId);
 
         $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple(
@@ -164,7 +173,7 @@ class ProductFacade
 
         $this->editProductStockRelation($productData, $product);
 
-        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId());
+        $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority ?? ProductRecalculationPriorityEnum::REGULAR);
 
         return $product;
     }
