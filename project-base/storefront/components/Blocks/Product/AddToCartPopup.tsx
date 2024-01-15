@@ -26,6 +26,8 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, added
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
 
+    const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
+
     return (
         <Popup hideCloseButton className="w-11/12 max-w-2xl" onCloseCallback={onCloseCallback}>
             <div className="mb-4 flex w-full items-center md:mb-6">
@@ -50,7 +52,10 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, added
                 )}
                 <div className="w-full md:pl-4 lg:flex lg:items-center lg:justify-between">
                     <div className="block break-words text-primary" data-testid={TEST_IDENTIFIER + '-name'}>
-                        <ExtendedNextLink href={product.slug} type="product">
+                        <ExtendedNextLink
+                            href={productUrl}
+                            type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
+                        >
                             {product.fullName}
                         </ExtendedNextLink>
                     </div>
