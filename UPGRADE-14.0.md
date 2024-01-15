@@ -4,7 +4,7 @@ The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](
 
 ## Recommended way of upgrading
 
-Since there are 3 possible scenarios for using Shopsys Platform, instructions are divided into these scenarios.
+Since there are two possible scenarios for using Shopsys Platform, instructions are divided into these scenarios.
 
 ### You use our packages only
 
@@ -43,6 +43,16 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   if any of the database migrations do not suit you, there is an option to skip it; see [our Database Migrations docs](https://docs.shopsys.com/en/latest/introduction/database-migrations/#reordering-and-skipping-migrations)
 -   we may miss something even if we care a lot about these instructions. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 
+#### Movement of features from project-base to packages
+
+-   in this version, there are quite a lot of features that have been moved from `project-base` to the packages, mostly to the `framework` and the `frontend-api` package
+-   each section in the upgrade guide contains a link to the `project-base` diff and besides the particular upgrade instructions, there is also a list of the moved features you should be aware of (if there are any)
+-   if your project was originally not developed from the Commerce Cloud version, or it was developed on a version lower than `v13.0.0`, these feature movements should not affect you during the upgrade
+-   otherwise, you might need to adjust your project to the changes:
+    -   if you had no custom changes in the moved features, you should be fine, you can safely remove the features from your project and use the ones from the packages (project-base diff in each section will help you with that)
+    -   if you had custom changes in the moved features, you will need to adjust your project to the changes
+        -   you should remove everything that was not modified in your project and keep just the custom changes using the recommended ways of the [framework extensibility](https://docs.shopsys.com/en/latest/extensibility/)
+
 <!-- Insert upgrade instructions in the following format:
 - general instruction ([#<PR number>](https://github.com/shopsys/shopsys/pull/<PR number>))
     - additional instructions
@@ -70,7 +80,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         +       protected readonly ProductRepository $productRepository,
             )
         ```
--   update your project to fix problems with single domain ([#2875](https://github.com/shopsys/shopsys/pull/2875))
+-   update your project to fix problems with single domain and re-enable phing target cron ([#2875](https://github.com/shopsys/shopsys/pull/2875))
     -   see #project-base-diff to update your project
 -   improve product lists in GrapesJS ([#2879](https://github.com/shopsys/shopsys/pull/2879))
     -   see #project-base-diff to update your project
@@ -105,7 +115,6 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   add consumers and RabbitMQ to deployed application ([#2904](https://github.com/shopsys/shopsys/pull/2904))
     -   set new environment variables `RABBITMQ_DEFAULT_USER`, `RABBITMQ_DEFAULT_PASS`, `RABBITMQ_IP_WHITELIST` in your deployment tool (with use of the default config it will be Gitlab CI)
     -   see #project-base-diff to update your project
--   re-enable phing target cron ([#2875](https://github.com/shopsys/shopsys/pull/2875)) - see #project-base-diff to update your project
 -   prepare core for dispatch/consume system ([#2907](https://github.com/shopsys/shopsys/pull/2907))
     -   your custom classes that utilize internal array caching or need to be reset between message consumption should now implement the `\Symfony\Contracts\Service\ResetInterface` interface
     -   method `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler::cleanScheduleForImmediateRecalculation()` has been renamed to `reset()`
@@ -142,7 +151,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   prevent duplicate color parameters in data fixtures ([#2911](https://github.com/shopsys/shopsys/pull/2911))
     -   see #project-base-diff to update your project
--   enable crons to be run at specified times the same as crons ([#2922](https://github.com/shopsys/shopsys/pull/2922))
+-   enable feeds to be run at specified times the same as crons ([#2922](https://github.com/shopsys/shopsys/pull/2922))
     -   replace `HourlyFeedCronModule` and `DailyFeedCronModule` with `FeedCronModule` in `config/services/cron.yaml` and set it to be run every time crons are run to ensure that all feeds are generated
     -   `FeedExportCreationDataQueue` has changed, first parameter is now an array of `Shopsys\FrameworkBundle\Model\Feed\FeedModule` instances instead of module names
     -   method `Shopsys\FrameworkBundle\Model\Feed\FeedFacade::__construct()` changed its interface:
@@ -220,15 +229,13 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   add Persoo Category feed and check your feeds ([#2926](https://github.com/shopsys/shopsys/pull/2926))
     -   we have renamed `shopsys.product_feed` tag to `shopsys.feed` to make it more generic so update it in your `services.yaml` if you have extended any of current feeds or implemented your own
     -   see #project-base-diff to update your project
--   move part of data loading logic from project-base into packages ([#2901](https://github.com/shopsys/shopsys/pull/2901))
-    -   `Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository::extractHits` visibility has changed from `protected` to `public`
-    -   `Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository::extractTotalCount` visibility has changed from `protected` to `public`
-    -   see #project-base-diff to update your project
 -   implemented generic product lists ([#2901](https://github.com/shopsys/shopsys/pull/2901))
-    -   the functionality replaces the original implementations of wishlists a product comparisons
+    -   the functionality replaces the original implementations of wishlists and product comparisons
     -   check `Shopsys\FrameworkBundle\Migrations\Version20231102161313`
         -   the migration handles data transfer from `wishlists`, `wishlist_items`, `comparisons`, and `compared_items` tables to the new `product_lists` and `product_list_items` tables
         -   if you had any custom changes in your wishlist/comparison implementations, you might want to skip the migration in `migrations_lock.yaml` file and handle the data transfer yourself
+    -   `Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository::extractHits` visibility has changed from `protected` to `public`
+    -   `Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository::extractTotalCount` visibility has changed from `protected` to `public`
     -   `Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation::__construct()` changed its interface:
     ```diff
         public function __construct(
@@ -252,6 +259,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
     +       protected readonly ProductListFacade $productListFacade,
     ```
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `frontend-api` package:
+        -   part of FE API data loaders, namely `productsVisibleByIdsBatchLoader`, `productsVisibleAndSortedByIdsBatchLoader`, and `productsSellableByIdsBatchLoader`
     -   see #project-base-diff to update your project
 -   remove backend API ([#2937](https://github.com/shopsys/shopsys/pull/2937))
     -   if you used the backend API, you need to implement it by yourself
@@ -517,9 +526,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   add Persoo Product feed and remove unused code ([#2939](https://github.com/shopsys/shopsys/pull/2939))
     -   product plan and assembly instructions have been removed from project-base, see diff to update your project
-    -   most of the `ProductDomain` attributes and methods has been moved to `framework`, see diff to update your project
+    -   most of the `ProductDomain` attributes and methods has been [moved](#movement-of-features-from-project-base-to-packages) to `framework`, see diff to update your project
         -   attribute `domainOrderingPriority` has been renamed to `orderingPriority`
-    -   most of the domain specific attributes from `ProductData` has been moved to `framework`, see diff to update your project
+    -   most of the domain specific attributes from `ProductData` has been [moved](#movement-of-features-from-project-base-to-packages) to `framework`, see diff to update your project
         -   attribute `shortDescriptionUsp1` has been renamed to `shortDescriptionUsp1ByDomainId`
         -   same for all other `shortDescriptionUspX` attributes
         -   attribute `flags` has been renamed to `flagsByDomainId`
@@ -622,6 +631,20 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   change product recalculations to be asynchronous ([#2917](https://github.com/shopsys/shopsys/pull/2917))
     -   see the specialized upgrade note in [upgrade-product-recalculations.md](./upgrade-product-recalculations.md)
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `framework` package:
+        -   `Transport::$daysUntilDelivery`
+        -   `ProductData::$productStockData`
+        -   `ProductDomain`:
+            -   `$saleExclusion`
+            -   `$domainHidden`
+        -   `ProductAvailabilityFacade`
+        -   `Model\Product\Search\FilterQuery`:
+            -   `getAggregationQueryForProductFilterConfig()`
+            -   `getAggregationQueryForProductCountInCategories()`
+            -   `getAggregationQueryForProductFilterConfigWithoutParameters()`
+        -   `CategoryParameter`
+        -   `OrderByCollationHelper`
+        -   product filtering from Elasticsearch (check `Product\Filter` namespace)
     -   see #project-base-diff to update your project
 -   docker-compose: add rabbitMQ and php-consumer containers for review stage on gitlab CI [#2953](https://github.com/shopsys/shopsys/pull/2953)
     -   see #project-base-diff to update your project
@@ -763,10 +786,26 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   Frontend API `termsAndConditionsArticle` query now returns `ArticleSite` type instead of `Article`
     -   Frontend API `privacyPolicyArticle` query now returns `ArticleSite` type instead of `Article`
     -   Frontend API `cookiesArticle` query now returns `ArticleSite` type instead of `Article`
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `framework` package:
+        -   `BlogArticle` and `BlogCategory`
+        -   `GrapeJsType`
+        -   `DomainBreadcrumbGeneratorInterface`
+        -   `AbstractElasticsearchDataFetcher`
+        -   `AbstractFilterQuery`
+        -   `RedisDomainQueueFacade`
+        -   `BreadcrumbFacade`
+        -   `BreadcrumbFacade`
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to `frontend-api` package:
+        -   `PageSizeValidator`
+        -   `ComplexityCalculator`
+        -   `DynamicPaginationComplexityExpressionFunction`
+        -   entity images batch loading (see `imagesBatchLoader` and `firstImageBatchLoader`)
     -   see #project-base-diff to update your project
--   fix broken drag and drop in GrapesJS in Safari ([#2966])(https://github.com/shopsys/shopsys/pull/2966)
+-   fix broken drag and drop in GrapesJS in Safari ([#2966](https://github.com/shopsys/shopsys/pull/2966))
     -   see #project-base-diff to update your project
 -   add Category ID to CategoryHierarchyItem ([#2962](https://github.com/shopsys/shopsys/pull/2962))
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `frontend-api` package:
+        -   `Category.CategoryHierarchyItem`
     -   see #project-base-diff to update your project
 -   product recalculations priority queue ([#2981](https://github.com/shopsys/shopsys/pull/2981))
     -   `Shopsys\FrameworkBundle\Controller\Admin\ProductController` class was changed:
