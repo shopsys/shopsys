@@ -29,13 +29,13 @@ jobs:
                 run: docker-compose logs php-fpm
             -   name: Copy Codeception logs from container
                 if: ${{ failure() }}
-                run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./var/log
+                run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v2
                 with:
                     name: acceptance-logs
-                    path: ./var/log
+                    path: ./app/var/log
 
             -   name: Build Storefront part of application
                 run: |
@@ -111,13 +111,13 @@ jobs:
                 run: docker-compose logs php-fpm
             -   name: Copy Codeception logs from container
                 if: ${{ failure() }}
-                run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./var/log
+                run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v2
                 with:
                     name: acceptance-logs
-                    path: ./var/log
+                    path: ./app/var/log
 
             -   name: Build Storefront part of application
                 run: |
