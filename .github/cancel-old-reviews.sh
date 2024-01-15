@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAIN_BRANCH_NAME=$1
+DEFAULT_BRANCH=$1
 ACTIONS_TOKEN=$2
 
 current_date=$(date +%Y-%m-%d)
@@ -25,7 +25,7 @@ branches_between_fourteen_and_seven_days_ago=($branches_between_fourteen_and_sev
 IFS=$SAVEIFS
 
 # add main branch to branches between 14 and 7 days ago in order to prevent its cancellation
-branches_between_fourteen_and_seven_days_ago+=($MAIN_BRANCH_NAME)
+branches_between_fourteen_and_seven_days_ago+=($DEFAULT_BRANCH)
 
 filtered_branches=()
 
