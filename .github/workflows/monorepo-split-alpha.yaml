@@ -1,0 +1,28 @@
+on:
+    push:
+        branches:
+            - 'alpha'
+name: Split alpha branch
+permissions:
+    contents: write
+    actions: write
+jobs:
+    split-branch:
+        runs-on: ubuntu-22.04
+        name: Split ${{ github.ref_name }} branch
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref_name }}
+                uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Ensure ${{ github.ref_name }} branch dependencies in project-base/composer.json
+                run: |
+                    sed -i 's/"14.0.x-dev"/"dev-${{ github.ref_name }} as 14.0.x-dev"/' project-base/app/composer.json
+                    git config --global user.name 'ShopsysBot'
+                    git config --global user.email 'shopsysbot@users.noreply.github.com'
+                    git commit -am "Ensure ${{ github.ref_name }} branch dependencies in project-base/app/composer.json"
+                    git push
+            -   name: Force split ${{ github.ref_name }} branch
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                run: gh workflow run "monorepo-force-split-branch.yaml" --ref "${{ github.ref_name }}" --field branch_name="${{ github.ref_name }}"
