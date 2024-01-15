@@ -15,6 +15,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { ToastContainer } from 'react-toastify';
 import { usePersistStore } from 'store/usePersistStore';
+import { SymfonyWebDebugToolbar } from '@basster/react-symfony-debug-toolbar';
 
 const UserConsentContainer = dynamic(
     () =>
@@ -59,6 +60,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
                 {!userConsent && !isConsentUpdatePage && <UserConsentContainer />}
                 {pageProps.isMaintenance ? <Error503Content /> : <Component {...pageProps} />}
             </GtmProvider>
+            <SymfonyWebDebugToolbar />
         </>
     );
 };

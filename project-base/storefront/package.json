@@ -23,6 +23,7 @@
         "test--no-watch": "vitest run"
     },
     "dependencies": {
+        "@basster/react-symfony-debug-toolbar": "^0.1.5",
         "@floating-ui/react": "~0.24.8",
         "@hookform/resolvers": "~2.6.1",
         "@next/bundle-analyzer": "~13.2.4",
