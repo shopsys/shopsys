@@ -186,9 +186,6 @@ return static function (ECSConfig $ecsConfig): void {
         'SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.UnusedProperty' => [
             __DIR__ . '/src/Model/Category/LinkedCategory/LinkedCategory.php',
         ],
-        'PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\ConstructorNameSniff.OldStyle' => [
-            __DIR__ . '/src/FrontendApi/Mutation/Login/RefreshTokensMutation.php',
-        ],
         // @deprecated File is excluded as the comments are already missing and deprecated methods will not be in next major
         DeprecatedAnnotationDeclarationSniff::class => [
             __DIR__ . '/tests/App/Test/Codeception/Module/StrictWebDriver.php',
