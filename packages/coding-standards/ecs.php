@@ -14,7 +14,6 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\NoSpaceAfterCastSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\CallTimePassByReferenceSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\ConstructorNameSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\DiscourageGotoSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\NoSilencedErrorsSniff;
 use PHP_CodeSniffer\Standards\MySource\Sniffs\PHP\GetRequestDataSniff;
@@ -216,7 +215,6 @@ return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->ruleWithConfiguration(CyclomaticComplexitySniff::class, [
         'absoluteComplexity' => CyclomaticComplexitySniffSetting::DEFAULT_ABSOLUTE_COMPLEXITY,
     ]);
-    $ecsConfig->rule(ConstructorNameSniff::class);
     $ecsConfig->rule(CamelCapsFunctionNameSniff::class);
     $ecsConfig->rule(DiscourageGotoSniff::class);
     $ecsConfig->rule(NoSilencedErrorsSniff::class);
