@@ -1,4 +1,4 @@
-query ProductDetailQuery($urlSlug: String) {
+query ProductDetailQuery($urlSlug: String) @friendlyUrl {
     product(urlSlug: $urlSlug) {
         ... on Product {
             ...ProductDetailFragment

@@ -5070,7 +5070,7 @@ export function useAdvertsQueryApi(options?: Omit<Urql.UseQueryArgs<AdvertsQuery
   return Urql.useQuery<AdvertsQueryApi, AdvertsQueryVariablesApi>({ query: AdvertsQueryDocumentApi, ...options });
 };
 export const ArticleDetailQueryDocumentApi = gql`
-    query ArticleDetailQuery($urlSlug: String) {
+    query ArticleDetailQuery($urlSlug: String) @friendlyUrl {
   article(urlSlug: $urlSlug) {
     ...ArticleDetailFragment
   }
@@ -5130,7 +5130,7 @@ export function useArticlesQueryApi(options?: Omit<Urql.UseQueryArgs<ArticlesQue
   return Urql.useQuery<ArticlesQueryApi, ArticlesQueryVariablesApi>({ query: ArticlesQueryDocumentApi, ...options });
 };
 export const BlogArticleDetailQueryDocumentApi = gql`
-    query BlogArticleDetailQuery($urlSlug: String) {
+    query BlogArticleDetailQuery($urlSlug: String) @friendlyUrl {
   blogArticle(urlSlug: $urlSlug) {
     ...BlogArticleDetailFragment
   }
@@ -5212,7 +5212,7 @@ export function useBlogCategoryArticlesApi(options: Omit<Urql.UseQueryArgs<BlogC
   return Urql.useQuery<BlogCategoryArticlesApi, BlogCategoryArticlesVariablesApi>({ query: BlogCategoryArticlesDocumentApi, ...options });
 };
 export const BlogCategoryQueryDocumentApi = gql`
-    query BlogCategoryQuery($urlSlug: String) {
+    query BlogCategoryQuery($urlSlug: String) @friendlyUrl {
   blogCategory(urlSlug: $urlSlug) {
     ...BlogCategoryDetailFragment
   }
@@ -5234,7 +5234,7 @@ export function useBlogUrlQueryApi(options?: Omit<Urql.UseQueryArgs<BlogUrlQuery
   return Urql.useQuery<BlogUrlQueryApi, BlogUrlQueryVariablesApi>({ query: BlogUrlQueryDocumentApi, ...options });
 };
 export const BrandDetailQueryDocumentApi = gql`
-    query BrandDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+    query BrandDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) @friendlyUrl {
   brand(urlSlug: $urlSlug) {
     ...BrandDetailFragment
   }
@@ -5374,7 +5374,7 @@ export function useMinimalCartQueryApi(options?: Omit<Urql.UseQueryArgs<MinimalC
   return Urql.useQuery<MinimalCartQueryApi, MinimalCartQueryVariablesApi>({ query: MinimalCartQueryDocumentApi, ...options });
 };
 export const CategoryDetailQueryDocumentApi = gql`
-    query CategoryDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+    query CategoryDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) @friendlyUrl {
   category(urlSlug: $urlSlug, orderingMode: $orderingMode, filter: $filter) {
     ...CategoryDetailFragment
   }
@@ -5485,7 +5485,7 @@ export function useIsCustomerUserRegisteredQueryApi(options: Omit<Urql.UseQueryA
   return Urql.useQuery<IsCustomerUserRegisteredQueryApi, IsCustomerUserRegisteredQueryVariablesApi>({ query: IsCustomerUserRegisteredQueryDocumentApi, ...options });
 };
 export const FlagDetailQueryDocumentApi = gql`
-    query FlagDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+    query FlagDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) @friendlyUrl {
   flag(urlSlug: $urlSlug) {
     ...FlagDetailFragment
   }
@@ -5872,7 +5872,7 @@ export function useFlagProductsQueryApi(options: Omit<Urql.UseQueryArgs<FlagProd
   return Urql.useQuery<FlagProductsQueryApi, FlagProductsQueryVariablesApi>({ query: FlagProductsQueryDocumentApi, ...options });
 };
 export const ProductDetailQueryDocumentApi = gql`
-    query ProductDetailQuery($urlSlug: String) {
+    query ProductDetailQuery($urlSlug: String) @friendlyUrl {
   product(urlSlug: $urlSlug) {
     ... on Product {
       ...ProductDetailFragment
@@ -6130,7 +6130,7 @@ export function useSlugQueryApi(options: Omit<Urql.UseQueryArgs<SlugQueryVariabl
   return Urql.useQuery<SlugQueryApi, SlugQueryVariablesApi>({ query: SlugQueryDocumentApi, ...options });
 };
 export const StoreDetailQueryDocumentApi = gql`
-    query StoreDetailQuery($urlSlug: String) {
+    query StoreDetailQuery($urlSlug: String) @friendlyUrl {
   store(urlSlug: $urlSlug) {
     ...StoreDetailFragment
   }

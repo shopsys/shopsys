@@ -1,4 +1,4 @@
-query BrandDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+query BrandDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) @friendlyUrl {
     brand(urlSlug: $urlSlug) {
         ...BrandDetailFragment
     }
