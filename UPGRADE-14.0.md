@@ -991,3 +991,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   fix Add to cart popup product link type
     -   fix Bestsellers product link type
 -   add scroll to cart order personal pick up place select modal ([#2979](https://github.com/shopsys/shopsys/pull/2979))
+
+-   customer's user cart is now overwritten with the incoming cart if logged in in 3rd order step ([#2978](https://github.com/shopsys/shopsys/pull/2978))
+    -   new optional parameter `shouldOverwriteCustomerUserCart` was added to `LoginMutation`
+    -   you can use it if in certain scenarios it makes more sense to overwrite customer user's cart instead of merging it
+    -   see #project-base-diff to update your project
