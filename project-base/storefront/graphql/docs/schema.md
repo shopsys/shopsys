@@ -8619,6 +8619,15 @@ Uuids of product lists that should be merged to the product lists of the user
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>shouldOverwriteCustomerUserCart</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid
+
+</td>
+</tr>
 </tbody>
 </table>
 

@@ -776,6 +776,8 @@ input LoginInput {
   password: Password!
   "Uuids of product lists that should be merged to the product lists of the user"
   productListsUuids: [Uuid!]! = []
+  "A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid"
+  shouldOverwriteCustomerUserCart: Boolean! = false
 }
 
 type LoginResult {

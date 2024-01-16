@@ -13,3 +13,7 @@ LoginInputDecorator:
                 type: "[Uuid!]!"
                 description: "Uuids of product lists that should be merged to the product lists of the user"
                 defaultValue: []
+            shouldOverwriteCustomerUserCart:
+                type: "Boolean!"
+                description: "A boolean pointer to indicate if the current customer user cart should be overwritten by the cart with cartUuid"
+                defaultValue: false

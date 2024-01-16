@@ -317,4 +317,14 @@ class Cart extends BaseCart
     {
         $this->paymentWatchedPrice = $paymentWatchedPrice;
     }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     */
+    public function assignCartToCustomerUser(?CustomerUser $customerUser): void
+    {
+        $this->customerUser = $customerUser;
+        $this->cartIdentifier = '';
+        $this->setModifiedNow();
+    }
 }

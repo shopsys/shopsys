@@ -74,7 +74,11 @@ class LoginMutation extends BaseLoginMutation
         }
 
         if (array_key_exists('cartUuid', $input) && $input['cartUuid'] !== null) {
-            $this->mergeCartFacade->mergeCartByUuidToCustomerCart($input['cartUuid'], $user);
+            if (array_key_exists('shouldOverwriteCustomerUserCart', $input) && $input['shouldOverwriteCustomerUserCart']) {
+                $this->mergeCartFacade->overwriteCustomerCartWithCartByUuid($input['cartUuid'], $user);
+            } else {
+                $this->mergeCartFacade->mergeCartByUuidToCustomerCart($input['cartUuid'], $user);
+            }
         }
 
         if (array_key_exists('productListsUuids', $input)) {
