@@ -1,4 +1,5 @@
 import { Fonts } from './Fonts';
+import { SymfonyDebugToolbar } from 'components/Basic/SymfonyDebugToolbar/SymfonyDebugToolbar';
 import { Error503Content } from 'components/Pages/ErrorPage/Error503Content';
 import { GtmHeadScript } from 'gtm/GtmHeadScript';
 import { GtmProvider } from 'gtm/context/GtmProvider';
@@ -59,6 +60,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
                 {!userConsent && !isConsentUpdatePage && <UserConsentContainer />}
                 {pageProps.isMaintenance ? <Error503Content /> : <Component {...pageProps} />}
             </GtmProvider>
+            {/* if is in development */ <SymfonyDebugToolbar />}
         </>
     );
 };
