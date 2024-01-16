@@ -1291,9 +1291,6 @@ msgstr ""
 msgid "Please check the correctness of all data filled."
 msgstr ""
 
-msgid "Please enter the correct time format (hh:mm)"
-msgstr ""
-
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%."
 msgstr ""
 

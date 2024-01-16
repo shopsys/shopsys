@@ -1291,9 +1291,6 @@ msgstr "Osobní odběr"
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů."
 
-msgid "Please enter the correct time format (hh:mm)"
-msgstr "Prosím vyplňte správný formát času (hh:mm)"
-
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%."
 msgstr "Omluvte tuto chybu, pracujeme na tom, aby se chyba opravila co nejdříve. Případně nás kontaktujte na %mail% nebo telefonicky %phone%."
 
