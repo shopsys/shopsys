@@ -1075,6 +1075,8 @@ type Order {
   number: String!
   "Payment method applied to the order"
   payment: Payment!
+  "Count of the payment transactions related to the order"
+  paymentTransactionsCount: Int!
   "Selected pickup place identifier"
   pickupPlaceIdentifier: String
   "Billing address zip code"

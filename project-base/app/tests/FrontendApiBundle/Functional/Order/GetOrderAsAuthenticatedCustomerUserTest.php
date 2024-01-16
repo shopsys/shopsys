@@ -22,7 +22,9 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             [$uuid, $orderNumber, $expectedOrderData] = $dataSet;
 
             $graphQlType = 'order';
-            $responseByUuid = $this->getResponseContentForQuery($this->getOrderQueryByUuid($uuid));
+            $responseByUuid = $this->getResponseContentForGql(__DIR__ . '/graphql/GetOrderQuery.graphql', [
+                'uuid' => $uuid,
+            ]);
             $this->assertResponseContainsArrayOfDataForGraphQlType($responseByUuid, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($responseByUuid, $graphQlType);
 
@@ -48,7 +50,12 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             $this->assertArrayHasKey('trackingUrl', $responseData);
             $this->assertSame($expectedOrderData['trackingUrl'], $responseData['trackingUrl']);
 
-            $responseByOrderNumber = $this->getResponseContentForQuery($this->getOrderQueryByOrderNumber($orderNumber));
+            $this->assertArrayHasKey('paymentTransactionsCount', $responseData);
+            $this->assertSame($expectedOrderData['paymentTransactionsCount'], $responseData['paymentTransactionsCount']);
+
+            $responseByOrderNumber = $this->getResponseContentForGql(__DIR__ . '/graphql/GetOrderQuery.graphql', [
+                'orderNumber' => $orderNumber,
+            ]);
             $this->assertSame($responseByUuid, $responseByOrderNumber);
         }
     }
@@ -58,7 +65,9 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         $order = $this->getOrderOfNotCurrentlyLoggedCustomerUser();
         $expectedErrorMessage = "Order with UUID 'e4002d79-0dba-4899-a51a-0a8feec3c2ce' not found.";
 
-        $response = $this->getResponseContentForQuery($this->getOrderQueryByUuid($order->getUuid()));
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetOrderQuery.graphql', [
+            'uuid' => $order->getUuid(),
+        ]);
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
@@ -71,7 +80,9 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     {
         $order = $this->getOrderOfNotCurrentlyLoggedCustomerUser();
 
-        $response = $this->getResponseContentForQuery($this->getOrderQueryByOrderNumber($order->getNumber()));
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetOrderQuery.graphql', [
+            'orderNumber' => $order->getNumber(),
+        ]);
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
@@ -104,57 +115,12 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                     'promoCode' => $order->getGtmCoupon(),
                     'trackingNumber' => $order->getTrackingNumber(),
                     'trackingUrl' => $order->getTrackingUrl(),
+                    'paymentTransactionsCount' => $order->getPaymentTransactionsCount(),
                 ],
             ];
         }
 
         return $data;
-    }
-
-    /**
-     * @param string $uuid
-     * @return string
-     */
-    private function getOrderQueryByUuid(string $uuid): string
-    {
-        return '
-            {
-                order (uuid:"' . $uuid . '") {
-                    status
-                    totalPrice {
-                        priceWithVat
-                    }
-                    firstName
-                    lastName
-                    promoCode
-                    trackingNumber
-                    trackingUrl
-                }
-            }
-        ';
-    }
-
-    /**
-     * @param string $orderNumber
-     * @return string
-     */
-    private function getOrderQueryByOrderNumber(string $orderNumber): string
-    {
-        return '
-            {
-                order (orderNumber:"' . $orderNumber . '") {
-                    status
-                    totalPrice {
-                        priceWithVat
-                    }
-                    firstName
-                    lastName
-                    promoCode
-                    trackingNumber
-                    trackingUrl
-                }
-            }
-        ';
     }
 
     /**

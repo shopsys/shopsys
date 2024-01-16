@@ -1405,6 +1405,8 @@ export type OrderApi = {
   number: Scalars['String']['output'];
   /** Payment method applied to the order */
   payment: PaymentApi;
+  /** Count of the payment transactions related to the order */
+  paymentTransactionsCount: Scalars['Int']['output'];
   /** Selected pickup place identifier */
   pickupPlaceIdentifier: Maybe<Scalars['String']['output']>;
   /** Billing address zip code */

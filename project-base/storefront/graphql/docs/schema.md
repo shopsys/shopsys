@@ -5164,6 +5164,15 @@ Payment method applied to the order
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>paymentTransactionsCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Count of the payment transactions related to the order
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>pickupPlaceIdentifier</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>

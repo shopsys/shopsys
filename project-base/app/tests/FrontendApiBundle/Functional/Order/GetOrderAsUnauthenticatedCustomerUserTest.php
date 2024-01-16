@@ -21,7 +21,9 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
             [$urlHash, $expectedOrderData] = $dataSet;
 
             $graphQlType = 'order';
-            $response = $this->getResponseContentForQuery($this->getOrderQuery($urlHash));
+            $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetOrderQuery.graphql', [
+                'urlHash' => $urlHash,
+            ]);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -46,6 +48,9 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
 
             $this->assertArrayHasKey('trackingUrl', $responseData);
             $this->assertSame($expectedOrderData['trackingUrl'], $responseData['trackingUrl']);
+
+            $this->assertArrayHasKey('paymentTransactionsCount', $responseData);
+            $this->assertSame($expectedOrderData['paymentTransactionsCount'], $responseData['paymentTransactionsCount']);
         }
     }
 
@@ -54,7 +59,9 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
         foreach ($this->getIncorrectOrderDataProvider() as $dataSet) {
             [$urlHash, $expectedErrorMessage] = $dataSet;
 
-            $response = $this->getResponseContentForQuery($this->getOrderQuery($urlHash));
+            $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetOrderQuery.graphql', [
+                'urlHash' => $urlHash,
+            ]);
             $this->assertResponseContainsArrayOfErrors($response);
             $errors = $this->getErrorsFromResponse($response);
 
@@ -87,6 +94,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
                     'promoCode' => $order->getGtmCoupon(),
                     'trackingNumber' => $order->getTrackingNumber(),
                     'trackingUrl' => $order->getTrackingUrl(),
+                    'paymentTransactionsCount' => $order->getPaymentTransactionsCount(),
                 ],
             ];
         }
@@ -109,34 +117,5 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
                 'Order not found',
             ],
         ];
-    }
-
-    /**
-     * @param string|null $urlHash
-     * @return string
-     */
-    private function getOrderQuery(?string $urlHash = null): string
-    {
-        if ($urlHash !== null) {
-            $graphQlTypeWithFilters = 'order (urlHash:"' . $urlHash . '")';
-        } else {
-            $graphQlTypeWithFilters = 'order';
-        }
-
-        return '
-            {
-                ' . $graphQlTypeWithFilters . ' {
-                    status
-                    totalPrice {
-                        priceWithVat
-                    }
-                    firstName
-                    lastName
-                    promoCode
-                    trackingNumber
-                    trackingUrl
-                }
-            }
-        ';
     }
 }
