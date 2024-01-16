@@ -1415,9 +1415,15 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   Remove `image-rendering:-webkit-optimize-contrast` from images. This property is causing some of images to be rendered with sharp edges on places where it is not wanted. Browsers algorithms seem to handle this value correctly on its own without need to use specific rendering property.
 
 -   added last visited products block ([#2716](https://github.com/shopsys/shopsys/pull/2716))
+
     -   on page component add ServerSidePropsType and get cookies in props list
         ```tsx
         const HomePage: FC<ServerSidePropsType> = ({ cookies }) => {
         ```
     -   include tag <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} /> on place where you want to display last visited products
     -   default places: homepage, product detail, search, category, blog list, blog detail
+
+-   add possibility to change SF error verbosity for development ([#2990](https://github.com/shopsys/shopsys/pull/2990))
+    -   added possibility for controlling error verbosity on SF (can be now devel or user) which can be set independently of the actual node environment. This allows for better error debugging on SF
+    -   errorDebugging controls the verbosity of errors on SF, it is controlled by an environment variable
+    -   `error-handling.md` was extended with the new information and can be used to update your project
