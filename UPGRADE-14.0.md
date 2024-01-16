@@ -932,8 +932,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   if you're using custom storefront, you have to implement hreflang tags yourself
     -   see #project-base-diff to update your project
 -   add Persoo autocompletion ([#2983](https://github.com/shopsys/shopsys/pull/2983))
+
     -   `Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory` has been introduced so use it for creation of `ProductFilterData` instead of `new ProductFilterData()`
     -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade::__construct()` changed its interface:
+
     ```diff
         public function __construct(
             protected readonly ProductRepository $productRepository,
@@ -946,7 +948,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly ProductFilterDataFactory $productFilterDataFactory,
         )
     ```
+
     -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade::__construct()` changed its interface:
+
     ```diff
         public function __construct(
             protected readonly ProductRepository $productRepository,
@@ -959,7 +963,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly ProductFilterDataFactory $productFilterDataFactory,
         )
     ```
+
     -   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper::__construct()` changed its interface:
+
     ```diff
         public function __construct(
             protected readonly FlagFacade $flagFacade,
@@ -968,7 +974,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly ProductFilterDataFactory $productFilterDataFactory,
         )
     ```
+
     -   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade::__construct()` changed its interface:
+
     ```diff
         public function __construct(
             protected readonly Domain $domain,
@@ -978,7 +986,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly ProductFilterDataFactory $productFilterDataFactory,
         )
     ```
+
     -   `Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection::__construct()` changed its interface:
+
     ```diff
          public function __construct(
              array $edges,
@@ -991,7 +1001,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +        protected string $defaultOrderingMode = ProductListOrderingConfig::ORDER_BY_PRIORITY,
          )
     ```
+
     -   `Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory::createConnection()` changed its interface:
+
     ```diff
          protected function createConnection(
              callable $retrieveProductClosure,
@@ -1002,7 +1014,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +        ?string $orderingMode = null,
          )
     ```
+
     -   `Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory::createConnectionForAll()` changed its interface:
+
     ```diff
         public function createConnectionForAll(
             callable $retrieveProductClosure,
@@ -1012,7 +1026,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       ?string $orderingMode = null,
         )
     ```
+
     -   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory::createProductFilterOptionsForAll` changed its interface:
+
     ```diff
         public function createProductFilterOptionsForAll(
             ProductFilterConfig $productFilterConfig,
@@ -1031,6 +1047,82 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
             protected readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
             protected readonly ProductListFacade $productListFacade,
     +       protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
+        )
+    ```
+
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface::getProductFilterCountDataInCategory` changed its interface:
+
+    ```diff
+        public function getProductFilterCountDataInCategory(
+            int $categoryId,
+            ProductFilterConfig $productFilterConfig,
+            ProductFilterData $productFilterData,
+    -       string $searchText = '',
+        )
+    ```
+
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade::getProductFilterCountDataInCategory` changed its interface:
+
+    ```diff
+        public function getProductFilterCountDataInCategory(
+            int $categoryId,
+            ProductFilterConfig $productFilterConfig,
+            ProductFilterData $productFilterData,
+    -       string $searchText = '',
+        )
+    ```
+
+    -   `Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory::createForCategory` changed its interface:
+
+    ```diff
+        public function createForCategory(
+            string $locale,
+            Category $category,
+    -       string $searchText,
+        )
+    ```
+
+    -   `Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterElasticFacade::getProductFilterDataInCategory` changed its interface:
+
+    ```diff
+        public function getProductFilterDataInCategory(
+            int $categoryId,
+            PricingGroup $pricingGroup,
+    -       string $search,
+        )
+    ```
+
+    -   `Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterElasticFacade::getProductFilterDataInBrand` changed its interface:
+
+    ```diff
+        public function getProductFilterDataInBrand(
+            int $brandId,
+            PricingGroup $pricingGroup,
+    -       string $searchText = '',
+        )
+    ```
+
+    -   `Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterElasticFacade::getProductFilterDataInFlag` changed its interface:
+
+    ```diff
+        public function getProductFilterDataInFlag(
+            int $flagId,
+            PricingGroup $pricingGroup,
+    -       string $searchText = '',
+        )
+    ```
+
+    -   `Shopsys\FrontendApiBundle\Component\Arguments\PaginatorArgumentsBuilder` has been split into two new builders:
+
+        -   `Shopsys\FrontendApiBundle\Component\Arguments\ProductPaginatorArgumentsBuilder`
+        -   `Shopsys\FrontendApiBundle\Component\Arguments\ProductSearchPaginatorArgumentsBuilder`
+
+    -   `Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade::getProductFilterConfigForCategory` changed its interface:
+
+    ```diff
+        public function getProductFilterConfigForCategory(
+            Category $category,
+    -       string $searchText = '',
         )
     ```
 

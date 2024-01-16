@@ -26,7 +26,7 @@ class ProductBatchLoadByEntityData
         private int $offset,
         private string $orderingModeId,
         private ProductFilterData $productFilterData,
-        private string $search,
+        private string $search = '',
     ) {
     }
 

@@ -70,22 +70,16 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     /**
      * @param int $flagId
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataForFlag(
         int $flagId,
         ProductFilterData $productFilterData,
-        string $searchText = '',
     ): ProductFilterCountData {
         $filterQuery = $this->filterQueryFactory->createListableProductsByFlagIdWithPriceAndStockFilter(
             $flagId,
             $productFilterData,
         );
-
-        if ($searchText !== '') {
-            $filterQuery = $filterQuery->search($searchText);
-        }
 
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,
@@ -105,22 +99,16 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     /**
      * @param int $brandId
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataForBrand(
         int $brandId,
         ProductFilterData $productFilterData,
-        string $searchText = '',
     ): ProductFilterCountData {
         $filterQuery = $this->filterQueryFactory->createListableProductsByBrandIdWithPriceAndStockFilter(
             $brandId,
             $productFilterData,
         );
-
-        if ($searchText !== '') {
-            $filterQuery = $filterQuery->search($searchText);
-        }
 
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,

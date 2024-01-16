@@ -8,13 +8,13 @@ use App\FrontendApi\Model\Product\ProductsBatchLoader;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Flag\Flag;
 use Closure;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory as BaseProductConnectionFactory;
 
@@ -48,13 +48,11 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         string $batchLoadDataId,
         ?ReadyCategorySeoMix $readyCategorySeoMix,
     ): Promise {
-        $searchText = $argument['search'] ?? '';
-        $productFilterOptionsClosure = function () use ($category, $productFilterData, $searchText, $readyCategorySeoMix) {
+        $productFilterOptionsClosure = function () use ($category, $productFilterData, $readyCategorySeoMix) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForCategory(
                 $category,
-                $this->productFilterFacade->getProductFilterConfigForCategory($category, $searchText),
+                $this->productFilterFacade->getProductFilterConfigForCategory($category),
                 $productFilterData,
-                $searchText,
                 $readyCategorySeoMix,
             );
         };
@@ -81,13 +79,11 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         string $defaultOrderingMode,
         string $batchLoadDataId,
     ): Promise {
-        $searchText = $argument['search'] ?? '';
-        $productFilterOptionsClosure = function () use ($flag, $productFilterData, $searchText) {
+        $productFilterOptionsClosure = function () use ($flag, $productFilterData) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForFlag(
                 $flag,
-                $this->productFilterFacade->getProductFilterConfigForFlag($flag, $searchText),
+                $this->productFilterFacade->getProductFilterConfigForFlag($flag),
                 $productFilterData,
-                $searchText,
             );
         };
 
@@ -113,13 +109,11 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         string $defaultOrderingMode,
         string $batchLoadDataId,
     ): Promise {
-        $searchText = $argument['search'] ?? '';
-        $productFilterOptionsClosure = function () use ($brand, $productFilterData, $searchText) {
+        $productFilterOptionsClosure = function () use ($brand, $productFilterData) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForBrand(
                 $brand,
-                $this->productFilterFacade->getProductFilterConfigForBrand($brand, $searchText),
+                $this->productFilterFacade->getProductFilterConfigForBrand($brand),
                 $productFilterData,
-                $searchText,
             );
         };
 

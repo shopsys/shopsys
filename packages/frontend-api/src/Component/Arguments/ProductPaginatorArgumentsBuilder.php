@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Arguments;
 
-class BlogArticlePaginatorArgumentsBuilder extends AbstractPaginatorArgumentsBuilder
+class ProductPaginatorArgumentsBuilder extends AbstractProductPaginatorArgumentsBuilder
 {
     /**
      * @param array $config
@@ -12,12 +12,19 @@ class BlogArticlePaginatorArgumentsBuilder extends AbstractPaginatorArgumentsBui
      */
     public function toMappingDefinition(array $config): array
     {
+        $this->checkMandatoryFields($config);
+
         $mappingDefinition = parent::toMappingDefinition($config);
 
         return array_merge($mappingDefinition, [
-            'onlyHomepageArticles' => [
-                'type' => 'Boolean',
-                'defaultValue' => false,
+            'categorySlug' => [
+                'type' => 'String',
+            ],
+            'brandSlug' => [
+                'type' => 'String',
+            ],
+            'flagSlug' => [
+                'type' => 'String',
             ],
         ]);
     }

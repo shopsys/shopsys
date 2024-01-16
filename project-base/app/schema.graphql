@@ -300,7 +300,7 @@ type Brand implements Hreflang & Breadcrumb & Slug & ProductListable {
   "Brand name"
   name: String!
   "Paginated and ordered products of brand"
-  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum): ProductConnection!
   "Brand SEO H1"
   seoH1: String
   "Brand SEO meta description"
@@ -457,7 +457,7 @@ type Category implements Breadcrumb & Slug & ProductListable {
   "Ancestor category"
   parent: Category
   "Paginated and ordered products of category"
-  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum): ProductConnection!
   "An array of links of prepared category SEO mixes of a given category"
   readyCategorySeoMixLinks: [Link!]!
   "Seo first level heading of category"
@@ -696,7 +696,7 @@ type Flag implements Breadcrumb & Slug & ProductListable {
   "Localized flag name (domain dependent)"
   name: String!
   "Paginated and ordered products of flag"
-  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum): ProductConnection!
   "Flag color in rgb format"
   rgbColor: String!
   "URL slug of flag"
@@ -1595,7 +1595,7 @@ type ProductList {
 "Paginated and ordered products"
 interface ProductListable {
   "Paginated and ordered products"
-  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum): ProductConnection!
 }
 
 input ProductListInput {
@@ -1745,14 +1745,14 @@ type Query {
   productList(input: ProductListInput!): ProductList
   productListsByType(productListType: ProductListTypeEnum!): [ProductList!]!
   "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
-  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  products(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum): ProductConnection!
   "Returns list of products by catalog numbers"
   productsByCatnums(
     "Array of product catalog numbers"
     catnums: [String!]!
   ): [Product!]!
   "Returns list of searched products that can be paginated using `first`, `last`, `before` and `after` keywords"
-  productsSearch(after: String, before: String, brandSlug: String, categorySlug: String, filter: ProductFilter, first: Int, flagSlug: String, last: Int, orderingMode: ProductOrderingModeEnum, search: String!): ProductConnection!
+  productsSearch(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String!): ProductConnection!
   "Returns promoted categories"
   promotedCategories: [Category!]!
   "Returns promoted products"

@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory as B
  * @property \App\Model\Product\Flag\FlagFacade $flagFacade
  * @property \App\Model\Product\Brand\BrandFacade $brandFacade
  * @method __construct(\App\Model\Product\Filter\ParameterFilterChoiceRepository $parameterFilterChoiceRepository, \App\Model\Product\Filter\FlagFilterChoiceRepository $flagFilterChoiceRepository, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\Model\Product\Filter\BrandFilterChoiceRepository $brandFilterChoiceRepository, \App\Model\Product\Filter\PriceRangeRepository $priceRangeRepository, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterElasticFacade $productFilterElasticFacade, \App\Model\Product\Parameter\ParameterFacade $parameterFacade, \App\Model\Product\Flag\FlagFacade $flagFacade, \App\Model\Product\Brand\BrandFacade $brandFacade)
- * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig createForCategory(string $locale, \App\Model\Category\Category $category, string $searchText)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig createForCategory(string $locale, \App\Model\Category\Category $category)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] getSortedParameterFilterChoicesForCategory(\Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $aggregatedParameterFilterChoices, \App\Model\Category\Category $category)
  */
 class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
@@ -49,19 +49,16 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
      * @param int $domainId
      * @param string $locale
      * @param \App\Model\Product\Brand\Brand $brand
-     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
     public function createForBrand(
         int $domainId,
         string $locale,
         Brand $brand,
-        string $searchText = '',
     ): ProductFilterConfig {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInBrand(
             $brand->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            $searchText,
         );
 
         return new ProductFilterConfig(
@@ -75,15 +72,13 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
     /**
      * @param \App\Model\Product\Flag\Flag $flag
      * @param string $locale
-     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForFlag(Flag $flag, string $locale, string $searchText = ''): ProductFilterConfig
+    public function createForFlag(Flag $flag, string $locale): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInFlag(
             $flag->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            $searchText,
         );
 
         return new ProductFilterConfig(

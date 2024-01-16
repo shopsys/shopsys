@@ -10,7 +10,6 @@ use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory;
 use App\Model\Product\Filter\ParameterFilterData;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -18,6 +17,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Tests\App\Test\ParameterTransactionFunctionalTestCase;
 
@@ -56,7 +56,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
             $filterConfig = $this->productFilterConfigFactory->createForCategory(
                 $this->domain->getLocale(),
                 $category,
-                '',
             );
             $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory(
                 $category->getId(),

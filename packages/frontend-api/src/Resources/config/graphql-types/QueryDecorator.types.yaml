@@ -18,7 +18,7 @@ QueryDecorator:
             products:
                 type: "ProductConnection"
                 argsBuilder:
-                    builder: "PaginatorArgumentsBuilder"
+                    builder: "ProductPaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
                 resolve: "@=query('productsQuery', args)"
@@ -35,7 +35,7 @@ QueryDecorator:
             productsSearch:
                 type: "ProductConnection!"
                 argsBuilder:
-                    builder: "PaginatorArgumentsBuilder"
+                    builder: "ProductSearchPaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
                 resolve: "@=query('productsSearchQuery', args)"

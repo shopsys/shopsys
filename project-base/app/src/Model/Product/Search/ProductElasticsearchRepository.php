@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository as BaseProductElasticsearchRepository;
 
 /**

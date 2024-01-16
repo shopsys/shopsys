@@ -408,7 +408,6 @@ export type BrandProductsArgsApi = {
   flagSlug: InputMaybe<Scalars['String']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
   orderingMode: InputMaybe<ProductOrderingModeEnumApi>;
-  search: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Brand filter option */
@@ -604,7 +603,6 @@ export type CategoryProductsArgsApi = {
   flagSlug: InputMaybe<Scalars['String']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
   orderingMode: InputMaybe<ProductOrderingModeEnumApi>;
-  search: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A connection to a list of items. */
@@ -863,7 +861,6 @@ export type FlagProductsArgsApi = {
   flagSlug: InputMaybe<Scalars['String']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
   orderingMode: InputMaybe<ProductOrderingModeEnumApi>;
-  search: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Flag filter option */
@@ -2006,7 +2003,6 @@ export type ProductListableProductsArgsApi = {
   flagSlug: InputMaybe<Scalars['String']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
   orderingMode: InputMaybe<ProductOrderingModeEnumApi>;
-  search: InputMaybe<Scalars['String']['input']>;
 };
 
 /** One of possible ordering modes for product */
@@ -2324,7 +2320,6 @@ export type QueryProductsArgsApi = {
   flagSlug: InputMaybe<Scalars['String']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
   orderingMode: InputMaybe<ProductOrderingModeEnumApi>;
-  search: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -2336,11 +2331,8 @@ export type QueryProductsByCatnumsArgsApi = {
 export type QueryProductsSearchArgsApi = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
-  brandSlug: InputMaybe<Scalars['String']['input']>;
-  categorySlug: InputMaybe<Scalars['String']['input']>;
   filter: InputMaybe<ProductFilterApi>;
   first: InputMaybe<Scalars['Int']['input']>;
-  flagSlug: InputMaybe<Scalars['String']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
   orderingMode: InputMaybe<ProductOrderingModeEnumApi>;
   search: Scalars['String']['input'];

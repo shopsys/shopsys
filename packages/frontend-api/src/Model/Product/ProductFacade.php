@@ -42,8 +42,10 @@ class ProductFacade
      * @param string $search
      * @return int
      */
-    public function getFilteredProductsCountOnCurrentDomain(ProductFilterData $productFilterData, string $search): int
-    {
+    public function getFilteredProductsCountOnCurrentDomain(
+        ProductFilterData $productFilterData,
+        string $search = '',
+    ): int {
         $filterQuery = $this->filterQueryFactory->createListableWithProductFilter($productFilterData);
 
         if ($search !== '') {
@@ -66,7 +68,7 @@ class ProductFacade
         int $offset,
         string $orderingModeId,
         ProductFilterData $productFilterData,
-        string $search,
+        string $search = '',
     ): array {
         $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
             $productFilterData,

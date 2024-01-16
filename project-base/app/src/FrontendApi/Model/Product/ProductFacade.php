@@ -10,8 +10,8 @@ use Shopsys\FrontendApiBundle\Model\Product\ProductFacade as BaseProductFacade;
  * @method \App\Model\Product\Product getSellableByUuid(string $uuid, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @property \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
  * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
- * @method int getFilteredProductsCountOnCurrentDomain(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $search)
- * @method array getFilteredProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $search)
+ * @method int getFilteredProductsCountOnCurrentDomain(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $search = '')
+ * @method array getFilteredProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $search = '')
  * @method array getFilteredProductsByCategory(\App\Model\Category\Category $category, int $limit, int $offset, string $orderingModeId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $search)
  * @method int getFilteredProductsByCategoryCount(\App\Model\Category\Category $category, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $search)
  * @method array getFilteredProductsByBrand(\App\Model\Product\Brand\Brand $brand, int $limit, int $offset, string $orderingModeId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $search)

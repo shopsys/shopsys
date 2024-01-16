@@ -25,21 +25,16 @@ class ProductFilterElasticFacade
     /**
      * @param int $categoryId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $search
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigIdsData
      */
     public function getProductFilterDataInCategory(
         int $categoryId,
         PricingGroup $pricingGroup,
-        string $search,
     ): ProductFilterConfigIdsData {
         $filterQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
             ->filterByCategory([$categoryId]);
 
-        if ($search !== '') {
-            $filterQuery = $filterQuery->search($search);
-        }
         $aggregationQuery = $filterQuery
             ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());
         $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];
@@ -68,21 +63,16 @@ class ProductFilterElasticFacade
     /**
      * @param int $brandId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigIdsData
      */
     public function getProductFilterDataInBrand(
         int $brandId,
         PricingGroup $pricingGroup,
-        string $searchText = '',
     ): ProductFilterConfigIdsData {
         $filterQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
             ->filterByBrands([$brandId]);
 
-        if ($searchText !== '') {
-            $filterQuery = $filterQuery->search($searchText);
-        }
         $aggregationQuery = $filterQuery
             ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());
         $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];
@@ -93,21 +83,16 @@ class ProductFilterElasticFacade
     /**
      * @param int $flagId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigIdsData
      */
     public function getProductFilterDataInFlag(
         int $flagId,
         PricingGroup $pricingGroup,
-        string $searchText = '',
     ): ProductFilterConfigIdsData {
         $filterQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
             ->filterByFlags([$flagId]);
 
-        if ($searchText !== '') {
-            $filterQuery = $filterQuery->search($searchText);
-        }
         $aggregationQuery = $filterQuery
             ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());
         $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];

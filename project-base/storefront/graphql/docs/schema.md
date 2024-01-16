@@ -889,11 +889,6 @@ Returns list of ordered products that can be paginated using `first`, `last`, `b
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>productsByCatnums</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
@@ -931,16 +926,6 @@ Returns list of searched products that can be paginated using `first`, `last`, `
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">brandSlug</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">categorySlug</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">filter</td>
 <td valign="top"><a href="#productfilter">ProductFilter</a></td>
 <td></td>
@@ -948,11 +933,6 @@ Returns list of searched products that can be paginated using `first`, `last`, `
 <tr>
 <td colspan="2" align="right" valign="top">first</td>
 <td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">flagSlug</td>
-<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
@@ -2683,11 +2663,6 @@ Paginated and ordered products of brand
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -3332,11 +3307,6 @@ Paginated and ordered products of category
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>readyCategorySeoMixLinks</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
@@ -3934,11 +3904,6 @@ Paginated and ordered products of flag
 <tr>
 <td colspan="2" align="right" valign="top">orderingMode</td>
 <td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
@@ -10933,11 +10898,6 @@ Paginated and ordered products
 <tr>
 <td colspan="2" align="right" valign="top">orderingMode</td>
 <td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 </tbody>

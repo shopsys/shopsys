@@ -11,7 +11,6 @@ use App\FrontendApi\Resolver\Products\Flag\FlagQuery;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
 use GraphQL\Executor\Promise\Promise;
@@ -22,6 +21,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
@@ -160,7 +160,6 @@ class ProductsQuery extends BaseProductsQuery
                         $offset,
                         $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $argument['search'] ?? '',
                     ),
                 );
             },
@@ -188,8 +187,6 @@ class ProductsQuery extends BaseProductsQuery
     public function productsWithOverlyingEntityQuery(Argument $argument, ResolveInfo $info)
     {
         PageSizeValidator::checkMaxPageSize($argument);
-
-        $search = $argument['search'] ?? '';
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
@@ -226,16 +223,15 @@ class ProductsQuery extends BaseProductsQuery
         }
 
         return $this->productConnectionFactory->createConnectionForAll(
-            function ($offset, $limit) use ($argument, $productFilterData, $search) {
+            function ($offset, $limit) use ($argument, $productFilterData) {
                 return $this->productFacade->getFilteredProductsOnCurrentDomain(
                     $limit,
                     $offset,
                     $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
                     $productFilterData,
-                    $search,
                 );
             },
-            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
+            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData),
             $argument,
             $productFilterData,
             $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
@@ -282,7 +278,6 @@ class ProductsQuery extends BaseProductsQuery
                         $offset,
                         $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $argument['search'] ?? '',
                     ),
                 );
             },
