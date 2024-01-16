@@ -8,14 +8,14 @@ on:
 name: Manually cancel review
 jobs:
     cancel-review:
-        if:  ${{ inputs.branch_name }} != ${{ vars.MAIN_BRANCH_NAME }}
+        if:  ${{ inputs.branch_name }} != ${{ github.event.repository.default_branch }}
         name: Cancel review
         runs-on: [self-hosted, linux, review-stage]
         steps:
-            -   name: GIT checkout branch - ${{ vars.MAIN_BRANCH_NAME }}
+            -   name: GIT checkout branch - ${{ github.event.repository.default_branch }}
                 uses: actions/checkout@v4
                 with:
-                    ref: 'refs/heads/${{ vars.MAIN_BRANCH_NAME }}'
+                    ref: 'refs/heads/${{ github.event.repository.default_branch }}'
                     path: manually-cancel-review
             -   name: Cancel review
                 working-directory: manually-cancel-review
