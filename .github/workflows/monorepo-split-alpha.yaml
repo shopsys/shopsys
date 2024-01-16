@@ -17,7 +17,7 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Ensure ${{ github.ref_name }} branch dependencies in project-base/composer.json
                 run: |
-                    sed -i 's/"14.0.x-dev"/"dev-${{ github.ref_name }} as 14.0.x-dev"/' project-base/app/composer.json
+                    sed -r -i 's_("shopsys/[a-zA-Z0-9-]+")\s*:\s*"([0-9\.]+\.x-dev)"_\1: "dev-${{ github.ref_name }} as \2"_' project-base/app/composer.json
                     git config --global user.name 'ShopsysBot'
                     git config --global user.email 'shopsysbot@users.noreply.github.com'
                     git commit -am "Ensure ${{ github.ref_name }} branch dependencies in project-base/app/composer.json"
