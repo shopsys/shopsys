@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnumInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -43,6 +45,13 @@ class DispatchRecalculationMessageCommand extends Command
                 null,
                 InputOption::VALUE_NONE,
                 'Dispatch messages to recalculate all products',
+            )
+            ->addOption(
+                'priority',
+                'p',
+                InputOption::VALUE_OPTIONAL,
+                sprintf('Define the message priority. Possible values are: %s', ProductRecalculationPriorityEnum::getPipeSeparatedValues()),
+                ProductRecalculationPriorityEnum::REGULAR->value,
             );
     }
 
@@ -55,9 +64,22 @@ class DispatchRecalculationMessageCommand extends Command
 
         $productIds = $input->getArgument('productIds');
         $shouldRecalculateAll = $input->getOption('all');
+        $priority = ProductRecalculationPriorityEnum::tryFrom($input->getOption('priority'));
+
+        if ($priority === null) {
+            $symfonyStyle->error(sprintf('Invalid priority value. Possible values are: %s', ProductRecalculationPriorityEnum::getPipeSeparatedValues()));
+
+            return Command::FAILURE;
+        }
 
         if ($shouldRecalculateAll && count($productIds) > 0) {
             $symfonyStyle->error('You cannot use both `--all` and product IDs at the same time');
+
+            return Command::FAILURE;
+        }
+
+        if ($shouldRecalculateAll && $priority === ProductRecalculationPriorityEnum::HIGH) {
+            $symfonyStyle->error('Dispatching all products to the high priority queue is not supported');
 
             return Command::FAILURE;
         }
@@ -66,7 +88,7 @@ class DispatchRecalculationMessageCommand extends Command
             return $this->executeAll($symfonyStyle);
         }
 
-        return $this->executeIds($productIds, $symfonyStyle);
+        return $this->executeIds($productIds, $symfonyStyle, $priority);
     }
 
     /**
@@ -84,10 +106,14 @@ class DispatchRecalculationMessageCommand extends Command
     /**
      * @param int[] $productIds
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum $priority
      * @return int
      */
-    protected function executeIds(array $productIds, SymfonyStyle $symfonyStyle): int
-    {
+    protected function executeIds(
+        array $productIds,
+        SymfonyStyle $symfonyStyle,
+        ProductRecalculationPriorityEnumInterface $priority,
+    ): int {
         try {
             Assert::allNumeric($productIds, 'All product IDs must be numeric');
             Assert::notEmpty($productIds, 'You must specify at least one product ID');
@@ -97,8 +123,8 @@ class DispatchRecalculationMessageCommand extends Command
             return Command::FAILURE;
         }
 
-        $dispatchedProductIds = $this->productRecalculationDispatcher->dispatchProductIds($productIds);
-        $symfonyStyle->success(['Dispatched message for IDs', implode(', ', $dispatchedProductIds)]);
+        $dispatchedProductIds = $this->productRecalculationDispatcher->dispatchProductIds($productIds, $priority);
+        $symfonyStyle->success(['Dispatched message for IDs', implode(', ', $dispatchedProductIds), sprintf('Priority: %s', $priority->value)]);
 
         return Command::SUCCESS;
     }

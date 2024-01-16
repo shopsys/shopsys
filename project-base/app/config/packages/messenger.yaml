@@ -8,15 +8,24 @@ framework:
                     - 'Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayEnvelopeMiddleware'
         transports:
             failed: 'doctrine://default?queue_name=failed'
-            product_recalculation:
+            product_recalculation_priority_regular:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:
                     vhost: '%env(MESSENGER_TRANSPORT_VHOST)%'
                     exchange:
-                        name: product_recalculation
+                        name: product_recalculation_priority_regular
                         type: direct
                     queues:
-                        product_recalculation: ~
+                        product_recalculation_priority_regular: ~
+            product_recalculation_priority_high:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    vhost: '%env(MESSENGER_TRANSPORT_VHOST)%'
+                    exchange:
+                        name: product_recalculation_priority_high
+                        type: direct
+                    queues:
+                        product_recalculation_priority_high: ~
             placed_order_transport:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:
@@ -32,6 +41,7 @@ framework:
                     multiplier: 5
 
         routing:
-            Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessage: product_recalculation
-            Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAllProductsMessage: product_recalculation
+            Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityRegularMessage: product_recalculation_priority_regular
+            Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityHighMessage: product_recalculation_priority_high
+            Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAllProductsMessage: product_recalculation_priority_regular
             Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessage: placed_order_transport

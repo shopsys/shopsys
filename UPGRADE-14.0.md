@@ -768,6 +768,40 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   add Category ID to CategoryHierarchyItem ([#2962](https://github.com/shopsys/shopsys/pull/2962))
     -   see #project-base-diff to update your project
+-   product recalculations priority queue ([#2981](https://github.com/shopsys/shopsys/pull/2981))
+    -   `Shopsys\FrameworkBundle\Controller\Admin\ProductController` class was changed:
+        -   `editAction()` is now strictly typed
+        -   `newAction()` is now strictly typed
+        -   `deleteAction()` is now strictly typed
+    -   `Shopsys\FrameworkBundle\Model\Product\ProductFacade` class was changed:
+        -   `create()` method changed its interface:
+        ```diff
+            public function create(
+                ProductData $productData
+        +       ?ProductRecalculationPriorityEnumInterface $priority = null,
+        -   )
+        +   ): Product
+        ```
+        -   `edit()` method changed its interface:
+        ```diff
+            public function edit(
+        -       $productId,
+        +       int $productId,
+                ProductData $productData,
+        +       ?ProductRecalculationPriorityEnumInterface $priority = null,
+        -   )
+        +   ): Product
+        ```
+        -   `delete()` method changed its interface:
+        ```diff
+            public function delete(
+        -       $productId
+        +       int $productId,
+        +       ?ProductRecalculationPriorityEnumInterface $priority = null,
+        -   )
+        +   ): void
+        ```
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

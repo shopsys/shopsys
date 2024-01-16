@@ -49,13 +49,13 @@ Failed Message Details
 ======================
 
  ------------- ---------------------------------------------------------------------------------
-  Class         Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessage
+  Class         Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityRegularMessage
   Message Id    36
   Failed at     2023-12-27 13:43:15
   Error         Product visibility was not found for product with ID #1.
   Error Code    0
   Error Class   Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException
-  Transport     product_recalculation
+  Transport     product_recalculation_priority_regular
  ------------- ---------------------------------------------------------------------------------
 
  Message history:

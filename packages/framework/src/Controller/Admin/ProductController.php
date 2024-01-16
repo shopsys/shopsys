@@ -28,9 +28,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Twig\ProductExtension;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -74,8 +76,9 @@ class ProductController extends AdminBaseController
      * @Route("/product/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, int $id)
+    public function editAction(Request $request, int $id): Response
     {
         $product = $this->productFacade->getById($id);
         $productData = $this->productDataFactory->createFromProduct($product);
@@ -85,7 +88,7 @@ class ProductController extends AdminBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->setSellingToUntilEndOfDay($productData);
-            $this->productFacade->edit($id, $productData);
+            $this->productFacade->edit($id, $productData, ProductRecalculationPriorityEnum::HIGH);
 
             $this
                 ->addSuccessFlashTwig(
@@ -119,8 +122,9 @@ class ProductController extends AdminBaseController
     /**
      * @Route("/product/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         try {
             $productData = $this->productDataFactory->create();
@@ -135,7 +139,7 @@ class ProductController extends AdminBaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->setSellingToUntilEndOfDay($productData);
-            $product = $this->productFacade->create($productData);
+            $product = $this->productFacade->create($productData, ProductRecalculationPriorityEnum::HIGH);
 
             $this
                 ->addSuccessFlashTwig(
@@ -226,13 +230,14 @@ class ProductController extends AdminBaseController
      * @Route("/product/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         try {
             $product = $this->productFacade->getById($id);
 
-            $this->productFacade->delete($id);
+            $this->productFacade->delete($id, ProductRecalculationPriorityEnum::HIGH);
 
             $this->addSuccessFlashTwig(
                 t('Product <strong>{{ product|productDisplayName }}</strong> deleted'),
