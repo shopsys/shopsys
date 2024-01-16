@@ -19,7 +19,10 @@ vi.mock('helpers/isClient', () => ({
 }));
 
 vi.mock('next/config', () => ({
-    default: () => ({ serverRuntimeConfig: { internalGraphqlEndpoint: TEST_URL } }),
+    default: () => ({
+        serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/graphql/' },
+        publicRuntimeConfig: { errorDebugging: false },
+    }),
 }));
 
 const mockRedisClientGet: Mock<[], null | string> = vi.fn(() => null);

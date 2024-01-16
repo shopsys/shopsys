@@ -1,8 +1,10 @@
 import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
 import { Error500Content } from 'components/Pages/ErrorPage/Error500Content';
+import { isWithErrorDebugging } from 'helpers/errors/isWithErrorDebugging';
 import { logException } from 'helpers/errors/logException';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { showErrorMessage } from 'helpers/toasts';
 import { NextPage } from 'next';
 import { ReactElement } from 'react';
 
@@ -21,7 +23,7 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ hasGetInitialPropsRun, err, statu
         logException(err);
     }
 
-    return statusCode === 404 ? <Error404Content /> : <Error500Content />;
+    return statusCode === 404 ? <Error404Content /> : <Error500Content err={err} />;
 };
 
 ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context: any) => {
@@ -30,10 +32,19 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
 
     const serverSideProps = await initServerSideProps({ context, redisClient, domainConfig, t });
     const statusCode = middlewareStatusCode || context.res.statusCode || 500;
-    const err = middlewareStatusMessage || context.err || 'Unknown error (inside _error.tsx)';
+    let err: string | Error = middlewareStatusMessage || context.err || 'Unknown error (inside _error.tsx)';
 
-    if (statusCode !== 404) {
+    if (err instanceof Error) {
+        err = JSON.stringify({ name: err.name, message: err.message, stack: err.stack, cause: err.cause });
+    }
+
+    if (statusCode !== 404 && !isWithErrorDebugging) {
         logException(err);
+    }
+
+    if (isWithErrorDebugging) {
+        logException(err);
+        showErrorMessage(err);
     }
 
     // eslint-disable-next-line require-atomic-updates
