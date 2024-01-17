@@ -34,7 +34,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
  * @property \App\Model\Category\CategoryRepository $categoryRepository
  * @property \App\Model\Product\Brand\BrandRepository $brandRepository
  * @property \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
- * @method __construct(\App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository, \App\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository, \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory, \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory)
  */
 class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElasticFacade
 {
