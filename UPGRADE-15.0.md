@@ -85,6 +85,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
                 protected readonly AdministratorActivityFacade $administratorActivityFacade,
         ```
     -   see #project-base-diff to update your project
+-   Added check vulnerabilities for javascripts in storefront ([#2993](https://github.com/shopsys/shopsys/pull/2993))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
