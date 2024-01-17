@@ -26,13 +26,12 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
                         className="border-r-1 flex min-w-[calc(182px+12px*2)] max-w-[calc(182px+12px*2)] shrink-0 basis-64 items-center border-greyVeryLight py-3 px-1 sm:min-w-[calc(205px+20px*2)] sm:max-w-[calc(205px+20px*2)]"
                         style={index === 0 ? { marginLeft: -props.tableMarginLeft } : undefined}
                     >
-                        <a className="w-16" href={product.slug}>
+                        <a className="relative h-16 w-16" href={product.slug}>
                             <Image
+                                fill
                                 alt={product.mainImage?.name || product.fullName}
-                                className="w-auto"
-                                height={64}
+                                className="object-contain"
                                 src={product.mainImage?.url}
-                                width={64}
                             />
                         </a>
                         <div className="ml-2 flex flex-1 flex-col">

@@ -22,8 +22,8 @@ type ProductItemProps = {
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
     isProductInComparison: boolean;
-    toggleProductInComparison: () => void;
     isProductInWishlist: boolean;
+    toggleProductInComparison: () => void;
     toggleProductInWishlist: () => void;
 } & FunctionComponentProps;
 
@@ -37,8 +37,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             gtmProductListName,
             gtmMessageOrigin,
             isProductInComparison,
-            toggleProductInComparison,
             isProductInWishlist,
+            toggleProductInComparison,
             toggleProductInWishlist,
             className,
         },
@@ -73,14 +73,15 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
                     onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
                 >
-                    <div className="relative">
+                    <div className="relative flex items-center justify-center">
                         <Image
                             alt={product.mainImage?.name || product.fullName}
-                            className="mx-auto h-40 w-auto"
-                            height={160}
+                            className="max-h-64 w-auto"
+                            height={250}
                             src={product.mainImage?.url}
-                            width={320}
+                            width={190}
                         />
+
                         {!!product.flags.length && (
                             <div className="absolute top-3 left-4 flex flex-col">
                                 <ProductFlags flags={product.flags} />

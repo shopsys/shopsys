@@ -116,13 +116,15 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                                                 ),
                                             )}
                                         >
-                                            <Image
-                                                alt={product.mainImage?.name || product.fullName}
-                                                className="mx-auto flex items-center justify-center"
-                                                height={64}
-                                                src={product.mainImage?.url}
-                                                width={80}
-                                            />
+                                            <div className="relative mx-auto flex h-20 w-20 items-center justify-center lg:w-full">
+                                                <Image
+                                                    fill
+                                                    alt={product.mainImage?.name || product.fullName}
+                                                    className="object-contain"
+                                                    sizes="(max-width: 768px) 80px, (max-width: 1024px) 20vw, 110px"
+                                                    src={product.mainImage?.url}
+                                                />
+                                            </div>
 
                                             <span className="flex-1">{product.fullName}</span>
 
