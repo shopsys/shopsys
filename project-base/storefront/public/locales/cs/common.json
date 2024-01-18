@@ -159,6 +159,7 @@
     "Item {{ itemName }} has been sold out.": "Položka {{ itemName }} byla vyprodána.",
     "Last name": "Příjmení",
     "Last name must be at most {{ max }} characters": "Příjmení nesmí být delší než {{ max }} znaků",
+    "Last visited products": "Naposledy navštívené produkty",
     "Load more": "Načíst další",
     "Log in": "Přihlásit se",
     "Log-in": "Přihlásit",

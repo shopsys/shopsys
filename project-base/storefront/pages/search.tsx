@@ -1,5 +1,6 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
@@ -37,7 +38,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useQueryParams } from 'hooks/useQueryParams';
 import useTranslation from 'next-translate/useTranslation';
 
-const SearchPage: FC<ServerSidePropsType> = () => {
+const SearchPage: FC<ServerSidePropsType> = ({ cookies }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const { sort, filter, searchString, currentLoadMore } = useQueryParams();
@@ -73,6 +74,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
                         </div>
                     )}
                 </Webline>
+                <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
             </CommonLayout>
         </>
     );

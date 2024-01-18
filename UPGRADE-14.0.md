@@ -1016,8 +1016,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   in your `next.config.js`, add all your domains names into `images -> remotePatterns` setting
 
 -   improve translation caching ([#2949](https://github.com/shopsys/shopsys/pull/2949))
+
 -   fix Search results Blog Article link type ([#2961](https://github.com/shopsys/shopsys/pull/2961))
     -   Wrong link type was causing the link to not work. Solved by replacing "article" with "blogArticle".
+
 -   add categoryHierarchy to Category query ([#2962](https://github.com/shopsys/shopsys/pull/2962))
 
     -   in order to have proper category tree for GTM (and Persoo) we need to add proper category hierarchy tree, now we send whole tree instead of last category id
@@ -1040,3 +1042,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   after migration to Next Image component there were some places left to adjust proper image sizes
     -   Fix additionally downloaded image is loaded after product page render. `Lightgallery` is not cooperating right with `NextImage` component. It doesn't know about which image (`width`) was loaded from `srcset` so it takes src from image loaded with `NextImage` which is full size of 3840px and loads it immediately after page loads in order to having it downloaded after user opens an image modal. After the image modal opens `LightGallery` loads original image (which is without `width` query) anyway. So preloaded image is loaded for nothing. Proper fix is replacing `Lightgallery` with new component for Image Modal Gallery.
     -   Remove `image-rendering:-webkit-optimize-contrast` from images. This property is causing some of images to be rendered with sharp edges on places where it is not wanted. Browsers algorithms seem to handle this value correctly on its own without need to use specific rendering property.
+
+-   added last visited products block ([#2716](https://github.com/shopsys/shopsys/pull/2716))
+    -   on page component add ServerSidePropsType and get cookies in props list
+        ```tsx
+        const HomePage: FC<ServerSidePropsType> = ({ cookies }) => {
+        ```
+    -   include tag <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} /> on place where you want to display last visited products
+    -   default places: homepage, product detail, search, category, blog list, blog detail

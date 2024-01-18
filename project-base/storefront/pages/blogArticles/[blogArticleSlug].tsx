@@ -1,3 +1,4 @@
+import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
 import {
@@ -14,13 +15,13 @@ import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { parseCatnums } from 'helpers/parsing/grapesJsParser';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 
-const BlogArticleDetailPage: NextPage = () => {
+const BlogArticleDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
     const router = useRouter();
     const [{ data: blogArticleData, fetching }] = useBlogArticleDetailQueryApi({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
@@ -39,6 +40,7 @@ const BlogArticleDetailPage: NextPage = () => {
             title={blogArticleData?.blogArticle?.seoTitle}
         >
             {!!blogArticleData?.blogArticle && <BlogArticleDetailContent blogArticle={blogArticleData.blogArticle} />}
+            <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
         </CommonLayout>
     );
 };

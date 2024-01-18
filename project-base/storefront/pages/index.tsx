@@ -2,6 +2,7 @@ import { SearchMetadata } from 'components/Basic/Head/SearchMetadata';
 import { Banners } from 'components/Blocks/Banners/Banners';
 import { BLOG_PREVIEW_VARIABLES, BlogPreview } from 'components/Blocks/BlogPreview/BlogPreview';
 import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategories';
+import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { PromotedProducts } from 'components/Blocks/Product/PromotedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -19,7 +20,7 @@ import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSideProps
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import useTranslation from 'next-translate/useTranslation';
 
-const HomePage: FC<ServerSidePropsType> = () => {
+const HomePage: FC<ServerSidePropsType> = ({ cookies }) => {
     const { t } = useTranslation();
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.homepage);
@@ -43,6 +44,7 @@ const HomePage: FC<ServerSidePropsType> = () => {
                 <Webline type="blog">
                     <BlogPreview />
                 </Webline>
+                <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
             </CommonLayout>
         </>
     );
