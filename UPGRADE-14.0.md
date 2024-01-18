@@ -1126,6 +1126,15 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         )
     ```
 
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `framework` package:
+
+        -   `ProductFilterData` and part of related logic
+        -   `ClassExtensionRegistry::getOtherClassesExtensionMap()` logic was moved to its parent class
+
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `frontend-api` package:
+
+        -   `ProductExtendedConnection` logic has been moved to `ProductConnection`
+
     -   see #project-base-diff to update your project
 
 ### Storefront
