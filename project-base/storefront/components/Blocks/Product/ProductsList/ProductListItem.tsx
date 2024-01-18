@@ -73,13 +73,13 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
                     onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
                 >
-                    <div className="relative flex items-center justify-center">
+                    <div className="relative flex h-56 items-center justify-center">
                         <Image
                             alt={product.mainImage?.name || product.fullName}
-                            className="max-h-64 w-auto"
+                            className="max-h-full object-contain"
                             height={250}
                             src={product.mainImage?.url}
-                            width={190}
+                            width={250}
                         />
 
                         {!!product.flags.length && (
