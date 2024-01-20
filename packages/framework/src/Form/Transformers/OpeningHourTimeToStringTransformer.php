@@ -4,26 +4,27 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
-use DateTime;
+use DateTimeImmutable;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class OpeningHourTimeToStringTransformer implements DataTransformerInterface
 {
     /**
      * @param string|null $time
-     * @return \DateTime|null
+     * @return \DateTimeImmutable|null
      */
-    public function transform($time): ?DateTime
+    public function transform($time): ?DateTimeImmutable
     {
         if ($time === null) {
             return null;
         }
 
-        return new DateTime(sprintf('1970-01-01 %s:00', $time));
+        return DateTimeHelper::createDateTimeFromTime($time);
     }
 
     /**
-     * @param \DateTime|null $dateTime
+     * @param \DateTimeImmutable|null $dateTime
      * @return string|null
      */
     public function reverseTransform($dateTime): ?string

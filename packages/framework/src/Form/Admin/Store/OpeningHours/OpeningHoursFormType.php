@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Form\Transformers\OpeningHourTimeToStringTransformer;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData;
 use Symfony\Component\Form\AbstractType;
@@ -15,9 +17,11 @@ class OpeningHoursFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\OpeningHourTimeToStringTransformer $openingHourTimeToStringTransformer
+     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider $displayTimeZoneProvider
      */
     public function __construct(
         protected readonly OpeningHourTimeToStringTransformer $openingHourTimeToStringTransformer,
+        protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
     ) {
     }
 
@@ -31,6 +35,7 @@ class OpeningHoursFormType extends AbstractType
             'attr' => [
                 'class' => 'full-width',
             ],
+            'view_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId(Domain::FIRST_DOMAIN_ID)->getName(),
         ];
 
         $builder->add('firstOpeningTime', TimeType::class, $timeOptions);

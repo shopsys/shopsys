@@ -6,7 +6,9 @@ namespace App\FrontendApi\Resolver\Store\OpeningHours;
 
 use DateTimeImmutable;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
@@ -25,12 +27,16 @@ class OpeningHoursResolverMap extends ResolverMap
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHoursDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory $openingHoursFactory
+     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider $displayTimeZoneProvider
+     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly OpeningHoursDataFactory $openingHoursDataFactory,
         protected readonly OpeningHoursFactory $openingHoursFactory,
+        protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
+        protected readonly DateTimeHelper $dateTimeHelper,
     ) {
     }
 
@@ -45,17 +51,14 @@ class OpeningHoursResolverMap extends ResolverMap
                     /** @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHour */
                     $openingHour = reset($openingHours);
 
-                    $now = new DateTimeImmutable(
-                        'now',
-                        $this->domain->getCurrentDomainConfig()->getDateTimeZone(),
+                    $closedDays = $this->closedDayFacade->getThisWeekClosedDaysNotExcludedForStoreIndexedByDayNumber(
+                        $this->domain->getId(),
+                        $openingHour->getStore(),
                     );
 
-                    return $openingHour->getStore()->isOpen(
-                        $now,
-                        $this->closedDayFacade->getThisWeekClosedDaysNotExcludedForStoreIndexedByDayNumber(
-                            $this->domain->getId(),
-                            $openingHour->getStore(),
-                        ),
+                    return $openingHour->getStore()->isOpenNow(
+                        $closedDays,
+                        $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($this->domain->getId()),
                     );
                 },
                 'dayOfWeek' => $this->getDayOfWeek(...),
@@ -80,14 +83,23 @@ class OpeningHoursResolverMap extends ResolverMap
      */
     protected function isStoreClosedOnDay(Store $store, int $dayNumber): bool
     {
-        if (!array_key_exists($store->getId(), $this->thisWeekClosedDaysIndexedByStoreIdAndDayNumber)) {
-            $this->thisWeekClosedDaysIndexedByStoreIdAndDayNumber[$store->getId()] = $this->closedDayFacade->getThisWeekClosedDaysNotExcludedForStoreIndexedByDayNumber(
-                $this->domain->getId(),
-                $store,
-            );
+        $timeZone = $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($this->domain->getId());
+        $day = DateTimeHelper::getUtcDateForDayInCurrentWeek(
+            $dayNumber,
+            $timeZone,
+        );
+        $closedDays = $this->closedDayFacade->getThisWeekClosedDaysNotExcludedForStoreIndexedByDayNumber(
+            $this->domain->getId(),
+            $store,
+        );
+
+        foreach ($closedDays as $closedDay) {
+            if ($closedDay->getDate()->format('N') === $day->format('N')) {
+                return true;
+            }
         }
 
-        return array_key_exists($dayNumber, $this->thisWeekClosedDaysIndexedByStoreIdAndDayNumber[$store->getId()]);
+        return false;
     }
 
     /**
@@ -97,7 +109,6 @@ class OpeningHoursResolverMap extends ResolverMap
     {
         return (int)(new DateTimeImmutable(
             'now',
-            $this->domain->getCurrentDomainConfig()->getDateTimeZone(),
         ))->format('N');
     }
 
@@ -109,10 +120,10 @@ class OpeningHoursResolverMap extends ResolverMap
     {
         return [
             'dayOfWeek' => $openingHours->getDayOfWeek(),
-            'firstOpeningTime' => $openingHours->getFirstOpeningTime(),
-            'firstClosingTime' => $openingHours->getFirstClosingTime(),
-            'secondOpeningTime' => $openingHours->getSecondOpeningTime(),
-            'secondClosingTime' => $openingHours->getSecondClosingTime(),
+            'firstOpeningTime' => $this->dateTimeHelper->convertHoursAndMinutesFromUtcToDisplayTimezone($openingHours->getFirstOpeningTime(), $this->domain->getId()),
+            'firstClosingTime' => $this->dateTimeHelper->convertHoursAndMinutesFromUtcToDisplayTimezone($openingHours->getFirstClosingTime(), $this->domain->getId()),
+            'secondOpeningTime' => $this->dateTimeHelper->convertHoursAndMinutesFromUtcToDisplayTimezone($openingHours->getSecondOpeningTime(), $this->domain->getId()),
+            'secondClosingTime' => $this->dateTimeHelper->convertHoursAndMinutesFromUtcToDisplayTimezone($openingHours->getSecondClosingTime(), $this->domain->getId()),
         ];
     }
 }
