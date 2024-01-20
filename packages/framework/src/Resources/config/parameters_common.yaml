@@ -8,6 +8,8 @@ parameters:
     # Administration locale. Must be registered in domains.yaml
     shopsys.admin_locale: en
 
+    shopsys.admin_display_timezone: 'Europe/Prague'
+
     # Hours defined in cron.yaml correspond to this timezone (default is PHP timezone)
     shopsys.cron_timezone: ~
 

@@ -52,7 +52,8 @@ class DateTimeTypeTest extends TypeTestCase
      */
     protected function getExtensions(): array
     {
-        $displayTimeZoneProvider = new DisplayTimeZoneProvider($this->getMockedDomain('Europe/Prague'));
+        $displayTimeZone = 'Europe/Prague';
+        $displayTimeZoneProvider = new DisplayTimeZoneProvider($displayTimeZone, $this->getMockedDomain($displayTimeZone));
 
         $dateTimeType = new DateTimeType($displayTimeZoneProvider);
 

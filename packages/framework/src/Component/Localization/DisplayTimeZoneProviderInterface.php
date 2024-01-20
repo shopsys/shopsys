@@ -13,4 +13,9 @@ interface DisplayTimeZoneProviderInterface
      * @return \DateTimeZone
      */
     public function getDisplayTimeZoneByDomainId(int $domainId): DateTimeZone;
+
+    /**
+     * @return \DateTimeZone
+     */
+    public function getDisplayTimeZoneForAdmin(): DateTimeZone;
 }
