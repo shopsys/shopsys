@@ -52,7 +52,7 @@ class DateTimeFormatterTest extends TestCase
     {
         $mockedDomain = $this->getMockedDomain($dateTimeZone);
         $dateTimeFormatPatternRepository = new DateTimeFormatPatternRepository();
-        $displayTimeZoneProvider = new DisplayTimeZoneProvider($mockedDomain);
+        $displayTimeZoneProvider = new DisplayTimeZoneProvider($dateTimeZone, $mockedDomain);
 
         $dateTimeFormatter = new DateTimeFormatter($dateTimeFormatPatternRepository, $displayTimeZoneProvider);
 
