@@ -10,10 +10,10 @@ import { PaymentTypeEnum } from 'types/payment';
 type PaymentFailProps = {
     orderUuid: string;
     lastUsedOrderPaymentType: string | undefined;
-    canPaymentBeRepeated: boolean;
+    paymentTransactionCount: number;
 };
 
-export const PaymentFail: FC<PaymentFailProps> = ({ orderUuid, lastUsedOrderPaymentType, canPaymentBeRepeated }) => {
+export const PaymentFail: FC<PaymentFailProps> = ({ orderUuid, lastUsedOrderPaymentType, paymentTransactionCount }) => {
     const { t } = useTranslation();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.payment_fail);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -28,7 +28,10 @@ export const PaymentFail: FC<PaymentFailProps> = ({ orderUuid, lastUsedOrderPaym
             AdditionalContent={
                 <>
                     {lastUsedOrderPaymentType === PaymentTypeEnum.GoPay && (
-                        <PaymentsInOrderSelect canPaymentBeRepeated={canPaymentBeRepeated} orderUuid={orderUuid} />
+                        <PaymentsInOrderSelect
+                            orderUuid={orderUuid}
+                            paymentTransactionCount={paymentTransactionCount}
+                        />
                     )}
                 </>
             }

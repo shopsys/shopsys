@@ -101,8 +101,8 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                             <Cell className="flex-1">
                                 <ColumnHeader>{t('Payment information')}</ColumnHeader>
                                 <PaymentsInOrderSelect
-                                    canPaymentBeRepeated
                                     orderUuid={order.uuid}
+                                    paymentTransactionCount={order.paymentTransactionsCount}
                                     withRedirectAfterChanging={false}
                                 />
                             </Cell>

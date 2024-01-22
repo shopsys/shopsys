@@ -6,7 +6,7 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 
-export const useChangePaymentInOrder = (withRedirectAfterChanging = true) => {
+export const useChangePaymentInOrder = () => {
     const { t } = useTranslation();
     const router = useRouter();
     const isUserLoggedIn = useIsUserLoggedIn();
@@ -18,22 +18,27 @@ export const useChangePaymentInOrder = (withRedirectAfterChanging = true) => {
 
     const [{ fetching: isChangePaymentInOrderFetching }, changePaymentInOrder] = useChangePaymentInOrderMutationApi();
 
-    const changePaymentInOrderHandler = async (orderUuid: string, paymentUuid: string) => {
+    const changePaymentInOrderHandler = async (
+        orderUuid: string,
+        paymentUuid: string,
+        paymentGoPayBankSwift?: string | null,
+        withRedirectAfterChanging = true,
+    ) => {
         const { data: changePaymentInOrderData } = await changePaymentInOrder({
-            input: { orderUuid, paymentGoPayBankSwift: null, paymentUuid },
+            input: { orderUuid, paymentGoPayBankSwift: paymentGoPayBankSwift ?? null, paymentUuid },
         });
         const editedOrder = changePaymentInOrderData?.ChangePaymentInOrder;
 
         if (!editedOrder) {
             showErrorMessage(t('An error occurred while changing the payment'));
 
-            return;
+            return changePaymentInOrderData;
         }
 
         showSuccessMessage(t('Your payment has been successfully changed'));
 
         if (!withRedirectAfterChanging) {
-            return;
+            return changePaymentInOrderData;
         }
 
         if (isUserLoggedIn) {
@@ -44,6 +49,8 @@ export const useChangePaymentInOrder = (withRedirectAfterChanging = true) => {
         } else {
             router.push(`${orderByHashUrl}/${editedOrder.urlHash}`);
         }
+
+        return changePaymentInOrderData;
     };
 
     return { changePaymentInOrderHandler, isChangePaymentInOrderFetching };

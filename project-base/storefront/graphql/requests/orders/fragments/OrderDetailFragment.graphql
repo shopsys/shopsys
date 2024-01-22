@@ -50,4 +50,5 @@ fragment OrderDetailFragment on Order {
     totalPrice {
         ...PriceFragment
     }
+    paymentTransactionsCount
 }
