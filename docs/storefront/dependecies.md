@@ -6,7 +6,6 @@ Sometimes, it's not worth reinventing the wheel, right? For those cases, we use 
 -   [@hookform/resolvers](https://www.npmjs.com/package/@hookform/resolvers) - used for forms validation
 -   [cookies-next](https://www.npmjs.com/package/cookies-next) - cookie parser
 -   [embla-carousel-react](https://www.embla-carousel.com/) - lightweight carousel library
--   [lightgallery](https://www.lightgalleryjs.com/) - JavaScript image and video lightbox gallery plugin
 -   [zustand](https://github.com/pmndrs/zustand) - store management
 -   [react-toastify](https://fkhadra.github.io/react-toastify/introduction) - solution for displaying toast notifications
 -   [react-loading-skeleton](https://github.com/dvtng/react-loading-skeleton) - solution for skeletons

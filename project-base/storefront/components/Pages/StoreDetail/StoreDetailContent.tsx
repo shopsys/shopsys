@@ -11,9 +11,12 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
-const Gallery = dynamic(() => import('components/Basic/Gallery/Gallery').then((component) => component.Gallery));
+const ModalGallery = dynamic(() =>
+    import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),
+);
 
 type StoreDetailContentProps = {
     store: StoreDetailFragmentApi;
@@ -26,6 +29,8 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const storeCoordinates = createMapMarker(store.locationLatitude, store.locationLongitude);
     const { url } = useDomainConfig();
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
+
+    const [selectedGalleryItemIndex, setSelectedGalleryItemIndex] = useState<number>();
 
     return (
         <Webline className="mb-10" dataTestId={TEST_IDENTIFIER}>
@@ -107,28 +112,36 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
 
             {store.storeImages.length > 0 && (
                 <div className="mt-6 bg-greyVeryLight p-3">
-                    <Gallery selector=".lightboxItem">
-                        <div className="flex flex-wrap justify-center lg:justify-start">
-                            {store.storeImages.map((image, index) => (
-                                <div
-                                    key={index}
-                                    className="lightboxItem basis-[304px] p-3"
-                                    data-src={image.url}
-                                    title={store.storeName}
-                                >
-                                    <Image
-                                        alt={image.name || `${store.storeName}-${index}`}
-                                        className="w-auto cursor-pointer"
-                                        height={190}
-                                        loading="lazy"
-                                        src={image.url}
-                                        width={280}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </Gallery>
+                    <ul className="flex flex-wrap justify-center lg:justify-start">
+                        {store.storeImages.map((image, index) => (
+                            <li
+                                key={image.url}
+                                className="lightboxItem basis-[304px] p-3"
+                                data-src={image.url}
+                                title={store.storeName}
+                                onClick={() => setSelectedGalleryItemIndex(index)}
+                            >
+                                <Image
+                                    alt={image.name || `${store.storeName}-${index}`}
+                                    className="w-auto cursor-pointer"
+                                    height={190}
+                                    loading="lazy"
+                                    src={image.url}
+                                    width={280}
+                                />
+                            </li>
+                        ))}
+                    </ul>
                 </div>
+            )}
+
+            {selectedGalleryItemIndex !== undefined && (
+                <ModalGallery
+                    galleryName={store.storeName}
+                    initialIndex={selectedGalleryItemIndex}
+                    items={store.storeImages}
+                    onCloseModal={() => setSelectedGalleryItemIndex(undefined)}
+                />
             )}
         </Webline>
     );
