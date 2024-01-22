@@ -1448,3 +1448,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   added possibility for controlling error verbosity on SF (can be now devel or user) which can be set independently of the actual node environment. This allows for better error debugging on SF
     -   errorDebugging controls the verbosity of errors on SF, it is controlled by an environment variable
     -   `error-handling.md` was extended with the new information and can be used to update your project
+-   replace Lightgallery with custom ModalGallery component ([#2995](https://github.com/shopsys/shopsys/pull/2995))
+    -   new features:
+        -   custom useKeyPress hook, responsible for handling key press events
+        -   new library for handling swiping events (react-swipeable)
+        -   gallery is loaded dynamically, allowing us to lower the size of product page
