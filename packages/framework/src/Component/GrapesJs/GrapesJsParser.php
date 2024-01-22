@@ -25,7 +25,8 @@ class GrapesJsParser
         }
 
         $newText = preg_replace_callback(static::GJS_PRODUCTS_REGEX, static function (array $matches): string {
-            preg_match('/data-products="(.+?)"/', $matches[0], $productMatches);
+            $gjsProductsDiv = str_replace(["\r", "\n", "\r\n"], '', $matches[0]);
+            preg_match('/data-products="(.+?)"/', $gjsProductsDiv, $productMatches);
             $productArray = explode(',', $productMatches[1]);
             $trimmedProductArray = array_map(static fn ($product) => trim($product), $productArray);
             $productCatnumsString = implode(',', $trimmedProductArray);
