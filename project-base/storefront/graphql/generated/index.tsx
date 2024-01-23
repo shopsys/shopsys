@@ -1395,6 +1395,8 @@ export type OrderApi = {
   email: Scalars['String']['output'];
   /** The customer's first name */
   firstName: Maybe<Scalars['String']['output']>;
+  /** Indicates whether the order is paid successfully with GoPay payment type */
+  isPaid: Scalars['Boolean']['output'];
   /** All items in the order including payment and transport */
   items: Array<OrderItemApi>;
   /** The customer's last name */

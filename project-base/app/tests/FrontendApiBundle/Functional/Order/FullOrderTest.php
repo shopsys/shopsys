@@ -55,6 +55,7 @@ class FullOrderTest extends GraphQlTestCase
                 ],
                 'note' => 'Thank You',
                 'paymentTransactionsCount' => 0,
+                'isPaid' => false,
             ],
         ];
 

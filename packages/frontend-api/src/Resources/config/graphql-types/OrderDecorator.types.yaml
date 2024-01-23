@@ -106,3 +106,6 @@ OrderDecorator:
             paymentTransactionsCount:
                 type: "Int!"
                 description: "Count of the payment transactions related to the order"
+            isPaid:
+                type: "Boolean!"
+                description: "Indicates whether the order is paid successfully with GoPay payment type"

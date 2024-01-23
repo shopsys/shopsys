@@ -1065,6 +1065,8 @@ type Order {
   email: String!
   "The customer's first name"
   firstName: String
+  "Indicates whether the order is paid successfully with GoPay payment type"
+  isPaid: Boolean!
   "All items in the order including payment and transport"
   items: [OrderItem!]!
   "The customer's last name"

@@ -5119,6 +5119,15 @@ The customer's first name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isPaid</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicates whether the order is paid successfully with GoPay payment type
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>items</strong></td>
 <td valign="top">[<a href="#orderitem">OrderItem</a>!]!</td>
 <td>

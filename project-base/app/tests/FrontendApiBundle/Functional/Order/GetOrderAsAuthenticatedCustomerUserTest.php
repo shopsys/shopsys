@@ -53,6 +53,9 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             $this->assertArrayHasKey('paymentTransactionsCount', $responseData);
             $this->assertSame($expectedOrderData['paymentTransactionsCount'], $responseData['paymentTransactionsCount']);
 
+            $this->assertArrayHasKey('isPaid', $responseData);
+            $this->assertSame($expectedOrderData['isPaid'], $responseData['isPaid']);
+
             $responseByOrderNumber = $this->getResponseContentForGql(__DIR__ . '/graphql/GetOrderQuery.graphql', [
                 'orderNumber' => $orderNumber,
             ]);
@@ -116,6 +119,7 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                     'trackingNumber' => $order->getTrackingNumber(),
                     'trackingUrl' => $order->getTrackingUrl(),
                     'paymentTransactionsCount' => $order->getPaymentTransactionsCount(),
+                    'isPaid' => $order->isPaid(),
                 ],
             ];
         }

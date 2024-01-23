@@ -101,6 +101,7 @@ mutation CreateFullOrder(
             }
             note
             paymentTransactionsCount
+            isPaid
         }
     }
 }
