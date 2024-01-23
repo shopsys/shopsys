@@ -298,9 +298,27 @@ Returns list of searched articles and blog articles
 </td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">requestingPage</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+URL of page where the search was initiated
+
+</td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">search</td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">userIdentifier</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Unique identifier of the user who initiated the search in format ^[0-9a-zA-Z+/]{24}$/
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>blogArticle</strong></td>
@@ -478,9 +496,27 @@ Returns list of searched categories that can be paginated using `first`, `last`,
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">requestingPage</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+URL of page where the search was initiated
+
+</td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">search</td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">userIdentifier</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Unique identifier of the user who initiated the search in format ^[0-9a-zA-Z+/]{24}$/
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>category</strong></td>
@@ -946,9 +982,27 @@ Returns list of searched products that can be paginated using `first`, `last`, `
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">requestingPage</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+URL of page where the search was initiated
+
+</td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">search</td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">userIdentifier</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Unique identifier of the user who initiated the search in format ^[0-9a-zA-Z+/]{24}$/
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>promotedCategories</strong></td>

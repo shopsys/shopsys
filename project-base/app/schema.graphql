@@ -1671,7 +1671,13 @@ type Query {
   ): ArticleConnection!
   ArticleSite: ArticleSite
   "Returns list of searched articles and blog articles"
-  articlesSearch(search: String!): [ArticleInterface!]!
+  articlesSearch(
+    "URL of page where the search was initiated"
+    requestingPage: String
+    search: String!
+    "Unique identifier of the user who initiated the search in format ^[0-9a-zA-Z+/]{24}$/"
+    userIdentifier: String
+  ): [ArticleInterface!]!
   "Returns blog article filtered using UUID or URL slug"
   blogArticle(urlSlug: String, uuid: Uuid): BlogArticle
   "Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords"
@@ -1691,7 +1697,17 @@ type Query {
   "Returns complete list of categories"
   categories: [Category!]!
   "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"
-  categoriesSearch(after: String, before: String, first: Int, last: Int, search: String!): CategoryConnection!
+  categoriesSearch(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    "URL of page where the search was initiated"
+    requestingPage: String
+    search: String!
+    "Unique identifier of the user who initiated the search in format ^[0-9a-zA-Z+/]{24}$/"
+    userIdentifier: String
+  ): CategoryConnection!
   "Returns category filtered using UUID or URL slug"
   category(filter: ProductFilter, orderingMode: ProductOrderingModeEnum, urlSlug: String, uuid: Uuid): Category
   CompanyCustomerUser: CompanyCustomerUser
@@ -1752,7 +1768,19 @@ type Query {
     catnums: [String!]!
   ): [Product!]!
   "Returns list of searched products that can be paginated using `first`, `last`, `before` and `after` keywords"
-  productsSearch(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String!): ProductConnection!
+  productsSearch(
+    after: String
+    before: String
+    filter: ProductFilter
+    first: Int
+    last: Int
+    orderingMode: ProductOrderingModeEnum
+    "URL of page where the search was initiated"
+    requestingPage: String
+    search: String!
+    "Unique identifier of the user who initiated the search in format ^[0-9a-zA-Z+/]{24}$/"
+    userIdentifier: String
+  ): ProductConnection!
   "Returns promoted categories"
   promotedCategories: [Category!]!
   "Returns promoted products"

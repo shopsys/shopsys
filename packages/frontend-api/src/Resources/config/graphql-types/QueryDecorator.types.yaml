@@ -14,6 +14,12 @@ QueryDecorator:
                 args:
                     search:
                         type: "String!"
+                    requestingPage:
+                        type: "String"
+                        description: "URL of page where the search was initiated"
+                    userIdentifier:
+                        type: "String"
+                        description: "Unique identifier of the user who initiated the search in format ^[0-9a-zA-Z+\/]{24}$/"
                 description: "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"
             products:
                 type: "ProductConnection"
@@ -43,6 +49,12 @@ QueryDecorator:
                 args:
                     search:
                         type: "String!"
+                    requestingPage:
+                        type: "String"
+                        description: "URL of page where the search was initiated"
+                    userIdentifier:
+                        type: "String"
+                        description: "Unique identifier of the user who initiated the search in format ^[0-9a-zA-Z+\/]{24}$/"
                 description: "Returns list of searched products that can be paginated using `first`, `last`, `before` and `after` keywords"
             RegularProduct:
                 type: 'RegularProduct'
@@ -118,6 +130,12 @@ QueryDecorator:
                 args:
                     search:
                         type: "String!"
+                    requestingPage:
+                        type: "String"
+                        description: "URL of page where the search was initiated"
+                    userIdentifier:
+                        type: "String"
+                        description: "Unique identifier of the user who initiated the search in format ^[0-9a-zA-Z+\/]{24}$/"
                 description: "Returns list of searched articles and blog articles"
             article:
                 type: 'NotBlogArticleInterface'

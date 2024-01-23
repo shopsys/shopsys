@@ -20,6 +20,7 @@ class PersooClient
     public const PERSOO_EVENT_GET_RECOMMENDATION = 'getRecommendation';
     public const PERSOO_ACTION_SEARCH = 'search';
     public const PERSOO_ACTION_RECOMMENDATION = 'recommendation';
+    public const PERSOO_USER_IDENTIFIER_PATTERN = '/^[0-9a-zA-Z+\/]{24}$/';
 
     /**
      * @param string $persooApiUrl
@@ -59,9 +60,9 @@ class PersooClient
         string $action,
         int $page,
         int $limit,
-        array $filter = [],
-        string $browserId = 'AAABQAg1a7sMJnpF6WlwIFuC',
-        string $requestingPage = 'http://127.0.0.1:8000/',
+        array $filter,
+        string $browserId,
+        string $requestingPage,
     ): PersooResult {
         $this->checkNecessaryConfigurationIsSet();
 

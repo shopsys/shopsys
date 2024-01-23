@@ -2190,7 +2190,9 @@ export type QueryArticlesArgsApi = {
 
 
 export type QueryArticlesSearchArgsApi = {
+  requestingPage: InputMaybe<Scalars['String']['input']>;
   search: Scalars['String']['input'];
+  userIdentifier: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -2236,7 +2238,9 @@ export type QueryCategoriesSearchArgsApi = {
   before: InputMaybe<Scalars['String']['input']>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
+  requestingPage: InputMaybe<Scalars['String']['input']>;
   search: Scalars['String']['input'];
+  userIdentifier: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -2335,7 +2339,9 @@ export type QueryProductsSearchArgsApi = {
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
   orderingMode: InputMaybe<ProductOrderingModeEnumApi>;
+  requestingPage: InputMaybe<Scalars['String']['input']>;
   search: Scalars['String']['input'];
+  userIdentifier: InputMaybe<Scalars['String']['input']>;
 };
 
 

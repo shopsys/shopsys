@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
@@ -75,12 +76,31 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
         $search = $argument['search'] ?? '';
         $limit = $argument['first'] ?? 0;
         $after = $argument['after'] ?? null;
+        $requestingPage = $argument['requestingPage'] ?? '';
+        $userIdentifier = $argument['userIdentifier'] ?? '';
+
+        if (filter_var($requestingPage, FILTER_VALIDATE_URL) === false) {
+            throw new InvalidArgumentUserError('Provided argument \'requestingPage\' is not in correct URL format.');
+        }
+
+        if (!preg_match(PersooClient::PERSOO_USER_IDENTIFIER_PATTERN, $userIdentifier)) {
+            throw new InvalidArgumentUserError(sprintf('Provided argument \'userIdentifier\' does not follow required pattern \'%s\'', PersooClient::PERSOO_USER_IDENTIFIER_PATTERN));
+        }
 
         $connectionBuilder = new ConnectionBuilder();
         $offset = $connectionBuilder->getOffsetWithDefault($after, -1) + 1;
         $page = $this->getPageFromOffsetAndLimit($offset, $limit);
         $persooFilter = $this->productFilterToPersooFilterMapper->mapForSearch($productFilterData, $this->domain);
-        $result = $this->client->getData($search, PersooClient::PERSOO_INDEX_PRODUCTS, PersooClient::PERSOO_ACTION_SEARCH, $page, $limit, $persooFilter);
+        $result = $this->client->getData(
+            $search,
+            PersooClient::PERSOO_INDEX_PRODUCTS,
+            PersooClient::PERSOO_ACTION_SEARCH,
+            $page,
+            $limit,
+            $persooFilter,
+            $userIdentifier,
+            $requestingPage,
+        );
 
         $filterQuery = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($result->getIds(), $limit);
         $sortedProducts = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery)->getHits();
