@@ -52,7 +52,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 data-testid={getDataTestId(product.catalogNumber)}
                 ref={ref}
                 className={twMergeCustom(
-                    'relative flex flex-col justify-between gap-3 border-b border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
+                    'relative flex select-none flex-col justify-between gap-3 border-b border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
                     className,
                 )}
             >
@@ -68,7 +68,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
 
                 <ExtendedNextLink
-                    className="flex h-full flex-col gap-3 no-underline hover:no-underline"
+                    className="flex h-full select-none flex-col gap-3 no-underline hover:no-underline"
+                    draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
                     onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url)}
@@ -77,6 +78,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         <Image
                             alt={product.mainImage?.name || product.fullName}
                             className="max-h-full object-contain"
+                            draggable={false}
                             height={250}
                             src={product.mainImage?.url}
                             width={250}
