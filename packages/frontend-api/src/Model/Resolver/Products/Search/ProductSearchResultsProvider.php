@@ -38,7 +38,7 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
         Argument $argument,
         ProductFilterData $productFilterData,
     ): ProductConnection {
-        $search = $argument['search'] ?? '';
+        $search = $argument['searchInput']['search'] ?? '';
 
         return $this->productConnectionFactory->createConnectionForAll(
             function ($offset, $limit) use ($search, $productFilterData) {

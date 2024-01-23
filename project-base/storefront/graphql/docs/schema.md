@@ -124,6 +124,7 @@
     * [RegistrationDataInput](#registrationdatainput)
     * [RemoveFromCartInput](#removefromcartinput)
     * [RemovePromoCodeFromCartInput](#removepromocodefromcartinput)
+    * [SearchInput](#searchinput)
     * [TransportInput](#transportinput)
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
@@ -300,8 +301,8 @@ Returns list of searched articles and blog articles
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" align="right" valign="top">searchInput</td>
+<td valign="top"><a href="#searchinput">SearchInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -423,8 +424,8 @@ Returns list of searched brands
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" align="right" valign="top">searchInput</td>
+<td valign="top"><a href="#searchinput">SearchInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -480,8 +481,8 @@ Returns list of searched categories that can be paginated using `first`, `last`,
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" align="right" valign="top">searchInput</td>
+<td valign="top"><a href="#searchinput">SearchInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -952,11 +953,6 @@ Returns list of searched products that can be paginated using `first`, `last`, `
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">isAutocomplete</td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">last</td>
 <td valign="top"><a href="#int">Int</a></td>
 <td></td>
@@ -968,7 +964,12 @@ Returns list of searched products that can be paginated using `first`, `last`, `
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">searchInput</td>
+<td valign="top"><a href="#searchinput">SearchInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -9798,6 +9799,41 @@ Cart identifier or null if customer is logged in
 <td>
 
 Promo code to be removed
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### SearchInput
+
+Represents search input object
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>isAutocomplete</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>search</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>userIdentifier</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Unique identifier of the user who initiated the search in format UUID version 4 (^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$/)
 
 </td>
 </tr>

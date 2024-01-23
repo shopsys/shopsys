@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Category\Search;
 
+use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
@@ -23,9 +25,9 @@ class CategoriesSearchQuery extends AbstractQuery
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
+     * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
      */
-    public function categoriesSearchQuery(Argument $argument)
+    public function categoriesSearchQuery(Argument $argument): Promise|ConnectionInterface
     {
         PageSizeValidator::checkMaxPageSize($argument);
         $this->setDefaultFirstOffsetIfNecessary($argument);

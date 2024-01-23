@@ -7,8 +7,8 @@ QueryDecorator:
                 type: "[Brand!]!"
                 resolve: "@=query('brandSearchQuery', args)"
                 args:
-                    search:
-                        type: "String!"
+                    searchInput:
+                        type: "SearchInput!"
                 description: "Returns list of searched brands"
             categories:
                 type: '[Category!]!'
@@ -19,8 +19,8 @@ QueryDecorator:
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('categoriesSearchQuery', args)"
                 args:
-                    search:
-                        type: "String!"
+                    searchInput:
+                        type: "SearchInput!"
                 description: "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"
             products:
                 type: "ProductConnection"
@@ -48,10 +48,8 @@ QueryDecorator:
                 resolve: "@=query('productsSearchQuery', args)"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 args:
-                    search:
-                        type: "String!"
-                    isAutocomplete:
-                        type: "Boolean!"
+                    searchInput:
+                        type: "SearchInput!"
                 description: "Returns list of searched products that can be paginated using `first`, `last`, `before` and `after` keywords"
             RegularProduct:
                 type: 'RegularProduct'
@@ -125,8 +123,8 @@ QueryDecorator:
                 type: "[ArticleInterface!]!"
                 resolve: "@=query('articlesSearchQuery', args)"
                 args:
-                    search:
-                        type: "String!"
+                    searchInput:
+                        type: "SearchInput!"
                 description: "Returns list of searched articles and blog articles"
             article:
                 type: 'NotBlogArticleInterface'

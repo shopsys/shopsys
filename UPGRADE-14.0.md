@@ -1764,6 +1764,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   change any call to `logException` to only pass one argument, which should be a complete error with all of its context
 
 -   refactored cypress tests
+
     -   rewrote cypress tests to typescript for better static control and easier working with the code, so in you should do the same with your cypress files
         -   make sure to change the file extensions and add type annotiations
         -   make sure to include any extra files in your `tsconfig.json`

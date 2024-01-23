@@ -29,7 +29,7 @@ class ArticlesSearchResultsProvider implements ArticlesSearchResultsProviderInte
         Argument $argument,
     ): Promise|array {
         return $this->combinedArticleElasticsearchFacade->getArticlesBySearchText(
-            $argument['search'] ?? '',
+            $argument['searchInput']['search'] ?? '',
             $this->domain->getId(),
             ArticlesSearchQuery::ARTICLE_SEARCH_LIMIT,
         );

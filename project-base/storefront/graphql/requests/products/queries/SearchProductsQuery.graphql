@@ -6,7 +6,7 @@ query SearchProductsQuery(
     $pageSize: Int
     $isAutocomplete: Boolean!
 ) {
-    productsSearch(after: $endCursor, orderingMode: $orderingMode, filter: $filter, search: $search, first: $pageSize, isAutocomplete: $isAutocomplete) {
+    productsSearch(after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize, searchInput: { search: $search, isAutocomplete: $isAutocomplete }) {
         orderingMode
         defaultOrderingMode
         totalCount

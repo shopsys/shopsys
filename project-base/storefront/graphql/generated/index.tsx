@@ -2218,7 +2218,7 @@ export type QueryArticlesArgsApi = {
 
 
 export type QueryArticlesSearchArgsApi = {
-  search: Scalars['String']['input'];
+  searchInput: SearchInputApi;
 };
 
 
@@ -2250,7 +2250,7 @@ export type QueryBrandArgsApi = {
 
 
 export type QueryBrandSearchArgsApi = {
-  search: Scalars['String']['input'];
+  searchInput: SearchInputApi;
 };
 
 
@@ -2264,7 +2264,7 @@ export type QueryCategoriesSearchArgsApi = {
   before: InputMaybe<Scalars['String']['input']>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
-  search: Scalars['String']['input'];
+  searchInput: SearchInputApi;
 };
 
 
@@ -2366,10 +2366,10 @@ export type QueryProductsSearchArgsApi = {
   before: InputMaybe<Scalars['String']['input']>;
   filter: InputMaybe<ProductFilterApi>;
   first: InputMaybe<Scalars['Int']['input']>;
-  isAutocomplete: Scalars['Boolean']['input'];
   last: InputMaybe<Scalars['Int']['input']>;
   orderingMode: InputMaybe<ProductOrderingModeEnumApi>;
-  search: Scalars['String']['input'];
+  search: InputMaybe<Scalars['String']['input']>;
+  searchInput: SearchInputApi;
 };
 
 
@@ -2584,6 +2584,14 @@ export type RemovePromoCodeFromCartInputApi = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Promo code to be removed */
   promoCode: Scalars['String']['input'];
+};
+
+/** Represents search input object */
+export type SearchInputApi = {
+  isAutocomplete: Scalars['Boolean']['input'];
+  search: Scalars['String']['input'];
+  /** Unique identifier of the user who initiated the search in format UUID version 4 (^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$/) */
+  userIdentifier: Scalars['Uuid']['input'];
 };
 
 /** Represents SEO settings for specific page */
@@ -3600,6 +3608,7 @@ export type SearchProductsQueryVariablesApi = Exact<{
   search: Scalars['String']['input'];
   pageSize: InputMaybe<Scalars['Int']['input']>;
   isAutocomplete: Scalars['Boolean']['input'];
+  userIdentifier: Scalars['Uuid']['input'];
 }>;
 
 
@@ -3622,6 +3631,7 @@ export type AutocompleteSearchQueryVariablesApi = Exact<{
   maxProductCount: InputMaybe<Scalars['Int']['input']>;
   maxCategoryCount: InputMaybe<Scalars['Int']['input']>;
   isAutocomplete: Scalars['Boolean']['input'];
+  userIdentifier: Scalars['Uuid']['input'];
 }>;
 
 
@@ -3633,6 +3643,7 @@ export type SearchQueryVariablesApi = Exact<{
   filter: InputMaybe<ProductFilterApi>;
   pageSize: InputMaybe<Scalars['Int']['input']>;
   isAutocomplete: Scalars['Boolean']['input'];
+  userIdentifier: Scalars['Uuid']['input'];
 }>;
 
 
@@ -6048,14 +6059,13 @@ export function usePromotedProductsQueryApi(options?: Omit<Urql.UseQueryArgs<Pro
   return Urql.useQuery<PromotedProductsQueryApi, PromotedProductsQueryVariablesApi>({ query: PromotedProductsQueryDocumentApi, ...options });
 };
 export const SearchProductsQueryDocumentApi = gql`
-    query SearchProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $search: String!, $pageSize: Int, $isAutocomplete: Boolean!) {
+    query SearchProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $search: String!, $pageSize: Int, $isAutocomplete: Boolean!, $userIdentifier: Uuid!) {
   productsSearch(
     after: $endCursor
     orderingMode: $orderingMode
     filter: $filter
-    search: $search
     first: $pageSize
-    isAutocomplete: $isAutocomplete
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
   ) {
     orderingMode
     defaultOrderingMode
@@ -6100,20 +6110,26 @@ export function useRobotsTxtQueryApi(options?: Omit<Urql.UseQueryArgs<RobotsTxtQ
   return Urql.useQuery<RobotsTxtQueryApi, RobotsTxtQueryVariablesApi>({ query: RobotsTxtQueryDocumentApi, ...options });
 };
 export const AutocompleteSearchQueryDocumentApi = gql`
-    query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int, $isAutocomplete: Boolean!) {
-  articlesSearch(search: $search) {
+    query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int, $isAutocomplete: Boolean!, $userIdentifier: Uuid!) {
+  articlesSearch(
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
+  ) {
     ...SimpleArticleInterfaceFragment
   }
-  brandSearch(search: $search) {
+  brandSearch(
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
+  ) {
     ...SimpleBrandFragment
   }
-  categoriesSearch(search: $search, first: $maxCategoryCount) {
+  categoriesSearch(
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
+    first: $maxCategoryCount
+  ) {
     ...SimpleCategoryConnectionFragment
   }
   productsSearch: productsSearch(
-    search: $search
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
     first: $maxProductCount
-    isAutocomplete: $isAutocomplete
   ) {
     orderingMode
     defaultOrderingMode
@@ -6134,22 +6150,27 @@ export function useAutocompleteSearchQueryApi(options: Omit<Urql.UseQueryArgs<Au
   return Urql.useQuery<AutocompleteSearchQueryApi, AutocompleteSearchQueryVariablesApi>({ query: AutocompleteSearchQueryDocumentApi, ...options });
 };
 export const SearchQueryDocumentApi = gql`
-    query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $pageSize: Int, $isAutocomplete: Boolean!) {
-  articlesSearch(search: $search) {
+    query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $pageSize: Int, $isAutocomplete: Boolean!, $userIdentifier: Uuid!) {
+  articlesSearch(
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
+  ) {
     ...SimpleArticleInterfaceFragment
   }
-  brandSearch(search: $search) {
+  brandSearch(
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
+  ) {
     ...ListedBrandFragment
   }
-  categoriesSearch(search: $search) {
+  categoriesSearch(
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
+  ) {
     ...ListedCategoryConnectionFragment
   }
   productsSearch: productsSearch(
-    search: $search
+    searchInput: {search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier}
     orderingMode: $orderingMode
     filter: $filter
     first: $pageSize
-    isAutocomplete: $isAutocomplete
   ) {
     ...ListedProductConnectionPreviewFragment
   }
