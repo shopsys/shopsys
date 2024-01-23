@@ -70,6 +70,7 @@
         "@graphql-codegen/introspection": "~4.0.0",
         "@graphql-codegen/typescript-operations": "~4.0.1",
         "@graphql-codegen/typescript-urql": "~4.0.0",
+        "@mswjs/interceptors": "0.19.0",
         "@testing-library/react": "~14.2.0",
         "@trivago/prettier-plugin-sort-imports": "~4.3.0",
         "@types/crypto-js": "~4.2.2",
