@@ -90,7 +90,7 @@ MutationDecorator:
                         type: "Uuid!"
                 resolve: "@=mutation('payOrderMutation', args)"
             UpdatePaymentStatus:
-                type: "PaymentStatus!"
+                type: "Order!"
                 description: "check payment status of order after callback from payment service"
                 args:
                     orderUuid:

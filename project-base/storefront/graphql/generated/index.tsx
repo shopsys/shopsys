@@ -1123,7 +1123,7 @@ export type MutationApi = {
   /** Set default delivery address by Uuid */
   SetDefaultDeliveryAddress: CustomerUserApi;
   /** check payment status of order after callback from payment service */
-  UpdatePaymentStatus: PaymentStatusApi;
+  UpdatePaymentStatus: OrderApi;
 };
 
 
@@ -1753,16 +1753,6 @@ export type PaymentSetupCreationDataApi = {
   __typename?: 'PaymentSetupCreationData';
   /** Identifiers of GoPay payment method */
   goPayCreatePaymentSetup: Maybe<GoPayCreatePaymentSetupApi>;
-};
-
-export type PaymentStatusApi = {
-  __typename?: 'PaymentStatus';
-  /** Whether the order is already paid or not */
-  isPaid: Scalars['Boolean']['output'];
-  /** Type of payment */
-  paymentType: Scalars['String']['output'];
-  /** Count of already processed transactions */
-  transactionCount: Scalars['Int']['output'];
 };
 
 export type PersonalDataApi = {
@@ -3346,7 +3336,7 @@ export type UpdatePaymentStatusMutationVariablesApi = Exact<{
 }>;
 
 
-export type UpdatePaymentStatusMutationApi = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'PaymentStatus', isPaid: boolean, transactionCount: number, paymentType: string } };
+export type UpdatePaymentStatusMutationApi = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'Order', isPaid: boolean, paymentTransactionsCount: number, payment: { __typename?: 'Payment', type: string } } };
 
 export type LastOrderQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
@@ -5670,8 +5660,10 @@ export const UpdatePaymentStatusMutationDocumentApi = gql`
     orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash
   ) {
     isPaid
-    transactionCount
-    paymentType
+    paymentTransactionsCount
+    payment {
+      type
+    }
   }
 }
     `;

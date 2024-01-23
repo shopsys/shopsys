@@ -948,7 +948,7 @@ type Mutation {
     deliveryAddressUuid: Uuid!
   ): CustomerUser!
   "check payment status of order after callback from payment service"
-  UpdatePaymentStatus(orderPaymentStatusPageValidityHash: String, orderUuid: Uuid!): PaymentStatus!
+  UpdatePaymentStatus(orderPaymentStatusPageValidityHash: String, orderUuid: Uuid!): Order!
 }
 
 "Represents a navigation structure item"
@@ -1394,15 +1394,6 @@ input PaymentInput {
 type PaymentSetupCreationData {
   "Identifiers of GoPay payment method"
   goPayCreatePaymentSetup: GoPayCreatePaymentSetup
-}
-
-type PaymentStatus {
-  "Whether the order is already paid or not"
-  isPaid: Boolean!
-  "Type of payment"
-  paymentType: String!
-  "Count of already processed transactions"
-  transactionCount: Int!
 }
 
 type PersonalData {

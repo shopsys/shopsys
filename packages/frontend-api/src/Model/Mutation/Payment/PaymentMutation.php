@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Payment;
 
 use GraphQL\Error\Error;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentSetupCreationData;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
@@ -55,9 +56,9 @@ class PaymentMutation extends AbstractMutation
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return array{isPaid: bool, transactionCount: int, paymentType: string}
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function updatePaymentStatusMutation(Argument $argument): array
+    public function updatePaymentStatusMutation(Argument $argument): Order
     {
         try {
             $uuid = $argument['orderUuid'];
@@ -70,11 +71,7 @@ class PaymentMutation extends AbstractMutation
                 $this->orderFacade->setOrderPaymentStatusPageValidFromNow($order);
             }
 
-            return [
-                'isPaid' => $order->isPaid(),
-                'transactionCount' => $order->getPaymentTransactionsCount(),
-                'paymentType' => $order->getPayment()->getType(),
-            ];
+            return $order;
         } catch (Throwable $exception) {
             throw new Error($exception->getMessage(), null, null, [], null, $exception);
         }

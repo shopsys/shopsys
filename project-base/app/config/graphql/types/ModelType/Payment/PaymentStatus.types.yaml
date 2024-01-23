@@ -1,4 +1,0 @@
-PaymentStatus:
-    type: object
-    inherits:
-        - 'PaymentStatusDecorator'
