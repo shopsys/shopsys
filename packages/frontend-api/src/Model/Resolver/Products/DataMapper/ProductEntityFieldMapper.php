@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 use Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade;
 
@@ -21,6 +22,7 @@ class ProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -29,6 +31,7 @@ class ProductEntityFieldMapper
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        protected readonly HreflangLinksFacade $hreflangLinksFacade,
     ) {
     }
 
@@ -156,5 +159,14 @@ class ProductEntityFieldMapper
     public function getOrderingPriority(Product $product): int
     {
         return $product->getOrderingPriority($this->domain->getId());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
+     */
+    public function getHreflangLinks(Product $product): array
+    {
+        return $this->hreflangLinksFacade->getForProduct($product, $this->domain->getId());
     }
 }

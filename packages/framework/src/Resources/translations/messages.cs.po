@@ -91,11 +91,17 @@ msgstr "Přidat stát"
 msgid "Add item"
 msgstr "Přidat položku"
 
+msgid "Add language combination"
+msgstr "Přidat kombinaci jazyků"
+
 msgid "Add product"
 msgstr "Přidat zboží"
 
 msgid "Add requirement"
 msgstr "Přidat podmínku"
+
+msgid "Add some alternate language combinations"
+msgstr "Přidejte nějaké kombinace alternativních jazyků"
 
 msgid "Add some mail whitelist patterns"
 msgstr "Přidejte nějaké předpisy pro e-mailový whitelist"
@@ -174,6 +180,15 @@ msgstr "Pokud je zaškrtnuto, všechny ceny je třeba nastavovat ručně, jinak 
 
 msgid "All search results"
 msgstr "Všechny výsledky hledání"
+
+msgid "Alternate language domains"
+msgstr "Domény alternativních jazyků"
+
+msgid "Alternate language settings"
+msgstr "Nastavení alternativních jazyků"
+
+msgid "Alternate language settings modified"
+msgstr "Nastavení alternativních jazyků upraveno"
 
 msgid "Amount"
 msgstr "Množství"
@@ -370,6 +385,9 @@ msgstr "Vypočtená cena bez DPH"
 msgid "Calculated price including VAT"
 msgstr "Vypočtená cena vč. DPH"
 
+msgid "Canonical URL"
+msgstr "Kanonická URL"
+
 msgid "Catalog number"
 msgstr "Katalogové číslo"
 
@@ -519,6 +537,9 @@ msgstr "Kód země v ISO 3166-1 alpha-2"
 
 msgid "Create"
 msgstr "Vytvořit"
+
+msgid "Create SEO page"
+msgstr "Vytvořit SEO stránku"
 
 msgid "Create VAT rate"
 msgstr "Vytvořit sazbu DPH"
@@ -841,6 +862,9 @@ msgstr "Opravdu si přejete trvale odstranit stav objednávek \"%name%\"? Nikde 
 msgid "Do you really want to remove the order?"
 msgstr "Opravdu si přejete objednávku smazat?"
 
+msgid "Do you really want to remove this SEO page?"
+msgstr "Opravdu chcete smazat tuto SEO stránku?"
+
 msgid "Do you really want to remove this administrator?"
 msgstr "Opravdu chcete odstranit tohoto administrátora?"
 
@@ -963,6 +987,9 @@ msgstr "Změnit ikonu domény"
 
 msgid "Edit store"
 msgstr "Upravit prodejnu"
+
+msgid "Editing SEO page"
+msgstr "Editace SEO stránky"
 
 msgid "Editing administrator"
 msgstr "Editace administrátora"
@@ -1264,6 +1291,9 @@ msgstr "Pro odstranění sazby \"%name% musíte zvolit, která se má všude, kd
 msgid "For deleting unit \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which unit you want to set instead?"
 msgstr "Pro odstranění jednotky \"%name% musíte zvolit, která se má všude, kde je aktuálně používaná nastavit. Jakou jednotku místo ní chcete nastavit?"
 
+msgid "For more information about hreflang tags, see the <a href=\"https://developers.google.com/search/docs/specialty/international/localized-versions\">Google documentation</a>."
+msgstr "Další informace o hreflang naleznete v <a href=\"https://developers.google.com/search/docs/specialty/international/localized-versions\">dokumentaci Google</a>."
+
 msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
 msgstr "Pro odstranění cenové skupiny \"%name%\" musíte zvolit, která se má všude, kde je aktuálně používaná, nastavit. Jakou cenovou skupinu místo ní chcete nastavit?"
 
@@ -1359,6 +1389,9 @@ msgstr "Svátek / interní <strong>{{ name }}</strong> byl smazán"
 
 msgid "Holidays and internal days overview"
 msgstr "Přehled svátků a interních dní"
+
+msgid "Hreflang tags help search engines understand the language and regional targeting of your content. By selecting multiple domains, you ensure that hreflang tags will be properly rendered in sitemap and on the page. Search engines then properly index and display the correct versions of your content to users across different regions."
+msgstr "Hreflang tagy pomáhají vyhledávačům porozumět jazyku a regionálnímu zaměření obsahu. Výběrem více domén zajistíte, že se značky hreflang budou správně zobrazovat v sitemapě a na stránkách. Vyhledávače pak správně indexují a zobrazují správné verze vašeho obsahu uživatelům v různých regionech."
 
 msgid "I buy on company behalf"
 msgstr "Nakupuji na firmu"
@@ -1609,6 +1642,9 @@ msgstr "Název slouží pouze pro interní použití v rámci administrace"
 msgid "Name serves only for internal use within the administration."
 msgstr "Název slouží pouze pro interní použití v rámci administrace."
 
+msgid "New SEO page"
+msgstr "Nová SEO stránka"
+
 msgid "New administrator"
 msgstr "Nový administrátor"
 
@@ -1680,6 +1716,9 @@ msgstr "Nový sklad"
 
 msgid "No"
 msgstr "Ne"
+
+msgid "No SEO pages found."
+msgstr "Nebyly nalezeny žádné SEO stránky."
 
 msgid "No URLs so far."
 msgstr "Doposud nejsou žádné url adresy."
@@ -1801,8 +1840,17 @@ msgstr "Ok"
 msgid "On each run (usually every 5 minutes)"
 msgstr "Po každém spuštění (obvykle každých 5 minut)"
 
+msgid "One domain cannot be used in two groups"
+msgstr "Stejná doméne nemůže být použita ve dvou skupinách"
+
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"
+
+msgid "Open Graph description"
+msgstr "Open Graph popis"
+
+msgid "Open Graph title"
+msgstr "Open Graph titulek"
 
 msgid "Open in a new tab"
 msgstr "Otevřít v novém panelu"
@@ -1884,6 +1932,12 @@ msgstr "Vyprodáno"
 
 msgid "Page <strong>{{ name }}</strong> deleted"
 msgstr "Stránka <strong>{{ name }}</strong> byla smazána"
+
+msgid "Page URL"
+msgstr "URL stránky"
+
+msgid "Page name"
+msgstr "Název stránky"
 
 msgid "Page title"
 msgstr "Titulek stránky"
@@ -2149,11 +2203,26 @@ msgstr "Probíhá"
 msgid "SEO"
 msgstr "SEO"
 
+msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "SEO stránka <strong><a href=\\\"{{ url }}\\\">{{ name }}</a></strong> byla vytvořena"
+
+msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "SEO stránka <strong><a href=\\\"{{ url }}\\\">{{ name }}</a></strong> byla upravena"
+
+msgid "SEO Page <strong>{{ name }}</strong> removed"
+msgstr "SEO stránka <strong>{{ name }}</strong> byla smazána"
+
 msgid "SEO attributes settings"
 msgstr "Nastavení SEO atributů"
 
 msgid "SEO attributes settings modified"
 msgstr "Natavení SEO atributů bylo upraveno"
+
+msgid "SEO page"
+msgstr "SEO stránka"
+
+msgid "SEO pages"
+msgstr "SEO stránky"
 
 msgid "Sales including/excluding VAT settings"
 msgstr "Nastavení prodeje s/bez DPH"
@@ -2220,6 +2289,12 @@ msgstr "Vyhledávání hledá v číslu objednávky, e-mailu registrovaného zá
 
 msgid "Select new value"
 msgstr "Zvolte novou hodnotu"
+
+msgid "Selected SEO page cannot be deleted"
+msgstr "Vybraná SEO stránka nemůže být smazána"
+
+msgid "Selected SEO page does not exist"
+msgstr "Vybraná SEO stránka neexistuje"
 
 msgid "Selected VAT doesn't exist"
 msgstr "Zvolené DPH neexistuje"
@@ -2506,6 +2581,9 @@ msgstr "Během odhlašování došlo k chybě. Pokud se chcete opravdu odhlásit
 msgid "There was an error while saving. The order isn't saved."
 msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
 
+msgid "This SEO page cannot be deleted."
+msgstr "Tato SEO stránka nemůže být smazána."
+
 msgid "This currency can't be deleted, it is set as default or is saved with order."
 msgstr "Tuto měnu nelze smazat, je nastavena jako výchozí nebo je uložena u objednávky"
 
@@ -2568,6 +2646,9 @@ msgstr "Celková cena s DPH"
 
 msgid "Tracking ID"
 msgstr "Číslo pro měření"
+
+msgid "Two selected domains cannot have the same language"
+msgstr "Dvě vybrané domény nemohou mít stejný jazyk"
 
 msgid "Type"
 msgstr "Typ"

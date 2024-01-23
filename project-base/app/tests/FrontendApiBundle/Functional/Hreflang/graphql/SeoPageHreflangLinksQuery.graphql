@@ -1,0 +1,8 @@
+query SeoPageHreflangLinksQuery($urlSlug: String!) {
+    seoPage(pageSlug: $urlSlug) {
+        hreflangLinks{
+            hreflang
+            href
+        }
+    }
+}

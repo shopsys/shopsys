@@ -21,7 +21,7 @@ class SeoPageTest extends GraphQlTestCase
 
         $data = $this->getResponseDataForGraphQlType($response, 'seoPage');
 
-        /** @var \App\Model\SeoPage\SeoPage $seoPage */
+        /** @var \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage */
         $seoPage = $this->getReference($pageSlug);
 
         $domainId = $this->domain->getId();

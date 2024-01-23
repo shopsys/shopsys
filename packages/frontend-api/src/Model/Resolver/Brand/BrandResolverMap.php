@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Brand;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BrandResolverMap extends ResolverMap
@@ -14,10 +15,12 @@ class BrandResolverMap extends ResolverMap
     /**
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      */
     public function __construct(
         protected readonly UrlGeneratorInterface $urlGenerator,
         protected readonly Domain $domain,
+        protected readonly HreflangLinksFacade $hreflangLinksFacade,
     ) {
     }
 
@@ -43,6 +46,9 @@ class BrandResolverMap extends ResolverMap
                 },
                 'seoH1' => function (Brand $brand) {
                     return $brand->getSeoH1($this->domain->getId());
+                },
+                'hreflangLinks' => function (Brand $brand) {
+                    return $this->hreflangLinksFacade->getForBrand($brand, $this->domain->getId());
                 },
             ],
         ];

@@ -51,6 +51,7 @@ class ProductElasticsearchConverter
         $result['seo_h1'] = $product['seo_h1'] ?? null;
         $result['seo_title'] = $product['seo_title'] ?? null;
         $result['seo_meta_description'] = $product['seo_meta_description'] ?? null;
+        $result['hreflang_links'] = $product['hreflang_links'] ?? [];
 
         return $result;
     }

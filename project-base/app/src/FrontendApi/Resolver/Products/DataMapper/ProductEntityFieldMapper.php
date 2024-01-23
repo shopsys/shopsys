@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper as BaseProductEntityFieldMapper;
 
@@ -36,6 +37,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method string|null getSeoMetaDescription(\App\Model\Product\Product $product)
  * @method array{name: string, status: string} getAvailability(\App\Model\Product\Product $product)
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+ * @method \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[] getHreflangLinks(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -46,6 +48,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
@@ -63,6 +66,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         CurrentCustomerUser $currentCustomerUser,
         ParameterWithValuesFactory $parameterWithValuesFactory,
         ProductAvailabilityFacade $productAvailabilityFacade,
+        HreflangLinksFacade $hreflangLinksFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ProductRepository $productRepository,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -80,6 +84,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $currentCustomerUser,
             $parameterWithValuesFactory,
             $productAvailabilityFacade,
+            $hreflangLinksFacade,
         );
     }
 

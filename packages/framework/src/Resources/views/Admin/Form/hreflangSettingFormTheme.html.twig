@@ -1,0 +1,42 @@
+{% macro hreflangSettingRow(hreflangItem, index) %}
+    <tr class="js-hreflang-setting-item js-form-group table-form__row" data-index="{{ index }}">
+        <td class="table-form__cell table-form__cell--del-before">
+            <div class="input__wrap">
+                {{ form_widget(hreflangItem) }}
+                {{ form_errors(hreflangItem) }}
+            </div>
+        </td>
+        <td class="table-form__cell table-form__cell--actions">
+            <a href="#" class="js-hreflang-setting-item-remove table-form__action"><i class="svg svg-delete-thin in-icon"></i></a>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block hreflang_setting_collection_widget %}
+    {% import _self as self %}
+    <div id="{{ form.vars.id }}" class="js-form-group form-group">
+        <table class="table-form" id="hreflang-setting">
+            <tbody class="js-hreflang-setting" data-prototype="{{ self.hreflangSettingRow(form.vars.prototype)|escape }}" data-index="{{ form|length }}">
+
+            {% for key, hreflangItem in form %}
+                {{ self.hreflangSettingRow(hreflangItem, key) }}
+            {% else %}
+                {% do form.setRendered %}
+            {% endfor %}
+
+            <tr class="js-hreflang-setting-empty-item table-form__row">
+                <td class="table-form__cell" colspan="4">{{ 'Add some alternate language combinations'|trans }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="form-line form-line--no-top-border">
+            <div class="form-line__line form-line__line--no-space">
+                <a href="#" class="js-hreflang-setting-item-add btn btn--plus">
+                    <i class="btn__icon">+</i>
+                    {{ 'Add language combination'|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

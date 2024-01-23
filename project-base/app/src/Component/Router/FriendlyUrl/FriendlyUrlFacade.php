@@ -8,9 +8,9 @@ use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl as BaseFriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade as BaseFriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 
 /**
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
  * @method string getAbsoluteUrlByFriendlyUrl(\App\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl)
  * @method renewMainFriendlyUrlSlugCache(\App\Component\Router\FriendlyUrl\FriendlyUrl $mainFriendlyUrl)
  * @method \App\Component\Router\FriendlyUrl\FriendlyUrl getMainFriendlyUrl(int $domainId, string $routeName, int $entityId)
+ * @method \App\Component\Router\FriendlyUrl\FriendlyUrl|null findByDomainIdAndSlug(int $domainId, string $slug)
  */
 class FriendlyUrlFacade extends BaseFriendlyUrlFacade
 {
@@ -55,16 +56,6 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
 
         $this->em->remove($friendlyUrl);
         $this->em->flush();
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $slug
-     * @return \App\Component\Router\FriendlyUrl\FriendlyUrl|null
-     */
-    public function findByDomainIdAndSlug(int $domainId, string $slug): ?BaseFriendlyUrl
-    {
-        return $this->friendlyUrlRepository->findByDomainIdAndSlug($domainId, $slug);
     }
 
     /**
@@ -131,6 +122,10 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
     {
         $mainFriendlyUrlSlug = $this->getMainFriendlyUrlSlug($domainId, $routeName, $entityId);
         $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+        if ($mainFriendlyUrlSlug === SeoPage::SEO_PAGE_HOMEPAGE_SLUG) {
+            return $domainConfig->getUrl();
+        }
 
         return $domainConfig->getUrl() . '/' . $mainFriendlyUrlSlug;
     }

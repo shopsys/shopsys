@@ -418,6 +418,11 @@ class SideMenuBuilder
         $seoMenu = $menu->addChild('seo', ['label' => t('SEO')]);
         $seoMenu->addChild('seo', ['route' => 'admin_seo_index', 'label' => t('SEO')]);
         $seoMenu->addChild('robots', ['route' => 'admin_seo_robots', 'label' => t('Robots.txt')]);
+        $seoMenu->addChild('hreflang', ['route' => 'admin_seo_hreflang', 'label' => t('Alternate language settings')]);
+
+        $seoPageMenu = $seoMenu->addChild('seoPageList', ['route' => 'admin_seopage_list', 'label' => t('SEO pages')]);
+        $seoPageMenu->addChild('seoPageNew', ['route' => 'admin_seopage_new', 'label' => t('New SEO page'), 'display' => false]);
+        $seoPageMenu->addChild('seoPageEdit', ['route' => 'admin_seopage_edit', 'label' => t('Editing SEO page'), 'display' => false]);
 
         $contactFormSettingsMenu = $menu->addChild('contact_form_settings', ['label' => t('Contact form')]);
         $contactFormSettingsMenu->addChild(

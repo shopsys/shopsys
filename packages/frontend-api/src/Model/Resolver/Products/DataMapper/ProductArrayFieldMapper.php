@@ -206,4 +206,13 @@ class ProductArrayFieldMapper
     {
         return $this->productElasticsearchProvider->getVisibleProductArrayById($data['main_variant_id']);
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function getHreflangLinks(array $data): array
+    {
+        return $data['hreflang_links'];
+    }
 }

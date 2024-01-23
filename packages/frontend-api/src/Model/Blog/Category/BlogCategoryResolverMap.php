@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 class BlogCategoryResolverMap extends ResolverMap
 {
@@ -18,12 +19,14 @@ class BlogCategoryResolverMap extends ResolverMap
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade,
+        protected readonly HreflangLinksFacade $hreflangLinksFacade,
     ) {
     }
 
@@ -68,6 +71,9 @@ class BlogCategoryResolverMap extends ResolverMap
                 },
                 'articlesTotalCount' => function (BlogCategory $blogCategory) {
                     return $this->blogArticleElasticsearchFacade->getByBlogCategoryTotalCount($blogCategory);
+                },
+                'hreflangLinks' => function (BlogCategory $blogCategory) {
+                    return $this->hreflangLinksFacade->getForBlogCategory($blogCategory, $this->domain->getId());
                 },
             ],
         ];

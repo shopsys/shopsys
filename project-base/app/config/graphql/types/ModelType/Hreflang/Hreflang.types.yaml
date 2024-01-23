@@ -1,0 +1,4 @@
+Hreflang:
+    type: interface
+    inherits:
+        - 'HreflangDecorator'

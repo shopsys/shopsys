@@ -238,7 +238,7 @@ export enum AvailabilityStatusEnumApi {
   OutOfStockApi = 'OutOfStock'
 }
 
-export type BlogArticleApi = ArticleInterfaceApi & BreadcrumbApi & SlugApi & {
+export type BlogArticleApi = ArticleInterfaceApi & BreadcrumbApi & HreflangApi & SlugApi & {
   __typename?: 'BlogArticle';
   /** The list of the blog article blog categories */
   blogCategories: Array<BlogCategoryApi>;
@@ -246,6 +246,8 @@ export type BlogArticleApi = ArticleInterfaceApi & BreadcrumbApi & SlugApi & {
   breadcrumb: Array<LinkApi>;
   /** Date and time of the blog article creation */
   createdAt: Scalars['DateTime']['output'];
+  /** Alternate links for hreflang meta tags */
+  hreflangLinks: Array<HreflangLinkApi>;
   /** ID of category */
   id: Scalars['Int']['output'];
   /** Blog article images */
@@ -306,7 +308,7 @@ export type BlogArticleEdgeApi = {
   node: Maybe<BlogArticleApi>;
 };
 
-export type BlogCategoryApi = BreadcrumbApi & SlugApi & {
+export type BlogCategoryApi = BreadcrumbApi & HreflangApi & SlugApi & {
   __typename?: 'BlogCategory';
   /** Total count of blog articles in this category */
   articlesTotalCount: Scalars['Int']['output'];
@@ -320,6 +322,8 @@ export type BlogCategoryApi = BreadcrumbApi & SlugApi & {
   children: Array<BlogCategoryApi>;
   /** The blog category description */
   description: Maybe<Scalars['String']['output']>;
+  /** Alternate links for hreflang meta tags */
+  hreflangLinks: Array<HreflangLinkApi>;
   /** The blog category absolute URL */
   link: Scalars['String']['output'];
   /** The blog category name */
@@ -348,12 +352,14 @@ export type BlogCategoryBlogArticlesArgsApi = {
 };
 
 /** Represents a brand */
-export type BrandApi = BreadcrumbApi & ProductListableApi & SlugApi & {
+export type BrandApi = BreadcrumbApi & HreflangApi & ProductListableApi & SlugApi & {
   __typename?: 'Brand';
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<LinkApi>;
   /** Brand description */
   description: Maybe<Scalars['String']['output']>;
+  /** Alternate links for hreflang meta tags */
+  hreflangLinks: Array<HreflangLinkApi>;
   /** ID of category */
   id: Scalars['Int']['output'];
   /** Brand images */
@@ -542,6 +548,8 @@ export type CategoryApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   children: Array<CategoryApi>;
   /** Localized category description (domain dependent) */
   description: Maybe<Scalars['String']['output']>;
+  /** Alternate links for hreflang meta tags */
+  hreflangLinks: Array<HreflangLinkApi>;
   /** ID of category */
   id: Scalars['Int']['output'];
   /** Category images */
@@ -908,6 +916,20 @@ export type GoPayPaymentMethodApi = {
   paymentGroup: Scalars['String']['output'];
 };
 
+/** Represents entity able to return alternate links for hreflang meta tags */
+export type HreflangApi = {
+  /** Alternate links for hreflang meta tags */
+  hreflangLinks: Array<HreflangLinkApi>;
+};
+
+export type HreflangLinkApi = {
+  __typename?: 'HreflangLink';
+  /** URL for hreflang meta tag */
+  href: Scalars['String']['output'];
+  /** Language code for hreflang meta tag */
+  hreflang: Scalars['String']['output'];
+};
+
 /** Represents an image */
 export type ImageApi = {
   __typename?: 'Image';
@@ -955,7 +977,7 @@ export type LoginResultApi = {
 };
 
 /** Represents a product */
-export type MainVariantApi = BreadcrumbApi & ProductApi & SlugApi & {
+export type MainVariantApi = BreadcrumbApi & HreflangApi & ProductApi & SlugApi & {
   __typename?: 'MainVariant';
   accessories: Array<ProductApi>;
   availability: AvailabilityApi;
@@ -976,6 +998,8 @@ export type MainVariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** Alternate links for hreflang meta tags */
+  hreflangLinks: Array<HreflangLinkApi>;
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */
@@ -1816,6 +1840,8 @@ export type ProductApi = {
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** Alternate links for hreflang meta tags */
+  hreflangLinks: Array<HreflangLinkApi>;
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */
@@ -2422,7 +2448,7 @@ export type RegularCustomerUserApi = CustomerUserApi & {
 };
 
 /** Represents a product */
-export type RegularProductApi = BreadcrumbApi & ProductApi & SlugApi & {
+export type RegularProductApi = BreadcrumbApi & HreflangApi & ProductApi & SlugApi & {
   __typename?: 'RegularProduct';
   accessories: Array<ProductApi>;
   availability: AvailabilityApi;
@@ -2443,6 +2469,8 @@ export type RegularProductApi = BreadcrumbApi & ProductApi & SlugApi & {
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** Alternate links for hreflang meta tags */
+  hreflangLinks: Array<HreflangLinkApi>;
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */
@@ -2517,10 +2545,12 @@ export type RemovePromoCodeFromCartInputApi = {
 };
 
 /** Represents SEO settings for specific page */
-export type SeoPageApi = {
+export type SeoPageApi = HreflangApi & {
   __typename?: 'SeoPage';
   /** Page's canonical link */
   canonicalUrl: Maybe<Scalars['String']['output']>;
+  /** Alternate links for hreflang meta tags */
+  hreflangLinks: Array<HreflangLinkApi>;
   /** Description for meta tag */
   metaDescription: Maybe<Scalars['String']['output']>;
   /** Description for og:description meta tag */
@@ -2749,7 +2779,7 @@ export type UnitApi = {
 };
 
 /** Represents a product */
-export type VariantApi = BreadcrumbApi & ProductApi & SlugApi & {
+export type VariantApi = BreadcrumbApi & HreflangApi & ProductApi & SlugApi & {
   __typename?: 'Variant';
   accessories: Array<ProductApi>;
   availability: AvailabilityApi;
@@ -2770,6 +2800,8 @@ export type VariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
   fullName: Scalars['String']['output'];
+  /** Alternate links for hreflang meta tags */
+  hreflangLinks: Array<HreflangLinkApi>;
   /** Product id */
   id: Scalars['Int']['output'];
   /** Product images */
@@ -3658,6 +3690,15 @@ export type TransportsQueryApi = { __typename?: 'Query', transports: Array<{ __t
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"
+    ],
+    "Hreflang": [
+      "BlogArticle",
+      "BlogCategory",
+      "Brand",
+      "MainVariant",
+      "RegularProduct",
+      "SeoPage",
+      "Variant"
     ],
     "NotBlogArticleInterface": [
       "ArticleLink",

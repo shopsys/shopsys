@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\SeoPage\SeoPage;
-use App\Model\SeoPage\SeoPageData;
-use App\Model\SeoPage\SeoPageDataFactory;
-use App\Model\SeoPage\SeoPageFacade;
-use App\Model\SeoPage\SeoPageRepository;
-use App\Model\SeoPage\SeoPageSlugTransformer;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageRepository;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageSlugTransformer;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SeoPageDataFixture extends AbstractReferenceFixture
@@ -29,9 +29,9 @@ class SeoPageDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\SeoPage\SeoPageRepository $seoPageRepository
-     * @param \App\Model\SeoPage\SeoPageFacade $seoPageFacade
-     * @param \App\Model\SeoPage\SeoPageDataFactory $seoPageDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageRepository $seoPageRepository
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade $seoPageFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory $seoPageDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
@@ -80,7 +80,7 @@ class SeoPageDataFixture extends AbstractReferenceFixture
     /**
      * Predefined seo pages are created in database migration.
      *
-     * @see \App\Migrations\Version20230207100358
+     * @see \Shopsys\FrameworkBundle\Migrations\Version20240108154625
      */
     private function editPredefinedSeoPages(): void
     {
@@ -103,7 +103,7 @@ class SeoPageDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \App\Model\SeoPage\SeoPageData $seoPageData
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData $seoPageData
      * @param int $domainId
      * @param string $locale
      * @param int|null $seoPageId

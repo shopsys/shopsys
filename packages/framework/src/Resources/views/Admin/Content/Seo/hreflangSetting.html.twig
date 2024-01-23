@@ -1,0 +1,23 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Alternate language settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'Alternate language settings'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="in-message in-message--info margin-bottom-30">
+        <p>
+            {{ 'Hreflang tags help search engines understand the language and regional targeting of your content. By selecting multiple domains, you ensure that hreflang tags will be properly rendered in sitemap and on the page. Search engines then properly index and display the correct versions of your content to users across different regions.'|trans }}
+        </p>
+        <p>
+            {{ 'For more information about hreflang tags, see the <a href="https://developers.google.com/search/docs/specialty/international/localized-versions">Google documentation</a>.'|trans|raw }}
+        </p>
+    </div>
+
+    {{ form_start(form) }}
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            {{ form_widget(form.save, { label: 'Save changes'|trans}) }}
+        {% endblock %}
+    {% endembed %}
+    {{ form_end(form) }}
+{% endblock %}

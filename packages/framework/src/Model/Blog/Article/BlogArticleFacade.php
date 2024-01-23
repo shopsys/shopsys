@@ -129,6 +129,15 @@ class BlogArticleFacade
     }
 
     /**
+     * @param int $domainId
+     * @return int[]
+     */
+    public function getAllIdsByDomainId(int $domainId): array
+    {
+        return $this->blogArticleRepository->getAllIdsByDomainId($domainId);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
      * @param int $domainId
      * @param string $locale

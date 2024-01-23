@@ -10,6 +10,9 @@ msgstr "Adresa {{ url }} již existuje."
 msgid "Amount of money should be greater than or equal to zero."
 msgstr "Tato částka musí být větší nebo rovna nule."
 
+msgid "At least two domains must be selected"
+msgstr "Musí být vybrány alespoň dvě domény"
+
 msgid "Availability name cannot be longer than {{ limit }} characters"
 msgstr "Název dostupnosti nesmí být delší než {{ limit }} znaků"
 
@@ -303,6 +306,12 @@ msgstr "Zadejte prosím název reklamní plochy"
 
 msgid "Please enter order status name in all languages"
 msgstr "Vyplňte prosím název stavu objednávky ve všech jazycích"
+
+msgid "Please enter page URL"
+msgstr "Odkaz musí být platnou URL adresou"
+
+msgid "Please enter page name"
+msgstr "Prosím vyplňte název stránky"
 
 msgid "Please enter parameter name"
 msgstr "Vyplňte prosím název parametru"

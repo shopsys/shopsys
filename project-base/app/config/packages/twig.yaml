@@ -21,6 +21,7 @@ twig:
         - '@ShopsysFramework/Admin/Form/productCalculatedPrices.html.twig'
         - '@ShopsysFramework/Front/Form/deliveryAddressChoiceFields.html.twig'
         - '@ShopsysFramework/Admin/Form/deliveryAddressListFields.html.twig'
+        - '@ShopsysFramework/Admin/Form/hreflangSettingFormTheme.html.twig'
         - 'Admin/Form/blogCategoriesType.html.twig'
         - 'Admin/Form/blogCategoryCheckboxType.html.twig'
         - 'Admin/Form/productDetailFormTheme.html.twig'

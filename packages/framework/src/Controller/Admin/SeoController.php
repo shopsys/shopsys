@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Form\Admin\Seo\HreflangSettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoRobotsSettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Seo\SeoSettingFormType;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
@@ -88,6 +89,40 @@ class SeoController extends AdminBaseController
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Seo/robotsSetting.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/seo/hreflang/")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function hreflangAction(Request $request): Response
+    {
+        $hreflangData = [
+            HreflangSettingFormType::FIELD_HREFLANG_COLLECTION => $this->seoSettingFacade->getAllAlternativeDomains(),
+        ];
+
+        $form = $this->createForm(HreflangSettingFormType::class, $hreflangData)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $hreflangData = $form->getData();
+
+            $this->seoSettingFacade->setAllAlternativeDomains(
+                $hreflangData[HreflangSettingFormType::FIELD_HREFLANG_COLLECTION],
+            );
+
+            $this->addSuccessFlash(t('Alternate language settings modified'));
+
+            return $this->redirectToRoute('admin_seo_hreflang');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
+        }
+
+        return $this->render('@ShopsysFramework/Admin/Content/Seo/hreflangSetting.html.twig', [
             'form' => $form->createView(),
         ]);
     }

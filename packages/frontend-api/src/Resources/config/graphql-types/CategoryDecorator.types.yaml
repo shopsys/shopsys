@@ -44,3 +44,6 @@ CategoryDecorator:
             categoryHierarchy:
                 type: "[CategoryHierarchyItem!]!"
                 description: "All parent category names with their IDs and UUIDs"
+            hreflangLinks:
+                type: "[HreflangLink!]!"
+                description: "Alternate links for hreflang meta tags"

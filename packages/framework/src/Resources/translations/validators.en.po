@@ -10,6 +10,9 @@ msgstr ""
 msgid "Amount of money should be greater than or equal to zero."
 msgstr ""
 
+msgid "At least two domains must be selected"
+msgstr ""
+
 msgid "Availability name cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -302,6 +305,12 @@ msgid "Please enter name of advertisement area"
 msgstr ""
 
 msgid "Please enter order status name in all languages"
+msgstr ""
+
+msgid "Please enter page URL"
+msgstr ""
+
+msgid "Please enter page name"
 msgstr ""
 
 msgid "Please enter parameter name"

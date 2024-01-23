@@ -1,0 +1,9 @@
+HreflangDecorator:
+    type: interface
+    decorator: true
+    config:
+        description: "Represents entity able to return alternate links for hreflang meta tags"
+        fields:
+            hreflangLinks:
+                type: "[HreflangLink!]!"
+                description: "Alternate links for hreflang meta tags"

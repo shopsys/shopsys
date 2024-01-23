@@ -9,3 +9,4 @@ MainVariantDecorator:
                 type: '[Variant!]!'
         interfaces:
             - 'Product'
+            - 'Hreflang'

@@ -426,6 +426,17 @@
             "type": "keyword"
           }
         }
+      },
+      "hreflang_links": {
+        "type": "nested",
+        "properties": {
+          "hreflang": {
+            "type": "keyword"
+          },
+          "href":  {
+            "type": "keyword"
+          }
+        }
       }
     }
   }

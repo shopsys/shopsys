@@ -49,9 +49,6 @@ msgstr ""
 msgid "Last name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Link must be valid URL address"
-msgstr ""
-
 msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
 msgstr ""
 
@@ -152,12 +149,6 @@ msgid "Please enter only numbers and the + character"
 msgstr ""
 
 msgid "Please enter only numbers and the + sign"
-msgstr ""
-
-msgid "Please enter page URL"
-msgstr ""
-
-msgid "Please enter page name"
 msgstr ""
 
 msgid "Please enter password"

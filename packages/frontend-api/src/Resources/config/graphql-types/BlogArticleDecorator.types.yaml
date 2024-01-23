@@ -6,6 +6,7 @@ BlogArticleDecorator:
             - 'Breadcrumb'
             - 'Slug'
             - 'ArticleInterface'
+            - 'Hreflang'
         fields:
             id:
                 type: "Int!"
@@ -68,3 +69,6 @@ BlogArticleDecorator:
                     type:
                         type: "String"
                         defaultValue: null
+            hreflangLinks:
+                type: "[HreflangLink!]!"
+                description: "Alternate links for hreflang meta tags"

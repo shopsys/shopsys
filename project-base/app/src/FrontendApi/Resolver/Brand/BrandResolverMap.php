@@ -7,6 +7,7 @@ namespace App\FrontendApi\Resolver\Brand;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandResolverMap as BaseBrandResolverMap;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -15,14 +16,16 @@ class BrandResolverMap extends BaseBrandResolverMap
     /**
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
         Domain $domain,
-        private FriendlyUrlFacade $friendlyUrlFacade,
+        HreflangLinksFacade $hreflangLinksFacade,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
-        parent::__construct($urlGenerator, $domain);
+        parent::__construct($urlGenerator, $domain, $hreflangLinksFacade);
     }
 
     /**

@@ -247,9 +247,6 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-msgid "Canonical URL"
-msgstr ""
-
 msgid "Catalog number"
 msgstr ""
 
@@ -382,9 +379,6 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-msgid "Create SEO page"
-msgstr ""
-
 msgid "Create and download CSV"
 msgstr ""
 
@@ -475,9 +469,6 @@ msgstr ""
 msgid "Do you really want to mark this issue as resolved?"
 msgstr ""
 
-msgid "Do you really want to remove this SEO page?"
-msgstr ""
-
 msgid "Do you really want to remove this administrator role group?"
 msgstr ""
 
@@ -545,9 +536,6 @@ msgid "Edit store"
 msgstr ""
 
 msgid "Edit transport type"
-msgstr ""
-
-msgid "Editing SEO page"
 msgstr ""
 
 msgid "Editing administrator"
@@ -1027,9 +1015,6 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-msgid "New SEO page"
-msgstr ""
-
 msgid "New administrator"
 msgstr ""
 
@@ -1084,9 +1069,6 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-msgid "No SEO pages found."
-msgstr ""
-
 msgid "No combinations of SEO categories found."
 msgstr ""
 
@@ -1139,12 +1121,6 @@ msgid "Number of orders"
 msgstr ""
 
 msgid "Oops! Error occurred."
-msgstr ""
-
-msgid "Open Graph description"
-msgstr ""
-
-msgid "Open Graph title"
 msgstr ""
 
 msgid "Open in new window"
@@ -1211,12 +1187,6 @@ msgid "Outside layout"
 msgstr ""
 
 msgid "Package tracking"
-msgstr ""
-
-msgid "Page URL"
-msgstr ""
-
-msgid "Page name"
 msgstr ""
 
 msgid "Page not found"
@@ -1504,22 +1474,10 @@ msgstr ""
 msgid "Rounding"
 msgstr ""
 
-msgid "SEO"
-msgstr ""
-
 msgid "SEO - full"
 msgstr ""
 
 msgid "SEO - view"
-msgstr ""
-
-msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr ""
-
-msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "SEO Page <strong>{{ name }}</strong> removed"
 msgstr ""
 
 msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed"
@@ -1529,9 +1487,6 @@ msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not b
 msgstr ""
 
 msgid "SEO page"
-msgstr ""
-
-msgid "SEO pages"
 msgstr ""
 
 msgid "Sale"
@@ -1577,12 +1532,6 @@ msgid "Search in transfers"
 msgstr ""
 
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
-msgstr ""
-
-msgid "Selected SEO page cannot be deleted"
-msgstr ""
-
-msgid "Selected SEO page does not exist"
 msgstr ""
 
 msgid "Selected administrator role group doesn't exist."
@@ -1691,9 +1640,6 @@ msgid "The selected flag cannot be deleted."
 msgstr ""
 
 msgid "There are no parameter values of type color yet."
-msgstr ""
-
-msgid "This SEO page cannot be deleted."
 msgstr ""
 
 msgid "This flag can not be deleted as it is used in definition of"

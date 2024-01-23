@@ -8,11 +8,7 @@ use App\Model\CategorySeo\ReadyCategorySeoMix;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository as BaseSitemapRepository;
-use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
-use Shopsys\FrameworkBundle\Model\Stock\StockDomain;
 
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
@@ -29,7 +25,7 @@ class SitemapRepository extends BaseSitemapRepository
     {
         $queryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId());
         $queryBuilder
-            ->select('fu.slug')
+            ->select('fu.slug, fu.entityId')
             ->join(ReadyCategorySeoMix::class, 'rcsm', Join::WITH, 'rcsm.category = c AND rcsm.domainId = :domainId')
             ->join(
                 FriendlyUrl::class,
@@ -41,67 +37,6 @@ class SitemapRepository extends BaseSitemapRepository
                 AND fu.main = TRUE',
             )
             ->setParameter('categorySeoMixRouteName', 'front_category_seo')
-            ->setParameter('domainId', $domainConfig->getId());
-
-        return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return array
-     */
-    public function getSitemapItemsForSoldOutProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup): array
-    {
-        $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup);
-        $queryBuilder
-            ->addSelect('fu.slug')
-            ->join(
-                FriendlyUrl::class,
-                'fu',
-                Join::WITH,
-                'fu.routeName = :productDetailRouteName
-                AND fu.entityId = p.id
-                AND fu.domainId = :domainId
-                AND fu.main = TRUE',
-            )
-            ->andWhere('p.variantType != :variantTypeMain')
-            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
-            ->setParameter('productDetailRouteName', 'front_product_detail')
-            ->setParameter('domainId', $domainConfig->getId());
-
-        $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
-            ->select('1')
-            ->from(ProductStock::class, 'ps')
-            ->join(StockDomain::class, 'sd', Join::WITH, 'ps.stock = sd.stock AND sd.domainId = :domainId')
-            ->where('ps.product = p')
-            ->having('SUM(ps.productQuantity) = 0');
-
-        $this->productRepository->addDomain($queryBuilder, $domainConfig->getId());
-        $queryBuilder->andWhere('EXISTS(' . $subquery->getDQL() . ') AND (pd.saleExclusion = true)');
-
-        return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
-     */
-    public function getSitemapItemsForArticlesOnDomain(DomainConfig $domainConfig): array
-    {
-        $queryBuilder = $this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainConfig->getId());
-        $queryBuilder
-            ->select('fu.slug')
-            ->join(
-                FriendlyUrl::class,
-                'fu',
-                Join::WITH,
-                'fu.routeName = :articlesRouteName
-                AND fu.entityId = a.id
-                AND fu.domainId = :domainId
-                AND fu.main = TRUE',
-            )
-            ->setParameter('articlesRouteName', 'front_article_detail')
             ->setParameter('domainId', $domainConfig->getId());
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
