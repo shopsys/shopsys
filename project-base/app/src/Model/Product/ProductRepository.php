@@ -186,21 +186,4 @@ class ProductRepository extends BaseProductRepository
             ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
             ->setParameter('domainId', $domainId);
     }
-
-    /**
-     * @param string[] $catnums
-     * @return int[]
-     */
-    public function getProductIdsByCatnums(array $catnums): array
-    {
-        $result = $this->em->createQueryBuilder()
-            ->select('p.id')
-            ->from(Product::class, 'p')
-            ->where('p.catnum IN (:catnums)')
-            ->setParameter('catnums', $catnums)
-            ->getQuery()
-            ->getScalarResult();
-
-        return array_column($result, 'id');
-    }
 }

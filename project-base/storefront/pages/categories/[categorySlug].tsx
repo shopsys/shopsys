@@ -1,5 +1,6 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
 import { useCategoryDetailData } from 'components/Pages/CategoryDetail/helpers';
@@ -28,14 +29,14 @@ import {
     LOAD_MORE_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useHandleDefaultFiltersUpdate } from 'hooks/seoCategories/useHandleDefaultFiltersUpdate';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { createClient } from 'urql/createClient';
 
-const CategoryDetailPage: NextPage = () => {
+const CategoryDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
     const { filter } = useQueryParams();
     const { categoryData, isFetchingVisible } = useCategoryDetailData(filter);
 
@@ -62,6 +63,7 @@ const CategoryDetailPage: NextPage = () => {
                 title={seoTitle}
             >
                 {!!categoryData && <CategoryDetailContent category={categoryData} />}
+                <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
             </CommonLayout>
         </>
     );

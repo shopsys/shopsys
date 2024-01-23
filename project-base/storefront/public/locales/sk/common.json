@@ -159,6 +159,7 @@
     "Item {{ itemName }} has been sold out.": "Item {{ itemName }} has been sold out.",
     "Last name": "Priezvisko",
     "Last name must be at most {{ max }} characters": "",
+    "Last visited products": "Naposledy navštívené produkty",
     "Load more": "Načítať viac",
     "Log in": "Prihlásiť sa",
     "Log-in": "Prihlásiť",

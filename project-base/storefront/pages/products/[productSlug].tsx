@@ -1,3 +1,5 @@
+import { setLastVisitedProductCatalogNumbers } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedHelpers';
+import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
 import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
@@ -13,13 +15,14 @@ import { handleServerSideErrorResponseForFriendlyUrls } from 'helpers/errors/han
 import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 
-const ProductDetailPage: NextPage = () => {
+const ProductDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
     const router = useRouter();
     const [{ data: productData, fetching }] = useProductDetailQueryApi({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
@@ -33,6 +36,11 @@ const ProductDetailPage: NextPage = () => {
     const pageViewEvent = useGtmFriendlyPageViewEvent(product);
     useGtmPageViewEvent(pageViewEvent, fetching);
 
+    useEffect(() => {
+        if (product?.catalogNumber) {
+            setLastVisitedProductCatalogNumbers(product.catalogNumber);
+        }
+    }, [product]);
     return (
         <CommonLayout
             breadcrumbs={product?.breadcrumb}
@@ -47,6 +55,10 @@ const ProductDetailPage: NextPage = () => {
             {product?.__typename === 'MainVariant' && (
                 <ProductDetailMainVariantContent fetching={fetching} product={product} />
             )}
+            <LastVisitedProducts
+                currentProductCatalogNumber={product?.catalogNumber}
+                lastVisitedProductsFromCookies={cookies.lastVisitedProducts}
+            />
         </CommonLayout>
     );
 };

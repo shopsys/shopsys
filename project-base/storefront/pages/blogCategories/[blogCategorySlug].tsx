@@ -1,4 +1,5 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
+import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -16,14 +17,14 @@ import { isRedirectedFromSsr } from 'helpers/isRedirectedFromSsr';
 import { getNumberFromUrlQuery, getSlugFromServerSideUrl, getSlugFromUrl } from 'helpers/parsing/urlParsing';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParamNames';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
-import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
+import { ServerSidePropsType, initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { OperationResult } from 'urql';
 import { createClient } from 'urql/createClient';
 
-const BlogCategoryPage: NextPage = () => {
+const BlogCategoryPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
     const router = useRouter();
     const [{ data: blogCategoryData, fetching }] = useBlogCategoryQueryApi({
         variables: { urlSlug: getSlugFromUrl(router.asPath) },
@@ -47,6 +48,7 @@ const BlogCategoryPage: NextPage = () => {
             title={seoTitle}
         >
             {!!blogCategoryData?.blogCategory && <BlogCategoryContent blogCategory={blogCategoryData.blogCategory} />}
+            <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
         </CommonLayout>
     );
 };

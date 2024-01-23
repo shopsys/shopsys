@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
@@ -27,6 +28,7 @@ class ProductsQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
         protected readonly ProductFacade $productFacade,
@@ -34,6 +36,7 @@ class ProductsQuery extends AbstractQuery
         protected readonly ProductConnectionFactory $productConnectionFactory,
         protected readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
         protected readonly ProductListFacade $productListFacade,
+        protected readonly ProductRepository $productRepository,
     ) {
     }
 
@@ -180,6 +183,17 @@ class ProductsQuery extends AbstractQuery
     public function productsByProductListQuery(ProductList $productList): Promise
     {
         $productIds = $this->productListFacade->getProductIdsByProductList($productList);
+
+        return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
+    }
+
+    /**
+     * @param string[] $catnums
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function productsByCatnumsQuery(array $catnums): Promise
+    {
+        $productIds = $this->productRepository->getProductIdsByCatnums($catnums);
 
         return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
     }

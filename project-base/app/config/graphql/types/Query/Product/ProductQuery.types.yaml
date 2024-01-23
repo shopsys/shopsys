@@ -11,14 +11,6 @@ ProductQuery:
                 resolve: "@=query('productsWithOverlyingEntityQuery', args, info)"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
-            productsByCatnums:
-                type: "[Product!]!"
-                resolve: '@=query("productsByCatnumsQuery", args["catnums"])'
-                args:
-                    catnums:
-                        type: "[String!]!"
-                        description: "Array of product catalog numbers"
-                description: "Returns list of products by catalog numbers"
             ParameterSliderFilterOption:
                 type: "ParameterSliderFilterOption"
             ParameterCheckboxFilterOption:

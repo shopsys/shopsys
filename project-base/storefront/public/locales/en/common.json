@@ -155,6 +155,7 @@
     "Item {{ itemName }} has been sold out.": "Item {{ itemName }} has been sold out.",
     "Last name": "Last Name",
     "Last name must be at most {{ max }} characters": "Last name must be at most {{ max }} characters",
+    "Last visited products": "Last visited products",
     "Load more": "Load more",
     "Log in": "Log in",
     "Log-in": "Login",

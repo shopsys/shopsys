@@ -1,3 +1,4 @@
+import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { Wishlist } from 'components/Pages/Wishlist/Wishlist';
@@ -9,9 +10,10 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useDomainConfig } from 'hooks/useDomainConfig';
+import { NextPage } from 'next';
 import useTranslation from 'next-translate/useTranslation';
 
-const WishlistPage: FC<ServerSidePropsType> = () => {
+const WishlistPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
     const { t } = useTranslation();
     useGtmPageViewEvent(useGtmStaticPageViewEvent(GtmPageType.other));
     const currentDomainConfig = useDomainConfig();
@@ -24,6 +26,8 @@ const WishlistPage: FC<ServerSidePropsType> = () => {
             <Webline>
                 <Wishlist />
             </Webline>
+
+            <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} />
         </CommonLayout>
     );
 };

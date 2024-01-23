@@ -1,3 +1,4 @@
+import { getCookies } from 'cookies-next';
 import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
@@ -26,6 +27,7 @@ export type ServerSidePropsType = {
     urqlState: SSRData;
     isMaintenance: boolean;
     domainConfig: DomainConfigType;
+    cookies: { [key: string]: string };
 };
 
 type QueriesArray = { query: string | DocumentNode; variables?: { [key: string]: unknown } }[];
@@ -139,6 +141,8 @@ export const initServerSideProps = async ({
         context.res.statusCode = 503;
     }
 
+    const allCookies = getCookies(context);
+
     return {
         props: {
             ...(await loadNamespaces({
@@ -149,6 +153,7 @@ export const initServerSideProps = async ({
             // JSON.parse(JSON.stringify()) fix of https://github.com/vercel/next.js/issues/11993
             urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
             isMaintenance,
+            cookies: JSON.parse(JSON.stringify(allCookies)),
         },
     };
 };

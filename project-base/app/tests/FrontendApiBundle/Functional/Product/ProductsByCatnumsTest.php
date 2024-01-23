@@ -28,16 +28,23 @@ class ProductsByCatnumsTest extends ProductsGraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'productsByCatnums');
 
         $productsExpected = [
-            ['name' => t('Canon EH-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('24" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [
+                'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'catalogNumber' => '9177759',
+            ], [
+                'name' => t('Canon EH-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'catalogNumber' => '532564',
+            ], [
+                'name' => t('Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'catalogNumber' => '9176544M',
+            ], [
+                'name' => t('24" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'catalogNumber' => '9176522',
+            ],
         ];
 
         $this->assertSameSize($productsExpected, $data);
 
-        foreach ($data as $resultProduct) {
-            $this->assertContains($resultProduct, $productsExpected);
-        }
+        $this->assertSame($productsExpected, $data);
     }
 }
