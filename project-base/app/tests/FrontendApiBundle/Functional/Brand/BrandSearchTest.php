@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Brand;
 
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -11,9 +12,11 @@ class BrandSearchTest extends GraphQlTestCase
 {
     public function testBrandSearch(): void
     {
+        $userIdentifier = Uuid::uuid4()->toString();
+
         $query = '
             query {
-                brandSearch(search: "de") {
+                brandSearch(searchInput: { search: "de", userIdentifier: "' . $userIdentifier . '"}) {
                     name
                 }
             }

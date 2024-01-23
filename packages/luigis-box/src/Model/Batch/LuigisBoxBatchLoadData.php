@@ -13,6 +13,7 @@ class LuigisBoxBatchLoadData
      * @param string $endpoint
      * @param int $page
      * @param array $filter
+     * @param string $userIdentifier
      * @param string|null $orderingMode
      */
     public function __construct(
@@ -22,6 +23,7 @@ class LuigisBoxBatchLoadData
         protected readonly string $endpoint,
         protected readonly int $page,
         protected readonly array $filter,
+        protected readonly string $userIdentifier,
         protected readonly ?string $orderingMode = null,
     ) {
     }
@@ -80,5 +82,13 @@ class LuigisBoxBatchLoadData
     public function getOrderingMode(): ?string
     {
         return $this->orderingMode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->userIdentifier;
     }
 }

@@ -1,0 +1,14 @@
+SearchInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Represents search input object"
+        fields:
+            search:
+                type: "String!"
+            userIdentifier:
+                type: "Uuid!"
+                description: "Unique identifier of the user who initiated the search in format UUID version 4 (^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$/)"
+            isAutocomplete:
+                type: "Boolean!"
+                defaultValue: false

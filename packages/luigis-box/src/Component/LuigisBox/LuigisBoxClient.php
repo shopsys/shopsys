@@ -58,6 +58,7 @@ class LuigisBoxClient
      * @param int $page
      * @param array<string, int> $limitsByType
      * @param array $filter
+     * @param string $userIdentifier
      * @param string|null $orderingMode
      * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult[]
      */
@@ -67,6 +68,7 @@ class LuigisBoxClient
         int $page,
         array $limitsByType,
         array $filter,
+        string $userIdentifier,
         ?string $orderingMode,
     ): array {
         $this->checkNecessaryConfigurationIsSet();
@@ -80,6 +82,7 @@ class LuigisBoxClient
                     $page,
                     $limitsByType,
                     $filter,
+                    $userIdentifier,
                     $orderingMode,
                 ),
             ),
@@ -115,6 +118,7 @@ class LuigisBoxClient
      * @param int $page
      * @param array $limitsByType
      * @param array $filter
+     * @param string $userIdentifier
      * @param string|null $orderingMode
      * @return string
      */
@@ -124,13 +128,15 @@ class LuigisBoxClient
         int $page,
         array $limitsByType,
         array $filter,
+        string $userIdentifier,
         ?string $orderingMode,
     ): string {
         $url = $this->luigisBoxApiUrl .
             $action . '/' .
             '?tracker_id=' . $this->getTrackerId() .
             '&q=' . urlencode($query) .
-            '&hit_fields=url';
+            '&hit_fields=url' .
+            '&user_id=' . $userIdentifier;
 
         if ($action === self::ACTION_SEARCH) {
             $quicksearchTypesWithLimits = $this->getQuicksearchTypesWithLimits($limitsByType);

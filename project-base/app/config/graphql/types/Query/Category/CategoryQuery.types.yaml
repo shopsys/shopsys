@@ -12,8 +12,8 @@ CategoryQuery:
                 resolve: "@=query('categoriesSearchQuery', args)"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 args:
-                    search:
-                        type: "String!"
+                    searchInput:
+                        type: "SearchInput!"
                 description: "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"
             category:
                 type: 'Category'
