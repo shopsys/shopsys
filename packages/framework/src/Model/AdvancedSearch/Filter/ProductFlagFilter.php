@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
-use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ProductFlagFilter implements AdvancedSearchFilterInterface
@@ -68,25 +67,33 @@ class ProductFlagFilter implements AdvancedSearchFilterInterface
      */
     public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
     {
+        $isFlags = [];
         $isNotFlags = [];
 
-        foreach ($rulesData as $index => $ruleData) {
+        foreach ($rulesData as $ruleData) {
             if ($ruleData->operator === self::OPERATOR_IS) {
-                $tableAlias = 'f' . $index;
-                $flagParameter = 'flag' . $index;
-                $queryBuilder->join('p.flags', $tableAlias, Join::WITH, $tableAlias . '.id = :' . $flagParameter);
-                $queryBuilder->setParameter($flagParameter, $ruleData->value);
+                $isFlags[] = $ruleData->value;
             } elseif ($ruleData->operator === self::OPERATOR_IS_NOT) {
                 $isNotFlags[] = $ruleData->value;
             }
+        }
+
+        if (count($isFlags) + count($isNotFlags) === 0) {
+            return;
+        }
+
+        if (count($isFlags) > 0) {
+            $subQuery = 'SELECT IDENTITY(pdSub.product) FROM ' . ProductDomain::class . ' pdSub JOIN pdSub.flags AS fSub WHERE fSub.id IN (:isFlags)';
+            $queryBuilder->andWhere($queryBuilder->expr()->in('p.id', $subQuery));
+            $queryBuilder->setParameter('isFlags', $isFlags);
         }
 
         if (count($isNotFlags) === 0) {
             return;
         }
 
-        $subQuery = 'SELECT flag_p.id FROM ' . Product::class . ' flag_p JOIN flag_p.flags _f WITH _f.id IN (:isNotFlags)';
-        $queryBuilder->andWhere('p.id NOT IN (' . $subQuery . ')');
+        $subQuery = 'SELECT IDENTITY(pdSubNot.product) FROM ' . ProductDomain::class . ' pdSubNot JOIN pdSubNot.flags AS fSubNot WHERE fSubNot.id IN (:isNotFlags)';
+        $queryBuilder->andWhere($queryBuilder->expr()->notIn('p.id', $subQuery));
         $queryBuilder->setParameter('isNotFlags', $isNotFlags);
     }
 }
