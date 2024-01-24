@@ -3574,6 +3574,8 @@ export type AutocompleteSearchQueryVariablesApi = Exact<{
   search: Scalars['String']['input'];
   maxProductCount: InputMaybe<Scalars['Int']['input']>;
   maxCategoryCount: InputMaybe<Scalars['Int']['input']>;
+  userIdentifier: Scalars['String']['input'];
+  requestingPage: Scalars['String']['input'];
 }>;
 
 
@@ -5975,17 +5977,31 @@ export function useRobotsTxtQueryApi(options?: Omit<Urql.UseQueryArgs<RobotsTxtQ
   return Urql.useQuery<RobotsTxtQueryApi, RobotsTxtQueryVariablesApi>({ query: RobotsTxtQueryDocumentApi, ...options });
 };
 export const AutocompleteSearchQueryDocumentApi = gql`
-    query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int) {
-  articlesSearch(search: $search) {
+    query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int, $userIdentifier: String!, $requestingPage: String!) {
+  articlesSearch(
+    search: $search
+    userIdentifier: $userIdentifier
+    requestingPage: $requestingPage
+  ) {
     ...SimpleArticleInterfaceFragment
   }
   brandSearch(search: $search) {
     ...SimpleBrandFragment
   }
-  categoriesSearch(search: $search, first: $maxCategoryCount) {
+  categoriesSearch(
+    search: $search
+    first: $maxCategoryCount
+    userIdentifier: $userIdentifier
+    requestingPage: $requestingPage
+  ) {
     ...SimpleCategoryConnectionFragment
   }
-  productsSearch: productsSearch(search: $search, first: $maxProductCount) {
+  productsSearch: productsSearch(
+    search: $search
+    first: $maxProductCount
+    userIdentifier: $userIdentifier
+    requestingPage: $requestingPage
+  ) {
     orderingMode
     defaultOrderingMode
     totalCount

@@ -3,12 +3,15 @@ import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { useGtmAutocompleteResultsViewEvent } from 'gtm/hooks/useGtmAutocompleteResultsViewEvent';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
 import { useDebounce } from 'hooks/helpers/useDebounce';
+import { useCurrentUrl } from 'hooks/useCurrentUrl';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 
 const AutocompleteSearchPopup = dynamic(() =>
@@ -20,15 +23,19 @@ const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((c
 export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
 
 export const AutocompleteSearch: FC = () => {
+    const { t } = useTranslation();
+    const { url } = useDomainConfig();
     const router = useRouter();
+    const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
+
     const [isSearchResultsPopupOpen, setIsSearchResultsPopupOpen] = useState(false);
     const [searchData, setSearchData] = useState<AutocompleteSearchQueryApi>();
     const [searchQueryValue, setSearchQueryValue] = useState('');
-    const debouncedSearchQuery = useDebounce(searchQueryValue, 200);
-    const { url } = useDomainConfig();
-    const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
-    const { t } = useTranslation();
 
+    const userIdentifier = usePersistStore((store) => store.userId)!;
+    const requestingPage = useCurrentUrl();
+
+    const debouncedSearchQuery = useDebounce(searchQueryValue, 200);
     const isWithValidSearchQuery = searchQueryValue.length >= MINIMAL_SEARCH_QUERY_LENGTH;
 
     const [{ data: fetchedSearchData, fetching: isFetchingSearchData }] = useAutocompleteSearchQueryApi({
@@ -36,6 +43,8 @@ export const AutocompleteSearch: FC = () => {
             search: debouncedSearchQuery,
             maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
             maxProductCount: AUTOCOMPLETE_PRODUCT_LIMIT,
+            userIdentifier,
+            requestingPage: getUrlWithoutGetParameters(requestingPage),
         },
         pause: debouncedSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH,
         requestPolicy: 'network-only',

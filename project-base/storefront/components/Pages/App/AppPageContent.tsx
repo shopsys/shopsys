@@ -6,6 +6,7 @@ import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStat
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useAuthLoader } from 'hooks/app/useAuthLoader';
 import { usePageLoader } from 'hooks/app/usePageLoader';
+import { useSetUserId } from 'hooks/app/useSetUserId';
 import { useStoreHydration } from 'hooks/app/useStoreHydration';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
 import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
@@ -45,6 +46,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
     useAuthLoader();
     usePageLoader();
     useReloadCart();
+    useSetUserId();
 
     const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
     const isConsentUpdatePage = router.asPath === consentUpdatePageUrl;
