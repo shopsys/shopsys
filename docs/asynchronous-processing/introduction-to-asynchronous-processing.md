@@ -213,6 +213,12 @@ DEFAULT_CONSUMERS=(
 That way only one pod will be deployed, and it will consume messages from both `example_transport` and `my_new_transport` queues in the order they are specified in the configuration (meaning no messages from the `my_new_transport` will be processed until `example_transport` is empty).
 For example, this is the way how product recalculation priority is implemented (you can examine `product_recalculation_priority_regular` and `product_recalculation_priority_high` transports for detailed information).
 
+### Gitlab CI review stage
+
+If you use Gitlab CI, a single RabbitMQ message broker is deployed for all review apps (branches).
+To ensure the isolation of the review apps, each one of them has its own virtual host (see `MESSENGER_TRANSPORT_VHOST` in the `gitlab/docker-compose-ci-review.yml` file).
+The vhost is automatically created when the review app is deployed thanks to `gitlab/scripts/rabbitmq-vhost.sh` that is called inside the `.gitlab-ci.yaml` config file.
+
 #### 2. Create a new consumer
 
 ```bash
