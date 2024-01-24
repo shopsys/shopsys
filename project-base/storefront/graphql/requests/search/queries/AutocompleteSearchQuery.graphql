@@ -1,14 +1,46 @@
-query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int, $isAutocomplete: Boolean!) {
-    articlesSearch(search: $search) {
+query AutocompleteSearchQuery(
+    $search: String!
+    $maxProductCount: Int
+    $maxCategoryCount: Int
+    $isAutocomplete: Boolean!
+    $userIdentifier: Uuid!
+) {
+    articlesSearch(
+        searchInput: {
+            search: $search,
+            isAutocomplete: $isAutocomplete
+            userIdentifier: $userIdentifier
+        }
+    ) {
         ...SimpleArticleInterfaceFragment
     }
-    brandSearch(search: $search) {
+    brandSearch(
+        searchInput: {
+            search: $search,
+            isAutocomplete: $isAutocomplete
+            userIdentifier: $userIdentifier
+        }
+    ) {
         ...SimpleBrandFragment
     }
-    categoriesSearch(search: $search, first: $maxCategoryCount) {
+    categoriesSearch(
+        searchInput: {
+            search: $search
+            isAutocomplete: $isAutocomplete
+            userIdentifier: $userIdentifier
+        }
+        first: $maxCategoryCount
+    ) {
         ...SimpleCategoryConnectionFragment
     }
-    productsSearch: productsSearch(search: $search, first: $maxProductCount, isAutocomplete: $isAutocomplete) {
+    productsSearch: productsSearch(
+        searchInput: {
+            search: $search
+            isAutocomplete: $isAutocomplete
+            userIdentifier: $userIdentifier
+        }
+        first: $maxProductCount
+    ) {
         orderingMode
         defaultOrderingMode
         totalCount

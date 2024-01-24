@@ -5,8 +5,9 @@ query SearchProductsQuery(
     $search: String!
     $pageSize: Int
     $isAutocomplete: Boolean!
+    $userIdentifier: Uuid!
 ) {
-    productsSearch(after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize, searchInput: { search: $search, isAutocomplete: $isAutocomplete }) {
+    productsSearch(after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize, searchInput: { search: $search, isAutocomplete: $isAutocomplete, userIdentifier: $userIdentifier }) {
         orderingMode
         defaultOrderingMode
         totalCount
