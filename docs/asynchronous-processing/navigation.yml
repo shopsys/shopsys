@@ -1,3 +1,5 @@
 arrange:
     - index.md
+    - introduction-to-asynchronous-processing.md
+    - product-recalculations.md
     - handling-failed-product-recalculations.md

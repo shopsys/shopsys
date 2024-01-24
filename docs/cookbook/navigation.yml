@@ -16,3 +16,4 @@ arrange:
     - create-basic-grid.md
     - create-advanced-grid.md
     - adding-a-new-email-template.md
+    - create-asynchronous-notifier.md
