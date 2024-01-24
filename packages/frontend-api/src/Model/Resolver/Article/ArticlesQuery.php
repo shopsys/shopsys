@@ -13,8 +13,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class ArticlesQuery extends AbstractQuery
 {
-    protected const DEFAULT_FIRST_LIMIT = 10;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchFacade $articleElasticsearchFacade
@@ -40,17 +38,5 @@ class ArticlesQuery extends AbstractQuery
         });
 
         return $paginator->auto($argument, $this->articleElasticsearchFacade->getAllArticlesTotalCount($placements));
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     */
-    protected function setDefaultFirstOffsetIfNecessary(Argument $argument): void
-    {
-        if ($argument->offsetExists('first') === false
-            && $argument->offsetExists('last') === false
-        ) {
-            $argument->offsetSet('first', static::DEFAULT_FIRST_LIMIT);
-        }
     }
 }

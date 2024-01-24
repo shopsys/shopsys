@@ -9,8 +9,10 @@ overblog_graphql:
                     dir: "%kernel.project_dir%/config/graphql/types"
         builders:
             args:
-                -   alias: "PaginatorArgumentsBuilder"
-                    class: App\FrontendApi\Component\Arguments\PaginatorArgumentsBuilder
+                -   alias: "ProductPaginatorArgumentsBuilder"
+                    class: Shopsys\FrontendApiBundle\Component\Arguments\ProductPaginatorArgumentsBuilder
+                -   alias: "ProductSearchPaginatorArgumentsBuilder"
+                    class: Shopsys\FrontendApiBundle\Component\Arguments\ProductSearchPaginatorArgumentsBuilder
                 -   alias: "BlogArticlePaginatorArgumentsBuilder"
                     class: Shopsys\FrontendApiBundle\Component\Arguments\BlogArticlePaginatorArgumentsBuilder
         # these settings are suggested by docs: https://github.com/overblog/GraphQLBundle/blob/master/docs/index.md#composer-autoloader-configuration-optional

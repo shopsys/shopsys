@@ -6,3 +6,7 @@ monolog:
             action_level: warning
             handler: sentry
             excluded_http_codes: [{ 404: ['^/'] }, { 405: ['^/'] }]
+        sentry:
+            type: stream
+            path: "%shopsys.log_stream%"
+            level: warning

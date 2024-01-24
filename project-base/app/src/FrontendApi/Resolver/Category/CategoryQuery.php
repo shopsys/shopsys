@@ -8,7 +8,6 @@ use App\Component\Deprecation\DeprecatedMethodException;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade as AppFriendlyUrlFacade;
 use App\FrontendApi\Model\Product\Filter\ProductFilterFacade;
 use App\FrontendApi\Resolver\Category\Exception\ReadyCategorySeoMixNotFoundUserError;
-use App\FrontendApi\Resolver\Products\ProductsQuery;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
@@ -28,6 +27,7 @@ use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery as BaseCategoryQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\Exception\CategoryNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider;
 
 /**
  * @method \App\Model\Category\Category getByUuid(string $uuid)
@@ -44,6 +44,7 @@ class CategoryQuery extends BaseCategoryQuery
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $appFriendlyUrlFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -53,6 +54,7 @@ class CategoryQuery extends BaseCategoryQuery
         private readonly AppFriendlyUrlFacade $appFriendlyUrlFacade,
         private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         private readonly ParameterFacade $parameterFacade,
+        private readonly ProductOrderingModeProvider $productOrderingModeProvider,
     ) {
         parent::__construct($categoryFacade, $domain, $friendlyUrlFacade);
     }
@@ -174,7 +176,7 @@ class CategoryQuery extends BaseCategoryQuery
                 $category->getId(),
                 $variableValues['filter']['parameters'] ?? [],
                 $variableValues['filter']['flags'] ?? [],
-                $variableValues['orderingMode'] ?? ProductsQuery::getDefaultOrderingModeForListing(),
+                $variableValues['orderingMode'] ?? $this->productOrderingModeProvider->getDefaultOrderingModeForListing(),
             );
         } catch (ParameterValueNotFoundException | ParameterNotFoundException) {
             return null;

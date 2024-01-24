@@ -1,0 +1,8 @@
+parameters:
+    persoo.enabled_domain_ids: ''
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false

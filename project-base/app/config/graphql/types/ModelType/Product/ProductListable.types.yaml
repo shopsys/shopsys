@@ -7,6 +7,6 @@ ProductListable:
                 type: "ProductConnection!"
                 description: "Paginated and ordered products"
                 argsBuilder:
-                    builder: "PaginatorArgumentsBuilder"
+                    builder: "ProductPaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'

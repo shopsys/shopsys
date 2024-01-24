@@ -834,3 +834,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider:
         alias: App\Model\Product\ProductElasticsearchProvider
+
+    Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory:
+        alias: App\Model\Product\Filter\ProductFilterDataFactory

@@ -48,6 +48,7 @@ If you are interested, you can read more about the monorepo approach here - http
 -   [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
 -   [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
 -   [shopsys/php-image](https://github.com/shopsys/php-image)
+-   [shopsys/persoo](https://github.com/shopsys/persoo)
 
 !!! note
 

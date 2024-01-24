@@ -5,7 +5,7 @@ ProductQuery:
             products:
                 type: "ProductConnection!"
                 argsBuilder:
-                    builder: "PaginatorArgumentsBuilder"
+                    builder: "ProductPaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
                 resolve: "@=query('productsWithOverlyingEntityQuery', args, info)"

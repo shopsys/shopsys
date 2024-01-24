@@ -28,7 +28,7 @@ CategoryDecorator:
                 type: "ProductConnection"
                 description: "Paginated and ordered products of category"
                 argsBuilder:
-                    builder: "PaginatorArgumentsBuilder"
+                    builder: "ProductPaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
                 resolve: '@=query("productsByCategoryQuery", args, value)'

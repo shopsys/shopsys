@@ -26,11 +26,11 @@ class ProductRepository
      */
     public function getSellableByUuid(string $uuid, int $domainId, PricingGroup $pricingGroup): Product
     {
-        $qb = $this->productRepository->getAllSellableQueryBuilder($domainId, $pricingGroup);
-        $qb->andWhere('p.uuid = :uuid');
-        $qb->setParameter('uuid', $uuid);
+        $queryBuilder = $this->productRepository->getAllSellableQueryBuilder($domainId, $pricingGroup);
+        $queryBuilder->andWhere('p.uuid = :uuid');
+        $queryBuilder->setParameter('uuid', $uuid);
 
-        $product = $qb->getQuery()->getOneOrNullResult();
+        $product = $queryBuilder->getQuery()->getOneOrNullResult();
 
         if ($product === null) {
             throw new ProductNotFoundException(

@@ -20,14 +20,12 @@ interface ProductOnCurrentDomainFacadeInterface
      * @param int $categoryId
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataInCategory(
         int $categoryId,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
-        string $searchText = '',
     ): ProductFilterCountData;
 
     /**

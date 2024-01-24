@@ -40,18 +40,15 @@ class ProductFilterConfigFactory
     /**
      * @param string $locale
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
     public function createForCategory(
         string $locale,
         Category $category,
-        string $searchText,
     ): ProductFilterConfig {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInCategory(
             $category->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            $searchText,
         );
 
         $aggregatedParameterFilterChoices = $this->parameterFacade->getParameterFilterChoicesByIds(

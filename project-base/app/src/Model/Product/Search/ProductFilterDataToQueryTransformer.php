@@ -9,21 +9,22 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer as BaseProductFilterDataToQueryTransformer;
 
 /**
- * @method \App\Model\Product\Search\FilterQuery addBrandsToQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
- * @method \App\Model\Product\Search\FilterQuery addFlagsToQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
- * @method \App\Model\Product\Search\FilterQuery addStockToQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
- * @method \App\Model\Product\Search\FilterQuery addPricesToQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
+ * @method \App\Model\Product\Search\FilterQuery addBrandsToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
+ * @method \App\Model\Product\Search\FilterQuery addFlagsToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
+ * @method \App\Model\Product\Search\FilterQuery addStockToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
+ * @method \App\Model\Product\Search\FilterQuery addPricesToQuery(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method array flattenParameterFilterData(\App\Model\Product\Filter\ParameterFilterData[] $parameters)
  */
 class ProductFilterDataToQueryTransformer extends BaseProductFilterDataToQueryTransformer
 {
     /**
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \App\Model\Product\Search\FilterQuery $filterQuery
      * @return \App\Model\Product\Search\FilterQuery
      */
     public function addParametersToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery): FilterQuery
     {
+        /** @var \App\Model\Product\Filter\ParameterFilterData[] $parametersFilterData */
         $parametersFilterData = $productFilterData->parameters;
 
         if (count($parametersFilterData) === 0) {

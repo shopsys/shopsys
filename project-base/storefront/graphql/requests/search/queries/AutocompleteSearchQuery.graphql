@@ -8,7 +8,7 @@ query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCateg
     categoriesSearch(search: $search, first: $maxCategoryCount) {
         ...SimpleCategoryConnectionFragment
     }
-    productsSearch: products(search: $search, first: $maxProductCount) {
+    productsSearch: productsSearch(search: $search, first: $maxProductCount) {
         orderingMode
         defaultOrderingMode
         totalCount

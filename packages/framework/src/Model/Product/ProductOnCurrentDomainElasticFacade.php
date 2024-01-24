@@ -55,16 +55,11 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         int $categoryId,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
-        string $searchText = '',
     ): ProductFilterCountData {
         $baseFilterQuery = $this->filterQueryFactory->createListableProductsByCategoryIdWithPriceAndStockFilter(
             $categoryId,
             $productFilterData,
         );
-
-        if ($searchText !== '') {
-            $baseFilterQuery = $baseFilterQuery->search($searchText);
-        }
 
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,

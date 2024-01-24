@@ -4,8 +4,12 @@ monolog:
             type: "null"
             level: emergency
             excluded_http_codes: []
-        log_stream: # difference between common setup and DEV env log_stream handler is only in level: for DEV env is logging enabled from NOTICE
+        log_stream:
             type: stream
             path: "%shopsys.log_stream%"
             level: notice
             formatter: "monolog.formatter.line"
+        sentry:
+            type: stream
+            path: "%shopsys.log_stream%"
+            level: warning

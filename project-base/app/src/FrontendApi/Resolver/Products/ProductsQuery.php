@@ -11,7 +11,6 @@ use App\FrontendApi\Resolver\Products\Flag\FlagQuery;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
-use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
 use GraphQL\Executor\Promise\Promise;
@@ -22,14 +21,15 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery as BaseProductsQuery;
 
 /**
@@ -51,8 +51,9 @@ class ProductsQuery extends BaseProductsQuery
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
      * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
      * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
      * @param \App\FrontendApi\Resolver\Category\CategoryQuery $categoryQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
      * @param \App\FrontendApi\Resolver\Products\Flag\FlagQuery $flagQuery
@@ -64,13 +65,22 @@ class ProductsQuery extends BaseProductsQuery
         ProductListFacade $productListFacade,
         DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
         ProductRepository $productRepository,
-        private readonly DataLoaderInterface $productsByEntitiesBatchLoader,
+        ProductOrderingModeProvider $productOrderingModeProvider,
         private readonly ProductFilterDataFactory $productFilterDataFactory,
+        private readonly DataLoaderInterface $productsByEntitiesBatchLoader,
         private readonly CategoryQuery $categoryQuery,
         private readonly BrandQuery $brandQuery,
         private readonly FlagQuery $flagQuery,
     ) {
-        parent::__construct($productFacade, $productFilterFacade, $productConnectionFactory, $productsVisibleAndSortedByIdsBatchLoader, $productListFacade, $productRepository);
+        parent::__construct(
+            $productFacade,
+            $productFilterFacade,
+            $productConnectionFactory,
+            $productsVisibleAndSortedByIdsBatchLoader,
+            $productListFacade,
+            $productRepository,
+            $productOrderingModeProvider,
+        );
     }
 
     /**
@@ -80,7 +90,7 @@ class ProductsQuery extends BaseProductsQuery
      */
     public function productsByCategoryOrReadyCategorySeoMixQuery(
         Argument $argument,
-        $categoryOrReadyCategorySeoMix,
+        BaseCategory|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix,
     ): Promise {
         PageSizeValidator::checkMaxPageSize($argument);
 
@@ -91,8 +101,8 @@ class ProductsQuery extends BaseProductsQuery
                 $argument,
                 $category,
             );
-            $orderingMode = $this->getOrderingModeFromArgument($argument);
-            $defaultOrderingMode = $this->getDefaultOrderingMode($argument);
+            $orderingMode = $this->productOrderingModeProvider->getOrderingModeFromArgument($argument);
+            $defaultOrderingMode = $this->productOrderingModeProvider->getDefaultOrderingMode($argument);
         } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
             $category = $categoryOrReadyCategorySeoMix->getCategory();
             $readyCategorySeoMix = $categoryOrReadyCategorySeoMix;
@@ -148,16 +158,15 @@ class ProductsQuery extends BaseProductsQuery
                         Flag::class,
                         $limit,
                         $offset,
-                        $this->getOrderingModeFromArgument($argument),
+                        $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $argument['search'] ?? '',
                     ),
                 );
             },
             $argument,
             $productFilterData,
-            $this->getOrderingModeFromArgument($argument),
-            $this->getDefaultOrderingMode($argument),
+            $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
+            $this->productOrderingModeProvider->getDefaultOrderingMode($argument),
             $batchLoadDataId,
         );
     }
@@ -173,13 +182,11 @@ class ProductsQuery extends BaseProductsQuery
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \GraphQL\Type\Definition\ResolveInfo $info
-     * @return \App\FrontendApi\Model\Product\Connection\ProductExtendedConnection|\GraphQL\Executor\Promise\Promise
+     * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection|\GraphQL\Executor\Promise\Promise
      */
     public function productsWithOverlyingEntityQuery(Argument $argument, ResolveInfo $info)
     {
         PageSizeValidator::checkMaxPageSize($argument);
-
-        $search = $argument['search'] ?? '';
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
@@ -216,19 +223,18 @@ class ProductsQuery extends BaseProductsQuery
         }
 
         return $this->productConnectionFactory->createConnectionForAll(
-            function ($offset, $limit) use ($argument, $productFilterData, $search) {
+            function ($offset, $limit) use ($argument, $productFilterData) {
                 return $this->productFacade->getFilteredProductsOnCurrentDomain(
                     $limit,
                     $offset,
-                    $this->getOrderingModeFromArgument($argument),
+                    $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
                     $productFilterData,
-                    $search,
                 );
             },
-            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
+            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData),
             $argument,
             $productFilterData,
-            $this->getOrderingModeFromArgument($argument),
+            $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
         );
     }
 
@@ -270,16 +276,15 @@ class ProductsQuery extends BaseProductsQuery
                         Brand::class,
                         $limit,
                         $offset,
-                        $this->getOrderingModeFromArgument($argument),
+                        $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $argument['search'] ?? '',
                     ),
                 );
             },
             $argument,
             $productFilterData,
-            $this->getOrderingModeFromArgument($argument),
-            $this->getDefaultOrderingMode($argument),
+            $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
+            $this->productOrderingModeProvider->getDefaultOrderingMode($argument),
             $batchLoadDataId,
         );
     }
@@ -287,7 +292,7 @@ class ProductsQuery extends BaseProductsQuery
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Category\Category $category
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingMode
      * @param string $defaultOrderingMode
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
@@ -327,41 +332,5 @@ class ProductsQuery extends BaseProductsQuery
             $batchLoadDataId,
             $readyCategorySeoMix,
         );
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return string
-     */
-    protected function getOrderingModeFromArgument(Argument $argument): string
-    {
-        $orderingMode = $this->getDefaultOrderingMode($argument);
-
-        if ($argument->offsetExists('orderingMode') && $argument->offsetGet('orderingMode') !== null) {
-            $orderingMode = $argument->offsetGet('orderingMode');
-        }
-
-        return $orderingMode;
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return string
-     */
-    protected function getDefaultOrderingMode(Argument $argument): string
-    {
-        if (isset($argument['search'])) {
-            return ProductListOrderingConfig::ORDER_BY_RELEVANCE;
-        }
-
-        return self::getDefaultOrderingModeForListing();
-    }
-
-    /**
-     * @return string
-     */
-    public static function getDefaultOrderingModeForListing(): string
-    {
-        return ProductListOrderingConfig::ORDER_BY_PRIORITY;
     }
 }

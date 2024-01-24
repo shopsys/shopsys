@@ -55,8 +55,8 @@ export const useSearchProductsData = (
         }
 
         setSearchProductsData({
-            products: mergeProductEdges(previouslyQueriedProductsFromCache, response.data.products.edges),
-            hasNextPage: response.data.products.pageInfo.hasNextPage,
+            products: mergeProductEdges(previouslyQueriedProductsFromCache, response.data.productsSearch.edges),
+            hasNextPage: response.data.productsSearch.pageInfo.hasNextPage,
         });
         stopFetching();
     };
@@ -141,7 +141,7 @@ const readSearchProductsFromCache = (
             endCursor,
             pageSize,
         },
-    )?.data?.products;
+    )?.data?.productsSearch;
 
     return {
         products: dataFromCache?.edges,

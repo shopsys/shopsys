@@ -12,8 +12,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class CategoriesSearchQuery extends AbstractQuery
 {
-    protected const DEFAULT_FIRST_LIMIT = 10;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrontendApiBundle\Model\Category\CategoryFacade $categoryFacade
@@ -52,17 +50,5 @@ class CategoriesSearchQuery extends AbstractQuery
                 $this->domain->getId(),
             ),
         );
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     */
-    protected function setDefaultFirstOffsetIfNecessary(Argument $argument): void
-    {
-        if ($argument->offsetExists('first') === false
-            && $argument->offsetExists('last') === false
-        ) {
-            $argument->offsetSet('first', static::DEFAULT_FIRST_LIMIT);
-        }
     }
 }

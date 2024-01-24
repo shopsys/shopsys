@@ -13,8 +13,6 @@ use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageExcep
 
 class OrdersQuery extends AbstractQuery
 {
-    protected const DEFAULT_FIRST_LIMIT = 10;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
@@ -44,17 +42,5 @@ class OrdersQuery extends AbstractQuery
         });
 
         return $paginator->auto($argument, $this->orderApiFacade->getCustomerUserOrderCount($customerUser));
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     */
-    protected function setDefaultFirstOffsetIfNecessary(Argument $argument): void
-    {
-        if ($argument->offsetExists('first') === false
-            && $argument->offsetExists('last') === false
-        ) {
-            $argument->offsetSet('first', static::DEFAULT_FIRST_LIMIT);
-        }
     }
 }

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Arguments;
 
-use Overblog\GraphQLBundle\Definition\Builder\MappingInterface;
 use Shopsys\FrontendApiBundle\Component\Arguments\Exception\MandatoryArgumentMissingException;
 
-class PaginatorArgumentsBuilder implements MappingInterface
+class AbstractProductPaginatorArgumentsBuilder extends AbstractPaginatorArgumentsBuilder
 {
     protected const CONFIG_ORDER_TYPE_KEY = 'orderingModeType';
 
@@ -19,38 +18,17 @@ class PaginatorArgumentsBuilder implements MappingInterface
     {
         $this->checkMandatoryFields($config);
 
-        return [
-            'after' => [
-                'type' => 'String',
-            ],
-            'first' => [
-                'type' => 'Int',
-            ],
-            'before' => [
-                'type' => 'String',
-            ],
-            'last' => [
-                'type' => 'Int',
-            ],
+        $mappingDefinition = parent::toMappingDefinition($config);
+
+        return array_merge($mappingDefinition, [
             'orderingMode' => [
                 'type' => $config[static::CONFIG_ORDER_TYPE_KEY],
             ],
             'filter' => [
                 'type' => 'ProductFilter',
+                'validation' => 'cascade',
             ],
-            'search' => [
-                'type' => 'String',
-            ],
-            'categorySlug' => [
-                'type' => 'String',
-            ],
-            'brandSlug' => [
-                'type' => 'String',
-            ],
-            'flagSlug' => [
-                'type' => 'String',
-            ],
-        ];
+        ]);
     }
 
     /**

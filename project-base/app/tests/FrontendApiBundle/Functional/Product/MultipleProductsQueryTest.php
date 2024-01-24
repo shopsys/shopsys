@@ -26,7 +26,7 @@ class MultipleProductsQueryTest extends GraphQlTestCase
           }
         }
       }      
-      productsStatic: products(first: 2, filter: {minimalPrice: "6000"}, orderingMode: PRICE_ASC, search: "Samsung") {
+      productsStatic: products(first: 2, filter: {minimalPrice: "6000"}, orderingMode: PRICE_ASC) {
         edges {
           node {
             name

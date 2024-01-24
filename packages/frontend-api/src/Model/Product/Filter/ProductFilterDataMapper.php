@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Product\Filter;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
@@ -26,11 +27,13 @@ class ProductFilterDataMapper
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      */
     public function __construct(
         protected readonly FlagFacade $flagFacade,
         protected readonly BrandFacade $brandFacade,
         protected readonly ParameterFacade $parameterFacade,
+        protected readonly ProductFilterDataFactory $productFilterDataFactory,
     ) {
     }
 
@@ -40,7 +43,7 @@ class ProductFilterDataMapper
      */
     public function mapFrontendApiFilterToProductFilterData(array $frontendApiFilter): ProductFilterData
     {
-        $productFilterData = new ProductFilterData();
+        $productFilterData = $this->productFilterDataFactory->create();
         $productFilterData->minimalPrice = $frontendApiFilter['minimalPrice'] ?? null;
         $productFilterData->maximalPrice = $frontendApiFilter['maximalPrice'] ?? null;
         $productFilterData->parameters = $this->getParametersAndValuesByUuids($frontendApiFilter['parameters'] ?? []);

@@ -24,6 +24,7 @@ There is a list of all the repositories maintained by the monorepo:
 -   [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
 -   [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
 -   [shopsys/php-image](https://github.com/shopsys/php-image)
+-   [shopsys/persoo](https://github.com/shopsys/persoo)
 
 Packages are formatted by release version.
 You can see all the changes done to the package that you carry about with this tree.

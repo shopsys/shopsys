@@ -23,6 +23,7 @@
             "Shopsys\\ArticleFeed\\PersooBundle\\": "packages/article-feed-persoo/src/",
             "Shopsys\\S3Bridge\\": "packages/s3-bridge/src/",
             "Shopsys\\FrameworkBundle\\": "packages/framework/src/",
+            "Shopsys\\PersooBundle\\": "packages/persoo/src/",
             "Sniffer\\": "project-base/app/sniffer/"
         },
         "classmap": [
@@ -48,6 +49,7 @@
             "Tests\\ProductFeed\\HeurekaBundle\\": "packages/product-feed-heureka/tests/",
             "Tests\\ProductFeed\\HeurekaDeliveryBundle\\": "packages/product-feed-heureka-delivery/tests/",
             "Tests\\ProductFeed\\PersooBundle\\": "packages/product-feed-persoo/tests/",
+            "Tests\\PersooBundle\\": "packages/persoo/tests/",
             "Shopsys\\Releaser\\": "utils/releaser/src/",
             "Shopsys\\Releaser\\Tests\\": "utils/releaser/tests"
         }
@@ -269,6 +271,7 @@
         "shopsys/product-feed-heureka-delivery": "self.version",
         "shopsys/framework": "self.version",
         "shopsys/coding-standards": "self.version",
-        "shopsys/s3-bridge": "self.version"
+        "shopsys/s3-bridge": "self.version",
+        "shopsys/persoo": "self.version"
     }
 }

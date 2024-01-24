@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
@@ -20,8 +19,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class ProductsQuery extends AbstractQuery
 {
-    protected const DEFAULT_FIRST_LIMIT = 10;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
@@ -29,6 +26,7 @@ class ProductsQuery extends AbstractQuery
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade $productListFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
      */
     public function __construct(
         protected readonly ProductFacade $productFacade,
@@ -37,6 +35,7 @@ class ProductsQuery extends AbstractQuery
         protected readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
         protected readonly ProductListFacade $productListFacade,
         protected readonly ProductRepository $productRepository,
+        protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
     ) {
     }
 
@@ -59,7 +58,7 @@ class ProductsQuery extends AbstractQuery
                 return $this->productFacade->getFilteredProductsOnCurrentDomain(
                     $limit,
                     $offset,
-                    $this->getOrderingModeFromArgument($argument),
+                    $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
                     $productFilterData,
                     $search,
                 );
@@ -93,7 +92,7 @@ class ProductsQuery extends AbstractQuery
                     $category,
                     $limit,
                     $offset,
-                    $this->getOrderingModeFromArgument($argument),
+                    $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
                     $productFilterData,
                     $search,
                 );
@@ -127,7 +126,7 @@ class ProductsQuery extends AbstractQuery
                     $brand,
                     $limit,
                     $offset,
-                    $this->getOrderingModeFromArgument($argument),
+                    $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
                     $productFilterData,
                     $search,
                 );
@@ -136,44 +135,6 @@ class ProductsQuery extends AbstractQuery
             $argument,
             $productFilterData,
         );
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     */
-    protected function setDefaultFirstOffsetIfNecessary(Argument $argument): void
-    {
-        if ($argument->offsetExists('first') === false && $argument->offsetExists('last') === false) {
-            $argument->offsetSet('first', static::DEFAULT_FIRST_LIMIT);
-        }
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return string
-     */
-    protected function getOrderingModeFromArgument(Argument $argument): string
-    {
-        $orderingMode = $this->getDefaultOrderingMode($argument);
-
-        if ($argument->offsetExists('orderingMode')) {
-            $orderingMode = $argument->offsetGet('orderingMode');
-        }
-
-        return $orderingMode;
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return string
-     */
-    protected function getDefaultOrderingMode(Argument $argument): string
-    {
-        if (isset($argument['search'])) {
-            return ProductListOrderingConfig::ORDER_BY_RELEVANCE;
-        }
-
-        return ProductListOrderingConfig::ORDER_BY_PRIORITY;
     }
 
     /**

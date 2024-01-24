@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Category;
 
 use App\Model\Category\LinkedCategory\LinkedCategoryFacade;
-use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -22,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -215,7 +215,7 @@ class CategoryFacade extends BaseCategoryFacade
     }
 
     /**
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return array
      */
     public function getCategoriesOfProductByFilterData(ProductFilterData $productFilterData): array

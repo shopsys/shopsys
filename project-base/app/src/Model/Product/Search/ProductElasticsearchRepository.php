@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
-use App\Model\Product\Filter\ProductFilterData;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository as BaseProductElasticsearchRepository;
 
 /**
@@ -45,7 +45,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
     }
 
     /**
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return int[]
      */
     public function getCategoryIdsForFilterData(ProductFilterData $productFilterData): array

@@ -39,7 +39,7 @@ BrandDecorator:
                 type: "ProductConnection"
                 description: "Paginated and ordered products of brand"
                 argsBuilder:
-                    builder: "PaginatorArgumentsBuilder"
+                    builder: "ProductPaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
                 resolve: '@=query("productsByBrandQuery", args, value)'
