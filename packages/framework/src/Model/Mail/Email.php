@@ -30,4 +30,24 @@ class Email extends BaseEmail
     {
         return $this->domainId;
     }
+
+    /**
+     * @internal
+     * @return array
+     */
+    public function __serialize(): array
+    {
+        return [$this->domainId, parent::__serialize()];
+    }
+
+    /**
+     * @internal
+     * @param array $data
+     */
+    public function __unserialize(array $data): void
+    {
+        [$this->domainId, $parentData] = $data;
+
+        parent::__unserialize($parentData);
+    }
 }
