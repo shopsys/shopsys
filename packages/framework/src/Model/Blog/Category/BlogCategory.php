@@ -31,7 +31,7 @@ class BlogCategory extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryTranslation>
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryTranslation>
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryTranslation")
      */
     protected $translations;
@@ -45,7 +45,7 @@ class BlogCategory extends AbstractTranslatableEntity
     protected $parent;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory>
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory>
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
@@ -73,7 +73,7 @@ class BlogCategory extends AbstractTranslatableEntity
     protected $rgt;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDomain>
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDomain>
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDomain", mappedBy="blogCategory", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $domains;

@@ -217,7 +217,6 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->manualInputPricesByPricingGroupId = $this->getNullForAllPricingGroups();
         }
 
-        /** @var \App\Model\Product\Product[] $productAccessories */
         $productAccessories = $this->getAccessoriesData($product);
 
         $productData->accessories = $productAccessories;

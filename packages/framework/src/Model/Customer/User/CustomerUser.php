@@ -130,7 +130,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $uuid;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain>
      * @ORM\OneToMany(targetEntity="CustomerUserRefreshTokenChain", mappedBy="customerUser", cascade={"persist"})
      */
     protected $refreshTokenChain;

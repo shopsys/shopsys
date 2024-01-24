@@ -70,7 +70,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $email;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit>
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimit",
      *     mappedBy="administrator",
@@ -81,7 +81,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $gridLimits;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole>
      * @ORM\OneToMany(
      *     targetEntity="\Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole",
      *     mappedBy="administrator",

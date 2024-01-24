@@ -1144,7 +1144,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 
 -   leverage added missing entity factories ([#3004](https://github.com/shopsys/shopsys/pull/3004))
+
     -   `Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade::__construct()` changed its interface:
+
     ```diff
         public function __construct(
             protected readonly EntityManagerInterface $em,
@@ -1153,7 +1155,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly CategoryParameterFactory $categoryParameterFactory,
         )
     ```
+
     -   `\Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade::__construct()` changed its interface:
+
     ```diff
         public function __construct(
             protected readonly EntityManagerInterface $em,
@@ -1162,6 +1166,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly HeurekaCategoryFactory $heurekaCategoryFactory,
         )
     ```
+
+    -   see #project-base-diff to update your project
+
+-   fix doctrine collections type annotations ([#3000](https://github.com/shopsys/shopsys/pull/3000))
     -   see #project-base-diff to update your project
 
 ### Storefront

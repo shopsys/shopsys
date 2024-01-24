@@ -33,7 +33,7 @@ class Parameter extends AbstractTranslatableEntity
     protected $uuid;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation>
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */

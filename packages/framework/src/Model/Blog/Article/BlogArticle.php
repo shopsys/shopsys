@@ -28,7 +28,7 @@ class BlogArticle extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomain>
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomain>
      * @ORM\OneToMany(
      *   targetEntity="Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomain",
      *   mappedBy="blogArticle",
@@ -39,13 +39,13 @@ class BlogArticle extends AbstractTranslatableEntity
     protected $blogArticleBlogCategoryDomains;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleTranslation>
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleTranslation>
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleTranslation")
      */
     protected $translations;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDomain>
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDomain>
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDomain", mappedBy="blogArticle", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $domains;

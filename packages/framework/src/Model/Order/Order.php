@@ -63,7 +63,7 @@ class Order
     protected $orderPaymentStatusPageValidFrom;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem>
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Order\Item\OrderItem",
      *     mappedBy="order",
