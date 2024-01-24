@@ -1346,3 +1346,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         ```
     -   include tag <LastVisitedProducts lastVisitedProductsFromCookies={cookies.lastVisitedProducts} /> on place where you want to display last visited products
     -   default places: homepage, product detail, search, category, blog list, blog detail
+-   add new arguments to enable personalized search ([#2999](https://github.com/shopsys/shopsys/pull/2999))
+    -   two additional arguments (userId and requestingPage) were added to search queries that are used in a Persoo bundle for search personalization
+    -   new hook `useCurrentUrl` for get current full URL
+    -   unique `userIdentifier` is generated and saved in persisted store
