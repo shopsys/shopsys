@@ -30,7 +30,7 @@ class AnnotationsAdder
             return;
         }
 
-        if ($projectClassDocComment === '') {
+        if ($projectClassDocComment === '' || $projectClassDocComment === null) {
             $classKeywordWithName = 'class ' . $betterReflectionClass->getShortName();
             $this->fileContentReplacer->replaceInFile(
                 $projectClassFileName,

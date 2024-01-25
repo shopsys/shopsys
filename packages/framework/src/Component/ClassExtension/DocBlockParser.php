@@ -21,12 +21,12 @@ class DocBlockParser
     }
 
     /**
-     * @param string $docBlock
+     * @param string|null $docBlock
      * @return \phpDocumentor\Reflection\Type[]
      */
-    public function getReturnTypes(string $docBlock): array
+    public function getReturnTypes(?string $docBlock): array
     {
-        if ($docBlock === '') {
+        if ($docBlock === '' || $docBlock === null) {
             return [];
         }
 
@@ -43,7 +43,7 @@ class DocBlockParser
     {
         $docBlock = $reflectionParameter->getDeclaringFunction()->getDocComment();
 
-        if ($docBlock === '') {
+        if ($docBlock === '' || $docBlock === null) {
             return null;
         }
 
@@ -72,7 +72,7 @@ class DocBlockParser
     {
         $docBlock = $reflectionProperty->getDocComment();
 
-        if ($docBlock === '') {
+        if ($docBlock === '' || $docBlock === null) {
             return null;
         }
 

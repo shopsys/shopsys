@@ -51,7 +51,7 @@ class MethodAnnotationsFactory
         foreach ($frameworkClassBetterReflection->getMethods() as $method) {
             $methodAnnotationLine = $this->getMethodAnnotationLine($method, $projectClassBetterReflection);
 
-            if ($methodAnnotationLine !== '' && strpos($projectClassDocBlock, $methodAnnotationLine) === false) {
+            if ($methodAnnotationLine !== '' && !str_contains($projectClassDocBlock ?? '', $methodAnnotationLine)) {
                 $methodAnnotationsLines .= $methodAnnotationLine;
             }
         }
