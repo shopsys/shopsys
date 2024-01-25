@@ -8,8 +8,6 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Model\Customer\Customer;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -232,7 +230,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
-    public function getCustomer(): Customer
+    public function getCustomer()
     {
         return $this->customer;
     }
@@ -422,7 +420,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      */
-    public function getDefaultDeliveryAddress(): ?DeliveryAddress
+    public function getDefaultDeliveryAddress()
     {
         return $this->defaultDeliveryAddress;
     }
@@ -430,7 +428,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }

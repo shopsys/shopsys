@@ -68,7 +68,7 @@ class ProductManualInputPrice
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getInputPrice(): ?Money
+    public function getInputPrice()
     {
         return $this->inputPrice;
     }

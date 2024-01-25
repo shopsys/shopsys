@@ -60,7 +60,7 @@ class CustomerUserRefreshTokenChain
     /**
      * @return string
      */
-    public function getTokenChain(): string
+    public function getTokenChain()
     {
         return $this->tokenChain;
     }
@@ -68,7 +68,7 @@ class CustomerUserRefreshTokenChain
     /**
      * @return string
      */
-    public function getDeviceId(): string
+    public function getDeviceId()
     {
         return $this->deviceId;
     }

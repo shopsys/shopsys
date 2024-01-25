@@ -208,7 +208,7 @@ class Cart
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function getCustomerUser(): ?CustomerUser
+    public function getCustomerUser()
     {
         return $this->customerUser;
     }

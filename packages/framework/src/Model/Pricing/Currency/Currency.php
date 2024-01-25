@@ -133,7 +133,7 @@ class Currency
     /**
      * @return int
      */
-    public function getMinFractionDigits(): int
+    public function getMinFractionDigits()
     {
         return $this->minFractionDigits;
     }
@@ -141,7 +141,7 @@ class Currency
     /**
      * @return string
      */
-    public function getRoundingType(): string
+    public function getRoundingType()
     {
         return $this->roundingType;
     }

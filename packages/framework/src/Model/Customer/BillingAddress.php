@@ -118,7 +118,7 @@ class BillingAddress
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -190,7 +190,7 @@ class BillingAddress
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
-    public function getCustomer(): Customer
+    public function getCustomer()
     {
         return $this->customer;
     }

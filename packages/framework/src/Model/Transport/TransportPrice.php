@@ -49,7 +49,7 @@ class TransportPrice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function getTransport(): Transport
+    public function getTransport()
     {
         return $this->transport;
     }
@@ -57,7 +57,7 @@ class TransportPrice
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getPrice(): Money
+    public function getPrice()
     {
         return $this->price;
     }
@@ -81,7 +81,7 @@ class TransportPrice
     /**
      * @return int
      */
-    public function getDomainId(): int
+    public function getDomainId()
     {
         return $this->domainId;
     }

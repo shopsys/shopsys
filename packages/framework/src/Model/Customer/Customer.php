@@ -109,7 +109,7 @@ class Customer
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress[]
      */
-    public function getDeliveryAddresses(): array
+    public function getDeliveryAddresses()
     {
         return $this->deliveryAddresses->getValues();
     }

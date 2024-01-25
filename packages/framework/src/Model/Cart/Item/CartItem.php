@@ -93,7 +93,7 @@ class CartItem
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -101,7 +101,7 @@ class CartItem
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProduct(): Product
+    public function getProduct()
     {
         if ($this->product === null) {
             throw new ProductNotFoundException();
@@ -122,7 +122,7 @@ class CartItem
     /**
      * @return int
      */
-    public function getQuantity(): int
+    public function getQuantity()
     {
         return $this->quantity;
     }
@@ -130,7 +130,7 @@ class CartItem
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getWatchedPrice(): ?Money
+    public function getWatchedPrice()
     {
         return $this->watchedPrice;
     }
@@ -155,7 +155,7 @@ class CartItem
     /**
      * @return \DateTime
      */
-    public function getAddedAt(): DateTime
+    public function getAddedAt()
     {
         return $this->addedAt;
     }

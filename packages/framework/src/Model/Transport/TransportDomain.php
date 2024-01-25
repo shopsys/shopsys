@@ -100,7 +100,7 @@ class TransportDomain
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function getVat(): Vat
+    public function getVat()
     {
         return $this->vat;
     }

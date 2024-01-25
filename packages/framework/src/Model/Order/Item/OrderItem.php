@@ -194,7 +194,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getPriceWithoutVat(): Money
+    public function getPriceWithoutVat()
     {
         return $this->priceWithoutVat;
     }
@@ -202,7 +202,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getPriceWithVat(): Money
+    public function getPriceWithVat()
     {
         return $this->priceWithVat;
     }
@@ -210,7 +210,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getTotalPriceWithoutVat(): ?Money
+    public function getTotalPriceWithoutVat()
     {
         return $this->hasForcedTotalPrice() ? $this->totalPriceWithoutVat : null;
     }
@@ -218,7 +218,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getTotalPriceWithVat(): Money
+    public function getTotalPriceWithVat()
     {
         return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->priceWithVat->multiply(
             $this->quantity,
@@ -322,7 +322,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function getTransport(): Transport
+    public function getTransport()
     {
         $this->checkTypeTransport();
 
@@ -341,7 +341,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function getPayment(): Payment
+    public function getPayment()
     {
         $this->checkTypePayment();
 
@@ -351,7 +351,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
      */
-    public function getProduct(): ?Product
+    public function getProduct()
     {
         $this->checkTypeProduct();
 

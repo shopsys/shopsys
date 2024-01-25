@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\ZboziBundle\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 
 /**
  * @ORM\Table(
@@ -21,33 +19,33 @@ class ZboziProductDomain
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected int $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
-    protected Product $product;
+    protected $product;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected bool $show;
+    protected $show;
 
     /**
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
-    protected ?Money $cpc = null;
+    protected $cpc;
 
     /**
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
-    protected ?Money $cpcSearch = null;
+    protected $cpcSearch;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected int $domainId;
+    protected $domainId;
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
@@ -112,7 +110,7 @@ class ZboziProductDomain
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getCpc(): ?Money
+    public function getCpc()
     {
         return $this->cpc;
     }
@@ -120,7 +118,7 @@ class ZboziProductDomain
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getCpcSearch(): ?Money
+    public function getCpcSearch()
     {
         return $this->cpcSearch;
     }

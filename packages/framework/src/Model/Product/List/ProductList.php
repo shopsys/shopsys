@@ -113,7 +113,7 @@ class ProductList
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }
@@ -121,7 +121,7 @@ class ProductList
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum
      */
-    public function getType(): ProductListTypeEnumInterface
+    public function getType()
     {
         return $this->type;
     }
@@ -152,7 +152,7 @@ class ProductList
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem[]
      */
-    public function getItems(): array
+    public function getItems()
     {
         return $this->items->getValues();
     }

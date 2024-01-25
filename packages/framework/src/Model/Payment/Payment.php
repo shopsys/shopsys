@@ -400,7 +400,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }

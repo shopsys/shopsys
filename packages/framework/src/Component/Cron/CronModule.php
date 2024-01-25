@@ -164,7 +164,7 @@ class CronModule
     /**
      * @return \DateTime|null
      */
-    public function getLastStartedAt(): ?DateTime
+    public function getLastStartedAt()
     {
         return $this->lastStartedAt;
     }
@@ -172,7 +172,7 @@ class CronModule
     /**
      * @return \DateTime|null
      */
-    public function getLastFinishedAt(): ?DateTime
+    public function getLastFinishedAt()
     {
         return $this->lastFinishedAt;
     }
@@ -180,7 +180,7 @@ class CronModule
     /**
      * @return int|null
      */
-    public function getLastDuration(): ?int
+    public function getLastDuration()
     {
         return $this->lastDuration;
     }
@@ -188,7 +188,7 @@ class CronModule
     /**
      * @return string
      */
-    public function getStatus(): string
+    public function getStatus()
     {
         return $this->status;
     }

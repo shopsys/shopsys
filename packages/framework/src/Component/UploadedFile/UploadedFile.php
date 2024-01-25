@@ -168,7 +168,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -176,7 +176,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -208,7 +208,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return string
      */
-    public function getSlug(): string
+    public function getSlug()
     {
         return $this->slug;
     }
@@ -232,7 +232,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return string
      */
-    public function getEntityName(): string
+    public function getEntityName()
     {
         return $this->entityName;
     }
@@ -240,7 +240,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return int
      */
-    public function getEntityId(): int
+    public function getEntityId()
     {
         return $this->entityId;
     }
@@ -248,7 +248,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return string
      */
-    public function getExtension(): string
+    public function getExtension()
     {
         return $this->extension;
     }
@@ -256,7 +256,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return string
      */
-    public function getType(): string
+    public function getType()
     {
         return $this->type;
     }
@@ -301,7 +301,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return \DateTime
      */
-    public function getModifiedAt(): DateTime
+    public function getModifiedAt()
     {
         return $this->modifiedAt;
     }
@@ -309,7 +309,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @return int
      */
-    public function getPosition(): int
+    public function getPosition()
     {
         return $this->position;
     }

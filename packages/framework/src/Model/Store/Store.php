@@ -11,8 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
-use Shopsys\FrameworkBundle\Model\Country\Country;
-use Shopsys\FrameworkBundle\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\Exception\OpeningHoursNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
@@ -222,7 +220,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -230,7 +228,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }
@@ -238,7 +236,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -246,7 +244,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Stock\Stock|null
      */
-    public function getStock(): ?Stock
+    public function getStock()
     {
         return $this->stock;
     }
@@ -262,7 +260,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getDescription(): ?string
+    public function getDescription()
     {
         return $this->description;
     }
@@ -270,7 +268,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getExternalId(): ?string
+    public function getExternalId()
     {
         return $this->externalId;
     }
@@ -278,7 +276,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getStreet(): string
+    public function getStreet()
     {
         return $this->street;
     }
@@ -286,7 +284,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getCity(): string
+    public function getCity()
     {
         return $this->city;
     }
@@ -294,7 +292,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getPostcode(): string
+    public function getPostcode()
     {
         return $this->postcode;
     }
@@ -302,7 +300,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    public function getCountry(): Country
+    public function getCountry()
     {
         return $this->country;
     }
@@ -310,7 +308,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours[]
      */
-    public function getOpeningHours(): array
+    public function getOpeningHours()
     {
         return $this->openingHours->getValues();
     }
@@ -380,7 +378,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getContactInfo(): ?string
+    public function getContactInfo()
     {
         return $this->contactInfo;
     }
@@ -388,7 +386,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getSpecialMessage(): ?string
+    public function getSpecialMessage()
     {
         return $this->specialMessage;
     }
@@ -396,7 +394,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getLocationLatitude(): ?string
+    public function getLocationLatitude()
     {
         return $this->locationLatitude;
     }
@@ -404,7 +402,7 @@ class Store implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getLocationLongitude(): ?string
+    public function getLocationLongitude()
     {
         return $this->locationLongitude;
     }

@@ -99,7 +99,7 @@ class SeoPageDomain
     /**
      * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
      */
-    public function getSeoPage(): SeoPage
+    public function getSeoPage()
     {
         return $this->seoPage;
     }

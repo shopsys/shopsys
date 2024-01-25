@@ -65,7 +65,7 @@ class CountryDomain
     /**
      * @return int
      */
-    public function getDomainId(): int
+    public function getDomainId()
     {
         return $this->domainId;
     }
@@ -89,7 +89,7 @@ class CountryDomain
     /**
      * @return int
      */
-    public function getPriority(): int
+    public function getPriority()
     {
         return $this->priority;
     }

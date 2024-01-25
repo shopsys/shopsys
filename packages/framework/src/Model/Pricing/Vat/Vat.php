@@ -93,7 +93,7 @@ class Vat
     /**
      * @return string
      */
-    public function getPercent(): string
+    public function getPercent()
     {
         return $this->percent;
     }
@@ -122,7 +122,7 @@ class Vat
     /**
      * @return int
      */
-    public function getDomainId(): int
+    public function getDomainId()
     {
         return $this->domainId;
     }

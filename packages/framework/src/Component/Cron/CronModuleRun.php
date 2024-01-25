@@ -76,7 +76,7 @@ class CronModuleRun
     /**
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronModule
      */
-    public function getCronModule(): CronModule
+    public function getCronModule()
     {
         return $this->cronModule;
     }
@@ -84,7 +84,7 @@ class CronModuleRun
     /**
      * @return string
      */
-    public function getStatus(): string
+    public function getStatus()
     {
         return $this->status;
     }
@@ -92,7 +92,7 @@ class CronModuleRun
     /**
      * @return \DateTime
      */
-    public function getStartedAt(): DateTime
+    public function getStartedAt()
     {
         return $this->startedAt;
     }
@@ -100,7 +100,7 @@ class CronModuleRun
     /**
      * @return \DateTime
      */
-    public function getFinishedAt(): DateTime
+    public function getFinishedAt()
     {
         return $this->finishedAt;
     }
@@ -108,7 +108,7 @@ class CronModuleRun
     /**
      * @return int
      */
-    public function getDuration(): int
+    public function getDuration()
     {
         return $this->duration;
     }
@@ -116,7 +116,7 @@ class CronModuleRun
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }

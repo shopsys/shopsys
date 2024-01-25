@@ -545,7 +545,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getTotalPriceWithVat(): Money
+    public function getTotalPriceWithVat()
     {
         return $this->totalPriceWithVat;
     }
@@ -553,7 +553,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getTotalPriceWithoutVat(): Money
+    public function getTotalPriceWithoutVat()
     {
         return $this->totalPriceWithoutVat;
     }
@@ -569,7 +569,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getTotalProductPriceWithVat(): Money
+    public function getTotalProductPriceWithVat()
     {
         return $this->totalProductPriceWithVat;
     }
@@ -616,7 +616,7 @@ class Order
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }
@@ -649,7 +649,7 @@ class Order
     /**
      * @return \DateTime|null
      */
-    public function getOrderPaymentStatusPageValidFrom(): ?DateTime
+    public function getOrderPaymentStatusPageValidFrom()
     {
         return $this->orderPaymentStatusPageValidFrom;
     }
@@ -960,7 +960,7 @@ class Order
     /**
      * @return string|null
      */
-    public function getOrigin(): ?string
+    public function getOrigin()
     {
         return $this->origin;
     }
@@ -988,7 +988,7 @@ class Order
     /**
      * @return string|null
      */
-    public function getOrderPaymentStatusPageValidityHash(): ?string
+    public function getOrderPaymentStatusPageValidityHash()
     {
         return $this->orderPaymentStatusPageValidityHash;
     }

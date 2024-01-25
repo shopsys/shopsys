@@ -282,7 +282,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return \DateTime|null
      */
-    public function getRolesChangedAt(): ?DateTime
+    public function getRolesChangedAt()
     {
         return $this->rolesChangedAt;
     }
@@ -361,7 +361,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * {@inheritdoc}
      */
-    public function getRoles(): array
+    public function getRoles()
     {
         $roles = [];
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole $role */

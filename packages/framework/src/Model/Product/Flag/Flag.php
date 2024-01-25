@@ -91,7 +91,7 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }

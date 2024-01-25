@@ -234,7 +234,7 @@ class ProductDomain
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function getVat(): Vat
+    public function getVat()
     {
         return $this->vat;
     }
@@ -330,7 +330,7 @@ class ProductDomain
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getFlags(): array
+    public function getFlags()
     {
         return $this->flags->getValues();
     }
