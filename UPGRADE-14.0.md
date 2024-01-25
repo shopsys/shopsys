@@ -1136,6 +1136,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   `ProductExtendedConnection` logic has been moved to `ProductConnection`
 
     -   see #project-base-diff to update your project
+
 -   add ability to change a payment in an order ([#2952](https://github.com/shopsys/shopsys/pull/2952))
     -   `Shopsys\FrontendApiBundle\Model\Resolver\Payment\PaymentsQuery::__construct()` changed its interface:
     ```diff
@@ -1206,6 +1207,33 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         +       ?ArrayObject $context = null,
         +   ): Price
         ```
+    -   `Shopsys\FrontendApiBundle\Model\Resolver\Payment\PaymentsQuery` was changed:
+        -   `__construct()` changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly PaymentFacade $paymentFacade,
+                protected readonly OrderApiFacade $orderApiFacade,
+        +       protected readonly OrderPaymentsConfigFactory $orderPaymentsConfigFactory,
+        ```
+        -   `orderPaymentsQuery()` method changed its interface:
+        ```diff
+        -   public function orderPaymentsQuery(string $orderUuid): array
+        +   public function orderPaymentsQuery(string $orderUuid): OrderPaymentsConfig
+        ```
+    -   FE API: `orderPayments` query now returns `OrderPaymentsConfig` type instead of `Payment[]`
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `framework` package:
+        -   GoPay and payment transactions functionality
+        -   `Payment::$type`
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `frontend-api` package:
+        -   `TransportResolverMap`
+        -   `goPaySwiftsQuery`
+        -   `Payment.goPayPaymentMethod`
+        -   `PaymentMutation` (`updatePaymentStatusMutation` now returns `Order` type)
+        -   `GqlContextHelper` and `GqlContextInitializer`
+        -   `CartFacade::findCart()` moved to new `CartApiFacade`
+        -   `priceByPaymentQuery`
+        -   `priceByTransportQuery`
+        -   `ProductPriceMissingUserError`
     -   see #project-base-diff to update your project
 
 -   log entity changes ([#2980](https://github.com/shopsys/shopsys/pull/2980))
