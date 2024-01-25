@@ -21,7 +21,7 @@
         }
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "phpunit/phpunit": "^9.5.20",
         "symfony/framework-bundle": "^3.4|^4.0|^5.0",
         "symfony/http-foundation": "^3.4|^4.0|^5.0",

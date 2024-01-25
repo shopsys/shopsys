@@ -181,8 +181,8 @@ Docker images may fail to build during `docker-compose up -d` due to invalid ref
 
 ```no-highlight
 Building php-fpm
-Step 1/41 : FROM php:8.1-fpm-bullseye as base
-ERROR: Service 'php-fpm' failed to build: Error parsing reference: "php:8.1-fpm-bullseye as base" is not a valid repository/tag: invalid reference format
+Step 1/41 : FROM php:8.3-fpm-bullseye as base
+ERROR: Service 'php-fpm' failed to build: Error parsing reference: "php:8.3-fpm-bullseye as base" is not a valid repository/tag: invalid reference format
 ```
 
 This is because you have a version of Docker that does not support [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/).

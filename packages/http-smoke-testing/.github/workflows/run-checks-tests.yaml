@@ -9,7 +9,7 @@ jobs:
         runs-on: ubuntu-22.04
         strategy:
             matrix:
-                php-versions: ['8.1']
+                php-versions: ['8.3']
                 composer-preferred-dependencies: ['--prefer-lowest', '']
             fail-fast: false
         steps:
