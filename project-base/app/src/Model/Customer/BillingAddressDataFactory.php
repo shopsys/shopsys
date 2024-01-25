@@ -10,14 +10,14 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory as BaseBill
 
 /**
  * @method \App\Model\Customer\BillingAddressData createFromBillingAddress(\App\Model\Customer\BillingAddress $billingAddress)
- * @method \App\Model\Customer\BillingAddressData createInstance()
+ * @method \App\Model\Customer\BillingAddressData create()
  */
 class BillingAddressDataFactory extends BaseBillingAddressDataFactory
 {
     /**
      * @return \App\Model\Customer\BillingAddressData
      */
-    public function create(): BaseBillingAddressData
+    protected function createInstance(): BillingAddressData
     {
         return new BillingAddressData();
     }
