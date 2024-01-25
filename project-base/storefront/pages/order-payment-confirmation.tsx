@@ -34,7 +34,9 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                                 <PaymentFail
                                     lastUsedOrderPaymentType={paymentStatusData.UpdatePaymentStatus.payment.type}
                                     orderUuid={orderUuid}
-                                    paymentTransactionCount={paymentStatusData.UpdatePaymentStatus.paymentTransactionsCount}
+                                    paymentTransactionCount={
+                                        paymentStatusData.UpdatePaymentStatus.paymentTransactionsCount
+                                    }
                                 />
                             )}
                         </>

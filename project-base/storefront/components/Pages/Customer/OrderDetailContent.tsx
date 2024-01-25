@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Row, Cell, CellHead, Table, CellMinor } from 'components/Basic/Table/Table';
+import { OrderStatus } from 'components/Blocks/OrderStatus/OrderStatus';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
@@ -97,16 +98,24 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                 </Table>
                             </Cell>
                         )}
-                        {order.payment.type === PaymentTypeEnum.GoPay && (
-                            <Cell className="flex-1">
-                                <ColumnHeader>{t('Payment information')}</ColumnHeader>
+                        <Cell className="flex-1">
+                            <ColumnHeader>{t('Payment information')}</ColumnHeader>
+                            <Table className="border-0 p-0">
+                                <Row>
+                                    <CellMinor>{t('Status')}</CellMinor>
+                                    <Cell align="right">
+                                        <OrderStatus order={order} />
+                                    </Cell>
+                                </Row>
+                            </Table>
+                            {!order.isPaid && order.payment.type === PaymentTypeEnum.GoPay && (
                                 <PaymentsInOrderSelect
                                     orderUuid={order.uuid}
                                     paymentTransactionCount={order.paymentTransactionsCount}
                                     withRedirectAfterChanging={false}
                                 />
-                            </Cell>
-                        )}
+                            )}
+                        </Cell>
                     </Row>
                 </Table>
 

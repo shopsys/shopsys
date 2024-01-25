@@ -51,4 +51,5 @@ fragment OrderDetailFragment on Order {
         ...PriceFragment
     }
     paymentTransactionsCount
+    isPaid
 }
