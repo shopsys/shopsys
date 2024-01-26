@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexNotFoundException;
 
 class IndexRegistry
 {
@@ -50,7 +50,7 @@ class IndexRegistry
             return $this->registeredIndexes[$indexName];
         }
 
-        throw ElasticsearchIndexException::noRegisteredIndexFound($indexName);
+        throw new ElasticsearchIndexNotFoundException($indexName);
     }
 
     /**

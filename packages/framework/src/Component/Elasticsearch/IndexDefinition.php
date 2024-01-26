@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchCannotReadDefinitionFileException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchInvalidJsonInDefinitionFileException;
 
 class IndexDefinition
 {
@@ -34,7 +35,7 @@ class IndexDefinition
         $decodedDefinition = json_decode($this->getDefinitionFileContent(), true);
 
         if ($decodedDefinition === null) {
-            throw ElasticsearchIndexException::invalidJsonInDefinitionFile(
+            throw new ElasticsearchInvalidJsonInDefinitionFileException(
                 $this->getIndexName(),
                 $this->getDefinitionFilepath(),
             );
@@ -59,7 +60,7 @@ class IndexDefinition
         $definitionFilepath = $this->getDefinitionFilepath();
 
         if (!is_readable($definitionFilepath)) {
-            throw ElasticsearchIndexException::cantReadDefinitionFile($definitionFilepath);
+            throw new ElasticsearchCannotReadDefinitionFileException($definitionFilepath);
         }
 
         return file_get_contents($definitionFilepath);

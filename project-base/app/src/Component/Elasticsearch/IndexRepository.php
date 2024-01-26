@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Component\Elasticsearch;
 
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchBulkUpdateException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository as BaseIndexRepository;
 
@@ -82,7 +82,7 @@ class IndexRepository extends BaseIndexRepository
         $result = $this->elasticsearchClient->bulk($params);
 
         if (isset($result['errors']) && $result['errors'] === true) {
-            throw ElasticsearchIndexException::bulkUpdateError($indexAlias, $result['items']);
+            throw new ElasticsearchBulkUpdateException($indexAlias, $result['items']);
         }
     }
 }

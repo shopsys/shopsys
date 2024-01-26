@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchCannotReadDefinitionFileException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchInvalidJsonInDefinitionFileException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionModifier;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
@@ -57,8 +58,7 @@ class IndexDefinitionTest extends TestCase
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/invalidJson/';
         $indexDefinition = new IndexDefinition('product', $definitionDirectory, '', 1, new IndexDefinitionModifier(EnvironmentType::PRODUCTION, false));
 
-        $this->expectException(ElasticsearchIndexException::class);
-        $this->expectExceptionMessage('Invalid JSON in "product" definition file');
+        $this->expectException(ElasticsearchInvalidJsonInDefinitionFileException::class);
         $indexDefinition->getDefinition();
     }
 
@@ -67,8 +67,7 @@ class IndexDefinitionTest extends TestCase
         $definitionDirectory = __DIR__ . '/__fixtures/definitions/non-existing-folder-id-3e85ba/';
         $indexDefinition = new IndexDefinition('product', $definitionDirectory, '', 1, new IndexDefinitionModifier(EnvironmentType::PRODUCTION, false));
 
-        $this->expectException(ElasticsearchIndexException::class);
-        $this->expectExceptionMessage('Can\'t read definition file at path');
+        $this->expectException(ElasticsearchCannotReadDefinitionFileException::class);
         $indexDefinition->getDefinition();
     }
 

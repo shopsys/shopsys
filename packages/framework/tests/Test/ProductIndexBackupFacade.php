@@ -6,7 +6,7 @@ namespace Tests\FrameworkBundle\Test;
 
 use Elasticsearch\Client;
 use Elasticsearch\Namespaces\IndicesNamespace;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchCreateIndexException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository;
@@ -78,7 +78,7 @@ class ProductIndexBackupFacade
         $this->setWriteBlock($sourceIndexName, false);
 
         if (isset($result['error'])) {
-            throw ElasticsearchIndexException::createIndexError($sourceIndexName, $result['error']);
+            throw new ElasticsearchCreateIndexException($sourceIndexName, $result['error']);
         }
 
         $this->setWriteBlock($targetIndexName, false);
