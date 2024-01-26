@@ -166,7 +166,7 @@ class ProductData
     /**
      * @var string|null
      */
-    public ?string $uuid = null;
+    public $uuid;
 
     /**
      * @var array<int, \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat>

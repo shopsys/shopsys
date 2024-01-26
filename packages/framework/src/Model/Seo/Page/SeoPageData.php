@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Seo\Page;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
-
 class SeoPageData
 {
     /**
@@ -51,7 +49,7 @@ class SeoPageData
     /**
      * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
      */
-    public ImageUploadData $seoOgImage;
+    public $seoOgImage;
 
     public function __construct()
     {

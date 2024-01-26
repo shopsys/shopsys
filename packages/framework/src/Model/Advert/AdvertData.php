@@ -54,7 +54,7 @@ class AdvertData
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public array $categories;
+    public $categories;
 
     /**
      * @var \DateTime|null

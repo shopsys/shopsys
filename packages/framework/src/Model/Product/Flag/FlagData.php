@@ -24,7 +24,7 @@ class FlagData
     /**
      * @var string|null
      */
-    public ?string $uuid = null;
+    public $uuid;
 
     public function __construct()
     {
