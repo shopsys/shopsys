@@ -74,5 +74,5 @@ includes:
     - %currentWorkingDirectory%/packages/coding-standards/extension.neon
 rules:
     - \Shopsys\CodingStandards\Phpstan\EntityShouldHaveFactoryRule
-    - \Shopsys\CodingStandards\Phpstan\OrmPropertyGetterHasNoTypehintRule
+    - \Shopsys\CodingStandards\Phpstan\OrmPropertyGetterAndSetterHasNoTypehintRule
     - \Shopsys\CodingStandards\Phpstan\OrmPropertyHasNoTypehintRule
