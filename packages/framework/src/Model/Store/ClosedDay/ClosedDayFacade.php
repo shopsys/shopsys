@@ -12,10 +12,12 @@ class ClosedDayFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayRepository $closedDayRepository
+     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFactory $closedDayFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ClosedDayRepository $closedDayRepository,
+        protected readonly ClosedDayFactory $closedDayFactory,
     ) {
     }
 
@@ -44,7 +46,7 @@ class ClosedDayFacade
      */
     public function create(ClosedDayData $closedDayData): ClosedDay
     {
-        $closedDay = new ClosedDay($closedDayData);
+        $closedDay = $this->closedDayFactory->create($closedDayData);
         $this->em->persist($closedDay);
         $this->em->flush();
 
