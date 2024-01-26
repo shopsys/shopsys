@@ -72,3 +72,5 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
     - %currentWorkingDirectory%/packages/coding-standards/extension.neon
+rules:
+    - \Shopsys\CodingStandards\Phpstan\EntityShouldHaveFactoryRule
