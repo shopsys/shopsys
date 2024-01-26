@@ -13,11 +13,13 @@ class CategoryParameterFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFactory $categoryParameterFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CategoryParameterRepository $categoryParameterRepository,
         protected readonly ParameterFacade $parameterFacade,
+        protected readonly CategoryParameterFactory $categoryParameterFactory,
     ) {
     }
 
@@ -67,7 +69,7 @@ class CategoryParameterFacade
             }
 
             $parameter = $this->parameterFacade->getById($parameterId);
-            $categoryParameter = new CategoryParameter($category, $parameter, $collapsed, $position);
+            $categoryParameter = $this->categoryParameterFactory->create($category, $parameter, $collapsed, $position);
             $this->em->persist($categoryParameter);
             $catFlushAfterSaveRelation = true;
         }

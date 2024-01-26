@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Category\CategoryParameter;
+use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory;
 
 class ParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -101,15 +101,17 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFactory $categoryParameterFactory
      */
     public function __construct(
-        private ParameterDataFactory $parameterDataFactory,
-        private ParameterFacade $parameterFacade,
-        private ParameterValueDataFactory $parameterValueDataFactory,
-        private ParameterRepository $parameterRepository,
-        private ProductParameterValueFactory $productParameterValueFactory,
-        private EntityManagerDecorator $entityManager,
-        private Domain $domain,
+        private readonly ParameterDataFactory $parameterDataFactory,
+        private readonly ParameterFacade $parameterFacade,
+        private readonly ParameterValueDataFactory $parameterValueDataFactory,
+        private readonly ParameterRepository $parameterRepository,
+        private readonly ProductParameterValueFactory $productParameterValueFactory,
+        private readonly EntityManagerDecorator $entityManager,
+        private readonly Domain $domain,
+        private readonly CategoryParameterFactory $categoryParameterFactory,
     ) {
     }
 
@@ -216,7 +218,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $counter = 0;
 
         foreach ($asFilterInCategories as $category) {
-            $categoryParameter = new CategoryParameter($category, $parameter, false, $counter);
+            $categoryParameter = $this->categoryParameterFactory->create($category, $parameter, false, $counter);
             $this->entityManager->persist($categoryParameter);
             $counter++;
         }

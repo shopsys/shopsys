@@ -1140,6 +1140,19 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   sent emails via async queue ([#2998](https://github.com/shopsys/shopsys/pull/2998))
     -   see #project-base-diff to update your project
 -   change the product catnums field type in GrapesJs to text (([#2994](https://github.com/shopsys/shopsys/pull/2994)))
+
+    -   see #project-base-diff to update your project
+
+-   leverage added missing entity factories ([#3004](https://github.com/shopsys/shopsys/pull/3004))
+    -   `Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly EntityManagerInterface $em,
+            protected readonly CategoryParameterRepository $categoryParameterRepository,
+            protected readonly ParameterFacade $parameterFacade,
+    +       protected readonly CategoryParameterFactory $categoryParameterFactory,
+        )
+    ```
     -   see #project-base-diff to update your project
 
 ### Storefront
