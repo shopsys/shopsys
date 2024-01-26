@@ -200,7 +200,7 @@ class Cart
     /**
      * @param \DateTime $modifiedAt
      */
-    public function setModifiedAt(DateTime $modifiedAt)
+    public function setModifiedAt($modifiedAt)
     {
         $this->modifiedAt = $modifiedAt;
     }

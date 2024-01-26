@@ -196,7 +196,7 @@ class CronModule
     /**
      * @param int $duration
      */
-    public function setLastDuration(int $duration): void
+    public function setLastDuration($duration): void
     {
         $this->lastDuration = $duration;
     }

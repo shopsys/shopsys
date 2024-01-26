@@ -166,7 +166,7 @@ class Store implements OrderableEntityInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours[] $openingHours
      */
-    public function setOpeningHours(array $openingHours): void
+    public function setOpeningHours($openingHours): void
     {
         $this->openingHours = new ArrayCollection($openingHours);
     }

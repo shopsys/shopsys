@@ -65,7 +65,7 @@ class TransportPrice
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      */
-    public function setPrice(Money $price): void
+    public function setPrice($price): void
     {
         $this->price = $price;
     }
@@ -73,7 +73,7 @@ class TransportPrice
     /**
      * @param int $domainId
      */
-    public function setDomainId(int $domainId): void
+    public function setDomainId($domainId): void
     {
         $this->domainId = $domainId;
     }

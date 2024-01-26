@@ -15,10 +15,8 @@ use Shopsys\FrameworkBundle\Model\Order\Item\Exception\MainVariantCannotBeOrdere
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasOnlyOneTotalPriceException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\WrongItemTypeException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
  * @ORM\Table(name="order_items")
@@ -313,7 +311,7 @@ class OrderItem
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      */
-    public function setTransport(Transport $transport): void
+    public function setTransport($transport): void
     {
         $this->checkTypeTransport();
         $this->transport = $transport;
@@ -332,7 +330,7 @@ class OrderItem
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      */
-    public function setPayment(Payment $payment): void
+    public function setPayment($payment): void
     {
         $this->checkTypePayment();
         $this->payment = $payment;
@@ -371,7 +369,7 @@ class OrderItem
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      */
-    public function setProduct(?Product $product): void
+    public function setProduct($product): void
     {
         $this->checkTypeProduct();
 

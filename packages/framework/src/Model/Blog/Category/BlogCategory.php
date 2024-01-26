@@ -111,7 +111,7 @@ class BlogCategory extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|null $parent
      */
-    public function setParent(?self $parent = null): void
+    public function setParent($parent = null): void
     {
         $this->parent = $parent;
     }

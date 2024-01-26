@@ -138,7 +138,7 @@ class CartItem
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $watchedPrice
      */
-    public function setWatchedPrice(?Money $watchedPrice): void
+    public function setWatchedPrice($watchedPrice): void
     {
         $this->watchedPrice = $watchedPrice;
     }

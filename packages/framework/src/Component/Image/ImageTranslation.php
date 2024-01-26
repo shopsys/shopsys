@@ -38,7 +38,7 @@ class ImageTranslation extends AbstractTranslation
     /**
      * @param string|null $name
      */
-    public function setName(?string $name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }

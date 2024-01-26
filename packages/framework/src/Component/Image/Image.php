@@ -202,7 +202,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @param int $position
      */
-    public function setPosition(int $position): void
+    public function setPosition($position): void
     {
         $this->position = $position;
     }

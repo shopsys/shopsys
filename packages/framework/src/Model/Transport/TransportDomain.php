@@ -92,7 +92,7 @@ class TransportDomain
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      */
-    public function setVat(Vat $vat): void
+    public function setVat($vat): void
     {
         $this->vat = $vat;
     }

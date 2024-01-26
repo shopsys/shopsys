@@ -192,7 +192,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @param string $name
      */
-    public function setName(string $name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -224,7 +224,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @param string $slug
      */
-    public function setSlug(string $slug): void
+    public function setSlug($slug): void
     {
         $this->slug = $slug;
     }
@@ -282,7 +282,7 @@ class UploadedFile implements EntityFileUploadInterface
     /**
      * @param int $position
      */
-    public function setPosition(int $position): void
+    public function setPosition($position): void
     {
         $this->position = $position;
     }

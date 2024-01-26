@@ -8,7 +8,6 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 /**
@@ -95,7 +94,7 @@ class ProductList
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
-    public function setCustomerUser(CustomerUser $customerUser): void
+    public function setCustomerUser($customerUser): void
     {
         $this->setUpdatedAtToNow();
         $this->customerUser = $customerUser;

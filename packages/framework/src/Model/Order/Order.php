@@ -449,7 +449,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $status
      */
-    public function setStatus(OrderStatus $status)
+    public function setStatus($status)
     {
         $this->status = $status;
     }

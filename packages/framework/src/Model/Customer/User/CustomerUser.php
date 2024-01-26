@@ -175,7 +175,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @param string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail($email): void
     {
         $this->email = mb_strtolower($email);
     }
@@ -396,7 +396,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     /**
      * @param string $resetPasswordHash
      */
-    public function setResetPasswordHash(string $resetPasswordHash): void
+    public function setResetPasswordHash($resetPasswordHash): void
     {
         $this->resetPasswordHash = $resetPasswordHash;
         $this->resetPasswordHashValidThrough = new DateTime('+48 hours');

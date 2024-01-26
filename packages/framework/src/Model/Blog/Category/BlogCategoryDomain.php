@@ -114,7 +114,7 @@ class BlogCategoryDomain
     /**
      * @param string|null $seoTitle
      */
-    public function setSeoTitle(?string $seoTitle): void
+    public function setSeoTitle($seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
@@ -122,7 +122,7 @@ class BlogCategoryDomain
     /**
      * @param string|null $seoMetaDescription
      */
-    public function setSeoMetaDescription(?string $seoMetaDescription): void
+    public function setSeoMetaDescription($seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
@@ -130,7 +130,7 @@ class BlogCategoryDomain
     /**
      * @param string|null $seoH1
      */
-    public function setSeoH1(?string $seoH1): void
+    public function setSeoH1($seoH1): void
     {
         $this->seoH1 = $seoH1;
     }

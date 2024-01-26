@@ -97,7 +97,7 @@ class CountryDomain
     /**
      * @param int $priority
      */
-    public function setPriority(int $priority): void
+    public function setPriority($priority): void
     {
         $this->priority = $priority;
     }

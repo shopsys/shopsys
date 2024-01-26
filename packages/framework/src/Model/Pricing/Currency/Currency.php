@@ -149,7 +149,7 @@ class Currency
     /**
      * @param string $roundingType
      */
-    protected function setRoundingType(string $roundingType): void
+    protected function setRoundingType($roundingType): void
     {
         if (in_array($roundingType, static::getRoundingTypes(), true) !== true) {
             throw new InvalidRoundingTypeException($roundingType);
