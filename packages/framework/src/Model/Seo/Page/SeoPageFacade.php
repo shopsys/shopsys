@@ -21,6 +21,7 @@ class SeoPageFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageRepository $seoPageRepository
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFactory $seoPageFactory
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -28,6 +29,7 @@ class SeoPageFacade
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly SeoPageRepository $seoPageRepository,
         protected readonly ImageFacade $imageFacade,
+        protected readonly SeoPageFactory $seoPageFactory,
     ) {
     }
 
@@ -37,7 +39,7 @@ class SeoPageFacade
      */
     public function create(SeoPageData $seoPageData): SeoPage
     {
-        $seoPage = new SeoPage($seoPageData);
+        $seoPage = $this->seoPageFactory->create($seoPageData);
 
         $this->em->persist($seoPage);
         $this->em->flush();
