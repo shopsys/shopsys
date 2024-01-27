@@ -12,10 +12,12 @@ class ProductStockFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockRepository $productStockRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFactory $productStockFactory
      */
     public function __construct(
         protected readonly ProductStockRepository $productStockRepository,
         protected readonly EntityManagerInterface $em,
+        protected readonly ProductStockFactory $productStockFactory,
     ) {
     }
 
@@ -105,7 +107,7 @@ class ProductStockFacade
      */
     protected function createProductStock(Product $product, Stock $stock): ProductStock
     {
-        $productStock = new ProductStock($stock, $product);
+        $productStock = $this->productStockFactory->create($stock, $product);
         $this->em->persist($productStock);
 
         return $productStock;
