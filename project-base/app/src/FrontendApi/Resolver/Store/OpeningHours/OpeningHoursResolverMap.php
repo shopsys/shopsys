@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class OpeningHoursResolverMap extends ResolverMap
@@ -23,11 +24,13 @@ class OpeningHoursResolverMap extends ResolverMap
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHoursDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory $openingHoursFactory
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly OpeningHoursDataFactory $openingHoursDataFactory,
+        protected readonly OpeningHoursFactory $openingHoursFactory,
     ) {
     }
 
@@ -61,7 +64,7 @@ class OpeningHoursResolverMap extends ResolverMap
                         $openingHoursData = $this->openingHoursDataFactory->create();
                         $openingHoursData->dayOfWeek = $openingHours->getDayOfWeek();
 
-                        return $this->mapOpeningHoursToArray(new OpeningHours($openingHoursData));
+                        return $this->mapOpeningHoursToArray($this->openingHoursFactory->create($openingHoursData));
                     }
 
                     return $this->mapOpeningHoursToArray($openingHours);
