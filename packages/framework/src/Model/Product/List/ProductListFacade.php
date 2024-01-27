@@ -18,12 +18,14 @@ class ProductListFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListFactory $productListFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListRepository $productListRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListDataFactory $productListDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\List\ProductListItemFactory $productListItemFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
         protected readonly ProductListFactory $productListFactory,
         protected readonly ProductListRepository $productListRepository,
         protected readonly ProductListDataFactory $productListDataFactory,
+        protected readonly ProductListItemFactory $productListItemFactory,
     ) {
     }
 
@@ -50,7 +52,7 @@ class ProductListFacade
         if ($productList->findProductListItemByProduct($product) !== null) {
             throw new ProductAlreadyInListException(sprintf('Product with UUID %s already exists in the list.', $product->getUuid()));
         }
-        $newProductListItem = new ProductListItem($productList, $product);
+        $newProductListItem = $this->productListItemFactory->create($productList, $product);
         $this->entityManager->persist($newProductListItem);
 
         $productList->addItem($newProductListItem);
