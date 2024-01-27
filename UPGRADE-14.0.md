@@ -1153,6 +1153,15 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly CategoryParameterFactory $categoryParameterFactory,
         )
     ```
+    -   `\Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade::__construct()` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly EntityManagerInterface $em,
+            protected readonly HeurekaCategoryRepository $heurekaCategoryRepository,
+            protected readonly CategoryRepository $categoryRepository,
+    +       protected readonly HeurekaCategoryFactory $heurekaCategoryFactory,
+        )
+    ```
     -   see #project-base-diff to update your project
 
 ### Storefront
