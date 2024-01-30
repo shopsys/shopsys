@@ -76,6 +76,9 @@ msgstr ""
 msgid "2.0"
 msgstr ""
 
+msgid "2000 DPI"
+msgstr ""
+
 msgid "21\""
 msgstr ""
 
@@ -466,6 +469,9 @@ msgstr ""
 msgid "Active/Passive"
 msgstr ""
 
+msgid "Adaptive Sync Technology"
+msgstr ""
+
 msgid "All kind of electronic devices."
 msgstr ""
 
@@ -649,6 +655,9 @@ msgstr ""
 msgid "Color printing"
 msgstr ""
 
+msgid "Compact Design, Big Value"
+msgstr ""
+
 msgid "Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers."
 msgstr ""
 
@@ -656,6 +665,9 @@ msgid "Complaint"
 msgstr ""
 
 msgid "Connection method"
+msgstr ""
+
+msgid "Connectivity at Your Fingertips"
 msgstr ""
 
 msgid "Connectors"
@@ -689,6 +701,9 @@ msgid "Cyklocomputer – cyklonavigation with preset maps, color display 3\", tr
 msgstr ""
 
 msgid "Czech"
+msgstr ""
+
+msgid "Czech Heritage Certified"
 msgstr ""
 
 msgid "Czech post"
@@ -838,6 +853,9 @@ msgstr ""
 msgid "Easy printing, scanning and copying in one device will take much less space and you'll save money than buying individual components. The printing machine uses an innovative print FINE technology Which guarantee excellent print quality."
 msgstr ""
 
+msgid "Eco-Friendly Printing"
+msgstr ""
+
 msgid "Electronic devices"
 msgstr ""
 
@@ -862,16 +880,28 @@ msgstr ""
 msgid "Electronics without HDMI in sale"
 msgstr ""
 
+msgid "Elegant Hardcover Edition"
+msgstr ""
+
 msgid "Element arrangement"
 msgstr ""
 
+msgid "Endless Shopping Possibilities"
+msgstr ""
+
 msgid "Energy efficiency class"
+msgstr ""
+
+msgid "Energy-Efficient Design"
 msgstr ""
 
 msgid "Enjoy quick cooking with special cooking HI-LIGHT zones"
 msgstr ""
 
 msgid "Enter"
+msgstr ""
+
+msgid "Ergonomic Excellence"
 msgstr ""
 
 msgid "Ergonomics"
@@ -1021,6 +1051,9 @@ msgstr ""
 msgid "Hello Kitty Television"
 msgstr ""
 
+msgid "Hello Kitty approved"
+msgstr ""
+
 msgid "Hewlett-Packard was founded in the difficult times of the Great Depression."
 msgstr ""
 
@@ -1042,6 +1075,12 @@ msgstr ""
 msgid "Hyundai 22HD44D"
 msgstr ""
 
+msgid "Iconic Design"
+msgstr ""
+
+msgid "Immersive Full HD resolution"
+msgstr ""
+
 msgid "In Progress"
 msgstr ""
 
@@ -1049,6 +1088,9 @@ msgid "In stock"
 msgstr ""
 
 msgid "Information about cookies"
+msgstr ""
+
+msgid "Innovative Technology"
 msgstr ""
 
 msgid "Installment plan"
@@ -1112,6 +1154,9 @@ msgid "MIO Cyclo 100, bicycle computer, 1,8\""
 msgstr ""
 
 msgid "Magazine capacity for beans"
+msgstr ""
+
+msgid "Magical Journeys Await Within"
 msgstr ""
 
 msgid "Main blog page - %locale%"
@@ -1249,6 +1294,12 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+msgid "No Expiry"
+msgstr ""
+
+msgid "No Obligations"
+msgstr ""
+
 msgid "Notification in the bar, notification of a new event."
 msgstr ""
 
@@ -1375,6 +1426,9 @@ msgstr ""
 msgid "Photographer's dream. Main camera with 13-megapixel front camera and a 5 megapixel guarantee photos in high definition on each side. Thanks to the built-in tools for editing and sharing can capture moving images in HD and combine the results to show from multiple angles. Incredible design, giant 5,5palcový display with HD resolution, two front stereo speakers, customized channels with real-time information and a quad-core processor - all combine to form one of the best smartphones in the world."
 msgstr ""
 
+msgid "Pocket-friendly"
+msgstr ""
+
 msgid "Pot holder, black"
 msgstr ""
 
@@ -1394,6 +1448,9 @@ msgid "Practical and stylish optical mouse ideal for everyday office use.With it
 msgstr ""
 
 msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers.Using an optical sensor with high sensitivity is move the cursor on the screen fast and smooth.Benefits are also programmable buttons to help with easy access to the programs and documents you use most often.The computer mouse simply connect using a cable with a USB connector and the support Plug and Play, no need to install drivers and you can immediately get to work."
+msgstr ""
+
+msgid "Premium Performance"
 msgstr ""
 
 msgid "PremiumCord micro USB, A-B, 1m"
@@ -1480,6 +1537,9 @@ msgstr ""
 msgid "Resolution of rear camera"
 msgstr ""
 
+msgid "Responsive and Reliable"
+msgstr ""
+
 msgid "Right-handed"
 msgstr ""
 
@@ -1525,6 +1585,9 @@ msgstr ""
 msgid "Screen size"
 msgstr ""
 
+msgid "Seamless Control"
+msgstr ""
+
 msgid "Second Christmas Day"
 msgstr ""
 
@@ -1565,6 +1628,9 @@ msgid "Sleek and compact stereo speakers in combination of black and metallic su
 msgstr ""
 
 msgid "Slicer Pizza ETV-2860"
+msgstr ""
+
+msgid "Slim Profile"
 msgstr ""
 
 msgid "Slovakia"
@@ -1822,6 +1888,12 @@ msgstr ""
 msgid "USB"
 msgstr ""
 
+msgid "Unforgettable Tales"
+msgstr ""
+
+msgid "Unleash Your Gaming Potential"
+msgstr ""
+
 msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
 msgstr ""
 
@@ -1871,6 +1943,9 @@ msgid "Where to find us"
 msgstr ""
 
 msgid "WiFi"
+msgstr ""
+
+msgid "Wide Color Gamut"
 msgstr ""
 
 msgid "Winch throttle silver VP-9711/12"

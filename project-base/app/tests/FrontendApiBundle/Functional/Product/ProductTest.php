@@ -352,31 +352,31 @@ class ProductTest extends GraphQlTestCase
                     'ean' => '8845781245930',
                     'usps' => [
                         t(
-                            'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                            'Hello Kitty approved',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                             $firstDomainLocale,
                         ),
                         t(
-                            'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                            'Immersive Full HD resolution',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                             $firstDomainLocale,
                         ),
                         t(
-                            'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                            'Energy-Efficient Design',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                             $firstDomainLocale,
                         ),
                         t(
-                            'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                            'Wide Color Gamut',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                             $firstDomainLocale,
                         ),
                         t(
-                            'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                            'Adaptive Sync Technology',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                             $firstDomainLocale,
