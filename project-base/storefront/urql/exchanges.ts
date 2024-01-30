@@ -10,7 +10,7 @@ import { cache } from 'urql/cache/cacheExchange';
 
 export const getUrqlExchanges = (
     ssrExchange: SSRExchange,
-    t?: Translate,
+    t: Translate,
     context?: GetServerSidePropsContext | NextPageContext,
 ): ClientOptions['exchanges'] => [
     devtoolsExchange,

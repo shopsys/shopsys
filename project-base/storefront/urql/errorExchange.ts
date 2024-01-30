@@ -16,7 +16,7 @@ import { CombinedError, Exchange, Operation } from 'urql';
 import { pipe, tap } from 'wonka';
 
 export const getErrorExchange =
-    (t?: Translate, context?: GetServerSidePropsContext | NextPageContext): Exchange =>
+    (t: Translate, context?: GetServerSidePropsContext | NextPageContext): Exchange =>
     ({ forward }) => {
         return (operations$) => {
             return pipe(
@@ -44,7 +44,7 @@ export const getErrorExchange =
 
                     if (isWithErrorDebugging) {
                         handleErrorMessagesForDevelopment(error);
-                    } else if (t) {
+                    } else {
                         handleErrorMessagesForUsers(error, t, operation);
                     }
                 }),
