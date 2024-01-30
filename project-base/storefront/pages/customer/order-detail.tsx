@@ -2,7 +2,12 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent';
-import { BreadcrumbFragmentApi, OrderDetailQueryDocumentApi, useOrderDetailQueryApi } from 'graphql/generated';
+import {
+    BreadcrumbFragmentApi,
+    OrderDetailQueryDocumentApi,
+    OrderDetailQueryVariablesApi,
+    useOrderDetailQueryApi,
+} from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -57,7 +62,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         };
     }
 
-    return initServerSideProps({
+    return initServerSideProps<OrderDetailQueryVariablesApi>({
         context,
         authenticationRequired: true,
         prefetchedQueries: [

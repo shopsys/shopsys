@@ -1,14 +1,18 @@
+import { Variables } from '@urql/exchange-graphcache';
 import { getCookies } from 'cookies-next';
 import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
     ArticlePlacementTypeEnumApi,
     ArticlesQueryDocumentApi,
+    ArticlesQueryVariablesApi,
     CurrentCustomerUserQueryDocumentApi,
     NavigationQueryDocumentApi,
     NotificationBarsDocumentApi,
     SeoPageQueryDocumentApi,
+    SeoPageQueryVariablesApi,
     SettingsQueryDocumentApi,
+    SettingsQueryVariablesApi,
 } from 'graphql/generated';
 import { getUnauthenticatedRedirectSSR } from 'helpers/auth/getUnauthenticatedRedirectSSR';
 import { isUserLoggedInSSR } from 'helpers/auth/isUserLoggedInSSR';
@@ -30,13 +34,13 @@ export type ServerSidePropsType = {
     cookies: { [key: string]: string };
 };
 
-type QueriesArray = { query: string | DocumentNode; variables?: { [key: string]: unknown } }[];
+type QueriesArray<VariablesType> = { query: string | DocumentNode; variables?: VariablesType }[];
 
-type InitServerSidePropsParameters = {
+type InitServerSidePropsParameters<VariablesType> = {
     domainConfig: DomainConfigType;
     context: GetServerSidePropsContext;
     authenticationRequired?: boolean;
-    prefetchedQueries?: QueriesArray;
+    prefetchedQueries?: QueriesArray<VariablesType>;
 } & (
     | {
           client: Client;
@@ -52,7 +56,7 @@ type InitServerSidePropsParameters = {
       }
 );
 
-export const initServerSideProps = async ({
+export const initServerSideProps = async <VariablesType extends Variables>({
     domainConfig,
     context,
     redisClient,
@@ -61,7 +65,7 @@ export const initServerSideProps = async ({
     prefetchedQueries: additionalPrefetchQueries = [],
     client,
     ssrExchange: ssrExchangeOverride,
-}: InitServerSidePropsParameters): Promise<GetServerSidePropsResult<ServerSidePropsType>> => {
+}: InitServerSidePropsParameters<VariablesType>): Promise<GetServerSidePropsResult<ServerSidePropsType>> => {
     const currentSsrCache = ssrExchangeOverride ?? ssrExchange({ isClient: false });
     const currentClient =
         client ??
@@ -75,7 +79,9 @@ export const initServerSideProps = async ({
 
     const seoPageSlug = extractSeoPageSlugFromUrl(context.resolvedUrl, domainConfig.url);
 
-    const prefetchQueries: QueriesArray = [
+    const prefetchQueries: QueriesArray<
+        ArticlesQueryVariablesApi | SettingsQueryVariablesApi | SeoPageQueryVariablesApi | VariablesType
+    > = [
         { query: NotificationBarsDocumentApi },
         { query: NavigationQueryDocumentApi },
         {

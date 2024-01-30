@@ -8,7 +8,9 @@ import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import {
     BreadcrumbFragmentApi,
     SearchProductsQueryDocumentApi,
+    SearchProductsQueryVariablesApi,
     SearchQueryDocumentApi,
+    SearchQueryVariablesApi,
     useSearchQueryApi,
 } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
@@ -94,7 +96,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
     const filter = getMappedProductFilter(context.query[FILTER_QUERY_PARAMETER_NAME]);
     const search = getStringFromUrlQuery(context.query[SEARCH_QUERY_PARAMETER_NAME]);
 
-    return initServerSideProps({
+    return initServerSideProps<SearchQueryVariablesApi | SearchProductsQueryVariablesApi>({
         context,
         prefetchedQueries: !search
             ? []

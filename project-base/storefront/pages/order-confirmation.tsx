@@ -4,7 +4,11 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
-import { OrderSentPageContentQueryDocumentApi, useOrderSentPageContentQueryApi } from 'graphql/generated';
+import {
+    OrderSentPageContentQueryDocumentApi,
+    OrderSentPageContentQueryVariablesApi,
+    useOrderSentPageContentQueryApi,
+} from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
 import { GtmPageType } from 'gtm/types/enums';
@@ -80,7 +84,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         };
     }
 
-    return initServerSideProps({
+    return initServerSideProps<OrderSentPageContentQueryVariablesApi>({
         context,
         prefetchedQueries: [
             {

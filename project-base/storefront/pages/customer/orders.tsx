@@ -7,6 +7,7 @@ import {
     BreadcrumbFragmentApi,
     ListedOrderFragmentApi,
     OrdersQueryDocumentApi,
+    OrdersQueryVariablesApi,
     useOrdersQueryApi,
 } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
@@ -56,7 +57,7 @@ const OrdersPage: FC = () => {
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
 
-    return initServerSideProps({
+    return initServerSideProps<OrdersQueryVariablesApi>({
         context,
         authenticationRequired: true,
         prefetchedQueries: [
@@ -64,7 +65,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
                 query: OrdersQueryDocumentApi,
                 variables: {
                     after: getEndCursor(page),
-                    pageSize: DEFAULT_PAGE_SIZE,
+                    first: DEFAULT_PAGE_SIZE,
                 },
             },
         ],

@@ -1,7 +1,11 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
 import { PersonalDataDetailContent } from 'components/Pages/PersonalData/Detail/PersonalDataDetailContent';
-import { PersonalDataDetailQueryDocumentApi, usePersonalDataDetailQueryApi } from 'graphql/generated';
+import {
+    PersonalDataDetailQueryDocumentApi,
+    PersonalDataDetailQueryVariablesApi,
+    usePersonalDataDetailQueryApi,
+} from 'graphql/generated';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
@@ -25,16 +29,21 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
-    const hash = context.query.hash ?? '';
-
-    return initServerSideProps({
-        context,
-        prefetchedQueries: [{ query: PersonalDataDetailQueryDocumentApi, variables: { hash } }],
-        redisClient,
-        domainConfig,
-        t,
-    });
-});
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, t }) =>
+        async (context) =>
+            initServerSideProps<PersonalDataDetailQueryVariablesApi>({
+                context,
+                prefetchedQueries: [
+                    {
+                        query: PersonalDataDetailQueryDocumentApi,
+                        variables: { hash: getStringFromUrlQuery(context.query.hash) },
+                    },
+                ],
+                redisClient,
+                domainConfig,
+                t,
+            }),
+);
 
 export default PersonalDataOverviewByHashPage;
