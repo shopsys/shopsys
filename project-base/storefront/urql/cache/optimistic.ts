@@ -11,22 +11,24 @@ import {
     ChangePaymentInCartMutationApi,
     ChangeTransportInCartMutationApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
+    ChangeTransportInCartMutationVariablesApi,
+    ChangePaymentInCartMutationVariablesApi,
 } from 'graphql/generated';
 
 export const optimisticUpdates: OptimisticMutationConfig = {
-    ChangeTransportInCart: ({ input }: { input: ChangeTransportInCartInputApi }, cache) => {
-        const cartQueryResult: CartQueryApi | null = cache.readQuery<CartQueryApi>({
+    ChangeTransportInCart: ({ input }: ChangeTransportInCartMutationVariablesApi, cache) => {
+        const cartQueryResult: CartQueryApi | null = cache.readQuery<CartQueryApi, CartQueryVariablesApi>({
             query: CartQueryDocumentApi,
             variables: {
                 cartUuid: input.cartUuid ?? null,
-            } as CartQueryVariablesApi,
+            },
         });
 
-        const transportsQueryResult = cache.readQuery<TransportsQueryApi>({
+        const transportsQueryResult = cache.readQuery<TransportsQueryApi, TransportsQueryVariablesApi>({
             query: TransportsQueryDocumentApi,
             variables: {
                 cartUuid: input.cartUuid ?? null,
-            } as TransportsQueryVariablesApi,
+            },
         });
 
         if (cartQueryResult === null) {
@@ -35,12 +37,12 @@ export const optimisticUpdates: OptimisticMutationConfig = {
 
         return getOptimisticChangeTransportInCartResult(cartQueryResult, transportsQueryResult, input);
     },
-    ChangePaymentInCart: ({ input }: { input: ChangePaymentInCartInputApi }, cache) => {
-        const cartQueryResult: CartQueryApi | null = cache.readQuery<CartQueryApi>({
+    ChangePaymentInCart: ({ input }: ChangePaymentInCartMutationVariablesApi, cache) => {
+        const cartQueryResult: CartQueryApi | null = cache.readQuery<CartQueryApi, CartQueryVariablesApi>({
             query: CartQueryDocumentApi,
             variables: {
                 cartUuid: input.cartUuid ?? null,
-            } as CartQueryVariablesApi,
+            },
         });
 
         if (cartQueryResult === null) {

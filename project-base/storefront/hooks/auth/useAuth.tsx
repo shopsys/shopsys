@@ -1,4 +1,9 @@
-import { LoginApi, LoginVariablesApi, useLoginApi, useLogoutApi } from 'graphql/generated';
+import {
+    LoginMutationApi,
+    LoginMutationVariablesApi,
+    useLoginMutationApi,
+    useLogoutMutationApi,
+} from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookies } from 'helpers/auth/tokens';
 import { dispatchBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useRouter } from 'next/router';
@@ -7,15 +12,15 @@ import { useSessionStore } from 'store/useSessionStore';
 import { OperationResult } from 'urql';
 
 type LoginHandler = (
-    variables: Omit<LoginVariablesApi, 'productListsUuids'>,
+    variables: Omit<LoginMutationVariablesApi, 'productListsUuids'>,
     rewriteUrl?: string,
-) => Promise<OperationResult<LoginApi, LoginVariablesApi>>;
+) => Promise<OperationResult<LoginMutationApi, LoginMutationVariablesApi>>;
 
 type LogoutHandler = () => Promise<void>;
 
 export const useAuth = () => {
-    const [, loginMutation] = useLoginApi();
-    const [, logoutMutation] = useLogoutApi();
+    const [, loginMutation] = useLoginMutationApi();
+    const [, logoutMutation] = useLogoutMutationApi();
 
     const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);

@@ -2960,7 +2960,7 @@ export type SimpleArticleInterfaceFragmentApi = SimpleArticleInterfaceFragment_A
 
 export type TokenFragmentsApi = { __typename?: 'Token', accessToken: string, refreshToken: string };
 
-export type LoginVariablesApi = Exact<{
+export type LoginMutationVariablesApi = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['Password']['input'];
   previousCartUuid: InputMaybe<Scalars['Uuid']['input']>;
@@ -2969,12 +2969,12 @@ export type LoginVariablesApi = Exact<{
 }>;
 
 
-export type LoginApi = { __typename?: 'Mutation', Login: { __typename?: 'LoginResult', showCartMergeInfo: boolean, tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
+export type LoginMutationApi = { __typename?: 'Mutation', Login: { __typename?: 'LoginResult', showCartMergeInfo: boolean, tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
-export type LogoutVariablesApi = Exact<{ [key: string]: never; }>;
+export type LogoutMutationVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type LogoutApi = { __typename?: 'Mutation', Logout: boolean };
+export type LogoutMutationApi = { __typename?: 'Mutation', Logout: boolean };
 
 export type RefreshTokensVariablesApi = Exact<{
   refreshToken: Scalars['String']['input'];
@@ -5183,8 +5183,8 @@ export const BlogArticlesQueryDocumentApi = gql`
 export function useBlogArticlesQueryApi(options?: Omit<Urql.UseQueryArgs<BlogArticlesQueryVariablesApi>, 'query'>) {
   return Urql.useQuery<BlogArticlesQueryApi, BlogArticlesQueryVariablesApi>({ query: BlogArticlesQueryDocumentApi, ...options });
 };
-export const LoginDocumentApi = gql`
-    mutation Login($email: String!, $password: Password!, $previousCartUuid: Uuid, $productListsUuids: [Uuid!]!, $shouldOverwriteCustomerUserCart: Boolean = false) {
+export const LoginMutationDocumentApi = gql`
+    mutation LoginMutation($email: String!, $password: Password!, $previousCartUuid: Uuid, $productListsUuids: [Uuid!]!, $shouldOverwriteCustomerUserCart: Boolean = false) {
   Login(
     input: {email: $email, password: $password, cartUuid: $previousCartUuid, productListsUuids: $productListsUuids, shouldOverwriteCustomerUserCart: $shouldOverwriteCustomerUserCart}
   ) {
@@ -5196,17 +5196,17 @@ export const LoginDocumentApi = gql`
 }
     ${TokenFragmentsApi}`;
 
-export function useLoginApi() {
-  return Urql.useMutation<LoginApi, LoginVariablesApi>(LoginDocumentApi);
+export function useLoginMutationApi() {
+  return Urql.useMutation<LoginMutationApi, LoginMutationVariablesApi>(LoginMutationDocumentApi);
 };
-export const LogoutDocumentApi = gql`
-    mutation Logout {
+export const LogoutMutationDocumentApi = gql`
+    mutation LogoutMutation {
   Logout
 }
     `;
 
-export function useLogoutApi() {
-  return Urql.useMutation<LogoutApi, LogoutVariablesApi>(LogoutDocumentApi);
+export function useLogoutMutationApi() {
+  return Urql.useMutation<LogoutMutationApi, LogoutMutationVariablesApi>(LogoutMutationDocumentApi);
 };
 export const RefreshTokensDocumentApi = gql`
     mutation RefreshTokens($refreshToken: String!) {
