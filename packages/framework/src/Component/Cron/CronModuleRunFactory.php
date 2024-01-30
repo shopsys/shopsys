@@ -22,9 +22,9 @@ class CronModuleRunFactory
      */
     public function createFromFinishedCronModule(CronModule $cronModule): CronModuleRun
     {
-        $classData = $this->entityNameResolver->resolve(CronModuleRun::class);
+        $entityClassName = $this->entityNameResolver->resolve(CronModuleRun::class);
 
-        return new $classData(
+        return new $entityClassName(
             $cronModule,
             $cronModule->getStatus(),
             $cronModule->getLastStartedAt(),

@@ -25,9 +25,9 @@ class ProductFactory implements ProductFactoryInterface
      */
     public function create(ProductData $data): Product
     {
-        $classData = $this->entityNameResolver->resolve(Product::class);
+        $entityClassName = $this->entityNameResolver->resolve(Product::class);
 
-        $product = $classData::create($data);
+        $product = $entityClassName::create($data);
 
         return $product;
     }
@@ -42,9 +42,9 @@ class ProductFactory implements ProductFactoryInterface
     {
         $variants[] = $mainProduct;
 
-        $classData = $this->entityNameResolver->resolve(Product::class);
+        $entityClassName = $this->entityNameResolver->resolve(Product::class);
 
-        $mainVariant = $classData::createMainVariant($data, $variants);
+        $mainVariant = $entityClassName::createMainVariant($data, $variants);
 
         return $mainVariant;
     }

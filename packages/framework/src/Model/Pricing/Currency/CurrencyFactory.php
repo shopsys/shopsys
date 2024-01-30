@@ -21,8 +21,8 @@ class CurrencyFactory implements CurrencyFactoryInterface
      */
     public function create(CurrencyData $data): Currency
     {
-        $classData = $this->entityNameResolver->resolve(Currency::class);
+        $entityClassName = $this->entityNameResolver->resolve(Currency::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

@@ -24,9 +24,9 @@ class CustomerUserFactory implements CustomerUserFactoryInterface
      */
     public function create(CustomerUserData $customerUserData): CustomerUser
     {
-        $classData = $this->entityNameResolver->resolve(CustomerUser::class);
+        $entityClassName = $this->entityNameResolver->resolve(CustomerUser::class);
 
-        $customerUser = new $classData($customerUserData);
+        $customerUser = new $entityClassName($customerUserData);
 
         $this->customerUserPasswordFacade->changePassword($customerUser, $customerUserData->password);
 

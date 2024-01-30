@@ -21,8 +21,8 @@ class ArticleFactory implements ArticleFactoryInterface
      */
     public function create(ArticleData $data): Article
     {
-        $classData = $this->entityNameResolver->resolve(Article::class);
+        $entityClassName = $this->entityNameResolver->resolve(Article::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

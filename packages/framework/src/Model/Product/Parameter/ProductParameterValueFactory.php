@@ -27,8 +27,8 @@ class ProductParameterValueFactory implements ProductParameterValueFactoryInterf
         Parameter $parameter,
         ParameterValue $value,
     ): ProductParameterValue {
-        $classData = $this->entityNameResolver->resolve(ProductParameterValue::class);
+        $entityClassName = $this->entityNameResolver->resolve(ProductParameterValue::class);
 
-        return new $classData($product, $parameter, $value);
+        return new $entityClassName($product, $parameter, $value);
     }
 }

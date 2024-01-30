@@ -33,9 +33,9 @@ class FriendlyUrlFactory implements FriendlyUrlFactoryInterface
         int $domainId,
         string $slug,
     ): FriendlyUrl {
-        $classData = $this->entityNameResolver->resolve(FriendlyUrl::class);
+        $entityClassName = $this->entityNameResolver->resolve(FriendlyUrl::class);
 
-        return new $classData($routeName, $entityId, $domainId, $slug);
+        return new $entityClassName($routeName, $entityId, $domainId, $slug);
     }
 
     /**

@@ -26,8 +26,8 @@ class SettingValueFactory implements SettingValueFactoryInterface
         $value,
         int $domainId,
     ): SettingValue {
-        $classData = $this->entityNameResolver->resolve(SettingValue::class);
+        $entityClassName = $this->entityNameResolver->resolve(SettingValue::class);
 
-        return new $classData($name, $value, $domainId);
+        return new $entityClassName($name, $value, $domainId);
     }
 }

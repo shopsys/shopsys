@@ -22,8 +22,8 @@ class SeoPageFactory
      */
     public function create(SeoPageData $data): SeoPage
     {
-        $classData = $this->entityNameResolver->resolve(SeoPage::class);
+        $entityClassName = $this->entityNameResolver->resolve(SeoPage::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

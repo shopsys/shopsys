@@ -27,8 +27,8 @@ class TopCategoryFactory implements TopCategoryFactoryInterface
         int $domainId,
         int $position,
     ): TopCategory {
-        $classData = $this->entityNameResolver->resolve(TopCategory::class);
+        $entityClassName = $this->entityNameResolver->resolve(TopCategory::class);
 
-        return new $classData($category, $domainId, $position);
+        return new $entityClassName($category, $domainId, $position);
     }
 }

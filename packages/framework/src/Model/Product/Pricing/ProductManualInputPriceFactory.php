@@ -29,8 +29,8 @@ class ProductManualInputPriceFactory implements ProductManualInputPriceFactoryIn
         PricingGroup $pricingGroup,
         ?Money $inputPrice,
     ): ProductManualInputPrice {
-        $classData = $this->entityNameResolver->resolve(ProductManualInputPrice::class);
+        $entityClassName = $this->entityNameResolver->resolve(ProductManualInputPrice::class);
 
-        return new $classData($product, $pricingGroup, $inputPrice);
+        return new $entityClassName($product, $pricingGroup, $inputPrice);
     }
 }

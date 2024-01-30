@@ -21,8 +21,8 @@ class BrandFactory implements BrandFactoryInterface
      */
     public function create(BrandData $data): Brand
     {
-        $classData = $this->entityNameResolver->resolve(Brand::class);
+        $entityClassName = $this->entityNameResolver->resolve(Brand::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

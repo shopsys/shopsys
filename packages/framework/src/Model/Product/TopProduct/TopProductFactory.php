@@ -27,8 +27,8 @@ class TopProductFactory implements TopProductFactoryInterface
         int $domainId,
         int $position,
     ): TopProduct {
-        $classData = $this->entityNameResolver->resolve(TopProduct::class);
+        $entityClassName = $this->entityNameResolver->resolve(TopProduct::class);
 
-        return new $classData($product, $domainId, $position);
+        return new $entityClassName($product, $domainId, $position);
     }
 }

@@ -22,8 +22,8 @@ class VatFactory implements VatFactoryInterface
      */
     public function create(VatData $data, int $domainId): Vat
     {
-        $classData = $this->entityNameResolver->resolve(Vat::class);
+        $entityClassName = $this->entityNameResolver->resolve(Vat::class);
 
-        return new $classData($data, $domainId);
+        return new $entityClassName($data, $domainId);
     }
 }

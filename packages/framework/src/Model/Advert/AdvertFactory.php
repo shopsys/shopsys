@@ -21,8 +21,8 @@ class AdvertFactory implements AdvertFactoryInterface
      */
     public function create(AdvertData $data): Advert
     {
-        $classData = $this->entityNameResolver->resolve(Advert::class);
+        $entityClassName = $this->entityNameResolver->resolve(Advert::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

@@ -21,8 +21,8 @@ class PaymentFactory implements PaymentFactoryInterface
      */
     public function create(PaymentData $data): Payment
     {
-        $classData = $this->entityNameResolver->resolve(Payment::class);
+        $entityClassName = $this->entityNameResolver->resolve(Payment::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

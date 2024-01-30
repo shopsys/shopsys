@@ -23,8 +23,8 @@ class AdministratorActivityFactory implements AdministratorActivityFactoryInterf
      */
     public function create(Administrator $administrator, string $ipAddress): AdministratorActivity
     {
-        $classData = $this->entityNameResolver->resolve(AdministratorActivity::class);
+        $entityClassName = $this->entityNameResolver->resolve(AdministratorActivity::class);
 
-        return new $classData($administrator, $ipAddress);
+        return new $entityClassName($administrator, $ipAddress);
     }
 }

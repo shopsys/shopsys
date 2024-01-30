@@ -21,8 +21,8 @@ class SliderItemFactory implements SliderItemFactoryInterface
      */
     public function create(SliderItemData $data): SliderItem
     {
-        $classData = $this->entityNameResolver->resolve(SliderItem::class);
+        $entityClassName = $this->entityNameResolver->resolve(SliderItem::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

@@ -26,8 +26,8 @@ class CategoryParameterFactory
      */
     public function create(Category $category, Parameter $parameter, bool $collapsed, int $position): CategoryParameter
     {
-        $classData = $this->entityNameResolver->resolve(CategoryParameter::class);
+        $entityClassName = $this->entityNameResolver->resolve(CategoryParameter::class);
 
-        return new $classData($category, $parameter, $collapsed, $position);
+        return new $entityClassName($category, $parameter, $collapsed, $position);
     }
 }

@@ -22,8 +22,8 @@ class ClosedDayFactory
      */
     public function create(ClosedDayData $data): ClosedDay
     {
-        $classData = $this->entityNameResolver->resolve(ClosedDay::class);
+        $entityClassName = $this->entityNameResolver->resolve(ClosedDay::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

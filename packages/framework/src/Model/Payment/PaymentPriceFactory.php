@@ -27,8 +27,8 @@ class PaymentPriceFactory implements PaymentPriceFactoryInterface
         Money $price,
         int $domainId,
     ): PaymentPrice {
-        $classData = $this->entityNameResolver->resolve(PaymentPrice::class);
+        $entityClassName = $this->entityNameResolver->resolve(PaymentPrice::class);
 
-        return new $classData($payment, $price, $domainId);
+        return new $entityClassName($payment, $price, $domainId);
     }
 }

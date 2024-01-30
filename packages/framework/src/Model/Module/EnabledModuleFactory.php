@@ -21,8 +21,8 @@ class EnabledModuleFactory implements EnabledModuleFactoryInterface
      */
     public function create(string $name): EnabledModule
     {
-        $classData = $this->entityNameResolver->resolve(EnabledModule::class);
+        $entityClassName = $this->entityNameResolver->resolve(EnabledModule::class);
 
-        return new $classData($name);
+        return new $entityClassName($name);
     }
 }

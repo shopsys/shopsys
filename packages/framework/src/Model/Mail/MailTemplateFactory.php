@@ -23,8 +23,8 @@ class MailTemplateFactory implements MailTemplateFactoryInterface
      */
     public function create(string $name, int $domainId, MailTemplateData $data): MailTemplate
     {
-        $classData = $this->entityNameResolver->resolve(MailTemplate::class);
+        $entityClassName = $this->entityNameResolver->resolve(MailTemplate::class);
 
-        return new $classData($name, $domainId, $data);
+        return new $entityClassName($name, $domainId, $data);
     }
 }

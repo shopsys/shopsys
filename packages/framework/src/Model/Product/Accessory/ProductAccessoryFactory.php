@@ -27,8 +27,8 @@ class ProductAccessoryFactory implements ProductAccessoryFactoryInterface
         Product $accessory,
         int $position,
     ): ProductAccessory {
-        $classData = $this->entityNameResolver->resolve(ProductAccessory::class);
+        $entityClassName = $this->entityNameResolver->resolve(ProductAccessory::class);
 
-        return new $classData($product, $accessory, $position);
+        return new $entityClassName($product, $accessory, $position);
     }
 }

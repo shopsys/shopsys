@@ -22,8 +22,8 @@ class HeurekaCategoryFactory
      */
     public function create(HeurekaCategoryData $data): HeurekaCategory
     {
-        $classData = $this->entityNameResolver->resolve(HeurekaCategory::class);
+        $entityClassName = $this->entityNameResolver->resolve(HeurekaCategory::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

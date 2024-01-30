@@ -41,9 +41,9 @@ class OrderItemFactory implements OrderItemFactoryInterface
         ?string $catnum,
         ?Product $product = null,
     ): OrderItem {
-        $classData = $this->entityNameResolver->resolve(OrderItem::class);
+        $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
 
-        $orderProduct = new $classData(
+        $orderProduct = new $entityClassName(
             $order,
             $name,
             $price,
@@ -76,9 +76,9 @@ class OrderItemFactory implements OrderItemFactoryInterface
         int $quantity,
         Payment $payment,
     ): OrderItem {
-        $classData = $this->entityNameResolver->resolve(OrderItem::class);
+        $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
 
-        $orderPayment = new $classData(
+        $orderPayment = new $entityClassName(
             $order,
             $name,
             $price,
@@ -111,9 +111,9 @@ class OrderItemFactory implements OrderItemFactoryInterface
         int $quantity,
         Transport $transport,
     ): OrderItem {
-        $classData = $this->entityNameResolver->resolve(OrderItem::class);
+        $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
 
-        $orderTransport = new $classData(
+        $orderTransport = new $entityClassName(
             $order,
             $name,
             $price,

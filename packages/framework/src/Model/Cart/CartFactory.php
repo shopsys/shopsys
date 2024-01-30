@@ -22,8 +22,8 @@ class CartFactory
      */
     public function create(CustomerUserIdentifier $customerUserIdentifier): Cart
     {
-        $classData = $this->entityNameResolver->resolve(Cart::class);
+        $entityClassName = $this->entityNameResolver->resolve(Cart::class);
 
-        return new $classData($customerUserIdentifier->getCartIdentifier(), $customerUserIdentifier->getCustomerUser());
+        return new $entityClassName($customerUserIdentifier->getCartIdentifier(), $customerUserIdentifier->getCustomerUser());
     }
 }

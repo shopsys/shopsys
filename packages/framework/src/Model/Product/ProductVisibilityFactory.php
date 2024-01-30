@@ -27,8 +27,8 @@ class ProductVisibilityFactory implements ProductVisibilityFactoryInterface
         PricingGroup $pricingGroup,
         int $domainId,
     ): ProductVisibility {
-        $classData = $this->entityNameResolver->resolve(ProductVisibility::class);
+        $entityClassName = $this->entityNameResolver->resolve(ProductVisibility::class);
 
-        return new $classData($product, $pricingGroup, $domainId);
+        return new $entityClassName($product, $pricingGroup, $domainId);
     }
 }

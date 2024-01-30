@@ -25,8 +25,8 @@ class DeliveryAddressFactory implements DeliveryAddressFactoryInterface
             return null;
         }
 
-        $classData = $this->entityNameResolver->resolve(DeliveryAddress::class);
+        $entityClassName = $this->entityNameResolver->resolve(DeliveryAddress::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

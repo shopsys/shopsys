@@ -27,10 +27,10 @@ class StoreFactory
      */
     public function create(StoreData $storeData): Store
     {
-        $classData = $this->entityNameResolver->resolve(Store::class);
+        $entityClassName = $this->entityNameResolver->resolve(Store::class);
 
         /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-        $store = new $classData($storeData);
+        $store = new $entityClassName($storeData);
 
         $store->setOpeningHours(
             $this->createOpeningHours($storeData->openingHours, $store),

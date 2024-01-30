@@ -21,8 +21,8 @@ class ScriptFactory implements ScriptFactoryInterface
      */
     public function create(ScriptData $data): Script
     {
-        $classData = $this->entityNameResolver->resolve(Script::class);
+        $entityClassName = $this->entityNameResolver->resolve(Script::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

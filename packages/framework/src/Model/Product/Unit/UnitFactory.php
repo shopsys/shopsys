@@ -21,8 +21,8 @@ class UnitFactory implements UnitFactoryInterface
      */
     public function create(UnitData $data): Unit
     {
-        $classData = $this->entityNameResolver->resolve(Unit::class);
+        $entityClassName = $this->entityNameResolver->resolve(Unit::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

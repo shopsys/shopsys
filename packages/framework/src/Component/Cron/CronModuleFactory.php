@@ -21,8 +21,8 @@ class CronModuleFactory implements CronModuleFactoryInterface
      */
     public function create(string $serviceId): CronModule
     {
-        $classData = $this->entityNameResolver->resolve(CronModule::class);
+        $entityClassName = $this->entityNameResolver->resolve(CronModule::class);
 
-        return new $classData($serviceId);
+        return new $entityClassName($serviceId);
     }
 }

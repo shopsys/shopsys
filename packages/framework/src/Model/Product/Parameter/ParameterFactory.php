@@ -21,8 +21,8 @@ class ParameterFactory implements ParameterFactoryInterface
      */
     public function create(ParameterData $data): Parameter
     {
-        $classData = $this->entityNameResolver->resolve(Parameter::class);
+        $entityClassName = $this->entityNameResolver->resolve(Parameter::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

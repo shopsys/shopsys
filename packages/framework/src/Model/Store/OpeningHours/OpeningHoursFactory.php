@@ -22,8 +22,8 @@ class OpeningHoursFactory
      */
     public function create(OpeningHoursData $data): OpeningHours
     {
-        $classData = $this->entityNameResolver->resolve(OpeningHours::class);
+        $entityClassName = $this->entityNameResolver->resolve(OpeningHours::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

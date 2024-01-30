@@ -31,8 +31,8 @@ class CartItemFactory implements CartItemFactoryInterface
         int $quantity,
         ?Money $watchedPrice,
     ): CartItem {
-        $classData = $this->entityNameResolver->resolve(CartItem::class);
+        $entityClassName = $this->entityNameResolver->resolve(CartItem::class);
 
-        return new $classData($cart, $product, $quantity, $watchedPrice);
+        return new $entityClassName($cart, $product, $quantity, $watchedPrice);
     }
 }

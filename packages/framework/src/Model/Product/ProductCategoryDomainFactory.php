@@ -27,9 +27,9 @@ class ProductCategoryDomainFactory implements ProductCategoryDomainFactoryInterf
         Category $category,
         int $domainId,
     ): ProductCategoryDomain {
-        $classData = $this->entityNameResolver->resolve(ProductCategoryDomain::class);
+        $entityClassName = $this->entityNameResolver->resolve(ProductCategoryDomain::class);
 
-        return new $classData($product, $category, $domainId);
+        return new $entityClassName($product, $category, $domainId);
     }
 
     /**

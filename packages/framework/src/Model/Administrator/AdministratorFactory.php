@@ -21,8 +21,8 @@ class AdministratorFactory implements AdministratorFactoryInterface
      */
     public function create(AdministratorData $data): Administrator
     {
-        $classData = $this->entityNameResolver->resolve(Administrator::class);
+        $entityClassName = $this->entityNameResolver->resolve(Administrator::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

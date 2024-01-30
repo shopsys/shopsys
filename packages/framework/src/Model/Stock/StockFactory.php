@@ -22,8 +22,8 @@ class StockFactory
      */
     public function create(StockData $stockData): Stock
     {
-        $classData = $this->entityNameResolver->resolve(Stock::class);
+        $entityClassName = $this->entityNameResolver->resolve(Stock::class);
 
-        return new $classData($stockData);
+        return new $entityClassName($stockData);
     }
 }
