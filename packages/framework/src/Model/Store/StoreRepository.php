@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Store;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreNotFoundException;
@@ -49,20 +48,6 @@ class StoreRepository
     }
 
     /**
-     * @param int[] $storeIds
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
-     */
-    public function getStoresByIdsIndexedById(array $storeIds): array
-    {
-        return $this->getStoreRepository()
-            ->createQueryBuilder('s', 's.id')
-            ->where('s.id IN (:storeIds)')
-            ->setParameter('storeIds', $storeIds)
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
      */
     public function getAll(): array
@@ -83,9 +68,20 @@ class StoreRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllStoresQueryBuilder(): QueryBuilder
+    protected function getAllStoresQueryBuilder(): QueryBuilder
     {
         return $this->getQueryBuilder()->orderBy('s.position, s.id', 'ASC');
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getStoresByDomainIdQueryBuilder(int $domainId): QueryBuilder
+    {
+        return $this->getAllStoresQueryBuilder()
+            ->andWhere('s.domainId = :domainId')
+            ->setParameter('domainId', $domainId);
     }
 
     /**
@@ -109,11 +105,9 @@ class StoreRepository
      * @param int|null $offset
      * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
      */
-    public function getStoresEnabledOnDomain(int $domainId, ?int $limit = null, ?int $offset = null): array
+    public function getStoresByDomainId(int $domainId, ?int $limit = null, ?int $offset = null): array
     {
-        $queryBuilder = $this->getAllStoresQueryBuilder()
-            ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
-            ->setParameter('domainId', $domainId);
+        $queryBuilder = $this->getStoresByDomainIdQueryBuilder($domainId);
 
         if ($limit !== null) {
             $queryBuilder->setMaxResults($limit);
@@ -139,12 +133,11 @@ class StoreRepository
      * @param int $domainId
      * @return int
      */
-    public function getStoresCountEnabledOnDomain(int $domainId): int
+    public function getStoresCountByDomainId(int $domainId): int
     {
-        $queryBuilder = $this->getQueryBuilder()
-            ->select('COUNT(s)')
-            ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
-            ->setParameter('domainId', $domainId);
+        $queryBuilder = $this->getStoresByDomainIdQueryBuilder($domainId)
+            ->resetDQLPart('orderBy')
+            ->select('COUNT(s)');
 
         return (int)$queryBuilder->getQuery()->getSingleScalarResult();
     }
@@ -154,12 +147,10 @@ class StoreRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Store\Store
      */
-    public function getByUuidEnabledOnDomain(string $uuid, int $domainId): Store
+    public function getByUuidAndDomainId(string $uuid, int $domainId): Store
     {
-        $store = $this->getQueryBuilder()
-            ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
-            ->setParameter('domainId', $domainId)
-            ->where('s.uuid = :uuid')
+        $store = $this->getStoresByDomainIdQueryBuilder($domainId)
+            ->andWhere('s.uuid = :uuid')
             ->setParameter('uuid', $uuid)
             ->getQuery()
             ->getOneOrNullResult();
@@ -176,12 +167,10 @@ class StoreRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Store\Store
      */
-    public function getByIdEnabledOnDomain(int $id, int $domainId): Store
+    public function getByIdAndDomainId(int $id, int $domainId): Store
     {
-        $store = $this->getQueryBuilder()
-            ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
-            ->setParameter('domainId', $domainId)
-            ->where('s.id = :id')
+        $store = $this->getStoresByDomainIdQueryBuilder($domainId)
+            ->andWhere('s.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult();

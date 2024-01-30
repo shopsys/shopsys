@@ -47,7 +47,7 @@ class TransportValidationFacade
             return;
         }
 
-        $this->storeFacade->getByUuidEnabledOnDomain(
+        $this->storeFacade->getByUuidAndDomainId(
             $pickupPlaceIdentifier,
             $this->domain->getId(),
         );

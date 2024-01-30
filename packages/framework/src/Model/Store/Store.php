@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Stock\Stock;
-use Shopsys\FrameworkBundle\Model\Store\Exception\StoreDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\Exception\OpeningHoursNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
 
@@ -41,10 +40,10 @@ class Store implements OrderableEntityInterface
     protected $uuid;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Store\StoreDomain>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Store\StoreDomain", mappedBy="store", cascade={"persist"})
+     * @var int
+     * @ORM\Column(type="integer")
      */
-    protected $domains;
+    protected $domainId;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Stock\Stock|null
@@ -145,9 +144,7 @@ class Store implements OrderableEntityInterface
      */
     public function __construct(StoreData $storeData)
     {
-        $this->domains = new ArrayCollection();
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
-        $this->createDomains($storeData);
         $this->uuid = $storeData->uuid ?: Uuid::uuid4()->toString();
         $this->openingHours = new ArrayCollection();
         $this->setData($storeData);
@@ -158,7 +155,6 @@ class Store implements OrderableEntityInterface
      */
     public function edit(StoreData $storeData)
     {
-        $this->setDomains($storeData);
         $this->setData($storeData);
 
         foreach ($this->openingHours as $index => $openingHours) {
@@ -192,32 +188,7 @@ class Store implements OrderableEntityInterface
         $this->specialMessage = $storeData->specialMessage;
         $this->locationLatitude = $storeData->locationLatitude;
         $this->locationLongitude = $storeData->locationLongitude;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
-     */
-    protected function createDomains(StoreData $storeData): void
-    {
-        $domainIds = array_keys($storeData->isEnabledOnDomains);
-
-        foreach ($domainIds as $domainId) {
-            $storeDomain = new StoreDomain($this, $domainId);
-            $this->domains->add($storeDomain);
-        }
-
-        $this->setDomains($storeData);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
-     */
-    protected function setDomains(StoreData $storeData): void
-    {
-        foreach ($this->domains as $storeDomain) {
-            $domainId = $storeDomain->getDomainId();
-            $storeDomain->setEnabled($storeData->isEnabledOnDomains[$domainId]);
-        }
+        $this->domainId = $storeData->domainId;
     }
 
     /**
@@ -419,38 +390,6 @@ class Store implements OrderableEntityInterface
     }
 
     /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function isEnabled(int $domainId): bool
-    {
-        return $this->getStoreDomain($domainId)->isEnabled();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Store\StoreDomain[]
-     */
-    public function getEnabledDomains(): array
-    {
-        return array_filter($this->domains->getValues(), static fn (StoreDomain $storeDomain) => $storeDomain->isEnabled());
-    }
-
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Store\StoreDomain
-     */
-    protected function getStoreDomain(int $domainId): StoreDomain
-    {
-        foreach ($this->domains as $storeDomain) {
-            if ($storeDomain->getDomainId() === $domainId) {
-                return $storeDomain;
-            }
-        }
-
-        throw new StoreDomainNotFoundException($domainId, $this->id);
-    }
-
-    /**
      * @param int $position
      */
     public function setPosition($position): void
@@ -461,5 +400,13 @@ class Store implements OrderableEntityInterface
     public function setDefault(): void
     {
         $this->isDefault = true;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId()
+    {
+        return $this->domainId;
     }
 }

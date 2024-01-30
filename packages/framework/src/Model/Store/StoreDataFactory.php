@@ -26,11 +26,12 @@ class StoreDataFactory
     }
 
     /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Store\StoreData
      */
-    public function create(): StoreData
+    public function createForDomain(int $domainId): StoreData
     {
-        $storeData = $this->createInstance();
+        $storeData = $this->createInstance($domainId);
         $storeData->openingHours = $this->openingHourDataFactory->createWeek();
 
         return $storeData;
@@ -42,7 +43,7 @@ class StoreDataFactory
      */
     public function createFromStore(Store $store): StoreData
     {
-        $storeData = $this->createInstance();
+        $storeData = $this->createInstance($store->getDomainId());
         $storeData->name = $store->getName();
         $storeData->stock = $store->getStock();
         $storeData->isDefault = $store->isDefault();
@@ -60,8 +61,6 @@ class StoreDataFactory
         $storeData->image = $this->imageUploadDataFactory->createFromEntityAndType($store);
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $storeData->isEnabledOnDomains[$domainId] = $store->isEnabled($domainId);
-
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
                 StoreFriendlyUrlProvider::ROUTE_NAME,
@@ -74,12 +73,14 @@ class StoreDataFactory
     }
 
     /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Store\StoreData
      */
-    protected function createInstance(): StoreData
+    protected function createInstance(int $domainId): StoreData
     {
         $storeData = new StoreData();
         $storeData->image = $this->imageUploadDataFactory->create();
+        $storeData->domainId = $domainId;
 
         return $storeData;
     }

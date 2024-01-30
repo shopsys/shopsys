@@ -9,9 +9,9 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 class StoreData
 {
     /**
-     * @var array<int, bool>
+     * @var int
      */
-    public $isEnabledOnDomains;
+    public $domainId;
 
     /**
      * @var bool

@@ -56,7 +56,7 @@ class ClosedDayFormType extends AbstractType
             ->add('excludedStores', ChoiceType::class, [
                 'required' => false,
                 'label' => t('Excluded stores'),
-                'choices' => $this->storeFacade->getStoresListEnabledOnDomain($domainId),
+                'choices' => $this->storeFacade->getStoresByDomainId($domainId),
                 'choice_label' => static fn (Store $store) => $store->getName(),
                 'multiple' => true,
                 'attr' => [
