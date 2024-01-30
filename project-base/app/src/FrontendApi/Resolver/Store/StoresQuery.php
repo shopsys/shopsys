@@ -34,10 +34,10 @@ class StoresQuery extends AbstractQuery
         $domainId = $this->domain->getId();
 
         $paginator = new Paginator(function ($offset, $limit) use ($domainId) {
-            return $this->storeFacade->getStoresListEnabledOnDomain($domainId, $limit, $offset);
+            return $this->storeFacade->getStoresByDomainId($domainId, $limit, $offset);
         });
 
-        $storesCount = $this->storeFacade->getStoresCountEnabledOnDomain($domainId);
+        $storesCount = $this->storeFacade->getStoresCountByDomainId($domainId);
 
         return $paginator->auto($argument, $storesCount);
     }

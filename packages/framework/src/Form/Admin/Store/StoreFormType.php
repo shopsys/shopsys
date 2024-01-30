@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Store;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours\OpeningHoursFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
-use Shopsys\FrameworkBundle\Form\DomainsType;
+use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
@@ -80,8 +80,8 @@ class StoreFormType extends AbstractType
                 ],
                 'label' => t('Name'),
             ])
-            ->add('isEnabledOnDomains', DomainsType::class, [
-                'required' => false,
+            ->add('domainId', DomainType::class, [
+                'required' => true,
                 'label' => t('Display on'),
             ])
             ->add('externalId', TextType::class, [

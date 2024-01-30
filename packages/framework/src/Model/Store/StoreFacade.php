@@ -81,14 +81,12 @@ class StoreFacade
      */
     protected function createFriendlyUrl(Store $store): void
     {
-        foreach ($store->getEnabledDomains() as $storeDomain) {
-            $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                StoreFriendlyUrlProvider::ROUTE_NAME,
-                $store->getId(),
-                $store->getName(),
-                $storeDomain->getDomainId(),
-            );
-        }
+        $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+            StoreFriendlyUrlProvider::ROUTE_NAME,
+            $store->getId(),
+            $store->getName(),
+            $store->getDomainId(),
+        );
     }
 
     /**
@@ -98,23 +96,6 @@ class StoreFacade
     public function getById(int $id): Store
     {
         return $this->storeRepository->getById($id);
-    }
-
-    /**
-     * @param int[] $storeIds
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
-     */
-    public function getStoresByIdsIndexedById(array $storeIds): array
-    {
-        return $this->storeRepository->getStoresByIdsIndexedById($storeIds);
-    }
-
-    /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllStoresQueryBuilder(): QueryBuilder
-    {
-        return $this->storeRepository->getAllStoresQueryBuilder();
     }
 
     /**
@@ -150,18 +131,18 @@ class StoreFacade
      * @param int|null $offset
      * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
      */
-    public function getStoresListEnabledOnDomain(int $domainId, ?int $limit = null, ?int $offset = null): array
+    public function getStoresByDomainId(int $domainId, ?int $limit = null, ?int $offset = null): array
     {
-        return $this->storeRepository->getStoresEnabledOnDomain($domainId, $limit, $offset);
+        return $this->storeRepository->getStoresByDomainId($domainId, $limit, $offset);
     }
 
     /**
      * @param int $domainId
      * @return int
      */
-    public function getStoresCountEnabledOnDomain(int $domainId): int
+    public function getStoresCountByDomainId(int $domainId): int
     {
-        return $this->storeRepository->getStoresCountEnabledOnDomain($domainId);
+        return $this->storeRepository->getStoresCountByDomainId($domainId);
     }
 
     /**
@@ -169,9 +150,9 @@ class StoreFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Store\Store
      */
-    public function getByUuidEnabledOnDomain(string $uuid, int $domainId): Store
+    public function getByUuidAndDomainId(string $uuid, int $domainId): Store
     {
-        return $this->storeRepository->getByUuidEnabledOnDomain($uuid, $domainId);
+        return $this->storeRepository->getByUuidAndDomainId($uuid, $domainId);
     }
 
     /**
@@ -179,9 +160,9 @@ class StoreFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Store\Store
      */
-    public function getByIdEnabledOnDomain(int $id, int $domainId): Store
+    public function getByIdAndDomainId(int $id, int $domainId): Store
     {
-        return $this->storeRepository->getByIdEnabledOnDomain($id, $domainId);
+        return $this->storeRepository->getByIdAndDomainId($id, $domainId);
     }
 
     /**
@@ -191,5 +172,14 @@ class StoreFacade
     public function getStoresByIds(array $storeIds): array
     {
         return $this->storeRepository->getStoresByIds($storeIds);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getStoresByDomainIdQueryBuilder(int $domainId): QueryBuilder
+    {
+        return $this->storeRepository->getStoresByDomainIdQueryBuilder($domainId);
     }
 }

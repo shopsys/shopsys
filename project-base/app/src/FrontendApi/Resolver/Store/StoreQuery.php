@@ -38,7 +38,7 @@ class StoreQuery extends AbstractQuery
     {
         if ($uuid !== null) {
             try {
-                return $this->storeFacade->getByUuidEnabledOnDomain($uuid, $this->domain->getId());
+                return $this->storeFacade->getByUuidAndDomainId($uuid, $this->domain->getId());
             } catch (StoreByUuidNotFoundException $storeNotFoundException) {
                 throw new StoreNotFoundUserError($storeNotFoundException->getMessage());
             }
@@ -66,7 +66,7 @@ class StoreQuery extends AbstractQuery
                 $urlSlug,
             );
 
-            return $this->storeFacade->getByIdEnabledOnDomain($friendlyUrl->getEntityId(), $this->domain->getId());
+            return $this->storeFacade->getByIdAndDomainId($friendlyUrl->getEntityId(), $this->domain->getId());
         } catch (FriendlyUrlNotFoundException|StoreNotFoundException $exception) {
             throw new StoreNotFoundUserError(sprintf('Store with URL slug "%s" does not exist.', $urlSlug));
         }

@@ -13,7 +13,6 @@ use App\Model\Cart\Transport\CartTransportFacade;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -36,11 +35,6 @@ class TransportInOrderValidationTest extends GraphQlTestCase
      * @inject
      */
     private StoreFacade $storeFacade;
-
-    /**
-     * @inject
-     */
-    private StoreDataFactory $storeDataFactory;
 
     /**
      * @inject
@@ -106,28 +100,6 @@ class TransportInOrderValidationTest extends GraphQlTestCase
         $this->assertArrayHasKey('transportModifications', $response['data']['CreateOrder']['cart']['modifications']);
         $this->assertArrayHasKey('transportPriceChanged', $response['data']['CreateOrder']['cart']['modifications']['transportModifications']);
         $this->assertTrue($response['data']['CreateOrder']['cart']['modifications']['transportModifications']['transportPriceChanged']);
-    }
-
-    public function testDisabledPickupPlaceUnavailable(): void
-    {
-        $this->addCardPaymentToDemoCart();
-        $storeReferenceName = StoreDataFixture::STORE_PREFIX . 1;
-        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-        $store = $this->getReference($storeReferenceName);
-        /** @var \App\Model\Transport\Transport $transportPersonal */
-        $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
-        $this->addTransportToCart(CartDataFixture::CART_UUID, $transportPersonal, $store->getUuid());
-        $this->disableStoreOnFirstDomain($storeReferenceName);
-        $mutation = $this->getCreateOrderMutationFromDemoCart();
-        $response = $this->getResponseContentForQuery($mutation);
-
-        $this->assertArrayHasKey('data', $response);
-        $this->assertArrayHasKey('CreateOrder', $response['data']);
-        $this->assertArrayHasKey('cart', $response['data']['CreateOrder']);
-        $this->assertArrayHasKey('modifications', $response['data']['CreateOrder']['cart']);
-        $this->assertArrayHasKey('transportModifications', $response['data']['CreateOrder']['cart']['modifications']);
-        $this->assertArrayHasKey('personalPickupStoreUnavailable', $response['data']['CreateOrder']['cart']['modifications']['transportModifications']);
-        $this->assertTrue($response['data']['CreateOrder']['cart']['modifications']['transportModifications']['personalPickupStoreUnavailable']);
     }
 
     public function testDeletedPickupPlaceUnavailable(): void
@@ -213,18 +185,5 @@ class TransportInOrderValidationTest extends GraphQlTestCase
         $transportData = $this->transportDataFactory->createFromTransport($transportPpl);
         $transportData->maxWeight = 1;
         $this->transportFacade->edit($transportPpl, $transportData);
-    }
-
-    /**
-     * @param string $storeReferenceName
-     */
-    private function disableStoreOnFirstDomain(string $storeReferenceName): void
-    {
-        // refresh store, so we're able to work with it as with an entity
-        /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
-        $store = $this->getReference($storeReferenceName);
-        $storeData = $this->storeDataFactory->createFromStore($store);
-        $storeData->isEnabledOnDomains[1] = false;
-        $this->storeFacade->edit($store->getId(), $storeData);
     }
 }

@@ -21,7 +21,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const ATTR_NAME = 'name';
     private const ATTR_STOCK = 'stockId';
     private const ATTR_IS_DEFAULT = 'isDefault';
-    private const ATTR_IS_ENABLED_BY_DOMAIN = 'isEnabledByDomain';
+    private const ATTR_DOMAIN_ID = 'domainId';
     private const ATTR_DESCRIPTION = 'description';
     private const ATTR_EXTERNAL_ID = 'externalId';
     private const ATTR_STREET = 'street';
@@ -33,16 +33,6 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const ATTR_LOCATION_LATITUDE = 'locationLatitude';
     private const ATTR_LOCATION_LONGITUDE = 'locationLongitude';
     private const ATTR_IMAGE = 'image';
-
-    private const ENABLED_FIRST_DOMAIN = [
-        1 => true,
-        2 => false,
-    ];
-    private const ENABLED_SECOND_DOMAIN = [
-        1 => false,
-        2 => true,
-    ];
-
     public const STORE_PREFIX = 'store_';
 
     /**
@@ -99,7 +89,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             [
                 self::ATTR_NAME => 'Ostrava',
                 self::ATTR_IS_DEFAULT => true,
-                self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_FIRST_DOMAIN,
+                self::ATTR_DOMAIN_ID => Domain::FIRST_DOMAIN_ID,
                 self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 4),
                 self::ATTR_DESCRIPTION => t('Store in Ostrava Přívoz', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
@@ -115,7 +105,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             ], [
                 self::ATTR_NAME => 'Pardubice',
                 self::ATTR_IS_DEFAULT => false,
-                self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_FIRST_DOMAIN,
+                self::ATTR_DOMAIN_ID => Domain::FIRST_DOMAIN_ID,
                 self::ATTR_STOCK => null,
                 self::ATTR_DESCRIPTION => t('Store v Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
@@ -135,7 +125,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             $stores[] = [
                 self::ATTR_NAME => 'Žilina',
                 self::ATTR_IS_DEFAULT => false,
-                self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_SECOND_DOMAIN,
+                self::ATTR_DOMAIN_ID => Domain::SECOND_DOMAIN_ID,
                 self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 14),
                 self::ATTR_DESCRIPTION => t('Store in Žilina', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $secondDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
@@ -160,18 +150,12 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     private function initStoreData(array $demoRow): StoreData
     {
-        $storeData = $this->storeDataFactory->create();
+        $storeData = $this->storeDataFactory->createForDomain($demoRow[self::ATTR_DOMAIN_ID]);
 
         $storeData->uuid = array_pop($this->uuidPool);
 
         $storeData->name = $demoRow[self::ATTR_NAME];
         $storeData->isDefault = $demoRow[self::ATTR_IS_DEFAULT];
-
-        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-            $storeData->isEnabledOnDomains[$domainId] = $demoRow[self::ATTR_IS_ENABLED_BY_DOMAIN][$domainId] ?? false;
-        }
-
         $storeData->stock = $demoRow[self::ATTR_STOCK];
         $storeData->description = $demoRow[self::ATTR_DESCRIPTION];
         $storeData->externalId = $demoRow[self::ATTR_EXTERNAL_ID];
