@@ -8,6 +8,11 @@ fragment BrandDetailFragment on Brand {
     }
     name
     seoH1
+    seoTitle
+    seoMetaDescription
+    hreflangLinks {
+        ...HreflangLinksFragment
+    }
     description
     mainImage {
         ...ImageFragment
@@ -15,6 +20,4 @@ fragment BrandDetailFragment on Brand {
     products(orderingMode: $orderingMode, filter: $filter) {
         ...ListedProductConnectionPreviewFragment
     }
-    seoTitle
-    seoMetaDescription
 }

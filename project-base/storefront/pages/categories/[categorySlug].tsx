@@ -59,6 +59,7 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
                 breadcrumbs={categoryData?.breadcrumb}
                 breadcrumbsType="category"
                 description={categoryData?.seoMetaDescription}
+                hreflangLinks={categoryData?.hreflangLinks}
                 isFetchingData={isFetchingVisible}
                 title={seoTitle}
             >

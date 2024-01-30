@@ -36,6 +36,7 @@ const BlogArticleDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
             breadcrumbsType="blogCategory"
             canonicalQueryParams={[]}
             description={blogArticleData?.blogArticle?.seoMetaDescription}
+            hreflangLinks={blogArticleData?.blogArticle?.hreflangLinks}
             isFetchingData={fetching}
             title={blogArticleData?.blogArticle?.seoTitle}
         >

@@ -8,7 +8,7 @@ import { Webline } from './Webline/Webline';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
-import { BreadcrumbFragmentApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi, HreflangLinkApi } from 'graphql/generated';
 import { CanonicalQueryParameters } from 'helpers/seo/generateCanonicalUrl';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
@@ -19,6 +19,7 @@ type CommonLayoutProps = {
     breadcrumbs?: BreadcrumbFragmentApi[];
     breadcrumbsType?: FriendlyPagesTypesKey;
     canonicalQueryParams?: CanonicalQueryParameters;
+    hreflangLinks?: HreflangLinkApi[];
     isFetchingData?: boolean;
 };
 
@@ -29,6 +30,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     breadcrumbs,
     breadcrumbsType,
     canonicalQueryParams,
+    hreflangLinks,
     isFetchingData,
 }) => {
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
@@ -38,6 +40,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
             <SeoMeta
                 canonicalQueryParams={canonicalQueryParams}
                 defaultDescription={description}
+                defaultHreflangLinks={hreflangLinks}
                 defaultTitle={title}
             />
 

@@ -1,3 +1,4 @@
+import { HreflangLinkApi } from 'graphql/generated';
 import logMessage from 'helpers/errors/logMessage';
 import { CanonicalQueryParameters } from 'helpers/seo/generateCanonicalUrl';
 import useSeo from 'hooks/seo/useSeo';
@@ -10,12 +11,27 @@ type SeoMetaProps = {
     defaultTitle?: string | null;
     defaultDescription?: string | null;
     canonicalQueryParams?: CanonicalQueryParameters;
+    defaultHreflangLinks?: HreflangLinkApi[];
 };
 
-export const SeoMeta: FC<SeoMetaProps> = ({ defaultTitle, defaultDescription, canonicalQueryParams }) => {
+export const SeoMeta: FC<SeoMetaProps> = ({
+    defaultTitle,
+    defaultDescription,
+    canonicalQueryParams,
+    defaultHreflangLinks,
+}) => {
     const [areMissingRequiredTagsReported, setAreMissingRequiredTagsReported] = useState(false);
 
-    const { title, titleSuffix, description, ogTitle, ogDescription, ogImageUrl, canonicalUrl } = useSeo({
+    const {
+        title,
+        titleSuffix,
+        description,
+        ogTitle,
+        ogDescription,
+        ogImageUrl,
+        canonicalUrl,
+        hreflangLinks: hreflangLinksSeoPage,
+    } = useSeo({
         defaultTitle,
         defaultDescription,
         canonicalQueryParams,
@@ -24,6 +40,8 @@ export const SeoMeta: FC<SeoMetaProps> = ({ defaultTitle, defaultDescription, ca
     const currentUri = useRouter().asPath;
     const { url } = useDomainConfig();
     const currentUrlWithDomain = url.substring(0, url.length - 1) + currentUri;
+
+    const hreflangLinks = hreflangLinksSeoPage || defaultHreflangLinks;
 
     useEffect(() => {
         if (!title && !areMissingRequiredTagsReported) {
@@ -40,10 +58,17 @@ export const SeoMeta: FC<SeoMetaProps> = ({ defaultTitle, defaultDescription, ca
     return (
         <Head>
             <title>{`${title} ${titleSuffix}`}</title>
+
             {description && <meta content={description} name="description" />}
+
             {ogTitle && <meta content={ogTitle} name="og:title" />}
             {ogDescription && <meta content={ogDescription} name="og:description" />}
             {ogImageUrl && <meta content={ogImageUrl} property="og:image" />}
+
+            {hreflangLinks?.map(({ hreflang, href }) => (
+                <link key={hreflang} href={href} hrefLang={hreflang} rel="alternate" />
+            ))}
+
             {canonicalUrl && canonicalUrl !== currentUrlWithDomain && <link href={canonicalUrl} rel="canonical" />}
         </Head>
     );

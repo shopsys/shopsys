@@ -8,4 +8,7 @@ fragment SeoPageFragment on SeoPage {
     ogImage {
         ...ImageFragment
     }
+    hreflangLinks {
+        ...HreflangLinksFragment
+    }
 }
