@@ -1137,6 +1137,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
     -   see #project-base-diff to update your project
 
+-   sent emails via async queue ([#2998](https://github.com/shopsys/shopsys/pull/2998))
+    -   see #project-base-diff to update your project
+
 ### Storefront
 
 -   add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))

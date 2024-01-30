@@ -6,4 +6,5 @@ php ./bin/console messenger:consume \
     product_recalculation_priority_high \
     product_recalculation_priority_regular \
     placed_order_transport \
+    send_email_transport \
     --time-limit=$TIME_LIMIT

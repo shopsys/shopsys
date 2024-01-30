@@ -39,9 +39,19 @@ framework:
                     max_retries: 5
                     delay: 60000
                     multiplier: 5
+            send_email_transport:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    vhost: '%env(MESSENGER_TRANSPORT_VHOST)%'
+                    exchange:
+                        name: send_email_exchange
+                        type: direct
+                    queues:
+                        send_email: ~
 
         routing:
             Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityRegularMessage: product_recalculation_priority_regular
             Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityHighMessage: product_recalculation_priority_high
             Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAllProductsMessage: product_recalculation_priority_regular
             Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessage: placed_order_transport
+            Symfony\Component\Mailer\Messenger\SendEmailMessage: send_email_transport
