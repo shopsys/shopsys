@@ -30,7 +30,7 @@ class Country extends AbstractTranslatableEntity
     /**
      * Country code in ISO 3166-1 alpha-2
      *
-     * @var string|null
+     * @var string
      * @ORM\Column(type="string", length=2)
      */
     protected $code;
@@ -115,7 +115,7 @@ class Country extends AbstractTranslatableEntity
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getCode()
     {
