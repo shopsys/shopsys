@@ -83,7 +83,6 @@
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "shopsys/migrations": "14.0.x-dev",
         "shopsys/plugin-interface": "14.0.x-dev",
-        "shopsys/postgres-search-bundle": "^0.4",
         "shopsys/category-feed-persoo": "14.0.x-dev",
         "shopsys/product-feed-google": "14.0.x-dev",
         "shopsys/product-feed-heureka": "14.0.x-dev",

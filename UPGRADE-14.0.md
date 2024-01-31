@@ -1171,6 +1171,28 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   fix doctrine collections type annotations ([#3000](https://github.com/shopsys/shopsys/pull/3000))
     -   see #project-base-diff to update your project
+-   remove tsvector database columns ([#3007](https://github.com/shopsys/shopsys/pull/3007))
+    -   following db functions, triggers and columns were removed, you may skip `Version20240131072541` migration if you're using them:
+        -   trigger `recalc_catnum_tsvector` on table `recalc_catnum_tsvector`
+        -   trigger `recalc_description_tsvector` on table `recalc_description_tsvector`
+        -   trigger `recalc_name_tsvector` on table `recalc_name_tsvector`
+        -   trigger `recalc_partno_tsvector` on table `recalc_partno_tsvector`
+        -   trigger `recalc_product_domain_fulltext_tsvector` on table `recalc_product_domain_fulltext_tsvector`
+        -   trigger `recalc_product_domain_fulltext_tsvector` on table `recalc_product_domain_fulltext_tsvector`
+        -   trigger `recalc_product_domain_fulltext_tsvector` on table `recalc_product_domain_fulltext_tsvector`
+        -   function `set_product_catnum_tsvector`
+        -   function `set_product_domain_description_tsvector`
+        -   function `set_product_domain_fulltext_tsvector`
+        -   function `set_product_partno_tsvector`
+        -   function `set_product_translation_name_tsvector`
+        -   function `update_product_domain_fulltext_tsvector_by_product`
+        -   function `update_product_domain_fulltext_tsvector_by_product_translation`
+        -   column `catnum_tsvector` on table `products`
+        -   column `partno_tsvector` on table `products`
+        -   column `description_tsvector` on table `product_domains`
+        -   column `fulltext_tsvector` on table `product_domains`
+        -   column `name_tsvector` on table `product_translations`
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

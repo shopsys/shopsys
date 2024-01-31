@@ -65,18 +65,6 @@ class ProductDomain
     protected $shortDescription;
 
     /**
-     * @var string
-     * @ORM\Column(type="tsvector", nullable=false)
-     */
-    protected $descriptionTsvector;
-
-    /**
-     * @var string
-     * @ORM\Column(type="tsvector", nullable=false)
-     */
-    protected $fulltextTsvector;
-
-    /**
      * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
