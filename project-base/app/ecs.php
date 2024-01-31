@@ -12,9 +12,9 @@ use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
+use SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
-use SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff;
 use Sniffer\ExtendedApiClassNamespaceSniffer;
 use Sniffer\FrontendApiNamespaceSniffer;
 use Symplify\CodingStandard\Fixer\Commenting\RemoveUselessDefaultCommentFixer;
@@ -40,6 +40,7 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/*',
             __DIR__ . '/app/*',
             __DIR__ . '/tests/App/Acceptance/*',
+            __DIR__ . '/tests/App/Functional/EntityExtension/Model/*',
         ],
         FunctionLengthSniff::class => [
             __DIR__ . '/src/Migrations/Version20190801103940.php',
@@ -167,9 +168,6 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/tests/App/Test/Codeception/Helper/NumberFormatHelper.php',
             __DIR__ . '/tests/App/Test/Codeception/Helper/SymfonyHelper.php',
             __DIR__ . '/tests/App/Test/Codeception/Module/Db.php'],
-        PropertyPerClassLimitSniff::class => [
-            __DIR__ . '/src/Model/Product/ProductData.php',
-        ],
         'SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.WriteOnlyProperty' => [
             __DIR__ . '/src/Model/Category/LinkedCategory/LinkedCategory.php',
             __DIR__ . '/src/Model/Order/Item/OrderItem.php',
@@ -193,7 +191,10 @@ return static function (ECSConfig $ecsConfig): void {
         ForbiddenSuperGlobalSniff::class => [
             __DIR__ . '/tests/App/Functional/Controller/CdnTest.php',
         ],
-        PropertyTypeHintSniff::class => json_decode(file_get_contents(__DIR__ . '/var/cache/entities-dump.json'), true),
+        PropertyTypeHintSniff::class => [
+            ...json_decode(file_get_contents(__DIR__ . '/var/cache/entities-dump.json'), true),
+            __DIR__ . '/tests/App/Functional/EntityExtension/Model/*',
+        ],
     ]);
 
     $ecsConfig->import(__DIR__ . '/vendor/shopsys/coding-standards/ecs.php', null, true);

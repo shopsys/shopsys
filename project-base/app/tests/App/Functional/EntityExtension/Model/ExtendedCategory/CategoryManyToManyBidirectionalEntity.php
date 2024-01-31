@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension\Model;
+namespace Tests\App\Functional\EntityExtension\Model\ExtendedCategory;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +21,7 @@ class CategoryManyToManyBidirectionalEntity
     protected int $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedCategory>
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory>
      * @ORM\ManyToMany(targetEntity="ExtendedCategory", mappedBy="manyToManyBidirectionalEntities")
      */
     protected Collection $categories;
@@ -49,7 +49,7 @@ class CategoryManyToManyBidirectionalEntity
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
+     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory[]
      */
     public function getCategories(): array
     {
@@ -57,7 +57,7 @@ class CategoryManyToManyBidirectionalEntity
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory $category
+     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory $category
      */
     public function addCategory(ExtendedCategory $category): void
     {

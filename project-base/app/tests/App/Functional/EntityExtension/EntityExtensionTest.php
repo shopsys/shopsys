@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\EntityExtension;
 
-use App\Model\Order\Order as ExtendedOrder;
-use App\Model\Product\Brand\Brand as ExtendedBrand;
 use Doctrine\ORM\Tools\SchemaTool;
-use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductTranslation;
-use Tests\App\Functional\EntityExtension\Model\CategoryManyToManyBidirectionalEntity;
-use Tests\App\Functional\EntityExtension\Model\CategoryOneToManyBidirectionalEntity;
-use Tests\App\Functional\EntityExtension\Model\CategoryOneToOneBidirectionalEntity;
-use Tests\App\Functional\EntityExtension\Model\ExtendedCategory;
-use Tests\App\Functional\EntityExtension\Model\ExtendedOrderItem;
-use Tests\App\Functional\EntityExtension\Model\ExtendedProduct;
-use Tests\App\Functional\EntityExtension\Model\ExtendedProductTranslation;
-use Tests\App\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity;
-use Tests\App\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity;
-use Tests\App\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity;
+use Doctrine\ORM\Tools\SchemaValidator;
+use Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade;
+use Tests\App\Functional\EntityExtension\Model\Category\Category;
+use Tests\App\Functional\EntityExtension\Model\ExtendedCategory\CategoryManyToManyBidirectionalEntity;
+use Tests\App\Functional\EntityExtension\Model\ExtendedCategory\CategoryOneToManyBidirectionalEntity;
+use Tests\App\Functional\EntityExtension\Model\ExtendedCategory\CategoryOneToOneBidirectionalEntity;
+use Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory;
+use Tests\App\Functional\EntityExtension\Model\ExtendedOrder\ExtendedOrder;
+use Tests\App\Functional\EntityExtension\Model\ExtendedOrder\ExtendedOrderItem;
+use Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct;
+use Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProductTranslation;
+use Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ProductManyToManyBidirectionalEntity;
+use Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ProductOneToManyBidirectionalEntity;
+use Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ProductOneToOneBidirectionalEntity;
+use Tests\App\Functional\EntityExtension\Model\Order\Order;
+use Tests\App\Functional\EntityExtension\Model\Order\OrderItem;
+use Tests\App\Functional\EntityExtension\Model\Product\Product;
+use Tests\App\Functional\EntityExtension\Model\Product\ProductTranslation;
 use Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -42,35 +42,32 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
     /**
      * @inject
-     * @phpstan-ignore-next-line skipped test
      */
     private EntityExtensionTestHelper $entityExtensionTestHelper;
+
+    /**
+     * @inject
+     */
+    private DatabaseSchemaFacade $databaseSchemaFacade;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        return;
+        // To ensure the changes in the application do not break this test, it's necessary to start with a clean database
+        // test database is restored after the test thanks to the usage of transactional test case
+        $this->databaseSchemaFacade->dropSchemaIfExists('public');
+        $this->databaseSchemaFacade->createSchema('public');
 
-        /** @phpstan-ignore-next-line skipped test */
         $this->entityExtensionTestHelper->registerTestEntities();
 
         $entityExtensionMap = [
             Product::class => ExtendedProduct::class,
             Category::class => ExtendedCategory::class,
             OrderItem::class => ExtendedOrderItem::class,
-            Brand::class => ExtendedBrand::class,
             Order::class => ExtendedOrder::class,
             ProductTranslation::class => ExtendedProductTranslation::class,
         ];
-
-        $applicationEntityExtensionMap = self::getContainer()->getParameter('shopsys.entity_extension.map');
-
-        foreach ($applicationEntityExtensionMap as $baseClass => $extendedClass) {
-            if (!array_key_exists($baseClass, $entityExtensionMap)) {
-                $entityExtensionMap[$baseClass] = $extendedClass;
-            }
-        }
 
         $newEntities = [
             UnidirectionalEntity::class,
@@ -89,13 +86,15 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
         $this->generateProxies($metadata);
         $this->updateDatabaseSchema($metadata);
+
+        $this->insertTestEntities();
     }
 
     /**
      * @param string[] $entities
      * @return \Doctrine\Persistence\Mapping\ClassMetadata[]
      */
-    public function getMetadata(array $entities): array
+    private function getMetadata(array $entities): array
     {
         return array_map(function (string $entity) {
             return $this->em->getClassMetadata($entity);
@@ -105,7 +104,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     /**
      * @param \Doctrine\Persistence\Mapping\ClassMetadata[] $metadata
      */
-    public function generateProxies(array $metadata): void
+    private function generateProxies(array $metadata): void
     {
         $this->em->getProxyFactory()->generateProxyClasses($metadata);
     }
@@ -113,10 +112,25 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     /**
      * @param \Doctrine\Persistence\Mapping\ClassMetadata[] $metadata
      */
-    public function updateDatabaseSchema(array $metadata): void
+    private function updateDatabaseSchema(array $metadata): void
     {
         $schemaTool = new SchemaTool($this->em);
         $schemaTool->updateSchema($metadata);
+    }
+
+    /**
+     * Test mapping, so changes in source entity are ok
+     */
+    public function testMappingIsOk(): void
+    {
+        $validator = new SchemaValidator($this->em);
+        $mappingValidation = $validator->validateMapping();
+
+        foreach ($mappingValidation as $errors) {
+            foreach ($errors as $error) {
+                $this->fail($error);
+            }
+        }
     }
 
     /**
@@ -124,9 +138,6 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
      */
     public function testAll(): void
     {
-        $this->markTestSkipped();
-
-        /** @phpstan-ignore-next-line skipped test */
         $this->doTestExtendedProductPersistence();
         $this->doTestExtendedCategoryPersistence();
         $this->doTestExtendedOrderItemsPersistence();
@@ -141,9 +152,6 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         );
     }
 
-    /**
-     * @phpstan-ignore-next-line skipped test
-     */
     private function doTestExtendedProductPersistence(): void
     {
         $product = $this->getProduct(self::MAIN_PRODUCT_ID);
@@ -268,7 +276,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
     /**
      * @param int $id
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
+     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct
      */
     private function getProduct(int $id): ExtendedProduct
     {
@@ -284,9 +292,6 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         return $product;
     }
 
-    /**
-     * @phpstan-ignore-next-line skipped test
-     */
     private function doTestExtendedCategoryPersistence(): void
     {
         $category = $this->getCategory(self::MAIN_CATEGORY_ID);
@@ -411,7 +416,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
     /**
      * @param int $id
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory
+     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory
      */
     public function getCategory(int $id): ExtendedCategory
     {
@@ -427,9 +432,6 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         return $category;
     }
 
-    /**
-     * @phpstan-ignore-next-line skipped test
-     */
     private function doTestExtendedOrderItemsPersistence(): void
     {
         $orderItem = $this->getOrderItem(self::ORDER_ITEM_ID);
@@ -444,7 +446,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
     /**
      * @param int $id
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedOrderItem
+     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedOrder\ExtendedOrderItem
      */
     private function getOrderItem(int $id): ExtendedOrderItem
     {
@@ -464,7 +466,6 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
      * @param string $parentEntityName
      * @param string $extendedEntityName
      * @param int $entityId
-     * @phpstan-ignore-next-line skipped test
      */
     private function doTestExtendedEntityInstantiation(
         string $parentEntityName,
@@ -487,5 +488,53 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
         $entity = $this->em->find($parentEntityName, $entityId);
         $this->assertInstanceOf($extendedEntityName, $entity);
+    }
+
+    private function insertTestEntities(): void
+    {
+        $this->insertProduct();
+        $this->insertProduct();
+        $this->insertProduct();
+        $this->insertProduct();
+
+        $this->insertCategory();
+        $this->insertCategory();
+        $this->insertCategory();
+        $this->insertCategory();
+
+        $this->insertOrder();
+    }
+
+    private function insertProduct(): void
+    {
+        $product = new ExtendedProduct();
+
+        $product->setMandatoryData();
+
+        $this->em->persist($product);
+        $this->em->flush();
+    }
+
+    private function insertCategory(): void
+    {
+        $category = new ExtendedCategory();
+
+        $category->setMandatoryData();
+
+        $this->em->persist($category);
+        $this->em->flush();
+    }
+
+    private function insertOrder(): void
+    {
+        $order = new ExtendedOrder();
+        $orderItem = new ExtendedOrderItem($order);
+
+        $order->setMandatoryData();
+        $orderItem->setMandatoryData();
+
+        $this->em->persist($order);
+        $this->em->persist($orderItem);
+        $this->em->flush();
     }
 }

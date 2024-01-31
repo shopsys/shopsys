@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension\Model;
+namespace Tests\App\Functional\EntityExtension\Model\ExtendedProduct;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +21,7 @@ class ProductManyToManyBidirectionalEntity
     protected int $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedProduct>
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct>
      * @ORM\ManyToMany(targetEntity="ExtendedProduct", mappedBy="manyToManyBidirectionalEntities")
      */
     protected Collection $products;
@@ -49,7 +49,7 @@ class ProductManyToManyBidirectionalEntity
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
+     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct[]
      */
     public function getProducts(): array
     {
@@ -57,7 +57,7 @@ class ProductManyToManyBidirectionalEntity
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct $product
+     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct $product
      */
     public function addProduct(ExtendedProduct $product): void
     {
