@@ -699,9 +699,6 @@
     "shopsys/plugin-interface": {
         "version": "v9.1.1"
     },
-    "shopsys/postgres-search-bundle": {
-        "version": "0.1"
-    },
     "shopsys/product-feed-google": {
         "version": "v9.1.1"
     },

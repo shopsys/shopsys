@@ -621,9 +621,6 @@
     "shopsys/ordered-form": {
         "version": "4.0.0"
     },
-    "shopsys/postgres-search-bundle": {
-        "version": "0.1"
-    },
     "slevomat/coding-standard": {
         "version": "4.8.7"
     },
