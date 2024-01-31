@@ -31,14 +31,6 @@ class StoreFacade
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
-     */
-    public function getAllStores(): array
-    {
-        return $this->storeRepository->getAll();
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
      * @return \Shopsys\FrameworkBundle\Model\Store\Store
      */

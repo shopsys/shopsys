@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Store\ClosedDay;
 
 use DateInterval;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\Exception\ClosedDayNotFoundException;
@@ -47,14 +47,12 @@ class ClosedDayRepository
      * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
      */
-    public function getThisWeekClosedDaysNotExcludedForStoreIndexedByDayNumber(int $domainId, Store $store): array
+    public function getThisWeekClosedDaysNotExcludedForStore(int $domainId, Store $store): array
     {
-        $timeZone = $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($this->domain->getId());
-        $beginningOfWeekInUtc = DateTimeHelper::convertDateTimeFromTimezoneToUtc('this week monday', $timeZone);
-        $beginningOfNextWeekInUtc = $beginningOfWeekInUtc->add(new DateInterval('P7D'));
+        $beginningOfWeek = new DateTimeImmutable('this week monday', $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId));
+        $beginningOfNextWeek = $beginningOfWeek->add(new DateInterval('P7D'));
 
-        /** @var \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[] $closedDays */
-        $closedDays = $this
+        return $this
             ->getClosedDayRepository()
             ->createQueryBuilder('cd')
             ->where('cd.domainId = :domainId')
@@ -63,18 +61,10 @@ class ClosedDayRepository
             ->andWhere('cd.date < :beginningOfNextWeek')
             ->setParameter('domainId', $domainId)
             ->setParameter('store', $store)
-            ->setParameter('beginningOfWeek', $beginningOfWeekInUtc)
-            ->setParameter('beginningOfNextWeek', $beginningOfNextWeekInUtc)
+            ->setParameter('beginningOfWeek', $beginningOfWeek)
+            ->setParameter('beginningOfNextWeek', $beginningOfNextWeek)
             ->getQuery()
             ->getResult();
-
-        $closedDaysIndexedByDayNumber = [];
-
-        foreach ($closedDays as $closedDay) {
-            $closedDaysIndexedByDayNumber[$closedDay->getDate()->format('N')] = $closedDay;
-        }
-
-        return $closedDaysIndexedByDayNumber;
     }
 
     /**
