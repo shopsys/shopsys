@@ -29,7 +29,7 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
     const contactInformationValues = useCurrentUserContactInformation();
 
     const resolver = yupResolver(
-        Yup.object().shape({
+        Yup.object().shape<Record<keyof ContactInformation, any>>({
             email: validateEmail(t),
             customer: validateCustomer(),
             telephone: validateTelephoneRequired(t),
@@ -92,6 +92,8 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                 then: validateCountry(t),
             }),
             newsletterSubscription: Yup.boolean(),
+            deliveryAddressUuid: Yup.string().optional().nullable(),
+            note: Yup.string().optional().nullable(),
         }),
     );
     const defaultValues = contactInformationValues;

@@ -15,7 +15,7 @@ export const useRegistrationAfterOrderForm = (): [
 ] => {
     const { t } = useTranslation();
     const resolver = yupResolver(
-        Yup.object().shape({
+        Yup.object().shape<Record<keyof RegistrationAfterOrderFormType, any>>({
             password: Yup.string()
                 .required(t('Please enter password'))
                 .min(
