@@ -64,22 +64,10 @@ class Product extends AbstractTranslatableEntity
     protected $catnum;
 
     /**
-     * @var string
-     * @ORM\Column(type="tsvector", nullable=false)
-     */
-    protected $catnumTsvector;
-
-    /**
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $partno;
-
-    /**
-     * @var string
-     * @ORM\Column(type="tsvector", nullable=false)
-     */
-    protected $partnoTsvector;
 
     /**
      * @var string|null
