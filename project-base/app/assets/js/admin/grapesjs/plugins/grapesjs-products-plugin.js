@@ -142,7 +142,7 @@ export default grapesjs.plugins.add('products', editor => {
                 `,
                 traits: [
                     {
-                        type: 'textarea',
+                        type: 'text',
                         name: dataProducts,
                         label: Translator.trans('Catalog numbers delimited by comma')
                     }

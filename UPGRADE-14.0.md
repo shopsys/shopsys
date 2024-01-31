@@ -1139,6 +1139,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   sent emails via async queue ([#2998](https://github.com/shopsys/shopsys/pull/2998))
     -   see #project-base-diff to update your project
+-   change the product catnums field type in GrapesJs to text (([#2994](https://github.com/shopsys/shopsys/pull/2994)))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
