@@ -27,8 +27,8 @@ class TransportPriceFactory implements TransportPriceFactoryInterface
         Money $price,
         int $domainId,
     ): TransportPrice {
-        $classData = $this->entityNameResolver->resolve(TransportPrice::class);
+        $entityClassName = $this->entityNameResolver->resolve(TransportPrice::class);
 
-        return new $classData($transport, $price, $domainId);
+        return new $entityClassName($transport, $price, $domainId);
     }
 }

@@ -38,9 +38,9 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
     ): UploadedFile {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
 
-        $classData = $this->entityNameResolver->resolve(UploadedFile::class);
+        $entityClassName = $this->entityNameResolver->resolve(UploadedFile::class);
 
-        return new $classData($entityName, $entityId, $type, pathinfo(
+        return new $entityClassName($entityName, $entityId, $type, pathinfo(
             $temporaryFilepath,
             PATHINFO_BASENAME,
         ), $uploadedFilename, $position);

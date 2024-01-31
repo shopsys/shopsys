@@ -23,8 +23,8 @@ class AdministratorGridLimitFactory implements AdministratorGridLimitFactoryInte
      */
     public function create(Administrator $administrator, string $gridId, int $limit): AdministratorGridLimit
     {
-        $classData = $this->entityNameResolver->resolve(AdministratorGridLimit::class);
+        $entityClassName = $this->entityNameResolver->resolve(AdministratorGridLimit::class);
 
-        return new $classData($administrator, $gridId, $limit);
+        return new $entityClassName($administrator, $gridId, $limit);
     }
 }

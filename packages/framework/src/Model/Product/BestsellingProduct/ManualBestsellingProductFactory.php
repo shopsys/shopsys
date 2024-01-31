@@ -30,8 +30,8 @@ class ManualBestsellingProductFactory implements ManualBestsellingProductFactory
         Product $product,
         int $position,
     ): ManualBestsellingProduct {
-        $classData = $this->entityNameResolver->resolve(ManualBestsellingProduct::class);
+        $entityClassName = $this->entityNameResolver->resolve(ManualBestsellingProduct::class);
 
-        return new $classData($domainId, $category, $product, $position);
+        return new $entityClassName($domainId, $category, $product, $position);
     }
 }

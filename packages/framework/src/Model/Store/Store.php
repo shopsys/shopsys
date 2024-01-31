@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\Exception\OpeningHoursNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
-use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData;
 
 /**
  * @ORM\Table(name="stores")
@@ -104,7 +103,7 @@ class Store implements OrderableEntityInterface
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int,\Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours>
-     * @ORM\OneToMany(targetEntity="\Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours", mappedBy="store", cascade={"persist", "remove"}, orphanRemoval=true, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="\Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours", mappedBy="store", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"dayOfWeek" = "ASC"})
      */
     protected $openingHours;
@@ -160,6 +159,18 @@ class Store implements OrderableEntityInterface
     {
         $this->setDomains($storeData);
         $this->setData($storeData);
+
+        foreach ($this->openingHours as $index => $openingHours) {
+            $openingHours->edit($storeData->openingHours[$index]);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours[] $openingHours
+     */
+    public function setOpeningHours(array $openingHours): void
+    {
+        $this->openingHours = new ArrayCollection($openingHours);
     }
 
     /**
@@ -176,7 +187,6 @@ class Store implements OrderableEntityInterface
         $this->city = $storeData->city;
         $this->postcode = $storeData->postcode;
         $this->country = $storeData->country;
-        $this->openingHours = $this->createOpeningHours($storeData->openingHours);
         $this->contactInfo = $storeData->contactInfo;
         $this->specialMessage = $storeData->specialMessage;
         $this->locationLatitude = $storeData->locationLatitude;
@@ -442,21 +452,5 @@ class Store implements OrderableEntityInterface
     public function setDefault(): void
     {
         $this->isDefault = true;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[] $openingHours
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    protected function createOpeningHours(array $openingHours): ArrayCollection
-    {
-        $openingHours = array_map(function (OpeningHoursData $openingHourData): OpeningHours {
-            $openingHours = new OpeningHours($openingHourData);
-            $openingHours->setStore($this);
-
-            return $openingHours;
-        }, $openingHours);
-
-        return new ArrayCollection($openingHours);
     }
 }

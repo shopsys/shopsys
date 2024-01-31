@@ -13,11 +13,13 @@ class HeurekaCategoryFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryRepository $heurekaCategoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
+     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFactory $heurekaCategoryFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly HeurekaCategoryRepository $heurekaCategoryRepository,
         protected readonly CategoryRepository $categoryRepository,
+        protected readonly HeurekaCategoryFactory $heurekaCategoryFactory,
     ) {
     }
 
@@ -32,7 +34,7 @@ class HeurekaCategoryFacade
 
         foreach ($newHeurekaCategoriesData as $newHeurekaCategoryData) {
             if (!array_key_exists($newHeurekaCategoryData->id, $existingHeurekaCategories)) {
-                $newHeurekaCategory = new HeurekaCategory($newHeurekaCategoryData);
+                $newHeurekaCategory = $this->heurekaCategoryFactory->create($newHeurekaCategoryData);
                 $this->em->persist($newHeurekaCategory);
             } else {
                 $existingHeurekaCategory = $existingHeurekaCategories[$newHeurekaCategoryData->id];

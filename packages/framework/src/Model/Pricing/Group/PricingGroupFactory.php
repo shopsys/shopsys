@@ -22,8 +22,8 @@ class PricingGroupFactory implements PricingGroupFactoryInterface
      */
     public function create(PricingGroupData $data, int $domainId): PricingGroup
     {
-        $classData = $this->entityNameResolver->resolve(PricingGroup::class);
+        $entityClassName = $this->entityNameResolver->resolve(PricingGroup::class);
 
-        return new $classData($data, $domainId);
+        return new $entityClassName($data, $domainId);
     }
 }

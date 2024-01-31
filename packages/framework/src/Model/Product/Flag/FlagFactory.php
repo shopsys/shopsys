@@ -21,8 +21,8 @@ class FlagFactory implements FlagFactoryInterface
      */
     public function create(FlagData $data): Flag
     {
-        $classData = $this->entityNameResolver->resolve(Flag::class);
+        $entityClassName = $this->entityNameResolver->resolve(Flag::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

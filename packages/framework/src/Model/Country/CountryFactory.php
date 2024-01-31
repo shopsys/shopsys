@@ -21,8 +21,8 @@ class CountryFactory implements CountryFactoryInterface
      */
     public function create(CountryData $data): Country
     {
-        $classData = $this->entityNameResolver->resolve(Country::class);
+        $entityClassName = $this->entityNameResolver->resolve(Country::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

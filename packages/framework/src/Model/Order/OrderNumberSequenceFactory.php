@@ -22,8 +22,8 @@ class OrderNumberSequenceFactory implements OrderNumberSequenceFactoryInterface
      */
     public function create(int $id, string $number): OrderNumberSequence
     {
-        $classData = $this->entityNameResolver->resolve(OrderNumberSequence::class);
+        $entityClassName = $this->entityNameResolver->resolve(OrderNumberSequence::class);
 
-        return new $classData($id, $number);
+        return new $entityClassName($id, $number);
     }
 }

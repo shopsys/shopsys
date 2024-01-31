@@ -21,8 +21,8 @@ class AdministratorRoleFactory implements AdministratorRoleFactoryInterface
      */
     public function create(AdministratorRoleData $administratorRoleData): AdministratorRole
     {
-        $classData = $this->entityNameResolver->resolve(AdministratorRole::class);
+        $entityClassName = $this->entityNameResolver->resolve(AdministratorRole::class);
 
-        return new $classData($administratorRoleData);
+        return new $entityClassName($administratorRoleData);
     }
 }

@@ -22,8 +22,8 @@ class CustomerUserRefreshTokenChainFactory implements CustomerUserRefreshTokenCh
     public function create(
         CustomerUserRefreshTokenChainData $customerUserRefreshTokenChainData,
     ): CustomerUserRefreshTokenChain {
-        $classData = $this->entityNameResolver->resolve(CustomerUserRefreshTokenChain::class);
+        $entityClassName = $this->entityNameResolver->resolve(CustomerUserRefreshTokenChain::class);
 
-        return new $classData($customerUserRefreshTokenChainData);
+        return new $entityClassName($customerUserRefreshTokenChainData);
     }
 }

@@ -21,8 +21,8 @@ class PromoCodeFactory implements PromoCodeFactoryInterface
      */
     public function create(PromoCodeData $data): PromoCode
     {
-        $classData = $this->entityNameResolver->resolve(PromoCode::class);
+        $entityClassName = $this->entityNameResolver->resolve(PromoCode::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

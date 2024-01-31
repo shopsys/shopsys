@@ -21,8 +21,8 @@ class TransportFactory implements TransportFactoryInterface
      */
     public function create(TransportData $data): Transport
     {
-        $classData = $this->entityNameResolver->resolve(Transport::class);
+        $entityClassName = $this->entityNameResolver->resolve(Transport::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

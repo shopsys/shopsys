@@ -22,8 +22,8 @@ class CategoryFactory implements CategoryFactoryInterface
      */
     public function create(CategoryData $data, ?Category $rootCategory): Category
     {
-        $classData = $this->entityNameResolver->resolve(Category::class);
-        $category = new $classData($data);
+        $entityClassName = $this->entityNameResolver->resolve(Category::class);
+        $category = new $entityClassName($data);
 
         if ($rootCategory !== null && $category->getParent() === null) {
             $category->setParent($rootCategory);

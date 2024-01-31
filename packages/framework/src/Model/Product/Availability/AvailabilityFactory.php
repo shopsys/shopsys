@@ -21,8 +21,8 @@ class AvailabilityFactory implements AvailabilityFactoryInterface
      */
     public function create(AvailabilityData $data): Availability
     {
-        $classData = $this->entityNameResolver->resolve(Availability::class);
+        $entityClassName = $this->entityNameResolver->resolve(Availability::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

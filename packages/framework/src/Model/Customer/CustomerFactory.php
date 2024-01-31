@@ -21,8 +21,8 @@ class CustomerFactory implements CustomerFactoryInterface
      */
     public function create(CustomerData $customerData): Customer
     {
-        $classData = $this->entityNameResolver->resolve(Customer::class);
+        $entityClassName = $this->entityNameResolver->resolve(Customer::class);
 
-        return new $classData($customerData);
+        return new $entityClassName($customerData);
     }
 }

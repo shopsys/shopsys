@@ -26,8 +26,8 @@ class PersistentReferenceFactory implements PersistentReferenceFactoryInterface
         string $entityName,
         int $entityId,
     ): PersistentReference {
-        $classData = $this->entityNameResolver->resolve(PersistentReference::class);
+        $entityClassName = $this->entityNameResolver->resolve(PersistentReference::class);
 
-        return new $classData($referenceName, $entityName, $entityId);
+        return new $entityClassName($referenceName, $entityName, $entityId);
     }
 }

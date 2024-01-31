@@ -15,12 +15,14 @@ class StockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockRepository $stockRepository
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
+     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFactory $stockFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly StockRepository $stockRepository,
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly ProductStockFacade $productStockFacade,
+        protected readonly StockFactory $stockFactory,
     ) {
     }
 
@@ -30,7 +32,7 @@ class StockFacade
      */
     public function create(StockData $stockData): Stock
     {
-        $stock = new Stock($stockData);
+        $stock = $this->stockFactory->create($stockData);
         $this->em->persist($stock);
         $this->em->flush();
 

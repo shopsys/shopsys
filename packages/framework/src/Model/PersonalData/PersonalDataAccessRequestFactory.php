@@ -21,8 +21,8 @@ class PersonalDataAccessRequestFactory implements PersonalDataAccessRequestFacto
      */
     public function create(PersonalDataAccessRequestData $data): PersonalDataAccessRequest
     {
-        $classData = $this->entityNameResolver->resolve(PersonalDataAccessRequest::class);
+        $entityClassName = $this->entityNameResolver->resolve(PersonalDataAccessRequest::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

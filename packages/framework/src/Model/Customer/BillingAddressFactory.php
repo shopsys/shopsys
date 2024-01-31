@@ -21,8 +21,8 @@ class BillingAddressFactory implements BillingAddressFactoryInterface
      */
     public function create(BillingAddressData $data): BillingAddress
     {
-        $classData = $this->entityNameResolver->resolve(BillingAddress::class);
+        $entityClassName = $this->entityNameResolver->resolve(BillingAddress::class);
 
-        return new $classData($data);
+        return new $entityClassName($data);
     }
 }

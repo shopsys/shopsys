@@ -24,8 +24,8 @@ class NewsletterSubscriberFactory implements NewsletterSubscriberFactoryInterfac
      */
     public function create(string $email, DateTimeImmutable $createdAt, int $domainId): NewsletterSubscriber
     {
-        $classData = $this->entityNameResolver->resolve(NewsletterSubscriber::class);
+        $entityClassName = $this->entityNameResolver->resolve(NewsletterSubscriber::class);
 
-        return new $classData($email, $createdAt, $domainId);
+        return new $entityClassName($email, $createdAt, $domainId);
     }
 }

@@ -67,6 +67,14 @@ class OpeningHours
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData $openingHourData
+     */
+    public function edit(OpeningHoursData $openingHourData): void
+    {
+        $this->setData($openingHourData);
+    }
+
+    /**
      * @return int
      */
     public function getId()

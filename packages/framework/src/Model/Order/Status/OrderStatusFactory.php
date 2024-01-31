@@ -22,8 +22,8 @@ class OrderStatusFactory implements OrderStatusFactoryInterface
      */
     public function create(OrderStatusData $data, int $type): OrderStatus
     {
-        $classData = $this->entityNameResolver->resolve(OrderStatus::class);
+        $entityClassName = $this->entityNameResolver->resolve(OrderStatus::class);
 
-        return new $classData($data, $type);
+        return new $entityClassName($data, $type);
     }
 }

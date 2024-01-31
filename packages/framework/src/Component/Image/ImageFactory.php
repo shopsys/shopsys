@@ -42,9 +42,9 @@ class ImageFactory implements ImageFactoryInterface
         $temporaryFilePath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
         $convertedFilePath = $this->imageProcessor->convertToShopFormatAndGetNewFilename($temporaryFilePath);
 
-        $classData = $this->entityNameResolver->resolve(Image::class);
+        $entityClassName = $this->entityNameResolver->resolve(Image::class);
 
-        return new $classData($entityName, $entityId, $namesIndexedByLocale, $convertedFilePath, $type);
+        return new $entityClassName($entityName, $entityId, $namesIndexedByLocale, $convertedFilePath, $type);
     }
 
     /**
