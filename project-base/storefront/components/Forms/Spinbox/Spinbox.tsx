@@ -19,7 +19,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         const { t } = useTranslation();
         const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
         const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
-        const intervalRef = useRef<NodeJS.Timer | null>(null);
+        const intervalRef = useRef<NodeJS.Timeout | null>(null);
         const spinboxRef = useForwardedRef(spinboxForwardedRef);
 
         const setNewSpinboxValue = useCallback(
@@ -74,7 +74,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             };
         }, [isHoldingIncrease, onChangeValueHandler, step]);
 
-        const clearSpinboxInterval = (interval: NodeJS.Timer | null) => {
+        const clearSpinboxInterval = (interval: NodeJS.Timeout | null) => {
             if (interval !== null) {
                 clearInterval(interval);
             }

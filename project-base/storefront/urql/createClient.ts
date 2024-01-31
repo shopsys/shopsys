@@ -3,7 +3,7 @@ import { Translate } from 'next-translate';
 // eslint-disable-next-line no-restricted-imports
 import { initUrqlClient } from 'next-urql';
 import getConfig from 'next/config';
-import { RedisClientType, RedisModules, RedisScripts } from 'redis';
+import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { Client, SSRExchange } from 'urql';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
@@ -18,7 +18,7 @@ export const createClient = ({
     t: Translate;
     ssrExchange: SSRExchange;
     publicGraphqlEndpoint: string;
-    redisClient?: RedisClientType<RedisModules, RedisScripts>;
+    redisClient?: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
     context?: GetServerSidePropsContext | NextPageContext;
 }): Client => {
     const { serverRuntimeConfig } = getConfig();

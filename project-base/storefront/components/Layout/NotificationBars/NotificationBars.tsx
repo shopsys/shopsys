@@ -5,7 +5,7 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useNotificationBarsApi } from 'graphql/generated';
 import { getTokensFromCookies } from 'helpers/auth/tokens';
 import { useAuth } from 'hooks/auth/useAuth';
-import decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import Trans from 'next-translate/Trans';
 import { memo, useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -24,7 +24,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
             return;
         }
 
-        const decodedAccessToken = decode(encodedAccessToken) as { administratorUuid?: string };
+        const decodedAccessToken = jwtDecode(encodedAccessToken) as { administratorUuid?: string };
         const isUserAdmin = !!decodedAccessToken.administratorUuid;
 
         setLoggedAsUserEmail(isUserAdmin ? user!.email : undefined);

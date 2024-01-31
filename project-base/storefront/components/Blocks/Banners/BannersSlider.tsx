@@ -15,7 +15,7 @@ type BannersSliderProps = {
 export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [pause, setPause] = useState(false);
-    const timer = useRef<NodeJS.Timer | null>(null);
+    const timer = useRef<NodeJS.Timeout | null>(null);
     const sliderBoxRef = useRef<HTMLDivElement>(null);
 
     const { width: windowWidth } = useGetWindowSize();
