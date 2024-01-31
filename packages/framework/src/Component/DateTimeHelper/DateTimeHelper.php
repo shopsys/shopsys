@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Component\DateTimeHelper;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
-use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\Exception\CannotParseDateTimeException;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 
@@ -54,43 +53,6 @@ class DateTimeHelper
     }
 
     /**
-     * @param string $dateTime
-     * @param \DateTimeZone $inputTimeZone
-     * @return \DateTimeImmutable
-     */
-    public static function convertDateTimeFromTimezoneToUtc(
-        string $dateTime,
-        DateTimeZone $inputTimeZone,
-    ): DateTimeImmutable {
-        $utcTimeZone = new DateTimeZone('UTC');
-
-        return (new DateTimeImmutable($dateTime, $inputTimeZone))->setTimezone($utcTimeZone);
-    }
-
-    /**
-     * @param int $dayNumber
-     * @param \DateTimeZone $inputTimeZone
-     * @return \DateTimeImmutable
-     */
-    public static function getUtcDateForDayInCurrentWeek(
-        int $dayNumber,
-        DateTimeZone $inputTimeZone,
-    ): DateTimeImmutable {
-        $dayName = match ($dayNumber) {
-            1 => 'monday',
-            2 => 'tuesday',
-            3 => 'wednesday',
-            4 => 'thursday',
-            5 => 'friday',
-            6 => 'saturday',
-            7 => 'sunday',
-            default => throw new InvalidArgumentException(sprintf('Day number "%s" is not valid. (expected a value in range 1-7)', $dayNumber)),
-        };
-
-        return self::convertDateTimeFromTimezoneToUtc('this week ' . $dayName, $inputTimeZone);
-    }
-
-    /**
      * @param string $hoursAndMinutes
      * @return \DateTimeImmutable
      */
@@ -100,19 +62,14 @@ class DateTimeHelper
     }
 
     /**
-     * @param string|null $hoursAndMinutes
      * @param int $domainId
-     * @return string|null
+     * @return int
      */
-    public function convertHoursAndMinutesFromUtcToDisplayTimezone(?string $hoursAndMinutes, int $domainId): ?string
+    public function getCurrentDayOfWeek(int $domainId): int
     {
-        if ($hoursAndMinutes === null) {
-            return null;
-        }
-
-        $displayTimeZone = $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId);
-        $dateTime = self::createDateTimeFromTime($hoursAndMinutes);
-
-        return $dateTime->setTimezone($displayTimeZone)->format('H:i');
+        return (int)(new DateTimeImmutable(
+            'now',
+            $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId),
+        ))->format('N');
     }
 }

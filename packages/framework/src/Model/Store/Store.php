@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Store;
 
-use DateTimeImmutable;
-use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
-use Shopsys\FrameworkBundle\Model\Store\OpeningHours\Exception\OpeningHoursNotFoundException;
-use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
 
 /**
  * @ORM\Table(name="stores")
@@ -283,76 +278,6 @@ class Store implements OrderableEntityInterface
     public function getOpeningHours()
     {
         return $this->openingHours->getValues();
-    }
-
-    /**
-     * @param \DateTimeImmutable $dateInUtc
-     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours
-     */
-    protected function getOpeningHoursForDate(DateTimeImmutable $dateInUtc): OpeningHours
-    {
-        $dayOfWeek = (int)$dateInUtc->format('N');
-
-        foreach ($this->openingHours as $openingHours) {
-            if ($openingHours->getDayOfWeek() === $dayOfWeek) {
-                return $openingHours;
-            }
-        }
-
-        throw new OpeningHoursNotFoundException($this->id, $dayOfWeek);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[] $closedDays
-     * @param \DateTimeZone $timeZone
-     * @return bool
-     */
-    public function isOpenNow(array $closedDays, DateTimeZone $timeZone): bool
-    {
-        $nowInUtc = new DateTimeImmutable(
-            'now',
-        );
-
-        $day = DateTimeHelper::getUtcDateForDayInCurrentWeek(
-            (int)$nowInUtc->format('N'),
-            $timeZone,
-        );
-
-        foreach ($closedDays as $closedDay) {
-            if ($closedDay->getDate()->format('N') === $day->format('N')) {
-                return false;
-            }
-        }
-
-        $todayOpeningHours = $this->getOpeningHoursForDate($nowInUtc);
-        $firstOpeningTime = $this->getTimeWithTimeZone($todayOpeningHours->getFirstOpeningTime());
-        $firstClosingTime = $this->getTimeWithTimeZone($todayOpeningHours->getFirstClosingTime());
-        $secondOpeningTime = $this->getTimeWithTimeZone($todayOpeningHours->getSecondOpeningTime());
-        $secondClosingTime = $this->getTimeWithTimeZone($todayOpeningHours->getSecondClosingTime());
-
-        $hasFirstTimeSet = $firstOpeningTime !== null && $firstClosingTime !== null;
-        $hasSecondTimeSet = $secondOpeningTime !== null && $secondClosingTime !== null;
-
-        $isFirstTimeOpen = $hasFirstTimeSet && $nowInUtc >= $firstOpeningTime && $nowInUtc < $firstClosingTime;
-        $isSecondTimeOpen = $hasSecondTimeSet && $nowInUtc >= $secondOpeningTime && $nowInUtc < $secondClosingTime;
-
-        return $isFirstTimeOpen || $isSecondTimeOpen;
-    }
-
-    /**
-     * @param string|null $time
-     * @return \DateTimeImmutable|null
-     */
-    protected function getTimeWithTimeZone(?string $time): ?DateTimeImmutable
-    {
-        if ($time === null) {
-            return null;
-        }
-
-        return DateTimeImmutable::createFromFormat(
-            'H:i',
-            $time,
-        );
     }
 
     /**

@@ -8,7 +8,6 @@ use App\DataFixtures\Demo\StoreDataFixture;
 use DateTimeImmutable;
 use DateTimeZone;
 use Nette\Utils\Json;
-use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
@@ -59,11 +58,6 @@ class GetStoreTest extends GraphQlTestCase
      * @inject
      */
     private ClosedDayFacade $closedDayFacade;
-
-    /**
-     * @inject
-     */
-    private DateTimeHelper $dateTimeHelper;
 
     private DateTimeImmutable $now;
 
@@ -563,7 +557,7 @@ class GetStoreTest extends GraphQlTestCase
         ?string $secondOpeningTime,
         ?string $secondClosingTime,
     ): Store {
-        $store = $this->storeFacade->getAllStores()[0];
+        $store = $this->storeFacade->getStoresByDomainId(Domain::FIRST_DOMAIN_ID)[0];
         $dayOfWeek = $this->getCurrentDayOfWeek();
 
         $storeData = $this->storeDataFactory->createFromStore($store);
@@ -618,10 +612,10 @@ class GetStoreTest extends GraphQlTestCase
         ?string $secondClosingTimeModifier,
     ): array {
         return [
-            'firstOpeningTime' => $this->getConvertedOpeningOrClosingTime($firstOpeningTimeModifier),
-            'firstClosingTime' => $this->getConvertedOpeningOrClosingTime($firstClosingTimeModifier),
-            'secondOpeningTime' => $this->getConvertedOpeningOrClosingTime($secondOpeningTimeModifier),
-            'secondClosingTime' => $this->getConvertedOpeningOrClosingTime($secondClosingTimeModifier),
+            'firstOpeningTime' => $this->getFormattedTime($firstOpeningTimeModifier),
+            'firstClosingTime' => $this->getFormattedTime($firstClosingTimeModifier),
+            'secondOpeningTime' => $this->getFormattedTime($secondOpeningTimeModifier),
+            'secondClosingTime' => $this->getFormattedTime($secondClosingTimeModifier),
         ];
     }
 
@@ -653,7 +647,7 @@ class GetStoreTest extends GraphQlTestCase
     private function getNow(): DateTimeImmutable
     {
         if (!isset($this->now)) {
-            $this->now = DateTimeHelper::convertDateTimeFromTimezoneToUtc('now', new DateTimeZone('Europe/Prague'));
+            $this->now = new DateTimeImmutable('now', new DateTimeZone('Europe/Prague'));
         }
 
         return $this->now;
@@ -665,7 +659,7 @@ class GetStoreTest extends GraphQlTestCase
     private function getToday(): DateTimeImmutable
     {
         if (!isset($this->today)) {
-            $this->today = DateTimeHelper::convertDateTimeFromTimezoneToUtc('today', new DateTimeZone('Europe/Prague'));
+            $this->today = new DateTimeImmutable('today', new DateTimeZone('Europe/Prague'));
         }
 
         return $this->today;
@@ -675,13 +669,12 @@ class GetStoreTest extends GraphQlTestCase
      * @param string|null $modifier
      * @return string|null
      */
-    private function getConvertedOpeningOrClosingTime(?string $modifier): ?string
+    private function getFormattedTime(?string $modifier): ?string
     {
         if ($modifier === null) {
             return null;
         }
-        $hoursAndMinutes = $this->createOpeningOrClosingHour($modifier)->format('H:i');
 
-        return $this->dateTimeHelper->convertHoursAndMinutesFromUtcToDisplayTimezone($hoursAndMinutes, Domain::FIRST_DOMAIN_ID);
+        return $this->createOpeningOrClosingHour($modifier)->format('H:i');
     }
 }

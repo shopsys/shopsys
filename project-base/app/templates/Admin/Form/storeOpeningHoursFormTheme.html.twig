@@ -29,3 +29,13 @@
         {% endfor %}
     </div>
 {% endblock _store_form_openingHours_widget %}
+
+{% block _store_form_openingHours_label %}
+    <label class="form-line__label">
+        {{ label }}
+        <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
+           data-toggle="tooltip" data-placement="bottom"
+           title="{{ 'Enter in the store local time'|trans }}"
+        ></i>
+    </label>
+{% endblock _store_form_openingHours_label %}

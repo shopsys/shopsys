@@ -36,7 +36,7 @@ class ClosedDay
 
     /**
      * @var \DateTimeImmutable
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="date_immutable")
      */
     protected $date;
 

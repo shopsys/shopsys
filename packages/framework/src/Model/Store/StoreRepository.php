@@ -48,14 +48,6 @@ class StoreRepository
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
-     */
-    public function getAll(): array
-    {
-        return $this->getStoreRepository()->findAll();
-    }
-
-    /**
      * @return \Doctrine\ORM\QueryBuilder
      */
     protected function getQueryBuilder(): QueryBuilder

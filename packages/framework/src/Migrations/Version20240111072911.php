@@ -28,9 +28,6 @@ class Version20240111072911 extends AbstractMigration implements ContainerAwareI
         $this->sql(
             sprintf('UPDATE blog_articles SET publish_date = publish_date - INTERVAL \'%d hour\';', $timeOffsetInHours),
         );
-        $this->sql(
-            sprintf('UPDATE closed_days SET date = date - INTERVAL \'%d hour\';', $timeOffsetInHours),
-        );
     }
 
     /**
