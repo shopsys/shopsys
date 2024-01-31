@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentData as BasePaymentData;
 /**
  * @ORM\Table(name="payments")
  * @ORM\Entity
- * @property \App\Model\Transport\Transport[]|\Doctrine\Common\Collections\Collection $transports
+ * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Transport\Transport> $transports
  * @method \App\Model\Transport\Transport[] getTransports()
  * @method addTransport(\App\Model\Transport\Transport $transport)
  * @method setTransports(\App\Model\Transport\Transport[] $transports)

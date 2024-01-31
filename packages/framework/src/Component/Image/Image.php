@@ -34,7 +34,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     protected $id;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageTranslation[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Component\Image\ImageTranslation>
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Component\Image\ImageTranslation")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */

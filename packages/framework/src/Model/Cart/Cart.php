@@ -40,7 +40,7 @@ class Cart
     protected $customerUser;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem>
      * @ORM\OneToMany(
      *     targetEntity="Shopsys\FrameworkBundle\Model\Cart\Item\CartItem",
      *     mappedBy="cart"

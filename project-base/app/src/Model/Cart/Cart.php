@@ -23,7 +23,7 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
  * @ORM\Table(name="carts")
  * @ORM\Entity
  * @property \App\Model\Customer\User\CustomerUser|null $customerUser
- * @property \App\Model\Cart\Item\CartItem[]|\Doctrine\Common\Collections\Collection $items
+ * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Cart\Item\CartItem> $items
  * @method addItem(\App\Model\Cart\Item\CartItem $item)
  * @method \App\Model\Cart\Item\CartItem[] getItems()
  * @method \App\Model\Cart\Item\CartItem getItemById(int $itemId)
@@ -33,7 +33,7 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 class Cart extends BaseCart
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCode[]|\Doctrine\Common\Collections\ArrayCollection
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\Order\PromoCode\PromoCode>
      * @ORM\ManyToMany(
      *     targetEntity="\App\Model\Order\PromoCode\PromoCode"
      * )

@@ -21,10 +21,10 @@ class CategoryManyToManyBidirectionalEntity
     protected int $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedCategory>
      * @ORM\ManyToMany(targetEntity="ExtendedCategory", mappedBy="manyToManyBidirectionalEntities")
      */
-    protected Collection|array $categories;
+    protected Collection $categories;
 
     /**
      * @ORM\Column(type="string")

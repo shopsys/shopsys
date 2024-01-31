@@ -102,7 +102,7 @@ class Store implements OrderableEntityInterface
     protected $country;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int,\Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours>
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours>
      * @ORM\OneToMany(targetEntity="\Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours", mappedBy="store", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"dayOfWeek" = "ASC"})
      */

@@ -32,7 +32,7 @@ class LanguageConstant extends AbstractTranslatableEntity
     private string $key;
 
     /**
-     * @var \App\Model\LanguageConstant\LanguageConstantTranslation[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\LanguageConstant\LanguageConstantTranslation>
      * @Prezent\Translations(targetEntity="App\Model\LanguageConstant\LanguageConstantTranslation")
      */
     protected $translations;

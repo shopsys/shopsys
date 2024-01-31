@@ -21,10 +21,10 @@ class ProductManyToManyBidirectionalEntity
     protected int $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
+     * @var \Doctrine\Common\Collections\Collection<int, \Tests\App\Functional\EntityExtension\Model\ExtendedProduct>
      * @ORM\ManyToMany(targetEntity="ExtendedProduct", mappedBy="manyToManyBidirectionalEntities")
      */
-    protected Collection|array $products;
+    protected Collection $products;
 
     /**
      * @ORM\Column(type="string")

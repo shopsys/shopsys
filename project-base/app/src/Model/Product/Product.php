@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @ORM\Table(name="products")
  * @ORM\Entity
  * @property \App\Model\Product\Brand\Brand|null $brand
- * @property \App\Model\Product\Product[]|\Doctrine\Common\Collections\Collection $variants
+ * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\Product> $variants
  * @property \App\Model\Product\Product|null $mainVariant
  * @method static \App\Model\Product\Product create(\App\Model\Product\ProductData $productData)
  * @method static \App\Model\Product\Product createMainVariant(\App\Model\Product\ProductData $productData, \App\Model\Product\Product[] $variants)
@@ -33,10 +33,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method addNewVariants(\App\Model\Product\Product[] $currentVariants)
  * @method unsetRemovedVariants(\App\Model\Product\Product[] $currentVariants)
  * @method \App\Model\Product\ProductTranslation translation(?string $locale = null)
- * @property \App\Model\Product\ProductTranslation[]|\Doctrine\Common\Collections\Collection $translations
- * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
+ * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\ProductTranslation> $translations
+ * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\ProductDomain> $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
- * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
  * @property \App\Model\Product\Unit\Unit $unit
  * @method \App\Model\Product\Unit\Unit getUnit()
  * @method \App\Model\Product\Flag\Flag[] getFlags(int $domainId)
@@ -87,7 +86,7 @@ class Product extends BaseProduct
     protected ?int $weight;
 
     /**
-     * @var \App\Model\Product\Product[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\Product\Product>
      * @ORM\ManyToMany(targetEntity="App\Model\Product\Product")
      * @ORM\JoinTable(name="related_products",
      *     joinColumns={@ORM\JoinColumn(name="main_product", referencedColumnName="id")},
@@ -97,7 +96,7 @@ class Product extends BaseProduct
     protected $relatedProducts;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\ProductVideo\ProductVideo[]
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\ProductVideo\ProductVideo>
      * @ORM\OneToMany(
      *   targetEntity="App\Model\ProductVideo\ProductVideo",
      *   mappedBy="product",
@@ -115,7 +114,8 @@ class Product extends BaseProduct
     {
         parent::__construct($productData, $variants);
 
-        $this->flags = new ArrayCollection();
+        $this->relatedProducts = new ArrayCollection();
+        $this->productVideos = new ArrayCollection();
     }
 
     /**
@@ -127,7 +127,7 @@ class Product extends BaseProduct
     }
 
     /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $productVideos
+     * @param \Doctrine\Common\Collections\ArrayCollection<int, \App\Model\ProductVideo\ProductVideo> $productVideos
      */
     public function setProductVideos(ArrayCollection $productVideos): void
     {
@@ -351,11 +351,11 @@ class Product extends BaseProduct
     }
 
     /**
-     * @return \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection
+     * @return \App\Model\Product\ProductDomain[]
      */
-    public function getProductDomains()
+    public function getProductDomains(): array
     {
-        return $this->domains;
+        return $this->domains->getValues();
     }
 
     /**

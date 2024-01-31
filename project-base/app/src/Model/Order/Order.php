@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @ORM\Table(name="orders")
  * @ORM\Entity
  * @property \App\Model\Customer\User\CustomerUser|null $customerUser
- * @property \App\Model\Order\Item\OrderItem[]|\Doctrine\Common\Collections\Collection $items
+ * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Order\Item\OrderItem> $items
  * @property \App\Model\Transport\Transport $transport
  * @property \App\Model\Payment\Payment $payment
  * @property \App\Model\Administrator\Administrator|null $createdAsAdministrator

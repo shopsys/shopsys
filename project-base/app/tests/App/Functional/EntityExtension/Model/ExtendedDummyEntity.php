@@ -15,7 +15,7 @@ class ExtendedDummyEntity extends DummyEntity
     /**
      * Unlike the association in the parent class, this one has the "OrderBy" setting
      *
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Flag\Flag>
      * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\Flag\Flag")
      * @ORM\JoinTable(name="dummy_flags")
      * @ORM\OrderBy({"id" = "DESC"})

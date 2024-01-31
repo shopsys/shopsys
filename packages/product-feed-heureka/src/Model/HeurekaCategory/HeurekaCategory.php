@@ -36,7 +36,7 @@ class HeurekaCategory
     protected $fullName;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\Category[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Category\Category>
      * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
      * @ORM\JoinTable(
      *     name="heureka_category_categories",

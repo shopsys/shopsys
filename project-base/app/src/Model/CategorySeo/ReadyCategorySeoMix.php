@@ -62,7 +62,7 @@ class ReadyCategorySeoMix
     private $ordering;
 
     /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue>
      * @ORM\OneToMany(targetEntity="App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue", mappedBy="readyCategorySeoMix", cascade={"persist" ,"remove"}, fetch="EXTRA_LAZY")
      */
     private $readyCategorySeoMixParameterParameterValues;

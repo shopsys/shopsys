@@ -27,7 +27,7 @@ class ParameterGroup extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \App\Model\Product\Parameter\ParameterGroupTranslation[]|\Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\Product\Parameter\ParameterGroupTranslation>
      * @Prezent\Translations(targetEntity="App\Model\Product\Parameter\ParameterGroupTranslation")
      */
     protected $translations;

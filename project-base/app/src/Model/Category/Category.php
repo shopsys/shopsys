@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
  * )
  * @ORM\Entity
  * @property \App\Model\Category\Category|null $parent
- * @property \App\Model\Category\Category[]|\Doctrine\Common\Collections\Collection $children
+ * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Category\Category> $children
  * @method \App\Model\Category\Category|null getParent()
  * @method \App\Model\Category\Category[] getChildren()
  * @method setParent(\App\Model\Category\Category|null $parent = null)
