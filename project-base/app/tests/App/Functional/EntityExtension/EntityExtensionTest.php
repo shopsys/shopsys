@@ -54,6 +54,10 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     {
         parent::setUp();
 
+        if (!$this->isMonorepo()) {
+            $this->markTestSkipped('This test is run only in monorepo.');
+        }
+
         // To ensure the changes in the application do not break this test, it's necessary to start with a clean database
         // test database is restored after the test thanks to the usage of transactional test case
         $this->databaseSchemaFacade->dropSchemaIfExists('public');
@@ -536,5 +540,13 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->em->persist($order);
         $this->em->persist($orderItem);
         $this->em->flush();
+    }
+
+    /**
+     * @return bool
+     */
+    private function isMonorepo(): bool
+    {
+        return file_exists(__DIR__ . '/../../../../../../parameters_monorepo.yaml');
     }
 }
