@@ -78,7 +78,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
     if (!orderUuid || !orderEmail) {
         return {
             redirect: {
-                destination: getInternationalizedStaticUrls(['/cart'], domainConfig.url)[0] ?? '/',
+                destination: getInternationalizedStaticUrls(['/cart'], domainConfig.url)[0],
                 statusCode: 301,
             },
         };

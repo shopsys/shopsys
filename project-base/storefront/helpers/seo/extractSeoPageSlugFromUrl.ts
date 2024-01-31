@@ -1,17 +1,8 @@
+import { STATIC_REWRITE_PATHS, StaticRewritePathKeyType } from 'config/staticRewritePaths';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/urlParsing';
-import getConfig from 'next/config';
-import { StaticRewriteDomainPathsType } from 'types/staticPaths';
-
-const isStaticTemplatePageSlug = (
-    slug: string,
-    staticRewritePaths: StaticRewriteDomainPathsType,
-): slug is keyof StaticRewriteDomainPathsType => {
-    return slug in staticRewritePaths;
-};
 
 export const extractSeoPageSlugFromUrl = (url: string, domain: string): string | null => {
-    const { publicRuntimeConfig } = getConfig();
-    const staticRewritePaths = publicRuntimeConfig.staticRewritePaths[domain] as StaticRewriteDomainPathsType;
+    const staticRewritePathsForDomain = STATIC_REWRITE_PATHS[domain];
 
     const slugOrI18nPagePath = getUrlWithoutGetParameters(url);
 
@@ -19,11 +10,11 @@ export const extractSeoPageSlugFromUrl = (url: string, domain: string): string |
         return '/';
     }
 
-    if (isStaticTemplatePageSlug(slugOrI18nPagePath, staticRewritePaths)) {
-        return staticRewritePaths[slugOrI18nPagePath];
+    if (slugOrI18nPagePath in staticRewritePathsForDomain) {
+        return staticRewritePathsForDomain[slugOrI18nPagePath as StaticRewritePathKeyType];
     }
 
-    const path = Object.values(staticRewritePaths).find((path) => path === slugOrI18nPagePath);
+    const path = Object.values(staticRewritePathsForDomain).find((path) => path === slugOrI18nPagePath);
 
     return path ?? null;
 };

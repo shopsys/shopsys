@@ -1,3 +1,4 @@
+import { STATIC_REWRITE_PATHS } from 'config/staticRewritePaths';
 import { getDomainIdFromHostname } from 'helpers/domain/getDomainIdFromHostname';
 import { NextMiddleware, NextRequest, NextResponse } from 'next/server';
 import {
@@ -8,7 +9,6 @@ import {
 } from 'types/friendlyUrl';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const STATIC_REWRITE_PATHS = require('config/staticRewritePaths') as Record<string, Record<string, string>>;
 const ERROR_PAGE_ROUTE = '/404';
 const MIDDLEWARE_STATUS_CODE_KEY = 'middleware-status-code';
 const MIDDLEWARE_STATUS_MESSAGE_KEY = 'middleware-status-message';
