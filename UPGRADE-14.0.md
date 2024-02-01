@@ -1172,6 +1172,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   fix doctrine collections type annotations ([#3000](https://github.com/shopsys/shopsys/pull/3000))
     -   see #project-base-diff to update your project
 -   remove tsvector database columns ([#3007](https://github.com/shopsys/shopsys/pull/3007))
+
     -   following db functions, triggers and columns were removed, you may skip `Version20240131072541` migration if you're using them:
         -   trigger `recalc_catnum_tsvector` on table `recalc_catnum_tsvector`
         -   trigger `recalc_description_tsvector` on table `recalc_description_tsvector`
@@ -1192,6 +1193,20 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   column `description_tsvector` on table `product_domains`
         -   column `fulltext_tsvector` on table `product_domains`
         -   column `name_tsvector` on table `product_translations`
+    -   see #project-base-diff to update your project
+
+-   replace ElasticsearchIndexException usage with separate Exceptions for each use case ([#3003](https://github.com/shopsys/shopsys/pull/3003))
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::invalidJsonInDefinitionFile()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchInvalidJsonInDefinitionFileException`
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::cantReadDefinitionFile()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchCannotReadDefinitionFileException`
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::createIndexError()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchCreateIndexException`
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::createAliasError()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchCreateAliasException`
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::deleteIndexError()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchDeleteIndexException`
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::noRegisteredIndexFound()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexNotFoundException`
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::bulkUpdateError()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchBulkUpdateException`
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::noIndexFoundForAlias()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAliasNotFoundException`
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::moreThanOneIndexFoundForAlias()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchMoreThanOneCurrentIndexException`
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::__construct()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAliasAlreadyExistsException`
+    -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchNoAliasException` has been renamed to `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAliasNotFoundException`
     -   see #project-base-diff to update your project
 
 ### Storefront

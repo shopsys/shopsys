@@ -6,7 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexNotFoundException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
@@ -64,8 +64,7 @@ class IndexRegistryTest extends TestCase
 
     public function testGetIndexByIndexNameWithNonRegisteredNameThrowsException(): void
     {
-        $this->expectException(ElasticsearchIndexException::class);
-        $this->expectExceptionMessage('There is no index "price" registered');
+        $this->expectException(ElasticsearchIndexNotFoundException::class);
         $this->indexRegistry->getIndexByIndexName('price');
     }
 

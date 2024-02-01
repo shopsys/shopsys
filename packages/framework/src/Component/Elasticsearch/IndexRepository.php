@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Elasticsearch\Client;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAlreadyExistsException;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoAliasException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchAliasNotFoundException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchBulkUpdateException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchCreateAliasException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchCreateIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchDeleteIndexException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAliasAlreadyExistsException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchMoreThanOneIndexFoundForAliasException;
 
 class IndexRepository
 {
@@ -27,7 +31,7 @@ class IndexRepository
         $indexes = $this->elasticsearchClient->indices();
 
         if ($indexes->exists(['index' => $indexName])) {
-            throw new ElasticsearchIndexAlreadyExistsException($indexName);
+            throw new ElasticsearchIndexAliasAlreadyExistsException($indexName);
         }
 
         $result = $indexes->create([
@@ -36,7 +40,7 @@ class IndexRepository
         ]);
 
         if (isset($result['error'])) {
-            throw ElasticsearchIndexException::createIndexError($indexName, $result['error']);
+            throw new ElasticsearchCreateIndexException($indexName, $result['error']);
         }
     }
 
@@ -54,7 +58,7 @@ class IndexRepository
         ]);
 
         if (isset($result['error'])) {
-            throw ElasticsearchIndexException::createAliasError($indexName, $result['error']);
+            throw new ElasticsearchCreateAliasException($indexName, $result['error']);
         }
     }
 
@@ -84,7 +88,7 @@ class IndexRepository
         ]);
 
         if (isset($result['error'])) {
-            throw ElasticsearchIndexException::deleteIndexError($indexName, $result['error']);
+            throw new ElasticsearchDeleteIndexException($indexName, $result['error']);
         }
     }
 
@@ -158,7 +162,7 @@ class IndexRepository
         $result = $this->elasticsearchClient->bulk($params);
 
         if (isset($result['errors']) && $result['errors'] === true) {
-            throw ElasticsearchIndexException::bulkUpdateError($indexAlias, $result['items']);
+            throw new ElasticsearchBulkUpdateException($indexAlias, $result['items']);
         }
     }
 
@@ -169,7 +173,7 @@ class IndexRepository
     protected function findIndexNamesForAlias(string $aliasName): array
     {
         if (!$this->isAliasCreated($aliasName)) {
-            throw new ElasticsearchNoAliasException($aliasName);
+            throw new ElasticsearchAliasNotFoundException($aliasName);
         }
 
         $indexes = $this->elasticsearchClient->indices();
@@ -177,7 +181,7 @@ class IndexRepository
         $indexesWithAlias = array_keys($indexes->getAlias(['name' => $aliasName]));
 
         if (count($indexesWithAlias) === 0) {
-            throw ElasticsearchIndexException::noIndexFoundForAlias($aliasName);
+            throw new ElasticsearchAliasNotFoundException($aliasName);
         }
 
         return $indexesWithAlias;
@@ -203,7 +207,7 @@ class IndexRepository
         $indexesWithAlias = $this->findIndexNamesForAlias($aliasName);
 
         if (count($indexesWithAlias) > 1) {
-            throw ElasticsearchIndexException::moreThanOneIndexFoundForAlias($aliasName, $indexesWithAlias);
+            throw new ElasticsearchMoreThanOneIndexFoundForAliasException($aliasName, $indexesWithAlias);
         }
 
         return $indexesWithAlias[0];

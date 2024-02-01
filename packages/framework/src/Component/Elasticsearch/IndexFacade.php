@@ -7,9 +7,9 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAlreadyExistsException;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoAliasException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchAliasNotFoundException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAliasAlreadyExistsException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAliasNotFoundException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class IndexFacade
@@ -44,12 +44,12 @@ class IndexFacade
 
         try {
             if (!$this->isIndexUpToDate($indexDefinition)) {
-                throw new ElasticsearchIndexException(sprintf(
+                throw new ElasticsearchIndexAliasAlreadyExistsException(sprintf(
                     'There is an index for alias "%s" already. You have to migrate it first due to different definition.',
                     $alias,
                 ));
             }
-        } catch (ElasticsearchNoAliasException $exception) {
+        } catch (ElasticsearchAliasNotFoundException $exception) {
             $output->writeln(sprintf('Alias "%s" does not exist', $alias));
         }
 
@@ -154,9 +154,8 @@ class IndexFacade
 
         try {
             $this->resolveExistingIndexName($indexDefinition);
-        } catch (ElasticsearchNoAliasException $exception) {
-            throw new ElasticsearchIndexException(sprintf(
-                'Can\'t found any index with alias "%s". You have to migrate elasticsearch structure first.',
+        } catch (ElasticsearchAliasNotFoundException $exception) {
+            throw new ElasticsearchIndexAliasNotFoundException(sprintf(
                 $indexDefinition->getIndexAlias(),
             ));
         }
@@ -206,7 +205,7 @@ class IndexFacade
 
         try {
             $existingIndexName = $this->resolveExistingIndexName($indexDefinition);
-        } catch (ElasticsearchNoAliasException $exception) {
+        } catch (ElasticsearchAliasNotFoundException $exception) {
             $output->writeln(sprintf('No index for alias "%s" was not found on domain "%s"', $indexName, $domainId));
             $this->create($indexDefinition, $output);
 
@@ -268,7 +267,7 @@ class IndexFacade
     {
         try {
             $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
-        } catch (ElasticsearchNoAliasException $exception) {
+        } catch (ElasticsearchAliasNotFoundException $exception) {
             $output->writeln(sprintf(
                 'Index "%s" does not exist on domain "%s"',
                 $indexDefinition->getIndexName(),
@@ -286,7 +285,7 @@ class IndexFacade
     {
         try {
             $this->indexRepository->createIndex($indexDefinition);
-        } catch (ElasticsearchIndexAlreadyExistsException $exception) {
+        } catch (ElasticsearchIndexAliasAlreadyExistsException $exception) {
             $output->writeln(sprintf(
                 'Index "%s" was not created on domain "%s" because it already exists',
                 $indexDefinition->getIndexName(),
