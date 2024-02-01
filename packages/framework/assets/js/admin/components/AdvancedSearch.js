@@ -1,7 +1,6 @@
 import 'select2/dist/js/select2.full';
 import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
-import constant from '../utils/constant';
 
 export default class AdvancedSearch {
 
@@ -71,7 +70,7 @@ export default class AdvancedSearch {
     }
 
     static updateValueByOperator ($rulesContainer, $rule, operator) {
-        $rule.find('.js-advanced-search-rule-value').toggle(operator !== constant('\\Shopsys\\FrameworkBundle\\Model\\AdvancedSearch\\AdvancedSearchFilterInterface::OPERATOR_NOT_SET'));
+        $rule.find('.js-advanced-search-rule-value').toggle(operator !== 'notSet');
     }
 
     static init ($container) {

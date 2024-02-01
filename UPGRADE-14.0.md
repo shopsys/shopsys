@@ -1208,6 +1208,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchIndexException::__construct()` has been replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAliasAlreadyExistsException`
     -   `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Exception\ElasticsearchNoAliasException` has been renamed to `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAliasNotFoundException`
     -   see #project-base-diff to update your project
+-   remove constant.js (([#2969](https://github.com/shopsys/shopsys/pull/2969)))
+    -   `constant.js` component has been removed, check all the usages in your code and replace them with the corresponding values
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

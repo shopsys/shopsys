@@ -3,7 +3,6 @@ import Register from '../../common/utils/Register';
 import { addNewItemToCollection, removeItemFromCollection } from '../validation/customization/customizeCollectionBundle';
 import ProductPicker from './ProductPicker';
 import { escapeHtml } from '../../common/utils/escapeHtml';
-import constant from '../utils/constant';
 import '../../common/bootstrap/tooltip';
 import Translator from 'bazinga-translator';
 import Window from '../utils/Window';
@@ -134,10 +133,11 @@ export default class OrderItems {
 
     getNewIndex ($collection) {
         let maxIndex = 0;
+        const newItemIndex = 'new_';
 
         $collection.find('.js-order-item').each(function () {
             const indexStr = $(this).data('index').toString();
-            if (indexStr.indexOf(constant('\\Shopsys\\FrameworkBundle\\Model\\Order\\OrderData::NEW_ITEM_PREFIX')) === 0) {
+            if (indexStr.indexOf(newItemIndex) === 0) {
                 const index = parseInt(indexStr.slice(4));
                 if (index > maxIndex) {
                     maxIndex = index;
@@ -145,7 +145,7 @@ export default class OrderItems {
             }
         });
 
-        return constant('\\Shopsys\\FrameworkBundle\\Model\\Order\\OrderData::NEW_ITEM_PREFIX') + (maxIndex + 1);
+        return newItemIndex + (maxIndex + 1);
     }
 
     static onPriceCalculationChange ($orderItem) {

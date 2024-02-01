@@ -1,4 +1,3 @@
-import constant from '../utils/constant';
 import Window from '../utils/Window';
 import Register from '../../common/utils/Register';
 import Translator from 'bazinga-translator';
@@ -16,10 +15,10 @@ export default class MassActionConfirm {
                 const selectType = $('.js-mass-action-select-type').val();
                 let count;
                 switch (selectType) {
-                    case constant('\\Shopsys\\FrameworkBundle\\Model\\Product\\MassAction\\ProductMassActionData::SELECT_TYPE_CHECKED'):
+                    case 'selectTypeChecked':
                         count = $('.js-grid-mass-action-select-row:checked').length;
                         break;
-                    case constant('\\Shopsys\\FrameworkBundle\\Model\\Product\\MassAction\\ProductMassActionData::SELECT_TYPE_ALL_RESULTS'):
+                    case 'selectTypeAllResults':
                         count = $('.js-grid').data('total-count');
                         break;
                 }

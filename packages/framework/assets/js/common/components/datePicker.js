@@ -1,6 +1,5 @@
 import 'jquery-ui/datepicker';
 import Register from '../utils/Register';
-import constant from '../../admin/utils/constant';
 
 /* Czech initialisation for the jQuery UI date picker plugin. */
 /* Written by Tomas Muller (tomas@tomas-muller.net). */
@@ -30,7 +29,7 @@ export default function datePicker ($container) {
         const options = Object.assign({}, $.datepicker.regional[global.locale] || $.datepicker.regional['']);
 
         // Date format is fixed so that it is understood by back-end
-        options.dateFormat = constant('\\Shopsys\\FrameworkBundle\\Form\\DatePickerType::FORMAT_JS');
+        options.dateFormat = 'dd.mm.yy';
 
         $(this).datepicker(options);
     });

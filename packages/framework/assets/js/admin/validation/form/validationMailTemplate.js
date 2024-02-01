@@ -1,5 +1,5 @@
-import constant from '../../utils/constant';
 import Register from '../../../common/utils/Register';
+import { VALIDATION_GROUP_DEFAULT } from './validation';
 
 export default function validationMailTemplate () {
     $('#js-mail-templates').find('.js-mail-template').each(function () {
@@ -9,9 +9,9 @@ export default function validationMailTemplate () {
         $(this).jsFormValidator({
             'groups': function () {
 
-                const groups = [constant('\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT')];
+                const groups = [VALIDATION_GROUP_DEFAULT];
                 if ($(self).find('#' + sendMailId).is(':checked')) {
-                    groups.push(constant('\\Shopsys\\FrameworkBundle\\Form\\Admin\\Mail\\MailTemplateFormType::VALIDATION_GROUP_SEND_MAIL'));
+                    groups.push('sendMail');
                 }
 
                 return groups;

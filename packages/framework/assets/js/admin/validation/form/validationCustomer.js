@@ -1,13 +1,13 @@
-import constant from '../../utils/constant';
 import Register from '../../../common/utils/Register';
+import { VALIDATION_GROUP_DEFAULT } from './validation';
 
 export default function validationCustomer () {
     const $customerDeliveryAddressForm = $('#customer_form_deliveryAddressData');
     $customerDeliveryAddressForm.jsFormValidator({
         'groups': function () {
-            const groups = [constant('\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT')];
+            const groups = [VALIDATION_GROUP_DEFAULT];
             if ($customerDeliveryAddressForm.find('#customer_form_deliveryAddressData_deliveryAddress_addressFilled').is(':checked')) {
-                groups.push(constant('\\Shopsys\\FrameworkBundle\\Form\\Admin\\Customer\\DeliveryAddressFormType::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS'));
+                groups.push('differentDeliveryAddress');
             }
 
             return groups;
@@ -17,9 +17,9 @@ export default function validationCustomer () {
     $customerBillingAddressForm.jsFormValidator({
         'groups': function () {
 
-            var groups = [constant('\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT')];
+            var groups = [VALIDATION_GROUP_DEFAULT];
             if ($customerBillingAddressForm.find('#customer_form_billingAddressData_companyData_companyCustomer').is(':checked')) {
-                groups.push(constant('\\Shopsys\\FrameworkBundle\\Form\\Admin\\Customer\\BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER'));
+                groups.push('companyCustomer');
             }
 
             return groups;

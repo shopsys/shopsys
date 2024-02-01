@@ -1,7 +1,7 @@
 // Script is named "noticer.js" because scripts named "advert.js" are often blocked by browser (e.g. by AdBlock plugin)
 
-import constant from '../../utils/constant';
 import Register from '../../../common/utils/Register';
+import { VALIDATION_GROUP_DEFAULT } from './validation';
 
 export default function validationAdvert () {
     const $advertForm = $('form[name="advert_form"]');
@@ -36,13 +36,13 @@ export default function validationAdvert () {
 
     $advertForm.jsFormValidator({
         'groups': function () {
-            const groups = [constant('\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT')];
+            const groups = [VALIDATION_GROUP_DEFAULT];
 
             const checkedType = getCheckedType();
-            if (checkedType === constant('\\Shopsys\\FrameworkBundle\\Model\\Advert\\Advert::TYPE_CODE')) {
-                groups.push(constant('\\Shopsys\\FrameworkBundle\\Form\\Admin\\Advert\\AdvertFormType::VALIDATION_GROUP_TYPE_CODE'));
-            } else if (checkedType === constant('\\Shopsys\\FrameworkBundle\\Model\\Advert\\Advert::TYPE_IMAGE')) {
-                groups.push(constant('\\Shopsys\\FrameworkBundle\\Form\\Admin\\Advert\\AdvertFormType::VALIDATION_GROUP_TYPE_IMAGE'));
+            if (checkedType === 'code') {
+                groups.push('typeCode');
+            } else if (checkedType === 'image') {
+                groups.push('typeImage');
             }
 
             return groups;

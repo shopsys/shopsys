@@ -1,5 +1,4 @@
 import { highlightSubmitButtons, findElementsToHighlight } from './validationHelpers';
-import constant from '../../admin/utils/constant';
 import Timeout from '../utils/Timeout';
 import Window from '../../admin/utils/Window';
 import Translator from 'bazinga-translator';
@@ -18,7 +17,7 @@ export default class CustomizeBundle {
 
     static ckeditorValidationInit (element) {
         $.each(element.children, function (index, childElement) {
-            if (childElement.type === constant('\\FOS\\CKEditorBundle\\Form\\Type\\CKEditorType::class')
+            if (childElement.type === 'FOS\\CKEditorBundle\\Form\\Type\\CKEditorType'
                 && CKEDITOR.instances[childElement.id]
             ) {
                 CKEDITOR.instances[childElement.id].on('change', function () {
@@ -179,7 +178,7 @@ export default class CustomizeBundle {
     }
 
     static isExpandedChoiceFormType (element, value) {
-        return element.type === constant('\\Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType::class') && $.isArray(value);
+        return element.type === 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType' && $.isArray(value);
     }
 
     static isExpandedChoiceEmpty (value) {
