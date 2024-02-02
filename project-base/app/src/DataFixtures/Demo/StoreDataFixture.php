@@ -187,62 +187,74 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     {
         $openingHourData = $this->openingHourDataFactory->create();
         $openingHourData->dayOfWeek = 1;
-        $openingHourData->firstOpeningTime = '06:00';
-        $openingHourData->firstClosingTime = '11:00';
-        $openingHourData->secondOpeningTime = '13:00';
-        $openingHourData->secondClosingTime = '18:00';
+        $openingHourData->openingTime = '06:00';
+        $openingHourData->closingTime = '11:00';
+        $openingHoursData[] = $openingHourData;
 
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 1;
+        $openingHourData->openingTime = '13:00';
+        $openingHourData->closingTime = '18:00';
         $openingHoursData[] = $openingHourData;
 
         $openingHourData = $this->openingHourDataFactory->create();
         $openingHourData->dayOfWeek = 2;
-        $openingHourData->firstOpeningTime = '07:00';
-        $openingHourData->firstClosingTime = '11:00';
-        $openingHourData->secondOpeningTime = '13:00';
-        $openingHourData->secondClosingTime = '17:00';
+        $openingHourData->openingTime = '07:00';
+        $openingHourData->closingTime = '11:00';
+        $openingHoursData[] = $openingHourData;
 
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 2;
+        $openingHourData->openingTime = '13:00';
+        $openingHourData->closingTime = '17:00';
         $openingHoursData[] = $openingHourData;
 
         $openingHourData = $this->openingHourDataFactory->create();
         $openingHourData->dayOfWeek = 3;
-        $openingHourData->firstOpeningTime = '08:00';
-        $openingHourData->firstClosingTime = '11:00';
-        $openingHourData->secondOpeningTime = '13:00';
-        $openingHourData->secondClosingTime = '16:00';
+        $openingHourData->openingTime = '08:00';
+        $openingHourData->closingTime = '11:00';
+        $openingHoursData[] = $openingHourData;
 
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 3;
+        $openingHourData->openingTime = '13:00';
+        $openingHourData->closingTime = '16:00';
         $openingHoursData[] = $openingHourData;
 
         $openingHourData = $this->openingHourDataFactory->create();
         $openingHourData->dayOfWeek = 4;
-        $openingHourData->firstOpeningTime = '09:00';
-        $openingHourData->firstClosingTime = '11:00';
-        $openingHourData->secondOpeningTime = '13:00';
-        $openingHourData->secondClosingTime = '15:00';
+        $openingHourData->openingTime = '09:00';
+        $openingHourData->closingTime = '11:00';
+        $openingHoursData[] = $openingHourData;
 
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 4;
+        $openingHourData->openingTime = '13:00';
+        $openingHourData->closingTime = '15:00';
         $openingHoursData[] = $openingHourData;
 
         $openingHourData = $this->openingHourDataFactory->create();
         $openingHourData->dayOfWeek = 5;
-        $openingHourData->firstOpeningTime = '10:00';
-        $openingHourData->firstClosingTime = '11:00';
-        $openingHourData->secondOpeningTime = '13:00';
-        $openingHourData->secondClosingTime = '14:00';
+        $openingHourData->openingTime = '10:00';
+        $openingHourData->closingTime = '11:00';
+        $openingHoursData[] = $openingHourData;
 
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = 5;
+        $openingHourData->openingTime = '13:00';
+        $openingHourData->closingTime = '14:00';
         $openingHoursData[] = $openingHourData;
 
         $openingHourData = $this->openingHourDataFactory->create();
         $openingHourData->dayOfWeek = 6;
-        $openingHourData->firstOpeningTime = '08:00';
-        $openingHourData->firstClosingTime = '11:00';
-
+        $openingHourData->openingTime = '08:00';
+        $openingHourData->closingTime = '11:00';
         $openingHoursData[] = $openingHourData;
-
 
         $openingHourData = $this->openingHourDataFactory->create();
         $openingHourData->dayOfWeek = 7;
-        $openingHourData->firstOpeningTime = '09:00';
-        $openingHourData->firstClosingTime = '11:00';
-
+        $openingHourData->openingTime = '09:00';
+        $openingHourData->closingTime = '11:00';
         $openingHoursData[] = $openingHourData;
 
         return $openingHoursData;

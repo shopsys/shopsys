@@ -9,6 +9,9 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory;
 
 class StoreFacade
 {
@@ -19,6 +22,8 @@ class StoreFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory $openingHoursFactory
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHoursDataFactory
      */
     public function __construct(
         protected readonly StoreRepository $storeRepository,
@@ -27,6 +32,8 @@ class StoreFacade
         protected readonly ImageFacade $imageFacade,
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        protected readonly OpeningHoursFactory $openingHoursFactory,
+        protected readonly OpeningHoursDataFactory $openingHoursDataFactory,
     ) {
     }
 
@@ -37,6 +44,9 @@ class StoreFacade
     public function create(StoreData $storeData): Store
     {
         $store = $this->storeFactory->create($storeData);
+        $store->setOpeningHours(
+            $this->createFullWeekOpeningHours($storeData->openingHours, $store),
+        );
         $this->em->persist($store);
         $this->em->flush();
 
@@ -57,6 +67,9 @@ class StoreFacade
     {
         $store = $this->getById($id);
         $store->edit($storeData);
+        $store->setOpeningHours(
+            $this->createFullWeekOpeningHours($storeData->openingHours, $store),
+        );
         $this->friendlyUrlFacade->saveUrlListFormData(StoreFriendlyUrlProvider::ROUTE_NAME, $store->getId(), $storeData->urls);
         $this->em->flush();
 
@@ -173,5 +186,39 @@ class StoreFacade
     public function getStoresByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->storeRepository->getStoresByDomainIdQueryBuilder($domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[] $openingHoursData
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
+     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours[]
+     */
+    protected function createFullWeekOpeningHours(array $openingHoursData, Store $store): array
+    {
+        $openingHours = [];
+        $daysCovered = [];
+
+        foreach ($openingHoursData as $openingHourData) {
+            $openingHours[] = $this->openingHoursFactory->create($openingHourData);
+            $daysCovered[] = $openingHourData->dayOfWeek;
+        }
+
+        $daysOfWeek = range(1, 7);
+        $missingDays = array_diff($daysOfWeek, $daysCovered);
+
+        foreach ($missingDays as $missingDay) {
+            $openingHourData = $this->openingHoursDataFactory->create();
+            $openingHourData->dayOfWeek = $missingDay;
+            $openingHours[] = $this->openingHoursFactory->create($openingHourData);
+        }
+
+        return array_map(
+            static function (OpeningHours $openingHours) use ($store): OpeningHours {
+                $openingHours->setStore($store);
+
+                return $openingHours;
+            },
+            $openingHours,
+        );
     }
 }

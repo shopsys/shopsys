@@ -11,27 +11,26 @@
 
     <div class='form-line__side'>
         <div class='flex-align-center'>
-            <div class='full-width margin-5'>{{ 'Day'|trans }}</div>
-            <div class='full-width margin-5'>{{ 'Time from'|trans }}</div>
-            <div class='full-width margin-5'>{{ 'Time to'|trans }}</div>
-            <div class='full-width margin-5'>{{ 'Time from'|trans }}</div>
-            <div class='full-width margin-5'>{{ 'Time to'|trans }}</div>
+            <div style="width: 100px" class='margin-5'><strong>{{ 'Day'|trans }}</strong></div>
+            <div style="display: flex; padding-right: 45px; max-width: 400px" class="full-width">
+                <div style="padding-left: 40px" class='full-width margin-5'><strong>{{ 'Opening time'|trans }}</strong></div>
+                <div style="padding-left: 20px" class='full-width margin-5'><strong>{{ 'Closing time'|trans }}</strong></div>
+            </div>
         </div>
 
-        {% for openingHour in form %}
+        {% for key, openingHour in form %}
             <div class='flex-align-center'>
-                <div class='full-width margin-5'>{{ dayNames[openingHour.vars.value.dayOfWeek - 1] }}</div>
-                <div class='full-width margin-5'>{{ form_widget(openingHour.firstOpeningTime) }}</div>
-                <div class='full-width margin-5'>{{ form_widget(openingHour.firstClosingTime) }}</div>
-                <div class='full-width margin-5'>{{ form_widget(openingHour.secondOpeningTime) }}</div>
-                <div class='full-width margin-5'>{{ form_widget(openingHour.secondClosingTime) }}</div>
+                <div style="width: 100px; margin-top: 0" class='full-width margin-5'>
+                    <strong>{{ dayNames[key - 1] }}</strong>
+                </div>
+                {{ form_widget(openingHour.vars.form) }}
             </div>
         {% endfor %}
     </div>
 {% endblock _store_form_openingHours_widget %}
 
 {% block _store_form_openingHours_label %}
-    <label class="form-line__label">
+    <label class="form-line__label" style="float: none">
         {{ label }}
         <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
            data-toggle="tooltip" data-placement="bottom"

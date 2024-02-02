@@ -11,7 +11,6 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Stock\Stock;
-use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
 
 /**
  * @ORM\Table(name="stores")
@@ -152,10 +151,6 @@ class Store implements OrderableEntityInterface
     public function edit(StoreData $storeData)
     {
         $this->setData($storeData);
-
-        foreach ($this->openingHours as $index => $openingHours) {
-            $openingHours->edit($storeData->openingHours[$index]);
-        }
     }
 
     /**

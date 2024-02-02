@@ -46,6 +46,9 @@ msgstr ""
 msgid "Add limit"
 msgstr ""
 
+msgid "Add opening hours"
+msgstr ""
+
 msgid "Add some flag"
 msgstr ""
 
@@ -305,6 +308,9 @@ msgid "Clean Storefront Cache"
 msgstr ""
 
 msgid "Clean Storefront Query Cache"
+msgstr ""
+
+msgid "Closing time"
 msgstr ""
 
 msgid "Code"
@@ -1129,6 +1135,9 @@ msgstr ""
 msgid "Open in new window"
 msgstr ""
 
+msgid "Opening time"
+msgstr ""
+
 msgid "Operator information - full"
 msgstr ""
 
@@ -1661,12 +1670,6 @@ msgid "Thursday"
 msgstr ""
 
 msgid "TikTok URL"
-msgstr ""
-
-msgid "Time from"
-msgstr ""
-
-msgid "Time to"
 msgstr ""
 
 msgid "Top categories - full"

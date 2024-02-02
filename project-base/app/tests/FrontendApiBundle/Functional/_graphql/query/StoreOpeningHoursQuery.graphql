@@ -4,10 +4,10 @@ query StoreOpeningHoursQuery($uuid: Uuid!) {
             isOpen
             openingHoursOfDays {
                 dayOfWeek
-                firstOpeningTime
-                firstClosingTime
-                secondOpeningTime
-                secondClosingTime
+                openingHoursRanges {
+                    openingTime
+                    closingTime
+                }
             }
         }
     }

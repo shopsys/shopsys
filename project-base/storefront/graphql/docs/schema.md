@@ -55,6 +55,7 @@
     * [NotificationBar](#notificationbar)
     * [OpeningHours](#openinghours)
     * [OpeningHoursOfDay](#openinghoursofday)
+    * [OpeningHoursRange](#openinghoursrange)
     * [Order](#order)
     * [OrderConnection](#orderconnection)
     * [OrderEdge](#orderedge)
@@ -4865,6 +4866,8 @@ Opening hours for every day of the week (1 for Monday 7 for Sunday)
 
 ### OpeningHoursOfDay
 
+Represents store opening hours for a specific day
+
 <table>
 <thead>
 <tr>
@@ -4885,38 +4888,46 @@ Day of the week
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstClosingTime</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>openingHoursRanges</strong></td>
+<td valign="top">[<a href="#openinghoursrange">OpeningHoursRange</a>!]!</td>
 <td>
 
-First closing time
+An array of opening hours ranges (each range contains opening and closing time)
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OpeningHoursRange
+
+Represents a time period when a store is open
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>closingTime</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Closing time
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstOpeningTime</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>openingTime</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-First opening time
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>secondClosingTime</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Second closing time
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>secondOpeningTime</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Second opening time
+Opening time
 
 </td>
 </tr>

@@ -40,10 +40,8 @@ class OpeningHoursDataFactory
         $openingHourData = $this->create();
 
         $openingHourData->dayOfWeek = $openingHours->getDayOfWeek();
-        $openingHourData->firstOpeningTime = $openingHours->getFirstOpeningTime();
-        $openingHourData->firstClosingTime = $openingHours->getFirstClosingTime();
-        $openingHourData->secondOpeningTime = $openingHours->getSecondOpeningTime();
-        $openingHourData->secondClosingTime = $openingHours->getSecondClosingTime();
+        $openingHourData->openingTime = $openingHours->getOpeningTime();
+        $openingHourData->closingTime = $openingHours->getClosingTime();
 
         return $openingHourData;
     }

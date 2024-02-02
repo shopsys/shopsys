@@ -3,9 +3,9 @@ fragment OpeningHoursFragment on OpeningHours {
     dayOfWeek
     openingHoursOfDays {
         dayOfWeek
-        firstOpeningTime
-        firstClosingTime
-        secondOpeningTime
-        secondClosingTime
+        openingHoursRanges {
+            openingTime
+            closingTime
+        }
     }
 }
