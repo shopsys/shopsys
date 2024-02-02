@@ -21,8 +21,12 @@ type AppProps = {
     pageProps: ServerSidePropsType;
 } & Omit<NextAppProps, 'pageProps'>;
 
-process.on('unhandledRejection', logException);
-process.on('uncaughtException', logException);
+process.on('unhandledRejection', (reason: unknown, promise: Promise<unknown>) =>
+    logException({ reason, promise, location: '_app.tsx:unhandledRejection' }),
+);
+process.on('uncaughtException', (error: Error, origin: unknown) =>
+    logException({ error, origin, location: '_app.tsx:uncaughtException' }),
+);
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
     const { defaultLocale, publicGraphqlEndpoint } = pageProps.domainConfig;

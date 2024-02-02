@@ -98,7 +98,7 @@ export const useTransportChangeInSelect = (
             const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
 
             if (!packeteryApiKey?.length) {
-                logException(new Error(`Packeta API key was not set`));
+                logException('Packeta API key was not set');
                 return;
             }
 
