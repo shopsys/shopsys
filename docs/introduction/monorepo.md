@@ -31,13 +31,13 @@ If you are interested, you can read more about the monorepo approach here - http
 `packages/`
 
 -   [shopsys/framework](https://github.com/shopsys/framework)
--   [shopsys/category-feed-persoo](https://github.com/shopsys/category-feed-persoo)
+-   [shopsys/category-feed-luigis-box](https://github.com/shopsys/category-feed-luigis-box)
 -   [shopsys/product-feed-zbozi](https://github.com/shopsys/product-feed-zbozi)
 -   [shopsys/product-feed-google](https://github.com/shopsys/product-feed-google)
 -   [shopsys/product-feed-heureka](https://github.com/shopsys/product-feed-heureka)
 -   [shopsys/product-feed-heureka-delivery](https://github.com/shopsys/product-feed-heureka-delivery)
--   [shopsys/product-feed-persoo](https://github.com/shopsys/product-feed-persoo)
--   [shopsys/article-feed-persoo](https://github.com/shopsys/article-feed-persoo)
+-   [shopsys/product-feed-luigis-box](https://github.com/shopsys/product-feed-luigis-box)
+-   [shopsys/article-feed-luigis-box](https://github.com/shopsys/article-feed-luigis-box)
 -   [shopsys/plugin-interface](https://github.com/shopsys/plugin-interface)
 -   [shopsys/coding-standards](https://github.com/shopsys/coding-standards)
 -   [shopsys/http-smoke-testing](https://github.com/shopsys/http-smoke-testing)
