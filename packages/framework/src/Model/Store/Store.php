@@ -149,10 +149,6 @@ class Store implements OrderableEntityInterface
     public function edit(StoreData $storeData)
     {
         $this->setData($storeData);
-
-        foreach ($this->openingHours as $index => $openingHours) {
-            $openingHours->edit($storeData->openingHours[$index]);
-        }
     }
 
     /**

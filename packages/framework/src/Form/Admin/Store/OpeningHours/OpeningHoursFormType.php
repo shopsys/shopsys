@@ -31,12 +31,11 @@ class OpeningHoursFormType extends AbstractType
             'attr' => [
                 'class' => 'full-width',
             ],
+            'label' => false,
         ];
 
-        $builder->add('firstOpeningTime', TimeType::class, $timeOptions);
-        $builder->add('firstClosingTime', TimeType::class, $timeOptions);
-        $builder->add('secondOpeningTime', TimeType::class, $timeOptions);
-        $builder->add('secondClosingTime', TimeType::class, $timeOptions);
+        $builder->add('openingTime', TimeType::class, $timeOptions);
+        $builder->add('closingTime', TimeType::class, $timeOptions);
 
         foreach ($builder->all() as $child) {
             $child->addModelTransformer($this->openingHourTimeToStringTransformer);

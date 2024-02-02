@@ -18,41 +18,33 @@ export const OpeningHours: FC<{ openingHours: OpeningHoursApi }> = ({ openingHou
 
     return (
         <div className={twMergeCustom('flex w-full flex-col items-center gap-2 text-left', className)}>
-            {openingHours.openingHoursOfDays.map(
-                ({ firstOpeningTime, firstClosingTime, secondOpeningTime, secondClosingTime, dayOfWeek }) => {
-                    const isToday = openingHours.dayOfWeek === dayOfWeek;
-                    const isClosedWholeDay =
-                        (!firstOpeningTime || !firstClosingTime) && (!secondOpeningTime || !secondClosingTime);
-                    const isFirstTime = firstOpeningTime && firstClosingTime;
-                    const isSecondTime = secondOpeningTime && secondClosingTime;
+            {openingHours.openingHoursOfDays.map(({ dayOfWeek, openingHoursRanges }) => {
+                const isToday = openingHours.dayOfWeek === dayOfWeek;
+                const isClosedWholeDay = openingHoursRanges.length === 0;
 
-                    return (
-                        <div
-                            key={dayOfWeek}
-                            className={twJoin(
-                                'flex w-full flex-col items-center md:w-auto md:flex-row',
-                                isToday ? 'font-bold' : 'font-normal',
+                return (
+                    <div
+                        key={dayOfWeek}
+                        className={twJoin(
+                            'flex w-full flex-col items-center md:w-auto md:flex-row',
+                            isToday ? 'font-bold' : 'font-normal',
+                        )}
+                    >
+                        <span className="mr-1 md:basis-28">{dayNames[dayOfWeek - 1]}:</span>
+                        <span className="flex-1">
+                            {isClosedWholeDay ? (
+                                <>&nbsp;{t('Closed')}</>
+                            ) : (
+                                openingHoursRanges.map(({ openingTime, closingTime }, index) => (
+                                    <>
+                                        {index > 0 && ','}&nbsp;{openingTime}&nbsp;-&nbsp;{closingTime}
+                                    </>
+                                ))
                             )}
-                        >
-                            <span className="mr-1 md:basis-28">{dayNames[dayOfWeek - 1]}:</span>
-                            <span className="flex-1">
-                                {isFirstTime && (
-                                    <>
-                                        {firstOpeningTime}&nbsp;-&nbsp;{firstClosingTime}
-                                    </>
-                                )}
-                                {isFirstTime && isSecondTime && ','}
-                                {isSecondTime && (
-                                    <>
-                                        &nbsp;{secondOpeningTime}&nbsp;-&nbsp;{secondClosingTime}
-                                    </>
-                                )}
-                                {isClosedWholeDay && <>&nbsp;{t('Closed')}</>}
-                            </span>
-                        </div>
-                    );
-                },
-            )}
+                        </span>
+                    </div>
+                );
+            })}
         </div>
     );
 };

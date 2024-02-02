@@ -64,7 +64,7 @@ class StoreOpeningHoursProvider implements ResetInterface
         $openingHoursData = [];
 
         foreach (static::DAY_NUMBERS_TO_ENGLISH_NAMES_MAP as $dayName) {
-            $openingHoursData[] = $this->getOpeningHoursDataForDayInThisWeek($dayName, $store);
+            $openingHoursData = [...$openingHoursData, ...$this->getOpeningHoursDataForDayInThisWeek($dayName, $store)];
         }
 
         return $openingHoursData;
@@ -97,17 +97,10 @@ class StoreOpeningHoursProvider implements ResetInterface
         $weekSetting = [];
 
         foreach ($store->getOpeningHours() as $openingHour) {
-            $openingHoursOfDay = [];
-
-            if ($openingHour->getFirstOpeningTime() !== null && $openingHour->getFirstClosingTime() !== null) {
-                $openingHoursOfDay[] = $openingHour->getFirstOpeningTime() . '-' . $openingHour->getFirstClosingTime();
+            if ($openingHour->getOpeningTime() !== null && $openingHour->getClosingTime() !== null) {
+                $openingHoursRange = $openingHour->getOpeningTime() . '-' . $openingHour->getClosingTime();
+                $weekSetting[$this->getEnglishDayNameFromDayNumber($openingHour->getDayOfWeek())][] = $openingHoursRange;
             }
-
-            if ($openingHour->getSecondOpeningTime() !== null && $openingHour->getSecondClosingTime() !== null) {
-                $openingHoursOfDay[] = $openingHour->getSecondOpeningTime() . '-' . $openingHour->getSecondClosingTime();
-            }
-
-            $weekSetting[$this->getEnglishDayNameFromDayNumber($openingHour->getDayOfWeek())] = $openingHoursOfDay;
         }
 
         return $weekSetting;
@@ -155,29 +148,31 @@ class StoreOpeningHoursProvider implements ResetInterface
     /**
      * @param string $dayName
      * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData
+     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[]
      */
-    protected function getOpeningHoursDataForDayInThisWeek(string $dayName, Store $store): OpeningHoursData
+    protected function getOpeningHoursDataForDayInThisWeek(string $dayName, Store $store): array
     {
-        $date = new DateTimeImmutable('this ' . $dayName);
+        $date = new DateTimeImmutable('this week ' . $dayName);
         $openingHoursForDay = $this->getOpeningHoursSetting($store)->forDate($date);
 
-        $openingHourData = $this->openingHoursDataFactory->create();
-        $openingHourData->dayOfWeek = $this->getDayNumberFromEnglishDayName($dayName);
-        $openingRangeNumber = 1;
-        /** @var \Spatie\OpeningHours\TimeRange $openingHour */
-        foreach ($openingHoursForDay->getIterator() as $openingHour) {
-            if ($openingRangeNumber === 1) {
-                $openingHourData->firstOpeningTime = $openingHour->start()->format();
-                $openingHourData->firstClosingTime = $openingHour->end()->format();
-            } elseif ($openingRangeNumber === 2) {
-                $openingHourData->secondOpeningTime = $openingHour->start()->format();
-                $openingHourData->secondClosingTime = $openingHour->end()->format();
-            }
-            $openingRangeNumber++;
+        if ($openingHoursForDay->isEmpty()) {
+            $openingHourData = $this->openingHoursDataFactory->create();
+            $openingHourData->dayOfWeek = $this->getDayNumberFromEnglishDayName($dayName);
+
+            return [$openingHourData];
         }
 
-        return $openingHourData;
+        $openingHoursData = [];
+        /** @var \Spatie\OpeningHours\TimeRange $openingHour */
+        foreach ($openingHoursForDay->getIterator() as $openingHour) {
+            $openingHourData = $this->openingHoursDataFactory->create();
+            $openingHourData->dayOfWeek = $this->getDayNumberFromEnglishDayName($dayName);
+            $openingHourData->openingTime = $openingHour->start()->format();
+            $openingHourData->closingTime = $openingHour->end()->format();
+            $openingHoursData[] = $openingHourData;
+        }
+
+        return $openingHoursData;
     }
 
     public function reset(): void

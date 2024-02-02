@@ -1019,17 +1019,20 @@ type OpeningHours {
   openingHoursOfDays: [OpeningHoursOfDay!]!
 }
 
+"Represents store opening hours for a specific day"
 type OpeningHoursOfDay {
   "Day of the week"
   dayOfWeek: Int!
-  "First closing time"
-  firstClosingTime: String
-  "First opening time"
-  firstOpeningTime: String
-  "Second closing time"
-  secondClosingTime: String
-  "Second opening time"
-  secondOpeningTime: String
+  "An array of opening hours ranges (each range contains opening and closing time)"
+  openingHoursRanges: [OpeningHoursRange!]!
+}
+
+"Represents a time period when a store is open"
+type OpeningHoursRange {
+  "Closing time"
+  closingTime: String!
+  "Opening time"
+  openingTime: String!
 }
 
 type Order {

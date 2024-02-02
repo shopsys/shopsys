@@ -1,19 +1,11 @@
 OpeningHoursOfDay:
     type: object
     config:
+        description: "Represents store opening hours for a specific day"
         fields:
             dayOfWeek:
                 type: "Int!"
                 description: "Day of the week"
-            firstOpeningTime:
-                type: "String"
-                description: "First opening time"
-            firstClosingTime:
-                type: "String"
-                description: "First closing time"
-            secondOpeningTime:
-                type: "String"
-                description: "Second opening time"
-            secondClosingTime:
-                type: "String"
-                description: "Second closing time"
+            openingHoursRanges:
+                type: "[OpeningHoursRange!]!"
+                description: "An array of opening hours ranges (each range contains opening and closing time)"

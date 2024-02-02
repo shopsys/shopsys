@@ -38,38 +38,18 @@ class OpeningHours
      * @var string|null
      * @ORM\Column(type="string", length=5, nullable=true)
      */
-    protected $firstOpeningTime;
+    protected $openingTime;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=5, nullable=true)
      */
-    protected $firstClosingTime;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=5, nullable=true)
-     */
-    protected $secondOpeningTime;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=5, nullable=true)
-     */
-    protected $secondClosingTime;
+    protected $closingTime;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData $openingHourData
      */
     public function __construct(OpeningHoursData $openingHourData)
-    {
-        $this->setData($openingHourData);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData $openingHourData
-     */
-    public function edit(OpeningHoursData $openingHourData): void
     {
         $this->setData($openingHourData);
     }
@@ -109,33 +89,17 @@ class OpeningHours
     /**
      * @return string|null
      */
-    public function getFirstOpeningTime()
+    public function getOpeningTime()
     {
-        return $this->firstOpeningTime;
+        return $this->openingTime;
     }
 
     /**
      * @return string|null
      */
-    public function getFirstClosingTime()
+    public function getClosingTime()
     {
-        return $this->firstClosingTime;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSecondOpeningTime()
-    {
-        return $this->secondOpeningTime;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSecondClosingTime()
-    {
-        return $this->secondClosingTime;
+        return $this->closingTime;
     }
 
     /**
@@ -144,9 +108,7 @@ class OpeningHours
     protected function setData(OpeningHoursData $openingHourData): void
     {
         $this->dayOfWeek = $openingHourData->dayOfWeek;
-        $this->firstOpeningTime = $openingHourData->firstOpeningTime;
-        $this->firstClosingTime = $openingHourData->firstClosingTime;
-        $this->secondOpeningTime = $openingHourData->secondOpeningTime;
-        $this->secondClosingTime = $openingHourData->secondClosingTime;
+        $this->openingTime = $openingHourData->openingTime;
+        $this->closingTime = $openingHourData->closingTime;
     }
 }

@@ -14,20 +14,10 @@ class OpeningHoursData
     /**
      * @var string|null
      */
-    public $firstOpeningTime;
+    public $openingTime;
 
     /**
      * @var string|null
      */
-    public $firstClosingTime;
-
-    /**
-     * @var string|null
-     */
-    public $secondOpeningTime;
-
-    /**
-     * @var string|null
-     */
-    public $secondClosingTime;
+    public $closingTime;
 }

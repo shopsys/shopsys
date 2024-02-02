@@ -46,6 +46,9 @@ msgstr "Přidat další video"
 msgid "Add limit"
 msgstr "Přidat limit"
 
+msgid "Add opening hours"
+msgstr "Přidat otevírací dobu"
+
 msgid "Add some flag"
 msgstr "Přidejte nějaký příznak"
 
@@ -303,6 +306,9 @@ msgstr "Vymazat Storefront cache"
 
 msgid "Clean Storefront Query Cache"
 msgstr "Vymazat cache s graphql dotazy na FE"
+
+msgid "Closing time"
+msgstr "Čas do"
 
 msgid "Code"
 msgstr "Kód"
@@ -1102,6 +1108,9 @@ msgstr "Jejda! Nastala chyba."
 msgid "Open in new window"
 msgstr "Otevírat v novém okně"
 
+msgid "Opening time"
+msgstr "Čas od"
+
 msgid "Operator information - full"
 msgstr "Informace o provozovateli - vše"
 
@@ -1581,12 +1590,6 @@ msgstr "Čtvrtek"
 
 msgid "TikTok URL"
 msgstr "TikTok URL"
-
-msgid "Time from"
-msgstr "Čas od"
-
-msgid "Time to"
-msgstr "Čas do"
 
 msgid "Top categories - full"
 msgstr "Promované kategorie - vše"
