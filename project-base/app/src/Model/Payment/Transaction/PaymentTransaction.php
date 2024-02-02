@@ -8,12 +8,17 @@ use App\Model\Order\Order;
 use App\Model\Payment\Payment;
 use Doctrine\ORM\Mapping as ORM;
 use GoPay\Definition\Response\PaymentStatus;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableParentProperty;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 /**
  * @ORM\Table(name="payment_transactions")
  * @ORM\Entity
  */
+#[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 class PaymentTransaction
 {
     /**
@@ -29,6 +34,7 @@ class PaymentTransaction
      * @ORM\ManyToOne(targetEntity="App\Model\Order\Order", inversedBy="paymentTransactions")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
+    #[LoggableParentProperty]
     private Order $order;
 
     /**
@@ -115,6 +121,10 @@ class PaymentTransaction
         return $this->payment;
     }
 
+    /**
+     * @return string
+     */
+    #[EntityLogIdentify]
     /**
      * @return string
      */
