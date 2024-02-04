@@ -13,6 +13,16 @@ export default class CategoryTreeSorting {
         this.$rootTree = $rootTree;
         this.$saveButton = $saveButton;
 
+        $.mjs.nestedSortable.prototype._setHandleClassName = function () {
+            this._removeClass(this.element.find('.ui-sortable-handle'), 'ui-sortable-handle');
+            $.each(this.items, function () {
+                (this.instance.options.handle
+                    ? this.item.find(this.instance.options.handle)
+                    : this.item
+                ).addClass('ui-sortable-handle');
+            });
+        };
+
         const _this = this;
         this.$rootTree.nestedSortable({
             listType: 'ul',
