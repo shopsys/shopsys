@@ -1,4 +1,4 @@
-query ArticleDetailQuery($urlSlug: String) {
+query ArticleDetailQuery($urlSlug: String) @friendlyUrl {
     article(urlSlug: $urlSlug) {
         ...ArticleDetailFragment
     }

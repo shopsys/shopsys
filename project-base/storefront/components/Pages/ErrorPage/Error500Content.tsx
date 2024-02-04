@@ -3,7 +3,7 @@ import { ErrorLayout } from 'components/Layout/ErrorLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FallbackProps } from 'react-error-boundary';
 
 export const Error500ContentWithBoundary: FC<FallbackProps> = ({ resetErrorBoundary }) => {
@@ -20,7 +20,11 @@ export const Error500ContentWithBoundary: FC<FallbackProps> = ({ resetErrorBound
     return <Error500Content />;
 };
 
-export const Error500Content: FC = () => {
+type Error500ContentProps = {
+    err?: string;
+};
+
+export const Error500Content: FC<Error500ContentProps> = ({ err }) => {
     const { t } = useTranslation();
 
     return (
@@ -29,9 +33,17 @@ export const Error500Content: FC = () => {
                 <ErrorPage isWithoutImage>
                     <ErrorPageTextHeading>{t('Something went wrong.')}</ErrorPageTextHeading>
                     <ErrorPageTextMain>{t('Please try again later or contact us.')}</ErrorPageTextMain>
-
                     <ErrorPageButtonLink href="/">{t('Back to shop')}</ErrorPageButtonLink>
                 </ErrorPage>
+                {err && (
+                    <div className="my-3 flex justify-center">
+                        <div className="rounded bg-greyLighter">
+                            <div className="p-3">
+                                <p>{err}</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </Webline>
         </ErrorLayout>
     );

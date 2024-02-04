@@ -1,4 +1,4 @@
-query BlogCategoryQuery($urlSlug: String) {
+query BlogCategoryQuery($urlSlug: String) @friendlyUrl {
     blogCategory(urlSlug: $urlSlug) {
         ...BlogCategoryDetailFragment
     }

@@ -41,6 +41,7 @@ const nextConfig = {
         cdnDomain: process.env.CDN_DOMAIN ?? '',
         sentryDsn: process.env.SENTRY_DSN ?? '',
         sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? '',
+        errorDebugging: process.env.ERROR_DEBUGGING === '1',
         domains: [
             {
                 publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,

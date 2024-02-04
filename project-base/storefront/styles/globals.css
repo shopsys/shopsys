@@ -156,6 +156,11 @@ input[type='number'] {
 
 .Toastify__toast-body {
     @apply !text-dark;
+    max-width: 90%;
+
+    > div {
+        max-width: 100%;
+    }
 }
 
 .Toastify__close-button {

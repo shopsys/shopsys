@@ -1,4 +1,4 @@
-query FlagDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+query FlagDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) @friendlyUrl {
     flag(urlSlug: $urlSlug) {
         ...FlagDetailFragment
     }

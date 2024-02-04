@@ -1,3 +1,5 @@
+import { isWithErrorDebugging } from './isWithErrorDebugging';
+import { mapGraphqlErrorForDevelopment } from './mapGraphqlErrorForDevelopment';
 import { GraphQLError } from 'graphql';
 import { IncomingMessage, ServerResponse } from 'http';
 
@@ -6,7 +8,11 @@ export const handleServerSideErrorResponseForFriendlyUrls = (
     data: unknown,
     res: ServerResponse<IncomingMessage>,
 ) => {
-    if (graphQLErrors?.[0]?.extensions.code === 500) {
+    if (graphQLErrors?.some((error) => error.extensions.code === 500)) {
+        if (isWithErrorDebugging) {
+            throw new Error(JSON.stringify(mapGraphqlErrorForDevelopment(graphQLErrors[0])));
+        }
+
         throw new Error('Internal Server Error');
     }
 

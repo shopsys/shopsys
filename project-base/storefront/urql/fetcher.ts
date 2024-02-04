@@ -3,15 +3,29 @@ import md5 from 'crypto-js/md5';
 import { isClient } from 'helpers/isClient';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 
-const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)`;
+const FRIENDLY_URL_REGEXP = `@friendlyUrl` as const;
+const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)` as const;
 const QUERY_NAME_REGEXP = `query\\s([A-z]*)(\\([A-z:!0-9$,\\s]*\\))?\\s@redisCache`;
 const getRedisPrefixPattern = () => `${process.env.REDIS_PREFIX}:fe:queryCache:`;
 
-const removeDirectiveFromQuery = (query: string) => query.replace(new RegExp(CACHE_REGEXP), '');
+const removeDirectiveFromQuery = (
+    query: string,
+    directiveRegexps: (typeof CACHE_REGEXP | typeof FRIENDLY_URL_REGEXP)[],
+) => {
+    let cleanedQuery = query;
+    for (const directiveRegexp of directiveRegexps) {
+        cleanedQuery = cleanedQuery.replace(new RegExp(directiveRegexp), '');
+    }
+
+    return cleanedQuery;
+};
 
 const createInit = (init?: RequestInit | undefined) => ({
     ...init,
-    body: typeof init?.body === 'string' ? removeDirectiveFromQuery(init.body) : init?.body,
+    body:
+        typeof init?.body === 'string'
+            ? removeDirectiveFromQuery(init.body, [CACHE_REGEXP, FRIENDLY_URL_REGEXP])
+            : init?.body,
 });
 
 export const fetcher =
@@ -31,6 +45,7 @@ export const fetcher =
             if (typeof init.body !== 'string' || !init.body.match(CACHE_REGEXP)) {
                 return fetch(input, createInit(init));
             }
+
             const [, rawTtl] = init.body.match(CACHE_REGEXP) as string[];
             const ttl = parseInt(rawTtl, 10);
 
@@ -38,7 +53,7 @@ export const fetcher =
                 return fetch(input, createInit(init));
             }
 
-            const body = removeDirectiveFromQuery(init.body);
+            const body = removeDirectiveFromQuery(init.body, [CACHE_REGEXP, FRIENDLY_URL_REGEXP]);
             const host = (init.headers ? new Headers(init.headers) : new Headers()).get('OriginalHost');
             const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
             const hash = `${getRedisPrefixPattern()}${queryName}:${host}:${md5(body).toString().substring(0, 7)}`;
