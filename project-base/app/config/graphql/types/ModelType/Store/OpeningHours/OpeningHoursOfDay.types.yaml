@@ -1,11 +1,4 @@
 OpeningHoursOfDay:
     type: object
-    config:
-        description: "Represents store opening hours for a specific day"
-        fields:
-            dayOfWeek:
-                type: "Int!"
-                description: "Day of the week"
-            openingHoursRanges:
-                type: "[OpeningHoursRange!]!"
-                description: "An array of opening hours ranges (each range contains opening and closing time)"
+    inherits:
+        - 'OpeningHoursOfDayDecorator'

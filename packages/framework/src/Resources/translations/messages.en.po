@@ -94,6 +94,9 @@ msgstr ""
 msgid "Add language combination"
 msgstr ""
 
+msgid "Add opening hours"
+msgstr ""
+
 msgid "Add product"
 msgstr ""
 
@@ -454,6 +457,9 @@ msgstr ""
 msgid "Close (Esc)"
 msgstr ""
 
+msgid "Closing time"
+msgstr ""
+
 msgid "Code"
 msgstr ""
 
@@ -737,6 +743,9 @@ msgid "Date of publication"
 msgstr ""
 
 msgid "Date of registration and privacy policy agreement"
+msgstr ""
+
+msgid "Day"
 msgstr ""
 
 msgid "Days for transfer between warehouses"
@@ -1147,6 +1156,9 @@ msgstr ""
 msgid "Enter 32-digit code which will be sent to server"
 msgstr ""
 
+msgid "Enter in the store local time"
+msgstr ""
+
 msgid "Entered customer not found, please check entered data."
 msgstr ""
 
@@ -1313,6 +1325,9 @@ msgid "Free shipping and payment settings saved"
 msgstr ""
 
 msgid "Frequency"
+msgstr ""
+
+msgid "Friday"
 msgstr ""
 
 msgid "Frontend"
@@ -1624,6 +1639,9 @@ msgstr ""
 msgid "Modules configuration modified"
 msgstr ""
 
+msgid "Monday"
+msgstr ""
+
 msgid "Move"
 msgstr ""
 
@@ -1859,6 +1877,9 @@ msgid "Open in new window"
 msgstr ""
 
 msgid "Opening hours"
+msgstr ""
+
+msgid "Opening time"
 msgstr ""
 
 msgid "Operator information"
@@ -2230,6 +2251,9 @@ msgstr ""
 msgid "Sales overview (last 7 days)"
 msgstr ""
 
+msgid "Saturday"
+msgstr ""
+
 msgid "Save"
 msgstr ""
 
@@ -2536,6 +2560,9 @@ msgstr ""
 msgid "Successfully uploaded"
 msgstr ""
 
+msgid "Sunday"
+msgstr ""
+
 msgid "Superadmin"
 msgstr ""
 
@@ -2605,6 +2632,9 @@ msgstr ""
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr ""
 
+msgid "Thursday"
+msgstr ""
+
 msgid "To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one."
 msgstr ""
 
@@ -2645,6 +2675,9 @@ msgid "Total price including VAT"
 msgstr ""
 
 msgid "Tracking ID"
+msgstr ""
+
+msgid "Tuesday"
 msgstr ""
 
 msgid "Two selected domains cannot have the same language"
@@ -2813,6 +2846,9 @@ msgid "Warehouse settings"
 msgstr ""
 
 msgid "Warehouses"
+msgstr ""
+
+msgid "Wednesday"
 msgstr ""
 
 msgid "When changing the default currency there is no recalculation of prices"

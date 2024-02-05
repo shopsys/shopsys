@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Store\OpeningHours;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\OpeningHours;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;

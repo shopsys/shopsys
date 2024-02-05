@@ -94,6 +94,9 @@ msgstr "Přidat položku"
 msgid "Add language combination"
 msgstr "Přidat kombinaci jazyků"
 
+msgid "Add opening hours"
+msgstr "Přidat otevírací dobu"
+
 msgid "Add product"
 msgstr "Přidat zboží"
 
@@ -454,6 +457,9 @@ msgstr "Zavřít"
 msgid "Close (Esc)"
 msgstr "Zavřít (Esc)"
 
+msgid "Closing time"
+msgstr "Čas do"
+
 msgid "Code"
 msgstr "Kód"
 
@@ -738,6 +744,9 @@ msgstr "Datum publikace"
 
 msgid "Date of registration and privacy policy agreement"
 msgstr "Datum registrace a dohody o ochraně soukromí"
+
+msgid "Day"
+msgstr "Den"
 
 msgid "Days for transfer between warehouses"
 msgstr "Dny pro přesun mezi sklady"
@@ -1147,6 +1156,9 @@ msgstr "Whitelist aktivní"
 msgid "Enter 32-digit code which will be sent to server"
 msgstr "Zadejte 32-číselný kod, který bude odeslán na server"
 
+msgid "Enter in the store local time"
+msgstr "Zadejte v lokálním čase prodejny"
+
 msgid "Entered customer not found, please check entered data."
 msgstr "Zadaný zákazník nebyl nalezen, prosím překontrolujte zadané údaje"
 
@@ -1314,6 +1326,9 @@ msgstr "Nastavení dopravy a platby zdarma bylo uloženo"
 
 msgid "Frequency"
 msgstr "Frekvence"
+
+msgid "Friday"
+msgstr "Pátek"
 
 msgid "Frontend"
 msgstr "Frontend"
@@ -1624,6 +1639,9 @@ msgstr "Zapínací moduly"
 msgid "Modules configuration modified"
 msgstr "Nastavení zapínacích modulů bylo upraveno"
 
+msgid "Monday"
+msgstr "Pondělí"
+
 msgid "Move"
 msgstr "Přesunout"
 
@@ -1860,6 +1878,9 @@ msgstr "Otevírat v novém okně"
 
 msgid "Opening hours"
 msgstr "Otevírací doba"
+
+msgid "Opening time"
+msgstr "Čas od"
 
 msgid "Operator information"
 msgstr "Informace o provozovateli"
@@ -2230,6 +2251,9 @@ msgstr "Nastavení prodeje s/bez DPH"
 msgid "Sales overview (last 7 days)"
 msgstr "Přehled prodejů (za posledních 7 dní)"
 
+msgid "Saturday"
+msgstr "Sobota"
+
 msgid "Save"
 msgstr "Uložit"
 
@@ -2536,6 +2560,9 @@ msgstr "Odběratel newsletteru <strong>{{ email }}</strong> byl smazán"
 msgid "Successfully uploaded"
 msgstr "Úspěšně nahráno"
 
+msgid "Sunday"
+msgstr "Neděle"
+
 msgid "Superadmin"
 msgstr "Superadmin"
 
@@ -2605,6 +2632,9 @@ msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčno
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr "Tento stav není možné smazat. Jde o stav, který je automaticky přiřazen všem novým objednávkám."
 
+msgid "Thursday"
+msgstr "Čtvrtek"
+
 msgid "To delete this value there has to be selected another one, which will be used instead of the existing one. Unfortunately there is no other value available, you have to create new value before deleting this one."
 msgstr "Aby bylo možné tuto hodnotu smazat, je třeba nastavit novou, která se použije místo ní. Bohužel není za co nahrazovat, před smazáním musíte nějdřív vytvořit novou."
 
@@ -2646,6 +2676,9 @@ msgstr "Celková cena s DPH"
 
 msgid "Tracking ID"
 msgstr "Číslo pro měření"
+
+msgid "Tuesday"
+msgstr "Úterý"
 
 msgid "Two selected domains cannot have the same language"
 msgstr "Dvě vybrané domény nemohou mít stejný jazyk"
@@ -2814,6 +2847,9 @@ msgstr "Nastavení skladů"
 
 msgid "Warehouses"
 msgstr "Sklady"
+
+msgid "Wednesday"
+msgstr "Středa"
 
 msgid "When changing the default currency there is no recalculation of prices"
 msgstr "Při změně výchozí měny nedochází k žádnému přepočtu cen"
