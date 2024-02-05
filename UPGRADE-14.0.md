@@ -1138,19 +1138,25 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 
 -   add ability to change a payment in an order ([#2952](https://github.com/shopsys/shopsys/pull/2952))
+
     -   `Shopsys\FrontendApiBundle\Model\Resolver\Payment\PaymentsQuery::__construct()` changed its interface:
+
     ```diff
         public function __construct(
             protected readonly PaymentFacade $paymentFacade,
     +       protected readonly OrderApiFacade $orderApiFacade,
     ```
+
     -   `Shopsys\FrameworkBundle\Model\Order\OrderDataFactory::__construct()` changed its interface:
+
     ```diff
         public function __construct(
             protected readonly OrderItemDataFactoryInterface $orderItemDataFactory,
     +       protected readonly PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
     ```
+
     -   `Shopsys\FrameworkBundle\Model\Order\OrderFacade::__construct()` changed its interface:
+
     ```diff
         public function __construct(
             // ...
@@ -1162,9 +1168,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly OrderItemDataFactory $orderItemDataFactory,
     +       protected readonly OrderDataFactory $orderDataFactory,
     ```
+
     -   `Shopsys\FrameworkBundle\Model\Order\OrderRepository::createOrderQueryBuilder()` changed its visibility from `protected` to `public` and is strictly typed
     -   `Shopsys\FrameworkBundle\Model\Order\Order::getTotalProductPriceWithVat()` method was removed
     -   `Shopsys\FrameworkBundle\Model\Order\OrderTotalPrice::__construct()` changed its interface:
+
     ```diff
         public function __construct(
             protected readonly Money $priceWithVat,
@@ -1172,11 +1180,14 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
             protected readonly Money $productPriceWithVat,
     +       protected readonly Money $productPriceWithoutVat,
     ```
+
     -   `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory::getOnlyWithCartIdentifier()` changed its interface:
+
     ```diff
     -   public function getOnlyWithCartIdentifier(string $cartIdentifier): CustomerUserIdentifier
     +   public function getOnlyWithCartIdentifier(?string $cartIdentifier): CustomerUserIdentifier
     ```
+
     -   `Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceQuery` class was changed:
         -   `__contruct()` method changed its interface:
         ```diff
