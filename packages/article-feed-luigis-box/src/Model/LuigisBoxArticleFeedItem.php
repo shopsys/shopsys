@@ -10,17 +10,19 @@ class LuigisBoxArticleFeedItem implements FeedItemInterface
 {
     /**
      * @param int $id
+     * @param string $index
      * @param string $title
      * @param string $link
      * @param string|null $description
-     * @param string|null $imageLink
+     * @param string|null $perex
      */
     public function __construct(
         protected readonly int $id,
-        public readonly string $title,
-        public readonly string $link,
-        public readonly ?string $description,
-        public readonly ?string $imageLink,
+        protected readonly string $index,
+        protected readonly string $title,
+        protected readonly string $link,
+        protected readonly ?string $description,
+        protected readonly ?string $perex,
     ) {
     }
 
@@ -30,5 +32,45 @@ class LuigisBoxArticleFeedItem implements FeedItemInterface
     public function getSeekId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentity(): string
+    {
+        return $this->index . '-' . $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->link;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getText(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAnnotation(): ?string
+    {
+        return $this->perex;
     }
 }

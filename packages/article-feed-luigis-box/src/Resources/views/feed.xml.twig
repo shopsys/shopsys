@@ -5,13 +5,14 @@
 
 {% block item %}
     <article>
-        <title>{{ item.title }}</title>
-        <link>{{ item.link }}</link>
-        {% if item.description is not null %}
-            <description><![CDATA[{{ item.description }}]]></description>
+        <identity>{{ item.identity }}</identity>
+        <name>{{ item.name }}</name>
+        {% if item.annotation is not null %}
+            <annotation>{{ item.annotation }}</annotation>
         {% endif %}
-        {% if item.imageLink is not null %}
-            <imageLink>{{ item.imageLink }}</imageLink>
+        <url>{{ item.url }}</url>
+        {% if item.text is not null %}
+            <text>{{ item.text }}</text>
         {% endif %}
     </article>
 {% endblock %}

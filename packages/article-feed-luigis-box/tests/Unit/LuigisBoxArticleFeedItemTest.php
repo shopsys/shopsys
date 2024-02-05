@@ -17,19 +17,16 @@ class LuigisBoxArticleFeedItemTest extends TestCase
     /**
      * @dataProvider articleFeedItemCreationDataProvider
      * @param array $articleData
-     * @param int $itemNumber
-     * @param string|null $expectedImageUrl
      */
-    public function testArticleFeedItemCreation(array $articleData, int $itemNumber, ?string $expectedImageUrl): void
+    public function testArticleFeedItemCreation(array $articleData): void
     {
         $luigisBoxArticleFeedItemFactory = new LuigisBoxArticleFeedItemFactory();
-        $luigisBoxArticleFeedItem = $luigisBoxArticleFeedItemFactory->create($articleData, $itemNumber);
+        $luigisBoxArticleFeedItem = $luigisBoxArticleFeedItemFactory->create($articleData);
 
-        $this->assertSame($itemNumber, $luigisBoxArticleFeedItem->getSeekId());
-        $this->assertSame($articleData['name'], $luigisBoxArticleFeedItem->title);
-        $this->assertSame($articleData['url'], $luigisBoxArticleFeedItem->link);
-        $this->assertSame($articleData['text'], $luigisBoxArticleFeedItem->description);
-        $this->assertSame($expectedImageUrl, $luigisBoxArticleFeedItem->imageLink);
+        $this->assertSame($articleData['index'] . '-' . $articleData['id'], $luigisBoxArticleFeedItem->getIdentity());
+        $this->assertSame($articleData['name'], $luigisBoxArticleFeedItem->getName());
+        $this->assertSame($articleData['url'], $luigisBoxArticleFeedItem->getUrl());
+        $this->assertSame($articleData['text'], $luigisBoxArticleFeedItem->getText());
     }
 
     /**
@@ -45,15 +42,18 @@ class LuigisBoxArticleFeedItemTest extends TestCase
 
         yield [
             'articleData' => [
+                'id' => 1,
+                'index' => 'article',
                 ...$commonArticleData,
                 'imageUrl' => self::ARTICLE_IMAGE_URL,
             ],
-            'itemNumber' => 1,
             'expectedImageUrl' => self::ARTICLE_IMAGE_URL . '?width=605',
         ];
 
         yield [
             'articleData' => [
+                'id' => 2,
+                'index' => 'article',
                 ...$commonArticleData,
                 'imageUrl' => null,
             ],
@@ -62,8 +62,11 @@ class LuigisBoxArticleFeedItemTest extends TestCase
         ];
 
         yield [
-            'articleData' => $commonArticleData,
-            'itemNumber' => 3,
+            'articleData' => [
+                'id' => 1,
+                'index' => 'blog_article',
+                ...$commonArticleData,
+            ],
             'expectedImageUrl' => null,
         ];
     }

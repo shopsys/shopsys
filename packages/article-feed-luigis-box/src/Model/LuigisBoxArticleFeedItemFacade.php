@@ -7,7 +7,7 @@ namespace Shopsys\ArticleFeed\LuigisBoxBundle\Model;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\CombinedArticle\CombinedArticleElasticsearchFacade;
 
-class LuigisBoxArticleFacade
+class LuigisBoxArticleFeedItemFacade
 {
     /**
      * @param \Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItemFactory $luigisBoxArticleFeedItemFactory
@@ -33,8 +33,7 @@ class LuigisBoxArticleFacade
         $articlesData = $this->combinedArticleElasticsearchFacade->getArticlesByDomainId($domainConfig->getId(), $lastSeekId, $maxResults);
 
         foreach ($articlesData as $article) {
-            yield $this->luigisBoxArticleFeedItemFactory->create($article, $lastSeekId);
-            $lastSeekId++;
+            yield $this->luigisBoxArticleFeedItemFactory->create($article);
         }
     }
 }

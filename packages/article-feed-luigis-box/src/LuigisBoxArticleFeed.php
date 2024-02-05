@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ArticleFeed\LuigisBoxBundle;
 
-use Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFacade;
+use Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItemFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInterface;
@@ -13,11 +13,11 @@ class LuigisBoxArticleFeed implements FeedInterface
 {
     /**
      * @param \Shopsys\ArticleFeed\LuigisBoxBundle\LuigisBoxArticleFeedInfo $luigisBoxArticleFeedInfo
-     * @param \Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFacade $luigisBoxArticleFacade
+     * @param \Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItemFacade $luigisBoxArticleFeedItemFacade
      */
     public function __construct(
         protected readonly LuigisBoxArticleFeedInfo $luigisBoxArticleFeedInfo,
-        protected readonly LuigisBoxArticleFacade $luigisBoxArticleFacade,
+        protected readonly LuigisBoxArticleFeedItemFacade $luigisBoxArticleFeedItemFacade,
     ) {
     }
 
@@ -42,6 +42,6 @@ class LuigisBoxArticleFeed implements FeedInterface
      */
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {
-        yield from $this->luigisBoxArticleFacade->getItems($domainConfig, $lastSeekId, $maxResults);
+        yield from $this->luigisBoxArticleFeedItemFacade->getItems($domainConfig, $lastSeekId, $maxResults);
     }
 }
