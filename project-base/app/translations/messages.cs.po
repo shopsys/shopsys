@@ -46,9 +46,6 @@ msgstr "Přidat další video"
 msgid "Add limit"
 msgstr "Přidat limit"
 
-msgid "Add opening hours"
-msgstr "Přidat otevírací dobu"
-
 msgid "Add some flag"
 msgstr "Přidejte nějaký příznak"
 
@@ -307,9 +304,6 @@ msgstr "Vymazat Storefront cache"
 msgid "Clean Storefront Query Cache"
 msgstr "Vymazat cache s graphql dotazy na FE"
 
-msgid "Closing time"
-msgstr "Čas do"
-
 msgid "Code"
 msgstr "Kód"
 
@@ -432,9 +426,6 @@ msgstr "Datum a čas"
 
 msgid "Date and time of order creation"
 msgstr "Datum a čas vytvoření objednávky"
-
-msgid "Day"
-msgstr "Den"
 
 msgid "Days until delivery"
 msgstr "Dní do doručení"
@@ -625,9 +616,6 @@ msgstr "Vložte 6 místný ověřovací kód z e-mailu. Nejprve o něj musíte z
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
 msgstr "Vložte 6 místný ověřovací kód z mobilní aplikace pro dvoufaktorovou autentizaci."
 
-msgid "Enter in the store local time"
-msgstr "Zadejte v lokálním čase prodejny"
-
 msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
 msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 00:00:00)"
 
@@ -747,9 +735,6 @@ msgstr "Doprava a platba zdarma - vše"
 
 msgid "Free transport and payment - view"
 msgstr "Doprava a platba zdarma - zobrazení"
-
-msgid "Friday"
-msgstr "Pátek"
 
 msgid "Friendly URL \"%slug%\" was removed."
 msgstr "Hezká URL \"%slug%\" byla smazána."
@@ -961,9 +946,6 @@ msgstr "Text zprávy"
 msgid "Meta description"
 msgstr "Meta popis"
 
-msgid "Monday"
-msgstr "Pondělí"
-
 msgid "Move"
 msgstr "Posunout"
 
@@ -1107,9 +1089,6 @@ msgstr "Jejda! Nastala chyba."
 
 msgid "Open in new window"
 msgstr "Otevírat v novém okně"
-
-msgid "Opening time"
-msgstr "Čas od"
 
 msgid "Operator information - full"
 msgstr "Informace o provozovateli - vše"
@@ -1429,9 +1408,6 @@ msgstr "Výprodej"
 msgid "Sales overview (last 7 days)"
 msgstr "Přehled prodejů (posledních 7 dní)"
 
-msgid "Saturday"
-msgstr "Sobota"
-
 msgid "Save"
 msgstr "Uložit"
 
@@ -1537,9 +1513,6 @@ msgstr "Prodejny - zobrazení"
 msgid "Street"
 msgstr "Ulice"
 
-msgid "Sunday"
-msgstr "Neděle"
-
 msgid "TOP"
 msgstr "TOP"
 
@@ -1584,9 +1557,6 @@ msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčno
 
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr "Tento stav není možné smazat. Jde o stav, který je automaticky přiřazen všem novým objednávkám."
-
-msgid "Thursday"
-msgstr "Čtvrtek"
 
 msgid "TikTok URL"
 msgstr "TikTok URL"
@@ -1659,9 +1629,6 @@ msgstr "Dopravy a platby - vše"
 
 msgid "Transports and payments - view"
 msgstr "Dopravy a platby - zobrazení"
-
-msgid "Tuesday"
-msgstr "Úterý"
 
 msgid "Two factor authentication code"
 msgstr "Dvoufaktorový ověřovací kód"
@@ -1782,9 +1749,6 @@ msgstr "Sklady - zobrazení"
 
 msgid "We have nothing to show you at this url."
 msgstr "Na téhle url adrese nemáme nic, co bychom Vám ukázali."
-
-msgid "Wednesday"
-msgstr "Středa"
 
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"

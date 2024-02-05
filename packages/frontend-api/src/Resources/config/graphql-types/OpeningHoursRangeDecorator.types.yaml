@@ -1,0 +1,12 @@
+OpeningHoursRangeDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents a time period when a store is open"
+        fields:
+            openingTime:
+                type: "String!"
+                description: "Opening time"
+            closingTime:
+                type: "String!"
+                description: "Closing time"

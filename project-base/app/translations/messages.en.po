@@ -46,9 +46,6 @@ msgstr ""
 msgid "Add limit"
 msgstr ""
 
-msgid "Add opening hours"
-msgstr ""
-
 msgid "Add some flag"
 msgstr ""
 
@@ -307,9 +304,6 @@ msgstr ""
 msgid "Clean Storefront Query Cache"
 msgstr ""
 
-msgid "Closing time"
-msgstr ""
-
 msgid "Code"
 msgstr ""
 
@@ -431,9 +425,6 @@ msgid "Date and time"
 msgstr ""
 
 msgid "Date and time of order creation"
-msgstr ""
-
-msgid "Day"
 msgstr ""
 
 msgid "Days until delivery"
@@ -625,9 +616,6 @@ msgstr ""
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
 msgstr ""
 
-msgid "Enter in the store local time"
-msgstr ""
-
 msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
 msgstr ""
 
@@ -746,9 +734,6 @@ msgid "Free transport and payment - full"
 msgstr ""
 
 msgid "Free transport and payment - view"
-msgstr ""
-
-msgid "Friday"
 msgstr ""
 
 msgid "Friendly URL \"%slug%\" was removed."
@@ -961,9 +946,6 @@ msgstr ""
 msgid "Meta description"
 msgstr ""
 
-msgid "Monday"
-msgstr ""
-
 msgid "Move"
 msgstr ""
 
@@ -1106,9 +1088,6 @@ msgid "Oops! Error occurred."
 msgstr ""
 
 msgid "Open in new window"
-msgstr ""
-
-msgid "Opening time"
 msgstr ""
 
 msgid "Operator information - full"
@@ -1429,9 +1408,6 @@ msgstr ""
 msgid "Sales overview (last 7 days)"
 msgstr ""
 
-msgid "Saturday"
-msgstr ""
-
 msgid "Save"
 msgstr ""
 
@@ -1537,9 +1513,6 @@ msgstr ""
 msgid "Street"
 msgstr ""
 
-msgid "Sunday"
-msgstr ""
-
 msgid "TOP"
 msgstr ""
 
@@ -1583,9 +1556,6 @@ msgid "This status can't be deleted, because there is a functionality bounded to
 msgstr ""
 
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
-msgstr ""
-
-msgid "Thursday"
 msgstr ""
 
 msgid "TikTok URL"
@@ -1658,9 +1628,6 @@ msgid "Transports and payments - full"
 msgstr ""
 
 msgid "Transports and payments - view"
-msgstr ""
-
-msgid "Tuesday"
 msgstr ""
 
 msgid "Two factor authentication code"
@@ -1781,9 +1748,6 @@ msgid "Warehouses - view"
 msgstr ""
 
 msgid "We have nothing to show you at this url."
-msgstr ""
-
-msgid "Wednesday"
 msgstr ""
 
 msgid "Weight (g)"
