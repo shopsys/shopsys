@@ -26,14 +26,15 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
-use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxFeedItem;
-use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxFeedItemFactory;
+use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
+use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItemFactory;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class LuigisBoxFeedItemTest extends TestCase
 {
     private const MAIN_CATEGORY_ID = 1;
     private const MAIN_CATEGORY_NAME = 'Main category';
+    private const PRODUCT_IDENTITY = 'product-1';
     private const FLAG_NAME = 'Flag name';
     private const PRODUCT_NAME = 'product name';
     private const PRODUCT_URL = 'https://example.com/product-1';
@@ -55,7 +56,7 @@ class LuigisBoxFeedItemTest extends TestCase
 
     private ProductUrlsBatchLoader|MockObject $productUrlsBatchLoaderMock;
 
-    private LuigisBoxFeedItemFactory $luigisBoxFeedItemFactory;
+    private LuigisBoxProductFeedItemFactory $luigisBoxProductFeedItemFactory;
 
     private Currency $defaultCurrency;
 
@@ -123,7 +124,7 @@ class LuigisBoxFeedItemTest extends TestCase
 
         $productAvailabilityFacade = $this->createMock(ProductAvailabilityFacade::class);
 
-        $this->luigisBoxFeedItemFactory = new LuigisBoxFeedItemFactory(
+        $this->luigisBoxProductFeedItemFactory = new LuigisBoxProductFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
             $this->currencyFacadeMock,
             $this->productUrlsBatchLoaderMock,
@@ -199,35 +200,33 @@ class LuigisBoxFeedItemTest extends TestCase
      */
     private function mockProductImageUrl(Product $product, DomainConfig $domain, string $url): void
     {
-        $this->productUrlsBatchLoaderMock->method('getResizedProductImageUrl')
+        $this->productUrlsBatchLoaderMock->method('getProductImageUrl')
             ->with($product, $domain)->willReturn($url);
     }
 
     public function testMinimalLuigisBoxFeedItemIsCreatable(): void
     {
-        $luigisBoxFeedItem = $this->luigisBoxFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+        $luigisBoxProductFeedItem = $this->luigisBoxProductFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
-        self::assertInstanceOf(LuigisBoxFeedItem::class, $luigisBoxFeedItem);
-        self::assertEquals(self::PRODUCT_ID, $luigisBoxFeedItem->getId());
-        self::assertEquals(self::PRODUCT_ID, $luigisBoxFeedItem->getSeekId());
-        self::assertEquals(self::PRODUCT_NAME, $luigisBoxFeedItem->getTitle());
-        self::assertEquals(self::PRODUCT_URL, $luigisBoxFeedItem->getLink());
-        self::assertEquals(self::PRODUCT_EAN, $luigisBoxFeedItem->getEan());
-        self::assertEquals(self::PRODUCT_PART_NO, $luigisBoxFeedItem->getPartNo());
-        self::assertEquals(self::PRODUCT_SKU, $luigisBoxFeedItem->getSku());
-        self::assertNull($luigisBoxFeedItem->getDescription());
-        self::assertEquals(self::MAIN_CATEGORY_ID, $luigisBoxFeedItem->getCategoryId());
-        self::assertEquals(self::MAIN_CATEGORY_NAME, $luigisBoxFeedItem->getCategoryText());
-        self::assertEquals([0 => self::MAIN_CATEGORY_ID], $luigisBoxFeedItem->getHierarchyIdsIndexedByCategoryId());
-        self::assertEquals([0 => self::MAIN_CATEGORY_NAME], $luigisBoxFeedItem->getHierarchyNamesIndexedByCategoryId());
-        self::assertNull($luigisBoxFeedItem->getImageLink());
-        self::assertEquals(t('In stock'), $luigisBoxFeedItem->getAvailability());
-        self::assertThat($luigisBoxFeedItem->getPrice()->getPriceWithoutVat(), new IsMoneyEqual(Money::zero()));
-        self::assertThat($luigisBoxFeedItem->getPrice()->getPriceWithVat(), new IsMoneyEqual(Money::zero()));
-        self::assertEquals(self::EUR, $luigisBoxFeedItem->getCurrency()->getCode());
-        self::assertNull($luigisBoxFeedItem->getBrand());
-        self::assertEquals(['Flag_name'], $luigisBoxFeedItem->getFlagNames());
-        self::assertEquals([self::PARAMETER_NAME => self::PARAMETER_VALUE], $luigisBoxFeedItem->getProductParameterValuesIndexedByName());
+        self::assertInstanceOf(LuigisBoxProductFeedItem::class, $luigisBoxProductFeedItem);
+        self::assertEquals(self::PRODUCT_IDENTITY, $luigisBoxProductFeedItem->getIdentity());
+        self::assertEquals(self::PRODUCT_ID, $luigisBoxProductFeedItem->getSeekId());
+        self::assertEquals(self::PRODUCT_NAME, $luigisBoxProductFeedItem->getTitle());
+        self::assertEquals(self::PRODUCT_URL, $luigisBoxProductFeedItem->getUrl());
+        self::assertEquals(self::PRODUCT_EAN, $luigisBoxProductFeedItem->getEan());
+        self::assertEquals(self::PRODUCT_SKU, $luigisBoxProductFeedItem->getProductCode());
+        self::assertNull($luigisBoxProductFeedItem->getDescription());
+        self::assertEquals([self::MAIN_CATEGORY_ID => self::MAIN_CATEGORY_NAME], $luigisBoxProductFeedItem->getCategoryNamesIndexedByCategoryId());
+        self::assertNull($luigisBoxProductFeedItem->getImageLinkS());
+        self::assertNull($luigisBoxProductFeedItem->getImageLinkM());
+        self::assertNull($luigisBoxProductFeedItem->getImageLinkL());
+        self::assertEquals(t('In stock'), $luigisBoxProductFeedItem->getAvailabilityRankText());
+        self::assertThat($luigisBoxProductFeedItem->getPrice()->getPriceWithoutVat(), new IsMoneyEqual(Money::zero()));
+        self::assertThat($luigisBoxProductFeedItem->getPrice()->getPriceWithVat(), new IsMoneyEqual(Money::zero()));
+        self::assertEquals(self::EUR, $luigisBoxProductFeedItem->getCurrency()->getCode());
+        self::assertNull($luigisBoxProductFeedItem->getBrand());
+        self::assertEquals([self::FLAG_NAME], $luigisBoxProductFeedItem->getFlagNames());
+        self::assertEquals([self::PARAMETER_NAME => self::PARAMETER_VALUE], $luigisBoxProductFeedItem->getProductParameterValuesIndexedByName());
     }
 
     public function testLuigisBoxFeedItemWithBrand(): void
@@ -237,9 +236,9 @@ class LuigisBoxFeedItemTest extends TestCase
         $brand->method('getName')->willReturn(self::BRAND_NAME);
         $this->defaultProduct->method('getBrand')->willReturn($brand);
 
-        $luigisBoxFeedItem = $this->luigisBoxFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+        $luigisBoxProductFeedItem = $this->luigisBoxProductFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
-        self::assertEquals(self::BRAND_NAME, $luigisBoxFeedItem->getBrand());
+        self::assertEquals(self::BRAND_NAME, $luigisBoxProductFeedItem->getBrand());
     }
 
     public function testLuigisBoxFeedItemWithDescription(): void
@@ -247,18 +246,18 @@ class LuigisBoxFeedItemTest extends TestCase
         $this->defaultProduct->method('getDescriptionAsPlainText')
             ->with($this->defaultDomain->getId())->willReturn(self::PRODUCT_DESCRIPTION);
 
-        $luigisBoxFeedItem = $this->luigisBoxFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+        $luigisBoxProductFeedItem = $this->luigisBoxProductFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
-        self::assertEquals(self::PRODUCT_DESCRIPTION, $luigisBoxFeedItem->getDescription());
+        self::assertEquals(self::PRODUCT_DESCRIPTION, $luigisBoxProductFeedItem->getDescription());
     }
 
     public function testLuigisBoxFeedItemWithImageLink(): void
     {
         $this->mockProductImageUrl($this->defaultProduct, $this->defaultDomain, self::IMAGE_URL);
 
-        $luigisBoxFeedItem = $this->luigisBoxFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
+        $luigisBoxProductFeedItem = $this->luigisBoxProductFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
-        self::assertEquals(self::IMAGE_URL, $luigisBoxFeedItem->getImageLink());
+        self::assertEquals(self::IMAGE_URL . '?width=100&height=100', $luigisBoxProductFeedItem->getImageLinkS());
     }
 
     public function testLuigisBoxFeedItemWithSellingDenied(): void
@@ -266,8 +265,8 @@ class LuigisBoxFeedItemTest extends TestCase
         $product = clone $this->defaultProduct;
         $product->method('getCalculatedSellingDenied')->willReturn(true);
 
-        $luigisBoxFeedItem = $this->luigisBoxFeedItemFactory->create($product, $this->defaultDomain);
+        $luigisBoxProductFeedItem = $this->luigisBoxProductFeedItemFactory->create($product, $this->defaultDomain);
 
-        self::assertEquals(t('Out of stock'), $luigisBoxFeedItem->getAvailability());
+        self::assertEquals(t('Out of stock'), $luigisBoxProductFeedItem->getAvailabilityRankText());
     }
 }

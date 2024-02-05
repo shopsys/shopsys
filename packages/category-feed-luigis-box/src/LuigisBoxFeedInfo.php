@@ -13,7 +13,7 @@ class LuigisBoxFeedInfo implements FeedInfoInterface
      */
     public function getLabel(): string
     {
-        return 'LuigisBox Category';
+        return 'Luigi\'s Box Category';
     }
 
     /**
@@ -21,7 +21,7 @@ class LuigisBoxFeedInfo implements FeedInfoInterface
      */
     public function getName(): string
     {
-        return 'luigisBox-category';
+        return 'luigis-box-category';
     }
 
     /**

@@ -6,14 +6,14 @@ namespace Shopsys\ProductFeed\LuigisBoxBundle;
 
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 
-class LuigisBoxFeedInfo implements FeedInfoInterface
+class LuigisBoxProductFeedInfo implements FeedInfoInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getLabel(): string
     {
-        return 'LuigisBox Product';
+        return 'Luigi\'s Box Product';
     }
 
     /**
@@ -21,7 +21,7 @@ class LuigisBoxFeedInfo implements FeedInfoInterface
      */
     public function getName(): string
     {
-        return 'luigisBox-product';
+        return 'luigis-box-product';
     }
 
     /**

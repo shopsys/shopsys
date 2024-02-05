@@ -6,42 +6,49 @@
 
 {% block item %}
     <product>
-        <title><![CDATA[{{ item.title }}]]></title>
-        <link>{{ item.link }}</link>
-        <ean>{{ item.ean }}</ean>
-        <sku>{{ item.sku }}</sku>
-        <partNo>{{ item.partNo }}</partNo>
-        <description><![CDATA[{{ item.description }}]]></description>
-        <id>{{ item.id }}</id>
-        <categoryId>{{ item.categoryId }}</categoryId>
-        <categoryText>{{ item.categoryText }}</categoryText>
-        <isMaster>{% if item.isMaster is same as(true) %}true{% else %}false{% endif %}</isMaster>
+        <identity>{{ item.identity }}</identity>
+        <title>{{ item.title }}</title>
+        <url>{{ item.url }}</url>
+        <availability>{{ item.availability }}</availability>
+        <availability_rank>{{ item.availabilityRank }}</availability_rank>
+        <availability_rank_text>{{ item.availabilityRankText }}</availability_rank_text>
+        {% for categoryId, categoryNames in item.categoryNamesIndexedByCategoryId %}
+            <category{% if categoryId is same as(item.mainCategoryId) %} primary="true"{% endif %}>{{ categoryNames }}</category>
+        {% endfor %}
+        {% if item.brand is not null -%}
+            <brand>{{ item.brand }}</brand>
+        {% endif -%}
+        <price>{{ item.price.priceWithVat|moneyFormat(2) }} {{ item.currency.code }}</price>
+        {% if item.imageLinkS is not null -%}
+            <image_link_s>{{ item.imageLinkS }}</image_link_s>
+            <image_link_m>{{ item.imageLinkM }}</image_link_m>
+            <image_link_l>{{ item.imageLinkL }}</image_link_l>
+        {% endif -%}
+        {% if item.description is not null -%}
+            <description>{{ item.description }}</description>
+        {% endif -%}
+        {% if item.flagNames|length > 0 -%}
+            <labels>{{ item.flagNames|join(', ') }}</labels>
+        {% endif %}
+        {% if item.productCode is not null -%}
+            <product_code>{{ item.productCode }}</product_code>
+        {% endif -%}
+        {% if item.ean is not null -%}
+            <ean>{{ item.ean }}</ean>
+        {% endif -%}
+        {% if item.productParameterValuesIndexedByName|length > 0 %}
+            <parameters>
+            {% for parameterName, parameterValue in item.getProductParameterValuesIndexedByName %}
+                <param>
+                    <name>{{ parameterName }}</name>
+                    <value>{{ parameterValue }}</value>
+                </param>
+            {% endfor %}
+            </parameters>
+        {% endif %}
         {% if item.itemGroupId is not null %}
             <item_group_id>{{ item.itemGroupId }}</item_group_id>
         {% endif %}
-        {% for hierarchyIds in item.hierarchyIdsIndexedByCategoryId %}
-            <hierarchy>{{ hierarchyIds }}</hierarchy>
-        {% endfor %}
-        {% for hierarchyNames in item.hierarchyNamesIndexedByCategoryId %}
-            <hierarchy_text>{{ hierarchyNames }}</hierarchy_text>
-        {% endfor %}
-        {% if item.imageLink is not null -%}
-            <image_link>{{ item.imageLink }}</image_link>
-        {% endif -%}
-        <availability>{{ item.availability }}</availability>
-        <price>{{ item.price.priceWithVat|moneyFormat(2) }}</price>
-        {%  if item.brand is not null -%}
-            <brand>{{ item.brand }}</brand>
-        {% endif -%}
-        {% for flagName in item.flagNames %}
-            <tag_{{ flagName }}>true</tag_{{ flagName }}>
-        {% endfor %}
-        {% for parameterName, parameterValue in item.getProductParameterValuesIndexedByName %}
-            <param>
-                <name>{{ parameterName }}</name>
-                <value>{{ parameterValue }}</value>
-            </param>
-        {% endfor %}
     </product>
 {% endblock %}
 

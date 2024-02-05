@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\ArticleFeed\LuigisBoxBundle\Model;
 
 use Shopsys\FrameworkBundle\Component\String\TransformString;
-use Shopsys\FrameworkBundle\Model\Feed\FeedItemImageHelper;
+use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 
 class LuigisBoxArticleFeedItemFactory
 {
@@ -35,6 +35,6 @@ class LuigisBoxArticleFeedItemFactory
             return null;
         }
 
-        return FeedItemImageHelper::limitWidthInImageUrl($articleData['imageUrl']);
+        return ImageUrlWithSizeHelper::limitWidthInImageUrl($articleData['imageUrl']);
     }
 }

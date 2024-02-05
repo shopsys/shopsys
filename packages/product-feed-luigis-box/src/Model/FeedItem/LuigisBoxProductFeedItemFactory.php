@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -17,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCust
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 
-class LuigisBoxFeedItemFactory
+class LuigisBoxProductFeedItemFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
@@ -40,62 +39,61 @@ class LuigisBoxFeedItemFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxFeedItem
+     * @return \Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem
      */
-    public function create(Product $product, DomainConfig $domainConfig): LuigisBoxFeedItem
+    public function create(Product $product, DomainConfig $domainConfig): LuigisBoxProductFeedItem
     {
         $locale = $domainConfig->getLocale();
         $rootCategory = $this->categoryRepository->getRootCategory();
         $mainCategory = $this->categoryRepository->getProductMainCategoryOnDomain($product, $domainConfig->getId());
-        $availability = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainConfig->getId());
+        $availabilityText = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainConfig->getId());
+        $isAvailable = $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainConfig->getId());
+        $availableInDays = $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainConfig->getId());
         $productDescription = $product->isVariant() ? $product->getMainVariant()->getDescriptionAsPlainText($domainConfig->getId()) : $product->getDescriptionAsPlainText($domainConfig->getId());
         $categories = $product->getCategoriesIndexedByDomainId()[$domainConfig->getId()];
         $categoryHierarchyNamesByCategoryId = [];
-        $categoryHierarchyIdsByCategoryId = [];
 
         foreach ($categories as $category) {
             $categoryHierarchyNames = [];
-            $categoryHierarchyIds = [];
             $parent = $category->getParent();
             $categoryHierarchyNames[] = $category->getName($locale);
-            $categoryHierarchyIds[] = $category->getId();
 
             while ($parent !== null && $parent->getId() !== $rootCategory->getId()) {
-                $categoryHierarchyIds[] = $parent->getId();
                 $categoryHierarchyNames[] = $parent->getName($locale);
                 $parent = $parent->getParent();
             }
 
-            $categoryHierarchyNamesByCategoryId[$category->getId()] = implode(' > ', array_reverse($categoryHierarchyNames));
-            $categoryHierarchyIdsByCategoryId[$category->getId()] = implode(':', array_reverse($categoryHierarchyIds));
+            $categoryHierarchyNamesByCategoryId[$category->getId()] = implode(' | ', array_reverse($categoryHierarchyNames));
         }
 
         $parameterValuesIndexedByName = [];
 
         foreach ($this->productCachedAttributesFacade->getProductParameterValues($product, $locale) as $productParameterValue) {
-            $parameterValuesIndexedByName[$productParameterValue->getParameter()->getName($locale)] = $productParameterValue->getValue()->getText();
+            $parameterName = str_replace('.', '', $productParameterValue->getParameter()->getName($locale));
+            $parameterValuesIndexedByName[$parameterName] = $productParameterValue->getValue()->getText();
         }
 
-        return new LuigisBoxFeedItem(
+        return new LuigisBoxProductFeedItem(
             $product->getId(),
             $product->getName($domainConfig->getLocale()),
             $product->getCatnum(),
-            $availability,
+            $availabilityText,
+            $isAvailable,
+            $availableInDays,
             $this->getPrice($product, $domainConfig),
             $this->getCurrency($domainConfig),
             $mainCategory->getId(),
             $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
-            array_reverse($categoryHierarchyNamesByCategoryId),
-            array_reverse($categoryHierarchyIdsByCategoryId),
+            array_reverse($categoryHierarchyNamesByCategoryId, true),
             $product->isMainVariant(),
-            array_map(fn (Flag $flag): string => TransformString::safeFilename($flag->getName($locale)), $product->getFlags($domainConfig->getId())),
+            array_map(fn (Flag $flag): string => $flag->getName($locale), $product->getFlags($domainConfig->getId())),
             $parameterValuesIndexedByName,
             $mainCategory->getName($locale),
             $product->getEan(),
-            $product->getPartno(),
+            $product->getCatnum(),
             $product->getBrand()?->getName(),
             $productDescription,
-            $this->productUrlsBatchLoader->getResizedProductImageUrl($product, $domainConfig),
+            $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
             $product->isVariant() ? $product->getMainVariant()->getId() : null,
         );
     }

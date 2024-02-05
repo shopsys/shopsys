@@ -9,17 +9,17 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\Product\LuigisBoxProductRepository;
 
-class LuigisBoxFeedItemFacade
+class LuigisBoxProductFeedItemFacade
 {
     /**
      * @param \Shopsys\ProductFeed\LuigisBoxBundle\Model\Product\LuigisBoxProductRepository $luigisBoxProductRepository
-     * @param \Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxFeedItemFactory $feedItemFactory
+     * @param \Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItemFactory $luigisBoxProductFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
      */
     public function __construct(
         protected readonly LuigisBoxProductRepository $luigisBoxProductRepository,
-        protected readonly LuigisBoxFeedItemFactory $feedItemFactory,
+        protected readonly LuigisBoxProductFeedItemFactory $luigisBoxProductFeedItemFactory,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
     ) {
@@ -29,7 +29,7 @@ class LuigisBoxFeedItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int|null $lastSeekId
      * @param int $maxResults
-     * @return \Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxFeedItem[]|iterable
+     * @return iterable<int, \Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem>
      */
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {
@@ -40,10 +40,11 @@ class LuigisBoxFeedItemFacade
             $lastSeekId,
             $maxResults,
         );
+
         $this->productUrlsBatchLoader->loadForProducts($products, $domainConfig);
 
         foreach ($products as $product) {
-            yield $this->feedItemFactory->create($product, $domainConfig);
+            yield $this->luigisBoxProductFeedItemFactory->create($product, $domainConfig);
         }
     }
 }

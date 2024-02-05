@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
-use Shopsys\FrameworkBundle\Model\Feed\FeedItemImageHelper;
+use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 
 class LuigisBoxCategoryFeedItemFactory
 {
@@ -41,7 +41,7 @@ class LuigisBoxCategoryFeedItemFactory
         $rootCategory = $this->categoryRepository->getRootCategory();
 
         try {
-            $imageUrl = FeedItemImageHelper::limitWidthInImageUrl($this->imageFacade->getImageUrl($domainConfig, $category));
+            $imageUrl = ImageUrlWithSizeHelper::limitSizeInImageUrl($this->imageFacade->getImageUrl($domainConfig, $category));
         } catch (ImageNotFoundException) {
             $imageUrl = null;
         }

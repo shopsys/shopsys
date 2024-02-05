@@ -7,17 +7,17 @@ namespace Shopsys\ProductFeed\LuigisBoxBundle;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInterface;
-use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxFeedItemFacade;
+use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItemFacade;
 
-class LuigisBoxFeed implements FeedInterface
+class LuigisBoxProductFeed implements FeedInterface
 {
     /**
-     * @param \Shopsys\ProductFeed\LuigisBoxBundle\LuigisBoxFeedInfo $feedInfo
-     * @param \Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxFeedItemFacade $feedItemFacade
+     * @param \Shopsys\ProductFeed\LuigisBoxBundle\LuigisBoxProductFeedInfo $luigisBoxProductFeedInfo
+     * @param \Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItemFacade $luigisBoxProductFeedItemFacade
      */
     public function __construct(
-        protected readonly LuigisBoxFeedInfo $feedInfo,
-        protected readonly LuigisBoxFeedItemFacade $feedItemFacade,
+        protected readonly LuigisBoxProductFeedInfo $luigisBoxProductFeedInfo,
+        protected readonly LuigisBoxProductFeedItemFacade $luigisBoxProductFeedItemFacade,
     ) {
     }
 
@@ -26,7 +26,7 @@ class LuigisBoxFeed implements FeedInterface
      */
     public function getInfo(): FeedInfoInterface
     {
-        return $this->feedInfo;
+        return $this->luigisBoxProductFeedInfo;
     }
 
     /**
@@ -42,6 +42,6 @@ class LuigisBoxFeed implements FeedInterface
      */
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {
-        yield from $this->feedItemFacade->getItems($domainConfig, $lastSeekId, $maxResults);
+        yield from $this->luigisBoxProductFeedItemFacade->getItems($domainConfig, $lastSeekId, $maxResults);
     }
 }

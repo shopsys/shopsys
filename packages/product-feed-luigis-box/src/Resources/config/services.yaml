@@ -7,6 +7,6 @@ services:
     Shopsys\ProductFeed\LuigisBoxBundle\:
         resource: '../../*'
 
-    Shopsys\ProductFeed\LuigisBoxBundle\LuigisBoxFeed:
+    Shopsys\ProductFeed\LuigisBoxBundle\LuigisBoxProductFeed:
         tags:
             - { name: shopsys.feed, hours: '*', minutes: '15' }

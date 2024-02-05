@@ -30,14 +30,14 @@ class LuigisBoxProductRepository
         ?int $lastSeekId,
         int $maxResults,
     ): iterable {
-        $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainConfig->getId(), $pricingGroup)
-            ->addSelect('b')->leftJoin('p.brand', 'b')
-            ->orderBy('p.id', 'asc')
+        $queryBuilder = $this->productRepository->getAllSellableQueryBuilder($domainConfig->getId(), $pricingGroup)
+            ->addSelect('b, pd')
+            ->leftJoin('p.brand', 'b')
+            ->addSelect('v')->join('pd.vat', 'v')
+            ->orderBy('IDENTITY(p.mainVariant)', 'asc')
             ->setMaxResults($maxResults);
 
         $this->productRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
-        $this->productRepository->addDomain($queryBuilder, $domainConfig->getId());
-        $queryBuilder->addSelect('v')->join('pd.vat', 'v');
 
         if ($lastSeekId !== null) {
             $queryBuilder->andWhere('p.id > :lastProductId')->setParameter('lastProductId', $lastSeekId);
