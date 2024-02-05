@@ -80,7 +80,7 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
      */
     public function getIdentity(): string
     {
-        return self::UNIQUE_IDENTIFIER_PREFIX . $this->id;
+        return static::UNIQUE_IDENTIFIER_PREFIX . $this->id;
     }
 
     /**
@@ -216,7 +216,7 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
             return null;
         }
 
-        return self::UNIQUE_IDENTIFIER_PREFIX . $this->mainVariantId;
+        return static::UNIQUE_IDENTIFIER_PREFIX . $this->mainVariantId;
     }
 
     /**

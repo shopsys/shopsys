@@ -8,22 +8,20 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 
 class LuigisBoxCategoryFeedItem implements FeedItemInterface
 {
+    protected const UNIQUE_IDENTIFIER_PREFIX = 'category-';
+
     /**
      * @param int $id
      * @param string $name
-     * @param array $hierarchyIds
      * @param string $url
      * @param array $hierarchyNames
-     * @param string|null $description
      * @param string|null $imageUrl
      */
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,
-        protected readonly array $hierarchyIds,
         protected readonly string $url,
         protected readonly array $hierarchyNames,
-        protected readonly ?string $description,
         protected readonly ?string $imageUrl = null,
     ) {
     }
@@ -37,33 +35,25 @@ class LuigisBoxCategoryFeedItem implements FeedItemInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): int
+    public function getIdentity(): string
     {
-        return $this->id;
+        return static::UNIQUE_IDENTIFIER_PREFIX . $this->id;
     }
 
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @return string|null
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
      * @return string
      */
-    public function getLink(): string
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -71,24 +61,20 @@ class LuigisBoxCategoryFeedItem implements FeedItemInterface
     /**
      * @return string|null
      */
-    public function getImageLink(): ?string
+    public function getImageUrl(): ?string
     {
         return $this->imageUrl;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getHierarchyIds(): string
+    public function getHierarchy(): ?string
     {
-        return implode(':', $this->hierarchyIds);
-    }
+        if (count($this->hierarchyNames) > 0) {
+            return implode(' | ', $this->hierarchyNames);
+        }
 
-    /**
-     * @return string
-     */
-    public function getHierarchyText(): string
-    {
-        return implode(' | ', $this->hierarchyNames);
+        return null;
     }
 }

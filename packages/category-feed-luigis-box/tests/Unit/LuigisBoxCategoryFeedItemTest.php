@@ -21,13 +21,13 @@ class LuigisBoxCategoryFeedItemTest extends TestCase
 
     private const CATEGORY_ID = 1;
 
-    private const CATEGORY_URL = 'https://example.com/category-1';
+    private const CATEGORY_IDENTITY = 'category-1';
 
-    private const CATEGORY_DESCRIPTION = 'category description';
+    private const CATEGORY_URL = 'https://example.com/category-1';
 
     private const CATEGORY_IMAGE_URL = 'https://example.com/img/category/1';
 
-    private LuigisBoxCategoryFeedItemFactory $luigisBoxFeedItemFactory;
+    private LuigisBoxCategoryFeedItemFactory $luigisBoxCategoryFeedItemFactory;
 
     private DomainConfig $defaultDomain;
 
@@ -43,7 +43,7 @@ class LuigisBoxCategoryFeedItemTest extends TestCase
         $this->imageFacadeMock = $this->createMock(ImageFacade::class);
         $categoryRepositoryMock = $this->createMock(CategoryRepository::class);
 
-        $this->luigisBoxFeedItemFactory = new LuigisBoxCategoryFeedItemFactory(
+        $this->luigisBoxCategoryFeedItemFactory = new LuigisBoxCategoryFeedItemFactory(
             $this->friendlyUrlFacadeMock,
             $this->imageFacadeMock,
             $categoryRepositoryMock,
@@ -105,34 +105,22 @@ class LuigisBoxCategoryFeedItemTest extends TestCase
     {
         $this->imageFacadeMock->method('getImageUrl')->willThrowException(new ImageNotFoundException());
 
-        $luigisBoxCategoryFeedItem = $this->luigisBoxFeedItemFactory->create($this->defaultCategory, $this->defaultDomain);
+        $luigisBoxCategoryFeedItem = $this->luigisBoxCategoryFeedItemFactory->create($this->defaultCategory, $this->defaultDomain);
 
-        self::assertEquals(self::CATEGORY_ID, $luigisBoxCategoryFeedItem->getId());
+        self::assertEquals(self::CATEGORY_IDENTITY, $luigisBoxCategoryFeedItem->getIdentity());
         self::assertEquals(self::CATEGORY_ID, $luigisBoxCategoryFeedItem->getSeekId());
-        self::assertEquals(self::CATEGORY_NAME, $luigisBoxCategoryFeedItem->getTitle());
-        self::assertNull($luigisBoxCategoryFeedItem->getDescription());
-        self::assertEquals(self::CATEGORY_URL, $luigisBoxCategoryFeedItem->getLink());
-        self::assertNull($luigisBoxCategoryFeedItem->getImageLink());
-        self::assertEquals('1', $luigisBoxCategoryFeedItem->getHierarchyIds());
-        self::assertEquals(self::CATEGORY_NAME, $luigisBoxCategoryFeedItem->getHierarchyText());
-    }
-
-    public function testLuigisBoxCategoryFeedItemWithDescription(): void
-    {
-        $this->imageFacadeMock->method('getImageUrl')->willThrowException(new ImageNotFoundException());
-        $this->defaultCategory->method('getDescription')->with(Domain::FIRST_DOMAIN_ID)->willReturn(self::CATEGORY_DESCRIPTION);
-
-        $luigisBoxCategoryFeedItem = $this->luigisBoxFeedItemFactory->create($this->defaultCategory, $this->defaultDomain);
-
-        self::assertEquals(self::CATEGORY_DESCRIPTION, $luigisBoxCategoryFeedItem->getDescription());
+        self::assertEquals(self::CATEGORY_NAME, $luigisBoxCategoryFeedItem->getName());
+        self::assertEquals(self::CATEGORY_URL, $luigisBoxCategoryFeedItem->getUrl());
+        self::assertNull($luigisBoxCategoryFeedItem->getImageUrl());
+        self::assertEquals(null, $luigisBoxCategoryFeedItem->getHierarchy());
     }
 
     public function testLuigisBoxCategoryFeedItemWithImageLink(): void
     {
         $this->mockCategoryImageUrl($this->defaultCategory, $this->defaultDomain, self::CATEGORY_IMAGE_URL);
 
-        $luigisBoxCategoryFeedItem = $this->luigisBoxFeedItemFactory->create($this->defaultCategory, $this->defaultDomain);
+        $luigisBoxCategoryFeedItem = $this->luigisBoxCategoryFeedItemFactory->create($this->defaultCategory, $this->defaultDomain);
 
-        self::assertEquals(self::CATEGORY_IMAGE_URL . '?width=605', $luigisBoxCategoryFeedItem->getImageLink());
+        self::assertEquals(self::CATEGORY_IMAGE_URL . '?width=100&height=100', $luigisBoxCategoryFeedItem->getImageUrl());
     }
 }

@@ -5,13 +5,13 @@
 
 {% block item %}
     <category>
-        <category_id>{{ item.id }}</category_id>
-        <hierarchy>{{ item.hierarchyIds }}</hierarchy>
-        <title><![CDATA[{{ item.title }}]]></title>
-        <description><![CDATA[{{ item.description }}]]></description>
-        <link>{{ item.link }}</link>
-        <image_link>{{ item.imageLink }}</image_link>
-        <hierarchy_text><![CDATA[{{ item.hierarchyText }}]]></hierarchy_text>
+        <identity>{{ item.identity }}</identity>
+        <name>{{ item.name }}</name>
+        <url>{{ item.url }}</url>
+        {% if item.hierarchy is not null %}
+            <hierarchy>{{ item.hierarchy }}</hierarchy>
+        {% endif %}
+        <image_url>{{ item.imageUrl }}</image_url>
     </category>
 {% endblock %}
 

@@ -6,7 +6,7 @@ namespace Shopsys\CategoryFeed\LuigisBoxBundle;
 
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 
-class LuigisBoxFeedInfo implements FeedInfoInterface
+class LuigisBoxCategoryFeedInfo implements FeedInfoInterface
 {
     /**
      * {@inheritdoc}

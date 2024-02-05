@@ -11,11 +11,11 @@ class LuigisBoxCategoryFeedItemFacade
 {
     /**
      * @param \Shopsys\CategoryFeed\LuigisBoxBundle\Model\Category\LuigisBoxCategoryRepository $luigisBoxCategoryRepository
-     * @param \Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedItemFactory $luigisBoxFeedItemFactory
+     * @param \Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedItemFactory $luigisBoxCategoryFeedItemFactory
      */
     public function __construct(
         protected readonly LuigisBoxCategoryRepository $luigisBoxCategoryRepository,
-        protected readonly LuigisBoxCategoryFeedItemFactory $luigisBoxFeedItemFactory,
+        protected readonly LuigisBoxCategoryFeedItemFactory $luigisBoxCategoryFeedItemFactory,
     ) {
     }
 
@@ -23,14 +23,14 @@ class LuigisBoxCategoryFeedItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int|null $lastSeekId
      * @param int $maxResults
-     * @return \Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedItem[]|iterable
+     * @return iterable<int, \Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedItem>
      */
     public function getItems(DomainConfig $domainConfig, ?int $lastSeekId, int $maxResults): iterable
     {
         $categories = $this->luigisBoxCategoryRepository->getCategories($domainConfig, $lastSeekId, $maxResults);
 
         foreach ($categories as $category) {
-            yield $this->luigisBoxFeedItemFactory->create($category, $domainConfig);
+            yield $this->luigisBoxCategoryFeedItemFactory->create($category, $domainConfig);
         }
     }
 }
