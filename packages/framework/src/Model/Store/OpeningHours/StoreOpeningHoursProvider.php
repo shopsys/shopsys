@@ -97,10 +97,43 @@ class StoreOpeningHoursProvider implements ResetInterface
         $weekSetting = [];
 
         foreach ($store->getOpeningHours() as $openingHour) {
-            if ($openingHour->getOpeningTime() !== null && $openingHour->getClosingTime() !== null) {
-                $openingHoursRange = $openingHour->getOpeningTime() . '-' . $openingHour->getClosingTime();
-                $weekSetting[$this->getEnglishDayNameFromDayNumber($openingHour->getDayOfWeek())][] = $openingHoursRange;
-            }
+            $weekSetting = $this->addOpeningHourRangeToWeekSetting($openingHour->getDayOfWeek(), $openingHour->getOpeningTime(), $openingHour->getClosingTime(), $weekSetting);
+        }
+
+        return $weekSetting;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[] $openingHoursData
+     * @return \Spatie\OpeningHours\OpeningHours
+     */
+    public function getOpeningHoursSettingFromData(array $openingHoursData): SpatieOpeningHours
+    {
+        $weekSetting = [];
+
+        foreach ($openingHoursData as $openingHourData) {
+            $weekSetting = $this->addOpeningHourRangeToWeekSetting($openingHourData->dayOfWeek, $openingHourData->openingTime, $openingHourData->closingTime, $weekSetting);
+        }
+
+        return SpatieOpeningHours::create($weekSetting);
+    }
+
+    /**
+     * @param int $dayOfWeek
+     * @param string|null $openingTime
+     * @param string|null $closingTime
+     * @param array $weekSetting
+     * @return array
+     */
+    protected function addOpeningHourRangeToWeekSetting(
+        int $dayOfWeek,
+        ?string $openingTime,
+        ?string $closingTime,
+        array $weekSetting,
+    ): array {
+        if ($openingTime !== null && $closingTime !== null) {
+            $openingHoursRange = $openingTime . '-' . $closingTime;
+            $weekSetting[$this->getEnglishDayNameFromDayNumber($dayOfWeek)][] = $openingHoursRange;
         }
 
         return $weekSetting;

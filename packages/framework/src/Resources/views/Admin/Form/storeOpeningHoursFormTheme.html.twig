@@ -38,3 +38,9 @@
         ></i>
     </label>
 {% endblock _store_form_openingHours_label %}
+
+{% block _store_form_openingHours_errors %}
+    <div style="position: relative; right: 20px; top: 10px">
+        {{ form_errors(form) }}
+    </div>
+{% endblock _store_form_openingHours_errors %}

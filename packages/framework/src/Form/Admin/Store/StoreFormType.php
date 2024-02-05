@@ -14,10 +14,12 @@ use Shopsys\FrameworkBundle\Form\Transformers\OpeningHoursCollectionTransformer;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreData;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFriendlyUrlProvider;
+use Spatie\OpeningHours\Exceptions\Exception;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -38,12 +40,14 @@ class StoreFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\OpeningHoursCollectionTransformer $openingHoursCollectionTransformer
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider $storeOpeningHoursProvider
      */
     public function __construct(
         private readonly StockFacade $stockFacade,
         private readonly StoreFacade $storeFacade,
         private readonly CountryFacade $countryFacade,
         private readonly OpeningHoursCollectionTransformer $openingHoursCollectionTransformer,
+        private readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
     ) {
     }
 
@@ -168,6 +172,7 @@ class StoreFormType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                 ],
+                'error_bubbling' => false,
             ])
             ->add('contactInfo', TextareaType::class, [
                 'required' => false,
@@ -192,6 +197,7 @@ class StoreFormType extends AbstractType
             ->setDefaults([
                 'data_class' => StoreData::class,
                 'attr' => ['novalidate' => 'novalidate'],
+                'constraints' => new Constraints\Callback([$this, 'validateOpeningHours']),
             ]);
     }
 
@@ -241,5 +247,21 @@ class StoreFormType extends AbstractType
             'entity' => $options['store'],
             'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
         ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateOpeningHours(StoreData $storeData, ExecutionContextInterface $context): void
+    {
+        try {
+            $this->storeOpeningHoursProvider->getOpeningHoursSettingFromData($storeData->openingHours);
+        } catch (Exception) {
+            $context
+                ->buildViolation(t('Opening hours setting is not valid', [], 'validators'))
+                ->atPath('openingHours')
+                ->addViolation();
+        }
     }
 }

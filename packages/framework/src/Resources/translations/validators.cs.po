@@ -127,6 +127,9 @@ msgstr "Počet dní k expedici musí být větší nebo roven {{ compared_value 
 msgid "Number of days to expedite must be whole number."
 msgstr "Počet dní k expedici musí být celé číslo"
 
+msgid "Opening hours setting is not valid"
+msgstr "Neplaté nastavení otevírací doby"
+
 msgid "Parameter name cannot be longer than {{ limit }} characters"
 msgstr "Název parametru nesmí být delší než {{ limit }} znaků"
 
