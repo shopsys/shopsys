@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
 use Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
@@ -24,7 +23,6 @@ class PlaceOrderFacade
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -35,7 +33,6 @@ class PlaceOrderFacade
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
-        protected readonly OrderProductFacade $orderProductFacade,
         protected readonly OrderStatusRepository $orderStatusRepository,
         protected readonly OrderPreviewFactory $orderPreviewFactory,
         protected readonly CurrencyFacade $currencyFacade,
@@ -65,7 +62,6 @@ class PlaceOrderFacade
         );
 
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, $customerUser);
-        $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
 
         if ($customerUser instanceof CustomerUser) {
             $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, null);

@@ -49,16 +49,7 @@ class ProductSellingDeniedRecalculator
     {
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')
-            ->set('p.calculatedSellingDenied', '
-                CASE
-                    WHEN p.usingStock = TRUE
-                        AND p.stockQuantity <= 0
-                        AND p.outOfStockAction = :outOfStockActionExcludeFromSale
-                    THEN TRUE
-                    ELSE p.sellingDenied
-                END
-            ')
-            ->setParameter('outOfStockActionExcludeFromSale', Product::OUT_OF_STOCK_ACTION_EXCLUDE_FROM_SALE);
+            ->set('p.calculatedSellingDenied', 'p.sellingDenied');
 
         if (count($productIds) > 0) {
             $qb->andWhere('p IN (:productIds)')->setParameter('productIds', $productIds);

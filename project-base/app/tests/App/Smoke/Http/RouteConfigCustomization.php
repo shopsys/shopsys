@@ -339,12 +339,6 @@ class RouteConfigCustomization
                     ->setParameter('categoryId', 8)
                     ->setParameter('choseCategorySeoMixCombinationJson', '{"domainId":1,"categoryId":8,"flagId":1,"ordering":null,"parameterValueIdsByParameterIds":{"38":75,"40":79,"37":73,"39":77}}');
             })
-            ->customizeByRouteName('admin_availability_delete', function (RouteConfig $config) {
-                $config->skipRoute('Deleting Availability is no longer available.');
-            })
-            ->customizeByRouteName('admin_availability_deleteconfirm', function (RouteConfig $config) {
-                $config->skipRoute('Deleting Availability is no longer available.');
-            })
             ->customizeByRouteName('admin_unused_friendly_url_delete', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Unused friendly URL may be deleted only when there is any and CSRF token is provided')
                     ->addCallDuringTestExecution(function (RequestDataSet $requestDataSet, ContainerInterface $container) {

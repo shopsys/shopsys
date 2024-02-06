@@ -92,7 +92,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setBasicInformationGroup($builder);
         $this->setSeoGroup($builder);
         $this->setStocksGroup($builder);
-        $this->setDisplayAvailabilityGroup($builder, $product);
+        $this->setDisplayAvailabilityGroup($builder);
         $this->setPricesGroup($builder, $product);
         $this->setRelatedProductsGroup($builder, $product);
         $this->setVideoGroup($builder);
@@ -116,17 +116,10 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \App\Model\Product\Product|null $product
      */
-    private function setDisplayAvailabilityGroup(FormBuilderInterface $builder, ?Product $product): void
+    private function setDisplayAvailabilityGroup(FormBuilderInterface $builder): void
     {
         $groupBuilder = $builder->get('displayAvailabilityGroup');
-        $groupBuilder->remove('availability');
-
-        $groupBuilder->get('stockGroup')
-            ->remove('stockQuantity')
-            ->remove('outOfStockAction')
-            ->remove('outOfStockAvailability');
 
         $groupBuilder
             ->add('sellingDenied', YesNoType::class, [
@@ -142,12 +135,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
                 'entry_type' => YesNoType::class,
                 'position' => ['after' => 'sellingDenied'],
-            ])
-            ->add('usingStock', YesNoType::class, [
-                'data' => true,
-                'required' => false,
-                'disabled' => true,
-                'label' => t('Use stocks'),
             ])
             ->add('domainHidden', MultidomainType::class, [
                 'label' => t('Hide on domain'),

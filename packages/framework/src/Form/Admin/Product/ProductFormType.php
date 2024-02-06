@@ -27,12 +27,10 @@ use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Shopsys\FrameworkBundle\Form\UrlListType;
-use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Form\WarningMessageType;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -42,26 +40,20 @@ use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
 class ProductFormType extends AbstractType
 {
-    public const VALIDATION_GROUP_USING_STOCK = 'usingStock';
-    public const VALIDATION_GROUP_USING_STOCK_AND_ALTERNATE_AVAILABILITY = 'usingStockAndAlternateAvailability';
-    public const VALIDATION_GROUP_NOT_USING_STOCK = 'notUsingStock';
     public const CSRF_TOKEN_ID = 'product_edit_type';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
@@ -75,7 +67,6 @@ class ProductFormType extends AbstractType
      */
     public function __construct(
         private readonly VatFacade $vatFacade,
-        private readonly AvailabilityFacade $availabilityFacade,
         private readonly BrandFacade $brandFacade,
         private readonly FlagFacade $flagFacade,
         private readonly UnitFacade $unitFacade,
@@ -93,7 +84,7 @@ class ProductFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product|null $product */
         $product = $options['product'];
@@ -125,7 +116,7 @@ class ProductFormType extends AbstractType
         }
 
         $builder->add($this->createBasicInformationGroup($builder, $product, $disabledItemInMainVariantAttr));
-        $builder->add($this->createDisplayAvailabilityGroup($builder, $product, $disabledItemInMainVariantAttr));
+        $builder->add($this->createDisplayAvailabilityGroup($builder, $product));
         $builder->add($this->createPricesGroup($builder, $product));
         $builder->add($this->createDescriptionsGroup($builder, $product));
         $builder->add($this->createShortDescriptionsGroup($builder, $product));
@@ -141,7 +132,7 @@ class ProductFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('product')
@@ -150,23 +141,6 @@ class ProductFormType extends AbstractType
                 'data_class' => ProductData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'csrf_token_id' => self::CSRF_TOKEN_ID,
-                'validation_groups' => function (FormInterface $form) {
-                    $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
-                    /** @var \Shopsys\FrameworkBundle\Model\Product\ProductData $productData */
-                    $productData = $form->getData();
-
-                    if ($productData->usingStock) {
-                        $validationGroups[] = static::VALIDATION_GROUP_USING_STOCK;
-
-                        if ($productData->outOfStockAction === Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY) {
-                            $validationGroups[] = static::VALIDATION_GROUP_USING_STOCK_AND_ALTERNATE_AVAILABILITY;
-                        }
-                    } else {
-                        $validationGroups[] = static::VALIDATION_GROUP_NOT_USING_STOCK;
-                    }
-
-                    return $validationGroups;
-                },
             ]);
     }
 
@@ -179,8 +153,8 @@ class ProductFormType extends AbstractType
     private function createBasicInformationGroup(
         FormBuilderInterface $builder,
         ?Product $product,
-        $disabledItemInMainVariantAttr = [],
-    ) {
+        array $disabledItemInMainVariantAttr = [],
+    ): FormBuilderInterface {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => t('Basic information'),
         ]);
@@ -260,8 +234,10 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createShortDescriptionsGroup(FormBuilderInterface $builder, ?Product $product)
-    {
+    private function createShortDescriptionsGroup(
+        FormBuilderInterface $builder,
+        ?Product $product,
+    ): FormBuilderInterface {
         $builderShortDescriptionGroup = $builder->create('shortDescriptionsGroup', GroupType::class, [
             'label' => t('Short description'),
         ]);
@@ -298,7 +274,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createDescriptionsGroup(FormBuilderInterface $builder, ?Product $product)
+    private function createDescriptionsGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $builderDescriptionGroup = $builder->create('descriptionsGroup', GroupType::class, [
             'label' => t('Description'),
@@ -329,14 +305,12 @@ class ProductFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @param array $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createDisplayAvailabilityGroup(
         FormBuilderInterface $builder,
         ?Product $product,
-        $disabledItemInMainVariantAttr = [],
-    ) {
+    ): FormBuilderInterface {
         $productMainCategoriesIndexedByDomainId = [];
 
         if ($product !== null) {
@@ -411,13 +385,11 @@ class ProductFormType extends AbstractType
 
         if (
             $product !== null
-            && $product->isUsingStock()
             && $product->getCalculatedSellingDenied()
-            && $product->getStockQuantity() <= 0
         ) {
             $builderDisplayAvailabilityGroup
                 ->add('productCalculatedSellingDeniedInfo', WarningMessageType::class, [
-                    'data' => t('Product is excluded from the sale due to sellout'),
+                    'data' => t('Product is excluded from the sale'),
                 ]);
         }
 
@@ -461,97 +433,17 @@ class ProductFormType extends AbstractType
                     ]),
                 ],
                 'label' => t('Unit'),
-            ])
-            ->add('usingStock', YesNoType::class, [
-                'required' => false,
-                'disabled' => $this->isProductMainVariant($product),
-                'attr' => $disabledItemInMainVariantAttr,
-                'label' => t('Use stocks'),
             ]);
 
         $builderStockGroup = $builder->create('stockGroup', FormType::class, [
             'render_form_row' => false,
             'inherit_data' => true,
             'attr' => [
-                'class' => 'js-product-using-stock form-line__js',
+                'class' => 'form-line__js',
             ],
         ]);
 
         $builderDisplayAvailabilityGroup->add($builderStockGroup);
-
-        $builderStockGroup
-            ->add('stockQuantity', IntegerType::class, [
-                'required' => true,
-                'invalid_message' => 'Please enter a number',
-                'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please enter stock quantity',
-                        'groups' => static::VALIDATION_GROUP_USING_STOCK,
-                    ]),
-                ],
-                'disabled' => $this->isProductMainVariant($product),
-                'attr' => $disabledItemInMainVariantAttr,
-                'label' => t('Available in stock'),
-            ])
-            ->add('outOfStockAction', ChoiceType::class, [
-                'required' => true,
-                'expanded' => false,
-                'choices' => [
-                    t('Set alternative availability') => Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY,
-                    t('Hide product') => Product::OUT_OF_STOCK_ACTION_HIDE,
-                    t('Exclude from sale') => Product::OUT_OF_STOCK_ACTION_EXCLUDE_FROM_SALE,
-                ],
-                'placeholder' => t('-- Choose action --'),
-                'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please choose action',
-                        'groups' => static::VALIDATION_GROUP_USING_STOCK,
-                    ]),
-                ],
-                'disabled' => $this->isProductMainVariant($product),
-                'attr' => $disabledItemInMainVariantAttr,
-                'label' => t('Action after sellout'),
-            ]);
-
-        $builderStockGroup
-            ->add('outOfStockAvailability', ChoiceType::class, [
-                'required' => true,
-                'choices' => $this->availabilityFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'placeholder' => t('-- Choose availability --'),
-                'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please choose availability',
-                        'groups' => static::VALIDATION_GROUP_USING_STOCK_AND_ALTERNATE_AVAILABILITY,
-                    ]),
-                ],
-                'disabled' => $this->isProductMainVariant($product),
-                'attr' => array_merge($disabledItemInMainVariantAttr, [
-                    'class' => 'js-product-using-stock-and-alternate-availability',
-                ]),
-                'label' => t('Availability after sellout'),
-            ]);
-
-        $builderDisplayAvailabilityGroup
-            ->add('availability', ChoiceType::class, [
-                'required' => true,
-                'choices' => $this->availabilityFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'placeholder' => t('-- Choose availability --'),
-                'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Please choose availability',
-                        'groups' => static::VALIDATION_GROUP_NOT_USING_STOCK,
-                    ]),
-                ],
-                'disabled' => $this->isProductMainVariant($product),
-                'attr' => array_merge($disabledItemInMainVariantAttr, [
-                    'class' => 'js-product-not-using-stock',
-                ]),
-                'label' => t('Availability'),
-            ]);
 
         $builderDisplayAvailabilityGroup
             ->add('orderingPriorityByDomainId', MultidomainType::class, [
@@ -570,7 +462,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createPricesGroup(FormBuilderInterface $builder, ?Product $product)
+    private function createPricesGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $builderPricesGroup = $builder->create('pricesGroup', GroupType::class, [
             'label' => t('Prices'),
@@ -649,7 +541,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createSeoGroup(FormBuilderInterface $builder, ?Product $product)
+    private function createSeoGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $seoTitlesOptionsByDomainId = [];
         $seoMetaDescriptionsOptionsByDomainId = [];
@@ -721,7 +613,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createVariantGroup(FormBuilderInterface $builder, ?Product $product)
+    private function createVariantGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $variantGroup = $builder->create('variantGroup', FormType::class, [
             'inherit_data' => true,
@@ -775,7 +667,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return string
      */
-    private function getTitlePlaceholder($locale, ?Product $product = null)
+    private function getTitlePlaceholder($locale, ?Product $product = null): string
     {
         return $product !== null ? $product->getName($locale) : '';
     }
@@ -784,7 +676,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return bool
      */
-    private function isProductMainVariant(?Product $product)
+    private function isProductMainVariant(?Product $product): bool
     {
         return $product !== null && $product->isMainVariant();
     }
@@ -793,7 +685,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return bool
      */
-    private function isProductVariant(?Product $product)
+    private function isProductVariant(?Product $product): bool
     {
         return $product !== null && $product->isVariant();
     }

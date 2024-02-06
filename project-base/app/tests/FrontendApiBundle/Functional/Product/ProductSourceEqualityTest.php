@@ -103,7 +103,6 @@ class ProductSourceEqualityTest extends GraphQlTestCase
                     text
                 }
             }
-            isUsingStock
             namePrefix
             nameSuffix
             fullName

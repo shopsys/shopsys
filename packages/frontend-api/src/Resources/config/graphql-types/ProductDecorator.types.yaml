@@ -21,8 +21,6 @@ ProductDecorator:
                 description: "Product link"
             unit:
                 type: "Unit!"
-            isUsingStock:
-                type: "Boolean!"
             availability:
                 type: "Availability"
             stockQuantity:

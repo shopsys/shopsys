@@ -49,34 +49,9 @@ class ProductData
     public $hidden;
 
     /**
-     * @var bool
-     */
-    public $usingStock;
-
-    /**
-     * @var int|null
-     */
-    public $stockQuantity;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null
      */
     public $unit;
-
-    /**
-     * @var string|null Product::OUT_OF_STOCK_ACTION_*
-     */
-    public $outOfStockAction;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
-     */
-    public $availability;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
-     */
-    public $outOfStockAvailability;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[][]|null[][]
@@ -219,7 +194,6 @@ class ProductData
         $this->sellingDenied = false;
         $this->hidden = false;
         $this->flagsByDomainId = [];
-        $this->usingStock = false;
         $this->productStockData = [];
         $this->categoriesByDomainId = [];
         $this->variantAlias = [];
