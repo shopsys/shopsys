@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\PersooBundle;
+namespace Shopsys\LuigisBoxBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class ShopsysPersooBundle extends Bundle
+class ShopsysLuigisBoxBundle extends Bundle
 {
 }

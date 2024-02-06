@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\PersooBundle\Component\Persoo\Filter;
+namespace Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
-class ProductFilterToPersooFilterMapper
+class ProductFilterToLuigisBoxFilterMapper
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
@@ -27,25 +27,25 @@ class ProductFilterToPersooFilterMapper
      */
     public function mapForSearch(ProductFilterData $productFilterData, Domain $domain): array
     {
-        $persooFilter = [];
+        $luigisBoxFilter = [];
 
-        $persooFilter = $this->mapPrice($productFilterData, $persooFilter);
-        $persooFilter = $this->mapAvailability($productFilterData, $persooFilter, $domain->getLocale());
-        $persooFilter = $this->mapFlags($productFilterData, $persooFilter, $domain->getLocale());
-        $persooFilter = $this->mapBrands($productFilterData, $persooFilter);
+        $luigisBoxFilter = $this->mapPrice($productFilterData, $luigisBoxFilter);
+        $luigisBoxFilter = $this->mapAvailability($productFilterData, $luigisBoxFilter, $domain->getLocale());
+        $luigisBoxFilter = $this->mapFlags($productFilterData, $luigisBoxFilter, $domain->getLocale());
+        $luigisBoxFilter = $this->mapBrands($productFilterData, $luigisBoxFilter);
 
-        return $persooFilter;
+        return $luigisBoxFilter;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param array $persooFilter
+     * @param array $luigisBoxFilter
      * @return array
      */
-    protected function mapPrice(ProductFilterData $productFilterData, array $persooFilter): array
+    protected function mapPrice(ProductFilterData $productFilterData, array $luigisBoxFilter): array
     {
         if ($productFilterData->minimalPrice !== null) {
-            $persooFilter['must'][] = [
+            $luigisBoxFilter['must'][] = [
                 'type' => 'customRule',
                 'fields' => [
                     'price',
@@ -57,7 +57,7 @@ class ProductFilterToPersooFilterMapper
         }
 
         if ($productFilterData->maximalPrice !== null) {
-            $persooFilter['must'][] = [
+            $luigisBoxFilter['must'][] = [
                 'type' => 'customRule',
                 'fields' => [
                     'price',
@@ -68,22 +68,22 @@ class ProductFilterToPersooFilterMapper
             ];
         }
 
-        return $persooFilter;
+        return $luigisBoxFilter;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param array $persooFilter
+     * @param array $luigisBoxFilter
      * @param string $locale
      * @return array
      */
     protected function mapAvailability(
         ProductFilterData $productFilterData,
-        array $persooFilter,
+        array $luigisBoxFilter,
         string $locale,
     ): array {
         if ($productFilterData->inStock === true) {
-            $persooFilter['must'] = [
+            $luigisBoxFilter['must'] = [
                 [
                     'type' => 'customRule',
                     'fields' => [
@@ -96,20 +96,20 @@ class ProductFilterToPersooFilterMapper
             ];
         }
 
-        return $persooFilter;
+        return $luigisBoxFilter;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param array $persooFilter
+     * @param array $luigisBoxFilter
      * @param string $locale
      * @return array
      */
-    protected function mapFlags(ProductFilterData $productFilterData, array $persooFilter, string $locale): array
+    protected function mapFlags(ProductFilterData $productFilterData, array $luigisBoxFilter, string $locale): array
     {
         if (count($productFilterData->flags) > 0) {
             foreach ($productFilterData->flags as $flag) {
-                $persooFilter['must'][] = [
+                $luigisBoxFilter['must'][] = [
                     'type' => 'customRule',
                     'fields' => [
                         'tag' . TransformString::safeFilename($flag->getName($locale)),
@@ -121,18 +121,18 @@ class ProductFilterToPersooFilterMapper
             }
         }
 
-        return $persooFilter;
+        return $luigisBoxFilter;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param array $persooFilter
+     * @param array $luigisBoxFilter
      * @return array
      */
-    protected function mapBrands(ProductFilterData $productFilterData, array $persooFilter): array
+    protected function mapBrands(ProductFilterData $productFilterData, array $luigisBoxFilter): array
     {
         if (count($productFilterData->brands) > 0) {
-            $persooFilter['must'] = [
+            $luigisBoxFilter['must'] = [
                 [
                     'type' => 'customRule',
                     'fields' => [
@@ -145,6 +145,6 @@ class ProductFilterToPersooFilterMapper
             ];
         }
 
-        return $persooFilter;
+        return $luigisBoxFilter;
     }
 }

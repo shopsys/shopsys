@@ -931,7 +931,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   you have to implement your custom pages by yourself to sitemap and graphql
     -   if you're using custom storefront, you have to implement hreflang tags yourself
     -   see #project-base-diff to update your project
--   add Persoo autocompletion ([#2983](https://github.com/shopsys/shopsys/pull/2983))
+-   add Luigi's Box autocompletion ([#2983](https://github.com/shopsys/shopsys/pull/2983))
 
     -   `Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory` has been introduced so use it for creation of `ProductFilterData` instead of `new ProductFilterData()`
     -   `Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade::__construct()` changed its interface:

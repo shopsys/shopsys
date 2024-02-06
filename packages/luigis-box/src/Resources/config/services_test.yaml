@@ -1,5 +1,5 @@
 parameters:
-    persoo.enabled_domain_ids: ''
+    luigisBox.enabled_domain_ids: ''
 
 services:
     _defaults:

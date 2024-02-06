@@ -2,43 +2,43 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\PersooBundle\Component\Persoo;
+namespace Shopsys\LuigisBoxBundle\Component\LuigisBox;
 
-use Shopsys\PersooBundle\Component\Persoo\Exception\PersooIndexNotRecognizedException;
+use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxIndexNotRecognizedException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class PersooClient
+class LuigisBoxClient
 {
     protected const WEBSERVER_NAME = 'shopsys-api';
-    protected const PERSOO_PARAMETER_PREFIX = 'persoo';
-    protected const PERSOO_PARAMETER_ALGORITHM_ID = 'algorithm_id';
-    protected const PERSOO_PARAMETER_OFFER_ID = 'offer_id';
-    protected const PERSOO_PARAMETER_LOCATION_ID = 'location_id';
-    public const PERSOO_INDEX_PRODUCTS = 'products';
-    public const PERSOO_INDEX_CATEGORIES = 'categories';
-    public const PERSOO_INDEX_ARTICLES = 'articles';
-    public const PERSOO_EVENT_GET_RECOMMENDATION = 'getRecommendation';
-    public const PERSOO_ACTION_SEARCH = 'search';
-    public const PERSOO_ACTION_RECOMMENDATION = 'recommendation';
+    protected const LUIGIS_BOX_PARAMETER_PREFIX = 'luigisBox';
+    protected const LUIGIS_BOX_PARAMETER_ALGORITHM_ID = 'algorithm_id';
+    protected const LUIGIS_BOX_PARAMETER_OFFER_ID = 'offer_id';
+    protected const LUIGIS_BOX_PARAMETER_LOCATION_ID = 'location_id';
+    public const LUIGIS_BOX_INDEX_PRODUCTS = 'products';
+    public const LUIGIS_BOX_INDEX_CATEGORIES = 'categories';
+    public const LUIGIS_BOX_INDEX_ARTICLES = 'articles';
+    public const LUIGIS_BOX_EVENT_GET_RECOMMENDATION = 'getRecommendation';
+    public const LUIGIS_BOX_ACTION_SEARCH = 'search';
+    public const LUIGIS_BOX_ACTION_RECOMMENDATION = 'recommendation';
 
     /**
-     * @param string $persooApiUrl
-     * @param string $persooAccountId
-     * @param bool $persooIsProductionMode
+     * @param string $luigisBoxApiUrl
+     * @param string $luigisBoxAccountId
+     * @param bool $luigisBoxIsProductionMode
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      */
     public function __construct(
-        protected readonly string $persooApiUrl,
-        protected readonly string $persooAccountId,
-        protected readonly bool $persooIsProductionMode,
+        protected readonly string $luigisBoxApiUrl,
+        protected readonly string $luigisBoxAccountId,
+        protected readonly bool $luigisBoxIsProductionMode,
         protected readonly ParameterBagInterface $parameterBag,
     ) {
     }
 
     protected function checkNecessaryConfigurationIsSet(): void
     {
-        if ($this->persooAccountId === '') {
-            throw new PersooIndexNotRecognizedException('Persoo account ID is not set.');
+        if ($this->luigisBoxAccountId === '') {
+            throw new LuigisBoxIndexNotRecognizedException('Luigi\'s Box account ID is not set.');
         }
     }
 
@@ -51,7 +51,7 @@ class PersooClient
      * @param array $filter
      * @param string $browserId
      * @param string $requestingPage
-     * @return \Shopsys\PersooBundle\Component\Persoo\PersooResult
+     * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult
      */
     public function getData(
         string $query,
@@ -62,12 +62,12 @@ class PersooClient
         array $filter = [],
         string $browserId = 'AAABQAg1a7sMJnpF6WlwIFuC',
         string $requestingPage = 'http://127.0.0.1:8000/',
-    ): PersooResult {
+    ): LuigisBoxResult {
         $this->checkNecessaryConfigurationIsSet();
 
         $data = json_decode(
             file_get_contents(
-                $this->getPersooApiUrl(
+                $this->getLuigisBoxApiUrl(
                     $query,
                     $index,
                     $action,
@@ -83,7 +83,7 @@ class PersooClient
             JSON_THROW_ON_ERROR,
         );
 
-        return new PersooResult(
+        return new LuigisBoxResult(
             $data['data']['itemFieldValues'][$this->getIdFieldNameByIndex($index)],
             $data['data']['itemsCount'],
         );
@@ -100,7 +100,7 @@ class PersooClient
      * @param string $requestingPage
      * @return string
      */
-    protected function getPersooApiUrl(
+    protected function getLuigisBoxApiUrl(
         string $query,
         string $index,
         string $action,
@@ -110,12 +110,12 @@ class PersooClient
         string $browserId,
         string $requestingPage,
     ): string {
-        return $this->persooApiUrl .
-            $this->persooAccountId . '/' .
+        return $this->luigisBoxApiUrl .
+            $this->luigisBoxAccountId . '/' .
             $this->getEnvironmentId() . '/' .
             'workflow.json?_t=' . $this->getTimestampInMilliseconds() .
             '&_a=' . urlencode($this->getWebserverName()) .
-            '&_e=' . self::PERSOO_EVENT_GET_RECOMMENDATION .
+            '&_e=' . self::LUIGIS_BOX_EVENT_GET_RECOMMENDATION .
             '&_url=' . urlencode($requestingPage) .
             '&algorithmID=' . $this->getAlgorithmId($action) .
             '&offerID=' . $this->getOfferId($action) .
@@ -134,7 +134,7 @@ class PersooClient
      */
     protected function getEnvironmentId(): string
     {
-        return $this->persooIsProductionMode === true ? 'p' : 'test';
+        return $this->luigisBoxIsProductionMode === true ? 'p' : 'test';
     }
 
     /**
@@ -160,11 +160,11 @@ class PersooClient
      */
     protected function getParameterByActionAndName(string $action, string $name): string
     {
-        $parameterName = static::PERSOO_PARAMETER_PREFIX . '.' . $action . '.' . $name;
+        $parameterName = static::LUIGIS_BOX_PARAMETER_PREFIX . '.' . $action . '.' . $name;
 
         if (!$this->parameterBag->has($parameterName)) {
-            throw new PersooIndexNotRecognizedException(
-                sprintf('Persoo ENV variable for event "%s" with name "%s" or parameter "%s" is not set.', $action, $name, $parameterName),
+            throw new LuigisBoxIndexNotRecognizedException(
+                sprintf('LuigisBox ENV variable for event "%s" with name "%s" or parameter "%s" is not set.', $action, $name, $parameterName),
             );
         }
 
@@ -177,7 +177,7 @@ class PersooClient
      */
     protected function getAlgorithmId(string $action): string
     {
-        return $this->getParameterByActionAndName($action, static::PERSOO_PARAMETER_ALGORITHM_ID);
+        return $this->getParameterByActionAndName($action, static::LUIGIS_BOX_PARAMETER_ALGORITHM_ID);
     }
 
     /**
@@ -186,7 +186,7 @@ class PersooClient
      */
     protected function getOfferId(string $action): string
     {
-        return $this->getParameterByActionAndName($action, static::PERSOO_PARAMETER_OFFER_ID);
+        return $this->getParameterByActionAndName($action, static::LUIGIS_BOX_PARAMETER_OFFER_ID);
     }
 
     /**
@@ -195,7 +195,7 @@ class PersooClient
      */
     protected function getLocationId(string $action): string
     {
-        return $this->getParameterByActionAndName($action, static::PERSOO_PARAMETER_LOCATION_ID);
+        return $this->getParameterByActionAndName($action, static::LUIGIS_BOX_PARAMETER_LOCATION_ID);
     }
 
     /**
@@ -220,6 +220,6 @@ class PersooClient
             return 'categoryId';
         }
 
-        throw new PersooIndexNotRecognizedException(sprintf('Persoo index "%s" is not recognized.', $index));
+        throw new LuigisBoxIndexNotRecognizedException(sprintf('Luigi\'s Box index "%s" is not recognized.', $index));
     }
 }

@@ -22,7 +22,7 @@ return [
     Shopsys\ProductFeed\HeurekaDeliveryBundle\ShopsysProductFeedHeurekaDeliveryBundle::class => ['all' => true],
     Shopsys\ProductFeed\LuigisBoxBundle\ShopsysProductFeedLuigisBoxBundle::class => ['all' => true],
     Shopsys\ArticleFeed\LuigisBoxBundle\ShopsysArticleFeedLuigisBoxBundle::class => ['all' => true],
-    Shopsys\PersooBundle\ShopsysPersooBundle::class => ['all' => true],
+    Shopsys\LuigisBoxBundle\ShopsysLuigisBoxBundle::class => ['all' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],

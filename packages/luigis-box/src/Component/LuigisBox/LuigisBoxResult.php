@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\PersooBundle\Component\Persoo;
+namespace Shopsys\LuigisBoxBundle\Component\LuigisBox;
 
-class PersooResult
+class LuigisBoxResult
 {
     /**
      * @param array $ids

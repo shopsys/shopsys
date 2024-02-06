@@ -23,7 +23,7 @@
             "Shopsys\\ArticleFeed\\LuigisBoxBundle\\": "packages/article-feed-luigis-box/src/",
             "Shopsys\\S3Bridge\\": "packages/s3-bridge/src/",
             "Shopsys\\FrameworkBundle\\": "packages/framework/src/",
-            "Shopsys\\PersooBundle\\": "packages/persoo/src/",
+            "Shopsys\\LuigisBoxBundle\\": "packages/luigis-box/src/",
             "Sniffer\\": "project-base/app/sniffer/"
         },
         "classmap": [
@@ -50,7 +50,7 @@
             "Tests\\ProductFeed\\HeurekaBundle\\": "packages/product-feed-heureka/tests/",
             "Tests\\ProductFeed\\HeurekaDeliveryBundle\\": "packages/product-feed-heureka-delivery/tests/",
             "Tests\\ProductFeed\\LuigisBoxBundle\\": "packages/product-feed-luigis-box/tests/",
-            "Tests\\PersooBundle\\": "packages/persoo/tests/",
+            "Tests\\LuigisBoxBundle\\": "packages/luigis-box/tests/",
             "Shopsys\\Releaser\\": "utils/releaser/src/",
             "Shopsys\\Releaser\\Tests\\": "utils/releaser/tests"
         }
@@ -275,6 +275,6 @@
         "shopsys/framework": "self.version",
         "shopsys/coding-standards": "self.version",
         "shopsys/s3-bridge": "self.version",
-        "shopsys/persoo": "self.version"
+        "shopsys/luigis-box": "self.version"
     }
 }

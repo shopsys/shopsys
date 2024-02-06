@@ -25,7 +25,7 @@ return static function (ECSConfig $ecsConfig): void {
         ->call('configure', [
             [
                 'analyzed_namespaces' => [
-                    'Shopsys\PersooBundle',
+                    'Shopsys\LuigisBoxBundle',
                 ],
             ],
         ]);
