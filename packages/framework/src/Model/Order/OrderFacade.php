@@ -22,12 +22,10 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -53,7 +51,6 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface $orderFactory
@@ -81,7 +78,6 @@ class OrderFacade
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly OrderPreviewFactory $orderPreviewFactory,
-        protected readonly OrderProductFacade $orderProductFacade,
         protected readonly HeurekaFacade $heurekaFacade,
         protected readonly Domain $domain,
         protected readonly OrderFactoryInterface $orderFactory,
@@ -142,7 +138,6 @@ class OrderFacade
         $this->updateOrderDataWithDeliveryAddress($orderData, $deliveryAddress);
 
         $order = $this->createOrder($orderData, $orderPreview, $customerUser);
-        $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
 
         $this->cartFacade->deleteCartOfCurrentCustomerUser();
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
@@ -200,14 +195,6 @@ class OrderFacade
 
         if ($orderEditResult->isStatusChanged()) {
             $this->orderMailFacade->sendEmail($order);
-
-            if ($originalOrderStatus->getType() === OrderStatus::TYPE_CANCELED) {
-                $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
-            }
-
-            if ($orderData->status->getType() === OrderStatus::TYPE_CANCELED) {
-                $this->orderProductFacade->addOrderProductsToStock($order->getProductItems());
-            }
         }
 
         return $order;
@@ -230,9 +217,6 @@ class OrderFacade
     {
         $order = $this->orderRepository->getById($orderId);
 
-        if ($order->getStatus()->getType() !== OrderStatus::TYPE_CANCELED) {
-            $this->orderProductFacade->addOrderProductsToStock($order->getProductItems());
-        }
         $order->markAsDeleted();
         $this->em->flush();
     }

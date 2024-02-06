@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantException;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
@@ -52,7 +51,6 @@ class ProductController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      */
     public function __construct(
         protected readonly ProductMassActionFacade $productMassActionFacade,
@@ -68,7 +66,6 @@ class ProductController extends AdminBaseController
         protected readonly Domain $domain,
         protected readonly UnitFacade $unitFacade,
         protected readonly Setting $setting,
-        protected readonly AvailabilityFacade $availabilityFacade,
     ) {
     }
 
@@ -370,8 +367,7 @@ class ProductController extends AdminBaseController
     protected function productCanBeCreated()
     {
         return count($this->unitFacade->getAll()) !== 0
-            && $this->setting->get(Setting::DEFAULT_UNIT) !== 0
-            && count($this->availabilityFacade->getAll()) !== 0;
+            && $this->setting->get(Setting::DEFAULT_UNIT) !== 0;
     }
 
     /**

@@ -1816,9 +1816,6 @@ msgstr ""
 msgid "Upload new image"
 msgstr ""
 
-msgid "Use stocks"
-msgstr ""
-
 msgid "User translation"
 msgstr ""
 

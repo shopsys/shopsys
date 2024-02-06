@@ -288,9 +288,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator:
         alias: App\Model\Product\ProductSellingDeniedRecalculator
 
-    Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository:
-        alias: App\Model\Product\Availability\AvailabilityRepository
-
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade:
         alias: App\Model\Product\Brand\BrandFacade
 
@@ -496,11 +493,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository:
         alias: App\Model\Product\Filter\ParameterFilterChoiceRepository
 
-    App\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
-
-    Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig:
-        alias: App\Model\AdvancedSearch\ProductAdvancedSearchConfig
-
     App\Model\Product\Search\ProductElasticsearchConverter: ~
 
     App\Model\Product\Search\FilterQuery: ~
@@ -653,9 +645,6 @@ services:
 
     Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory:
         alias: App\ProductFeed\Heureka\Model\FeedItem\HeurekaFeedItemFactory
-
-    Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataRepository:
-        alias: App\ProductFeed\HeurekaDelivery\Model\FeedItem\HeurekaDeliveryDataRepository
 
     Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory:
         alias: App\ProductFeed\Google\Model\FeedItem\GoogleFeedItemFactory

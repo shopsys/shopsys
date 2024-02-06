@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product;
 
 use App\Component\Image\Image;
-use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
@@ -69,7 +68,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         }
         $productData->name = $names;
         $productData->categoriesByDomainId = [Domain::FIRST_DOMAIN_ID => [$category]];
-        $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->catnum = '123';
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
         $this->setPriceForAllDomains($productData, Money::create(100));

@@ -499,7 +499,6 @@ class RetrieveCartTest extends GraphQlTestCase
                     ],
                 ],
             ],
-            'isUsingStock' => true,
             'namePrefix' => t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'nameSuffix' => t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'fullName' => $fullName,
@@ -623,7 +622,6 @@ class RetrieveCartTest extends GraphQlTestCase
                     text
                 }
             }
-            isUsingStock
             namePrefix
             nameSuffix
             fullName
