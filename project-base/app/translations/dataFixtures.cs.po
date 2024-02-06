@@ -76,6 +76,9 @@ msgstr "2 litrové kávovary v akci"
 msgid "2.0"
 msgstr "2.0"
 
+msgid "2000 DPI"
+msgstr "2000 DPI"
+
 msgid "21\""
 msgstr "21\""
 
@@ -466,6 +469,9 @@ msgstr "Aktivní"
 msgid "Active/Passive"
 msgstr "Aktivní/Pasivní"
 
+msgid "Adaptive Sync Technology"
+msgstr "Technologie adaptivní synchronizace"
+
 msgid "All kind of electronic devices."
 msgstr "Všechny druhy elektroniky."
 
@@ -649,6 +655,9 @@ msgstr "Barva"
 msgid "Color printing"
 msgstr "Barevný tisk"
 
+msgid "Compact Design, Big Value"
+msgstr "Kompaktní design, velká hodnota"
+
 msgid "Compact Speakers Genius SP-HF150 are the perfect accessory for portable computers."
 msgstr "REPRO Genius SP-U150X černozelené 4W 2.0"
 
@@ -657,6 +666,9 @@ msgstr "Reklamace"
 
 msgid "Connection method"
 msgstr "Způsob připojení"
+
+msgid "Connectivity at Your Fingertips"
+msgstr "Připojení na dosah ruky"
 
 msgid "Connectors"
 msgstr "Konektory"
@@ -690,6 +702,9 @@ msgstr "Cyklocomputer - cyklonavigace s předinstalovanými mapami silnic a cykl
 
 msgid "Czech"
 msgstr "česká"
+
+msgid "Czech Heritage Certified"
+msgstr "Certifikované české dědictví"
 
 msgid "Czech post"
 msgstr "Česká pošta - balík do ruky"
@@ -838,6 +853,9 @@ msgstr "Multifunkční tiskárna CANON PIXMA MG2450, A4, print/scan/copy, USB, V
 msgid "Easy printing, scanning and copying in one device will take much less space and you'll save money than buying individual components. The printing machine uses an innovative print FINE technology Which guarantee excellent print quality."
 msgstr "Multifunkční tiskárna CANON PIXMA MG2450, A4, print/scan/copy, USB, Vysoce kvalitní tisk"
 
+msgid "Eco-Friendly Printing"
+msgstr "Ekologický tisk"
+
 msgid "Electronic devices"
 msgstr "Elektrické zařízení"
 
@@ -862,17 +880,29 @@ msgstr "Elektro s LED technologií a úhlopříčkou 30 palců v akci"
 msgid "Electronics without HDMI in sale"
 msgstr "Elektro bez HDMI v akci"
 
+msgid "Elegant Hardcover Edition"
+msgstr "Elegantní pevná vazba"
+
 msgid "Element arrangement"
 msgstr "Uspořádání prvků"
 
+msgid "Endless Shopping Possibilities"
+msgstr "Nekonečné možnosti uplatnění"
+
 msgid "Energy efficiency class"
 msgstr "Třída energetické účinnosti"
+
+msgid "Energy-Efficient Design"
+msgstr "Energeticky úsporný design"
 
 msgid "Enjoy quick cooking with special cooking HI-LIGHT zones"
 msgstr "Dopřejte si rychlé vaření se speciálními varnými HI-LIGHT zónami"
 
 msgid "Enter"
 msgstr "Enter"
+
+msgid "Ergonomic Excellence"
+msgstr "Excelentní ergonomie"
 
 msgid "Ergonomics"
 msgstr "Ergonomie"
@@ -1021,6 +1051,9 @@ msgstr "Hello Kitty TV, LED, uhlopříčka 55 cm, 1920x1080 Full HD."
 msgid "Hello Kitty Television"
 msgstr "Hello Kitty Televize"
 
+msgid "Hello Kitty approved"
+msgstr "Doporučuje Hello Kitty"
+
 msgid "Hewlett-Packard was founded in the difficult times of the Great Depression."
 msgstr "S touto jednoduchou a cenově dostupnou multifunkční tiskárnou HP Deskjet můžete tisknout, skenovat i kopírovat."
 
@@ -1042,6 +1075,12 @@ msgstr "Hadice VP-9310"
 msgid "Hyundai 22HD44D"
 msgstr "Hyundai 22HD44D"
 
+msgid "Iconic Design"
+msgstr "Ikonický design"
+
+msgid "Immersive Full HD resolution"
+msgstr "Rozlišení, co tě vtáhne"
+
 msgid "In Progress"
 msgstr "Vyřizuje se"
 
@@ -1050,6 +1089,9 @@ msgstr "Skladem"
 
 msgid "Information about cookies"
 msgstr "Informace o cookies"
+
+msgid "Innovative Technology"
+msgstr "Inovativní technologie"
 
 msgid "Installment plan"
 msgstr "Nákup na splátky"
@@ -1113,6 +1155,9 @@ msgstr "MIO Cyclo 100, cyklopočítač na jízdní kolo, 1,8\""
 
 msgid "Magazine capacity for beans"
 msgstr "Kapacita zásobníku na zrna"
+
+msgid "Magical Journeys Await Within"
+msgstr "Kouzelné dobrodružství"
 
 msgid "Main blog page - %locale%"
 msgstr "Hlavní stránka blogu - %locale%"
@@ -1249,6 +1294,12 @@ msgstr "Nikon VH-520"
 msgid "No"
 msgstr "Ne"
 
+msgid "No Expiry"
+msgstr "Bez omezení platnosti"
+
+msgid "No Obligations"
+msgstr "Bez závazků"
+
 msgid "Notification in the bar, notification of a new event."
 msgstr "Notifikace v liště, upozornění na novou akci."
 
@@ -1375,6 +1426,9 @@ msgstr "Fotografův sen. Hlavní fotoaparát s 13 megapixely a přední fotoapar
 msgid "Photographer's dream. Main camera with 13-megapixel front camera and a 5 megapixel guarantee photos in high definition on each side. Thanks to the built-in tools for editing and sharing can capture moving images in HD and combine the results to show from multiple angles. Incredible design, giant 5,5palcový display with HD resolution, two front stereo speakers, customized channels with real-time information and a quad-core processor - all combine to form one of the best smartphones in the world."
 msgstr "Fotografův sen. Hlavní fotoaparát s 13 megapixely a přední fotoaparát s 5 megapixely zaručují fotky ve vysokém rozlišení z každé strany. Díky vestavěným nástrojům pro úpravu a sdílení můžete zachytit pohyblivé obrázky v HD kvalitě a kombinovat výsledky do zobrazení z více úhlů. Neuvěřitelný design, obří 5,5palcový displej s HD rozlišením, dva přední stereo reproduktory, přizpůsobené kanály s informacemi v reálném čase a čtyřjádrový procesor – to vše dohromady tvoří jeden z nejvýhodnějších smartphonů na světě."
 
+msgid "Pocket-friendly"
+msgstr "Kapesní vydání"
+
 msgid "Pot holder, black"
 msgstr "Držák na hrnce, černý"
 
@@ -1395,6 +1449,9 @@ msgstr "Tato USB myš funguje spolehlivě na téměř libovolném povrchu a je u
 
 msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers.Using an optical sensor with high sensitivity is move the cursor on the screen fast and smooth.Benefits are also programmable buttons to help with easy access to the programs and documents you use most often.The computer mouse simply connect using a cable with a USB connector and the support Plug and Play, no need to install drivers and you can immediately get to work."
 msgstr "Tato USB myš funguje spolehlivě na téměř libovolném povrchu a je uzpůsobená pro ovládání pravou i levou rukou."
+
+msgid "Premium Performance"
+msgstr "Prémiový výkon"
 
 msgid "PremiumCord micro USB, A-B, 1m"
 msgstr "PremiumCord micro USB, A-B, 1m"
@@ -1480,6 +1537,9 @@ msgstr "Rozlišení"
 msgid "Resolution of rear camera"
 msgstr "Rozlišení standardní zadní kamery"
 
+msgid "Responsive and Reliable"
+msgstr "Vysoká odezva a spolehlivost"
+
 msgid "Right-handed"
 msgstr "Pravoruká"
 
@@ -1525,6 +1585,9 @@ msgstr "Samsung UE75HU7500 (UHD)"
 msgid "Screen size"
 msgstr "Úhlopříčka"
 
+msgid "Seamless Control"
+msgstr "Bezproblémové ovládání"
+
 msgid "Second Christmas Day"
 msgstr "Druhý svátek Vánoční"
 
@@ -1566,6 +1629,9 @@ msgstr "Jednopásmové stereo reproduktory SP-M120 s celkovým hudebním výkone
 
 msgid "Slicer Pizza ETV-2860"
 msgstr "Kráječ na pizzu ETV-2860"
+
+msgid "Slim Profile"
+msgstr "Tenký profil"
 
 msgid "Slovakia"
 msgstr "Slovensko"
@@ -1822,6 +1888,12 @@ msgstr "Typ hubice: Univerzální. Průměr: 32 mm. Turbokartáč: Velký."
 msgid "USB"
 msgstr "USB"
 
+msgid "Unforgettable Tales"
+msgstr "Nezapomenutelné příběhy"
+
+msgid "Unleash Your Gaming Potential"
+msgstr "Povol otěže hraní"
+
 msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
 msgstr "Použití parní trouby Concept  je překvapivě všestranné. Lze v ní připravit předkrmy, polévky, maso, ryby, zeleninu, vegetariánská jídla, knedlíky, rýži, ovoce i dezerty."
 
@@ -1872,6 +1944,9 @@ msgstr "Kde nás najdete"
 
 msgid "WiFi"
 msgstr "WiFi"
+
+msgid "Wide Color Gamut"
+msgstr "Široké barevné spektrum"
 
 msgid "Winch throttle silver VP-9711/12"
 msgstr "Klapka navijáku stříbrná VP-9711/12"

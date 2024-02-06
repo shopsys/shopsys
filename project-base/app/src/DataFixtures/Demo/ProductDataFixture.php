@@ -169,6 +169,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
             $this->addParameterTranslations($parameterTranslations, t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
             $this->addParameterTranslations($parameterTranslations, t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i, t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
+
+            $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Hello Kitty approved', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp2ByDomainId[$domain->getId()] = t('Immersive Full HD resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp3ByDomainId[$domain->getId()] = t('Energy-Efficient Design', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp4ByDomainId[$domain->getId()] = t('Wide Color Gamut', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp5ByDomainId[$domain->getId()] = t('Adaptive Sync Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
@@ -306,6 +312,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterTranslations($parameterTranslations, t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Right-handed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Windows 2000/XP/Vista/7', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
+
+            $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Seamless Control', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp2ByDomainId[$domain->getId()] = t('Unleash Your Gaming Potential', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp3ByDomainId[$domain->getId()] = t('2000 DPI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp4ByDomainId[$domain->getId()] = t('Ergonomic Excellence', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp5ByDomainId[$domain->getId()] = t('Responsive and Reliable', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
@@ -355,6 +367,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterTranslations($parameterTranslations, t('Bluetooth', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('NFC', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('GPS module', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
+
+            $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Iconic Design', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp2ByDomainId[$domain->getId()] = t('Slim Profile', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp3ByDomainId[$domain->getId()] = t('Innovative Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp4ByDomainId[$domain->getId()] = t('Connectivity at Your Fingertips', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp5ByDomainId[$domain->getId()] = t('Premium Performance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
@@ -1327,6 +1345,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterTranslations($parameterTranslations, t('Pages count', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('48', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('50 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Cover', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), t('paper', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $locale, $i);
+
+            $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Czech Heritage Certified', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp2ByDomainId[$domain->getId()] = t('Elegant Hardcover Edition', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp3ByDomainId[$domain->getId()] = t('Magical Journeys Await Within', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp4ByDomainId[$domain->getId()] = t('Eco-Friendly Printing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp5ByDomainId[$domain->getId()] = t('Unforgettable Tales', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
@@ -3041,6 +3065,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->seoH1s[$domain->getId()] = t('Ticket for 100 Czech crowns', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->seoTitles[$domain->getId()] = t('Ticket for 100 CZK', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->seoMetaDescriptions[$domain->getId()] = t('Coupon valued to 100 Czech crowns.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
+
+            $productData->shortDescriptionUsp1ByDomainId[$domain->getId()] = t('Compact Design, Big Value', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp2ByDomainId[$domain->getId()] = t('No Expiry', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp3ByDomainId[$domain->getId()] = t('Pocket-friendly', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp4ByDomainId[$domain->getId()] = t('Endless Shopping Possibilities', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->shortDescriptionUsp5ByDomainId[$domain->getId()] = t('No Obligations', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setVat($productData, VatDataFixture::VAT_HIGH);
@@ -6062,28 +6092,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function createProduct(ProductData $productData): Product
     {
-        $this->fillShortDescriptionUpsBySeoDescription($productData);
         $productData->uuid = array_pop($this->uuidPool);
-        /** @var \App\Model\Product\Product $product */
+
         $product = $this->productFacade->create($productData);
 
         $this->addProductReference($product);
 
         return $product;
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    private function fillShortDescriptionUpsBySeoDescription(ProductData $productData): void
-    {
-        foreach ($productData->seoMetaDescriptions as $domainId => $seoDescription) {
-            $productData->shortDescriptionUsp1ByDomainId[$domainId] = $seoDescription;
-            $productData->shortDescriptionUsp2ByDomainId[$domainId] = $seoDescription;
-            $productData->shortDescriptionUsp3ByDomainId[$domainId] = $seoDescription;
-            $productData->shortDescriptionUsp4ByDomainId[$domainId] = $seoDescription;
-            $productData->shortDescriptionUsp5ByDomainId[$domainId] = $seoDescription;
-        }
     }
 
     /**
