@@ -67,6 +67,9 @@ msgstr "Příslušenství v mezikošíku"
 msgid "Account"
 msgstr "Účet"
 
+msgid "Action"
+msgstr "Akce"
+
 msgid "Action after sellout"
 msgstr "Akce při vyprodání"
 
@@ -240,6 +243,9 @@ msgstr "Články bez umístění"
 
 msgid "Assign to category"
 msgstr "Přiřazení do kategorie"
+
+msgid "Attribute %attribute% was changed %changes%"
+msgstr "Atribut %attribute% byl změněn %changes%"
 
 msgid "Automatic stock calculation"
 msgstr "Automatické výpočty skladových zásob"
@@ -415,6 +421,9 @@ msgstr "Rozcestník kategorií na titulní stránce"
 msgid "Change for"
 msgstr "Změna pro"
 
+msgid "Changes"
+msgstr "Změny"
+
 msgid "Choose"
 msgstr "Vybrat"
 
@@ -462,6 +471,9 @@ msgstr "Kód služby Ověřeno zákazníky"
 
 msgid "Collapse menu"
 msgstr "Skrýt menu"
+
+msgid "Collection %collectionAttribute% was changed:<br> %changes%"
+msgstr "Kolekce %collectionAttribute% byla změněna:<br> %changes%"
 
 msgid "Color"
 msgstr "Barva"
@@ -627,6 +639,9 @@ msgstr "Vytvořit variantu"
 
 msgid "Created"
 msgstr "Vytvořena"
+
+msgid "Created %dataType%: \"%readableValue%\""
+msgstr "Vytvořen %dataType%: \"%readableValue%\""
 
 msgid "Created by administrator"
 msgstr "Vytvořeno administrátorem"
@@ -1152,6 +1167,15 @@ msgstr "Zadaný zákazník nebyl nalezen, prosím překontrolujte zadané údaje
 
 msgid "Entered in days. Zero represents products in stock, empty means unknown availability."
 msgstr "Zadává se ve dnech. Nula reprezentuje zboží skladem, nevyplněné znamená, že dostupnost je neznámá."
+
+msgid "Entity"
+msgstr "Entita"
+
+msgid "Entity identifier"
+msgstr "Identifikárot entity"
+
+msgid "Entity log"
+msgstr "Protokol entity"
 
 msgid "Entry price type"
 msgstr "Typ vstupní ceny"
@@ -1765,6 +1789,9 @@ msgstr "Nebyly nalezeny žádné e-mailové šablony. Nejprve musíte nějaké v
 msgid "No flags found. You have to create some first."
 msgstr "Nebyly nalezeny žádné příznaky. Nejprve musíte nějaké vytvořit."
 
+msgid "No logs created so far."
+msgstr "Žádné protokoly nejsou zatím vytvořeny."
+
 msgid "No order found."
 msgstr "Nebyla nalezena žádná objednávka."
 
@@ -2172,6 +2199,9 @@ msgstr "Potvrzení registrace"
 
 msgid "Remove"
 msgstr "Odebrat"
+
+msgid "Removed %dataType%: \"%readableValue%\""
+msgstr "Smazáno %dataType%: \"%readableValue%\""
 
 msgid "Reset filter"
 msgstr "Zrušit filtr"
@@ -2728,6 +2758,9 @@ msgstr "Používat skladové zásoby"
 msgid "Used: %currentLength% characters. Recommended max. %recommendedLength%"
 msgstr "Využito: %currentLength% znaků. Doporučeno max. %recommendedLength%"
 
+msgid "User"
+msgstr "Uživatel"
+
 msgid "Username"
 msgstr "Uživatelské jméno"
 
@@ -2923,11 +2956,17 @@ msgstr "neobsahuje"
 msgid "doesn't use"
 msgstr "nepoužívá"
 
+msgid "empty value"
+msgstr "prázdná hodnota"
+
 msgid "flags"
 msgstr "příznaky"
 
 msgid "from"
 msgstr "z"
+
+msgid "from \"oldReadableValue\" to \"newReadableValue\""
+msgstr "z \"oldReadableValue\" na \"newReadableValue\""
 
 msgid "higher or equal"
 msgstr "větší nebo rovno"

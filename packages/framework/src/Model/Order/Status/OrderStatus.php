@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Status;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\InvalidOrderStatusTypeException;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException;
@@ -80,6 +81,7 @@ class OrderStatus extends AbstractTranslatableEntity
         return $this->id;
     }
 
+    #[EntityLogIdentify(EntityLogIdentify::IS_LOCALIZED)]
     /**
      * @param string|null $locale
      * @return string

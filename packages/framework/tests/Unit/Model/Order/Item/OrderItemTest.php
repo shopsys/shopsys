@@ -129,7 +129,7 @@ class OrderItemTest extends TestCase
         $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(20)));
         $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(30)));
         $this->assertSame(2, $orderItem->getQuantity());
-        $this->assertSame('10', $orderItem->getvatPercent());
+        $this->assertSame('10.000000', $orderItem->getvatPercent());
     }
 
     public function testEditProductTypeWithoutProduct()
@@ -148,7 +148,7 @@ class OrderItemTest extends TestCase
         $this->assertThat($orderItem->getPriceWithVat(), new IsMoneyEqual(Money::create(20)));
         $this->assertThat($orderItem->getPriceWithoutVat(), new IsMoneyEqual(Money::create(30)));
         $this->assertSame(2, $orderItem->getQuantity());
-        $this->assertSame('10', $orderItem->getvatPercent());
+        $this->assertSame('10.000000', $orderItem->getvatPercent());
     }
 
     public function testConstructWithMainVariantThrowsException()

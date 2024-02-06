@@ -67,6 +67,9 @@ msgstr ""
 msgid "Account"
 msgstr ""
 
+msgid "Action"
+msgstr ""
+
 msgid "Action after sellout"
 msgstr ""
 
@@ -239,6 +242,9 @@ msgid "Articles without positioning"
 msgstr ""
 
 msgid "Assign to category"
+msgstr ""
+
+msgid "Attribute %attribute% was changed %changes%"
 msgstr ""
 
 msgid "Automatic stock calculation"
@@ -415,6 +421,9 @@ msgstr ""
 msgid "Change for"
 msgstr ""
 
+msgid "Changes"
+msgstr ""
+
 msgid "Choose"
 msgstr ""
 
@@ -461,6 +470,9 @@ msgid "Code of service Heureka - Verified by Customer"
 msgstr ""
 
 msgid "Collapse menu"
+msgstr ""
+
+msgid "Collection %collectionAttribute% was changed:<br> %changes%"
 msgstr ""
 
 msgid "Color"
@@ -626,6 +638,9 @@ msgid "Create variant"
 msgstr ""
 
 msgid "Created"
+msgstr ""
+
+msgid "Created %dataType%: \"%readableValue%\""
 msgstr ""
 
 msgid "Created by administrator"
@@ -1151,6 +1166,15 @@ msgid "Entered customer not found, please check entered data."
 msgstr ""
 
 msgid "Entered in days. Zero represents products in stock, empty means unknown availability."
+msgstr ""
+
+msgid "Entity"
+msgstr ""
+
+msgid "Entity identifier"
+msgstr ""
+
+msgid "Entity log"
 msgstr ""
 
 msgid "Entry price type"
@@ -1765,6 +1789,9 @@ msgstr ""
 msgid "No flags found. You have to create some first."
 msgstr ""
 
+msgid "No logs created so far."
+msgstr ""
+
 msgid "No order found."
 msgstr ""
 
@@ -2171,6 +2198,9 @@ msgid "Registration confirmation"
 msgstr ""
 
 msgid "Remove"
+msgstr ""
+
+msgid "Removed %dataType%: \"%readableValue%\""
 msgstr ""
 
 msgid "Reset filter"
@@ -2728,6 +2758,9 @@ msgstr ""
 msgid "Used: %currentLength% characters. Recommended max. %recommendedLength%"
 msgstr ""
 
+msgid "User"
+msgstr ""
+
 msgid "Username"
 msgstr ""
 
@@ -2923,10 +2956,16 @@ msgstr ""
 msgid "doesn't use"
 msgstr ""
 
+msgid "empty value"
+msgstr ""
+
 msgid "flags"
 msgstr ""
 
 msgid "from"
+msgstr ""
+
+msgid "from \"oldReadableValue\" to \"newReadableValue\""
 msgstr ""
 
 msgid "higher or equal"

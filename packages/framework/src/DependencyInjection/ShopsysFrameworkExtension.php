@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\DependencyInjection;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
+use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataTypeResolverInterface;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
@@ -51,6 +52,9 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
         $container->registerForAutoconfiguration(BreadcrumbGeneratorInterface::class)
             ->addTag('shopsys.breadcrumb_generator');
+
+        $container->registerForAutoconfiguration(DataTypeResolverInterface::class)
+            ->addTag('shopsys.data_type_resolver');
     }
 
     /**

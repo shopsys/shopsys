@@ -32,7 +32,7 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
     public function testDeleteByIdAndReplace()
     {
         $orderStatusData = new OrderStatusData();
-        $orderStatusData->name = ['cs' => 'name'];
+        $orderStatusData->name = ['en' => 'name'];
         $orderStatusToDelete = $this->orderStatusFacade->create($orderStatusData);
         /** @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatusToReplaceWith */
         $orderStatusToReplaceWith = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);

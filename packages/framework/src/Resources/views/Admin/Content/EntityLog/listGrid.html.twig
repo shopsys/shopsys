@@ -1,0 +1,14 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid %}
+    <h3>{{ 'Entity log'|trans }}</h3>
+    {{ parent() }}
+{% endblock %}
+
+{% block grid_value_cell_id_changeSet %}
+    {{ value|raw }}
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No logs created so far.'|trans }}
+{% endblock %}

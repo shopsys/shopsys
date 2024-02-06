@@ -8,6 +8,9 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\ExcludeLog;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
@@ -19,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
  * @ORM\Table(name="orders")
  * @ORM\Entity
  */
+#[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 class Order
 {
     public const MAX_TRANSACTION_COUNT = 2;
@@ -111,6 +115,7 @@ class Order
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
      * @ORM\Column(type="money", precision=20, scale=6)
      */
+    #[ExcludeLog]
     protected $totalProductPriceWithVat;
 
     /**
@@ -619,6 +624,7 @@ class Order
     /**
      * @return string
      */
+    #[EntityLogIdentify]
     public function getNumber()
     {
         return $this->number;

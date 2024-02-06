@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -152,6 +153,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         return $this->id;
     }
 
+    #[EntityLogIdentify(EntityLogIdentify::IS_LOCALIZED)]
     /**
      * @param string|null $locale
      * @return string|null

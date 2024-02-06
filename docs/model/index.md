@@ -10,3 +10,4 @@
 -   [Elasticsearch](./elasticsearch.md)
 -   [Front-end Product Searching](./front-end-product-searching.md)
 -   [Front-end Product Filtering](./front-end-product-filtering.md)
+-   [Log entity changes](./log-entity-changes.md)

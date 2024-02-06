@@ -9,6 +9,7 @@ use App\Model\Payment\Transaction\PaymentTransaction;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
@@ -43,6 +44,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @method \App\Model\Order\Item\OrderItem[] getTransportAndPaymentItems()
  * @method \Shopsys\FrameworkBundle\Model\Order\OrderEditResult edit(\App\Model\Order\OrderData $orderData)
  */
+#[Loggable(Loggable::STRATEGY_INCLUDE_ALL)]
 class Order extends BaseOrder
 {
     /**

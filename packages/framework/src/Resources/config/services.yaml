@@ -16,7 +16,7 @@ services:
         public: false
 
     Shopsys\FrameworkBundle\:
-        resource: '../../**/*{Calculation,Dispatcher,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
+        resource: '../../**/*{Calculation,Dispatcher,Facade,Factory,Formatter,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\:
@@ -1052,3 +1052,13 @@ services:
     Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter:
         arguments:
             $resettableServices: !tagged kernel.reset
+
+    Shopsys\FrameworkBundle\Component\EntityLog\EventListener\EntityLogEventListener:
+        tags:
+            - { name: doctrine.event_listener, event: postPersist, priority: 1 }
+            - { name: doctrine.event_listener, event: postUpdate, priority: 1 }
+            - { name: doctrine.event_listener, event: preRemove, priority: 1 }
+            - { name: doctrine.event_listener, event: postFlush, priority: 1 }
+
+    Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ChangeSetResolver:
+        arguments: [!tagged shopsys.data_type_resolver]

@@ -6,6 +6,8 @@ namespace App\Model\Order\Item;
 
 use App\Model\Order\Item\Exception\OrderItemRelatedException;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
+use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -26,6 +28,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
  * @method setPayment(\App\Model\Payment\Payment $payment)
  * @method setProduct(\App\Model\Product\Product|null $product)
  */
+#[LoggableChild(Loggable::STRATEGY_INCLUDE_ALL)]
 class OrderItem extends BaseOrderItem
 {
     /**
