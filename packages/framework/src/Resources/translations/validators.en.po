@@ -13,9 +13,6 @@ msgstr ""
 msgid "At least two domains must be selected"
 msgstr ""
 
-msgid "Availability name cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -121,12 +118,6 @@ msgstr ""
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Number of days to dispatch must be greater or equal to {{ compared_value }}"
-msgstr ""
-
-msgid "Number of days to expedite must be whole number."
-msgstr ""
-
 msgid "Opening hours setting is not valid"
 msgstr ""
 
@@ -157,9 +148,6 @@ msgstr ""
 msgid "Passwords do not match"
 msgstr ""
 
-msgid "Please choose action"
-msgstr ""
-
 msgid "Please choose advertisement area"
 msgstr ""
 
@@ -167,12 +155,6 @@ msgid "Please choose advertisement type"
 msgstr ""
 
 msgid "Please choose article placement"
-msgstr ""
-
-msgid "Please choose availability"
-msgstr ""
-
-msgid "Please choose availability for stock products"
 msgstr ""
 
 msgid "Please choose country"
@@ -208,16 +190,10 @@ msgstr ""
 msgid "Please enter VAT rate"
 msgstr ""
 
-msgid "Please enter a number"
-msgstr ""
-
 msgid "Please enter article content"
 msgstr ""
 
 msgid "Please enter article name"
-msgstr ""
-
-msgid "Please enter availability name in all languages"
 msgstr ""
 
 msgid "Please enter city"
@@ -341,9 +317,6 @@ msgid "Please enter script code"
 msgstr ""
 
 msgid "Please enter script name"
-msgstr ""
-
-msgid "Please enter stock quantity"
 msgstr ""
 
 msgid "Please enter street"

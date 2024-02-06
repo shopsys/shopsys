@@ -5,17 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation;
 
 class ProductFactory implements ProductFactoryInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation $productAvailabilityCalculation
      */
     public function __construct(
         protected readonly EntityNameResolver $entityNameResolver,
-        protected readonly ProductAvailabilityCalculation $productAvailabilityCalculation,
     ) {
     }
 

@@ -23,8 +23,7 @@ The source is mocked with [apiari.io service](http://docs.ssfwbasicdataimportdem
         "vat_percent": "21",
         "ean": "12345678901",
         "brand_id": 101,
-        "description": "light source: 1 x 3W CREE LED + 12 LED 5 mm ...",
-        "stock_quantity": 25
+        "description": "light source: 1 x 3W CREE LED + 12 LED 5 mm ..."
     },
     {
         "id": 1002,
@@ -33,8 +32,7 @@ The source is mocked with [apiari.io service](http://docs.ssfwbasicdataimportdem
         "vat_percent": "21",
         "ean": "12345678902",
         "brand_id": 102,
-        "description": "EasyPix GoXtreme - outdoor waterproof camera.",
-        "stock_quantity": 18
+        "description": "EasyPix GoXtreme - outdoor waterproof camera."
     },
     {
         "id": 1004,
@@ -43,8 +41,7 @@ The source is mocked with [apiari.io service](http://docs.ssfwbasicdataimportdem
         "vat_percent": "21",
         "ean": "12345678904",
         "brand_id": 103,
-        "description": "Highly powerful mobile grill with turbo vent.",
-        "stock_quantity": 3
+        "description": "Highly powerful mobile grill with turbo vent."
     }
 ]
 ```
@@ -358,15 +355,9 @@ private function fillProductData(ProductData $productData, array $externalProduc
     $productData->vatsIndexedByDomainId[self::DOMAIN_ID] = $this->vatFacade->getVatByPercent($externalProductData['vat_percent']); // will be implemented in next step
     $productData->ean = $externalProductData['ean'];
     $productData->descriptions[self::DOMAIN_ID] = $externalProductData['description'];
-    $productData->usingStock = true;
-    $productData->stockQuantity = $externalProductData['stock_quantity'];
     $productData->extId = $externalProductData['id'];
 }
 ```
-
-!!! note
-
-    In order to be able to use stock quantity, we must enable it by setting the `$usingStock` attribute to `true`.
 
 !!! note
 

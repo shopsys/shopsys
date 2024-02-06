@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade;
@@ -35,7 +34,6 @@ class DefaultController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
@@ -49,7 +47,6 @@ class DefaultController extends AdminBaseController
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly UnitFacade $unitFacade,
         protected readonly Setting $setting,
-        protected readonly AvailabilityFacade $availabilityFacade,
         protected readonly CronModuleFacade $cronModuleFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly CronConfig $cronConfig,
@@ -155,24 +152,6 @@ class DefaultController extends AdminBaseController
                 t('<a href="{{ url }}">Default unit is not set.</a>'),
                 [
                     'url' => $this->generateUrl('admin_unit_list'),
-                ],
-            );
-        }
-
-        if (count($this->availabilityFacade->getAll()) === 0) {
-            $this->addErrorFlashTwig(
-                t('<a href="{{ url }}">There are no availabilities, you need to create some.</a>'),
-                [
-                    'url' => $this->generateUrl('admin_availability_list'),
-                ],
-            );
-        }
-
-        if ($this->setting->get(Setting::DEFAULT_AVAILABILITY_IN_STOCK) === 0) {
-            $this->addErrorFlashTwig(
-                t('<a href="{{ url }}">Default product in stock availability is not set.</a>'),
-                [
-                    'url' => $this->generateUrl('admin_availability_list'),
                 ],
             );
         }

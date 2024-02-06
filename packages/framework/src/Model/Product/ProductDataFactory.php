@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
@@ -34,7 +33,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
@@ -51,7 +49,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         protected readonly PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         protected readonly ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         protected readonly PricingGroupFacade $pricingGroupFacade,
-        protected readonly AvailabilityFacade $availabilityFacade,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
         protected readonly ProductStockFacade $productStockFacade,
         protected readonly StockFacade $stockFacade,
@@ -121,7 +118,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
             $productData->name[$locale] = null;
             $productData->variantAlias[$locale] = null;
         }
-        $productData->availability = $this->availabilityFacade->getDefaultInStockAvailability();
     }
 
     /**
@@ -185,12 +181,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $productData->sellingFrom = $product->getSellingFrom();
         $productData->sellingTo = $product->getSellingTo();
         $productData->sellingDenied = $product->isSellingDenied();
-        $productData->usingStock = $product->isUsingStock();
-        $productData->stockQuantity = $product->getStockQuantity();
         $productData->unit = $product->getUnit();
-        $productData->availability = $product->getAvailability();
-        $productData->outOfStockAvailability = $product->getOutOfStockAvailability();
-        $productData->outOfStockAction = $product->getOutOfStockAction();
 
         $productData->hidden = $product->isHidden();
         $productData->categoriesByDomainId = $product->getCategoriesIndexedByDomainId();

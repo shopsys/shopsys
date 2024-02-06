@@ -846,7 +846,6 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
-  isUsingStock: Boolean!
   "Product link"
   link: String!
   "Product image by params"
@@ -1507,7 +1506,6 @@ interface Product {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
-  isUsingStock: Boolean!
   "Product link"
   link: String!
   "Product image by params"
@@ -1913,7 +1911,6 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
-  isUsingStock: Boolean!
   "Product link"
   link: String!
   "Product image by params"
@@ -2193,7 +2190,6 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
-  isUsingStock: Boolean!
   "Product link"
   link: String!
   "Product image by params"

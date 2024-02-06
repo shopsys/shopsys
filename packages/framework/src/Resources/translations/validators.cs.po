@@ -13,9 +13,6 @@ msgstr "Tato částka musí být větší nebo rovna nule."
 msgid "At least two domains must be selected"
 msgstr "Musí být vybrány alespoň dvě domény"
 
-msgid "Availability name cannot be longer than {{ limit }} characters"
-msgstr "Název dostupnosti nesmí být delší než {{ limit }} znaků"
-
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr "Katalogové číslo nesmí být delší než {{ limit }} znaků"
 
@@ -121,12 +118,6 @@ msgstr "Odkaz musí být validní URL adresa"
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr "Název nesmí být delší než {{ limit }} znaků"
 
-msgid "Number of days to dispatch must be greater or equal to {{ compared_value }}"
-msgstr "Počet dní k expedici musí být větší nebo roven {{ compared_value }}"
-
-msgid "Number of days to expedite must be whole number."
-msgstr "Počet dní k expedici musí být celé číslo"
-
 msgid "Opening hours setting is not valid"
 msgstr "Neplaté nastavení otevírací doby"
 
@@ -157,9 +148,6 @@ msgstr "Heslo musí mít minimálně {{ limit }} znaků"
 msgid "Passwords do not match"
 msgstr "Hesla se neshodují"
 
-msgid "Please choose action"
-msgstr "Prosím vyberte akci"
-
 msgid "Please choose advertisement area"
 msgstr "Prosím vyberte reklamní plochu"
 
@@ -168,12 +156,6 @@ msgstr "Prosím vyberte typ reklamy"
 
 msgid "Please choose article placement"
 msgstr "Prosím vyberte umístění článku"
-
-msgid "Please choose availability"
-msgstr "Prosím vyberte dostupnost"
-
-msgid "Please choose availability for stock products"
-msgstr "Prosím vyberte výchozí dostupnost pro zboží skladem"
 
 msgid "Please choose country"
 msgstr "Prosím vyberte stát"
@@ -208,17 +190,11 @@ msgstr "Vyplňte prosím název dph"
 msgid "Please enter VAT rate"
 msgstr "Vyplňte prosím výši DPH"
 
-msgid "Please enter a number"
-msgstr "Prosím zadejte číslo"
-
 msgid "Please enter article content"
 msgstr "Vyplňte prosím text článku"
 
 msgid "Please enter article name"
 msgstr "Vyplňte prosím název článku"
-
-msgid "Please enter availability name in all languages"
-msgstr "Vyplňte prosím název dostupnosti ve všech jazycích"
 
 msgid "Please enter city"
 msgstr "Vyplňte prosím město"
@@ -342,9 +318,6 @@ msgstr "Vyplňte prosím kód skriptu"
 
 msgid "Please enter script name"
 msgstr "Vyplňte prosím název skriptu"
-
-msgid "Please enter stock quantity"
-msgstr "Prosím zadejte množství skladem"
 
 msgid "Please enter street"
 msgstr "Vyplňte prosím ulici"

@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade;
@@ -36,7 +35,6 @@ class DefaultController extends BaseDefaultController
      * @param \App\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \App\Model\Product\Unit\UnitFacade $unitFacade
      * @param \App\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
@@ -51,7 +49,6 @@ class DefaultController extends BaseDefaultController
         MailTemplateFacade $mailTemplateFacade,
         UnitFacade $unitFacade,
         Setting $setting,
-        AvailabilityFacade $availabilityFacade,
         CronModuleFacade $cronModuleFacade,
         GridFactory $gridFactory,
         CronConfig $cronConfig,
@@ -66,7 +63,6 @@ class DefaultController extends BaseDefaultController
             $mailTemplateFacade,
             $unitFacade,
             $setting,
-            $availabilityFacade,
             $cronModuleFacade,
             $gridFactory,
             $cronConfig,

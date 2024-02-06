@@ -16,9 +16,6 @@ msgstr "%defaultCurrency% za 1 jednotku"
 msgid "%name% agrees with privacy policy."
 msgstr "%name% souhlasí se zpracováním osobních údajů."
 
-msgid "-- Choose action --"
-msgstr "-- Vyberte akci --"
-
 msgid "-- Choose area --"
 msgstr "-- Vyberte plochu --"
 
@@ -27,9 +24,6 @@ msgstr "-- Vyberte článek --"
 
 msgid "-- Choose article position --"
 msgstr "-- Vyberte umístění článku --"
-
-msgid "-- Choose availability --"
-msgstr "-- Vyberte dostupnost --"
 
 msgid "-- Choose brand --"
 msgstr "-- Vyberte značku --"
@@ -40,17 +34,11 @@ msgstr "-- Vyberte jednotku --"
 msgid "0"
 msgstr ""
 
-msgid "<a href=\"{{ url }}\">Default product in stock availability is not set.</a>"
-msgstr "<a href=\"{{ url }}\">Není nastavena výchozí dostupnost pro produkty skladem.</a>"
-
 msgid "<a href=\"{{ url }}\">Default unit is not set.</a>"
 msgstr "<a href=\"{{ url }}\">Není nastavena výchozí jednotka.</a>"
 
 msgid "<a href=\"{{ url }}\">Some required email templates are not fully set.</a>"
 msgstr "<a href=\"{{ url }}\">Některé povinné e-mailové šablony nejsou vyplněny.</a>"
-
-msgid "<a href=\"{{ url }}\">There are no availabilities, you need to create some.</a>"
-msgstr "<a href=\"{{ url }}\">Neexistují žádné dostupnosti, musíte nějakou vytvořit.</a>"
 
 msgid "<a href=\"{{ url }}\">There are no units, you need to create some.</a>"
 msgstr "<a href=\"{{ url }}\">Neexistují žádné jednotky, musíte nějakou vytvořit.</a>"
@@ -69,9 +57,6 @@ msgstr "Účet"
 
 msgid "Action"
 msgstr "Akce"
-
-msgid "Action after sellout"
-msgstr "Akce při vyprodání"
 
 msgid "Active"
 msgstr "Aktivní"
@@ -250,32 +235,8 @@ msgstr "Přiřazení do kategorie"
 msgid "Attribute %attribute% was changed %changes%"
 msgstr "Atribut %attribute% byl změněn %changes%"
 
-msgid "Automatic stock calculation"
-msgstr "Automatické výpočty skladových zásob"
-
-msgid "Availabilities overview"
-msgstr "Přehled dostupností"
-
-msgid "Availability"
-msgstr "Dostupnost"
-
-msgid "Availability \"%name%\" set as default. For deleting it you have to choose other one to be set everywhere where the existing one is used. Which availability you want to set instead?"
-msgstr "Dostupnost \"%name%\" je nastavena jako výchozí. Pro její odstranění musíte zvolit, která se má všude, kde je aktuálně používaná, nastavit. Jakou dostupnost místo ní chcete nastavit?"
-
-msgid "Availability <strong>{{ name }}</strong> deleted"
-msgstr "Dostupnost <strong>{{ name }}</strong> byla smazána"
-
-msgid "Availability <strong>{{ oldName }}</strong> deleted and replaced by availability <strong>{{ newName }}</strong>"
-msgstr "Dostupnost <strong>{{ oldName }}</strong> byla nahrazena dostupností <strong>{{ newName }}</strong> a byla smazána."
-
-msgid "Availability after sellout"
-msgstr "Dostupnost při vyprodání"
-
 msgid "Available immediately"
 msgstr "Ihned k odběru"
-
-msgid "Available in stock"
-msgstr "Skladem"
 
 msgid "Available payment methods"
 msgstr "Dostupné platby"
@@ -300,9 +261,6 @@ msgstr "Základní měna frontendu %domainName%"
 
 msgid "Basic information"
 msgstr "Základní informace"
-
-msgid "Because availability \"%name%\" is used with other products also, you have to choose a new availability which will replace the existing one. Which availability you want to set to these products?"
-msgstr "Jelikož dostupnost \"%name%\" je používána ještě u některých produktů, musíte zvolit, jaká dostupnost bude použita místo ní. Jakou dostupnost chcete těmto produktům nastavit?"
 
 msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
 msgstr "Jelikož stav \"%name%\" je používán ještě u některých objednávek, musíte zvolit, jaký stav bude použit místo něj. Jaký stav chcete těmto objednávkám nastavit? Při této změně stavu nebude odeslán e-mail zákazníkům."
@@ -565,9 +523,6 @@ msgstr "Vytvořit SEO stránku"
 msgid "Create VAT rate"
 msgstr "Vytvořit sazbu DPH"
 
-msgid "Create availability"
-msgstr "Vytvořit dostupnost"
-
 msgid "Create currency"
 msgstr "Vytvořit měnu"
 
@@ -775,17 +730,11 @@ msgstr "Výchozí sazba DPH"
 msgid "Default administration currency"
 msgstr "Výchozí měna administrace"
 
-msgid "Default availability for the stock settings modified"
-msgstr "Nastavení výchozí dostupnosti pro zboží skladem bylo upraveno"
-
 msgid "Default pricing group"
 msgstr "Výchozí cenová skupina"
 
 msgid "Default pricing group settings modified"
 msgstr "Nastavení výchozí cenové skupiny bylo upraveno"
-
-msgid "Default product in stock availability"
-msgstr "Výchozí dostupnost pro zboží skladem"
 
 msgid "Default store"
 msgstr "Výchozí prodejna"
@@ -867,9 +816,6 @@ msgstr "Opravdu chcete smazat tuto kategorii?"
 
 msgid "Do you really want to discard all changes?"
 msgstr "Opravdu chcete zahodit všechny změny?"
-
-msgid "Do you really want to remove availability \"%name%\" permanently? It is not used anywhere."
-msgstr "Opravdu si přejete trvale odstranit dostupnost \"%name%\"? Nikde není použitá."
 
 msgid "Do you really want to remove currency \"%name%\" permanently?"
 msgstr "Opravdu si přejete trvale odstranit měnu \"%name%\"?"
@@ -1180,9 +1126,6 @@ msgstr "Zadejte v lokálním čase prodejny"
 msgid "Entered customer not found, please check entered data."
 msgstr "Zadaný zákazník nebyl nalezen, prosím překontrolujte zadané údaje"
 
-msgid "Entered in days. Zero represents products in stock, empty means unknown availability."
-msgstr "Zadává se ve dnech. Nula reprezentuje zboží skladem, nevyplněné znamená, že dostupnost je neznámá."
-
 msgid "Entity"
 msgstr "Entita"
 
@@ -1224,9 +1167,6 @@ msgstr "Kurz"
 
 msgid "Excl. VAT"
 msgstr "Bez DPH"
-
-msgid "Exclude from sale"
-msgstr "Vyřadit z prodeje"
 
 msgid "Exclude from sale on whole eshop"
 msgstr "Vyřadit z prodeje na celém e-shopu"
@@ -1798,9 +1738,6 @@ msgstr "Nebyla nalezena žádná reklama. Nejprve musíte nějakou vytvořit."
 msgid "No articles found on this domain. You have to create some first."
 msgstr "Na této doméně nebyly nalezeny žádné články. Nejprve musíte nějaký vytvořit."
 
-msgid "No availabilities found. You have to create some first."
-msgstr "Nebyly nalezeny žádné dostupnosti. Nejprve musíte nějaké vytvořit."
-
 msgid "No blog articles found."
 msgstr "Nebyly nalezeny žádné články blogu."
 
@@ -1893,9 +1830,6 @@ msgstr "Poznámka"
 
 msgid "Nothing to choose from."
 msgstr "Není z čeho vybírat."
-
-msgid "Number of days to despatch"
-msgstr "Počet dní k expedici"
 
 msgid "Number of orders"
 msgstr "Počet objednávek"
@@ -2218,8 +2152,8 @@ msgstr "Zboží je vyřazeno z prodeje"
 msgid "Product in order"
 msgstr "Zboží v objednávce"
 
-msgid "Product is excluded from the sale due to sellout"
-msgstr "Produkt je vyřazen z prodeje z důvodu vyprodání"
+msgid "Product is excluded from the sale"
+msgstr "Produkt je vyřazen z prodeje"
 
 msgid "Product is main variant."
 msgstr "Produkt je hlavní variantou."
@@ -2440,12 +2374,6 @@ msgstr "Zvolená reklama neexistuje."
 msgid "Selected article doesn't exist."
 msgstr "Zvolený článek neexistuje."
 
-msgid "Selected availability doesn't exist"
-msgstr "Zvolená dostupnost neexistuje"
-
-msgid "Selected availatibily doesn't exist."
-msgstr "Zvolená dostupnost neexistuje."
-
 msgid "Selected blog article does not exist."
 msgstr "Vybraný článek blogu neexistuje."
 
@@ -2535,9 +2463,6 @@ msgstr "Seo"
 
 msgid "Set"
 msgstr "Nastavit"
-
-msgid "Set alternative availability"
-msgstr "Nastavit alternativní dostupnost"
 
 msgid "Set as default"
 msgstr "Nastavit jako výchozí"
@@ -2697,9 +2622,6 @@ msgstr "Tel. číslo"
 
 msgid "Terms and conditions"
 msgstr "Obchodní podmínky"
-
-msgid "The change will be applied to products in 10 minutes"
-msgstr "Změna se u zboží projeví do 10 minut"
 
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
 msgstr "Aktuální seznam URL adres lze nalézt v repozitáři projektu v souboru \"storefront/config/staticRewritePaths.js\"."
@@ -2869,9 +2791,6 @@ msgstr "Url adresa"
 msgid "Use"
 msgstr "Používat"
 
-msgid "Use stocks"
-msgstr "Používat skladové zásoby"
-
 msgid "Used: %currentLength% characters. Recommended max. %recommendedLength%"
 msgstr "Využito: %currentLength% znaků. Doporučeno max. %recommendedLength%"
 
@@ -2962,9 +2881,6 @@ msgstr "Nastavení %domainName% skladů uloženo."
 msgid "Warehouse settings"
 msgstr "Nastavení skladů"
 
-msgid "Warehouses"
-msgstr "Sklady"
-
 msgid "Wednesday"
 msgstr "Středa"
 
@@ -3052,9 +2968,6 @@ msgstr "po"
 msgid "articles"
 msgstr "článků"
 
-msgid "availability"
-msgstr "dostupností"
-
 msgid "before"
 msgstr "před"
 
@@ -3075,9 +2988,6 @@ msgstr "zákazníků"
 
 msgid "doesn't include"
 msgstr "neobsahuje"
-
-msgid "doesn't use"
-msgstr "nepoužívá"
 
 msgid "empty value"
 msgstr "prázdná hodnota"
@@ -3168,9 +3078,6 @@ msgstr "jednotky"
 
 msgid "unregistered customer"
 msgstr "neregistrovaný zákazník"
-
-msgid "uses"
-msgstr "používá"
 
 msgid "without positioning"
 msgstr "bez umístění"

@@ -16,9 +16,6 @@ msgstr ""
 msgid "%name% agrees with privacy policy."
 msgstr ""
 
-msgid "-- Choose action --"
-msgstr ""
-
 msgid "-- Choose area --"
 msgstr ""
 
@@ -26,9 +23,6 @@ msgid "-- Choose article --"
 msgstr ""
 
 msgid "-- Choose article position --"
-msgstr ""
-
-msgid "-- Choose availability --"
 msgstr ""
 
 msgid "-- Choose brand --"
@@ -40,16 +34,10 @@ msgstr ""
 msgid "0"
 msgstr ""
 
-msgid "<a href=\"{{ url }}\">Default product in stock availability is not set.</a>"
-msgstr ""
-
 msgid "<a href=\"{{ url }}\">Default unit is not set.</a>"
 msgstr ""
 
 msgid "<a href=\"{{ url }}\">Some required email templates are not fully set.</a>"
-msgstr ""
-
-msgid "<a href=\"{{ url }}\">There are no availabilities, you need to create some.</a>"
 msgstr ""
 
 msgid "<a href=\"{{ url }}\">There are no units, you need to create some.</a>"
@@ -68,9 +56,6 @@ msgid "Account"
 msgstr ""
 
 msgid "Action"
-msgstr ""
-
-msgid "Action after sellout"
 msgstr ""
 
 msgid "Active"
@@ -250,31 +235,7 @@ msgstr ""
 msgid "Attribute %attribute% was changed %changes%"
 msgstr ""
 
-msgid "Automatic stock calculation"
-msgstr ""
-
-msgid "Availabilities overview"
-msgstr ""
-
-msgid "Availability"
-msgstr ""
-
-msgid "Availability \"%name%\" set as default. For deleting it you have to choose other one to be set everywhere where the existing one is used. Which availability you want to set instead?"
-msgstr ""
-
-msgid "Availability <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Availability <strong>{{ oldName }}</strong> deleted and replaced by availability <strong>{{ newName }}</strong>"
-msgstr ""
-
-msgid "Availability after sellout"
-msgstr ""
-
 msgid "Available immediately"
-msgstr ""
-
-msgid "Available in stock"
 msgstr ""
 
 msgid "Available payment methods"
@@ -299,9 +260,6 @@ msgid "Basic frontend currency %domainName%"
 msgstr ""
 
 msgid "Basic information"
-msgstr ""
-
-msgid "Because availability \"%name%\" is used with other products also, you have to choose a new availability which will replace the existing one. Which availability you want to set to these products?"
 msgstr ""
 
 msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
@@ -565,9 +523,6 @@ msgstr ""
 msgid "Create VAT rate"
 msgstr ""
 
-msgid "Create availability"
-msgstr ""
-
 msgid "Create currency"
 msgstr ""
 
@@ -775,16 +730,10 @@ msgstr ""
 msgid "Default administration currency"
 msgstr ""
 
-msgid "Default availability for the stock settings modified"
-msgstr ""
-
 msgid "Default pricing group"
 msgstr ""
 
 msgid "Default pricing group settings modified"
-msgstr ""
-
-msgid "Default product in stock availability"
 msgstr ""
 
 msgid "Default store"
@@ -866,9 +815,6 @@ msgid "Do you really want to delete this category?"
 msgstr ""
 
 msgid "Do you really want to discard all changes?"
-msgstr ""
-
-msgid "Do you really want to remove availability \"%name%\" permanently? It is not used anywhere."
 msgstr ""
 
 msgid "Do you really want to remove currency \"%name%\" permanently?"
@@ -1180,9 +1126,6 @@ msgstr ""
 msgid "Entered customer not found, please check entered data."
 msgstr ""
 
-msgid "Entered in days. Zero represents products in stock, empty means unknown availability."
-msgstr ""
-
 msgid "Entity"
 msgstr ""
 
@@ -1223,9 +1166,6 @@ msgid "Exchange rate"
 msgstr ""
 
 msgid "Excl. VAT"
-msgstr ""
-
-msgid "Exclude from sale"
 msgstr ""
 
 msgid "Exclude from sale on whole eshop"
@@ -1798,9 +1738,6 @@ msgstr ""
 msgid "No articles found on this domain. You have to create some first."
 msgstr ""
 
-msgid "No availabilities found. You have to create some first."
-msgstr ""
-
 msgid "No blog articles found."
 msgstr ""
 
@@ -1892,9 +1829,6 @@ msgid "Note"
 msgstr ""
 
 msgid "Nothing to choose from."
-msgstr ""
-
-msgid "Number of days to despatch"
 msgstr ""
 
 msgid "Number of orders"
@@ -2218,7 +2152,7 @@ msgstr ""
 msgid "Product in order"
 msgstr ""
 
-msgid "Product is excluded from the sale due to sellout"
+msgid "Product is excluded from the sale"
 msgstr ""
 
 msgid "Product is main variant."
@@ -2440,12 +2374,6 @@ msgstr ""
 msgid "Selected article doesn't exist."
 msgstr ""
 
-msgid "Selected availability doesn't exist"
-msgstr ""
-
-msgid "Selected availatibily doesn't exist."
-msgstr ""
-
 msgid "Selected blog article does not exist."
 msgstr ""
 
@@ -2534,9 +2462,6 @@ msgid "Seo"
 msgstr ""
 
 msgid "Set"
-msgstr ""
-
-msgid "Set alternative availability"
 msgstr ""
 
 msgid "Set as default"
@@ -2696,9 +2621,6 @@ msgid "Telephone number"
 msgstr ""
 
 msgid "Terms and conditions"
-msgstr ""
-
-msgid "The change will be applied to products in 10 minutes"
 msgstr ""
 
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
@@ -2869,9 +2791,6 @@ msgstr ""
 msgid "Use"
 msgstr ""
 
-msgid "Use stocks"
-msgstr ""
-
 msgid "Used: %currentLength% characters. Recommended max. %recommendedLength%"
 msgstr ""
 
@@ -2962,9 +2881,6 @@ msgstr ""
 msgid "Warehouse settings"
 msgstr ""
 
-msgid "Warehouses"
-msgstr ""
-
 msgid "Wednesday"
 msgstr ""
 
@@ -3052,9 +2968,6 @@ msgstr ""
 msgid "articles"
 msgstr ""
 
-msgid "availability"
-msgstr ""
-
 msgid "before"
 msgstr ""
 
@@ -3074,9 +2987,6 @@ msgid "customers"
 msgstr ""
 
 msgid "doesn't include"
-msgstr ""
-
-msgid "doesn't use"
 msgstr ""
 
 msgid "empty value"
@@ -3167,9 +3077,6 @@ msgid "units"
 msgstr ""
 
 msgid "unregistered customer"
-msgstr ""
-
-msgid "uses"
 msgstr ""
 
 msgid "without positioning"

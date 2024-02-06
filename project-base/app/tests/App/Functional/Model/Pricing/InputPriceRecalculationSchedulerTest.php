@@ -14,8 +14,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -165,11 +163,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $vatData->name = 'vat';
         $vatData->percent = $vatPercent;
         $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
-        $availabilityData = new AvailabilityData();
-        $availabilityData->dispatchTime = 0;
-        $availability = new Availability($availabilityData);
         $this->em->persist($vat);
-        $this->em->persist($availability);
 
         $paymentData->name = ['cs' => 'name'];
 

@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
 use Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessageDispatcher;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
@@ -36,7 +35,6 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
 {
     /**
      * @param \App\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -52,7 +50,6 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
      */
     public function __construct(
         OrderFacade $orderFacade,
-        OrderProductFacade $orderProductFacade,
         OrderStatusRepository $orderStatusRepository,
         OrderPreviewFactory $orderPreviewFactory,
         CurrencyFacade $currencyFacade,
@@ -68,7 +65,6 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
     ) {
         parent::__construct(
             $orderFacade,
-            $orderProductFacade,
             $orderStatusRepository,
             $orderPreviewFactory,
             $currencyFacade,
@@ -111,7 +107,6 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         );
 
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, $customerUser);
-        $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
 
         if ($customerUser instanceof CustomerUser) {
             $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);

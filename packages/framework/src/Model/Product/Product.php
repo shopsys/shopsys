@@ -11,7 +11,6 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductCannotBeTransformedException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundException;
@@ -34,9 +33,6 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainV
  */
 class Product extends AbstractTranslatableEntity
 {
-    public const OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY = 'setAlternateAvailability';
-    public const OUT_OF_STOCK_ACTION_EXCLUDE_FROM_SALE = 'excludeFromSale';
-    public const OUT_OF_STOCK_ACTION_HIDE = 'hide';
     public const VARIANT_TYPE_NONE = 'none';
     public const VARIANT_TYPE_MAIN = 'main';
     public const VARIANT_TYPE_VARIANT = 'variant';
@@ -106,43 +102,11 @@ class Product extends AbstractTranslatableEntity
     protected $hidden;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $usingStock;
-
-    /**
-     * @var int|null
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $stockQuantity;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Unit\Unit")
      * @ORM\JoinColumn(name="unit_id", referencedColumnName="id", nullable=false)
      */
     protected $unit;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $outOfStockAction;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Availability\Availability")
-     * @ORM\JoinColumn(name="availability_id", referencedColumnName="id", nullable=true)
-     */
-    protected $availability;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Availability\Availability")
-     * @ORM\JoinColumn(name="out_of_stock_availability_id", referencedColumnName="id", nullable=true)
-     */
-    protected $outOfStockAvailability;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain>
@@ -205,7 +169,6 @@ class Product extends AbstractTranslatableEntity
         $this->catnum = $productData->catnum;
         $this->partno = $productData->partno;
         $this->ean = $productData->ean;
-        $this->setAvailabilityAndStock($productData);
         $this->createDomains($productData);
         $this->productCategoryDomains = new ArrayCollection();
         $this->calculatedSellingDenied = true;
@@ -238,7 +201,6 @@ class Product extends AbstractTranslatableEntity
         }
 
         if (!$this->isMainVariant()) {
-            $this->setAvailabilityAndStock($productData);
             $this->catnum = $productData->catnum;
             $this->partno = $productData->partno;
             $this->ean = $productData->ean;
@@ -277,25 +239,6 @@ class Product extends AbstractTranslatableEntity
     public static function createMainVariant(ProductData $productData, array $variants)
     {
         return new static($productData, $variants);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     */
-    protected function setAvailabilityAndStock(ProductData $productData): void
-    {
-        $this->usingStock = $productData->usingStock;
-        $this->availability = $productData->availability;
-
-        if ($this->usingStock) {
-            $this->stockQuantity = $productData->stockQuantity;
-            $this->outOfStockAction = $productData->outOfStockAction;
-            $this->outOfStockAvailability = $productData->outOfStockAvailability;
-        } else {
-            $this->stockQuantity = null;
-            $this->outOfStockAction = null;
-            $this->outOfStockAvailability = null;
-        }
     }
 
     /**
@@ -435,51 +378,11 @@ class Product extends AbstractTranslatableEntity
     }
 
     /**
-     * @return bool
-     */
-    public function isUsingStock()
-    {
-        return $this->usingStock;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getStockQuantity()
-    {
-        return $this->stockQuantity;
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
     public function getUnit()
     {
         return $this->unit;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOutOfStockAction()
-    {
-        return $this->outOfStockAction;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
-     */
-    public function getAvailability()
-    {
-        return $this->availability;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
-     */
-    public function getOutOfStockAvailability()
-    {
-        return $this->outOfStockAvailability;
     }
 
     /**
@@ -489,22 +392,6 @@ class Product extends AbstractTranslatableEntity
     public function getOrderingPriority(int $domainId)
     {
         return $this->getProductDomain($domainId)->getOrderingPriority();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
-     */
-    public function setAvailability($availability)
-    {
-        $this->availability = $availability;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null $outOfStockAvailability
-     */
-    public function setOutOfStockAvailability($outOfStockAvailability = null)
-    {
-        $this->outOfStockAvailability = $outOfStockAvailability;
     }
 
     /**
@@ -712,22 +599,6 @@ class Product extends AbstractTranslatableEntity
     {
         $this->variantType = self::VARIANT_TYPE_VARIANT;
         $this->mainVariant = $mainVariant;
-    }
-
-    /**
-     * @param int $quantity
-     */
-    public function addStockQuantity($quantity)
-    {
-        $this->stockQuantity += $quantity;
-    }
-
-    /**
-     * @param int $quantity
-     */
-    public function subtractStockQuantity($quantity)
-    {
-        $this->stockQuantity -= $quantity;
     }
 
     /**

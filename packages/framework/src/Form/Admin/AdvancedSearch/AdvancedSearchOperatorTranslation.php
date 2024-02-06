@@ -22,8 +22,6 @@ class AdvancedSearchOperatorTranslation
             AdvancedSearchFilterInterface::OPERATOR_NOT_SET => t('not entered'),
             AdvancedSearchFilterInterface::OPERATOR_IS => t('is'),
             AdvancedSearchFilterInterface::OPERATOR_IS_NOT => t('not'),
-            AdvancedSearchFilterInterface::OPERATOR_IS_USED => t('uses'),
-            AdvancedSearchFilterInterface::OPERATOR_IS_NOT_USED => t('doesn\'t use'),
             AdvancedSearchFilterInterface::OPERATOR_BEFORE => t('before'),
             AdvancedSearchFilterInterface::OPERATOR_AFTER => t('after'),
             AdvancedSearchFilterInterface::OPERATOR_GT => t('higher than'),
