@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Component\Setting\Setting;
 use App\Model\ProductVideo\ProductVideoDataFactory;
 use App\Model\ProductVideo\ProductVideoRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -14,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
@@ -50,12 +48,10 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
-     * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
      * @param \App\Model\ProductVideo\ProductVideoRepository $productVideoRepository
      */
@@ -70,12 +66,10 @@ class ProductDataFactory extends BaseProductDataFactory
         PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         PricingGroupFacade $pricingGroupFacade,
-        AvailabilityFacade $availabilityFacade,
         ImageUploadDataFactory $imageUploadDataFactory,
         ProductStockFacade $productStockFacade,
         StockFacade $stockFacade,
         ProductStockDataFactory $productStockDataFactory,
-        private readonly Setting $setting,
         private readonly ProductVideoDataFactory $productVideoDataFactory,
         private readonly ProductVideoRepository $productVideoRepository,
     ) {
@@ -90,7 +84,6 @@ class ProductDataFactory extends BaseProductDataFactory
             $pluginDataFormExtensionFacade,
             $productParameterValueDataFactory,
             $pricingGroupFacade,
-            $availabilityFacade,
             $imageUploadDataFactory,
             $productStockFacade,
             $stockFacade,
@@ -146,8 +139,6 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->namePrefix[$locale] = null;
             $productData->nameSufix[$locale] = null;
         }
-
-        $productData->availability = $this->availabilityFacade->getById($this->setting->get('defaultAvailabilityInStockId'));
     }
 
     /**
@@ -200,8 +191,6 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->sellingFrom = $product->getSellingFrom();
         $productData->sellingTo = $product->getSellingTo();
         $productData->sellingDenied = $product->isSellingDenied();
-
-        $productData->availability = $this->availabilityFacade->getById($this->setting->get('defaultAvailabilityInStockId'));
 
         $productData->unit = $product->getUnit();
 

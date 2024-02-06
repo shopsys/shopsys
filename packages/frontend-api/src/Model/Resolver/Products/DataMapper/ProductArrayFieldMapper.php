@@ -97,15 +97,6 @@ class ProductArrayFieldMapper
 
     /**
      * @param array $data
-     * @return bool
-     */
-    public function isUsingStock(array $data): bool
-    {
-        return $data['is_using_stock'];
-    }
-
-    /**
-     * @param array $data
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
      */
     public function getBrand(array $data): ?Brand

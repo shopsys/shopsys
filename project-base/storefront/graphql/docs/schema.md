@@ -4454,11 +4454,6 @@ Product images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6824,11 +6819,6 @@ Product images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -7955,11 +7945,6 @@ Product images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
@@ -10643,11 +10628,6 @@ Product images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>

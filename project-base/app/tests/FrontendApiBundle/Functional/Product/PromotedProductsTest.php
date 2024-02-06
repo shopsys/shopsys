@@ -94,7 +94,6 @@ class PromotedProductsTest extends GraphQlTestCase
                             text
                         }
                     }
-                    isUsingStock
                     namePrefix
                     nameSuffix
                     fullName
@@ -166,7 +165,6 @@ class PromotedProductsTest extends GraphQlTestCase
                             text
                         }
                     }
-                    isUsingStock
                     namePrefix
                     nameSuffix
                     fullName

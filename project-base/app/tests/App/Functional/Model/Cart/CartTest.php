@@ -13,8 +13,6 @@ use App\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CartTest extends TransactionFunctionalTestCase
@@ -33,13 +31,8 @@ class CartTest extends TransactionFunctionalTestCase
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
-        $availabilityData = new AvailabilityData();
-        $availabilityData->dispatchTime = 0;
-        $availability = new Availability($availabilityData);
-
         $productData = $this->productDataFactory->create();
         $productData->name = [];
-        $productData->availability = $availability;
         $productData->catnum = '123';
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
         $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
@@ -57,7 +50,6 @@ class CartTest extends TransactionFunctionalTestCase
         $cart->addItem($cartItem2);
 
         $this->em->persist($cart);
-        $this->em->persist($availability);
         $this->em->persist($product1);
         $this->em->persist($product2);
         $this->em->persist($cartItem1);

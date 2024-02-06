@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product;
 
-use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\StocksDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\ProductData;
@@ -50,7 +49,6 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->create();
         $productData->hidden = $hidden;
         $productData->sellingDenied = $sellingDenied;
-        $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
 
         /** @var \Shopsys\FrameworkBundle\Model\Stock\Stock $stock */

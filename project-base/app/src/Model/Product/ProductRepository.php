@@ -6,9 +6,7 @@ namespace App\Model\Product;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Exception;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
@@ -73,15 +71,6 @@ class ProductRepository extends BaseProductRepository
             ->having('SUM(ps.productQuantity) > 0');
 
         $queryBuilder->andWhere('(EXISTS(' . $subquery->getDQL() . ')) AND pd.saleExclusion = false AND p.calculatedSellingDenied = false');
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
-     * @return \App\Model\Product\Product[]
-     */
-    public function getProductsWithAvailability(Availability $availability): array
-    {
-        throw new Exception('Product Availability is deprecated');
     }
 
     /**

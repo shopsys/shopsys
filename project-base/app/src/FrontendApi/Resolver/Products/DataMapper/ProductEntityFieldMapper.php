@@ -92,15 +92,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \App\Model\Product\Product $product
      * @return bool
      */
-    public function isUsingStock(Product $product): bool
-    {
-        return true;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return bool
-     */
     public function isSellingDenied(BaseProduct $product): bool
     {
         return $product->getCalculatedSellingDenied() === true || $product->getSaleExclusion($this->domain->getId()) === true;

@@ -88,7 +88,6 @@ class ProductsTest extends ProductsGraphQlTestCase
                                     text
                                 }
                             }
-                            isUsingStock
                             namePrefix
                             nameSuffix
                             fullName
@@ -227,7 +226,6 @@ class ProductsTest extends ProductsGraphQlTestCase
                         ],
                     ],
                 ],
-                'isUsingStock' => true,
                 'namePrefix' => null,
                 'nameSuffix' => null,
                 'fullName' => t('30" Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCatnumFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductFlagFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductNameFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductPartnoFilter;
-use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductStockFilter;
 
 class ProductAdvancedSearchConfig extends AdvancedSearchConfig
 {
@@ -19,7 +18,6 @@ class ProductAdvancedSearchConfig extends AdvancedSearchConfig
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCatnumFilter $productCatnumFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductNameFilter $productNameFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductPartnoFilter $productPartnoFilter
-     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductStockFilter $productStockFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductFlagFilter $productFlagFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCalculatedSellingDeniedFilter $productCalculatedSellingDeniedFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductBrandFilter $productBrandFilter
@@ -29,7 +27,6 @@ class ProductAdvancedSearchConfig extends AdvancedSearchConfig
         ProductCatnumFilter $productCatnumFilter,
         ProductNameFilter $productNameFilter,
         ProductPartnoFilter $productPartnoFilter,
-        ProductStockFilter $productStockFilter,
         ProductFlagFilter $productFlagFilter,
         ProductCalculatedSellingDeniedFilter $productCalculatedSellingDeniedFilter,
         ProductBrandFilter $productBrandFilter,
@@ -40,10 +37,19 @@ class ProductAdvancedSearchConfig extends AdvancedSearchConfig
         $this->registerFilter($productNameFilter);
         $this->registerFilter($productCatnumFilter);
         $this->registerFilter($productPartnoFilter);
-        $this->registerFilter($productStockFilter);
         $this->registerFilter($productFlagFilter);
         $this->registerFilter($productCalculatedSellingDeniedFilter);
         $this->registerFilter($productBrandFilter);
         $this->registerFilter($productCategoryFilter);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $filter
+     */
+    protected function unregisterFilter(AdvancedSearchFilterInterface $filter): void
+    {
+        if (array_key_exists($filter->getName(), $this->filters)) {
+            unset($this->filters[$filter->getName()]);
+        }
     }
 }

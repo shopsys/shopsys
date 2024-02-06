@@ -46,7 +46,6 @@ query Product($uuid: Uuid) {
                 text
             }
         }
-        isUsingStock
         namePrefix
         nameSuffix
         fullName
