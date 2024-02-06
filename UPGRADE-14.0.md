@@ -1160,10 +1160,6 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   sent emails via async queue ([#2998](https://github.com/shopsys/shopsys/pull/2998))
     -   see #project-base-diff to update your project
--   change the product catnums field type in GrapesJs to text (([#2994](https://github.com/shopsys/shopsys/pull/2994)))
-
-    -   see #project-base-diff to update your project
-
 -   leverage added missing entity factories ([#3004](https://github.com/shopsys/shopsys/pull/3004))
 
     -   `Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade::__construct()` changed its interface:
@@ -1214,6 +1210,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   column `description_tsvector` on table `product_domains`
         -   column `fulltext_tsvector` on table `product_domains`
         -   column `name_tsvector` on table `product_translations`
+    -   see #project-base-diff to update your project
+
+-   improve products editing in GrapesJS ([#3008](https://github.com/shopsys/shopsys/pull/3008))
+
     -   see #project-base-diff to update your project
 
 -   replace ElasticsearchIndexException usage with separate Exceptions for each use case ([#3003](https://github.com/shopsys/shopsys/pull/3003))
