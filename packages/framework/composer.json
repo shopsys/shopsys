@@ -83,6 +83,8 @@
         "shopsys/plugin-interface": "14.0.x-dev",
         "snc/redis-bundle": "^4.4.1",
         "stof/doctrine-extensions-bundle": "^1.3.0",
+        "symfony/css-selector": "^5.4",
+        "symfony/dom-crawler": "^5.4",
         "symfony/error-handler": "^5.4",
         "symfony/event-dispatcher": "^5.4",
         "symfony/html-sanitizer": "^6.1.0",
