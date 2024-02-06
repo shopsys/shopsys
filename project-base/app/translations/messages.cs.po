@@ -250,8 +250,8 @@ msgstr "Zrušit"
 msgid "Catalog number"
 msgstr "Katalogové číslo"
 
-msgid "Catalog numbers delimited by comma"
-msgstr "Katalogová čísla oddělená čárkou"
+msgid "Catalog numbers"
+msgstr "Katalogová čísla"
 
 msgid "Categories"
 msgstr "Kategorie"
@@ -1947,6 +1947,9 @@ msgstr "relevance"
 
 msgid "turnover in"
 msgstr "obrat v"
+
+msgid "unknown catalog number (product will not be displayed)"
+msgstr "neznámé katalogové číslo (produkt se nezobrazí)"
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
 msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vytvořeny <strong>%count%</strong> slevové kupóny|[5,Inf] Bylo vytvořeno <strong>%count%</strong> slevových kupónů"

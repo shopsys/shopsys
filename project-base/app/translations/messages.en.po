@@ -250,7 +250,7 @@ msgstr ""
 msgid "Catalog number"
 msgstr ""
 
-msgid "Catalog numbers delimited by comma"
+msgid "Catalog numbers"
 msgstr ""
 
 msgid "Categories"
@@ -1946,6 +1946,9 @@ msgid "relevance"
 msgstr ""
 
 msgid "turnover in"
+msgstr ""
+
+msgid "unknown catalog number (product will not be displayed)"
 msgstr ""
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
