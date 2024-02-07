@@ -197,7 +197,7 @@ class StoreFormType extends AbstractType
             ->setDefaults([
                 'data_class' => StoreData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'constraints' => new Constraints\Callback($this->validateOpeningHours(...)),
+                'constraints' => new Constraints\Callback([$this, 'validateOpeningHours']),
             ]);
     }
 
