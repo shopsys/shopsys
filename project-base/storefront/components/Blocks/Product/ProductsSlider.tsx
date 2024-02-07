@@ -5,6 +5,7 @@ import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, useEffect, useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 
 type ProductsSliderProps = {
     products: ListedProductFragmentApi[];
@@ -43,14 +44,14 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
     const handleScroll = (productIndex: number) => setActiveIndex(productIndex);
 
-    const handlePreviousClick = () => {
+    const handlePrevious = () => {
         const prevIndex = activeIndex - 1;
         const newActiveIndex = prevIndex >= 0 ? prevIndex : productElementRefs!.length - 4;
 
         handleScroll(newActiveIndex);
     };
 
-    const handleNextClick = () => {
+    const handleNext = () => {
         const nextIndex = activeIndex + 1;
         const isEndSlide = nextIndex + 4 > productElementRefs!.length;
         const newActiveIndex = isEndSlide ? 0 : nextIndex;
@@ -58,12 +59,18 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
         handleScroll(newActiveIndex);
     };
 
+    const handlers = useSwipeable({
+        onSwipedLeft: handleNext,
+        onSwipedRight: handlePrevious,
+        trackMouse: true,
+    });
+
     return (
         <div className="relative" data-testid={dataTestId}>
             {isWithControls && (
                 <div className="absolute -top-11 right-0 hidden items-center justify-center vl:flex ">
-                    <SliderButton title={t('Previous products')} type="prev" onClick={handlePreviousClick} />
-                    <SliderButton title={t('Next products')} type="next" onClick={handleNextClick} />
+                    <SliderButton title={t('Previous products')} type="prev" onClick={handlePrevious} />
+                    <SliderButton title={t('Next products')} type="next" onClick={handleNext} />
                 </div>
             )}
 
@@ -74,6 +81,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                 gtmProductListName={gtmProductListName}
                 productRefs={productElementRefs}
                 products={products}
+                swipeHandlers={handlers}
             />
         </div>
     );

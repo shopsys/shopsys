@@ -7,6 +7,7 @@ import { useWishlist } from 'hooks/productLists/wishlist/useWishlist';
 import { useQueryParams } from 'hooks/useQueryParams';
 import dynamic from 'next/dynamic';
 import React, { RefObject } from 'react';
+import { SwipeableHandlers } from 'react-swipeable';
 
 const ProductComparePopup = dynamic(() =>
     import('../ButtonsAction/ProductComparePopup').then((component) => component.ProductComparePopup),
@@ -18,6 +19,7 @@ type ProductsListProps = {
     gtmMessageOrigin: GtmMessageOriginType;
     ref?: RefObject<HTMLUListElement>;
     productRefs?: RefObject<HTMLLIElement>[];
+    swipeHandlers?: SwipeableHandlers;
     className?: string;
     classNameProduct?: string;
 };
@@ -32,6 +34,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     ref,
     dataTestId,
     children,
+    swipeHandlers,
 }) => {
     const { currentPage } = useQueryParams();
     const { isPopupCompareOpen, toggleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
@@ -40,7 +43,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
 
     return (
         <>
-            <ul className={className} data-testid={dataTestId} ref={ref}>
+            <ul className={className} data-testid={dataTestId} ref={ref} {...swipeHandlers}>
                 {products.map((product, index) => (
                     <ProductListItem
                         key={product.uuid}

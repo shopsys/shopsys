@@ -1236,14 +1236,20 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 ### Storefront
 
 -   add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))
+
 -   remove unnecessary default value for domain config in zustand ([#2888](https://github.com/shopsys/shopsys/pull/2888))
+
     -   you probably do not need the default value as well, as we set it right at the beginning of page load
+
 -   fixed undefined window error ([#2882](https://github.com/shopsys/shopsys/pull/2882))
+
     -   in one of the previous PR's, the `canUseDom` function was removed, but it caused the application to fail in some cases
     -   because of that, the function was brought back as a constant (as `isClient`) and some checks were reinstantiated
     -   in your code, you should pay attention to where you are using the window object and make sure it is available (either by checking the logic or by explicitly wrapping it in a check)
     -   also keep in mind that `canUseDom` is now `isClient` and `isServer` is now used as `!isClient`
+
 -   add Prettier plugin and ESlint plugins and rules ([#2874](https://github.com/shopsys/shopsys/pull/2874))
+
     -   to check if your repo follows the new rules run `pnpm run check` or `pnpm run check--fix` to autofix in Storefront folder or in Storefront Docker container
     -   **Prettier**
         -   added `@trivago/prettier-plugin-sort-imports` plugin
@@ -1255,22 +1261,32 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
             -   react/self-closing-comp
             -   react/jsx-sort-props
             -   no-relative-import-paths/no-relative-import-paths
+
 -   add Related Products tab on product detail page ([#2885](https://github.com/shopsys/shopsys/pull/2885))
+
 -   improve product lists in GrapesJS ([#2879](https://github.com/shopsys/shopsys/pull/2879))
+
 -   add instant page skeleton after link click ([#2863](https://github.com/shopsys/shopsys/pull/2863))
+
     -   before page must first load and then skeleton was shown, now we pass page type to `ExtendedLink` component which allow us to display immediately after user click on the link proper skeleton for the required page
     -   some reorganization and renaming was done to Skeletons, we basically have only two types of skeletons, for pages and modules, since it is sometimes difficult to recognise which one is which, we have added Page word, but this was not perfect in folder organization, that's why it's been added word Module as well, to organize skeletons better way
     -   added missing skeletons for Homepage and Stores
     -   adjustments to current skeletons to match the design of a page better
+
 -   refactoring of various error-related matters on SF ([#2871](https://github.com/shopsys/shopsys/pull/2871))
+
     -   the goal was to shine light on some of the not-well-understood places in regard of error handling on SF
     -   for you to get the most out of this PR, you should check `error-handling.md` in SF docs, which is a direct result of this PR
     -   it contains explanations and tips on how to improve error handling in your SF code as well
+
 -   refactor `ProductVariantsTable` ([#2899](https://github.com/shopsys/shopsys/pull/2899))
+
     -   `ProductVariantsTable` component was made with table element but on smaller screens it was styled more like list. This was causing styling difficulties. That's why it has been replaced with grid with combination of flexbox.
     -   components `ProductVariantsTableRow` and `Variant` were removed
     -   component `ProductVariantsTable` was renamed to `ProductDetailVariantsTable` so it matches parent folder where it's placed
+
 -   add equal spacing to the Category page ([#2900](https://github.com/shopsys/shopsys/pull/2900))
+
 -   auth (loading) improvements ([#2897](https://github.com/shopsys/shopsys/pull/2897))
 
     -   `window.location.href` assignments were replaced with `router` operations because of unexpected behavior, where the current URL (thus also properties of the router) changed even before the transition, which caused useEffects and some other conditions to re-run and potentially fails
@@ -1302,37 +1318,56 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         ```
 
 -   added USPs on product detail page ([#2887](https://github.com/shopsys/shopsys/pull/2887))
+
 -   fix sizes of product actions buttons ([#2896](https://github.com/shopsys/shopsys/pull/2896))
+
     -   now we have unified sizes of add to cart buttons
+
 -   fix Comparison for not logged in users ([#2905](https://github.com/shopsys/shopsys/pull/2905))
+
     -   unified code for Comparison and Wishlist
     -   refactored Zustand store to use only one store (User Store) for all cartUuid, wishlistUuid and comparisonUuid
+
 -   search on search page is now not called if search query is empty ([#2895](https://github.com/shopsys/shopsys/pull/2895))
+
 -   fix set default delivery address country ([#2902](https://github.com/shopsys/shopsys/pull/2902))
+
 -   fix router server access error on PageGuard ([#2909](https://github.com/shopsys/shopsys/pull/2909))
+
 -   fix Cart list unit text ([#2910](https://github.com/shopsys/shopsys/pull/2910))
+
 -   remove `Heading` component ([#2894](https://github.com/shopsys/shopsys/pull/2894))
+
     -   it was decided by FE team that this component is not beneficial
     -   it was replaced with general H tags and styles were put into globals.css, styles were also included with new classes (`h1`, `h2`, `h3`, `h4`) which we can use to style text which suppose to look like heading but it is not important enough for mark with H tag
     -   also from those headings and heading classes was remove margin bottom since spacing should be set in exact place where this component is used, not everywhere
+
 -   remove error logging for when gtmSafePush is called outside of the client ([#2920](https://github.com/shopsys/shopsys/pull/2920))
+
     -   logging this type of error brought no business value, thus it was removed
     -   if you want to treat this ignorable event in a more strict way, you might want to keep the logging, but then you have to improve its behavior yourself
+
 -   added logic for ordering GTM events ([#2921](https://github.com/shopsys/shopsys/pull/2921))
+
     -   added a GTM context provider for synchronizing events
     -   if you have any logic for syncing your events, you can move it to this provider
     -   docs were added, so you can base your changes on those
+
 -   improve SEO categories logic in regards to non-SEO-sensitive filters ([#2891](https://github.com/shopsys/shopsys/pull/2891))
+
     -   we moved some config from various files to `config/constants` and warmly suggest you do the same, as it improves the app and testing
     -   we also moved some hooks from `helpers` to `hooks` and suggest you do the same with all hooks, as it again improves the app and testing
     -   the implemented functionality for dynamic switching between SEO-sensitivity for various filters is only implemented on SF, so applying these changes won't make it work on BE
     -   if you do not need SEO categories, these changes might be irrelevant altogether
     -   flag and brand values are now merged after change of default parameters (leaving SEO category) instead of overwritting. This is a bug fix and you should apply it to your changes as well.
+
 -   category data fetching logic improvements ([#2893](https://github.com/shopsys/shopsys/pull/2893))
+
     -   these changes primarily focus on fixing loading and fetching logic on the category page
     -   there were certain bugs with double loads, skeleton glitches, etc. but they were mostly caused by the added complexity of SEO categories, so if you do not have those and your fetching logic is thus much simpler, you probably do not need most of these changes
     -   the category detail fetching was also rewritten to the generated URQL hook, which can be beneficial for you if your logic allows you to do so
     -   one thing that you should definitely consider is removal of `onRouteChangeError` from the page loading logic, as the previous implementation was rather invalid. See commit message for more details
+
 -   added additional skeletons, sync store across browser tabs, use BroadcastChannel to refresh cart after Add/Remove to/from cart, ExtendedNextLink was refactored, remove EmptyCartWrapper ([#2906](https://github.com/shopsys/shopsys/pull/2906))
 
     -   added skeletons for Wishlist, Comparison and My orders, Order detail and Product Main Variant page
@@ -1372,6 +1407,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   also this fixes bug with infinite cart page loading
 
 -   improve repeat order related mutations ([#2876](https://github.com/shopsys/shopsys/pull/2876))
+
     -   the maximum number of payment transaction is set to 2 (using `MAX_ALLOWED_PAYMENT_TRANSACTIONS`), this means that the user can repeat payment only once, so if this does not match your requirements, you need to change it
     -   GoPay SWIFT selection was moved directly inside payment selection, which might not be visible right away if you use the same approach as we do (hide unselected transports and payments), however if you do not do that, this new layout might be suitable for you
     -   RegistrationAfterOrder now takes care of its own conditional rendering, so if you want to add a condition, move it inside the component
@@ -1381,7 +1417,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   query for order confirmation was renamed (the word 'Query' was added)
     -   expiration of confirmation content is now taken into account on SF by ignoring the API error and not rendering the content. This was a bug (missing feature) in previous versions. If you have not fixed it yourself before, you definitely want to implement these changes, because otherwise, the user can see errors when displaying the order confirmation page after a certain timeout.
     -   query parameters parsed using getStringFromUrlQuery are now also trimmed, which makes sure the API can understand the string. For example, the API does not understand " 440ecde4-b992-4290-8636-4f454c9cf475 " as a valid UUID.
+
 -   display Transport and Payment description on desktop ([#2930](https://github.com/shopsys/shopsys/pull/2930))
+
 -   implemented generic product lists ([#2901](https://github.com/shopsys/shopsys/pull/2901))
 
     -   previous implementation for wishlist and comparison was removed, so if you want to keep them, you have to re-implement it according to the new requirements (use of generic API queries and mutations)
@@ -1401,6 +1439,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   implement NextImage component ([#2924](https://github.com/shopsys/shopsys/pull/2924))
 
     -   Now we don't use `srcset` solution anymore for which was our `Image` component prepared. It was replaced with the solution provided by Next.js which is `NextImage` component. This component allows us many more possibilities. But it comes with a price. Since `NextImage` is capable of different image rendering methods we need to adjust each image to the chosen method. For this there is no specific advice, but we have 2 methods:
+
         -   Each `Image` has specific dimensions `width` and `height`, here we need to usually adjust `w-auto` or `max-h-full` so it is displayed properly. All depends on project and specific place.
         -   `Image` component has `fill` prop, no need to specify `width` or `height` props. But it needs some wrapper which has specified dimensions to limit the image. Then you can use different `object-fit` CSS properties.
         -   check all places where you use the `Image` component and modify them accordingly as the component interface has changed
@@ -1417,18 +1456,24 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   in order to have proper category tree for GTM (and Persoo) we need to add proper category hierarchy tree, now we send whole tree instead of last category id
 
 -   improve error handling for friendly URL pages based on API status codes ([#2973](https://github.com/shopsys/shopsys/pull/2973))
+
     -   API now returns a 500 code if there is a server error
     -   friendly URL pages now react to API 500 errors and API not found errors, and display the correct pages based on this datapoint
+
 -   improve Breadcrumbs navigation on customer order page ([#2974](https://github.com/shopsys/shopsys/pull/2974))
+
 -   fix missing variant link types ([#2976](https://github.com/shopsys/shopsys/pull/2976))
+
     -   fix Add to cart popup product link type
     -   fix Bestsellers product link type
+
 -   add scroll to cart order personal pick up place select modal ([#2979](https://github.com/shopsys/shopsys/pull/2979))
 
 -   customer's user cart is now overwritten with the incoming cart if logged in in 3rd order step ([#2978](https://github.com/shopsys/shopsys/pull/2978))
+
     -   new optional parameter `shouldOverwriteCustomerUserCart` was added to `LoginMutation`
     -   you can use it if in certain scenarios it makes more sense to overwrite customer user's cart instead of merging it
-    -   see #project-base-diff to update your project
+
 -   fix image sizes ([#2968](https://github.com/shopsys/shopsys/pull/2968))
 
     -   after migration to Next Image component there were some places left to adjust proper image sizes
@@ -1445,11 +1490,17 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   default places: homepage, product detail, search, category, blog list, blog detail
 
 -   add possibility to change SF error verbosity for development ([#2990](https://github.com/shopsys/shopsys/pull/2990))
+
     -   added possibility for controlling error verbosity on SF (can be now devel or user) which can be set independently of the actual node environment. This allows for better error debugging on SF
     -   errorDebugging controls the verbosity of errors on SF, it is controlled by an environment variable
     -   `error-handling.md` was extended with the new information and can be used to update your project
+
 -   replace Lightgallery with custom ModalGallery component ([#2995](https://github.com/shopsys/shopsys/pull/2995))
+
     -   new features:
         -   custom useKeyPress hook, responsible for handling key press events
         -   new library for handling swiping events (react-swipeable)
         -   gallery is loaded dynamically, allowing us to lower the size of product page
+
+-   add swipe handlers to our custom product slider ([#2996](https://github.com/shopsys/shopsys/pull/2996))
+    -   after replacing `Lightgallery` with a custom solution we have the `react-swipeable` library available, which provides us with a hook to handle swipe events, this is another place where we want to use it
