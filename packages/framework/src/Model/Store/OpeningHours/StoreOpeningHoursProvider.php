@@ -49,7 +49,7 @@ class StoreOpeningHoursProvider
      */
     public function isOpenNow(Store $store): bool
     {
-        $now = (new DateTimeImmutable())->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));
+        $now = new DateTimeImmutable(timezone: $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));
 
         return $this->getOpeningHoursSetting($store)->isOpenAt($now);
     }
