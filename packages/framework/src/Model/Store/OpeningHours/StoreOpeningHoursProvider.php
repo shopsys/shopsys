@@ -11,8 +11,9 @@ use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterf
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Spatie\OpeningHours\OpeningHours as SpatieOpeningHours;
+use Symfony\Contracts\Service\ResetInterface;
 
-class StoreOpeningHoursProvider
+class StoreOpeningHoursProvider implements ResetInterface
 {
     protected const DAY_NUMBERS_TO_ENGLISH_NAMES_MAP = [
         1 => 'monday',
@@ -205,5 +206,10 @@ class StoreOpeningHoursProvider
         }
 
         return $openingHoursData;
+    }
+
+    public function reset(): void
+    {
+        $this->openingHoursSetting = [];
     }
 }
