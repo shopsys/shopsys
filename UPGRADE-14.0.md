@@ -1269,6 +1269,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   fix display advert on invisible category ([#2701](https://github.com/shopsys/shopsys/pull/2701))
     -   see #project-base-diff to update your project
+-   unset variant is now automatically recalculated ([#301](https://github.com/shopsys/shopsys/pull/301))
+    -   `Shopsys\FrameworkBundle\Model\Product\Product::unsetRemovedVariants()` now returns int[]
+    -   `Shopsys\FrameworkBundle\Model\Product\Product::refreshVariants()` now returns int[]
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
