@@ -10,8 +10,6 @@ type PersonalDataDetailContentProps = {
     data: PersonalDataDetailQueryApi;
 };
 
-const TEST_IDENTIFIER = 'pages-personal-data-detail-';
-
 export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ data }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
@@ -42,41 +40,37 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                         <>
                                             <Row>
                                                 <CellMinor>{t('First name')}:</CellMinor>
-                                                <Cell data-testid={TEST_IDENTIFIER + 'firstName'}>
-                                                    {userData.firstName}
-                                                </Cell>
+                                                <Cell>{userData.firstName}</Cell>
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('Last name')}:</CellMinor>
-                                                <Cell data-testid={TEST_IDENTIFIER + 'lastName'}>
-                                                    {userData.lastName}
-                                                </Cell>
+                                                <Cell>{userData.lastName}</Cell>
                                             </Row>
                                         </>
                                     )}
                                     <Row>
                                         <CellMinor>{t('Email')}</CellMinor>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'email'}>{userData.email}</Cell>
+                                        <Cell>{userData.email}</Cell>
                                     </Row>
                                     <Row>
                                         <CellMinor>{t('Phone')}</CellMinor>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'telephone'}>{userData.telephone}</Cell>
+                                        <Cell>{userData.telephone}</Cell>
                                     </Row>
                                     <Row>
                                         <CellMinor>{t('Street and house no.')}</CellMinor>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'street'}>{userData.street}</Cell>
+                                        <Cell>{userData.street}</Cell>
                                     </Row>
                                     <Row>
                                         <CellMinor>{t('City')}</CellMinor>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'city'}>{userData.city}</Cell>
+                                        <Cell>{userData.city}</Cell>
                                     </Row>
                                     <Row>
                                         <CellMinor>{t('Postcode')}</CellMinor>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'postcode'}>{userData.postcode}</Cell>
+                                        <Cell>{userData.postcode}</Cell>
                                     </Row>
                                     <Row>
                                         <CellMinor>{t('Country')}</CellMinor>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'country'}>{userData.country.name}</Cell>
+                                        <Cell>{userData.country.name}</Cell>
                                     </Row>
                                 </Table>
                             </Cell>
@@ -86,21 +80,15 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                     <Table className="border-0 p-0">
                                         <Row>
                                             <CellMinor>{t('Company name')}</CellMinor>
-                                            <Cell data-testid={TEST_IDENTIFIER + 'companyName'}>
-                                                {userData.companyName}
-                                            </Cell>
+                                            <Cell>{userData.companyName}</Cell>
                                         </Row>
                                         <Row>
                                             <CellMinor>{t('Company number')}</CellMinor>
-                                            <Cell data-testid={TEST_IDENTIFIER + 'companyNumber'}>
-                                                {userData.companyNumber}
-                                            </Cell>
+                                            <Cell>{userData.companyNumber}</Cell>
                                         </Row>
                                         <Row>
                                             <CellMinor>{t('Tax number')}</CellMinor>
-                                            <Cell data-testid={TEST_IDENTIFIER + 'companyTaxNumber'}>
-                                                {userData.companyTaxNumber}
-                                            </Cell>
+                                            <Cell>{userData.companyTaxNumber}</Cell>
                                         </Row>
                                     </Table>
                                 </Cell>
@@ -114,7 +102,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                             <Table>
                                 {userData.deliveryAddresses.map((address) => (
                                     <Row key={address.uuid}>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'firstName'}>
+                                        <Cell>
                                             {address.firstName} {address.lastName}
                                             {address.companyName ? ` (${address.companyName})` : ''}, {address.street},{' '}
                                             {address.postcode} {address.city}, {address.country?.name}
@@ -140,58 +128,46 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                         <Table className="border-0 p-0">
                                             <Row>
                                                 <CellMinor>{t('Order number')}</CellMinor>
-                                                <Cell data-testid={TEST_IDENTIFIER + 'number'}>{order.number}</Cell>
+                                                <Cell>{order.number}</Cell>
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('Creation date')}</CellMinor>
-                                                <Cell data-testid={TEST_IDENTIFIER + 'creation-date'}>
-                                                    {formatDate(order.creationDate, 'l')}
-                                                </Cell>
+                                                <Cell>{formatDate(order.creationDate, 'l')}</Cell>
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('First name')}</CellMinor>
-                                                <Cell data-testid={TEST_IDENTIFIER + 'firstName'}>
-                                                    {order.firstName}
-                                                </Cell>
+                                                <Cell>{order.firstName}</Cell>
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('Last name')}</CellMinor>
-                                                <Cell data-testid={TEST_IDENTIFIER + 'lastName'}>{order.lastName}</Cell>
+                                                <Cell>{order.lastName}</Cell>
                                             </Row>
                                             {!!order.companyName && (
                                                 <Row>
                                                     <CellMinor>{t('Company')}</CellMinor>
-                                                    <Cell data-testid={TEST_IDENTIFIER + 'companyName'}>
-                                                        {order.companyName}
-                                                    </Cell>
+                                                    <Cell>{order.companyName}</Cell>
                                                 </Row>
                                             )}
                                             {!!order.companyNumber && (
                                                 <Row>
                                                     <CellMinor>{t('Company number')}</CellMinor>
-                                                    <Cell data-testid={TEST_IDENTIFIER + 'companyNumber'}>
-                                                        {order.companyNumber}
-                                                    </Cell>
+                                                    <Cell>{order.companyNumber}</Cell>
                                                 </Row>
                                             )}
                                             {!!order.companyTaxNumber && (
                                                 <Row>
                                                     <CellMinor>{t('Tax number')}</CellMinor>
-                                                    <Cell data-testid={TEST_IDENTIFIER + 'taxNumber'}>
-                                                        {order.companyTaxNumber}
-                                                    </Cell>
+                                                    <Cell>{order.companyTaxNumber}</Cell>
                                                 </Row>
                                             )}
                                             <Row>
                                                 <CellMinor>{t('Phone')}</CellMinor>
-                                                <Cell data-testid={TEST_IDENTIFIER + 'telephone'}>
-                                                    {order.telephone}
-                                                </Cell>
+                                                <Cell>{order.telephone}</Cell>
                                             </Row>
                                             {!!order.deliveryFirstName && (
                                                 <Row>
                                                     <CellMinor>{t('Delivery address')}</CellMinor>
-                                                    <Cell data-testid={TEST_IDENTIFIER + 'deliveryAddress'}>
+                                                    <Cell>
                                                         {order.deliveryFirstName} {order.deliveryLastName}
                                                         {order.deliveryCompanyName
                                                             ? ` (${order.deliveryCompanyName})`
@@ -211,27 +187,21 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                         <Table className="border-0 p-0">
                                             <Row>
                                                 <CellMinor>{t('Number of items')}</CellMinor>
-                                                <Cell data-testid={TEST_IDENTIFIER + 'quantity'}>
+                                                <Cell>
                                                     {order.productItems.reduce((sum, item) => sum + item.quantity, 0)}
                                                 </Cell>
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('Shipping')}</CellMinor>
-                                                <Cell data-testid={TEST_IDENTIFIER + 'transport'}>
-                                                    {order.transport.name}
-                                                </Cell>
+                                                <Cell>{order.transport.name}</Cell>
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('Payment')}</CellMinor>
-                                                <Cell data-testid={TEST_IDENTIFIER + 'payment'}>
-                                                    {order.payment.name}
-                                                </Cell>
+                                                <Cell>{order.payment.name}</Cell>
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('Total price including VAT')}</CellMinor>
-                                                <Cell data-testid={TEST_IDENTIFIER + 'total-price'}>
-                                                    {formatPrice(parseFloat(order.totalPrice.priceWithVat))}
-                                                </Cell>
+                                                <Cell>{formatPrice(parseFloat(order.totalPrice.priceWithVat))}</Cell>
                                             </Row>
                                         </Table>
                                     </Cell>

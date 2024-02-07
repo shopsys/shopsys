@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { IconImage } from 'components/Basic/Icon/IconImage';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
+import { DataTestIds } from 'cypress/dataTestIds';
 import {
     AutocompleteSearchQueryApi,
     ListedProductFragmentApi,
@@ -29,8 +30,6 @@ type AutocompleteProps = {
     autocompleteSearchQueryValue: string;
     onClickLink: () => void;
 };
-
-const TEST_IDENTIFIER = 'layout-header-search-autocomplete-popup';
 
 export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
     autocompleteSearchQueryValue,
@@ -94,16 +93,12 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
 
                     <ul
                         className="flex flex-col gap-4 lg:grid lg:grid-cols-5 lg:gap-2"
-                        data-testid={TEST_IDENTIFIER + '-products'}
+                        data-testid={DataTestIds.layout_header_search_autocomplete_popup_products}
                     >
                         {mappedProductSearchResults?.map(
                             (product, index) =>
                                 index < AUTOCOMPLETE_PRODUCT_LIMIT && (
-                                    <li
-                                        key={product.slug}
-                                        className="text-sm"
-                                        data-testid={TEST_IDENTIFIER + '-products-' + index}
-                                    >
+                                    <li key={product.slug} className="text-sm">
                                         <ExtendedNextLink
                                             className="flex cursor-pointer items-center gap-2 text-dark no-underline outline-none lg:flex-col lg:items-start"
                                             href={product.slug}
@@ -143,11 +138,11 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                 <div>
                     <SearchResultSectionTitle>{`${t('Brands')} (${brandSearch.length})`}</SearchResultSectionTitle>
 
-                    <SearchResultSectionGroup dataTestId={TEST_IDENTIFIER + '-brands'}>
+                    <SearchResultSectionGroup>
                         {brandSearch.map(
                             (brand, index) =>
                                 index < AUTOCOMPLETE_BRAND_LIMIT && (
-                                    <li key={brand.slug} data-testid={TEST_IDENTIFIER + '-brands-' + index}>
+                                    <li key={brand.slug}>
                                         <SearchResultLink
                                             href={brand.slug}
                                             type="brand"
@@ -174,11 +169,11 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                         {`${t('Categories')} (${categoriesSearch.totalCount})`}
                     </SearchResultSectionTitle>
 
-                    <SearchResultSectionGroup dataTestId={TEST_IDENTIFIER + '-categories'}>
+                    <SearchResultSectionGroup>
                         {mappedCategoriesSearchResults?.map(
                             (category, index) =>
                                 index < AUTOCOMPLETE_CATEGORY_LIMIT && (
-                                    <li key={category.slug} data-testid={TEST_IDENTIFIER + '-categories-' + index}>
+                                    <li key={category.slug}>
                                         <SearchResultLink
                                             href={category.slug}
                                             type="category"
@@ -203,11 +198,11 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                 <div>
                     <SearchResultSectionTitle>{`${t('Articles')} (${articlesSearch.length})`}</SearchResultSectionTitle>
 
-                    <SearchResultSectionGroup dataTestId={TEST_IDENTIFIER + '-articles'}>
+                    <SearchResultSectionGroup>
                         {articlesSearch.map(
                             (article, index) =>
                                 index < AUTOCOMPLETE_ARTICLE_LIMIT && (
-                                    <li key={article.slug} data-testid={TEST_IDENTIFIER + '-articles-' + index}>
+                                    <li key={article.slug}>
                                         <SearchResultLink
                                             href={article.slug}
                                             type={article.__typename === 'ArticleSite' ? 'article' : 'blogArticle'}
@@ -230,7 +225,6 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
 
             <div className="flex justify-center">
                 <Button
-                    dataTestId={TEST_IDENTIFIER + '-all-button'}
                     size="small"
                     onClick={handleClickLink(() =>
                         router.push({
@@ -250,11 +244,7 @@ const SearchResultSectionTitle: FC = ({ children }) => {
     return <p className="mb-6 text-sm text-greyLight">{children}</p>;
 };
 
-const SearchResultSectionGroup: FC = ({ children, dataTestId }) => (
-    <ul className="flex flex-col gap-2" data-testid={dataTestId}>
-        {children}
-    </ul>
-);
+const SearchResultSectionGroup: FC = ({ children }) => <ul className="flex flex-col gap-2">{children}</ul>;
 
 const SearchResultLink: FC<{ onClick: () => void; href: string; type: FriendlyPagesTypesKey }> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

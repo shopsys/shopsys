@@ -1,8 +1,6 @@
 import { NavigationItem } from './NavigationItem';
 import { useNavigationQueryApi } from 'graphql/generated';
 
-const TEST_IDENTIFIER = 'layout-header-navigation';
-
 export const Navigation: FC = () => {
     const [{ data: navigationData }] = useNavigationQueryApi();
 
@@ -11,7 +9,7 @@ export const Navigation: FC = () => {
     }
 
     return (
-        <ul className="relative hidden w-full lg:flex lg:gap-6 xl:gap-12" data-testid={TEST_IDENTIFIER}>
+        <ul className="relative hidden w-full lg:flex lg:gap-6 xl:gap-12">
             {navigationData.navigation.map((navigationItem, index) => (
                 <NavigationItem key={index} navigationItem={navigationItem} />
             ))}

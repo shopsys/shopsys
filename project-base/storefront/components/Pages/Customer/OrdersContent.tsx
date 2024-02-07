@@ -27,8 +27,6 @@ type OrdersContentProps = {
     totalCount: number | undefined;
 };
 
-const TEST_IDENTIFIER = 'pages-customer-orders-';
-
 export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, totalCount }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
@@ -87,9 +85,9 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                     </Row>
                                 }
                             >
-                                {orders.map((order, index) => (
-                                    <Row key={order.uuid} data-testid={TEST_IDENTIFIER + index}>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'number'}>
+                                {orders.map((order) => (
+                                    <Row key={order.uuid}>
+                                        <Cell>
                                             <ExtendedNextLink
                                                 type="order"
                                                 href={{
@@ -100,13 +98,9 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                                 {order.number}
                                             </ExtendedNextLink>
                                         </Cell>
-                                        <Cell align="right" data-testid={TEST_IDENTIFIER + 'creation-date'}>
-                                            {formatDateAndTime(order.creationDate)}
-                                        </Cell>
-                                        <Cell align="right" data-testid={TEST_IDENTIFIER + 'quantity'}>
-                                            {order.productItems.length}
-                                        </Cell>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'transport'}>
+                                        <Cell align="right">{formatDateAndTime(order.creationDate)}</Cell>
+                                        <Cell align="right">{order.productItems.length}</Cell>
+                                        <Cell>
                                             <div className="flex items-center gap-2">
                                                 <Image
                                                     alt={order.transport.mainImage?.name || order.transport.name}
@@ -117,14 +111,14 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                                 <span className="flex-1">{order.transport.name}</span>
                                             </div>
                                         </Cell>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment.name}</Cell>
+                                        <Cell>{order.payment.name}</Cell>
                                         <Cell isWithoutWrap>
                                             <OrderStatus order={order} />
                                         </Cell>
-                                        <Cell isWithoutWrap align="right" data-testid={TEST_IDENTIFIER + 'total-price'}>
+                                        <Cell isWithoutWrap align="right">
                                             {formatPrice(order.totalPrice.priceWithVat)}
                                         </Cell>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'repeat-order'}>
+                                        <Cell>
                                             <Button
                                                 className="bg-white text-greyDarker hover:bg-orangeLight hover:text-greyDark"
                                                 size="small"
@@ -133,7 +127,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                                 {t('Repeat order')}
                                             </Button>
                                         </Cell>
-                                        <Cell data-testid={TEST_IDENTIFIER + 'detail-link'}>
+                                        <Cell>
                                             <ExtendedNextLink
                                                 type="order"
                                                 href={{

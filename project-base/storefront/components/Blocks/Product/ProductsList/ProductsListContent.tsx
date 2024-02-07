@@ -32,7 +32,6 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     className,
     classNameProduct,
     ref,
-    dataTestId,
     children,
     swipeHandlers,
 }) => {
@@ -43,7 +42,7 @@ export const ProductsListContent: FC<ProductsListProps> = ({
 
     return (
         <>
-            <ul className={className} data-testid={dataTestId} ref={ref} {...swipeHandlers}>
+            <ul className={className} ref={ref} {...swipeHandlers}>
                 {products.map((product, index) => (
                     <ProductListItem
                         key={product.uuid}

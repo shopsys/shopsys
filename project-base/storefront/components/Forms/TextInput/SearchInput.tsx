@@ -1,5 +1,6 @@
 import { CloseIcon, SearchIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
+import { DataTestIds } from 'cypress/dataTestIds';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
@@ -14,8 +15,6 @@ type SearchInputProps = NativeProps & {
     onClear: () => void;
     onSearch?: () => void;
 };
-
-const TEST_IDENTIFIER = 'layout-header-search-autocomplete-input';
 
 export const SearchInput: FC<SearchInputProps> = ({
     label,
@@ -38,8 +37,7 @@ export const SearchInput: FC<SearchInputProps> = ({
         <div className="relative w-full">
             <input
                 autoComplete="off"
-                data-testid={TEST_IDENTIFIER}
-                id={TEST_IDENTIFIER}
+                data-testid={DataTestIds.layout_header_search_autocomplete_input}
                 placeholder={label}
                 type="search"
                 value={value}

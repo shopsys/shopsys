@@ -5,8 +5,6 @@ type ProductAvailableStoresCountProps = {
     availableStoresCount: number;
 };
 
-const TEST_IDENTIFIER = 'blocks-product-availability';
-
 export const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> = ({
     availableStoresCount,
     isMainVariant,
@@ -18,7 +16,7 @@ export const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> =
     }
 
     return (
-        <div className="text-sm  text-inStock" data-testid={TEST_IDENTIFIER}>
+        <div className="text-sm  text-inStock">
             {t('This item is available immediately in {{ count }} stores', { count: availableStoresCount })}
         </div>
     );

@@ -1,26 +1,27 @@
+import { DataTestIds } from 'dataTestIds';
 import { buttonName, link } from 'fixtures/demodata';
 
 export const checkIfLoginLinkIsVisible = () => {
-    cy.getByDataTestId('layout-header-menuiconic-login-link-popup').should('be.visible');
+    cy.getByDataTestId([DataTestIds.layout_header_menuiconic_login_link_popup]).should('be.visible');
 };
 
 export const clickOnUserIconInHeader = () => {
-    cy.getByDataTestId('layout-header-menuiconic-login-link-popup').click();
+    cy.getByDataTestId([DataTestIds.layout_header_menuiconic_login_link_popup]).click();
 };
 
 export const checkUserIsLoggedIn = () => {
-    cy.getByDataTestId('my-account-link').contains(link.myAccount);
+    cy.getByDataTestId([DataTestIds.my_account_link]).contains(link.myAccount);
 };
 
 export const loginFromHeader = (email: string, password: string) => {
     clickOnUserIconInHeader();
     fillInEmailAndPasswordInLoginPopup(email, password);
-    cy.getByDataTestId('layout-popup').get('button').contains(buttonName.login).click();
+    cy.getByDataTestId([DataTestIds.layout_popup]).get('button').contains(buttonName.login).click();
     checkUserIsLoggedIn();
 };
 
 export const fillInEmailAndPasswordInLoginPopup = (email: string, password: string) => {
-    const getLoginPopup = () => cy.getByDataTestId('layout-popup');
+    const getLoginPopup = () => cy.getByDataTestId([DataTestIds.layout_popup]);
     getLoginPopup().get('#login-form-email').type(email);
     getLoginPopup().get('#login-form-password').type(password);
 };

@@ -12,7 +12,6 @@ type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputEl
 type PasswordInputProps = NativeProps & {
     label: string;
     inputSize?: 'small' | 'default';
-    dataTestId?: string;
 };
 
 type PasswordInputControlledProps = {
@@ -46,7 +45,6 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
         <>
             <TextInput
                 required
-                dataTestId={passwordInputProps.dataTestId}
                 hasError={invalid}
                 id={passwordInputId}
                 inputSize={passwordInputProps.inputSize}

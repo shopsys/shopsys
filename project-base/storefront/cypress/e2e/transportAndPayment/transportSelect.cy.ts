@@ -3,6 +3,7 @@ import {
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
 } from './transportAndPaymentSupport';
+import { DataTestIds } from 'dataTestIds';
 import { DEFAULT_APP_STORE, transport, url } from 'fixtures/demodata';
 import { takeSnapshotAndCompare } from 'support';
 
@@ -19,7 +20,7 @@ describe('Transport select tests', () => {
 
         changeSelectionOfTransportByName(transport.czechPost.name);
 
-        cy.getByDataTestId('loader-overlay').should('not.exist');
+        cy.getByDataTestId([DataTestIds.loader_overlay]).should('not.exist');
         takeSnapshotAndCompare('transport-to-home');
     });
 
@@ -30,7 +31,7 @@ describe('Transport select tests', () => {
 
         chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
 
-        cy.getByDataTestId('loader-overlay').should('not.exist');
+        cy.getByDataTestId([DataTestIds.loader_overlay]).should('not.exist');
         takeSnapshotAndCompare('personal-pickup-transport');
     });
 
@@ -39,11 +40,11 @@ describe('Transport select tests', () => {
         cy.visit(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
-        cy.getByDataTestId('loader-overlay').should('not.exist');
+        cy.getByDataTestId([DataTestIds.loader_overlay]).should('not.exist');
         changeSelectionOfTransportByName(transport.czechPost.name);
-        cy.getByDataTestId('loader-overlay').should('not.exist');
+        cy.getByDataTestId([DataTestIds.loader_overlay]).should('not.exist');
         changeSelectionOfTransportByName(transport.ppl.name);
-        cy.getByDataTestId('loader-overlay').should('not.exist');
+        cy.getByDataTestId([DataTestIds.loader_overlay]).should('not.exist');
 
         takeSnapshotAndCompare('select-deselect-and-select-transport-again');
     });

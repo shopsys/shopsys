@@ -8,8 +8,6 @@ type OrderStepsProps = {
     domainUrl: string;
 };
 
-const TEST_IDENTIFIER = 'blocks-ordersteps-';
-
 export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
     const { t } = useTranslation();
     const [cartUrl, transportAndPaymentUrl] = getInternationalizedStaticUrls(
@@ -19,7 +17,7 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
 
     return (
         <ul className="mb-6 flex justify-between border-b border-greyLighter p-0 lg:mb-3">
-            <OrderStepsListItem dataTestId={TEST_IDENTIFIER + '1'}>
+            <OrderStepsListItem>
                 {activeStep > 1 ? (
                     <OrderStepsListItemLink isClickable href={cartUrl} isActive={false}>
                         {'1. ' + t('Cart')}
@@ -28,7 +26,7 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
                     <OrderStepsListItemLink isActive={activeStep === 1}>{'1. ' + t('Cart')}</OrderStepsListItemLink>
                 )}
             </OrderStepsListItem>
-            <OrderStepsListItem dataTestId={TEST_IDENTIFIER + '2'}>
+            <OrderStepsListItem>
                 {activeStep > 2 ? (
                     <OrderStepsListItemLink isClickable href={transportAndPaymentUrl} isActive={false}>
                         {'2. ' + t('Transport and payment')}
@@ -39,7 +37,7 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
                     </OrderStepsListItemLink>
                 )}
             </OrderStepsListItem>
-            <OrderStepsListItem dataTestId={TEST_IDENTIFIER + '3'}>
+            <OrderStepsListItem>
                 <OrderStepsListItemLink isActive={activeStep === 3}>
                     {'3. ' + t('Contact information')}
                 </OrderStepsListItemLink>
@@ -48,11 +46,7 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
     );
 };
 
-const OrderStepsListItem: FC = ({ children, dataTestId }) => (
-    <li className="relative w-1/3 p-3 lg:py-3 lg:px-5" data-testid={dataTestId}>
-        {children}
-    </li>
-);
+const OrderStepsListItem: FC = ({ children }) => <li className="relative w-1/3 p-3 lg:py-3 lg:px-5">{children}</li>;
 
 type OrderStepsListItemLinkProps = { isActive: boolean; isClickable?: boolean; href?: string };
 

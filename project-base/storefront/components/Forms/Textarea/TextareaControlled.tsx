@@ -21,7 +21,7 @@ export const TextareaControlled: FC<TextareaControlledProps> = ({ name, render, 
     return render(
         <>
             <Textarea {...textareaProps} {...field} hasError={invalid} id={textareaId} />
-            <FormLineError dataTestId={`${textareaId}-error`} error={error} inputType="textarea" />
+            <FormLineError error={error} inputType="textarea" />
         </>,
     );
 };

@@ -2,8 +2,6 @@ import { DropdownItem } from './DropdownItem';
 import { Fragment } from 'react';
 import { DropdownListProps } from 'types/dropdown';
 
-const TEST_IDENTIFIER = 'layout-header-dropdownmenu-tertiarylist-';
-
 export const TertiaryList: FC<DropdownListProps> = ({ navigationItems, historyOfIndexes }) => (
     <>
         {navigationItems
@@ -14,10 +12,7 @@ export const TertiaryList: FC<DropdownListProps> = ({ navigationItems, historyOf
                             {columnCategories.categories
                                 .map((columnCategory, columnCategoryIndex) => (
                                     <Fragment key={columnCategoryIndex}>
-                                        <div
-                                            className="border-b border-greyLighter px-8 pb-4 font-bold uppercase"
-                                            data-testid={TEST_IDENTIFIER + '-' + index + '-' + columnCategoryIndex}
-                                        >
+                                        <div className="border-b border-greyLighter px-8 pb-4 font-bold uppercase">
                                             {columnCategory.name}
                                         </div>
                                         {columnCategory.children.map((columnCategoryChild, subListIndex) => (

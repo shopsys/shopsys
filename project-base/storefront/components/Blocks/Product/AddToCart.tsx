@@ -2,6 +2,7 @@ import { CartIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
+import { DataTestIds } from 'cypress/dataTestIds';
 import { CartItemFragmentApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
@@ -22,8 +23,6 @@ type AddToCartProps = {
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
 };
-
-const TEST_IDENTIFIER = 'blocks-product-addtocart';
 
 export const AddToCart: FC<AddToCartProps> = ({
     productUuid,
@@ -62,7 +61,7 @@ export const AddToCart: FC<AddToCartProps> = ({
             />
             <Button
                 className="py-2"
-                dataTestId={TEST_IDENTIFIER}
+                dataTestId={DataTestIds.blocks_product_addtocart}
                 isDisabled={fetching}
                 name="add-to-cart"
                 size="small"

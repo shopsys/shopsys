@@ -91,20 +91,15 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
             />
 
             <div className="mt-10 mb-5 flex flex-wrap justify-end gap-3">
-                <Button dataTestId="blocks-userconsent-save" size="small" variant="primary" onClick={saveCookieChoices}>
+                <Button size="small" variant="primary" onClick={saveCookieChoices}>
                     {t('Save choices')}
                 </Button>
 
-                <Button dataTestId="blocks-userconsent-accept" size="small" onClick={acceptAllCookieChoices}>
+                <Button size="small" onClick={acceptAllCookieChoices}>
                     {t('Accept all')}
                 </Button>
 
-                <Button
-                    dataTestId="blocks-userconsent-reject"
-                    size="small"
-                    variant="secondary"
-                    onClick={rejectAllCookieChoices}
-                >
+                <Button size="small" variant="secondary" onClick={rejectAllCookieChoices}>
                     {t('Reject all')}
                 </Button>
             </div>

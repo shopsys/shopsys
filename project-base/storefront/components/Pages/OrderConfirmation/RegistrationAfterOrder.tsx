@@ -25,8 +25,6 @@ import { RegistrationAfterOrderFormType } from 'types/form';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
-const TEST_IDENTIFIER = 'pages-orderconfirmation-registration-create-account';
-
 export const RegistrationAfterOrder: FC = () => {
     const { t } = useTranslation();
     const [formProviderMethods] = useRegistrationAfterOrderForm();
@@ -148,7 +146,6 @@ export const RegistrationAfterOrder: FC = () => {
                                     )}
                                 />
                                 <SubmitButton
-                                    dataTestId={TEST_IDENTIFIER}
                                     isDisabled={isInvalidRegistrationRef.current}
                                     isWithDisabledLook={!formProviderMethods.formState.isValid}
                                     style={{ width: '100%' }}

@@ -13,8 +13,6 @@ type ProductActionProps = {
     listIndex: number;
 };
 
-const TEST_IDENTIFIER = 'blocks-product-action';
-
 const wrapperTwClass = 'rounded bg-greyVeryLight p-2';
 
 export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListName, gtmMessageOrigin, listIndex }) => {
@@ -24,12 +22,7 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListN
         return (
             <div className={wrapperTwClass}>
                 <ExtendedNextLink href={product.slug} type="productMainVariant">
-                    <Button
-                        className="w-full py-2"
-                        dataTestId={TEST_IDENTIFIER + '-choose-variant'}
-                        name="choose-variant"
-                        size="small"
-                    >
+                    <Button className="w-full py-2" name="choose-variant" size="small">
                         {t('Choose variant')}
                     </Button>
                 </ExtendedNextLink>

@@ -345,16 +345,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             }}
                                                         />
 
-                                                        <FormLineError
-                                                            error={error}
-                                                            inputType="select"
-                                                            dataTestId={
-                                                                formMeta.formName +
-                                                                '-' +
-                                                                formMeta.fields.deliveryCountry.name +
-                                                                '-error'
-                                                            }
-                                                        />
+                                                        <FormLineError error={error} inputType="select" />
                                                     </>
                                                 )}
                                             />

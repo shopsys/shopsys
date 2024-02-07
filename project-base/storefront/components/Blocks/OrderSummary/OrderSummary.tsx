@@ -12,8 +12,6 @@ type OrderSummaryProps = {
     isTransportOrPaymentLoading?: boolean;
 };
 
-const TEST_IDENTIFIER = 'blocks-ordersummary';
-
 export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoading }) => {
     const { t } = useTranslation();
     const { cart, transport, payment, promoCode, roundingPrice, isFetching } = useCurrentCart();
@@ -29,12 +27,12 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
     return (
         <>
             <Adverts withGapBottom positionName="cartPreview" />
-            <div className="w-full vl:max-w-md" data-testid={TEST_IDENTIFIER}>
+            <div className="w-full vl:max-w-md">
                 <h3 className="mb-3 font-bold lg:text-lg">{t('Your order')}</h3>
 
                 <div className="rounded bg-greyVeryLight py-3 px-5 vl:m-0">
                     <div className="relative flex flex-col">
-                        <div className="mb-5" data-testid={TEST_IDENTIFIER}>
+                        <div className="mb-5">
                             <ul>
                                 {cart.items.map((item) => (
                                     <SingleProduct key={item.uuid} item={item} />

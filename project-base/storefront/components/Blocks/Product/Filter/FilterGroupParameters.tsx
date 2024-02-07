@@ -22,13 +22,10 @@ type FilterGroupParametersProps = {
     defaultNumberOfShownParameters: number;
 };
 
-const getDataTestId = (index: number) => 'blocks-product-filter-filtergroup-parameters-' + index;
-
 export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     title,
     parameter,
     defaultNumberOfShownParameters,
-    dataTestId,
     parameterIndex,
 }) => {
     const { t } = useTranslation();
@@ -56,7 +53,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     const defaultOptions = isCheckboxType ? (isWithAllItemsShown ? parameter.values : shownOptions) : [];
 
     return (
-        <FilterGroupWrapper dataTestId={dataTestId}>
+        <FilterGroupWrapper>
             <FilterGroupTitle
                 isOpen={!isGroupCollapsed}
                 title={title}
@@ -78,11 +75,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 const isDisabled = parameterValueOption.count === 0 && !isChecked;
 
                                 return (
-                                    <FilterGroupContentItem
-                                        key={parameterValueOption.uuid}
-                                        dataTestId={getDataTestId(parameterIndex) + '-' + index}
-                                        isDisabled={isDisabled}
-                                    >
+                                    <FilterGroupContentItem key={parameterValueOption.uuid} isDisabled={isDisabled}>
                                         <Checkbox
                                             count={parameterValueOption.count}
                                             disabled={isDisabled}
@@ -121,7 +114,6 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                     <CheckboxColor
                                         key={parameterValue.uuid}
                                         bgColor={parameterValue.rgbHex ?? undefined}
-                                        dataTestId={getDataTestId(index)}
                                         disabled={parameterValue.count === 0 && !isChecked}
                                         id={id}
                                         label={parameterValue.text}

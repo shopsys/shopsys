@@ -1,4 +1,5 @@
 docs
+!cypress/dataTestIds.ts
 cypress
 
 node_modules

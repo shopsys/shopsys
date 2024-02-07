@@ -19,47 +19,43 @@ type TransportAndPaymentProps = {
     roundingPrice: PriceFragmentApi | null;
 };
 
-const TEST_IDENTIFIER = 'blocks-ordersummary';
-
 export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, transport, roundingPrice }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
     return (
-        <OrderSummaryRowWrapper dataTestId={TEST_IDENTIFIER}>
+        <OrderSummaryRowWrapper>
             <div className="table w-full">
                 {transport && (
                     <OrderSummaryRow>
-                        <OrderSummaryTextAndImage dataTestId={TEST_IDENTIFIER + '-transport-name'}>
+                        <OrderSummaryTextAndImage>
                             {transport.name}
                             <div className="flex h-8 w-8 items-center">
                                 <Image alt={transport.name} height={32} src={transport.mainImage?.url} width={32} />
                             </div>
                         </OrderSummaryTextAndImage>
-                        <OrderSummaryPrice dataTestId={TEST_IDENTIFIER + '-transport-price'}>
+                        <OrderSummaryPrice>
                             <strong>{formatPrice(transport.price.priceWithVat)}</strong>
                         </OrderSummaryPrice>
                     </OrderSummaryRow>
                 )}
                 {payment && (
                     <OrderSummaryRow>
-                        <OrderSummaryTextAndImage dataTestId={TEST_IDENTIFIER + '-payment-name'}>
+                        <OrderSummaryTextAndImage>
                             {payment.name}
                             <div className="flex h-8 w-8 items-center">
                                 <Image alt={payment.name} height={32} src={payment.mainImage?.url} width={32} />
                             </div>
                         </OrderSummaryTextAndImage>
-                        <OrderSummaryPrice dataTestId={TEST_IDENTIFIER + '-payment-price'}>
+                        <OrderSummaryPrice>
                             <strong>{formatPrice(payment.price.priceWithVat)}</strong>
                         </OrderSummaryPrice>
                     </OrderSummaryRow>
                 )}
                 {roundingPrice && (
                     <OrderSummaryRow>
-                        <OrderSummaryTextAndImage dataTestId={TEST_IDENTIFIER + '-rounding-name'}>
-                            {t('Rounding')}
-                        </OrderSummaryTextAndImage>
-                        <OrderSummaryPrice dataTestId={TEST_IDENTIFIER + '-rounding-price'}>
+                        <OrderSummaryTextAndImage>{t('Rounding')}</OrderSummaryTextAndImage>
+                        <OrderSummaryPrice>
                             <strong>{formatPrice(roundingPrice.priceWithVat)}</strong>
                         </OrderSummaryPrice>
                     </OrderSummaryRow>

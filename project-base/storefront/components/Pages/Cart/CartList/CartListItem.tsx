@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
+import { DataTestIds } from 'cypress/dataTestIds';
 import { CartItemFragmentApi } from 'graphql/generated';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { AddToCartAction } from 'hooks/cart/useAddToCart';
@@ -15,8 +16,6 @@ type CartListItemProps = {
     onItemRemove: MouseEventHandler<HTMLButtonElement>;
     onItemQuantityChange: AddToCartAction;
 };
-
-const TEST_IDENTIFIER = 'pages-cart-list-item-';
 
 export const CartListItem: FC<CartListItemProps> = ({
     item: { product, quantity, uuid },
@@ -48,10 +47,10 @@ export const CartListItem: FC<CartListItemProps> = ({
     return (
         <div
             className="relative flex flex-row flex-wrap items-center gap-4 border-b border-greyLighter py-5 vl:flex-nowrap"
-            data-testid={TEST_IDENTIFIER + listIndex}
+            data-testid={DataTestIds.pages_cart_list_item_ + listIndex}
         >
             <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0">
-                <div className="flex h-12 w-24 shrink-0" data-testid={TEST_IDENTIFIER + 'image'}>
+                <div className="flex h-12 w-24 shrink-0">
                     <ExtendedNextLink className="relative h-full w-full" href={productSlug} type="product">
                         <Image
                             alt={product.mainImage?.name || product.fullName}
@@ -64,7 +63,10 @@ export const CartListItem: FC<CartListItemProps> = ({
                 </div>
 
                 <div className="flex flex-col items-start gap-4 text-sm font-bold vl:flex-1 vl:flex-row vl:items-center">
-                    <div className="h-full text-left vl:w-[16.875rem]" data-testid={TEST_IDENTIFIER + 'name'}>
+                    <div
+                        className="h-full text-left vl:w-[16.875rem]"
+                        data-testid={DataTestIds.pages_cart_list_item_name}
+                    >
                         <ExtendedNextLink
                             className="text-sm font-bold uppercase leading-4 text-dark no-underline hover:text-dark hover:no-underline"
                             href={productSlug}
@@ -78,7 +80,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                         </div>
                     </div>
 
-                    <div className="block flex-1 vl:text-center" data-testid={TEST_IDENTIFIER + 'availability'}>
+                    <div className="block flex-1 vl:text-center">
                         {product.availability.name}
 
                         {!!product.availableStoresCount && (
@@ -92,7 +94,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                 </div>
             </div>
 
-            <div className="flex w-28 items-center vl:w-36" data-testid={TEST_IDENTIFIER + 'spinbox'}>
+            <div className="flex w-28 items-center vl:w-36">
                 <Spinbox
                     defaultValue={quantity}
                     id={uuid}
@@ -104,13 +106,13 @@ export const CartListItem: FC<CartListItemProps> = ({
                 />
             </div>
 
-            <div className="flex items-center justify-end text-sm vl:w-32" data-testid={TEST_IDENTIFIER + 'itemprice'}>
+            <div className="flex items-center justify-end text-sm vl:w-32">
                 {formatPrice(product.price.priceWithVat) + '\u00A0/\u00A0' + product.unit.name}
             </div>
 
             <div
                 className="ml-auto flex items-center justify-end text-sm text-primary lg:text-base vl:w-32"
-                data-testid={TEST_IDENTIFIER + 'totalprice'}
+                data-testid={DataTestIds.pages_cart_list_item_totalprice}
             >
                 {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
             </div>

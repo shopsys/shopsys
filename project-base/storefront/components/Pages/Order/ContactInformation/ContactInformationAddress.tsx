@@ -108,11 +108,7 @@ export const ContactInformationAddress: FC = () => {
                                 value={countriesAsSelectOptions.find((option) => option.value === field.value.value)}
                                 onChange={field.onChange}
                             />
-                            <FormLineError
-                                dataTestId={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
-                                error={error}
-                                inputType="select"
-                            />
+                            <FormLineError error={error} inputType="select" />
                         </>
                     )}
                 />

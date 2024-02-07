@@ -1,21 +1,24 @@
 import { CyHttpMessages } from 'cypress/types/net-stubbing';
+import { DataTestIds } from 'dataTestIds';
 import { transport } from 'fixtures/demodata';
 
 export const chooseTransportPersonalCollectionAndStore = (storeName: string) => {
-    cy.getByDataTestId('pages-order-selectitem-label-name').contains(transport.personalCollection.name).click();
-    cy.getByDataTestId('layout-popup');
-    cy.getByDataTestId('pages-order-selectitem-label-name').contains(storeName).click();
-    cy.getByDataTestId('pages-order-pickupplace-popup-confirm').scrollIntoView().click();
+    cy.getByDataTestId([DataTestIds.pages_order_selectitem_label_name])
+        .contains(transport.personalCollection.name)
+        .click();
+    cy.getByDataTestId([DataTestIds.layout_popup]);
+    cy.getByDataTestId([DataTestIds.pages_order_selectitem_label_name]).contains(storeName).click();
+    cy.getByDataTestId([DataTestIds.pages_order_pickupplace_popup_confirm]).scrollIntoView().click();
 };
 
 export const changeSelectionOfTransportByName = (transportName: string) => {
-    cy.getByDataTestId(['pages-order-transport', 'pages-order-selectitem-label-name'])
+    cy.getByDataTestId([DataTestIds.pages_order_transport, DataTestIds.pages_order_selectitem_label_name])
         .contains(transportName)
         .click('left');
 };
 
 export const changeSelectionOfPaymentByName = (paymentName: string) => {
-    cy.getByDataTestId(['pages-order-payment', 'pages-order-selectitem-label-name'])
+    cy.getByDataTestId([DataTestIds.pages_order_payment, DataTestIds.pages_order_selectitem_label_name])
         .contains(paymentName)
         .click('left');
 };

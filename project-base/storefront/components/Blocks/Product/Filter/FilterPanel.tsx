@@ -20,7 +20,6 @@ type FilterPanelProps = {
     totalCount: number;
 };
 
-const TEST_IDENTIFIER = 'blocks-product-filter';
 const DEFAULT_NUMBER_OF_SHOWN_FLAGS = 5;
 const DEFAULT_NUMBER_OF_SHOWN_BRANDS = 5;
 const DEFAULT_NUMBER_OF_SHOWN_PARAMETERS = 5;
@@ -30,10 +29,7 @@ export const FilterPanel = memo<FilterPanelProps>(
         const { t } = useTranslation();
 
         return (
-            <div
-                className="z-aboveOverlay flex h-full flex-col bg-blueLight pb-1 vl:z-above vl:h-auto vl:rounded"
-                data-testid={TEST_IDENTIFIER}
-            >
+            <div className="z-aboveOverlay flex h-full flex-col bg-blueLight pb-1 vl:z-above vl:h-auto vl:rounded">
                 <div className="border-b-2 border-greyLight px-5 vl:border-none">
                     <div className="flex items-center justify-between bg-blueLight py-5 text-2xl vl:hidden">
                         {t('Product filter')}

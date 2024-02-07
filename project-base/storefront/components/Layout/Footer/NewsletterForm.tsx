@@ -19,8 +19,6 @@ import { NewsletterFormType } from 'types/form';
 
 const ErrorPopup = dynamic(() => import('components/Forms/Lib/ErrorPopup').then((component) => component.ErrorPopup));
 
-const TEST_IDENTIFIER = 'layout-footer-newsletterform';
-
 export const NewsletterForm: FC = () => {
     const { t } = useTranslation();
     const [, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
@@ -46,10 +44,7 @@ export const NewsletterForm: FC = () => {
 
     return (
         <>
-            <div
-                className="relative flex flex-col pb-7 pt-8 before:absolute before:bottom-0 before:-left-5 before:h-32 before:w-28 before:-translate-x-full before:bg-[url('/images/lines.webp')] before:content-[''] lg:flex-row lg:items-center"
-                data-testid={TEST_IDENTIFIER}
-            >
+            <div className="relative flex flex-col pb-7 pt-8 before:absolute before:bottom-0 before:-left-5 before:h-32 before:w-28 before:-translate-x-full before:bg-[url('/images/lines.webp')] before:content-[''] lg:flex-row lg:items-center">
                 <div className="mb-3 break-words text-lg font-bold text-dark lg:mb-0 lg:pr-5 lg:text-2xl">
                     {t('Sign up for our newsletter and get 35% discount on running apparel')}
                 </div>

@@ -1,7 +1,7 @@
 export const brandSencor = 'Sencor';
 
 export const buttonName = {
-    login: 'Log-in',
+    login: 'Login',
 };
 
 export const customer1 = {
@@ -41,8 +41,8 @@ export const placeholder = {
     password: 'Password',
     email: 'Your email',
     phone: 'Phone',
-    firstName: 'First name',
-    lastName: 'Last name',
+    firstName: 'First Name',
+    lastName: 'Last Name',
     street: 'Street and house no.',
     city: 'City',
     postCode: 'Postcode',
@@ -55,7 +55,7 @@ export const products = {
         uuid: '8c44b857-527d-41e2-a128-fc042b41736f',
         name: '22" Sencor SLE 22F46DM4 HELLO KITTY',
         fullName: 'Television 22" Sencor SLE 22F46DM4 HELLO KITTY plasma',
-        catnum: '9177759',
+        catnum: 9177759,
         url: '/television-22-sencor-sle-22f46dm4-hello-kitty-plasma',
     },
     philips32PFL4308: {
@@ -64,7 +64,7 @@ export const products = {
     },
     philips54CRT: {
         name: '54" Philips CRT 32PFL4308',
-        catnum: '9176588',
+        catnum: 9176588,
     },
 } as const;
 

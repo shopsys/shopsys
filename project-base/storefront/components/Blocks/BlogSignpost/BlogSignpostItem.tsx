@@ -7,9 +7,8 @@ type BlogSignpostItemProps = {
     itemLevel?: number;
 };
 
-export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({ children, href, isActive, itemLevel, dataTestId }) => (
+export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({ children, href, isActive, itemLevel }) => (
     <ExtendedNextLink
-        data-testid={dataTestId}
         href={href}
         style={itemLevel !== undefined ? { marginLeft: `calc(6px*${itemLevel})` } : {}}
         type="blogCategory"

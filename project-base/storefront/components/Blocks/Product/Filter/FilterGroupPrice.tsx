@@ -10,8 +10,6 @@ type FilterGroupPriceProps = {
     initialMaxPrice: string;
 };
 
-const TEST_IDENTIFIER = 'blocks-product-filter-filtergroup-price';
-
 export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinPrice, initialMaxPrice }) => {
     const [isGroupOpen, setIsGroupOpen] = useState(true);
     const { filter, updateFilterPriceMinimum, updateFilterPriceMaximum } = useQueryParams();
@@ -34,7 +32,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinP
     };
 
     return (
-        <FilterGroupWrapper dataTestId={TEST_IDENTIFIER}>
+        <FilterGroupWrapper>
             <FilterGroupTitle isOpen={isGroupOpen} title={title} onClick={() => setIsGroupOpen(!isGroupOpen)} />
             {isGroupOpen && (
                 <FilterGroupContent>

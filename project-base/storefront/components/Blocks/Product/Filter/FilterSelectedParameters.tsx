@@ -9,8 +9,6 @@ import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlic
 import { useSessionStore } from 'store/useSessionStore';
 import { FilterOptionsParameterUrlQueryType } from 'types/productFilter';
 
-const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
-
 type FilterSelectedParametersProps = {
     filterOptions: ProductFilterOptionsFragmentApi;
 };
@@ -40,7 +38,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     const checkedFlags = getCheckedFlags(defaultProductFiltersMap, filterOptions.flags, filter?.flags);
 
     return (
-        <div className="z-aboveOverlay rounded py-4 vl:z-[0]" data-testid={TEST_IDENTIFIER}>
+        <div className="z-aboveOverlay rounded py-4 vl:z-[0]">
             <div className="h4 mb-3 uppercase">{t('Selected filters')}</div>
 
             <div className="mb-4 flex flex-col gap-3">
@@ -121,14 +119,10 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                     />
                                 </SelectedParametersListItem>
                             ) : (
-                                selectedParameterValues?.map((selectedValue, index) => (
-                                    <SelectedParametersListItem
-                                        key={selectedValue.uuid}
-                                        dataTestId={TEST_IDENTIFIER + index}
-                                    >
+                                selectedParameterValues?.map((selectedValue) => (
+                                    <SelectedParametersListItem key={selectedValue.uuid}>
                                         {selectedValue.text}
                                         <SelectedParametersIcon
-                                            dataTestId={TEST_IDENTIFIER + 'remove-' + index}
                                             onClick={() =>
                                                 updateFilterParameters(selectedParameter.parameter, selectedValue.uuid)
                                             }
@@ -184,8 +178,8 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     );
 };
 
-const SelectedParametersIcon: FC<{ onClick: () => void }> = ({ onClick, dataTestId }) => (
-    <RemoveThinIcon className="ml-3 w-3 cursor-pointer" data-testid={dataTestId} onClick={onClick} />
+const SelectedParametersIcon: FC<{ onClick: () => void }> = ({ onClick }) => (
+    <RemoveThinIcon className="ml-3 w-3 cursor-pointer" onClick={onClick} />
 );
 
 const getCheckedFlags = (

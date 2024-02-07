@@ -3,8 +3,8 @@ import { twMergeCustom } from 'helpers/twMerge';
 import { forwardRef } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 
-export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, dataTestId, title }) => (
-    <li className={className} data-testid={dataTestId} title={title}>
+export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, title }) => (
+    <li className={className} title={title}>
         {children}
     </li>
 );

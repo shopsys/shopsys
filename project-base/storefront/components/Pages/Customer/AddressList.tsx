@@ -16,8 +16,6 @@ type AddressListProps = {
     deliveryAddresses: DeliveryAddressType[];
 };
 
-const TEST_IDENTIFIER = 'list-addresses';
-
 export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deliveryAddresses }) => {
     const [addressToBeDeleted, setAddressToBeDeleted] = useState<string | undefined>(undefined);
     const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutationApi();
@@ -61,10 +59,9 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
     return (
         <>
             <div className="flex w-full flex-col">
-                {deliveryAddresses.map((address, index) => (
+                {deliveryAddresses.map((address) => (
                     <div
                         key={address.uuid}
-                        data-testid={TEST_IDENTIFIER + '-item-' + index}
                         className={twJoin(
                             'mb-5 flex w-full items-center justify-between rounded border border-grey p-5',
                             defaultDeliveryAddress?.uuid === address.uuid

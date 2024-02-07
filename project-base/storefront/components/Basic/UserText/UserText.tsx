@@ -5,10 +5,10 @@ type UserTextProps = {
     isGrapesJs?: boolean;
 };
 
-export const UserText: FC<UserTextProps> = ({ dataTestId, htmlContent, isGrapesJs }) => {
+export const UserText: FC<UserTextProps> = ({ htmlContent, isGrapesJs }) => {
     if (isGrapesJs) {
-        return <GrapesJs content={htmlContent} dataTestId={dataTestId} />;
+        return <GrapesJs content={htmlContent} />;
     }
 
-    return <section dangerouslySetInnerHTML={{ __html: htmlContent }} data-testid={dataTestId} />;
+    return <section dangerouslySetInnerHTML={{ __html: htmlContent }} />;
 };

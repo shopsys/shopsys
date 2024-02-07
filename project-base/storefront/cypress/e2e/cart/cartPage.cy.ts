@@ -5,6 +5,7 @@ import {
     decreaseCartItemQuantityWithSpinbox,
     continueToTransportAndPaymentSelection,
 } from './cartSupport';
+import { DataTestIds } from 'dataTestIds';
 import { products, url } from 'fixtures/demodata';
 import { checkLoaderOverlayIsNotVisible, checkUrl } from 'support';
 
@@ -63,24 +64,30 @@ describe('Cart page tests', () => {
     });
 
     it('should remove products from cart', () => {
-        cy.getByDataTestId(['pages-cart-list-item-0', 'pages-cart-removecartitembutton']).click();
-        cy.getByDataTestId(['pages-cart-list-item-0', 'pages-cart-list-item-name']).contains(
+        cy.getByDataTestId([
+            [DataTestIds.pages_cart_list_item_, 0],
+            DataTestIds.pages_cart_removecartitembutton,
+        ]).click();
+        cy.getByDataTestId([[DataTestIds.pages_cart_list_item_, 0], DataTestIds.pages_cart_list_item_name]).contains(
             products.helloKitty.fullName,
         );
-        cy.getByDataTestId('pages-cart-list-item-1').should('not.exist');
+        cy.getByDataTestId([[DataTestIds.pages_cart_list_item_, 1]]).should('not.exist');
         checkCartTotalPrice('€279.92');
 
-        cy.getByDataTestId(['pages-cart-list-item-0', 'pages-cart-removecartitembutton']).click();
-        cy.getByDataTestId('pages-cart-list-item-0').should('not.exist');
-        cy.getByDataTestId('cart-page-empty-cart-text').should('be.visible');
+        cy.getByDataTestId([
+            [DataTestIds.pages_cart_list_item_, 0],
+            DataTestIds.pages_cart_removecartitembutton,
+        ]).click();
+        cy.getByDataTestId([[DataTestIds.pages_cart_list_item_, 0]]).should('not.exist');
+        cy.getByDataTestId([DataTestIds.cart_page_empty_cart_text]).should('be.visible');
     });
 
     it('should add and then remove promo code from cart', () => {
-        cy.getByDataTestId('blocks-promocode-add-button').click();
+        cy.getByDataTestId([DataTestIds.blocks_promocode_add_button]).click();
         cy.get('#blocks-promocode-input').should('be.visible').type('test', { force: true });
-        cy.getByDataTestId('blocks-promocode-apply-button').click();
-        cy.getByDataTestId('blocks-promocode-promocodeinfo-code').contains('test');
-        cy.getByDataTestId('pages-cart-cartpreview-discount').contains('-€27.99');
+        cy.getByDataTestId([DataTestIds.blocks_promocode_apply_button]).click();
+        cy.getByDataTestId([DataTestIds.blocks_promocode_promocodeinfo_code]).contains('test');
+        cy.getByDataTestId([DataTestIds.pages_cart_cartpreview_discount]).contains('-€27.99');
         checkCartTotalPrice('€647.53');
 
         continueToTransportAndPaymentSelection();

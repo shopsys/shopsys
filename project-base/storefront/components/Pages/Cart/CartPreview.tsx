@@ -1,10 +1,9 @@
+import { DataTestIds } from 'cypress/dataTestIds';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
-
-const TEST_IDENTIFIER = 'pages-cart-cartpreview';
 
 export const CartPreview: FC = () => {
     const { t } = useTranslation();
@@ -16,17 +15,17 @@ export const CartPreview: FC = () => {
     }
 
     return (
-        <table className="w-full" data-testid={TEST_IDENTIFIER}>
+        <table className="w-full">
             <tbody>
                 {mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0 && (
-                    <CartPreviewRow dataTestId={TEST_IDENTIFIER + '-discount'}>
+                    <CartPreviewRow dataTestId={DataTestIds.pages_cart_cartpreview_discount}>
                         <CartPreviewCell>{t('The amount of discounts')}</CartPreviewCell>
                         <CartPreviewCell isAlignRight>
                             <strong>{'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}</strong>
                         </CartPreviewCell>
                     </CartPreviewRow>
                 )}
-                <CartPreviewRow dataTestId={TEST_IDENTIFIER + '-total'}>
+                <CartPreviewRow dataTestId={DataTestIds.pages_cart_cartpreview_total}>
                     <CartPreviewCell>{t('You pay')}</CartPreviewCell>
                     <CartPreviewCell isAlignRight>
                         <strong className="text-2xl text-primary">

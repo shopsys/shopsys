@@ -10,6 +10,7 @@ import {
     usePaymentChangeInSelect,
     useTransportChangeInSelect,
 } from 'components/Pages/Order/TransportAndPayment/helpers';
+import { DataTestIds } from 'cypress/dataTestIds';
 import {
     ListedStoreFragmentApi,
     SimplePaymentFragmentApi,
@@ -29,8 +30,6 @@ type TransportAndPaymentSelectProps = {
     changePaymentInCart: ChangePaymentHandler;
     isTransportSelectionLoading: boolean;
 };
-
-const TEST_IDENTIFIER = 'pages-order-';
 
 export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     transports,
@@ -57,14 +56,9 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         transportItem: TransportWithAvailablePaymentsAndStoresFragmentApi,
         isActive: boolean,
     ) => (
-        <TransportAndPaymentListItem
-            key={transportItem.uuid}
-            dataTestId={TEST_IDENTIFIER + 'transport-item' + (isActive ? '-active' : '')}
-            isActive={isActive}
-        >
+        <TransportAndPaymentListItem key={transportItem.uuid} isActive={isActive}>
             <Radiobutton
                 checked={isActive}
-                dataTestId={TEST_IDENTIFIER + 'transport-item-input'}
                 id={transportItem.uuid}
                 name="transport"
                 value={transportItem.uuid}
@@ -90,14 +84,9 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
             payment.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT';
 
         return (
-            <TransportAndPaymentListItem
-                key={paymentItem.uuid}
-                dataTestId={TEST_IDENTIFIER + 'payment-item' + (isActive ? '-active' : '')}
-                isActive={isActive}
-            >
+            <TransportAndPaymentListItem key={paymentItem.uuid} isActive={isActive}>
                 <Radiobutton
                     checked={isActive}
-                    dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
                     id={paymentItem.uuid}
                     name="payment"
                     value={paymentItem.uuid}
@@ -136,8 +125,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     return (
         <>
             <PacketeryContainer />
-            <div data-testid={TEST_IDENTIFIER + 'transport-and-payment'}>
-                <div data-testid={TEST_IDENTIFIER + 'transport'}>
+            <div>
+                <div data-testid={DataTestIds.pages_order_transport}>
                     <div className="h3 mb-3">{t('Choose transport')}</div>
                     <ul>
                         {transport
@@ -145,11 +134,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                             : transports.map((transportItem) => renderTransportListItem(transportItem, false))}
                     </ul>
                     {!!transport && (
-                        <ResetButton
-                            dataTestId={TEST_IDENTIFIER + 'reset-transport'}
-                            text={t('Change transport type')}
-                            onClick={resetTransportAndPayment}
-                        />
+                        <ResetButton text={t('Change transport type')} onClick={resetTransportAndPayment} />
                     )}
                     {!!preSelectedTransport && (
                         <PickupPlacePopup
@@ -160,7 +145,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     )}
                 </div>
                 {transport !== null && preSelectedTransport === null && (
-                    <div className="relative mt-12" data-testid={TEST_IDENTIFIER + 'payment'}>
+                    <div className="relative mt-12" data-testid={DataTestIds.pages_order_payment}>
                         {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" />}
 
                         <div className="h3 mb-3">{t('Choose payment')}</div>
@@ -171,11 +156,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                 : transport.payments.map((paymentItem) => renderPaymentListItem(paymentItem, false))}
                         </ul>
                         {payment !== null && (
-                            <ResetButton
-                                dataTestId={TEST_IDENTIFIER + 'reset-payment'}
-                                text={t('Change payment type')}
-                                onClick={resetPaymentAndGoPayBankSwift}
-                            />
+                            <ResetButton text={t('Change payment type')} onClick={resetPaymentAndGoPayBankSwift} />
                         )}
                     </div>
                 )}
@@ -186,12 +167,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
 type ResetButtonProps = { text: string; onClick: () => void };
 
-const ResetButton: FC<ResetButtonProps> = ({ text, dataTestId, onClick }) => (
-    <button
-        className="flex w-full items-center bg-whitesmoke px-2 py-1 text-sm"
-        data-testid={dataTestId}
-        onClick={onClick}
-    >
+const ResetButton: FC<ResetButtonProps> = ({ text, onClick }) => (
+    <button className="flex w-full items-center bg-whitesmoke px-2 py-1 text-sm" onClick={onClick}>
         {text}
         <ArrowIcon className="ml-2" />
     </button>

@@ -6,12 +6,9 @@ type FormLineErrorProps = {
     inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password' | 'select';
     textInputSize?: 'small' | 'default';
     error?: FieldError;
-    dataTestId?: string;
 };
 
-const getDataTestId = (dataTestId?: string) => dataTestId ?? 'forms-error';
-
-export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, dataTestId, textInputSize }) => {
+export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textInputSize }) => {
     if (error === undefined) {
         return null;
     }
@@ -24,7 +21,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, dataTe
     const isTextInputSmall = textInputSize === 'small';
 
     return (
-        <div className="relative mt-2" data-testid={getDataTestId(dataTestId)}>
+        <div className="relative mt-2">
             <CrossIcon
                 className={twJoin(
                     'absolute flex w-4 text-red',

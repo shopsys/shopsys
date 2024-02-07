@@ -10,8 +10,6 @@ type BrandDetailContentProps = {
     brand: BrandDetailFragmentApi;
 };
 
-const TEST_IDENTIFIER = 'pages-branddetail-';
-
 export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
 
@@ -20,7 +18,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
             <Webline>
                 <h1 className="mb-3">{brand.seoH1 !== null ? brand.seoH1 : brand.name}</h1>
                 <div className="mb-5 flex w-full flex-col justify-start md:flex-row">
-                    <div className="mr-5 min-w-[13.75rem] self-start" data-testid={TEST_IDENTIFIER + 'image'}>
+                    <div className="mr-5 min-w-[13.75rem] self-start">
                         <Image
                             alt={brand.mainImage?.name || brand.name}
                             height={220}
@@ -28,10 +26,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                             width={220}
                         />
                     </div>
-                    <div
-                        className="self-start  md:self-center [&>section]:text-base [&>section]:text-dark"
-                        data-testid={TEST_IDENTIFIER + 'description'}
-                    >
+                    <div className="self-start  md:self-center [&>section]:text-base [&>section]:text-dark">
                         {brand.description !== null ? <UserText htmlContent={brand.description} /> : null}
                     </div>
                 </div>

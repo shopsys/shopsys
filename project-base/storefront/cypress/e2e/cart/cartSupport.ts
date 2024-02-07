@@ -1,31 +1,33 @@
+import { DataTestIds } from 'dataTestIds';
 import { products, url } from 'fixtures/demodata';
 import { checkUrl } from 'support';
 
 export const increaseCartItemQuantityWithSpinbox = (listIndex = 0) => {
-    cy.getByDataTestId([`pages-cart-list-item-${listIndex}`, 'forms-spinbox-increase']).click();
+    cy.getByDataTestId([[DataTestIds.pages_cart_list_item_, listIndex], DataTestIds.forms_spinbox_increase]).click();
 };
 
 export const decreaseCartItemQuantityWithSpinbox = (listIndex = 0) => {
-    cy.getByDataTestId([`pages-cart-list-item-${listIndex}`, 'forms-spinbox-decrease']).click();
+    cy.getByDataTestId([[DataTestIds.pages_cart_list_item_, listIndex], DataTestIds.forms_spinbox_decrease]).click();
 };
 
 export const checkCartItemTotalPrice = (priceWithCurrency: string, listIndex = 0) => {
-    cy.getByDataTestId([`pages-cart-list-item-${listIndex}`, 'pages-cart-list-item-totalprice']).contains(
-        priceWithCurrency,
-    );
+    cy.getByDataTestId([
+        [DataTestIds.pages_cart_list_item_, listIndex],
+        DataTestIds.pages_cart_list_item_totalprice,
+    ]).contains(priceWithCurrency);
 };
 
 export const checkCartTotalPrice = (priceWithCurrency: string) => {
-    cy.getByDataTestId('pages-cart-cartpreview-total').contains(priceWithCurrency);
+    cy.getByDataTestId([DataTestIds.pages_cart_cartpreview_total]).contains(priceWithCurrency);
 };
 
 export const continueToTransportAndPaymentSelection = () => {
-    cy.getByDataTestId('blocks-orderaction-next').click();
+    cy.getByDataTestId([DataTestIds.blocks_orderaction_next]).click();
 };
 
 export const checkIfCorrectlyAddedHelloKittyToCart = () => {
     checkProductAndGoToCartFromCartPopupWindow(products.helloKitty.fullName);
-    cy.getByDataTestId(['pages-cart-list-item-0', 'pages-cart-list-item-name']).contains(
+    cy.getByDataTestId([[DataTestIds.pages_cart_list_item_, 0], DataTestIds.pages_cart_list_item_name]).contains(
         products.helloKitty.fullName,
     );
 
@@ -33,30 +35,35 @@ export const checkIfCorrectlyAddedHelloKittyToCart = () => {
     checkUrl(url.cart);
 };
 
-export const addProductToCartFromProductList = (productCatnum: string) => {
-    cy.getByDataTestId([`blocks-product-list-listeditem-${productCatnum}`, 'blocks-product-addtocart'])
+export const addProductToCartFromProductList = (productCatnum: number) => {
+    cy.getByDataTestId([
+        [DataTestIds.blocks_product_list_listeditem_, productCatnum],
+        DataTestIds.blocks_product_addtocart,
+    ])
         .should('be.visible')
         .click();
 };
 
-export const addProductToCartFromPromotedProductsOnHomepage = (productCatnum: string) => {
+export const addProductToCartFromPromotedProductsOnHomepage = (productCatnum: number) => {
     cy.getByDataTestId([
-        'blocks-product-slider-promoted-products',
-        `blocks-product-list-listeditem-${productCatnum}`,
-        'blocks-product-addtocart',
+        DataTestIds.blocks_product_slider_promoted_products,
+        [DataTestIds.blocks_product_list_listeditem_, productCatnum],
+        DataTestIds.blocks_product_addtocart,
     ]).click();
 };
 
-export const searchProductByNameTypeEnterAndCheckResult = (productName: string, productCatnum: string) => {
-    cy.getByDataTestId('layout-header-search-autocomplete-input').type(productName);
-    cy.getByDataTestId('layout-header-search-autocomplete-popup-products').contains(productName);
-    cy.getByDataTestId('layout-header-search-autocomplete-input').type('{enter}');
+export const searchProductByNameTypeEnterAndCheckResult = (productName: string, productCatnum: number) => {
+    cy.getByDataTestId([DataTestIds.layout_header_search_autocomplete_input]).type(productName);
+    cy.getByDataTestId([DataTestIds.layout_header_search_autocomplete_popup_products]).contains(productName);
+    cy.getByDataTestId([DataTestIds.layout_header_search_autocomplete_input]).type('{enter}');
     checkUrl(url.search);
-    cy.getByDataTestId('search-results-heading').contains(productName);
-    cy.getByDataTestId('blocks-product-list-listeditem-' + productCatnum).contains(productName);
+    cy.getByDataTestId([DataTestIds.search_results_heading]).contains(productName);
+    cy.getByDataTestId([[DataTestIds.blocks_product_list_listeditem_, productCatnum]]).contains(productName);
 };
 
 export const checkProductAndGoToCartFromCartPopupWindow = (productName: string) => {
-    cy.getByDataTestId(['layout-popup', 'blocks-product-addtocartpopup-product-name']).contains(productName);
-    cy.getByDataTestId(['layout-popup', 'basic-link-button']).click();
+    cy.getByDataTestId([DataTestIds.layout_popup, DataTestIds.blocks_product_addtocartpopup_product_name]).contains(
+        productName,
+    );
+    cy.getByDataTestId([DataTestIds.layout_popup, DataTestIds.basic_link]).click();
 };

@@ -16,8 +16,6 @@ import { useRouter } from 'next/router';
 import { usePersistStore } from 'store/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 
-const TEST_IDENTIFIER = 'layout-header-cart-';
-
 export const Cart: FC = ({ className }) => {
     const router = useRouter();
     const { t } = useTranslation();
@@ -36,7 +34,6 @@ export const Cart: FC = ({ className }) => {
             )}
 
             <ExtendedNextLink
-                data-testid={TEST_IDENTIFIER + 'block'}
                 href={cartUrl}
                 className={twJoin(
                     'hidden items-center gap-x-4 rounded bg-orangeLight py-4 pr-2 pl-4 text-black no-underline transition-all hover:text-black hover:no-underline group-hover:rounded-b-none group-hover:bg-white group-hover:shadow-lg lg:flex',
@@ -46,7 +43,7 @@ export const Cart: FC = ({ className }) => {
                     <CartIcon className="w-6 lg:w-5" />
                     <CartCount>{cart?.items.length ?? 0}</CartCount>
                 </span>
-                <span className="hidden text-sm font-bold lg:block" data-testid={TEST_IDENTIFIER + 'totalprice'}>
+                <span className="hidden text-sm font-bold lg:block">
                     {formatPrice(cart?.totalItemsPrice.priceWithVat ?? 0, {
                         explicitZero: true,
                     })}
@@ -54,7 +51,6 @@ export const Cart: FC = ({ className }) => {
             </ExtendedNextLink>
 
             <div
-                data-testid={TEST_IDENTIFIER + 'detail'}
                 className={twJoin(
                     'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 p-5 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded lg:rounded-tr-none lg:bg-white lg:opacity-0 lg:shadow-md',
                     !cart?.items.length
@@ -75,11 +71,7 @@ export const Cart: FC = ({ className }) => {
                             ))}
                         </ul>
                         <div className="flex w-full justify-end pt-5">
-                            <Button
-                                dataTestId={TEST_IDENTIFIER + 'button'}
-                                size="small"
-                                onClick={() => router.push(cartUrl)}
-                            >
+                            <Button size="small" onClick={() => router.push(cartUrl)}>
                                 {t('Go to cart')}
                             </Button>
                         </div>
@@ -105,11 +97,8 @@ export const Cart: FC = ({ className }) => {
     );
 };
 
-const CartCount: FC = ({ children, dataTestId }) => (
-    <span
-        className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold leading-normal text-white lg:-top-2 lg:-right-2"
-        data-testid={dataTestId}
-    >
+const CartCount: FC = ({ children }) => (
+    <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold leading-normal text-white lg:-top-2 lg:-right-2">
         {children}
     </span>
 );

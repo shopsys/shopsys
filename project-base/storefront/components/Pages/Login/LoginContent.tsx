@@ -5,6 +5,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { DataTestIds } from 'cypress/dataTestIds';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
@@ -15,8 +16,6 @@ import { useRouter } from 'next/router';
 import { FormProvider } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import * as Yup from 'yup';
-
-const TEST_IDENTIFIER = 'pages-login-submit';
 
 export const LoginContent: FC = () => {
     const { t } = useTranslation();
@@ -71,7 +70,7 @@ export const LoginContent: FC = () => {
                         }}
                     />
                     <div className="mt-8 flex w-full justify-center">
-                        <SubmitButton dataTestId={TEST_IDENTIFIER}>{t('Log in')}</SubmitButton>
+                        <SubmitButton dataTestId={DataTestIds.pages_login_submit}>{t('Log in')}</SubmitButton>
                     </div>
                 </Form>
             </FormProvider>

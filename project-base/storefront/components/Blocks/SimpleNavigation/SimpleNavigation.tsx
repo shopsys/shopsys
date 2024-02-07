@@ -1,4 +1,5 @@
 import { SimpleNavigationListItem } from './SimpleNavigationListItem';
+import { DataTestIds } from 'cypress/dataTestIds';
 import { twMergeCustom } from 'helpers/twMerge';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropType } from 'types/simpleNavigation';
@@ -10,8 +11,6 @@ type SimpleNavigationProps = {
     linkType: PageType;
 };
 
-const TEST_IDENTIFIER = 'blocks-simplenavigation';
-
 export const SimpleNavigation: FC<SimpleNavigationProps> = ({
     listedItems,
     isWithoutSlider,
@@ -21,7 +20,6 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({
 }) => {
     return (
         <ul
-            data-testid={TEST_IDENTIFIER}
             className={twMergeCustom(
                 !isWithoutSlider &&
                     'snap-x snap-mandatory auto-cols-[40%] grid-flow-col overflow-x-auto overflow-y-hidden overscroll-x-contain lg:grid-flow-row',
@@ -33,7 +31,7 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({
                 <SimpleNavigationListItem
                     key={index}
                     className={itemClassName}
-                    dataTestId={TEST_IDENTIFIER + '-' + index}
+                    dataTestId={DataTestIds.blocks_simplenavigation_ + index}
                     linkType={linkType}
                     listedItem={listedItem}
                 >

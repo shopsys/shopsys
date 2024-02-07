@@ -6,6 +6,7 @@ import {
     searchProductByNameTypeEnterAndCheckResult,
     checkCartTotalPrice,
 } from './cartSupport';
+import { DataTestIds } from 'dataTestIds';
 import { brandSencor, DEFAULT_APP_STORE, products, url } from 'fixtures/demodata';
 import { checkUrl } from 'support';
 
@@ -18,7 +19,10 @@ describe('Product add to cart tests', () => {
 
     it('should add product to cart from brand list', () => {
         cy.visit(url.brandsOverwiev);
-        cy.getByDataTestId('blocks-simplenavigation-22').contains(brandSencor).should('be.visible').click();
+        cy.getByDataTestId([[DataTestIds.blocks_simplenavigation_, 22]])
+            .contains(brandSencor)
+            .should('be.visible')
+            .click();
         addProductToCartFromProductList(products.helloKitty.catnum);
 
         checkIfCorrectlyAddedHelloKittyToCart();
@@ -26,7 +30,7 @@ describe('Product add to cart tests', () => {
 
     it('should add product to cart from product detail', () => {
         cy.visit(products.helloKitty.url);
-        cy.getByDataTestId('pages-productdetail-addtocart-button').click();
+        cy.getByDataTestId([DataTestIds.pages_productdetail_addtocart_button]).click();
 
         checkIfCorrectlyAddedHelloKittyToCart();
     });
@@ -41,12 +45,12 @@ describe('Product add to cart tests', () => {
     it('should add variant product to cart from product detail', () => {
         cy.visit(products.philips32PFL4308.url);
         cy.getByDataTestId([
-            `pages-productdetail-variant-${products.philips54CRT.catnum}`,
-            'blocks-product-addtocart',
+            [DataTestIds.pages_productdetail_variant_, products.philips54CRT.catnum],
+            DataTestIds.blocks_product_addtocart,
         ]).click();
 
         checkProductAndGoToCartFromCartPopupWindow(products.philips54CRT.name);
-        cy.getByDataTestId(['pages-cart-list-item-0', 'pages-cart-list-item-name']).contains(
+        cy.getByDataTestId([[DataTestIds.pages_cart_list_item_, 0], DataTestIds.pages_cart_list_item_name]).contains(
             products.philips54CRT.name,
         );
         checkCartTotalPrice('€492.40');

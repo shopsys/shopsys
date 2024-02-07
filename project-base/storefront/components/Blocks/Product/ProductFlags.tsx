@@ -4,8 +4,6 @@ import tinycolor from 'tinycolor2';
 
 type ProductFlagsProps = { flags: SimpleFlagFragmentApi[] };
 
-const TEST_IDENTIFIER = 'blocks-product-flags-';
-
 export const ProductFlags: FC<ProductFlagsProps> = ({ flags }) => {
     if (!flags.length) {
         return null;
@@ -13,10 +11,9 @@ export const ProductFlags: FC<ProductFlagsProps> = ({ flags }) => {
 
     return (
         <>
-            {flags.map(({ name, rgbColor }, key) => (
+            {flags.map(({ name, rgbColor }, index) => (
                 <div
-                    key={key}
-                    data-testid={TEST_IDENTIFIER + key}
+                    key={index}
                     style={{ backgroundColor: rgbColor || '#cdb3ff' }}
                     className={twJoin(
                         'mb-1 mr-auto inline-flex rounded py-1 px-2 text-xs uppercase text-black',

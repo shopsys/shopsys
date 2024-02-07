@@ -4,6 +4,7 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { DataTestIds } from 'cypress/dataTestIds';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
@@ -24,8 +25,6 @@ type TransportAndPaymentErrorsType = {
         errorMessage: string | undefined;
     };
 };
-
-const TEST_IDENTIFIER = 'blocks-promocode';
 
 export const PromoCode: FC = () => {
     const { promoCode } = useCurrentCart();
@@ -93,7 +92,7 @@ export const PromoCode: FC = () => {
 
     return (
         <>
-            <div className="relative w-80" data-testid={TEST_IDENTIFIER}>
+            <div className="relative w-80">
                 {promoCode !== null ? (
                     <>
                         {fetchingRemovePromoCode && <LoaderWithOverlay className="w-5" />}
@@ -103,7 +102,7 @@ export const PromoCode: FC = () => {
                     <>
                         <button
                             className="mb-3 inline-flex cursor-pointer items-center rounded bg-orangeLight py-3 px-4 text-sm font-bold uppercase text-grey transition hover:bg-orangeLight"
-                            data-testid={TEST_IDENTIFIER + '-add-button'}
+                            data-testid={DataTestIds.blocks_promocode_add_button}
                             onClick={() => setIsContentVisible(!isContentVisible)}
                         >
                             <PlusIcon className="mr-3 w-3" />
@@ -128,7 +127,7 @@ export const PromoCode: FC = () => {
                                     <div className="flex" ref={contentElement}>
                                         <TextInput
                                             className="!mb-0 !w-full max-w-sm !rounded-r-none !border-r-0"
-                                            id={TEST_IDENTIFIER + '-input'}
+                                            id="blocks-promocode-input"
                                             label={t('Coupon')}
                                             type="text"
                                             value={promoCodeValue}
@@ -136,7 +135,7 @@ export const PromoCode: FC = () => {
                                         />
                                         <SubmitButton
                                             className="!rounded-r !rounded-l-none !px-3"
-                                            dataTestId={TEST_IDENTIFIER + '-apply-button'}
+                                            dataTestId={DataTestIds.blocks_promocode_apply_button}
                                             isWithDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
                                             onClick={onApplyPromoCodeHandler}
                                         >

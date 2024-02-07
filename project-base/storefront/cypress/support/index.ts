@@ -1,16 +1,18 @@
 import 'cypress-real-events';
 import 'cypress-set-device-pixel-ratio';
 import compareSnapshotCommand from 'cypress-visual-regression/dist/command';
+import { DataTestIds } from 'dataTestIds';
 import { DEFAULT_APP_STORE, products } from 'fixtures/demodata';
 
-Cypress.Commands.add('getByDataTestId', (selectors: string | string[]) => {
-    if (typeof selectors === 'string') {
-        selectors = [selectors];
-    }
-
+Cypress.Commands.add('getByDataTestId', (selectors: ([DataTestIds, number] | DataTestIds)[]) => {
     let selectorString = '';
-    for (let i = 0; i < selectors.length; i++) {
-        selectorString += `[data-testid=${selectors[i]}] `;
+    for (const selector of selectors) {
+        if (Array.isArray(selector)) {
+            const [selectorPrefix, index] = selector;
+            selectorString += `[data-testid=${selectorPrefix}${index}] `;
+        } else {
+            selectorString += `[data-testid=${selector}] `;
+        }
     }
 
     return cy.get(selectorString.trim());
@@ -156,7 +158,7 @@ compareSnapshotCommand({
 });
 
 export const checkAndHideSuccessToast = () => {
-    cy.getByDataTestId('toast-success').should('exist').click().should('not.exist');
+    cy.getByDataTestId([DataTestIds.toast_success]).should('exist').click().should('not.exist');
 };
 
 export const checkUrl = (url: string) => {
@@ -164,16 +166,17 @@ export const checkUrl = (url: string) => {
 };
 
 export const checkLoaderOverlayIsNotVisible = (timeout?: number) => {
-    cy.getByDataTestId('loader-overlay').should('be.visible', { timeout });
+    cy.getByDataTestId([DataTestIds.loader_overlay]).should('be.visible', { timeout });
 };
 
 export const takeSnapshotAndCompare = (snapshotName: string) => {
+    cy.wait(200);
     cy.setDevicePixelRatio(1);
     cy.screenshot();
     cy.compareSnapshot(snapshotName);
 };
 
-export const changeElementText = (selector: string, newText: string, isRightAfterSSR = true) => {
+export const changeElementText = (selector: DataTestIds, newText: string, isRightAfterSSR = true) => {
     if (isRightAfterSSR) {
         cy.wait(200);
     }

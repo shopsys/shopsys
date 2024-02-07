@@ -1,6 +1,7 @@
 import { StoreSelect } from './StoreSelect';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { DataTestIds } from 'cypress/dataTestIds';
 import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
@@ -10,8 +11,6 @@ type PickupPlacePopupProps = {
     onChangePickupPlaceCallback: (selectedPickupPlace: ListedStoreFragmentApi | null) => void;
     onClosePickupPlacePopupCallback: () => void;
 };
-
-const TEST_IDENTIFIER = 'pages-order-pickupplace-popup-';
 
 export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
     transport,
@@ -50,11 +49,9 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
                 onSelectStoreCallback={onSelectStoreHandler}
             />
             <div className="mt-5 flex justify-between">
-                <Button dataTestId={TEST_IDENTIFIER + 'close'} onClick={onClosePickupPlacePopupHandler}>
-                    {t('Close')}
-                </Button>
+                <Button onClick={onClosePickupPlacePopupHandler}>{t('Close')}</Button>
                 <Button
-                    dataTestId={TEST_IDENTIFIER + 'confirm'}
+                    dataTestId={DataTestIds.pages_order_pickupplace_popup_confirm}
                     isDisabled={selectedStoreUuid === ''}
                     onClick={onConfirmPickupPlaceHandler}
                 >

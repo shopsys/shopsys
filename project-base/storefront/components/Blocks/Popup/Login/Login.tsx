@@ -25,8 +25,6 @@ type LoginProps = {
     shouldOverwriteCustomerUserCart?: boolean;
 };
 
-const TEST_IDENTIFIER = 'blocks-popup-login';
-
 export const Login: FC<LoginProps> = ({ defaultEmail, shouldOverwriteCustomerUserCart }) => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
@@ -59,10 +57,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail, shouldOverwriteCustomerUse
     };
 
     return (
-        <div
-            className="flex w-full max-w-xs flex-col sm:max-w-md md:max-w-2xl lg:max-w-3xl lg:flex-row"
-            data-testid={TEST_IDENTIFIER}
-        >
+        <div className="flex w-full max-w-xs flex-col sm:max-w-md md:max-w-2xl lg:max-w-3xl lg:flex-row">
             <div className="w-full border-b border-primary lg:w-1/2 lg:border-b-0 lg:border-r lg:pr-5">
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
@@ -91,9 +86,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail, shouldOverwriteCustomerUse
 
                         <div className="mt-5 mb-5 flex items-center justify-between gap-2 lg:mb-0 lg:block lg:border-none lg:p-0">
                             <div className="order-1 flex w-full justify-end">
-                                <SubmitButton className="max-lg:!px-3" dataTestId="blocks-popup-login-submit">
-                                    {t('Log-in')}
-                                </SubmitButton>
+                                <SubmitButton className="max-lg:!px-3">{t('Log-in')}</SubmitButton>
                             </div>
 
                             <div className="flex items-center gap-1 whitespace-nowrap rounded border-primary py-2 px-2 text-sm text-primary lg:mt-5 lg:border-2 lg:px-3 lg:py-3">

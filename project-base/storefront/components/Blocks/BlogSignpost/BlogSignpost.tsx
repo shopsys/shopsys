@@ -10,8 +10,6 @@ type BlogSingpostProps = {
     blogCategoryItems?: ListedBlogCategoryRecursiveType[];
 };
 
-const TEST_IDENTIFIER = 'blocks-blogsignpost-';
-
 export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) => {
     const { t } = useTranslation();
 
@@ -19,16 +17,12 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
         <div className="flex flex-col rounded bg-primary p-7">
             <h2 className="mb-3">{t('Article categories')}</h2>
 
-            {blogCategoryItems?.map((blogCategory, index) => {
+            {blogCategoryItems?.map((blogCategory) => {
                 const isActive = activeItem === blogCategory.uuid;
 
                 return (
                     <Fragment key={blogCategory.uuid}>
-                        <BlogSignpostItem
-                            dataTestId={TEST_IDENTIFIER + index}
-                            href={blogCategory.link}
-                            isActive={isActive}
-                        >
+                        <BlogSignpostItem href={blogCategory.link} isActive={isActive}>
                             <BlogSignpostIcon isActive={isActive} />
                             {blogCategory.name}
                         </BlogSignpostItem>

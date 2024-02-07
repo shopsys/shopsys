@@ -9,20 +9,13 @@ type NavigationItemProps = {
     navigationItem: CategoriesByColumnFragmentApi;
 };
 
-const TEST_IDENTIFIER = 'layout-header-navigation-navigationitem';
-
 export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem }) => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
     const hasChildren = !!navigationItem.categoriesByColumns.length;
     const isCatalogLink = navigationItem.link === `/#`;
 
     return (
-        <li
-            className="group"
-            data-testid={TEST_IDENTIFIER}
-            onMouseEnter={() => setIsMenuOpened(true)}
-            onMouseLeave={() => setIsMenuOpened(false)}
-        >
+        <li className="group" onMouseEnter={() => setIsMenuOpened(true)} onMouseLeave={() => setIsMenuOpened(false)}>
             <ExtendedNextLink
                 href={navigationItem.link}
                 type={isCatalogLink ? 'homepage' : 'category'}

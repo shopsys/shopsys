@@ -4,8 +4,6 @@ import { ArticlePlacementTypeEnumApi, SimpleNotBlogArticleFragmentApi, useArticl
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 
-const TEST_IDENTIFIER = 'layout-footer-footermenu';
-
 export const FooterMenu: FC = () => {
     const { t } = useTranslation();
     const [{ data }] = useArticlesQueryApi({
@@ -47,17 +45,14 @@ export const FooterMenu: FC = () => {
     );
 
     return (
-        <div
-            className="flex w-full flex-col flex-wrap gap-6 text-center lg:flex-row lg:justify-center lg:text-left vl:flex-nowrap vl:justify-between"
-            data-testid={TEST_IDENTIFIER}
-        >
+        <div className="flex w-full flex-col flex-wrap gap-6 text-center lg:flex-row lg:justify-center lg:text-left vl:flex-nowrap vl:justify-between">
             {items.map((item) => (
                 <div key={item.key} className="flex-1">
                     <FooterMenuItem items={item.items} title={item.title} />
                 </div>
             ))}
 
-            <div className="flex basis-full flex-col items-center vl:flex-1" data-testid={TEST_IDENTIFIER}>
+            <div className="flex basis-full flex-col items-center vl:flex-1">
                 <FooterContact />
             </div>
         </div>

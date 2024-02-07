@@ -1,3 +1,4 @@
+import { DataTestIds } from 'cypress/dataTestIds';
 import { useForwardedRef } from 'hooks/typescript/useForwardedRef';
 import useTranslation from 'next-translate/useTranslation';
 import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
@@ -11,8 +12,6 @@ type SpinboxProps = {
     onChangeValueCallback?: (currentValue: number) => void;
     size?: 'default' | 'small';
 };
-
-const TEST_IDENTIFIER = 'forms-spinbox-';
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
     ({ min, max, onChangeValueCallback, step, defaultValue, size, id }, spinboxForwardedRef) => {
@@ -89,7 +88,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         const content = (
             <>
                 <SpinboxButton
-                    dataTestId={TEST_IDENTIFIER + 'decrease'}
+                    dataTestId={DataTestIds.forms_spinbox_decrease}
                     title={t('Decrease')}
                     onClick={() => onChangeValueHandler(-step)}
                     onMouseDown={() => setIsHoldingDecrease(true)}
@@ -102,7 +101,6 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 <input
                     aria-label={`${t('Quantity')} ${id}`}
                     className="h-full min-w-0 flex-1 border-0 p-0 text-center text-lg font-bold text-dark outline-none"
-                    data-testid={TEST_IDENTIFIER + 'input'}
                     defaultValue={defaultValue}
                     max={max}
                     min={min}
@@ -112,7 +110,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 />
 
                 <SpinboxButton
-                    dataTestId={TEST_IDENTIFIER + 'increase'}
+                    dataTestId={DataTestIds.forms_spinbox_increase}
                     title={t('Increase')}
                     onClick={() => onChangeValueHandler(step)}
                     onMouseDown={() => setIsHoldingIncrease(true)}

@@ -1,6 +1,7 @@
 import { isWithErrorDebugging } from './errors/isWithErrorDebugging';
 import { isClient } from './isClient';
 import CopyTextBlock from 'components/Basic/CopyTextBlock/CopyTextBlock';
+import { DataTestIds } from 'cypress/dataTestIds';
 import { onGtmShowMessageEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmMessageDetailType, GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
 import { toast } from 'react-toastify';
@@ -15,21 +16,24 @@ const showMessage = (message: string, type: 'info' | 'error' | 'success'): void 
                 style: { width: '100%' },
             });
         } else {
-            toast.error(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid="toast-error" />, {
+            toast.error(() => <span dangerouslySetInnerHTML={{ __html: message }} />, {
                 toastId: message,
                 closeOnClick: true,
             });
         }
     } else if (type === 'info') {
-        toast.info(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid="toast-info" />, {
+        toast.info(() => <span dangerouslySetInnerHTML={{ __html: message }} />, {
             toastId: message,
             closeOnClick: true,
         });
     } else {
-        toast.success(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid="toast-success" />, {
-            toastId: message,
-            closeOnClick: true,
-        });
+        toast.success(
+            () => <span dangerouslySetInnerHTML={{ __html: message }} data-testid={DataTestIds.toast_success} />,
+            {
+                toastId: message,
+                closeOnClick: true,
+            },
+        );
     }
 };
 
