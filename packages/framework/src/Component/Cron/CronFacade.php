@@ -97,7 +97,7 @@ class CronFacade
         } catch (Throwable $throwable) {
             $this->cronModuleFacade->markCronAsFailed($cronModuleConfig);
             $this->logger->error('End of ' . $cronModuleConfig->getServiceId() . ' because of error', [
-                'throwable' => $throwable,
+                'exception' => $throwable,
             ]);
 
             throw $throwable;
