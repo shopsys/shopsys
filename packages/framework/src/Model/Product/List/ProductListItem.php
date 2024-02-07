@@ -64,7 +64,7 @@ class ProductListItem
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProduct(): Product
+    public function getProduct()
     {
         return $this->product;
     }

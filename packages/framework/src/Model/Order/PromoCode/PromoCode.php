@@ -60,7 +60,7 @@ class PromoCode
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -68,7 +68,7 @@ class PromoCode
     /**
      * @return string
      */
-    public function getCode(): string
+    public function getCode()
     {
         return $this->code;
     }
@@ -76,7 +76,7 @@ class PromoCode
     /**
      * @return string
      */
-    public function getPercent(): string
+    public function getPercent()
     {
         return $this->percent;
     }

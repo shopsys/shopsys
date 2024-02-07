@@ -49,7 +49,7 @@ class PaymentPrice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function getPayment(): Payment
+    public function getPayment()
     {
         return $this->payment;
     }
@@ -57,7 +57,7 @@ class PaymentPrice
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getPrice(): Money
+    public function getPrice()
     {
         return $this->price;
     }
@@ -65,7 +65,7 @@ class PaymentPrice
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      */
-    public function setPrice(Money $price): void
+    public function setPrice($price): void
     {
         $this->price = $price;
     }
@@ -73,7 +73,7 @@ class PaymentPrice
     /**
      * @return int
      */
-    public function getDomainId(): int
+    public function getDomainId()
     {
         return $this->domainId;
     }
@@ -81,7 +81,7 @@ class PaymentPrice
     /**
      * @param int $domainId
      */
-    public function setDomainId(int $domainId): void
+    public function setDomainId($domainId): void
     {
         $this->domainId = $domainId;
     }

@@ -42,7 +42,7 @@ class BlogCategoryTranslation extends AbstractTranslation
     /**
      * @param string|null $name
      */
-    public function setName(?string $name): void
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -58,7 +58,7 @@ class BlogCategoryTranslation extends AbstractTranslation
     /**
      * @param string|null $description
      */
-    public function setDescription(?string $description): void
+    public function setDescription($description): void
     {
         $this->description = $description;
     }

@@ -57,7 +57,7 @@ class ArticleData
     /**
      * @var string|null
      */
-    public ?string $uuid = null;
+    public $uuid;
 
     /**
      * @var \DateTime|null

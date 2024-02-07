@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\HeurekaBundle\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 
 /**
  * @ORM\Table(
@@ -87,7 +86,7 @@ class HeurekaProductDomain
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getCpc(): ?Money
+    public function getCpc()
     {
         return $this->cpc;
     }

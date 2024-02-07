@@ -202,7 +202,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @param int $position
      */
-    public function setPosition(int $position): void
+    public function setPosition($position): void
     {
         $this->position = $position;
     }
@@ -210,7 +210,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @return int|null
      */
-    public function getPosition(): ?int
+    public function getPosition()
     {
         return $this->position;
     }
@@ -226,7 +226,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -234,7 +234,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @return string
      */
-    public function getEntityName(): string
+    public function getEntityName()
     {
         return $this->entityName;
     }
@@ -242,7 +242,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @return int
      */
-    public function getEntityId(): int
+    public function getEntityId()
     {
         return $this->entityId;
     }
@@ -250,7 +250,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @return string|null
      */
-    public function getType(): ?string
+    public function getType()
     {
         return $this->type;
     }
@@ -258,7 +258,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @return string
      */
-    public function getExtension(): string
+    public function getExtension()
     {
         return $this->extension;
     }
@@ -266,7 +266,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     /**
      * @return \DateTime
      */
-    public function getModifiedAt(): DateTime
+    public function getModifiedAt()
     {
         return $this->modifiedAt;
     }

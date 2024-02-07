@@ -170,7 +170,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }
@@ -258,7 +258,7 @@ class Article implements OrderableEntityInterface
     /**
      * @return \DateTime
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }

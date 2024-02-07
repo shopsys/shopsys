@@ -42,7 +42,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @ORM\Column(type="boolean")
      */
-    protected bool $visible;
+    protected $visible;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
@@ -82,7 +82,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }

@@ -494,7 +494,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
      */
-    public function setAvailability(Availability $availability)
+    public function setAvailability($availability)
     {
         $this->availability = $availability;
     }
@@ -502,7 +502,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null $outOfStockAvailability
      */
-    public function setOutOfStockAvailability(?Availability $outOfStockAvailability = null)
+    public function setOutOfStockAvailability($outOfStockAvailability = null)
     {
         $this->outOfStockAvailability = $outOfStockAvailability;
     }
@@ -510,7 +510,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      */
-    public function setProductCategoryDomains(array $productCategoryDomains)
+    public function setProductCategoryDomains($productCategoryDomains)
     {
         foreach ($this->productCategoryDomains as $productCategoryDomain) {
             if ($this->isProductCategoryDomainInArray($productCategoryDomain, $productCategoryDomains) === false) {
@@ -708,7 +708,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
      */
-    protected function setMainVariant(self $mainVariant)
+    protected function setMainVariant($mainVariant)
     {
         $this->variantType = self::VARIANT_TYPE_VARIANT;
         $this->mainVariant = $mainVariant;
@@ -931,7 +931,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }

@@ -15,10 +15,8 @@ use Shopsys\FrameworkBundle\Model\Order\Item\Exception\MainVariantCannotBeOrdere
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasOnlyOneTotalPriceException;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\WrongItemTypeException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
  * @ORM\Table(name="order_items")
@@ -194,7 +192,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getPriceWithoutVat(): Money
+    public function getPriceWithoutVat()
     {
         return $this->priceWithoutVat;
     }
@@ -202,7 +200,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getPriceWithVat(): Money
+    public function getPriceWithVat()
     {
         return $this->priceWithVat;
     }
@@ -210,7 +208,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getTotalPriceWithoutVat(): ?Money
+    public function getTotalPriceWithoutVat()
     {
         return $this->hasForcedTotalPrice() ? $this->totalPriceWithoutVat : null;
     }
@@ -218,7 +216,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getTotalPriceWithVat(): Money
+    public function getTotalPriceWithVat()
     {
         return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->priceWithVat->multiply(
             $this->quantity,
@@ -313,7 +311,7 @@ class OrderItem
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      */
-    public function setTransport(Transport $transport): void
+    public function setTransport($transport): void
     {
         $this->checkTypeTransport();
         $this->transport = $transport;
@@ -322,7 +320,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function getTransport(): Transport
+    public function getTransport()
     {
         $this->checkTypeTransport();
 
@@ -332,7 +330,7 @@ class OrderItem
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      */
-    public function setPayment(Payment $payment): void
+    public function setPayment($payment): void
     {
         $this->checkTypePayment();
         $this->payment = $payment;
@@ -341,7 +339,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function getPayment(): Payment
+    public function getPayment()
     {
         $this->checkTypePayment();
 
@@ -351,7 +349,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
      */
-    public function getProduct(): ?Product
+    public function getProduct()
     {
         $this->checkTypeProduct();
 
@@ -371,7 +369,7 @@ class OrderItem
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      */
-    public function setProduct(?Product $product): void
+    public function setProduct($product): void
     {
         $this->checkTypeProduct();
 

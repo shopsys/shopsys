@@ -141,7 +141,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $transports
      */
-    public function setTransports(array $transports)
+    public function setTransports($transports)
     {
         foreach ($this->transports as $currentTransport) {
             if (!in_array($currentTransport, $transports, true)) {
@@ -400,7 +400,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }

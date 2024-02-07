@@ -125,7 +125,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $parent
      */
-    public function setParent(?self $parent = null)
+    public function setParent($parent = null)
     {
         $this->parent = $parent;
     }
@@ -293,7 +293,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }

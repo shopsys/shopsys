@@ -8,7 +8,6 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 /**
@@ -95,7 +94,7 @@ class ProductList
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
-    public function setCustomerUser(CustomerUser $customerUser): void
+    public function setCustomerUser($customerUser): void
     {
         $this->setUpdatedAtToNow();
         $this->customerUser = $customerUser;
@@ -113,7 +112,7 @@ class ProductList
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }
@@ -121,7 +120,7 @@ class ProductList
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum
      */
-    public function getType(): ProductListTypeEnumInterface
+    public function getType()
     {
         return $this->type;
     }
@@ -152,7 +151,7 @@ class ProductList
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\List\ProductListItem[]
      */
-    public function getItems(): array
+    public function getItems()
     {
         return $this->items->getValues();
     }

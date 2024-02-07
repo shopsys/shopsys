@@ -412,7 +412,7 @@ class Product extends BaseProduct
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      */
-    public function setProductCategoryDomains(array $productCategoryDomains)
+    public function setProductCategoryDomains($productCategoryDomains)
     {
         foreach ($this->productCategoryDomains as $productCategoryDomain) {
             if ($this->isProductCategoryDomainInArray($productCategoryDomain, $productCategoryDomains) === false) {

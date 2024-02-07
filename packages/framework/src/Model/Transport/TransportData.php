@@ -54,7 +54,7 @@ class TransportData
     /**
      * @var string|null
      */
-    public ?string $uuid = null;
+    public $uuid;
 
     /**
      * @var int|null

@@ -66,7 +66,7 @@ class ProductVisibility
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getPricingGroup(): PricingGroup
+    public function getPricingGroup()
     {
         return $this->pricingGroup;
     }

@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Advert;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
@@ -80,7 +79,7 @@ class Advert
      * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
      * @ORM\JoinTable(name="advert_categories")
      */
-    protected Collection $categories;
+    protected $categories;
 
     /**
      * @var \DateTime|null
@@ -149,7 +148,7 @@ class Advert
     /**
      * @return string
      */
-    public function getUuid(): string
+    public function getUuid()
     {
         return $this->uuid;
     }
@@ -213,7 +212,7 @@ class Advert
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getCategories(): array
+    public function getCategories()
     {
         return $this->categories->getValues();
     }
@@ -221,7 +220,7 @@ class Advert
     /**
      * @return \DateTime|null
      */
-    public function getDatetimeVisibleFrom(): ?DateTime
+    public function getDatetimeVisibleFrom()
     {
         return $this->datetimeVisibleFrom;
     }
@@ -229,7 +228,7 @@ class Advert
     /**
      * @return \DateTime|null
      */
-    public function getDatetimeVisibleTo(): ?DateTime
+    public function getDatetimeVisibleTo()
     {
         return $this->datetimeVisibleTo;
     }

@@ -70,7 +70,7 @@ class ProductCategoryDomain
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      */
-    public function setProduct(Product $product): void
+    public function setProduct($product): void
     {
         $this->product = $product;
     }

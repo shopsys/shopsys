@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 /**
  * @ORM\Table(
@@ -234,7 +233,7 @@ class ProductDomain
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function getVat(): Vat
+    public function getVat()
     {
         return $this->vat;
     }
@@ -242,7 +241,7 @@ class ProductDomain
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      */
-    public function setVat(Vat $vat): void
+    public function setVat($vat): void
     {
         $this->vat = $vat;
     }
@@ -258,7 +257,7 @@ class ProductDomain
     /**
      * @param string|null $shortDescriptionUsp1
      */
-    public function setShortDescriptionUsp1(?string $shortDescriptionUsp1): void
+    public function setShortDescriptionUsp1($shortDescriptionUsp1): void
     {
         $this->shortDescriptionUsp1 = $shortDescriptionUsp1;
     }
@@ -274,7 +273,7 @@ class ProductDomain
     /**
      * @param string|null $shortDescriptionUsp2
      */
-    public function setShortDescriptionUsp2(?string $shortDescriptionUsp2): void
+    public function setShortDescriptionUsp2($shortDescriptionUsp2): void
     {
         $this->shortDescriptionUsp2 = $shortDescriptionUsp2;
     }
@@ -290,7 +289,7 @@ class ProductDomain
     /**
      * @param string|null $shortDescriptionUsp3
      */
-    public function setShortDescriptionUsp3(?string $shortDescriptionUsp3): void
+    public function setShortDescriptionUsp3($shortDescriptionUsp3): void
     {
         $this->shortDescriptionUsp3 = $shortDescriptionUsp3;
     }
@@ -306,7 +305,7 @@ class ProductDomain
     /**
      * @param string|null $shortDescriptionUsp4
      */
-    public function setShortDescriptionUsp4(?string $shortDescriptionUsp4): void
+    public function setShortDescriptionUsp4($shortDescriptionUsp4): void
     {
         $this->shortDescriptionUsp4 = $shortDescriptionUsp4;
     }
@@ -322,7 +321,7 @@ class ProductDomain
     /**
      * @param string|null $shortDescriptionUsp5
      */
-    public function setShortDescriptionUsp5(?string $shortDescriptionUsp5): void
+    public function setShortDescriptionUsp5($shortDescriptionUsp5): void
     {
         $this->shortDescriptionUsp5 = $shortDescriptionUsp5;
     }
@@ -330,7 +329,7 @@ class ProductDomain
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getFlags(): array
+    public function getFlags()
     {
         return $this->flags->getValues();
     }
@@ -338,7 +337,7 @@ class ProductDomain
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flags
      */
-    public function setFlags(array $flags): void
+    public function setFlags($flags): void
     {
         $this->flags->clear();
 
@@ -358,7 +357,7 @@ class ProductDomain
     /**
      * @param int $orderingPriority
      */
-    public function setOrderingPriority(int $orderingPriority): void
+    public function setOrderingPriority($orderingPriority): void
     {
         $this->orderingPriority = $orderingPriority;
     }

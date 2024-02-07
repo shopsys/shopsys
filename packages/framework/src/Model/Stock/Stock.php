@@ -103,7 +103,7 @@ class Stock implements OrderableEntityInterface
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -111,7 +111,7 @@ class Stock implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -127,7 +127,7 @@ class Stock implements OrderableEntityInterface
     /**
      * @return string
      */
-    public function getNote(): ?string
+    public function getNote()
     {
         return $this->note;
     }
@@ -158,7 +158,7 @@ class Stock implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getExternalId(): ?string
+    public function getExternalId()
     {
         return $this->externalId;
     }
@@ -220,7 +220,7 @@ class Stock implements OrderableEntityInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
      */
-    public function getStores(): array
+    public function getStores()
     {
         return $this->stores->getValues();
     }

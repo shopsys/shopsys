@@ -57,7 +57,7 @@ class ProductStock
     /**
      * @return \Shopsys\FrameworkBundle\Model\Stock\Stock
      */
-    public function getStock(): Stock
+    public function getStock()
     {
         return $this->stock;
     }
@@ -65,7 +65,7 @@ class ProductStock
     /**
      * @return int
      */
-    public function getProductQuantity(): int
+    public function getProductQuantity()
     {
         return $this->productQuantity;
     }

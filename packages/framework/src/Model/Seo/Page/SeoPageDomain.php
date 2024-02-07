@@ -99,7 +99,7 @@ class SeoPageDomain
     /**
      * @return \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage
      */
-    public function getSeoPage(): SeoPage
+    public function getSeoPage()
     {
         return $this->seoPage;
     }
@@ -115,7 +115,7 @@ class SeoPageDomain
     /**
      * @param string|null $seoTitle
      */
-    public function setSeoTitle(?string $seoTitle): void
+    public function setSeoTitle($seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
@@ -131,7 +131,7 @@ class SeoPageDomain
     /**
      * @param string|null $seoMetaDescription
      */
-    public function setSeoMetaDescription(?string $seoMetaDescription): void
+    public function setSeoMetaDescription($seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
@@ -147,7 +147,7 @@ class SeoPageDomain
     /**
      * @param string|null $canonicalUrl
      */
-    public function setCanonicalUrl(?string $canonicalUrl): void
+    public function setCanonicalUrl($canonicalUrl): void
     {
         $this->canonicalUrl = $canonicalUrl;
     }
@@ -163,7 +163,7 @@ class SeoPageDomain
     /**
      * @param string|null $seoOgTitle
      */
-    public function setSeoOgTitle(?string $seoOgTitle): void
+    public function setSeoOgTitle($seoOgTitle): void
     {
         $this->seoOgTitle = $seoOgTitle;
     }
@@ -179,7 +179,7 @@ class SeoPageDomain
     /**
      * @param string|null $seoOgDescription
      */
-    public function setSeoOgDescription(?string $seoOgDescription): void
+    public function setSeoOgDescription($seoOgDescription): void
     {
         $this->seoOgDescription = $seoOgDescription;
     }

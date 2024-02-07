@@ -101,7 +101,7 @@ class OpeningHours
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      */
-    public function setStore(Store $store): void
+    public function setStore($store): void
     {
         $this->store = $store;
     }

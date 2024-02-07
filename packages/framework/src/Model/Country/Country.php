@@ -109,7 +109,7 @@ class Country extends AbstractTranslatableEntity
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -117,7 +117,7 @@ class Country extends AbstractTranslatableEntity
     /**
      * @return string|null
      */
-    public function getCode(): ?string
+    public function getCode()
     {
         return $this->code;
     }

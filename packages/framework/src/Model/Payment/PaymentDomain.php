@@ -92,7 +92,7 @@ class PaymentDomain
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function getVat(): Vat
+    public function getVat()
     {
         return $this->vat;
     }
@@ -100,7 +100,7 @@ class PaymentDomain
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      */
-    public function setVat(Vat $vat): void
+    public function setVat($vat): void
     {
         $this->vat = $vat;
     }

@@ -59,7 +59,7 @@ class NewsletterSubscriber
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -75,7 +75,7 @@ class NewsletterSubscriber
     /**
      * @return \DateTimeImmutable
      */
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }

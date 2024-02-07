@@ -112,7 +112,7 @@ class DeliveryAddress
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -120,7 +120,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getCompanyName(): ?string
+    public function getCompanyName()
     {
         return $this->companyName;
     }
@@ -128,7 +128,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getFirstName(): ?string
+    public function getFirstName()
     {
         return $this->firstName;
     }
@@ -136,7 +136,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getLastName(): ?string
+    public function getLastName()
     {
         return $this->lastName;
     }
@@ -144,7 +144,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getStreet(): ?string
+    public function getStreet()
     {
         return $this->street;
     }
@@ -152,7 +152,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getCity(): ?string
+    public function getCity()
     {
         return $this->city;
     }
@@ -160,7 +160,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getPostcode(): ?string
+    public function getPostcode()
     {
         return $this->postcode;
     }
@@ -168,7 +168,7 @@ class DeliveryAddress
     /**
      * @return string|null
      */
-    public function getTelephone(): ?string
+    public function getTelephone()
     {
         return $this->telephone;
     }
@@ -176,7 +176,7 @@ class DeliveryAddress
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
-    public function getCountry(): ?Country
+    public function getCountry()
     {
         return $this->country;
     }
@@ -184,7 +184,7 @@ class DeliveryAddress
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
-    public function getCustomer(): Customer
+    public function getCustomer()
     {
         return $this->customer;
     }

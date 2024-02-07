@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator\Role;
 
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
 /**
  * @ORM\Table(name="administrator_roles")
@@ -40,7 +39,7 @@ class AdministratorRole
     /**
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function getAdministrator(): Administrator
+    public function getAdministrator()
     {
         return $this->administrator;
     }
@@ -48,7 +47,7 @@ class AdministratorRole
     /**
      * @return string
      */
-    public function getRole(): string
+    public function getRole()
     {
         return $this->role;
     }
