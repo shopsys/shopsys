@@ -30,7 +30,7 @@ class DatePickerType extends AbstractType
             'widget' => 'single_text',
             'format' => static::FORMAT_PHP,
             'html5' => false,
-            'display_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin(),
+            'view_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin(),
         ];
 
         $resolver->setDefaults($defaults);
