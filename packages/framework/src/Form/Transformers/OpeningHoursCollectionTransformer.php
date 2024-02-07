@@ -24,15 +24,6 @@ class OpeningHoursCollectionTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        $flattenedOpeningHours = [];
-
-        foreach ($value as $dayOfWeek => $openingHoursData) {
-            foreach ($openingHoursData as $openingHours) {
-                $openingHours->dayOfWeek = $dayOfWeek;
-                $flattenedOpeningHours[] = $openingHours;
-            }
-        }
-
-        return $flattenedOpeningHours;
+        return OpeningHoursDataHelper::flattenOpeningHoursData($value);
     }
 }

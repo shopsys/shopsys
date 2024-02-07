@@ -20,4 +20,22 @@ class OpeningHoursDataHelper
 
         return $openingHoursIndexedByDayNumber;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[][] $openingHoursDataIndexedByDayOfWeek
+     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[]
+     */
+    public static function flattenOpeningHoursData(array $openingHoursDataIndexedByDayOfWeek): array
+    {
+        $flattenedOpeningHours = [];
+
+        foreach ($openingHoursDataIndexedByDayOfWeek as $dayOfWeek => $openingHoursData) {
+            foreach ($openingHoursData as $openingHours) {
+                $openingHours->dayOfWeek = $dayOfWeek;
+                $flattenedOpeningHours[] = $openingHours;
+            }
+        }
+
+        return $flattenedOpeningHours;
+    }
 }
