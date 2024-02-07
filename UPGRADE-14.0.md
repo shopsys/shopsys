@@ -1267,6 +1267,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +   protected function createCurrentFeedExport(?int $lastSeekId = null): ?FeedExport
     ```
 
+-   fix display advert on invisible category ([#2701](https://github.com/shopsys/shopsys/pull/2701))
+    -   see #project-base-diff to update your project
+
 ### Storefront
 
 -   add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))
