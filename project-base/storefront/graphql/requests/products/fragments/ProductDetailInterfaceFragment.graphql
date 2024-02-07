@@ -41,6 +41,9 @@ fragment ProductDetailInterfaceFragment on Product {
     }
     seoTitle
     seoMetaDescription
+    hreflangLinks {
+        ...HreflangLinksFragment
+    }
     isMainVariant
     productVideos {
         ...VideoTokenFragment

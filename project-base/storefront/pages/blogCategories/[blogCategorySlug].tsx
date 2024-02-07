@@ -44,6 +44,7 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
             breadcrumbs={blogCategoryData?.blogCategory?.breadcrumb}
             breadcrumbsType="blogCategory"
             description={blogCategoryData?.blogCategory?.seoMetaDescription}
+            hreflangLinks={blogCategoryData?.blogCategory?.hreflangLinks}
             isFetchingData={fetching}
             title={seoTitle}
         >

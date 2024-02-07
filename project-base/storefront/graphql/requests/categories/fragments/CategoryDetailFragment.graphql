@@ -7,8 +7,22 @@ fragment CategoryDetailFragment on Category {
     name
     description
     seoH1
+    seoTitle
+    seoMetaDescription
+    readyCategorySeoMixLinks {
+        __typename
+        name
+        slug
+    }
+    hreflangLinks {
+        ...HreflangLinksFragment
+    }
     breadcrumb {
         ...BreadcrumbFragment
+    }
+    categoryHierarchy {
+        id
+        name
     }
     children {
         ...CategoryPreviewFragment
@@ -19,18 +33,7 @@ fragment CategoryDetailFragment on Category {
     products(orderingMode: $orderingMode, filter: $filter) {
         ...ListedProductConnectionPreviewFragment
     }
-    readyCategorySeoMixLinks {
-        __typename
-        name
-        slug
-    }
-    seoTitle
-    seoMetaDescription
     bestsellers {
         ...ListedProductFragment
-    }
-    categoryHierarchy {
-        id
-        name
     }
 }

@@ -16,4 +16,7 @@ fragment BlogArticleDetailFragment on BlogArticle {
     seoTitle
     seoMetaDescription
     seoH1
+    hreflangLinks {
+        ...HreflangLinksFragment
+    }
 }

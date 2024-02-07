@@ -1507,5 +1507,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   after replacing `Lightgallery` with a custom solution we have the `react-swipeable` library available, which provides us with a hook to handle swipe events, this is another place where we want to use it
 
 -   update repo dependencies ([#3010](https://github.com/shopsys/shopsys/pull/3010))
+
     -   after this we use latest major versions for the most of our dependencies
     -   with this change we get rid of 4 critical `pnpm audit` issues
+
+-   added hreflang links to Head ([#3005](https://github.com/shopsys/shopsys/pull/3005))

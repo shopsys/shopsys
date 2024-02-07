@@ -5,23 +5,13 @@ import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 
-type UseSeoHookReturn = {
-    title: string | null | undefined;
-    titleSuffix: string | null | undefined;
-    description: string | null | undefined;
-    ogTitle: string | null | undefined;
-    ogDescription: string | null | undefined;
-    ogImageUrl: string | null | undefined;
-    canonicalUrl: string | null | undefined;
-};
-
 type UseSeoHookProps = {
     defaultTitle?: string | null;
     defaultDescription?: string | null;
     canonicalQueryParams?: CanonicalQueryParameters;
 };
 
-const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseSeoHookProps): UseSeoHookReturn => {
+const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseSeoHookProps) => {
     const { url } = useDomainConfig();
     const router = useRouter();
 
@@ -57,6 +47,7 @@ const useSeo = ({ defaultTitle, defaultDescription, canonicalQueryParams }: UseS
         ogTitle: preferredOgTitle,
         ogDescription: preferredOgDescription,
         ogImageUrl: preferredOgImageUrl,
+        hreflangLinks: seoPageData?.seoPage?.hreflangLinks,
         canonicalUrl,
     };
 };

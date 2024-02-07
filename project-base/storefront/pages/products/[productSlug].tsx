@@ -41,12 +41,14 @@ const ProductDetailPage: NextPage<ServerSidePropsType> = ({ cookies }) => {
             setLastVisitedProductCatalogNumbers(product.catalogNumber);
         }
     }, [product]);
+
     return (
         <CommonLayout
             breadcrumbs={product?.breadcrumb}
             breadcrumbsType="category"
             canonicalQueryParams={[]}
             description={product?.seoMetaDescription}
+            hreflangLinks={product?.hreflangLinks}
             isFetchingData={fetching}
             title={product?.seoTitle || product?.name}
         >
