@@ -1,8 +1,8 @@
 import { RemoveIcon } from 'components/Basic/Icon/IconsSvg';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { twMergeCustom } from 'helpers/twMerge';
+import { useKeypress } from 'hooks/useKeyPress';
 import dynamic from 'next/dynamic';
-import { MouseEventHandler, useEffect, useRef } from 'react';
 
 const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
 
@@ -14,25 +14,11 @@ type PopupProps = {
 const TEST_IDENTIFIER = 'layout-popup';
 
 export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButton, className }) => {
-    const onEscapeButtonPressHandler = useRef((event: KeyboardEvent): void => {
-        if (event.key === 'Escape') {
-            onCloseCallback();
-        }
-    }).current;
-
-    useEffect(() => {
-        document.addEventListener('keydown', onEscapeButtonPressHandler);
-
-        return () => document.removeEventListener('keydown', onEscapeButtonPressHandler);
-    }, []);
-
-    const onClickCloseActionHandler: MouseEventHandler<HTMLElement> = () => {
-        onCloseCallback();
-    };
+    useKeypress('Escape', onCloseCallback);
 
     return (
         <Portal>
-            <Overlay isActive onClick={onClickCloseActionHandler} />
+            <Overlay isActive onClick={onCloseCallback} />
             <div
                 aria-modal
                 data-testid={TEST_IDENTIFIER}
@@ -46,7 +32,7 @@ export const Popup: FC<PopupProps> = ({ onCloseCallback, children, hideCloseButt
                     <div className="flex h-9 items-center justify-end ">
                         <button
                             className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-0 bg-creamWhite text-xs text-grey no-underline outline-none"
-                            onClick={onClickCloseActionHandler}
+                            onClick={onCloseCallback}
                         >
                             <RemoveIcon className="w-6 text-primary" />
                         </button>

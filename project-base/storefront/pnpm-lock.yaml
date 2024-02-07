@@ -53,9 +53,6 @@ dependencies:
   keen-slider:
     specifier: ~5.5.1
     version: 5.5.1
-  lightgallery:
-    specifier: ~2.7.2
-    version: 2.7.2
   lz-string:
     specifier: ~1.5.0
     version: 1.5.0
@@ -95,6 +92,9 @@ dependencies:
   react-select:
     specifier: ~5.7.7
     version: 5.7.7(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+  react-swipeable:
+    specifier: ~7.0.1
+    version: 7.0.1(react@18.2.0)
   react-tabs:
     specifier: ~6.0.2
     version: 6.0.2(react@18.2.0)
@@ -5697,11 +5697,6 @@ packages:
       immediate: 3.0.6
     dev: false
 
-  /lightgallery@2.7.2:
-    resolution: {integrity: sha512-Ewdcg9UPDqV0HGZeD7wNE4uYejwH2u0fMo5VAr6GHzlPYlhItJvjhLTR0cL0V1HjhMsH39PAom9iv69ewitLWw==}
-    engines: {node: '>=6.0.0'}
-    dev: false
-
   /lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
     engines: {node: '>=10'}
@@ -6769,6 +6764,14 @@ packages:
     resolution: {integrity: sha512-yFNHrlVEReVYKsLI5lF05tZoHveA5pGzjFbFJY/3pOqqjGOmMmqx83N4hIjN2n6E1AOa+eQEUxs3CgRnPmT0RQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /react-swipeable@7.0.1(react@18.2.0):
+    resolution: {integrity: sha512-RKB17JdQzvECfnVj9yDZsiYn3vH0eyva/ZbrCZXZR0qp66PBRhtg4F9yJcJTWYT5Adadi+x4NoG53BxKHwIYLQ==}
+    peerDependencies:
+      react: ^16.8.3 || ^17 || ^18
     dependencies:
       react: 18.2.0
     dev: false

@@ -37,7 +37,6 @@ const nextConfig = {
     publicRuntimeConfig: {
         googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
         packeteryApiKey: process.env.PACKETERY_API_KEY,
-        lightgalleryLicenseKey: process.env.LIGHTGALLERY_LICENSE_KEY,
         cdnDomain: process.env.CDN_DOMAIN ?? '',
         sentryDsn: process.env.SENTRY_DSN ?? '',
         sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? '',
