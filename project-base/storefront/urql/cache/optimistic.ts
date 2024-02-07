@@ -77,7 +77,7 @@ const getOptimisticChangeTransportInCartResult = (
         uuid: cartQueryResult.cart?.uuid ?? null,
         transport:
             transportsQueryResult?.transports.find((transport) => transport.uuid === input.transportUuid) ?? null,
-    } as ChangeTransportInCartMutationApi['ChangeTransportInCart']);
+    }) as ChangeTransportInCartMutationApi['ChangeTransportInCart'];
 
 const getOptimisticChangePaymentInCartResult = (cartQueryResult: CartQueryApi, input: ChangePaymentInCartInputApi) => {
     const optimisticPayment = getPaymentFromTransport(cartQueryResult.cart?.transport, input.paymentUuid);

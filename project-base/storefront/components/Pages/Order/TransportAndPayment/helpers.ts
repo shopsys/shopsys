@@ -288,11 +288,10 @@ export const useLoadTransportAndPaymentFromLastOrder = (
         }
 
         const { data: lastOrderData } = await client
-            .query<LastOrderQueryApi, LastOrderQueryVariablesApi>(
-                LastOrderQueryDocumentApi,
-                {},
-                { requestPolicy: 'network-only' },
-            )
+            .query<
+                LastOrderQueryApi,
+                LastOrderQueryVariablesApi
+            >(LastOrderQueryDocumentApi, {}, { requestPolicy: 'network-only' })
             .toPromise();
 
         const lastOrderPickupPlace = await loadLastOrderPickupPlace(lastOrderData);

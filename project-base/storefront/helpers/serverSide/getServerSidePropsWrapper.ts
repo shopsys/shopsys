@@ -2,13 +2,13 @@ import { DomainConfigType, getDomainConfig } from 'helpers/domain/domainConfig';
 import { GetServerSideProps } from 'next';
 import { Translate } from 'next-translate';
 import getT from 'next-translate/getT';
-import { RedisClientType, RedisModules, RedisScripts } from 'redis';
+import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { SSRExchange, ssrExchange } from 'urql';
 
 export const getServerSidePropsWrapper =
     (
         callback: (props: {
-            redisClient: RedisClientType<RedisModules, RedisScripts>;
+            redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
             domainConfig: DomainConfigType;
             ssrExchange: SSRExchange;
             t: Translate;

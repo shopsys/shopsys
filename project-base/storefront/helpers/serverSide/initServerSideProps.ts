@@ -19,7 +19,7 @@ import { extractSeoPageSlugFromUrl } from 'helpers/seo/extractSeoPageSlugFromUrl
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Translate } from 'next-translate';
 import loadNamespaces from 'next-translate/loadNamespaces';
-import { RedisClientType, RedisModules, RedisScripts } from 'redis';
+import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
 
@@ -46,7 +46,7 @@ type InitServerSidePropsParameters = {
       }
     | {
           client?: never;
-          redisClient: RedisClientType<RedisModules, RedisScripts>;
+          redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
           ssrExchange?: SSRExchange;
           t: Translate;
       }

@@ -15,8 +15,8 @@
         "jsx": "preserve",
         "baseUrl": ".",
         "typeRoots": ["./node_modules/@types", "./theme"],
-        "incremental": true
+        "incremental": true,
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "*.js", "*.test.tsx", ".eslintrc.js"],
-    "exclude": ["node_modules", "tsconfig.json", "graphql", ".pnpm-store", ".next"]
+    "exclude": ["node_modules", "tsconfig.json", "graphql", ".pnpm-store", ".next"],
 }
