@@ -24,5 +24,5 @@ class DummyEntity
      * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\Flag\Flag")
      * @ORM\JoinTable(name="dummy_flags")
      */
-    protected array|Collection $flags;
+    protected Collection $flags;
 }

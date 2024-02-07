@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension\Model;
+namespace Tests\App\Functional\EntityExtension\Model\ExtendedProduct;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -46,7 +46,7 @@ class ProductOneToOneBidirectionalEntity
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
+     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct
      */
     public function getProduct(): ExtendedProduct
     {
@@ -54,7 +54,7 @@ class ProductOneToOneBidirectionalEntity
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct $product
+     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProduct $product
      */
     public function setProduct(ExtendedProduct $product): void
     {

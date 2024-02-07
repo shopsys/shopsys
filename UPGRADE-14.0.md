@@ -1232,6 +1232,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   remove constant.js (([#2969](https://github.com/shopsys/shopsys/pull/2969)))
     -   `constant.js` component has been removed, check all the usages in your code and replace them with the corresponding values
     -   see #project-base-diff to update your project
+-   skip or remove entirely EntityExtensionTest ([#3011](https://github.com/shopsys/shopsys/pull/3011))
+    -   this test is now run only in monorepo, so you can skip it in your project or remove it entirely
 
 ### Storefront
 

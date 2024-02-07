@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension\Model;
+namespace Tests\App\Functional\EntityExtension\Model\ExtendedOrder;
 
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Tests\App\Functional\EntityExtension\Model\Order\OrderItem;
 
 /**
  * @ORM\Entity
@@ -21,7 +21,7 @@ class ExtendedOrderItem extends OrderItem
     /**
      * @return string|null
      */
-    public function getStringField()
+    public function getStringField(): ?string
     {
         return $this->stringField;
     }
@@ -29,7 +29,7 @@ class ExtendedOrderItem extends OrderItem
     /**
      * @param string|null $stringField
      */
-    public function setStringField($stringField)
+    public function setStringField(?string $stringField): void
     {
         $this->stringField = $stringField;
     }

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\App\Functional\EntityExtension\Model;
+namespace Tests\App\Functional\EntityExtension\Model\ExtendedCategory;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  */
-class CategoryOneToManyBidirectionalEntity
+class CategoryOneToOneBidirectionalEntity
 {
     /**
      * @ORM\Column(type="integer")
@@ -19,7 +19,7 @@ class CategoryOneToManyBidirectionalEntity
     protected int $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ExtendedCategory", inversedBy="oneToManyBidirectionalEntity")
+     * @ORM\OneToOne(targetEntity="ExtendedCategory", inversedBy="oneToOneBidirectionalEntity")
      * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id")
      */
     protected ExtendedCategory $category;
@@ -46,7 +46,7 @@ class CategoryOneToManyBidirectionalEntity
     }
 
     /**
-     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory
+     * @return \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory
      */
     public function getCategory(): ExtendedCategory
     {
@@ -54,7 +54,7 @@ class CategoryOneToManyBidirectionalEntity
     }
 
     /**
-     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory $category
+     * @param \Tests\App\Functional\EntityExtension\Model\ExtendedCategory\ExtendedCategory $category
      */
     public function setCategory(ExtendedCategory $category): void
     {

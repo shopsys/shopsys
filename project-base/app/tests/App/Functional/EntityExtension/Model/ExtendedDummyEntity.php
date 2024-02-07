@@ -20,5 +20,5 @@ class ExtendedDummyEntity extends DummyEntity
      * @ORM\JoinTable(name="dummy_flags")
      * @ORM\OrderBy({"id" = "DESC"})
      */
-    protected array|Collection $flags;
+    protected Collection $flags;
 }

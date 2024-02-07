@@ -19,6 +19,10 @@ class EntityExtensionSubscriberTest extends TransactionFunctionalTestCase
     {
         parent::setUp();
 
+        if (!$this->isMonorepo()) {
+            $this->markTestSkipped('This test is run only in monorepo.');
+        }
+
         $this->entityExtensionTestHelper->registerTestEntities();
         $entityExtensionMap = [
             DummyEntity::class => ExtendedDummyEntity::class,
@@ -32,5 +36,13 @@ class EntityExtensionSubscriberTest extends TransactionFunctionalTestCase
 
         $expectedOrderByValue = ['id' => 'DESC'];
         $this->assertEquals($expectedOrderByValue, $classMetadata->associationMappings['flags']['orderBy']);
+    }
+
+    /**
+     * @return bool
+     */
+    private function isMonorepo(): bool
+    {
+        return file_exists(__DIR__ . '/../../../../../../parameters_monorepo.yaml');
     }
 }
