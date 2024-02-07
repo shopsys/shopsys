@@ -31,8 +31,10 @@ class StoreDataFactory
      */
     public function createForDomain(int $domainId): StoreData
     {
-        $storeData = $this->createInstance($domainId);
+        $storeData = $this->createInstance();
+        $storeData->domainId = $domainId;
         $storeData->openingHours = $this->openingHourDataFactory->createWeek();
+        $storeData->image = $this->imageUploadDataFactory->create();
 
         return $storeData;
     }
@@ -43,7 +45,8 @@ class StoreDataFactory
      */
     public function createFromStore(Store $store): StoreData
     {
-        $storeData = $this->createInstance($store->getDomainId());
+        $storeData = $this->createInstance();
+        $storeData->domainId = $store->getDomainId();
         $storeData->name = $store->getName();
         $storeData->stock = $store->getStock();
         $storeData->isDefault = $store->isDefault();
@@ -73,15 +76,10 @@ class StoreDataFactory
     }
 
     /**
-     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Store\StoreData
      */
-    protected function createInstance(int $domainId): StoreData
+    protected function createInstance(): StoreData
     {
-        $storeData = new StoreData();
-        $storeData->image = $this->imageUploadDataFactory->create();
-        $storeData->domainId = $domainId;
-
-        return $storeData;
+        return new StoreData();
     }
 }
