@@ -6,7 +6,7 @@ export default function validationStore ($container) {
     storeForm.jsFormValidator({
         callbacks: {
             validateOpeningHours: function () {
-                console.log('hey hou!')
+
             }
         }
     });
