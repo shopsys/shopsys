@@ -1234,6 +1234,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   skip or remove entirely EntityExtensionTest ([#3011](https://github.com/shopsys/shopsys/pull/3011))
     -   this test is now run only in monorepo, so you can skip it in your project or remove it entirely
+-   remove http links in demo data ([#2751](https://github.com/shopsys/shopsys/pull/2751))
+    -   check if you have any links in your demo data and replace them with HTTPS to avoid mixed content issues and to avoid distorting core web vitals metrics
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
