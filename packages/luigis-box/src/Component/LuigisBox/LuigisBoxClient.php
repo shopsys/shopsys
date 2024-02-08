@@ -4,64 +4,66 @@ declare(strict_types=1);
 
 namespace Shopsys\LuigisBoxBundle\Component\LuigisBox;
 
+use Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItem;
+use Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedItem;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\LuigisBoxBundle\Component\LuigisBox\Exception\LuigisBoxIndexNotRecognizedException;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxProductFeedItem;
 
 class LuigisBoxClient
 {
-    protected const WEBSERVER_NAME = 'shopsys-api';
-    protected const LUIGIS_BOX_PARAMETER_PREFIX = 'luigisBox';
-    protected const LUIGIS_BOX_PARAMETER_ALGORITHM_ID = 'algorithm_id';
-    protected const LUIGIS_BOX_PARAMETER_OFFER_ID = 'offer_id';
-    protected const LUIGIS_BOX_PARAMETER_LOCATION_ID = 'location_id';
-    public const LUIGIS_BOX_INDEX_PRODUCTS = 'products';
-    public const LUIGIS_BOX_INDEX_CATEGORIES = 'categories';
-    public const LUIGIS_BOX_INDEX_ARTICLES = 'articles';
-    public const LUIGIS_BOX_EVENT_GET_RECOMMENDATION = 'getRecommendation';
-    public const LUIGIS_BOX_ACTION_SEARCH = 'search';
-    public const LUIGIS_BOX_ACTION_RECOMMENDATION = 'recommendation';
+    public const string LUIGIS_BOX_TYPE_PRODUCT = 'item';
+    public const string LUIGIS_BOX_ENDPOINT_SEARCH = 'search';
+    public const string LUIGIS_BOX_ENDPOINT_AUTOCOMPLETE = 'autocomplete/v2';
 
     /**
      * @param string $luigisBoxApiUrl
-     * @param string $luigisBoxAccountId
-     * @param bool $luigisBoxIsProductionMode
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
+     * @param array $trackerIdsByDomainIds
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly string $luigisBoxApiUrl,
-        protected readonly string $luigisBoxAccountId,
-        protected readonly bool $luigisBoxIsProductionMode,
-        protected readonly ParameterBagInterface $parameterBag,
+        protected readonly array $trackerIdsByDomainIds,
+        protected readonly Domain $domain,
     ) {
     }
 
     protected function checkNecessaryConfigurationIsSet(): void
     {
-        if ($this->luigisBoxAccountId === '') {
-            throw new LuigisBoxIndexNotRecognizedException('Luigi\'s Box account ID is not set.');
+        if (array_key_exists($this->domain->getId(), $this->trackerIdsByDomainIds) === false) {
+            throw new LuigisBoxIndexNotRecognizedException(
+                sprintf('Luigi\'s Box tracker ID is not set for domain with ID: "%d".', $this->domain->getId()),
+            );
         }
     }
 
     /**
+     * @return string
+     */
+    protected function getTrackerId(): string
+    {
+        return $this->trackerIdsByDomainIds[$this->domain->getId()];
+    }
+
+    /**
      * @param string $query
-     * @param string $index
-     * @param string $action
+     * @param string $type
+     * @param string $endpoint
      * @param int $page
      * @param int $limit
      * @param array $filter
-     * @param string $browserId
-     * @param string $requestingPage
+     * @param string|null $orderingMode
      * @return \Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxResult
      */
     public function getData(
         string $query,
-        string $index,
-        string $action,
+        string $type,
+        string $endpoint,
         int $page,
         int $limit,
-        array $filter = [],
-        string $browserId = 'AAABQAg1a7sMJnpF6WlwIFuC',
-        string $requestingPage = 'http://127.0.0.1:8000/',
+        array $filter,
+        ?string $orderingMode,
     ): LuigisBoxResult {
         $this->checkNecessaryConfigurationIsSet();
 
@@ -69,13 +71,12 @@ class LuigisBoxClient
             file_get_contents(
                 $this->getLuigisBoxApiUrl(
                     $query,
-                    $index,
-                    $action,
+                    $type,
+                    $endpoint,
                     $page,
                     $limit,
                     $filter,
-                    $browserId,
-                    $requestingPage,
+                    $orderingMode,
                 ),
             ),
             true,
@@ -83,143 +84,115 @@ class LuigisBoxClient
             JSON_THROW_ON_ERROR,
         );
 
+        if ($endpoint === self::LUIGIS_BOX_ENDPOINT_SEARCH) {
+            $data = $data['results'];
+        }
+
+        $ids = [];
+
+        foreach ($data['hits'] as $hit) {
+            $ids[] = $this->getIdFromIdentity($hit['url']);
+        }
+
         return new LuigisBoxResult(
-            $data['data']['itemFieldValues'][$this->getIdFieldNameByIndex($index)],
-            $data['data']['itemsCount'],
+            $ids,
+            $this->getTotalHitsFromData($data, $endpoint),
         );
     }
 
     /**
+     * @param array $data
+     * @param string $endpoint
+     * @return int
+     */
+    protected function getTotalHitsFromData(array $data, string $endpoint): int
+    {
+        if ($endpoint === self::LUIGIS_BOX_ENDPOINT_AUTOCOMPLETE) {
+            return (int)$data['exact_match_hits_count'] + (int)$data['partial_match_hits_count'];
+        }
+
+        return $data['total_hits'];
+    }
+
+    /**
      * @param string $query
-     * @param string $index
-     * @param string $action
-     * @param int $page
+     * @param string $type
+     * @param string $endpoint
+     * @param int $offset
      * @param int $limit
      * @param array $filter
-     * @param string $browserId
-     * @param string $requestingPage
+     * @param string|null $orderingMode
      * @return string
      */
     protected function getLuigisBoxApiUrl(
         string $query,
-        string $index,
-        string $action,
-        int $page,
+        string $type,
+        string $endpoint,
+        int $offset,
         int $limit,
         array $filter,
-        string $browserId,
-        string $requestingPage,
+        ?string $orderingMode,
     ): string {
-        return $this->luigisBoxApiUrl .
-            $this->luigisBoxAccountId . '/' .
-            $this->getEnvironmentId() . '/' .
-            'workflow.json?_t=' . $this->getTimestampInMilliseconds() .
-            '&_a=' . urlencode($this->getWebserverName()) .
-            '&_e=' . self::LUIGIS_BOX_EVENT_GET_RECOMMENDATION .
-            '&_url=' . urlencode($requestingPage) .
-            '&algorithmID=' . $this->getAlgorithmId($action) .
-            '&offerID=' . $this->getOfferId($action) .
-            '&locationID=' . $this->getLocationId($action) .
-            '&query=' . urlencode('"' . $query . '"') .
-            '&itemsPerPage=' . $limit .
-            '&page=' . $page .
-            '&index=' . urlencode($index) .
-            '&_vid=' . urlencode($browserId) .
-            ($filter !== [] ? '&boolQuery=' . urlencode(json_encode($filter, JSON_THROW_ON_ERROR)) : '') .
-            '&idsOnly=' . $this->getOnlyIds();
+        $url = $this->luigisBoxApiUrl .
+            $endpoint . '/' .
+            '?tracker_id=' . $this->getTrackerId() .
+            '&q=' . urlencode('"' . $query . '"');
+
+        if ($endpoint === self::LUIGIS_BOX_ENDPOINT_SEARCH) {
+            $url .= '&hit_fields=identity' .
+                '&size=' . $limit .
+                '&from=' . $offset;
+
+            foreach ($filter as $key => $filterValues) {
+                foreach ($filterValues as $filterValue) {
+                    $url .= '&' . $key . '[]=' . urlencode($filterValue);
+                }
+            }
+
+            $orderingMode = $this->getOrderingMode($orderingMode);
+
+            if ($orderingMode !== null) {
+                $url .= '&sort=' . $orderingMode;
+            }
+        }
+
+        if ($endpoint === self::LUIGIS_BOX_ENDPOINT_AUTOCOMPLETE) {
+            $url .= '&type=' . $type . ':' . $limit;
+        }
+
+        return $url;
     }
 
     /**
-     * @return string
+     * @param string|null $orderingMode
+     * @return string|null
      */
-    protected function getEnvironmentId(): string
+    protected function getOrderingMode(?string $orderingMode): ?string
     {
-        return $this->luigisBoxIsProductionMode === true ? 'p' : 'test';
+        return match ($orderingMode) {
+            ProductListOrderingConfig::ORDER_BY_NAME_ASC => 'name:asc',
+            ProductListOrderingConfig::ORDER_BY_NAME_DESC => 'name:desc',
+            ProductListOrderingConfig::ORDER_BY_PRICE_ASC => 'price:asc',
+            ProductListOrderingConfig::ORDER_BY_PRICE_DESC => 'price:desc',
+            default => null,
+        };
     }
 
     /**
+     * @param string $identity
      * @return int
      */
-    protected function getTimestampInMilliseconds(): int
+    protected function getIdFromIdentity(string $identity): int
     {
-        return (int)floor(microtime(true) * 1000);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getWebserverName(): string
-    {
-        return static::WEBSERVER_NAME;
-    }
-
-    /**
-     * @param string $action
-     * @param string $name
-     * @return string
-     */
-    protected function getParameterByActionAndName(string $action, string $name): string
-    {
-        $parameterName = static::LUIGIS_BOX_PARAMETER_PREFIX . '.' . $action . '.' . $name;
-
-        if (!$this->parameterBag->has($parameterName)) {
-            throw new LuigisBoxIndexNotRecognizedException(
-                sprintf('LuigisBox ENV variable for event "%s" with name "%s" or parameter "%s" is not set.', $action, $name, $parameterName),
-            );
-        }
-
-        return $this->parameterBag->get($parameterName);
-    }
-
-    /**
-     * @param string $action
-     * @return string
-     */
-    protected function getAlgorithmId(string $action): string
-    {
-        return $this->getParameterByActionAndName($action, static::LUIGIS_BOX_PARAMETER_ALGORITHM_ID);
-    }
-
-    /**
-     * @param string $action
-     * @return string
-     */
-    protected function getOfferId(string $action): string
-    {
-        return $this->getParameterByActionAndName($action, static::LUIGIS_BOX_PARAMETER_OFFER_ID);
-    }
-
-    /**
-     * @param string $action
-     * @return string
-     */
-    protected function getLocationId(string $action): string
-    {
-        return $this->getParameterByActionAndName($action, static::LUIGIS_BOX_PARAMETER_LOCATION_ID);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getOnlyIds(): string
-    {
-        return 'true';
-    }
-
-    /**
-     * @param string $index
-     * @return string
-     */
-    protected function getIdFieldNameByIndex(string $index): string
-    {
-        if ($index === 'products') {
-            return 'id';
-        }
-
-        if ($index === 'categories') {
-            return 'categoryId';
-        }
-
-        throw new LuigisBoxIndexNotRecognizedException(sprintf('Luigi\'s Box index "%s" is not recognized.', $index));
+        return (int)str_replace(
+            [
+                LuigisBoxProductFeedItem::UNIQUE_IDENTIFIER_PREFIX,
+                LuigisBoxCategoryFeedItem::UNIQUE_IDENTIFIER_PREFIX,
+                LuigisBoxArticleFeedItem::UNIQUE_BLOG_ARTICLE_IDENTIFIER_PREFIX,
+                LuigisBoxArticleFeedItem::UNIQUE_ARTICLE_IDENTIFIER_PREFIX,
+            ],
+            '',
+            $identity,
+        );
     }
 }

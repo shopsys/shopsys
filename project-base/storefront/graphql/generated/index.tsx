@@ -2366,6 +2366,7 @@ export type QueryProductsSearchArgsApi = {
   before: InputMaybe<Scalars['String']['input']>;
   filter: InputMaybe<ProductFilterApi>;
   first: InputMaybe<Scalars['Int']['input']>;
+  isAutocomplete: Scalars['Boolean']['input'];
   last: InputMaybe<Scalars['Int']['input']>;
   orderingMode: InputMaybe<ProductOrderingModeEnumApi>;
   search: Scalars['String']['input'];
@@ -3598,6 +3599,7 @@ export type SearchProductsQueryVariablesApi = Exact<{
   filter: InputMaybe<ProductFilterApi>;
   search: Scalars['String']['input'];
   pageSize: InputMaybe<Scalars['Int']['input']>;
+  isAutocomplete: Scalars['Boolean']['input'];
 }>;
 
 
@@ -3619,6 +3621,7 @@ export type AutocompleteSearchQueryVariablesApi = Exact<{
   search: Scalars['String']['input'];
   maxProductCount: InputMaybe<Scalars['Int']['input']>;
   maxCategoryCount: InputMaybe<Scalars['Int']['input']>;
+  isAutocomplete: Scalars['Boolean']['input'];
 }>;
 
 
@@ -3629,6 +3632,7 @@ export type SearchQueryVariablesApi = Exact<{
   orderingMode: InputMaybe<ProductOrderingModeEnumApi>;
   filter: InputMaybe<ProductFilterApi>;
   pageSize: InputMaybe<Scalars['Int']['input']>;
+  isAutocomplete: Scalars['Boolean']['input'];
 }>;
 
 
@@ -6044,13 +6048,14 @@ export function usePromotedProductsQueryApi(options?: Omit<Urql.UseQueryArgs<Pro
   return Urql.useQuery<PromotedProductsQueryApi, PromotedProductsQueryVariablesApi>({ query: PromotedProductsQueryDocumentApi, ...options });
 };
 export const SearchProductsQueryDocumentApi = gql`
-    query SearchProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $search: String!, $pageSize: Int) {
+    query SearchProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $search: String!, $pageSize: Int, $isAutocomplete: Boolean!) {
   productsSearch(
     after: $endCursor
     orderingMode: $orderingMode
     filter: $filter
     search: $search
     first: $pageSize
+    isAutocomplete: $isAutocomplete
   ) {
     orderingMode
     defaultOrderingMode
@@ -6095,7 +6100,7 @@ export function useRobotsTxtQueryApi(options?: Omit<Urql.UseQueryArgs<RobotsTxtQ
   return Urql.useQuery<RobotsTxtQueryApi, RobotsTxtQueryVariablesApi>({ query: RobotsTxtQueryDocumentApi, ...options });
 };
 export const AutocompleteSearchQueryDocumentApi = gql`
-    query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int) {
+    query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int, $isAutocomplete: Boolean!) {
   articlesSearch(search: $search) {
     ...SimpleArticleInterfaceFragment
   }
@@ -6105,7 +6110,11 @@ export const AutocompleteSearchQueryDocumentApi = gql`
   categoriesSearch(search: $search, first: $maxCategoryCount) {
     ...SimpleCategoryConnectionFragment
   }
-  productsSearch: productsSearch(search: $search, first: $maxProductCount) {
+  productsSearch: productsSearch(
+    search: $search
+    first: $maxProductCount
+    isAutocomplete: $isAutocomplete
+  ) {
     orderingMode
     defaultOrderingMode
     totalCount
@@ -6125,7 +6134,7 @@ export function useAutocompleteSearchQueryApi(options: Omit<Urql.UseQueryArgs<Au
   return Urql.useQuery<AutocompleteSearchQueryApi, AutocompleteSearchQueryVariablesApi>({ query: AutocompleteSearchQueryDocumentApi, ...options });
 };
 export const SearchQueryDocumentApi = gql`
-    query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $pageSize: Int) {
+    query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $pageSize: Int, $isAutocomplete: Boolean!) {
   articlesSearch(search: $search) {
     ...SimpleArticleInterfaceFragment
   }
@@ -6140,6 +6149,7 @@ export const SearchQueryDocumentApi = gql`
     orderingMode: $orderingMode
     filter: $filter
     first: $pageSize
+    isAutocomplete: $isAutocomplete
   ) {
     ...ListedProductConnectionPreviewFragment
   }

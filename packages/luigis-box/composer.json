@@ -1,8 +1,8 @@
 {
-    "name": "shopsys/luigisBox",
+    "name": "shopsys/luigis-box",
     "type": "library",
     "description": "Shopsys Platform connector to Luigi's Box",
-    "keywords": ["api", "Shopsys Platform", "Luigi's Box", "SSFW", "SSP"],
+    "keywords": ["api", "Shopsys Platform", "Luigis Box", "SSFW", "SSP"],
     "license": "proprietary",
     "authors": [
         {

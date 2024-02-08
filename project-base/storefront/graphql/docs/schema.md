@@ -952,6 +952,11 @@ Returns list of searched products that can be paginated using `first`, `last`, `
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">isAutocomplete</td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">last</td>
 <td valign="top"><a href="#int">Int</a></td>
 <td></td>

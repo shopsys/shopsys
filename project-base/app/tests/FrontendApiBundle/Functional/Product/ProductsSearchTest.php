@@ -13,7 +13,7 @@ class ProductsSearchTest extends ProductsGraphQlTestCase
         $firstDomainLocale = $this->getFirstDomainLocale();
         $query = '
             query {
-                productsSearch (first: 5, search: "' . t('book', [], Translator::TESTS_TRANSLATION_DOMAIN, $firstDomainLocale) . '") {
+                productsSearch (first: 5, search: "' . t('book', [], Translator::TESTS_TRANSLATION_DOMAIN, $firstDomainLocale) . '", isAutocomplete: false) {
                     edges {
                         node {
                             name

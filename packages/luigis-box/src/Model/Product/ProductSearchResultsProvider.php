@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
@@ -75,12 +76,21 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
         $search = $argument['search'] ?? '';
         $limit = $argument['first'] ?? 0;
         $after = $argument['after'] ?? null;
+        $orderingMode = $argument['orderingMode'] === null || $argument['orderingMode'] === ProductListOrderingConfig::ORDER_BY_RELEVANCE ? null : $argument['orderingMode'];
 
         $connectionBuilder = new ConnectionBuilder();
         $offset = $connectionBuilder->getOffsetWithDefault($after, -1) + 1;
-        $page = $this->getPageFromOffsetAndLimit($offset, $limit);
-        $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->mapForSearch($productFilterData, $this->domain);
-        $result = $this->client->getData($search, LuigisBoxClient::LUIGIS_BOX_INDEX_PRODUCTS, LuigisBoxClient::LUIGIS_BOX_ACTION_SEARCH, $page, $limit, $luigisBoxFilter);
+        $luigisBoxFilter = $this->productFilterToLuigisBoxFilterMapper->mapForSearch(LuigisBoxClient::LUIGIS_BOX_TYPE_PRODUCT, $productFilterData, $this->domain);
+
+        $result = $this->client->getData(
+            $search,
+            LuigisBoxClient::LUIGIS_BOX_TYPE_PRODUCT,
+            $argument['isAutocomplete'] === true ? LuigisBoxClient::LUIGIS_BOX_ENDPOINT_AUTOCOMPLETE : LuigisBoxClient::LUIGIS_BOX_ENDPOINT_SEARCH,
+            $offset,
+            $limit,
+            $luigisBoxFilter,
+            $orderingMode,
+        );
 
         $filterQuery = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($result->getIds(), $limit);
         $sortedProducts = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery)->getHits();
@@ -94,15 +104,5 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
             $productFilterData,
             $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
         );
-    }
-
-    /**
-     * @param int $offset
-     * @param int $limit
-     * @return int
-     */
-    protected function getPageFromOffsetAndLimit(int $offset, int $limit): int
-    {
-        return (int)ceil($offset / $limit);
     }
 }

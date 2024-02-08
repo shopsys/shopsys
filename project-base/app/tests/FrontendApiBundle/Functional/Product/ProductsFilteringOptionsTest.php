@@ -643,7 +643,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     public function testGetProductFilterOptionsForSencorSearch()
     {
         $query = 'query {
-          productsSearch (search:"sencor") {
+          productsSearch (search: "sencor", isAutocomplete: false) {
             productFilterOptions {
               minimalPrice
               maximalPrice

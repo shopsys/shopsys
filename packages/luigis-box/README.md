@@ -27,15 +27,8 @@ composer require shopsys/luigis-box
 Set these environment variables in your project:
 
 ```
-LUIGIS_BOX_IS_PRODUCTION_MODE // 'true' or 'false'
 LUIGIS_BOX_ENABLED_DOMAIN_IDS // comma separated list of domain ids e.g. '1,2'
-LUIGIS_BOX_ACCOUNT_ID // value provided by LuigisBox company
-LUIGIS_BOX_RECOMMENDATION_ALGORITHM_ID // value provided by LuigisBox company
-LUIGIS_BOX_RECOMMENDATION_OFFER_ID // value provided by LuigisBox company
-LUIGIS_BOX_RECOMMENDATION_LOCATION_ID // value provided by LuigisBox company
-LUIGIS_BOX_SEARCH_ALGORITHM_ID // value provided by LuigisBox company
-LUIGIS_BOX_SEARCH_OFFER_ID // value provided by LuigisBox company
-LUIGIS_BOX_SEARCH_LOCATION_ID // value provided by LuigisBox company
+LUIGIS_BOX_TRACKER_IDS_BY_DOMAIN_IDS='{"1": "<TRACKER_ID_FOR_DOMAIN_1>", "2": "<TRACKER_ID_FOR_DOMAIN_2>", ...}' // JSON object with domain id as key and tracker id as value
 ```
 
 ## Contributing

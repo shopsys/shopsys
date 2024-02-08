@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class LuigisBoxProductFeedItem implements FeedItemInterface
 {
-    protected const UNIQUE_IDENTIFIER_PREFIX = 'product-';
+    public const UNIQUE_IDENTIFIER_PREFIX = 'product-';
     protected const SMALL_IMAGE_SIZE = 100;
     protected const MEDIUM_IMAGE_SIZE = 200;
     protected const LARGE_IMAGE_SIZE = 600;

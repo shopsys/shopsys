@@ -7,13 +7,12 @@ services:
     Shopsys\LuigisBoxBundle\Component\LuigisBox\LuigisBoxClient:
         arguments:
             $luigisBoxApiUrl: '%env(string:LUIGIS_BOX_API_URL)%'
-            $luigisBoxAccountId: '%env(string:LUIGIS_BOX_ACCOUNT_ID)%'
-            $luigisBoxIsProductionMode: '%env(bool:LUIGIS_BOX_IS_PRODUCTION_MODE)%'
+            $trackerIdsByDomainIds: '%env(json:LUIGIS_BOX_TRACKER_IDS_BY_DOMAIN_IDS)%'
 
     Shopsys\LuigisBoxBundle\Component\LuigisBox\Filter\ProductFilterToLuigisBoxFilterMapper: ~
 
     Shopsys\LuigisBoxBundle\Model\Product\ProductSearchResultsProvider:
         arguments:
-            $enabledDomainIds: '%luigisBox.enabled_domain_ids%'
+            $enabledDomainIds: '%env(LUIGIS_BOX_ENABLED_DOMAIN_IDS)%'
         tags:
             - { name: 'shopsys.frontend_api.products_search_results_provider', priority: 100 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\LuigisBoxBundle\DependencyInjection;
 
-use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -20,9 +19,5 @@ class ShopsysLuigisBoxExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
         $loader->load('parameters.yaml');
-
-        if ($container->getParameter('kernel.environment') === EnvironmentType::TEST) {
-            $loader->load('services_test.yaml');
-        }
     }
 }
