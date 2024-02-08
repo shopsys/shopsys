@@ -12,6 +12,7 @@ export const useRegistration = () => {
     const router = useRouter();
     const updateAuthLoadingState = usePersistStore((s) => s.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
+    const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
 
@@ -44,6 +45,7 @@ export const useRegistration = () => {
             const refreshToken = registerResult.data.Register.tokens.refreshToken;
 
             setTokensToCookies(accessToken, refreshToken);
+            updateCartUuid(null);
             updateProductListUuids({});
 
             updateAuthLoadingState(
