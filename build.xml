@@ -146,7 +146,12 @@
 
     <target name="frontend-api-generate-apiary-blueprint">
         <echo level="info" message="Generating apiary blueprint"/>
-        <exec command="npx hercule ${path.frontend-api}/apiary/index.md -o ${path.frontend-api}/apiary.apib" passthru="true" checkreturn="true"/>
+        <exec executable="npx" passthru="true" checkreturn="true">
+            <arg value="hercule"/>
+            <arg value="${path.frontend-api}/apiary/index.md"/>
+            <arg value="-o"/>
+            <arg value="${path.frontend-api}/apiary.apib"/>
+        </exec>
         <echo message="Apiary blueprint was generated, commit changes when needed"/>
     </target>
 
