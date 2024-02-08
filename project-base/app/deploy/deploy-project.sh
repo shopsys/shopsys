@@ -128,13 +128,13 @@ function merge() {
     # <consumer-name>:<transport-names-separated-by-space>:<number-of-consumers>
     DEFAULT_CONSUMERS=(
         "product-recalculation:product_recalculation_priority_high product_recalculation_priority_regular:1"
-        "placed_order:placed_order_transport:1"
-        "send_email:send_email_transport:1"
+        "placed-order:placed_order_transport:1"
+        "send-email:send_email_transport:1"
     )
 
     source "${BASE_PATH}/vendor/shopsys/deployment/deploy/functions.sh"
     merge_configuration
-    create_consumer_manifests $DEFAULT_CONSUMERS
+    create_consumer_manifests "${DEFAULT_CONSUMERS[@]}"
 }
 
 case "$1" in

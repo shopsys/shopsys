@@ -1237,6 +1237,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   remove http links in demo data ([#2751](https://github.com/shopsys/shopsys/pull/2751))
     -   check if you have any links in your demo data and replace them with HTTPS to avoid mixed content issues and to avoid distorting core web vitals metrics
     -   see #project-base-diff to update your project
+-   fix consumer deployment ([#3019](https://github.com/shopsys/shopsys/pull/3019))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
