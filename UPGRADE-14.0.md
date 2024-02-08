@@ -1551,3 +1551,6 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     ```
     -   static rewrite paths are now not accessed through the Next.js config based on a JS file, but instead a TS file is provided, which can be accessed directly and includes literal type values
         -   the keys for the static rewrite paths object must be defined based on 2 sources (`process.env` or `publicRuntimeConfig`), because one of them is not accessible on the client (`process.env`) and the other one is not accessible in `middleware.ts` (`publicRuntimeConfig`)
+-   added more verbose error messages when using logException on SF ([#3018](https://github.com/shopsys/shopsys/pull/3018))
+    -   messages logged to sentry now contain more context
+    -   when adding error logs using `logException`, make sure you always provide as much context as possible
