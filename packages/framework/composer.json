@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-curl": "*",
@@ -75,7 +75,7 @@
         "prezent/doctrine-translatable-bundle": "^1.4",
         "psr/log": "^1.0",
         "ramsey/uuid": "^4.3.1",
-        "roave/better-reflection": "^5.4.0",
+        "roave/better-reflection": "^6.0",
         "shopsys/form-types-bundle": "14.0.x-dev",
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "shopsys/migrations": "14.0.x-dev",

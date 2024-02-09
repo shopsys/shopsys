@@ -17,6 +17,7 @@ use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageTrait;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class PaymentServiceFacade
 {
@@ -32,12 +33,14 @@ class PaymentServiceFacade
      * @param \App\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
      * @param \App\Model\GoPay\GoPayFacade $goPayFacade
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct(
         private readonly PaymentTransactionFacade $paymentTransactionFacade,
         private readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
         GoPayFacade $goPayFacade,
         private readonly LoggerInterface $logger,
+        private readonly ContainerInterface $container,
     ) {
         $this->paymentServices = [];
         $this->paymentServices[Payment::TYPE_GOPAY] = $goPayFacade;

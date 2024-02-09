@@ -1239,6 +1239,13 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   fix consumer deployment ([#3019](https://github.com/shopsys/shopsys/pull/3019))
     -   see #project-base-diff to update your project
+-   upgrade to PHP 8.3 ([#3002](https://github.com/shopsys/shopsys/pull/3002))
+    -   class `Shopsys\FrameworkBundle\Component\ArrayUtils\RecursiveArraySorter` was removed
+    -   the minimum required version is now PHP 8.3
+    -   check your code for any Incompatibilities with PHP 8.2 and PHP 8.3
+        -   https://www.php.net/manual/en/migration82.php
+        -   https://www.php.net/manual/en/migration83.php
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

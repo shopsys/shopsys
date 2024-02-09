@@ -109,10 +109,10 @@ class StrictWebDriver extends WebDriver
     {
         $locator = Crawler::xpathLiteral(trim($text));
         $xpath = Locator::combine(
-            ".//a[normalize-space(.)=${locator}]",
-            ".//button[normalize-space(.)=${locator}]",
-            ".//a/img[normalize-space(@alt)=${locator}]/ancestor::a",
-            ".//input[./@type = 'submit' or ./@type = 'image' or ./@type = 'button'][normalize-space(@value)=${locator}]",
+            ".//a[normalize-space(.)={$locator}]",
+            ".//button[normalize-space(.)={$locator}]",
+            ".//a/img[normalize-space(@alt)={$locator}]/ancestor::a",
+            ".//input[./@type = 'submit' or ./@type = 'image' or ./@type = 'button'][normalize-space(@value)={$locator}]",
         );
 
         return WebDriverBy::xpath($xpath);

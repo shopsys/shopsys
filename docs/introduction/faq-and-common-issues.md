@@ -154,10 +154,10 @@ _Note: You can also view the outgoing emails in the Symfony profiler._
 
 Yes, you can! Check [the quick guide](../automated-testing/running-acceptance-tests.md#how-to-watch-what-is-going-on-in-the-selenium-browser).
 
-## Why is there a faked PHP 8.1 platform in the Composer config?
+## Why is there a faked PHP 8.3 platform in the Composer config?
 
-As a general rule, packages and libraries that depend on PHP 8.1 will work as expected even on any higher 8.x version, but not vice versa.
-Maintainers of PHP are focusing on backward-compatibility (even if there were [some incompatible changes](https://www.php.net/manual/en/migration81.incompatible.php) introduced in PHP 8.1, in practice it doesn't cause issues).
+As a general rule, packages and libraries that depend on PHP 8.3 will work as expected even on any higher 8.x version, but not vice versa.
+Maintainers of PHP are focusing on backward-compatibility (even if there were [some incompatible changes](https://www.php.net/manual/en/migration81.incompatible.php) introduced in PHP 8.3, in practice it doesn't cause issues).
 
 Using [the `config.platform.php` option](https://getcomposer.org/doc/06-config.md#platform) in `composer.json` allows us to force Composer to install such dependencies, that work for all supported versions of PHP by Shopsys Platform.
 These dependencies are locked during each release of Shopsys Platform so users that install it can download exact versions of all libraries and tools that were tested and proved working.

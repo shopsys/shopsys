@@ -34,7 +34,7 @@ class PropertyAnnotationsFactory
         foreach ($frameworkClassBetterReflection->getProperties() as $property) {
             $propertyAnnotationLine = $this->getPropertyAnnotationLine($property, $projectClassBetterReflection);
 
-            if ($propertyAnnotationLine !== '' && strpos($projectClassDocBlock, $propertyAnnotationLine) === false) {
+            if ($propertyAnnotationLine !== '' && !str_contains($projectClassDocBlock ?? '', $propertyAnnotationLine)) {
                 $propertyAnnotationsLines .= $propertyAnnotationLine;
             }
         }
@@ -102,7 +102,10 @@ class PropertyAnnotationsFactory
         ReflectionProperty $reflectionProperty,
         string $frameworkClassPattern,
     ): bool {
-        $propertyTypeString = $reflectionProperty->getDocComment() !== '' ? $reflectionProperty->getDocComment() : TypehintHelper::getPropertyTypeFromTypehint($reflectionProperty);
+        $docComment = $reflectionProperty->getDocComment() ?? '';
+
+        $propertyTypeString = $docComment !== '' ? $docComment : TypehintHelper::getPropertyTypeFromTypehint($reflectionProperty);
+
 
         return (bool)preg_match(
             $frameworkClassPattern,

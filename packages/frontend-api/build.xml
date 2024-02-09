@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="frontend_api">
-    <property name="env.lang.english" value="LANG=en_US.UTF-8"/>
     <property name="path.openssl.executable" value="openssl"/>
 
     <target name="frontend-api-generate-new-keys" depends="production-protection" description="Generates keys and parameter for signing tokens.">
@@ -40,8 +39,8 @@
             <arg value="graphql"/>
             <arg value="--modern"/>
         </exec>
-        <exec executable="${env.lang.english}" passthru="true" checkreturn="true">
-            <arg value="node"/>
+        <exec executable="node" passthru="true" checkreturn="true">
+            <env key="LANG" value="en_US.UTF-8"/>
             <arg value="${path.node_modules.bin}/format-graphql"/>
             <arg value="--write"/>
             <arg value="${path.root}/schema.graphql"/>

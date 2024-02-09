@@ -16,7 +16,7 @@
         }
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.3",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4",
         "symfony/form": "^5.4",

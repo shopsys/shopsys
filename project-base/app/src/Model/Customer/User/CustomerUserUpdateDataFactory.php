@@ -66,8 +66,6 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
      */
     public function createFromRegistrationData(RegistrationData $registrationData): BaseCustomerUserUpdateData
     {
-
-        /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
         $billingAddressData = $this->billingAddressDataFactory->create();
         $billingAddressData->city = $registrationData->city;
         $billingAddressData->street = $registrationData->street;
@@ -79,7 +77,6 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         $billingAddressData->companyTaxNumber = $registrationData->companyTaxNumber;
         $billingAddressData->activated = $registrationData->activated;
 
-        /** @var \App\Model\Customer\User\CustomerUserData $customerUserData */
         $customerUserData = $this->customerUserDataFactory->createForDomainId($registrationData->domainId);
         $customerUserData->createdAt = $registrationData->createdAt;
         $customerUserData->email = $registrationData->email;
