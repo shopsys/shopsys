@@ -100,32 +100,32 @@ jobs:
                     "${{ steps.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}" \
                     "${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}"
             -   name: Upload docker-compose.yml to artifacts
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: docker-compose
                     path: ./docker-compose.yml
             -   name: Upload docker-compose.review.yml to artifacts
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: docker-compose-review
                     path: ./docker-compose.review.yml
             -   name: Upload docker-compose.review.simplified.yml to artifacts
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: docker-compose-review-simplified
                     path: ./docker-compose.review.simplified.yml
             -   name: Upload docker-compose.cypress.yml to artifacts
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: docker-compose-cypress
                     path: ./docker-compose.cypress.yml
             -   name: Upload set-urls-for-review.sh to artifacts
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: set-urls-for-review
                     path: ./.github/set-urls-for-review.sh
             -   name: Upload rabbitmq-vhost.sh to artifacts
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: rabbitmq-vhost-sh
                     path: ./.github/rabbitmq-vhost.sh
@@ -145,7 +145,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
-                uses: docker/login-action@v2
+                uses: docker/login-action@v3
                 with:
                     registry: ghcr.io
                     username: ${{ github.actor }}
@@ -175,7 +175,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
-                uses: docker/login-action@v2
+                uses: docker/login-action@v3
                 with:
                     registry: ghcr.io
                     username: ${{ github.actor }}
@@ -203,7 +203,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
-                uses: docker/login-action@v2
+                uses: docker/login-action@v3
                 with:
                     registry: ghcr.io
                     username: ${{ github.actor }}
@@ -231,7 +231,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to GitHub Container Registry
-                uses: docker/login-action@v2
+                uses: docker/login-action@v3
                 with:
                     registry: ghcr.io
                     username: ${{ github.actor }}
@@ -253,7 +253,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             -   name: Download docker-compose.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose
             -   name: Build application
@@ -282,7 +282,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose
             -   name: Build application
@@ -327,7 +327,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose
             -   name: Build application
@@ -356,7 +356,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose
             -   name: Build application
@@ -393,7 +393,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose
             -   name: Build application
@@ -411,7 +411,7 @@ jobs:
                 run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/var/log ./project-base/app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: acceptance-logs
                     path: ./project-base/app/var/log/
@@ -434,7 +434,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.cypress.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose-cypress
             -   name: Build application
@@ -446,13 +446,13 @@ jobs:
                 run: docker compose run cypress
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: cypress-videos
                     path: ./videos
             -   name: Upload Cypress screenshots to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: cypress-screenshots
                     path: ./screenshots
@@ -485,7 +485,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose
             -   name: Build application
@@ -523,7 +523,7 @@ jobs:
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose
             -   name: Build application
@@ -560,7 +560,7 @@ jobs:
             -   name: Build PHP-FPM image
                 run: .github/build-php-fpm-image.sh ${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }} base
             -   name: Download docker-compose.cypress.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose
             -   name: Build PHP-FPM part of application
@@ -609,7 +609,7 @@ jobs:
                 run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/var/log ./project-base/app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: acceptance-logs
                     path: ./project-base/app/var/log/
@@ -638,7 +638,7 @@ jobs:
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
             -   name: Download docker-compose.cypress.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose-cypress
             -   name: Stop previous running application
@@ -656,13 +656,13 @@ jobs:
                 run: docker compose run cypress
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: cypress-videos
                     path: ./videos
             -   name: Upload Cypress screenshots to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v3
+                uses: actions/upload-artifact@v4
                 with:
                     name: cypress-screenshots
                     path: ./screenshots
@@ -705,20 +705,20 @@ jobs:
                     HOST=${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
                     echo "HOSTS=${HOST}, cz.${HOST}" >> $GITHUB_ENV
             -   name: Download docker-compose.review.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose-review
             -   name: Download docker-compose.review.simplified.yml from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: docker-compose-review-simplified
             -   name: Download set-urls-for-review-sh from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: set-urls-for-review
                     path: ${{ needs.variables.outputs.BRANCH_NAME }}
             -   name: Download rabbitmq-vhost-sh from artifacts
-                uses: actions/download-artifact@v3
+                uses: actions/download-artifact@v4
                 with:
                     name: rabbitmq-vhost-sh
                     path: ${{ needs.variables.outputs.BRANCH_NAME }}
