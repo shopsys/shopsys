@@ -7,6 +7,14 @@ namespace Shopsys\FrameworkBundle\Model\Store\OpeningHours;
 class OpeningHoursDataFactory
 {
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory $openingHoursRangeDataFactory
+     */
+    public function __construct(
+        protected readonly OpeningHoursRangeDataFactory $openingHoursRangeDataFactory,
+    ) {
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData
      */
     public function create(): OpeningHoursData
@@ -40,8 +48,7 @@ class OpeningHoursDataFactory
         $openingHourData = $this->create();
 
         $openingHourData->dayOfWeek = $openingHours->getDayOfWeek();
-        $openingHourData->openingTime = $openingHours->getOpeningTime();
-        $openingHourData->closingTime = $openingHours->getClosingTime();
+        $openingHourData->openingHoursRanges = $this->openingHoursRangeDataFactory->createOpeningHoursRangesDataFromEntities($openingHours->getOpeningHoursRanges());
 
         return $openingHourData;
     }

@@ -358,6 +358,9 @@ msgstr "Vyplňte prosím telefon"
 msgid "Please enter the filename"
 msgstr "Prosím vyplňte název souboru"
 
+msgid "Please enter time"
+msgstr "Zadejte čas, prosím"
+
 msgid "Please enter total price with VAT"
 msgstr "Vyplňte prosím celkovou cenu s DPH"
 

@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
@@ -58,6 +59,11 @@ class GetStoreTest extends GraphQlTestCase
      * @inject
      */
     private ClosedDayFacade $closedDayFacade;
+
+    /**
+     * @inject
+     */
+    private OpeningHoursRangeDataFactory $openingHoursRangeDataFactory;
 
     private DateTimeImmutable $now;
 
@@ -272,26 +278,6 @@ class GetStoreTest extends GraphQlTestCase
             ],
         ];
 
-        yield 'store with missing closing time' => [
-            'openingRangesModifiers' => [
-                ['openingTime' => '-2 hour', 'closingTime' => null],
-            ],
-            'publicHolidayDate' => null,
-            'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
-            'expectedOpeningRangesModifiers' => [],
-        ];
-
-        yield 'store with missing opening time' => [
-            'openingRangesModifiers' => [
-                ['openingTime' => null, 'closingTime' => '+1 hour'],
-            ],
-            'publicHolidayDate' => null,
-            'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
-            'expectedOpeningRangesModifiers' => [],
-        ];
-
         yield 'store that closes sooner then opens' => [
             'openingRangesModifiers' => [
                 ['openingTime' => '+1 hour', 'closingTime' => '-1 hour'],
@@ -493,17 +479,17 @@ class GetStoreTest extends GraphQlTestCase
         $storeData = $this->storeDataFactory->createFromStore($store);
         $storeData->openingHours = $this->openingHourDataFactory->createWeek();
 
-        $openingHoursData = [];
+        $openingHourData = $this->openingHourDataFactory->create();
+        $openingHourData->dayOfWeek = $dayOfWeek;
 
         foreach ($openingRangesModifiers as $modifier) {
-            $openingHourData = $this->openingHourDataFactory->create();
-            $openingHourData->dayOfWeek = $dayOfWeek;
-            $openingHourData->openingTime = $modifier['openingTime'] ? $this->createOpeningOrClosingHour($modifier['openingTime'])->format('H:i') : null;
-            $openingHourData->closingTime = $modifier['closingTime'] ? $this->createOpeningOrClosingHour($modifier['closingTime'])->format('H:i') : null;
-            $openingHoursData[] = $openingHourData;
+            $openingHourData->openingHoursRanges[] = $this->openingHoursRangeDataFactory->create(
+                $this->createOpeningOrClosingHour($modifier['openingTime'])->format('H:i'),
+                $this->createOpeningOrClosingHour($modifier['closingTime'])->format('H:i'),
+            );
         }
 
-        $storeData->openingHours = $openingHoursData;
+        $storeData->openingHours = [$openingHourData];
 
         return $this->storeFacade->edit($store->getId(), $storeData);
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Store\OpeningHours;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 
@@ -35,16 +36,10 @@ class OpeningHours
     protected $dayOfWeek;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=5, nullable=true)
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRange>
+     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRange", mappedBy="openingHours", cascade={"persist"}, orphanRemoval=true)
      */
-    protected $openingTime;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=5, nullable=true)
-     */
-    protected $closingTime;
+    protected $openingHoursRanges;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData $openingHourData
@@ -87,19 +82,19 @@ class OpeningHours
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRange[]
      */
-    public function getOpeningTime()
+    public function getOpeningHoursRanges()
     {
-        return $this->openingTime;
+        return $this->openingHoursRanges->getValues();
     }
 
     /**
-     * @return string|null
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRange[] $openingHoursRanges
      */
-    public function getClosingTime()
+    public function setOpeningHoursRanges($openingHoursRanges): void
     {
-        return $this->closingTime;
+        $this->openingHoursRanges = new ArrayCollection($openingHoursRanges);
     }
 
     /**
@@ -108,7 +103,5 @@ class OpeningHours
     protected function setData(OpeningHoursData $openingHourData): void
     {
         $this->dayOfWeek = $openingHourData->dayOfWeek;
-        $this->openingTime = $openingHourData->openingTime;
-        $this->closingTime = $openingHourData->closingTime;
     }
 }

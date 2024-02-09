@@ -358,6 +358,9 @@ msgstr ""
 msgid "Please enter the filename"
 msgstr ""
 
+msgid "Please enter time"
+msgstr ""
+
 msgid "Please enter total price with VAT"
 msgstr ""
 

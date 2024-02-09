@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDisp
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory;
+use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeFactory;
 
 class StoreFacade
 {
@@ -24,6 +25,7 @@ class StoreFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory $openingHoursFactory
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHoursDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeFactory $openingHoursRangeFactory
      */
     public function __construct(
         protected readonly StoreRepository $storeRepository,
@@ -34,6 +36,7 @@ class StoreFacade
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly OpeningHoursFactory $openingHoursFactory,
         protected readonly OpeningHoursDataFactory $openingHoursDataFactory,
+        protected readonly OpeningHoursRangeFactory $openingHoursRangeFactory,
     ) {
     }
 
@@ -67,9 +70,7 @@ class StoreFacade
     {
         $store = $this->getById($id);
         $store->edit($storeData);
-        $store->setOpeningHours(
-            $this->createFullWeekOpeningHours($storeData->openingHours, $store),
-        );
+        $this->refreshStoreOpeningHours($store, $storeData);
         $this->friendlyUrlFacade->saveUrlListFormData(StoreFriendlyUrlProvider::ROUTE_NAME, $store->getId(), $storeData->urls);
         $this->em->flush();
 
@@ -199,7 +200,9 @@ class StoreFacade
         $daysCovered = [];
 
         foreach ($openingHoursData as $openingHourData) {
-            $openingHours[] = $this->openingHoursFactory->create($openingHourData);
+            $openingHour = $this->openingHoursFactory->create($openingHourData);
+            $openingHour->setOpeningHoursRanges($this->openingHoursRangeFactory->createOpeningHoursRanges($openingHour, $openingHourData->openingHoursRanges));
+            $openingHours[] = $openingHour;
             $daysCovered[] = $openingHourData->dayOfWeek;
         }
 
@@ -219,6 +222,21 @@ class StoreFacade
                 return $openingHours;
             },
             $openingHours,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
+     */
+    protected function refreshStoreOpeningHours(Store $store, StoreData $storeData): void
+    {
+        foreach ($store->getOpeningHours() as $openingHours) {
+            $this->em->remove($openingHours);
+        }
+        $this->em->flush();
+        $store->setOpeningHours(
+            $this->createFullWeekOpeningHours($storeData->openingHours, $store),
         );
     }
 }

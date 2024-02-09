@@ -35,12 +35,14 @@ class StoreOpeningHoursProvider implements ResetInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHoursDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory $openingHoursRangeDataFactory
      */
     public function __construct(
         protected readonly ClosedDayFacade $closedDayFacade,
         protected readonly Domain $domain,
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
         protected readonly OpeningHoursDataFactory $openingHoursDataFactory,
+        protected readonly OpeningHoursRangeDataFactory $openingHoursRangeDataFactory,
     ) {
     }
 
@@ -64,7 +66,7 @@ class StoreOpeningHoursProvider implements ResetInterface
         $openingHoursData = [];
 
         foreach (static::DAY_NUMBERS_TO_ENGLISH_NAMES_MAP as $dayName) {
-            $openingHoursData = [...$openingHoursData, ...$this->getOpeningHoursDataForDayInThisWeek($dayName, $store)];
+            $openingHoursData[] = $this->getOpeningHoursDataForDayInThisWeek($dayName, $store);
         }
 
         return $openingHoursData;
@@ -97,7 +99,14 @@ class StoreOpeningHoursProvider implements ResetInterface
         $weekSetting = [];
 
         foreach ($store->getOpeningHours() as $openingHour) {
-            $weekSetting = $this->addOpeningHourRangeToWeekSetting($openingHour->getDayOfWeek(), $openingHour->getOpeningTime(), $openingHour->getClosingTime(), $weekSetting);
+            $dayOfWeekName = $this->getEnglishDayNameFromDayNumber($openingHour->getDayOfWeek());
+
+            foreach ($openingHour->getOpeningHoursRanges() as $openingHoursRange) {
+                $weekSetting[$dayOfWeekName][] = $this->formatOpeningHours(
+                    $openingHoursRange->getOpeningTime(),
+                    $openingHoursRange->getClosingTime()
+                );
+            }
         }
 
         return $weekSetting;
@@ -109,34 +118,7 @@ class StoreOpeningHoursProvider implements ResetInterface
      */
     public function getOpeningHoursSettingFromData(array $openingHoursData): SpatieOpeningHours
     {
-        $weekSetting = [];
-
-        foreach ($openingHoursData as $openingHourData) {
-            $weekSetting = $this->addOpeningHourRangeToWeekSetting($openingHourData->dayOfWeek, $openingHourData->openingTime, $openingHourData->closingTime, $weekSetting);
-        }
-
-        return SpatieOpeningHours::create($weekSetting);
-    }
-
-    /**
-     * @param int $dayOfWeek
-     * @param string|null $openingTime
-     * @param string|null $closingTime
-     * @param array $weekSetting
-     * @return array
-     */
-    protected function addOpeningHourRangeToWeekSetting(
-        int $dayOfWeek,
-        ?string $openingTime,
-        ?string $closingTime,
-        array $weekSetting,
-    ): array {
-        if ($openingTime !== null && $closingTime !== null) {
-            $openingHoursRange = $openingTime . '-' . $closingTime;
-            $weekSetting[$this->getEnglishDayNameFromDayNumber($dayOfWeek)][] = $openingHoursRange;
-        }
-
-        return $weekSetting;
+        return SpatieOpeningHours::create($this->getWeekSettingFromData($openingHoursData));
     }
 
     /**
@@ -181,35 +163,70 @@ class StoreOpeningHoursProvider implements ResetInterface
     /**
      * @param string $dayName
      * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[]
+     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData
      */
-    protected function getOpeningHoursDataForDayInThisWeek(string $dayName, Store $store): array
+    protected function getOpeningHoursDataForDayInThisWeek(string $dayName, Store $store): OpeningHoursData
     {
         $date = new DateTimeImmutable('this week ' . $dayName);
         $openingHoursForDay = $this->getOpeningHoursSetting($store)->forDate($date);
 
-        if ($openingHoursForDay->isEmpty()) {
-            $openingHourData = $this->openingHoursDataFactory->create();
-            $openingHourData->dayOfWeek = $this->getDayNumberFromEnglishDayName($dayName);
+        $openingHourData = $this->openingHoursDataFactory->create();
+        $openingHourData->dayOfWeek = $this->getDayNumberFromEnglishDayName($dayName);
 
-            return [$openingHourData];
+        if ($openingHoursForDay->isEmpty()) {
+            return $openingHourData;
         }
 
-        $openingHoursData = [];
         /** @var \Spatie\OpeningHours\TimeRange $openingHour */
         foreach ($openingHoursForDay->getIterator() as $openingHour) {
-            $openingHourData = $this->openingHoursDataFactory->create();
-            $openingHourData->dayOfWeek = $this->getDayNumberFromEnglishDayName($dayName);
-            $openingHourData->openingTime = $openingHour->start()->format();
-            $openingHourData->closingTime = $openingHour->end()->format();
-            $openingHoursData[] = $openingHourData;
+            $openingHourData->openingHoursRanges[] = $this->openingHoursRangeDataFactory->create($openingHour->start()->format(), $openingHour->end()->format());
         }
 
-        return $openingHoursData;
+        return $openingHourData;
     }
 
     public function reset(): void
     {
         $this->openingHoursSetting = [];
+    }
+
+    /**
+     * @param string $openingTime
+     * @param string $closingTime
+     * @return string
+     */
+    protected function formatOpeningHours(string $openingTime, string $closingTime): string
+    {
+        return $openingTime . '-' . $closingTime;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[] $openingHoursData
+     * @return array{
+     *     monday: string[],
+     *     tuesday: string[],
+     *     wednesday: string[],
+     *     thursday: string[],
+     *     friday: string[],
+     *     saturday: string[],
+     *     sunday: string[],
+     * }
+     */
+    protected function getWeekSettingFromData(array $openingHoursData): array
+    {
+        $weekSetting = [];
+
+        foreach ($openingHoursData as $openingHourData) {
+            $dayOfWeekName = $this->getEnglishDayNameFromDayNumber($openingHourData->dayOfWeek);
+
+            foreach ($openingHourData->openingHoursRanges as $openingHoursRange) {
+                $weekSetting[$dayOfWeekName][] = $this->formatOpeningHours(
+                    $openingHoursRange->openingTime,
+                    $openingHoursRange->closingTime,
+                );
+            }
+        }
+
+        return $weekSetting;
     }
 }

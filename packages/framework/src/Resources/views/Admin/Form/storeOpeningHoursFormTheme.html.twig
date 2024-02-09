@@ -1,13 +1,14 @@
 {% block _store_form_openingHours_widget %}
-    {% set dayNames = [
-        'Monday'|trans,
-        'Tuesday'|trans,
-        'Wednesday'|trans,
-        'Thursday'|trans,
-        'Friday'|trans,
-        'Saturday'|trans,
-        'Sunday'|trans,
-    ] %}
+    {% import _self as self %}
+    {% set dayNamesIndexedByDayNumber = {
+        1: 'Monday'|trans,
+        2: 'Tuesday'|trans,
+        3: 'Wednesday'|trans,
+        4: 'Thursday'|trans,
+        5: 'Friday'|trans,
+        6: 'Saturday'|trans,
+        7: 'Sunday'|trans,
+    } %}
 
     <div class='form-line__side'>
         <div class='flex-align-center'>
@@ -18,12 +19,31 @@
             </div>
         </div>
 
-        {% for key, openingHour in form %}
+        {% for openingHours in form %}
             <div class='flex-align-center'>
                 <div style="width: 100px; margin-top: 0" class='full-width margin-5'>
-                    <strong>{{ dayNames[key - 1] }}</strong>
+                    <strong>{{ dayNamesIndexedByDayNumber[openingHours.vars.value.dayOfWeek] }}</strong>
                 </div>
-                {{ form_widget(openingHour.vars.form) }}
+                {% set rangesForm = openingHours.openingHoursRanges %}
+                <div class="js-form-group form-group js-opening-hours-form-group">
+                    <table class="table-form" id="opening-hours">
+                        <tbody class="js-opening-hours" data-prototype="{{ self.openingHoursRangeRow(rangesForm.vars.prototype)|escape }}" data-index="{{ rangesForm|length }}">
+                            {% for key, range in rangesForm %}
+                                {{ self.openingHoursRangeRow(range, key) }}
+                            {% else %}
+                                {% do rangesForm.setRendered %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="form-line form-line--no-top-border">
+                        <div class="form-line__line form-line__line--no-space">
+                            <a href="#" class="js-opening-hours-item-add btn btn--plus margin-left-10">
+                                <i class="btn__icon">+</i>
+                                {{ 'Add opening hours'|trans }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         {% endfor %}
     </div>
@@ -44,3 +64,17 @@
         {{ form_errors(form) }}
     </div>
 {% endblock _store_form_openingHours_errors %}
+
+{% macro openingHoursRangeRow(openingHoursRange, index) %}
+    <tr class="js-opening-hours-item js-form-group table-form__row" data-index="{{ index }}">
+        <td class="table-form__cell table-form__cell--del-before">
+            <div class="input__wrap">
+                {{ form_widget(openingHoursRange, { attr: { class: "opening-hours-widget" } }) }}
+                {{ form_errors(openingHoursRange) }}
+            </div>
+        </td>
+        <td class="table-form__cell table-form__cell--actions">
+            <a href="#" class="js-opening-hours-item-remove table-form__action"><i class="svg svg-delete-thin in-icon"></i></a>
+        </td>
+    </tr>
+{% endmacro %}

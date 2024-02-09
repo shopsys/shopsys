@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Store;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours\OpeningHoursFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours\OpeningHoursRangeCollectionFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
-use Shopsys\FrameworkBundle\Form\Transformers\OpeningHoursCollectionTransformer;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -39,14 +38,12 @@ class StoreFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\OpeningHoursCollectionTransformer $openingHoursCollectionTransformer
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider $storeOpeningHoursProvider
      */
     public function __construct(
         private readonly StockFacade $stockFacade,
         private readonly StoreFacade $storeFacade,
         private readonly CountryFacade $countryFacade,
-        private readonly OpeningHoursCollectionTransformer $openingHoursCollectionTransformer,
         private readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
     ) {
     }
@@ -165,14 +162,8 @@ class StoreFormType extends AbstractType
             ])
             ->add('openingHours', CollectionType::class, [
                 'label' => t('Opening hours'),
-                'entry_type' => CollectionType::class,
+                'entry_type' => OpeningHoursRangeCollectionFormType::class,
                 'required' => false,
-                'entry_options' => [
-                    'entry_type' => OpeningHoursFormType::class,
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                ],
-                'error_bubbling' => false,
             ])
             ->add('contactInfo', TextareaType::class, [
                 'required' => false,
@@ -182,8 +173,6 @@ class StoreFormType extends AbstractType
             ])
             ->add($this->createImagesGroup($builder, $options))
             ->add('save', SubmitType::class);
-
-        $builder->get('openingHours')->addModelTransformer($this->openingHoursCollectionTransformer);
     }
 
     /**

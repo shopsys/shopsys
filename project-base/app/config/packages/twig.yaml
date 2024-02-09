@@ -24,7 +24,6 @@ twig:
         - '@ShopsysFramework/Admin/Form/hreflangSettingFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/paymentTransactionsFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/storeOpeningHoursFormTheme.html.twig'
-        - '@ShopsysFramework/Admin/Form/openingHoursFormTheme.html.twig'
         - 'Admin/Form/blogCategoriesType.html.twig'
         - 'Admin/Form/blogCategoryCheckboxType.html.twig'
         - 'Admin/Form/productDetailFormTheme.html.twig'
