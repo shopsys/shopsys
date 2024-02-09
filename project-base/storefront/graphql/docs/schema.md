@@ -3873,6 +3873,15 @@ Categories containing at least one product with flag
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
+<td>
+
+Alternate links for hreflang meta tags
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
@@ -20,6 +21,7 @@ class HreflangLinksFacade
     protected const ROUTE_PRODUCT_DETAIL = 'front_product_detail';
     protected const ROUTE_PRODUCT_LIST = 'front_product_list';
     protected const ROUTE_BRAND_DETAIL = 'front_brand_detail';
+    protected const ROUTE_FLAG_DETAIL = 'front_flag_detail';
     protected const ROUTE_BLOG_ARTICLE_DETAIL = 'front_blogarticle_detail';
     protected const ROUTE_BLOG_CATEGORY_DETAIL = 'front_blogcategory_detail';
     protected const ROUTE_PAGE_SEO = 'front_page_seo';
@@ -151,6 +153,16 @@ class HreflangLinksFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
+     * @param int $currentDomainId
+     * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
+     */
+    public function getForFlag(Flag $flag, int $currentDomainId): array
+    {
+        return $this->doGetHrefLinks($flag, $currentDomainId, static::ROUTE_FLAG_DETAIL);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $seoPage
      * @param int $currentDomainId
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
@@ -161,14 +173,14 @@ class HreflangLinksFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle|\Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|\Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\Product\Product|\Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage $entity
+     * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle|\Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory|\Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\Product\Product|\Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage|\Shopsys\FrameworkBundle\Model\Product\Flag\Flag $entity
      * @param int $currentDomainId
      * @param string $routeName
      * @param callable|null $isVisibleCallable
      * @return \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[]
      */
     protected function doGetHrefLinks(
-        BlogArticle|BlogCategory|Brand|Category|Product|SeoPage $entity,
+        BlogArticle|BlogCategory|Brand|Category|Product|SeoPage|Flag $entity,
         int $currentDomainId,
         string $routeName,
         ?callable $isVisibleCallable = null,

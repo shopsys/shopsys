@@ -697,11 +697,13 @@ input DeliveryAddressInput {
 }
 
 "Represents a flag"
-type Flag implements Breadcrumb & Slug & ProductListable {
+type Flag implements Hreflang & Slug & Breadcrumb & ProductListable {
   "Hierarchy of the current element in relation to the structure"
   breadcrumb: [Link!]!
   "Categories containing at least one product with flag"
   categories(productFilter: ProductFilter): [Category!]!
+  "Alternate links for hreflang meta tags"
+  hreflangLinks: [HreflangLink!]!
   "Localized flag name (domain dependent)"
   name: String!
   "Paginated and ordered products of flag"

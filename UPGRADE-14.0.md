@@ -1386,6 +1386,11 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   add unique index to cart identifiers ([#3017](https://github.com/shopsys/shopsys/pull/3017))
     -   check `Version20240209114704` migration and if you already have the unique indexes on the cart table, you can skip it
     -   see #project-base-diff to update your project
+-   add hreflang links for flag detail query ([#3022](https://github.com/shopsys/shopsys/pull/3022))
+    -   [features moved](#movement-of-features-from-project-base-to-packages) to the `frontend-api` package:
+        -   class `FlagResolverMap`
+    -   `Flag.name` and `Flag.rgbColor` fields are now required in the `Flag` graphql type
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
@@ -1694,3 +1699,4 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   added more verbose error messages when using logException on SF ([#3018](https://github.com/shopsys/shopsys/pull/3018))
     -   messages logged to sentry now contain more context
     -   when adding error logs using `logException`, make sure you always provide as much context as possible
+-   add hreflang links for flag detail page ([#3022](https://github.com/shopsys/shopsys/pull/3022))

@@ -5,15 +5,8 @@ Flag:
     config:
         interfaces:
             - 'Breadcrumb'
-            - 'Slug'
             - 'ProductListable'
         fields:
-            name:
-                type: "String!"
-                description: "Localized flag name (domain dependent)"
-            slug:
-                type: "String!"
-                description: "URL slug of flag"
             products:
                 type: "ProductConnection!"
                 description: "Paginated and ordered products of flag"
@@ -33,6 +26,3 @@ Flag:
                 args:
                     productFilter:
                         type: "ProductFilter"
-            rgbColor:
-                type: "String!"
-                description: "Flag color in rgb format"
