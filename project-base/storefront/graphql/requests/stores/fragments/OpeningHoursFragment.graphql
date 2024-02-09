@@ -2,6 +2,7 @@ fragment OpeningHoursFragment on OpeningHours {
     isOpen
     dayOfWeek
     openingHoursOfDays {
+        date
         dayOfWeek
         openingHoursRanges {
             openingTime

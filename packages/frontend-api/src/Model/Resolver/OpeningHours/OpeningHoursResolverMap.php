@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\OpeningHours;
 
+use DateTimeImmutable;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
-use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataHelper;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
+use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class OpeningHoursResolverMap extends ResolverMap
 {
@@ -56,24 +57,29 @@ class OpeningHoursResolverMap extends ResolverMap
                     /** @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHour */
                     $openingHour = reset($openingHours);
 
-                    return $this->getOpeningHoursOfDays($this->storeOpeningHoursProvider->getThisWeekOpeningHours($openingHour->getStore()));
+                    return $this->getOpeningHoursForStore($openingHour->getStore());
                 },
             ],
         ];
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[] $openingHoursData
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return array
      */
-    protected function getOpeningHoursOfDays(array $openingHoursData): array
+    protected function getOpeningHoursForStore(Store $store): array
     {
         $openingHoursOfDays = [];
 
-        foreach (OpeningHoursDataHelper::getOpeningHoursIndexedByDayNumber($openingHoursData) as $dayNumber => $openingHours) {
+        $today = new DateTimeImmutable('today', timezone: $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));
+
+        for ($i = 0; $i <= 6; $i++) {
+            $day = $today->modify("+${i} days");
+
             $openingHoursOfDays[] = [
-                'dayOfWeek' => $dayNumber,
-                'openingHoursRanges' => $this->getOpeningHoursRanges($openingHours),
+                'date' => $day,
+                'dayOfWeek' => (int)$day->format('N'),
+                'openingHoursRanges' => $this->getOpeningHoursRanges($this->storeOpeningHoursProvider->getOpeningHoursDataForDay($day, $store)),
             ];
         }
 

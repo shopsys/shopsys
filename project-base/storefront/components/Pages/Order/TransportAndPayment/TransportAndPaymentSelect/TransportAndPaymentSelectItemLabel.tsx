@@ -60,10 +60,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
                         <div className="my-1 text-greyLight">{t('Open') + ': '}</div>
 
-                        <OpeningHours
-                            className="items-start gap-1 lg:items-start"
-                            openingHours={pickupPlaceDetail.openingHours}
-                        />
+                        <OpeningHours openingHours={pickupPlaceDetail.openingHours} />
                     </div>
                 )}
 

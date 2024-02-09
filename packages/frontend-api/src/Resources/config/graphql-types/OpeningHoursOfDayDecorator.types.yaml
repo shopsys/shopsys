@@ -4,6 +4,9 @@ OpeningHoursOfDayDecorator:
     config:
         description: "Represents store opening hours for a specific day"
         fields:
+            date:
+                type: "DateTime!"
+                description: "Date of day with display timezone for domain"
             dayOfWeek:
                 type: "Int!"
                 description: "Day of the week"

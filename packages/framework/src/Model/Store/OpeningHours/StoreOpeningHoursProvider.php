@@ -57,21 +57,6 @@ class StoreOpeningHoursProvider implements ResetInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[]
-     */
-    public function getThisWeekOpeningHours(Store $store): array
-    {
-        $openingHoursData = [];
-
-        foreach (static::DAY_NUMBERS_TO_ENGLISH_NAMES_MAP as $dayName) {
-            $openingHoursData = [...$openingHoursData, ...$this->getOpeningHoursDataForDayInThisWeek($dayName, $store)];
-        }
-
-        return $openingHoursData;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Spatie\OpeningHours\OpeningHours
      */
     protected function getOpeningHoursSetting(Store $store): SpatieOpeningHours
@@ -146,7 +131,7 @@ class StoreOpeningHoursProvider implements ResetInterface
     protected function getExceptions(Store $store): array
     {
         $exceptions = [];
-        $closedDays = $this->closedDayFacade->getThisWeekClosedDaysNotExcludedForStore(
+        $closedDays = $this->closedDayFacade->getFollowingWeekClosedDaysNotExcludedForStore(
             $this->domain->getId(),
             $store,
         );
@@ -159,17 +144,6 @@ class StoreOpeningHoursProvider implements ResetInterface
     }
 
     /**
-     * @param string $dayName
-     * @return int
-     */
-    protected function getDayNumberFromEnglishDayName(string $dayName): int
-    {
-        $dayNumber = array_search($dayName, static::DAY_NUMBERS_TO_ENGLISH_NAMES_MAP, true);
-
-        return $dayNumber !== false ? $dayNumber : throw new InvalidArgumentException(sprintf('Day name "%s" is not valid', $dayName));
-    }
-
-    /**
      * @param int $dayNumber
      * @return string
      */
@@ -179,18 +153,17 @@ class StoreOpeningHoursProvider implements ResetInterface
     }
 
     /**
-     * @param string $dayName
+     * @param \DateTimeImmutable $date
      * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[]
      */
-    protected function getOpeningHoursDataForDayInThisWeek(string $dayName, Store $store): array
+    public function getOpeningHoursDataForDay(DateTimeImmutable $date, Store $store): array
     {
-        $date = new DateTimeImmutable('this week ' . $dayName);
         $openingHoursForDay = $this->getOpeningHoursSetting($store)->forDate($date);
 
         if ($openingHoursForDay->isEmpty()) {
             $openingHourData = $this->openingHoursDataFactory->create();
-            $openingHourData->dayOfWeek = $this->getDayNumberFromEnglishDayName($dayName);
+            $openingHourData->dayOfWeek = (int)$date->format('N');
 
             return [$openingHourData];
         }
@@ -199,7 +172,7 @@ class StoreOpeningHoursProvider implements ResetInterface
         /** @var \Spatie\OpeningHours\TimeRange $openingHour */
         foreach ($openingHoursForDay->getIterator() as $openingHour) {
             $openingHourData = $this->openingHoursDataFactory->create();
-            $openingHourData->dayOfWeek = $this->getDayNumberFromEnglishDayName($dayName);
+            $openingHourData->dayOfWeek = (int)$date->format('N');
             $openingHourData->openingTime = $openingHour->start()->format();
             $openingHourData->closingTime = $openingHour->end()->format();
             $openingHoursData[] = $openingHourData;

@@ -58,7 +58,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
 
                         <InfoItem className="flex-1">
                             <StoreHeading text={t('Opening hours')} />
-                            <OpeningHours openingHours={store.openingHours} />
+                            <OpeningHours className="mx-auto w-80" openingHours={store.openingHours} />
                         </InfoItem>
                     </div>
 

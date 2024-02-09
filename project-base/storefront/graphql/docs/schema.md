@@ -4879,6 +4879,15 @@ Represents store opening hours for a specific day
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>date</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date of day with display timezone for domain
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>dayOfWeek</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>

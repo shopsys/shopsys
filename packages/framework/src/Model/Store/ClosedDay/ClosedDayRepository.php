@@ -47,22 +47,22 @@ class ClosedDayRepository
      * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
      */
-    public function getThisWeekClosedDaysNotExcludedForStore(int $domainId, Store $store): array
+    public function getFollowingWeekClosedDaysNotExcludedForStore(int $domainId, Store $store): array
     {
-        $beginningOfWeek = new DateTimeImmutable('this week monday', $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId));
-        $beginningOfNextWeek = $beginningOfWeek->add(new DateInterval('P7D'));
+        $today = new DateTimeImmutable('today', $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId));
+        $endOfFollowingWeek = $today->add(new DateInterval('P7D'));
 
         return $this
             ->getClosedDayRepository()
             ->createQueryBuilder('cd')
             ->where('cd.domainId = :domainId')
             ->andWhere(':store NOT MEMBER OF cd.excludedStores')
-            ->andWhere('cd.date >= :beginningOfWeek')
-            ->andWhere('cd.date < :beginningOfNextWeek')
+            ->andWhere('cd.date >= :today')
+            ->andWhere('cd.date < :endOfFollowingWeek')
             ->setParameter('domainId', $domainId)
             ->setParameter('store', $store)
-            ->setParameter('beginningOfWeek', $beginningOfWeek)
-            ->setParameter('beginningOfNextWeek', $beginningOfNextWeek)
+            ->setParameter('today', $today)
+            ->setParameter('endOfFollowingWeek', $endOfFollowingWeek)
             ->getQuery()
             ->getResult();
     }
