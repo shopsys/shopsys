@@ -9,7 +9,6 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
-use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursFactory;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeFactory;
@@ -200,7 +199,7 @@ class StoreFacade
         $daysCovered = [];
 
         foreach ($openingHoursDataArray as $openingHoursData) {
-            $openingHour = $this->openingHoursFactory->create($openingHoursData);
+            $openingHour = $this->openingHoursFactory->createWithStore($openingHoursData, $store);
             $openingHour->setOpeningHoursRanges($this->openingHoursRangeFactory->createOpeningHoursRanges($openingHour, $openingHoursData->openingHoursRanges));
             $openingHours[] = $openingHour;
             $daysCovered[] = $openingHoursData->dayOfWeek;
@@ -211,17 +210,12 @@ class StoreFacade
 
         foreach ($missingDays as $missingDay) {
             $openingHoursData = $this->openingHoursDataFactory->createForDayOfWeek($missingDay);
-            $openingHours[] = $this->openingHoursFactory->create($openingHoursData);
+            $openingHour = $this->openingHoursFactory->createWithStore($openingHoursData, $store);
+            $openingHour->setOpeningHoursRanges($this->openingHoursRangeFactory->createOpeningHoursRanges($openingHour, $openingHoursData->openingHoursRanges));
+            $openingHours[] = $openingHour;
         }
 
-        return array_map(
-            static function (OpeningHours $openingHours) use ($store): OpeningHours {
-                $openingHours->setStore($store);
-
-                return $openingHours;
-            },
-            $openingHours,
-        );
+        return $openingHours;
     }
 
     /**
