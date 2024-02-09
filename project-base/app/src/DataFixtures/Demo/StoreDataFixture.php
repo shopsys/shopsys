@@ -188,60 +188,54 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     private function createOpeningHoursData(): array
     {
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 1;
-        $openingHourData->openingHoursRanges = [
+        $openingHoursDataArray = [];
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(1);
+        $openingHoursData->openingHoursRanges = [
             $this->openingHoursRangeDataFactory->create('06:00', '11:00'),
             $this->openingHoursRangeDataFactory->create('13:00', '18:00'),
         ];
-        $openingHoursData[] = $openingHourData;
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 2;
-        $openingHourData->openingHoursRanges = [
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(2);
+        $openingHoursData->openingHoursRanges = [
             $this->openingHoursRangeDataFactory->create('07:00', '11:00'),
             $this->openingHoursRangeDataFactory->create('13:00', '17:00'),
         ];
-        $openingHoursData[] = $openingHourData;
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 3;
-        $openingHourData->openingHoursRanges = [
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(3);
+        $openingHoursData->openingHoursRanges = [
             $this->openingHoursRangeDataFactory->create('08:00', '11:00'),
             $this->openingHoursRangeDataFactory->create('13:00', '16:00'),
         ];
-        $openingHoursData[] = $openingHourData;
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 4;
-        $openingHourData->openingHoursRanges = [
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(4);
+        $openingHoursData->openingHoursRanges = [
             $this->openingHoursRangeDataFactory->create('09:00', '11:00'),
             $this->openingHoursRangeDataFactory->create('13:00', '15:00'),
         ];
-        $openingHoursData[] = $openingHourData;
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 5;
-        $openingHourData->openingHoursRanges = [
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(5);
+        $openingHoursData->openingHoursRanges = [
             $this->openingHoursRangeDataFactory->create('10:00', '11:00'),
             $this->openingHoursRangeDataFactory->create('13:00', '14:00'),
         ];
-        $openingHoursData[] = $openingHourData;
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 6;
-        $openingHourData->openingHoursRanges = [
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(6);
+        $openingHoursData->openingHoursRanges = [
             $this->openingHoursRangeDataFactory->create('08:00', '11:00'),
         ];
-        $openingHoursData[] = $openingHourData;
+        $openingHoursDataArray[] = $openingHoursData;
 
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = 7;
-        $openingHourData->openingHoursRanges = [
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek(7);
+        $openingHoursData->openingHoursRanges = [
             $this->openingHoursRangeDataFactory->create('09:00', '11:00'),
         ];
-        $openingHoursData[] = $openingHourData;
+        $openingHoursDataArray[] = $openingHoursData;
 
-        return $openingHoursData;
+        return $openingHoursDataArray;
     }
 }

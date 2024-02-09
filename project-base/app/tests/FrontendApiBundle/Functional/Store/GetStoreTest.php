@@ -479,17 +479,16 @@ class GetStoreTest extends GraphQlTestCase
         $storeData = $this->storeDataFactory->createFromStore($store);
         $storeData->openingHours = $this->openingHourDataFactory->createWeek();
 
-        $openingHourData = $this->openingHourDataFactory->create();
-        $openingHourData->dayOfWeek = $dayOfWeek;
+        $openingHoursData = $this->openingHourDataFactory->createForDayOfWeek($dayOfWeek);
 
         foreach ($openingRangesModifiers as $modifier) {
-            $openingHourData->openingHoursRanges[] = $this->openingHoursRangeDataFactory->create(
+            $openingHoursData->openingHoursRanges[] = $this->openingHoursRangeDataFactory->create(
                 $this->createOpeningOrClosingHour($modifier['openingTime'])->format('H:i'),
                 $this->createOpeningOrClosingHour($modifier['closingTime'])->format('H:i'),
             );
         }
 
-        $storeData->openingHours = [$openingHourData];
+        $storeData->openingHours = [$openingHoursData];
 
         return $this->storeFacade->edit($store->getId(), $storeData);
     }

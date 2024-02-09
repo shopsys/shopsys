@@ -15,11 +15,15 @@ class OpeningHoursDataFactory
     }
 
     /**
+     * @param int $dayOfWeek
      * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData
      */
-    public function create(): OpeningHoursData
+    public function createForDayOfWeek(int $dayOfWeek): OpeningHoursData
     {
-        return new OpeningHoursData();
+        $openingHoursData = new OpeningHoursData();
+        $openingHoursData->dayOfWeek = $dayOfWeek;
+
+        return $openingHoursData;
     }
 
     /**
@@ -30,10 +34,7 @@ class OpeningHoursDataFactory
         $weekOpeningHourData = [];
 
         for ($i = 1; $i <= 7; $i++) {
-            $openingHourData = $this->create();
-            $openingHourData->dayOfWeek = $i;
-
-            $weekOpeningHourData[] = $openingHourData;
+            $weekOpeningHourData[] = $this->createForDayOfWeek($i);
         }
 
         return $weekOpeningHourData;
@@ -45,12 +46,10 @@ class OpeningHoursDataFactory
      */
     public function createFromOpeningHour(OpeningHours $openingHours): OpeningHoursData
     {
-        $openingHourData = $this->create();
+        $openingHoursData = $this->createForDayOfWeek($openingHours->getDayOfWeek());
+        $openingHoursData->openingHoursRanges = $this->openingHoursRangeDataFactory->createOpeningHoursRangesDataFromEntities($openingHours->getOpeningHoursRanges());
 
-        $openingHourData->dayOfWeek = $openingHours->getDayOfWeek();
-        $openingHourData->openingHoursRanges = $this->openingHoursRangeDataFactory->createOpeningHoursRangesDataFromEntities($openingHours->getOpeningHoursRanges());
-
-        return $openingHourData;
+        return $openingHoursData;
     }
 
     /**

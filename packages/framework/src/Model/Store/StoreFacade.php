@@ -190,29 +190,28 @@ class StoreFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[] $openingHoursData
+     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursData[] $openingHoursDataArray
      * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours[]
      */
-    protected function createFullWeekOpeningHours(array $openingHoursData, Store $store): array
+    protected function createFullWeekOpeningHours(array $openingHoursDataArray, Store $store): array
     {
         $openingHours = [];
         $daysCovered = [];
 
-        foreach ($openingHoursData as $openingHourData) {
-            $openingHour = $this->openingHoursFactory->create($openingHourData);
-            $openingHour->setOpeningHoursRanges($this->openingHoursRangeFactory->createOpeningHoursRanges($openingHour, $openingHourData->openingHoursRanges));
+        foreach ($openingHoursDataArray as $openingHoursData) {
+            $openingHour = $this->openingHoursFactory->create($openingHoursData);
+            $openingHour->setOpeningHoursRanges($this->openingHoursRangeFactory->createOpeningHoursRanges($openingHour, $openingHoursData->openingHoursRanges));
             $openingHours[] = $openingHour;
-            $daysCovered[] = $openingHourData->dayOfWeek;
+            $daysCovered[] = $openingHoursData->dayOfWeek;
         }
 
         $daysOfWeek = range(1, 7);
         $missingDays = array_diff($daysOfWeek, $daysCovered);
 
         foreach ($missingDays as $missingDay) {
-            $openingHourData = $this->openingHoursDataFactory->create();
-            $openingHourData->dayOfWeek = $missingDay;
-            $openingHours[] = $this->openingHoursFactory->create($openingHourData);
+            $openingHoursData = $this->openingHoursDataFactory->createForDayOfWeek($missingDay);
+            $openingHours[] = $this->openingHoursFactory->create($openingHoursData);
         }
 
         return array_map(

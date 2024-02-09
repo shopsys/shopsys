@@ -101,7 +101,7 @@ class StoreOpeningHoursProvider implements ResetInterface
             foreach ($openingHour->getOpeningHoursRanges() as $openingHoursRange) {
                 $weekSetting[$dayOfWeekName][] = $this->formatOpeningHours(
                     $openingHoursRange->getOpeningTime(),
-                    $openingHoursRange->getClosingTime()
+                    $openingHoursRange->getClosingTime(),
                 );
             }
         }
@@ -164,19 +164,19 @@ class StoreOpeningHoursProvider implements ResetInterface
         $date = new DateTimeImmutable('this week ' . $dayName);
         $openingHoursForDay = $this->getOpeningHoursSetting($store)->forDate($date);
 
-        $openingHourData = $this->openingHoursDataFactory->create();
-        $openingHourData->dayOfWeek = $this->getDayNumberFromEnglishDayName($dayName);
+        $dayOfWeek = $this->getDayNumberFromEnglishDayName($dayName);
+        $openingHoursData = $this->openingHoursDataFactory->createForDayOfWeek($dayOfWeek);
 
         if ($openingHoursForDay->isEmpty()) {
-            return $openingHourData;
+            return $openingHoursData;
         }
 
         /** @var \Spatie\OpeningHours\TimeRange $openingHour */
         foreach ($openingHoursForDay->getIterator() as $openingHour) {
-            $openingHourData->openingHoursRanges[] = $this->openingHoursRangeDataFactory->create($openingHour->start()->format(), $openingHour->end()->format());
+            $openingHoursData->openingHoursRanges[] = $this->openingHoursRangeDataFactory->create($openingHour->start()->format(), $openingHour->end()->format());
         }
 
-        return $openingHourData;
+        return $openingHoursData;
     }
 
     public function reset(): void
