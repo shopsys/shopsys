@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Store\OpeningHours;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -32,14 +31,12 @@ class StoreOpeningHoursProvider implements ResetInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDayFacade $closedDayFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursDataFactory $openingHoursDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeDataFactory $openingHoursRangeDataFactory
      */
     public function __construct(
         protected readonly ClosedDayFacade $closedDayFacade,
-        protected readonly Domain $domain,
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
         protected readonly OpeningHoursDataFactory $openingHoursDataFactory,
         protected readonly OpeningHoursRangeDataFactory $openingHoursRangeDataFactory,
@@ -128,10 +125,7 @@ class StoreOpeningHoursProvider implements ResetInterface
     protected function getExceptions(Store $store): array
     {
         $exceptions = [];
-        $closedDays = $this->closedDayFacade->getThisWeekClosedDaysNotExcludedForStore(
-            $this->domain->getId(),
-            $store,
-        );
+        $closedDays = $this->closedDayFacade->getThisWeekClosedDaysNotExcludedForStore($store);
 
         foreach ($closedDays as $closedDay) {
             $exceptions[$closedDay->getDate()->format('Y-m-d')] = [];

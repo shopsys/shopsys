@@ -43,13 +43,12 @@ class ClosedDayRepository
     }
 
     /**
-     * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
      */
-    public function getThisWeekClosedDaysNotExcludedForStore(int $domainId, Store $store): array
+    public function getThisWeekClosedDaysNotExcludedForStore(Store $store): array
     {
-        $beginningOfWeek = new DateTimeImmutable('this week monday', $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId));
+        $beginningOfWeek = new DateTimeImmutable('this week monday', $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));
         $beginningOfNextWeek = $beginningOfWeek->add(new DateInterval('P7D'));
 
         return $this
@@ -59,7 +58,7 @@ class ClosedDayRepository
             ->andWhere(':store NOT MEMBER OF cd.excludedStores')
             ->andWhere('cd.date >= :beginningOfWeek')
             ->andWhere('cd.date < :beginningOfNextWeek')
-            ->setParameter('domainId', $domainId)
+            ->setParameter('domainId', $store->getDomainId())
             ->setParameter('store', $store)
             ->setParameter('beginningOfWeek', $beginningOfWeek)
             ->setParameter('beginningOfNextWeek', $beginningOfNextWeek)

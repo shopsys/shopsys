@@ -31,13 +31,12 @@ class ClosedDayFacade
     }
 
     /**
-     * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Shopsys\FrameworkBundle\Model\Store\ClosedDay\ClosedDay[]
      */
-    public function getThisWeekClosedDaysNotExcludedForStore(int $domainId, Store $store): array
+    public function getThisWeekClosedDaysNotExcludedForStore(Store $store): array
     {
-        return $this->closedDayRepository->getThisWeekClosedDaysNotExcludedForStore($domainId, $store);
+        return $this->closedDayRepository->getThisWeekClosedDaysNotExcludedForStore($store);
     }
 
     /**
