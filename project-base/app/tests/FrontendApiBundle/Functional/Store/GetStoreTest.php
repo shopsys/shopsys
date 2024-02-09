@@ -203,7 +203,7 @@ class GetStoreTest extends GraphQlTestCase
         self::assertEquals($expectedIsOpen, $response['data']['store']['openingHours']['isOpen']);
         self::assertEquals(
             array_merge($expectedOpeningRanges, ['dayOfWeek' => $dayOfWeek]),
-            $response['data']['store']['openingHours']['openingHoursOfDays'][$dayOfWeek - 1],
+            $response['data']['store']['openingHours']['openingHoursOfDays'][0], // today is always first
         );
     }
 

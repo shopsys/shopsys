@@ -1021,6 +1021,8 @@ type OpeningHours {
 
 "Represents store opening hours for a specific day"
 type OpeningHoursOfDay {
+  "Date of day with display timezone for domain"
+  date: DateTime!
   "Day of the week"
   dayOfWeek: Int!
   "An array of opening hours ranges (each range contains opening and closing time)"

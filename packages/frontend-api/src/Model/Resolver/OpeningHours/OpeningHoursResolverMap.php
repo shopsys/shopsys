@@ -6,17 +6,17 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\OpeningHours;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
-use Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider;
+use Shopsys\FrontendApiBundle\Model\Store\OpeningHours\StoreOpeningHoursApiProvider;
 
 class OpeningHoursResolverMap extends ResolverMap
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
-     * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider $storeOpeningHoursProvider
+     * @param \Shopsys\FrontendApiBundle\Model\Store\OpeningHours\StoreOpeningHoursApiProvider $storeOpeningHoursApiProvider
      */
     public function __construct(
         protected readonly DateTimeHelper $dateTimeHelper,
-        protected readonly StoreOpeningHoursProvider $storeOpeningHoursProvider,
+        protected readonly StoreOpeningHoursApiProvider $storeOpeningHoursApiProvider,
     ) {
     }
 
@@ -31,7 +31,7 @@ class OpeningHoursResolverMap extends ResolverMap
                     /** @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHour */
                     $openingHour = reset($openingHours);
 
-                    return $this->storeOpeningHoursProvider->isOpenNow($openingHour->getStore());
+                    return $this->storeOpeningHoursApiProvider->isOpenNow($openingHour->getStore());
                 },
                 'dayOfWeek' => function (array $openingHours): int {
                     /** @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHour */
@@ -43,7 +43,7 @@ class OpeningHoursResolverMap extends ResolverMap
                     /** @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHour */
                     $openingHour = reset($openingHours);
 
-                    return $this->storeOpeningHoursProvider->getThisWeekOpeningHours($openingHour->getStore());
+                    return $this->storeOpeningHoursApiProvider->getFollowingWeekOpeningHours($openingHour->getStore());
                 },
             ],
         ];
