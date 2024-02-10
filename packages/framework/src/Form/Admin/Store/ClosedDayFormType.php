@@ -44,6 +44,7 @@ class ClosedDayFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter date']),
                 ],
+                'view_timezone' => null,
             ])
             ->add('name', TextType::class, [
                 'required' => true,
