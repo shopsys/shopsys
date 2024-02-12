@@ -1,8 +1,8 @@
 {
     "name": "shopsys/article-feed-luigis-box",
     "type": "library",
-    "description": "Shopsys Platform plugin interface for Luigi's Box XML article feed generation",
-    "keywords": ["Luigi's Box", "article feed", "XML feed", "plugin", "Shopsys Platform", "SSFW", "SSP"],
+    "description": "Shopsys Platform plugin interface for Luigis Box XML article feed generation",
+    "keywords": ["Luigis Box", "article feed", "XML feed", "plugin", "Shopsys Platform", "SSFW", "SSP"],
     "license": "MIT",
     "authors": [
         {
