@@ -1,0 +1,22 @@
+{% block begin %}
+<?xml version="1.0" encoding="utf-8"?>
+<articles>
+{% endblock %}
+
+{% block item %}
+    <article>
+        <identity>{{ item.identity }}</identity>
+        <name>{{ item.name }}</name>
+        {% if item.annotation is not null %}
+            <annotation>{{ item.annotation }}</annotation>
+        {% endif %}
+        <url>{{ item.url }}</url>
+        {% if item.text is not null %}
+            <text>{{ item.text }}</text>
+        {% endif %}
+    </article>
+{% endblock %}
+
+{% block end %}
+</articles>
+{% endblock %}

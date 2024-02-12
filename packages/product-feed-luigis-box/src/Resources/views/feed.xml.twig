@@ -1,0 +1,58 @@
+{% block begin %}
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/2.0">
+    <channel>
+{% endblock %}
+
+{% block item %}
+    <product>
+        <identity>{{ item.identity }}</identity>
+        <title>{{ item.title }}</title>
+        <url>{{ item.url }}</url>
+        <availability>{{ item.availability }}</availability>
+        <availability_rank>{{ item.availabilityRank }}</availability_rank>
+        <availability_rank_text>{{ item.availabilityRankText }}</availability_rank_text>
+        {% for categoryId, categoryNames in item.categoryNamesIndexedByCategoryId %}
+            <category{% if categoryId is same as(item.mainCategoryId) %} primary="true"{% endif %}>{{ categoryNames }}</category>
+        {% endfor %}
+        {% if item.brand is not null -%}
+            <brand>{{ item.brand }}</brand>
+        {% endif -%}
+        <price>{{ item.price.priceWithVat|moneyFormat(2) }} {{ item.currency.code }}</price>
+        {% if item.imageLinkS is not null -%}
+            <image_link_s>{{ item.imageLinkS }}</image_link_s>
+            <image_link_m>{{ item.imageLinkM }}</image_link_m>
+            <image_link_l>{{ item.imageLinkL }}</image_link_l>
+        {% endif -%}
+        {% if item.description is not null -%}
+            <description>{{ item.description }}</description>
+        {% endif -%}
+        {% if item.flagNames|length > 0 -%}
+            <labels>{{ item.flagNames|join(', ') }}</labels>
+        {% endif %}
+        {% if item.productCode is not null -%}
+            <product_code>{{ item.productCode }}</product_code>
+        {% endif -%}
+        {% if item.ean is not null -%}
+            <ean>{{ item.ean }}</ean>
+        {% endif -%}
+        {% if item.productParameterValuesIndexedByName|length > 0 %}
+            <parameters>
+            {% for parameterName, parameterValue in item.getProductParameterValuesIndexedByName %}
+                <param>
+                    <name>{{ parameterName }}</name>
+                    <value>{{ parameterValue }}</value>
+                </param>
+            {% endfor %}
+            </parameters>
+        {% endif %}
+        {% if item.itemGroupId is not null %}
+            <item_group_id>{{ item.itemGroupId }}</item_group_id>
+        {% endif %}
+    </product>
+{% endblock %}
+
+{% block end %}
+    </channel>
+</rss>
+{% endblock %}

@@ -19,13 +19,13 @@ get_all_packages() {
         frontend-api \
         google-cloud-bundle \
         s3-bridge \
-        category-feed-persoo \
+        category-feed-luigis-box \
         product-feed-zbozi \
         product-feed-google \
         product-feed-heureka \
         product-feed-heureka-delivery \
-        product-feed-persoo \
-        article-feed-persoo \
+        product-feed-luigis-box \
+        article-feed-luigis-box \
         plugin-interface \
         coding-standards \
         http-smoke-testing \

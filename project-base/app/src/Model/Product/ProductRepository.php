@@ -180,7 +180,7 @@ class ProductRepository extends BaseProductRepository
     public function getAllSellableQueryBuilder($domainId, PricingGroup $pricingGroup): QueryBuilder
     {
         return $this->getAllOfferedQueryBuilder($domainId, $pricingGroup)
-            ->join(ProductDomain::class, 'pd', Join::WITH, 'pd.product = p AND pd.domainId = :domainId')
+            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
             ->andWhere('p.variantType != :variantTypeMain')
             ->andWhere('pd.saleExclusion = false')
             ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)

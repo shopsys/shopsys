@@ -1,0 +1,20 @@
+{% block begin %}
+<?xml version="1.0" encoding="utf-8"?>
+<categories>
+{% endblock %}
+
+{% block item %}
+    <category>
+        <identity>{{ item.identity }}</identity>
+        <name>{{ item.name }}</name>
+        <url>{{ item.url }}</url>
+        {% if item.hierarchy is not null %}
+            <hierarchy>{{ item.hierarchy }}</hierarchy>
+        {% endif %}
+        <image_url>{{ item.imageUrl }}</image_url>
+    </category>
+{% endblock %}
+
+{% block end %}
+</categories>
+{% endblock %}

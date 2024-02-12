@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Collection;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Model\Feed\FeedItemImageHelper;
+use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductImageUrlNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductUrlNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -92,7 +92,7 @@ class ProductUrlsBatchLoader implements ResetInterface
     {
         $imageUrl = $this->getProductImageUrl($product, $domainConfig);
 
-        return $imageUrl !== null ? FeedItemImageHelper::limitWidthInImageUrl($imageUrl) : null;
+        return $imageUrl !== null ? ImageUrlWithSizeHelper::limitSizeInImageUrl($imageUrl) : null;
     }
 
     /**

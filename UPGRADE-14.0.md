@@ -226,7 +226,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   remove custom stores and stocks implementation as it's now a part of shopsys/framework ([#2918](https://github.com/shopsys/shopsys/pull/2918))
     -   if necessary, extend classes and implement your custom logic
     -   see #project-base-diff to update your project
--   add Persoo Category feed and check your feeds ([#2926](https://github.com/shopsys/shopsys/pull/2926))
+-   add Luigi's Box Category feed and check your feeds ([#2926](https://github.com/shopsys/shopsys/pull/2926))
     -   we have renamed `shopsys.product_feed` tag to `shopsys.feed` to make it more generic so update it in your `services.yaml` if you have extended any of current feeds or implemented your own
     -   see #project-base-diff to update your project
 -   implemented generic product lists ([#2901](https://github.com/shopsys/shopsys/pull/2901))
@@ -524,7 +524,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   remove preorder and vendor delivery date features ([#2942](https://github.com/shopsys/shopsys/pull/2942))
     -   see #project-base-diff to update your project
--   add Persoo Product feed and remove unused code ([#2939](https://github.com/shopsys/shopsys/pull/2939))
+-   add Luigi's Box Product feed and remove unused code ([#2939](https://github.com/shopsys/shopsys/pull/2939))
     -   product plan and assembly instructions have been removed from project-base, see diff to update your project
     -   most of the `ProductDomain` attributes and methods has been [moved](#movement-of-features-from-project-base-to-packages) to `framework`, see diff to update your project
         -   attribute `domainOrderingPriority` has been renamed to `orderingPriority`
@@ -654,7 +654,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 -   remove unnecessary extended class FeedExportFactory as the underlying issue was resolved (([#2959](https://github.com/shopsys/shopsys/pull/2959)))
     -   see #project-base-diff to update your project
--   add persoo article feed ([#2940](https://github.com/shopsys/shopsys/pull/2940))
+-   add Luigi's Box article feed ([#2940](https://github.com/shopsys/shopsys/pull/2940))
     -   there is a new `Product::getDescriptionAsPlainText()` method that returns the product description without HTML tags - check your XML feeds and use the method if necessary
     -   `Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver` class was changed:
         -   `registerGenerators()` is now strictly typed
@@ -1467,7 +1467,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   add categoryHierarchy to Category query ([#2962](https://github.com/shopsys/shopsys/pull/2962))
 
-    -   in order to have proper category tree for GTM (and Persoo) we need to add proper category hierarchy tree, now we send whole tree instead of last category id
+    -   in order to have a proper category tree for GTM (and Luigi's Box) we need to add proper category hierarchy tree, now we send whole tree instead of last category id
 
 -   improve error handling for friendly URL pages based on API status codes ([#2973](https://github.com/shopsys/shopsys/pull/2973))
 
