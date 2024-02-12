@@ -1,9 +1,10 @@
 import { captureMessage, SeverityLevel, withScope } from '@sentry/nextjs';
+import { isEnvironment } from 'helpers/isEnvironment';
 
 type SentryExtra = { key: string; data: string };
 
 const logMessage = (message: string, extras: Array<SentryExtra> = [], level: SeverityLevel = 'info'): void => {
-    if (process.env.APP_ENV === 'development') {
+    if (isEnvironment('development')) {
         /* eslint-disable no-console */
         console.warn(message, { extras });
     }

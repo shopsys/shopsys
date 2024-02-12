@@ -44,6 +44,10 @@ You may want to set some settings in a different way (such as production, test, 
 | `TRUSTED_PROXIES`                     | `'127.0.0.1'`                      | proxies that are trusted to pass traffic, used mainly for production (set as text separated by comma for multiple values)       |
 | `CDN_DOMAIN`                          | `'//'`                             | specifies URL of a Content Delivery Network (CDN) that is used to serve static assets such as images, CSS, and JavaScript files |
 
+### Storefront
+
+Environment variable `SHOW_SYMFONY_TOOLBAR` allows for showing/hiding of the Symfony toolbar on Storefront, which can be used to view API requests from the front-end.
+
 ### Google Cloud Bundle
 
 These variables are specific for [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)

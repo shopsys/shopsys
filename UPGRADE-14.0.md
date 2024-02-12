@@ -1526,3 +1526,4 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   with this change we get rid of 4 critical `pnpm audit` issues
 
 -   added hreflang links to Head ([#3005](https://github.com/shopsys/shopsys/pull/3005))
+-   add basic Symfony Toolbar for XHR requests to JavaScript Storefront ([#2997](https://github.com/shopsys/shopsys/pull/2997))

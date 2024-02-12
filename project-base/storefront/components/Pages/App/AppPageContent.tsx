@@ -3,6 +3,7 @@ import { Error503Content } from 'components/Pages/ErrorPage/Error503Content';
 import { GtmHeadScript } from 'gtm/GtmHeadScript';
 import { GtmProvider } from 'gtm/context/GtmProvider';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
+import { isEnvironment } from 'helpers/isEnvironment';
 import { ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useAuthLoader } from 'hooks/app/useAuthLoader';
 import { usePageLoader } from 'hooks/app/usePageLoader';
@@ -11,6 +12,7 @@ import { useReloadCart } from 'hooks/cart/useReloadCart';
 import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useSetDomainConfig } from 'hooks/useDomainConfig';
 import { NextComponentType, NextPageContext } from 'next';
+import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { ToastContainer } from 'react-toastify';
@@ -25,6 +27,23 @@ const UserConsentContainer = dynamic(
         ssr: false,
     },
 );
+
+const {
+    publicRuntimeConfig: { showSymfonyToolbar },
+} = getConfig();
+
+const SymfonyDebugToolbar =
+    isEnvironment('development') &&
+    showSymfonyToolbar === '1' &&
+    dynamic(
+        () =>
+            import('components/Basic/SymfonyDebugToolbar/SymfonyDebugToolbar').then(
+                (component) => component.SymfonyDebugToolbar,
+            ),
+        {
+            ssr: true,
+        },
+    );
 
 type AppPageContentProps = {
     Component: NextComponentType<NextPageContext, any, any>;
@@ -59,6 +78,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
                 {!userConsent && !isConsentUpdatePage && <UserConsentContainer />}
                 {pageProps.isMaintenance ? <Error503Content /> : <Component {...pageProps} />}
             </GtmProvider>
+            {SymfonyDebugToolbar && <SymfonyDebugToolbar />}
         </>
     );
 };
