@@ -4,6 +4,12 @@ WORKDIR /app
 
 COPY --chown=node:node . /app
 
-USER node
+COPY ./docker/entrypoint.sh /
 
-CMD npm ci && npx cypress run --env type=base
+RUN rm -rf /app/node_modules
+
+USER node
+ 
+ENV TYPE=actual
+
+ENTRYPOINT ["/entrypoint.sh"]

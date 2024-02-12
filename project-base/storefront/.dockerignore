@@ -1,6 +1,6 @@
 docs
-!cypress/dataTestIds.ts
 cypress
+!cypress/dataTestIds.ts
 
 node_modules
 

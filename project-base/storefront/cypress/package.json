@@ -4,7 +4,9 @@
     "description": "Acceptance tests of Shopsys Platform Storefront",
     "private": true,
     "scripts": {
-        "typecheck": "tsc --pretty --noEmit --project tsconfig.json"
+        "typecheck": "tsc --pretty --noEmit --project tsconfig.json",
+        "base": "cypress run --env type=base",
+        "actual": "cypress run --env type=actual"
     },
     "devDependencies": {
         "cypress": "^12.3.0",
