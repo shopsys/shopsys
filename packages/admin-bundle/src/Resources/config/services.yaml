@@ -3,3 +3,8 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+
+    admin.order:
+        class: Shopsys\AdminBundle\Admin\OrderAdmin
+        tags:
+            - { name: sonata.admin, model_class: Shopsys\FrameworkBundle\Model\Order\Order, manager_type: orm, label: Order }

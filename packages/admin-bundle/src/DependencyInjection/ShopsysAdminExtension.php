@@ -6,11 +6,10 @@ namespace Shopsys\AdminBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class ShopsysAdminBundleExtension extends Extension implements PrependExtensionInterface
+class ShopsysAdminExtension extends Extension
 {
     /**
      * {@inheritdoc}

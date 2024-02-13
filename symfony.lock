@@ -671,6 +671,9 @@
             "ref": "4ea4a4b6730f83239608d7d4c849533645c70169"
         }
     },
+    "sonata-project/doctrine-orm-admin-bundle": {
+        "version": "4.9.1"
+    },
     "sonata-project/exporter": {
         "version": "3.3",
         "recipe": {

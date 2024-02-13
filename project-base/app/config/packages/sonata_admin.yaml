@@ -1,5 +1,7 @@
 sonata_admin:
-    title: 'Sonata Admin'
+    title: 'Shopsys Platform admin'
+    title_logo: public/admin/images/logo.svg
+    show_mosaic_button: false
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
@@ -8,3 +10,9 @@ sonata_block:
     blocks:
         sonata.admin.block.admin_list:
             contexts: [admin]
+
+sonata_doctrine_orm_admin:
+    templates:
+        types:
+            list:
+                domain: '@ShopsysAdmin/templates/domain.html.twig'
