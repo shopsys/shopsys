@@ -20,9 +20,11 @@ check-schema:
 	docker-compose exec storefront sh check-code-gen.sh
 
 run-acceptance-tests-base:
-	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
-	docker compose exec php-fpm php phing test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
+	docker compose stop storefront
+	docker compose up -d --wait storefront-cypress
 	docker compose run --rm -e TYPE=base cypress
+	docker compose stop storefront-cypress
+	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
 
 run-acceptance-tests-actual:
