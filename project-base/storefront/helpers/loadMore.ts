@@ -2,8 +2,11 @@ import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCur
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { DocumentNode } from 'graphql';
 import {
+    BrandProductsQueryApi,
     BrandProductsQueryVariablesApi,
+    CategoryProductsQueryApi,
     CategoryProductsQueryVariablesApi,
+    FlagProductsQueryApi,
     FlagProductsQueryVariablesApi,
     ListedProductConnectionFragmentApi,
     Maybe,
@@ -223,7 +226,12 @@ export const useProductsData = (
         variables: CategoryProductsQueryVariablesApi | FlagProductsQueryVariablesApi | BrandProductsQueryVariablesApi,
         previouslyQueriedProductsFromCache: ListedProductConnectionFragmentApi['edges'] | undefined,
     ) => {
-        const response = await client.query(queryDocument, variables).toPromise();
+        const response = await client
+            .query<
+                CategoryProductsQueryApi | BrandProductsQueryApi | FlagProductsQueryApi,
+                typeof variables
+            >(queryDocument, variables)
+            .toPromise();
 
         if (!response.data) {
             setProductsData({ products: undefined, hasNextPage: false });
@@ -319,13 +327,16 @@ const readProductsFromCache = (
     products: ListedProductConnectionFragmentApi['edges'] | undefined;
     hasNextPage: boolean;
 } => {
-    const dataFromCache = client.readQuery(queryDocument, {
-        urlSlug,
-        orderingMode,
-        filter,
-        endCursor,
-        pageSize,
-    })?.data?.products;
+    const dataFromCache = client.readQuery<CategoryProductsQueryApi | BrandProductsQueryApi | FlagProductsQueryApi>(
+        queryDocument,
+        {
+            urlSlug,
+            orderingMode,
+            filter,
+            endCursor,
+            pageSize,
+        },
+    )?.data?.products;
 
     return {
         products: dataFromCache?.edges,

@@ -1,40 +1,42 @@
+import { SkeletonPagePersonalDataOverview } from 'components/Blocks/Skeleton/SkeletonPagePersonalDataOverview';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { PersonalDataDetailContent } from 'components/Pages/PersonalData/Detail/PersonalDataDetailContent';
-import { PersonalDataDetailQueryDocumentApi, usePersonalDataDetailQueryApi } from 'graphql/generated';
+import { PersonalDataDetailQueryVariablesApi, usePersonalDataDetailQueryApi } from 'graphql/generated';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'helpers/serverSide/initServerSideProps';
 import { NextPage } from 'next';
+import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 
 const PersonalDataOverviewByHashPage: NextPage = () => {
+    const { t } = useTranslation();
     const { query } = useRouter();
     const hash = getStringFromUrlQuery(query.hash);
 
-    const [{ data }] = usePersonalDataDetailQueryApi({ variables: { hash } });
+    const [{ data, fetching }] = usePersonalDataDetailQueryApi({ variables: { hash } });
 
-    if (!data) {
-        return <Error404Content />;
-    }
-
-    return (
-        <CommonLayout>
-            <PersonalDataDetailContent data={data} />
-        </CommonLayout>
+    const content = data ? (
+        <PersonalDataDetailContent data={data} />
+    ) : (
+        <Webline>
+            <p className="my-28 text-center text-2xl">{t('Could not find personal data overview.')}</p>
+        </Webline>
     );
+
+    return <CommonLayout>{fetching ? <SkeletonPagePersonalDataOverview /> : content}</CommonLayout>;
 };
 
-export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
-    const hash = context.query.hash ?? '';
-
-    return initServerSideProps({
-        context,
-        prefetchedQueries: [{ query: PersonalDataDetailQueryDocumentApi, variables: { hash } }],
-        redisClient,
-        domainConfig,
-        t,
-    });
-});
+export const getServerSideProps = getServerSidePropsWrapper(
+    ({ redisClient, domainConfig, t }) =>
+        async (context) =>
+            initServerSideProps<PersonalDataDetailQueryVariablesApi>({
+                context,
+                redisClient,
+                domainConfig,
+                t,
+            }),
+);
 
 export default PersonalDataOverviewByHashPage;

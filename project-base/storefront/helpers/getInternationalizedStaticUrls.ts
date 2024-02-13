@@ -1,15 +1,15 @@
+import { STATIC_REWRITE_PATHS, StaticRewritePathKeyType } from 'config/staticRewritePaths';
 import {
     getQueryWithoutSlugTypeParameterFromQueryString,
     getUrlWithoutGetParameters,
 } from 'helpers/parsing/urlParsing';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
-import getConfig from 'next/config';
+import { SameLengthOutput } from 'types/SameLengthOutput';
 
-type Url = string | { url: string; param: string | undefined | null };
+type Url = StaticRewritePathKeyType | { url: StaticRewritePathKeyType; param: string | undefined | null };
 
 const getInternationalizedStaticUrl = (url: Url, domainUrl: string) => {
-    const { publicRuntimeConfig } = getConfig();
-    const urlsOnDomain = publicRuntimeConfig.staticRewritePaths[domainUrl];
+    const urlsOnDomain = STATIC_REWRITE_PATHS[domainUrl];
 
     if (typeof url === 'string') {
         const result = urlsOnDomain[url];
@@ -17,13 +17,13 @@ const getInternationalizedStaticUrl = (url: Url, domainUrl: string) => {
     }
 
     const staticUrlTemplate = urlsOnDomain[url.url];
-    const staticPart = staticUrlTemplate?.split(':')[0];
+    const staticPart = staticUrlTemplate.split(':')[0];
 
-    return (staticPart ?? '') + (url.param ?? '');
+    return staticPart + (url.param ?? '');
 };
 
-export const getInternationalizedStaticUrls = (urls: Url[], domainUrl: string): string[] => {
-    return urls.map((url) => getInternationalizedStaticUrl(url, domainUrl));
+export const getInternationalizedStaticUrls = <InputUrls extends Url[]>(urls: [...InputUrls], domainUrl: string) => {
+    return urls.map((url) => getInternationalizedStaticUrl(url, domainUrl)) as SameLengthOutput<InputUrls>;
 };
 
 export const getServerSideInternationalizedStaticUrl = (
@@ -35,7 +35,11 @@ export const getServerSideInternationalizedStaticUrl = (
     }
 
     const trimmedUrlWithoutQueryParams = getUrlWithoutGetParameters(context.resolvedUrl);
-    const result = getInternationalizedStaticUrl(trimmedUrlWithoutQueryParams, domainUrl);
+    if (!(trimmedUrlWithoutQueryParams in STATIC_REWRITE_PATHS[domainUrl])) {
+        return { trimmedUrlWithoutQueryParams: '/', queryParams: null };
+    }
+
+    const result = getInternationalizedStaticUrl(trimmedUrlWithoutQueryParams as StaticRewritePathKeyType, domainUrl);
     const queryParams = getQueryWithoutSlugTypeParameterFromQueryString(context.resolvedUrl.split('?')[1]);
 
     return {

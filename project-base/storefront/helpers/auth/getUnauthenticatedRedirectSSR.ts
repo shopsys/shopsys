@@ -1,9 +1,17 @@
 import { getLoginUrlWithRedirect } from './getLoginUrlWithRedirect';
+import { STATIC_REWRITE_PATHS, StaticRewritePathKeyType } from 'config/staticRewritePaths';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { Redirect } from 'next';
 
 export const getUnauthenticatedRedirectSSR = (resolvedUrl: string, domainUrl: string): { redirect: Redirect } => {
-    const [redirectTargetUrlWithLeadingSlash] = getInternationalizedStaticUrls([resolvedUrl], domainUrl);
+    let redirectTargetUrlWithLeadingSlash = getInternationalizedStaticUrls(['/login'], domainUrl)[0];
+
+    if (resolvedUrl in STATIC_REWRITE_PATHS[domainUrl]) {
+        redirectTargetUrlWithLeadingSlash = getInternationalizedStaticUrls(
+            [resolvedUrl as StaticRewritePathKeyType],
+            domainUrl,
+        )[0];
+    }
 
     return {
         redirect: {

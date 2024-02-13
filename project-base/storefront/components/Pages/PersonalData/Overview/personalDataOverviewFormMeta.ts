@@ -12,7 +12,7 @@ export const usePersonalDataOverviewForm = (): [
 ] => {
     const { t } = useTranslation();
     const resolver = yupResolver(
-        Yup.object().shape({
+        Yup.object().shape<Record<keyof PersonalDataOverviewFormType, any>>({
             email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
         }),
     );

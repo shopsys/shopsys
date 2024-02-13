@@ -16,7 +16,7 @@ const AbandonedCartPage: FC<AbandonedCartPageProps> = ({ cartUuid }) => {
         if (typeof cartUuid === 'string') {
             updateCartUuid(cartUuid);
         }
-        router.replace(getInternationalizedStaticUrls(['/cart'], url)[0] ?? '/');
+        router.replace(getInternationalizedStaticUrls(['/cart'], url)[0]);
     }, [cartUuid, router, updateCartUuid, url]);
 
     return null;

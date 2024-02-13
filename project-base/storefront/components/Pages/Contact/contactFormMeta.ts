@@ -12,7 +12,7 @@ export const useContactForm = (): [UseFormReturn<ContactFormType>, ContactFormTy
     const user = useCurrentCustomerData();
 
     const resolver = yupResolver(
-        Yup.object().shape({
+        Yup.object().shape<Record<keyof ContactFormType, any>>({
             email: Yup.string().required(t('Please enter email')).email(t('This value is not a valid email')).min(5),
             name: Yup.string().required(t('Please enter your name')),
             message: Yup.string().required(t('Please enter a message')),

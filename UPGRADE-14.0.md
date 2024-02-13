@@ -1527,3 +1527,27 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   added hreflang links to Head ([#3005](https://github.com/shopsys/shopsys/pull/3005))
 -   add basic Symfony Toolbar for XHR requests to JavaScript Storefront ([#2997](https://github.com/shopsys/shopsys/pull/2997))
+
+-   improvements to Storefront typings ([#3009](https://github.com/shopsys/shopsys/pull/3009))
+    -   certain broadcast channel events are now not processed in the same tab, this is controlled by the code below from `useBroadcastChannel.ts`:
+    ```ts
+    const broadcastChannelSameTabConfig: Record<BroadcastChannelsType, boolean> = {
+        refetchCart: false,
+        reloadPage: true,
+    };
+    ```
+    -   types in cache exchange were improved/fixed and the documentation and cookbooks in `graphcache.md` were updated accordingly, check your types in cache exchange and change them to match the new types
+    -   `initServerSideProps` now accepts type arguments for provided variables for prefetched queries, which can be used to make sure that you provide correct variables
+    ```ts
+    return initServerSideProps<OrderDetailByHashQueryVariablesApi>({
+        context,
+        prefetchedQueries: [
+            { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },
+        ],
+        redisClient,
+        domainConfig,
+        t,
+    });
+    ```
+    -   static rewrite paths are now not accessed through the Next.js config based on a JS file, but instead a TS file is provided, which can be accessed directly and includes literal type values
+        -   the keys for the static rewrite paths object must be defined based on 2 sources (`process.env` or `publicRuntimeConfig`), because one of them is not accessible on the client (`process.env`) and the other one is not accessible in `middleware.ts` (`publicRuntimeConfig`)

@@ -8,6 +8,7 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import {
     BlogArticlesQueryDocumentApi,
+    BlogArticlesQueryVariablesApi,
     BlogUrlQueryDocumentApi,
     PromotedCategoriesQueryDocumentApi,
     PromotedProductsQueryDocumentApi,
@@ -53,7 +54,7 @@ const HomePage: FC<ServerSidePropsType> = ({ cookies }) => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps({
+            initServerSideProps<BlogArticlesQueryVariablesApi>({
                 context,
                 redisClient,
                 domainConfig,

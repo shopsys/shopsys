@@ -128,7 +128,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail, shouldOverwriteCustomerUse
 
 const getLoginFormResolver = (t: Translate) => {
     return yupResolver(
-        Yup.object().shape({
+        Yup.object().shape<Record<keyof { email: string; password: string }, any>>({
             email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
             password: Yup.string().required(t('This field is required')),
         }),

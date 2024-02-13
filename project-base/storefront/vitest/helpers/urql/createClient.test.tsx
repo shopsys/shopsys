@@ -21,7 +21,10 @@ vi.mock('helpers/isClient', () => ({
 vi.mock('next/config', () => ({
     default: () => ({
         serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/graphql/' },
-        publicRuntimeConfig: { errorDebugging: false },
+        publicRuntimeConfig: {
+            errorDebugging: false,
+            domains: [{ url: 'https://test.ts/' }, { url: 'https://test.ts/' }],
+        },
     }),
 }));
 
@@ -31,7 +34,6 @@ const mockRedisClient = {
     set: vi.fn(() => null),
 } as unknown as RedisClientType;
 
-const TEST_URL = 'https://test.ts/graphql/';
 const QUERY_OBJECT = gql`
     query NotificationBars @redisCache(ttl: 3600) {
         notificationBars {
@@ -47,10 +49,9 @@ describe('createClient test', () => {
 
     test('created client (and URQL) do not filter out Redis cache directive on the client (in component)', async () => {
         (isClientGetter as Mock).mockImplementation(() => true);
+        const publicGraphqlEndpoint = 'https://test.ts/graphql/';
 
         const UrqlWrapper: FC = ({ children }) => {
-            const publicGraphqlEndpoint = TEST_URL;
-
             return (
                 <Provider
                     value={createClient({
@@ -80,22 +81,29 @@ describe('createClient test', () => {
         );
 
         await waitFor(() => {
-            expect(mockRequestWithFetcher).toBeCalledWith(TEST_URL, expect.objectContaining({ body: REQUEST_BODY }));
+            expect(mockRequestWithFetcher).toBeCalledWith(
+                publicGraphqlEndpoint,
+                expect.objectContaining({ body: REQUEST_BODY }),
+            );
         });
     });
 
     test('created client (and URQL) do not filter out Redis cache directive on the server', async () => {
         (isClientGetter as Mock).mockImplementation(() => false);
+        const publicGraphqlEndpoint = 'https://test.ts/graphql/';
 
         const client = createClient({
             t: () => 'foo' as any,
             ssrExchange: ssrExchange(),
-            publicGraphqlEndpoint: TEST_URL,
+            publicGraphqlEndpoint,
             redisClient: mockRedisClient,
         });
 
         await client.query(QUERY_OBJECT, undefined).toPromise();
 
-        expect(mockRequestWithFetcher).toBeCalledWith(TEST_URL, expect.objectContaining({ body: REQUEST_BODY }));
+        expect(mockRequestWithFetcher).toBeCalledWith(
+            publicGraphqlEndpoint,
+            expect.objectContaining({ body: REQUEST_BODY }),
+        );
     });
 });

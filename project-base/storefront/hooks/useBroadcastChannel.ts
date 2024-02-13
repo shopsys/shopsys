@@ -1,12 +1,19 @@
 import { isClient } from 'helpers/isClient';
 import { useEffect } from 'react';
+import { v4 as uuid } from 'uuid';
 
 type BroadcastChannelsType = 'reloadPage' | 'refetchCart';
+const tabId = uuid();
+
+const broadcastChannelSameTabConfig: Record<BroadcastChannelsType, boolean> = {
+    refetchCart: false,
+    reloadPage: true,
+};
 
 export const dispatchBroadcastChannel = (name: BroadcastChannelsType, data?: any) => {
     const channel = isClient ? new BroadcastChannel(name) : undefined;
 
-    channel?.postMessage(data);
+    channel?.postMessage({ tabId, ...data });
     channel?.close();
 };
 
@@ -19,7 +26,9 @@ export const useBroadcastChannel = (name: BroadcastChannelsType, callBack: (data
         }
 
         channel.onmessage = (event) => {
-            callBack(event.data);
+            if (event.data.tabId !== tabId || broadcastChannelSameTabConfig[name]) {
+                callBack(event.data);
+            }
         };
 
         return () => {

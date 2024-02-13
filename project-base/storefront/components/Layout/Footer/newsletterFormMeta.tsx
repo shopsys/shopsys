@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 export const useNewsletterForm = (): [UseFormReturn<NewsletterFormType>, NewsletterFormType] => {
     const { t } = useTranslation();
     const resolver = yupResolver(
-        Yup.object().shape({
+        Yup.object().shape<Record<keyof { email: string; privacyPolicy: boolean }, any>>({
             email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
             privacyPolicy: Yup.bool().oneOf([true], t('You have to agree with our privacy policy')),
         }),

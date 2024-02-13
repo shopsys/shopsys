@@ -29,7 +29,7 @@ import * as Yup from 'yup';
 export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, RegistrationFormType] => {
     const { t } = useTranslation();
     const resolver = yupResolver(
-        Yup.object().shape({
+        Yup.object().shape<Record<keyof RegistrationFormType, any>>({
             email: validateEmail(t),
             passwordFirst: validateFirstPassword(t),
             passwordSecond: validateSecondPassword(t),

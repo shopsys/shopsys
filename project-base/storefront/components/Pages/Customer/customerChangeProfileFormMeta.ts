@@ -27,7 +27,7 @@ export const useCustomerChangeProfileForm = (
     const { t } = useTranslation();
 
     const resolver = yupResolver(
-        Yup.object().shape({
+        Yup.object().shape<Record<keyof CustomerChangeProfileFormType, any>>({
             email: validateEmail(t),
             passwordFirst: Yup.string().when('passwordOld', {
                 is: (passwordOld: string) => passwordOld.length > 0,
@@ -61,6 +61,9 @@ export const useCustomerChangeProfileForm = (
                 then: validateCompanyTaxNumber(t),
                 otherwise: Yup.string(),
             }),
+            passwordOld: Yup.string(),
+            newsletterSubscription: Yup.boolean(),
+            companyCustomer: Yup.boolean(),
         }),
     );
 

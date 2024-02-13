@@ -1,4 +1,4 @@
-mutation Login(
+mutation LoginMutation(
     $email: String!
     $password: Password!
     $previousCartUuid: Uuid

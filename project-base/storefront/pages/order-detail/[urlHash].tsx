@@ -5,6 +5,7 @@ import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent
 import {
     BreadcrumbFragmentApi,
     OrderDetailByHashQueryDocumentApi,
+    OrderDetailByHashQueryVariablesApi,
     useOrderDetailByHashQueryApi,
 } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
@@ -56,7 +57,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         };
     }
 
-    return initServerSideProps({
+    return initServerSideProps<OrderDetailByHashQueryVariablesApi>({
         context,
         prefetchedQueries: [
             { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },

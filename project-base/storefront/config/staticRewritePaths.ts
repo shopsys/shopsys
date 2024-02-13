@@ -1,5 +1,9 @@
-const STATIC_REWRITE_PATHS = {
-    [process.env.DOMAIN_HOSTNAME_1]: {
+import getConfig from 'next/config';
+
+const nextConfig = getConfig();
+
+export const STATIC_REWRITE_PATHS = {
+    [(nextConfig?.publicRuntimeConfig?.domains?.[0]?.url || process.env.DOMAIN_HOSTNAME_1) as string]: {
         '/search': '/search',
         '/cart': '/cart',
         '/contact': '/contact',
@@ -28,7 +32,7 @@ const STATIC_REWRITE_PATHS = {
         '/product-comparison': '/product-comparison',
         '/wishlist': '/wishlist',
     },
-    [process.env.DOMAIN_HOSTNAME_2]: {
+    [(nextConfig?.publicRuntimeConfig?.domains?.[1]?.url || process.env.DOMAIN_HOSTNAME_2) as string]: {
         '/search': '/hledani',
         '/cart': '/kosik',
         '/contact': '/kontakt',
@@ -57,8 +61,6 @@ const STATIC_REWRITE_PATHS = {
         '/product-comparison': '/porovnani-produktu',
         '/wishlist': '/oblibene-produkty',
     },
-};
+} as const;
 
-module.exports = {
-    ...STATIC_REWRITE_PATHS,
-};
+export type StaticRewritePathKeyType = keyof (typeof STATIC_REWRITE_PATHS)[string];

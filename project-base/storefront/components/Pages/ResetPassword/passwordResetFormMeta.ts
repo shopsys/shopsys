@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 export const usePasswordResetForm = (): [UseFormReturn<PasswordResetFormType>, PasswordResetFormType] => {
     const { t } = useTranslation();
     const resolver = yupResolver(
-        Yup.object().shape({
+        Yup.object().shape<Record<keyof PasswordResetFormType, any>>({
             email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
         }),
     );

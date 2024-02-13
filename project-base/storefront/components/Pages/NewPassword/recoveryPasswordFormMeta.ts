@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 export const useRecoveryPasswordForm = (): [UseFormReturn<NewPasswordFormType>, NewPasswordFormType] => {
     const { t } = useTranslation();
     const resolver = yupResolver(
-        Yup.object().shape({
+        Yup.object().shape<Record<keyof NewPasswordFormType, any>>({
             newPassword: Yup.string()
                 .required(t('Fill first password'))
                 .min(

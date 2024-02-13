@@ -3,8 +3,6 @@ const { withSentryConfig } = require('@sentry/nextjs');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const nextTranslate = require('next-translate-plugin');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const STATIC_REWRITE_PATHS = require('./config/staticRewritePaths');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 });
@@ -72,7 +70,6 @@ const nextConfig = {
                 gtmId: process.env.GTM_ID,
             },
         ],
-        staticRewritePaths: STATIC_REWRITE_PATHS,
     },
     eslint: {
         ignoreDuringBuilds: true,

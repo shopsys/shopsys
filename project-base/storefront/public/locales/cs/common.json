@@ -68,6 +68,7 @@
     "Could not create account": "Nepodařilo se vytvořit účet",
     "Could not create order": "Nepodařilo se vytvořit objednávku",
     "Could not find any results for the given query.": "Pro tento výraz jsme bohužel nenašli žádné výsledky.",
+    "Could not find personal data overview.": "Přehled osobních údajů se nepodařilo najít.",
     "Could not prefill your cart": "Nepodařílo se naplnit váš košík",
     "Could not reset password": "Nepodařilo se obnovit heslo",
     "Could not sent personal data export request": "Nepodařilo se odeslat email s odkazem na export osobních dat",
