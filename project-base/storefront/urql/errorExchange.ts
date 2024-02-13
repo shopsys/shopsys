@@ -53,7 +53,10 @@ export const getErrorExchange =
     };
 
 const handleErrorMessagesForDevelopment = (error: CombinedError) => {
-    logException(error);
+    logException(error.message, {
+        originalError: JSON.stringify(error),
+        location: 'getErrorExchange.handleErrorMessagesForDevelopment',
+    });
     error.graphQLErrors
         .map((graphqlError) => mapGraphqlErrorForDevelopment(graphqlError))
         .forEach((simplifiedGraphqlError) => showErrorMessage(JSON.stringify(simplifiedGraphqlError)));
@@ -64,7 +67,11 @@ const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operati
     const isCartError = operation.query === CartQueryDocumentApi;
 
     if (parsedErrors.userError) {
-        logException(parsedErrors.userError);
+        logException(error.message, {
+            parsedUserError: parsedErrors.userError,
+            originalError: JSON.stringify(error),
+            location: 'getErrorExchange.handleErrorMessagesForUsers',
+        });
     }
 
     if (isCartError) {
@@ -78,7 +85,11 @@ const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operati
     }
 
     if (!isNoLogError(parsedErrors.applicationError.type)) {
-        logException(parsedErrors.applicationError);
+        logException(error.message, {
+            parsedApplicationError: parsedErrors.applicationError,
+            originalError: JSON.stringify(error),
+            location: 'getErrorExchange.handleErrorMessagesForUsers',
+        });
     }
 
     if (isFlashMessageError(parsedErrors.applicationError.type)) {

@@ -16,7 +16,7 @@ export const useSeznamMapLoader = (
 
         script.onload = () => {
             if (typeof Loader !== 'object') {
-                logException(new Error(`SMap Loader object was not initialized`));
+                logException('SMap Loader object was not initialized');
 
                 if (onError) {
                     onError();
@@ -35,7 +35,7 @@ export const useSeznamMapLoader = (
                 if (typeof SMap !== 'undefined') {
                     setIsMapLoaded(true);
                 } else {
-                    logException(new Error(`SMap was not initialized`));
+                    logException('SMap was not initialized');
                     if (onError) {
                         onError();
                     }
@@ -44,11 +44,7 @@ export const useSeznamMapLoader = (
         };
 
         script.onerror = (error) => {
-            if (typeof error === 'string') {
-                logException(new Error(error));
-            } else {
-                logException(error);
-            }
+            logException(error);
 
             if (onError) {
                 onError();

@@ -143,12 +143,22 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
     const statusCode = middlewareStatusCode || context.res.statusCode || 500;
     ...
 
-    if (statusCode !== 404) {
-        logException(err);
+    if (statusCode !== 404 && !isWithErrorDebugging) {
+        logException(err, {
+            err,
+            statusCode,
+            initServerSidePropsResonse: JSON.stringify(serverSideProps),
+            location: 'ErrorPage.getInitialProps.isWithErrorDebugging = false',
+        });
     }
 
     if (isWithErrorDebugging) {
-        logException(err);
+        logException(err, {
+            err,
+            statusCode,
+            initServerSidePropsResonse: JSON.stringify(serverSideProps),
+            location: 'ErrorPage.getInitialProps.isWithErrorDebugging = true',
+        });
         showErrorMessage(err);
     }
 

@@ -7,7 +7,7 @@ export const useDomainConfig = (): DomainConfigType => {
     const domainConfig = useSessionStore((state) => state.domainConfig);
 
     if (!domainConfig) {
-        logException(new Error('Domain config was undefined.'));
+        logException('Domain config was undefined.');
     }
 
     return domainConfig!;
