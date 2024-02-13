@@ -19,16 +19,21 @@ check-schema:
 	docker-compose exec -u root storefront chown node:node schema.graphql
 	docker-compose exec storefront sh check-code-gen.sh
 
-run-acceptance-tests-base:
+define run_acceptance_tests
+	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
+	docker compose exec php-fpm php phing test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
 	docker compose stop storefront
 	docker compose up -d --wait storefront-cypress
-	docker compose run --rm -e TYPE=base cypress
+	-docker compose run --rm -e TYPE=$(1) cypress;
 	docker compose stop storefront-cypress
 	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
+endef
 
+.PHONY: run-acceptance-tests-base
+run-acceptance-tests-base:
+	$(call run_acceptance_tests,base)
+
+.PHONY: run-acceptance-tests-actual
 run-acceptance-tests-actual:
-	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
-	docker compose exec php-fpm php phing test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
-	docker compose run --rm -e TYPE=actual cypress
-	docker compose exec php-fpm php phing -D change.environment=dev environment-change
+	$(call run_acceptance_tests,actual)

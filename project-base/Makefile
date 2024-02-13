@@ -12,8 +12,21 @@ generate-schema-native:
 	cd storefront; npm run gql
 	rm -rf storefront/schema.graphql
 
-run-acceptance-tests:
-	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=acc environment-change
+define run_acceptance_tests
+	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
 	docker compose exec php-fpm php phing test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
-	docker compose up --force-recreate cypress
+	docker compose stop storefront
+	docker compose up -d --wait storefront-cypress
+	-docker compose run --rm -e TYPE=$(1) cypress;
+	docker compose stop storefront-cypress
+	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
+endef
+
+.PHONY: run-acceptance-tests-base
+run-acceptance-tests-base:
+	$(call run_acceptance_tests,base)
+
+.PHONY: run-acceptance-tests-actual
+run-acceptance-tests-actual:
+	$(call run_acceptance_tests,actual)
