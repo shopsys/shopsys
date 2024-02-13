@@ -86,4 +86,15 @@ class FeedModuleRepository
     {
         return $this->getFeedModuleRepository()->findBy(['scheduled' => true]);
     }
+
+    /**
+     * @param string $feedName
+     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedModule[]
+     */
+    public function findFeedModulesByName(string $feedName): array
+    {
+        return $this->getFeedModuleRepository()->findBy([
+            'name' => $feedName,
+        ]);
+    }
 }

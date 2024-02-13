@@ -1246,6 +1246,26 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         -   https://www.php.net/manual/en/migration82.php
         -   https://www.php.net/manual/en/migration83.php
     -   see #project-base-diff to update your project
+-   prevent cron failure after feed removal ([#3024](https://github.com/shopsys/shopsys/pull/3024))
+
+    -   `Shopsys\FrameworkBundle\Model\Feed\FeedCronModule::__construct` changed its interface:
+
+    ```diff
+        public function __construct(
+            protected readonly FeedFacade $feedFacade,
+            protected readonly Domain $domain,
+            protected readonly Setting $setting,
+            protected readonly FeedModuleRepository $feedModuleRepository,
+    +       protected readonly FeedModuleFacade $feedModuleFacade,
+        )
+    ```
+
+    -   `Shopsys\FrameworkBundle\Model\Feed\FeedCronModule::createCurrentFeedExport` changed its interface:
+
+    ```diff
+    -   protected function createCurrentFeedExport(?int $lastSeekId = null): FeedExport
+    +   protected function createCurrentFeedExport(?int $lastSeekId = null): ?FeedExport
+    ```
 
 ### Storefront
 

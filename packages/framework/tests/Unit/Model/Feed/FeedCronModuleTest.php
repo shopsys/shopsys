@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedExport;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModule;
+use Shopsys\FrameworkBundle\Model\Feed\FeedModuleFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository;
 use Symfony\Bridge\Monolog\Logger;
 use Tests\FrameworkBundle\Unit\TestCase;
@@ -67,7 +68,12 @@ class FeedCronModuleTest extends TestCase
         $feedFacadeMock->expects($this->any())->method('scheduleFeedsForCurrentTime');
         $feedFacadeMock->expects($this->any())->method('markFeedModuleAsUnscheduled');
 
-        $feedCronModule = new FeedCronModule($feedFacadeMock, $domain, $settingMock, $feedModuleRepositoryMock);
+        $feedModuleFacadeMock = $this->getMockBuilder(FeedModuleFacade::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['deleteFeedCronModulesByName'])
+            ->getMock();
+
+        $feedCronModule = new FeedCronModule($feedFacadeMock, $domain, $settingMock, $feedModuleRepositoryMock, $feedModuleFacadeMock);
         $feedCronModule->setLogger($logger);
 
         $feedCronModule->iterate();
