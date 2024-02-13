@@ -123,6 +123,7 @@ test:storefront-acceptance:
         paths:
             - ./storefront/cypress/videos/
             - ./storefront/cypress/screenshots/
+            - ./storefront/cypress/snapshotDiffs/
             - php-fpm-log.txt
             - webserver-log.txt
             - storefront-log.txt

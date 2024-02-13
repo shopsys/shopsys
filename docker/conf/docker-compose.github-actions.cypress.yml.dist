@@ -92,6 +92,7 @@ services:
         volumes:
             - ./videos:/app/videos
             - ./screenshots:/app/screenshots
+            - ./snapshotDiffs:/app/snapshotDiffs
         network_mode: "host"
 
     img-proxy:
