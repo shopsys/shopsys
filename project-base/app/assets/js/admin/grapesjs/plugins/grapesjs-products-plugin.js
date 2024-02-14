@@ -1,11 +1,13 @@
 import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
+import Tagify from '@yaireo/tagify';
 
 export default grapesjs.plugins.add('products', editor => {
     const dataProduct = 'data-product';
     const dataProducts = 'data-products';
     const dataProductName = 'data-product-name';
     const dataProductsEvent = 'change:attributes:data-products';
+    const unkonwnProductName = Translator.trans('unknown catalog number (product will not be displayed)');
 
     const createProductsView = (component, model) => {
         component.listenTo(model, dataProductsEvent, component.render);
@@ -16,7 +18,7 @@ export default grapesjs.plugins.add('products', editor => {
         const components = element.components();
 
         if (productsCatnumString) {
-            const splitProductCatnums = productsCatnumString.split(',').map(product => product.trim());
+            const splitProductCatnums = productsCatnumString.split(',').map(productCatnum => productCatnum.trim());
 
             const response = $.post({
                 url: `${window.location.origin}/admin/product/names-by-catnums`,
@@ -26,13 +28,11 @@ export default grapesjs.plugins.add('products', editor => {
 
             const productNames = response.status === 200 ? response.responseJSON : undefined;
 
-            for (const product of splitProductCatnums) {
-                if (productNames[product] !== undefined) {
-                    components.add('<div class="gjs-product"></div>').addAttributes({
-                        [dataProduct]: product,
-                        [dataProductName]: productNames[product]
-                    });
-                }
+            for (const productCatnum of splitProductCatnums) {
+                components.add('<div class="gjs-product"></div>').addAttributes({
+                    [dataProduct]: productCatnum,
+                    [dataProductName]: productNames[productCatnum] ? productNames[productCatnum] : unkonwnProductName
+                });
             }
         }
     };
@@ -54,7 +54,7 @@ export default grapesjs.plugins.add('products', editor => {
     };
 
     const removeProduct = component => {
-        const product = component.getAttributes()[dataProduct];
+        const productCatnum = component.getAttributes()[dataProduct];
         const parent = component.parent();
 
         if (parent) {
@@ -62,7 +62,7 @@ export default grapesjs.plugins.add('products', editor => {
 
             if (products) {
                 parent.addAttributes({
-                    [dataProducts]: products.split(',').filter(innerProduct => innerProduct !== product).join(',')
+                    [dataProducts]: products.split(',').filter(innerProduct => innerProduct !== productCatnum).join(',')
                 });
             }
         }
@@ -70,13 +70,21 @@ export default grapesjs.plugins.add('products', editor => {
 
     const renderProductView = (element, model) => {
         const attributes = model.getAttributes();
-        const product = attributes[dataProduct];
+        const productCatnum = attributes[dataProduct];
         const productName = attributes[dataProductName];
 
-        if (product && productName) {
+        if (productCatnum && productName) {
+            const templateName = productName === unkonwnProductName ? 'grapejs-unknown-product-card' : 'grapejs-product-card';
+
             element.appendChild(createDiv(`
-                <div style="margin-top: 2em; text-align: center;">${productName}<br/><br/>${product}</div>
-                <img src="${window.location.origin}/public/admin/images/grapejs-product-list-item.png" alt="${dataProductName}" style="max-width: 100%;/>
+                <div style="position: relative; max-width: 100%;">
+                    <div class="gjs-products-product-card-name">
+                        ${productName.substring(0, 55)}
+                        <br><br>
+                        ${productCatnum}
+                    </div>
+                    <img src="${window.location.origin}/public/admin/images/${templateName}.png" alt="${dataProductName}" style="max-width: 100%;"/>
+                </div>
             `));
         }
     };
@@ -121,6 +129,43 @@ export default grapesjs.plugins.add('products', editor => {
         }
     });
 
+    editor.TraitManager.addType('tag-input', {
+        templateInput: '',
+        tagifyInstance: undefined,
+
+        createInput ({ trait }) {
+            const el = document.createElement('div');
+            el.innerHTML = `<input class="tag-input__input"/>`;
+
+            const tagInput = el.querySelector('.tag-input__input');
+
+            this.tagifyInstance = new Tagify(tagInput);
+
+            this.tagifyInstance.addTags(trait.get('value').split(','));
+
+            return el;
+        },
+
+        onEvent ({ component, trait }) {
+            const values = this.tagifyInstance.value;
+
+            component.addAttributes({
+                [dataProducts]: values.map(item => item.value).join(',')
+            });
+        },
+
+        onUpdate ({ component, trait }) {
+            const values = component.getAttributes()[dataProducts];
+
+            if (!values) {
+                return;
+            }
+
+            this.tagifyInstance.removeAllTags();
+            this.tagifyInstance.addTags(values.split(','));
+        }
+    });
+
     editor.DomComponents.addType('products', {
         isComponent: element => element.classList && element.classList.contains('gjs-products'),
         model: {
@@ -139,12 +184,13 @@ export default grapesjs.plugins.add('products', editor => {
                 styles: `
                     .gjs-products { text-align: center; }
                     .gjs-products .gjs-product { display: inline-block; width: 20%; margin: 1em; }
+                    .gjs-products-product-card-name {text-align: center; position: absolute; width: 100%; font-size: min(0.8em, 1vw); padding: 0 10%; top: 63%;}
                 `,
                 traits: [
                     {
-                        type: 'text',
+                        type: 'tag-input',
                         name: dataProducts,
-                        label: Translator.trans('Catalog numbers delimited by comma')
+                        label: Translator.trans('Catalog numbers')
                     }
                 ]
             }

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\GrapesJs;
 
+use DOMText;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 use Symfony\Component\HtmlSanitizer\Reference\W3CReference;
 
 class GrapesJsParser
 {
-    protected const GJS_PRODUCTS_REGEX = '/<div[^<>]*class="gjs-products"[^<>]*data-products=".[^"]*"[^<>]*><\/div>|<div[^<>]*data-products=".*[^"]"[^<>]*class="gjs-products"[^<>]*><\/div>/';
-    protected const GJS_PRODUCT_REGEX = '/<div[^<>]*class="gjs-product"[^<>]*data-product="[^"]*"[^<>]*><\/div>|<div[^<>]*data-product="[^"]*"[^<>]*class="gjs-product"[^<>]*><\/div>/';
     protected const GJS_PRODUCTS_SEPARATOR = '|||';
 
     /**
@@ -24,19 +24,33 @@ class GrapesJsParser
             return null;
         }
 
-        $newText = preg_replace_callback(static::GJS_PRODUCTS_REGEX, static function (array $matches): string {
-            $gjsProductsDiv = str_replace(["\r", "\n", "\r\n"], '', $matches[0]);
-            preg_match('/data-products="(.+?)"/', $gjsProductsDiv, $productMatches);
-            $productArray = explode(',', $productMatches[1]);
-            $trimmedProductArray = array_map(static fn ($product) => trim($product), $productArray);
+        $crawler = new Crawler($text);
+
+        $crawler->filter('.gjs-product')->each(function (Crawler $node) {
+            foreach ($node as $domElement) {
+                $domElement->parentNode->removeChild($domElement);
+            }
+        });
+
+        $crawler->filter('.gjs-products')->each(function (Crawler $node) {
+            $dataProducts = $node->attr('data-products');
+
+            if ($dataProducts === null) {
+                return;
+            }
+
+            $productArray = explode(',', $dataProducts);
+            $trimmedProductArray = array_map('trim', $productArray);
             $productCatnumsString = implode(',', $trimmedProductArray);
 
-            return sprintf('%s[gjc-comp-ProductList=%s]%s', static::GJS_PRODUCTS_SEPARATOR, $productCatnumsString, static::GJS_PRODUCTS_SEPARATOR);
-        }, preg_replace(static::GJS_PRODUCT_REGEX, '', $text));
+            foreach ($node as $domElement) {
+                $domElement->parentNode->replaceChild(new DOMText(static::GJS_PRODUCTS_SEPARATOR . '[gjc-comp-ProductList=' . $productCatnumsString . ']' . static::GJS_PRODUCTS_SEPARATOR), $domElement);
+            }
+        });
 
-        $sanitizer = $this->getConfiguredSanitizer();
+        $newText = str_replace(['<body>', '</body>'], '', $crawler->html());
 
-        return $sanitizer->sanitize($newText);
+        return $this->getConfiguredSanitizer()->sanitize($newText);
     }
 
     /**
