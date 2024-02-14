@@ -164,3 +164,46 @@ As described above in the **How to run tests?** section, to update your screensh
 -   You can view the videos in `/videos` to see where the test got stuck
 -   You can view snapshot diffs in `/snapshotDiffs` if your tests fail because of visual differences, they should help you to spot the differences
 -   You can log within your tests, though this is considerably harder than the methods above, as logging is not intuitive in cypress, however, you can read more in the official docs
+
+## How to work with dynamic data?
+
+In situations when you work with dynamic data, such as store opening hours, or created order numbers, which might be different each time you run the tests, it is good to find a way how to make this data static in order for the tests results to be consistent.
+
+There are generally two ways to work with dynamic data which you could want to modify in order to work on a consistend UI:
+
+### Modification of the incoming API request
+
+This one is suitable for situations in which you have a client-side API request which you can intercept. This approach might be better, as it does not directly change the UI. For example, you can change the incoming order number to be `1234`, and test if the UI does display this number, which should be consistent with how the actual application behaves. If, on the other hand, you directly modify the UI using cypress (hardcode a heading to display `1234`), even if the logic of display the number is broken because of a bug, the UI will just show the number and your tests will not discover a bug related to data display. On the other hand, this approach with intercepting and modifying a request might be too complicated for some situations. Furthermore, it cannot be used (or in a very complicated manner) for SSR requests.
+
+To intercept and modify an API request, you will need a code similar to the one below. There are no types provided, and the application types are by default not available in the cypress folder. Because of that, you will either have to ignore the types, or provide a pseudo support type.
+
+**You have to call this intercept before your API call is made to correctly catch it.**
+
+```ts
+export const changeSomethingInApiResponses = () => {
+    cy.intercept('POST', '/graphql/', (req) => {
+        req.reply((response) => {
+            if (response?.body?.data?.yourResponseObject?.someValue) {
+                response.body.data.yourResponseObject.someValue = 'your value override';
+            }
+        });
+    });
+};
+```
+
+### Modification of the UI
+
+If you cannot use intercepting because of some of the aforementioned reasons, such as the call happening on SSR, or if your data inconsistency is not caused by API requests in the first place, you can still stabilize your screenshots by manually modifying the UI. Keep in mind that this should be done as the last resort, as it effectively means that the tests are not actually testing what the user sees, but rather your hardcoded data. If, however, you find this necessary in a given scenario, you can use the provided helper method `changeElementText` to change an element's text, or copy the approach to do any similar thing.
+
+As for the `changeElementText` method, it by default expects to be called right after the page is loaded after SSR, which is the reason why we wait for 200ms, in order to surpass the React hydration error. If you call this method in a different setting, you can save yourself 200ms for every call by setting `isRightAfterSSR` to `false`.
+
+```ts
+export const changeElementText = (selector: DataTestIds, newText: string, isRightAfterSSR = true) => {
+    if (isRightAfterSSR) {
+        cy.wait(200);
+    }
+    cy.getByDataTestId([selector]).then((element) => {
+        element.text(newText);
+    });
+};
+```
