@@ -17,15 +17,18 @@ const showMessage = (message: string, type: 'info' | 'error' | 'success'): void 
         } else {
             toast.error(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid="toast-error" />, {
                 toastId: message,
+                closeOnClick: true,
             });
         }
     } else if (type === 'info') {
         toast.info(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid="toast-info" />, {
             toastId: message,
+            closeOnClick: true,
         });
     } else {
         toast.success(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid="toast-success" />, {
             toastId: message,
+            closeOnClick: true,
         });
     }
 };
