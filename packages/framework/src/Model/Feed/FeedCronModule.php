@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -24,12 +25,14 @@ class FeedCronModule implements IteratedCronModuleInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository $feedModuleRepository
+     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleFacade $feedModuleFacade
      */
     public function __construct(
         protected readonly FeedFacade $feedFacade,
         protected readonly Domain $domain,
         protected readonly Setting $setting,
         protected readonly FeedModuleRepository $feedModuleRepository,
+        protected readonly FeedModuleFacade $feedModuleFacade,
     ) {
     }
 
@@ -59,6 +62,10 @@ class FeedCronModule implements IteratedCronModuleInterface
 
         if ($this->currentFeedExport === null) {
             $this->currentFeedExport = $this->createCurrentFeedExport();
+
+            if ($this->currentFeedExport === null) {
+                return false;
+            }
 
             $this->logger->info(sprintf(
                 'Started generation of feed "%s" generated on domain "%s" into "%s".',
@@ -93,6 +100,10 @@ class FeedCronModule implements IteratedCronModuleInterface
 
             if ($existsNext === true) {
                 $this->currentFeedExport = $this->createCurrentFeedExport();
+
+                if ($this->currentFeedExport === null) {
+                    return false;
+                }
 
                 $this->logger->info(sprintf(
                     'Started generation of feed "%s" generated on domain "%s" into "%s".',
@@ -166,6 +177,11 @@ class FeedCronModule implements IteratedCronModuleInterface
 
         $lastSeekId = $this->setting->get(Setting::FEED_ITEM_ID_TO_CONTINUE);
         $this->currentFeedExport = $this->createCurrentFeedExport($lastSeekId);
+
+        if ($this->currentFeedExport === null) {
+            return;
+        }
+
         $this->currentFeedExport->wakeUp();
 
         $this->logger->info(sprintf(
@@ -178,15 +194,31 @@ class FeedCronModule implements IteratedCronModuleInterface
 
     /**
      * @param int|null $lastSeekId
-     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedExport
+     * @return \Shopsys\FrameworkBundle\Model\Feed\FeedExport|null
      */
-    protected function createCurrentFeedExport(?int $lastSeekId = null): FeedExport
+    protected function createCurrentFeedExport(?int $lastSeekId = null): ?FeedExport
     {
-        return $this->feedFacade->createFeedExport(
-            $this->getFeedExportCreationDataQueue()->getCurrentFeedName(),
-            $this->getFeedExportCreationDataQueue()->getCurrentDomain(),
-            $lastSeekId,
-        );
+        try {
+            $feedExport = $this->feedFacade->createFeedExport(
+                $this->getFeedExportCreationDataQueue()->getCurrentFeedName(),
+                $this->getFeedExportCreationDataQueue()->getCurrentDomain(),
+                $lastSeekId,
+            );
+        } catch (FeedNotFoundException $e) {
+            $this->logger->error($e->getMessage());
+
+            $this->feedModuleFacade->deleteFeedCronModulesByName($this->getFeedExportCreationDataQueue()->getCurrentFeedName());
+
+            $isNextFeedInQueue = $this->getFeedExportCreationDataQueue()->next();
+
+            if ($isNextFeedInQueue === false) {
+                return null;
+            }
+
+            return $this->createCurrentFeedExport();
+        }
+
+        return $feedExport;
     }
 
     /**
