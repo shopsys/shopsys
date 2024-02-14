@@ -23,6 +23,11 @@ export const link = {
 
 export const orderNote = 'Just a tiny note in the order.';
 
+export const orderDetail = {
+    numberHeading: 'Order number 1234567890',
+    creationDate: '10/26/1999 10:10 AM',
+};
+
 export const payment = {
     creditCard: {
         uuid: 'a22b0dde-77ab-448f-be5e-831c0b2b5a32',

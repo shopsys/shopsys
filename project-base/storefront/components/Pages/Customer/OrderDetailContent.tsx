@@ -4,6 +4,7 @@ import { OrderStatus } from 'components/Blocks/OrderStatus/OrderStatus';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
+import { DataTestIds } from 'cypress/dataTestIds';
 import { OrderDetailFragmentApi } from 'graphql/generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
@@ -40,7 +41,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
             <Webline className="mb-2">
                 <div className="flex flex-col items-center justify-between lg:mb-4 lg:flex-row">
                     <div className="w-1/5" />
-                    <h1 className="mb-3 lg:mb-0">
+                    <h1 className="mb-3 lg:mb-0" data-testid={DataTestIds.order_detail_number}>
                         {t('Order number')} {order.number}
                     </h1>
                     <div className="flex items-center justify-end lg:w-1/5">
@@ -59,7 +60,11 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                             <Table className="border-0 p-0">
                                 <Row>
                                     <CellMinor>{t('Creation date')}</CellMinor>
-                                    <Cell align="right">{formatDateAndTime(order.creationDate)}</Cell>
+                                    <Cell align="right">
+                                        <span data-testid={DataTestIds.order_detail_creation_date}>
+                                            {formatDateAndTime(order.creationDate)}
+                                        </span>
+                                    </Cell>
                                 </Row>
                             </Table>
                         </Cell>
