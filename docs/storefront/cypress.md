@@ -1,45 +1,166 @@
 # Cypress
 
-For E2E testing, we use [Cypress](https://www.cypress.io/). It's available to be run in Docker or natively.
+For E2E testing, we use [Cypress](https://www.cypress.io/). Below you can read answers to some of the questions you might have.
 
-## Setup
+## How to structure your cypress folder?
 
-### Run in Docker
+### e2e folder
 
-From the root of the project run
+This folder is where you should put your test suites and domain-specific helpers. These would be things related to a single part of the application you are testing, such as helper which only focus on authentication, cart, or order.
 
-```bash
-make run-acceptance-tests
+You should split your tests into domain-specific subfolders. This helps to balance the tests and make it clear what each test suite focuses on. Some examples are the aforementioned authentication, cart, or order. Other examples could be adding to cart.
+
+-   e2e/
+    -   domainSpecificFunctionality/
+        -   domainSpecificFunctionality.cy.ts
+        -   domainSpecificFunctionalitySomeOtherPart.cy.ts
+        -   domainSpecificFunctionalitySupport.ts
+
+### fixtures folder
+
+Here you can put any static values and demodata you would need. This could be strings to fill in in inputs, things you would expect to find in a page, etc.
+
+### support folder
+
+Here you can put various global helpers, such as custom cypress commands, or similar.
+
+### DataTestIds.ts
+
+Here you should put all data test IDs used in the app. Having them in a single TS file which can be globally referenced is helpful for maintenance and keeping track of used or unused IDs.
+
+### cypress.d.ts
+
+Here you should put type definitions for your custom cypress commands which are defined using `Cypress.Commands.add`. This is necessary as otherwise cypress cannot infer the types.
+
+### snapshots folder
+
+This is where all snapshots created using `takeSnapshotAndCompare` are stored. They are stored under the provided name (the name provided as a function parameter).
+
+### videos folder (uncommited)
+
+This is were all videos from your tests are stored.
+
+### screenshots folder (uncommited)
+
+This is were all screenshots from your tests are stored. They are not the same as the snapshots, as these are generated even when running your tests in `base` mode. However, they can be used to compare your snapshots with the given test run. They are also the images based on which the snapshot diffs are generated (diffs between `snapshots` and `screenshots`).
+
+### snapshotDiffs folder (uncommited)
+
+This is where snapshot diffs are stored if a test fails because of visual regression.F
+
+## How to write tests?
+
+### General guidelines
+
+Your tests should ideally test a small and isolated part of the application. For example, it is better to split the order process into multiple steps (adding to cart, adding a promo code, choosing transport, choosing payment, filling in personal information) and test each of them separately, rather then as a whole. This is because to test all combinations (adding products from multiple places, choosing different transports, etc.) by testing the entire order, we would have to have a very large amount of tests, where many things would be repeated unnecessarily. However, if we split them and test all variants of a partial step, we test all combinations implicitly.
+
+To be more specific, you should group all tests for a specific part of the application in a single test suite using the `describe` method as seen below. Name it the same way your file is named.
+
+Each test should be named in a way to describe what the test and the application should do. Below are some examples:
+
+-   Should add a product to cart and check the cart
+-   Should not be allowed to see transport options if cart is empty
+-   Should login from header and then log out
+
+In the `beforeEach` hook, you can run various preparation logic. There are also other hooks, which you can find in the cypress documentation. One of the specific things you might want to do is to reset the zustand storage by setting `app-store` as visible below. Another thing could be to visit a specific page, such as the cart page if all your tests only focus on that page.
+
+```ts
+describe('<Domain Specific Functionality> tests', () => {
+    beforeEach(() => {
+        cy.window().then((win) => {
+            win.localStorage.setItem('app-store', JSON.stringify(DEFAULT_APP_STORE));
+        });
+    });
+
+    it('should do something', () => {
+        ...
+    });
+});
 ```
 
-This will prepare both the backend and frontend for Cypress to be able to test scenarios on the correct setup.
+### How to write a custom cypress command
 
-### Run natively
+If you want to add a custom cypress command using `Cypress.Commands.add`, which might be helpful if you want to define a command "the cypress way" and allow it to be chained with other commands, you need to add a similar entry in the `/support/index.ts` file. You will need to set its name and interface, together with the actual logic. In the end, you might need to return a suitable cypress object to allow for chaining.
 
-You first need [setup and run](https://docs.shopsys.com/installation/installation-guide/) project. For more info about frontend setup see the section [Setup Storefront](./setup-storefront.md).
+```ts
+Cypress.Commands.add('youCustomCommandName', (param1: string, param2: number) => {
+    // the command logic
 
-Then go to `/project-base/storefront/cypress` folder and install all dependencies.
-
-```bash
-npm i
+    // optionally return the cypress object if you want to chain it, for example by returning cy.get, or similar
+    return cy.get(...);
+});
 ```
 
-Then you should be able to run Cypress itself by command
+Another thing is that you should modify `cypress.d.ts`, where you should put type definitions for your custom cypress commands which are defined using `Cypress.Commands.add`. This is necessary as otherwise cypress cannot infer the types.
 
-```bash
-npx cypress run
+### Visual regression tests
+
+Another important part of our cypress tests is visual regression. This allows us to make a full-page screenshot of the application at any point and compare it with a base screenshot every time the tests are run. This way you make sure that the app looks the same and that your changes did not break it visually.
+
+For this purpose, the `takeSnapshotAndCompare` helper method can be used. You can use it multiple times in each test, just remember to provide the screenshot name, which will be used to store the snapshot under `/snapshots`.
+
+```ts
+it('should do something', () => {
+    ...
+    // do something
+    ...
+    takeSnapshotAndCompare('screenshot-name');
+    ...
+    // do something else
+    ...
+    takeSnapshotAndCompare('another-screenshot-name');
+});
 ```
 
-## Tests Results
+Remember this can be leveraged to make sure that an action does not change the UI by comparing to the same screenshot.
 
-You should be able to see text results in your terminal after Cypress finishes the testing.
+```ts
+it('should do something', () => {
+    takeSnapshotAndCompare('screenshot-name');
+    ...
+    // do something that should not change the UI
+    ...
+    takeSnapshotAndCompare('screenshot-name');
+});
+```
 
-There are also generated videos (for all scenarios) in folder `/project-base/storefront/cypress/videos` and screenshots (for failed scenarios) in folder `/project-base/storefront/cypress/screenshots`.
+The `takeSnapshotAndCompare` helper method does several things. First it waits for 200ms for the UI to stabilize (animations to finish, etc.), then the device pixel ratio is changed, which is neccessary to standardize tests across different devices, then it takes a screenshot, and in the end it compares the screenshot to the base snapshot.
 
-## Test scenarios
+```ts
+export const takeSnapshotAndCompare = (snapshotName: string) => {
+    cy.wait(200);
+    cy.setDevicePixelRatio(1);
+    cy.screenshot();
+    cy.compareSnapshot(snapshotName);
+};
+```
 
-Test scenarios are placed in folder `/project-base/storefront/cypress/integration`. They are split into two folders `/Functions` and `/Tests`.
+You can set up the snapshot to take a full-page, runner, or a viewport screenshot. The most robust version is to test the full page, because then you know that the entire page is unchanged.
 
-**Functions** are meant for reusable actions used in test scenarios.
+You can also set the comparison threshold. For example, the `0.02` threshold seen below means that 2% of the image pixels can change without the tests failing. This can be modified in any way necessary, but remember to keep a balance. The higher the threshold, the less false positives you will get, but the more differences and bugs can stay unnoticed. For example, if you have a page with order detail, where only the total price is wrong, if the page is large enough, the mistake in the price might be less than, for example, 2%. On the other hand, if you do not allow any differences (`errorThreshold: 0`), you might get some false positives, because of unnoticable differences.
 
-**Tests** are scenarios itself split into several folders according to the tested part in the Storefront application.
+```ts
+compareSnapshotCommand({
+    capture: 'fullPage',
+    errorThreshold: 0.02,
+});
+```
+
+## How to run tests?
+
+To make sure that the test runs are consistent, use the provided make commands located in `Makefile` in the project root. These commands run the tests using a separate dedicated storefront copy (`storefront-cypress`). Furthermore, the back-end application is set to a test environment with a dedicated database. Last, but not least, running it via docker makes sure that your OS does not influence the tests, which can happen, e.g. by font smoothing, which causes differences in visual regression tests.
+
+There are two commands provided for you:
+
+-   `run-acceptance-tests-base`: This command runs the tests and allows screenshot regeneration. This means that whatever your tests generate at that point will be considered the new base case. By running this, the tests will not fail because of visual differences, but might still fail because of the cypress tests failing themselves. Make sure to only run this once you are sure that your application behaves as expected. If you set the base to an invalid state, once it is fixed, your tests will start failing.
+-   `run-acceptance-tests-actual`: This command runs the tests without allowing screenshot regeneration. This should be used most of the time if you want to check your application. This is also what should be used as part of CI. If this command fails because of visual differences, there will be screenshot diffs generated in a `/snapshotDiffs` folder. You can analyze them to see the differences which caused an issue.
+
+## How to update your test results?
+
+As described above in the **How to run tests?** section, to update your screenshots, you can run the `run-acceptance-tests-base` make command. This way, all your screenshots which have changed will be regenerated and the new values will be stored in `/snapshots`.
+
+## How to debug failed tests?
+
+-   You can view the videos in `/videos` to see where the test got stuck
+-   You can view snapshot diffs in `/snapshotDiffs` if your tests fail because of visual differences, they should help you to spot the differences
+-   You can log within your tests, though this is considerably harder than the methods above, as logging is not intuitive in cypress, however, you can read more in the official docs
