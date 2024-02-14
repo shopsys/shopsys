@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
@@ -25,12 +26,14 @@ class SitemapRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
      * @param \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository $flagRepository
      */
     public function __construct(
         protected readonly ProductRepository $productRepository,
         protected readonly CategoryRepository $categoryRepository,
         protected readonly ArticleRepository $articleRepository,
         protected readonly BlogArticleRepository $blogArticleRepository,
+        protected readonly FlagRepository $flagRepository,
     ) {
     }
 
@@ -186,6 +189,30 @@ class SitemapRepository
 
         $this->productRepository->addDomain($queryBuilder, $domainConfig->getId());
         $queryBuilder->andWhere('EXISTS(' . $subquery->getDQL() . ') AND (pd.saleExclusion = true)');
+
+        return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
+     */
+    public function getSitemapItemsForVisibleFlags(DomainConfig $domainConfig): array
+    {
+        $queryBuilder = $this->flagRepository->getVisibleQueryBuilder();
+        $queryBuilder
+            ->select('fu.slug, fu.entityId')
+            ->join(
+                FriendlyUrl::class,
+                'fu',
+                Join::WITH,
+                'fu.routeName = :flagDetailRouteName
+                AND fu.entityId = f.id
+                AND fu.domainId = :domainId
+                AND fu.main = TRUE',
+            )
+            ->setParameter('flagDetailRouteName', 'front_flag_detail')
+            ->setParameter('domainId', $domainConfig->getId());
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
     }

@@ -103,6 +103,16 @@ class SitemapListener implements EventSubscriberInterface
             'front_blogarticle_detail',
             $this->sitemapFacade->getSitemapItemsForBlogArticlesOnDomain(...),
         );
+
+        $flagSitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleFlags($domainConfig);
+        $this->addUrlsForSitemapItemsWithAlternativeLocations(
+            $flagSitemapItems,
+            $generator,
+            $domainConfig,
+            'flags',
+            'front_flag_detail',
+            $this->sitemapFacade->getSitemapItemsForVisibleFlags(...),
+        );
     }
 
     /**

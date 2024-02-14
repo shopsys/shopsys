@@ -55,11 +55,10 @@ class FlagRepository extends BaseFlagRepository
      */
     public function getVisibleFlagById(int $flagId, string $locale): Flag
     {
-        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
-            ->select('f, ft')
+        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
+            ->addSelect('ft')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->where('f.id = :flagId')
-            ->andWhere('f.visible = true')
             ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('flagId', $flagId)
             ->setParameter('locale', $locale);
@@ -73,10 +72,9 @@ class FlagRepository extends BaseFlagRepository
      */
     public function getAllVisibleFlags(string $locale): array
     {
-        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
-            ->select('f, ft')
+        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
+            ->addSelect('f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->where('f.visible = true')
             ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('locale', $locale);
 
@@ -90,11 +88,10 @@ class FlagRepository extends BaseFlagRepository
      */
     public function getVisibleByUuid(string $uuid, string $locale): Flag
     {
-        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
-            ->select('f, ft')
+        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
+            ->addSelect('ft')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->setParameter('locale', $locale)
-            ->where('f.visible = true')
             ->andWhere('f.uuid = :uuid')
             ->setParameter('uuid', $uuid);
 

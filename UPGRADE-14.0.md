@@ -1390,6 +1390,15 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   [features moved](#movement-of-features-from-project-base-to-packages) to the `frontend-api` package:
         -   class `FlagResolverMap`
     -   `Flag.name` and `Flag.rgbColor` fields are now required in the `Flag` graphql type
+    -   constructor `Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository::__construct()` changed its interface:
+        ```diff
+            public function __construct(
+                protected readonly ProductRepository $productRepository,
+                protected readonly CategoryRepository $categoryRepository,
+                protected readonly ArticleRepository $articleRepository,
+                protected readonly BlogArticleRepository $blogArticleRepository,
+        +       protected readonly FlagRepository $flagRepository,
+        ```
     -   see #project-base-diff to update your project
 
 ### Storefront

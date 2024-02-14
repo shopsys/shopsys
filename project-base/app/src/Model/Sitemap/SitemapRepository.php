@@ -13,7 +13,8 @@ use Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository as BaseSitemapReposi
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Category\CategoryRepository $categoryRepository
- * @method __construct(\App\Model\Product\ProductRepository $productRepository, \App\Model\Category\CategoryRepository $categoryRepository, \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository $blogArticleRepository)
+ * @method __construct(\App\Model\Product\ProductRepository $productRepository, \App\Model\Category\CategoryRepository $categoryRepository, \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository, \Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository $blogArticleRepository, \App\Model\Product\Flag\FlagRepository $flagRepository)
+ * @property \App\Model\Product\Flag\FlagRepository $flagRepository
  */
 class SitemapRepository extends BaseSitemapRepository
 {
