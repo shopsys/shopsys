@@ -1750,4 +1750,28 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   removed duplicate update payment mutation call on order payment confirmation page ([#3025](https://github.com/shopsys/shopsys/pull/3025))
 
 -   fixed non-working sentry logging on SF ([#3034]https://github.com/shopsys/shopsys/pull/3034)
+
     -   change any call to `logException` to only pass one argument, which should be a complete error with all of its context
+
+-   refactored cypress tests
+    -   rewrote cypress tests to typescript for better static control and easier working with the code, so in you should do the same with your cypress files
+        -   make sure to change the file extensions and add type annotiations
+        -   make sure to include any extra files in your `tsconfig.json`
+    -   changed the structure of the `cypress` folder
+        -   make sure to follow the new folder structure (you can find out how in the docs - `cypress.md`)
+    -   simplified accessing DOM elements in cypress by introducing a new cypress command `getByTID`, so you should use this method to access elements in order to do it in a unified way
+    -   introduced visual snapshot testing using the cypress-visual-regression library
+        -   if you want to do any visual testing, you can inspire yourself in e.g. order tests (`createOrder.cy.ts`)
+    -   introduced the possibility to do real UI interactions using the cypress-real-events library
+        -   if you want to simulate any "real" UI interactions, such as hover, focus, etc. you can use this library
+    -   introduced custom cypress commands to work with cart, which is helpful when cart needs to be modified before a test
+        -   if you need to modify cart directly via API, you should use/extend these methods
+    -   tests are now grouped in related test suites using the `describe` test suit group
+        -   you should do the same for any future tests, read the docs if unsure
+    -   test names now use the 'should do something' convention, which you should also follow in your tests
+    -   refactored data test IDs
+        -   they were removed from all the unused places, so you should also remove them from any such places in your code
+        -   test IDs are not string literals anymore but an enum instead, so you should follow this example and add all the values which you are using in your tests
+        -   they were renamed to `tid` everywhere, so you should do the same
+    -   as the docker setup for running acceptance tests was improved, makefile commands (`run-acceptance-tests-base` and `run-acceptance-tests-actual`) should be used to run tests
+    -   add `closeOnClick` to all toast messages, as even though this should not be necessary (it is the default option), it does not work without it
