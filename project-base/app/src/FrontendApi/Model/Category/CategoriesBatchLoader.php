@@ -28,6 +28,6 @@ class CategoriesBatchLoader
      */
     public function loadByIds(array $categoriesIds): Promise
     {
-        return $this->promiseAdapter->all($this->categoryFacade->getCategoriesByIds($categoriesIds, $this->domain->getCurrentDomainConfig()));
+        return $this->promiseAdapter->all($this->categoryFacade->getVisibleCategoriesByIds($categoriesIds, $this->domain->getCurrentDomainConfig()));
     }
 }

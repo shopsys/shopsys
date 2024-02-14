@@ -232,4 +232,18 @@ class Advert
     {
         return $this->datetimeVisibleTo;
     }
+
+    /**
+     * @return int[]
+     */
+    public function getCategoryIds(): array
+    {
+        $categoryIds = [];
+
+        foreach ($this->getCategories() as $category) {
+            $categoryIds[] = $category->getId();
+        }
+
+        return $categoryIds;
+    }
 }

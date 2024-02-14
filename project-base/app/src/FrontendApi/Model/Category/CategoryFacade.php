@@ -41,8 +41,8 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[][]
      */
-    public function getCategoriesByIds(array $categoriesIds, DomainConfig $domainConfig): array
+    public function getVisibleCategoriesByIds(array $categoriesIds, DomainConfig $domainConfig): array
     {
-        return $this->categoryRepository->getCategoriesByIds($categoriesIds, $domainConfig);
+        return $this->categoryRepository->getVisibleCategoriesByIds($categoriesIds, $domainConfig);
     }
 }
