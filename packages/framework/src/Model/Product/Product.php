@@ -897,11 +897,14 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $currentVariants
+     * @return int[]
      */
-    public function refreshVariants(array $currentVariants): void
+    public function refreshVariants(array $currentVariants): array
     {
-        $this->unsetRemovedVariants($currentVariants);
+        $removedVariantIds = $this->unsetRemovedVariants($currentVariants);
         $this->addNewVariants($currentVariants);
+
+        return $removedVariantIds;
     }
 
     /**
@@ -918,14 +921,20 @@ class Product extends AbstractTranslatableEntity
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $currentVariants
+     * @return int[]
      */
-    protected function unsetRemovedVariants(array $currentVariants)
+    protected function unsetRemovedVariants(array $currentVariants): array
     {
+        $removedVariantIds = [];
+
         foreach ($this->getVariants() as $originalVariant) {
             if (!in_array($originalVariant, $currentVariants, true)) {
                 $originalVariant->unsetMainVariant();
+                $removedVariantIds[] = $originalVariant->getId();
             }
         }
+
+        return $removedVariantIds;
     }
 
     /**

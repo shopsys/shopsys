@@ -29,9 +29,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method \App\Model\Product\Product[] getVariants()
  * @method addVariants(\App\Model\Product\Product[] $variants)
  * @method setMainVariant(\App\Model\Product\Product $mainVariant)
- * @method refreshVariants(\App\Model\Product\Product[] $currentVariants)
+ * @method int[] refreshVariants(\App\Model\Product\Product[] $currentVariants)
  * @method addNewVariants(\App\Model\Product\Product[] $currentVariants)
- * @method unsetRemovedVariants(\App\Model\Product\Product[] $currentVariants)
+ * @method int[] unsetRemovedVariants(\App\Model\Product\Product[] $currentVariants)
  * @method \App\Model\Product\ProductTranslation translation(?string $locale = null)
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\ProductTranslation> $translations
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Product\ProductDomain> $domains

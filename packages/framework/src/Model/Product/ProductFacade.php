@@ -159,7 +159,8 @@ class ProductFacade
         }
 
         if ($product->isMainVariant()) {
-            $product->refreshVariants($productData->variants);
+            $removedVariantIds = $product->refreshVariants($productData->variants);
+            $this->productRecalculationDispatcher->dispatchProductIds($removedVariantIds, $priority ?? ProductRecalculationPriorityEnum::REGULAR);
         }
 
         $this->refreshProductAccessories($product, $productData->accessories);
