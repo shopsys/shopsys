@@ -1273,6 +1273,8 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `Shopsys\FrameworkBundle\Model\Product\Product::unsetRemovedVariants()` now returns int[]
     -   `Shopsys\FrameworkBundle\Model\Product\Product::refreshVariants()` now returns int[]
     -   see #project-base-diff to update your project
+-   fix standards in PaymentServiceFacade ([#3026](https://github.com/shopsys/shopsys/pull/3026))
+    -   see #project-base-diff to update your project
 
 ### Storefront
 

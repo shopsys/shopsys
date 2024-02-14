@@ -40,7 +40,8 @@ class PaymentServiceFacade
         private readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
         GoPayFacade $goPayFacade,
         private readonly LoggerInterface $logger,
-        private readonly ContainerInterface $container,
+        // intentionally protected to avoid error in phpstan in project-base
+        protected readonly ContainerInterface $container,
     ) {
         $this->paymentServices = [];
         $this->paymentServices[Payment::TYPE_GOPAY] = $goPayFacade;
