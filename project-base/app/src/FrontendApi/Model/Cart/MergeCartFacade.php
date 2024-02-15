@@ -51,11 +51,11 @@ class MergeCartFacade
         $oldCart = $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
         $customerCart = $this->cartFacade->getCartCreateIfNotExists($customerUser, null);
 
+        $this->cartFacade->deleteCart($customerCart);
+
         $oldCart->assignCartToCustomerUser($customerUser);
 
         $this->entityManager->flush();
-
-        $this->cartFacade->deleteCart($customerCart);
     }
 
     /**

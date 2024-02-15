@@ -1273,6 +1273,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   `Shopsys\FrameworkBundle\Model\Product\Product::unsetRemovedVariants()` now returns int[]
     -   `Shopsys\FrameworkBundle\Model\Product\Product::refreshVariants()` now returns int[]
     -   see #project-base-diff to update your project
+-   add unique index to cart identifiers ([#3017](https://github.com/shopsys/shopsys/pull/3017))
+    -   check `Version20240209114704` migration and if you already have the unique indexes on the cart table, you can skip it
+    -   see #project-base-diff to update your project
 
 ### Storefront
 
