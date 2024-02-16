@@ -14,7 +14,8 @@ class Version20240102112523 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE orders ADD total_product_price_without_vat NUMERIC(20, 6) NOT NULL');
+        $this->sql('ALTER TABLE orders ADD total_product_price_without_vat NUMERIC(20, 6) NOT NULL DEFAULT 0');
+        $this->sql('ALTER TABLE orders ALTER total_product_price_without_vat DROP DEFAULT');
         $this->sql('COMMENT ON COLUMN orders.total_product_price_without_vat IS \'(DC2Type:money)\'');
         $this->sql('UPDATE orders
             SET total_product_price_without_vat = (
