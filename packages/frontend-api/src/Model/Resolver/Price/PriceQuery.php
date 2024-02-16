@@ -75,7 +75,7 @@ class PriceQuery extends AbstractQuery
     }
 
     /**
-     * @param \App\Model\Payment\Payment $payment
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param string|null $cartUuid
      * @param \ArrayObject|null $context
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price

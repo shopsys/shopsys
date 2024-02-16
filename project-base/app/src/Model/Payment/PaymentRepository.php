@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository as BasePaymentReposi
  * @method \App\Model\Payment\Payment getById(int $id)
  * @method \App\Model\Payment\Payment[] getAllByTransport(\App\Model\Transport\Transport $transport)
  * @method \App\Model\Payment\Payment getOneByUuid(string $uuid)
+ * @method \App\Model\Payment\Payment[] getByGoPayPaymentMethod(\Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod)
  */
 class PaymentRepository extends BasePaymentRepository
 {
