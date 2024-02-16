@@ -44,7 +44,16 @@ class LuigisBoxProductFeedItemFacade
         $this->productUrlsBatchLoader->loadForProducts($products, $domainConfig);
 
         foreach ($products as $product) {
-            yield $this->luigisBoxProductFeedItemFactory->create($product, $domainConfig);
+            if ($product->isMainVariant()) {
+                $variants = $this->luigisBoxProductRepository->getAllVariantsByMainVariantId($product, $domainConfig->getId(), $pricingGroup);
+                $this->productUrlsBatchLoader->loadForProducts($variants, $domainConfig);
+
+                foreach ($variants as $variant) {
+                    yield $this->luigisBoxProductFeedItemFactory->create($variant, $domainConfig);
+                }
+            } else {
+                yield $this->luigisBoxProductFeedItemFactory->create($product, $domainConfig);
+            }
         }
     }
 }

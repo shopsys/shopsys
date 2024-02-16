@@ -85,7 +85,9 @@ class FeedCronModule implements IteratedCronModuleInterface
                 $this->getFeedExportCreationDataQueue()->getCurrentFeedName(),
                 $this->getFeedExportCreationDataQueue()->getCurrentDomain()->getId(),
             );
+
             $this->feedFacade->markFeedModuleAsUnscheduled($currentFeedModule);
+            $this->cleanSettingsValues();
 
             $this->logger->info(sprintf(
                 'Feed "%s" generated on domain "%s" into "%s".',
@@ -166,9 +168,7 @@ class FeedCronModule implements IteratedCronModuleInterface
             }
 
             if ($queue->isEmpty()) {
-                $this->setting->set(Setting::FEED_NAME_TO_CONTINUE, null);
-                $this->setting->set(Setting::FEED_DOMAIN_ID_TO_CONTINUE, null);
-
+                $this->cleanSettingsValues();
 
                 return;
             }
@@ -234,5 +234,12 @@ class FeedCronModule implements IteratedCronModuleInterface
         }
 
         return $this->feedExportCreationDataQueue;
+    }
+
+    protected function cleanSettingsValues(): void
+    {
+        $this->setting->set(Setting::FEED_NAME_TO_CONTINUE, null);
+        $this->setting->set(Setting::FEED_DOMAIN_ID_TO_CONTINUE, null);
+        $this->setting->set(Setting::FEED_ITEM_ID_TO_CONTINUE, null);
     }
 }
