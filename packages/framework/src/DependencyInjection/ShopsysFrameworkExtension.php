@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\DependencyInjection;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Scope\ExportScopeInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataTypeResolverInterface;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
@@ -55,6 +56,9 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
         $container->registerForAutoconfiguration(DataTypeResolverInterface::class)
             ->addTag('shopsys.data_type_resolver');
+
+        $container->registerForAutoconfiguration(ExportScopeInterface::class)
+            ->addTag('shopsys.elasticsearch.export_scope');
     }
 
     /**

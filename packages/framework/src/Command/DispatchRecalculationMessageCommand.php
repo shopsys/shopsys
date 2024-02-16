@@ -123,7 +123,7 @@ class DispatchRecalculationMessageCommand extends Command
             return Command::FAILURE;
         }
 
-        $dispatchedProductIds = $this->productRecalculationDispatcher->dispatchProductIds($productIds, $priority);
+        $dispatchedProductIds = $this->productRecalculationDispatcher->dispatchProductIds($productIds, $priority, ['Product::name', 'Category::name']);
         $symfonyStyle->success(['Dispatched message for IDs', implode(', ', $dispatchedProductIds), sprintf('Priority: %s', $priority->value)]);
 
         return Command::SUCCESS;

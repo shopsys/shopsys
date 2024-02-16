@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 class ProductRecalculationDispatcher extends AbstractMessageDispatcher
 {
     /**
+     * TODO remove - usunsued after removing deprecated properties from product entity
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum $productRecalculationPriorityEnum
      * @return int[]
@@ -27,18 +28,20 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
     /**
      * @param int[] $productIds
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum $productRecalculationPriorityEnum
+     * @param string[] $affectedPropertyNames
      * @return int[]
      */
     public function dispatchProductIds(
         array $productIds,
         ProductRecalculationPriorityEnumInterface $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
+        array $affectedPropertyNames = [],
     ): array {
         $productIds = array_unique($productIds);
 
         foreach ($productIds as $productId) {
             $message = match ($productRecalculationPriorityEnum) {
-                ProductRecalculationPriorityEnum::HIGH => new ProductRecalculationPriorityHighMessage((int)$productId),
-                ProductRecalculationPriorityEnum::REGULAR => new ProductRecalculationPriorityRegularMessage((int)$productId),
+                ProductRecalculationPriorityEnum::HIGH => new ProductRecalculationPriorityHighMessage((int)$productId, $affectedPropertyNames),
+                ProductRecalculationPriorityEnum::REGULAR => new ProductRecalculationPriorityRegularMessage((int)$productId, $affectedPropertyNames),
             };
             $this->messageBus->dispatch($message);
         }
@@ -49,12 +52,14 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
     /**
      * @param int $productId
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum $productRecalculationPriorityEnum
+     * @param string[] $affectedPropertyNames
      */
     public function dispatchSingleProductId(
         int $productId,
         ProductRecalculationPriorityEnumInterface $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
+        array $affectedPropertyNames = [],
     ): void {
-        $this->dispatchProductIds([$productId], $productRecalculationPriorityEnum);
+        $this->dispatchProductIds([$productId], $productRecalculationPriorityEnum, $affectedPropertyNames);
     }
 
     public function dispatchAllProducts(): void

@@ -12,6 +12,7 @@ use App\Model\ProductVideo\ProductVideo;
 use App\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Scope\ExportScopeRegistry;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
@@ -47,6 +48,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 class ProductExportRepository extends BaseProductExportRepository
 {
     /**
+     * TODO tohle bych vytáhnul do nějaké servisy, abych se k tomu dostal ze všeech možných providerů
      * @var \App\Model\Product\Product[]|null
      */
     private ?array $variantCache = null;
@@ -81,6 +83,7 @@ class ProductExportRepository extends BaseProductExportRepository
         BrandCachedFacade $brandCachedFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         HreflangLinksFacade $hreflangLinksFacade,
+        ExportScopeRegistry $exportScopeRegistry,
         private readonly ProductRepository $productRepository,
         private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         private readonly ProductPriceCalculation $productPriceCalculation,
@@ -99,6 +102,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $brandCachedFacade,
             $productAvailabilityFacade,
             $hreflangLinksFacade,
+            $exportScopeRegistry,
         );
     }
 
@@ -109,7 +113,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param int $batchSize
      * @return array
      */
-    public function getProductsData(int $domainId, string $locale, int $lastProcessedId, int $batchSize): array
+    public function getProductsData(int $domainId, string $locale, int $lastProcessedId, int $batchSize, array $scopes): array
     {
         $queryBuilder = $this->createQueryBuilder($domainId)
             ->andWhere('p.id > :lastProcessedId')
@@ -121,7 +125,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $results = [];
         /** @var \App\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
-            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale);
+            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale, $scopes);
             $this->clearVariantCache();
         }
 
@@ -134,7 +138,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param int[] $productIds
      * @return array
      */
-    public function getProductsDataForIds(int $domainId, string $locale, array $productIds): array
+    public function getProductsDataForIds(int $domainId, string $locale, array $productIds, array $fields): array
     {
         $queryBuilder = $this->createQueryBuilder($domainId)
             ->andWhere('p.id IN (:productIds)')
@@ -145,7 +149,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $result = [];
         /** @var \App\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
-            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale);
+            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
             $this->clearVariantCache();
         }
 
@@ -158,7 +162,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param string $locale
      * @return array
      */
-    protected function extractResult(BaseProduct $product, int $domainId, string $locale): array
+    protected function extractResult(BaseProduct $product, int $domainId, string $locale, array $fields): array
     {
         $flagIds = $this->extractFlagsForDomain($domainId, $product);
         $categoryIds = $this->extractCategories($domainId, $product);

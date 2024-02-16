@@ -7,6 +7,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\ExportFieldEnumInterface;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Scope\ExportScopeRegistry;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
@@ -14,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
+use Shopsys\FrameworkBundle\Model\Product\Export\ProductExportFieldEnum;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -49,6 +52,7 @@ class ProductExportRepository
         protected readonly BrandCachedFacade $brandCachedFacade,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
+        protected readonly ExportScopeRegistry $exportScopeRegistry,
     ) {
     }
 
@@ -57,9 +61,10 @@ class ProductExportRepository
      * @param string $locale
      * @param int $lastProcessedId
      * @param int $batchSize
+     * @param \Shopsys\FrameworkBundle\Model\Product\Export\ProductExportFieldEnum[] $scopes
      * @return array
      */
-    public function getProductsData(int $domainId, string $locale, int $lastProcessedId, int $batchSize): array
+    public function getProductsData(int $domainId, string $locale, int $lastProcessedId, int $batchSize, array $scopes): array
     {
         $queryBuilder = $this->createQueryBuilder($domainId)
             ->andWhere('p.id > :lastProcessedId')
@@ -71,7 +76,7 @@ class ProductExportRepository
         $results = [];
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
-            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale);
+            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale, $scopes);
         }
 
         return $results;
@@ -81,9 +86,10 @@ class ProductExportRepository
      * @param int $domainId
      * @param string $locale
      * @param int[] $productIds
+     * @param \Shopsys\FrameworkBundle\Model\Product\Export\ProductExportFieldEnum[] $fields
      * @return array
      */
-    public function getProductsDataForIds(int $domainId, string $locale, array $productIds): array
+    public function getProductsDataForIds(int $domainId, string $locale, array $productIds, array $fields): array
     {
         $queryBuilder = $this->createQueryBuilder($domainId)
             ->andWhere('p.id IN (:productIds)')
@@ -94,7 +100,7 @@ class ProductExportRepository
         $result = [];
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         foreach ($query->getResult() as $product) {
-            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale);
+            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale, $fields);
         }
 
         return $result;
@@ -115,58 +121,72 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Model\Product\Export\ProductExportFieldEnum[] $fields
      * @return array
      */
-    protected function extractResult(Product $product, int $domainId, string $locale): array
+    protected function extractResult(Product $product, int $domainId, string $locale, array $fields): array
     {
-        $flagIds = $this->extractFlags($domainId, $product);
-        $categoryIds = $this->extractCategories($domainId, $product);
-        $parameters = $this->extractParameters($locale, $product);
-        $prices = $this->extractPrices($domainId, $product);
-        $visibility = $this->extractVisibility($domainId, $product);
-        $detailUrl = $this->extractDetailUrl($domainId, $product);
-        $variantIds = $this->extractVariantIds($product);
+        if (count($fields) === 0) {
+            $fields = ProductExportFieldEnum::cases();
+        }
 
-        return [
-            'id' => $product->getId(),
-            'catnum' => $product->getCatnum(),
-            'partno' => $product->getPartno(),
-            'ean' => $product->getEan(),
-            'name' => $product->getName($locale),
-            'description' => $product->getDescription($domainId),
-            'short_description' => $product->getShortDescription($domainId),
-            'brand' => $product->getBrand() ? $product->getBrand()->getId() : '',
-            'brand_name' => $product->getBrand() ? $product->getBrand()->getName() : '',
-            'brand_url' => $this->getBrandUrlForDomainByProduct($product, $domainId),
-            'flags' => $flagIds,
-            'categories' => $categoryIds,
-            'main_category_id' => $this->categoryFacade->getProductMainCategoryByDomainId(
+        $exportedResult = [];
+        foreach ($fields as $scope) {
+            $exportedResult[$scope->value] = $this->getExportedScopeValue($domainId, $product, $locale, $scope);
+        }
+
+        return $exportedResult;
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Model\Product\Export\ProductExportFieldEnum $field
+     * @return mixed
+     */
+    protected function getExportedScopeValue(int $domainId, Product $product, string $locale, ExportFieldEnumInterface $field): mixed
+    {
+        return match ($field) {
+            ProductExportFieldEnum::ID => $product->getId(),
+            ProductExportFieldEnum::CATNUM => $product->getCatnum(),
+            ProductExportFieldEnum::PARTNO => $product->getPartno(),
+            ProductExportFieldEnum::EAN => $product->getEan(),
+            ProductExportFieldEnum::NAME => $product->getName($locale),
+            ProductExportFieldEnum::DESCRIPTION => $product->getDescription($domainId),
+            ProductExportFieldEnum::SHORT_DESCRIPTION => $product->getShortDescription($domainId),
+            ProductExportFieldEnum::BRAND => $product->getBrand() ? $product->getBrand()->getId() : '',
+            ProductExportFieldEnum::BRAND_NAME => $product->getBrand() ? $product->getBrand()->getName() : '',
+            ProductExportFieldEnum::BRAND_URL => $this->getBrandUrlForDomainByProduct($product, $domainId),
+            ProductExportFieldEnum::FLAGS => $this->extractFlags($domainId, $product),
+            ProductExportFieldEnum::CATEGORIES => $this->extractCategories($domainId, $product),
+            ProductExportFieldEnum::MAIN_CATEGORY_ID => $this->categoryFacade->getProductMainCategoryByDomainId(
                 $product,
                 $domainId,
             )->getId(),
-            'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
-            'prices' => $prices,
-            'parameters' => $parameters,
-            'ordering_priority' => $product->getOrderingPriority($domainId),
-            'calculated_selling_denied' => $product->getCalculatedSellingDenied(),
-            'selling_denied' => $product->isSellingDenied(),
-            'availability' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
-            'availability_dispatch_time' => $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId),
-            'is_main_variant' => $product->isMainVariant(),
-            'is_variant' => $product->isVariant(),
-            'detail_url' => $detailUrl,
-            'visibility' => $visibility,
-            'uuid' => $product->getUuid(),
-            'unit' => $product->getUnit()->getName($locale),
-            'stock_quantity' => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $domainId),
-            'variants' => $variantIds,
-            'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
-            'seo_h1' => $product->getSeoH1($domainId),
-            'seo_title' => $product->getSeoTitle($domainId),
-            'seo_meta_description' => $product->getSeoMetaDescription($domainId),
-            'accessories' => $this->extractAccessoriesIds($product),
-            'hreflang_links' => $this->hreflangLinksFacade->getForProduct($product, $domainId),
-        ];
+            ProductExportFieldEnum::IN_STOCK => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
+            ProductExportFieldEnum::PRICES => $this->extractPrices($domainId, $product),
+            ProductExportFieldEnum::PARAMETERS => $this->extractParameters($locale, $product),
+            ProductExportFieldEnum::ORDERING_PRIORITY => $product->getOrderingPriority($domainId),
+            ProductExportFieldEnum::CALCULATED_SELLING_DENIED => $product->getCalculatedSellingDenied(),
+            ProductExportFieldEnum::SELLING_DENIED => $product->isSellingDenied(),
+            ProductExportFieldEnum::AVAILABILITY => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
+            ProductExportFieldEnum::AVAILABILITY_DISPATCH_TIME => $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId),
+            ProductExportFieldEnum::IS_MAIN_VARIANT => $product->isMainVariant(),
+            ProductExportFieldEnum::IS_VARIANT => $product->isVariant(),
+            ProductExportFieldEnum::DETAIL_URL => $this->extractDetailUrl($domainId, $product),
+            ProductExportFieldEnum::VISIBILITY => $this->extractVisibility($domainId, $product),
+            ProductExportFieldEnum::UUID => $product->getUuid(),
+            ProductExportFieldEnum::UNIT => $product->getUnit()->getName($locale),
+            ProductExportFieldEnum::STOCK_QUANTITY => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $domainId),
+            ProductExportFieldEnum::VARIANTS => $this->extractVariantIds($product),
+            ProductExportFieldEnum::MAIN_VARIANT_ID => $product->isVariant() ? $product->getMainVariant()?->getId() : null,
+            ProductExportFieldEnum::SEO_H1 => $product->getSeoH1($domainId),
+            ProductExportFieldEnum::SEO_TITLE => $product->getSeoTitle($domainId),
+            ProductExportFieldEnum::SEO_META_DESCRIPTION => $product->getSeoMetaDescription($domainId),
+            ProductExportFieldEnum::ACCESSORIES => $this->extractAccessoriesIds($product),
+            ProductExportFieldEnum::HREFLANG_LINKS => $this->hreflangLinksFacade->getForProduct($product, $domainId),
+        };
     }
 
     /**
