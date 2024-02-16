@@ -139,7 +139,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
-        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
+        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . $domainId);
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE);
         $orderData->firstName = 'Jiří';
         $orderData->lastName = 'Ševčík';
@@ -474,7 +474,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
 
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
-        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
+        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . $domainId);
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE);
         $orderData->trackingNumber = '48172539041';
         $orderData->firstName = 'Pavla';

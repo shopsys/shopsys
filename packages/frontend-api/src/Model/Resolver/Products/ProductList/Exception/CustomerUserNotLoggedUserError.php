@@ -9,13 +9,13 @@ use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class CustomerUserNotLoggedUserError extends UserError implements UserErrorWithCodeInterface
 {
-    public const CODE = 'customer-user-not-logged';
+    protected const CODE = 'customer-user-not-logged';
 
     /**
      * @return string
      */
     public function getUserErrorCode(): string
     {
-        return self::CODE;
+        return static::CODE;
     }
 }

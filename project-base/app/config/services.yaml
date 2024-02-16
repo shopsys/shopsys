@@ -247,6 +247,9 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface:
         alias: App\Model\Order\OrderDataFactory
 
+    Shopsys\FrameworkBundle\Model\Order\OrderDataFactory:
+        alias: App\Model\Order\OrderDataFactory
+
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface:
         alias: App\Model\Order\Item\OrderItemDataFactory
 
@@ -443,13 +446,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation:
         alias: App\Model\Payment\IndependentPaymentVisibilityCalculation
-
-    App\Model\GoPay\GoPayClientFactory:
-        arguments:
-            - '%gopay_config%'
-
-    App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade:
-        public: true
 
     App\Model\Order\Preview\OrderPreviewCalculation: ~
 
@@ -683,9 +679,6 @@ services:
 
     App\Component\Packetery\PacketeryRenderer: ~
 
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory:
-        alias: App\Model\Customer\User\CustomerUserIdentifierFactory
-
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory:
         alias: App\Model\Customer\DeliveryAddressDataFactory
 
@@ -738,8 +731,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:
         alias: App\FrontendApi\Model\Token\TokenAuthenticator
-
-    App\FrontendApi\Component\GqlContext\GqlContextInitializer: ~
 
     Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory:
         alias: App\Model\Transport\Grid\TransportGridFactory

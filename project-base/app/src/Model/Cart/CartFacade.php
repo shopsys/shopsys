@@ -27,13 +27,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
  * @property \App\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
- * @property \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
  * @method \App\Model\Product\Product getProductByCartItemId(int $cartItemId)
  * @method \App\Model\Cart\Cart|null findCartOfCurrentCustomerUser()
  * @method \App\Model\Cart\Cart getCartOfCurrentCustomerUserCreateIfNotExists()
  * @method \App\Model\Cart\Cart getCartByCustomerUserIdentifierCreateIfNotExists(\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier)
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+ * @method \App\Model\Cart\Cart|null findCartByCartIdentifier(string $cartIdentifier)
  */
 class CartFacade extends BaseCartFacade
 {
@@ -41,7 +41,7 @@ class CartFacade extends BaseCartFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
      * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
@@ -174,20 +174,6 @@ class CartFacade extends BaseCartFacade
 
         $this->em->remove($cartItemToRemove);
         $this->em->flush();
-
-        return $cart;
-    }
-
-    /**
-     * @param string $cartIdentifier
-     * @return \App\Model\Cart\Cart|null
-     */
-    public function findCartByCartIdentifier(string $cartIdentifier): ?BaseCart
-    {
-        $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCartIdentifier($cartIdentifier);
-
-        /** @var \App\Model\Cart\Cart|null $cart */
-        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
 
         return $cart;
     }

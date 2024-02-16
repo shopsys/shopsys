@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -38,7 +39,7 @@ class OrderRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function createOrderQueryBuilder()
+    public function createOrderQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('o')

@@ -231,3 +231,17 @@ QueryDecorator:
                         type: "[String!]!"
                         description: "Array of product catalog numbers"
                 description: "Returns list of products by catalog numbers"
+            orderPayments:
+                type: 'OrderPaymentsConfig!'
+                resolve: "@=query('orderPaymentsQuery', args['orderUuid'])"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns payments available for the given order"
+            GoPaySwifts:
+                type: "[GoPayBankSwift!]!"
+                description: "List of available banks for GoPay bank transfer payment"
+                resolve: "@=query('goPaySwiftsQuery', args['currencyCode'])"
+                args:
+                    currencyCode:
+                        type: "String!"

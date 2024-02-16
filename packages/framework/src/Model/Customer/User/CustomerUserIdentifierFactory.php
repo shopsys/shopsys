@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -40,11 +42,24 @@ class CustomerUserIdentifierFactory
     }
 
     /**
-     * @param string $cartIdentifier
+     * @param string|null $cartIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier
      */
-    public function getOnlyWithCartIdentifier(string $cartIdentifier): CustomerUserIdentifier
+    public function getOnlyWithCartIdentifier(?string $cartIdentifier): CustomerUserIdentifier
     {
-        return new CustomerUserIdentifier($cartIdentifier, null);
+        if (TransformString::emptyToNull($cartIdentifier) === null) {
+            $cartIdentifier = Uuid::uuid4()->toString();
+        }
+
+        return new CustomerUserIdentifier($cartIdentifier);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier
+     */
+    public function getByCustomerUser(CustomerUser $customerUser): CustomerUserIdentifier
+    {
+        return new CustomerUserIdentifier('', $customerUser);
     }
 }

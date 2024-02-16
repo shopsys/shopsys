@@ -175,9 +175,6 @@ msgstr ""
 msgid "Banners"
 msgstr ""
 
-msgid "Basic"
-msgstr ""
-
 msgid "Basic information"
 msgstr ""
 
@@ -670,12 +667,6 @@ msgstr ""
 msgid "External scripts"
 msgstr ""
 
-msgid "External transaction ID"
-msgstr ""
-
-msgid "External transaction status"
-msgstr ""
-
 msgid "Facebook URL"
 msgstr ""
 
@@ -763,18 +754,6 @@ msgstr ""
 msgid "Generated batches"
 msgstr ""
 
-msgid "GoPay"
-msgstr ""
-
-msgid "GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right."
-msgstr ""
-
-msgid "GoPay payment method"
-msgstr ""
-
-msgid "GoPay payment status"
-msgstr ""
-
 msgid "Google analytics"
 msgstr ""
 
@@ -791,9 +770,6 @@ msgid "Heureka setting - full"
 msgstr ""
 
 msgid "Heureka setting - view"
-msgstr ""
-
-msgid "Hidden"
 msgstr ""
 
 msgid "Hide"
@@ -815,9 +791,6 @@ msgid "If the time FROM is filled in, enter the date FROM too."
 msgstr ""
 
 msgid "If the time TO is filled in, enter the date TO too."
-msgstr ""
-
-msgid "If you want execute refund, you have to setup refund amount."
 msgstr ""
 
 msgid "Image"
@@ -1093,9 +1066,6 @@ msgstr ""
 msgid "Nominal"
 msgstr ""
 
-msgid "Not refundable"
-msgstr ""
-
 msgid "Note"
 msgstr ""
 
@@ -1139,9 +1109,6 @@ msgid "Order detail"
 msgstr ""
 
 msgid "Order detail URL address"
-msgstr ""
-
-msgid "Order has not been sent to GoPay"
 msgstr ""
 
 msgid "Order number"
@@ -1195,9 +1162,6 @@ msgstr ""
 msgid "Page title"
 msgstr ""
 
-msgid "Paid amount"
-msgstr ""
-
 msgid "Parameter"
 msgstr ""
 
@@ -1237,40 +1201,7 @@ msgstr ""
 msgid "Path to file"
 msgstr ""
 
-msgid "Payment authorized"
-msgstr ""
-
-msgid "Payment canceled"
-msgstr ""
-
-msgid "Payment created"
-msgstr ""
-
-msgid "Payment has expired"
-msgstr ""
-
 msgid "Payment instructions"
-msgstr ""
-
-msgid "Payment method chosen"
-msgstr ""
-
-msgid "Payment method name"
-msgstr ""
-
-msgid "Payment paid"
-msgstr ""
-
-msgid "Payment partially refunded"
-msgstr ""
-
-msgid "Payment refunded"
-msgstr ""
-
-msgid "Payment transactions"
-msgstr ""
-
-msgid "Payment type"
 msgstr ""
 
 msgid "Percents"
@@ -1423,15 +1354,6 @@ msgstr ""
 msgid "Redirect type"
 msgstr ""
 
-msgid "Refund amount"
-msgstr ""
-
-msgid "Refundable amount"
-msgstr ""
-
-msgid "Refunded amount"
-msgstr ""
-
 msgid "Registration"
 msgstr ""
 
@@ -1552,9 +1474,6 @@ msgstr ""
 msgid "Send me authentication code"
 msgstr ""
 
-msgid "Send refund and save order"
-msgstr ""
-
 msgid "Seo"
 msgstr ""
 
@@ -1643,9 +1562,6 @@ msgid "There are no parameter values of type color yet."
 msgstr ""
 
 msgid "This flag can not be deleted as it is used in definition of"
-msgstr ""
-
-msgid "This payment method is hidden by GoPay."
 msgstr ""
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
@@ -1892,9 +1808,6 @@ msgid "You are allowed to disable two factor authentication only to yourself."
 msgstr ""
 
 msgid "You are allowed to set up two factor authentication only to yourself."
-msgstr ""
-
-msgid "You can refund only %refundableAmount%."
 msgstr ""
 
 msgid "You can upload following formats: PNG, JPG"

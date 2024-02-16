@@ -175,9 +175,6 @@ msgstr "Banner"
 msgid "Banners"
 msgstr "Bannery"
 
-msgid "Basic"
-msgstr "Základní"
-
 msgid "Basic information"
 msgstr "Základní informace"
 
@@ -670,12 +667,6 @@ msgstr "Rozšířená SEO kategorie - kombinace s nastavenými SEO hodnotami"
 msgid "External scripts"
 msgstr "Měřící skripty"
 
-msgid "External transaction ID"
-msgstr "Externí indentifikátor transakce"
-
-msgid "External transaction status"
-msgstr "Externí status transakce"
-
 msgid "Facebook URL"
 msgstr "Facebook URL"
 
@@ -763,18 +754,6 @@ msgstr ""
 msgid "Generated batches"
 msgstr "Vygenerované dávky"
 
-msgid "GoPay"
-msgstr "GoPay"
-
-msgid "GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right."
-msgstr "GoPay API vrátilo chybu - jděte do administrace GoPay, najděte transakci %paymentId% a zkontrolujte, zda je vše v pořádku."
-
-msgid "GoPay payment method"
-msgstr "Platební metoda GoPay"
-
-msgid "GoPay payment status"
-msgstr "Stav platby GoPay"
-
 msgid "Google analytics"
 msgstr "Google analytics"
 
@@ -792,9 +771,6 @@ msgstr "Heureka nastavení - vše"
 
 msgid "Heureka setting - view"
 msgstr "Heureka nastavení - zobrazení"
-
-msgid "Hidden"
-msgstr "Skrytý"
 
 msgid "Hide"
 msgstr "Skrýt"
@@ -816,9 +792,6 @@ msgstr "Pokud je vyplněn čas OD, vyplňte i datum OD."
 
 msgid "If the time TO is filled in, enter the date TO too."
 msgstr "Pokud je vyplněn čas DO, vyplňte i datum DO."
-
-msgid "If you want execute refund, you have to setup refund amount."
-msgstr "Pokud chcete provést refundaci, musíte nastavit její výši."
 
 msgid "Image"
 msgstr "Obrázek"
@@ -1093,9 +1066,6 @@ msgstr "Nebyly nalezeny žádné typy doprav."
 msgid "Nominal"
 msgstr "Nominální"
 
-msgid "Not refundable"
-msgstr "Nerefundovatelné"
-
 msgid "Note"
 msgstr "Poznámka"
 
@@ -1140,9 +1110,6 @@ msgstr "Detail objednávky"
 
 msgid "Order detail URL address"
 msgstr "URL adresa detailu objednávky"
-
-msgid "Order has not been sent to GoPay"
-msgstr "Objednávka nebyla odeslána do GoPay"
 
 msgid "Order number"
 msgstr "Číslo objednávky"
@@ -1195,9 +1162,6 @@ msgstr "Stránka nenalazena"
 msgid "Page title"
 msgstr "Titulek stránky"
 
-msgid "Paid amount"
-msgstr "Zaplacená částka"
-
 msgid "Parameter"
 msgstr "Parametr"
 
@@ -1237,41 +1201,8 @@ msgstr "Heslo musí obsahovat velké, malé písmena, číslice a musí být del
 msgid "Path to file"
 msgstr "Cesta k souboru"
 
-msgid "Payment authorized"
-msgstr "Platba předautorizována"
-
-msgid "Payment canceled"
-msgstr "Platba zrušena"
-
-msgid "Payment created"
-msgstr "Platba vytvořena"
-
-msgid "Payment has expired"
-msgstr "Vypršela platnost platby"
-
 msgid "Payment instructions"
 msgstr "Pokyny k platbě"
-
-msgid "Payment method chosen"
-msgstr "Platební metoda vybrána"
-
-msgid "Payment method name"
-msgstr "Název platební metody"
-
-msgid "Payment paid"
-msgstr "Platba zaplacena"
-
-msgid "Payment partially refunded"
-msgstr "Platba částečně refundována"
-
-msgid "Payment refunded"
-msgstr "Refundovaná platba"
-
-msgid "Payment transactions"
-msgstr "Platební transakce"
-
-msgid "Payment type"
-msgstr "Typ platby"
 
 msgid "Percents"
 msgstr "Procenta"
@@ -1423,15 +1354,6 @@ msgstr "Cíl přesměrování"
 msgid "Redirect type"
 msgstr "Typ přesměrování"
 
-msgid "Refund amount"
-msgstr "Refundovat částku"
-
-msgid "Refundable amount"
-msgstr "Refundovatelná částka "
-
-msgid "Refunded amount"
-msgstr "Refundovaná částka"
-
 msgid "Registration"
 msgstr "Registrace"
 
@@ -1552,9 +1474,6 @@ msgstr "Vybraný problém v přenosu nebyl nalezen"
 msgid "Send me authentication code"
 msgstr "Pošlete mi ověřovací kód"
 
-msgid "Send refund and save order"
-msgstr "Odeslat refundaci a uložit objednávku"
-
 msgid "Seo"
 msgstr "Seo"
 
@@ -1644,9 +1563,6 @@ msgstr "Žádná hodnota parametru typu barva zatím nebyla vytvořena."
 
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr "Tento příznak nelze smazat, protože se používá v definici"
-
-msgid "This payment method is hidden by GoPay."
-msgstr "Tento způsob platby je skrytý systémem GoPay."
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
 msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje objednávky, které nebyly úspěšně vyřízeny."
@@ -1893,9 +1809,6 @@ msgstr "Můžete si vypnout dvoufaktorové ověření pouze pro sebe."
 
 msgid "You are allowed to set up two factor authentication only to yourself."
 msgstr "Můžete si zapnout dvoufaktorové ověření pouze pro sebe."
-
-msgid "You can refund only %refundableAmount%."
-msgstr "Mužete refundovat pouze %refundableAmount%."
 
 msgid "You can upload following formats: PNG, JPG"
 msgstr "Můžete nahrát následující formáty: PNG, JPG"

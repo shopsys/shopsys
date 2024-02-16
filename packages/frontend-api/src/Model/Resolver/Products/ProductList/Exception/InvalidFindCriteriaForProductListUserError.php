@@ -9,13 +9,13 @@ use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class InvalidFindCriteriaForProductListUserError extends UserError implements UserErrorWithCodeInterface
 {
-    public const CODE = 'invalid-find-criteria-for-product-list';
+    protected const CODE = 'invalid-find-criteria-for-product-list';
 
     /**
      * @return string
      */
     public function getUserErrorCode(): string
     {
-        return self::CODE;
+        return static::CODE;
     }
 }

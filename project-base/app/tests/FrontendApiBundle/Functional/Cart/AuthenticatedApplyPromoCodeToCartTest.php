@@ -10,13 +10,13 @@ use App\DataFixtures\Demo\VatDataFixture;
 use App\FrontendApi\Model\Component\Constraints\PromoCode;
 use App\Model\Cart\Cart;
 use App\Model\Cart\CartFacade;
-use App\Model\Customer\User\CustomerUserIdentifierFactory;
 use App\Model\Order\PromoCode\PromoCodeDataFactory;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase

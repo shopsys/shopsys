@@ -7,9 +7,12 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
 class PaymentFacade
@@ -267,5 +270,63 @@ class PaymentFacade
     public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Payment
     {
         return $this->paymentRepository->getEnabledOnDomainByUuid($uuid, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
+     */
+    public function getVisibleForOrder(Order $order): array
+    {
+        return $this->getVisibleOnDomainByTransport($order->getDomainId(), $order->getTransport());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
+     */
+    public function getVisibleOnCurrentDomainByTransport(Transport $transport): array
+    {
+        return $this->getVisibleOnDomainByTransport($this->domain->getId(), $transport);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
+     */
+    protected function getVisibleOnDomainByTransport(int $domainId, Transport $transport): array
+    {
+        $paymentsByTransport = $this->paymentRepository->getAllByTransport($transport);
+
+        return $this->paymentVisibilityCalculation->filterVisible($paymentsByTransport, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
+     */
+    public function hideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): void
+    {
+        $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod);
+
+        foreach ($payments as $payment) {
+            $payment->hideByGoPay();
+        }
+
+        $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
+     */
+    public function unHideByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): void
+    {
+        $payments = $this->paymentRepository->getByGoPayPaymentMethod($goPayPaymentMethod);
+
+        foreach ($payments as $payment) {
+            $payment->unHideByGoPay();
+        }
+
+        $this->em->flush();
     }
 }

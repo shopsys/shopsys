@@ -82,3 +82,27 @@ MutationDecorator:
                     input:
                         type: ProductListInput!
                 resolve: "@=mutation('removeProductListMutation', args)"
+            PayOrder:
+                type: PaymentSetupCreationData!
+                description: "Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                resolve: "@=mutation('payOrderMutation', args)"
+            UpdatePaymentStatus:
+                type: "Order!"
+                description: "check payment status of order after callback from payment service"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                    orderPaymentStatusPageValidityHash:
+                        type: "String"
+                resolve: "@=mutation('updatePaymentStatusMutation', args)"
+            ChangePaymentInOrder:
+                type: "Order!"
+                description: "change payment in an order after the order creation (available for unpaid GoPay orders only)"
+                args:
+                    input:
+                        type: ChangePaymentInOrderInput!
+                        validation: cascade
+                resolve: "@=mutation('changePaymentInOrderMutation', args)"

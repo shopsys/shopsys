@@ -17,8 +17,11 @@ fragment ListedOrderFragment on Order {
     payment {
         __typename
         name
+        type
     }
     totalPrice {
         ...PriceFragment
     }
+    isPaid
+    status
 }

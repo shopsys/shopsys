@@ -1,7 +1,9 @@
 mutation UpdatePaymentStatusMutation($orderUuid: Uuid!, $orderPaymentStatusPageValidityHash: String = null) {
     UpdatePaymentStatus(orderUuid: $orderUuid, orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash) {
         isPaid
-        transactionCount
-        paymentType
+        paymentTransactionsCount
+        payment {
+            type
+        }
     }
 }

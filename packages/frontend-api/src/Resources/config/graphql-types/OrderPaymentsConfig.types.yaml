@@ -1,0 +1,11 @@
+OrderPaymentsConfigDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            currentPayment:
+                type: "Payment!"
+                description: "Current payment method used in the order"
+            availablePayments:
+                type: "[Payment!]!"
+                description: "All available payment methods for the order (excluding the current one)"

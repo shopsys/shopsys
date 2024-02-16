@@ -1,18 +1,4 @@
 GoPayBankSwift:
     type: object
-    config:
-        fields:
-            swift:
-                type: "String!"
-                description: "Swift code"
-            name:
-                type: "String!"
-                description: "Bank name"
-            imageNormalUrl:
-                type: "String!"
-                description: "normal image url"
-            imageLargeUrl:
-                type: "String!"
-                description: "large image url"
-            isOnline:
-                type: "Boolean!"
+    inherits:
+        - 'GoPayBankSwiftDecorator'

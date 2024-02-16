@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Cart;
 
 use App\FrontendApi\Model\Cart\Exception\InvalidCartItemUserError;
-use App\FrontendApi\Model\Cart\Exception\UnavailableCartUserError;
 use App\FrontendApi\Model\Product\ProductFacade;
 use App\Model\Cart\AddProductResult;
 use App\Model\Cart\Cart;
 use App\Model\Cart\CartFacade as BaseCartFacade;
 use App\Model\Customer\User\CustomerUser;
-use App\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 
 class CartFacade
 {
@@ -24,7 +24,8 @@ class CartFacade
      * @param \App\FrontendApi\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      */
     public function __construct(
         protected BaseCartFacade $cartFacade,
@@ -32,6 +33,7 @@ class CartFacade
         protected Domain $domain,
         protected CurrentCustomerUser $currentCustomerUser,
         protected CustomerUserIdentifierFactory $customerUserIdentifierFactory,
+        protected CartApiFacade $cartApiFacade,
     ) {
     }
 
@@ -83,7 +85,8 @@ class CartFacade
     public function getCartCreateIfNotExists(?CustomerUser $customerUser, ?string $cartUuid): Cart
     {
         if ($customerUser === null && $cartUuid !== null) {
-            $cart = $this->getCartByUuid($cartUuid);
+            /** @var \App\Model\Cart\Cart $cart */
+            $cart = $this->cartApiFacade->getCartByUuid($cartUuid);
 
             if ($cart->getCustomerUser() === null) {
                 return $cart;
@@ -93,7 +96,7 @@ class CartFacade
         if ($customerUser !== null) {
             $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCustomerUser($customerUser);
         } else {
-            $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCartIdentifier($cartUuid);
+            $customerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier($cartUuid);
         }
 
         return $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
@@ -106,41 +109,10 @@ class CartFacade
      */
     public function findCart(?CustomerUser $customerUser, ?string $cartUuid): ?Cart
     {
-        $this->assertFilledCustomerUserOrUuid($customerUser, $cartUuid);
-
-        if ($customerUser !== null) {
-            $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCustomerUser($customerUser);
-
-            return $this->cartFacade->findCartByCustomerUserIdentifier($customerUserIdentifier);
-        }
-
-        return $this->getCartByUuid($cartUuid);
-    }
-
-    /**
-     * @param string $cartUuid
-     * @return \App\Model\Cart\Cart
-     */
-    private function getCartByUuid(string $cartUuid): Cart
-    {
-        $cart = $this->cartFacade->findCartByCartIdentifier($cartUuid);
-
-        if ($cart === null) {
-            $cart = $this->cartFacade->createCart($cartUuid);
-        }
+        /** @var \App\Model\Cart\Cart $cart */
+        $cart = $this->cartApiFacade->findCart($customerUser, $cartUuid);
 
         return $cart;
-    }
-
-    /**
-     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
-     * @param string|null $cartUuid
-     */
-    private function assertFilledCustomerUserOrUuid(?CustomerUser $customerUser, ?string $cartUuid): void
-    {
-        if ($customerUser === null && $cartUuid === null) {
-            throw new UnavailableCartUserError('Either cart UUID has to be provided, or the user has to be logged in.');
-        }
     }
 
     /**

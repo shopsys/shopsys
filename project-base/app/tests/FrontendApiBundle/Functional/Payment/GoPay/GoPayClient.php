@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Payment\GoPay;
 
-use App\Model\GoPay\GoPayClient as BaseGoPayClient;
 use GoPay\Http\Response;
+use Shopsys\FrameworkBundle\Model\GoPay\GoPayClient as BaseGoPayClient;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class GoPayClient extends BaseGoPayClient

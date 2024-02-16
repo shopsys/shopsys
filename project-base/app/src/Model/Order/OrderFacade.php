@@ -6,15 +6,8 @@ namespace App\Model\Order;
 
 use App\Component\Deprecation\DeprecatedMethodException;
 use App\Model\Order\Item\OrderItemDataFactory;
-use App\Model\Order\Status\OrderStatus;
-use App\Model\Payment\Payment;
-use App\Model\Payment\Service\PaymentServiceFacade;
-use App\Model\Payment\Transaction\PaymentTransaction;
-use App\Model\Payment\Transaction\PaymentTransactionDataFactory;
-use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use App\Model\Security\LoginAsUserFacade;
 use App\Model\Transport\Type\TransportType;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -36,6 +29,7 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as BaseOrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade as BaseOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository;
@@ -48,6 +42,9 @@ use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
@@ -83,6 +80,11 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method fillOrderItems(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview)
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  * @method setOrderPaymentStatusPageValidFromNow(\App\Model\Order\Order $order)
+ * @method \App\Model\Order\Order[] getAllUnpaidGoPayOrders(\DateTime $fromDate)
+ * @property \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+ * @property \App\Model\Order\OrderDataFactory $orderDataFactory
+ * @method changeOrderPayment(\App\Model\Order\Order $order, \App\Model\Payment\Payment $payment)
+ * @method fillOrderPayment(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -114,10 +116,10 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \App\Model\Order\Item\OrderItemFactory $orderItemFactory
      * @param \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \App\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
-     * @param \App\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
-     * @param \App\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
      * @param \App\Model\Security\LoginAsUserFacade $loginAsUserFacade
      */
     public function __construct(
@@ -147,11 +149,11 @@ class OrderFacade extends BaseOrderFacade
         PaymentPriceCalculation $paymentPriceCalculation,
         TransportPriceCalculation $transportPriceCalculation,
         OrderItemFactoryInterface $orderItemFactory,
-        private readonly OrderItemDataFactory $orderItemDataFactory,
-        private readonly OrderDataFactory $orderDataFactory,
-        private readonly PaymentTransactionFacade $paymentTransactionFacade,
-        private readonly PaymentServiceFacade $paymentServiceFacade,
-        private readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        OrderItemDataFactory $orderItemDataFactory,
+        PaymentTransactionFacade $paymentTransactionFacade,
+        PaymentServiceFacade $paymentServiceFacade,
+        PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        BaseOrderDataFactory $orderDataFactory,
         private readonly LoginAsUserFacade $loginAsUserFacade,
     ) {
         parent::__construct(
@@ -181,6 +183,11 @@ class OrderFacade extends BaseOrderFacade
             $paymentPriceCalculation,
             $transportPriceCalculation,
             $orderItemFactory,
+            $paymentTransactionFacade,
+            $paymentTransactionDataFactory,
+            $paymentServiceFacade,
+            $orderItemDataFactory,
+            $orderDataFactory,
         );
     }
 
@@ -250,33 +257,11 @@ class OrderFacade extends BaseOrderFacade
 
         parent::edit($orderId, $orderData);
 
-        foreach ($orderData->paymentTransactionRefunds as $paymentTransactionId => $paymentTransactionRefundData) {
-            $paymentTransaction = $this->paymentTransactionFacade->getById($paymentTransactionId);
-            $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);
-            $paymentTransactionData->refundedAmount = $paymentTransactionRefundData->refundedAmount;
-            $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
-        }
-
-        $this->handleRefundTransactions($orderData->paymentTransactionRefunds);
-
         if ($oldOrderStatus !== $order->getStatus()) {
             $this->orderMailFacade->sendOrderStatusMailByOrder($order);
         }
 
         return $order;
-    }
-
-    /**
-     * @param \App\Model\Payment\Transaction\Refund\PaymentTransactionRefundData[] $transactionsIndexedByPaymentTransactionId
-     */
-    private function handleRefundTransactions(array $transactionsIndexedByPaymentTransactionId): void
-    {
-        foreach ($transactionsIndexedByPaymentTransactionId as $paymentTransactionId => $paymentTransactionRefundData) {
-            if ($paymentTransactionRefundData->executeRefund) {
-                $paymentTransaction = $this->paymentTransactionFacade->getById($paymentTransactionId);
-                $this->paymentServiceFacade->refundTransaction($paymentTransaction, $paymentTransactionRefundData->refundAmount);
-            }
-        }
     }
 
     /**
@@ -368,132 +353,6 @@ class OrderFacade extends BaseOrderFacade
             $orderItem->getOrder(),
             null,
         );
-    }
-
-    /**
-     * @param \DateTime $fromDate
-     * @return \App\Model\Order\Order[]
-     */
-    public function getAllUnpaidGoPayOrders(DateTime $fromDate): array
-    {
-        return $this->orderRepository->getAllUnpaidGoPayOrders($fromDate);
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @return bool
-     */
-    public function isUnpaidOrderPaymentChangeable(Order $order): bool
-    {
-        return $order->getStatus()->getType() === OrderStatus::TYPE_NEW &&
-            $order->getPayment()->isGoPay() &&
-            count(array_filter($order->getGoPayTransactions(), function (PaymentTransaction $paymentTransaction) {
-                return $paymentTransaction->isPaid();
-            })) === 0;
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Payment\Payment $payment
-     * @param int $domainId
-     */
-    public function changeOrderPayment(Order $order, Payment $payment, int $domainId): void
-    {
-        $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice($payment, $order->getCurrency(), $domainId);
-
-        $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = $payment->getName();
-        $orderItemData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
-        $orderItemData->priceWithVat = $paymentPrice->getPriceWithVat();
-        $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
-        $orderItemData->quantity = 1;
-        $orderItemData->payment = $payment;
-        $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData($orderItemData, $order);
-
-        $orderPaymentData = $this->orderItemDataFactory->createFromOrderItem($orderPayment);
-        $orderData = $this->orderDataFactory->createFromOrder($order);
-        $orderData->orderPayment = $orderPaymentData;
-        $order->removeItem($order->getOrderPayment());
-        $this->edit($order->getId(), $orderData);
-    }
-
-    /**
-     * @param \App\Model\Order\FrontOrderData $frontOrderFormData
-     * @param \App\Model\Payment\Payment[] $payments
-     * @param \App\Model\Transport\Transport[] $transports
-     * @return \App\Model\Order\FrontOrderData
-     */
-    public function revalidatePaymentAndTransport(
-        FrontOrderData $frontOrderFormData,
-        array $payments,
-        array $transports,
-    ) {
-        if ($frontOrderFormData->payment !== null) {
-            $isPaymentValid = false;
-            $paymentId = $frontOrderFormData->payment->getId();
-
-            foreach ($payments as $payment) {
-                if ($payment->getId() === $paymentId) {
-                    $isPaymentValid = true;
-
-                    break;
-                }
-            }
-
-            if ($isPaymentValid === false) {
-                $frontOrderFormData->payment = null;
-            }
-        }
-
-        if ($frontOrderFormData->transport !== null) {
-            $transportId = $frontOrderFormData->transport->getId();
-            $isTransportValid = false;
-
-            foreach ($transports as $transport) {
-                if ($transport->getId() === $transportId) {
-                    $isTransportValid = true;
-
-                    break;
-                }
-            }
-
-            if ($isTransportValid === false) {
-                $frontOrderFormData->transport = null;
-            }
-        }
-
-        return $frontOrderFormData;
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
-     * @param string $locale
-     */
-    protected function fillOrderPayment(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
-    {
-        $payment = $order->getPayment();
-        $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
-            $payment,
-            $order->getCurrency(),
-            $orderPreview->getProductsPrice(),
-            $order->getDomainId(),
-        );
-
-        $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = $payment->getName($locale);
-        $orderItemData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
-        $orderItemData->priceWithVat = $paymentPrice->getPriceWithVat();
-        $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
-        $orderItemData->quantity = 1;
-        $orderItemData->payment = $payment;
-        $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData(
-            $orderItemData,
-            $order,
-        );
-
-        $order->addItem($orderPayment);
-        $this->em->persist($orderPayment);
     }
 
     /**

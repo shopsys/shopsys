@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { Cell, CellHead, Row, Table } from 'components/Basic/Table/Table';
+import { OrderStatus } from 'components/Blocks/OrderStatus/OrderStatus';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleCustomerOrders } from 'components/Blocks/Skeleton/SkeletonModuleCustomerOrders';
 import { Button } from 'components/Forms/Button/Button';
@@ -78,6 +79,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                             {t('Shipping')}
                                         </CellHead>
                                         <CellHead isWithoutWrap>{t('Payment')}</CellHead>
+                                        <CellHead isWithoutWrap>{t('Status')}</CellHead>
                                         <CellHead isWithoutWrap align="right">
                                             {t('Total price including VAT')}
                                         </CellHead>
@@ -116,6 +118,9 @@ export const OrdersContent: FC<OrdersContentProps> = ({ isLoading, orders, total
                                             </div>
                                         </Cell>
                                         <Cell data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment.name}</Cell>
+                                        <Cell isWithoutWrap>
+                                            <OrderStatus order={order} />
+                                        </Cell>
                                         <Cell isWithoutWrap align="right" data-testid={TEST_IDENTIFIER + 'total-price'}>
                                             {formatPrice(order.totalPrice.priceWithVat)}
                                         </Cell>

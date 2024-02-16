@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 /**
@@ -110,6 +111,13 @@ class Order
      * @ORM\Column(type="money", precision=20, scale=6)
      */
     protected $totalPriceWithoutVat;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money
+     * @ORM\Column(type="money", precision=20, scale=6)
+     */
+    #[ExcludeLog]
+    protected $totalProductPriceWithoutVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
@@ -297,6 +305,18 @@ class Order
     protected $orderPaymentStatusPageValidityHash;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction>
+     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction", mappedBy="order", cascade={"persist"})
+     */
+    protected $paymentTransactions;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    protected $goPayBankSwift;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -332,8 +352,96 @@ class Order
         $this->createdAsAdministratorName = $orderData->createdAsAdministratorName;
         $this->origin = $orderData->origin;
         $this->uuid = $orderData->uuid ?: Uuid::uuid4()->toString();
-        $this->setTotalPrice(new OrderTotalPrice(Money::zero(), Money::zero(), Money::zero()));
+        $this->setTotalPrice(new OrderTotalPrice(Money::zero(), Money::zero(), Money::zero(), Money::zero()));
         $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();
+        $this->paymentTransactions = new ArrayCollection();
+        $this->goPayBankSwift = $orderData->goPayBankSwift;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGoPayBankSwift()
+    {
+        return $this->goPayBankSwift;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction[]
+     */
+    public function getGoPayTransactions(): array
+    {
+        $paymentTransactions = [];
+
+        foreach ($this->getPaymentTransactions() as $paymentTransaction) {
+            if ($paymentTransaction->getPayment()?->isGoPay()) {
+                $paymentTransactions[] = $paymentTransaction;
+            }
+        }
+
+        return $paymentTransactions;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMaxTransactionCountReached(): bool
+    {
+        return $this->paymentTransactions->count() >= static::MAX_TRANSACTION_COUNT;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getGoPayTransactionStatusesIndexedByGoPayId(): array
+    {
+        $returnArray = [];
+
+        foreach ($this->getPaymentTransactions() as $paymentTransaction) {
+            if ($paymentTransaction->getPayment()?->isGoPay()) {
+                $returnArray[$paymentTransaction->getExternalPaymentIdentifier()] = $paymentTransaction->getExternalPaymentStatus();
+            }
+        }
+
+        return $returnArray;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPaid(): bool
+    {
+        foreach ($this->paymentTransactions as $paymentTransaction) {
+            if ($paymentTransaction->isPaid()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaymentTransactionsCount(): int
+    {
+        return $this->paymentTransactions->count();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction $paymentTransaction
+     */
+    public function addPaymentTransaction(PaymentTransaction $paymentTransaction): void
+    {
+        $this->paymentTransactions->add($paymentTransaction);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction[]
+     */
+    public function getPaymentTransactions()
+    {
+        return $this->paymentTransactions->getValues();
     }
 
     /**
@@ -567,14 +675,6 @@ class Order
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function getTotalProductPriceWithVat()
-    {
-        return $this->totalProductPriceWithVat;
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
     public function getCurrency()
@@ -590,6 +690,7 @@ class Order
         $this->totalPriceWithVat = $orderTotalPrice->getPriceWithVat();
         $this->totalPriceWithoutVat = $orderTotalPrice->getPriceWithoutVat();
         $this->totalProductPriceWithVat = $orderTotalPrice->getProductPriceWithVat();
+        $this->totalProductPriceWithoutVat = $orderTotalPrice->getProductPriceWithoutVat();
     }
 
     /**
@@ -996,5 +1097,13 @@ class Order
     public function setOrderPaymentStatusPageValidityHashToNull(): void
     {
         $this->orderPaymentStatusPageValidityHash = null;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalProductsPrice(): Price
+    {
+        return new Price($this->totalProductPriceWithoutVat, $this->totalProductPriceWithVat);
     }
 }

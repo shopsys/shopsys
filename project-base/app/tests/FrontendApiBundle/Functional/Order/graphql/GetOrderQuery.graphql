@@ -1,0 +1,15 @@
+query GetOrder($uuid: Uuid, $orderNumber: String, $urlHash: String) {
+    order(uuid: $uuid, orderNumber: $orderNumber, urlHash: $urlHash) {
+        status
+        totalPrice {
+            priceWithVat
+        }
+        firstName
+        lastName
+        promoCode
+        trackingNumber
+        trackingUrl
+        paymentTransactionsCount
+        isPaid
+    }
+}

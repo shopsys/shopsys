@@ -1,5 +1,5 @@
-import { GoPayGateway } from './Gateways/GoPayGateway';
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
+import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { useOrderPaymentFailedContentQueryApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
@@ -9,11 +9,11 @@ import { PaymentTypeEnum } from 'types/payment';
 
 type PaymentFailProps = {
     orderUuid: string;
-    orderPaymentType: string | undefined;
-    canPaymentBeRepeated: boolean;
+    lastUsedOrderPaymentType: string | undefined;
+    paymentTransactionCount: number;
 };
 
-export const PaymentFail: FC<PaymentFailProps> = ({ orderUuid, orderPaymentType, canPaymentBeRepeated }) => {
+export const PaymentFail: FC<PaymentFailProps> = ({ orderUuid, lastUsedOrderPaymentType, paymentTransactionCount }) => {
     const { t } = useTranslation();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.payment_fail);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -26,14 +26,14 @@ export const PaymentFail: FC<PaymentFailProps> = ({ orderUuid, orderPaymentType,
             heading={t('Your payment was not successful')}
             isFetching={fetching}
             AdditionalContent={
-                orderPaymentType === PaymentTypeEnum.GoPay && canPaymentBeRepeated ? (
-                    <GoPayGateway
-                        requiresAction
-                        className="mt-5"
-                        initialButtonText={t('Repeat payment')}
-                        orderUuid={orderUuid}
-                    />
-                ) : undefined
+                <>
+                    {lastUsedOrderPaymentType === PaymentTypeEnum.GoPay && (
+                        <PaymentsInOrderSelect
+                            orderUuid={orderUuid}
+                            paymentTransactionCount={paymentTransactionCount}
+                        />
+                    )}
+                </>
             }
         />
     );

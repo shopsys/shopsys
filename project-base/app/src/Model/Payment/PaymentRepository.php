@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Payment;
 
-use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
@@ -22,15 +21,6 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository as BasePaymentReposi
  */
 class PaymentRepository extends BasePaymentRepository
 {
-    /**
-     * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     * @return \App\Model\Payment\Payment[]
-     */
-    public function getByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): array
-    {
-        return $this->getPaymentRepository()->findBy(['goPayPaymentMethod' => $goPayPaymentMethod]);
-    }
-
     /**
      * @param string $uuid
      * @param int $domainId

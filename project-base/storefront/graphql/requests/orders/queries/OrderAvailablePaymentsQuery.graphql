@@ -1,0 +1,10 @@
+query OrderAvailablePaymentsQuery($orderUuid: Uuid!) {
+    orderPayments(orderUuid: $orderUuid) {
+        availablePayments {
+            ...SimplePaymentFragment
+        }
+        currentPayment {
+            ...SimplePaymentFragment
+        }
+    }
+}

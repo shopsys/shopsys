@@ -1,0 +1,8 @@
+PaymentSetupCreationDataDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            goPayCreatePaymentSetup:
+                type: "GoPayCreatePaymentSetup"
+                description: "Identifiers of GoPay payment method"

@@ -14,14 +14,6 @@ Transport:
                 type: "StoreConnection"
                 description: "Stores available for personal pickup"
                 resolve: "@=query('storesByTransportQuery', value, args)"
-            price:
-                type: "Price!"
-                description: "Transport price"
-                resolve: '@=query("priceByTransportQuery", value, args["cartUuid"], context)'
-                args:
-                    cartUuid:
-                        type: "Uuid"
-                        defaultValue: null
             images:
                 type: "[Image!]!"
                 description: "Transport images"

@@ -37,7 +37,7 @@ services:
         arguments:
             - '%gopay_config%'
 
-    App\Model\GoPay\GoPayClientFactory:
+    Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory:
         alias: Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory
 
     Tests\App\Functional\EntityExtension\EntityExtensionTestHelper: ~

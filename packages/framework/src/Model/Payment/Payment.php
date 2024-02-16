@@ -25,6 +25,8 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 class Payment extends AbstractTranslatableEntity implements OrderableEntityInterface
 {
     protected const GEDMO_SORTABLE_LAST_POSITION = -1;
+    public const TYPE_GOPAY = 'goPay';
+    public const TYPE_BASIC = 'basic';
 
     /**
      * @var int
@@ -93,6 +95,25 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     protected $uuid;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    protected $goPayPaymentMethod;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $type;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $hiddenByGoPay;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
      */
     public function __construct(PaymentData $paymentData)
@@ -124,6 +145,9 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     {
         $this->hidden = $paymentData->hidden;
         $this->czkRounding = $paymentData->czkRounding;
+        $this->type = $paymentData->type;
+        $this->setGoPayPaymentMethod($paymentData);
+        $this->hiddenByGoPay = $paymentData->hiddenByGoPay;
         $this->setTranslations($paymentData);
     }
 
@@ -328,6 +352,60 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     public function isCzkRounding()
     {
         return $this->czkRounding;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGoPay(): bool
+    {
+        return $this->type === self::TYPE_GOPAY;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHiddenByGoPay()
+    {
+        return $this->hiddenByGoPay;
+    }
+
+    public function hideByGoPay(): void
+    {
+        $this->hiddenByGoPay = true;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null
+     */
+    public function getGoPayPaymentMethod()
+    {
+        return $this->goPayPaymentMethod;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function unHideByGoPay(): void
+    {
+        $this->hiddenByGoPay = false;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
+     */
+    protected function setGoPayPaymentMethod(PaymentData $paymentData): void
+    {
+        $this->goPayPaymentMethod = null;
+
+        if ($this->type === self::TYPE_GOPAY) {
+            $this->goPayPaymentMethod = $paymentData->goPayPaymentMethod;
+        }
     }
 
     /**

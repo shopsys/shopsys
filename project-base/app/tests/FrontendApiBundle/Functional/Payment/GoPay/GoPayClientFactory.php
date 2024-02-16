@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Payment\GoPay;
 
-use App\Model\GoPay\GoPayClientFactory as BaseGoPayClientFactory;
+use Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory as BaseGoPayClientFactory;
 
 class GoPayClientFactory extends BaseGoPayClientFactory
 {

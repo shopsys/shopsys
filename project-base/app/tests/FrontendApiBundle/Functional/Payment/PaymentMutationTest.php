@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Payment;
 
 use App\DataFixtures\Demo\OrderDataFixture;
-use App\DataFixtures\Demo\PaymentDataFixture;
-use App\Model\Payment\Transaction\PaymentTransactionDataFactory;
-use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use GoPay\Definition\Response\PaymentStatus;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentMutationTest extends GraphQlTestCase
@@ -59,8 +59,8 @@ class PaymentMutationTest extends GraphQlTestCase
         $content = $this->getResponseDataForGraphQlType($response, 'UpdatePaymentStatus');
 
         $this->assertTrue($content['isPaid']);
-        $this->assertSame(2, $content['transactionCount']);
-        $this->assertSame(PaymentDataFixture::PAYMENT_GOPAY, $content['paymentType']);
+        $this->assertSame(2, $content['paymentTransactionsCount']);
+        $this->assertSame(Payment::TYPE_GOPAY, $content['payment']['type']);
 
 
         $this->em->clear();
@@ -91,7 +91,7 @@ class PaymentMutationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
-        $this->assertSame($errors[0]['extensions']['userCode'], 'order-already-paid');
+        $this->assertSame('order-already-paid', $errors[0]['extensions']['userCode']);
     }
 
     public function testOrderCannotBePaidForPaymentWithTwoTransactions(): void
@@ -107,6 +107,6 @@ class PaymentMutationTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
-        $this->assertSame($errors[0]['extensions']['userCode'], 'max-transaction-count-reached');
+        $this->assertSame('max-transaction-count-reached', $errors[0]['extensions']['userCode']);
     }
 }

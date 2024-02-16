@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CartPaymentTest extends GraphQlTestCase
@@ -14,7 +15,7 @@ class CartPaymentTest extends GraphQlTestCase
     public function testPaymentIsReturnedFromCart(): void
     {
         /** @var \App\Model\Payment\Payment $paymentGoPay */
-        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
+        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID);
         $swift = 'ABCDEFGH';
         $this->addPaymentToDemoCart($paymentGoPay, $swift);
         $getCartQuery = '{
@@ -35,10 +36,10 @@ class CartPaymentTest extends GraphQlTestCase
         $this->assertSame($swift, $responseData['paymentGoPayBankSwift']);
     }
 
-    public function testPaymentIsReturnedAfterAddingToCart()
+    public function testPaymentIsReturnedAfterAddingToCart(): void
     {
         /** @var \App\Model\Payment\Payment $paymentGoPay */
-        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
+        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID);
         $swift = 'ABCDEFGH';
         $response = $this->addPaymentToDemoCart($paymentGoPay, $swift);
         $responseData = $this->getResponseDataForGraphQlType($response, 'ChangePaymentInCart');

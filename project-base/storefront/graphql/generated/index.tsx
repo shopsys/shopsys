@@ -653,6 +653,15 @@ export type ChangePaymentInCartInputApi = {
   paymentUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
+export type ChangePaymentInOrderInputApi = {
+  /** Order identifier */
+  orderUuid: Scalars['Uuid']['input'];
+  /** Selected bank swift code of goPay payment bank transfer */
+  paymentGoPayBankSwift: InputMaybe<Scalars['String']['input']>;
+  /** UUID of a payment that should be assigned to the order. */
+  paymentUuid: Scalars['Uuid']['input'];
+};
+
 export type ChangePersonalDataInputApi = {
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String']['input'];
@@ -1071,6 +1080,8 @@ export type MutationApi = {
   ChangePassword: CustomerUserApi;
   /** Add a payment to the cart, or remove a payment from the cart */
   ChangePaymentInCart: CartApi;
+  /** change payment in an order after the order creation (available for unpaid GoPay orders only) */
+  ChangePaymentInOrder: OrderApi;
   /** Changes customer user personal data */
   ChangePersonalData: CustomerUserApi;
   /** Add a transport to the cart, or remove a transport from the cart */
@@ -1112,7 +1123,7 @@ export type MutationApi = {
   /** Set default delivery address by Uuid */
   SetDefaultDeliveryAddress: CustomerUserApi;
   /** check payment status of order after callback from payment service */
-  UpdatePaymentStatus: PaymentStatusApi;
+  UpdatePaymentStatus: OrderApi;
 };
 
 
@@ -1143,6 +1154,11 @@ export type MutationChangePasswordArgsApi = {
 
 export type MutationChangePaymentInCartArgsApi = {
   input: ChangePaymentInCartInputApi;
+};
+
+
+export type MutationChangePaymentInOrderArgsApi = {
+  input: ChangePaymentInOrderInputApi;
 };
 
 
@@ -1379,6 +1395,8 @@ export type OrderApi = {
   email: Scalars['String']['output'];
   /** The customer's first name */
   firstName: Maybe<Scalars['String']['output']>;
+  /** Indicates whether the order is paid successfully with GoPay payment type */
+  isPaid: Scalars['Boolean']['output'];
   /** All items in the order including payment and transport */
   items: Array<OrderItemApi>;
   /** The customer's last name */
@@ -1389,6 +1407,8 @@ export type OrderApi = {
   number: Scalars['String']['output'];
   /** Payment method applied to the order */
   payment: PaymentApi;
+  /** Count of the payment transactions related to the order */
+  paymentTransactionsCount: Scalars['Int']['output'];
   /** Selected pickup place identifier */
   pickupPlaceIdentifier: Maybe<Scalars['String']['output']>;
   /** Billing address zip code */
@@ -1512,6 +1532,14 @@ export type OrderItemApi = {
   unitPrice: PriceApi;
   /** Applied VAT rate percentage applied to the order item */
   vatRate: Scalars['String']['output'];
+};
+
+export type OrderPaymentsConfigApi = {
+  __typename?: 'OrderPaymentsConfig';
+  /** All available payment methods for the order (excluding the current one) */
+  availablePayments: Array<PaymentApi>;
+  /** Current payment method used in the order */
+  currentPayment: PaymentApi;
 };
 
 /** Represents a product in order */
@@ -1725,16 +1753,6 @@ export type PaymentSetupCreationDataApi = {
   __typename?: 'PaymentSetupCreationData';
   /** Identifiers of GoPay payment method */
   goPayCreatePaymentSetup: Maybe<GoPayCreatePaymentSetupApi>;
-};
-
-export type PaymentStatusApi = {
-  __typename?: 'PaymentStatus';
-  /** Whether the order is already paid or not */
-  isPaid: Scalars['Boolean']['output'];
-  /** Type of payment */
-  paymentType: Scalars['String']['output'];
-  /** Count of already processed transactions */
-  transactionCount: Scalars['Int']['output'];
 };
 
 export type PersonalDataApi = {
@@ -2110,6 +2128,8 @@ export type QueryApi = {
   orderPaymentFailedContent: Scalars['String']['output'];
   /** Returns HTML content for order with successful payment. */
   orderPaymentSuccessfulContent: Scalars['String']['output'];
+  /** Returns payments available for the given order */
+  orderPayments: OrderPaymentsConfigApi;
   /** Returns HTML content for order sent page. */
   orderSentPageContent: Scalars['String']['output'];
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
@@ -2272,6 +2292,11 @@ export type QueryOrderPaymentFailedContentArgsApi = {
 
 
 export type QueryOrderPaymentSuccessfulContentArgsApi = {
+  orderUuid: Scalars['Uuid']['input'];
+};
+
+
+export type QueryOrderPaymentsArgsApi = {
   orderUuid: Scalars['Uuid']['input'];
 };
 
@@ -3252,13 +3277,20 @@ export type NotificationBarsApi = { __typename?: 'Query', notificationBars: Arra
 
 export type LastOrderFragmentApi = { __typename: 'Order', pickupPlaceIdentifier: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, transport: { __typename: 'Transport', uuid: string, name: string, description: string | null, transportType: { __typename?: 'TransportType', code: string } }, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null };
 
-export type ListedOrderFragmentApi = { __typename: 'Order', uuid: string, number: string, creationDate: any, productItems: Array<{ __typename: 'OrderItem', quantity: number }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }, payment: { __typename: 'Payment', name: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
+export type ListedOrderFragmentApi = { __typename: 'Order', uuid: string, number: string, creationDate: any, isPaid: boolean, status: string, productItems: Array<{ __typename: 'OrderItem', quantity: number }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }, payment: { __typename: 'Payment', name: string, type: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
 
-export type OrderDetailFragmentApi = { __typename: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, items: Array<{ __typename: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename: 'Transport', name: string }, payment: { __typename: 'Payment', name: string }, country: { __typename: 'Country', name: string }, deliveryCountry: { __typename: 'Country', name: string } | null, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
+export type OrderDetailFragmentApi = { __typename: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, paymentTransactionsCount: number, isPaid: boolean, items: Array<{ __typename: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename: 'Transport', name: string }, payment: { __typename: 'Payment', name: string, type: string }, country: { __typename: 'Country', name: string }, deliveryCountry: { __typename: 'Country', name: string } | null, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
 
 export type OrderDetailItemFragmentApi = { __typename: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
 
-export type OrderListFragmentApi = { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: any, productItems: Array<{ __typename: 'OrderItem', quantity: number }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }, payment: { __typename: 'Payment', name: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null };
+export type OrderListFragmentApi = { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: any, isPaid: boolean, status: string, productItems: Array<{ __typename: 'OrderItem', quantity: number }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }, payment: { __typename: 'Payment', name: string, type: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null };
+
+export type ChangePaymentInOrderMutationVariablesApi = Exact<{
+  input: ChangePaymentInOrderInputApi;
+}>;
+
+
+export type ChangePaymentInOrderMutationApi = { __typename?: 'Mutation', ChangePaymentInOrder: { __typename?: 'Order', urlHash: string, number: string, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } } };
 
 export type CreateOrderMutationVariablesApi = Exact<{
   firstName: Scalars['String']['input'];
@@ -3304,26 +3336,33 @@ export type UpdatePaymentStatusMutationVariablesApi = Exact<{
 }>;
 
 
-export type UpdatePaymentStatusMutationApi = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'PaymentStatus', isPaid: boolean, transactionCount: number, paymentType: string } };
+export type UpdatePaymentStatusMutationApi = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'Order', isPaid: boolean, paymentTransactionsCount: number, payment: { __typename?: 'Payment', type: string } } };
 
 export type LastOrderQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
 export type LastOrderQueryApi = { __typename?: 'Query', lastOrder: { __typename: 'Order', pickupPlaceIdentifier: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, transport: { __typename: 'Transport', uuid: string, name: string, description: string | null, transportType: { __typename?: 'TransportType', code: string } }, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null } | null };
 
+export type OrderAvailablePaymentsQueryVariablesApi = Exact<{
+  orderUuid: Scalars['Uuid']['input'];
+}>;
+
+
+export type OrderAvailablePaymentsQueryApi = { __typename?: 'Query', orderPayments: { __typename?: 'OrderPaymentsConfig', availablePayments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }>, currentPayment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } } };
+
 export type OrderDetailByHashQueryVariablesApi = Exact<{
   urlHash: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type OrderDetailByHashQueryApi = { __typename?: 'Query', order: { __typename: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, items: Array<{ __typename: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename: 'Transport', name: string }, payment: { __typename: 'Payment', name: string }, country: { __typename: 'Country', name: string }, deliveryCountry: { __typename: 'Country', name: string } | null, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null };
+export type OrderDetailByHashQueryApi = { __typename?: 'Query', order: { __typename: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, paymentTransactionsCount: number, isPaid: boolean, items: Array<{ __typename: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename: 'Transport', name: string }, payment: { __typename: 'Payment', name: string, type: string }, country: { __typename: 'Country', name: string }, deliveryCountry: { __typename: 'Country', name: string } | null, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null };
 
 export type OrderDetailQueryVariablesApi = Exact<{
   orderNumber: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type OrderDetailQueryApi = { __typename?: 'Query', order: { __typename: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, items: Array<{ __typename: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename: 'Transport', name: string }, payment: { __typename: 'Payment', name: string }, country: { __typename: 'Country', name: string }, deliveryCountry: { __typename: 'Country', name: string } | null, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null };
+export type OrderDetailQueryApi = { __typename?: 'Query', order: { __typename: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, paymentTransactionsCount: number, isPaid: boolean, items: Array<{ __typename: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename: 'Transport', name: string }, payment: { __typename: 'Payment', name: string, type: string }, country: { __typename: 'Country', name: string }, deliveryCountry: { __typename: 'Country', name: string } | null, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null };
 
 export type OrderPaymentFailedContentQueryVariablesApi = Exact<{
   orderUuid: Scalars['Uuid']['input'];
@@ -3352,7 +3391,7 @@ export type OrdersQueryVariablesApi = Exact<{
 }>;
 
 
-export type OrdersQueryApi = { __typename?: 'Query', orders: { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: any, productItems: Array<{ __typename: 'OrderItem', quantity: number }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }, payment: { __typename: 'Payment', name: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null } | null };
+export type OrdersQueryApi = { __typename?: 'Query', orders: { __typename: 'OrderConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null }, edges: Array<{ __typename: 'OrderEdge', cursor: string, node: { __typename: 'Order', uuid: string, number: string, creationDate: any, isPaid: boolean, status: string, productItems: Array<{ __typename: 'OrderItem', quantity: number }>, transport: { __typename: 'Transport', name: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null }, payment: { __typename: 'Payment', name: string, type: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null } | null };
 
 export type PageInfoFragmentApi = { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor: string | null };
 
@@ -4741,6 +4780,7 @@ export const OrderDetailFragmentApi = gql`
   payment {
     __typename
     name
+    type
   }
   status
   firstName
@@ -4777,6 +4817,8 @@ export const OrderDetailFragmentApi = gql`
   totalPrice {
     ...PriceFragment
   }
+  paymentTransactionsCount
+  isPaid
 }
     ${OrderDetailItemFragmentApi}
 ${PriceFragmentApi}`;
@@ -4800,10 +4842,13 @@ export const ListedOrderFragmentApi = gql`
   payment {
     __typename
     name
+    type
   }
   totalPrice {
     ...PriceFragment
   }
+  isPaid
+  status
 }
     ${ImageFragmentApi}
 ${PriceFragmentApi}`;
@@ -5558,6 +5603,21 @@ export const NotificationBarsDocumentApi = gql`
 export function useNotificationBarsApi(options?: Omit<Urql.UseQueryArgs<NotificationBarsVariablesApi>, 'query'>) {
   return Urql.useQuery<NotificationBarsApi, NotificationBarsVariablesApi>({ query: NotificationBarsDocumentApi, ...options });
 };
+export const ChangePaymentInOrderMutationDocumentApi = gql`
+    mutation ChangePaymentInOrderMutation($input: ChangePaymentInOrderInput!) {
+  ChangePaymentInOrder(input: $input) {
+    urlHash
+    number
+    payment {
+      ...SimplePaymentFragment
+    }
+  }
+}
+    ${SimplePaymentFragmentApi}`;
+
+export function useChangePaymentInOrderMutationApi() {
+  return Urql.useMutation<ChangePaymentInOrderMutationApi, ChangePaymentInOrderMutationVariablesApi>(ChangePaymentInOrderMutationDocumentApi);
+};
 export const CreateOrderMutationDocumentApi = gql`
     mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $deliveryAddressUuid: Uuid, $note: String, $cartUuid: Uuid, $newsletterSubscription: Boolean) {
   CreateOrder(
@@ -5604,8 +5664,10 @@ export const UpdatePaymentStatusMutationDocumentApi = gql`
     orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash
   ) {
     isPaid
-    transactionCount
-    paymentType
+    paymentTransactionsCount
+    payment {
+      type
+    }
   }
 }
     `;
@@ -5623,6 +5685,22 @@ export const LastOrderQueryDocumentApi = gql`
 
 export function useLastOrderQueryApi(options?: Omit<Urql.UseQueryArgs<LastOrderQueryVariablesApi>, 'query'>) {
   return Urql.useQuery<LastOrderQueryApi, LastOrderQueryVariablesApi>({ query: LastOrderQueryDocumentApi, ...options });
+};
+export const OrderAvailablePaymentsQueryDocumentApi = gql`
+    query OrderAvailablePaymentsQuery($orderUuid: Uuid!) {
+  orderPayments(orderUuid: $orderUuid) {
+    availablePayments {
+      ...SimplePaymentFragment
+    }
+    currentPayment {
+      ...SimplePaymentFragment
+    }
+  }
+}
+    ${SimplePaymentFragmentApi}`;
+
+export function useOrderAvailablePaymentsQueryApi(options: Omit<Urql.UseQueryArgs<OrderAvailablePaymentsQueryVariablesApi>, 'query'>) {
+  return Urql.useQuery<OrderAvailablePaymentsQueryApi, OrderAvailablePaymentsQueryVariablesApi>({ query: OrderAvailablePaymentsQueryDocumentApi, ...options });
 };
 export const OrderDetailByHashQueryDocumentApi = gql`
     query OrderDetailByHashQuery($urlHash: String) {

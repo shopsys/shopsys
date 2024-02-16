@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Order\Order;
-use App\Model\Payment\Transaction\PaymentTransactionDataFactory;
-use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 
 class PaymentTransactionDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @param \App\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
-     * @param \App\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
      */
     public function __construct(
         private readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
@@ -30,12 +31,12 @@ class PaymentTransactionDataFixture extends AbstractReferenceFixture implements 
     {
         /** @var \App\Model\Order\Order $order */
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1);
-        $this->createPaymentTransaction($order, 'TR-123456', 'CREATED');
+        $this->createPaymentTransaction($order, 'TR-123456', PaymentStatus::CREATED);
 
         /** @var \App\Model\Order\Order $order */
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_14);
-        $this->createPaymentTransaction($order, '12454321', 'CREATED');
-        $this->createPaymentTransaction($order, '52467431', 'CREATED');
+        $this->createPaymentTransaction($order, '12454321', PaymentStatus::CREATED);
+        $this->createPaymentTransaction($order, '52467431', PaymentStatus::CREATED);
     }
 
     /**

@@ -6,11 +6,11 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Cart\CartFacade;
 use App\Model\Cart\Item\CartItem;
-use App\Model\Customer\User\CustomerUserIdentifierFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 
 class CartDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -18,7 +18,7 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
 
     /**
      * @param \App\Model\Cart\CartFacade $cartFacade
-     * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
@@ -33,7 +33,7 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
      */
     public function load(ObjectManager $manager)
     {
-        $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCartIdentifier(self::CART_UUID);
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier(self::CART_UUID);
         $cart = $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
 
         /** @var \App\Model\Product\Product $product */

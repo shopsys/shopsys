@@ -5,7 +5,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentFail } from 'components/Pages/Order/PaymentConfirmation/PaymentFail';
 import { PaymentSuccess } from 'components/Pages/Order/PaymentConfirmation/PaymentSuccess';
 import { useUpdatePaymentStatus } from 'components/Pages/Order/PaymentConfirmation/helpers';
-import { useSettingsQueryApi } from 'graphql/generated';
 import { getStringFromUrlQuery } from 'helpers/parsing/urlParsing';
 import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
@@ -20,9 +19,6 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const orderPaymentStatusPageValidityHashParam = getStringFromUrlQuery(orderPaymentStatusPageValidityHash);
     const paymentStatusData = useUpdatePaymentStatus(orderUuid, orderPaymentStatusPageValidityHashParam);
 
-    const [{ data }] = useSettingsQueryApi();
-    const maxAllowedPaymentTransactions = data?.settings?.maxAllowedPaymentTransactions ?? Number.MAX_SAFE_INTEGER;
-
     return (
         <>
             <MetaRobots content="noindex" />
@@ -36,11 +32,10 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                                 <PaymentSuccess orderUuid={orderUuid} />
                             ) : (
                                 <PaymentFail
-                                    orderPaymentType={paymentStatusData.UpdatePaymentStatus.paymentType}
+                                    lastUsedOrderPaymentType={paymentStatusData.UpdatePaymentStatus.payment.type}
                                     orderUuid={orderUuid}
-                                    canPaymentBeRepeated={
-                                        paymentStatusData.UpdatePaymentStatus.transactionCount <
-                                        maxAllowedPaymentTransactions
+                                    paymentTransactionCount={
+                                        paymentStatusData.UpdatePaymentStatus.paymentTransactionsCount
                                     }
                                 />
                             )}

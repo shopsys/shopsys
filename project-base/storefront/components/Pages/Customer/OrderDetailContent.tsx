@@ -1,7 +1,9 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Row, Cell, CellHead, Table, CellMinor } from 'components/Basic/Table/Table';
+import { OrderStatus } from 'components/Blocks/OrderStatus/OrderStatus';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { OrderDetailFragmentApi } from 'graphql/generated';
 import { twMergeCustom } from 'helpers/twMerge';
 import { useAddOrderItemsToCart } from 'hooks/cart/useAddOrderItemsToCart';
@@ -9,6 +11,7 @@ import { useFormatDate } from 'hooks/formatting/useFormatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
+import { PaymentTypeEnum } from 'types/payment';
 
 const NotAddedProductsPopup = dynamic(() =>
     import('./NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),
@@ -95,6 +98,24 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                                 </Table>
                             </Cell>
                         )}
+                        <Cell className="flex-1">
+                            <ColumnHeader>{t('Payment information')}</ColumnHeader>
+                            <Table className="border-0 p-0">
+                                <Row>
+                                    <CellMinor>{t('Status')}</CellMinor>
+                                    <Cell align="right">
+                                        <OrderStatus order={order} />
+                                    </Cell>
+                                </Row>
+                            </Table>
+                            {!order.isPaid && order.payment.type === PaymentTypeEnum.GoPay && (
+                                <PaymentsInOrderSelect
+                                    orderUuid={order.uuid}
+                                    paymentTransactionCount={order.paymentTransactionsCount}
+                                    withRedirectAfterChanging={false}
+                                />
+                            )}
+                        </Cell>
                     </Row>
                 </Table>
 

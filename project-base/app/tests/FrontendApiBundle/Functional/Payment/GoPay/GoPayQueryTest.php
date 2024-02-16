@@ -8,34 +8,30 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GoPayQueryTest extends GraphQlTestCase
 {
-    public function testGoPaySwiftsQuery()
+    public function testGoPaySwiftsQuery(): void
     {
-        $query = '
-query {
-  GoPaySwifts (currencyCode: "CZK"){
-    swift
-    name
-  }
-}        
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/../graphql/GoPaySwiftsQuery.graphql', [
+            'currencyCode' => 'CZK',
+        ]);
 
-        $expect = '
-{
-  "data": {
-    "GoPaySwifts": [
-      {
-        "swift": "123456XZY",
-        "name": "Airbank"
-      },
-      {
-        "swift": "ABC123456",
-        "name": "Aqua bank"
-      }
-    ]
-  }
-}        
-        ';
+        $data = $this->getResponseDataForGraphQlType($response, 'GoPaySwifts');
+        $expected = [
+            [
+                'swift' => 'AIRAcsPP',
+                'name' => 'Airbank',
+                'imageLargeUrl' => 'airbank large image Url',
+                'imageNormalUrl' => 'airbank image Url',
+                'isOnline' => true,
+            ],
+            [
+                'swift' => 'FIOBcsPP',
+                'name' => 'FIO bank',
+                'imageLargeUrl' => 'FIO bank large image Url',
+                'imageNormalUrl' => 'FIO bank image Url',
+                'isOnline' => true,
+            ],
+        ];
 
-        $this->assertQueryWithExpectedJson($query, $expect);
+        $this->assertSame($expected, $data);
     }
 }

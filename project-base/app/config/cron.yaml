@@ -97,13 +97,13 @@ services:
 
     # GoPay
 
-    App\Model\GoPay\GoPayAvailablePaymentsCronModule:
+    Shopsys\FrameworkBundle\Model\GoPay\GoPayAvailablePaymentsCronModule:
         arguments:
             - '%gopay_config%'
         tags:
             - { name: shopsys.cron, hours: '3', minutes: '50', instanceName: gopay, readableName: 'Import available payment methods from GoPay' }
 
-    App\Model\GoPay\OrderGoPayStatusUpdateCronModule:
+    Shopsys\FrameworkBundle\Model\GoPay\OrderGoPayStatusUpdateCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '15', instanceName: gopay, readableName: 'Import order payment status from GoPay' }
 

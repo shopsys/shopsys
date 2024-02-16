@@ -37,6 +37,15 @@ msgstr ""
 msgid "Password must be at least {{ limit }} characters long"
 msgstr ""
 
+msgid "Payment cannot be changed"
+msgstr ""
+
+msgid "Payment {{ paymentUuid }} cannot be used with SWIFT {{ swift }}"
+msgstr ""
+
+msgid "Payment {{ paymentUuid }} is not available for order {{ orderUuid }}"
+msgstr ""
+
 msgid "Payment {{ uuid }} doesn't exist"
 msgstr ""
 

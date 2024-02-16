@@ -103,3 +103,9 @@ OrderDecorator:
             urlHash:
                 type: "String!"
                 description: "Unique url hash that can be used to "
+            paymentTransactionsCount:
+                type: "Int!"
+                description: "Count of the payment transactions related to the order"
+            isPaid:
+                type: "Boolean!"
+                description: "Indicates whether the order is paid successfully with GoPay payment type"

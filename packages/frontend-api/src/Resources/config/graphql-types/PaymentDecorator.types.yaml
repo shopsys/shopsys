@@ -22,7 +22,11 @@ PaymentDecorator:
             price:
                 type: "Price!"
                 description: "Payment price"
-                resolve: '@=query("priceByPaymentQuery", value)'
+                resolve: '@=query("priceByPaymentQuery", value, args["cartUuid"], context)'
+                args:
+                    cartUuid:
+                        type: "Uuid"
+                        defaultValue: null
             images:
                 type: "[Image!]!"
                 description: "Payment images"
@@ -34,3 +38,6 @@ PaymentDecorator:
             transports:
                 type: "[Transport!]!"
                 description: "List of assigned transports"
+            goPayPaymentMethod:
+                type: "GoPayPaymentMethod"
+                description: "Additional data for GoPay payment"

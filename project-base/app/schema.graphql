@@ -517,6 +517,15 @@ input ChangePaymentInCartInput {
   paymentUuid: Uuid
 }
 
+input ChangePaymentInOrderInput {
+  "Order identifier"
+  orderUuid: Uuid!
+  "Selected bank swift code of goPay payment bank transfer"
+  paymentGoPayBankSwift: String = null
+  "UUID of a payment that should be assigned to the order."
+  paymentUuid: Uuid!
+}
+
 input ChangePersonalDataInput {
   "Billing address city name (will be on the tax invoice)"
   city: String!
@@ -893,6 +902,8 @@ type Mutation {
   ChangePassword(input: ChangePasswordInput!): CustomerUser!
   "Add a payment to the cart, or remove a payment from the cart"
   ChangePaymentInCart(input: ChangePaymentInCartInput!): Cart!
+  "change payment in an order after the order creation (available for unpaid GoPay orders only)"
+  ChangePaymentInOrder(input: ChangePaymentInOrderInput!): Order!
   "Changes customer user personal data"
   ChangePersonalData(input: ChangePersonalDataInput!): CustomerUser!
   "Add a transport to the cart, or remove a transport from the cart"
@@ -937,7 +948,7 @@ type Mutation {
     deliveryAddressUuid: Uuid!
   ): CustomerUser!
   "check payment status of order after callback from payment service"
-  UpdatePaymentStatus(orderPaymentStatusPageValidityHash: String, orderUuid: Uuid!): PaymentStatus!
+  UpdatePaymentStatus(orderPaymentStatusPageValidityHash: String, orderUuid: Uuid!): Order!
 }
 
 "Represents a navigation structure item"
@@ -1054,6 +1065,8 @@ type Order {
   email: String!
   "The customer's first name"
   firstName: String
+  "Indicates whether the order is paid successfully with GoPay payment type"
+  isPaid: Boolean!
   "All items in the order including payment and transport"
   items: [OrderItem!]!
   "The customer's last name"
@@ -1064,6 +1077,8 @@ type Order {
   number: String!
   "Payment method applied to the order"
   payment: Payment!
+  "Count of the payment transactions related to the order"
+  paymentTransactionsCount: Int!
   "Selected pickup place identifier"
   pickupPlaceIdentifier: String
   "Billing address zip code"
@@ -1184,6 +1199,13 @@ type OrderItem {
   unitPrice: Price!
   "Applied VAT rate percentage applied to the order item"
   vatRate: String!
+}
+
+type OrderPaymentsConfig {
+  "All available payment methods for the order (excluding the current one)"
+  availablePayments: [Payment!]!
+  "Current payment method used in the order"
+  currentPayment: Payment!
 }
 
 "Represents a product in order"
@@ -1372,15 +1394,6 @@ input PaymentInput {
 type PaymentSetupCreationData {
   "Identifiers of GoPay payment method"
   goPayCreatePaymentSetup: GoPayCreatePaymentSetup
-}
-
-type PaymentStatus {
-  "Whether the order is already paid or not"
-  isPaid: Boolean!
-  "Type of payment"
-  paymentType: String!
-  "Count of already processed transactions"
-  transactionCount: Int!
 }
 
 type PersonalData {
@@ -1722,6 +1735,8 @@ type Query {
   order(orderNumber: String, urlHash: String, uuid: Uuid): Order
   "Returns HTML content for order with failed payment."
   orderPaymentFailedContent(orderUuid: Uuid!): String!
+  "Returns payments available for the given order"
+  orderPayments(orderUuid: Uuid!): OrderPaymentsConfig!
   "Returns HTML content for order with successful payment."
   orderPaymentSuccessfulContent(orderUuid: Uuid!): String!
   "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"

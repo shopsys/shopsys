@@ -1,0 +1,12 @@
+mutation ChangePaymentInOrderMutation($input: ChangePaymentInOrderInput!) {
+    ChangePaymentInOrder(input: $input) {
+        uuid
+        payment {
+            uuid
+            name
+        }
+        totalPrice {
+            priceWithoutVat
+        }
+    }
+}

@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
@@ -29,7 +30,11 @@ use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
@@ -63,7 +68,12 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface $orderItemFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -92,6 +102,11 @@ class OrderFacade
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly OrderItemFactoryInterface $orderItemFactory,
+        protected readonly PaymentTransactionFacade $paymentTransactionFacade,
+        protected readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        protected readonly PaymentServiceFacade $paymentServiceFacade,
+        protected readonly OrderItemDataFactory $orderItemDataFactory,
+        protected readonly OrderDataFactory $orderDataFactory,
     ) {
     }
 
@@ -210,7 +225,29 @@ class OrderFacade
             }
         }
 
+        foreach ($orderData->paymentTransactionRefunds as $paymentTransactionId => $paymentTransactionRefundData) {
+            $paymentTransaction = $this->paymentTransactionFacade->getById($paymentTransactionId);
+            $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);
+            $paymentTransactionData->refundedAmount = $paymentTransactionRefundData->refundedAmount;
+            $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
+        }
+
+        $this->handleRefundTransactions($orderData->paymentTransactionRefunds);
+
         return $order;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundData[] $transactionsIndexedByPaymentTransactionId
+     */
+    protected function handleRefundTransactions(array $transactionsIndexedByPaymentTransactionId): void
+    {
+        foreach ($transactionsIndexedByPaymentTransactionId as $paymentTransactionId => $paymentTransactionRefundData) {
+            if ($paymentTransactionRefundData->executeRefund) {
+                $paymentTransaction = $this->paymentTransactionFacade->getById($paymentTransactionId);
+                $this->paymentServiceFacade->refundTransaction($paymentTransaction, $paymentTransactionRefundData->refundAmount);
+            }
+        }
     }
 
     /**
@@ -410,6 +447,7 @@ class OrderFacade
             $payment,
         );
         $order->addItem($orderPayment);
+        $this->em->persist($orderPayment);
     }
 
     /**
@@ -603,5 +641,31 @@ class OrderFacade
         $order->setOrderPaymentStatusPageValidFromNow();
         $order->setOrderPaymentStatusPageValidityHashToNull();
         $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
+     */
+    public function changeOrderPayment(Order $order, Payment $payment): void
+    {
+        $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
+            $payment,
+            $order->getCurrency(),
+            $order->getTotalProductsPrice(),
+            $order->getDomainId(),
+        );
+
+        $orderPaymentData = $this->orderItemDataFactory->create();
+        $orderPaymentData->name = $payment->getName();
+        $orderPaymentData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
+        $orderPaymentData->priceWithVat = $paymentPrice->getPriceWithVat();
+        $orderPaymentData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
+        $orderPaymentData->quantity = 1;
+        $orderPaymentData->payment = $payment;
+
+        $orderData = $this->orderDataFactory->createFromOrder($order);
+        $orderData->orderPayment = $orderPaymentData;
+        $this->edit($order->getId(), $orderData);
     }
 }

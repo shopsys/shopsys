@@ -20,9 +20,13 @@ TransportDecorator:
                 type: "Int!"
                 description: "Transport position"
             price:
-                type: "Price"
+                type: "Price!"
                 description: "Transport price"
-                resolve: '@=query("priceByTransportQuery", value)'
+                resolve: '@=query("priceByTransportQuery", value, args["cartUuid"], context)'
+                args:
+                    cartUuid:
+                        type: "Uuid"
+                        defaultValue: null
             images:
                 type: "[Image!]!"
                 description: "Transport images"
