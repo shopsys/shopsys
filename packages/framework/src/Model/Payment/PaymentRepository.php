@@ -138,7 +138,7 @@ class PaymentRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
-     * @return \App\Model\Payment\Payment[]
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
     public function getByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): array
     {

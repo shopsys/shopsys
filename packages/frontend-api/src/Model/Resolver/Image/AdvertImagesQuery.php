@@ -13,7 +13,7 @@ class AdvertImagesQuery extends ImagesQuery
     protected const ENTITY_NAME = 'noticer';
 
     /**
-     * @param \App\Model\Advert\Advert $advert
+     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
      * @param string|null $type
      * @return \GraphQL\Executor\Promise\Promise
      */
@@ -29,7 +29,7 @@ class AdvertImagesQuery extends ImagesQuery
     }
 
     /**
-     * @param \App\Model\Advert\Advert $advert
+     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
      * @param string|null $type
      * @return \GraphQL\Executor\Promise\Promise
      */

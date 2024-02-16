@@ -13,7 +13,7 @@ class ProductImagesQuery extends ImagesQuery
     protected const PRODUCT_ENTITY_NAME = 'product';
 
     /**
-     * @param \App\Model\Product\Product|array $data
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
      * @param string|null $type
      * @return \GraphQL\Executor\Promise\Promise
      */
@@ -25,7 +25,7 @@ class ProductImagesQuery extends ImagesQuery
     }
 
     /**
-     * @param \App\Model\Product\Product|array $data
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
      * @param string|null $type
      * @return \GraphQL\Executor\Promise\Promise
      */

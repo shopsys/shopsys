@@ -38,6 +38,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method array{name: string, status: string} getAvailability(\App\Model\Product\Product $product)
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  * @method \Shopsys\FrameworkBundle\Model\Seo\HreflangLink[] getHreflangLinks(\App\Model\Product\Product $product)
+ * @method int getOrderingPriority(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {

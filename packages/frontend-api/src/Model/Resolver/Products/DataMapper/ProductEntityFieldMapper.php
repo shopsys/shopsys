@@ -153,7 +153,7 @@ class ProductEntityFieldMapper
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return int
      */
     public function getOrderingPriority(Product $product): int
