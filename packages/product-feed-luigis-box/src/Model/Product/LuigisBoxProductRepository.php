@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\LuigisBoxBundle\Model\Product;
 
+use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class LuigisBoxProductRepository
@@ -30,11 +32,15 @@ class LuigisBoxProductRepository
         ?int $lastSeekId,
         int $maxResults,
     ): iterable {
-        $queryBuilder = $this->productRepository->getAllSellableQueryBuilder($domainConfig->getId(), $pricingGroup)
+        $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b, pd')
+            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
+            ->andWhere('pd.saleExclusion = false')
             ->leftJoin('p.brand', 'b')
             ->addSelect('v')->join('pd.vat', 'v')
-            ->orderBy('IDENTITY(p.mainVariant)', 'asc')
+            ->andWhere('p.variantType != :variantTypeVariant')
+            ->setParameter('variantTypeVariant', Product::VARIANT_TYPE_VARIANT)
+            ->orderBy('p.id', 'asc')
             ->setMaxResults($maxResults);
 
         $this->productRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
@@ -44,5 +50,19 @@ class LuigisBoxProductRepository
         }
 
         return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function getAllVariantsByMainVariantId(
+        Product $mainVariant,
+        int $domainId,
+        PricingGroup $pricingGroup,
+    ): array {
+        return $this->productRepository->getAllSellableVariantsByMainVariant($mainVariant, $domainId, $pricingGroup);
     }
 }
