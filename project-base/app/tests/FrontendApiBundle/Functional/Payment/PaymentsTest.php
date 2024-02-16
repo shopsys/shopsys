@@ -129,7 +129,7 @@ class PaymentsTest extends GraphQlTestCase
                 'name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => null,
                 'instruction' => null,
-                'position' => 7,
+                'position' => 5,
                 'type' => 'basic',
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatZero),
                 'images' => [],

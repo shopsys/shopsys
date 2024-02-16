@@ -101,10 +101,8 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::zero());
         $this->createPayment(self::PAYMENT_CASH, $paymentData, [TransportDataFixture::TRANSPORT_PERSONAL]);
 
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $this->createGoPayCardPaymentOnDomain($domainConfig);
-            $this->createGoPayBankAccountTransferPaymentOnDomain($domainConfig);
-        }
+        $this->createGoPayCardPaymentOnDomain($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
+        $this->createGoPayBankAccountTransferPaymentOnDomain($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
 
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = Payment::TYPE_BASIC;
@@ -115,6 +113,14 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
         $this->createPayment(self::PAYMENT_LATER, $paymentData, [TransportDataFixture::TRANSPORT_DRONE]);
+
+        foreach ($this->domain->getAll() as $domainConfig) {
+            if ($domainConfig->getId() === Domain::FIRST_DOMAIN_ID) {
+                continue;
+            }
+            $this->createGoPayCardPaymentOnDomain($domainConfig);
+            $this->createGoPayBankAccountTransferPaymentOnDomain($domainConfig);
+        }
     }
 
     /**
