@@ -145,6 +145,9 @@ msgstr ""
 msgid "Administrator activities history"
 msgstr ""
 
+msgid "Administrator with ID: %s"
+msgstr ""
+
 msgid "Administrators"
 msgstr ""
 

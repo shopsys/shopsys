@@ -446,4 +446,9 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
 
         throw new MandatoryAdministratorRoleIsMissingException($message);
     }
+
+    public function __toString(): string
+    {
+        return sprintf(t('Administrator with ID: %s'), $this->id);
+    }
 }

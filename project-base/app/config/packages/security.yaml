@@ -166,6 +166,22 @@ security:
             id: Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider
 
     firewalls:
+        admin-new:
+            pattern: ^/admin-new/(.*)
+            user_checker: Shopsys\FrameworkBundle\Model\Security\AdministratorChecker
+            provider: administrators
+            entry_point: form_login
+            form_login:
+                login_path: sonata_admin_login
+                use_forward: false
+                check_path: sonata_admin_login
+                failure_path: null
+            logout:
+                path: sonata_admin_logout
+                target: sonata_admin_login
+            guard:
+                authenticators:
+                    - Shopsys\AdminBundle\Component\Security\AdminLoginAuthenticator
         # see Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
         administration:
             pattern: ^/(%admin_url%/|efconnect|elfinder)
@@ -204,6 +220,9 @@ security:
                 - App\FrontendApi\Model\Token\TokenAuthenticator
 
     access_control:
+        - { path: ^/admin-new/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin-new/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin-new/, role: [ ROLE_ADMIN, ROLE_SONATA_ADMIN ] }
         # This makes the logout route accessible during two-factor authentication. Allows the user to
         # cancel two-factor authentication, if they need to.
         - { path: ^/%admin_url%/logout, role: PUBLIC_ACCESS }

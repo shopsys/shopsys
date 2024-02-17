@@ -997,4 +997,9 @@ class Order
     {
         $this->orderPaymentStatusPageValidityHash = null;
     }
+
+    public function __toString(): string
+    {
+        return sprintf('Order with id: %s and number: %s', $this->id, $this->number);
+    }
 }

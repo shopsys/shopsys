@@ -50,6 +50,7 @@ class OrderDataFactory implements OrderDataFactoryInterface
      */
     protected function fillFromOrder(OrderData $orderData, Order $order)
     {
+        $orderData->id = $order->getId();
         $orderData->orderNumber = $order->getNumber();
         $orderData->status = $order->getStatus();
         $orderData->firstName = $order->getFirstName();

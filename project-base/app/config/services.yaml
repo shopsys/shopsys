@@ -837,3 +837,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory:
         alias: App\Model\Product\Filter\ProductFilterDataFactory
+
+    Shopsys\FrameworkBundle\Model\Order\OrderDataFactory:
+        alias: App\Model\Order\OrderDataFactory

@@ -111,7 +111,7 @@ class AdministratorFacade
     public function delete(int $administratorId): void
     {
         $administrator = $this->administratorRepository->getById($administratorId);
-        $this->checkForDelete($administrator);
+        //$this->checkForDelete($administrator);
         $this->em->remove($administrator);
         $this->em->flush();
     }

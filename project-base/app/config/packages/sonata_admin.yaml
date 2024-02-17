@@ -2,9 +2,17 @@ sonata_admin:
     title: 'Shopsys Platform admin'
     title_logo: public/admin/images/logo.svg
     show_mosaic_button: false
+    default_controller: Shopsys\AdminBundle\Controller\CRUDController
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
+    options:
+        default_group: Orders
+    assets:
+        extra_javascripts:
+            - bundles/shopsysadmin/js/admin.js
+        extra_stylesheets:
+            - bundles/shopsysadmin/css/admin.css
 
 sonata_block:
     blocks:

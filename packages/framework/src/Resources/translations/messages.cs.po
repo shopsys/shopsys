@@ -145,6 +145,9 @@ msgstr "Administrátor <strong>{{ name }}</strong> je jediný a nemůže být sm
 msgid "Administrator activities history"
 msgstr "Historie aktivit administrátora"
 
+msgid "Administrator with ID: %s"
+msgstr ""
+
 msgid "Administrators"
 msgstr "Administrátoři"
 

@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
-class OrderData
+use Shopsys\AdminBundle\Component\AdminIdentifierInterface;
+
+class OrderData implements AdminIdentifierInterface
 {
+    /**
+     * @var int|null
+     */
+    public $id;
+
     public const NEW_ITEM_PREFIX = 'new_';
 
     /**
@@ -188,6 +195,12 @@ class OrderData
         $this->itemsWithoutTransportAndPayment = [];
         $this->deliveryAddressSameAsBillingAddress = false;
     }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData[]

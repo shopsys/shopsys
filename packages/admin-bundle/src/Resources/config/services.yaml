@@ -4,7 +4,45 @@ services:
         autoconfigure: true
         public: false
 
+    Shopsys\AdminBundle\Component\Security\AdminLoginAuthenticator:
+
+    Shopsys\AdminBundle\Controller\AdminLoginController:
+
+    Shopsys\AdminBundle\Admin\Order\OrderManager:
+
     admin.order:
-        class: Shopsys\AdminBundle\Admin\OrderAdmin
+        class: Shopsys\AdminBundle\Admin\Order\OrderAdmin
+        calls:
+            - [ setModelManager, [ '@Shopsys\AdminBundle\Admin\Order\OrderManager' ]]
         tags:
-            - { name: sonata.admin, model_class: Shopsys\FrameworkBundle\Model\Order\Order, manager_type: orm, label: Order }
+            - { name: sonata.admin, model_class: App\Model\Order\Order, manager_type: orm, label: Order, on_top: true }
+
+    Shopsys\AdminBundle\Admin\Administrator\AdministratorManager:
+
+    admin.administrator:
+        class: Shopsys\AdminBundle\Admin\Administrator\AdministratorAdmin
+        calls:
+            - [ setModelManager, [ '@Shopsys\AdminBundle\Admin\Administrator\AdministratorManager' ] ]
+        tags:
+            - { name: sonata.admin, model_class: App\Model\Administrator\Administrator, manager_type: orm, label: Administrator, group: 'Admin', on_top: true }
+
+
+    Shopsys\AdminBundle\Admin\Products\ProductManager:
+
+    admin.product:
+        class: Shopsys\AdminBundle\Admin\Products\ProductAdmin
+        calls:
+            - [ setModelManager, [ '@Shopsys\AdminBundle\Admin\Products\ProductManager' ] ]
+        tags:
+            - { name: sonata.admin, model_class: App\Model\Product\Product, manager_type: orm, label: Products, group: 'Products', on_top: true }
+
+    sonata.admin.request.fetcher:
+        class: Sonata\AdminBundle\Request\AdminFetcher
+        public: true
+
+    Shopsys\AdminBundle\Controller\CRUDController:
+        public: true
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags:
+            - 'container.service_subscriber'

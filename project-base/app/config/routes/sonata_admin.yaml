@@ -6,3 +6,7 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin-new
+
+sonata_admin:
+    resource: "@ShopsysAdminBundle/Controller"
+    type: annotation

@@ -35,7 +35,7 @@
                     {% endfor %}
                 {% endfor %}
                 <p class="login-box-msg">{{ 'Authentication'|trans }}</p>
-                <form action="{{ path("admin_login") }}" method="post" role="form">
+                <form action="{{ path("sonata_admin_login") }}" method="post" role="form">
                     {{ form_row(form._token) }}
 
                     <div class="form-group has-feedback">
