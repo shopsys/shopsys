@@ -34,14 +34,14 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
     public function dispatchProductIds(
         array $productIds,
         ProductRecalculationPriorityEnumInterface $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
-        array $affectedPropertyNames = [],
+        array $scopes = [],
     ): array {
         $productIds = array_unique($productIds);
 
         foreach ($productIds as $productId) {
             $message = match ($productRecalculationPriorityEnum) {
-                ProductRecalculationPriorityEnum::HIGH => new ProductRecalculationPriorityHighMessage((int)$productId, $affectedPropertyNames),
-                ProductRecalculationPriorityEnum::REGULAR => new ProductRecalculationPriorityRegularMessage((int)$productId, $affectedPropertyNames),
+                ProductRecalculationPriorityEnum::HIGH => new ProductRecalculationPriorityHighMessage((int)$productId, $scopes),
+                ProductRecalculationPriorityEnum::REGULAR => new ProductRecalculationPriorityRegularMessage((int)$productId, $scopes),
             };
             $this->messageBus->dispatch($message);
         }
@@ -57,9 +57,9 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
     public function dispatchSingleProductId(
         int $productId,
         ProductRecalculationPriorityEnumInterface $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
-        array $affectedPropertyNames = [],
+        array $scopes = [],
     ): void {
-        $this->dispatchProductIds([$productId], $productRecalculationPriorityEnum, $affectedPropertyNames);
+        $this->dispatchProductIds([$productId], $productRecalculationPriorityEnum, $scopes);
     }
 
     public function dispatchAllProducts(): void

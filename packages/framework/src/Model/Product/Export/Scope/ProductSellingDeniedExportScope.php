@@ -16,13 +16,17 @@ class ProductSellingDeniedExportScope extends AbstractProductExportScope
         ];
     }
 
-    public function getElasticFieldNamesIndexedByEntityFieldNames(): array
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $object
+     * @param string $locale
+     * @param int $domainId
+     * @return array
+     */
+    public function map(object $object, string $locale, int $domainId): array
     {
         return [
-            'Product::sellingDenied' => [
-                ProductExportFieldEnum::SELLING_DENIED,
-                ProductExportFieldEnum::CALCULATED_SELLING_DENIED,
-            ],
+            'selling_denied' => $object->isSellingDenied(),
+            'calculated_selling_denied' => $object->getCalculatedSellingDenied(),
         ];
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Shopsys\FrameworkBundle\Model\Product\Export\Scope\ProductCategoriesExportScope;
+use Shopsys\FrameworkBundle\Model\Product\Export\Scope\ProductNameExportScope;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnumInterface;
@@ -123,7 +125,7 @@ class DispatchRecalculationMessageCommand extends Command
             return Command::FAILURE;
         }
 
-        $dispatchedProductIds = $this->productRecalculationDispatcher->dispatchProductIds($productIds, $priority, ['Product::name', 'Category::name']);
+        $dispatchedProductIds = $this->productRecalculationDispatcher->dispatchProductIds($productIds, $priority, [ProductNameExportScope::class, ProductCategoriesExportScope::class]);
         $symfonyStyle->success(['Dispatched message for IDs', implode(', ', $dispatchedProductIds), sprintf('Priority: %s', $priority->value)]);
 
         return Command::SUCCESS;

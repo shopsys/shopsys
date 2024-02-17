@@ -15,14 +15,9 @@ interface ExportScopeInterface
     public function getPreconditions(): array;
 
     /**
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\Scope\ExportScopeInterface[]
      */
-    public function getElasticFieldNamesIndexedByEntityFieldNames(): array;
+    public function getDependencies(): array;
 
-    /**
-     * TODO ještě je varianta to vůbec nedefinovat tady (možná zrušit celý ExportScopeInterface a místo toho vytvořit atributy, kterými bych konfiguroval jednotlivé scopes, ale to mi přijde celkem rozfrcané...
-     * TODO každopádně bude fajn mít k dispozici command, kterým si vypíšu všechny dostupné scopes, a scopes dle fieldů
-     * @return string[]
-     */
-    public function getEntityFieldNames(): array;
+    public function map(object $object, string $locale, int $domainId): array;
 }

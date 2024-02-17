@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyEvent;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupEvent;
 use Shopsys\FrameworkBundle\Model\Product\AffectedProductsFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandEvent;
+use Shopsys\FrameworkBundle\Model\Product\Export\Scope\ProductBrandExportScope;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagEvent;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterEvent;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitEvent;
@@ -43,7 +44,7 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
         $this->productRecalculationDispatcher->dispatchProductIds(
             $productIds,
             ProductRecalculationPriorityEnum::REGULAR,
-            ['Product::brand'],
+            [ProductBrandExportScope::class],
         );
     }
 
@@ -57,7 +58,7 @@ class DispatchAffectedProductsSubscriber implements EventSubscriberInterface
         $this->productRecalculationDispatcher->dispatchProductIds(
             $productIds,
             ProductRecalculationPriorityEnum::REGULAR,
-            $this->exportScopeRegistry->getScopesByPropertyNames(['Product::brand']),
+            [ProductBrandExportScope::class],
         );
     }
 

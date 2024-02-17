@@ -47,7 +47,7 @@ class ProductRecalculationFacade
         d('recalculate');
         $idsToRecalculate = $this->productRecalculationRepository->getIdsToRecalculate($productIds);
 
-        $scopes = $this->exportScopeRegistry->getScopesByPropertyNames($affectedPropertyNames);
+        $scopes = $this->exportScopeRegistry->getScopesByFcqn($affectedPropertyNames);
 
         // TODO pokud mám přepočítávat viditelnost, tak bych měl pro ty produkty tady čeknout jejich viditelnost (spíše pomocí ověření existence v elasticu). Pokud je produkt skrytý, musím tady nastavit scopes jako prázdné pole, tedy říct tím, že se má exportovat všechno
         if ($this->shouldRecalculateVisibility($scopes)) {

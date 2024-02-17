@@ -16,11 +16,8 @@ abstract class AbstractProductExportScope implements ExportScopeInterface
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getEntityFieldNames(): array
+    public function getDependencies(): array
     {
-        return array_keys($this->getElasticFieldNamesIndexedByEntityFieldNames());
+        return [];
     }
 }

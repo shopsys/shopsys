@@ -23,26 +23,40 @@ class ExportScopeRegistry
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\Scope\ExportScopeInterface[]
+     * @return array<string, \Shopsys\FrameworkBundle\Component\Elasticsearch\Scope\ExportScopeInterface>
      */
     public function getAllScopes(): array
     {
-        return $this->allScopes;
+        $scopes = [];
+        foreach ($this->allScopes as $scope) {
+            $scopes[get_class($scope)] = $scope;
+        }
+
+        return $scopes;
     }
 
     /**
      * @param string[] $propertyNames
      * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\Scope\ExportScopeInterface[]
      */
-    public function getScopesByPropertyNames(array $propertyNames): array
+    public function getScopesByFcqn(array $scopesFcqn): array
     {
+        if ($scopesFcqn === []) {
+            return $this->getAllScopes();
+        }
+
         $scopes = [];
         foreach ($this->allScopes as $scope) {
-            if (array_intersect($scope->getEntityFieldNames(), $propertyNames) !== []) {
-                $scopes[] = $scope;
+            $scopeClass = get_class($scope);
+            if (in_array($scopeClass, $scopesFcqn, true)) {
+                $scopes[$scopeClass] = $scope;
+
+                if ($scope->getDependencies() !== []) {
+                    $scopes = array_merge($scopes, $this->getScopesByFcqn($scope->getDependencies()));
+                }
             }
         }
-// TODO na nějaké úrovni bych měl vrátit všechny pokud jsem žádný nenašel (případně můžu teda vytvořit jen All? ale jaké bych zvolil klíče?)
+
         return $scopes;
     }
 

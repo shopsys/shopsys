@@ -4,26 +4,29 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Export\Scope;
 
-use Shopsys\FrameworkBundle\Model\Product\Export\ProductExportFieldEnum;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 
 class ProductAvailabilityExportScope extends AbstractProductExportScope
 {
-    protected const array AVAILABILITY_ELASTIC_FIELDS = [
-        ProductExportFieldEnum::AVAILABILITY,
-        ProductExportFieldEnum::AVAILABILITY_DISPATCH_TIME,
-        ProductExportFieldEnum::IN_STOCK,
-        ProductExportFieldEnum::STOCK_QUANTITY,
-    ];
+    public function __construct(
+        private readonly ProductAvailabilityFacade $productAvailabilityFacade,
+    )
+    {
+    }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $object
+     * @param string $locale
+     * @param int $domainId
      * @return array
      */
-    public function getElasticFieldNamesIndexedByEntityFieldNames(): array
+    public function map(object $object, string $locale, int $domainId): array
     {
         return [
-            'Product::stocks' => self::AVAILABILITY_ELASTIC_FIELDS,
-            'ProductStock::productQuantity' => self::AVAILABILITY_ELASTIC_FIELDS,
-            'StockDomain::enabled' => self::AVAILABILITY_ELASTIC_FIELDS,
+            'availability' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($object, $domainId),
+            'availability_dispatch_time' => $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($object, $domainId),
+            'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($object, $domainId),
+            'stock_quantity' => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($object, $domainId),
         ];
     }
 }

@@ -6,9 +6,16 @@ namespace Shopsys\FrameworkBundle\Model\Product\Export\Scope;
 
 use Shopsys\FrameworkBundle\Model\Product\Export\Preconditions\ProductExportPreconditionsEnum;
 use Shopsys\FrameworkBundle\Model\Product\Export\ProductExportFieldEnum;
+use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class ProductVisibilityExportScope extends AbstractProductExportScope
 {
+    public function __construct(
+        private readonly ProductVisibilityFacade $productVisibilityFacade,
+    )
+    {}
+
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Export\Preconditions\ProductExportPreconditionsEnum[]
      */
@@ -20,56 +27,37 @@ class ProductVisibilityExportScope extends AbstractProductExportScope
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $object
+     * @param string $locale
+     * @param int $domainId
      * @return array
      */
-    public function getElasticFieldNamesIndexedByEntityFieldNames(): array
+    public function map(object $object, string $locale, int $domainId): array
     {
         return [
-            'Product::name' => [
-                ProductExportFieldEnum::NAME,
-                ProductExportFieldEnum::DETAIL_URL,
-                ProductExportFieldEnum::HREFLANG_LINKS,
-            ],
-            'Product::hidden' => [ // TODO tohle mění komplet viditelnost produktu - takže buď nebude vůbec v elasticu nebo bude všude true (pro každou pricing group)
-                ProductExportFieldEnum::VISIBILITY,
-            ],
-            'Product::sellingFrom' => [ // TODO tohle mění komplet viditelnost produktu - takže buď nebude vůbec v elasticu nebo bude všude true (pro každou pricing group)
-                ProductExportFieldEnum::VISIBILITY,
-            ],
-            'Product::sellingTo' => [ // TODO tohle mění komplet viditelnost produktu - takže buď nebude vůbec v elasticu nebo bude všude true (pro každou pricing group)
-                ProductExportFieldEnum::VISIBILITY,
-            ],
-            'Product::price' => [
-                ProductExportFieldEnum::PRICES,
-                ProductExportFieldEnum::VISIBILITY,
-            ],
-            'Product::categories' => [
-                ProductExportFieldEnum::CATEGORIES,
-                ProductExportFieldEnum::MAIN_CATEGORY_ID,
-            ],
-            'Category::name' => [
-                ProductExportFieldEnum::VISIBILITY,
-            ],
-            'Category::lft' => [
-                ProductExportFieldEnum::CATEGORIES,
-                ProductExportFieldEnum::MAIN_CATEGORY_ID,
-            ],
-            'Category::rgt' => [
-                ProductExportFieldEnum::CATEGORIES,
-                ProductExportFieldEnum::MAIN_CATEGORY_ID,
-            ],
-            'Category::level' => [
-                ProductExportFieldEnum::CATEGORIES,
-                ProductExportFieldEnum::MAIN_CATEGORY_ID,
-            ],
-            'Category::parent' => [
-                ProductExportFieldEnum::CATEGORIES,
-                ProductExportFieldEnum::MAIN_CATEGORY_ID,
-            ],
-            'Category::enabled' => [
-                ProductExportFieldEnum::CATEGORIES,
-                ProductExportFieldEnum::MAIN_CATEGORY_ID,
-            ],
+            'visibility' => $this->extractVisibility($domainId, $object),
         ];
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return array
+     */
+    protected function extractVisibility(int $domainId, Product $product): array
+    {
+        $visibility = [];
+
+        foreach ($this->productVisibilityFacade->findProductVisibilitiesByDomainIdAndProduct(
+            $domainId,
+            $product,
+        ) as $productVisibility) {
+            $visibility[] = [
+                'pricing_group_id' => $productVisibility->getPricingGroup()->getId(),
+                'visible' => $productVisibility->isVisible(),
+            ];
+        }
+
+        return $visibility;
     }
 }
