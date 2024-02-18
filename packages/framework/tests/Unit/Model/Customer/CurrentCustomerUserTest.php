@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -27,11 +28,13 @@ class CurrentCustomerUserTest extends TestCase
             $expectedPricingGroup,
         );
         $customerUserFacadeMock = $this->createMock(CustomerUserFacade::class);
+        $inMemoryCache = $this->createMock(InMemoryCache::class);
 
         $currentCustomerUser = new CurrentCustomerUser(
             $tokenStorageMock,
             $pricingGroupSettingFacadeMock,
             $customerUserFacadeMock,
+            $inMemoryCache,
         );
 
         $pricingGroup = $currentCustomerUser->getPricingGroup();
@@ -46,11 +49,13 @@ class CurrentCustomerUserTest extends TestCase
         $tokenStorageMock = $this->getTokenStorageMockForCustomerUser($customerUser);
         $pricingGroupFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
         $customerUserFacadeMock = $this->createMock(CustomerUserFacade::class);
+        $inMemoryCache = $this->createMock(InMemoryCache::class);
 
         $currentCustomerUser = new CurrentCustomerUser(
             $tokenStorageMock,
             $pricingGroupFacadeMock,
             $customerUserFacadeMock,
+            $inMemoryCache,
         );
 
         $pricingGroup = $currentCustomerUser->getPricingGroup();

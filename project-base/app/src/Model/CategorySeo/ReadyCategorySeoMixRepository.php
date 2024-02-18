@@ -150,7 +150,7 @@ class ReadyCategorySeoMixRepository implements ResetInterface
      */
     private function isJsonCombinationSeoCategory(int $categoryId, int $domainId, string $combinationJson): bool
     {
-        $readySeoCategorySetup = $this->getReadySeoCategorySetupFromLocalCache($categoryId, $domainId);
+        $readySeoCategorySetup = $this->getReadySeoCategorySetupFromCache($categoryId, $domainId);
 
         return in_array($combinationJson, $readySeoCategorySetup, true);
     }
@@ -160,7 +160,7 @@ class ReadyCategorySeoMixRepository implements ResetInterface
      * @param int $domainId
      * @return string[]
      */
-    private function getReadySeoCategorySetupFromLocalCache(int $categoryId, int $domainId): array
+    private function getReadySeoCategorySetupFromCache(int $categoryId, int $domainId): array
     {
         if (($this->readySeoCategorySetup[$domainId][$categoryId] ?? null) === null) {
             $scalarData = $this->em->createQueryBuilder()

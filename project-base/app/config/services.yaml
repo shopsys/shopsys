@@ -101,9 +101,6 @@ services:
 
     App\Model\Customer\Mail\CustomerActivationMail: ~
 
-    App\Model\Customer\User\ClearCurrentCustomerUserCacheDoctrineSubscriber:
-        tags: [ 'doctrine.event_subscriber' ]
-
     App\Model\Customer\User\CurrentCustomerUser: ~
 
     App\Model\LanguageConstant\LanguageConstantFacade:
