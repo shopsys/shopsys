@@ -116,6 +116,9 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         self::assertSame('payment-not-found', $extensions['userCode']);
     }
 
+    /**
+     * @group multidomain
+     */
     public function testChangePaymentInOrderValidationUnavailablePayment(): void
     {
         /** @var \App\Model\Order\Order $order */
@@ -203,6 +206,9 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $this->testInvalidSwift('non-existing-swift');
     }
 
+    /**
+     * @group multidomain
+     */
     public function testChangePaymentInOrderValidationSwiftForAnotherDomain(): void
     {
         $swiftForSecondDomain = sprintf(GoPayDataFixture::AIRBANK_SWIFT_PATTERN, $this->domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID)->getLocale());
