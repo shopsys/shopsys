@@ -1744,3 +1744,6 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     -   see #project-base-diff to update your project
 
 -   removed duplicate update payment mutation call on order payment confirmation page ([#3025](https://github.com/shopsys/shopsys/pull/3025))
+
+-   fixed non-working sentry logging on SF ([#3034]https://github.com/shopsys/shopsys/pull/3034)
+    -   change any call to `logException` to only pass one argument, which should be a complete error with all of its context
