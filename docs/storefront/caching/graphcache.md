@@ -53,6 +53,25 @@ The cache is configured with:
 -   `manuallyUpdateCartQuery`: Manually updates the cart query in the cache.
 -   `manuallyRemoveProductListQuery` & `manuallyUpdateProductListQuery`: Updaters for product lists and related queries.
 
+### Mutations called with `dedup` additional type
+
+In our application, we call some mutations with the `dedup` additional type (change transport and change payment mutations). This causes the mutations to be cancelled mid-flight in order to not work with duplicated requests. However, this also has an implication with regards to cache updates. Because of the cancellation, the updater in `updates.ts` for these mutations are called with a `null` result. This can cause the application to fail, as it is not expecting such result. Because of that, if you add deduplication to any mutation, make sure to follow the example below and check for nullability of the result, for example by checking some key of the result object.
+
+```ts
+// Because we use dedup on this mutation, if the mutation is cancelled
+// mid-flight, it calls this updater with the resulting object being null,
+// even though it should not happen
+ChangeTransportInCart(
+    result: MakeMaybe<ChangeTransportInCartMutationApi, 'ChangeTransportInCart'>,
+    _args: ChangeTransportInCartMutationVariablesApi,
+    cache,
+) {
+    if (result.ChangeTransportInCart?.uuid) {
+        manuallyUpdateCartQuery(cache, result.ChangeTransportInCart, result.ChangeTransportInCart.uuid);
+    }
+}
+```
+
 ### Cookbook & Tips:
 
 If you want to implement a manual cache update, you have to follow a set of rules. The benefits of manual cache updates are usually paid for by trial and error, and debugging. The following rules and steps should help you limit that.

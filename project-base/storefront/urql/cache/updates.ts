@@ -31,7 +31,7 @@ import {
     RemovePromoCodeFromCartMutation,
     RemovePromoCodeFromCartMutationVariables,
 } from 'graphql/requests/cart/mutations/RemovePromoCodeFromCartMutation.generated';
-import { CartQuery, CartQueryDocument, CartQueryVariables } from 'graphql/requests/cart/queries/CartQuery.generated';
+import { CartQuery, CartQueryVariables, CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.generated';
 import {
     DeleteDeliveryAddressMutation,
     DeleteDeliveryAddressMutationVariables,
@@ -55,10 +55,10 @@ import {
 } from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
 import {
     ProductListQuery,
-    ProductListQueryDocument,
     ProductListQueryVariables,
+    ProductListQueryDocument,
 } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
-import { ProductListInput } from 'graphql/types';
+import { MakeMaybe, ProductListInput } from 'graphql/types';
 
 export const cacheUpdates: UpdatesConfig = {
     Mutation: {
@@ -84,15 +84,29 @@ export const cacheUpdates: UpdatesConfig = {
         AddOrderItemsToCart(result: AddOrderItemsToCartMutation, _args: AddOrderItemsToCartMutationVariables, cache) {
             manuallyUpdateCartQuery(cache, result.AddOrderItemsToCart, result.AddOrderItemsToCart.uuid);
         },
+        // Because we use dedup on this mutation, if the mutation is cancelled
+        // mid-flight, it calls this updater with the resulting object being null,
+        // even though it should not happen
         ChangeTransportInCart(
-            result: ChangeTransportInCartMutation,
+            result: MakeMaybe<ChangeTransportInCartMutation, 'ChangeTransportInCart'>,
             _args: ChangeTransportInCartMutationVariables,
             cache,
         ) {
-            manuallyUpdateCartQuery(cache, result.ChangeTransportInCart, result.ChangeTransportInCart.uuid);
+            if (result.ChangeTransportInCart?.uuid) {
+                manuallyUpdateCartQuery(cache, result.ChangeTransportInCart, result.ChangeTransportInCart.uuid);
+            }
         },
-        ChangePaymentInCart(result: ChangePaymentInCartMutation, _args: ChangePaymentInCartMutationVariables, cache) {
-            manuallyUpdateCartQuery(cache, result.ChangePaymentInCart, result.ChangePaymentInCart.uuid);
+        // Because we use dedup on this mutation, if the mutation is cancelled
+        // mid-flight, it calls this updater with the resulting object being null,
+        // even though it should not happen
+        ChangePaymentInCart(
+            result: MakeMaybe<ChangePaymentInCartMutation, 'ChangePaymentInCart'>,
+            _args: ChangePaymentInCartMutationVariables,
+            cache,
+        ) {
+            if (result.ChangePaymentInCart?.uuid) {
+                manuallyUpdateCartQuery(cache, result.ChangePaymentInCart, result.ChangePaymentInCart.uuid);
+            }
         },
         RemoveFromCart(result: RemoveFromCartMutation, _args: RemoveFromCartMutationVariables, cache) {
             manuallyUpdateCartQuery(cache, result.RemoveFromCart, result.RemoveFromCart.uuid);
