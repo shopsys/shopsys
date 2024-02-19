@@ -8,6 +8,7 @@ use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
+use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\SeoPageDataFixture;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
@@ -70,6 +71,13 @@ class HreflangLinksTest extends GraphQlTestCase
             'routeName' => 'front_page_seo',
             'graphQlFileName' => 'SeoPageHreflangLinksQuery.graphql',
             'entityName' => 'seoPage',
+        ];
+
+        yield 'Flag' => [
+            'entityReference' => FlagDataFixture::FLAG_PRODUCT_NEW,
+            'routeName' => 'front_flag_detail',
+            'graphQlFileName' => 'FlagHreflangLinksQuery.graphql',
+            'entityName' => 'flag',
         ];
     }
 

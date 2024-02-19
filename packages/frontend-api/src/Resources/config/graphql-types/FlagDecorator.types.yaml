@@ -2,14 +2,23 @@ FlagDecorator:
     type: object
     decorator: true
     config:
+        interfaces:
+            - 'Hreflang'
+            - 'Slug'
         description: "Represents a flag"
         fields:
             uuid:
                 type: "Uuid!"
                 description: "UUID"
             name:
-                type: "String"
+                type: "String!"
                 description: "Localized flag name (domain dependent)"
             rgbColor:
-                type: "String"
+                type: "String!"
                 description: "Flag color in rgb format"
+            slug:
+                type: "String!"
+                description: "URL slug of flag"
+            hreflangLinks:
+                type: "[HreflangLink!]!"
+                description: "Alternate links for hreflang meta tags"

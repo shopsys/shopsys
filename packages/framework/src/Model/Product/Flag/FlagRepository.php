@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 
@@ -101,15 +102,24 @@ class FlagRepository
      */
     public function getVisibleFlagsByIds(array $flagsIds, string $locale): array
     {
-        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
-            ->select('f, ft')
+        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
+            ->addSelect('ft')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->where('f.id IN (:flagsIds)')
-            ->andWhere('f.visible = true')
             ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('flagsIds', $flagsIds)
             ->setParameter('locale', $locale);
 
         return $flagsQueryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getVisibleQueryBuilder(): QueryBuilder
+    {
+        return $this->getFlagRepository()->createQueryBuilder('f')
+            ->select('f')
+            ->where('f.visible = true');
     }
 }

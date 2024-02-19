@@ -9,4 +9,7 @@ fragment FlagDetailFragment on Flag {
     products(orderingMode: $orderingMode, filter: $filter) {
         ...ListedProductConnectionPreviewFragment
     }
+    hreflangLinks {
+        ...HreflangLinksFragment
+    }
 }

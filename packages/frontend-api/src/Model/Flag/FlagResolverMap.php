@@ -2,21 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Products\Flag;
+namespace Shopsys\FrontendApiBundle\Model\Flag;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use App\Model\Product\Flag\Flag;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 class FlagResolverMap extends ResolverMap
 {
     /**
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      */
-    public function __construct(private FriendlyUrlFacade $friendlyUrlFacade, private Domain $domain)
-    {
+    public function __construct(
+        protected readonly Domain $domain,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly HreflangLinksFacade $hreflangLinksFacade,
+    ) {
     }
 
     /**
@@ -32,12 +37,15 @@ class FlagResolverMap extends ResolverMap
                 'slug' => function (Flag $flag) {
                     return $this->getSlug($flag);
                 },
+                'hreflangLinks' => function (Flag $flag) {
+                    return $this->hreflangLinksFacade->getForFlag($flag, $this->domain->getId());
+                },
             ],
         ];
     }
 
     /**
-     * @param \App\Model\Product\Flag\Flag $flag
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
      * @return string
      */
     private function getSlug(Flag $flag): string

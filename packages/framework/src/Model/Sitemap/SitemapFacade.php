@@ -90,4 +90,13 @@ class SitemapFacade
     {
         return $this->sitemapRepository->getSitemapItemsForBlogArticlesOnDomain($domainConfig);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
+     */
+    public function getSitemapItemsForVisibleFlags(DomainConfig $domainConfig): array
+    {
+        return $this->sitemapRepository->getSitemapItemsForVisibleFlags($domainConfig);
+    }
 }

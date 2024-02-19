@@ -58,6 +58,7 @@ const FlagDetailPage: NextPage = () => {
         <CommonLayout
             breadcrumbs={flagDetailData?.flag?.breadcrumb}
             breadcrumbsType="category"
+            hreflangLinks={flagDetailData?.flag?.hreflangLinks}
             isFetchingData={!filter && fetching && !flagDetailData}
             title={seoTitle}
         >
