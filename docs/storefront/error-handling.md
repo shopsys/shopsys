@@ -144,8 +144,8 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
     ...
 
     if (statusCode !== 404 && !isWithErrorDebugging) {
-        logException(err, {
-            err,
+        logException({
+            message: err,
             statusCode,
             initServerSidePropsResonse: JSON.stringify(serverSideProps),
             location: 'ErrorPage.getInitialProps.isWithErrorDebugging = false',
@@ -153,8 +153,8 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
     }
 
     if (isWithErrorDebugging) {
-        logException(err, {
-            err,
+        logException({
+            message: err,
             statusCode,
             initServerSidePropsResonse: JSON.stringify(serverSideProps),
             location: 'ErrorPage.getInitialProps.isWithErrorDebugging = true',

@@ -20,7 +20,7 @@ type ErrorPageProps = {
 
 const ErrorPage: NextPage<ErrorPageProps> = ({ hasGetInitialPropsRun, err, statusCode }): ReactElement => {
     if (!hasGetInitialPropsRun && err) {
-        logException(err, { err, statusCode, location: 'ErrorPage' });
+        logException({ message: err, statusCode, location: 'ErrorPage' });
     }
 
     return statusCode === 404 ? <Error404Content /> : <Error500Content err={err} />;
@@ -39,8 +39,8 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
     }
 
     if (statusCode !== 404 && !isWithErrorDebugging) {
-        logException(err, {
-            err,
+        logException({
+            message: err,
             statusCode,
             initServerSidePropsResonse: JSON.stringify(serverSideProps),
             location: 'ErrorPage.getInitialProps.isWithErrorDebugging = false',
@@ -48,8 +48,8 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
     }
 
     if (isWithErrorDebugging) {
-        logException(err, {
-            err,
+        logException({
+            message: err,
             statusCode,
             initServerSidePropsResonse: JSON.stringify(serverSideProps),
             location: 'ErrorPage.getInitialProps.isWithErrorDebugging = true',

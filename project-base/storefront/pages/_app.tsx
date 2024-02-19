@@ -21,11 +21,16 @@ type AppProps = {
     pageProps: ServerSidePropsType;
 } & Omit<NextAppProps, 'pageProps'>;
 
-process.on('unhandledRejection', (reason: unknown, promise: Promise<unknown>) =>
-    logException({ reason, promise, location: '_app.tsx:unhandledRejection' }),
+process.on('unhandledRejection', (reason: unknown) =>
+    logException({ reason, location: '_app.tsx:unhandledRejection' }),
 );
 process.on('uncaughtException', (error: Error, origin: unknown) =>
-    logException({ error, origin, location: '_app.tsx:uncaughtException' }),
+    logException({
+        message: error.message,
+        originalError: JSON.stringify(error),
+        origin,
+        location: '_app.tsx:uncaughtException',
+    }),
 );
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement | null {

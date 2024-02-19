@@ -53,7 +53,8 @@ export const getErrorExchange =
     };
 
 const handleErrorMessagesForDevelopment = (error: CombinedError) => {
-    logException(error.message, {
+    logException({
+        message: error.message,
         originalError: JSON.stringify(error),
         location: 'getErrorExchange.handleErrorMessagesForDevelopment',
     });
@@ -67,7 +68,8 @@ const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operati
     const isCartError = operation.query === CartQueryDocumentApi;
 
     if (parsedErrors.userError) {
-        logException(error.message, {
+        logException({
+            message: error.message,
             parsedUserError: parsedErrors.userError,
             originalError: JSON.stringify(error),
             location: 'getErrorExchange.handleErrorMessagesForUsers',
@@ -85,7 +87,8 @@ const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operati
     }
 
     if (!isNoLogError(parsedErrors.applicationError.type)) {
-        logException(error.message, {
+        logException({
+            message: error.message,
             parsedApplicationError: parsedErrors.applicationError,
             originalError: JSON.stringify(error),
             location: 'getErrorExchange.handleErrorMessagesForUsers',
