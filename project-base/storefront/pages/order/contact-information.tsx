@@ -1,9 +1,10 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
+import { OrderContentWrapper } from 'components/Blocks/OrderContentWrapper/OrderContentWrapper';
 import { Login } from 'components/Blocks/Popup/Login/Login';
+import { SkeletonOrderContent } from 'components/Blocks/Skeleton/SkeletonOrderContent';
 import { Form } from 'components/Forms/Form/Form';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
-import { CartLoading } from 'components/Pages/Cart/CartLoading';
 import { ContactInformationContent } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
 import {
     useContactInformationForm,
@@ -31,6 +32,7 @@ import { getServerSidePropsWrapper } from 'helpers/serverSide/getServerSideProps
 import { initServerSideProps, ServerSidePropsType } from 'helpers/serverSide/initServerSideProps';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useCurrentCart } from 'hooks/cart/useCurrentCart';
+import { useOrderPagesAccess } from 'hooks/cart/useOrderPagesAccess';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import useTranslation from 'next-translate/useTranslation';
@@ -223,13 +225,15 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
         );
     };
 
+    const canContentBeDisplayed = useOrderPagesAccess('contact-information');
+
     return (
         <>
             <MetaRobots content="noindex" />
 
-            <OrderLayout activeStep={3}>
-                {!orderCreating ? (
-                    <>
+            <OrderLayout>
+                {!orderCreating && canContentBeDisplayed ? (
+                    <OrderContentWrapper activeStep={3}>
                         <FormProvider {...formProviderMethods}>
                             <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
                                 <ContactInformationContent setIsLoginPopupOpened={setIsLoginPopupOpened} />
@@ -259,9 +263,9 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                                 <Login shouldOverwriteCustomerUserCart defaultEmail={emailValue} />
                             </Popup>
                         )}
-                    </>
+                    </OrderContentWrapper>
                 ) : (
-                    <CartLoading />
+                    <SkeletonOrderContent />
                 )}
             </OrderLayout>
         </>

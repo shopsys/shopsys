@@ -5,7 +5,7 @@ import {
     chooseTransportPersonalCollectionAndStore,
 } from './transportAndPaymentSupport';
 import { DEFAULT_APP_STORE, transport, url } from 'fixtures/demodata';
-import { takeSnapshotAndCompare } from 'support';
+import { checkUrl, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
 describe('Transport select tests', () => {
@@ -49,5 +49,16 @@ describe('Transport select tests', () => {
         cy.getByTID([TIDs.loader_overlay]).should('not.exist');
 
         takeSnapshotAndCompare('select-deselect-and-select-transport-again');
+    });
+
+    it('should redirect to cart page and not display transport options if cart is empty', () => {
+        cy.visit(url.order.transportAndPayment);
+
+        cy.getByTID([TIDs.order_content_wrapper_skeleton]).should('exist');
+
+        cy.getByTID([TIDs.cart_page_empty_cart_text]).should('exist');
+        checkUrl(url.cart);
+
+        takeSnapshotAndCompare('empty-cart-transport');
     });
 });
