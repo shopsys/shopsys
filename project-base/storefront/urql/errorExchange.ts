@@ -23,7 +23,13 @@ export const getErrorExchange =
                 operations$,
                 forward,
                 tap(({ error, operation }) => {
-                    if (operation.kind !== 'query' || !error) {
+                    if ((operation.kind !== 'query' && operation.kind !== 'mutation') || !error) {
+                        return;
+                    }
+
+                    if (isWithErrorDebugging && operation.kind === 'mutation') {
+                        handleErrorMessagesForMutation(error);
+
                         return;
                     }
 
@@ -61,6 +67,20 @@ const handleErrorMessagesForDevelopment = (error: CombinedError) => {
     error.graphQLErrors
         .map((graphqlError) => mapGraphqlErrorForDevelopment(graphqlError))
         .forEach((simplifiedGraphqlError) => showErrorMessage(JSON.stringify(simplifiedGraphqlError)));
+};
+
+const handleErrorMessagesForMutation = (error: CombinedError) => {
+    if (isWithErrorDebugging) {
+        logException({
+            message: error.message,
+            originalError: JSON.stringify(error),
+            location: 'getErrorExchange.handleErrorMessagesForMutation',
+        });
+
+        error.graphQLErrors
+            .map((graphqlError) => mapGraphqlErrorForDevelopment(graphqlError))
+            .forEach((simplifiedGraphqlError) => showErrorMessage(JSON.stringify(simplifiedGraphqlError)));
+    }
 };
 
 const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operation: Operation) => {
