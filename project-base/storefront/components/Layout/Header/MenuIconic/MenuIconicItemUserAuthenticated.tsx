@@ -1,7 +1,7 @@
 import { MenuIconicItemLink, MenuIconicSubItemLink } from './MenuIconicElements';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { UserIcon } from 'components/Basic/Icon/IconsSvg';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -21,8 +21,8 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
             <div className="group">
                 <MenuIconicItemLink
                     className="rounded-t p-3 group-hover:bg-white group-hover:text-dark max-lg:hidden"
-                    dataTestId={DataTestIds.my_account_link}
                     href={customerUrl}
+                    tid={TIDs.my_account_link}
                 >
                     <UserIcon className="w-4 text-white group-hover:text-dark" />
                     {t('My account')}
@@ -38,7 +38,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                         <MenuIconicSubItemLink href={customerEditProfileUrl}>{t('Edit profile')}</MenuIconicSubItemLink>
                     </li>
                     <li className="block border-t border-border">
-                        <MenuIconicSubItemLink dataTestId={DataTestIds.header_logout} onClick={logout}>
+                        <MenuIconicSubItemLink tid={TIDs.header_logout} onClick={logout}>
                             {t('Logout')}
                         </MenuIconicSubItemLink>
                     </li>

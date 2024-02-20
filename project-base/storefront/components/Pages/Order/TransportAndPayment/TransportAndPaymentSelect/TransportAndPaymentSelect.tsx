@@ -10,7 +10,7 @@ import {
     usePaymentChangeInSelect,
     useTransportChangeInSelect,
 } from 'components/Pages/Order/TransportAndPayment/helpers';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import {
     ListedStoreFragmentApi,
     SimplePaymentFragmentApi,
@@ -126,7 +126,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         <>
             <PacketeryContainer />
             <div>
-                <div data-testid={DataTestIds.pages_order_transport}>
+                <div tid={TIDs.pages_order_transport}>
                     <div className="h3 mb-3">{t('Choose transport')}</div>
                     <ul>
                         {transport
@@ -145,7 +145,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     )}
                 </div>
                 {transport !== null && preSelectedTransport === null && (
-                    <div className="relative mt-12" data-testid={DataTestIds.pages_order_payment}>
+                    <div className="relative mt-12" tid={TIDs.pages_order_payment}>
                         {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" />}
 
                         <div className="h3 mb-3">{t('Choose payment')}</div>

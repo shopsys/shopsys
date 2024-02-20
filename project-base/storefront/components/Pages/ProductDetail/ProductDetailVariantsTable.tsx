@@ -3,7 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { Popup } from 'components/Layout/Popup/Popup';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { MainVariantDetailFragmentApi, StoreAvailabilityFragmentApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
@@ -27,7 +27,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                     <li
                         key={variant.uuid}
                         className="mx-auto flex w-full max-w-sm flex-col items-center gap-2 border border-greyLighter p-2 md:max-w-none lg:flex-row lg:border-0 "
-                        data-testid={DataTestIds.pages_productdetail_variant_ + variant.catalogNumber}
+                        tid={TIDs.pages_productdetail_variant_ + variant.catalogNumber}
                     >
                         <div className="relative h-48 w-full lg:h-16 lg:w-16">
                             <Image

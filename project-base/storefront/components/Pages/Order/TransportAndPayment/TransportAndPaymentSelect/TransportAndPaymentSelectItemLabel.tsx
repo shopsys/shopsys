@@ -1,6 +1,6 @@
 import { Image } from 'components/Basic/Image/Image';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { ImageFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { Translate } from 'next-translate';
@@ -34,7 +34,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
             <div className="flex flex-1 flex-col text-sm lg:flex-auto lg:basis-full lg:flex-row lg:items-center lg:gap-3">
                 <div>
-                    <div data-testid={DataTestIds.pages_order_selectitem_label_name}>{name}</div>
+                    <div tid={TIDs.pages_order_selectitem_label_name}>{name}</div>
 
                     {description && <div className="text-greyLight">{description}</div>}
                 </div>

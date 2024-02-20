@@ -1,26 +1,27 @@
+import {
+    OpeningHoursFragmentApi,
+    OpeningHoursOfDayApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+} from '../../../graphql/generated/index';
 import { CyHttpMessages } from 'cypress/types/net-stubbing';
-import { DataTestIds } from 'dataTestIds';
 import { transport } from 'fixtures/demodata';
+import { TIDs } from 'tids';
 
 export const chooseTransportPersonalCollectionAndStore = (storeName: string) => {
-    cy.getByDataTestId([DataTestIds.pages_order_selectitem_label_name])
-        .contains(transport.personalCollection.name)
-        .click();
-    cy.getByDataTestId([DataTestIds.layout_popup]);
-    cy.getByDataTestId([DataTestIds.pages_order_selectitem_label_name]).contains(storeName).click();
-    cy.getByDataTestId([DataTestIds.pages_order_pickupplace_popup_confirm]).scrollIntoView().click();
+    cy.getByTID([TIDs.pages_order_selectitem_label_name]).contains(transport.personalCollection.name).click();
+    cy.getByTID([TIDs.layout_popup]);
+    cy.getByTID([TIDs.pages_order_selectitem_label_name]).contains(storeName).click();
+    cy.getByTID([TIDs.pages_order_pickupplace_popup_confirm]).scrollIntoView().click();
 };
 
 export const changeSelectionOfTransportByName = (transportName: string) => {
-    cy.getByDataTestId([DataTestIds.pages_order_transport, DataTestIds.pages_order_selectitem_label_name])
+    cy.getByTID([TIDs.pages_order_transport, TIDs.pages_order_selectitem_label_name])
         .contains(transportName)
         .click('left');
 };
 
 export const changeSelectionOfPaymentByName = (paymentName: string) => {
-    cy.getByDataTestId([DataTestIds.pages_order_payment, DataTestIds.pages_order_selectitem_label_name])
-        .contains(paymentName)
-        .click('left');
+    cy.getByTID([TIDs.pages_order_payment, TIDs.pages_order_selectitem_label_name]).contains(paymentName).click('left');
 };
 
 export type Transport = {

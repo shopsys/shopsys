@@ -1,4 +1,4 @@
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { useForwardedRef } from 'hooks/typescript/useForwardedRef';
 import useTranslation from 'next-translate/useTranslation';
 import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
@@ -88,7 +88,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         const content = (
             <>
                 <SpinboxButton
-                    dataTestId={DataTestIds.forms_spinbox_decrease}
+                    tid={TIDs.forms_spinbox_decrease}
                     title={t('Decrease')}
                     onClick={() => onChangeValueHandler(-step)}
                     onMouseDown={() => setIsHoldingDecrease(true)}
@@ -110,7 +110,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 />
 
                 <SpinboxButton
-                    dataTestId={DataTestIds.forms_spinbox_increase}
+                    tid={TIDs.forms_spinbox_increase}
                     title={t('Increase')}
                     onClick={() => onChangeValueHandler(step)}
                     onMouseDown={() => setIsHoldingIncrease(true)}
@@ -148,10 +148,9 @@ type SpinboxButtonProps = {
     title: string;
 };
 
-const SpinboxButton: FC<SpinboxButtonProps> = ({ children, dataTestId, ...props }) => (
+const SpinboxButton: FC<SpinboxButtonProps> = ({ children, ...props }) => (
     <button
         className="flex min-h-0 w-6 cursor-pointer items-center justify-center border-none bg-none p-0 text-2xl text-dark outline-none"
-        data-testid={dataTestId}
         {...props}
     >
         {children}

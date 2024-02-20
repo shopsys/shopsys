@@ -3,7 +3,7 @@ import { CheckmarkIcon } from 'components/Basic/Icon/IconsSvg';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { CartItemFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
@@ -49,7 +49,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ onCloseCallback, added
                 <div className="w-full md:pl-4 lg:flex lg:items-center lg:justify-between">
                     <div
                         className="block break-words text-primary"
-                        data-testid={DataTestIds.blocks_product_addtocartpopup_product_name}
+                        tid={TIDs.blocks_product_addtocartpopup_product_name}
                     >
                         <ExtendedNextLink
                             href={productUrl}

@@ -1,7 +1,7 @@
 import { isWithErrorDebugging } from './errors/isWithErrorDebugging';
 import { isClient } from './isClient';
 import CopyTextBlock from 'components/Basic/CopyTextBlock/CopyTextBlock';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { onGtmShowMessageEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmMessageDetailType, GtmMessageOriginType, GtmMessageType } from 'gtm/types/enums';
 import { toast } from 'react-toastify';
@@ -27,13 +27,10 @@ const showMessage = (message: string, type: 'info' | 'error' | 'success'): void 
             closeOnClick: true,
         });
     } else {
-        toast.success(
-            () => <span dangerouslySetInnerHTML={{ __html: message }} data-testid={DataTestIds.toast_success} />,
-            {
-                toastId: message,
-                closeOnClick: true,
-            },
-        );
+        toast.success(() => <span dangerouslySetInnerHTML={{ __html: message }} tid={TIDs.toast_success} />, {
+            toastId: message,
+            closeOnClick: true,
+        });
     }
 };
 

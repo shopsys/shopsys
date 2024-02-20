@@ -4,7 +4,7 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { GtmMessageOriginType } from 'gtm/types/enums';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
@@ -102,7 +102,7 @@ export const PromoCode: FC = () => {
                     <>
                         <button
                             className="mb-3 inline-flex cursor-pointer items-center rounded bg-orangeLight py-3 px-4 text-sm font-bold uppercase text-grey transition hover:bg-orangeLight"
-                            data-testid={DataTestIds.blocks_promocode_add_button}
+                            tid={TIDs.blocks_promocode_add_button}
                             onClick={() => setIsContentVisible(!isContentVisible)}
                         >
                             <PlusIcon className="mr-3 w-3" />
@@ -135,8 +135,8 @@ export const PromoCode: FC = () => {
                                         />
                                         <SubmitButton
                                             className="!rounded-r !rounded-l-none !px-3"
-                                            dataTestId={DataTestIds.blocks_promocode_apply_button}
                                             isWithDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
+                                            tid={TIDs.blocks_promocode_apply_button}
                                             onClick={onApplyPromoCodeHandler}
                                         >
                                             {fetchingApplyPromoCode && <Loader className="w-4 text-white" />}

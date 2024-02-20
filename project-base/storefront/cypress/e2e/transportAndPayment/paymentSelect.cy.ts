@@ -1,7 +1,7 @@
 import { changeSelectionOfPaymentByName } from './transportAndPaymentSupport';
-import { DataTestIds } from 'dataTestIds';
 import { payment, transport, url } from 'fixtures/demodata';
 import { takeSnapshotAndCompare } from 'support';
+import { TIDs } from 'tids';
 
 describe('Payment select tests', () => {
     it('should select payment by cash', () => {
@@ -10,12 +10,12 @@ describe('Payment select tests', () => {
         cy.visit(url.order.transportAndPayment);
 
         changeSelectionOfPaymentByName(payment.cash.name);
-        cy.getByDataTestId([DataTestIds.loader_overlay]).should('not.exist');
+        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
 
-        cy.getByDataTestId([DataTestIds.blocks_orderaction_next]).should('not.be.disabled');
+        cy.getByTID([TIDs.blocks_orderaction_next]).should('not.be.disabled');
         takeSnapshotAndCompare('payment-by-cash');
 
-        cy.getByDataTestId([DataTestIds.blocks_orderaction_next]).click();
+        cy.getByTID([TIDs.blocks_orderaction_next]).click();
         cy.url().should('contain', url.order.contactInformation);
     });
 
@@ -25,16 +25,16 @@ describe('Payment select tests', () => {
         cy.visit(url.order.transportAndPayment);
 
         changeSelectionOfPaymentByName(payment.cash.name);
-        cy.getByDataTestId([DataTestIds.loader_overlay]).should('not.exist');
+        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
         changeSelectionOfPaymentByName(payment.cash.name);
-        cy.getByDataTestId([DataTestIds.loader_overlay]).should('not.exist');
+        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
         changeSelectionOfPaymentByName(payment.onDelivery.name);
-        cy.getByDataTestId([DataTestIds.loader_overlay]).should('not.exist');
+        cy.getByTID([TIDs.loader_overlay]).should('not.exist');
 
-        cy.getByDataTestId([DataTestIds.blocks_orderaction_next]).should('not.be.disabled');
+        cy.getByTID([TIDs.blocks_orderaction_next]).should('not.be.disabled');
         takeSnapshotAndCompare('select-deselect-and-select-payment-again');
 
-        cy.getByDataTestId([DataTestIds.blocks_orderaction_next]).click();
+        cy.getByTID([TIDs.blocks_orderaction_next]).click();
         cy.url().should('contain', url.order.contactInformation);
     });
 });

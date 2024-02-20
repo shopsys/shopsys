@@ -1,7 +1,7 @@
 import { MenuIconicItemLink } from './MenuIconicElements';
 import { UserIcon } from 'components/Basic/Icon/IconsSvg';
 import { Login } from 'components/Blocks/Popup/Login/Login';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
@@ -17,7 +17,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
         <>
             <MenuIconicItemLink
                 className="cursor-pointer"
-                dataTestId={DataTestIds.layout_header_menuiconic_login_link_popup}
+                tid={TIDs.layout_header_menuiconic_login_link_popup}
                 onClick={handleLogin}
             >
                 <UserIcon className="w-5 lg:w-4" />

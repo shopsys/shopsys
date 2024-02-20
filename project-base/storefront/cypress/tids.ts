@@ -1,4 +1,4 @@
-export enum DataTestIds {
+export enum TIDs {
     my_account_link = 'my_account_link',
     header_logout = 'header_logout',
     pages_login_submit = 'pages_login_submit',

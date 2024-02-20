@@ -7,7 +7,7 @@ import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { onGtmProductClickEventHandler } from 'gtm/helpers/eventHandlers';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
@@ -48,8 +48,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
 
         return (
             <li
-                data-testid={DataTestIds.blocks_product_list_listeditem_ + product.catalogNumber}
                 ref={ref}
+                tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
                     'relative flex select-none flex-col justify-between gap-3 border-b border-greyLighter p-3 text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl',
                     className,

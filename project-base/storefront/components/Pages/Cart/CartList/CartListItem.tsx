@@ -2,7 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { CartItemFragmentApi } from 'graphql/generated';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { AddToCartAction } from 'hooks/cart/useAddToCart';
@@ -47,7 +47,7 @@ export const CartListItem: FC<CartListItemProps> = ({
     return (
         <div
             className="relative flex flex-row flex-wrap items-center gap-4 border-b border-greyLighter py-5 vl:flex-nowrap"
-            data-testid={DataTestIds.pages_cart_list_item_ + listIndex}
+            tid={TIDs.pages_cart_list_item_ + listIndex}
         >
             <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0">
                 <div className="flex h-12 w-24 shrink-0">
@@ -63,10 +63,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                 </div>
 
                 <div className="flex flex-col items-start gap-4 text-sm font-bold vl:flex-1 vl:flex-row vl:items-center">
-                    <div
-                        className="h-full text-left vl:w-[16.875rem]"
-                        data-testid={DataTestIds.pages_cart_list_item_name}
-                    >
+                    <div className="h-full text-left vl:w-[16.875rem]" tid={TIDs.pages_cart_list_item_name}>
                         <ExtendedNextLink
                             className="text-sm font-bold uppercase leading-4 text-dark no-underline hover:text-dark hover:no-underline"
                             href={productSlug}
@@ -112,7 +109,7 @@ export const CartListItem: FC<CartListItemProps> = ({
 
             <div
                 className="ml-auto flex items-center justify-end text-sm text-primary lg:text-base vl:w-32"
-                data-testid={DataTestIds.pages_cart_list_item_totalprice}
+                tid={TIDs.pages_cart_list_item_totalprice}
             >
                 {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
             </div>

@@ -1,7 +1,7 @@
 import { StoreSelect } from './StoreSelect';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
@@ -51,8 +51,8 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({
             <div className="mt-5 flex justify-between">
                 <Button onClick={onClosePickupPlacePopupHandler}>{t('Close')}</Button>
                 <Button
-                    dataTestId={DataTestIds.pages_order_pickupplace_popup_confirm}
                     isDisabled={selectedStoreUuid === ''}
+                    tid={TIDs.pages_order_pickupplace_popup_confirm}
                     onClick={onConfirmPickupPlaceHandler}
                 >
                     {t('Confirm')}

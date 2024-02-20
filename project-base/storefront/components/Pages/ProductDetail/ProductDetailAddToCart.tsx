@@ -2,7 +2,7 @@ import { CartIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { CartItemFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
@@ -59,8 +59,8 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                             <div className="ml-2 flex-1">
                                 <Button
                                     className="w-full"
-                                    dataTestId={DataTestIds.pages_productdetail_addtocart_button}
                                     isDisabled={fetching}
+                                    tid={TIDs.pages_productdetail_addtocart_button}
                                     variant="primary"
                                     onClick={onAddToCartHandler}
                                 >

@@ -1,6 +1,6 @@
 import { CloseIcon, SearchIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
@@ -37,8 +37,8 @@ export const SearchInput: FC<SearchInputProps> = ({
         <div className="relative w-full">
             <input
                 autoComplete="off"
-                data-testid={DataTestIds.layout_header_search_autocomplete_input}
                 placeholder={label}
+                tid={TIDs.layout_header_search_autocomplete_input}
                 type="search"
                 value={value}
                 className={twMergeCustom(

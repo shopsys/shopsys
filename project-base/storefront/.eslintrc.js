@@ -108,7 +108,7 @@ module.exports = {
         'react/no-unknown-property': [
             'error',
             {
-                ignore: ['jsx', 'global'],
+                ignore: ['jsx', 'global', 'tid'],
             },
         ],
         'react/jsx-curly-brace-presence': [

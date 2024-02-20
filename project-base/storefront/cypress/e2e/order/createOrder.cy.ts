@@ -8,9 +8,9 @@ import {
     clickOnOrderDetailButtonOnThankYouPage,
     checkFinishOrderPageAsUnregistredCustomer,
 } from './orderSupport';
-import { DataTestIds } from 'dataTestIds';
 import { transport, payment, customer1, orderNote, url, orderDetail } from 'fixtures/demodata';
 import { changeElementText, loseFocus, takeSnapshotAndCompare } from 'support';
+import { TIDs } from 'tids';
 
 describe('Create order tests', () => {
     beforeEach(() => {
@@ -34,8 +34,8 @@ describe('Create order tests', () => {
         checkFinishOrderPageAsUnloggedCustomerWithEmailWithExistingRegistration();
         clickOnOrderDetailButtonOnThankYouPage();
 
-        changeElementText(DataTestIds.order_detail_number, orderDetail.numberHeading);
-        changeElementText(DataTestIds.order_detail_creation_date, orderDetail.creationDate, false);
+        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
+        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
 
         takeSnapshotAndCompare('order-detail-unlogged-user-with-registerd-email-transport-to-home-cash-on-delivery');
     });
@@ -57,8 +57,8 @@ describe('Create order tests', () => {
         checkFinishOrderPageAsUnregistredCustomer();
         clickOnOrderDetailButtonOnThankYouPage();
 
-        changeElementText(DataTestIds.order_detail_number, orderDetail.numberHeading);
-        changeElementText(DataTestIds.order_detail_creation_date, orderDetail.creationDate, false);
+        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
+        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
 
         takeSnapshotAndCompare('order-detail-unlogged-user-transport-to-home-cash-on-delivery');
     });
@@ -81,8 +81,8 @@ describe('Create order tests', () => {
         checkFinishOrderPageAsUnregistredCustomer();
         clickOnOrderDetailButtonOnThankYouPage();
 
-        changeElementText(DataTestIds.order_detail_number, orderDetail.numberHeading);
-        changeElementText(DataTestIds.order_detail_creation_date, orderDetail.creationDate, false);
+        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
+        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
 
         takeSnapshotAndCompare('order-detail-unlogged-user-personal-collection-cash');
     });
@@ -105,8 +105,8 @@ describe('Create order tests', () => {
         checkFinishOrderPageAsUnregistredCustomer();
         clickOnOrderDetailButtonOnThankYouPage();
 
-        changeElementText(DataTestIds.order_detail_number, orderDetail.numberHeading);
-        changeElementText(DataTestIds.order_detail_creation_date, orderDetail.creationDate, false);
+        changeElementText(TIDs.order_detail_number, orderDetail.numberHeading);
+        changeElementText(TIDs.order_detail_creation_date, orderDetail.creationDate, false);
 
         takeSnapshotAndCompare('order-detail-unlogged-user-ppl-credit-card');
     });

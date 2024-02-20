@@ -2,7 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { IconImage } from 'components/Basic/Icon/IconImage';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import {
     AutocompleteSearchQueryApi,
     ListedProductFragmentApi,
@@ -93,7 +93,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
 
                     <ul
                         className="flex flex-col gap-4 lg:grid lg:grid-cols-5 lg:gap-2"
-                        data-testid={DataTestIds.layout_header_search_autocomplete_popup_products}
+                        tid={TIDs.layout_header_search_autocomplete_popup_products}
                     >
                         {mappedProductSearchResults?.map(
                             (product, index) =>

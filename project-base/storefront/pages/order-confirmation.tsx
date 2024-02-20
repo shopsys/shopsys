@@ -4,7 +4,7 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import {
     OrderSentPageContentQueryDocumentApi,
     OrderSentPageContentQueryVariablesApi,
@@ -53,7 +53,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
 
             <CommonLayout title={t('Thank you for your order')}>
-                <Webline dataTestId={DataTestIds.pages_orderconfirmation}>
+                <Webline tid={TIDs.pages_orderconfirmation}>
                     <ConfirmationPageContent
                         content={orderSentPageContentData?.orderSentPageContent}
                         heading={t('Your order was created')}

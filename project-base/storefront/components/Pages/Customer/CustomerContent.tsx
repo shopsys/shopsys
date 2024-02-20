@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { getInternationalizedStaticUrls } from 'helpers/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useDomainConfig } from 'hooks/useDomainConfig';
@@ -36,7 +36,7 @@ export const CustomerContent: FC = () => {
                     </CustomerListItem>
 
                     <CustomerListItem>
-                        <a data-testid={DataTestIds.customer_page_logout} onClick={logout}>
+                        <a tid={TIDs.customer_page_logout} onClick={logout}>
                             {t('Logout')}
                         </a>
                     </CustomerListItem>

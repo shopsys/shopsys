@@ -6,7 +6,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { CartList } from 'components/Pages/Cart/CartList/CartList';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';
 import { CartSummary } from 'components/Pages/Cart/CartSummary';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { useGtmStaticPageViewEvent } from 'gtm/helpers/eventFactories';
 import { useGtmCartViewEvent } from 'gtm/hooks/useGtmCartViewEvent';
 import { useGtmPageViewEvent } from 'gtm/hooks/useGtmPageViewEvent';
@@ -58,7 +58,7 @@ const CartPage: FC<ServerSidePropsType> = () => {
                     )}
 
                     {isWithFetchedCart && !cart?.items.length && (
-                        <p className="my-28 text-center text-2xl" data-testid={DataTestIds.cart_page_empty_cart_text}>
+                        <p className="my-28 text-center text-2xl" tid={TIDs.cart_page_empty_cart_text}>
                             {t('Your cart is currently empty.')}
                         </p>
                     )}

@@ -1,5 +1,5 @@
 import { SimpleNavigationListItem } from './SimpleNavigationListItem';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { twMergeCustom } from 'helpers/twMerge';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropType } from 'types/simpleNavigation';
@@ -31,9 +31,9 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({
                 <SimpleNavigationListItem
                     key={index}
                     className={itemClassName}
-                    dataTestId={DataTestIds.blocks_simplenavigation_ + index}
                     linkType={linkType}
                     listedItem={listedItem}
+                    tid={TIDs.blocks_simplenavigation_ + index}
                 >
                     {listedItem.name}
                 </SimpleNavigationListItem>

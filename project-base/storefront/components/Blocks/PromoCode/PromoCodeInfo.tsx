@@ -1,5 +1,5 @@
 import { CrossIcon } from 'components/Basic/Icon/IconsSvg';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 
 type PromoCodeInfoProps = {
@@ -17,7 +17,7 @@ export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallbac
     return (
         <div>
             <div className="text-primary">{t('Your discount with the code has been applied.')}</div>
-            <div className="flex items-center font-bold" data-testid={DataTestIds.blocks_promocode_promocodeinfo_code}>
+            <div className="flex items-center font-bold" tid={TIDs.blocks_promocode_promocodeinfo_code}>
                 {promoCode}
                 <CrossIcon
                     className="mr-1 w-4 cursor-pointer text-greyDark hover:text-primary"

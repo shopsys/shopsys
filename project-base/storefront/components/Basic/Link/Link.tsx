@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { twMergeCustom } from 'helpers/twMerge';
 import { AnchorHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
@@ -28,7 +28,7 @@ export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel,
         href: isExternal ? href : undefined,
         rel,
         target,
-        'data-testid': DataTestIds.basic_link,
+        tid: TIDs.basic_link,
     };
 
     const content = isButton ? <Button className={className}>{children}</Button> : children;

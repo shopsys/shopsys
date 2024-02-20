@@ -1,5 +1,5 @@
-import { DataTestIds } from 'dataTestIds';
 import { link, placeholder, url } from 'fixtures/demodata';
+import { TIDs } from 'tids';
 
 export const fillEmailInThirdStep = (email: string) => {
     cy.get('#contact-information-form-email').should('have.attr', 'placeholder', placeholder.email).type(email);
@@ -24,7 +24,7 @@ export const fillBillingAdressInThirdStep = (street: string, city: string, postC
 };
 
 export const clickOnSendOrderButton = () => {
-    cy.getByDataTestId([DataTestIds.blocks_orderaction_next]).click();
+    cy.getByTID([TIDs.blocks_orderaction_next]).click();
 };
 
 export const fillInNoteInThirdStep = (note: string) => {
@@ -33,19 +33,17 @@ export const fillInNoteInThirdStep = (note: string) => {
 
 export const checkFinishOrderPageAsUnregistredCustomer = () => {
     cy.url().should('contain', url.order.orderConfirmation);
-    cy.getByDataTestId([DataTestIds.pages_orderconfirmation])
+    cy.getByTID([TIDs.pages_orderconfirmation])
         .get('#registration-after-order-form-password')
         .should('have.attr', 'placeholder', placeholder.password);
 };
 
 export const checkFinishOrderPageAsUnloggedCustomerWithEmailWithExistingRegistration = () => {
     cy.url().should('contain', url.order.orderConfirmation);
-    cy.getByDataTestId([DataTestIds.pages_orderconfirmation])
-        .get('#registration-after-order-form-password')
-        .should('not.exist');
+    cy.getByTID([TIDs.pages_orderconfirmation]).get('#registration-after-order-form-password').should('not.exist');
 };
 
 export const clickOnOrderDetailButtonOnThankYouPage = () => {
-    cy.getByDataTestId([DataTestIds.pages_orderconfirmation]).contains(link.orderDetail).click();
+    cy.getByTID([TIDs.pages_orderconfirmation]).contains(link.orderDetail).click();
     cy.url().should('contain', url.order.orderDetail);
 };

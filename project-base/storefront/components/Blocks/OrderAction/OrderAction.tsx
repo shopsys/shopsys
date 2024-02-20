@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon, SpinnerIcon } from 'components/Basic/Icon/IconsSvg';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { useRouter } from 'next/router';
 import { twJoin } from 'tailwind-merge';
 
@@ -53,7 +53,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                     {buttonBack}
                 </ExtendedNextLink>
             </div>
-            <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0" data-testid={DataTestIds.blocks_orderaction_next}>
+            <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0" tid={TIDs.blocks_orderaction_next}>
                 <SubmitButton isWithDisabledLook={hasDisabledLook} variant="primary" onClick={onNextStepHandler}>
                     {isLoading && <SpinnerIcon className="w-5" />}
                     <span>{buttonNext}</span>

@@ -19,7 +19,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     products,
     gtmProductListName,
     gtmMessageOrigin = GtmMessageOriginType.other,
-    dataTestId,
+    tid,
 }) => {
     const { t } = useTranslation();
     const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLLIElement>>>();
@@ -66,7 +66,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     });
 
     return (
-        <div className="relative" data-testid={dataTestId}>
+        <div className="relative" tid={tid}>
             {isWithControls && (
                 <div className="absolute -top-11 right-0 hidden items-center justify-center vl:flex ">
                     <SliderButton title={t('Previous products')} type="prev" onClick={handlePrevious} />

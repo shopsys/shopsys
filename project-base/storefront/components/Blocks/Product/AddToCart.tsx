@@ -2,7 +2,7 @@ import { CartIcon } from 'components/Basic/Icon/IconsSvg';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { CartItemFragmentApi } from 'graphql/generated';
 import { GtmMessageOriginType, GtmProductListNameType } from 'gtm/types/enums';
 import { twMergeCustom } from 'helpers/twMerge';
@@ -61,10 +61,10 @@ export const AddToCart: FC<AddToCartProps> = ({
             />
             <Button
                 className="py-2"
-                dataTestId={DataTestIds.blocks_product_addtocart}
                 isDisabled={fetching}
                 name="add-to-cart"
                 size="small"
+                tid={TIDs.blocks_product_addtocart}
                 onClick={onAddToCartHandler}
             >
                 {fetching ? <Loader className="w-4 text-white" /> : <CartIcon className="w-4 text-white" />}

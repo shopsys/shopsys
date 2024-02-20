@@ -6,9 +6,9 @@ import {
     searchProductByNameTypeEnterAndCheckResult,
     checkCartTotalPrice,
 } from './cartSupport';
-import { DataTestIds } from 'dataTestIds';
 import { brandSencor, DEFAULT_APP_STORE, products, url } from 'fixtures/demodata';
 import { checkUrl } from 'support';
+import { TIDs } from 'tids';
 
 describe('Product add to cart tests', () => {
     beforeEach(() => {
@@ -19,7 +19,7 @@ describe('Product add to cart tests', () => {
 
     it('should add product to cart from brand list', () => {
         cy.visit(url.brandsOverwiev);
-        cy.getByDataTestId([[DataTestIds.blocks_simplenavigation_, 22]])
+        cy.getByTID([[TIDs.blocks_simplenavigation_, 22]])
             .contains(brandSencor)
             .should('be.visible')
             .click();
@@ -30,7 +30,7 @@ describe('Product add to cart tests', () => {
 
     it('should add product to cart from product detail', () => {
         cy.visit(products.helloKitty.url);
-        cy.getByDataTestId([DataTestIds.pages_productdetail_addtocart_button]).click();
+        cy.getByTID([TIDs.pages_productdetail_addtocart_button]).click();
 
         checkIfCorrectlyAddedHelloKittyToCart();
     });
@@ -44,13 +44,13 @@ describe('Product add to cart tests', () => {
 
     it('should add variant product to cart from product detail', () => {
         cy.visit(products.philips32PFL4308.url);
-        cy.getByDataTestId([
-            [DataTestIds.pages_productdetail_variant_, products.philips54CRT.catnum],
-            DataTestIds.blocks_product_addtocart,
+        cy.getByTID([
+            [TIDs.pages_productdetail_variant_, products.philips54CRT.catnum],
+            TIDs.blocks_product_addtocart,
         ]).click();
 
         checkProductAndGoToCartFromCartPopupWindow(products.philips54CRT.name);
-        cy.getByDataTestId([[DataTestIds.pages_cart_list_item_, 0], DataTestIds.pages_cart_list_item_name]).contains(
+        cy.getByTID([[TIDs.pages_cart_list_item_, 0], TIDs.pages_cart_list_item_name]).contains(
             products.philips54CRT.name,
         );
         checkCartTotalPrice('€492.40');

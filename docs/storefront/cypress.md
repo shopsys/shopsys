@@ -24,7 +24,7 @@ Here you can put any static values and demodata you would need. This could be st
 
 Here you can put various global helpers, such as custom cypress commands, or similar.
 
-### DataTestIds.ts
+### TIDs.ts
 
 Here you should put all data test IDs used in the app. Having them in a single TS file which can be globally referenced is helpful for maintenance and keeping track of used or unused IDs.
 
@@ -198,11 +198,11 @@ If you cannot use intercepting because of some of the aforementioned reasons, su
 As for the `changeElementText` method, it by default expects to be called right after the page is loaded after SSR, which is the reason why we wait for 200ms, in order to surpass the React hydration error. If you call this method in a different setting, you can save yourself 200ms for every call by setting `isRightAfterSSR` to `false`.
 
 ```ts
-export const changeElementText = (selector: DataTestIds, newText: string, isRightAfterSSR = true) => {
+export const changeElementText = (selector: TIDs, newText: string, isRightAfterSSR = true) => {
     if (isRightAfterSSR) {
         cy.wait(200);
     }
-    cy.getByDataTestId([selector]).then((element) => {
+    cy.getByTID([selector]).then((element) => {
         element.text(newText);
     });
 };

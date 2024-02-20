@@ -1,5 +1,5 @@
 import { RemoveBoldIcon } from 'components/Basic/Icon/IconsSvg';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { twMergeCustom } from 'helpers/twMerge';
 import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler } from 'react';
@@ -13,7 +13,7 @@ export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onItemRemo
 
     return (
         <button
-            data-testid={DataTestIds.pages_cart_removecartitembutton}
+            tid={TIDs.pages_cart_removecartitembutton}
             title={t('Remove from cart')}
             className={twMergeCustom(
                 'flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-none bg-whitesmoke outline-none transition hover:bg-blueLight',

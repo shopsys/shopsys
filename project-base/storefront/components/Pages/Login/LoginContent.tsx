@@ -5,7 +5,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { DataTestIds } from 'cypress/dataTestIds';
+import { TIDs } from 'cypress/tids';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
@@ -70,7 +70,7 @@ export const LoginContent: FC = () => {
                         }}
                     />
                     <div className="mt-8 flex w-full justify-center">
-                        <SubmitButton dataTestId={DataTestIds.pages_login_submit}>{t('Log in')}</SubmitButton>
+                        <SubmitButton tid={TIDs.pages_login_submit}>{t('Log in')}</SubmitButton>
                     </div>
                 </Form>
             </FormProvider>

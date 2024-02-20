@@ -7,9 +7,9 @@ type WeblineProps = {
 
 type WeblineType = 'colored' | 'dark' | 'light' | 'blog';
 
-export const Webline: FC<WeblineProps> = ({ children, dataTestId, type, className }) => {
+export const Webline: FC<WeblineProps> = ({ children, tid, type, className }) => {
     const content = (
-        <div className={twMergeCustom('px-4 xl:mx-auto xl:w-full xl:max-w-7xl', className)} data-testid={dataTestId}>
+        <div className={twMergeCustom('px-4 xl:mx-auto xl:w-full xl:max-w-7xl', className)} tid={tid}>
             {children}
         </div>
     );

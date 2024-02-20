@@ -1,9 +1,9 @@
-import { DataTestIds } from 'dataTestIds';
+import { TIDs } from 'tids';
 
 declare global {
     namespace Cypress {
         interface Chainable<Subject = any> {
-            getByDataTestId(value: ([DataTestIds, number] | DataTestIds)[]): Chainable<JQuery<HTMLElement>>;
+            getByTID(value: ([TIDs, number] | TIDs)[]): Chainable<JQuery<HTMLElement>>;
             storeCartUuidInLocalStorage(cartUuid: string): Cypress.Chainable<undefined>;
             addProductToCartForTest(productUuid?: string, quantity?: number): Cypress.Chainable<any>;
             preselectTransportForTest(

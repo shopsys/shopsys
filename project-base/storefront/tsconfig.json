@@ -17,6 +17,6 @@
         "typeRoots": ["./node_modules/@types", "./theme"],
         "incremental": true
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "*.js", "*.test.tsx", ".eslintrc.js", "cypress/dataTestIds.ts"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "*.js", "*.test.tsx", ".eslintrc.js", "cypress/tids.ts"],
     "exclude": ["node_modules", "tsconfig.json", "graphql", ".pnpm-store", ".next", "cypress"]
 }
